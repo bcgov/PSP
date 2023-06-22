@@ -6,7 +6,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c1.btn {
+  .c2.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c1.btn:hover {
+.c2.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c1.btn:focus {
+.c2.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c1.btn.btn-primary {
+.c2.btn.btn-primary {
   border: none;
 }
 
-.c1.btn.btn-secondary {
+.c2.btn.btn-secondary {
   background: none;
 }
 
-.c1.btn.btn-info {
+.c2.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c1.btn.btn-info:hover,
-.c1.btn.btn-info:active,
-.c1.btn.btn-info:focus {
+.c2.btn.btn-info:hover,
+.c2.btn.btn-info:active,
+.c2.btn.btn-info:focus {
   background: none;
 }
 
-.c1.btn.btn-light {
+.c2.btn.btn-light {
   border: none;
 }
 
-.c1.btn.btn-dark {
+.c2.btn.btn-dark {
   border: none;
 }
 
-.c1.btn.btn-link {
+.c2.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   padding: 0;
 }
 
-.c1.btn.btn-link:hover,
-.c1.btn.btn-link:active,
-.c1.btn.btn-link:focus {
+.c2.btn.btn-link:hover,
+.c2.btn.btn-link:active,
+.c2.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   outline: none;
 }
 
-.c1.btn.btn-link:disabled,
-.c1.btn.btn-link.disabled {
+.c2.btn.btn-link:disabled,
+.c2.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c1.btn:disabled,
-.c1.btn:disabled:hover {
+.c2.btn:disabled,
+.c2.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,30 +128,34 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c1.Button .Button__icon {
+.c2.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c1.Button--icon-only:focus {
+.c2.Button--icon-only:focus {
   outline: none;
 }
 
-.c1.Button--icon-only .Button__icon {
+.c2.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c7 {
+.c8 {
   float: right;
   cursor: pointer;
 }
 
-.c4 {
+.c0 {
+  padding-top: 1rem;
+}
+
+.c5 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c2 {
+.c3 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -159,24 +163,24 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c6.required::before {
+.c7.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c5 {
+.c6 {
   font-weight: bold;
 }
 
-.c3 {
+.c4 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   font-weight: bold;
 }
 
-.c0 {
+.c1 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -186,14 +190,56 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   flex-direction: row-reverse;
 }
 
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.c10 span {
+  margin-left: 1.25rem;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: 1rem;
+}
+
 <div
-    class=""
+    class="c0"
   >
     <div
-      class="c0"
+      class="c1"
     >
       <button
-        class="c1 Button btn btn-primary"
+        class="c2 Button btn btn-primary"
         type="button"
       >
         <div
@@ -218,150 +264,110 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
       </button>
     </div>
     <div
-      class="c2 form-section"
+      class="c3 form-section"
     >
       <div
         class="collapse show"
       >
         <div
-          class="c3 no-gutters row"
+          class="c4 no-gutters row"
         >
           <div
-            class="col-7"
+            class="col-6"
           >
             <div
-              class="no-gutters row"
+              class="row"
             >
               <div
-                class="col"
+                class="pr-0 text-left col-8"
               >
-                <div
-                  class="row"
-                >
-                  <div
-                    class="pr-0 text-left col-auto"
-                  >
-                    <label>
-                      Client:
-                    </label>
-                  </div>
-                  <div
-                    class="pl-1 text-left col-4"
-                    data-testid="compensation-client"
-                  >
-                    <strong>
-                      034
-                    </strong>
-                  </div>
-                </div>
+                <label>
+                  Client:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-auto"
+                data-testid="compensation-client"
+              >
+                <strong>
+                  034
+                </strong>
               </div>
             </div>
             <div
-              class="no-gutters row"
+              class="row"
             >
               <div
-                class="col"
+                class="pr-0 text-left col-8"
               >
-                <div
-                  class="row"
-                >
-                  <div
-                    class="pr-0 text-left col-auto"
-                  >
-                    <label>
-                      Requisition number:
-                    </label>
-                  </div>
-                  <div
-                    class="pl-1 text-left col-4"
-                  >
-                    <strong>
-                      Draft
-                    </strong>
-                  </div>
-                </div>
+                <label>
+                  Requisition number:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-auto"
+              >
+                <strong>
+                  Draft
+                </strong>
               </div>
             </div>
           </div>
           <div
-            class="col-5"
+            class="col-6"
           >
             <div
-              class="no-gutters row"
+              class="row"
             >
               <div
-                class="col"
+                class="pr-0 text-left col-8"
               >
-                <div
-                  class="row"
-                >
-                  <div
-                    class="pr-0 text-left col-auto"
-                  >
-                    <label>
-                      Compensation amount:
-                    </label>
-                  </div>
-                  <div
-                    class="pl-1 text-left col-4"
-                  >
-                    <strong>
-                      $0.00
-                    </strong>
-                  </div>
-                </div>
+                <label>
+                  Compensation amount:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-auto"
+              >
+                <strong>
+                  $0.00
+                </strong>
               </div>
             </div>
             <div
-              class="no-gutters row"
+              class="row"
             >
               <div
-                class="col"
+                class="pr-0 text-left col-8"
               >
-                <div
-                  class="row"
-                >
-                  <div
-                    class="pr-0 text-left col-auto"
-                  >
-                    <label>
-                      Applicable GST:
-                    </label>
-                  </div>
-                  <div
-                    class="pl-1 text-left col-4"
-                  >
-                    <strong>
-                      $0.00
-                    </strong>
-                  </div>
-                </div>
+                <label>
+                  Applicable GST:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-auto"
+              >
+                <strong>
+                  $0.00
+                </strong>
               </div>
             </div>
             <div
-              class="no-gutters row"
+              class="row"
             >
               <div
-                class="col"
+                class="pr-0 text-left col-8"
               >
-                <div
-                  class="row"
-                >
-                  <div
-                    class="pr-0 text-left col-auto"
-                  >
-                    <label>
-                      Total cheque amount:
-                    </label>
-                  </div>
-                  <div
-                    class="pl-1 text-left col-4"
-                  >
-                    <strong>
-                      $0.00
-                    </strong>
-                  </div>
-                </div>
+                <label>
+                  Total cheque amount:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-auto"
+              >
+                <strong>
+                  $0.00
+                </strong>
               </div>
             </div>
           </div>
@@ -369,10 +375,10 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c2 form-section"
+      class="c3 form-section"
     >
       <h2
-        class="c4"
+        class="c5"
       >
         <div
           class="no-gutters row"
@@ -382,9 +388,6 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           >
             Requisition Details
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -397,13 +400,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Status:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             Draft
           </div>
@@ -415,13 +418,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Agreement date:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           />
         </div>
         <div
@@ -431,13 +434,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Expropriation notice server date:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           />
         </div>
         <div
@@ -447,13 +450,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Expropriation vesting date:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           />
         </div>
         <div
@@ -463,22 +466,22 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-12"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Special instructions:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           />
         </div>
       </div>
     </div>
     <div
-      class="c2 form-section"
+      class="c3 form-section"
     >
       <h2
-        class="c4"
+        class="c5"
       >
         <div
           class="no-gutters row"
@@ -492,7 +495,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="col-1"
           >
             <svg
-              class="c7"
+              class="c8"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -525,13 +528,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Product:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           />
         </div>
         <div
@@ -541,13 +544,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Business function:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           />
         </div>
         <div
@@ -557,13 +560,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Work activity:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           />
         </div>
         <div
@@ -573,13 +576,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Cost type:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           />
         </div>
         <div
@@ -589,19 +592,238 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Fiscal year:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              STOB:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              Service line:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+             - 
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              Responsiblity centre:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+             - 
+          </div>
         </div>
       </div>
     </div>
     <div
-      class="c2 form-section"
+      class="c3 form-section"
+    >
+      <h2
+        class="c5"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Payment
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c8"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              Payee:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="c9"
+            >
+              <label />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              Amount (before tax):
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            $0.00
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              GST applicable?:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            No
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              Total amount:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            $0.00
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c3 form-section"
+    >
+      <h2
+        class="c5"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Financial Activities
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c8"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      />
+    </div>
+    <div
+      class="c3 form-section"
     >
       <div
         class="collapse show"
@@ -613,14 +835,50 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-12"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Detailed remarks:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           />
+        </div>
+      </div>
+    </div>
+    <div
+      class="c3 form-section"
+    >
+      <div
+        class="collapse show"
+      >
+        <div
+          class="c10"
+        >
+          <div>
+            <label>
+              Compensation amount: 
+              <span>
+                $0.00
+              </span>
+            </label>
+          </div>
+          <div>
+            <label>
+              Applicable GST: 
+              <span>
+                $0.00
+              </span>
+            </label>
+          </div>
+          <div>
+            <label>
+              Total cheque amount: 
+              <span>
+                $0.00
+              </span>
+            </label>
+          </div>
         </div>
       </div>
     </div>

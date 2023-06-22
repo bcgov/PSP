@@ -479,9 +479,6 @@ exports[`AddResearchForm component renders as expected 1`] = `
           >
             Project
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -514,9 +511,6 @@ exports[`AddResearchForm component renders as expected 1`] = `
           >
             Properties to include in this file:
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -810,6 +804,7 @@ exports[`AddResearchForm component renders as expected 1`] = `
                                   class="input form-group"
                                 >
                                   <input
+                                    autocomplete="off"
                                     class="form-control"
                                     id="input-pid"
                                     name="pid"
@@ -1038,9 +1033,6 @@ exports[`AddResearchForm component renders as expected 1`] = `
               >
                 Selected properties
               </div>
-              <div
-                class="col-1"
-              />
             </div>
           </h2>
           <div

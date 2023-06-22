@@ -28,10 +28,12 @@ namespace Pims.Dal.Entities
             PimsAcquisitionFileForms = new HashSet<PimsAcquisitionFileForm>();
             PimsAcquisitionFileNotes = new HashSet<PimsAcquisitionFileNote>();
             PimsAcquisitionFilePeople = new HashSet<PimsAcquisitionFilePerson>();
+            PimsAcquisitionOwnerReps = new HashSet<PimsAcquisitionOwnerRep>();
             PimsAcquisitionOwnerSolicitors = new HashSet<PimsAcquisitionOwnerSolicitor>();
             PimsAcquisitionOwners = new HashSet<PimsAcquisitionOwner>();
             PimsAgreements = new HashSet<PimsAgreement>();
             PimsCompensationRequisitions = new HashSet<PimsCompensationRequisition>();
+            PimsInterestHolders = new HashSet<PimsInterestHolder>();
             PimsPropertyAcquisitionFiles = new HashSet<PimsPropertyAcquisitionFile>();
         }
 
@@ -154,6 +156,8 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsAcquisitionFileNote> PimsAcquisitionFileNotes { get; set; }
         [InverseProperty(nameof(PimsAcquisitionFilePerson.AcquisitionFile))]
         public virtual ICollection<PimsAcquisitionFilePerson> PimsAcquisitionFilePeople { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionOwnerRep.AcquisitionFile))]
+        public virtual ICollection<PimsAcquisitionOwnerRep> PimsAcquisitionOwnerReps { get; set; }
         [InverseProperty(nameof(PimsAcquisitionOwnerSolicitor.AcquisitionFile))]
         public virtual ICollection<PimsAcquisitionOwnerSolicitor> PimsAcquisitionOwnerSolicitors { get; set; }
         [InverseProperty(nameof(PimsAcquisitionOwner.AcquisitionFile))]
@@ -162,6 +166,8 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsAgreement> PimsAgreements { get; set; }
         [InverseProperty(nameof(PimsCompensationRequisition.AcquisitionFile))]
         public virtual ICollection<PimsCompensationRequisition> PimsCompensationRequisitions { get; set; }
+        [InverseProperty(nameof(PimsInterestHolder.AcquisitionFile))]
+        public virtual ICollection<PimsInterestHolder> PimsInterestHolders { get; set; }
         [InverseProperty(nameof(PimsPropertyAcquisitionFile.AcquisitionFile))]
         public virtual ICollection<PimsPropertyAcquisitionFile> PimsPropertyAcquisitionFiles { get; set; }
     }

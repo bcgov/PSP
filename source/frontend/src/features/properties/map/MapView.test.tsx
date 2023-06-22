@@ -3,6 +3,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { createPoints } from 'components/maps/leaflet/mapUtils';
+import { PropertyContextProvider } from 'components/maps/providers/PropertyContext';
 import {
   Claims,
   PropertyAreaUnitTypes,
@@ -142,7 +143,9 @@ describe('MapView', () => {
 
   const setup = async (renderOptions: RenderOptions = {}) => {
     const utils = render(
-      <MapView showParcelBoundaries={true} onMarkerPopupClosed={onMarkerPopupClosed} />,
+      <PropertyContextProvider>
+        <MapView showParcelBoundaries={true} onMarkerPopupClosed={onMarkerPopupClosed} />
+      </PropertyContextProvider>,
       {
         store,
         history,
@@ -219,7 +222,7 @@ describe('MapView', () => {
 
   afterEach(cleanup);
 
-  xit('Renders the map', async () => {
+  it('Renders the map', async () => {
     const { asFragment } = await setup();
     expect(asFragment()).toMatchSnapshot();
     expect(document.querySelector('.leaflet-container')).toBeVisible();
@@ -232,7 +235,7 @@ describe('MapView', () => {
     expect(basemapToggle).toBeInTheDocument();
     expect(basemapToggle).toHaveAttribute('src', '/satellite.jpg');
     // click it
-    await act(() => userEvent.click(basemapToggle));
+    await act(async () => userEvent.click(basemapToggle));
     // expect image to change
     expect(basemapToggle).toHaveAttribute('src', '/streets.jpg');
   });
@@ -263,7 +266,7 @@ describe('MapView', () => {
     // click the zoom-in button 10 times
     const zoomIn = container.querySelector('.leaflet-control-zoom-in');
     for (let i = 1; i <= 10; i++) {
-      await act(() => userEvent.click(zoomIn!));
+      await act(async () => userEvent.click(zoomIn!));
     }
 
     const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
@@ -299,7 +302,7 @@ describe('MapView', () => {
     // click the zoom-out button 10 times
     const zoomOut = container.querySelector('.leaflet-control-zoom-out');
     for (let i = 1; i <= 10; i++) {
-      await act(() => userEvent.click(zoomOut!));
+      await act(async () => userEvent.click(zoomOut!));
     }
 
     const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
@@ -312,12 +315,12 @@ describe('MapView', () => {
     // click the zoom-out button 10 times
     const zoomOut = container.querySelector('.leaflet-control-zoom-out');
     for (let i = 1; i <= 10; i++) {
-      await act(() => userEvent.click(zoomOut!));
+      await act(async () => userEvent.click(zoomOut!));
     }
 
     const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
     expect(cluster).toBeVisible();
-    await act(() => userEvent.click(cluster!));
+    await act(async () => userEvent.click(cluster!));
 
     const polyline = container.querySelector('.leaflet-pane.leaflet-overlay-pane svg g');
     expect(polyline).toBeVisible();
@@ -338,7 +341,7 @@ describe('MapView', () => {
 
     const map = container.querySelector('.leaflet-container');
     expect(map).toBeVisible();
-    await act(() => userEvent.click(map!));
+    await act(async () => userEvent.click(map!));
 
     expect(useLayerQueryMock.findOneWhereContains).toHaveBeenLastCalledWith({
       lat: 52.81604319154934,
@@ -377,10 +380,10 @@ describe('MapView', () => {
     await setup();
     // click on clustered markers to expand into single markers
     const cluster = document.querySelector('.leaflet-marker-icon.marker-cluster');
-    await act(() => userEvent.click(cluster!));
+    await act(async () => userEvent.click(cluster!));
     // click on single marker
     const marker = document.querySelector('img.leaflet-marker-icon');
-    await act(() => userEvent.click(marker!));
+    await act(async () => userEvent.click(marker!));
     // verify property information slide-out is shown
     const text = await screen.findByText('Property Information');
     expect(text).toBeVisible();
@@ -391,10 +394,10 @@ describe('MapView', () => {
     await setup();
     // click on clustered markers to expand into single markers
     const cluster = document.querySelector('.leaflet-marker-icon.marker-cluster');
-    await act(() => userEvent.click(cluster!));
+    await act(async () => userEvent.click(cluster!));
     // click on single marker
     const marker = document.querySelector('img.leaflet-marker-icon');
-    await act(() => userEvent.click(marker!));
+    await act(async () => userEvent.click(marker!));
     // verify property information slide-out is shown
     const text = await screen.findByText('Property Information');
     expect(text).toBeVisible();
@@ -404,10 +407,10 @@ describe('MapView', () => {
     await setup();
     // click on clustered markers to expand into single markers
     const cluster = document.querySelector('.leaflet-marker-icon.marker-cluster');
-    await act(() => userEvent.click(cluster!));
+    await act(async () => userEvent.click(cluster!));
     // click on single marker
     const marker = document.querySelector('img.leaflet-marker-icon');
-    await act(() => userEvent.click(marker!));
+    await act(async () => userEvent.click(marker!));
     // verify property information slide-out is shown
     const text = await screen.findByText('Property Information');
     expect(text).toBeVisible();

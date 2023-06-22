@@ -280,7 +280,7 @@ describe('AddAcquisitionContainer component', () => {
 
     const owner = getOwner(0);
 
-    await act(() => {
+    await act(async () => {
       userEvent.paste(getNameTextbox(), formValues.fileName as string);
       userEvent.selectOptions(getAcquisitionTypeDropdown(), formValues.acquisitionType as string);
       userEvent.selectOptions(getRegionDropdown(), formValues.region as string);
@@ -292,7 +292,7 @@ describe('AddAcquisitionContainer component', () => {
 
     expect(owner.givenNameTextbox()).toBeVisible();
 
-    await act(() => {
+    await act(async () => {
       userEvent.paste(owner.givenNameTextbox(), mockOwner.givenName!);
       userEvent.paste(owner.address.streetAddress1(), mockOwner.address?.streetAddress1!);
       userEvent.paste(owner.address.municipality(), mockOwner.address?.municipality!);
@@ -303,11 +303,11 @@ describe('AddAcquisitionContainer component', () => {
       );
     });
 
-    await act(() => {
+    await act(async () => {
       userEvent.paste(owner.address.countryOther(), mockOwner.address?.countryOther!);
     });
 
-    await act(() => userEvent.click(getSaveButton()));
+    await act(async () => userEvent.click(getSaveButton()));
 
     const expectedValues = formValues.toApi();
     expect(addAcquisitionFile).toBeCalledWith(expectedValues, []);

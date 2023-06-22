@@ -120,7 +120,7 @@ describe('MapFilterBar', () => {
     // Enter values on the form fields, then click the Search button
     await waitFor(() => fillInput(container, 'address', 'Victoria'));
 
-    await act(() => {
+    await act(async () => {
       fireEvent.click(submit!);
     });
 

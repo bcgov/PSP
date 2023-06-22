@@ -134,6 +134,13 @@ describe('UpdateAcquisitionForm component', () => {
     expect(getByDisplayValue('legacy file number')).toBeVisible();
   });
 
+  it('displays owner solicitor and owner representative', async () => {
+    const { getByText } = setup({ initialValues });
+    expect(getByText('Luke Skywalker')).toBeVisible();
+    expect(getByText('Han Solo')).toBeVisible();
+    expect(getByText('test representative comment')).toBeVisible();
+  });
+
   it('displays Individual type Owner with data', async () => {
     const {
       getIsOrganizationRadioButtonValue,
@@ -227,7 +234,7 @@ describe('UpdateAcquisitionForm component', () => {
       initialValues,
     });
 
-    await act(() => userEvent.selectOptions(getFileStatusDropdown(), 'DRAFT'));
+    await act(async () => userEvent.selectOptions(getFileStatusDropdown(), 'DRAFT'));
     expect(getFileCompletionDatePicker()).toBeDisabled();
 
     // submit form to trigger validation check
@@ -240,7 +247,7 @@ describe('UpdateAcquisitionForm component', () => {
   it('should require a file completion date when status is set to COMPLETED', async () => {
     const { getFormikRef, getFileStatusDropdown, findByText } = setup({ initialValues });
 
-    await act(() => userEvent.selectOptions(getFileStatusDropdown(), 'COMPLT'));
+    await act(async () => userEvent.selectOptions(getFileStatusDropdown(), 'COMPLT'));
 
     // submit form to trigger validation check
     await waitFor(() => getFormikRef().current?.submitForm());

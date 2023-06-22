@@ -39,6 +39,8 @@ type OptionalAttributes = {
   innerClassName?: string;
   /** optional tooltip text to display after the label */
   tooltip?: string;
+  /** select title attribute */
+  title?: string;
 };
 
 // only "field" and "options" are required for <Select>, the rest are optional
@@ -51,6 +53,7 @@ export type SelectOption = {
   code?: string;
   parentId?: string | number;
   parent?: string;
+  title?: string;
 };
 
 export type SelectOptions = SelectOption[];
@@ -91,7 +94,9 @@ export const Select: React.FC<React.PropsWithChildren<SelectProps>> = ({
   const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const updateFormValues = multiple ? handleMultipleChange : handleChange;
     updateFormValues(e);
-    onChange?.(e);
+    if (typeof onChange === 'function') {
+      onChange(e);
+    }
   };
 
   const renderPlaceholder = () => {
@@ -106,6 +111,7 @@ export const Select: React.FC<React.PropsWithChildren<SelectProps>> = ({
       <option
         key={option.value}
         value={option.value}
+        title={option.title}
         className="option"
         data-testid={`select-option-${option.value}`}
       >

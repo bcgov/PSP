@@ -63,7 +63,7 @@ describe('NoteContainer component', () => {
 
   beforeEach(() => {
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
-    mockAxios.onGet(new RegExp('notes/activity/*')).reply(200, mockNoteResponse(1));
+    mockAxios.onGet(new RegExp('notes/*')).reply(200, mockNoteResponse(1));
   });
 
   afterEach(() => {
@@ -207,7 +207,7 @@ describe('NoteContainer component', () => {
       userEvent.type(textarea, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
 
       mockAxios.onPut().reply(200, mockNoteResponse(1));
-      await act(() => userEvent.click(getSaveButton()));
+      await act(async () => userEvent.click(getSaveButton()));
 
       expect(closeModal).toBeCalled();
       expect(onSuccess).toBeCalled();

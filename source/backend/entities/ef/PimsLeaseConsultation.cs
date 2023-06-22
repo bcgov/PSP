@@ -22,11 +22,11 @@ namespace Pims.Dal.Entities
         public long LeaseId { get; set; }
         [Required]
         [Column("CONSULTATION_TYPE_CODE")]
-        [StringLength(40)]
+        [StringLength(20)]
         public string ConsultationTypeCode { get; set; }
         [Required]
         [Column("CONSULTATION_STATUS_TYPE_CODE")]
-        [StringLength(40)]
+        [StringLength(20)]
         public string ConsultationStatusTypeCode { get; set; }
         [Column("OTHER_DESCRIPTION")]
         [StringLength(2000)]

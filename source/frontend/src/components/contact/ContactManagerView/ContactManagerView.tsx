@@ -14,6 +14,7 @@ import styled from 'styled-components';
 import {
   ContactFilterComponent,
   defaultFilter,
+  RestrictContactType,
 } from './ContactFilterComponent/ContactFilterComponent';
 import { ContactResultComponent } from './ContactResultComponent/ContactResultComponent';
 import { IContactFilter } from './IContactFilter';
@@ -28,7 +29,7 @@ interface IContactManagerViewProps {
   showAddButton?: boolean;
   showActiveSelector?: boolean;
   isSingleSelect?: boolean;
-  showOnlyIndividuals?: boolean;
+  restrictContactType?: RestrictContactType;
 }
 
 /**
@@ -44,7 +45,7 @@ const ContactManagerView = ({
   showAddButton,
   showActiveSelector,
   isSingleSelect,
-  showOnlyIndividuals,
+  restrictContactType,
 }: IContactManagerViewProps) => {
   const history = useHistory();
   const { hasClaim } = useKeycloakWrapper();
@@ -100,7 +101,7 @@ const ContactManagerView = ({
             filter={filter}
             setFilter={changeFilter}
             showActiveSelector={showActiveSelector}
-            showOnlyIndividuals={showOnlyIndividuals}
+            restrictContactType={restrictContactType}
           />
         </Col>
         {showAddButton && hasClaim(Claims.CONTACT_ADD) && (

@@ -153,6 +153,15 @@ namespace Pims.Api.Helpers.Middleware
 
                 _logger.LogError(ex, "User override required to complete this action.");
             }
+            else if (ex is ForeignKeyDependencyException)
+            {
+                var exception = ex as ForeignKeyDependencyException;
+                code = HttpStatusCode.Conflict;
+                message = exception.Message;
+                errorCode = null;
+
+                _logger.LogError(ex, "User deleting a foreign key dependency");
+            }
             else if (ex is ApiHttpRequestException)
             {
                 var exception = ex as ApiHttpRequestException;

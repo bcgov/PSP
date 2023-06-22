@@ -5,8 +5,8 @@ import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { AgreementTypes, Api_Agreement } from 'models/api/Agreement';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
+import { Api_GenerateAcquisitionFile } from 'models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateAgreement } from 'models/generate/GenerateAgreement';
-import { Api_GenerateFile } from 'models/generate/GenerateFile';
 
 export const useGenerateAgreement = () => {
   const { getPersonConcept } = useApiContacts();
@@ -55,13 +55,14 @@ export const useGenerateAgreement = () => {
       ownerSolicitorConcept,
     ]);
 
-    const fileData = new Api_GenerateFile(
+    const fileData = new Api_GenerateAcquisitionFile({
       file,
-      persons[0]?.data,
-      persons[1]?.data,
-      persons[2]?.data,
-      persons[3]?.data,
-    );
+      coordinatorContact: persons[0]?.data ?? null,
+      negotiatingAgent: persons[1]?.data ?? null,
+      provincialSolicitor: persons[2]?.data ?? null,
+      ownerSolicitor: persons[3]?.data ?? null,
+      interestHolders: [],
+    });
     const agreementData = new Api_GenerateAgreement(agreement, fileData);
     const generatedFile = await generate({
       templateType: getTemplateTypeFromAgreementType(agreement.agreementType.id),
