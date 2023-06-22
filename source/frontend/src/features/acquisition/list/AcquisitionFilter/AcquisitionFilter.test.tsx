@@ -1,8 +1,9 @@
 import userEvent from '@testing-library/user-event';
-import { Claims } from 'constants/index';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { Claims } from '@/constants/index';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { IAcquisitionFilter } from '../interfaces';
 import { AcquisitionFilter, defaultAcquisitionFilter } from './AcquisitionFilter';

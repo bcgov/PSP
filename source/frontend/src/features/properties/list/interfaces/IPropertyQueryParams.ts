@@ -1,4 +1,4 @@
-import { PropertyClassificationTypes } from 'constants/index';
+import { PropertyClassificationTypes } from '@/constants/index';
 
 /**
  * IPropertyQueryParams interface, provides a model for querying the API for properties.

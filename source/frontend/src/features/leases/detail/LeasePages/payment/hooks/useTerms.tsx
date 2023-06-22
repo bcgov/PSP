@@ -1,11 +1,12 @@
 import axios, { AxiosError } from 'axios';
-import { useApiLeaseTerms } from 'hooks/pims-api/useApiLeaseTerms';
-import { IApiError } from 'interfaces/IApiError';
-import { ILeaseTerm } from 'interfaces/ILeaseTerm';
 import { useDispatch } from 'react-redux';
 import { hideLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
-import { handleAxiosResponse } from 'utils';
+
+import { useApiLeaseTerms } from '@/hooks/pims-api/useApiLeaseTerms';
+import { IApiError } from '@/interfaces/IApiError';
+import { ILeaseTerm } from '@/interfaces/ILeaseTerm';
+import { handleAxiosResponse } from '@/utils';
 
 /**
  * hook providing lease modification methods

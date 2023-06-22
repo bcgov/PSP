@@ -1,6 +1,7 @@
-import { NoteTypes } from 'constants/index';
-import { useNoteRepository } from 'hooks/repositories/useNoteRepository';
 import { useEffect, useState } from 'react';
+
+import { NoteTypes } from '@/constants/index';
+import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
 
 import { NoteDetailsFormModal } from './detail/NoteDetailsFormModal';
 import { UpdateNoteContainer } from './update/UpdateNoteContainer';

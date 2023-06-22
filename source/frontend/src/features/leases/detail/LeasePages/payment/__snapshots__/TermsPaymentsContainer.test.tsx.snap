@@ -216,9 +216,6 @@ exports[`TermsPaymentsContainer component renders as expected 1`] = `
         >
           Payments by Term
         </div>
-        <div
-          class="col-1"
-        />
       </div>
     </h2>
     <div
@@ -718,9 +715,6 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
         >
           Payments by Term
         </div>
-        <div
-          class="col-1"
-        />
       </div>
     </h2>
     <div

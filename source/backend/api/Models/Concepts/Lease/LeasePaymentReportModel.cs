@@ -20,7 +20,7 @@ namespace Pims.Api.Models.Concepts
         ///
         [DisplayName("L-File Number")]
         [CsvHelper.Configuration.Attributes.Name("L-File Number")]
-        public long LFileNumber { get; set; }
+        public string LFileNumber { get; set; }
 
         /// <summary>
         /// get/set - legacy lis number.
@@ -28,7 +28,7 @@ namespace Pims.Api.Models.Concepts
         ///
         [DisplayName("LIS number")]
         [CsvHelper.Configuration.Attributes.Name("LIS number")]
-        public decimal? LisNumber { get; set; }
+        public string LisNumber { get; set; }
 
         /// <summary>
         /// get/set - legacy ps file name.

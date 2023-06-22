@@ -1,14 +1,15 @@
-import { TableProps } from 'components/Table/Table';
-import { Claims } from 'constants/claims';
 import { getIn, useFormikContext } from 'formik';
-import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
-import { IFormLease } from 'interfaces';
-import { defaultFormLeasePayment, IFormLeasePayment } from 'interfaces/ILeasePayment';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { MdReceipt } from 'react-icons/md';
-import { withNameSpace } from 'utils/formUtils';
+
+import { TableProps } from '@/components/Table/Table';
+import { Claims } from '@/constants/claims';
+import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { IFormLease } from '@/interfaces';
+import { defaultFormLeasePayment, IFormLeasePayment } from '@/interfaces/ILeasePayment';
+import { withNameSpace } from '@/utils/formUtils';
 
 import * as PaymentStyles from '../../styles';
 import { getActualsColumns } from './paymentsColumns';

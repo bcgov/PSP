@@ -1,5 +1,5 @@
-import { Api_AcquisitionFileOwner } from 'models/api/AcquisitionFile';
-import { phoneFormatter } from 'utils/formUtils';
+import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
+import { phoneFormatter } from '@/utils/formUtils';
 
 import { Api_GenerateAddress } from './GenerateAddress';
 export class Api_GenerateOwner {

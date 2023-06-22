@@ -1,8 +1,9 @@
-import { ILease } from 'interfaces';
 import React from 'react';
 
+import { ILease } from '@/interfaces';
+
 import { ILeaseTerm } from './../../interfaces/ILeaseTerm';
-import { useAxiosApi } from '.';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the lease term endpoints.

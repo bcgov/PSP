@@ -1,8 +1,9 @@
-import { TextArea } from 'components/common/form';
-import { GenericModal } from 'components/common/GenericModal';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 import styled from 'styled-components';
+
+import { TextArea } from '@/components/common/form';
+import { GenericModal } from '@/components/common/GenericModal';
 
 import { EntityNoteForm } from './models';
 

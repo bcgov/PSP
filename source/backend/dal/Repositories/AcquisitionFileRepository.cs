@@ -97,7 +97,11 @@ namespace Pims.Dal.Repositories
                         .ThenInclude(x => x.Country)
                 .Include(r => r.PimsAcquisitionOwnerSolicitors)
                     .ThenInclude(rp => rp.Person)
+                .Include(r => r.PimsAcquisitionOwnerSolicitors)
+                    .ThenInclude(rp => rp.Organization)
                 .Include(r => r.PimsAcquisitionOwnerReps)
+                    .ThenInclude(rp => rp.Person)
+                .Include(r => r.PimsInterestHolders)
                     .ThenInclude(rp => rp.Person)
                 .FirstOrDefault(x => x.AcquisitionFileId == id) ?? throw new KeyNotFoundException();
         }

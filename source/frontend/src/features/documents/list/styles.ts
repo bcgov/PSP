@@ -1,5 +1,6 @@
-import { Scrollable as ScrollableBase } from 'components/common/Scrollable/Scrollable';
 import styled from 'styled-components';
+
+import { Scrollable as ScrollableBase } from '@/components/common/Scrollable/Scrollable';
 
 export const StyledContainer = styled.div`
   padding: 1rem;

@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Areas.CompensationRequisition.Controllers;
+using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -117,6 +117,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [HasPermission(Permissions.AcquisitionFileEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
+        [ProducesResponseType(typeof(ErrorResponseModel), 409)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         public IActionResult UpdateAcquisitionFile(long id, [FromBody] AcquisitionFileModel model, [FromQuery] string[] userOverrideCodes)
         {
@@ -180,6 +181,38 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             var owners = _acquisitionService.GetOwners(id);
 
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerModel>>(owners));
+        }
+
+        /// <summary>
+        /// Get the acquisition file Owner representatives.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/owner-representatives")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<AcquisitionFileOwnerRepresentativeModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetAcquisitionFileOwnerRepresentatives([FromRoute] long id)
+        {
+            var owners = _acquisitionService.GetOwnerRepresentatives(id);
+
+            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerRepresentativeModel>>(owners));
+        }
+
+        /// <summary>
+        /// Get the acquisition file Owner solicitors.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/owner-solicitors")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<AcquisitionFileOwnerSolicitorModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetAcquisitionFileOwnerSolicitors([FromRoute] long id)
+        {
+            var owners = _acquisitionService.GetOwnerSolicitors(id);
+
+            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerSolicitorModel>>(owners));
         }
 
         /// <summary>

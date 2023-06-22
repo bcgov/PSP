@@ -1,4 +1,4 @@
-import { ConvertToTypes } from 'constants/convertToTypes';
+import { ConvertToTypes } from '@/constants/convertToTypes';
 
 export interface DocumentGenerationRequest {
   templateData: object;

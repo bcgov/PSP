@@ -6,7 +6,8 @@ import React, { memo, useEffect } from 'react';
 import { ColProps } from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import NumberFormat from 'react-number-format';
-import { formikFieldMemo, isPositiveNumberOrZero } from 'utils';
+
+import { formikFieldMemo, isPositiveNumberOrZero } from '@/utils';
 
 import TooltipIcon from '../TooltipIcon';
 
@@ -49,6 +50,10 @@ type OptionalAttributes = {
   allowNegative?: boolean;
   /** Suppress validation on submit */
   suppressValidation?: boolean;
+
+  onBlurChange?: React.FormEventHandler;
+
+  onChange?: React.FormEventHandler;
 };
 
 export type CurrencyInputProps = RequiredAttributes &
@@ -79,6 +84,8 @@ const CurrencyInput = ({
     unregisterField,
     isSubmitting,
   },
+  onBlurChange,
+  onChange,
   ...rest
 }: CurrencyInputProps) => {
   value = value ? value : getIn(values, field);
@@ -92,12 +99,22 @@ const CurrencyInput = ({
     value = '';
   }
 
+  const onHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const regex = rest.allowNegative ? /[^0-9.-]/g : /[^0-9.]/g;
+    const cleanValue = e.target.value.replace(regex, '');
+    setFieldValue(field, cleanValue ? parseFloat(cleanValue) : '');
+    if (typeof onChange === 'function') {
+      onChange(e);
+    }
+  };
+
   useEffect(() => {
     registerField(field, {});
     return () => {
       unregisterField(field);
     };
   }, [field, registerField, unregisterField]);
+
   const isInvalid = error && touch ? 'is-invalid ' : '';
   const isValid = !error && touch && value && !disabled ? 'is-valid ' : '';
 
@@ -116,12 +133,12 @@ const CurrencyInput = ({
           id={`input-${field}`}
           value={value}
           name={field}
-          onChange={(e: any) => {
-            const cleanValue = e.target.value.replace(/[^0-9.]/g, '');
-            setFieldValue(field, cleanValue ? parseFloat(cleanValue) : '');
-          }}
+          onChange={onHandleChange}
           onBlur={(e: any) => {
             handleBlur(e);
+            if (typeof onBlurChange === 'function') {
+              onBlurChange(e);
+            }
           }}
           className={classNames('form-control input-number', innerClassName, isInvalid, isValid)}
           disabled={disabled}
@@ -131,6 +148,7 @@ const CurrencyInput = ({
           prefix={'$'}
           thousandSeparator
           placeholder={placeholder || ''}
+          allowNegative={rest.allowNegative}
         />
         {!label && !!tooltip && <TooltipIcon toolTipId="currency" toolTip={tooltip} />}
 

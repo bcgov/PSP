@@ -1,16 +1,17 @@
-import GenericModal from 'components/common/GenericModal';
-import { SectionListHeader } from 'components/common/SectionListHeader';
-import { TableSort } from 'components/Table/TableSort';
-import { Claims } from 'constants/claims';
-import { NoteTypes } from 'constants/noteTypes';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { useApiNotes } from 'hooks/pims-api/useApiNotes';
-import useIsMounted from 'hooks/useIsMounted';
-import { useModalManagement } from 'hooks/useModalManagement';
 import { orderBy } from 'lodash';
-import { Api_Note } from 'models/api/Note';
 import React, { useCallback } from 'react';
 import { toast } from 'react-toastify';
+
+import GenericModal from '@/components/common/GenericModal';
+import { Section } from '@/components/common/Section/Section';
+import { SectionListHeader } from '@/components/common/SectionListHeader';
+import { TableSort } from '@/components/Table/TableSort';
+import { Claims } from '@/constants/claims';
+import { NoteTypes } from '@/constants/noteTypes';
+import { useApiNotes } from '@/hooks/pims-api/useApiNotes';
+import { useModalManagement } from '@/hooks/useModalManagement';
+import useIsMounted from '@/hooks/util/useIsMounted';
+import { Api_Note } from '@/models/api/Note';
 
 import { AddNotesContainer } from '../add/AddNotesContainer';
 import { NoteContainer } from '../NoteContainer';

@@ -1,11 +1,13 @@
-import { ILeaseFilter } from 'features/leases';
-import { ILease, ILeaseSearchResult, IPagedItems } from 'interfaces';
-import { Api_Lease } from 'models/api/Lease';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import queryString from 'query-string';
 import React from 'react';
 
-import { IPaginateRequest, useAxiosApi } from '.';
+import { ILeaseFilter } from '@/features/leases';
+import { ILease, ILeaseSearchResult, IPagedItems } from '@/interfaces';
+import { Api_Lease } from '@/models/api/Lease';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+
+import { IPaginateRequest } from './interfaces/IPaginateRequest';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the lease endpoints.

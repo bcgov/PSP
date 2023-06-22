@@ -1,6 +1,7 @@
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
+
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 import HelpBox from '../components/HelpBox';
 import HelpSubmitBox from '../components/HelpSubmitBox';

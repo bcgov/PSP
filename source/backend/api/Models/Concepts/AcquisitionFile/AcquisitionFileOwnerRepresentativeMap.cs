@@ -8,7 +8,7 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsAcquisitionOwnerRep, AcquisitionFileOwnerRepresentativeModel>()
-                .Map(dest => dest.Id, src => src.Internal_Id)
+                .Map(dest => dest.Id, src => src.OwnerRepresentativeId)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Person, src => src.Person)
@@ -17,7 +17,7 @@ namespace Pims.Api.Models.Concepts
                 .Inherits<Entity.IBaseEntity, BaseModel>();
 
             config.NewConfig<AcquisitionFileOwnerRepresentativeModel, Entity.PimsAcquisitionOwnerRep>()
-                .Map(dest => dest.Internal_Id, src => src.Id)
+                .Map(dest => dest.OwnerRepresentativeId, src => src.Id)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)

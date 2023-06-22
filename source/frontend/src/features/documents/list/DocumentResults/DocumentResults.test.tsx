@@ -1,9 +1,10 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { Claims } from 'constants/claims';
-import { DocumentRow } from 'features/documents/ComposedDocument';
 import { noop } from 'lodash';
-import { mockDocumentsResponse } from 'mocks/documents.mock';
-import { cleanup, mockKeycloak, render, RenderOptions } from 'utils/test-utils';
+
+import { Claims } from '@/constants/claims';
+import { DocumentRow } from '@/features/documents/ComposedDocument';
+import { mockDocumentsResponse } from '@/mocks/documents.mock';
+import { cleanup, mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
 import { DocumentResults, IDocumentResultProps } from './DocumentResults';
 

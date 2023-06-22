@@ -1,6 +1,6 @@
-import * as actionTypes from 'constants/actionTypes';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { useApiUsers } from 'hooks/pims-api/useApiUsers';
+import * as actionTypes from '@/constants/actionTypes';
+import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 
 /**
  * hook that wraps calls to the users api.

@@ -1,8 +1,9 @@
 import userEvent from '@testing-library/user-event';
-import { Claims } from 'constants/claims';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { IContactSearchResult } from 'interfaces';
 import { noop } from 'lodash';
+
+import { Claims } from '@/constants/claims';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { IContactSearchResult } from '@/interfaces';
 import {
   act,
   fillInput,
@@ -11,7 +12,7 @@ import {
   RenderOptions,
   waitFor,
   waitForElementToBeRemoved,
-} from 'utils/test-utils';
+} from '@/utils/test-utils';
 
 import { defaultFilter } from './ContactFilterComponent/ContactFilterComponent';
 import ContactManagerView from './ContactManagerView';
@@ -19,7 +20,7 @@ import ContactManagerView from './ContactManagerView';
 // mock auth library
 jest.mock('@react-keycloak/web');
 
-jest.mock('hooks/pims-api/useApiContacts');
+jest.mock('@/hooks/pims-api/useApiContacts');
 const getContacts = jest.fn();
 (useApiContacts as jest.Mock).mockReturnValue({
   getContacts,

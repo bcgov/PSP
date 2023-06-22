@@ -1,11 +1,12 @@
-import { Form } from 'components/common/form/Form';
-import { FormSectionClear } from 'components/common/form/styles';
 import { FieldArray, Formik, FormikProps } from 'formik';
-import { IInsurance } from 'interfaces';
-import { IBatchUpdateRequest, IEntryModification, UpdateOperation } from 'interfaces/batchUpdate';
 import React from 'react';
-import { ILookupCode } from 'store/slices/lookupCodes/interfaces';
-import { withNameSpace } from 'utils/formUtils';
+
+import { Form } from '@/components/common/form/Form';
+import { FormSectionClear } from '@/components/common/form/styles';
+import { IInsurance } from '@/interfaces';
+import { IBatchUpdateRequest, IEntryModification, UpdateOperation } from '@/interfaces/batchUpdate';
+import { ILookupCode } from '@/store/slices/lookupCodes/interfaces';
+import { withNameSpace } from '@/utils/formUtils';
 
 import { useUpdateInsurance } from './hooks/useUpdateInsurance';
 import InsuranceForm from './InsuranceForm';

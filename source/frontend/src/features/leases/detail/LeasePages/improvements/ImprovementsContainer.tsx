@@ -1,13 +1,14 @@
-import ProtectedComponent from 'components/common/ProtectedComponent';
-import { Claims } from 'constants/claims';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { LeasePageProps } from 'features/properties/map/lease/LeaseContainer';
 import { Formik, FormikProps } from 'formik';
-import { defaultFormLease, IFormLease } from 'interfaces';
 import noop from 'lodash/noop';
 import * as React from 'react';
 import { useContext } from 'react';
+
+import ProtectedComponent from '@/components/common/ProtectedComponent';
+import { Section } from '@/components/common/Section/Section';
+import { Claims } from '@/constants/claims';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
+import { defaultFormLease, IFormLease } from '@/interfaces';
 
 import { StyledDetails } from '../details/LeaseDetailsForm';
 import { AddImprovementsContainer } from './AddImprovementsContainer';

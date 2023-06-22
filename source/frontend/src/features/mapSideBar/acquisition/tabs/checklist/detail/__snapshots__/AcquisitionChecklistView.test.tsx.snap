@@ -1,0 +1,3031 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AcquisitionChecklistView component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c5 {
+  float: right;
+  cursor: pointer;
+}
+
+.c0 {
+  padding-top: 1rem;
+}
+
+.c1 {
+  text-align: right;
+}
+
+.c4 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c2 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c7.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c6 {
+  font-weight: bold;
+}
+
+.c3 {
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.c9 {
+  color: #2E8540;
+  min-width: 11rem;
+}
+
+.c11 {
+  min-width: 11rem;
+}
+
+.c12 {
+  color: #aaaaaa;
+  min-width: 11rem;
+}
+
+.c8 {
+  min-width: 13rem;
+  font-size: 1.1rem;
+  font-style: italic;
+  text-align: right;
+}
+
+.c10 {
+  min-width: 2.4rem;
+  text-align: right;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 mr-3 my-1"
+    />
+    <div
+      class="c2 form-section c3"
+    >
+      <div
+        class="collapse show"
+      >
+        <em>
+          This checklist was last updated Mar 17, 2023 by 
+          <span
+            class="tooltip-icon"
+            data-testid="tooltip-icon-userNameTooltip"
+            id="userNameTooltip"
+          >
+            <strong>
+              ALESANCH
+            </strong>
+          </span>
+        </em>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            File Initiation
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c5"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Pre-acquisition title:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                >
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
+                    id="userNameTooltip"
+                  >
+                    <strong>
+                      ALESANCH
+                    </strong>
+                  </span>
+                  <em>
+                     Mar 17, 2023
+                  </em>
+                </span>
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c9"
+                  color="#2E8540"
+                >
+                  Complete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    color="#2E8540"
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    style="color: rgb(46, 133, 64);"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <polyline
+                      points="20 6 9 17 4 12"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              BC Assessment:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Company search:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                >
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
+                    id="userNameTooltip"
+                  >
+                    <strong>
+                      ALESANCH
+                    </strong>
+                  </span>
+                  <em>
+                     Mar 17, 2023
+                  </em>
+                </span>
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c12"
+                  color="#aaaaaa"
+                >
+                  Not applicable
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    color="#aaaaaa"
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    style="color: rgb(170, 170, 170);"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="5"
+                      x2="19"
+                      y1="12"
+                      y2="12"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Land Title documents or plans:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                >
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
+                    id="userNameTooltip"
+                  >
+                    <strong>
+                      ALESANCH
+                    </strong>
+                  </span>
+                  <em>
+                     Mar 17, 2023
+                  </em>
+                </span>
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c9"
+                  color="#2E8540"
+                >
+                  Complete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    color="#2E8540"
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    style="color: rgb(46, 133, 64);"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <polyline
+                      points="20 6 9 17 4 12"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Property Acquisition (PA) Plan:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Active File Management
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c5"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Photos:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Appraisals and reviews:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Other reports:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Record of negotiation:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Copies of correspondence:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Spending Authority Approval(s) - SAA:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                >
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
+                    id="userNameTooltip"
+                  >
+                    <strong>
+                      ALESANCH
+                    </strong>
+                  </span>
+                  <em>
+                     Mar 17, 2023
+                  </em>
+                </span>
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Final agreements with owner(s):
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              H120(s) processed for compensation:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Instructions or documents sent to lawyer:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Copy of owners' compensation cheque(s):
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Conditions of Entry (H0443):
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Conveyance closing documents:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Registered Plan:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Copy of new title:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              If this a total take with a surplus, then BCTFA notified:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Section 3 - Agreement
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c5"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Notice of Advanced Payment (Form 8):
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Release of Claims:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Conveyance Letter:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Signed Agreement:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Title and charges:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Current year property assessment:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              ALC order:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Section 6 - Expropriation
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c5"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Copy of expropriation approval packages:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Notice of Expropriation (Form 1):
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Approval of Expropriation (Form 5):
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Vesting Notice (Form 9):
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Copies of Affidavits of Service:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              Release of Claims:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Acquisition Completion
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c5"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 no-gutters row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c6"
+            >
+              File data entered into PIMS:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col-6"
+              >
+                <span
+                  class="c8"
+                />
+              </div>
+              <div
+                class="col-5"
+              >
+                <span
+                  class="c11"
+                >
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c10"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

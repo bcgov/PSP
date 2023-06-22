@@ -2,7 +2,7 @@ import {
   Api_AcquisitionFile,
   Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
-} from 'models/api/AcquisitionFile';
+} from '@/models/api/AcquisitionFile';
 
 export const mockAcquisitionFileResponse = (
   id = 1,
@@ -255,6 +255,14 @@ export const mockAcquisitionFileResponse = (
         id: 1,
         firstName: 'Luke',
         surname: 'Skywalker',
+      },
+      organizationId: 1,
+      organization: {
+        id: 1,
+        name: 'Millenium Inc',
+        alias: 'M Inc',
+        incorporationNumber: '1234',
+        comment: '',
       },
       isDisabled: false,
     },

@@ -1,15 +1,16 @@
-import { ModalProps } from 'components/common/GenericModal';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import { ModalContext } from 'contexts/modalContext';
 import { FormikProps } from 'formik';
-import { useApiDocuments } from 'hooks/pims-api/useApiDocuments';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import useIsMounted from 'hooks/useIsMounted';
-import { getCancelModalProps } from 'hooks/useModalContext';
-import { Api_DocumentUpdateRequest } from 'models/api/Document';
-import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
-import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+
+import { ModalProps } from '@/components/common/GenericModal';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import { ModalContext } from '@/contexts/modalContext';
+import { useApiDocuments } from '@/hooks/pims-api/useApiDocuments';
+import { getCancelModalProps } from '@/hooks/useModalContext';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import useIsMounted from '@/hooks/util/useIsMounted';
+import { Api_DocumentUpdateRequest } from '@/models/api/Document';
+import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
+import { ExternalResultStatus } from '@/models/api/ExternalResult';
 
 import { ComposedDocument, DocumentRow, DocumentUpdateFormData } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';

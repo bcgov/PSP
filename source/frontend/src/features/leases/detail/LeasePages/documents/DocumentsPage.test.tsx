@@ -1,7 +1,8 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { createMemoryHistory } from 'history';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, RenderResult } from 'utils/test-utils';
+
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { render, RenderOptions, RenderResult } from '@/utils/test-utils';
 
 import DocumentsPage from './DocumentsPage';
 

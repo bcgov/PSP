@@ -13,6 +13,18 @@ namespace Pims.Api.Models.Concepts
 
         public string FiscalYear { get; set; }
 
+        public long? YearlyFinancialId { get; set; }
+
+        public FinancialCodeModel YearlyFinancial { get; set; }
+
+        public long? ChartOfAccountsId { get; set; }
+
+        public FinancialCodeModel ChartOfAccounts { get; set; }
+
+        public long? ResponsibilityId { get; set; }
+
+        public FinancialCodeModel Responsibility { get; set; }
+
         public DateTime? AgreementDate { get; set; }
 
         public DateTime? ExpropriationNoticeServedDate { get; set; }
@@ -28,5 +40,7 @@ namespace Pims.Api.Models.Concepts
         public bool? IsDisabled { get; set; }
 
         public List<CompensationFinancialModel> Financials { get; set; }
+
+        public List<CompensationPayeeModel> Payees { get; set; }
     }
 }

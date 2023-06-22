@@ -1,6 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { render, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import DocumentTemplateManagementContainer from './DocumentTemplateManagementContainer';
 

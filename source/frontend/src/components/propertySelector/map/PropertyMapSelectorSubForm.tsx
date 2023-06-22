@@ -1,8 +1,9 @@
-import { SelectProperty } from 'components/common/mapping/SelectProperty';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import * as React from 'react';
 import { Col, Form as BsForm, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import { SelectProperty } from '@/components/common/mapping/SelectProperty';
+import { SectionField } from '@/components/common/Section/SectionField';
 
 import { IMapProperty } from '../models';
 

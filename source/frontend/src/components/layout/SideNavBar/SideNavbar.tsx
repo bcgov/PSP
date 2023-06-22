@@ -1,14 +1,15 @@
-import { ReactComponent as AdminPanelSettings } from 'assets/images/admin-panel-settings.svg';
-import { ReactComponent as Fence } from 'assets/images/fence.svg';
-import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-agent.svg';
-import { ReactComponent as Source } from 'assets/images/source.svg';
 import clsx from 'classnames';
-import { NavIcon } from 'components/layout';
-import { Claims, Roles } from 'constants/index';
 import { useContext, useState } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
 import { MdChevronLeft, MdChevronRight, MdContactMail, MdHome } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
+
+import { ReactComponent as AdminPanelSettings } from '@/assets/images/admin-panel-settings.svg';
+import { ReactComponent as Fence } from '@/assets/images/fence.svg';
+import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
+import { ReactComponent as Source } from '@/assets/images/source.svg';
+import { NavIcon } from '@/components/layout';
+import { Claims, Roles } from '@/constants/index';
 
 import { SidebarStateContext } from './SideNavbarContext';
 import { SidebarContextType, SideTray } from './SideTray';

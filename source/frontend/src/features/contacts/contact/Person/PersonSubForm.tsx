@@ -1,12 +1,13 @@
-import { AsyncTypeahead, Check, Input } from 'components/common/form';
-import { FormSection } from 'components/common/form/styles';
-import * as Styled from 'features/contacts/contact/edit/styles';
-import { usePersonOrganizationTypeahead } from 'features/contacts/hooks/usePersonOrganizationTypeahead';
 import { getIn, useFormikContext } from 'formik';
-import { IEditablePersonForm } from 'interfaces/editable-contact';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
+
+import { AsyncTypeahead, Check, Input } from '@/components/common/form';
+import { FormSection } from '@/components/common/form/styles';
+import * as Styled from '@/features/contacts/contact/edit/styles';
+import { usePersonOrganizationTypeahead } from '@/features/contacts/hooks/usePersonOrganizationTypeahead';
+import { IEditablePersonForm } from '@/interfaces/editable-contact';
 
 import { Address, CommentNotes, ContactEmailList, ContactPhoneList } from '../create/components';
 

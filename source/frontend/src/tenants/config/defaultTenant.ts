@@ -1,4 +1,4 @@
-import { ITenantConfig } from 'tenants/ITenantConfig';
+import { ITenantConfig2 } from '@/hooks/pims-api/interfaces/ITenantConfig';
 
 const MUNICIPALITY_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP';
@@ -23,7 +23,7 @@ const PIMS_BOUNDARY_LAYER_URL =
 /**
  * Default tenant configuration.
  */
-export const defaultTenant: ITenantConfig = {
+export const defaultTenant: ITenantConfig2 = {
   id: 'DFLT',
   title: 'Default Tenant Name',
   shortName: 'PIMS',

@@ -1,16 +1,17 @@
-import { ReactComponent as Active } from 'assets/images/active.svg';
-import { ResetButton, SearchButton } from 'components/common/buttons';
-import { Input, Select } from 'components/common/form';
-import ActiveFilterCheck from 'components/common/form/ActiveFilterCheck';
-import { FilterBoxForm } from 'components/common/styles';
-import TooltipWrapper from 'components/common/TooltipWrapper';
-import * as API from 'constants/API';
 import { Formik } from 'formik';
-import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
-import { IUsersFilter } from 'interfaces';
 import React from 'react';
 import { Row } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
+
+import { ReactComponent as Active } from '@/assets/images/active.svg';
+import { ResetButton, SearchButton } from '@/components/common/buttons';
+import { Input, Select } from '@/components/common/form';
+import ActiveFilterCheck from '@/components/common/form/ActiveFilterCheck';
+import { FilterBoxForm } from '@/components/common/styles';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
+import * as API from '@/constants/API';
+import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
+import { IUsersFilter } from '@/interfaces';
 interface IProps {
   values?: IUsersFilter;
   onChange: (filter: IUsersFilter) => void;

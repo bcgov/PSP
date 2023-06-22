@@ -1,4 +1,4 @@
-import { IBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
+import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 
 export const getMockLegalDescriptions = () => ({
   type: 'FeatureCollection',

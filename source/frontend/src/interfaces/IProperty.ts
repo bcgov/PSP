@@ -1,12 +1,13 @@
+import { Moment } from 'moment';
+
 import {
   PropertyAreaUnitTypes,
   PropertyClassificationTypes,
   PropertyDataSourceTypes,
   PropertyStatusTypes,
   PropertyTenureTypes,
-} from 'constants/index';
-import { IAddress, IOrganization } from 'interfaces';
-import { Moment } from 'moment';
+} from '@/constants/index';
+import { IAddress, IOrganization } from '@/interfaces';
 
 import { ILease } from './ILease';
 import IPropertySurplus from './IPropertySurplus';

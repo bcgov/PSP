@@ -1,12 +1,13 @@
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { getIn, useFormikContext } from 'formik';
-import { IFormLease } from 'interfaces';
-import { ILeaseTerm } from 'interfaces/ILeaseTerm';
 import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
-import { withNameSpace } from 'utils/formUtils';
+
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { IFormLease } from '@/interfaces';
+import { ILeaseTerm } from '@/interfaces/ILeaseTerm';
+import { withNameSpace } from '@/utils/formUtils';
 
 import { DetailTermInformationBox } from './DetailTermInformationBox';
 

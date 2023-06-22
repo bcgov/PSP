@@ -1,4 +1,4 @@
-import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ColumnWithProps, Table, TableProps } from '.';
 import { IIdentifiedObject } from './Table';
@@ -141,7 +141,7 @@ describe('Generic table component', () => {
         props: { pageSize: 10, manualPagination: false },
       });
 
-      await act(() => {
+      await act(async () => {
         userEvent.click(getByTitle('menu-item-5'));
       });
       const tableRows = container.querySelectorAll('.table .tbody .tr-wrapper');
@@ -154,10 +154,10 @@ describe('Generic table component', () => {
         props: { manualPagination: false },
       });
 
-      await act(() => userEvent.click(getByTitle('menu-item-5')));
+      await act(async () => userEvent.click(getByTitle('menu-item-5')));
       const tableRows = container.querySelectorAll('.table .tbody .tr-wrapper');
       expect(tableRows).toHaveLength(5);
-      await act(() => userEvent.click(getByLabelText('Page 2')));
+      await act(async () => userEvent.click(getByLabelText('Page 2')));
       expect(getByLabelText('Page 2 is your current page')).toBeVisible();
     });
 

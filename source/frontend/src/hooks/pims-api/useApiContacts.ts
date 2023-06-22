@@ -1,12 +1,14 @@
-import { IContactFilter } from 'components/contact/ContactManagerView/IContactFilter';
-import { IContactSearchResult, IPagedItems } from 'interfaces';
-import { IEditableOrganization, IEditablePerson } from 'interfaces/editable-contact';
-import { IContact } from 'interfaces/IContact';
 import queryString from 'query-string';
 import React from 'react';
 
-import { Api_Person } from './../../models/api/Person';
-import { IPaginateRequest, useAxiosApi } from '.';
+import { IContactFilter } from '@/components/contact/ContactManagerView/IContactFilter';
+import { IContactSearchResult, IPagedItems } from '@/interfaces';
+import { IEditableOrganization, IEditablePerson } from '@/interfaces/editable-contact';
+import { IContact } from '@/interfaces/IContact';
+import { Api_Person } from '@/models/api/Person';
+
+import { IPaginateRequest } from './interfaces/IPaginateRequest';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the contacts endpoints.
