@@ -101,7 +101,7 @@ describe('GenerateCompensation tests', () => {
       [],
       getMockAcquisitionPayee(),
     );
-    expect(compensation.payee.gst_number).toBe('3262');
+    expect(compensation.payee.gst_number).toBe('1');
   });
 
   it('can generate a payee with no cheques', () => {
@@ -112,6 +112,6 @@ describe('GenerateCompensation tests', () => {
       [],
       { ...getMockAcquisitionPayee() },
     );
-    expect(compensation.payee.total_amount).toBe('');
+    expect(compensation.payee.total_amount).toBe('$35.00');
   });
 });
