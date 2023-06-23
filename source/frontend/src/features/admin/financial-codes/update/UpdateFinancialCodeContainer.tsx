@@ -1,15 +1,16 @@
 import { AxiosError } from 'axios';
-import { H1 } from 'components/common/styles';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { FinancialCodeTypes } from 'constants/index';
-import { useFinancialCodeRepository } from 'hooks/repositories/useFinancialCodeRepository';
-import { IApiError } from 'interfaces/IApiError';
-import { Api_FinancialCode } from 'models/api/FinancialCode';
 import React, { useEffect, useState } from 'react';
 import { Alert, Col, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { H1 } from '@/components/common/styles';
+import { FinancialCodeTypes } from '@/constants/index';
+import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
+import { IApiError } from '@/interfaces/IApiError';
+import { Api_FinancialCode } from '@/models/api/FinancialCode';
 
 import { UpdateFinancialCodeYupSchema } from './UpdateFinancialCodeYupSchema';
 

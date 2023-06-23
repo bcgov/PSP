@@ -1,5 +1,6 @@
-import { Scrollable } from 'components/common/Scrollable/Scrollable';
 import styled from 'styled-components';
+
+import { Scrollable } from '@/components/common/Scrollable/Scrollable';
 
 export const StyledGreySection = styled.div`
   padding: 1rem;

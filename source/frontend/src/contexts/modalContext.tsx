@@ -1,6 +1,7 @@
-import { ModalContent, ModalProps } from 'components/common/GenericModal';
 import * as React from 'react';
 import { useState } from 'react';
+
+import { ModalContent, ModalProps } from '@/components/common/GenericModal';
 
 export interface IModalContext {
   modalProps?: ModalProps;

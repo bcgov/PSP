@@ -1,8 +1,9 @@
 import { useKeycloak } from '@react-keycloak/web';
-import * as API from 'constants/API';
-import { Claims } from 'constants/claims';
-import { Roles } from 'constants/roles';
-import { IProperty } from 'interfaces';
+
+import * as API from '@/constants/API';
+import { Claims } from '@/constants/claims';
+import { Roles } from '@/constants/roles';
+import { IProperty } from '@/interfaces';
 
 import useLookupCodeHelpers from './useLookupCodeHelpers';
 

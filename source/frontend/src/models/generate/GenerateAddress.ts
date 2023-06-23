@@ -1,4 +1,4 @@
-import { Api_Address } from 'models/api/Address';
+import { Api_Address } from '@/models/api/Address';
 export class Api_GenerateAddress {
   line_1: string;
   line_2: string;

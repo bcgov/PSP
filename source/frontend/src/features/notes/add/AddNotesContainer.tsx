@@ -1,8 +1,9 @@
-import { CancelConfirmationModal } from 'components/common/CancelConfirmationModal';
-import { NoteTypes } from 'constants/index';
 import { FormikProps } from 'formik';
-import { useModalManagement } from 'hooks/useModalManagement';
 import { useRef } from 'react';
+
+import { CancelConfirmationModal } from '@/components/common/CancelConfirmationModal';
+import { NoteTypes } from '@/constants/index';
+import { useModalManagement } from '@/hooks/useModalManagement';
 
 import { useAddNotesFormManagement } from '../hooks/useAddNotesFormManagement';
 import { AddNotesFormModal } from './AddNotesFormModal';

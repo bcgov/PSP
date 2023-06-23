@@ -1,11 +1,12 @@
-import { LinkButton } from 'components/common/buttons';
 import noop from 'lodash/noop';
 import React, { useCallback } from 'react';
 import { FaEllipsisH } from 'react-icons/fa';
 import { useMap } from 'react-leaflet';
 import styled from 'styled-components';
 
-import { LayerPopupInformation } from '../LayerPopup';
+import { LinkButton } from '@/components/common/buttons';
+
+import { LayerPopupInformation } from '../LayerPopupContainer';
 
 export interface ILayerPopupLinksProps {
   layerPopup: LayerPopupInformation;

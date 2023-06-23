@@ -1,5 +1,5 @@
-import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
-import { formatMoney } from 'utils';
+import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
+import { formatMoney } from '@/utils';
 
 export class Api_GenerateCompensationFinancial {
   pretax_amount: string;

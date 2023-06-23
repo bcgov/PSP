@@ -6,17 +6,7 @@ exports[`DepositsReturnedContainer component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c1 {
+  .c1 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -28,6 +18,16 @@ exports[`DepositsReturnedContainer component renders as expected 1`] = `
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
 }
 
 .c3 .btn.btn-primary {

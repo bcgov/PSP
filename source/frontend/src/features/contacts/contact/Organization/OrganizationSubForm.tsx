@@ -1,11 +1,12 @@
-import { Input } from 'components/common/form';
-import { FormSection } from 'components/common/form/styles';
-import * as Styled from 'features/contacts/contact/edit/styles';
 import { useFormikContext } from 'formik';
-import { IEditableOrganizationForm } from 'interfaces/editable-contact';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
+
+import { Input } from '@/components/common/form';
+import { FormSection } from '@/components/common/form/styles';
+import * as Styled from '@/features/contacts/contact/edit/styles';
+import { IEditableOrganizationForm } from '@/interfaces/editable-contact';
 
 import { ContactEmailList, ContactPhoneList } from '../create/components';
 

@@ -1,12 +1,13 @@
-import { Check, FastCurrencyInput, FastDatePicker, Input, Select } from 'components/common/form';
-import * as API from 'constants/API';
-import { LeaseTermStatusTypes } from 'constants/index';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { Formik, FormikProps } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { defaultFormLeaseTerm, IFormLeaseTerm } from 'interfaces/ILeaseTerm';
 import * as React from 'react';
 import { useContext } from 'react';
+
+import { Check, FastCurrencyInput, FastDatePicker, Input, Select } from '@/components/common/form';
+import * as API from '@/constants/API';
+import { LeaseTermStatusTypes } from '@/constants/index';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { defaultFormLeaseTerm, IFormLeaseTerm } from '@/interfaces/ILeaseTerm';
 
 import * as Styled from '../../styles';
 import { StyledFormBody } from '../../styles';

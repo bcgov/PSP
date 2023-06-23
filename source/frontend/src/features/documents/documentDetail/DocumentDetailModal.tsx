@@ -1,6 +1,7 @@
-import GenericModal, { ModalSize } from 'components/common/GenericModal';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { FaEye } from 'react-icons/fa';
+
+import GenericModal, { ModalSize } from '@/components/common/GenericModal';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 
 import { DocumentRow } from '../ComposedDocument';
 import { DocumentDetailContainer } from './DocumentDetailContainer';

@@ -1,12 +1,13 @@
-import { config, ITenantConfig } from 'tenants';
-import defaultTenant from 'tenants/config/defaultTenant';
-import { useTenant } from 'tenants/useTenant';
-import { render } from 'utils/test-utils';
+import { ITenantConfig2 } from '@/hooks/pims-api/interfaces/ITenantConfig';
+import { config } from '@/tenants';
+import defaultTenant from '@/tenants/config/defaultTenant';
+import { useTenant } from '@/tenants/useTenant';
+import { render } from '@/utils/test-utils';
 
 import { Header } from './Header';
 
-jest.mock('tenants/useTenant');
-const mockUseTenant = useTenant as jest.Mock<ITenantConfig>;
+jest.mock('@/tenants/useTenant');
+const mockUseTenant = useTenant as jest.Mock<ITenantConfig2>;
 
 const testRender = () => render(<Header />);
 

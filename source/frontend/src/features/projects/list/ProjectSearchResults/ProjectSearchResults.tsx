@@ -1,6 +1,7 @@
-import { Table } from 'components/Table';
-import { TableSort } from 'components/Table/TableSort';
 import { useCallback } from 'react';
+
+import { Table } from '@/components/Table';
+import { TableSort } from '@/components/Table/TableSort';
 
 import { columns } from './columns';
 import { ProjectSearchResultModel } from './models';

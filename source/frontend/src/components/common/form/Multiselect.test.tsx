@@ -1,6 +1,8 @@
+import { act } from '@testing-library/react';
 import { Formik } from 'formik';
 import noop from 'lodash/noop';
-import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+
+import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { IMultiselectProps, Multiselect } from './Multiselect';
 
@@ -82,11 +84,11 @@ describe('Multiselect component', () => {
     });
 
     // click on the multi-select to show drop-down list
-    userEvent.click(getInput());
+    act(() => userEvent.click(getInput()));
 
     // select an option from the drop-down
     focusOption(container, optionSelected, fakeOptions);
-    await waitFor(() => userEvent.click(findDropdownOption(optionSelected)));
+    await act(async () => await waitFor(() => userEvent.click(findDropdownOption(optionSelected))));
 
     // assert
     expect(onSelectSpy).toHaveBeenCalledWith([optionSelected]);
@@ -107,7 +109,7 @@ describe('Multiselect component', () => {
 
     // find option to remove (multi-select chip) and click on the X icon
     const chip = findChip(optionToRemove);
-    await waitFor(() => userEvent.click(findChipCloseIcon(chip)));
+    await act(async () => await waitFor(() => userEvent.click(findChipCloseIcon(chip))));
 
     // assert
     expect(onRemoveSpy).toHaveBeenCalledWith(remainingOptions);

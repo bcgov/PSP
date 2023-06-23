@@ -1,10 +1,11 @@
-import { Button } from 'components/common/buttons/Button';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import { Logo, useTenant } from 'tenants';
+
+import { Button } from '@/components/common/buttons/Button';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Logo, useTenant } from '@/tenants';
 
 import { LoginStyled } from './LoginStyled';
 

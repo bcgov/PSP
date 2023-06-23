@@ -1,7 +1,8 @@
 import userEvent from '@testing-library/user-event';
-import { ContactTypes } from 'features/contacts/interfaces';
 import { createMemoryHistory } from 'history';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { ContactTypes } from '@/features/contacts/interfaces';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import { ContactTypeSelector } from './ContactTypeSelector';
 

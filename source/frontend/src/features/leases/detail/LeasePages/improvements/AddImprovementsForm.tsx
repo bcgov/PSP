@@ -1,8 +1,9 @@
 import { Formik, FormikProps } from 'formik';
-import { defaultFormLease, IFormLease } from 'interfaces';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { defaultFormLease, IFormLease } from '@/interfaces';
 
 import { AddImprovementsYupSchema } from './AddImprovementsYupSchema';
 import { Improvements } from './Improvements';

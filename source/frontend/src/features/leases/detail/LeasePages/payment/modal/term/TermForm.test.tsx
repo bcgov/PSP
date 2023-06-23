@@ -2,11 +2,12 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultFormLeaseTerm } from 'interfaces';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
+
+import { defaultFormLeaseTerm } from '@/interfaces';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
 
 import { ITermFormProps, TermForm } from './TermForm';
 

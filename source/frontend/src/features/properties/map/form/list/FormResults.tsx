@@ -1,6 +1,6 @@
-import { Table } from 'components/Table';
-import { TableSort } from 'components/Table/TableSort';
-import { Api_FormDocumentFile, Api_FormDocumentType } from 'models/api/FormDocument';
+import { Table } from '@/components/Table';
+import { TableSort } from '@/components/Table/TableSort';
+import { Api_FormDocumentFile, Api_FormDocumentType } from '@/models/api/FormDocument';
 
 import { createFormTableColumns } from './columns';
 

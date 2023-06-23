@@ -1,12 +1,14 @@
-import { IResearchFilter } from 'features/research/interfaces';
-import { IPagedItems } from 'interfaces';
-import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
-import { Api_ResearchFile, Api_ResearchFileProperty } from 'models/api/ResearchFile';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import queryString from 'query-string';
 import React from 'react';
 
-import { IPaginateRequest, useAxiosApi } from '.';
+import { IResearchFilter } from '@/features/research/interfaces';
+import { IPagedItems } from '@/interfaces';
+import { IResearchSearchResult } from '@/interfaces/IResearchSearchResult';
+import { Api_ResearchFile, Api_ResearchFileProperty } from '@/models/api/ResearchFile';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+
+import { IPaginateRequest } from './interfaces/IPaginateRequest';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the research file endpoints.

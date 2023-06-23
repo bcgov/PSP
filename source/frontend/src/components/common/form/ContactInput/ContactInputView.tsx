@@ -1,18 +1,19 @@
-import { Button } from 'components/common/buttons';
-import TooltipWrapper from 'components/common/TooltipWrapper';
-import {
-  ContactManagerModal,
-  IContactManagerModalProps,
-} from 'components/contact/ContactManagerModal';
-import { StyledDiv } from 'features/properties/map/acquisition/common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
 import { getIn, useFormikContext } from 'formik';
-import { IContactSearchResult } from 'interfaces';
 import * as React from 'react';
 import { Col, FormControlProps, Row } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import { FaAddressBook } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
-import { formatNames } from 'utils/personUtils';
+
+import { Button } from '@/components/common/buttons';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
+import {
+  ContactManagerModal,
+  IContactManagerModalProps,
+} from '@/components/contact/ContactManagerModal';
+import { StyledDiv } from '@/features/mapSideBar/acquisition/common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
+import { IContactSearchResult } from '@/interfaces';
+import { formatNames } from '@/utils/personUtils';
 
 import { StyledRemoveLinkButton } from '../ContactInput';
 import { DisplayError } from '../DisplayError';

@@ -1,12 +1,13 @@
-import { ReactComponent as Active } from 'assets/images/active.svg';
-import { ReactComponent as Inactive } from 'assets/images/inactive.svg';
-import { Select, SelectOption } from 'components/common/form';
-import { ColumnWithProps } from 'components/Table';
-import { getPrimaryContact } from 'features/contacts/contactUtils';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
-import { formatApiPersonNames } from 'utils/personUtils';
+
+import { ReactComponent as Active } from '@/assets/images/active.svg';
+import { ReactComponent as Inactive } from '@/assets/images/inactive.svg';
+import { Select, SelectOption } from '@/components/common/form';
+import { ColumnWithProps } from '@/components/Table';
+import { getPrimaryContact } from '@/features/contacts/contactUtils';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { FormTenant } from './ViewTenantForm';
 const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] => {

@@ -1,10 +1,11 @@
-import { ContactBreadcrumb, ContactTypeSelector } from 'features/contacts';
-import { ContactTypes } from 'features/contacts/interfaces';
-import * as Styled from 'features/contacts/styles';
 import { getIn } from 'formik';
 import React from 'react';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { ContactBreadcrumb, ContactTypeSelector } from '@/features/contacts';
+import { ContactTypes } from '@/features/contacts/interfaces';
+import * as Styled from '@/features/contacts/styles';
 
 import ContactRouter from './ContactRouter';
 

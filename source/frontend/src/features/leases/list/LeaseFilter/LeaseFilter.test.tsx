@@ -1,7 +1,8 @@
 import userEvent from '@testing-library/user-event';
-import { ILeaseFilter } from 'features/leases';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions } from 'utils/test-utils';
+
+import { ILeaseFilter } from '@/features/leases';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
 import { ILeaseFilterProps, LeaseFilter } from './LeaseFilter';
 

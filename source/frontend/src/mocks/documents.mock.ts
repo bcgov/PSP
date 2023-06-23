@@ -1,9 +1,9 @@
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import { Api_DocumentRelationship, Api_DocumentType } from 'models/api/Document';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import { Api_DocumentRelationship, Api_DocumentType } from '@/models/api/Document';
 import {
   Api_Storage_DocumentMetadata,
   Api_Storage_DocumentTypeMetadataType,
-} from 'models/api/DocumentStorage';
+} from '@/models/api/DocumentStorage';
 
 export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
   {

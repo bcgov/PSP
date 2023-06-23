@@ -1,7 +1,7 @@
-import { IInsurance } from 'interfaces';
-import ITypeCode, { TypeCodeUtils } from 'interfaces/ITypeCode';
-import { ILookupCode } from 'store/slices/lookupCodes';
-import { NumberFieldValue } from 'typings/NumberFieldValue';
+import { IInsurance } from '@/interfaces';
+import ITypeCode, { TypeCodeUtils } from '@/interfaces/ITypeCode';
+import { ILookupCode } from '@/store/slices/lookupCodes';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
 
 export interface IUpdateFormInsurance {
   insurances: FormInsurance[];

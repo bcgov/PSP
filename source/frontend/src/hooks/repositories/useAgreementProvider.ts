@@ -1,9 +1,10 @@
 import { AxiosResponse } from 'axios';
-import { useApiAgreements } from 'hooks/pims-api/useApiAgreements';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { Api_Agreement } from 'models/api/Agreement';
 import { useCallback, useMemo } from 'react';
-import { useAxiosErrorHandler } from 'utils';
+
+import { useApiAgreements } from '@/hooks/pims-api/useApiAgreements';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { Api_Agreement } from '@/models/api/Agreement';
+import { useAxiosErrorHandler } from '@/utils';
 
 /**
  * hook that interacts with the Agreements API.

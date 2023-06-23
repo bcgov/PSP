@@ -1,8 +1,9 @@
-import { RemoveButton } from 'components/common/buttons';
-import { Input, Select } from 'components/common/form';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { withNameSpace } from 'utils/formUtils';
+
+import { RemoveButton } from '@/components/common/buttons';
+import { Input, Select } from '@/components/common/form';
+import { withNameSpace } from '@/utils/formUtils';
 
 import useContactInfoHelpers from './useContactInfoHelpers';
 

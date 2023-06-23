@@ -1,11 +1,12 @@
-import { Input } from 'components/common/form';
-import { PropertyImprovementTypes } from 'constants/propertyImprovementTypes';
-import * as Styled from 'features/leases/detail/LeasePages/improvements/styles';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { getIn, useFormikContext } from 'formik';
-import { IFormLease } from 'interfaces';
-import { withNameSpace } from 'utils/formUtils';
+
+import { Input } from '@/components/common/form';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { PropertyImprovementTypes } from '@/constants/propertyImprovementTypes';
+import * as Styled from '@/features/leases/detail/LeasePages/improvements/styles';
+import { IFormLease } from '@/interfaces';
+import { withNameSpace } from '@/utils/formUtils';
 
 export interface IImprovementProps {
   disabled?: boolean;

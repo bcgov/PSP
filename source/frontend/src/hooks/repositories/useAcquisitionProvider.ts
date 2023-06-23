@@ -1,6 +1,8 @@
 import { AxiosResponse } from 'axios';
-import { useApiAcquisitionFile } from 'hooks/pims-api/useApiAcquisitionFile';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
+import { useCallback, useMemo } from 'react';
+
+import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFileChecklistItem,
@@ -8,13 +10,12 @@ import {
   Api_AcquisitionFileProperty,
   Api_AcquisitionFileRepresentative,
   Api_AcquisitionFileSolicitor,
-} from 'models/api/AcquisitionFile';
-import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
-import { Api_Product, Api_Project } from 'models/api/Project';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
-import { useCallback, useMemo } from 'react';
-import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
+} from '@/models/api/AcquisitionFile';
+import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { Api_Product, Api_Project } from '@/models/api/Project';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 const ignoreErrorCodes = [409];
 

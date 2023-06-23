@@ -2,13 +2,14 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import find from 'lodash/find';
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
-import * as MOCK from 'mocks/data.mock';
 import { Provider } from 'react-redux';
 import { toast } from 'react-toastify';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { networkSlice } from 'store/slices/network/networkSlice';
+
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import * as MOCK from '@/mocks/data.mock';
+import { networkSlice } from '@/store/slices/network/networkSlice';
 
 import { useAcquisitionProvider } from './useAcquisitionProvider';
 

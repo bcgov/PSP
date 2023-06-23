@@ -1,8 +1,9 @@
-import { Form, Input } from 'components/common/form';
 import { getIn, useFormikContext } from 'formik';
-import { IFormLease } from 'interfaces';
 import * as React from 'react';
-import { withNameSpace } from 'utils/formUtils';
+
+import { Form, Input } from '@/components/common/form';
+import { IFormLease } from '@/interfaces';
+import { withNameSpace } from '@/utils/formUtils';
 
 import { FieldValue } from '../styles';
 

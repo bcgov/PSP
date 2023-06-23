@@ -1,7 +1,8 @@
 import { getIn, useFormikContext } from 'formik';
-import { IFormLeasePayment } from 'interfaces';
 import { useEffect } from 'react';
-import { SystemConstants, useSystemConstants } from 'store/slices/systemConstants';
+
+import { IFormLeasePayment } from '@/interfaces';
+import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
 /**
  * hook that auto fills formik payment fields based on gst calculation of total amount paid.

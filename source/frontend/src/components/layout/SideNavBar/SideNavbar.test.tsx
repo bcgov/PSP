@@ -1,8 +1,9 @@
 import { act, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Claims, Roles } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import TestCommonWrapper from 'utils/TestCommonWrapper';
+
+import { Claims, Roles } from '@/constants/index';
+import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
 import { SideNavBar } from './SideNavbar';
 import { SidebarStateContextProvider } from './SideNavbarContext';

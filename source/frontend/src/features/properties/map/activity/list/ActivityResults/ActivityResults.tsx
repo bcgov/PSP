@@ -1,7 +1,7 @@
-import { Table } from 'components/Table';
-import { TableSort } from 'components/Table/TableSort';
-import { Api_Activity } from 'models/api/Activity';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
+import { Table } from '@/components/Table';
+import { TableSort } from '@/components/Table/TableSort';
+import { Api_Activity } from '@/models/api/Activity';
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
 import { createActivityTableColumns } from './columns';
 

@@ -1,14 +1,15 @@
-import { LinkButton, StyledIconButton, StyledRemoveIconButton } from 'components/common/buttons';
-import { InlineFlexDiv } from 'components/common/styles';
-import { ColumnWithProps } from 'components/Table';
-import Claims from 'constants/claims';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_FormDocumentFile } from 'models/api/FormDocument';
 import { FaTrash } from 'react-icons/fa';
 import { ImEye } from 'react-icons/im';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
-import { stringToFragment } from 'utils';
+
+import { LinkButton, StyledIconButton, StyledRemoveIconButton } from '@/components/common/buttons';
+import { InlineFlexDiv } from '@/components/common/styles';
+import { ColumnWithProps } from '@/components/Table';
+import Claims from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_FormDocumentFile } from '@/models/api/FormDocument';
+import { stringToFragment } from '@/utils';
 
 export function createFormTableColumns(
   onShowForm: (form: Api_FormDocumentFile) => void,

@@ -1,7 +1,7 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { getApiPersonOrOrgMailingAddress } from 'features/contacts/contactUtils';
-import { Api_Person } from 'models/api/Person';
-import { formatNames } from 'utils/personUtils';
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { getApiPersonOrOrgMailingAddress } from '@/features/contacts/contactUtils';
+import { Api_Person } from '@/models/api/Person';
+import { formatNames } from '@/utils/personUtils';
 
 import { Api_GenerateAddress } from './GenerateAddress';
 export class Api_GeneratePerson {

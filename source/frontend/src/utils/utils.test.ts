@@ -1,4 +1,4 @@
-import { generateMultiSortCriteria, resolveSortCriteriaFromUrl } from 'utils';
+import { generateMultiSortCriteria, resolveSortCriteriaFromUrl } from '@/utils';
 
 import { isPositiveNumberOrZero } from '.';
 

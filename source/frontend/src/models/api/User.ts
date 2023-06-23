@@ -1,5 +1,5 @@
-import { Api_ConcurrentVersion } from 'models/api/ConcurrentVersion';
-import { Api_Person } from 'models/api/Person';
+import { Api_ConcurrentVersion } from '@/models/api/ConcurrentVersion';
+import { Api_Person } from '@/models/api/Person';
 
 import { Api_AuditFields } from './AuditFields';
 import { Api_RegionUser } from './RegionUser';

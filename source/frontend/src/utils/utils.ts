@@ -1,11 +1,12 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { SelectOption } from 'components/common/form';
-import { TableSort } from 'components/Table/TableSort';
 import { FormikProps, getIn } from 'formik';
 import { isEmpty, isNull, isUndefined, keys, lowerFirst, startCase } from 'lodash';
 import moment, { Moment } from 'moment-timezone';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { logError, logRequest, logSuccess } from 'store/slices/network/networkSlice';
+
+import { SelectOption } from '@/components/common/form';
+import { TableSort } from '@/components/Table/TableSort';
+import { logError, logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
 /**
  * Rounds the supplied number to a certain number of decimal places

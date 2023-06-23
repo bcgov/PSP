@@ -1,8 +1,9 @@
-import { IInsurance } from 'interfaces';
-import { IBatchUpdateReply, IBatchUpdateRequest } from 'interfaces/batchUpdate';
 import React from 'react';
 
-import { useAxiosApi } from '.';
+import { IInsurance } from '@/interfaces';
+import { IBatchUpdateReply, IBatchUpdateRequest } from '@/interfaces/batchUpdate';
+
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the insurance endpoints.

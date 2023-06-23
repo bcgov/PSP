@@ -1,6 +1,7 @@
-import { VolumeUnitTypes } from 'constants/volumeUnitTypes';
 import { Col, Row } from 'react-bootstrap';
-import { convertVolume, formatNumber } from 'utils';
+
+import { VolumeUnitTypes } from '@/constants/volumeUnitTypes';
+import { convertVolume, formatNumber } from '@/utils';
 
 import { StyledGreenBlue } from './styles';
 

@@ -108,41 +108,6 @@ namespace Pims.Api.Test.Controllers.Property
             repository.Verify(m => m.GetPage(It.IsAny<PropertyFilter>()), Times.Once());
         }
 
-        /// <summary>
-        /// Make a failed request because the query doesn't contain filter values.
-        /// </summary>
-        [Fact]
-        public void GetProperties_Query_NoFilter_BadRequest()
-        {
-            // Arrange
-            var controller = _helper.CreateController<SearchController>(Permissions.PropertyView);
-            var request = _helper.GetService<Mock<HttpRequest>>();
-            request.Setup(m => m.QueryString).Returns(new QueryString("?page=0"));
-
-            var repository = _helper.GetService<Mock<IPropertyRepository>>();
-
-            // Act
-            // Assert
-            Assert.Throws<BadRequestException>(() => controller.GetProperties());
-            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
-        }
-
-        /// <summary>
-        /// Make a failed request because the body doesn't contain a filter object.
-        /// </summary>
-        [Fact]
-        public void GetProperties_NoFilter_BadRequest()
-        {
-            // Arrange
-            var controller = _helper.CreateController<SearchController>(Permissions.PropertyView);
-
-            var repository = _helper.GetService<Mock<IPropertyRepository>>();
-
-            // Act
-            // Assert
-            Assert.Throws<BadRequestException>(() => controller.GetProperties(null));
-            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
-        }
         #endregion
         #endregion
     }

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 // common ui styling
-export * from 'features/leases/detail/styles';
+export * from '@/features/leases/detail/styles';
 
 export const DepositsContainer = styled.div`
   display: flex;

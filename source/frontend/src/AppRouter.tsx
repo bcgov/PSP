@@ -1,61 +1,64 @@
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
-import { Claims } from 'constants/claims';
-import { Roles } from 'constants/roles';
-import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
-import { LogoutPage } from 'features/account/Logout';
-import { AdminAccessRequestPage } from 'features/admin/access-request/AdminAccessRequestPage';
-import { AddFinancialCodeContainer } from 'features/admin/financial-codes/add/AddFinancialCodeContainer';
-import { AddFinancialCodeForm } from 'features/admin/financial-codes/add/AddFinancialCodeForm';
-import { UpdateFinancialCodeContainer } from 'features/admin/financial-codes/update/UpdateFinancialCodeContainer';
-import { UpdateFinancialCodeForm } from 'features/admin/financial-codes/update/UpdateFinancialCodeForm';
-import { ContactListPage } from 'features/contacts';
-import CreateContactContainer from 'features/contacts/contact/create/CreateContactContainer';
-import ContactViewContainer from 'features/contacts/contact/detail/Container';
-import UpdateContactContainer from 'features/contacts/contact/edit/UpdateContactContainer';
-import ProjectListView from 'features/projects/list/ProjectListView';
-import { ResearchListView } from 'features/research/list/ResearchListView';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import AuthLayout from 'layouts/AuthLayout';
-import PublicLayout from 'layouts/PublicLayout';
-import { NotFoundPage } from 'pages/404/NotFoundPage';
-import { TestFileManagement } from 'pages/TestFileManagement';
 import React, { lazy, Suspense, useLayoutEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import { Redirect, Switch, useLocation } from 'react-router-dom';
-import AppRoute from 'utils/AppRoute';
-import componentLoader from 'utils/utils';
+
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { MapStateContextProvider } from '@/components/maps/providers/MapStateContext';
+import { Claims } from '@/constants/claims';
+import { Roles } from '@/constants/roles';
+import { IENotSupportedPage } from '@/features/account/IENotSupportedPage';
+import { LogoutPage } from '@/features/account/Logout';
+import { AdminAccessRequestPage } from '@/features/admin/access-request/AdminAccessRequestPage';
+import { AddFinancialCodeContainer } from '@/features/admin/financial-codes/add/AddFinancialCodeContainer';
+import { AddFinancialCodeForm } from '@/features/admin/financial-codes/add/AddFinancialCodeForm';
+import { UpdateFinancialCodeContainer } from '@/features/admin/financial-codes/update/UpdateFinancialCodeContainer';
+import { UpdateFinancialCodeForm } from '@/features/admin/financial-codes/update/UpdateFinancialCodeForm';
+import { ContactListPage } from '@/features/contacts';
+import CreateContactContainer from '@/features/contacts/contact/create/CreateContactContainer';
+import ContactViewContainer from '@/features/contacts/contact/detail/Container';
+import UpdateContactContainer from '@/features/contacts/contact/edit/UpdateContactContainer';
+import ProjectListView from '@/features/projects/list/ProjectListView';
+import { ResearchListView } from '@/features/research/list/ResearchListView';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import AuthLayout from '@/layouts/AuthLayout';
+import PublicLayout from '@/layouts/PublicLayout';
+import { NotFoundPage } from '@/pages/404/NotFoundPage';
+import { TestFileManagement } from '@/pages/TestFileManagement';
+import AppRoute from '@/utils/AppRoute';
+import componentLoader from '@/utils/utils';
 
 import Login from './features/account/Login';
 import AccessDenied from './pages/401/AccessDenied';
 
-const MapView = lazy(() => componentLoader(import('./features/properties/map/MapView'), 2));
+const MapView = lazy(() => componentLoader(import('@/features/properties/map/MapContainer'), 2));
 const AccessRequestPage = lazy(() =>
-  componentLoader(import('./features/admin/access-request/AccessRequestPage'), 2),
+  componentLoader(import('@/features/admin/access-request/AccessRequestPage'), 2),
 );
 const EditUserPage = lazy(() =>
-  componentLoader(import('./features/admin/edit-user/EditUserPage'), 2),
+  componentLoader(import('@/features/admin/edit-user/EditUserPage'), 2),
 );
 const ManageAccessRequests = lazy(() =>
-  componentLoader(import('features/admin/access/ManageAccessRequestsPage'), 2),
+  componentLoader(import('@/features/admin/access/ManageAccessRequestsPage'), 2),
 );
-const ManageUsers = lazy(() => componentLoader(import('features/admin/users/ManageUsersPage'), 2));
+const ManageUsers = lazy(() =>
+  componentLoader(import('@/features/admin/users/ManageUsersPage'), 2),
+);
 
 const ManageDocumentTemplate = lazy(() =>
-  componentLoader(import('features/admin/document-template/DocumentTemplateManagementPage'), 2),
+  componentLoader(import('@/features/admin/document-template/DocumentTemplateManagementPage'), 2),
 );
 
 const PropertyListView = lazy(() =>
-  componentLoader(import('features/properties/list/PropertyListView'), 2),
+  componentLoader(import('@/features/properties/list/PropertyListView'), 2),
 );
 const LeaseAndLicenseListView = lazy(() =>
-  componentLoader(import('features/leases/list/LeaseListView'), 2),
+  componentLoader(import('@/features/leases/list/LeaseListView'), 2),
 );
 const AcquisitionListView = lazy(() =>
-  componentLoader(import('features/acquisition/list/AcquisitionListView'), 2),
+  componentLoader(import('@/features/acquisition/list/AcquisitionListView'), 2),
 );
 const FinancialCodesListView = lazy(() =>
-  componentLoader(import('features/admin/financial-codes/list/FinancialCodeListView'), 2),
+  componentLoader(import('@/features/admin/financial-codes/list/FinancialCodeListView'), 2),
 );
 
 const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
