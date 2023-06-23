@@ -1,6 +1,8 @@
 import { AxiosResponse } from 'axios';
 
-import { IApiVersion, IHealthLive, IHealthReady } from '.';
+import IApiVersion from './IApiVersion';
+import IHealthLive from './IHealthLive';
+import IHealthReady from './IHealthReady';
 
 export interface IApiHealth {
   // Get the api version information.

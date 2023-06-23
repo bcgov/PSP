@@ -1,10 +1,11 @@
-import { Button } from 'components/common/buttons/Button';
 import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
+
+import { Button } from '@/components/common/buttons/Button';
 
 import { IAccessRequestModel } from '../interfaces';
 

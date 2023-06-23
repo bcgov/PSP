@@ -1,5 +1,5 @@
-import Api_TypeCode from 'interfaces/ITypeCode';
-import { Api_Contact } from 'models/api/Contact';
+import Api_TypeCode from '@/interfaces/ITypeCode';
+import { Api_Contact } from '@/models/api/Contact';
 
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 

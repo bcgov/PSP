@@ -1,5 +1,5 @@
-import { ColumnWithProps } from 'components/Table';
-import { PidCell } from 'components/Table/PidCell';
+import { ColumnWithProps } from '@/components/Table';
+import { PidCell } from '@/components/Table/PidCell';
 
 import { SearchResultProperty } from '../models';
 

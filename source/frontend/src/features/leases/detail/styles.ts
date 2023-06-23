@@ -1,10 +1,11 @@
-import caretRightSvgUrl from 'assets/images/caret-right.svg';
-import { TextArea } from 'components/common/form';
-import { InlineFastCurrencyInput, InlineInput } from 'components/common/form/styles';
-import { InlineFlexDiv } from 'components/common/styles';
-import { Table } from 'components/Table';
 import { Form } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import caretRightSvgUrl from '@/assets/images/caret-right.svg';
+import { TextArea } from '@/components/common/form';
+import { InlineFastCurrencyInput, InlineInput } from '@/components/common/form/styles';
+import { InlineFlexDiv } from '@/components/common/styles';
+import { Table } from '@/components/Table';
 
 export const LeaseH1 = styled.h1`
   padding: 2rem;

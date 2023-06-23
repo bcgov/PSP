@@ -1,9 +1,10 @@
-import { LinkButton } from 'components/common/buttons';
-import { Api_AcquisitionFileProperty } from 'models/api/AcquisitionFile';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-import { formatApiAddress } from 'utils';
+
+import { LinkButton } from '@/components/common/buttons';
+import { Api_AcquisitionFileProperty } from '@/models/api/AcquisitionFile';
+import { formatApiAddress } from '@/utils';
 
 export interface IAcquisitionPropertiesProps {
   acquisitionProperties?: Api_AcquisitionFileProperty[];

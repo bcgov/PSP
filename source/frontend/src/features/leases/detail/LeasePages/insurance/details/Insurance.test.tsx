@@ -1,10 +1,11 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { IInsurance, TypeCodeUtils } from 'interfaces';
 import { noop } from 'lodash';
-import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, RenderResult } from 'utils/test-utils';
+
+import { IInsurance, TypeCodeUtils } from '@/interfaces';
+import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { render, RenderOptions, RenderResult } from '@/utils/test-utils';
 
 import InsuranceDetailsView from './Insurance';
 

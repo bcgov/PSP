@@ -1,9 +1,10 @@
 import axios, { AxiosError } from 'axios';
-import { useApiTenants } from 'hooks/pims-api';
-import { IApiError } from 'interfaces/IApiError';
 import React from 'react';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { useAppDispatch } from 'store/hooks';
+
+import { useApiTenants } from '@/hooks/pims-api/useApiTenants';
+import { IApiError } from '@/interfaces/IApiError';
+import { useAppDispatch } from '@/store/hooks';
 
 import { logError, logRequest, logSuccess } from '../network/networkSlice';
 import { storeSettings, tenantsSlice } from '.';

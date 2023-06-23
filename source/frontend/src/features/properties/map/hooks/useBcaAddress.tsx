@@ -1,10 +1,8 @@
-import {
-  BC_ASSESSMENT_TYPES,
-  IBcAssessmentSummary,
-  useBcAssessmentLayer,
-} from 'hooks/useBcAssessmentLayer';
 import { useCallback } from 'react';
-import { useTenant } from 'tenants';
+
+import { useBcAssessmentLayer } from '@/hooks/repositories/useBcAssessmentLayer';
+import { BC_ASSESSMENT_TYPES, IBcAssessmentSummary } from '@/models/layers/bcAssesment';
+import { useTenant } from '@/tenants';
 
 /**
  * hook that provides a function to retrieve the primary address for a given pid from BC Assessment.

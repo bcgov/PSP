@@ -1,11 +1,12 @@
-import { StyledDivider } from 'components/common/styles';
-import { UserNameTooltip } from 'components/common/UserNameTooltip';
-import { HeaderField } from 'features/mapSideBar/tabs/HeaderField';
-import { Api_Activity } from 'models/api/Activity';
-import { Api_File } from 'models/api/File';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { prettyFormatDate } from 'utils';
+
+import { HeaderField } from '@/components/common/HeaderField/HeaderField';
+import { StyledDivider } from '@/components/common/styles';
+import { UserNameTooltip } from '@/components/common/UserNameTooltip';
+import { Api_Activity } from '@/models/api/Activity';
+import { Api_File } from '@/models/api/File';
+import { prettyFormatDate } from '@/utils';
 
 export interface IActivityHeaderProps {
   file: Api_File;

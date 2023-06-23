@@ -1,7 +1,8 @@
-import { AreaUnitTypes } from 'constants/index';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { convertArea, round } from 'utils';
+
+import { AreaUnitTypes } from '@/constants/index';
+import { convertArea, round } from '@/utils';
 
 import { StyledGreenCol, StyledGreenGrey, StyledInput } from './styles';
 

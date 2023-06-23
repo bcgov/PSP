@@ -1,12 +1,13 @@
 import axios, { AxiosError } from 'axios';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { IEditableOrganization } from 'interfaces/editable-contact';
-import { IApiError } from 'interfaces/IApiError';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
-import { logError } from 'store/slices/network/networkSlice';
+
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { IEditableOrganization } from '@/interfaces/editable-contact';
+import { IApiError } from '@/interfaces/IApiError';
+import { logError } from '@/store/slices/network/networkSlice';
 
 /**
  * hook that fetches an organization with the supplied id.

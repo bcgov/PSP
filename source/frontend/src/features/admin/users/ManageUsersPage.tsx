@@ -1,18 +1,19 @@
-import { StyledIconButton } from 'components/common/buttons';
-import TooltipWrapper from 'components/common/TooltipWrapper';
-import { Table } from 'components/Table';
-import { useApiUsers } from 'hooks/pims-api/useApiUsers';
-import { useSearch } from 'hooks/useSearch';
-import { IUsersFilter } from 'interfaces';
 import fileDownload from 'js-file-download';
 import isEmpty from 'lodash/isEmpty';
-import { Api_User } from 'models/api/User';
 import React, { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaFileExcel } from 'react-icons/fa';
 import styled from 'styled-components';
-import { generateMultiSortCriteria } from 'utils';
-import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
+
+import { StyledIconButton } from '@/components/common/buttons';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { Table } from '@/components/Table';
+import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
+import { useSearch } from '@/hooks/useSearch';
+import { IUsersFilter } from '@/interfaces';
+import { Api_User } from '@/models/api/User';
+import { generateMultiSortCriteria } from '@/utils';
+import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
 
 import { defaultUserFilter, UsersFilterBar } from './components/UsersFilterBar';
 import { getUserColumns } from './constants';

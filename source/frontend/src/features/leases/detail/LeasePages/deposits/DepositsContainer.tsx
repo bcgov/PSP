@@ -1,12 +1,13 @@
-import GenericModal from 'components/common/GenericModal';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
-import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
 import { Formik, getIn } from 'formik';
-import { defaultLease } from 'interfaces';
-import { IParentConcurrencyGuard } from 'interfaces/IParentConcurrencyGuard';
 import { noop } from 'lodash';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import { useContext, useState } from 'react';
+
+import GenericModal from '@/components/common/GenericModal';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { apiLeaseToFormLease } from '@/features/leases/leaseUtils';
+import { defaultLease } from '@/interfaces';
+import { IParentConcurrencyGuard } from '@/interfaces/IParentConcurrencyGuard';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
 
 import DepositNotes from './components/DepositNotes/DepositNotes';
 import DepositsReceivedContainer from './components/DepositsReceivedContainer/DepositsReceivedContainer';

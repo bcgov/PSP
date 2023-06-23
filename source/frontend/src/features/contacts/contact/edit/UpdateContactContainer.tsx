@@ -1,8 +1,9 @@
-import { ContactBreadcrumb } from 'features/contacts';
-import { ContactTypes } from 'features/contacts/interfaces';
-import * as Styled from 'features/contacts/styles';
 import React from 'react';
 import { useParams } from 'react-router-dom';
+
+import { ContactBreadcrumb } from '@/features/contacts';
+import { ContactTypes } from '@/features/contacts/interfaces';
+import * as Styled from '@/features/contacts/styles';
 
 import { HalfWidthLayout } from '../create/styles';
 import UpdateOrganizationForm from './Organization/UpdateOrganizationForm';

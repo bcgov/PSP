@@ -1,9 +1,10 @@
-import { SelectOption } from 'components/common/form';
-import * as API from 'constants/API';
-import { CountryCodes } from 'constants/countryCodes';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { Dictionary } from 'interfaces/Dictionary';
 import { useEffect, useMemo, useState } from 'react';
+
+import { SelectOption } from '@/components/common/form';
+import * as API from '@/constants/API';
+import { CountryCodes } from '@/constants/countryCodes';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { Dictionary } from '@/interfaces/Dictionary';
 
 const formLabelMap = new Map<string, Dictionary<string>>([
   [

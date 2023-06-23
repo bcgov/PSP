@@ -1,12 +1,12 @@
-import { FormTenant } from 'features/leases/detail/LeasePages/tenant/ViewTenantForm';
-import { Api_AuditFields } from 'models/api/AuditFields';
-import { Api_ConcurrentVersion } from 'models/api/ConcurrentVersion';
-import { Api_LeaseConsultation } from 'models/api/Lease';
-import { Api_LeaseTenant } from 'models/api/LeaseTenant';
-import { Api_Person } from 'models/api/Person';
-import { Api_Project } from 'models/api/Project';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
-import { NumberFieldValue } from 'typings/NumberFieldValue';
+import { FormTenant } from '@/features/leases/detail/LeasePages/tenant/ViewTenantForm';
+import { Api_AuditFields } from '@/models/api/AuditFields';
+import { Api_ConcurrentVersion } from '@/models/api/ConcurrentVersion';
+import { Api_LeaseConsultation } from '@/models/api/Lease';
+import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
+import { Api_Person } from '@/models/api/Person';
+import { Api_Project } from '@/models/api/Project';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
 
 import { IFormProperty, IInsurance, ILeaseImprovement, IOrganization, IProperty } from '.';
 import { IFormLeaseTerm, ILeaseTerm } from './ILeaseTerm';

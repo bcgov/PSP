@@ -1,19 +1,20 @@
-import { Button } from 'components/common/buttons';
-import { Form, Input, Select, TextArea } from 'components/common/form';
-import { RadioGroup } from 'components/common/form/RadioGroup';
-import TooltipWrapper from 'components/common/TooltipWrapper';
-import * as API from 'constants/API';
-import { DISCLAIMER_URL, PRIVACY_POLICY_URL } from 'constants/strings';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik } from 'formik';
-import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
-import { Api_AccessRequest } from 'models/api/AccessRequest';
 import * as React from 'react';
 import { ButtonToolbar, Col, Row } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
 import styled from 'styled-components';
-import { mapLookupCode } from 'utils';
-import { AccessRequestSchema } from 'utils/YupSchema';
+
+import { Button } from '@/components/common/buttons';
+import { Form, Input, Select, TextArea } from '@/components/common/form';
+import { RadioGroup } from '@/components/common/form/RadioGroup';
+import { SectionField } from '@/components/common/Section/SectionField';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
+import * as API from '@/constants/API';
+import { DISCLAIMER_URL, PRIVACY_POLICY_URL } from '@/constants/strings';
+import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
+import { Api_AccessRequest } from '@/models/api/AccessRequest';
+import { mapLookupCode } from '@/utils';
+import { AccessRequestSchema } from '@/utils/YupSchema';
 
 import { FormAccessRequest as AccessRequestFormModel, userTypeCodeValues } from './models';
 import RolesToolTip from './RolesToolTip';

@@ -1,8 +1,9 @@
-import { Button } from 'components/common/buttons/Button';
-import { FastDatePicker, Form, TextArea } from 'components/common/form';
-import { InlineInput, InlineSelect } from 'components/common/form/styles';
 import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import { Button } from '@/components/common/buttons/Button';
+import { FastDatePicker, Form, TextArea } from '@/components/common/form';
+import { InlineInput, InlineSelect } from '@/components/common/form/styles';
 
 export const PropertyCol = styled(Col)`
   display: flex;

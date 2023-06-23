@@ -1,14 +1,16 @@
 import axios from 'axios';
 import React from 'react';
 
-import { config, ITenantConfig } from '.';
+import ITenantConfig, { ITenantConfig2 } from '@/hooks/pims-api/interfaces/ITenantConfig';
+
+import { config } from './config';
 import defaultTenant from './config/defaultTenant';
 
 export interface ITenantContext {
   // The tenant configuration.
-  tenant: ITenantConfig;
+  tenant: ITenantConfig2;
   // Update the tenant configuration.
-  setTenant: React.Dispatch<React.SetStateAction<ITenantConfig>>;
+  setTenant: React.Dispatch<React.SetStateAction<ITenantConfig2>>;
 }
 
 /**

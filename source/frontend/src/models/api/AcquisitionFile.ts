@@ -1,6 +1,7 @@
-import { Api_File } from 'models/api/File';
-import Api_TypeCode from 'models/api/TypeCode';
 import moment from 'moment';
+
+import { Api_File } from '@/models/api/File';
+import Api_TypeCode from '@/models/api/TypeCode';
 
 import { Api_Address } from './Address';
 import { Api_AuditFields } from './AuditFields';

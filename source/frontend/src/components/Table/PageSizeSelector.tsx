@@ -1,7 +1,8 @@
-import { IMenuItemProps, Menu } from 'components/menu/Menu';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
+
+import { IMenuItemProps, Menu } from '@/components/menu/Menu';
 
 /** align text to middle of size input */
 const StyledText = styled.span`

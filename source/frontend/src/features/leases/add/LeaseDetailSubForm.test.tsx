@@ -1,10 +1,11 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { useProjectTypeahead } from 'hooks/useProjectTypeahead';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, renderAsync, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+
+import { useProjectTypeahead } from '@/hooks/useProjectTypeahead';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, renderAsync, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { getDefaultFormLease } from '../models';
 import { AddLeaseYupSchema } from './AddLeaseYupSchema';
@@ -15,7 +16,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-jest.mock('hooks/useProjectTypeahead');
+jest.mock('@/hooks/useProjectTypeahead');
 const mockUseProjectTypeahead = useProjectTypeahead as jest.MockedFunction<
   typeof useProjectTypeahead
 >;

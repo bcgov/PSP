@@ -1,9 +1,10 @@
-import { Table } from 'components/Table';
-import { TableSort } from 'components/Table/TableSort';
-import { DocumentRow } from 'features/documents/ComposedDocument';
-import { Api_Document, Api_DocumentRelationship } from 'models/api/Document';
 import { useMemo } from 'react';
-import { getPage } from 'utils';
+
+import { Table } from '@/components/Table';
+import { TableSort } from '@/components/Table/TableSort';
+import { DocumentRow } from '@/features/documents/ComposedDocument';
+import { Api_Document, Api_DocumentRelationship } from '@/models/api/Document';
+import { getPage } from '@/utils';
 
 import { getDocumentColumns } from './DocumentResultsColumns';
 

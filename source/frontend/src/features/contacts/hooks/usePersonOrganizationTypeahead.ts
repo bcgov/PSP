@@ -1,7 +1,8 @@
-import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
-import { IAutocompletePrediction } from 'interfaces';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+
+import { useApiAutocomplete } from '@/hooks/pims-api/useApiAutocomplete';
+import { IAutocompletePrediction } from '@/interfaces';
 
 interface IPersonOrganizationTypeahead {
   handleTypeaheadSearch: (query: string) => Promise<void>;

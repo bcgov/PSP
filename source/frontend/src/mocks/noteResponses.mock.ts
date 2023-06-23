@@ -1,4 +1,4 @@
-import { Api_EntityNote, Api_Note } from 'models/api/Note';
+import { Api_EntityNote, Api_Note } from '@/models/api/Note';
 
 export const mockNotesResponse = (): Api_Note[] => {
   return [

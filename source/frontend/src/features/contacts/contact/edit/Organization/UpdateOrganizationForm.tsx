@@ -1,29 +1,33 @@
-import { Button } from 'components/common/buttons/Button';
-import { Select } from 'components/common/form';
-import { FormSection } from 'components/common/form/styles';
-import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
-import { FlexBox } from 'components/common/styles';
-import TooltipIcon from 'components/common/TooltipIcon';
+import { Formik, FormikHelpers, FormikProps, getIn } from 'formik';
+import React, { useMemo, useState } from 'react';
+import { Col } from 'react-bootstrap';
+import { AiOutlineExclamationCircle } from 'react-icons/ai';
+import { Link, useHistory } from 'react-router-dom';
+
+import { Button } from '@/components/common/buttons/Button';
+import { Select } from '@/components/common/form';
+import { FormSection } from '@/components/common/form/styles';
+import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
+import { FlexBox } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import {
   Address,
   CancelConfirmationModal,
   CommentNotes,
   useAddressHelpers,
-} from 'features/contacts/contact/create/components';
-import * as Styled from 'features/contacts/contact/edit/styles';
+} from '@/features/contacts/contact/create/components';
+import * as Styled from '@/features/contacts/contact/edit/styles';
 import {
   apiOrganizationToFormOrganization,
   formOrganizationToApiOrganization,
-} from 'features/contacts/contactUtils';
-import { useOrganizationDetail } from 'features/contacts/hooks/useOrganizationDetail';
-import useUpdateContact from 'features/contacts/hooks/useUpdateContact';
-import { Formik, FormikHelpers, FormikProps, getIn } from 'formik';
-import { defaultCreateOrganization, IEditableOrganizationForm } from 'interfaces/editable-contact';
-import { IContactPerson } from 'interfaces/IContact';
-import React, { useMemo, useState } from 'react';
-import { Col } from 'react-bootstrap';
-import { AiOutlineExclamationCircle } from 'react-icons/ai';
-import { Link, useHistory } from 'react-router-dom';
+} from '@/features/contacts/contactUtils';
+import { useOrganizationDetail } from '@/features/contacts/hooks/useOrganizationDetail';
+import useUpdateContact from '@/features/contacts/hooks/useUpdateContact';
+import {
+  defaultCreateOrganization,
+  IEditableOrganizationForm,
+} from '@/interfaces/editable-contact';
+import { IContactPerson } from '@/interfaces/IContact';
 
 import { OrganizationSubForm } from '../../Organization/OrganizationSubForm';
 import { onValidateOrganization } from '../../utils/contactUtils';

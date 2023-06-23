@@ -1,6 +1,7 @@
-import { ILease } from 'interfaces';
 import * as React from 'react';
 import styled from 'styled-components';
+
+import { ILease } from '@/interfaces';
 
 export interface ILeaseStatusSummaryProps {
   lease?: ILease;

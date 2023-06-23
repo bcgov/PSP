@@ -1,16 +1,17 @@
 import { AxiosResponse } from 'axios';
-import { FileTypes } from 'constants/fileTypes';
+import { useCallback, useMemo } from 'react';
+
+import { FileTypes } from '@/constants/fileTypes';
 import {
   deleteFileForm,
   getFileForm,
   getFileForms,
   getFormDocumentTypesApi,
   postFileFormApi,
-} from 'hooks/pims-api/useApiFormDocument';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { Api_FormDocumentFile, Api_FormDocumentType } from 'models/api/FormDocument';
-import { useCallback, useMemo } from 'react';
-import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
+} from '@/hooks/pims-api/useApiFormDocument';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { Api_FormDocumentFile, Api_FormDocumentType } from '@/models/api/FormDocument';
+import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 /**
  * hook that interacts with the Form documents API.

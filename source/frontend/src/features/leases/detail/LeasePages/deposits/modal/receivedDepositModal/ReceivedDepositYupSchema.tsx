@@ -1,5 +1,6 @@
-import { MAX_SQL_MONEY_SIZE } from 'constants/API';
 import * as Yup from 'yup';
+
+import { MAX_SQL_MONEY_SIZE } from '@/constants/API';
 
 export const ReceivedDepositYupSchema = Yup.object().shape({
   depositTypeCode: Yup.string().required('Deposit Type is required'),

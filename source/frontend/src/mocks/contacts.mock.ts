@@ -1,5 +1,5 @@
-import { IContactSearchResult } from 'interfaces/IContactSearchResult';
-import { Api_Person } from 'models/api/Person';
+import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
+import { Api_Person } from '@/models/api/Person';
 export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult => ({
   id: 'O3',
   organizationId: 3,

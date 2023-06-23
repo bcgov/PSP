@@ -1,10 +1,11 @@
-import { RemoveButton } from 'components/common/buttons';
-import { Input, Select } from 'components/common/form';
-import { Stack } from 'components/common/Stack/Stack';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { MdClose } from 'react-icons/md';
-import { withNameSpace } from 'utils/formUtils';
+
+import { RemoveButton } from '@/components/common/buttons';
+import { Input, Select } from '@/components/common/form';
+import { Stack } from '@/components/common/Stack/Stack';
+import { withNameSpace } from '@/utils/formUtils';
 
 import useContactInfoHelpers from './useContactInfoHelpers';
 

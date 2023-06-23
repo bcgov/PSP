@@ -1,9 +1,10 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultFormLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
-import { mockParcel } from 'mocks/filterData.mock';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { defaultFormLease, IFormLease } from '@/interfaces';
+import { mockParcel } from '@/mocks/filterData.mock';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertiesInformation, { IPropertiesInformationProps } from './PropertiesInformation';
 

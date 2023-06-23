@@ -1,5 +1,6 @@
-import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import * as Yup from 'yup';
+
+import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
 
 export const getDocumentMetadataYupSchema = (
   mayanMetadata: Api_Storage_DocumentTypeMetadataType[],

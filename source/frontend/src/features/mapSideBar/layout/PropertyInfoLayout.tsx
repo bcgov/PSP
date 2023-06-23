@@ -1,10 +1,11 @@
-import { ReactComponent as LotSvg } from 'assets/images/icon-lot.svg';
-import * as Styled from 'components/common/styles';
-import TooltipWrapper from 'components/common/TooltipWrapper';
 import { title } from 'process';
 import * as React from 'react';
 import { FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
+
+import { ReactComponent as LotSvg } from '@/assets/images/icon-lot.svg';
+import * as Styled from '@/components/common/styles';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 
 interface IPropertyInfoLayoutProps {
   setShowSideBar: (show: boolean) => void;

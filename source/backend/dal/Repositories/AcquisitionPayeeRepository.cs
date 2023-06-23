@@ -42,7 +42,6 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(os => os.Organization)
                 .Include(ap => ap.OwnerSolicitor)
                     .ThenInclude(os => os.Person)
-                .Include(ap => ap.PimsAcqPayeeCheques)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.AcquisitionPayeeId.Equals(payeeId)) ?? throw new KeyNotFoundException();
 

@@ -1,16 +1,15 @@
 import { render } from '@testing-library/react';
-import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import { useFormikContext } from 'formik';
 import React from 'react';
+
+import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
 import { SelectInput } from './SelectInput';
 
 jest.mock('formik');
 
 (useFormikContext as jest.Mock).mockReturnValue({
-  values: {
-    includeAllProperties: false,
-  },
+  values: {},
   setFieldValue: jest.fn(),
 });
 describe('SelectInput tests', () => {

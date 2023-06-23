@@ -1,4 +1,4 @@
-import { Api_User } from 'models/api/User';
+import { Api_User } from '@/models/api/User';
 
 export const getUserMock = (): Api_User => ({
   id: 30,

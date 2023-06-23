@@ -1,8 +1,9 @@
-import { LoadingBackdropProps } from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { CSSProperties } from 'react';
 import { Breadcrumb as BsBreadcrumb } from 'react-bootstrap';
 import { Tabs as BsTabs } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
+
+import { LoadingBackdropProps } from '@/components/common/LoadingBackdrop';
 
 import { Button } from './buttons';
 import { Form } from './form';

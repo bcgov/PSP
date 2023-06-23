@@ -1,13 +1,14 @@
-import { TableSort } from 'components/Table/TableSort';
-import * as API from 'constants/API';
-import { Claims } from 'constants/claims';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { IFormFilter } from 'interfaces/IFormResults';
-import { Api_FormDocumentFile, Api_FormDocumentType } from 'models/api/FormDocument';
 import * as React from 'react';
 import { useHistory, useRouteMatch } from 'react-router';
+
+import { Section } from '@/components/common/Section/Section';
+import { TableSort } from '@/components/Table/TableSort';
+import * as API from '@/constants/API';
+import { Claims } from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { IFormFilter } from '@/interfaces/IFormResults';
+import { Api_FormDocumentFile, Api_FormDocumentType } from '@/models/api/FormDocument';
 
 import { AddForm } from './AddForm';
 import { FormFilter } from './FormFilter';
