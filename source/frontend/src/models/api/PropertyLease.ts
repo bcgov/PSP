@@ -1,5 +1,5 @@
-import { Api_Lease } from 'models/api/Lease';
-import Api_TypeCode from 'models/api/TypeCode';
+import { Api_Lease } from '@/models/api/Lease';
+import Api_TypeCode from '@/models/api/TypeCode';
 
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_Property } from './Property';

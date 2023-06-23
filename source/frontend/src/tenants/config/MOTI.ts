@@ -1,10 +1,11 @@
-import { ITenantConfig } from '..';
+import { ITenantConfig2 } from '@/hooks/pims-api/interfaces/ITenantConfig';
+
 import defaultTenant from './defaultTenant';
 
 /**
  * Tenant configuration settings for MOTI.
  */
-export const config: ITenantConfig = {
+export const config: ITenantConfig2 = {
   ...defaultTenant,
   ...{
     id: 'MOTI',

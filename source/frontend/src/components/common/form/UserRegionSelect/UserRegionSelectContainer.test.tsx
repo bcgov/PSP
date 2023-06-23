@@ -1,10 +1,11 @@
 import { cleanup } from '@testing-library/react-hooks';
 import { Formik } from 'formik';
-import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/index.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { SelectProps } from '../Select';
 import {
@@ -19,7 +20,7 @@ const retrieveUserInfo = jest.fn();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
-jest.mock('hooks/repositories/useUserInfoRepository');
+jest.mock('@/hooks/repositories/useUserInfoRepository');
 (useUserInfoRepository as jest.Mock).mockReturnValue({
   retrieveUserInfo,
   retrieveUserInfoLoading: true,

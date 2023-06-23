@@ -1,6 +1,6 @@
-import GenericModal from 'components/common/GenericModal';
-import { useConfiguration } from 'hooks/useConfiguration';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import GenericModal from '@/components/common/GenericModal';
+import { useConfiguration } from '@/hooks/useConfiguration';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 export interface IRoleMismatchModalProps {
   display: boolean;

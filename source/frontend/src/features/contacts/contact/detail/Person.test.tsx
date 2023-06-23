@@ -1,14 +1,15 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { AddressTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
+
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { AddressTypes } from '@/constants/index';
 import {
   IContactAddress,
   IContactMethod,
   IContactOrganization,
   IContactPerson,
-} from 'interfaces/IContact';
-import { phoneFormatter } from 'utils/formUtils';
-import { render, RenderOptions } from 'utils/test-utils';
+} from '@/interfaces/IContact';
+import { phoneFormatter } from '@/utils/formUtils';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import PersonView, { PersonViewProps } from './Person';
 import { fakeAddresses } from './utils';

@@ -1,35 +1,36 @@
-import { Button } from 'components/common/buttons/Button';
-import { Select } from 'components/common/form';
-import { FormSection } from 'components/common/form/styles';
-import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
-import { FlexBox } from 'components/common/styles';
-import { AddressTypes } from 'constants/addressTypes';
-import {
-  CancelConfirmationModal,
-  useAddressHelpers,
-} from 'features/contacts/contact/create/components';
-import * as Styled from 'features/contacts/contact/edit/styles';
-import {
-  apiAddressToFormAddress,
-  apiPersonToFormPerson,
-  formPersonToApiPerson,
-  getApiMailingAddress,
-} from 'features/contacts/contactUtils';
-import { usePersonDetail } from 'features/contacts/hooks/usePersonDetail';
-import useUpdateContact from 'features/contacts/hooks/useUpdateContact';
 import { Formik, FormikHelpers, FormikProps, getIn } from 'formik';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { usePrevious } from 'hooks/usePrevious';
-import {
-  defaultCreatePerson,
-  getDefaultAddress,
-  IEditablePersonForm,
-} from 'interfaces/editable-contact';
 import { useEffect, useMemo, useState } from 'react';
 import { Col } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
+import { Button } from '@/components/common/buttons/Button';
+import { Select } from '@/components/common/form';
+import { FormSection } from '@/components/common/form/styles';
+import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
+import { FlexBox } from '@/components/common/styles';
+import { AddressTypes } from '@/constants/addressTypes';
+import {
+  CancelConfirmationModal,
+  useAddressHelpers,
+} from '@/features/contacts/contact/create/components';
+import * as Styled from '@/features/contacts/contact/edit/styles';
+import {
+  apiAddressToFormAddress,
+  apiPersonToFormPerson,
+  formPersonToApiPerson,
+  getApiMailingAddress,
+} from '@/features/contacts/contactUtils';
+import { usePersonDetail } from '@/features/contacts/hooks/usePersonDetail';
+import useUpdateContact from '@/features/contacts/hooks/useUpdateContact';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { usePrevious } from '@/hooks/usePrevious';
+import {
+  defaultCreatePerson,
+  getDefaultAddress,
+  IEditablePersonForm,
+} from '@/interfaces/editable-contact';
 
 import PersonSubForm from '../../Person/PersonSubForm';
 import { onValidatePerson } from '../../utils/contactUtils';

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
@@ -15,13 +17,15 @@ namespace Pims.Api.Services
         private readonly ILogger _logger;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
         private readonly IAcquisitionPayeeRepository _acquisitionPayeeRepository;
+        private readonly IEntityNoteRepository _entityNoteRepository;
 
-        public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository, IAcquisitionPayeeRepository acquisitionPayeeRepository)
+        public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository, IAcquisitionPayeeRepository acquisitionPayeeRepository, IEntityNoteRepository entityNoteRepository)
         {
             _user = user;
             _logger = logger;
             _compensationRequisitionRepository = compensationRequisitionRepository;
             _acquisitionPayeeRepository = acquisitionPayeeRepository;
+            _entityNoteRepository = entityNoteRepository;
         }
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
@@ -33,13 +37,14 @@ namespace Pims.Api.Services
             var compensationPayee = compensationRequisition.PimsAcquisitionPayees?.FirstOrDefault();
             if (compensationRequisition is not null && compensationPayee is not null)
             {
-                var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
+                // TODO fix this
+                /*var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
                 if (payeeCheque is not null)
                 {
                     payeeCheque.PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
                     payeeCheque.TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
                     payeeCheque.TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
-                }
+                }*/
             }
 
             return compensationRequisition;
@@ -51,66 +56,25 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
             var compensationRequisition = _compensationRequisitionRepository.GetById(compensationRequisitionId);
-            var tempPayee = compensationRequisition.PimsAcquisitionPayees.FirstOrDefault();
-            if (tempPayee != null)
+            if (compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is null)
             {
-                var compensationPayee = _acquisitionPayeeRepository.GetById(tempPayee.AcquisitionPayeeId);
-                if (compensationRequisition is not null && compensationPayee is not null)
-                {
-                    var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
-                    if (payeeCheque is not null)
-                    {
-                        payeeCheque.PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
-                        payeeCheque.TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
-                        payeeCheque.TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
-                    }
-                }
-                return compensationPayee;
+                throw new KeyNotFoundException();
             }
 
-            return null;
+            return _acquisitionPayeeRepository.GetById(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault().AcquisitionPayeeId);
         }
 
         public PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition)
         {
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionEdit);
             compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
-
             _logger.LogInformation($"Updating Compensation Requisition with id ${compensationRequisition.CompensationRequisitionId}");
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
-            var currentPayee = currentCompensation.PimsAcquisitionPayees.FirstOrDefault();
-            var updatedPayee = compensationRequisition.PimsAcquisitionPayees.FirstOrDefault();
-            var payeeCheque = updatedPayee?.PimsAcqPayeeCheques.FirstOrDefault();
-
-            if (currentPayee != null && updatedPayee != null)
-            {
-                if (currentPayee.InterestHolderId != updatedPayee.InterestHolderId ||
-                    currentPayee.AcquisitionOwnerId != updatedPayee.AcquisitionOwnerId ||
-                    currentPayee.OwnerSolicitorId != updatedPayee.OwnerSolicitorId ||
-                    currentPayee.AcquisitionFilePersonId != updatedPayee.AcquisitionFilePersonId ||
-                    currentPayee.OwnerRepresentativeId != updatedPayee.OwnerRepresentativeId)
-                {
-                    // Given there  is only one payee per compensation, set the existing ids for the compensation requisition payee.
-                    updatedPayee.CompensationRequisitionId = currentPayee.CompensationRequisitionId;
-                    updatedPayee.AcquisitionPayeeId = currentPayee.AcquisitionPayeeId;
-                    updatedPayee.ConcurrencyControlNumber = currentPayee.ConcurrencyControlNumber;
-                    _compensationRequisitionRepository.UpdatePayee(updatedPayee);
-                }
-            }
-
-            if (payeeCheque is not null && payeeCheque.AcqPayeeChequeId > 0)
-            {
-                _compensationRequisitionRepository.UpdatePayeeCheque(payeeCheque);
-            }
-            else
-            {
-                payeeCheque.AcquisitionPayeeId = updatedPayee.AcquisitionPayeeId;
-                _compensationRequisitionRepository.AddPayeeCheque(payeeCheque);
-            }
+            (bool? currentStatus, bool? newStatus) compReqStatusComparable = (currentStatus: currentCompensation.IsDraft, newStatus: compensationRequisition.IsDraft);
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
-
+            AddNoteIfStatusChanged(compensationRequisition.Internal_Id, compensationRequisition.AcquisitionFileId, compReqStatusComparable);
             _compensationRequisitionRepository.CommitTransaction();
 
             return updatedEntity;
@@ -124,6 +88,45 @@ namespace Pims.Api.Services
             var fileFormToDelete = _compensationRequisitionRepository.TryDelete(compensationId);
             _compensationRequisitionRepository.CommitTransaction();
             return fileFormToDelete;
+        }
+
+        private static string GetCompensationRequisitionStatusText(bool? isDraft)
+        {
+            if (isDraft.HasValue)
+            {
+                return isDraft.Value ? "'Draft'" : "'Final'";
+            }
+            else
+            {
+                return "'No Status'";
+            }
+        }
+
+        private void AddNoteIfStatusChanged(long compensationRequisitionId, long acquisitionFileId, (bool? currentStatus, bool? newStatus) statusComparable)
+        {
+            if (statusComparable.currentStatus.Equals(statusComparable.newStatus))
+            {
+                return;
+            }
+
+            var curentStatusText = GetCompensationRequisitionStatusText(statusComparable.currentStatus);
+            var newStatusText = GetCompensationRequisitionStatusText(statusComparable.newStatus);
+
+            PimsAcquisitionFileNote fileNoteInstance = new()
+            {
+                AcquisitionFileId = acquisitionFileId,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = _user.GetUsername(),
+                Note = new PimsNote()
+                {
+                    IsSystemGenerated = true,
+                    NoteTxt = $"Compensation Requisition with # {compensationRequisitionId}, changed status from {curentStatusText} to {newStatusText}",
+                    AppCreateTimestamp = DateTime.Now,
+                    AppCreateUserid = this._user.GetUsername(),
+                },
+            };
+
+            _entityNoteRepository.Add(fileNoteInstance);
         }
     }
 }

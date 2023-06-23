@@ -1,4 +1,4 @@
-import { Api_Activity } from 'models/api/Activity';
+import { Api_Activity } from '@/models/api/Activity';
 
 export const mockActivitiesResponse = (): Api_Activity[] => [
   {

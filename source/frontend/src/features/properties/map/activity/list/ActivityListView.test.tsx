@@ -1,12 +1,14 @@
 import { screen } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import Claims from 'constants/claims';
-import { FileTypes } from 'constants/fileTypes';
 import { createMemoryHistory } from 'history';
-import { mockActivitiesResponse } from 'mocks/activities.mock';
-import { mockLookups } from 'mocks/index.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
+
+import Claims from '@/constants/claims';
+import { FileTypes } from '@/constants/fileTypes';
+import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
+import { mockActivitiesResponse } from '@/mocks/activities.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   render,
@@ -14,9 +16,8 @@ import {
   userEvent,
   waitFor,
   waitForElementToBeRemoved,
-} from 'utils/test-utils';
+} from '@/utils/test-utils';
 
-import { SideBarContextProvider } from '../../context/sidebarContext';
 import ActivityListView, { IActivityListViewProps } from './ActivityListView';
 
 const mockAxios = new MockAdapter(axios);

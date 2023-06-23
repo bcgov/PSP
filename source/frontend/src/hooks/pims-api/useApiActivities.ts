@@ -1,7 +1,7 @@
-import { ENVIRONMENT } from 'constants/environment';
-import { FileTypes } from 'constants/fileTypes';
-import CustomAxios from 'customAxios';
-import { Api_Activity, Api_ActivityTemplate, Api_FileActivity } from 'models/api/Activity';
+import { ENVIRONMENT } from '@/constants/environment';
+import { FileTypes } from '@/constants/fileTypes';
+import CustomAxios from '@/customAxios';
+import { Api_Activity, Api_ActivityTemplate, Api_FileActivity } from '@/models/api/Activity';
 
 export const getActivity = (activityId: number) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_Activity>(`/activities/${activityId}`);

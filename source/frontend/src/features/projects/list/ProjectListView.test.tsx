@@ -1,7 +1,8 @@
 import userEvent from '@testing-library/user-event';
-import { Claims } from 'constants/index';
-import { useApiProjects } from 'hooks/pims-api/useApiProjects';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
+
+import { Claims } from '@/constants/index';
+import { useApiProjects } from '@/hooks/pims-api/useApiProjects';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   fillInput,
@@ -9,7 +10,7 @@ import {
   RenderOptions,
   waitFor,
   waitForElementToBeRemoved,
-} from 'utils/test-utils';
+} from '@/utils/test-utils';
 
 import { IProjectFilter } from '..';
 import { ProjectListView } from './ProjectListView';
@@ -20,7 +21,7 @@ const storeState = {
 };
 
 jest.mock('@react-keycloak/web');
-jest.mock('hooks/pims-api/useApiProjects');
+jest.mock('@/hooks/pims-api/useApiProjects');
 const searchProjects = jest.fn();
 (useApiProjects as jest.Mock).mockReturnValue({
   searchProjects,

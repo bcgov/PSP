@@ -1,10 +1,10 @@
-import { ActivityTrayPage, CloseButton, TrayHeader } from 'components/common/styles';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { Api_FormDocumentFile } from 'models/api/FormDocument';
 import * as React from 'react';
 import { MdClose } from 'react-icons/md';
 
-import { IFormContent } from '../../shared/content/models';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { ActivityTrayPage, CloseButton, TrayHeader } from '@/components/common/styles';
+import { IFormContent } from '@/features/mapSideBar/shared/content/models';
+import { Api_FormDocumentFile } from '@/models/api/FormDocument';
 
 export interface IFormViewProps {
   loading: boolean;

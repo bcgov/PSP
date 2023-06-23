@@ -1,7 +1,8 @@
-import { Api_Agreement } from 'models/api/Agreement';
 import React from 'react';
 
-import { useAxiosApi } from '.';
+import { Api_Agreement } from '@/models/api/Agreement';
+
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the agreements endpoints.

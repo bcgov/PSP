@@ -1,7 +1,8 @@
-import { TextArea } from 'components/common/form';
-import { FlexBox } from 'components/common/styles';
-import * as Styled from 'features/contacts/contact/create/styles';
 import React from 'react';
+
+import { TextArea } from '@/components/common/form';
+import { FlexBox } from '@/components/common/styles';
+import * as Styled from '@/features/contacts/contact/create/styles';
 
 export interface ICommentNotesProps {}
 

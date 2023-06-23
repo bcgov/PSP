@@ -1,6 +1,7 @@
-import { H1 } from 'components/common/styles';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import { H1 } from '@/components/common/styles';
 
 import EditUserContainer from './EditUserContainer';
 

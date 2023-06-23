@@ -1,6 +1,7 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import { useTenant } from 'tenants';
+
+import { useTenant } from '@/tenants';
 
 /**
  * The IENotSupportedPage prevents users from entering PIMS

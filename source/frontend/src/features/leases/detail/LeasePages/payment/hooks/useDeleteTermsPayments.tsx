@@ -1,11 +1,12 @@
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
+import { useCallback, useContext, useState } from 'react';
+
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import {
   formLeasePaymentToApiPayment,
   formLeaseTermToApiLeaseTerm,
   IFormLeasePayment,
   IFormLeaseTerm,
-} from 'interfaces';
-import { useCallback, useContext, useState } from 'react';
+} from '@/interfaces';
 
 import { useLeasePayments } from './usePayments';
 import { useLeaseTerms } from './useTerms';

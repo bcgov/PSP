@@ -1,10 +1,12 @@
-import { IProjectFilter } from 'features/projects';
-import { IPagedItems } from 'interfaces';
-import { Api_Product, Api_Project } from 'models/api/Project';
 import queryString from 'query-string';
 import React from 'react';
 
-import { IPaginateRequest, useAxiosApi } from '.';
+import { IProjectFilter } from '@/features/projects';
+import { IPagedItems } from '@/interfaces';
+import { Api_Product, Api_Project } from '@/models/api/Project';
+
+import { IPaginateRequest } from './interfaces/IPaginateRequest';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the Project endpoints.

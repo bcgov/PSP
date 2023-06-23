@@ -1,29 +1,24 @@
-import { IUserLayerQuery, useLayerQuery } from 'components/maps/leaflet/LayerPopup';
-import useIsMounted from 'hooks/useIsMounted';
-import { LatLngLiteral } from 'leaflet';
-import { Api_Property } from 'models/api/Property';
 import { useEffect, useMemo, useState } from 'react';
+
+import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
+import { useIndianReserveBandMapLayer } from '@/hooks/repositories/mapLayer/useIndianReserveBandMapLayer';
+import { useLegalAdminBoundariesMapLayer } from '@/hooks/repositories/mapLayer/useLegalAdminBoundariesMapLayer';
+import useIsMounted from '@/hooks/util/useIsMounted';
+import { Api_Property } from '@/models/api/Property';
 
 import {
   IPropertyDetailsForm,
   toFormValues,
-} from '../tabs/propertyDetails/detail/PropertyDetailsTabView.helpers';
-import { useTenant } from './../../../tenants/useTenant';
+} from '../property/tabs/propertyDetails/detail/PropertyDetailsTabView.helpers';
 
 export function usePropertyDetails(property?: Api_Property): IPropertyDetailsForm | undefined {
   const isMounted = useIsMounted();
-  const {
-    motiRegionLayerUrl,
-    hwyDistrictLayerUrl,
-    electoralLayerUrl,
-    alrLayerUrl,
-    reservesLayerUrl,
-  } = useTenant();
-  const motiRegionService = useLayerQuery(motiRegionLayerUrl);
-  const highwaysDistrictService = useLayerQuery(hwyDistrictLayerUrl);
-  const electoralService = useLayerQuery(electoralLayerUrl);
-  const alrService = useLayerQuery(alrLayerUrl);
-  const firstNationsService = useLayerQuery(reservesLayerUrl);
+  const electoralService_ = useAdminBoundaryMapLayer();
+  const findElectoralDistrict = electoralService_.findElectoralDistrict;
+  const legalAdminService_ = useLegalAdminBoundariesMapLayer();
+  const findOneAgriculturalReserve = legalAdminService_.findOneAgriculturalReserve;
+  const firstNationsService_ = useIndianReserveBandMapLayer();
+  const findFirstNation = firstNationsService_.findOne;
 
   const [propertyViewForm, setPropertyViewForm] = useState<IPropertyDetailsForm | undefined>(
     undefined,
@@ -50,19 +45,20 @@ export function usePropertyDetails(property?: Api_Property): IPropertyDetailsFor
   useEffect(() => {
     async function fn() {
       // Query BC Geographic Warehouse layers - ONLY if lat, long have been provided!
+
       if (location !== undefined) {
-        const electoralDistrict = await findByLocation(electoralService, location);
-        const alr = await alrService.findOneWhereContains(location, 'GEOMETRY');
-        const firstNations = await findByLocation(firstNationsService, location, 'GEOMETRY');
+        const electoralDistrictFeature = await findElectoralDistrict(location);
+        const alrFeature = await findOneAgriculturalReserve(location, 'GEOMETRY');
+        const firstNationsFeature = await findFirstNation(location, 'GEOMETRY');
 
         if (isMounted()) {
           const newState: IPropertyDetailsForm = {
             ...toFormValues(property),
-            electoralDistrict,
-            isALR: alr?.features?.length > 0,
+            electoralDistrict: electoralDistrictFeature,
+            isALR: alrFeature !== undefined,
             firstNations: {
-              bandName: firstNations?.BAND_NAME,
-              reserveName: firstNations?.ENGLISH_NAME,
+              bandName: firstNationsFeature?.properties.BAND_NAME || '',
+              reserveName: firstNationsFeature?.properties.ENGLISH_NAME || '',
             },
           };
 
@@ -83,25 +79,13 @@ export function usePropertyDetails(property?: Api_Property): IPropertyDetailsFor
 
     fn();
   }, [
-    alrService,
-    electoralService,
-    firstNationsService,
-    highwaysDistrictService,
+    findElectoralDistrict,
+    findOneAgriculturalReserve,
+    findFirstNation,
     isMounted,
     location,
-    motiRegionService,
     property,
   ]);
 
   return propertyViewForm;
-}
-
-async function findByLocation(
-  service: IUserLayerQuery,
-  latlng: LatLngLiteral,
-  geometryName: string = 'SHAPE',
-) {
-  const response = await service.findOneWhereContains(latlng, geometryName);
-  const featureProps = response?.features?.[0]?.properties;
-  return featureProps;
 }

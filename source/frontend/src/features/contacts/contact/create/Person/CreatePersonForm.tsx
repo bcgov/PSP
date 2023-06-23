@@ -1,31 +1,32 @@
-import { Button } from 'components/common/buttons/Button';
-import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
-import { FlexBox } from 'components/common/styles';
-import { AddressTypes } from 'constants/addressTypes';
-import {
-  CancelConfirmationModal,
-  DuplicateContactModal,
-  useAddressHelpers,
-} from 'features/contacts/contact/create/components';
-import * as Styled from 'features/contacts/contact/create/styles';
-import {
-  apiAddressToFormAddress,
-  formPersonToApiPerson,
-  getApiMailingAddress,
-} from 'features/contacts/contactUtils';
-import useAddContact from 'features/contacts/hooks/useAddContact';
 import { Formik, FormikHelpers, FormikProps, getIn } from 'formik';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { usePrevious } from 'hooks/usePrevious';
-import {
-  defaultCreatePerson,
-  getDefaultAddress,
-  IEditablePersonForm,
-} from 'interfaces/editable-contact';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
+import { Button } from '@/components/common/buttons/Button';
+import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
+import { FlexBox } from '@/components/common/styles';
+import { AddressTypes } from '@/constants/addressTypes';
+import {
+  CancelConfirmationModal,
+  DuplicateContactModal,
+  useAddressHelpers,
+} from '@/features/contacts/contact/create/components';
+import * as Styled from '@/features/contacts/contact/create/styles';
+import {
+  apiAddressToFormAddress,
+  formPersonToApiPerson,
+  getApiMailingAddress,
+} from '@/features/contacts/contactUtils';
+import useAddContact from '@/features/contacts/hooks/useAddContact';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { usePrevious } from '@/hooks/usePrevious';
+import {
+  defaultCreatePerson,
+  getDefaultAddress,
+  IEditablePersonForm,
+} from '@/interfaces/editable-contact';
 
 import PersonSubForm from '../../Person/PersonSubForm';
 import { onValidatePerson } from '../../utils/contactUtils';

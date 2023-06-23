@@ -1,5 +1,5 @@
-import { Api_InterestHolder, Api_InterestHolderProperty } from 'models/api/InterestHolder';
-import { formatNames } from 'utils/personUtils';
+import { Api_InterestHolder, Api_InterestHolderProperty } from '@/models/api/InterestHolder';
+import { formatNames } from '@/utils/personUtils';
 
 export class Api_GenerateInterestHolder {
   interestHolderName: string;

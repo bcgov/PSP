@@ -1,12 +1,13 @@
-import profileUrl from 'assets/images/profile.svg';
-import variables from 'assets/scss/_variables.module.scss';
-import { useConfiguration } from 'hooks/useConfiguration';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import React from 'react';
 import Image from 'react-bootstrap/Image';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FaSignOutAlt } from 'react-icons/fa';
 import styled from 'styled-components';
+
+import profileUrl from '@/assets/images/profile.svg';
+import variables from '@/assets/scss/_variables.module.scss';
+import { useConfiguration } from '@/hooks/useConfiguration';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 /** the styling for the dropdown menu that appears after clicking the user's name */
 const StyleDropDown = styled(NavDropdown)`

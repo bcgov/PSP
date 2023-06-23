@@ -1,20 +1,21 @@
-import GenericModal from 'components/common/GenericModal';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
-import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
-import { LeasePageProps } from 'features/properties/map/lease/LeaseContainer';
 import { FormikProps } from 'formik';
+import { find, noop } from 'lodash';
+import * as React from 'react';
+import { useCallback } from 'react';
+import { useContext, useState } from 'react';
+
+import GenericModal from '@/components/common/GenericModal';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { apiLeaseToFormLease } from '@/features/leases/leaseUtils';
+import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import {
   defaultLease,
   formLeasePaymentToApiPayment,
   IFormLease,
   IFormLeasePayment,
-} from 'interfaces';
-import { formLeaseTermToApiLeaseTerm, IFormLeaseTerm, ILeaseTerm } from 'interfaces/ILeaseTerm';
-import { find, noop } from 'lodash';
-import * as React from 'react';
-import { useCallback } from 'react';
-import { useContext, useState } from 'react';
-import { SystemConstants, useSystemConstants } from 'store/slices/systemConstants';
+} from '@/interfaces';
+import { formLeaseTermToApiLeaseTerm, IFormLeaseTerm, ILeaseTerm } from '@/interfaces/ILeaseTerm';
+import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
 import { useDeleteTermsPayments } from './hooks/useDeleteTermsPayments';
 import { useLeasePayments } from './hooks/usePayments';

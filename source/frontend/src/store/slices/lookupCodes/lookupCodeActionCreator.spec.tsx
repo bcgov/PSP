@@ -2,14 +2,15 @@ import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { ORGANIZATION_TYPES } from 'constants/API';
 import { find, values } from 'lodash';
-import * as MOCK from 'mocks/data.mock';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { useLookupCodes } from 'store/slices/lookupCodes/useLookupCodes';
+
+import { ORGANIZATION_TYPES } from '@/constants/API';
+import * as MOCK from '@/mocks/data.mock';
+import { useLookupCodes } from '@/store/slices/lookupCodes/useLookupCodes';
 
 import { networkSlice } from '../network/networkSlice';
 

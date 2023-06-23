@@ -1,5 +1,6 @@
-import GenericModal, { ModalProps } from 'components/common/GenericModal';
 import React from 'react';
+
+import GenericModal, { ModalProps } from '@/components/common/GenericModal';
 
 export const CancelConfirmationModal: React.FC<React.PropsWithChildren<ModalProps>> = props => {
   const {

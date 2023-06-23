@@ -1,6 +1,7 @@
-import { MAX_SQL_MONEY_SIZE } from 'constants/API';
-import { LeaseTermStatusTypes } from 'constants/index';
 import * as Yup from 'yup';
+
+import { MAX_SQL_MONEY_SIZE } from '@/constants/API';
+import { LeaseTermStatusTypes } from '@/constants/index';
 
 export const LeaseTermSchema = Yup.object().shape({
   startDate: Yup.date().required('Required'),

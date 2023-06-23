@@ -1,7 +1,8 @@
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import { ReactElement } from 'react';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import { ContactBreadcrumb } from '../..';
 

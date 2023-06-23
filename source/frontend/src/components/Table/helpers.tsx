@@ -1,6 +1,7 @@
-import Api_TypeCode from 'models/api/TypeCode';
 import { CellProps } from 'react-table';
-import { formatMoney, formatNumber, prettyFormatDate, stringToFragment } from 'utils';
+
+import Api_TypeCode from '@/models/api/TypeCode';
+import { formatMoney, formatNumber, prettyFormatDate, stringToFragment } from '@/utils';
 
 /**
  * These helper methods below provide ways to render common values on a Table cell;

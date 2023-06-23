@@ -1,12 +1,13 @@
 import axios, { AxiosError } from 'axios';
-import { useApiInsurances } from 'hooks/pims-api/useApiInsurances';
-import { IInsurance } from 'interfaces';
-import { IBatchUpdateRequest } from 'interfaces/batchUpdate';
-import { IApiError } from 'interfaces/IApiError';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
-import { logError } from 'store/slices/network/networkSlice';
+
+import { useApiInsurances } from '@/hooks/pims-api/useApiInsurances';
+import { IInsurance } from '@/interfaces';
+import { IBatchUpdateRequest } from '@/interfaces/batchUpdate';
+import { IApiError } from '@/interfaces/IApiError';
+import { logError } from '@/store/slices/network/networkSlice';
 
 /**
  * hook that creates or updates insurances.

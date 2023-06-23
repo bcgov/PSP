@@ -1,7 +1,8 @@
-import { Menu } from 'components/menu/Menu';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import { CellProps } from 'react-table';
+
+import { Menu } from '@/components/menu/Menu';
 
 import { useUsers } from '../hooks/useUsers';
 import { FormUser } from '../models';

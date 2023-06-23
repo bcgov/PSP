@@ -1,6 +1,7 @@
-import { InputGroup, Select, SelectOption } from 'components/common/form';
 import { getIn, useFormikContext } from 'formik';
 import React from 'react';
+
+import { InputGroup, Select, SelectOption } from '@/components/common/form';
 
 interface ISelectInputProps<SelectTypes> {
   /** Specifies that the HTML element should be disabled */

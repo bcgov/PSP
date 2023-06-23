@@ -1,8 +1,7 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { cleanup } from '@testing-library/react-hooks';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React from 'react';
 import renderer from 'react-test-renderer';
 
 import { ParentSelect } from './ParentSelect';
@@ -66,9 +65,10 @@ it('changes to corresponding child value on click', async () => {
     });
   });
   const childElement = getByRole('option');
-  await waitFor(() => {
+  await act(async () => {
     fireEvent.click(childElement);
   });
+
   expect(test).toHaveValue('child');
 });
 

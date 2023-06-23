@@ -1,11 +1,12 @@
 import classNames from 'classnames';
-import TooltipIcon from 'components/common/TooltipIcon';
 import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 import { useRef } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Typeahead, TypeaheadModel, TypeaheadProps } from 'react-bootstrap-typeahead';
 import styled from 'styled-components';
+
+import TooltipIcon from '@/components/common/TooltipIcon';
 
 import TooltipWrapper from '../TooltipWrapper';
 

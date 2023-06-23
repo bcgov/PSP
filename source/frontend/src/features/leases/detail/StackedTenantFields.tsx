@@ -1,8 +1,9 @@
-import OverflowTip from 'components/common/OverflowTip';
-import { InlineFlexDiv } from 'components/common/styles';
-import { ILease } from 'interfaces/ILease';
 import * as React from 'react';
 import styled from 'styled-components';
+
+import OverflowTip from '@/components/common/OverflowTip';
+import { InlineFlexDiv } from '@/components/common/styles';
+import { ILease } from '@/interfaces/ILease';
 
 import { getAllNames } from '../leaseUtils';
 export interface IStackedTenantFieldsProps {

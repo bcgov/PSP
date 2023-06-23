@@ -1,7 +1,8 @@
-import { GenericModal } from 'components/common/GenericModal';
-import { IFormLease } from 'interfaces/ILease';
 import filter from 'lodash/filter';
 import * as React from 'react';
+
+import { GenericModal } from '@/components/common/GenericModal';
+import { IFormLease } from '@/interfaces/ILease';
 
 import { FormTenant } from './ViewTenantForm';
 

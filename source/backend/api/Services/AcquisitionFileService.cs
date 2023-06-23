@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Exceptions;
@@ -367,11 +366,15 @@ namespace Pims.Api.Services
 
             // The compensation requisition can only have one payee and one checke, for now add them at creation.
             var newPayee = new PimsAcquisitionPayee();
-            var newCheque = new PimsAcqPayeeCheque();
-            newPayee.PimsAcqPayeeCheques = new List<PimsAcqPayeeCheque>() { newCheque };
+            // TODO fix this
+            /*var newCheque = new PimsAcqPayeeCheque();
+            newPayee.PimsAcqPayeeCheques = new List<PimsAcqPayeeCheque>() { newCheque };*/
 
+            compensationRequisition.IsDraft = compensationRequisition.IsDraft ?? true;
             compensationRequisition.PimsAcquisitionPayees = new List<PimsAcquisitionPayee>() { newPayee };
+
             var newCompensationRequisition = _compensationRequisitionRepository.Add(compensationRequisition);
+
             _compensationRequisitionRepository.CommitTransaction();
 
             return newCompensationRequisition;
@@ -651,7 +654,7 @@ namespace Pims.Api.Services
                     && !acquisitionFile.PimsAcquisitionOwnerReps.Any(x => x.Internal_Id.Equals(payee.OwnerRepresentativeId))
                     && currentAquisitionFile.PimsAcquisitionOwnerReps.Any(x => x.Internal_Id.Equals(payee.OwnerRepresentativeId)))
                 {
-                    throw new ForeignKeyDependencyException("Acquisition File Owner Reperesentative can not be removed since it's assigned as a payee for a compensation requisition");
+                    throw new ForeignKeyDependencyException("Acquisition File Owner Representative can not be removed since it's assigned as a payee for a compensation requisition");
                 }
 
                 // Check for File Person
@@ -659,7 +662,7 @@ namespace Pims.Api.Services
                     && !acquisitionFile.PimsAcquisitionFilePeople.Any(x => x.Internal_Id.Equals(payee.AcquisitionFilePersonId))
                     && currentAquisitionFile.PimsAcquisitionFilePeople.Any(x => x.Internal_Id.Equals(payee.AcquisitionFilePersonId)))
                 {
-                    throw new ForeignKeyDependencyException("Acquisition File Owner Reperesentative can not be removed since it's assigned as a payee for a compensation requisition");
+                    throw new ForeignKeyDependencyException("Acquisition File team member can not be removed since it's assigned as a payee for a compensation requisition");
                 }
             }
         }

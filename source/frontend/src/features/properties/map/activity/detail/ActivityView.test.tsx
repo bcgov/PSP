@@ -1,14 +1,15 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Claims } from 'constants/claims';
-import { FileTypes } from 'constants/fileTypes';
 import { Formik } from 'formik';
 import noop from 'lodash/noop';
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
-import { getMockActivityResponse } from 'mocks/activities.mock';
-import { mockLookups } from 'mocks/index.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { Claims } from '@/constants/claims';
+import { FileTypes } from '@/constants/fileTypes';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { getMockActivityResponse } from '@/mocks/activities.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import { ActivityView, IActivityViewProps } from './ActivityView';
 

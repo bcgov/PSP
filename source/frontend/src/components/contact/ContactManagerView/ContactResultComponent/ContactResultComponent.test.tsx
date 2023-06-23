@@ -1,8 +1,9 @@
 import userEvent from '@testing-library/user-event';
-import { Claims } from 'constants/claims';
-import { IContactSearchResult } from 'interfaces';
 import { noop } from 'lodash';
-import { mockKeycloak, render, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { Claims } from '@/constants/claims';
+import { IContactSearchResult } from '@/interfaces';
+import { mockKeycloak, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { ContactResultComponent, IContactResultComponentProps } from './ContactResultComponent';
 
