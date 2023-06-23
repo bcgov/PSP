@@ -12,6 +12,7 @@ import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_File } from '@/models/api/File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
@@ -133,7 +134,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const navigateToMenuRoute = (selectedIndex: number) => {
     const route = selectedIndex === 0 ? '' : `/property/${selectedIndex}`;
-    history.push(`${match.url}${route}`);
+    history.push(`${stripTrailingSlash(match.url)}${route}`);
   };
 
   const onMenuChange = (selectedIndex: number) => {
@@ -155,7 +156,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   };
 
   const onShowPropertySelector = () => {
-    history.push(`${match.url}/property/selector`);
+    history.push(`${stripTrailingSlash(match.url)}/property/selector`);
   };
 
   const handleSaveClick = () => {

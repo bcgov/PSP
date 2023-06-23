@@ -4,12 +4,12 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Claims } from '@/constants/claims';
 import { FileTypes } from '@/constants/fileTypes';
 import { NoteTypes } from '@/constants/noteTypes';
+import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
 import NoteListView from '@/features/notes/list/NoteListView';
 import ActivityListView from '@/features/properties/map/activity/list/ActivityListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
-import { FileTabs, FileTabType, TabFileView } from '../../shared/detail/FileTabs';
 import AgreementContainer from './agreement/detail/AgreementContainer';
 import AgreementView from './agreement/detail/AgreementView';
 import { AcquisitionChecklistView } from './checklist/detail/AcquisitionChecklistView';

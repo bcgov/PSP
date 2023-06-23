@@ -5,6 +5,7 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { stripTrailingSlash } from '@/utils';
 
 import { EditFormType } from './EditFormNames';
 import { AcquisitionFileTabs } from './tabs/AcquisitionFileTabs';
@@ -39,7 +40,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
   if (props.isEditing) {
     return (
       <Switch>
-        <Route exact path={`${path}/${FileTabType.FILE_DETAILS}`}>
+        <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.FILE_DETAILS}`}>
           <UpdateAcquisitionContainer
             ref={props.formikRef}
             acquisitionFile={props.acquisitionFile}
@@ -47,7 +48,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             View={UpdateAcquisitionForm}
           />
         </Route>
-        <Route exact path={`${path}/${FileTabType.CHECKLIST}`}>
+        <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.CHECKLIST}`}>
           <UpdateAcquisitionChecklistContainer
             formikRef={props.formikRef}
             acquisitionFile={props.acquisitionFile}
@@ -55,7 +56,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             View={UpdateAcquisitionChecklistForm}
           />
         </Route>
-        <Route exact path={`${path}/${FileTabType.AGREEMENTS}`}>
+        <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}`}>
           <UpdateAgreementsContainer
             acquisitionFileId={props.acquisitionFile.id || -1}
             View={UpdateAgreementsForm}
@@ -63,7 +64,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             onSuccess={() => props.setIsEditing(false)}
           />
         </Route>
-        <Route exact path={`${path}/${FileTabType.STAKEHOLDERS}`}>
+        <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.STAKEHOLDERS}`}>
           <UpdateStakeHolderContainer
             View={UpdateStakeHolderForm}
             formikRef={props.formikRef}
@@ -78,17 +79,17 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
     return (
       <Switch>
         {/* Ignore property-related routes (which are handled in separate FilePropertyRouter) */}
-        <Route path={`${path}/property`}>
+        <Route path={`${stripTrailingSlash(path)}/property`}>
           <></>
         </Route>
-        <Route path={`${path}/:tab`}>
+        <Route path={`${stripTrailingSlash(path)}/:tab`}>
           <AcquisitionFileTabs
             acquisitionFile={props.acquisitionFile}
             defaultTab={props.defaultFileTab}
             setIsEditing={props.setIsEditing}
           />
         </Route>
-        <Redirect from={`${path}`} to={`${url}/${FileTabType.FILE_DETAILS}`} />
+        <Redirect from={`${path}`} to={`${stripTrailingSlash(url)}/${FileTabType.FILE_DETAILS}`} />
       </Switch>
     );
   }

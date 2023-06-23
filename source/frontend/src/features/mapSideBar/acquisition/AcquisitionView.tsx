@@ -16,6 +16,7 @@ import GenericModal from '@/components/common/GenericModal';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { Api_File } from '@/models/api/File';
+import { stripTrailingSlash } from '@/utils';
 import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 import { InventoryTabNames } from '../property/InventoryTabs';
@@ -70,11 +71,11 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   const fileMatch = matchPath<Record<string, string>>(location.pathname, `${match.path}/:tab`);
   const propertySelectorMatch = matchPath<Record<string, string>>(
     location.pathname,
-    `${match.path}/property/selector`,
+    `${stripTrailingSlash(match.path)}/property/selector`,
   );
   const propertiesMatch = matchPath<Record<string, string>>(
     location.pathname,
-    `${match.path}/property/:menuIndex/:tab`,
+    `${stripTrailingSlash(match.path)}/property/:menuIndex/:tab`,
   );
 
   const selectedMenuIndex = propertiesMatch !== null ? Number(propertiesMatch.params.menuIndex) : 0;
@@ -94,7 +95,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
 
   return (
     <Switch>
-      <Route path={`${match.url}/property/selector`}>
+      <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
         {containerState.acquisitionFile && (
           <UpdateProperties
             file={containerState.acquisitionFile}
@@ -156,7 +157,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                   onSuccess={onSuccess}
                 />
                 <Route
-                  path={`${match.path}/property/:menuIndex`}
+                  path={`${stripTrailingSlash(match.path)}/property/:menuIndex`}
                   render={({ match }) => (
                     <FilePropertyRouter
                       formikRef={formikRef}
