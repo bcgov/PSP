@@ -1,8 +1,8 @@
-import { IProjectFilter } from 'features/projects/interfaces';
-import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
+import { IProjectFilter } from '@/features/projects/interfaces';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { IProjectFilterProps, ProjectFilter } from './ProjectFilter';
 
@@ -28,7 +28,7 @@ const setup = (
 };
 
 const retrieveUserInfo = jest.fn();
-jest.mock('hooks/repositories/useUserInfoRepository');
+jest.mock('@/hooks/repositories/useUserInfoRepository');
 (useUserInfoRepository as jest.Mock).mockReturnValue({
   retrieveUserInfo,
   retrieveUserInfoLoading: true,

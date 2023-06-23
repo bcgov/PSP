@@ -6,7 +6,8 @@ import React, { memo, useEffect } from 'react';
 import { ColProps } from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import NumberFormat from 'react-number-format';
-import { formikFieldMemo, isPositiveNumberOrZero } from 'utils';
+
+import { formikFieldMemo, isPositiveNumberOrZero } from '@/utils';
 
 import TooltipIcon from '../TooltipIcon';
 
@@ -99,7 +100,8 @@ const CurrencyInput = ({
   }
 
   const onHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const cleanValue = e.target.value.replace(/[^0-9.]/g, '');
+    const regex = rest.allowNegative ? /[^0-9.-]/g : /[^0-9.]/g;
+    const cleanValue = e.target.value.replace(regex, '');
     setFieldValue(field, cleanValue ? parseFloat(cleanValue) : '');
     if (typeof onChange === 'function') {
       onChange(e);
@@ -146,6 +148,7 @@ const CurrencyInput = ({
           prefix={'$'}
           thousandSeparator
           placeholder={placeholder || ''}
+          allowNegative={rest.allowNegative}
         />
         {!label && !!tooltip && <TooltipIcon toolTipId="currency" toolTip={tooltip} />}
 

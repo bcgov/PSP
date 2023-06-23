@@ -13,6 +13,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Person, src => src.Person)
                 .Map(dest => dest.PersonId, src => src.PersonId)
+                .Map(dest => dest.Comment, src => src.Comment)
                 .Inherits<Entity.IBaseEntity, BaseModel>();
 
             config.NewConfig<AcquisitionFileOwnerRepresentativeModel, Entity.PimsAcquisitionOwnerRep>()

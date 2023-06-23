@@ -1,7 +1,8 @@
-import variables from 'assets/scss/_variables.module.scss';
 import { has } from 'lodash';
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
 import styled from 'styled-components';
+
+import variables from '@/assets/scss/_variables.module.scss';
 
 import { ColumnInstanceWithProps } from '.';
 import { TableSort } from './TableSort';

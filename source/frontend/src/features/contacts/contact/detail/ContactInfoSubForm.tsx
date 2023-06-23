@@ -1,10 +1,11 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { ContactInfoField } from 'features/contacts/interfaces';
-import { Dictionary } from 'interfaces/Dictionary';
-import { IContactEntity } from 'interfaces/IContact';
 import * as React from 'react';
 import { Col } from 'react-bootstrap';
-import { phoneFormatter } from 'utils/formUtils';
+
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { ContactInfoField } from '@/features/contacts/interfaces';
+import { Dictionary } from '@/interfaces/Dictionary';
+import { IContactEntity } from '@/interfaces/IContact';
+import { phoneFormatter } from '@/utils/formUtils';
 
 import * as Styled from '../../styles';
 import { getContactInfo } from './utils';

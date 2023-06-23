@@ -1,10 +1,11 @@
 import userEvent from '@testing-library/user-event';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { IInsurance, TypeCodeUtils } from 'interfaces';
 import { noop } from 'lodash';
-import { ILookupCode } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, RenderResult } from 'utils/test-utils';
+
+import { IInsurance, TypeCodeUtils } from '@/interfaces';
+import { ILookupCode } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, RenderResult } from '@/utils/test-utils';
 
 import InsuranceEditContainer, { InsuranceEditContainerProps } from './EditInsuranceContainer';
 

@@ -1,5 +1,5 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { Api_ContactMethod } from 'models/api/ContactMethod';
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { Api_ContactMethod } from '@/models/api/ContactMethod';
 
 export function getPreferredContactMethodValue(
   methods: Api_ContactMethod[] | undefined,

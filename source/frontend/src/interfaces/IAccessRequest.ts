@@ -1,5 +1,5 @@
-import { AccessRequestStatus } from 'constants/index';
-import { IOrganization, IRole, IUser } from 'interfaces';
+import { AccessRequestStatus } from '@/constants/index';
+import { IOrganization, IRole, IUser } from '@/interfaces';
 
 export interface IAccessRequest {
   id?: number;

@@ -1,8 +1,9 @@
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { CreateContactContainer } from '.';
 

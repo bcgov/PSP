@@ -1,5 +1,5 @@
-import GenericModal, { ModalSize } from 'components/common/GenericModal';
-import { IContactSearchResult } from 'interfaces';
+import GenericModal, { ModalSize } from '@/components/common/GenericModal';
+import { IContactSearchResult } from '@/interfaces';
 
 import { RestrictContactType } from './ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import ContactManagerView from './ContactManagerView/ContactManagerView';

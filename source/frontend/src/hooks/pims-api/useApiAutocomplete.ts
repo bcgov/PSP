@@ -1,7 +1,8 @@
-import { IAutocompleteResponse } from 'interfaces';
 import React from 'react';
 
-import { useAxiosApi } from '.';
+import { IAutocompleteResponse } from '@/interfaces';
+
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the autocomplete endpoints.

@@ -1,10 +1,11 @@
 import { chain } from 'lodash';
-import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
-import { Api_CompensationPayee } from 'models/api/CompensationPayee';
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
-import { Api_H120Category } from 'models/api/H120Category';
 import moment from 'moment';
-import { formatMoney } from 'utils';
+
+import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
+import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { Api_H120Category } from '@/models/api/H120Category';
+import { formatMoney } from '@/utils';
 
 import { Api_GenerateAcquisitionFile } from './GenerateAcquisitionFile';
 import { Api_GenerateCompensationFinancial } from './GenerateCompensationFinancial';
@@ -67,10 +68,10 @@ export class Api_GenerateCompensation {
     this.financial_total = formatMoney(
       compensation?.financials?.reduce((acc, curr) => acc + (curr?.totalAmount ?? 0), 0) ?? 0,
     );
-    this.yearly_financial = compensation?.yearlyFinancial?.description ?? '';
-    this.service_line = compensation?.chartOfAccounts?.description ?? '';
-    this.responsibility_center = compensation?.responsibility?.description ?? '';
+    this.yearly_financial = compensation?.yearlyFinancial?.code ?? '';
+    this.service_line = compensation?.chartOfAccounts?.code ?? '';
+    this.responsibility_center = compensation?.responsibility?.code ?? '';
     this.client = client;
-    this.payee = new Api_GenerateCompensationPayee(payee);
+    this.payee = new Api_GenerateCompensationPayee(payee, compensation?.financials ?? []);
   }
 }

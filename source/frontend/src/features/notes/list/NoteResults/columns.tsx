@@ -1,14 +1,15 @@
-import { StyledIconButton, StyledRemoveLinkButton } from 'components/common/buttons';
-import { InlineFlexDiv } from 'components/common/styles';
-import { ColumnWithProps, DateCell } from 'components/Table';
-import { Claims } from 'constants/index';
-import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
-import { Api_Note } from 'models/api/Note';
 import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { ImFileText2 } from 'react-icons/im';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
+
+import { StyledIconButton, StyledRemoveLinkButton } from '@/components/common/buttons';
+import { InlineFlexDiv } from '@/components/common/styles';
+import { ColumnWithProps, DateCell } from '@/components/Table';
+import { Claims } from '@/constants/index';
+import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { Api_Note } from '@/models/api/Note';
 
 export function createTableColumns(
   onShowDetails: (note: Api_Note) => void,

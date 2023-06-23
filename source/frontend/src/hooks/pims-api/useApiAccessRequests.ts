@@ -1,10 +1,11 @@
-import { IPaginateAccessRequests } from 'constants/API';
-import { IPagedItems } from 'interfaces';
 import queryString from 'query-string';
 import React from 'react';
 
+import { IPaginateAccessRequests } from '@/constants/API';
+import { IPagedItems } from '@/interfaces';
+
 import { Api_AccessRequest } from './../../models/api/AccessRequest';
-import { useAxiosApi } from '.';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the access requests endpoints.

@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 
 namespace Pims.Dal.Entities
 {
@@ -10,5 +9,8 @@ namespace Pims.Dal.Entities
     {
         [NotMapped]
         public override long Internal_Id { get => AcquisitionPayeeId; set => AcquisitionPayeeId = value; }
+
+        [NotMapped]
+        public bool HasPayeeAssigned => AcquisitionOwnerId != null || InterestHolderId != null || OwnerRepresentativeId != null || OwnerSolicitorId != null || AcquisitionFilePersonId != null;
     }
 }

@@ -1,23 +1,24 @@
-import { Button } from 'components/common/buttons/Button';
-import { InlineFlexDiv } from 'components/common/styles';
-import TooltipIcon from 'components/common/TooltipIcon';
+import moment from 'moment';
+import { FaTrash } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { CellProps } from 'react-table';
+import styled from 'styled-components';
+
+import { Button } from '@/components/common/buttons/Button';
+import { InlineFlexDiv } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import {
   ColumnWithProps,
   renderBooleanAsYesNo,
   renderMoney,
   renderTypeCode,
-} from 'components/Table';
-import { Claims, LeaseTermStatusTypes } from 'constants/index';
-import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
-import { IFormLeaseTerm } from 'interfaces';
-import moment from 'moment';
-import { FaTrash } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { CellProps } from 'react-table';
-import { ISystemConstant } from 'store/slices/systemConstants';
-import styled from 'styled-components';
-import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { formatMoney, prettyFormatDate, stringToFragment } from 'utils';
+} from '@/components/Table';
+import { Claims, LeaseTermStatusTypes } from '@/constants/index';
+import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { IFormLeaseTerm } from '@/interfaces';
+import { ISystemConstant } from '@/store/slices/systemConstants';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { formatMoney, prettyFormatDate, stringToFragment } from '@/utils';
 
 function initialOrRenewalTerm({ row: { original, index } }: CellProps<IFormLeaseTerm, unknown>) {
   return stringToFragment(index === 0 ? 'Initial term' : `Renewal ${index}`);

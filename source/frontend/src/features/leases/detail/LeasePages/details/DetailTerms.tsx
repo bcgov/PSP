@@ -1,11 +1,12 @@
-import { InlineInput } from 'components/common/form/styles';
-import * as Styled from 'features/leases/detail/styles';
 import { getIn, useFormikContext } from 'formik';
-import { IFormLease } from 'interfaces';
-import { ILeaseTerm } from 'interfaces/ILeaseTerm';
 import moment from 'moment';
 import * as React from 'react';
-import { withNameSpace } from 'utils/formUtils';
+
+import { InlineInput } from '@/components/common/form/styles';
+import * as Styled from '@/features/leases/detail/styles';
+import { IFormLease } from '@/interfaces';
+import { ILeaseTerm } from '@/interfaces/ILeaseTerm';
+import { withNameSpace } from '@/utils/formUtils';
 
 import { leaseTermColumns } from './columns';
 

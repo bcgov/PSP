@@ -1,7 +1,8 @@
-import { Table } from 'components/Table';
-import { TableSort } from 'components/Table/TableSort';
-import { IContactSearchResult } from 'interfaces';
 import { useCallback } from 'react';
+
+import { Table } from '@/components/Table';
+import { TableSort } from '@/components/Table/TableSort';
+import { IContactSearchResult } from '@/interfaces';
 
 import columns from './columns';
 import summaryColumns from './summaryColumns';

@@ -1,9 +1,12 @@
 import { AxiosResponse } from 'axios';
-import { useApiInterestHolders } from 'hooks/pims-api/useApiInterestHolders';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { Api_InterestHolder } from 'models/api/InterestHolder';
 import { useCallback, useMemo } from 'react';
-import { useAxiosErrorHandler } from 'utils';
+
+import { useApiInterestHolders } from '@/hooks/pims-api/useApiInterestHolders';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { Api_InterestHolder } from '@/models/api/InterestHolder';
+import { useAxiosErrorHandler } from '@/utils';
+
+const ignoreErrorCodes = [409];
 
 /**
  * hook that interacts with the InterestHolde API.
@@ -34,7 +37,8 @@ export const useInterestHolderRepository = () => {
       [postAcquisitionholderApi],
     ),
     requestName: 'updateAcquisitionInterestHolder',
-    onError: useAxiosErrorHandler('Failed to update Acquisition File InterestHolder'),
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
   });
 
   return useMemo(

@@ -1,13 +1,14 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { createMemoryHistory } from 'history';
-import { defaultLease, ILeaseImprovement } from 'interfaces';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/lookups.mock';
 import React from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { renderAsync, RenderOptions } from 'utils/test-utils';
+
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { defaultLease, ILeaseImprovement } from '@/interfaces';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { renderAsync, RenderOptions } from '@/utils/test-utils';
 
 import ImprovementsContainer from './ImprovementsContainer';
 

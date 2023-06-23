@@ -1,4 +1,4 @@
-import { NumberFieldValue } from 'typings/NumberFieldValue';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
 export interface IUsersFilter {
   businessIdentifierValue?: string;
   email?: string;

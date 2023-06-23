@@ -1,15 +1,16 @@
-import { Button } from 'components/common/buttons';
+import * as React from 'react';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+
+import { Button } from '@/components/common/buttons';
 import {
   MapCursors,
   MapStateActionTypes,
   MapStateContext,
-} from 'components/maps/providers/MapStateContext';
-import { IMapProperty } from 'components/propertySelector/models';
-import { PropertyForm } from 'features/properties/map/shared/models';
-import * as React from 'react';
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import { getPropertyName, NameSourceType } from 'utils/mapPropertyUtils';
+} from '@/components/maps/providers/MapStateContext';
+import { IMapProperty } from '@/components/propertySelector/models';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
+import { getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
 
 import PropertyMapSelectorFormView from './map/PropertyMapSelectorFormView';
 import { PropertySelectorTabsView, SelectorTabNames } from './PropertySelectorTabsView';

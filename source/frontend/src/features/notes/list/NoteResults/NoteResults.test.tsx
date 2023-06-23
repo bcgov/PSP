@@ -1,7 +1,8 @@
-import { Claims } from 'constants/claims';
 import { noop } from 'lodash';
-import { mockNotesResponse } from 'mocks/noteResponses.mock';
-import { mockKeycloak, render, RenderOptions } from 'utils/test-utils';
+
+import { Claims } from '@/constants/claims';
+import { mockNotesResponse } from '@/mocks/noteResponses.mock';
+import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
 import { INoteResultProps, NoteResults } from './NoteResults';
 

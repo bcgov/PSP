@@ -1,6 +1,6 @@
-import { Api_File } from 'models/api/File';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
-import Api_TypeCode from 'models/api/TypeCode';
+import { Api_File } from '@/models/api/File';
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import Api_TypeCode from '@/models/api/TypeCode';
 
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';

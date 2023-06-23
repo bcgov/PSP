@@ -1,6 +1,7 @@
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_Person } from 'models/api/Person';
 import moment from 'moment';
+
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_Person } from '@/models/api/Person';
 
 import { Api_GenerateAcquisitionFile } from './acquisition/GenerateAcquisitionFile';
 export class Api_GenerateLetter extends Api_GenerateAcquisitionFile {

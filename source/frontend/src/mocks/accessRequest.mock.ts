@@ -1,4 +1,4 @@
-import { Api_AccessRequest } from 'models/api/AccessRequest';
+import { Api_AccessRequest } from '@/models/api/AccessRequest';
 
 export const getMockAccessRequest = (): Api_AccessRequest => ({
   id: 8,

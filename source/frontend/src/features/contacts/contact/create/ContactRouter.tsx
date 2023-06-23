@@ -1,7 +1,8 @@
-import { ContactTypes } from 'features/contacts/interfaces';
 import React from 'react';
 import { Redirect, Switch, useRouteMatch } from 'react-router-dom';
-import AppRoute from 'utils/AppRoute';
+
+import { ContactTypes } from '@/features/contacts/interfaces';
+import AppRoute from '@/utils/AppRoute';
 
 import CreateOrganizationForm from './Organization/CreateOrganizationForm';
 import CreatePersonForm from './Person/CreatePersonForm';

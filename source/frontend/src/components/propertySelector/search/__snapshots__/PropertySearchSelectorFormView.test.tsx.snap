@@ -272,6 +272,7 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
                   class="input form-group"
                 >
                   <input
+                    autocomplete="off"
                     class="form-control"
                     id="input-pid"
                     name="pid"

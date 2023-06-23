@@ -1,6 +1,7 @@
-import { Api_Agreement } from 'models/api/Agreement';
 import moment from 'moment';
-import { formatMoney } from 'utils';
+
+import { Api_Agreement } from '@/models/api/Agreement';
+import { formatMoney } from '@/utils';
 
 import { Api_GenerateAcquisitionFile } from './acquisition/GenerateAcquisitionFile';
 export class Api_GenerateAgreement {

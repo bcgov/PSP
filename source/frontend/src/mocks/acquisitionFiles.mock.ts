@@ -2,7 +2,7 @@ import {
   Api_AcquisitionFile,
   Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
-} from 'models/api/AcquisitionFile';
+} from '@/models/api/AcquisitionFile';
 
 export const mockAcquisitionFileResponse = (
   id = 1,

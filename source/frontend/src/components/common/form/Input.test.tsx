@@ -1,6 +1,7 @@
 import { Formik } from 'formik';
 import noop from 'lodash/noop';
-import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { Input, InputProps } from './';
 

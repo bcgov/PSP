@@ -1,4 +1,4 @@
-import { Api_Take } from 'models/api/Take';
+import { Api_Take } from '@/models/api/Take';
 export const getMockApiTakes = (): Api_Take[] => [
   {
     id: 4,

@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { useApiHealth } from '.';
+import { useApiHealth } from './useApiHealth';
 
 const mockAxios = new MockAdapter(axios);
 

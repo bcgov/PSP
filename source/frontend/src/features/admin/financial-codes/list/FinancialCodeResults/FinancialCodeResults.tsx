@@ -1,6 +1,6 @@
-import { Table } from 'components/Table';
-import { TableSort } from 'components/Table/TableSort';
-import { Api_FinancialCode } from 'models/api/FinancialCode';
+import { Table } from '@/components/Table';
+import { TableSort } from '@/components/Table/TableSort';
+import { Api_FinancialCode } from '@/models/api/FinancialCode';
 
 import { columns } from './columns';
 

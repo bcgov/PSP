@@ -79,6 +79,7 @@ namespace Pims.Dal.Repositories
             return Context.PimsAcquisitionOwnerSolicitors
                 .Where(x => x.AcquisitionFileId == acquisitionFileId)
                 .Include(aos => aos.Person)
+                .Include(aos => aos.Organization)
                 .AsNoTracking()
                 .ToList();
         }

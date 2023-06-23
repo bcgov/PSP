@@ -44,29 +44,6 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get an array of properties within the specified filters.
-        /// Will not return sensitive properties unless the user has the `sensitive-view` claim and belongs to the owning organization.
-        /// Note that the 'parcelFilter' will control the 'page' and 'quantity'.
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        public IEnumerable<PimsProperty> GetAllByFilter(PropertyFilter filter)
-        {
-            this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
-            filter.ThrowIfNull(nameof(filter));
-            if (!filter.IsValid())
-            {
-                throw new ArgumentException("Argument must have a valid filter", nameof(filter));
-            }
-
-            var query = this.Context.GeneratePropertyQuery(this.User, filter);
-            var properties = query.ToArray();
-
-            // TODO: PSP-4427 Add optional paging ability to query.
-            return properties;
-        }
-
-        /// <summary>
         /// Get a page with an array of properties within the specified filters.
         /// Will not return sensitive properties unless the user has the `sensitive-view` claim and belongs to the owning organization.
         /// Note that the 'parcelFilter' will control the 'page' and 'quantity'.

@@ -1,10 +1,11 @@
-import { IMapProperty } from 'components/propertySelector/models';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Polygon } from 'geojson';
 import { geoJSON, LatLng } from 'leaflet';
 import { compact } from 'lodash';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
 import polylabel from 'polylabel';
-import { formatApiAddress, pidFormatter } from 'utils';
+
+import { IMapProperty } from '@/components/propertySelector/models';
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { formatApiAddress, pidFormatter } from '@/utils';
 
 import { Api_Geometry, Api_Property } from '../models/api/Property';
 

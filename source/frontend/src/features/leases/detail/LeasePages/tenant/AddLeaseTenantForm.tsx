@@ -1,15 +1,16 @@
-import { Button } from 'components/common/buttons';
-import { TableSelect } from 'components/common/form';
-import { ContactManagerModal } from 'components/contact/ContactManagerModal';
-import { TENANT_TYPES } from 'constants/API';
 import { Formik, FormikProps } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { defaultFormLease, IContactSearchResult, IFormLease } from 'interfaces';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { Link, Prompt } from 'react-router-dom';
 import styled from 'styled-components';
-import { mapLookupCode } from 'utils';
+
+import { Button } from '@/components/common/buttons';
+import { TableSelect } from '@/components/common/form';
+import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
+import { TENANT_TYPES } from '@/constants/API';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { defaultFormLease, IContactSearchResult, IFormLease } from '@/interfaces';
+import { mapLookupCode } from '@/utils';
 
 import { AddLeaseTenantYupSchema } from './AddLeaseTenantYupSchema';
 import getColumns from './columns';

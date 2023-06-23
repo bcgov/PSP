@@ -1,5 +1,5 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { getMockPerson } from 'mocks/contacts.mock';
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { getMockPerson } from '@/mocks/contacts.mock';
 
 import { Api_GeneratePerson } from './GeneratePerson';
 

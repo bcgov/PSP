@@ -1,10 +1,11 @@
-import { MapStateContext } from 'components/maps/providers/MapStateContext';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import useDraftMarkerSynchronizer from 'hooks/useDraftMarkerSynchronizer';
-import { usePrevious } from 'hooks/usePrevious';
 import * as React from 'react';
 import { useContext } from 'react';
-import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
+
+import { MapStateContext } from '@/components/maps/providers/MapStateContext';
+import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
+import { usePrevious } from '@/hooks/usePrevious';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
 import { IMapProperty } from './models';
 

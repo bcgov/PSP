@@ -2,17 +2,18 @@ import { useKeycloak } from '@react-keycloak/web';
 import { fireEvent, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import * as actionTypes from 'constants/actionTypes';
-import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
-import { getMockPagedUsers } from 'mocks/user.mock';
 import { act } from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { networkSlice } from 'store/slices/network/networkSlice';
-import { prettyFormatDateTime } from 'utils';
-import { fillInput, render, userEvent } from 'utils/test-utils';
+
+import * as actionTypes from '@/constants/actionTypes';
+import * as API from '@/constants/API';
+import { getMockPagedUsers } from '@/mocks/user.mock';
+import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { networkSlice } from '@/store/slices/network/networkSlice';
+import { prettyFormatDateTime } from '@/utils';
+import { fillInput, render, userEvent } from '@/utils/test-utils';
 
 import { ManageUsersPage } from './ManageUsersPage';
 

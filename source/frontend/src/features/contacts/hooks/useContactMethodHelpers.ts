@@ -1,12 +1,13 @@
-import * as API from 'constants/API';
+import { useMemo } from 'react';
+
+import * as API from '@/constants/API';
 import {
   ContactMethodTypes,
   EmailContactMethods,
   PhoneContactMethods,
-} from 'constants/contactMethodType';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { useMemo } from 'react';
-import { ILookupCode } from 'store/slices/lookupCodes';
+} from '@/constants/contactMethodType';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { ILookupCode } from '@/store/slices/lookupCodes';
 
 /**
  * Extending default ILookupCode interface to enforce the presence of `displayOrder` property

@@ -1,8 +1,9 @@
-import { ColumnWithProps, DateCell } from 'components/Table';
-import { ILeaseTerm } from 'interfaces/ILeaseTerm';
-import ITypeCode from 'interfaces/ITypeCode';
 import { CellProps } from 'react-table';
-import { stringToFragment } from 'utils';
+
+import { ColumnWithProps, DateCell } from '@/components/Table';
+import { ILeaseTerm } from '@/interfaces/ILeaseTerm';
+import ITypeCode from '@/interfaces/ITypeCode';
+import { stringToFragment } from '@/utils';
 
 export const leaseTermColumns: ColumnWithProps<ILeaseTerm>[] = [
   {

@@ -1,7 +1,8 @@
 import { screen } from '@testing-library/react';
-import { Claims } from 'constants/claims';
 import { noop } from 'lodash';
-import { mockKeycloak, render, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { Claims } from '@/constants/claims';
+import { mockKeycloak, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { AcquisitionTray } from './AcquisitionTray';
 

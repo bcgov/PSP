@@ -1,9 +1,10 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
+
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
 
 import { getDefaultFormLease } from '../models';
 import AdministrationSubForm, { IAdministrationSubFormProps } from './AdministrationSubForm';
