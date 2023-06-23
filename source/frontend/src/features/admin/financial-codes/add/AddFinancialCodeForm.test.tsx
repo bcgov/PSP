@@ -67,7 +67,7 @@ describe('AddFinancialCode form', () => {
     setup();
 
     const cancelButton = screen.getByText('Cancel');
-    await act(() => userEvent.click(cancelButton));
+    await act(async () => userEvent.click(cancelButton));
 
     expect(mockProps.onCancel).toHaveBeenCalled();
   });
@@ -77,8 +77,8 @@ describe('AddFinancialCode form', () => {
 
     const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
     const cancelButton = screen.getByText('Cancel');
-    await act(() => userEvent.paste(description, `another description`));
-    await act(() => userEvent.click(cancelButton));
+    await act(async () => userEvent.paste(description, `another description`));
+    await act(async () => userEvent.click(cancelButton));
 
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
     expect(await screen.findByDisplayValue('another description')).toBeVisible();
@@ -89,11 +89,11 @@ describe('AddFinancialCode form', () => {
 
     const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
     const cancelButton = screen.getByText('Cancel');
-    await act(() => userEvent.paste(description, `another description`));
-    await act(() => userEvent.click(cancelButton));
+    await act(async () => userEvent.paste(description, `another description`));
+    await act(async () => userEvent.click(cancelButton));
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
     const confirmButton = screen.getByText('Confirm');
-    await act(() => userEvent.click(confirmButton));
+    await act(async () => userEvent.click(confirmButton));
 
     expect(mockProps.onCancel).toHaveBeenCalled();
     expect(description).toHaveTextContent('');
@@ -104,11 +104,11 @@ describe('AddFinancialCode form', () => {
 
     const textbox = document.querySelector(`input[name="description"]`) as HTMLInputElement;
     const cancelButton = screen.getByText('Cancel');
-    await act(() => userEvent.paste(textbox, `another description`));
-    await act(() => userEvent.click(cancelButton));
+    await act(async () => userEvent.paste(textbox, `another description`));
+    await act(async () => userEvent.click(cancelButton));
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
     const noButton = screen.getByText('No');
-    await act(() => userEvent.click(noButton));
+    await act(async () => userEvent.click(noButton));
 
     expect(mockProps.onCancel).not.toHaveBeenCalled();
     expect(await screen.findByDisplayValue('another description')).toBeVisible();
@@ -121,9 +121,9 @@ describe('AddFinancialCode form', () => {
     const codeType = document.querySelector(`select[name="type"]`) as HTMLSelectElement;
     const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
     const saveButton = screen.getByText('Save');
-    await act(() => userEvent.selectOptions(codeType, FinancialCodeTypes.BusinessFunction));
-    await act(() => userEvent.paste(description, `another description`));
-    await act(() => userEvent.click(saveButton));
+    await act(async () => userEvent.selectOptions(codeType, FinancialCodeTypes.BusinessFunction));
+    await act(async () => userEvent.paste(description, `another description`));
+    await act(async () => userEvent.click(saveButton));
 
     expect(mockProps.onSave).toHaveBeenCalledWith(
       expect.objectContaining<Partial<Api_FinancialCode>>({
@@ -141,9 +141,9 @@ describe('AddFinancialCode form', () => {
     const codeType = document.querySelector(`select[name="type"]`) as HTMLSelectElement;
     const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
     const saveButton = screen.getByText('Save');
-    await act(() => userEvent.selectOptions(codeType, FinancialCodeTypes.BusinessFunction));
-    await act(() => userEvent.paste(description, `another description`));
-    await act(() => userEvent.click(saveButton));
+    await act(async () => userEvent.selectOptions(codeType, FinancialCodeTypes.BusinessFunction));
+    await act(async () => userEvent.paste(description, `another description`));
+    await act(async () => userEvent.click(saveButton));
 
     expect(mockProps.onSave).toHaveBeenCalled();
     expect(mockProps.onError).toHaveBeenCalled();
@@ -155,7 +155,7 @@ describe('AddFinancialCode form', () => {
     setup();
 
     const saveButton = screen.getByText('Save');
-    await act(() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
 
     expect(mockProps.onSave).not.toHaveBeenCalled();
     expect(await screen.findByText('Code value is required')).toBeVisible();

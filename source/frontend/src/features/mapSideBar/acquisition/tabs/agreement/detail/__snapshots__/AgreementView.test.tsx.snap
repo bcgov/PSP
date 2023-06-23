@@ -652,24 +652,6 @@ exports[`AgreementView component renders as expected 1`] = `
             <label
               class="c8"
             >
-              Commencement date:
-            </label>
-          </div>
-          <div
-            class="c9 text-left col"
-          >
-            Apr 5, 2023
-          </div>
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-5"
-          >
-            <label
-              class="c8"
-            >
               Completion date:
             </label>
           </div>

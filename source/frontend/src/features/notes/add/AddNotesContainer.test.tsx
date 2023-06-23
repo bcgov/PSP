@@ -77,7 +77,7 @@ describe('AddNotesContainer component', () => {
     const { getCancelButton, getByText } = setup();
 
     expect(getByText(/Notes/i)).toBeVisible();
-    await act(() => {
+    await act(async () => {
       userEvent.click(getCancelButton());
     });
 
@@ -97,7 +97,7 @@ describe('AddNotesContainer component', () => {
     });
 
     mockAxios.onPost().reply(200, mockEntityNote(1));
-    await act(() => {
+    await act(async () => {
       userEvent.click(getSaveButton());
     });
 
@@ -130,7 +130,7 @@ describe('AddNotesContainer component', () => {
     });
 
     mockAxios.onPost().reply(200, mockEntityNote(1));
-    await act(() => {
+    await act(async () => {
       userEvent.click(getSaveButton());
     });
 

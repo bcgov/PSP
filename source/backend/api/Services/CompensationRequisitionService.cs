@@ -39,21 +39,7 @@ namespace Pims.Api.Services
             _logger.LogInformation($"Getting Compensation Requisition with id {compensationRequisitionId}");
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
-            var compensationRequisition = _compensationRequisitionRepository.GetById(compensationRequisitionId);
-            var compensationPayee = compensationRequisition.PimsAcquisitionPayees?.FirstOrDefault();
-            if (compensationRequisition is not null && compensationPayee is not null)
-            {
-                // TODO fix this
-                /*var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
-                if (payeeCheque is not null)
-                {
-                    payeeCheque.PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
-                    payeeCheque.TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
-                    payeeCheque.TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
-                }*/
-            }
-
-            return compensationRequisition;
+            return _compensationRequisitionRepository.GetById(compensationRequisitionId);
         }
 
         public PimsAcquisitionPayee GetPayeeByCompensationId(long compensationRequisitionId)
@@ -62,7 +48,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
             var compensationRequisition = _compensationRequisitionRepository.GetById(compensationRequisitionId);
-            if(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is null)
+            if (compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is null)
             {
                 throw new KeyNotFoundException();
             }

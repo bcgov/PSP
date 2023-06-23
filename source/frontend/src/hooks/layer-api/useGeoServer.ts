@@ -43,17 +43,5 @@ export const useGeoServer = () => {
     onError: useAxiosErrorHandler('Failed to retrieve property information from BC Data Warehouse'),
   });
 
-  const getPropertyWithPidWfs = useCallback(
-    async function (pid: string): Promise<Feature<Point> | null> {
-      if (!pid) {
-        return null;
-      }
-      const wfsUrl = buildUrl(baseUrl, { PID_PADDED: pid });
-      const { data } = await CustomAxios().get<FeatureCollection>(wfsUrl);
-      return data.features?.length ? (data.features[0] as Feature<Point>) : null;
-    },
-    [baseUrl],
-  );
-
-  return { getPropertyWfs, getPropertyWfsWrapper, getPropertyWithPidWfs };
+  return { getPropertyWfs, getPropertyWfsWrapper };
 };

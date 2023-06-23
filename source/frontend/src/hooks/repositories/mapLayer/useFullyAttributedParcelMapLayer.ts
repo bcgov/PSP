@@ -44,7 +44,7 @@ export const useFullyAttributedParcelMapLayer = () => {
       const formattedPid = pid.replace(/-/g, '');
       const data = await getAllFeatures(
         { PID: formattedPid },
-        { forceSimplePid: true, forceExactMatch: forceExactMatch, timeout: 30000 },
+        { forceExactMatch: forceExactMatch, timeout: 30000 },
       );
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
       return data as

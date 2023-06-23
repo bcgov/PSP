@@ -290,7 +290,7 @@ describe('MapContainer', () => {
     expect(basemapToggle).toBeInTheDocument();
     expect(basemapToggle).toHaveAttribute('src', '/satellite.jpg');
     // click it
-    await act(() => userEvent.click(basemapToggle));
+    await act(async () => userEvent.click(basemapToggle));
     // expect image to change
     expect(basemapToggle).toHaveAttribute('src', '/streets.jpg');
   });
@@ -323,7 +323,7 @@ describe('MapContainer', () => {
     // click the zoom-in button 10 times
     const zoomIn = container.querySelector('.leaflet-control-zoom-in');
     for (let i = 1; i <= 10; i++) {
-      await act(() => userEvent.click(zoomIn!));
+      await act(async () => userEvent.click(zoomIn!));
     }
 
     const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
@@ -361,7 +361,7 @@ describe('MapContainer', () => {
     // click the zoom-out button 10 times
     const zoomOut = container.querySelector('.leaflet-control-zoom-out');
     for (let i = 1; i <= 10; i++) {
-      await act(() => userEvent.click(zoomOut!));
+      await act(async () => userEvent.click(zoomOut!));
     }
 
     const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
@@ -374,12 +374,12 @@ describe('MapContainer', () => {
     // click the zoom-out button 10 times
     const zoomOut = container.querySelector('.leaflet-control-zoom-out');
     for (let i = 1; i <= 10; i++) {
-      await act(() => userEvent.click(zoomOut!));
+      await act(async () => userEvent.click(zoomOut!));
     }
 
     const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
     expect(cluster).toBeVisible();
-    await act(() => userEvent.click(cluster!));
+    await act(async () => userEvent.click(cluster!));
 
     const polyline = container.querySelector('.leaflet-pane.leaflet-overlay-pane svg g');
     expect(polyline).toBeVisible();
@@ -396,7 +396,7 @@ describe('MapContainer', () => {
 
     const map = container.querySelector('.leaflet-container');
     expect(map).toBeVisible();
-    await act(() => userEvent.click(map!));
+    await act(async () => userEvent.click(map!));
 
     expect(useFullyAttributedParcelMapLayerMock.findOne).toHaveBeenLastCalledWith({
       lat: 52.81604319154934,
@@ -437,10 +437,10 @@ describe('MapContainer', () => {
     await setup();
     // click on clustered markers to expand into single markers
     const cluster = document.querySelector('.leaflet-marker-icon.marker-cluster');
-    await act(() => userEvent.click(cluster!));
+    await act(async () => userEvent.click(cluster!));
     // click on single marker
     const marker = document.querySelector('img.leaflet-marker-icon');
-    await act(() => userEvent.click(marker!));
+    await act(async () => userEvent.click(marker!));
     // verify property information slide-out is shown
     const text = await screen.findByText('Property Information');
     expect(text).toBeVisible();
@@ -451,10 +451,10 @@ describe('MapContainer', () => {
     await setup();
     // click on clustered markers to expand into single markers
     const cluster = document.querySelector('.leaflet-marker-icon.marker-cluster');
-    await act(() => userEvent.click(cluster!));
+    await act(async () => userEvent.click(cluster!));
     // click on single marker
     const marker = document.querySelector('img.leaflet-marker-icon');
-    await act(() => userEvent.click(marker!));
+    await act(async () => userEvent.click(marker!));
     // verify property information slide-out is shown
     const text = await screen.findByText('Property Information');
     expect(text).toBeVisible();
@@ -464,10 +464,10 @@ describe('MapContainer', () => {
     await setup();
     // click on clustered markers to expand into single markers
     const cluster = document.querySelector('.leaflet-marker-icon.marker-cluster');
-    await act(() => userEvent.click(cluster!));
+    await act(async () => userEvent.click(cluster!));
     // click on single marker
     const marker = document.querySelector('img.leaflet-marker-icon');
-    await act(() => userEvent.click(marker!));
+    await act(async () => userEvent.click(marker!));
     // verify property information slide-out is shown
     const text = await screen.findByText('Property Information');
     expect(text).toBeVisible();

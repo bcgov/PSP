@@ -68,9 +68,9 @@ export class Api_GenerateCompensation {
     this.financial_total = formatMoney(
       compensation?.financials?.reduce((acc, curr) => acc + (curr?.totalAmount ?? 0), 0) ?? 0,
     );
-    this.yearly_financial = compensation?.yearlyFinancial?.description ?? '';
-    this.service_line = compensation?.chartOfAccounts?.description ?? '';
-    this.responsibility_center = compensation?.responsibility?.description ?? '';
+    this.yearly_financial = compensation?.yearlyFinancial?.code ?? '';
+    this.service_line = compensation?.chartOfAccounts?.code ?? '';
+    this.responsibility_center = compensation?.responsibility?.code ?? '';
     this.client = client;
     this.payee = new Api_GenerateCompensationPayee(payee, compensation?.financials ?? []);
   }

@@ -57,7 +57,7 @@ describe('LeaseHeaderAddresses component', () => {
     });
 
     const moreButton = getByText('[+3 more...]');
-    await act(() => userEvent.click(moreButton));
+    await act(async () => userEvent.click(moreButton));
 
     expect(
       getAllByText('000-000-000 - Address not available in PIMS', { exact: false }),

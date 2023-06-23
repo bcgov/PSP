@@ -216,8 +216,11 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   <SectionField label="Payee" labelWidth="4" required>
                     <Select
                       field="payeeKey"
+                      title={
+                        payeeOptions.find(p => p.value === formikProps.values.payeeKey)?.fullText
+                      }
                       options={payeeOptions.map<SelectOption>(x => {
-                        return { label: x.text, value: x.value };
+                        return { label: x.text, value: x.value, title: x.fullText };
                       })}
                       placeholder="Select..."
                     />
@@ -230,6 +233,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   </SectionField>
                   <SectionField label="Amount (before tax)">
                     <FastCurrencyInput
+                      allowNegative
                       field={withNameSpace('payees.0', 'pretaxAmount')}
                       formikProps={formikProps}
                       disabled
@@ -238,6 +242,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   <SectionField label="GST amount">
                     <FastCurrencyInput
                       field={withNameSpace('payees.0', 'taxAmount')}
+                      allowNegative
                       formikProps={formikProps}
                       disabled
                     />
@@ -248,6 +253,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   >
                     <FastCurrencyInput
                       field={withNameSpace('payees.0', 'totalAmount')}
+                      allowNegative
                       formikProps={formikProps}
                       disabled
                     />

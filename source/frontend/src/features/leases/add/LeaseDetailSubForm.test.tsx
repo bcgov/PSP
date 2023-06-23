@@ -88,7 +88,7 @@ describe('LeaseDetailSubForm component', () => {
 
   it('shows matching projects based on user input', async () => {
     const { getProjectSelector, findProjectSelectorItems } = await setup({});
-    await act(() => userEvent.type(getProjectSelector()!, 'test'));
+    await act(async () => userEvent.type(getProjectSelector()!, 'test'));
     await waitFor(() => expect(handleTypeaheadSearch).toHaveBeenCalled());
 
     const items = await findProjectSelectorItems();
