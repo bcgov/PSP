@@ -119,6 +119,18 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
   const payeeDetails = getPayeeDetails(compensationPayee);
 
+  const userCanEditCompensationReq = (): boolean => {
+    if (compensation.isDraft && hasClaim(Claims.COMPENSATION_REQUISITION_EDIT)) {
+      return true;
+    }
+
+    if (!compensation.isDraft && hasClaim(Claims.ADMIN_USERS)) {
+      return true;
+    }
+
+    return false;
+  };
+
   const editButtonBlock = (
     <EditButton
       title="Edit compensation requisition"
@@ -131,15 +143,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
       <RightFlexDiv>
-        {setEditMode !== undefined &&
-          compensation.isDraft &&
-          hasClaim(Claims.COMPENSATION_REQUISITION_EDIT) &&
-          editButtonBlock}
-
-        {setEditMode !== undefined &&
-          !compensation.isDraft &&
-          hasClaim(Claims.ADMIN_USERS) &&
-          editButtonBlock}
+        {setEditMode !== undefined && userCanEditCompensationReq() && editButtonBlock}
 
         <StyledAddButton
           onClick={() => {
@@ -187,7 +191,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       </Section>
 
       <Section header="Requisition Details">
-        <SectionField label="Status" labelWidth="4" data-testid={'compensation-status'}>
+        <SectionField label="Status" labelWidth="4" data-testid="compensation-status">
           {compensation.isDraft ? 'Draft' : 'Final'}
         </SectionField>
         <SectionField label="Agreement date" labelWidth="4">

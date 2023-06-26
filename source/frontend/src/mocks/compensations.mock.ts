@@ -451,3 +451,25 @@ export const getMockApiCompensationPayee = (): Api_CompensationPayee => ({
   rowVersion: 2,
   isDisabled: false,
 });
+
+export const getMockDefaultCreateCompenReq = (): Api_CompensationRequisition => ({
+  id: null,
+  acquisitionFileId: 1,
+  isDraft: true,
+  fiscalYear: null,
+  yearlyFinancialId: null,
+  yearlyFinancial: null,
+  chartOfAccountsId: null,
+  chartOfAccounts: null,
+  responsibilityId: null,
+  responsibility: null,
+  agreementDate: null,
+  expropriationNoticeServedDate: null,
+  expropriationVestingDate: null,
+  generationDate: null,
+  specialInstruction: null,
+  detailedRemarks: null,
+  isDisabled: null,
+  financials: [],
+  payees: [],
+});
