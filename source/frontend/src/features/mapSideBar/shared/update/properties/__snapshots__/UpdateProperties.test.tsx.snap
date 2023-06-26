@@ -216,7 +216,7 @@ exports[`UpdateProperties component renders as expected 1`] = `
 }
 
 .c6 .nav-tabs {
-  height: 2.4rem;
+  height: auto;
 }
 
 .c6 .nav-item {
@@ -303,10 +303,6 @@ exports[`UpdateProperties component renders as expected 1`] = `
 
 .c4 {
   height: 100%;
-}
-
-.c4 .nav-tabs {
-  height: 2.4rem;
 }
 
 .c4 .tab-content {

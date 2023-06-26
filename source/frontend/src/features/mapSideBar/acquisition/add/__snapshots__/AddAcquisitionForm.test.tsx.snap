@@ -181,7 +181,7 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
 }
 
 .c9 .nav-tabs {
-  height: 2.4rem;
+  height: auto;
 }
 
 .c9 .nav-item {
@@ -290,10 +290,6 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
 
 .c7 {
   height: 100%;
-}
-
-.c7 .nav-tabs {
-  height: 2.4rem;
 }
 
 .c7 .tab-content {
