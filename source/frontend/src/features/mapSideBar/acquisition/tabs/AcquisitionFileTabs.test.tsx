@@ -2,7 +2,7 @@ import { act } from 'react-test-renderer';
 
 import Claims from '@/constants/claims';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
-import { queryByText, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { FileTabType } from '../../shared/detail/FileTabs';
 import AcquisitionFileTabs, { IAcquisitionFileTabsProps } from './AcquisitionFileTabs';
