@@ -79,18 +79,18 @@ describe('AcquisitionFileTabs component', () => {
     });
   });
 
-  it('hides the expropiation tab when the Acquisition file type is "Consensual Agreement"', () => {
+  it('hides the expropriation tab when the Acquisition file type is "Consensual Agreement"', () => {
     const { queryByText } = setup({
       acquisitionFile: mockAcquisitionFileResponse(),
       defaultTab: FileTabType.FILE_DETAILS,
       setContainerState,
     });
 
-    const expropiationButton = queryByText('Expropiation');
-    expect(expropiationButton).not.toBeInTheDocument();
+    const expropriationButton = queryByText('Expropriation');
+    expect(expropriationButton).not.toBeInTheDocument();
   });
 
-  it('shows the expropiation tab when the Acquisition file type is "Section 3"', () => {
+  it('shows the expropriation tab when the Acquisition file type is "Section 3"', () => {
     const mockAcquisitionFile = mockAcquisitionFileResponse();
     mockAcquisitionFile.acquisitionTypeCode = {
       id: 'SECTN3',
@@ -104,11 +104,11 @@ describe('AcquisitionFileTabs component', () => {
       setContainerState,
     });
 
-    const editButton = queryByText('Expropiation');
+    const editButton = queryByText('Expropriation');
     expect(editButton).toBeInTheDocument();
   });
 
-  it('shows the expropiation tab when the Acquisition file type is "Section 6"', () => {
+  it('shows the expropriation tab when the Acquisition file type is "Section 6"', () => {
     const mockAcquisitionFile = mockAcquisitionFileResponse();
     mockAcquisitionFile.acquisitionTypeCode = {
       id: 'SECTN6',
@@ -122,7 +122,7 @@ describe('AcquisitionFileTabs component', () => {
       setContainerState,
     });
 
-    const editButton = queryByText('Expropiation');
+    const editButton = queryByText('Expropriation');
     expect(editButton).toBeInTheDocument();
   });
 });

@@ -280,7 +280,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
 }
 
 .c11 .nav-tabs {
-  height: 2.4rem;
+  height: auto;
 }
 
 .c11 .nav-item {
@@ -377,10 +377,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
 
 .c9 {
   height: 100%;
-}
-
-.c9 .nav-tabs {
-  height: 2.4rem;
 }
 
 .c9 .tab-content {

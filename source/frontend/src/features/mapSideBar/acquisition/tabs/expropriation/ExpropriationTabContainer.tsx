@@ -2,16 +2,16 @@ import { useContext } from 'react';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 
-import { IExpropiationTabcontainerViewProps } from './ExpropiationTabContainerView';
+import { IExpropriationTabcontainerViewProps } from './ExpropriationTabContainerView';
 
-export interface IExpropiationTabContainer {
+export interface IExpropriationTabContainer {
   acquisitionFileId: number;
   acquisitionFileTypeCode: string;
-  View: React.FunctionComponent<React.PropsWithChildren<IExpropiationTabcontainerViewProps>>;
+  View: React.FunctionComponent<React.PropsWithChildren<IExpropriationTabcontainerViewProps>>;
 }
 
-export const ExpropiationTabContainer: React.FunctionComponent<
-  React.PropsWithChildren<IExpropiationTabContainer>
+export const ExpropriationTabContainer: React.FunctionComponent<
+  React.PropsWithChildren<IExpropriationTabContainer>
 > = ({ View, acquisitionFileTypeCode }) => {
   const { file, fileLoading } = useContext(SideBarContext);
   if (!!file && file?.id === undefined && fileLoading === false) {
@@ -25,4 +25,4 @@ export const ExpropiationTabContainer: React.FunctionComponent<
   ) : null;
 };
 
-export default ExpropiationTabContainer;
+export default ExpropriationTabContainer;

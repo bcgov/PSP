@@ -2,12 +2,12 @@ import { EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import ExpropiationTabcontainerView, {
-  IExpropiationTabcontainerViewProps,
-} from './ExpropiationTabContainerView';
+  IExpropriationTabcontainerViewProps,
+} from './ExpropriationTabContainerView';
 
 describe('Expropiatin Tab Container View', () => {
   const setup = async (
-    renderOptions: RenderOptions & { props?: Partial<IExpropiationTabcontainerViewProps> },
+    renderOptions: RenderOptions & { props?: Partial<IExpropriationTabcontainerViewProps> },
   ) => {
     const utils = render(
       <ExpropiationTabcontainerView

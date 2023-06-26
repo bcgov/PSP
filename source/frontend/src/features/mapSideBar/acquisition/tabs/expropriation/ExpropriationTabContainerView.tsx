@@ -2,13 +2,13 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 
-export interface IExpropiationTabcontainerViewProps {
+export interface IExpropriationTabcontainerViewProps {
   loading: boolean;
   acquisitionFileTypeCode: string;
 }
 
-export const ExpropiationTabcontainerView: React.FunctionComponent<
-  IExpropiationTabcontainerViewProps
+export const ExpropriationTabcontainerView: React.FunctionComponent<
+  IExpropriationTabcontainerViewProps
 > = ({ loading, acquisitionFileTypeCode }) => {
   // TODO : Load created Forms
 
@@ -32,4 +32,4 @@ export const ExpropiationTabcontainerView: React.FunctionComponent<
   );
 };
 
-export default ExpropiationTabcontainerView;
+export default ExpropriationTabcontainerView;

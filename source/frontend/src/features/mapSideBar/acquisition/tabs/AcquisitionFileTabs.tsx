@@ -18,8 +18,8 @@ import { AcquisitionChecklistView } from './checklist/detail/AcquisitionChecklis
 import CompensationListContainer from './compensation/list/CompensationListContainer';
 import CompensationListView from './compensation/list/CompensationListView';
 import AcquisitionDocumentsTab from './documents/AcquisitionDocumentsTab';
-import ExpropiationTabContainer from './expropiation/ExpropiationTabContainer';
-import ExpropiationTabcontainerView from './expropiation/ExpropiationTabContainerView';
+import ExpropriationTabContainer from './expropriation/ExpropriationTabContainer';
+import ExpropriationTabcontainerView from './expropriation/ExpropriationTabContainerView';
 import AcquisitionSummaryView from './fileDetails/detail/AcquisitionSummaryView';
 import StakeHolderContainer from './stakeholders/detail/StakeHolderContainer';
 import StakeHolderView from './stakeholders/detail/StakeHolderView';
@@ -164,14 +164,14 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   ) {
     tabViews.push({
       content: (
-        <ExpropiationTabContainer
+        <ExpropriationTabContainer
           acquisitionFileId={acquisitionFile.id}
           acquisitionFileTypeCode={acquisitionFile.acquisitionTypeCode?.id}
-          View={ExpropiationTabcontainerView}
-        ></ExpropiationTabContainer>
+          View={ExpropriationTabcontainerView}
+        ></ExpropriationTabContainer>
       ),
-      key: FileTabType.EXPROPIATION,
-      name: 'Expropiation',
+      key: FileTabType.EXPROPRIATION,
+      name: 'Expropriation',
     });
   }
 
