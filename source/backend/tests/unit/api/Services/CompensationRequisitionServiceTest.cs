@@ -211,7 +211,7 @@ namespace Pims.Api.Test.Services
         public void Update_Status_BackToDraft_AuthorizedAdmin()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit, Permissions.AdminUsers);
+            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit, Permissions.SystemAdmin);
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
             var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
 
@@ -241,7 +241,7 @@ namespace Pims.Api.Test.Services
         public void Update_Status_BackToNull_AuthorizedAdmin()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit, Permissions.AdminUsers);
+            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit, Permissions.SystemAdmin);
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
             var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
 
