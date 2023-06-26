@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
@@ -80,7 +79,7 @@ namespace Pims.Tools.Keycloak.Sync
         /// <returns></returns>
         private async Task ActivateAccountAsync()
         {
-            var aRes = await _pimsClient.SendAsync("auth/activate", HttpMethod.Post);
+            var aRes = await _pimsClient.HandleRequestAsync <HttpResponseMessage>(HttpMethod.Post, "auth/activate");
             if (!aRes.IsSuccessStatusCode)
             {
                 throw new HttpClientRequestException(aRes);
@@ -384,24 +383,34 @@ namespace Pims.Tools.Keycloak.Sync
         private async Task SyncUserRoles(PModel.UserModel user, StringBuilder log)
         {
             var username = user.GuidIdentifierValue.ToString().Replace("-", string.Empty) + "@idir";
-            var kUserRoles = await _keycloakManagementClient.HandleGetAsync<KModel.UserRoleModel>(
-                $"{_keycloakManagementClient.GetIntegrationEnvUri()}/user-role-mappings?username={Uri.EscapeDataString(username)}",
-                (response) => response.StatusCode == HttpStatusCode.NotFound);
+            var kUserRoles = (await _keycloakManagementClient.HandleGetAsync<ResponseWrapperModel<IEnumerable<KModel.RoleModel>>>(
+                $"{_keycloakManagementClient.GetIntegrationEnvUri()}/users/{Uri.EscapeDataString(username)}/roles",
+                (response) => response.StatusCode == HttpStatusCode.NotFound)).Data;
 
-            IEnumerable<UserRoleOperation> userRolesToAdd = user.UserRoles.Where(ur => kUserRoles.Roles.All(kr => kr.Name != ur.Role.Name)).Select(ur => new UserRoleOperation() { RoleName = ur.Role.Name, Username = username, Operation = "add" });
-            IEnumerable<UserRoleOperation> userRolesToRemove = kUserRoles.Roles.Where(kur => user.UserRoles.All(ur => ur.Role.Name != kur.Name)).Select(kur => new UserRoleOperation() { RoleName = kur.Name, Username = username, Operation = "del" });
-            var allUserRoleMappings = userRolesToAdd.Concat(userRolesToRemove);
+            IEnumerable<RoleModel> userRolesToAdd = user.UserRoles.Where(ur => kUserRoles.All(kr => kr.Name != ur.Role.Name && ur.Role.IsDisabled == false)).Select(ur => new RoleModel() { Name = ur.Role.Name });
+            IEnumerable<RoleModel> userRolesToRemove = kUserRoles.Where(kur => user.UserRoles.All(ur => ur.Role.Name != kur.Name)).Select(ur => new RoleModel() { Name = ur.Name });
 
-            foreach (UserRoleOperation operation in allUserRoleMappings)
+            if (userRolesToAdd.Any())
             {
-                _logger.LogInformation($"Executing operation '{operation.Operation}' on role '{operation.RoleName}' to user '{operation.Username}'");
-
-                var response = await _keycloakManagementClient.SendJsonAsync($"{_keycloakManagementClient.GetIntegrationEnvUri()}/user-role-mappings", HttpMethod.Post, operation);
+                _logger.LogInformation($"Executing operation 'add' on roles '{string.Join(',', userRolesToAdd.Select(r => r.Name))}' to user '{username}'");
+                var response = await _keycloakManagementClient.SendJsonAsync($"{_keycloakManagementClient.GetIntegrationEnvUri()}/users/{Uri.EscapeDataString(username)}/roles", HttpMethod.Post, userRolesToAdd);
                 if (!response.IsSuccessStatusCode)
                 {
-                    throw new HttpClientRequestException(response, $"Failed to update the user role mappings for '{operation.Username}' during operation '{operation.Operation}' on role '{operation.RoleName}'");
+                    throw new HttpClientRequestException(response, $"Failed to update the user role mappings for '{username}' during operation 'add' on roles '{string.Join(',', userRolesToAdd.Select(r => r.Name))}'");
                 }
-                LogInfo(log, $"Executed operation '{operation.Operation}' on role '{operation.RoleName}' to user '{operation.Username}'");
+                LogInfo(log, $"Executed operation 'add' on roles '{string.Join(',', userRolesToAdd.Select(r => r.Name))}' to user '{username}'");
+            }
+
+            foreach (RoleModel userRoleToRemove in userRolesToRemove)
+            {
+                _logger.LogInformation($"Executing operation 'delete' on role '{userRoleToRemove.Name}' to user '{username}'");
+
+                var response = await _keycloakManagementClient.SendAsync($"{_keycloakManagementClient.GetIntegrationEnvUri()}/users/{Uri.EscapeDataString(username)}/roles/{Uri.EscapeDataString(userRoleToRemove.Name)}", HttpMethod.Delete);
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new HttpClientRequestException(response, $"Failed to update the user role mappings for '{username}' during operation 'delete' on role '{userRoleToRemove.Name}'");
+                }
+                LogInfo(log, $"Executed operation 'delete' on role '{userRoleToRemove.Name}' to user '{username}'");
             }
         }
 
