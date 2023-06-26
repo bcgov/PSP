@@ -10,7 +10,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { StyledAddButton } from '@/components/common/styles';
-import { Claims } from '@/constants';
+import { Claims, Roles } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
@@ -55,7 +55,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   setEditMode,
   onGenerate,
 }) => {
-  const { hasClaim } = useKeycloakWrapper();
+  const { hasClaim, hasRole } = useKeycloakWrapper();
   const getPayeeDetails = (
     compensationPayee: Api_CompensationPayee | null | undefined,
   ): PayeeViewDetails | null => {
@@ -124,7 +124,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       return true;
     }
 
-    if (!compensation.isDraft && hasClaim(Claims.ADMIN_USERS)) {
+    if (!compensation.isDraft && hasRole(Roles.SYSTEM_ADMINISTRATOR)) {
       return true;
     }
 
