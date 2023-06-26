@@ -1,10 +1,7 @@
 ﻿
 
 using OpenQA.Selenium;
-using OpenQA.Selenium.DevTools.V110.IndexedDB;
 using PIMS.Tests.Automation.Classes;
-using System;
-using System.Globalization;
 
 namespace PIMS.Tests.Automation.PageObjects
 {

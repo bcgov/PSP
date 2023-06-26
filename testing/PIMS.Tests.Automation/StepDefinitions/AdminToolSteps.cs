@@ -90,7 +90,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a CDOGS template")]
         public void CDOGSTemplate()
         {
-            /* TEST COVERAGE: PSP-4667, PSP-4668, PSP-4677, PSP-4681, PSP-5329 */
+            /* TEST COVERAGE: PSP-4667, PSP-4668, PSP-4677, PSP-4680, PSP-4681, PSP-5329 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -115,6 +115,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save new template
             digitalDocuments.SaveDigitalDocument();
+
+            //Verify Document List
+            digitalDocuments.VerifyDocumentsListView("CDOGS Templates");
 
             //Add new template
             cdogsTemplates.AddNewTemplate();
