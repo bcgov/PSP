@@ -180,6 +180,17 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
 .c1 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -190,7 +201,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   flex-direction: row-reverse;
 }
 
-.c11 {
+.c12 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -210,7 +221,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   font-weight: 600;
 }
 
-.c11 span {
+.c12 span {
   margin-left: 1.25rem;
 }
 
@@ -232,7 +243,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   padding-bottom: 1rem;
 }
 
-.c10 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -252,14 +263,14 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   margin-bottom: 2rem;
 }
 
-.c10 label {
+.c11 label {
   font-family: 'BCSans-Bold';
   font-size: 1.75rem;
   width: 100%;
   text-align: left;
 }
 
-.c10 button {
+.c11 button {
   margin-bottom: 1rem;
 }
 
@@ -337,6 +348,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
               </div>
               <div
                 class="pl-1 text-left col-auto"
+                data-testid="compensation-number"
               >
                 <strong>
                   Draft
@@ -359,9 +371,10 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
               </div>
               <div
                 class="pl-1 text-left col-auto"
+                data-testid="header-pretax-amount"
               >
                 <strong>
-                  $0.00
+                  $30,000.00
                 </strong>
               </div>
             </div>
@@ -377,9 +390,10 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
               </div>
               <div
                 class="pl-1 text-left col-auto"
+                data-testid="header-tax-amount"
               >
                 <strong>
-                  $0.00
+                  $1,500.00
                 </strong>
               </div>
             </div>
@@ -395,9 +409,10 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
               </div>
               <div
                 class="pl-1 text-left col-auto"
+                data-testid="header-total-amount"
               >
                 <strong>
-                  $0.00
+                  $31,500.00
                 </strong>
               </div>
             </div>
@@ -748,7 +763,33 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             <div
               class="c9"
             >
-              <label />
+              <a
+                class="c10"
+                href="/contact/P9"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span>
+                  Aman Monga
+                </span>
+                <svg
+                  class="ml-2"
+                  fill="currentColor"
+                  height="1rem"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1rem"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                  />
+                </svg>
+              </a>
+              <label>
+                , in trust
+              </label>
             </div>
           </div>
         </div>
@@ -767,7 +808,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           <div
             class="c7 text-left col"
           >
-            $0.00
+            $30,000.00
           </div>
         </div>
         <div
@@ -785,7 +826,25 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           <div
             class="c7 text-left col"
           >
-            No
+            Yes
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              GST amount:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            $1,500.00
           </div>
         </div>
         <div
@@ -803,7 +862,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           <div
             class="c7 text-left col"
           >
-            $0.00
+            $31,500.00
           </div>
         </div>
       </div>
@@ -853,7 +912,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c10"
+          class="c11"
         >
           <label>
             Activity 1
@@ -950,7 +1009,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c10"
+          class="c11"
         >
           <label>
             Activity 2
@@ -1081,13 +1140,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c11"
+          class="c12"
         >
           <div>
             <label>
               Compensation amount: 
               <span>
-                $0.00
+                $30,000.00
               </span>
             </label>
           </div>
@@ -1095,7 +1154,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             <label>
               Applicable GST: 
               <span>
-                $0.00
+                $1,500.00
               </span>
             </label>
           </div>
@@ -1103,7 +1162,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             <label>
               Total cheque amount: 
               <span>
-                $0.00
+                $31,500.00
               </span>
             </label>
           </div>

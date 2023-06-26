@@ -54,7 +54,6 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
             acquisitionFile={acquistionFile}
             View={CompensationRequisitionDetailView}
             clientConstant={clientConstant}
-            gstConstant={gstConstant ?? 0}
             loading={loading}
             setEditMode={setEditMode}
           ></CompensationRequisitionDetailContainer>
