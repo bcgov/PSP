@@ -82,6 +82,17 @@ describe('Tenant component', () => {
     expect(notes).toHaveLength(2);
   });
 
+  it('renders assignee section', () => {
+    const { component } = setup({
+      lease: { ...defaultApiLease, tenants: [] },
+      tenants: [],
+    });
+    const { getAllByText } = component;
+    const asgnSection = getAllByText('Assignee');
+
+    expect(asgnSection).toHaveLength(1);
+  });
+
   it('renders representative section', () => {
     const { component } = setup({
       lease: { ...defaultApiLease, tenants: [] },

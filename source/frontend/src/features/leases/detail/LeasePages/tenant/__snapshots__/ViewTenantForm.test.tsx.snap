@@ -83,6 +83,26 @@ exports[`Tenant component renders as expected 1`] = `
           <div
             class="col"
           >
+            Assignee
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      />
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
             Tenant
           </div>
         </div>

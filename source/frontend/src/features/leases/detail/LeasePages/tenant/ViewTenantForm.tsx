@@ -35,13 +35,36 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
       >
         <>
           <LoadingBackdrop show={loading} parentScreen />
+          <Section header="Assignee">
+            {tenants.map(
+              (tenant: FormTenant, index) =>
+                tenant.tenantType === 'ASGN' && (
+                  <div key={`tenants-${index}`}>
+                    <>
+                      {tenant.organizationId ? (
+                        <TenantOrganizationContactInfo
+                          disabled={true}
+                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                        />
+                      ) : (
+                        <TenantPersonContactInfo
+                          disabled={true}
+                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                        />
+                      )}
+                    </>
+                  </div>
+                ),
+            )}
+          </Section>
+
           <Section header="Tenant">
             {tenants.map(
               (tenant: FormTenant, index) =>
                 tenant.tenantType === 'TEN' && (
                   <div key={`tenants-${index}`}>
                     <>
-                      {tenant.lessorTypeCode?.id === 'ORG' ? (
+                      {tenant.organizationId ? (
                         <TenantOrganizationContactInfo
                           disabled={true}
                           nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
