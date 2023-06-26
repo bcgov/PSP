@@ -198,7 +198,6 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(createLicenseButton).Click();
         }
 
-        //Covers all fields on License Details
         public void CreateLicenseDetails(Lease lease)
         {
             Wait();
@@ -552,7 +551,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(licenseDetailsNotesTextarea).SendKeys(lease.LeaseNotes);
         }
 
-        public void EditLeaseFileDetails()
+        public void EditLeaseFileDetailsBttn()
         {
             Wait();
             webDriver.FindElement(licenseDetailsEditIcon).Click();

@@ -13,6 +13,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By createAcquisitionFileButton = By.XPath("//a[contains(text(),'Create an Acquisition File')]");
 
         private By acquisitionFileSummaryBttn = By.XPath("//div[contains(text(),'File Summary')]");
+        private By acquisitionFileDetailsTab = By.XPath("//a[contains(text(),'File details')]");
 
         //Acquisition File Details View Form Elements
         private By acquisitionFileViewTitle = By.XPath("//h1[contains(text(),'Acquisition File')]");
@@ -32,7 +33,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By acquisitionFileHeaderStatusLabel = By.XPath("//label[contains(text(),'Status')]");
         private By acquisitionFileHeaderStatusContent = By.XPath("//label[contains(text(),'Status')]/parent::div/following-sibling::div[1]/strong");
 
-        private By acquisitionFileProjectSubtitle = By.XPath("//div[contains(text(),'Project')]");
+        private By acquisitionFileProjectSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project')]");
         private By acquisitionFileProjectLabel = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]");
         private By acquisitionFileProjectInput = By.CssSelector("input[id='typeahead-project']");
         private By acquisitionFileProject1stOption = By.CssSelector("div[id='typeahead-project'] a");
@@ -114,10 +115,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToCreateNewAcquisitionFile()
         {
-            WaitUntil(menuAcquisitionButton);
+            Wait(5000);
             webDriver.FindElement(menuAcquisitionButton).Click();
 
-            Wait();
+            WaitUntil(createAcquisitionFileButton);
             FocusAndClick(createAcquisitionFileButton);
         }
 
@@ -133,6 +134,12 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(acquisitionFileSummaryBttn).Click();
         }
 
+        public void NavigateToFileDetailsTab()
+        {
+            Wait();
+            webDriver.FindElement(acquisitionFileDetailsTab).Click();
+        }
+
         public void CreateMinimumAcquisitionFile(AcquisitionFile acquisition)
         {
             Wait();
@@ -145,7 +152,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(acquisitionFileDetailsTypeSelect, acquisition.AcquisitionType);
 
             Wait();
-            ChooseSpecificSelectOption(acquisitionFileDetailsRegionSelect, acquisition.MOTIRegion);
+            ChooseSpecificSelectOption(acquisitionFileDetailsRegionSelect, acquisition.AcquisitionMOTIRegion);
         }
 
         public void EditAcquisitionFileDetails()
@@ -216,8 +223,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseSpecificSelectOption(acquisitionFileDetailsTypeSelect, acquisition.AcquisitionType);
 
             Wait();
-            if (acquisition.MOTIRegion != "")
-                ChooseSpecificSelectOption(acquisitionFileDetailsRegionSelect, acquisition.MOTIRegion);
+            if (acquisition.AcquisitionMOTIRegion != "")
+                ChooseSpecificSelectOption(acquisitionFileDetailsRegionSelect, acquisition.AcquisitionMOTIRegion);
 
             Wait();
             if (acquisition.AcquisitionStatus != "")
@@ -244,6 +251,13 @@ namespace PIMS.Tests.Automation.PageObjects
             if (webDriver.FindElements(acquisitionFileProjectOtherFundingLabel).Count > 0 && acquisition.AcquisitionFundingOther != "")
                 ClearInput(acquisitionFileProjectOtherFundingInput);
                 webDriver.FindElement(acquisitionFileProjectOtherFundingInput).SendKeys(acquisition.AcquisitionFundingOther);
+
+            if (acquisition.AssignedDate != "")
+            {
+                ClearInput(acquisitionFileAssignedDateInput);
+                webDriver.FindElement(acquisitionFileAssignedDateInput).SendKeys(acquisition.AssignedDate);
+                webDriver.FindElement(acquisitionFileAssignedDateInput).SendKeys(Keys.Enter);
+            }
 
             if (acquisition.DeliveryDate != "")
             {

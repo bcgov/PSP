@@ -21,24 +21,24 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseImprovResidentialSubtitle = By.XPath("//div[contains(text(),'Other Improvements')]/parent::div/parent::h2");
         private By licenseImprovResidentialUnitNbrLabel = By.XPath("//div[contains(text(),'Residential')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Unit #')]");
         private By licenceImprovResidentialUnitNbrInput = By.Id("input-improvements.1.address");
-        private By licenseImprovResidentialUnitContent = By.Id("input-improvements.2.address");
+        //private By licenseImprovResidentialUnitContent = By.Id("input-improvements.2.address");
         private By licenseImprovResidentialSizeLabel = By.XPath("//div[contains(text(),'Residential')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Building size')]");
         private By licenceImprovResidentialSizeInput = By.Id("input-improvements.1.structureSize");
-        private By licenseImprovResidentialSizeContent = By.Id("input-improvements.2.structureSize");
+        //private By licenseImprovResidentialSizeContent = By.Id("input-improvements.2.structureSize");
         private By licenseImprovResidentialDescriptionLabel = By.XPath("//div[contains(text(),'Residential')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]");
         private By licenseImprovResidentialDescriptionTextarea = By.Id("input-improvements.1.description");
-        private By licenseImprovResidentialDescriptionContent = By.Id("input-improvements.2.description");
+        //private By licenseImprovResidentialDescriptionContent = By.Id("input-improvements.2.description");
 
         private By licenseImprovOtherSubtitle = By.XPath("//div[contains(text(),'Other Improvements')]/parent::div/parent::h2");
         private By licenseImprovOtherlUnitNbrLabel = By.XPath("//div[contains(text(),'Other Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Unit #')]");
         private By licenceImprovOtherUnitNbrInput = By.Id("input-improvements.2.address");
-        private By licenseImprovOtherUnitNbrContent = By.Id("input-improvements.1.address");
+        //private By licenseImprovOtherUnitNbrContent = By.Id("input-improvements.1.address");
         private By licenseImprovOtherSizeLabel = By.XPath("//div[contains(text(),'Other Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Building size')]");
         private By licenceImprovOtherSizeInput = By.Id("input-improvements.2.structureSize");
-        private By licenseImprovOtherSizeContent = By.Id("input-improvements.1.structureSize");
+        //private By licenseImprovOtherSizeContent = By.Id("input-improvements.1.structureSize");
         private By licenseImprovOtherDescriptionLabel = By.XPath("//div[contains(text(),'Other Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]");
         private By licenceImprovOtherDescriptionTextarea = By.Id("input-improvements.2.description");
-        private By licenseImprovOtherDescriptionContent = By.Id("input-improvements.1.description");
+        //private By licenseImprovOtherDescriptionContent = By.Id("input-improvements.1.description");
 
         private By licenseImproSaveButton = By.XPath("//button/div[contains(text(),'Save')]/ancestor::button");
 
@@ -157,19 +157,19 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 Assert.True(webDriver.FindElement(licenseImprovResidentialSubtitle).Displayed);
                 Assert.True(webDriver.FindElement(licenseImprovResidentialUnitNbrLabel).Displayed);
-                Assert.True(webDriver.FindElement(licenseImprovResidentialUnitContent).GetAttribute("value") == lease.ResidentialImprovementUnit);
+                Assert.True(webDriver.FindElement(licenceImprovResidentialUnitNbrInput).GetAttribute("value") == lease.ResidentialImprovementUnit);
             }
 
             if (lease.ResidentialImprovementBuildingSize != "")
             {
                 Assert.True(webDriver.FindElement(licenseImprovResidentialSizeLabel).Displayed);
-                Assert.True(webDriver.FindElement(licenseImprovResidentialSizeContent).GetAttribute("value") == lease.ResidentialImprovementBuildingSize);
+                Assert.True(webDriver.FindElement(licenceImprovResidentialSizeInput).GetAttribute("value") == lease.ResidentialImprovementBuildingSize);
             }
                 
             if (lease.ResidentialImprovementDescription != "")
             {
                 Assert.True(webDriver.FindElement(licenseImprovResidentialDescriptionLabel).Displayed);
-                Assert.True(webDriver.FindElement(licenseImprovResidentialDescriptionContent).Text == lease.ResidentialImprovementDescription);
+                Assert.True(webDriver.FindElement(licenseImprovResidentialDescriptionTextarea).Text == lease.ResidentialImprovementDescription);
             }
 
             //Other Improvements
@@ -177,19 +177,19 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 Assert.True(webDriver.FindElement(licenseImprovOtherSubtitle).Displayed);
                 Assert.True(webDriver.FindElement(licenseImprovOtherlUnitNbrLabel).Displayed);
-                Assert.True(webDriver.FindElement(licenseImprovOtherUnitNbrContent).GetAttribute("value") == lease.OtherImprovementUnit);
+                Assert.True(webDriver.FindElement(licenceImprovOtherUnitNbrInput).GetAttribute("value") == lease.OtherImprovementUnit);
             }
 
             if (lease.OtherImprovementBuildingSize != "")
             {
                 Assert.True(webDriver.FindElement(licenseImprovOtherSizeLabel).Displayed);
-                Assert.True(webDriver.FindElement(licenseImprovOtherSizeContent).GetAttribute("value") == lease.OtherImprovementBuildingSize);
+                Assert.True(webDriver.FindElement(licenceImprovOtherSizeInput).GetAttribute("value") == lease.OtherImprovementBuildingSize);
             }
 
             if (lease.OtherImprovementDescription != "")
             {
                 Assert.True(webDriver.FindElement(licenseImprovOtherDescriptionLabel).Displayed);
-                Assert.True(webDriver.FindElement(licenseImprovOtherDescriptionContent).Text == lease.OtherImprovementDescription);
+                Assert.True(webDriver.FindElement(licenceImprovOtherDescriptionTextarea).Text == lease.OtherImprovementDescription);
             }
         }
 

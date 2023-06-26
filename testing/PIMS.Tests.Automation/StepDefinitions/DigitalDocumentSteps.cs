@@ -26,8 +26,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create Digital Documents for a ""(.*)"" row number (.*)")]
         public void DocumentTabCreate(string fileType, int rowNumber)
         {
-            /* TEST COVERAGE: PSP-4159, PSP-4339, PSP-4340, PSP-4341 PSP-4342, PSP-4343, PSP-4344, PSP-4345, PSP-4346, PSP-4347, PSP-4348, PSP-4349, PSP-4350, PSP-4351, PSP-4352, PSP-4353, 
-             *                PSP-4354, PSP-4355, PSP-4356, PSP-4357 */
+            /* TEST COVERAGE: PSP-4159, PSP-4172, PSP-4339, PSP-4340, PSP-4341 PSP-4342, PSP-4343, PSP-4344, PSP-4345, PSP-4346, PSP-4347, PSP-4348, PSP-4349, PSP-4350, PSP-4351, PSP-4352, PSP-4353, 
+             *                PSP-4354, PSP-4355, PSP-4356, PSP-4357, PSP-5208, PSP-5435, PSP-5421, PSP-5440, PSP-5755, PSP-5766, PSP-5929, PSP-6018, PSP-6211 */
 
             //Access the documents tab
             digitalDocumentsTab.NavigateDocumentsTab();
@@ -67,7 +67,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I edit a Digital Document for a ""(.*)"" from row number (.*)")]
         public void UpdateDigitalDocuments(string fileType, int rowNumber)
         {
-            /* TEST COVERAGE:  PSP-4030, PSP-4168, PSP-4335, PSP-4336, PSP-4338 */
+            /* TEST COVERAGE: PSP-4030, PSP-4168, PSP-4335, PSP-4336, PSP-4338, PSP-5417, PSP-5418, PSP-5420, PSP-5436, PSP-5437, PSP-5439, PSP-5762, PSP-5765, PSP-5930 */
 
             //Access the documents tab
             digitalDocumentsTab.NavigateDocumentsTab();

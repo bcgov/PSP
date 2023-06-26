@@ -4,14 +4,15 @@ Feature: Projects
 Scenario Outline: Create new Projects
 	Given I create a new Project from row number <RowNumber>
 	When I verify The Project View Form
+	And I create Digital Documents for a "Project" row number <DocRowNumber>
 	And I search for an existing project
 	Then Expected Content is displayed on Projects Table
 	Examples:
-	| RowNumber |
-	| 1         |
-	| 2			|
-	| 3         |
-	| 4         |
+	| RowNumber | DocRowNumber |
+	| 1         | 8            |
+	| 2         | 9            |
+	| 3         | 10           |
+	| 4         | 11           |
 
 Scenario: Update Project
 	Given I update an existing project from row number 5
