@@ -8,14 +8,14 @@
         public string? AcquisitionProjProduct { get; set; } = String.Empty;
         public string? AcquisitionProjFunding { get; set; } = String.Empty;
         public string? AcquisitionFundingOther { get; set; } = String.Empty;
-
+        public string? AssignedDate { get; set; } = String.Empty;
         public string? DeliveryDate { get; set; } = String.Empty;
         public string? AcquisitionCompletedDate { get; set; } = String.Empty;
         public string AcquisitionFileName { get; set; } = null!;
         public string? HistoricalFileNumber { get; set; } = String.Empty;
         public string? PhysicalFileStatus { get; set; } = String.Empty;
         public string AcquisitionType { get; set; } = null!;
-        public string MOTIRegion { get; set; } = null!;
+        public string AcquisitionMOTIRegion { get; set; } = null!;
         public int AcquisitionTeamStartRow { get; set; } = 0;
         public int AcquisitionTeamCount { get; set; } = 0;
         public List<AcquisitionTeamMember>? AcquisitionTeam { get; set; } = new List<AcquisitionTeamMember>();

@@ -178,7 +178,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Create a new Contact
         public void NavigateToCreateNewContact()
         {
-            Wait();
+            Wait(5000);
             webDriver.FindElement(menuContactsButton).Click();
 
             Wait();
