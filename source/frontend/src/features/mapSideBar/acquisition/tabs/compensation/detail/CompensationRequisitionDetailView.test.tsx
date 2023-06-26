@@ -1,6 +1,7 @@
 import { createMemoryHistory } from 'history';
 
 import Claims from '@/constants/claims';
+import { Roles } from '@/constants/index';
 import {
   getMockApiCompensation,
   getMockApiCompensationPayee,
@@ -136,7 +137,7 @@ describe('Compensation Detail View Component', () => {
   it('Admin user should be able to Edit Compensation when is in "FINAL" status', async () => {
     const mockFinalCompensation = getMockApiFinalCompensation();
     const { queryByTitle } = await setup({
-      claims: [Claims.ADMIN_USERS],
+      roles: [Roles.SYSTEM_ADMINISTRATOR],
       props: { compensation: mockFinalCompensation },
     });
 

@@ -130,7 +130,7 @@ namespace Pims.Api.Services
         {
             if (statusComparable.currentStatus.HasValue && statusComparable.currentStatus.Value.Equals(false)
                 && ((statusComparable.newStatus.HasValue && statusComparable.newStatus.Value.Equals(true)) || !statusComparable.newStatus.HasValue)
-                && !_user.HasPermission(Permissions.AdminUsers))
+                && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new NotAuthorizedException();
             }
