@@ -7,7 +7,7 @@ import { NoteTypes } from '@/constants/noteTypes';
 import NoteListView from '@/features/notes/list/NoteListView';
 import ActivityListView from '@/features/properties/map/activity/list/ActivityListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 
 import { FileTabs, FileTabType, TabFileView } from '../../shared/detail/FileTabs';
 import { AcquisitionContainerState } from '../AcquisitionContainer';
@@ -18,6 +18,8 @@ import { AcquisitionChecklistView } from './checklist/detail/AcquisitionChecklis
 import CompensationListContainer from './compensation/list/CompensationListContainer';
 import CompensationListView from './compensation/list/CompensationListView';
 import AcquisitionDocumentsTab from './documents/AcquisitionDocumentsTab';
+import ExpropiationTabContainer from './expropiation/ExpropiationTabContainer';
+import ExpropiationTabcontainerView from './expropiation/ExpropiationTabContainerView';
 import AcquisitionSummaryView from './fileDetails/detail/AcquisitionSummaryView';
 import StakeHolderContainer from './stakeholders/detail/StakeHolderContainer';
 import StakeHolderView from './stakeholders/detail/StakeHolderView';
@@ -152,6 +154,24 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       ),
       key: FileTabType.COMPENSATIONS,
       name: 'Compensation',
+    });
+  }
+
+  if (
+    acquisitionFile?.id &&
+    (acquisitionFile.acquisitionTypeCode?.id === EnumAcquisitionFileType.SECTN3 ||
+      acquisitionFile.acquisitionTypeCode?.id === EnumAcquisitionFileType.SECTN6)
+  ) {
+    tabViews.push({
+      content: (
+        <ExpropiationTabContainer
+          acquisitionFileId={acquisitionFile.id}
+          acquisitionFileTypeCode={acquisitionFile.acquisitionTypeCode?.id}
+          View={ExpropiationTabcontainerView}
+        ></ExpropiationTabContainer>
+      ),
+      key: FileTabType.EXPROPIATION,
+      name: 'Expropiation',
     });
   }
 

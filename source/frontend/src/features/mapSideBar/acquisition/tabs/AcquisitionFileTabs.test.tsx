@@ -2,7 +2,7 @@ import { act } from 'react-test-renderer';
 
 import Claims from '@/constants/claims';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
-import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { queryByText, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { FileTabType } from '../../shared/detail/FileTabs';
 import AcquisitionFileTabs, { IAcquisitionFileTabsProps } from './AcquisitionFileTabs';
@@ -77,5 +77,52 @@ describe('AcquisitionFileTabs component', () => {
     await waitFor(() => {
       expect(getByText('Documents')).toHaveClass('active');
     });
+  });
+
+  it('hides the expropiation tab when the Acquisition file type is "Consensual Agreement"', () => {
+    const { queryByText } = setup({
+      acquisitionFile: mockAcquisitionFileResponse(),
+      defaultTab: FileTabType.FILE_DETAILS,
+      setContainerState,
+    });
+
+    const expropiationButton = queryByText('Expropiation');
+    expect(expropiationButton).not.toBeInTheDocument();
+  });
+
+  it('shows the expropiation tab when the Acquisition file type is "Section 3"', () => {
+    const mockAcquisitionFile = mockAcquisitionFileResponse();
+    mockAcquisitionFile.acquisitionTypeCode = {
+      id: 'SECTN3',
+      description: 'Section 3 Agreement',
+      isDisabled: false,
+    };
+
+    const { queryByText } = setup({
+      acquisitionFile: mockAcquisitionFile,
+      defaultTab: FileTabType.FILE_DETAILS,
+      setContainerState,
+    });
+
+    const editButton = queryByText('Expropiation');
+    expect(editButton).toBeInTheDocument();
+  });
+
+  it('shows the expropiation tab when the Acquisition file type is "Section 6"', () => {
+    const mockAcquisitionFile = mockAcquisitionFileResponse();
+    mockAcquisitionFile.acquisitionTypeCode = {
+      id: 'SECTN6',
+      description: 'Section 6 Expropriation',
+      isDisabled: false,
+    };
+
+    const { queryByText } = setup({
+      acquisitionFile: mockAcquisitionFile,
+      defaultTab: FileTabType.FILE_DETAILS,
+      setContainerState,
+    });
+
+    const editButton = queryByText('Expropiation');
+    expect(editButton).toBeInTheDocument();
   });
 });

@@ -86,7 +86,7 @@ export const Tabs = styled(BsTabs)`
   font-size: 1.4rem;
   border-color: transparent;
   .nav-tabs {
-    height: 2.4rem;
+    height: auto;
   }
   .nav-item {
     min-width: 5rem;
