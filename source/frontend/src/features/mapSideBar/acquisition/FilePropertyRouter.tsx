@@ -11,14 +11,12 @@ import { UpdatePropertyDetailsContainer } from '../property/tabs/propertyDetails
 import { TakesUpdateContainer } from '../property/tabs/takes/update/TakesUpdateContainer';
 import { TakesUpdateForm } from '../property/tabs/takes/update/TakesUpdateForm';
 import { PropertyFileContainer } from '../shared/detail/PropertyFileContainer';
-import { EditFormType } from './EditFormNames';
 
 export interface IFilePropertyRouterProps {
   formikRef: React.Ref<FormikProps<any>>;
   acquisitionFile?: Api_AcquisitionFile;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
-  activeEditForm?: EditFormType;
   selectedMenuIndex: number;
   defaultFileTab: FileTabType;
   defaultPropertyTab: InventoryTabNames;

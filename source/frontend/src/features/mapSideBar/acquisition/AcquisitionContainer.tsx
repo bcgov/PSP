@@ -1,6 +1,6 @@
 import { FormikProps } from 'formik';
-import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import React, { useCallback, useContext, useEffect, useMemo, useReducer, useRef } from 'react';
+import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
@@ -17,7 +17,6 @@ import { stripTrailingSlash } from '@/utils';
 import { SideBarContext } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
 import { IAcquisitionViewProps } from './AcquisitionView';
-import { EditFormType } from './EditFormNames';
 
 export interface IAcquisitionContainerProps {
   acquisitionFileId: number;
@@ -28,7 +27,6 @@ export interface IAcquisitionContainerProps {
 // Interface for our internal state
 export interface AcquisitionContainerState {
   isEditing: boolean;
-  activeEditForm?: EditFormType;
   selectedMenuIndex: number;
   showConfirmModal: boolean;
   acquisitionFile: Api_AcquisitionFile | undefined;
@@ -38,7 +36,6 @@ export interface AcquisitionContainerState {
 
 const initialState: AcquisitionContainerState = {
   isEditing: false,
-  activeEditForm: undefined,
   selectedMenuIndex: 0,
   showConfirmModal: false,
   acquisitionFile: undefined,
@@ -66,6 +63,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const formikRef = useRef<FormikProps<any>>(null);
 
+  const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
   const query = useQuery();
@@ -79,6 +77,15 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     }
     history.push({ search: query.toString() });
   };
+
+  const isPropertySelector = useMemo(
+    () =>
+      matchPath<Record<string, string>>(
+        location.pathname,
+        `${stripTrailingSlash(match.path)}/property/selector`,
+      ),
+    [location.pathname, match.path],
+  );
 
   /**
    See here that we are using `newState: Partial<AcquisitionContainerState>` in our reducer
@@ -214,11 +221,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   };
 
   // UI components
-  if (
-    loadingAcquisitionFile ||
-    (loadingAcquisitionFileProperties &&
-      containerState.activeEditForm !== EditFormType.PROPERTY_SELECTOR)
-  ) {
+  if (loadingAcquisitionFile || (loadingAcquisitionFileProperties && !isPropertySelector)) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 

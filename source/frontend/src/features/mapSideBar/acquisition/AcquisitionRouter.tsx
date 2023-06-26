@@ -7,7 +7,6 @@ import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { stripTrailingSlash } from '@/utils';
 
-import { EditFormType } from './EditFormNames';
 import { AcquisitionFileTabs } from './tabs/AcquisitionFileTabs';
 import { UpdateAgreementsContainer } from './tabs/agreement/update/UpdateAgreementsContainer';
 import { UpdateAgreementsForm } from './tabs/agreement/update/UpdateAgreementsForm';
@@ -23,7 +22,6 @@ export interface IAcquisitionRouterProps {
   acquisitionFile?: Api_AcquisitionFile;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
-  activeEditForm?: EditFormType;
   defaultFileTab: FileTabType;
   defaultPropertyTab: InventoryTabNames;
   onSuccess: () => void;
