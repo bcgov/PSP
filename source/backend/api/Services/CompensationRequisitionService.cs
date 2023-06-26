@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -18,14 +19,18 @@ namespace Pims.Api.Services
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
         private readonly IAcquisitionPayeeRepository _acquisitionPayeeRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IAcquisitionFileRepository _acqFileRepository;
 
-        public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository, IAcquisitionPayeeRepository acquisitionPayeeRepository, IEntityNoteRepository entityNoteRepository)
+        public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository, IAcquisitionPayeeRepository acquisitionPayeeRepository, IEntityNoteRepository entityNoteRepository, IUserRepository userRepository, IAcquisitionFileRepository acqFileRepository)
         {
             _user = user;
             _logger = logger;
             _compensationRequisitionRepository = compensationRequisitionRepository;
             _acquisitionPayeeRepository = acquisitionPayeeRepository;
             _entityNoteRepository = entityNoteRepository;
+            _userRepository = userRepository;
+            _acqFileRepository = acqFileRepository;
         }
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
@@ -33,21 +38,7 @@ namespace Pims.Api.Services
             _logger.LogInformation($"Getting Compensation Requisition with id {compensationRequisitionId}");
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
-            var compensationRequisition = _compensationRequisitionRepository.GetById(compensationRequisitionId);
-            var compensationPayee = compensationRequisition.PimsAcquisitionPayees?.FirstOrDefault();
-            if (compensationRequisition is not null && compensationPayee is not null)
-            {
-                // TODO fix this
-                /*var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
-                if (payeeCheque is not null)
-                {
-                    payeeCheque.PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
-                    payeeCheque.TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
-                    payeeCheque.TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
-                }*/
-            }
-
-            return compensationRequisition;
+            return _compensationRequisitionRepository.GetById(compensationRequisitionId);
         }
 
         public PimsAcquisitionPayee GetPayeeByCompensationId(long compensationRequisitionId)
@@ -68,10 +59,14 @@ namespace Pims.Api.Services
         {
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionEdit);
             compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, compensationRequisition.AcquisitionFileId);
+
             _logger.LogInformation($"Updating Compensation Requisition with id ${compensationRequisition.CompensationRequisitionId}");
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
-            (bool? currentStatus, bool? newStatus) compReqStatusComparable = (currentStatus: currentCompensation.IsDraft, newStatus: compensationRequisition.IsDraft);
+            (bool? currentIsDraft, bool? newIsDraft) compReqStatusComparable = (currentIsDraft: currentCompensation.IsDraft, newIsDraft: compensationRequisition.IsDraft);
+
+            CheckDraftStatusUpdateAuthorized(compReqStatusComparable);
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
             AddNoteIfStatusChanged(compensationRequisition.Internal_Id, compensationRequisition.AcquisitionFileId, compReqStatusComparable);
@@ -87,6 +82,7 @@ namespace Pims.Api.Services
 
             var fileFormToDelete = _compensationRequisitionRepository.TryDelete(compensationId);
             _compensationRequisitionRepository.CommitTransaction();
+
             return fileFormToDelete;
         }
 
@@ -127,6 +123,16 @@ namespace Pims.Api.Services
             };
 
             _entityNoteRepository.Add(fileNoteInstance);
+        }
+
+        private void CheckDraftStatusUpdateAuthorized((bool? currentStatus, bool? newStatus) statusComparable)
+        {
+            if (statusComparable.currentStatus.HasValue && statusComparable.currentStatus.Value.Equals(false)
+                && ((statusComparable.newStatus.HasValue && statusComparable.newStatus.Value.Equals(true)) || !statusComparable.newStatus.HasValue)
+                && !_user.HasPermission(Permissions.SystemAdmin))
+            {
+                throw new NotAuthorizedException();
+            }
         }
     }
 }
