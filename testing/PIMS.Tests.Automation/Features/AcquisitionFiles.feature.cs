@@ -141,13 +141,13 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("I edit an existing Acquisition File from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 15
- testRunner.When("I edit a Digital Document for a \"Acquisition File\" from row number 7", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I update a Property details from row number 4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 16
- testRunner.And("I update a Property details from row number 4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I navigate back to the Acquisition File Summary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 17
- testRunner.And("I navigate back to the Acquisition File Summary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I edit a Digital Document for a \"Acquisition File\" from row number 7", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 18
  testRunner.Then("An existing Acquisition file has been edited successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

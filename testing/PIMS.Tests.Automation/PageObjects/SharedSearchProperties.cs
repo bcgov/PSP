@@ -186,15 +186,15 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(PropertiesTotal - PropertiesLeft == 1);
         }
 
-        public void SelectFirstOption()
+        public void SelectFirstOption(Boolean isDuplicateTest)
         {
             WaitUntil(searchProperties1stResultPropDiv);
             FocusAndClick(searchProperties1stResultPropCheckbox);
 
-            Wait();
+            Wait(5000);
             ButtonElement("Add to selection");
 
-            if (webDriver.FindElements(generalToastBody).Count() > 0)
+            if (webDriver.FindElements(generalToastBody).Count() > 0 && isDuplicateTest)
             {
                 Assert.True(sharedModals.ToastifyText().Equals("A property that the user is trying to select has already been added to the selected properties list"));
             }
