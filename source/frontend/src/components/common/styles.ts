@@ -93,6 +93,7 @@ export const Tabs = styled(BsTabs)`
     padding: 0.1rem 0.6rem;
 
     &:hover {
+      color: ${props => props.theme.css.secondaryVariantColor};
       border-color: transparent;
     }
     &.active {
