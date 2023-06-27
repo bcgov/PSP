@@ -183,4 +183,20 @@ describe('AcquisitionView component', () => {
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
   });
+
+  it(`should display the File Details tab when we are editing and the path doesn't match any route`, async () => {
+    history.replace(`/mapview/sidebar/acquisition/1/blahblahtab?edit=true`);
+    const { getByRole } = await act(() => setup());
+    const tab = getByRole('tab', { name: /File details/i });
+    expect(tab).toBeVisible();
+    expect(tab).toHaveClass('active');
+  });
+
+  it(`should display the Property Details tab when we are editing and the path doesn't match any route`, async () => {
+    history.replace(`/mapview/sidebar/acquisition/1/property/1/unknownTabWhatIsThis?edit=true`);
+    const { getByRole } = await act(() => setup());
+    const tab = getByRole('tab', { name: /Property Details/i });
+    expect(tab).toBeVisible();
+    expect(tab).toHaveClass('active');
+  });
 });

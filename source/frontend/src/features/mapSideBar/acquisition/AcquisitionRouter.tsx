@@ -70,6 +70,14 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             onSuccess={() => props.setIsEditing(false)}
           />
         </Route>
+        {/* Ignore property-related routes (which are handled in separate FilePropertyRouter) */}
+        <Route path={`${stripTrailingSlash(path)}/property`}>
+          <></>
+        </Route>
+        <Redirect
+          from={`${path}`}
+          to={`${stripTrailingSlash(url)}/${FileTabType.FILE_DETAILS}?edit=true`}
+        />
       </Switch>
     );
   } else {
