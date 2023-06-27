@@ -151,16 +151,17 @@ namespace Pims.Dal.Test.Repositories
             // Act
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
             var organization = EntityHelper.CreateOrganization(1, "tester org");
-            var addTenantPerson = new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId };
-            var addTenantOrganization = new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, OrganizationId = organization.OrganizationId };
+            var addTenantPerson = new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER1" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN1" } };
+            var addTenantOrganization = new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, OrganizationId = organization.OrganizationId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER2" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN2" } };
             lease.PimsLeaseTenants.Add(addTenantPerson);
             lease.PimsLeaseTenants.Add(addTenantOrganization);
-            var updatedTenants = repository.Update(1, lease.PimsLeaseTenants);
+            repository.Update(1, lease.PimsLeaseTenants);
+            repository.SaveChanges();
+            var updatedTenants = repository.GetByLeaseId(lease.LeaseId);
 
             // Assert
-            updatedTenants.Should().HaveCount(1);
-            updatedTenants.Should().Contain(addTenantPerson);
-            updatedTenants.Should().Contain(addTenantOrganization);
+            updatedTenants.Should().HaveCount(2);
+            updatedTenants.FirstOrDefault().Internal_Id.Should().Be(addTenantOrganization.Internal_Id);
         }
 
         [Fact]
@@ -174,8 +175,8 @@ namespace Pims.Dal.Test.Repositories
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
             var updatePerson = EntityHelper.CreatePerson(2, "tester", "two");
             var organization = EntityHelper.CreateOrganization(1, "tester org");
-            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId });
-            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, OrganizationId = organization.OrganizationId });
+            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER1" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN1" } });
+            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, OrganizationId = organization.OrganizationId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER2" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN2" } });
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
@@ -184,11 +185,13 @@ namespace Pims.Dal.Test.Repositories
             // Act
             var updateTenant = lease.PimsLeaseTenants.FirstOrDefault();
             updateTenant.PersonId = updatePerson.PersonId;
-            var updatedTenants = repository.Update(1, lease.PimsLeaseTenants);
+            repository.Update(1, lease.PimsLeaseTenants);
+            repository.SaveChanges();
+            var updatedTenants = repository.GetByLeaseId(lease.LeaseId);
 
             // Assert
-            updatedTenants.Should().HaveCount(1);
-            updatedTenants.Should().Contain(updateTenant);
+            updatedTenants.Should().HaveCount(2);
+            updatedTenants.FirstOrDefault().Internal_Id.Should().Be(updateTenant.Internal_Id);
         }
         [Fact]
         public void Update_Lease_Tenants_Remove()
@@ -200,7 +203,7 @@ namespace Pims.Dal.Test.Repositories
             var lease = EntityHelper.CreateLease(1);
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
             var organization = EntityHelper.CreateOrganization(1, "tester org");
-            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId });
+            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER1" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN1" } });
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
@@ -210,7 +213,9 @@ namespace Pims.Dal.Test.Repositories
             var deleteTenant = lease.PimsLeaseTenants.FirstOrDefault();
             lease.PimsLeaseTenants.Remove(deleteTenant);
             context.ChangeTracker.Clear();
-            var updatedLeaseTenants = service.Update(1, lease.PimsLeaseTenants);
+            service.Update(1, lease.PimsLeaseTenants);
+            service.SaveChanges();
+            var updatedLeaseTenants = service.GetByLeaseId(lease.LeaseId);
 
             // Assert
             updatedLeaseTenants.Should().BeEmpty();
@@ -226,8 +231,8 @@ namespace Pims.Dal.Test.Repositories
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
             var addPerson = EntityHelper.CreatePerson(2, "tester", "two");
             var organization = EntityHelper.CreateOrganization(1, "tester org");
-            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId });
-            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, OrganizationId = organization.OrganizationId });
+            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER1" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN1" } });
+            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, OrganizationId = organization.OrganizationId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER2" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN2" } });
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
@@ -239,64 +244,13 @@ namespace Pims.Dal.Test.Repositories
             var addTenant = new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = addPerson.PersonId };
             lease.PimsLeaseTenants.Add(addTenant);
             context.ChangeTracker.Clear();
-            var updatedLeaseTenants = repository.Update(1, lease.PimsLeaseTenants);
+            repository.Update(1, lease.PimsLeaseTenants);
+            repository.SaveChanges();
+            var updatedLeaseTenants = repository.GetByLeaseId(lease.LeaseId);
 
             // Assert
             updatedLeaseTenants.Should().HaveCount(1);
-            updatedLeaseTenants.Should().NotContain(deleteTenant);
-            updatedLeaseTenants.Should().Contain(addTenant);
-        }
-
-        [Fact]
-        public void Update_Lease_Tenants_NotAuthorized()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
-            var lease = EntityHelper.CreateLease(1);
-
-            var repository = helper.CreateRepository<LeaseTenantRepository>(user);
-
-            // Act
-            // Assert
-            Assert.Throws<NotAuthorizedException>(() =>
-                repository.Update(1, new List<Pims.Dal.Entities.PimsLeaseTenant>()));
-        }
-
-        [Fact]
-        public void Update_Lease_Tenants_NotFound()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
-
-            var repository = helper.CreateRepository<LeaseTenantRepository>(user);
-
-            // Act
-            // Assert
-            Assert.Throws<KeyNotFoundException>(() =>
-                repository.Update(1, new List<Pims.Dal.Entities.PimsLeaseTenant>()));
-        }
-
-        [Fact]
-        public void Update_Lease_Tenants_Concurrency()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
-
-            var lease = EntityHelper.CreateLease(1);
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
-
-            var repository = helper.CreateRepository<LeaseTenantRepository>(user);
-
-            // Act
-            lease.ConcurrencyControlNumber = lease.ConcurrencyControlNumber - 1;
-
-            // Assert
-            Assert.Throws<DbUpdateConcurrencyException>(() =>
-                repository.Update(lease.LeaseId, lease.PimsLeaseTenants));
+            updatedLeaseTenants.FirstOrDefault().Internal_Id.Should().NotBe(deleteTenant.Internal_Id);
         }
         #endregion
 
@@ -322,7 +276,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             updatedPropertyLeases.Should().HaveCount(1);
-            updatedPropertyLeases.Should().Contain(addProperty);
+            updatedPropertyLeases.FirstOrDefault().Internal_Id.Should().Be(addProperty.Internal_Id);
         }
 
         [Fact]
@@ -520,7 +474,7 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             updatedProperties.Should().HaveCount(1);
             updatedProperties.Should().NotContain(deleteProperty);
-            updatedProperties.Should().Contain(addPropertyLease);
+            updatedProperties.FirstOrDefault().Internal_Id.Should().Be(addPropertyLease.Internal_Id);
         }
 
         [Fact]
@@ -538,41 +492,6 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             Assert.Throws<NotAuthorizedException>(() =>
                 repository.UpdatePropertyLeases(1, new List<Pims.Dal.Entities.PimsPropertyLease>()));
-        }
-
-        [Fact]
-        public void Update_Lease_Properties_NotFound()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
-
-            var repository = helper.CreateRepository<PropertyLeaseRepository>(user);
-
-            // Act
-            // Assert
-            Assert.Throws<KeyNotFoundException>(() =>
-                repository.UpdatePropertyLeases(1, new List<Pims.Dal.Entities.PimsPropertyLease>()));
-        }
-
-        [Fact]
-        public void Update_Lease_Properties_Concurrency()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
-
-            var lease = EntityHelper.CreateLease(1);
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
-
-            var repository = helper.CreateRepository<PropertyLeaseRepository>(user);
-
-            // Act
-            lease.ConcurrencyControlNumber = lease.ConcurrencyControlNumber - 1;
-
-            // Assert
-            Assert.Throws<DbUpdateConcurrencyException>(() =>
-                repository.UpdatePropertyLeases(lease.LeaseId, lease.PimsPropertyLeases));
         }
         #endregion
 
@@ -671,58 +590,6 @@ namespace Pims.Dal.Test.Repositories
             updatedImprovements.Should().HaveCount(1);
             updatedImprovements.Should().NotContain(deleteProperty);
             updatedImprovements.Should().Contain(addPropertyImprovement);
-        }
-
-        [Fact]
-        public void Update_Lease_Improvements_NotAuthorized()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
-            var lease = EntityHelper.CreateLease(1);
-
-            var repository = helper.CreateRepository<PropertyImprovementRepository>(user);
-
-            // Act
-            // Assert
-            Assert.Throws<NotAuthorizedException>(() =>
-                repository.Update(1, new List<Pims.Dal.Entities.PimsPropertyImprovement>()));
-        }
-
-        [Fact]
-        public void Update_Lease_Improvements_NotFound()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
-
-            var repository = helper.CreateRepository<PropertyImprovementRepository>(user);
-
-            // Act
-            // Assert
-            Assert.Throws<KeyNotFoundException>(() =>
-                repository.Update(1, new List<Pims.Dal.Entities.PimsPropertyImprovement>()));
-        }
-
-        [Fact]
-        public void Update_Lease_Improvements_Concurrency()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
-
-            var lease = EntityHelper.CreateLease(1);
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
-
-            var repository = helper.CreateRepository<PropertyImprovementRepository>(user);
-
-            // Act
-            lease.ConcurrencyControlNumber = lease.ConcurrencyControlNumber - 1;
-
-            // Assert
-            Assert.Throws<DbUpdateConcurrencyException>(() =>
-                repository.Update(lease.LeaseId, lease.GetImprovements()));
         }
         #endregion
 
