@@ -1,6 +1,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { createMemoryHistory } from 'history';
 import React from 'react';
+import { Route } from 'react-router-dom';
 
 import { Claims } from '@/constants/claims';
 import { FileTypes } from '@/constants/index';
@@ -67,9 +69,11 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
   formikRef: React.createRef(),
 };
 
+const history = createMemoryHistory();
+
 describe('AcquisitionView component', () => {
   // render component under test
-  const setup = (
+  const setup = async (
     props: IAcquisitionViewProps = { ...DEFAULT_PROPS },
     renderOptions: RenderOptions = {},
   ) => {
@@ -80,7 +84,9 @@ describe('AcquisitionView component', () => {
           fileType: FileTypes.Acquisition,
         }}
       >
-        <AcquisitionView {...props} />
+        <Route path="/mapview/sidebar/acquisition/:id">
+          <AcquisitionView {...props} />
+        </Route>
       </SideBarContextProvider>,
       {
         store: {
@@ -88,6 +94,7 @@ describe('AcquisitionView component', () => {
         },
         useMockAuthentication: true,
         claims: renderOptions?.claims ?? [],
+        history,
         ...renderOptions,
       },
     );
@@ -99,6 +106,7 @@ describe('AcquisitionView component', () => {
   };
 
   beforeEach(() => {
+    history.replace(`/mapview/sidebar/acquisition/1`);
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
     mockAxios.onGet(new RegExp('notes/*')).reply(200, mockNotesResponse());
   });
@@ -109,13 +117,12 @@ describe('AcquisitionView component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment } = setup();
-
+    const { asFragment } = await setup();
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders the underlying form', async () => {
-    const { getByText } = setup();
+    const { getByText } = await setup();
     const testAcquisitionFile = mockAcquisitionFileResponse();
 
     expect(getByText('Acquisition File')).toBeVisible();
@@ -126,7 +133,7 @@ describe('AcquisitionView component', () => {
   });
 
   it('should close the form when Close button is clicked', async () => {
-    const { getCloseButton, getByText } = setup();
+    const { getCloseButton, getByText } = await setup();
 
     expect(getByText('Acquisition File')).toBeVisible();
     await waitFor(() => userEvent.click(getCloseButton()));
@@ -135,27 +142,45 @@ describe('AcquisitionView component', () => {
   });
 
   it('should display the Edit Properties button if the user has permissions', async () => {
-    const { getByTitle } = setup(undefined, { claims: [Claims.ACQUISITION_EDIT] });
-
+    const { getByTitle } = await setup(undefined, { claims: [Claims.ACQUISITION_EDIT] });
     expect(getByTitle(/Change properties/)).toBeVisible();
   });
 
   it('should not display the Edit Properties button if the user does not have permissions', async () => {
-    const { queryByTitle } = setup(undefined, { claims: [] });
-
+    const { queryByTitle } = await setup(undefined, { claims: [] });
     expect(queryByTitle('Change properties')).toBeNull();
   });
 
   it('should display the notes tab if the user has permissions', async () => {
-    const { getAllByText } = setup(undefined, { claims: [Claims.NOTE_VIEW] });
-    await act(async () => {
-      expect(getAllByText(/Notes/)[0]).toBeVisible();
-    });
+    const { getAllByText } = await setup(undefined, { claims: [Claims.NOTE_VIEW] });
+    expect(getAllByText(/Notes/)[0]).toBeVisible();
   });
 
   it('should not display the notes tab if the user does not have permissions', async () => {
-    const { queryByText } = setup(undefined, { claims: [] });
-
+    const { queryByText } = await setup(undefined, { claims: [] });
     expect(queryByText('Notes')).toBeNull();
+  });
+
+  it('should display the File Details tab by default', async () => {
+    const { getByRole } = await act(() => setup());
+    const tab = getByRole('tab', { name: /File details/i });
+    expect(tab).toBeVisible();
+    expect(tab).toHaveClass('active');
+  });
+
+  it('should display the Property Selector according to routing', async () => {
+    history.replace(`/mapview/sidebar/acquisition/1/property/selector`);
+    const { getByRole } = await act(() => setup());
+    const tab = getByRole('tab', { name: /Locate on Map/i });
+    expect(tab).toBeVisible();
+    expect(tab).toHaveClass('active');
+  });
+
+  it('should display the Property Details tab according to routing', async () => {
+    history.replace(`/mapview/sidebar/acquisition/1/property/1`);
+    const { getByRole } = await act(() => setup());
+    const tab = getByRole('tab', { name: /Property Details/i });
+    expect(tab).toBeVisible();
+    expect(tab).toHaveClass('active');
   });
 });
