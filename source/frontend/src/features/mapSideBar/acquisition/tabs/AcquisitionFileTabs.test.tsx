@@ -91,7 +91,6 @@ describe('AcquisitionFileTabs component', () => {
     const { queryByText } = setup({
       acquisitionFile: mockAcquisitionFileResponse(),
       defaultTab: FileTabType.FILE_DETAILS,
-      setContainerState,
     });
 
     const expropriationButton = queryByText('Expropriation');
@@ -109,7 +108,6 @@ describe('AcquisitionFileTabs component', () => {
     const { queryByText } = setup({
       acquisitionFile: mockAcquisitionFile,
       defaultTab: FileTabType.FILE_DETAILS,
-      setContainerState,
     });
 
     const editButton = queryByText('Expropriation');
@@ -127,7 +125,6 @@ describe('AcquisitionFileTabs component', () => {
     const { queryByText } = setup({
       acquisitionFile: mockAcquisitionFile,
       defaultTab: FileTabType.FILE_DETAILS,
-      setContainerState,
     });
 
     const editButton = queryByText('Expropriation');
