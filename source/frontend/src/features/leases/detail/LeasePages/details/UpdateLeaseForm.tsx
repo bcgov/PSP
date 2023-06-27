@@ -8,11 +8,10 @@ import AdministrationSubForm from '@/features/leases/add/AdministrationSubForm';
 import ConsultationSubForm from '@/features/leases/add/ConsultationSubForm';
 import LeaseDetailSubForm from '@/features/leases/add/LeaseDetailSubForm';
 import ReferenceSubForm from '@/features/leases/add/ReferenceSubForm';
-import * as Styled from '@/features/leases/add/styles';
 import { getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
 import { LeasePropertySelector } from '@/features/leases/shared/propertyPicker/LeasePropertySelector';
 
-interface IUpdateLeaseFormProps {
+export interface IUpdateLeaseFormProps {
   onSubmit: (lease: LeaseFormModel) => Promise<void>;
   initialValues?: LeaseFormModel;
   formikRef: React.Ref<FormikProps<LeaseFormModel>>;
@@ -35,13 +34,13 @@ export const UpdateLeaseForm: React.FunctionComponent<
               when={formikProps.dirty}
               message="You have made changes on this form. Do you wish to leave without saving?"
             />
-            <Styled.LeaseForm>
+            <>
               <LeaseDetailSubForm formikProps={formikProps}></LeaseDetailSubForm>
               <LeasePropertySelector formikProps={formikProps} />
               <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
               <ConsultationSubForm formikProps={formikProps}></ConsultationSubForm>
               <ReferenceSubForm />
-            </Styled.LeaseForm>
+            </>
           </>
         )}
       </Formik>

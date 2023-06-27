@@ -272,7 +272,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
 }
 
 .c12 .nav-tabs {
-  height: 2.4rem;
+  height: auto;
 }
 
 .c12 .nav-item {
@@ -317,10 +317,6 @@ exports[`AcquisitionView component renders as expected 1`] = `
 
 .c11 {
   height: 100%;
-}
-
-.c11 .nav-tabs {
-  height: 2.4rem;
 }
 
 .c11 .tab-content {

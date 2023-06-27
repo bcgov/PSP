@@ -2,12 +2,24 @@ import { IMapProperty } from '@/components/propertySelector/models';
 import { PropertyAreaUnitTypes } from '@/constants/index';
 import { IAutocompletePrediction } from '@/interfaces';
 import { Api_Lease, Api_LeaseConsultation } from '@/models/api/Lease';
+import { Api_Project } from '@/models/api/Project';
 import { Api_PropertyLease } from '@/models/api/PropertyLease';
 import { ILookupCode } from '@/store/slices/lookupCodes/interfaces/ILookupCode';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { emptyStringtoNullable, fromTypeCode, stringToNull, toTypeCode } from '@/utils/formUtils';
+import {
+  emptyStringtoNullable,
+  fromTypeCode,
+  stringToNull,
+  stringToUndefined,
+  toTypeCode,
+} from '@/utils/formUtils';
 
 import { PropertyForm } from '../mapSideBar/shared/models';
+import { FormLeaseDeposit } from './detail/LeasePages/deposits/models/FormLeaseDeposit';
+import { FormLeaseDepositReturn } from './detail/LeasePages/deposits/models/FormLeaseDepositReturn';
+import { FormInsurance } from './detail/LeasePages/insurance/edit/models';
+import { FormLeaseTerm } from './detail/LeasePages/payment/models';
+import { FormTenant } from './detail/LeasePages/tenant/models';
 
 export class LeaseFormModel {
   id?: number;
@@ -45,15 +57,21 @@ export class LeaseFormModel {
   hasPhysicalLicense?: boolean;
   hasDigitalLicense?: boolean;
   project?: IAutocompletePrediction;
+  apiProject: Api_Project | null = null;
   tenantNotes: string[] = [];
   properties: FormLeaseProperty[] = [];
   consultations: FormLeaseConsultation[] = [];
+  securityDeposits: FormLeaseDeposit[] = [];
+  securityDepositReturns: FormLeaseDepositReturn[] = [];
+  terms: FormLeaseTerm[] = [];
+  tenants: FormTenant[] = [];
+  insurances: FormInsurance[] = [];
   rowVersion: number = 0;
 
   static fromApi(apiModel?: Api_Lease): LeaseFormModel {
     const leaseDetail = new LeaseFormModel();
 
-    leaseDetail.id = apiModel?.id;
+    leaseDetail.id = apiModel?.id ?? undefined;
     leaseDetail.lFileNo = apiModel?.lFileNo || '';
     leaseDetail.psFileNo = apiModel?.psFileNo || '';
     leaseDetail.tfaFileNumber = apiModel?.tfaFileNumber || '';
@@ -74,8 +92,8 @@ export class LeaseFormModel {
     leaseDetail.returnNotes = apiModel?.returnNotes || '';
     leaseDetail.documentationReference = apiModel?.documentationReference || '';
     leaseDetail.motiName = apiModel?.motiName || '';
-    leaseDetail.hasDigitalLicense = apiModel?.hasDigitalLicense;
-    leaseDetail.hasPhysicalLicense = apiModel?.hasPhysicalLicense;
+    leaseDetail.hasDigitalLicense = apiModel?.hasDigitalLicense ?? undefined;
+    leaseDetail.hasPhysicalLicense = apiModel?.hasPhysicalLicense ?? undefined;
     leaseDetail.properties = apiModel?.properties?.map(p => FormLeaseProperty.fromApi(p)) ?? [];
     leaseDetail.isResidential = apiModel?.isResidential || false;
     leaseDetail.isCommercialBuilding = apiModel?.isCommercialBuilding || false;
@@ -88,63 +106,74 @@ export class LeaseFormModel {
     leaseDetail.otherLeaseTypeDescription = apiModel?.otherType || '';
     leaseDetail.project =
       apiModel?.project !== undefined
-        ? { id: apiModel.project.id || 0, text: apiModel.project.description || '' }
+        ? { id: apiModel?.project?.id || 0, text: apiModel?.project?.description || '' }
         : undefined;
+    leaseDetail.apiProject = apiModel?.project || null;
 
     const sortedConsultations = apiModel?.consultations?.sort(
       (a, b) => (a.consultationType?.displayOrder || 0) - (b.consultationType?.displayOrder || 0),
     );
     leaseDetail.consultations =
       sortedConsultations?.map(c => FormLeaseConsultation.fromApi(c)) || [];
+    leaseDetail.securityDeposits =
+      apiModel?.securityDeposits?.map(d => FormLeaseDeposit.fromApi(d)) || [];
+    leaseDetail.terms = apiModel?.terms?.map(t => FormLeaseTerm.fromApi(t)) || [];
+    leaseDetail.tenants = apiModel?.tenants?.map(t => new FormTenant(t)) || [];
+    leaseDetail.insurances = apiModel?.insurances?.map(i => FormInsurance.createFromModel(i)) || [];
 
     return leaseDetail;
   }
 
-  public toApi(): Api_Lease {
+  public static toApi(formLease: LeaseFormModel): Api_Lease {
     return {
-      id: this.id,
-      lFileNo: stringToNull(this.lFileNo),
-      psFileNo: stringToNull(this.psFileNo),
-      tfaFileNumber: stringToNull(this.tfaFileNumber),
-      expiryDate: stringToNull(this.expiryDate),
-      startDate: this.startDate,
-      responsibilityEffectiveDate: stringToNull(this.responsibilityEffectiveDate),
-      amount: parseFloat(this.amount?.toString() ?? '') || 0.0,
-      paymentReceivableType: toTypeCode(this.paymentReceivableTypeCode),
-      categoryType: this.categoryTypeCode ? toTypeCode(this.categoryTypeCode) : undefined,
-      purposeType: toTypeCode(this.purposeTypeCode),
-      responsibilityType: toTypeCode(this.responsibilityTypeCode),
-      initiatorType: toTypeCode(this.initiatorTypeCode),
-      statusType: toTypeCode(this.statusTypeCode),
-      type: toTypeCode(this.leaseTypeCode),
-      region: toTypeCode(Number(this.regionId)),
-      programType: toTypeCode(this.programTypeCode),
-      note: stringToNull(this.note),
-      returnNotes: this.returnNotes,
-      documentationReference: stringToNull(this.documentationReference),
-      motiName: this.motiName,
-      hasDigitalLicense: this.hasDigitalLicense,
-      hasPhysicalLicense: this.hasPhysicalLicense,
-      properties: this.properties?.map(p => p.toApi()) ?? [],
-      isResidential: this.isResidential,
-      isCommercialBuilding: this.isCommercialBuilding,
-      isOtherImprovement: this.isOtherImprovement,
-      description: stringToNull(this.description),
-      rowVersion: this.rowVersion > 0 ? this.rowVersion : undefined,
-      otherCategoryType: stringToNull(this.otherCategoryTypeDescription),
-      otherProgramType: stringToNull(this.otherProgramTypeDescription),
-      otherPurposeType: stringToNull(this.otherPurposeTypeDescription),
-      otherType: stringToNull(this.otherLeaseTypeDescription),
+      id: formLease.id,
+      lFileNo: stringToNull(formLease.lFileNo),
+      psFileNo: stringToNull(formLease.psFileNo),
+      tfaFileNumber: stringToNull(formLease.tfaFileNumber),
+      expiryDate: stringToNull(formLease.expiryDate),
+      startDate: formLease.startDate,
+      responsibilityEffectiveDate: stringToNull(formLease.responsibilityEffectiveDate),
+      amount: parseFloat(formLease.amount?.toString() ?? '') || 0.0,
+      paymentReceivableType: toTypeCode(formLease.paymentReceivableTypeCode) ?? null,
+      categoryType: formLease.categoryTypeCode
+        ? toTypeCode(formLease.categoryTypeCode) ?? null
+        : null,
+      purposeType: toTypeCode(formLease.purposeTypeCode) ?? null,
+      responsibilityType: toTypeCode(formLease.responsibilityTypeCode) ?? null,
+      initiatorType: toTypeCode(formLease.initiatorTypeCode) ?? null,
+      statusType: toTypeCode(formLease.statusTypeCode) ?? null,
+      type: toTypeCode(formLease.leaseTypeCode) ?? null,
+      region: toTypeCode(Number(formLease.regionId)) ?? null,
+      programType: toTypeCode(formLease.programTypeCode) ?? null,
+      note: stringToNull(formLease.note),
+      returnNotes: formLease.returnNotes,
+      documentationReference: stringToNull(formLease.documentationReference),
+      motiName: formLease.motiName,
+      hasDigitalLicense: formLease.hasDigitalLicense,
+      hasPhysicalLicense: formLease.hasPhysicalLicense,
+      properties: formLease.properties?.map(p => FormLeaseProperty.toApi(p)) ?? [],
+      isResidential: formLease.isResidential,
+      isCommercialBuilding: formLease.isCommercialBuilding,
+      isOtherImprovement: formLease.isOtherImprovement,
+      description: stringToNull(formLease.description),
+      rowVersion: formLease.rowVersion > 0 ? formLease.rowVersion : undefined,
+      otherCategoryType: stringToNull(formLease.otherCategoryTypeDescription),
+      otherProgramType: stringToNull(formLease.otherProgramTypeDescription),
+      otherPurposeType: stringToNull(formLease.otherPurposeTypeDescription),
+      otherType: stringToNull(formLease.otherLeaseTypeDescription),
       project:
-        this.project?.id !== undefined && this.project?.id !== 0
-          ? ({ id: this.project?.id } as any)
+        formLease.project?.id !== undefined && formLease.project?.id !== 0
+          ? ({ id: formLease.project?.id } as any)
           : undefined,
-      consultations: this.consultations.map(x => x.toApi()),
+      consultations: formLease.consultations.map(x => x.toApi()),
+      tenants: formLease.tenants.map(t => FormTenant.toApi(t)),
+      terms: formLease.terms.map(t => FormLeaseTerm.toApi(t)),
+      insurances: formLease.insurances.map(i => i.toInterfaceModel()),
     };
   }
 
-  public getPropertiesAsForm(): PropertyForm[] {
-    return this.properties
+  public static getPropertiesAsForm(leaseForm: LeaseFormModel): PropertyForm[] {
+    return leaseForm.properties
       .map(property => {
         return property.property;
       })
@@ -155,46 +184,49 @@ export class LeaseFormModel {
 export class FormLeaseProperty {
   id?: number;
   property?: PropertyForm;
-  leaseId?: number;
+  leaseId: number | null;
   rowVersion?: number;
   name?: string;
   landArea: string;
   areaUnitTypeCode: string;
 
-  private constructor(leaseId?: number) {
-    this.leaseId = leaseId;
+  private constructor(leaseId?: number | null) {
+    this.leaseId = leaseId ?? null;
     this.landArea = '0';
     this.areaUnitTypeCode = PropertyAreaUnitTypes.Meter;
   }
 
-  static fromApi(apiPropertyLease: Api_PropertyLease): FormLeaseProperty {
+  public static fromApi(apiPropertyLease: Api_PropertyLease): FormLeaseProperty {
     const model = new FormLeaseProperty(apiPropertyLease.lease?.id);
-    model.property = PropertyForm.fromApi(apiPropertyLease ?? {});
+    model.property = PropertyForm.fromApi(apiPropertyLease);
     model.id = apiPropertyLease.id;
     model.rowVersion = apiPropertyLease.rowVersion;
-    model.name = apiPropertyLease.propertyName;
+    model.name = apiPropertyLease.propertyName ?? undefined;
     model.landArea = apiPropertyLease.leaseArea?.toString() || '0';
     model.areaUnitTypeCode = apiPropertyLease.areaUnitType?.id || PropertyAreaUnitTypes.Meter;
-    model.property.displayOrder = apiPropertyLease.displayOrder;
     return model;
   }
 
-  static fromMapProperty(mapProperty: IMapProperty): FormLeaseProperty {
+  public static fromMapProperty(mapProperty: IMapProperty): FormLeaseProperty {
     const model = new FormLeaseProperty();
     model.property = PropertyForm.fromMapProperty(mapProperty);
     return model;
   }
 
-  public toApi(): Api_PropertyLease {
-    const numberLeaseArea: number | undefined = stringToNull(this.landArea);
+  public static toApi(formLeaseProperty: FormLeaseProperty): Api_PropertyLease {
+    const numberLeaseArea: number | undefined = stringToUndefined(formLeaseProperty.landArea);
     return {
-      id: this.id,
-      rowVersion: this.rowVersion,
-      property: this.property?.toApi(),
-      lease: { id: this.leaseId, consultations: null },
-      propertyName: this.name,
-      leaseArea: numberLeaseArea,
-      areaUnitType: numberLeaseArea !== undefined ? toTypeCode(this.areaUnitTypeCode) : undefined,
+      id: formLeaseProperty.id,
+      leaseId: formLeaseProperty.leaseId,
+      lease: null,
+      rowVersion: formLeaseProperty.rowVersion,
+      property: formLeaseProperty.property?.toApi(),
+      propertyName: formLeaseProperty.name ?? undefined,
+      leaseArea: numberLeaseArea ?? null,
+      areaUnitType:
+        numberLeaseArea !== undefined
+          ? toTypeCode(formLeaseProperty.areaUnitTypeCode) ?? null
+          : null,
     };
   }
 }
@@ -249,6 +281,7 @@ export class FormLeaseConsultation {
 export const getDefaultFormLease: () => LeaseFormModel = () =>
   LeaseFormModel.fromApi({
     properties: [],
+    tenants: [],
     startDate: '',
     expiryDate: '',
     lFileNo: '',
@@ -264,5 +297,18 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     hasPhysicalLicense: undefined,
     statusType: { id: 'DRAFT' },
     paymentReceivableType: { id: 'RCVBL' },
-    consultations: null,
+    categoryType: null,
+    purposeType: null,
+    programType: null,
+    type: null,
+    initiatorType: null,
+    responsibilityType: null,
+    region: null,
+    otherType: null,
+    otherCategoryType: null,
+    otherPurposeType: null,
+    otherProgramType: null,
+    consultations: [],
+    terms: [],
+    insurances: [],
   });

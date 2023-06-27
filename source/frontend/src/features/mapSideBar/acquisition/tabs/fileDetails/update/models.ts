@@ -4,7 +4,7 @@ import {
   Api_AcquisitionFileOwner,
   Api_AcquisitionFilePerson,
 } from '@/models/api/AcquisitionFile';
-import { fromTypeCode, stringToNull, toTypeCode } from '@/utils/formUtils';
+import { fromTypeCode, stringToUndefined, toTypeCode } from '@/utils/formUtils';
 
 import {
   AcquisitionOwnerFormModel,
@@ -53,9 +53,9 @@ export class UpdateAcquisitionSummaryFormModel
       legacyFileNumber: this.legacyFileNumber,
       fileName: this.fileName,
       rowVersion: this.rowVersion,
-      assignedDate: stringToNull(this.assignedDate),
-      deliveryDate: stringToNull(this.deliveryDate),
-      completionDate: stringToNull(this.completionDate),
+      assignedDate: stringToUndefined(this.assignedDate),
+      deliveryDate: stringToUndefined(this.deliveryDate),
+      completionDate: stringToUndefined(this.completionDate),
       fileStatusTypeCode: toTypeCode(this.fileStatusTypeCode),
       acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCode(this.acquisitionType),

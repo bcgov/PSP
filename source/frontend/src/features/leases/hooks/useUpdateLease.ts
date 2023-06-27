@@ -3,7 +3,6 @@ import { useCallback } from 'react';
 
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { ILease } from '@/interfaces';
 import { Api_Lease } from '@/models/api/Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
@@ -12,24 +11,7 @@ import { UserOverrideCode } from '@/models/api/UserOverrideCode';
  * @param leaseId
  */
 export const useUpdateLease = () => {
-  const { putLease, putApiLease } = useApiLeases();
-
-  const updateLease = useApiRequestWrapper<
-    (
-      lease: ILease,
-      subRoute: string,
-      userOverrideCodes: UserOverrideCode[],
-    ) => Promise<AxiosResponse<ILease, any>>
-  >({
-    requestFunction: useCallback(
-      async (lease: ILease, subRoute: string, userOverrideCodes: UserOverrideCode[] = []) =>
-        await putLease(lease, subRoute, userOverrideCodes),
-      [putLease],
-    ),
-    requestName: 'updateLease',
-    throwError: true,
-    skipErrorLogCodes: [409],
-  });
+  const { putApiLease } = useApiLeases();
 
   const updateApiLease = useApiRequestWrapper<
     (
@@ -47,5 +29,5 @@ export const useUpdateLease = () => {
     skipErrorLogCodes: [409],
   });
 
-  return { updateLease, updateApiLease };
+  return { updateApiLease };
 };

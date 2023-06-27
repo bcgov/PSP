@@ -86,4 +86,51 @@ describe('AcquisitionFileTabs component', () => {
     expect(getByText('Documents')).toHaveClass('active');
     expect(history.location.pathname).toBe(`/blah/${FileTabType.DOCUMENTS}`);
   });
+
+  it('hides the expropriation tab when the Acquisition file type is "Consensual Agreement"', () => {
+    const { queryByText } = setup({
+      acquisitionFile: mockAcquisitionFileResponse(),
+      defaultTab: FileTabType.FILE_DETAILS,
+      setContainerState,
+    });
+
+    const expropriationButton = queryByText('Expropriation');
+    expect(expropriationButton).not.toBeInTheDocument();
+  });
+
+  it('shows the expropriation tab when the Acquisition file type is "Section 3"', () => {
+    const mockAcquisitionFile = mockAcquisitionFileResponse();
+    mockAcquisitionFile.acquisitionTypeCode = {
+      id: 'SECTN3',
+      description: 'Section 3 Agreement',
+      isDisabled: false,
+    };
+
+    const { queryByText } = setup({
+      acquisitionFile: mockAcquisitionFile,
+      defaultTab: FileTabType.FILE_DETAILS,
+      setContainerState,
+    });
+
+    const editButton = queryByText('Expropriation');
+    expect(editButton).toBeInTheDocument();
+  });
+
+  it('shows the expropriation tab when the Acquisition file type is "Section 6"', () => {
+    const mockAcquisitionFile = mockAcquisitionFileResponse();
+    mockAcquisitionFile.acquisitionTypeCode = {
+      id: 'SECTN6',
+      description: 'Section 6 Expropriation',
+      isDisabled: false,
+    };
+
+    const { queryByText } = setup({
+      acquisitionFile: mockAcquisitionFile,
+      defaultTab: FileTabType.FILE_DETAILS,
+      setContainerState,
+    });
+
+    const editButton = queryByText('Expropriation');
+    expect(editButton).toBeInTheDocument();
+  });
 });

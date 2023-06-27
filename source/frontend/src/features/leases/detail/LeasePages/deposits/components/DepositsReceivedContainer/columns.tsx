@@ -34,7 +34,7 @@ export class DepositListEntry {
     this.depositDescription = baseDeposit.description;
     this.amountPaid = baseDeposit.amountPaid;
     this.paidDate = baseDeposit.depositDate || '';
-    this.contactHolder = baseDeposit.contactHolder;
+    this.contactHolder = baseDeposit.contactHolder || undefined;
     this.depositReturnCount = baseDeposit.depositReturns.length;
   }
 }

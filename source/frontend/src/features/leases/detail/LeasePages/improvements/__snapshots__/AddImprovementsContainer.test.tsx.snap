@@ -170,6 +170,7 @@ exports[`Add Improvements container component displays the improvement types in 
                   class="form-control"
                   id="input-improvements.0.structureSize"
                   name="improvements.0.structureSize"
+                  title=""
                   value=""
                 />
               </div>
@@ -199,6 +200,7 @@ exports[`Add Improvements container component displays the improvement types in 
                   name="improvements.0.description"
                   placeholder="Reason for improvement and improvement details"
                   rows="5"
+                  title=""
                 />
               </div>
             </div>
@@ -275,6 +277,7 @@ exports[`Add Improvements container component displays the improvement types in 
                   class="form-control"
                   id="input-improvements.1.structureSize"
                   name="improvements.1.structureSize"
+                  title=""
                   value=""
                 />
               </div>
@@ -304,6 +307,7 @@ exports[`Add Improvements container component displays the improvement types in 
                   name="improvements.1.description"
                   placeholder="Reason for improvement and improvement details"
                   rows="5"
+                  title=""
                 />
               </div>
             </div>
@@ -380,6 +384,7 @@ exports[`Add Improvements container component displays the improvement types in 
                   class="form-control"
                   id="input-improvements.2.structureSize"
                   name="improvements.2.structureSize"
+                  title=""
                   value=""
                 />
               </div>
@@ -409,6 +414,7 @@ exports[`Add Improvements container component displays the improvement types in 
                   name="improvements.2.description"
                   placeholder="Reason for improvement and improvement details"
                   rows="5"
+                  title=""
                 />
               </div>
             </div>
