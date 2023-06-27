@@ -53,7 +53,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Api.Models.Concepts.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult GetLeaseConcept(int id)
+        public IActionResult GetLease(int id)
         {
             var lease = _leaseService.GetById(id);
             var mapped = _mapper.Map<Api.Models.Concepts.LeaseModel>(lease);
@@ -78,11 +78,11 @@ namespace Pims.Api.Areas.Lease.Controllers
             return new JsonResult(_mapper.Map<Api.Models.Concepts.LeaseModel>(lease));
         }
 
-    /// <summary>
-    /// Update the specified lease, and attached properties.
-    /// </summary>
-    /// <returns></returns>
-    [HttpPut("{id:long}")]
+        /// <summary>
+        /// Update the specified lease, and attached properties.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:long}")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Api.Models.Concepts.LeaseModel>), 200)]

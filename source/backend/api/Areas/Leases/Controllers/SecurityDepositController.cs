@@ -151,10 +151,10 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpDelete("{leaseId:long}/deposits/{depositId:long}")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(void), 200)]
+        [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public void DeleteDeposit(long leaseId, long depositId, [FromBody] Pims.Api.Models.Concepts.SecurityDepositModel deleteRequest)
+        public bool DeleteDeposit(long leaseId, long depositId, [FromBody] Pims.Api.Models.Concepts.SecurityDepositModel deleteRequest)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -173,7 +173,7 @@ namespace Pims.Api.Areas.Lease.Controllers
                 throw new BadRequestException($"Invalid Security Deposit Id");
             }
             var depositEntity = _mapper.Map<PimsSecurityDeposit>(deleteRequest);
-            _securityDepositService.DeleteLeaseDeposit(depositEntity);
+            return _securityDepositService.DeleteLeaseDeposit(depositEntity);
         }
 
         /// <summary>

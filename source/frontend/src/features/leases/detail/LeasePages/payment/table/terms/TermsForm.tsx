@@ -1,9 +1,9 @@
 import { Formik, FormikProps } from 'formik';
 import { find, noop, orderBy } from 'lodash';
 import { useMemo } from 'react';
-import { Button } from 'react-bootstrap';
 import { MdArrowDropDown, MdArrowRight } from 'react-icons/md';
 
+import { Button } from '@/components/common/buttons';
 import { Section } from '@/components/common/Section/Section';
 import { Table } from '@/components/Table';
 import { Claims, LeaseTermStatusTypes } from '@/constants';

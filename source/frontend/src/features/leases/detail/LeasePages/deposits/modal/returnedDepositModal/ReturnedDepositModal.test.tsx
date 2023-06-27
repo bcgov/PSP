@@ -68,7 +68,7 @@ describe('ReturnedDepositModal component', () => {
     const {
       component: { getByText },
     } = await setup({
-      initialValues: FormLeaseDepositReturn.createFromModel(
+      initialValues: FormLeaseDepositReturn.fromApi(
         getMockDepositReturns()[0],
         getMockDeposits()[0],
       ),

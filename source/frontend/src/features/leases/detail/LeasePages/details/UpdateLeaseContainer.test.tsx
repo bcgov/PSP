@@ -13,7 +13,7 @@ import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
 import { getDefaultFormLease } from '@/features/leases/models';
 import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { defaultApiLease } from '@/models/api/Lease';
+import { Api_Lease, defaultApiLease } from '@/models/api/Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { renderAsync, screen } from '@/utils/test-utils';
@@ -28,7 +28,7 @@ const storeState = {
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 
-jest.mock('features/leases/hooks/useLeaseDetail');
+jest.mock('@/features/leases/hooks/useLeaseDetail');
 (useLeaseDetail as jest.MockedFunction<typeof useLeaseDetail>).mockReturnValue({
   lease: getMockApiLease(),
   setLease: noop,
@@ -85,7 +85,7 @@ describe('Update lease container component', () => {
     mockAxios.onPut().reply(200, {});
     await act(async () => viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }));
 
-    expect(mockAxios.history.put[0].data).toEqual(expectedFormLease);
+    expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(leaseData);
   });
 
   it('triggers the confirm popup', async () => {
@@ -94,7 +94,7 @@ describe('Update lease container component', () => {
     mockAxios.onPut().reply(409, { error: 'test message' });
     await act(async () => viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }));
 
-    expect(mockAxios.history.put[0].data).toEqual(expectedFormLease);
+    expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(leaseData);
   });
 
   it('clicking on the save anyways popup saves the form', async () => {
@@ -108,9 +108,42 @@ describe('Update lease container component', () => {
     const button = await screen.findByText('Acknowledge & Continue');
     await act(async () => userEvent.click(button));
 
-    expect(mockAxios.history.put[1].data).toEqual(expectedFormLease);
+    expect(JSON.parse(mockAxios.history.put[1].data)).toEqual(leaseData);
   });
 });
 
-const expectedFormLease =
-  '{"startDate":"","amount":0,"paymentReceivableType":{"id":"RCVBL"},"categoryType":null,"purposeType":{"id":"BCFERRIES"},"responsibilityType":null,"initiatorType":null,"statusType":{"id":"DRAFT"},"type":null,"region":null,"programType":null,"returnNotes":"","motiName":"","properties":[],"isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"consultations":[],"tenants":[],"terms":[],"insurances":[]}';
+const leaseData: Api_Lease = {
+  startDate: '',
+  amount: 0,
+  paymentReceivableType: { id: 'RCVBL' },
+  purposeType: { id: 'BCFERRIES' },
+  statusType: { id: 'DRAFT' },
+  type: null,
+  region: null,
+  programType: null,
+  returnNotes: '',
+  motiName: '',
+  properties: [],
+  isResidential: false,
+  isCommercialBuilding: false,
+  isOtherImprovement: false,
+  responsibilityType: null,
+  categoryType: null,
+  initiatorType: null,
+  otherType: null,
+  otherCategoryType: null,
+  otherProgramType: null,
+  otherPurposeType: null,
+  tfaFileNumber: null,
+  responsibilityEffectiveDate: null,
+  psFileNo: null,
+  note: null,
+  lFileNo: null,
+  description: null,
+  documentationReference: null,
+  expiryDate: null,
+  tenants: [],
+  terms: [],
+  insurances: [],
+  consultations: [],
+};

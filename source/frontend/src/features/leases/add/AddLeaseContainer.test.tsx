@@ -6,6 +6,7 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
 import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_Lease } from '@/models/api/Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, renderAsync, RenderOptions, screen, waitFor } from '@/utils/test-utils';
@@ -97,10 +98,10 @@ describe('AddLeaseContainer component', () => {
       userEvent.click(getByText(/Save/i));
     });
     await waitFor(() => {
-      expect(mockAxios.history.post[0].data).toEqual(leaseData);
+      expect(JSON.parse(mockAxios.history.post[0].data)).toEqual(leaseData);
     });
 
-    expect(mockAxios.history.post[0].data).toEqual(leaseData);
+    expect(JSON.parse(mockAxios.history.post[0].data)).toEqual(leaseData);
   });
 
   it('triggers the confirm popup', async () => {
@@ -146,7 +147,7 @@ describe('AddLeaseContainer component', () => {
       .reply(409, { error: 'test message', errorCode: UserOverrideCode.ADD_LOCATION_TO_PROPERTY });
     act(() => userEvent.click(getByText(/Save/i)));
     await waitFor(() => {
-      expect(mockAxios.history.post[0].data).toEqual(leaseData);
+      expect(JSON.parse(mockAxios.history.post[0].data)).toEqual(leaseData);
     });
 
     const popup = await screen.findByText(/test message/i);
@@ -156,9 +157,91 @@ describe('AddLeaseContainer component', () => {
       userEvent.click(await screen.findByText('Acknowledge & Continue'));
     });
 
-    expect(mockAxios.history.post[0].data).toEqual(leaseData);
+    expect(JSON.parse(mockAxios.history.post[0].data)).toEqual(leaseData);
   });
 });
-
-const leaseData =
-  '{"expiryDate":"2020-01-02","startDate":"2020-01-01","amount":0,"paymentReceivableType":{"id":"RCVBL"},"categoryType":null,"purposeType":{"id":"BCFERRIES"},"responsibilityType":null,"initiatorType":null,"statusType":{"id":"DRAFT"},"type":{"id":"LICONSTRC"},"region":{"id":1},"programType":{"id":"BCFERRIES"},"returnNotes":"","motiName":"","properties":[],"isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"consultations":[{"id":0,"consultationType":{"id":"1STNATION"},"consultationStatusType":{"id":"UNKNOWN"},"parentLeaseId":0,"otherDescription":null},{"id":0,"consultationType":{"id":"STRATRE"},"consultationStatusType":{"id":"UNKNOWN"},"parentLeaseId":0,"otherDescription":null},{"id":0,"consultationType":{"id":"REGPLANG"},"consultationStatusType":{"id":"UNKNOWN"},"parentLeaseId":0,"otherDescription":null},{"id":0,"consultationType":{"id":"REGPRPSVC"},"consultationStatusType":{"id":"UNKNOWN"},"parentLeaseId":0,"otherDescription":null},{"id":0,"consultationType":{"id":"DISTRICT"},"consultationStatusType":{"id":"UNKNOWN"},"parentLeaseId":0,"otherDescription":null},{"id":0,"consultationType":{"id":"HQ"},"consultationStatusType":{"id":"UNKNOWN"},"parentLeaseId":0,"otherDescription":null},{"id":0,"consultationType":{"id":"OTHER"},"consultationStatusType":{"id":"UNKNOWN"},"parentLeaseId":0,"otherDescription":null}],"tenants":[],"terms":[],"insurances":[]}';
+const leaseData: Api_Lease = {
+  startDate: '2020-01-01',
+  amount: 0,
+  paymentReceivableType: { id: 'RCVBL' },
+  purposeType: { id: 'BCFERRIES' },
+  statusType: { id: 'DRAFT' },
+  type: { id: 'LICONSTRC' },
+  region: { id: 1 },
+  programType: { id: 'BCFERRIES' },
+  returnNotes: '',
+  motiName: '',
+  properties: [],
+  isResidential: false,
+  isCommercialBuilding: false,
+  isOtherImprovement: false,
+  responsibilityType: null,
+  categoryType: null,
+  initiatorType: null,
+  otherType: null,
+  otherCategoryType: null,
+  otherProgramType: null,
+  otherPurposeType: null,
+  tfaFileNumber: null,
+  responsibilityEffectiveDate: null,
+  psFileNo: null,
+  note: null,
+  lFileNo: null,
+  description: null,
+  documentationReference: null,
+  expiryDate: '2020-01-02',
+  tenants: [],
+  terms: [],
+  insurances: [],
+  consultations: [
+    {
+      id: 0,
+      consultationType: { id: '1STNATION' },
+      consultationStatusType: { id: 'UNKNOWN' },
+      parentLeaseId: 0,
+      otherDescription: null,
+    },
+    {
+      id: 0,
+      consultationType: { id: 'STRATRE' },
+      consultationStatusType: { id: 'UNKNOWN' },
+      parentLeaseId: 0,
+      otherDescription: null,
+    },
+    {
+      id: 0,
+      consultationType: { id: 'REGPLANG' },
+      consultationStatusType: { id: 'UNKNOWN' },
+      parentLeaseId: 0,
+      otherDescription: null,
+    },
+    {
+      id: 0,
+      consultationType: { id: 'REGPRPSVC' },
+      consultationStatusType: { id: 'UNKNOWN' },
+      parentLeaseId: 0,
+      otherDescription: null,
+    },
+    {
+      id: 0,
+      consultationType: { id: 'DISTRICT' },
+      consultationStatusType: { id: 'UNKNOWN' },
+      parentLeaseId: 0,
+      otherDescription: null,
+    },
+    {
+      id: 0,
+      consultationType: { id: 'HQ' },
+      consultationStatusType: { id: 'UNKNOWN' },
+      parentLeaseId: 0,
+      otherDescription: null,
+    },
+    {
+      id: 0,
+      consultationType: { id: 'OTHER' },
+      consultationStatusType: { id: 'UNKNOWN' },
+      parentLeaseId: 0,
+      otherDescription: null,
+    },
+  ],
+};

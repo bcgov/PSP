@@ -14,7 +14,7 @@ import Surplus from './Surplus';
 const history = createMemoryHistory();
 
 usePropertyLeaseRepository as jest.MockedFunction<typeof usePropertyLeaseRepository>;
-jest.mock('hooks/repositories/usePropertyLeaseRepository');
+jest.mock('@/hooks/repositories/usePropertyLeaseRepository');
 
 describe('Lease Surplus Declaration', () => {
   const setup = (renderOptions: RenderOptions & { lease?: Api_Lease } = {}): RenderResult => {

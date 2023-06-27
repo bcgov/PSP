@@ -6,7 +6,13 @@ import { Api_Project } from '@/models/api/Project';
 import { Api_PropertyLease } from '@/models/api/PropertyLease';
 import { ILookupCode } from '@/store/slices/lookupCodes/interfaces/ILookupCode';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { emptyStringtoNullable, fromTypeCode, stringToNull, toTypeCode } from '@/utils/formUtils';
+import {
+  emptyStringtoNullable,
+  fromTypeCode,
+  stringToNull,
+  stringToUndefined,
+  toTypeCode,
+} from '@/utils/formUtils';
 
 import { PropertyForm } from '../mapSideBar/shared/models';
 import { FormLeaseDeposit } from './detail/LeasePages/deposits/models/FormLeaseDeposit';
@@ -208,7 +214,7 @@ export class FormLeaseProperty {
   }
 
   public static toApi(formLeaseProperty: FormLeaseProperty): Api_PropertyLease {
-    const numberLeaseArea: number | undefined = stringToNull(formLeaseProperty.landArea);
+    const numberLeaseArea: number | undefined = stringToUndefined(formLeaseProperty.landArea);
     return {
       id: formLeaseProperty.id,
       leaseId: formLeaseProperty.leaseId,

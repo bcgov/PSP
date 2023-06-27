@@ -28,6 +28,7 @@ import { IPrimaryContactWarningModalProps } from './PrimaryContactWarningModal';
 jest.mock('@react-keycloak/web');
 jest.mock('@/hooks/pims-api/useApiContacts');
 jest.mock('@/features/leases/hooks/useUpdateLease');
+jest.mock('@/hooks/repositories/useLeaseTenantRepository');
 
 const getPersonConcept = jest.fn();
 const updateTenants = jest.fn().mockResolvedValue({ ...defaultApiLease, id: 1 });

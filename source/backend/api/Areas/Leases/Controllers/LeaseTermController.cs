@@ -55,7 +55,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Update the specified term on the passed lease.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("{leaseId:long}/term")]
+        [HttpGet("{leaseId:long}/terms")]
         [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<LeaseTermModel>), 200)]
@@ -79,7 +79,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Update the specified term on the passed lease.
         /// </summary>
         /// <returns></returns>
-        [HttpPost("{leaseId:long}/term")]
+        [HttpPost("{leaseId:long}/terms")]
         [HasPermission(Permissions.LeaseAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(LeaseTermModel), 200)]
@@ -104,7 +104,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Update the specified term on the passed lease.
         /// </summary>
         /// <returns></returns>
-        [HttpPut("{leaseId:long}/term/{termId:long}")]
+        [HttpPut("{leaseId:long}/terms/{termId:long}")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(LeaseTermModel), 200)]
@@ -129,7 +129,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Delete the specified term on the passed lease.
         /// </summary>
         /// <returns></returns>
-        [HttpDelete("{leaseId:long}/term")]
+        [HttpDelete("{leaseId:long}/terms")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(LeaseTermModel), 200)]

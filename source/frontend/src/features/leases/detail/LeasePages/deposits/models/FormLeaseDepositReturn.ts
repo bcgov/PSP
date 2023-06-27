@@ -42,7 +42,7 @@ export class FormLeaseDepositReturn {
     return returnDeposit;
   }
 
-  public static createFromModel(
+  public static fromApi(
     baseModel: Api_SecurityDepositReturn,
     parentDeposit: Api_SecurityDeposit,
   ): FormLeaseDepositReturn {
@@ -67,7 +67,7 @@ export class FormLeaseDepositReturn {
     return model;
   }
 
-  public toInterfaceModel(): Api_SecurityDepositReturn {
+  public toApi(): Api_SecurityDepositReturn {
     return {
       id: this.id ?? null,
       parentDepositId: this.parentDepositId,

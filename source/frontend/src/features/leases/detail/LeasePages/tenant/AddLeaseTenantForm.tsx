@@ -1,9 +1,10 @@
 import { Formik, FormikProps } from 'formik';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { Prompt } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { Button } from '@/components/common/buttons';
 import { TableSelect } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { ContactManagerModal } from '@/components/contact/ContactManagerModal';

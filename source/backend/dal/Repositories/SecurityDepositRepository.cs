@@ -67,7 +67,7 @@ namespace Pims.Dal.Repositories
             return updatedSecurityDeposit.Entity;
         }
 
-        public void Delete(long id)
+        public bool Delete(long id)
         {
             PimsSecurityDeposit deposit = this.Context.PimsSecurityDeposits
                 .Where(x => x.SecurityDepositId == id)
@@ -77,6 +77,8 @@ namespace Pims.Dal.Repositories
                 this.Context.Remove(deposit.PimsSecurityDepositHolder);
             }
             this.Context.Remove(deposit);
+
+            return true;
         }
     }
 }

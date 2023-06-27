@@ -110,7 +110,7 @@ export const DepositsContainer: React.FunctionComponent<
 
   const onDeleteDepositReturnConfirmed = async () => {
     if (lease && lease.id && lease.rowVersion && depositReturnToDelete) {
-      await deleteSecurityDepositReturn(lease.id, depositReturnToDelete.toInterfaceModel());
+      await deleteSecurityDepositReturn(lease.id, depositReturnToDelete.toApi());
       setDepositReturnToDelete(undefined);
       setDeleteReturnModalWarning(false);
       getSecurityDeposits(lease.id);
@@ -141,7 +141,7 @@ export const DepositsContainer: React.FunctionComponent<
     if (deposit) {
       var parentDeposit = securityDeposits.find(x => x.id === deposit?.parentDepositId);
       if (parentDeposit) {
-        setEditReturnValue(FormLeaseDepositReturn.createFromModel(deposit, parentDeposit));
+        setEditReturnValue(FormLeaseDepositReturn.fromApi(deposit, parentDeposit));
         setShowReturnEditModal(true);
         lease?.id && getSecurityDeposits(lease.id);
       } else {
@@ -157,7 +157,7 @@ export const DepositsContainer: React.FunctionComponent<
         (x: Api_SecurityDeposit) => x.id === deposit?.parentDepositId,
       );
       if (parentDeposit) {
-        setDepositReturnToDelete(FormLeaseDepositReturn.createFromModel(deposit, parentDeposit));
+        setDepositReturnToDelete(FormLeaseDepositReturn.fromApi(deposit, parentDeposit));
         setDeleteReturnModalWarning(true);
       } else {
         console.error('Parent deposit incomplete');
@@ -171,7 +171,7 @@ export const DepositsContainer: React.FunctionComponent<
    */
   const onSaveReturnDeposit = async (returnDepositForm: FormLeaseDepositReturn) => {
     if (lease && lease.id) {
-      let request: Api_SecurityDepositReturn = returnDepositForm.toInterfaceModel();
+      let request: Api_SecurityDepositReturn = returnDepositForm.toApi();
       const securityDepositReturn = request?.id
         ? await updateSecurityDepositReturn(lease.id, request)
         : await addSecurityDepositReturn(lease.id, request);

@@ -13,6 +13,6 @@ namespace Pims.Api.Services
 
         void UpdateLeaseDepositNote(long leaseId, string note);
 
-        void DeleteLeaseDeposit(PimsSecurityDeposit deposit);
+        bool DeleteLeaseDeposit(PimsSecurityDeposit deposit);
     }
 }

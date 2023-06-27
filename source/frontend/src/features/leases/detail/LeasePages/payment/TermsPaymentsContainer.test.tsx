@@ -54,8 +54,8 @@ const defaultLeaseWithTermsPayments: LeaseFormModel = {
 };
 
 jest.mock('@react-keycloak/web');
-jest.mock('hooks/repositories/useUserInfoRepository');
-jest.mock('hooks/repositories/useLeaseTermRepository');
+jest.mock('@/hooks/repositories/useUserInfoRepository');
+jest.mock('@/hooks/repositories/useLeaseTermRepository');
 (useLeaseTermRepository as jest.MockedFunction<typeof useLeaseTermRepository>).mockReturnValue({
   getLeaseTerms: mockGetLeaseTerms,
   updateLeaseTerm: { ...defaultRepositoryResponse },

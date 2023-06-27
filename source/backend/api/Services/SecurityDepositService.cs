@@ -70,14 +70,15 @@ namespace Pims.Api.Services
             _leaseRepository.CommitTransaction();
         }
 
-        public void DeleteLeaseDeposit(PimsSecurityDeposit deposit)
+        public bool DeleteLeaseDeposit(PimsSecurityDeposit deposit)
         {
             _logger.LogInformation("Deleting lease deposit for lease id {leaseId}, deposit id {depositId}", deposit.LeaseId, deposit.SecurityDepositId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             ValidateDeletionRules(deposit);
 
-            _securityDepositRepository.Delete(deposit.SecurityDepositId);
+            bool deleted = _securityDepositRepository.Delete(deposit.SecurityDepositId);
             _securityDepositRepository.CommitTransaction();
+            return deleted;
         }
 
         private void ValidateDeletionRules(PimsSecurityDeposit deposit)

@@ -1,3 +1,4 @@
+import { orderBy } from 'lodash';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 
@@ -28,7 +29,7 @@ const InsuranceContainer: React.FunctionComponent<React.PropsWithChildren<LeaseP
   } = useInsurancesRepository();
 
   const { lease } = useContext(LeaseStateContext);
-  const insuranceList = insurances ?? [];
+  const insuranceList = orderBy(insurances, i => i.insuranceType.displayOrder) ?? [];
   const leaseId = lease?.id;
   useEffect(() => {
     leaseId && getInsurances(leaseId);

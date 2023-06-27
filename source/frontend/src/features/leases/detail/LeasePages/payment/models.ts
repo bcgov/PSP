@@ -3,7 +3,7 @@ import { Api_LeasePayment } from '@/models/api/LeasePayment';
 import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
 import Api_TypeCode from '@/models/api/TypeCode';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { stringToNull, toRequiredTypeCode } from '@/utils/formUtils';
+import { stringToUndefined, toRequiredTypeCode } from '@/utils/formUtils';
 
 export class FormLeaseTerm {
   id: number | null = null;
@@ -28,11 +28,11 @@ export class FormLeaseTerm {
     return {
       ...formLeaseTerm,
       leaseId: formLeaseTerm.leaseId ?? 0,
-      startDate: stringToNull(formLeaseTerm.startDate),
+      startDate: stringToUndefined(formLeaseTerm.startDate),
       renewalDate: null,
-      expiryDate: stringToNull(formLeaseTerm.expiryDate),
-      paymentAmount: stringToNull(formLeaseTerm.paymentAmount),
-      gstAmount: stringToNull(
+      expiryDate: stringToUndefined(formLeaseTerm.expiryDate),
+      paymentAmount: stringToUndefined(formLeaseTerm.paymentAmount),
+      gstAmount: stringToUndefined(
         formLeaseTerm.isGstEligible && gstConstant !== undefined
           ? (formLeaseTerm.paymentAmount as number) * (gstConstant / 100)
           : null,
@@ -101,10 +101,10 @@ export class FormLeasePayment {
     return {
       ...formLeasePayment,
       id: formLeasePayment.id ?? null,
-      amountPreTax: stringToNull(formLeasePayment.amountPreTax),
-      amountGst: stringToNull(formLeasePayment.amountGst),
-      amountPst: stringToNull(formLeasePayment.amountPst),
-      amountTotal: stringToNull(formLeasePayment.amountTotal),
+      amountPreTax: stringToUndefined(formLeasePayment.amountPreTax),
+      amountGst: stringToUndefined(formLeasePayment.amountGst),
+      amountPst: stringToUndefined(formLeasePayment.amountPst),
+      amountTotal: stringToUndefined(formLeasePayment.amountTotal),
       leasePaymentStatusTypeCode: formLeasePayment.leasePaymentStatusTypeCode?.id
         ? formLeasePayment.leasePaymentStatusTypeCode
         : null,

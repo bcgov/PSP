@@ -19,7 +19,7 @@ export interface Api_Lease extends Api_ConcurrentVersion, Api_AuditFields {
   tfaFileNumber?: string | null;
   expiryDate?: string | null;
   startDate?: string;
-  responsibilityEffectiveDate?: string;
+  responsibilityEffectiveDate?: string | null;
   paymentReceivableType: Api_TypeCode<string> | null;
   categoryType: Api_TypeCode<string> | null;
   purposeType: Api_TypeCode<string> | null;

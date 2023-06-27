@@ -19,8 +19,8 @@ import {
   waitFor,
 } from '@/utils/test-utils';
 
+import DepositsContainer from './DepositsContainer';
 import { FormLeaseDeposit } from './models/FormLeaseDeposit';
-import { DepositsContainer } from './styles';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');

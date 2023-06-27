@@ -8,7 +8,7 @@ import {
   booleanToString,
   fromTypeCode,
   stringToBoolean,
-  stringToNull,
+  stringToUndefined,
   toTypeCode,
 } from '@/utils/formUtils';
 
@@ -216,7 +216,7 @@ export class UpdatePropertyDetailsFormModel {
       district: toTypeCode(this.districtTypeCode),
       region: toTypeCode(this.regionTypeCode),
       address: this.address !== undefined ? this.address.toApi() : undefined,
-      generalLocation: stringToNull(this.generalLocation),
+      generalLocation: stringToUndefined(this.generalLocation),
       // multi-selects
       anomalies: this.anomalies?.map(e => e.toApi()),
       tenures: this.tenures?.map(e => e.toApi()),

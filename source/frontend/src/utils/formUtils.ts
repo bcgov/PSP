@@ -39,13 +39,24 @@ export function emptyStringtoNullable(value: string): string | null {
   return value;
 }
 
+export function stringToUndefined(value: any) {
+  return emptyStringToUndefined(value, value);
+}
+
+export function emptyStringToUndefined(value: any, originalValue: any) {
+  if (typeof originalValue === 'string' && originalValue === '') {
+    return undefined;
+  }
+  return value;
+}
+
 export function stringToNull(value: any) {
   return emptyStringToNull(value, value);
 }
 
 export function emptyStringToNull(value: any, originalValue: any) {
   if (typeof originalValue === 'string' && originalValue === '') {
-    return undefined;
+    return null;
   }
   return value;
 }
