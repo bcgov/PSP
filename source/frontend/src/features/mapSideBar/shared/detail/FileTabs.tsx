@@ -44,7 +44,9 @@ export const FileTabs: React.FunctionComponent<React.PropsWithChildren<IFileTabs
       activeKey={activeTab}
       onSelect={(eventKey: string | null) => {
         const tab = Object.values(FileTabType).find(value => value === eventKey);
-        tab && setActiveTab(tab);
+        if (tab && tab !== activeTab) {
+          setActiveTab(tab);
+        }
       }}
     >
       {tabViews.map((view: TabFileView, index: number) => (

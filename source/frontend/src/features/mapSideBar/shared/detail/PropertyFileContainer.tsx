@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { FileTypes } from '@/constants/fileTypes';
 import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
@@ -25,6 +26,7 @@ export interface IPropertyFileContainerProps {
   customTabs: TabInventoryView[];
   defaultTab: InventoryTabNames;
   fileContext?: FileTypes;
+  withRouter?: boolean;
 }
 
 export const PropertyFileContainer: React.FunctionComponent<
@@ -120,8 +122,26 @@ export const PropertyFileContainer: React.FunctionComponent<
     });
   }
 
-  const [activeTab, setActiveTab] = useState<InventoryTabNames>(props.defaultTab);
   const InventoryTabsView = props.View;
+  let activeTab: InventoryTabNames;
+  let setActiveTab: (tab: InventoryTabNames) => void;
+
+  // Use state-based tabs OR route-based tabs (as passed in the 'withRouter' property)
+  const [activeTabState, setActiveTabState] = useState<InventoryTabNames>(props.defaultTab);
+  const history = useHistory();
+  const params = useParams<{ tab?: string }>();
+
+  if (!!props.withRouter) {
+    activeTab = Object.values(InventoryTabNames).find(t => t === params.tab) ?? props.defaultTab;
+    setActiveTab = (tab: InventoryTabNames) => {
+      if (activeTab !== tab) {
+        history.push(`${tab}`);
+      }
+    };
+  } else {
+    activeTab = activeTabState;
+    setActiveTab = setActiveTabState;
+  }
 
   return (
     <InventoryTabsView
