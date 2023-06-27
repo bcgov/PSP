@@ -51,21 +51,9 @@ export const useMapSearch = () => {
         tileData = pimsProperties.features.length ? pimsProperties : parcel;
       } else {
         let task1, task2, task3;
-        task1 = loadProperties(filter);
-        if (filter?.PIN) {
-          task2 = parcelsService.findByPin(filter?.PIN);
-        }
-        if (filter?.PID) {
-          task3 = parcelsService.findByPid(filter?.PID);
-        }
-
-        const [pidPinInventoryData, pinNonInventoryData, pidNonInventoryData] = await Promise.all([
-          task1,
-          task2,
-          task3,
-        ]);
-
-        if (pidPinInventoryData?.features === undefined) {
+        try {
+          task1 = loadProperties(filter);
+        } catch (err) {
           setModalContent({
             title: 'Unable to connect to PIMS Inventory',
             message:
@@ -81,6 +69,19 @@ export const useMapSearch = () => {
           });
           setDisplayModal(true);
         }
+
+        if (filter?.PIN) {
+          task2 = parcelsService.findByPin(filter?.PIN);
+        }
+        if (filter?.PID) {
+          task3 = parcelsService.findByPid(filter?.PID);
+        }
+
+        const [pidPinInventoryData, pinNonInventoryData, pidNonInventoryData] = await Promise.all([
+          task1,
+          task2,
+          task3,
+        ]);
 
         tileData = pidPinInventoryData?.features?.length
           ? pidPinInventoryData
