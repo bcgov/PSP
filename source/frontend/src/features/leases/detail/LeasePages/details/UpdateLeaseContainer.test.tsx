@@ -83,7 +83,9 @@ describe('Update lease container component', () => {
     await setup({});
 
     mockAxios.onPut().reply(200, {});
-    await act(async () => viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }));
+    await act(async () =>
+      viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }),
+    );
 
     expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(leaseData);
   });
@@ -92,7 +94,9 @@ describe('Update lease container component', () => {
     await setup({});
 
     mockAxios.onPut().reply(409, { error: 'test message' });
-    await act(async () => viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }));
+    await act(async () =>
+      viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }),
+    );
 
     expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(leaseData);
   });
@@ -104,7 +108,9 @@ describe('Update lease container component', () => {
       error: 'test message',
       errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
     });
-    await act(async () => viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }));
+    await act(async () =>
+      viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }),
+    );
     const button = await screen.findByText('Acknowledge & Continue');
     await act(async () => userEvent.click(button));
 

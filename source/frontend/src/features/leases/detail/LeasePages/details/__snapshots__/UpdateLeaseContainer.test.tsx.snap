@@ -6,6 +6,5 @@ exports[`Update lease container component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-                                    autocomplete="off"
 </DocumentFragment>
 `;
