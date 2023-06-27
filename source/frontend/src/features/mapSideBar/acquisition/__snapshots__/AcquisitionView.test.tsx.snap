@@ -397,22 +397,6 @@ exports[`AcquisitionView component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c22 {
-  text-align: center;
-  font-style: italic;
-}
-
-.c19 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
 .c4 {
   text-align: left;
   padding: 0px;
@@ -471,6 +455,22 @@ exports[`AcquisitionView component renders as expected 1`] = `
 .c7 {
   font-size: 1.4rem;
   line-height: 2.2rem;
+}
+
+.c22 {
+  text-align: center;
+  font-style: italic;
+}
+
+.c19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .c10 {

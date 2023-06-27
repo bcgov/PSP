@@ -1,5 +1,3 @@
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Route } from 'react-router-dom';
@@ -7,9 +5,15 @@ import { Route } from 'react-router-dom';
 import { Claims } from '@/constants/claims';
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
-import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import {
+  mockAcquisitionFileOwnersResponse,
+  mockAcquisitionFileResponse,
+} from '@/mocks/acquisitionFiles.mock';
+import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { rest, server } from '@/mocks/msw/server';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';
+import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatDate } from '@/utils';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
@@ -17,8 +21,6 @@ import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-uti
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
 import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';
-
-const mockAxios = new MockAdapter(axios);
 
 // mock auth library
 jest.mock('@react-keycloak/web');
@@ -107,12 +109,23 @@ describe('AcquisitionView component', () => {
 
   beforeEach(() => {
     history.replace(`/mapview/sidebar/acquisition/1`);
-    mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
-    mockAxios.onGet(new RegExp('notes/*')).reply(200, mockNotesResponse());
+    server.use(
+      rest.get('/api/users/info/*', (req, res, ctx) =>
+        res(ctx.delay(500), ctx.status(200), ctx.json(getUserMock())),
+      ),
+      rest.get('/api/notes/*', (req, res, ctx) =>
+        res(ctx.delay(500), ctx.status(200), ctx.json(mockNotesResponse())),
+      ),
+      rest.get('/api/acquisitionfiles/:id/owners', (req, res, ctx) =>
+        res(ctx.delay(500), ctx.status(200), ctx.json(mockAcquisitionFileOwnersResponse())),
+      ),
+      rest.get('/api/acquisitionfiles/:id/interestholders', (req, res, ctx) =>
+        res(ctx.delay(500), ctx.status(200), ctx.json(getMockApiInterestHolders())),
+      ),
+    );
   });
 
   afterEach(() => {
-    mockAxios.resetHistory();
     jest.clearAllMocks();
   });
 
@@ -166,6 +179,16 @@ describe('AcquisitionView component', () => {
     const tab = getByRole('tab', { name: /File details/i });
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
+  });
+
+  it(`should show a toast and redirect to the File Details page when accessing a non-existing property index`, async () => {
+    history.replace(`/mapview/sidebar/acquisition/1/property/99999`);
+    const { getByRole, findByText } = await setup();
+    const tab = getByRole('tab', { name: /File details/i });
+    expect(tab).toBeVisible();
+    expect(tab).toHaveClass('active');
+    // toast
+    expect(await findByText(/Could not find property in the file/)).toBeVisible();
   });
 
   it('should display the Property Selector according to routing', async () => {
