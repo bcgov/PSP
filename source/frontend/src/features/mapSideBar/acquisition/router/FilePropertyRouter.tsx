@@ -8,10 +8,10 @@ import { InventoryTabNames, InventoryTabs } from '@/features/mapSideBar/property
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
-import { UpdatePropertyDetailsContainer } from '../property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
-import { TakesUpdateContainer } from '../property/tabs/takes/update/TakesUpdateContainer';
-import { TakesUpdateForm } from '../property/tabs/takes/update/TakesUpdateForm';
-import { PropertyFileContainer } from '../shared/detail/PropertyFileContainer';
+import { UpdatePropertyDetailsContainer } from '../../property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
+import { TakesUpdateContainer } from '../../property/tabs/takes/update/TakesUpdateContainer';
+import { TakesUpdateForm } from '../../property/tabs/takes/update/TakesUpdateForm';
+import { PropertyFileContainer } from '../../shared/detail/PropertyFileContainer';
 
 export interface IFilePropertyRouterProps {
   formikRef: React.Ref<FormikProps<any>>;

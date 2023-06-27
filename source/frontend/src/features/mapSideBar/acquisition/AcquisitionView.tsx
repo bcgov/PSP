@@ -24,10 +24,10 @@ import { FileTabType } from '../shared/detail/FileTabs';
 import SidebarFooter from '../shared/SidebarFooter';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { AcquisitionContainerState } from './AcquisitionContainer';
-import { AcquisitionRouter } from './AcquisitionRouter';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionMenu from './common/AcquisitionMenu';
-import { FilePropertyRouter } from './FilePropertyRouter';
+import { AcquisitionRouter } from './router/AcquisitionRouter';
+import { FilePropertyRouter } from './router/FilePropertyRouter';
 
 export interface IAcquisitionViewProps {
   onClose: (() => void) | undefined;

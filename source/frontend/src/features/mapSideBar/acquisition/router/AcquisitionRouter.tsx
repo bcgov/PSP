@@ -7,15 +7,15 @@ import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { stripTrailingSlash } from '@/utils';
 
-import { AcquisitionFileTabs } from './tabs/AcquisitionFileTabs';
-import { UpdateAgreementsContainer } from './tabs/agreement/update/UpdateAgreementsContainer';
-import { UpdateAgreementsForm } from './tabs/agreement/update/UpdateAgreementsForm';
-import { UpdateAcquisitionChecklistContainer } from './tabs/checklist/update/UpdateAcquisitionChecklistContainer';
-import { UpdateAcquisitionChecklistForm } from './tabs/checklist/update/UpdateAcquisitionChecklistForm';
-import { UpdateAcquisitionContainer } from './tabs/fileDetails/update/UpdateAcquisitionContainer';
-import { UpdateAcquisitionForm } from './tabs/fileDetails/update/UpdateAcquisitionForm';
-import { UpdateStakeHolderContainer } from './tabs/stakeholders/update/UpdateStakeHolderContainer';
-import { UpdateStakeHolderForm } from './tabs/stakeholders/update/UpdateStakeHolderForm';
+import { AcquisitionFileTabs } from '../tabs/AcquisitionFileTabs';
+import { UpdateAgreementsContainer } from '../tabs/agreement/update/UpdateAgreementsContainer';
+import { UpdateAgreementsForm } from '../tabs/agreement/update/UpdateAgreementsForm';
+import { UpdateAcquisitionChecklistContainer } from '../tabs/checklist/update/UpdateAcquisitionChecklistContainer';
+import { UpdateAcquisitionChecklistForm } from '../tabs/checklist/update/UpdateAcquisitionChecklistForm';
+import { UpdateAcquisitionContainer } from '../tabs/fileDetails/update/UpdateAcquisitionContainer';
+import { UpdateAcquisitionForm } from '../tabs/fileDetails/update/UpdateAcquisitionForm';
+import { UpdateStakeHolderContainer } from '../tabs/stakeholders/update/UpdateStakeHolderContainer';
+import { UpdateStakeHolderForm } from '../tabs/stakeholders/update/UpdateStakeHolderForm';
 
 export interface IAcquisitionRouterProps {
   formikRef: React.Ref<FormikProps<any>>;
