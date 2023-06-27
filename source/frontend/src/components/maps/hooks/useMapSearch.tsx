@@ -59,9 +59,11 @@ export const useMapSearch = () => {
           task3 = parcelsService.findByPid(filter?.PID);
         }
 
-        const pidPinInventoryData = await task1;
-        const pinNonInventoryData = await task2;
-        const pidNonInventoryData = await task3;
+        const [pidPinInventoryData, pinNonInventoryData, pidNonInventoryData] = await Promise.all([
+          task1,
+          task2,
+          task3,
+        ]);
 
         if (pidPinInventoryData?.features === undefined) {
           setModalContent({
