@@ -1,6 +1,7 @@
 import { FormikProps } from 'formik';
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { FileTypes } from '@/constants';
 import { InventoryTabNames, InventoryTabs } from '@/features/mapSideBar/property/InventoryTabs';
@@ -31,6 +32,13 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
   }
 
   const fileProperty = getAcquisitionFileProperty(props.acquisitionFile, props.selectedMenuIndex);
+
+  if (fileProperty == null) {
+    toast.warn('Could not find property in the file, showing file details instead', {
+      autoClose: 15000,
+    });
+    return <Redirect to={`/mapview/sidebar/acquisition/${props.acquisitionFile.id}`} />;
+  }
 
   // render edit forms
   if (props.isEditing) {
@@ -89,6 +97,11 @@ const getAcquisitionFileProperty = (
 ) => {
   const properties = acquisitionFile?.fileProperties || [];
   const selectedPropertyIndex = selectedMenuIndex - 1;
+
+  if (selectedPropertyIndex < 0 || selectedPropertyIndex >= properties.length) {
+    return null;
+  }
+
   const acquisitionFileProperty = properties[selectedPropertyIndex];
   if (!!acquisitionFileProperty.file) {
     acquisitionFileProperty.file = acquisitionFile;
