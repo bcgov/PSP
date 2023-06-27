@@ -2,7 +2,7 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { defaultFormLease, IFormLease } from '@/interfaces';
+import { LeaseFormModel } from '@/features/leases/models';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { DetailNotes, IDetailNotesProps } from './DetailNotes';
@@ -11,11 +11,11 @@ const history = createMemoryHistory();
 
 describe('DetailNotes component', () => {
   const setup = (
-    renderOptions: RenderOptions & IDetailNotesProps & { lease?: IFormLease } = {},
+    renderOptions: RenderOptions & IDetailNotesProps & { lease?: LeaseFormModel } = {},
   ) => {
     // render component under test
     const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
+      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? new LeaseFormModel()}>
         <DetailNotes disabled={renderOptions.disabled} nameSpace={renderOptions.nameSpace} />
       </Formik>,
       {
@@ -33,7 +33,7 @@ describe('DetailNotes component', () => {
       component: { getByDisplayValue },
     } = setup({
       lease: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         note: 'lease notes',
       },
     });

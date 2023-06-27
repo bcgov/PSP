@@ -12,28 +12,28 @@ import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { Api_Lease } from '@/models/api/Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
-import { UpdateLeaseForm } from './UpdateLeaseForm';
+import { IUpdateLeaseFormProps } from './UpdateLeaseForm';
 
-interface UpdateLeaseContainerProps {
+export interface UpdateLeaseContainerProps {
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
   onEdit: (isEditing: boolean) => void;
+  View: React.FunctionComponent<React.PropsWithChildren<IUpdateLeaseFormProps>>;
 }
 
 export const UpdateLeaseContainer: React.FunctionComponent<
   React.PropsWithChildren<UpdateLeaseContainerProps>
-> = ({ formikRef, onEdit }) => {
+> = ({ formikRef, onEdit, View }) => {
   const { lease } = useContext(LeaseStateContext);
   const {
     getApiLeaseById: { execute, response: apiLease, loading },
     refresh,
-  } = useLeaseDetail(lease?.id);
+  } = useLeaseDetail(lease?.id ?? undefined);
   const { updateApiLease } = useUpdateLease();
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
   >('Failed to update Lease File');
 
   const leaseId = lease?.id;
-  //TODO: For now we make a duplicate request here for the lease in the newer format. In the future all lease pages will use the new format so this will no longer be necessary.
   useEffect(() => {
     const exec = async () => {
       if (leaseId) {
@@ -46,7 +46,7 @@ export const UpdateLeaseContainer: React.FunctionComponent<
 
   const onSubmit = async (lease: LeaseFormModel, userOverrideCodes: UserOverrideCode[] = []) => {
     try {
-      const leaseToUpdate = lease.toApi();
+      const leaseToUpdate = LeaseFormModel.toApi(lease);
 
       const updatedLease = await updateApiLease.execute(leaseToUpdate, userOverrideCodes);
       afterSubmit(updatedLease);
@@ -67,7 +67,7 @@ export const UpdateLeaseContainer: React.FunctionComponent<
   return (
     <>
       <LoadingBackdrop show={loading} parentScreen></LoadingBackdrop>
-      <UpdateLeaseForm
+      <View
         onSubmit={(lease: LeaseFormModel) =>
           withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
             onSubmit(lease, userOverrideCodes),

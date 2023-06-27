@@ -31,7 +31,7 @@ describe('ReceivedDepositModal component', () => {
         onSave={onSave}
         onCancel={onCancel}
         display={true}
-        initialValues={FormLeaseDeposit.createEmpty()}
+        initialValues={FormLeaseDeposit.createEmpty(1)}
       />,
       {
         ...renderOptions,
@@ -57,7 +57,7 @@ describe('ReceivedDepositModal component', () => {
   });
   it('renders with data as expected', async () => {
     const { component } = await setup({
-      initialValues: FormLeaseDeposit.createEmpty(),
+      initialValues: FormLeaseDeposit.createEmpty(1),
     });
 
     expect(component.asFragment()).toMatchSnapshot();
@@ -82,6 +82,7 @@ describe('ReceivedDepositModal component', () => {
       depositTypeCode: 'SECURITY',
       description: 'Test description',
       id: undefined,
+      leaseId: 1,
       otherTypeDescription: '',
       contactHolder: { id: 'p1' },
       rowVersion: 0,

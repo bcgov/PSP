@@ -51,25 +51,9 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpGet("{id:long}")]
         [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Models.Lease.LeaseModel), 200)]
-        [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult GetLease(int id)
-        {
-            var lease = _leaseService.GetById(id);
-            var mapped = _mapper.Map<Models.Lease.LeaseModel>(lease);
-            return new JsonResult(mapped);
-        }
-
-        /// <summary>
-        /// Get the lease for the specified primary key 'id'.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("concept/{id:long}")]
-        [HasPermission(Permissions.LeaseView)]
-        [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Api.Models.Concepts.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult GetLeaseConcept(int id)
+        public IActionResult GetLease(int id)
         {
             var lease = _leaseService.GetById(id);
             var mapped = _mapper.Map<Api.Models.Concepts.LeaseModel>(lease);
@@ -83,7 +67,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpPost]
         [HasPermission(Permissions.LeaseAdd)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<Api.Models.Concepts.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         public IActionResult AddLease(Api.Models.Concepts.LeaseModel leaseModel, [FromQuery] string[] userOverrideCodes)
         {

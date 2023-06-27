@@ -2,20 +2,21 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { defaultFormLease, defaultFormLeaseTerm, IFormLease } from '@/interfaces';
+import { getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
 import { render, RenderOptions } from '@/utils/test-utils';
 
+import { defaultFormLeaseTerm } from '../payment/models';
 import { DetailTerms, IDetailTermsProps } from './DetailTerms';
 
 const history = createMemoryHistory();
 
 describe('DetailTermInformation component', () => {
   const setup = (
-    renderOptions: RenderOptions & IDetailTermsProps & { lease?: IFormLease } = {},
+    renderOptions: RenderOptions & IDetailTermsProps & { lease?: LeaseFormModel } = {},
   ) => {
     // render component under test
     const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
+      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? new LeaseFormModel()}>
         <DetailTerms nameSpace={renderOptions.nameSpace} />
       </Formik>,
       {
@@ -33,7 +34,7 @@ describe('DetailTermInformation component', () => {
       component: { getByDisplayValue },
     } = setup({
       lease: {
-        ...defaultFormLease,
+        ...getDefaultFormLease(),
         amount: 1000,
         renewalCount: 31,
       },
@@ -46,7 +47,7 @@ describe('DetailTermInformation component', () => {
       component: { getByText },
     } = setup({
       lease: {
-        ...defaultFormLease,
+        ...getDefaultFormLease(),
         terms: [
           {
             ...defaultFormLeaseTerm,
@@ -72,10 +73,10 @@ describe('DetailTermInformation component', () => {
       component: { getByText },
     } = setup({
       lease: {
-        ...defaultFormLease,
+        ...getDefaultFormLease(),
         startDate: '',
-        expiryDate: undefined,
-        renewalDate: undefined,
+        expiryDate: '',
+        renewalDate: '',
         terms: [
           {
             ...defaultFormLeaseTerm,

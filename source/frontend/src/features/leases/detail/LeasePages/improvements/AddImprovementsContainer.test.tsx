@@ -1,3 +1,4 @@
+import { RenderOptions, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -5,13 +6,15 @@ import { useFormikContext } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import React from 'react';
+import { act } from 'react-test-renderer';
 
-import { IAddLeaseContainerProps } from '@/features/leases';
+import { IAddLeaseContainerProps } from '@/features/leases/add/AddLeaseContainer';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { defaultLease, ILeaseImprovement } from '@/interfaces';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { defaultApiLease } from '@/models/api/Lease';
+import { Api_PropertyImprovement } from '@/models/api/PropertyImprovement';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
+import { fillInput, renderAsync } from '@/utils/test-utils';
 
 import { AddImprovementsContainer } from './AddImprovementsContainer';
 
@@ -29,21 +32,26 @@ const SaveButton = () => {
 describe('Add Improvements container component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<IAddLeaseContainerProps> & { improvements?: Partial<ILeaseImprovement>[] } = {},
+      Partial<IAddLeaseContainerProps> & { improvements?: Api_PropertyImprovement[] } = {},
   ) => {
     // render component under test
     const component = await renderAsync(
       <LeaseStateContext.Provider
         value={{
           lease: {
-            ...defaultLease,
-            improvements: renderOptions.improvements ?? ([] as any),
+            ...defaultApiLease,
             id: 1,
+            rowVersion: 1,
           },
           setLease: noop,
         }}
       >
-        <AddImprovementsContainer formikRef={React.createRef()} onEdit={noop}>
+        <AddImprovementsContainer
+          formikRef={React.createRef()}
+          onEdit={noop}
+          improvements={renderOptions.improvements ?? []}
+          loading={false}
+        >
           <SaveButton />
         </AddImprovementsContainer>
       </LeaseStateContext.Provider>,
@@ -82,9 +90,18 @@ describe('Add Improvements container component', () => {
       component: { findByDisplayValue, findByText },
     } = await setup({
       improvements: [
-        { propertyImprovementTypeId: 'COMMBLDG', address: 'test address 1' },
-        { propertyImprovementTypeId: 'OTHER', address: 'test address 2' },
-        { propertyImprovementTypeId: 'RTA', address: 'test address 3' },
+        {
+          propertyImprovementTypeCode: { id: 'COMMBLDG' },
+          address: 'test address 1',
+        } as Api_PropertyImprovement,
+        {
+          propertyImprovementTypeCode: { id: 'OTHER' },
+          address: 'test address 2',
+        } as Api_PropertyImprovement,
+        {
+          propertyImprovementTypeCode: { id: 'RTA' },
+          address: 'test address 3',
+        } as Api_PropertyImprovement,
       ],
     });
 
@@ -110,8 +127,8 @@ describe('Add Improvements container component', () => {
     await fillInput(container, 'improvements.2.structureSize', 'structure 3');
     await fillInput(container, 'improvements.2.description', 'description 3');
 
-    mockAxios.onPut().reply(200, {});
-    userEvent.click(getByText('Save'));
+    mockAxios.onPut().reply(200, []);
+    act(() => userEvent.click(getByText('Save')));
     await waitFor(() => {
       expect(mockAxios.history.put[0].data).toEqual(expectedFormData);
     });
@@ -129,19 +146,28 @@ describe('Add Improvements container component', () => {
     await fillInput(container, 'improvements.1.structureSize', 'structure 2');
     await fillInput(container, 'improvements.1.description', 'description 2');
 
-    mockAxios.onPut().reply(200, {});
-    userEvent.click(getByText('Save'));
+    mockAxios.onPut().reply(200, []);
+    act(() => userEvent.click(getByText('Save')));
     await waitFor(() => {
-      expect(JSON.parse(mockAxios.history.put[0].data).improvements).toHaveLength(2);
+      expect(JSON.parse(mockAxios.history.put[0].data)).toHaveLength(2);
     });
   });
 
   it('displays the improvement types in order', async () => {
     const { component } = await setup({
       improvements: [
-        { propertyImprovementTypeId: 'COMMBLDG', address: 'test address 1' },
-        { propertyImprovementTypeId: 'OTHER', address: 'test address 2' },
-        { propertyImprovementTypeId: 'RTA', address: 'test address 3' },
+        {
+          propertyImprovementTypeCode: { id: 'COMMBLDG' },
+          address: 'test address 1',
+        } as Api_PropertyImprovement,
+        {
+          propertyImprovementTypeCode: { id: 'OTHER' },
+          address: 'test address 2',
+        } as Api_PropertyImprovement,
+        {
+          propertyImprovementTypeCode: { id: 'RTA' },
+          address: 'test address 3',
+        } as Api_PropertyImprovement,
       ],
     });
 
@@ -151,4 +177,4 @@ describe('Add Improvements container component', () => {
 });
 
 const expectedFormData =
-  '{"organizations":[],"persons":[],"properties":[],"improvements":[{"propertyImprovementTypeId":"COMMBLDG","propertyImprovementType":"","description":"","structureSize":"structure 1","address":"address 1"},{"propertyImprovementTypeId":"RTA","propertyImprovementType":"","description":"","structureSize":"structure 2","address":"address 2"},{"propertyImprovementTypeId":"OTHER","propertyImprovementType":"","description":"","structureSize":"structure 3","address":"address 3"}],"securityDeposits":[],"securityDepositReturns":[],"startDate":"2020-01-01","lFileNo":"","tfaFileNumber":0,"psFileNo":"","programName":"","motiName":"Moti, Name, Name","amount":0,"renewalCount":0,"tenantNotes":[],"insurances":[],"isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"returnNotes":"","terms":[],"tenants":[],"hasDigitalLicense":null,"hasPhysicalLicense":null,"consultations":[],"statusType":{"id":"ACTIVE","description":"Active","isDisabled":false},"region":{"regionCode":1,"regionName":"South Coast Region"},"programType":{"id":"OTHER","description":"Other","isDisabled":false},"paymentReceivableType":{"id":"RCVBL","description":"Receivable","isDisabled":false},"categoryType":{"id":"COMM","description":"Commercial","isDisabled":false},"purposeType":{"id":"BCFERRIES","description":"BC Ferries","isDisabled":false},"initiatorType":{"id":"","description":"","isDisabled":false},"type":{"id":"LSREG","description":"Lease - Registered","isDisabled":false},"id":1}';
+  '[{"id":null,"leaseId":1,"lease":null,"propertyImprovementTypeCode":{"id":"COMMBLDG"},"improvementDescription":"","structureSize":"structure 1","address":"address 1"},{"id":null,"leaseId":1,"lease":null,"propertyImprovementTypeCode":{"id":"RTA"},"improvementDescription":"","structureSize":"structure 2","address":"address 2"},{"id":null,"leaseId":1,"lease":null,"propertyImprovementTypeCode":{"id":"OTHER"},"improvementDescription":"","structureSize":"structure 3","address":"address 3"}]';

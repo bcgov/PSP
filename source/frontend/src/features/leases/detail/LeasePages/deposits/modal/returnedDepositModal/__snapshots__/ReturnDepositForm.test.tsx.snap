@@ -21,9 +21,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
       </div>
       <div
         class="col"
-      >
-        Pet deposit
-      </div>
+      />
     </div>
     <div
       class="row"
@@ -38,7 +36,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
       <div
         class="col"
       >
-        $1,234.00
+        $500.00
       </div>
     </div>
   </div>
@@ -602,9 +600,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
       </div>
       <div
         class="col"
-      >
-        Pet deposit
-      </div>
+      />
     </div>
     <div
       class="row"
@@ -619,7 +615,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
       <div
         class="col"
       >
-        $1,234.00
+        $500.00
       </div>
     </div>
   </div>

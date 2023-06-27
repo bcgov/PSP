@@ -3,13 +3,12 @@ import { isEqual } from 'lodash';
 import * as React from 'react';
 
 import { Button } from '@/components/common/buttons/Button';
-import { ILease } from '@/interfaces';
 
 import * as Styled from './add/styles';
 
 interface ISaveCancelButtonsProps {
   onCancel: () => void;
-  onSaveOverride?: () => Promise<ILease | undefined>;
+  onSaveOverride?: () => Promise<void>;
   formikProps: FormikProps<any>;
   className?: string;
 }

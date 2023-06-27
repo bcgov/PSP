@@ -3,11 +3,11 @@ import styled from 'styled-components';
 
 import OverflowTip from '@/components/common/OverflowTip';
 import { InlineFlexDiv } from '@/components/common/styles';
-import { ILease } from '@/interfaces/ILease';
+import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
 
 import { getAllNames } from '../leaseUtils';
 export interface IStackedTenantFieldsProps {
-  lease?: ILease;
+  tenants?: Api_LeaseTenant[];
 }
 
 /**
@@ -16,8 +16,8 @@ export interface IStackedTenantFieldsProps {
  */
 export const StackedTenantFields: React.FunctionComponent<
   React.PropsWithChildren<IStackedTenantFieldsProps>
-> = ({ lease }) => {
-  const commaSeparatedNames = getAllNames(lease).join(', ');
+> = ({ tenants }) => {
+  const commaSeparatedNames = getAllNames(tenants ?? []).join(', ');
   return (
     <>
       <StyledStackedDivs>

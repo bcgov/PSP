@@ -4,12 +4,12 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { defaultFormLeasePayment } from '@/interfaces';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { systemConstantsSlice } from '@/store/slices/systemConstants';
 import { fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
 
+import { defaultFormLeasePayment } from '../../models';
 import { isActualGstEligible as isActualGstEligibleOriginal } from '../../TermPaymentsContainer';
 import PaymentForm, { IPaymentFormProps } from './PaymentForm';
 

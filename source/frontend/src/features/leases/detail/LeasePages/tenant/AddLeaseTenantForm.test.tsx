@@ -3,7 +3,6 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 
 import { Claims } from '@/constants/claims';
-import { defaultFormLease } from '@/interfaces';
 import {
   getMockContactOrganizationWithOnePerson,
   getMockContactPerson,
@@ -13,7 +12,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, renderAsync, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import AddLeaseTenantForm, { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
-import { FormTenant } from './ViewTenantForm';
+import { FormTenant } from './models';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -23,15 +22,15 @@ const storeState = {
 jest.mock('@react-keycloak/web');
 const setSelectedContacts = jest.fn();
 const setShowContactManager = jest.fn();
-const setTenants = jest.fn();
+const setSelectedTenants = jest.fn();
 const onSubmit = jest.fn();
 
 const defaultRenderOptions: IAddLeaseTenantFormProps = {
   selectedContacts: [],
   setSelectedContacts,
   setShowContactManager,
-  setTenants,
-  tenants: [],
+  setSelectedTenants,
+  selectedTenants: [],
   showContactManager: false,
   onSubmit,
   formikRef: React.createRef(),
@@ -42,8 +41,10 @@ describe('AddLeaseTenantForm component', () => {
     // render component under test
     const component = await renderAsync(
       <AddLeaseTenantForm
-        lease={defaultFormLease}
-        {...{ ...defaultRenderOptions, ...renderOptions }}
+        {...{
+          ...defaultRenderOptions,
+          ...renderOptions,
+        }}
       ></AddLeaseTenantForm>,
       {
         ...renderOptions,
@@ -93,12 +94,12 @@ describe('AddLeaseTenantForm component', () => {
     act(() => userEvent.click(confirm));
 
     expect(setShowContactManager).toHaveBeenLastCalledWith(false);
-    expect(setTenants).toHaveBeenCalledWith([]);
+    expect(setSelectedTenants).toHaveBeenCalledWith([]);
   });
 
   it('cancelling the modal resets the tenants', async () => {
     const tenants = [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())];
-    await setup({ showContactManager: true, tenants: tenants });
+    await setup({ showContactManager: true, selectedTenants: tenants });
 
     const modal = screen.getByText('Select a contact');
     expect(modal).toBeVisible();
@@ -120,7 +121,7 @@ describe('AddLeaseTenantForm component', () => {
 
   it('displays the number of previously selected tenants', async () => {
     await setup({
-      tenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
+      selectedTenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
     });
 
     const number = screen.getByText('1 Tenants associated with this Lease/License');
@@ -130,7 +131,7 @@ describe('AddLeaseTenantForm component', () => {
 
   it('displays previously selected tenants', async () => {
     await setup({
-      tenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
+      selectedTenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
     });
 
     const summary = screen.getByText('Dairy Queen Forever! Property Management');
@@ -140,7 +141,7 @@ describe('AddLeaseTenantForm component', () => {
 
   it('displays Not applicable for contact when contact is a person', async () => {
     await setup({
-      tenants: [new FormTenant(undefined, getMockContactPerson())],
+      selectedTenants: [new FormTenant(undefined, getMockContactPerson())],
     });
 
     const contactMsg = screen.getByText('Not applicable');
@@ -155,7 +156,7 @@ describe('AddLeaseTenantForm component', () => {
     };
 
     await setup({
-      tenants: [new FormTenant(undefined, organization)],
+      selectedTenants: [new FormTenant(undefined, organization)],
     });
 
     const contactMsg = screen.getByText('No contacts available');
@@ -170,7 +171,7 @@ describe('AddLeaseTenantForm component', () => {
     };
 
     await setup({
-      tenants: [new FormTenant(undefined, organization)],
+      selectedTenants: [new FormTenant(undefined, organization)],
     });
 
     const contactMsg = screen.getByText('No contacts available');
@@ -185,7 +186,7 @@ describe('AddLeaseTenantForm component', () => {
     };
 
     await setup({
-      tenants: [new FormTenant(undefined, organization)],
+      selectedTenants: [new FormTenant(undefined, organization)],
     });
 
     const contactMsg = screen.getByText('No contacts available');
@@ -210,7 +211,7 @@ describe('AddLeaseTenantForm component', () => {
     };
 
     await setup({
-      tenants: [new FormTenant(undefined, organization)],
+      selectedTenants: [new FormTenant(undefined, organization)],
     });
 
     const contactPerson = screen.getByText('test testerson');
@@ -242,7 +243,7 @@ describe('AddLeaseTenantForm component', () => {
     };
 
     await setup({
-      tenants: [new FormTenant(undefined, organization)],
+      selectedTenants: [new FormTenant(undefined, organization)],
     });
 
     const contactMsg = screen.getByDisplayValue('Select a contact');
@@ -254,13 +255,13 @@ describe('AddLeaseTenantForm component', () => {
     const {
       component: { getByTitle },
     } = await setup({
-      tenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
+      selectedTenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
     });
 
     const deleteButton = getByTitle('Click to remove');
     act(() => userEvent.click(deleteButton));
 
-    expect(setTenants).toHaveBeenCalledWith([]);
+    expect(setSelectedTenants).toHaveBeenCalledWith([]);
     expect(setSelectedContacts).toHaveBeenCalledWith([]);
   });
 });

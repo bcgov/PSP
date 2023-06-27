@@ -3,47 +3,13 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 
+import { getMockDepositReturns, getMockDeposits } from '@/mocks/deposits.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { FormLeaseDepositReturn } from '../../models/FormLeaseDepositReturn';
 import ReturnedDepositModal, { IReturnedDepositModalProps } from './ReturnedDepositModal';
-
-const mockDeposit: Api_SecurityDeposit = {
-  id: 7,
-  description: 'Test deposit 1',
-  amountPaid: 1234.0,
-  depositDate: '2022-02-09',
-  depositType: {
-    id: 'PET',
-    description: 'Pet deposit',
-    isDisabled: false,
-  },
-  depositReturns: [],
-  rowVersion: 1,
-};
-const mockReturnedDeposit: Api_SecurityDepositReturn = {
-  parentDepositId: 7,
-  returnAmount: 123,
-  interestPaid: 1,
-  contactHolder: {
-    id: 'P6',
-    person: {
-      id: 6,
-      isDisabled: false,
-      surname: 'User',
-      firstName: 'Admin',
-      middleNames: '',
-      personOrganizations: [],
-      personAddresses: [],
-      contactMethods: [],
-      rowVersion: 1,
-    },
-  },
-  rowVersion: 0,
-};
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -66,7 +32,7 @@ describe('ReturnedDepositModal component', () => {
         onSave={onSave}
         onCancel={onCancel}
         display={true}
-        initialValues={FormLeaseDepositReturn.createEmpty(mockDeposit)}
+        initialValues={FormLeaseDepositReturn.createEmpty(getMockDeposits()[0])}
       />,
       {
         ...renderOptions,
@@ -92,7 +58,7 @@ describe('ReturnedDepositModal component', () => {
   });
   it('renders with data as expected', async () => {
     const { component } = await setup({
-      initialValues: FormLeaseDepositReturn.createEmpty(mockDeposit),
+      initialValues: FormLeaseDepositReturn.createEmpty(getMockDeposits()[0]),
     });
 
     expect(component.asFragment()).toMatchSnapshot();
@@ -102,7 +68,10 @@ describe('ReturnedDepositModal component', () => {
     const {
       component: { getByText },
     } = await setup({
-      initialValues: FormLeaseDepositReturn.createFromModel(mockReturnedDeposit, mockDeposit),
+      initialValues: FormLeaseDepositReturn.fromApi(
+        getMockDepositReturns()[0],
+        getMockDeposits()[0],
+      ),
     });
 
     await fillInput(document.body, 'terminationDate', '2020-01-01', 'datepicker');
@@ -118,10 +87,10 @@ describe('ReturnedDepositModal component', () => {
     expect(onSave).toHaveBeenCalledWith({
       claimsAgainst: 1000,
       depositTypeCode: 'PET',
-      depositTypeDescription: 'Pet deposit',
+      depositTypeDescription: '',
       id: undefined,
-      parentDepositAmount: 1234,
-      parentDepositId: 7,
+      parentDepositAmount: 500,
+      parentDepositId: 1,
       parentDepositOtherDescription: '',
       returnAmount: 2000,
       interestPaid: 1,

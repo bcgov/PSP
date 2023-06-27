@@ -39,20 +39,20 @@ export class ReturnListEntry {
     this.returnAmount = baseDeposit.returnAmount || 0;
     this.interestPaid = baseDeposit.interestPaid || 0;
     this.returnDate = baseDeposit.returnDate || '';
-    this.contactHolder = baseDeposit.contactHolder;
+    this.contactHolder = baseDeposit.contactHolder || undefined;
   }
 }
 
 function renderHolder({ row: { original } }: CellProps<ReturnListEntry, Api_Contact | undefined>) {
-  if (original.contactHolder !== undefined) {
+  if (!!original.contactHolder) {
     const holder = original.contactHolder;
-    if (holder.person !== undefined) {
+    if (!!holder.person) {
       return (
         <Link to={`/contact/${holder.id}`}>
           {formatNames([holder.person.firstName, holder.person.middleNames, holder.person.surname])}
         </Link>
       );
-    } else if (holder.organization !== undefined) {
+    } else if (!!holder.organization) {
       return <Link to={`/contact/${holder.id}`}>{holder.organization.name}</Link>;
     }
   }

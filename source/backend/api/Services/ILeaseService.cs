@@ -13,5 +13,19 @@ namespace Pims.Api.Services
         PimsLease Add(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides);
 
         PimsLease Update(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides);
+
+        IEnumerable<PimsPropertyLease> GetPropertiesByLeaseId(long leaseId);
+
+        IEnumerable<PimsInsurance> GetInsuranceByLeaseId(long leaseId);
+
+        IEnumerable<PimsInsurance> UpdateInsuranceByLeaseId(long leaseId, IEnumerable<PimsInsurance> pimsInsurances);
+
+        IEnumerable<PimsPropertyImprovement> GetImprovementsByLeaseId(long leaseId);
+
+        IEnumerable<PimsPropertyImprovement> UpdateImprovementsByLeaseId(long leaseId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements);
+
+        IEnumerable<PimsLeaseTenant> GetTenantsByLeaseId(long leaseId);
+
+        IEnumerable<PimsLeaseTenant> UpdateTenantsByLeaseId(long leaseId, IEnumerable<PimsLeaseTenant> pimsLeaseTenants);
     }
 }

@@ -49,11 +49,9 @@ exports[`LeaseStatusSummary component renders as expected when active 1`] = `
 }
 
 <div
-    class="c0 active"
+    class="c0"
   >
-    <b>
-      Active
-    </b>
+    <b />
     <b />
   </div>
 </DocumentFragment>
@@ -108,11 +106,9 @@ exports[`LeaseStatusSummary component renders as expected when inactive 1`] = `
 }
 
 <div
-    class="c0 active"
+    class="c0"
   >
-    <b>
-      Active
-    </b>
+    <b />
     <b />
   </div>
 </DocumentFragment>
