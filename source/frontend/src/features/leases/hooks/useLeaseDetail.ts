@@ -5,7 +5,6 @@ import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRep
 import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { Api_Lease } from '@/models/api/Lease';
 import { useAxiosErrorHandler } from '@/utils';
 
