@@ -1,6 +1,7 @@
 import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
+import { useMapProperties } from 'features/properties/map/hooks/useMapProperties';
 import { createMemoryHistory } from 'history';
 import { geoJSON } from 'leaflet';
 import { noop } from 'lodash';
@@ -10,11 +11,13 @@ import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
+import { createPoints } from '../leaflet/mapUtils';
 import useActiveFeatureLayer from './useActiveFeatureLayer';
 
 const mapRef = { current: { leafletMap: {} } };
 jest.mock('leaflet');
 jest.mock('components/maps/leaflet/LayerPopup');
+jest.mock('features/properties/map/hooks/useMapProperties');
 
 let clearLayers = jest.fn();
 let addData = jest.fn();
@@ -29,6 +32,24 @@ const useLayerQueryMock = {
   findMetadataByLocation: jest.fn(),
 };
 (useLayerQuery as jest.Mock).mockReturnValue(useLayerQueryMock);
+
+(useMapProperties as unknown as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
+  loadProperties: {
+    execute: jest.fn().mockResolvedValue({
+      features: createPoints([
+        {
+          id: 1,
+          latitude: 54.917061,
+          longitude: -122.749672,
+          pid: '123-456-789',
+          address: { provinceId: 1, streetAddress1: 'test' },
+        },
+      ]),
+      type: 'FeatureCollection',
+      bbox: undefined,
+    }),
+  },
+});
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
@@ -179,6 +200,9 @@ describe('useActiveFeatureLayer hook tests', () => {
   });
 
   it('sets the layer popup with no data', async () => {
+    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+      features: [],
+    });
     useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
       features: [],
     });
