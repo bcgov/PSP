@@ -5,6 +5,7 @@ import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRep
 import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { Api_Lease } from '@/models/api/Lease';
 import { useAxiosErrorHandler } from '@/utils';
 
@@ -58,12 +59,19 @@ export function useLeaseDetail(leaseId?: number) {
     }
   }, [leaseId, getApiLeaseByIdFunc, setLease, getLeaseTenants, getPropertyLeases, getLeaseTerms]);
 
+  const loading =
+    getApiLeaseById.loading || propertyLeasesLoading || leaseTenantsLoading || leaseTermsLoading;
+  useDeepCompareEffect(() => {
+    if (!lease && !loading) {
+      getCompleteLease();
+    }
+  }, [getCompleteLease, lease, loading]);
+
   return {
     lease,
     setLease,
     refresh: () => leaseId && getCompleteLease(),
     getCompleteLease,
-    loading:
-      getApiLeaseById.loading || propertyLeasesLoading || leaseTenantsLoading || leaseTermsLoading,
+    loading: loading,
   };
 }

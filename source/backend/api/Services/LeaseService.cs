@@ -170,7 +170,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Adding lease");
             _user.ThrowIfNotAuthorized(Permissions.LeaseAdd);
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(lease.LeaseId).RegionCode);
+            pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
 
             var leasesWithProperties = AssociatePropertyLeases(lease, userOverrides);
             return _leaseRepository.Add(leasesWithProperties);

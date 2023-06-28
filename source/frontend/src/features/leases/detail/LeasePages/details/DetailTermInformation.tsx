@@ -31,10 +31,9 @@ export const DetailTermInformation: React.FunctionComponent<
       moment().isSameOrBefore(moment(term.expiryDate), 'day') ||
       (moment().isSameOrAfter(moment(term.startDate), 'day') && term.expiryDate === null),
   );
-  const projectName =
-    values?.project !== undefined
-      ? `${values?.project?.code} - ${values?.project?.description}`
-      : '';
+  const projectName = !!values?.project
+    ? `${values?.project?.code} - ${values?.project?.description}`
+    : '';
 
   return (
     <>
