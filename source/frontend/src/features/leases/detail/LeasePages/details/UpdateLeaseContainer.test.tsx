@@ -32,12 +32,7 @@ jest.mock('@/features/leases/hooks/useLeaseDetail');
 (useLeaseDetail as jest.MockedFunction<typeof useLeaseDetail>).mockReturnValue({
   lease: getMockApiLease(),
   setLease: noop,
-  getApiLeaseById: {
-    execute: jest.fn().mockResolvedValue(getMockApiLease()),
-    error: undefined,
-    response: getMockApiLease(),
-    loading: false,
-  },
+  getCompleteLease: jest.fn().mockResolvedValue(getMockApiLease()),
   refresh: noop as any,
   loading: false,
 });

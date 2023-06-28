@@ -69,7 +69,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             var lease = _leaseRepository.Get(leaseId);
@@ -100,7 +100,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting insurance on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             return _insuranceRepository.GetByLeaseId(leaseId);
@@ -110,7 +110,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating insurance on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             _insuranceRepository.UpdateLeaseInsurance(leaseId, pimsInsurances);
@@ -123,7 +123,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting property improvements on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             return _propertyImprovementRepository.GetByLeaseId(leaseId);
@@ -133,7 +133,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating property improvements on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             _propertyImprovementRepository.Update(leaseId, pimsPropertyImprovements);
@@ -146,7 +146,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting tenants on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             return _tenantRepository.GetByLeaseId(leaseId);
@@ -156,7 +156,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating tenants on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             _tenantRepository.Update(leaseId, pimsLeaseTenants);
@@ -169,7 +169,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Adding lease");
             _user.ThrowIfNotAuthorized(Permissions.LeaseAdd);
-            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(lease.LeaseId).RegionCode);
 
             var leasesWithProperties = AssociatePropertyLeases(lease, userOverrides);
@@ -180,7 +180,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting properties on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             return _propertyLeaseRepository.GetAllByLeaseId(leaseId);
@@ -190,7 +190,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating lease {leaseId}", lease.LeaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
             pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode); // need to check that the user is able to access the current lease as well as has the region for the updated lease.
             pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);

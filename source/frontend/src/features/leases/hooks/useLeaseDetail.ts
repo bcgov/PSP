@@ -6,6 +6,7 @@ import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermReposit
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { Api_Lease } from '@/models/api/Lease';
 import { useAxiosErrorHandler } from '@/utils';
 
 import { LeaseStateContext } from './../context/LeaseContext';
@@ -32,7 +33,7 @@ export function useLeaseDetail(leaseId?: number) {
 
   const getApiLeaseByIdFunc = getApiLeaseById.execute;
 
-  const func = useCallback(async () => {
+  const getCompleteLease = useCallback(async () => {
     if (leaseId) {
       const leasePromise = getApiLeaseByIdFunc(leaseId);
       const leaseTenantsPromise = getLeaseTenants(leaseId);
@@ -44,25 +45,25 @@ export function useLeaseDetail(leaseId?: number) {
         propertyLeasesPromise,
         leaseTermsPromise,
       ]);
-      lease &&
-        setLease({
+      if (!!lease) {
+        const mergedLeases: Api_Lease = {
           ...lease,
           tenants: leaseTenants ?? [],
           properties: propertyLeases ?? [],
           terms: leaseTerms ?? [],
-        });
+        };
+        setLease(mergedLeases);
+        return mergedLeases;
+      }
+      return undefined;
     }
   }, [leaseId, getApiLeaseByIdFunc, setLease, getLeaseTenants, getPropertyLeases, getLeaseTerms]);
-
-  useDeepCompareEffect(() => {
-    func();
-  }, [func]);
 
   return {
     lease,
     setLease,
-    refresh: () => leaseId && func(),
-    getApiLeaseById,
+    refresh: () => leaseId && getCompleteLease(),
+    getCompleteLease,
     loading:
       getApiLeaseById.loading || propertyLeasesLoading || leaseTenantsLoading || leaseTermsLoading,
   };

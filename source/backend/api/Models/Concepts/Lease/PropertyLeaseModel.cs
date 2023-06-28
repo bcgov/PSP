@@ -8,6 +8,8 @@ namespace Pims.Api.Models.Concepts
 
         public long? LeaseId { get; set; }
 
+        public long? PropertyId { get; set; }
+
         public PropertyModel Property { get; set; }
 
         public LeaseModel Lease { get; set; }

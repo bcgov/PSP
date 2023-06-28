@@ -4,13 +4,17 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Pims.Api.Areas.Lease.Models.Search;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Extensions;
+using Pims.Core.Json;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
+using Serilog.Core;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Lease.Controllers
@@ -29,6 +33,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #region Variables
         private readonly ILeaseService _leaseService;
         private readonly IMapper _mapper;
+        private readonly ILogger<LeaseController> _logger;
         #endregion
 
         #region Constructors
@@ -38,11 +43,13 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// </summary>
         /// <param name="leaseService"></param>
         /// <param name="mapper"></param>
+        /// <param name="logger"></param>
         ///
-        public SearchController(ILeaseService leaseService, IMapper mapper)
+        public SearchController(ILeaseService leaseService, IMapper mapper, ILogger<LeaseController> logger)
         {
             _leaseService = leaseService;
             _mapper = mapper;
+            _logger = logger;
         }
         #endregion
 
@@ -59,8 +66,16 @@ namespace Pims.Api.Areas.Lease.Controllers
         [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetLeases()
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(SearchController),
+                nameof(GetLeases),
+                User.GetUsername(),
+                DateTime.Now);
+
             var uri = new Uri(this.Request.GetDisplayUrl());
             var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
             return GetLeases(new LeaseFilterModel(query));
@@ -77,8 +92,16 @@ namespace Pims.Api.Areas.Lease.Controllers
         [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetLeases([FromBody] LeaseFilterModel filter)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(SearchController),
+                nameof(GetLeases),
+                User.GetUsername(),
+                DateTime.Now);
+
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
             if (!filter.IsValid())
             {
