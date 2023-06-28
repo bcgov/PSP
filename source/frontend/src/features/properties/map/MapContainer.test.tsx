@@ -29,13 +29,13 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   cleanup,
+  mockKeycloak,
   render,
   RenderOptions,
   screen,
   userEvent,
   waitFor,
 } from '@/utils/test-utils';
-import { mockKeycloak } from '@/utils/test-utils';
 
 import MapContainer from './MapContainer';
 
@@ -192,12 +192,11 @@ let history = createMemoryHistory();
 
 describe('MapContainer', () => {
   const onMarkerClick = jest.fn();
-  const onMarkerPopupClosed = jest.fn();
 
   const setup = async (renderOptions: RenderOptions = {}) => {
     const utils = render(
       <PropertyContextProvider>
-        <MapContainer showParcelBoundaries={true} onMarkerPopupClosed={onMarkerPopupClosed} />
+        <MapContainer />
       </PropertyContextProvider>,
       {
         store,

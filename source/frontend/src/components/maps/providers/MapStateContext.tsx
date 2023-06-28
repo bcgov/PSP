@@ -13,11 +13,13 @@ export enum MapCursors {
 }
 
 export enum MapState {
+  NOT_DEFINED = 'NOT_DEFINED',
   MAP = 'MAP',
   RESEARCH_FILE = 'RESEARCH_FILE',
   ACQUISITION_FILE = 'ACQUISITION_FILE',
   LEASE_FILE = 'LEASE_FILE',
   PROJECT = 'PROJECT',
+  PROPERTY_INFORMATION = 'PROPERTY_INFORMATION',
 }
 
 export enum MapStateActionTypes {
@@ -56,7 +58,6 @@ export interface IMapStateContext {
 const initialState = {
   mapState: MapState.MAP,
   selectedInventoryProperty: null,
-  selectedLeaseProperty: null,
   selectedFeature: null,
   selectedFileFeature: null,
   draftProperties: [],

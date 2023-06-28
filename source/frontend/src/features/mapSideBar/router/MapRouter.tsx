@@ -2,6 +2,7 @@ import queryString from 'query-string';
 import { memo, useContext, useEffect, useMemo } from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
 
+import { useMapStateMachine } from '@/components/maps/hooks/MapStateMachineContext';
 import {
   MapState,
   MapStateActionTypes,
@@ -11,7 +12,6 @@ import Claims from '@/constants/claims';
 import { AddLeaseContainer } from '@/features/leases';
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
 import MotiInventoryContainer from '@/features/mapSideBar/property/MotiInventoryContainer';
-import { Api_Property } from '@/models/api/Property';
 import AppRoute from '@/utils/AppRoute';
 
 import AcquisitionContainer from '../acquisition/AcquisitionContainer';
@@ -25,15 +25,16 @@ import AddResearchContainer from '../research/add/AddResearchContainer';
 import ResearchContainer from '../research/ResearchContainer';
 
 interface IMapRouterProps {
-  showSideBar: boolean;
-  setShowSideBar: (show: boolean) => void;
-  onZoom?: (apiProperty?: Api_Property) => void;
+  //showSideBar: boolean;
+  //setShowSideBar: (show: boolean) => void;
 }
 
 export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props => {
   const location = useLocation();
   const history = useHistory();
   const { setState } = useContext(MapStateContext);
+
+  const { isSidebarOpen, openSidebar, closeSidebar } = useMapStateMachine();
 
   const matched = useMemo(
     () =>
@@ -85,25 +86,49 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
     [location],
   );
 
-  const setShowSideBar = props.setShowSideBar;
+  const isProperty = useMemo(
+    () =>
+      matchPath(location.pathname, {
+        path: '/mapview/sidebar/property/*',
+        exact: true,
+        strict: true,
+      }),
+    [location],
+  );
 
   useEffect(() => {
     if (matched !== null) {
+      let mapState: MapState = MapState.NOT_DEFINED;
+
       if (isAcquisition) {
-        setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.ACQUISITION_FILE });
+        mapState = MapState.ACQUISITION_FILE;
       } else if (isResearch) {
-        setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.RESEARCH_FILE });
+        mapState = MapState.RESEARCH_FILE;
       } else if (isLease) {
-        setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.LEASE_FILE });
+        mapState = MapState.LEASE_FILE;
       } else if (isProject) {
-        setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.MAP });
+        mapState = MapState.PROJECT;
+      } else if (isProperty) {
+        mapState = MapState.PROPERTY_INFORMATION;
       }
-      setShowSideBar(true);
+
+      openSidebar(mapState);
+      setState({ type: MapStateActionTypes.MAP_STATE, mapState });
     } else {
-      setShowSideBar(false);
+      closeSidebar();
       setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.MAP });
     }
-  }, [isAcquisition, isResearch, isLease, isProject, matched, setShowSideBar, setState]);
+  }, [
+    isAcquisition,
+    isResearch,
+    isLease,
+    isProject,
+    isProperty,
+    matched,
+    openSidebar,
+    closeSidebar,
+    setState,
+  ]);
 
   const onClose = () => {
     history.push('/mapview');
@@ -156,7 +181,6 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
             onClose={onClose}
             id={Number(match.params.propertyId)}
             pid={pidQueryString}
-            onZoom={props.onZoom}
           />
         )}
         claim={Claims.PROPERTY_VIEW}
@@ -167,7 +191,7 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
       <AppRoute
         path={`/mapview/sidebar/non-inventory-property/:pid`}
         customRender={({ match }) => (
-          <MotiInventoryContainer onClose={onClose} pid={match.params.pid} onZoom={props.onZoom} />
+          <MotiInventoryContainer onClose={onClose} pid={match.params.pid} />
         )}
         claim={Claims.PROPERTY_VIEW}
         exact

@@ -89,17 +89,7 @@ function createProps(): TestProps {
 // component under test
 function Template(props: Omit<TestProps, 'renderOptions'>) {
   const { done, setMap, zoom = 6, ...rest } = props;
-  return (
-    <Map
-      showSideBar={false}
-      lat={48.43}
-      lng={-123.37}
-      zoom={zoom}
-      whenReady={done}
-      whenCreated={setMap}
-      {...rest}
-    />
-  );
+  return <Map showSideBar={false} {...rest} />;
 }
 
 function setup(props: Omit<TestProps, 'done'>) {

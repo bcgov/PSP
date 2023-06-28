@@ -1,13 +1,13 @@
 import { BBox } from 'geojson';
 import { LatLngBounds } from 'leaflet';
-import React, { useEffect, useMemo } from 'react';
-import { useContext } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { useMap } from 'react-leaflet';
 import { tilesInBbox } from 'tiles-in-bbox';
 
 import { IGeoSearchParams } from '@/constants/API';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { IProperty } from '@/interfaces';
+import { defaultBounds } from '@/store/slices/mapViewZoom/mapViewZoomSlice';
 
 import { useMapRefreshEvent } from '../../hooks/useMapRefreshEvent';
 import { useMapSearch } from '../../hooks/useMapSearch';
@@ -41,7 +41,7 @@ const getBbox = (bounds: LatLngBounds): BBox => {
     bounds.getSouthWest().lat,
     bounds.getNorthEast().lng,
     bounds.getNorthEast().lat,
-  ] as BBox;
+  ];
 };
 
 interface ITilePoint {
@@ -113,12 +113,6 @@ export const getTiles = (bounds: LatLngBounds, zoom: number): ITile[] => {
     };
   });
 };
-
-// default BC map bounds
-export const defaultBounds = new LatLngBounds(
-  [60.09114547, -119.49609429],
-  [48.78370426, -139.35937554],
-);
 
 /**
  * Displays the search results onto a layer with clustering.

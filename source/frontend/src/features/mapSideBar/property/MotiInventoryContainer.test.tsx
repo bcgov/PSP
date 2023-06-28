@@ -38,7 +38,6 @@ describe('MotiInventoryContainer component', () => {
       <MotiInventoryContainer
         onClose={renderOptions.onClose}
         pid={renderOptions.pid}
-        onZoom={renderOptions.onZoom}
         id={renderOptions.id}
       />,
       {
@@ -111,7 +110,6 @@ describe('MotiInventoryContainer component', () => {
     const { findByText, queryByTestId } = setup({
       id: 9212434,
       onClose,
-      onZoom,
     });
 
     await waitFor(() => {
@@ -140,7 +138,6 @@ describe('MotiInventoryContainer component', () => {
     const { queryByText, getByText, queryAllByTestId } = setup({
       pid: '9212434',
       onClose,
-      onZoom,
     });
 
     expect(queryByText(/property attributes/i)).toBeNull();

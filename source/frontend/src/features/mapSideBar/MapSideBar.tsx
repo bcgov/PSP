@@ -10,17 +10,16 @@ import MapRouter from './router/MapRouter';
 
 interface IMapSideBarProps {
   showSideBar: boolean;
-  setShowSideBar: (showSideBar: boolean) => void;
-  onZoom?: (apiProperty?: Api_Property) => void;
+  //setShowSideBar: (showSideBar: boolean) => void;
 }
 
 const MapSideBar: React.FunctionComponent<React.PropsWithChildren<IMapSideBarProps>> = ({
   showSideBar,
-  setShowSideBar,
-  onZoom,
+  //setShowSideBar,
 }) => {
   const { fullWidth } = useContext(SideBarContext);
   const { isSelecting, setState } = useContext(MapStateContext);
+
   return (
     <StyledMapSideBar show={showSideBar} fullWidth={fullWidth}>
       {isSelecting && (
@@ -36,7 +35,7 @@ const MapSideBar: React.FunctionComponent<React.PropsWithChildren<IMapSideBarPro
           </StyledSelectingText>
         </StyledBackdrop>
       )}
-      <MapRouter showSideBar={showSideBar} setShowSideBar={setShowSideBar} onZoom={onZoom} />
+      <MapRouter />
     </StyledMapSideBar>
   );
 };

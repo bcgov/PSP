@@ -90,8 +90,8 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   bounds,
   zoom,
   onMarkerClick,
-  minZoom,
-  maxZoom,
+  minZoom: minZoomProps,
+  maxZoom: maxZoomProps,
   zoomToBoundsOnClick = true,
   spiderfyOnMaxZoom = true,
   tilesLoaded,
@@ -114,8 +114,8 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
     throw new Error('<PointClusterer /> must be used under a <Map> leaflet component');
   }
 
-  minZoom = minZoom ?? 0;
-  maxZoom = maxZoom ?? 18;
+  const minZoom = minZoomProps ?? 0;
+  const maxZoom = maxZoomProps ?? 18;
 
   const [spider, setSpider] = useState<any>({});
 
@@ -177,7 +177,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       const { cluster_id } = cluster.properties;
       const expansionZoom = Math.min(
         supercluster.getClusterExpansionZoom(cluster_id as number),
-        maxZoom as number,
+        maxZoom,
       );
 
       // already at maxZoom, need to spiderfy child markers

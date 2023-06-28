@@ -1,7 +1,9 @@
 import axios from 'axios';
 import {
+  LatLng,
   LatLngBounds,
   LeafletEvent,
+  LeafletMouseEvent,
   Map as LeafletMap,
   Popup as LeafletPopup,
   PopupEvent,
@@ -9,19 +11,24 @@ import {
 import isEqual from 'lodash/isEqual';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { LayerGroup, MapContainer as ReactLeafletMap, TileLayer } from 'react-leaflet';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useResizeDetector } from 'react-resize-detector';
-import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
 import { IGeoSearchParams } from '@/constants/API';
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM } from '@/constants/strings';
+import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { IProperty } from '@/interfaces';
-import { useAppSelector } from '@/store/hooks';
-import { DEFAULT_MAP_ZOOM, setMapViewZoom } from '@/store/slices/mapViewZoom/mapViewZoomSlice';
+import {
+  DEFAULT_MAP_ZOOM,
+  defaultBounds,
+  defaultLatLng,
+} from '@/store/slices/mapViewZoom/mapViewZoomSlice';
 import { pidParser } from '@/utils/propertyUtils';
 
+import { useMapStateMachine } from './hooks/MapStateMachineContext';
 import useActiveFeatureLayer from './hooks/useActiveFeatureLayer';
 import BasemapToggle, {
   BaseLayer,
@@ -37,43 +44,33 @@ import {
 import { InventoryLayer } from './leaflet/Layers/InventoryLayer';
 import { MapEvents } from './leaflet/MapEvents/MapEvents';
 import * as Styled from './leaflet/styles';
+//import * as Styled from './leaflet/styles';
 import { MapStateActionTypes, MapStateContext } from './providers/MapStateContext';
 
 export type MapLeafletViewProps = {
-  lat: number;
-  lng: number;
-  zoom?: number;
-  whenCreated?: (map: LeafletMap) => void;
-  whenReady?: () => void;
+  //showSideBar: boolean;
+  parentWidth: number | undefined;
   geoFilter?: IGeoSearchParams;
-  mapRef: React.MutableRefObject<LeafletMap | null>;
 };
 
 type BaseLayerFile = {
   basemaps: BaseLayer[];
 };
 
-const defaultBounds = new LatLngBounds([60.09114547, -119.49609429], [48.78370426, -139.35937554]);
-
 /**
  * Creates a Leaflet map and by default includes a number of preconfigured layers.
  * @param param0
  */
 const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = ({
-  lat,
-  lng,
-  zoom: zoomProp,
-  whenReady,
-  whenCreated,
+  parentWidth,
   geoFilter,
-  mapRef,
 }) => {
   const dispatch = useDispatch();
 
   const [baseLayers, setBaseLayers] = useState<BaseLayer[]>([]);
 
   const [activeBasemap, setActiveBasemap] = useState<BaseLayer | null>(null);
-  const smallScreen = useMediaQuery({ maxWidth: 1800 });
+  //const smallScreen = useMediaQuery({ maxWidth: 1800 });
 
   const [bounds, setBounds] = useState<LatLngBounds>(defaultBounds);
   const [layerPopup, setLayerPopup] = useState<LayerPopupInformation>();
@@ -94,13 +91,14 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     }
   };
 
-  const { setState, selectedInventoryProperty, selectedFeature } = useContext(MapStateContext);
+  const {
+    setState,
+    selectedInventoryProperty,
+    loading: mapLoading,
+    selectedFeature,
+  } = useContext(MapStateContext);
 
-  if (mapRef.current && !selectedInventoryProperty) {
-    const center = mapRef.current.getCenter();
-    lat = center.lat;
-    lng = center.lng;
-  }
+  const mapRef = useRef<LeafletMap | null>(null);
 
   const parcelLayerFeature = selectedFeature;
   const { showLocationDetails } = useActiveFeatureLayer({
@@ -111,20 +109,38 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     setLayerPopup,
   });
 
-  const lastZoom = useAppSelector(state => state.mapViewZoom) ?? zoomProp;
-  const [zoom, setZoom] = useState(lastZoom);
-  useEffect(() => {
-    if (lastZoom === DEFAULT_MAP_ZOOM) {
-      dispatch(setMapViewZoom(smallScreen ? 4.9 : 5.5));
-    } else if (lastZoom !== zoom && zoom !== DEFAULT_MAP_ZOOM) {
-      dispatch(setMapViewZoom(zoom));
-    }
-  }, [dispatch, lastZoom, smallScreen, zoom]);
+  const handleClickEvent = (latlng: LatLng) => {
+    showLocationDetails(latlng);
+  };
 
-  const { width } = useResizeDetector();
+  const [zoom, setZoom] = useState(DEFAULT_MAP_ZOOM);
+
+  const handleZoomUpdate = (zoomLevel: number) => {
+    console.log(zoomLevel);
+    setZoom(zoomLevel);
+  };
+
+  //const requestedZoom = useSelector(zoomRequest);
+  const mapMachine = useMapStateMachine();
+  const flyToPending = mapMachine.flyToPending;
+
   useEffect(() => {
+    if (flyToPending !== null) {
+      mapRef?.current?.flyTo(flyToPending, MAP_MAX_ZOOM, {
+        animate: false,
+      });
+
+      //dispatch(zoomToPropery(null));
+      mapMachine.processFlyTo();
+    }
+  }, [flyToPending]);
+
+  // Todo: Verify that the resize is needed
+  //const { width } = useResizeDetector();
+  useEffect(() => {
+    console.log('resized!');
     mapRef.current?.invalidateSize();
-  }, [mapRef, width]);
+  }, [mapRef, parentWidth]);
 
   const handleBasemapToggle = (e: BasemapToggleEvent) => {
     const { previous, current } = e;
@@ -142,28 +158,24 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
   const fitMapBounds = () => {
     if (mapRef.current) {
-      mapRef.current.fitBounds([
-        [60.09114547, -119.49609429],
-        [48.78370426, -139.35937554],
-      ]);
+      mapRef.current.fitBounds(defaultBounds);
     }
   };
 
   const handleMapReady = () => {
+    console.log('when ready!');
+
     fitMapBounds();
-    if (typeof whenReady === 'function') {
-      whenReady();
-    }
   };
 
   const handleMapCreated = (mapInstance: L.Map) => {
-    mapRef.current = mapInstance;
-    if (typeof whenCreated === 'function') {
-      whenCreated(mapInstance);
+    if (mapInstance !== null) {
+      mapRef.current = mapInstance;
     }
   };
 
   const handleBounds = (event: LeafletEvent) => {
+    console.log('handleBounds', event);
     const boundsData: LatLngBounds = event.target.getBounds();
     if (!isEqual(boundsData.getNorthEast(), boundsData.getSouthWest())) {
       setBounds(boundsData);
@@ -189,16 +201,16 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
       )}
 
       <ReactLeafletMap
-        center={[lat, lng]}
-        zoom={lastZoom}
+        center={[defaultLatLng.lat, defaultLatLng.lng]}
+        zoom={DEFAULT_MAP_ZOOM}
         maxZoom={MAP_MAX_ZOOM}
         closePopupOnClick={true}
         ref={handleMapCreated}
         whenReady={handleMapReady}
       >
         <MapEvents
-          click={e => showLocationDetails(e.latlng)}
-          zoomend={e => setZoom(e.sourceTarget.getZoom())}
+          click={e => handleClickEvent(e.latlng)}
+          zoomend={e => handleZoomUpdate(e.sourceTarget.getZoom())}
           moveend={handleBounds}
           popupclose={onPopupClose}
         />
@@ -226,7 +238,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         )}
 
         <LegendControl />
-        <ZoomOutButton bounds={defaultBounds} />
+        <ZoomOutButton />
         <LayersControl
           open={layersOpen}
           setOpen={() => {
@@ -248,3 +260,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 };
 
 export default MapLeafletView;
+
+const MapContainerStyled = styled.div`
+  border: 5px solid red;
+  /*width: 500px;
+  height: 500px;*/
+  /*width: 100%;
+  height: 100%;*/
+`;

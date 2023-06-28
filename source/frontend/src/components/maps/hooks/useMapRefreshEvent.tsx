@@ -5,9 +5,9 @@ import useEventListener from '@/hooks/useEventListener';
  * @param callback
  */
 
-export const mapRefreshEventName = 'refreshMap';
-export const mapRefreshEvent = new CustomEvent(mapRefreshEventName);
-export const fireMapRefreshEvent = () => window.dispatchEvent(mapRefreshEvent);
+const mapRefreshEventName = 'refreshMap';
+//const mapRefreshEvent = new CustomEvent(mapRefreshEventName);
+//const fireMapRefreshEvent = () => window.dispatchEvent(mapRefreshEvent);
 
 export const useMapRefreshEvent = (callback: (event: Event) => void) => {
   const listener = useEventListener(mapRefreshEventName, callback);
