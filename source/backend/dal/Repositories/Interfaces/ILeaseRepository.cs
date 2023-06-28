@@ -11,7 +11,7 @@ namespace Pims.Dal.Repositories
     {
         int Count();
 
-        IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, bool loadPayments = false);
+        IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false);
 
         long GetRowVersion(long id);
 
@@ -19,7 +19,7 @@ namespace Pims.Dal.Repositories
 
         PimsLease GetNoTracking(long id);
 
-        Paged<PimsLease> GetPage(LeaseFilter filter);
+        Paged<PimsLease> GetPage(LeaseFilter filter, HashSet<short> regions);
 
         IList<PimsLeaseDocument> GetAllLeaseDocuments(long leaseId);
 
