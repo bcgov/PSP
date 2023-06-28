@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Pims.Dal;
 using Pims.Dal.Security;
+using Pims.Api.Repositories.Rest;
 
 namespace Pims.Core.Test
 {
@@ -22,13 +23,13 @@ namespace Pims.Core.Test
         /// <param name="helper"></param>
         /// <param name="permission"></param>
         /// <param name="args"></param>
-        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public static T CreateRepository<T>(this TestHelper helper, Permissions permission, params object[] args)
             where T : IRepository
         {
             var user = PrincipalHelper.CreateForPermission(permission);
             return helper.CreateRepository<T>(user, args);
+
         }
 
         /// <summary>
@@ -139,14 +140,21 @@ namespace Pims.Core.Test
         /// <param name="args"></param>
         /// <returns></returns>
         public static T CreateRepository<T>(this TestHelper helper, params object[] args)
-            where T : IRepository
         {
-            helper.MockConstructorArguments<T>(args);
+            if (typeof(T).GetInterfaces().Contains(typeof(IRepository)) ||
+            typeof(T).GetInterfaces().Contains(typeof(IRestRespository)))
+            {
+                helper.MockConstructorArguments<T>(args);
 
-            helper.BuildServiceProvider();
-            var service = helper.CreateInstance<T>();
+                helper.BuildServiceProvider();
+                var service = helper.CreateInstance<T>();
 
-            return service;
+                return service;
+            }
+            else
+            {
+                throw new InvalidOperationException("Type T must inherit from IRepository or IRestRepository.");
+            }
         }
 
         /// <summary>

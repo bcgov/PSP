@@ -42,12 +42,14 @@ namespace Pims.Core.Test
         /// <param name="id"></param>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public static Entity.PimsDocument CreateDocument(string fileName = "Test Document", long id = 1)
+        public static Entity.PimsDocument CreateDocument(string fileName = "Test Document", long id = 1, long typeId = 1, string documentType = "DEFAULT")
         {
             return new Entity.PimsDocument()
             {
                 Internal_Id = id,
                 DocumentId = id,
+                DocumentTypeId = typeId,
+                DocumentType = CreateDocumentType(typeId, documentType),
                 FileName = fileName,
                 AppCreateTimestamp = DateTime.Now,
                 AppCreateUserid = "admin",
