@@ -1,22 +1,27 @@
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
-import { EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
+import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 
-export interface IExpropriationTabcontainerViewProps {
+import ExpropriationForm1 from './form1/ExpropriationForm1';
+
+export interface IExpropriationTabContainerViewProps {
   loading: boolean;
-  acquisitionFileTypeCode: string;
+  acquisitionFile: Api_AcquisitionFile;
 }
 
-export const ExpropriationTabcontainerView: React.FunctionComponent<
-  IExpropriationTabcontainerViewProps
-> = ({ loading, acquisitionFileTypeCode }) => {
+export const ExpropriationTabContainerView: React.FunctionComponent<
+  IExpropriationTabContainerViewProps
+> = ({ loading, acquisitionFile }) => {
   // TODO : Load created Forms
+  const acquisitionFileTypeCode = acquisitionFile.acquisitionTypeCode?.id;
 
   return (
     <>
       <LoadingBackdrop show={loading} />
       {acquisitionFileTypeCode === EnumAcquisitionFileType.SECTN6 && (
-        <Section header="Form 1 - Notice of Expropiation" data-testid="form-1-section"></Section>
+        <Section header="Form 1 - Notice of Expropriation" data-testid="form-1-section">
+          <ExpropriationForm1 acquisitionFile={acquisitionFile}></ExpropriationForm1>
+        </Section>
       )}
 
       {acquisitionFileTypeCode === EnumAcquisitionFileType.SECTN6 && (
@@ -32,4 +37,4 @@ export const ExpropriationTabcontainerView: React.FunctionComponent<
   );
 };
 
-export default ExpropriationTabcontainerView;
+export default ExpropriationTabContainerView;
