@@ -6,8 +6,10 @@ import {
 import { getMockApiDefaultCompensation } from 'mocks/compensations.mock';
 import { mockLookups } from 'mocks/lookups.mock';
 import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
+import { Api_FinancialCode } from 'models/api/FinancialCode';
+import moment from 'moment';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions } from 'utils/test-utils';
+import { act, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { CompensationRequisitionFormModel, PayeeOption } from '../models';
 import UpdateCompensationRequisitionContainer from './UpdateCompensationRequisitionContainer';
@@ -230,5 +232,35 @@ describe('UpdateCompensationRequisition Container component', () => {
         updatedCompensationModel.toApi([testPayeeOption]),
       );
     }, 500);
+  });
+
+  it('filters expired financial codes when updating', async () => {
+    const expiredFinancialCodes: Api_FinancialCode[] = [
+      {
+        id: 1,
+        type: 'expired',
+        code: '1',
+        description: '1',
+        effectiveDate: moment().add(-2, 'days').format('YYYY-MM-DD'),
+        expiryDate: moment().add(-1, 'days').format('YYYY-MM-DD'),
+      },
+      {
+        id: 2,
+        type: 'non-expired',
+        code: '2',
+        description: '2',
+        effectiveDate: moment().add(-2, 'days').format('YYYY-MM-DD'),
+        expiryDate: moment().add(1, 'days').format('YYYY-MM-DD'),
+      },
+    ];
+    mockGetApi.execute = jest.fn().mockResolvedValue(expiredFinancialCodes);
+    await setup();
+
+    await waitFor(async () => {
+      expect(viewProps?.financialActivityOptions).toHaveLength(1);
+      expect(viewProps?.chartOfAccountsOptions).toHaveLength(1);
+      expect(viewProps?.responsiblityCentreOptions).toHaveLength(1);
+      expect(viewProps?.yearlyFinancialOptions).toHaveLength(1);
+    });
   });
 });
