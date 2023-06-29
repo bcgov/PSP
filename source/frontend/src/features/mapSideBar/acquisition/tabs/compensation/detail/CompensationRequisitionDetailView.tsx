@@ -152,14 +152,14 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
             </HeaderField>
           </Col>
           <Col xs="6">
-            <HeaderField label="Compensation amount:" labelWidth="8">
-              {formatMoney(payeeDetails?.preTaxAmount ?? 0)}
+            <HeaderField label="Compensation amount:" labelWidth="8" contentWidth="4">
+              <p className="mb-0 text-right">{formatMoney(payeeDetails?.preTaxAmount ?? 0)}</p>
             </HeaderField>
-            <HeaderField label="Applicable GST:" labelWidth="8">
-              {formatMoney(payeeDetails?.taxAmount ?? 0)}
+            <HeaderField label="Applicable GST:" labelWidth="8" contentWidth="4">
+              <p className="mb-0 text-right">{formatMoney(payeeDetails?.taxAmount ?? 0)}</p>
             </HeaderField>
-            <HeaderField label="Total cheque amount:" labelWidth="8">
-              {formatMoney(payeeDetails?.totalAmount ?? 0)}
+            <HeaderField label="Total cheque amount:" labelWidth="8" contentWidth="4">
+              <p className="mb-0 text-right">{formatMoney(payeeDetails?.totalAmount ?? 0)}</p>
             </HeaderField>
           </Col>
         </StyledRow>
@@ -284,21 +284,30 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
       <Section>
         <StyledCompensationFooter>
-          <div>
-            <label>
-              Compensation amount: <span>{formatMoney(payeeDetails?.preTaxAmount ?? 0)}</span>
-            </label>
-          </div>
-          <div>
-            <label>
-              Applicable GST: <span>{formatMoney(payeeDetails?.taxAmount ?? 0)}</span>
-            </label>
-          </div>
-          <div>
-            <label>
-              Total cheque amount: <span>{formatMoney(payeeDetails?.totalAmount ?? 0)}</span>
-            </label>
-          </div>
+          <Row>
+            <Col className="pr-0 text-right">
+              <label>Compensation amount:</label>
+            </Col>
+            <Col xs="3" className="pl-1 text-right">
+              <span>{formatMoney(payeeDetails?.preTaxAmount ?? 0)}</span>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="pr-0 text-right">
+              <label>Applicable GST:</label>
+            </Col>
+            <Col xs="3" className="pl-1 text-right">
+              <span>{formatMoney(payeeDetails?.taxAmount ?? 0)}</span>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="pr-0 text-right">
+              <label>Total cheque amount:</label>
+            </Col>
+            <Col xs="3" className="pl-1 text-right">
+              <span>{formatMoney(payeeDetails?.totalAmount ?? 0)}</span>
+            </Col>
+          </Row>
         </StyledCompensationFooter>
       </Section>
     </StyledSummarySection>
@@ -324,15 +333,8 @@ const RightFlexDiv = styled.div`
 `;
 
 const StyledCompensationFooter = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
   font-size: 16px;
   font-weight: 600;
-  span {
-    margin-left: 1.25rem;
-  }
 `;
 
 const StyledPayeeDisplayName = styled.div`
