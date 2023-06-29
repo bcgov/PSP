@@ -16,7 +16,7 @@ import UpdateCompensationRequisitionForm from './update/UpdateCompensationRequis
 
 export interface CompensationRequisitionTrayViewProps {
   compensation?: Api_CompensationRequisition;
-  acquistionFile: Api_AcquisitionFile;
+  acquisitionFile: Api_AcquisitionFile;
   clientConstant: string;
   gstConstant: number | undefined;
   onClose: () => void;
@@ -33,7 +33,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
   React.PropsWithChildren<CompensationRequisitionTrayViewProps>
 > = ({
   compensation,
-  acquistionFile,
+  acquisitionFile,
   clientConstant,
   gstConstant,
   editMode,
@@ -48,10 +48,10 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
   let detailViewContent =
     !editMode && compensation ? (
       <HalfHeightDiv>
-        {!!compensation?.id && acquistionFile && (
+        {!!compensation?.id && acquisitionFile && (
           <CompensationRequisitionDetailContainer
             compensation={compensation}
-            acquisitionFile={acquistionFile}
+            acquisitionFile={acquisitionFile}
             View={CompensationRequisitionDetailView}
             clientConstant={clientConstant}
             gstConstant={gstConstant ?? 0}
@@ -67,7 +67,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
       <HalfHeightDiv>
         <UpdateCompensationRequisitionContainer
           compensation={compensation}
-          acquisitionFile={acquistionFile}
+          acquisitionFile={acquisitionFile}
           onSuccess={() => {
             setEditMode(false);
             onUpdate();

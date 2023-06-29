@@ -6,7 +6,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c2.btn {
+  .c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c2.btn:hover {
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c2.btn:focus {
+.c6.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c2.btn.btn-primary {
+.c6.btn.btn-primary {
   border: none;
 }
 
-.c2.btn.btn-secondary {
+.c6.btn.btn-secondary {
   background: none;
 }
 
-.c2.btn.btn-info {
+.c6.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c2.btn.btn-info:hover,
-.c2.btn.btn-info:active,
-.c2.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
   background: none;
 }
 
-.c2.btn.btn-light {
+.c6.btn.btn-light {
   border: none;
 }
 
-.c2.btn.btn-dark {
+.c6.btn.btn-dark {
   border: none;
 }
 
-.c2.btn.btn-link {
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   padding: 0;
 }
 
-.c2.btn.btn-link:hover,
-.c2.btn.btn-link:active,
-.c2.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   outline: none;
 }
 
-.c2.btn.btn-link:disabled,
-.c2.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c2.btn:disabled,
-.c2.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,19 +128,19 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c2.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c2.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c2.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c8 {
+.c9 {
   float: right;
   cursor: pointer;
 }
@@ -149,13 +149,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   padding-top: 1rem;
 }
 
-.c5 {
+.c3 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c3 {
+.c1 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -163,24 +163,43 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c7.required::before {
+.c8.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c6 {
+.c7 {
   font-weight: bold;
 }
 
-.c4 {
+.c2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   font-weight: bold;
 }
 
-.c1 {
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -190,31 +209,12 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   flex-direction: row-reverse;
 }
 
-.c11 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  -webkit-align-items: flex-end;
-  -webkit-box-align: flex-end;
-  -ms-flex-align: flex-end;
-  align-items: flex-end;
+.c12 {
   font-size: 16px;
   font-weight: 600;
 }
 
-.c11 span {
-  margin-left: 1.25rem;
-}
-
-.c9 {
+.c10 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -232,7 +232,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   padding-bottom: 1rem;
 }
 
-.c10 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -252,14 +252,14 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   margin-bottom: 2rem;
 }
 
-.c10 label {
+.c11 label {
   font-family: 'BCSans-Bold';
   font-size: 1.75rem;
   width: 100%;
   text-align: left;
 }
 
-.c10 button {
+.c11 button {
   margin-bottom: 1rem;
 }
 
@@ -267,41 +267,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
     class="c0"
   >
     <div
-      class="c1"
-    >
-      <button
-        class="c2 Button btn btn-primary"
-        type="button"
-      >
-        <div
-          class="Button__value"
-        >
-          <svg
-            class="mr-2"
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 640 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 448c0 17.67 14.33 32 32 32h576c17.67 0 32-14.33 32-32V128H0v320zm448-208c0-8.84 7.16-16 16-16h96c8.84 0 16 7.16 16 16v32c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-32zm0 120c0-4.42 3.58-8 8-8h112c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H456c-4.42 0-8-3.58-8-8v-16zM64 264c0-4.42 3.58-8 8-8h304c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zm0 96c0-4.42 3.58-8 8-8h176c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zM624 32H16C7.16 32 0 39.16 0 48v48h640V48c0-8.84-7.16-16-16-16z"
-            />
-          </svg>
-          Generate H120
-        </div>
-      </button>
-    </div>
-    <div
-      class="c3 form-section"
+      class="c1 form-section"
     >
       <div
         class="collapse show"
       >
         <div
-          class="c4 no-gutters row"
+          class="c2 no-gutters row"
         >
           <div
             class="col-6"
@@ -358,10 +330,14 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
                 </label>
               </div>
               <div
-                class="pl-1 text-left col-auto"
+                class="pl-1 text-left col-4"
               >
                 <strong>
-                  $0.00
+                  <p
+                    class="mb-0 text-right"
+                  >
+                    $0.00
+                  </p>
                 </strong>
               </div>
             </div>
@@ -376,10 +352,14 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
                 </label>
               </div>
               <div
-                class="pl-1 text-left col-auto"
+                class="pl-1 text-left col-4"
               >
                 <strong>
-                  $0.00
+                  <p
+                    class="mb-0 text-right"
+                  >
+                    $0.00
+                  </p>
                 </strong>
               </div>
             </div>
@@ -394,10 +374,14 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
                 </label>
               </div>
               <div
-                class="pl-1 text-left col-auto"
+                class="pl-1 text-left col-4"
               >
                 <strong>
-                  $0.00
+                  <p
+                    class="mb-0 text-right"
+                  >
+                    $0.00
+                  </p>
                 </strong>
               </div>
             </div>
@@ -406,10 +390,10 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c3 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c5"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -417,7 +401,39 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           <div
             class="col"
           >
-            Requisition Details
+            <div
+              class="c4"
+            >
+              Requisition Details
+              <div
+                class="c5"
+              >
+                <button
+                  class="c6 Button btn btn-primary"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      class="mr-2"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 640 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 448c0 17.67 14.33 32 32 32h576c17.67 0 32-14.33 32-32V128H0v320zm448-208c0-8.84 7.16-16 16-16h96c8.84 0 16 7.16 16 16v32c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-32zm0 120c0-4.42 3.58-8 8-8h112c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H456c-4.42 0-8-3.58-8-8v-16zM64 264c0-4.42 3.58-8 8-8h304c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zm0 96c0-4.42 3.58-8 8-8h176c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zM624 32H16C7.16 32 0 39.16 0 48v48h640V48c0-8.84-7.16-16-16-16z"
+                      />
+                    </svg>
+                    Generate H120
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </h2>
@@ -431,13 +447,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Status:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             Draft
           </div>
@@ -449,13 +465,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Agreement date:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           />
         </div>
         <div
@@ -465,13 +481,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
-              Expropriation notice server date:
+              Expropriation notice served date:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           />
         </div>
         <div
@@ -481,13 +497,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Expropriation vesting date:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           />
         </div>
         <div
@@ -497,13 +513,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-12"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Special instructions:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             SPECIAL INSTRUCTION
           </div>
@@ -511,10 +527,10 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c3 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c5"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -528,7 +544,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="col-1"
           >
             <svg
-              class="c8"
+              class="c9"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -561,13 +577,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Product:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           />
         </div>
         <div
@@ -577,13 +593,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Business function:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           />
         </div>
         <div
@@ -593,13 +609,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Work activity:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           />
         </div>
         <div
@@ -609,13 +625,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Cost type:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           />
         </div>
         <div
@@ -625,13 +641,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Fiscal year:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             2023/2024
           </div>
@@ -643,13 +659,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               STOB:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           />
         </div>
         <div
@@ -659,13 +675,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Service line:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           />
         </div>
         <div
@@ -675,22 +691,22 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
-              Responsiblity centre:
+              Responsibility centre:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           />
         </div>
       </div>
     </div>
     <div
-      class="c3 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c5"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -704,7 +720,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="col-1"
           >
             <svg
-              class="c8"
+              class="c9"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -737,16 +753,16 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Payee:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             <div
-              class="c9"
+              class="c10"
             >
               <label />
             </div>
@@ -759,13 +775,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Amount (before tax):
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             $0.00
           </div>
@@ -777,13 +793,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               GST applicable?:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             No
           </div>
@@ -795,13 +811,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Total amount:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             $0.00
           </div>
@@ -809,10 +825,10 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c3 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c5"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -826,7 +842,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="col-1"
           >
             <svg
-              class="c8"
+              class="c9"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -853,7 +869,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c10"
+          class="c11"
         >
           <label>
             Activity 1
@@ -866,13 +882,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Code & Description:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             2 - Market
           </div>
@@ -884,13 +900,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Amount (before tax):
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             $10,000.00
           </div>
@@ -902,13 +918,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               GST applicable?:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             Yes
           </div>
@@ -920,13 +936,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               GST amount:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             $500.00
           </div>
@@ -938,19 +954,19 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Total amount:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             $10,500.00
           </div>
         </div>
         <div
-          class="c10"
+          class="c11"
         >
           <label>
             Activity 2
@@ -963,13 +979,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Code & Description:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             9 - Owners Entitlements
           </div>
@@ -981,13 +997,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Amount (before tax):
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             $20,000.00
           </div>
@@ -999,13 +1015,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               GST applicable?:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             Yes
           </div>
@@ -1017,13 +1033,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               GST amount:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             $1,000.00
           </div>
@@ -1035,13 +1051,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Total amount:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             $21,000.00
           </div>
@@ -1049,7 +1065,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c3 form-section"
+      class="c1 form-section"
     >
       <div
         class="collapse show"
@@ -1061,13 +1077,13 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             class="pr-0 text-left col-12"
           >
             <label
-              class="c6"
+              class="c7"
             >
               Detailed remarks:
             </label>
           </div>
           <div
-            class="c7 text-left col"
+            class="c8 text-left col"
           >
             DETAILED REMARKS
           </div>
@@ -1075,37 +1091,67 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c3 form-section"
+      class="c1 form-section"
     >
       <div
         class="collapse show"
       >
         <div
-          class="c11"
+          class="c12"
         >
-          <div>
-            <label>
-              Compensation amount: 
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-right col"
+            >
+              <label>
+                Compensation amount:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-right col-3"
+            >
               <span>
                 $0.00
               </span>
-            </label>
+            </div>
           </div>
-          <div>
-            <label>
-              Applicable GST: 
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-right col"
+            >
+              <label>
+                Applicable GST:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-right col-3"
+            >
               <span>
                 $0.00
               </span>
-            </label>
+            </div>
           </div>
-          <div>
-            <label>
-              Total cheque amount: 
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-right col"
+            >
+              <label>
+                Total cheque amount:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-right col-3"
+            >
               <span>
                 $0.00
               </span>
-            </label>
+            </div>
           </div>
         </div>
       </div>
