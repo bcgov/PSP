@@ -209,7 +209,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
             </label>
           )}
         </SectionField>
-        <SectionField label="Responsiblity centre" labelWidth="4">
+        <SectionField label="Responsibility centre" labelWidth="4">
           {compensation.responsibility && (
             <label>
               {compensation.responsibility?.code} - {compensation.responsibility?.description}
