@@ -182,7 +182,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                       placeholder="Select..."
                     />
                   </SectionField>
-                  <SectionField label="STOB" labelWidth="4" contentWidth="4" required>
+                  <SectionField label="STOB" labelWidth="4" required>
                     <Select field="stob" options={yearlyFinancialOptions} placeholder="Select..." />
                   </SectionField>
                   <SectionField label="Service line" labelWidth="4" required>

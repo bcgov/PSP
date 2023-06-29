@@ -183,7 +183,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           {compensation.fiscalYear ?? ''}
         </SectionField>
         <SectionField label="STOB" labelWidth="4">
-          {compensation.yearlyFinancial?.code ?? ''}
+          {compensation.yearlyFinancial?.code ?? ''} - {compensation.yearlyFinancial?.description}
         </SectionField>
         <SectionField label="Service line" labelWidth="4">
           {compensation.chartOfAccounts?.code} - {compensation.chartOfAccounts?.description}
@@ -233,7 +233,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
               <label>Activity {index + 1}</label>
             </StyledSubHeader>
             <SectionField label="Code & Description" labelWidth="4">
-              {item.financialActivityCode?.id} - {item.financialActivityCode?.description}
+              {item.financialActivityCode?.code} - {item.financialActivityCode?.description}
             </SectionField>
             <SectionField label="Amount (before tax)" labelWidth="4">
               {formatMoney(item.pretaxAmount ?? 0)}
