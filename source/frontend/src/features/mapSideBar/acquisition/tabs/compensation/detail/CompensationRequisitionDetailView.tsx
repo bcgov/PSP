@@ -123,24 +123,6 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   return (
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
-      <RightFlexDiv>
-        {setEditMode !== undefined && hasClaim(Claims.COMPENSATION_REQUISITION_EDIT) && (
-          <EditButton
-            title="Edit compensation requisition"
-            onClick={() => {
-              setEditMode(true);
-            }}
-          />
-        )}
-        <StyledAddButton
-          onClick={() => {
-            onGenerate(compensation);
-          }}
-        >
-          <FaMoneyCheck className="mr-2" />
-          Generate H120
-        </StyledAddButton>
-      </RightFlexDiv>
       <Section>
         <StyledRow className="no-gutters">
           <Col xs="6">
@@ -165,14 +147,38 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         </StyledRow>
       </Section>
 
-      <Section header="Requisition Details">
+      <Section
+        header={
+          <FlexDiv>
+            Requisition Details
+            <RightFlexDiv>
+              {setEditMode !== undefined && hasClaim(Claims.COMPENSATION_REQUISITION_EDIT) && (
+                <EditButton
+                  title="Edit compensation requisition"
+                  onClick={() => {
+                    setEditMode(true);
+                  }}
+                />
+              )}
+              <StyledAddButton
+                onClick={() => {
+                  onGenerate(compensation);
+                }}
+              >
+                <FaMoneyCheck className="mr-2" />
+                Generate H120
+              </StyledAddButton>
+            </RightFlexDiv>
+          </FlexDiv>
+        }
+      >
         <SectionField label="Status" labelWidth="4">
           {compensation.isDraft ? 'Draft' : 'Final'}
         </SectionField>
         <SectionField label="Agreement date" labelWidth="4">
           {prettyFormatDate(compensation.agreementDate)}
         </SectionField>
-        <SectionField label="Expropriation notice server date" labelWidth="4">
+        <SectionField label="Expropriation notice served date" labelWidth="4">
           {prettyFormatDate(compensation.expropriationNoticeServedDate)}
         </SectionField>
         <SectionField label="Expropriation vesting date" labelWidth="4">
@@ -325,6 +331,14 @@ const StyledRow = styled(Row)`
 const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
+`;
+
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
 `;
 
 const RightFlexDiv = styled.div`
