@@ -11,8 +11,8 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
+import { ExpropriationForm1Model } from '../models';
 import { ExpropriationForm1YupSchema } from './ExpropriationForm1YupSchema';
-import { ExpropriationForm1Model } from './models';
 
 export interface IExpropriationForm1Props {
   acquisitionFile: Api_AcquisitionFile;
@@ -24,7 +24,7 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({ acquisi
     formikHelpers: FormikHelpers<ExpropriationForm1Model>,
   ) => {
     // TODO: submit json values to Generate endpoint
-    alert(JSON.stringify(values));
+    alert(JSON.stringify(values, null, 4));
   };
 
   const onCancel = (formikProps: FormikProps<ExpropriationForm1Model>) => {
@@ -47,7 +47,7 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({ acquisi
         <>
           <SectionField label="Expropriation authority" required>
             <ContactInputContainer
-              field="expropriationAuthorityContact"
+              field="expropriationAuthority.contact"
               View={ContactInputView}
               restrictContactType={RestrictContactType.ONLY_ORGANIZATIONS}
               displayErrorAsTooltip={false}
