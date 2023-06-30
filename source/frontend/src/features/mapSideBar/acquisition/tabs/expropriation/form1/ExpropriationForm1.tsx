@@ -1,12 +1,13 @@
-import { Formik, FormikHelpers } from 'formik';
+import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
+import { Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 
+import { Button } from '@/components/common/buttons';
 import { Input } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
-import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
@@ -23,6 +24,16 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({ acquisi
     formikHelpers: FormikHelpers<ExpropriationForm1Model>,
   ) => {
     // TODO: submit json values to Generate endpoint
+    alert(JSON.stringify(values));
+  };
+
+  const onCancel = (formikProps: FormikProps<ExpropriationForm1Model>) => {
+    formikProps.resetForm();
+  };
+
+  const onGenerate = (formikProps: FormikProps<ExpropriationForm1Model>) => {
+    formikProps.setSubmitting(true);
+    formikProps.submitForm();
   };
 
   return (
@@ -32,13 +43,14 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({ acquisi
       validationSchema={ExpropriationForm1YupSchema}
       onSubmit={onSubmit}
     >
-      <StyledSummarySection>
-        <Section header="Form 1 Notice of Expropriation">
+      {formikProps => (
+        <>
           <SectionField label="Expropriation authority" required>
             <ContactInputContainer
-              field="expropriationAuthority.contact"
+              field="expropriationAuthorityContact"
               View={ContactInputView}
               restrictContactType={RestrictContactType.ONLY_ORGANIZATIONS}
+              displayErrorAsTooltip={false}
             ></ContactInputContainer>
           </SectionField>
           <SectionField
@@ -52,10 +64,26 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({ acquisi
           <SectionField label="Purpose of expropriation">
             <Input field="purpose" />
           </SectionField>
-        </Section>
-      </StyledSummarySection>
+
+          <RightFlexRow>
+            <Col xs="auto" className="pr-4">
+              <Button variant="secondary" onClick={() => onCancel(formikProps)}>
+                Cancel
+              </Button>
+            </Col>
+            <Col xs="auto">
+              <Button onClick={() => onGenerate(formikProps)}>Generate</Button>
+            </Col>
+          </RightFlexRow>
+        </>
+      )}
     </Formik>
   );
 };
+
+const RightFlexRow = styled(Row)`
+  justify-content: end;
+  align-items: center;
+`;
 
 export default ExpropriationForm1;

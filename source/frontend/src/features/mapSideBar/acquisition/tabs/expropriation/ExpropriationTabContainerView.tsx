@@ -19,19 +19,39 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
     <>
       <LoadingBackdrop show={loading} />
       {acquisitionFileTypeCode === EnumAcquisitionFileType.SECTN6 && (
-        <Section header="Form 1 - Notice of Expropriation" data-testid="form-1-section">
+        <Section
+          isCollapsable
+          initiallyExpanded
+          header="Form 1 - Notice of Expropriation"
+          data-testid="form-1-section"
+        >
           <ExpropriationForm1 acquisitionFile={acquisitionFile}></ExpropriationForm1>
         </Section>
       )}
 
       {acquisitionFileTypeCode === EnumAcquisitionFileType.SECTN6 && (
-        <Section header="Form 5 - Certificate of Approval" data-testid="form-5-section"></Section>
+        <Section
+          isCollapsable
+          initiallyExpanded={false}
+          header="Form 5 - Certificate of Approval"
+          data-testid="form-5-section"
+        ></Section>
       )}
 
-      <Section header="Form 8 - Notice of Advance Payment" data-testid="form-8-section"></Section>
+      <Section
+        isCollapsable
+        initiallyExpanded={false}
+        header="Form 8 - Notice of Advance Payment"
+        data-testid="form-8-section"
+      ></Section>
 
       {acquisitionFileTypeCode === EnumAcquisitionFileType.SECTN6 && (
-        <Section header="Form 9 - Vesting Notice" data-testid="form-9-section"></Section>
+        <Section
+          isCollapsable
+          initiallyExpanded={false}
+          header="Form 9 - Vesting Notice"
+          data-testid="form-9-section"
+        ></Section>
       )}
     </>
   );
