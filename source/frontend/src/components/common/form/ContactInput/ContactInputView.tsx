@@ -65,7 +65,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
         <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
           <Row>
             <Col>
-              <StyledDiv className={!!error ? 'is-invalid' : ''}>
+              <StyledDiv className={!!error && !!touch ? 'is-invalid' : ''}>
                 {text}
                 <StyledRemoveLinkButton
                   onClick={() => {
@@ -120,7 +120,6 @@ const StyledDiv = styled.div`
   border-radius: 0.3rem;
   padding: 0.6rem;
   padding-right: 2.1rem;
-  min-height: 2.5em;
   color: ${props => props.theme.css.formControlTextColor};
   border: ${props => props.theme.css.lightVariantColor} solid 0.1rem;
   &.is-invalid {
