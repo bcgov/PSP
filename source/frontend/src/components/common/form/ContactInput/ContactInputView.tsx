@@ -1,9 +1,9 @@
 import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
-import { Col, FormControlProps, Row } from 'react-bootstrap';
-import { Form } from 'react-bootstrap';
+import { Col, Form, FormControlProps, Row } from 'react-bootstrap';
 import { FaAddressBook } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
+import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
@@ -11,7 +11,6 @@ import {
   ContactManagerModal,
   IContactManagerModalProps,
 } from '@/components/contact/ContactManagerModal';
-import { StyledDiv } from '@/features/mapSideBar/acquisition/common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
 import { IContactSearchResult } from '@/interfaces';
 import { formatNames } from '@/utils/personUtils';
 
@@ -114,3 +113,17 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
 };
 
 export default ContactInputView;
+
+const StyledDiv = styled.div`
+  background: none;
+  position: relative;
+  border-radius: 0.3rem;
+  padding: 0.6rem;
+  padding-right: 2.1rem;
+  min-height: 2.5em;
+  color: ${props => props.theme.css.formControlTextColor};
+  border: ${props => props.theme.css.lightVariantColor} solid 0.1rem;
+  &.is-invalid {
+    border: ${props => props.theme.css.dangerColor} solid 0.1rem;
+  }
+`;
