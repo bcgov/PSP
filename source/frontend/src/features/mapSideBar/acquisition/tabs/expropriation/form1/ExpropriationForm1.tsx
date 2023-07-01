@@ -7,9 +7,12 @@ import { Button } from '@/components/common/buttons';
 import { Input } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
+import FormItem from '@/components/common/form/FormItem';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
+import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
 import { ExpropriationForm1Model } from '../models';
 import { ExpropriationForm1YupSchema } from './ExpropriationForm1YupSchema';
@@ -24,6 +27,7 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({ acquisi
     formikHelpers: FormikHelpers<ExpropriationForm1Model>,
   ) => {
     // TODO: submit json values to Generate endpoint
+    console.debug(values);
     alert(JSON.stringify(values, null, 4));
   };
 
@@ -44,7 +48,7 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({ acquisi
       onSubmit={onSubmit}
     >
       {formikProps => (
-        <>
+        <React.Fragment>
           <SectionField label="Expropriation authority" required>
             <ContactInputContainer
               field="expropriationAuthority.contact"
@@ -57,7 +61,18 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({ acquisi
             label="Impacted properties"
             required
             tooltip="For the selected properties - corresponding property and interest details will be captured on the form."
-          ></SectionField>
+          >
+            <FormItem field="impactedProperties">
+              <FilePropertiesTable
+                disabledSelection={false}
+                fileProperties={acquisitionFile.fileProperties ?? []}
+                selectedFileProperties={formikProps.values.impactedProperties}
+                setSelectedFileProperties={(fileProperties: Api_PropertyFile[]) => {
+                  formikProps.setFieldValue('impactedProperties', fileProperties);
+                }}
+              ></FilePropertiesTable>
+            </FormItem>
+          </SectionField>
           <SectionField label="Nature of interest">
             <Input field="landInterest" />
           </SectionField>
@@ -75,7 +90,7 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({ acquisi
               <Button onClick={() => onGenerate(formikProps)}>Generate</Button>
             </Col>
           </RightFlexRow>
-        </>
+        </React.Fragment>
       )}
     </Formik>
   );

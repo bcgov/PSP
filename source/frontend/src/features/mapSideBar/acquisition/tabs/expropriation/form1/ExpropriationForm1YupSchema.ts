@@ -2,7 +2,7 @@
 import * as yup from 'yup';
 
 export const ExpropriationForm1YupSchema = yup.object().shape({
-  // impactedProperties: Yup.array().min(1, 'At lease one impacted property is required'),
+  impactedProperties: yup.array().min(1, 'At lease one impacted property is required'),
   expropriationAuthority: yup.object().shape({
     contact: yup.object().required('Expropriation authority is required').nullable(),
   }),
