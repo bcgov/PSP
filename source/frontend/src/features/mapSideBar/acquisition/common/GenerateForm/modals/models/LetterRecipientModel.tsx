@@ -13,7 +13,7 @@ export class LetterRecipientModel {
     this.generateModel = model;
   }
 
-  public get InterestType(): string {
+  public get InterestTypeString(): string {
     let identifier = '';
     switch (this.interestType) {
       case 'HLDR':

@@ -124,7 +124,6 @@ const GenerateFormContainer: React.FunctionComponent<
       );
     }
 
-    console.table(generateRecipientsList);
     setFullRecipientsList(generateRecipientsList);
     openGenerateLetterModal();
   }, [

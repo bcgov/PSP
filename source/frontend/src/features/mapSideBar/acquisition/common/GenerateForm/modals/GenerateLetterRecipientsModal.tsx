@@ -60,32 +60,34 @@ const GenerateLetterRecipientsModal: React.FunctionComponent<
                 <strong>Available recipients in this file:</strong>
               </p>
 
-              <FieldArray
-                name={withNameSpace('recipients')}
-                render={arrayHelpers => (
-                  <Form.Group>
-                    {recipientList.map((rec: LetterRecipientModel, index: number) => (
-                      <Form.Check
-                        id={`recipient-${index}`}
-                        type="checkbox"
-                        name="recipients"
-                        key={rec.id}
-                      >
-                        <Form.Check.Input
-                          id={'recipient-' + index}
+              <StyledDiv>
+                <FieldArray
+                  name={withNameSpace('recipients')}
+                  render={arrayHelpers => (
+                    <Form.Group>
+                      {recipientList.map((rec: LetterRecipientModel, index: number) => (
+                        <Form.Check
+                          id={`recipient-${index}`}
                           type="checkbox"
                           name="recipients"
-                          value={rec.id}
-                          onChange={formikProps.handleChange}
-                        />
-                        <Form.Check.Label htmlFor={'recipient-' + index}>
-                          {rec.generateModel?.owner_string}
-                        </Form.Check.Label>
-                      </Form.Check>
-                    ))}
-                  </Form.Group>
-                )}
-              />
+                          key={rec.id}
+                        >
+                          <Form.Check.Input
+                            id={'recipient-' + index}
+                            type="checkbox"
+                            name="recipients"
+                            value={rec.id}
+                            onChange={formikProps.handleChange}
+                          />
+                          <Form.Check.Label htmlFor={'recipient-' + index}>
+                            {rec.generateModel?.owner_string} <span>{rec.InterestTypeString}</span>
+                          </Form.Check.Label>
+                        </Form.Check>
+                      ))}
+                    </Form.Group>
+                  )}
+                />
+              </StyledDiv>
               {Object.values(formikProps.errors).length > 0 && (
                 <div className="invalid-feedback" data-testid="team-profile-dup-error">
                   {formikProps.errors?.recipients?.toString()}
@@ -121,12 +123,32 @@ const StyledModal = styled(GenericModal)`
     padding-left: 2rem;
     padding-right: 2rem;
   }
+`;
+
+const StyledDiv = styled.div`
+  border: 0.1rem solid ${props => props.theme.css.lightVariantColor};
+  border-radius: 0.5rem;
+  max-height: 180px;
+  overflow-y: auto;
+  padding: 0.5rem 1.5rem;
+
+  .form-check {
+    input {
+      margin-top: 0.7rem;
+    }
+  }
 
   .form-group {
     label {
       font-family: BcSans-Bold;
-      line-height: 2rem;
+      line-height: 1rem;
       color: ${props => props.theme.css.textColor};
+
+      span {
+        font-size: 1.5rem;
+        font-family: BCSans-Italic;
+        font-style: italic;
+      }
     }
   }
 `;
