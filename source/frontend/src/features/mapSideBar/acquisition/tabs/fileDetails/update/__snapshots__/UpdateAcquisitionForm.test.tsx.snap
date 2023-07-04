@@ -250,6 +250,68 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   margin-bottom: unset;
 }
 
+.c7 {
+  position: relative;
+  border-radius: 0.3rem;
+  padding: 0.6rem;
+  padding-right: 2.1rem;
+  min-height: 2.5em;
+  background-image: none;
+  border: solid 0.1rem;
+}
+
+.c7.is-invalid {
+  border: solid 0.1rem;
+}
+
+.c9.c9.btn {
+  position: absolute;
+  top: calc(50% - 1.4rem);
+  right: 0.4rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c9.c9.btn .text {
+  display: none;
+}
+
+.c9.c9.btn:hover,
+.c9.c9.btn:active,
+.c9.c9.btn:focus {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+}
+
+.c19 {
+  background: none;
+  position: relative;
+  border-radius: 0.3rem;
+  padding: 0.6rem;
+  padding-right: 2.1rem;
+  border: solid 0.1rem;
+}
+
+.c19.is-invalid {
+  border: solid 0.1rem;
+}
+
+.c4 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
 .c3.required::before {
   content: '*';
   position: absolute;
@@ -310,55 +372,6 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   text-decoration: none solid rgb(33,37,41);
   line-height: 2rem;
   margin-bottom: 1rem;
-}
-
-.c7 {
-  position: relative;
-  border-radius: 0.3rem;
-  padding: 0.6rem;
-  padding-right: 2.1rem;
-  min-height: 2.5em;
-  background-image: none;
-  border: solid 0.1rem;
-}
-
-.c7.is-invalid {
-  border: solid 0.1rem;
-}
-
-.c9.c9.btn {
-  position: absolute;
-  top: calc(50% - 1.4rem);
-  right: 0.4rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c9.c9.btn .text {
-  display: none;
-}
-
-.c9.c9.btn:hover,
-.c9.c9.btn:active,
-.c9.c9.btn:focus {
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  opacity: unset;
-}
-
-.c4 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c1 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
 }
 
 .c0 .react-datepicker-wrapper {
@@ -3028,7 +3041,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c17"
+                    class="c19"
                   >
                     Luke Skywalker
                     <button
@@ -3129,7 +3142,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c17"
+                    class="c19"
                   >
                     Han Solo
                     <button
