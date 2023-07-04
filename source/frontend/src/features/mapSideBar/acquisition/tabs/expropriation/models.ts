@@ -8,9 +8,21 @@ export class ExpropriationAuthorityFormModel {
   contact: IContactSearchResult | null = null;
 }
 
-export class ExpropriationForm1Model {
+class ExpropriationBaseModel {
   expropriationAuthority = new ExpropriationAuthorityFormModel();
+}
+
+export class ExpropriationForm1Model extends ExpropriationBaseModel {
   impactedProperties: Api_AcquisitionFileProperty[] = [];
   landInterest: string = '';
   purpose: string = '';
+}
+
+export class ExpropriationForm5Model extends ExpropriationBaseModel {
+  impactedProperties: Api_AcquisitionFileProperty[] = [];
+}
+
+export class ExpropriationForm9Model extends ExpropriationBaseModel {
+  impactedProperties: Api_AcquisitionFileProperty[] = [];
+  registeredPlanNumbers: string = '';
 }

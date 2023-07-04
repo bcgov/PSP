@@ -14,36 +14,36 @@ import FilePropertiesTable from '@/components/filePropertiesTable/FileProperties
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
-import { ExpropriationForm1Model } from '../models';
-import { ExpropriationForm1YupSchema } from './ExpropriationForm1YupSchema';
+import { ExpropriationForm9Model } from '../models';
+import { ExpropriationForm9YupSchema } from './ExpropriationForm9YupSchema';
 
-export interface IExpropriationForm1Props {
+export interface IExpropriationForm9Props {
   acquisitionFile: Api_AcquisitionFile;
 }
 
-export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({ acquisitionFile }) => {
+export const ExpropriationForm9: React.FC<IExpropriationForm9Props> = ({ acquisitionFile }) => {
   const onSubmit = async (
-    values: ExpropriationForm1Model,
-    formikHelpers: FormikHelpers<ExpropriationForm1Model>,
+    values: ExpropriationForm9Model,
+    formikHelpers: FormikHelpers<ExpropriationForm9Model>,
   ) => {
     // TODO: submit json values to Generate endpoint
     alert(JSON.stringify(values, null, 4));
   };
 
-  const onCancel = (formikProps: FormikProps<ExpropriationForm1Model>) => {
+  const onCancel = (formikProps: FormikProps<ExpropriationForm9Model>) => {
     formikProps.resetForm();
   };
 
-  const onGenerate = (formikProps: FormikProps<ExpropriationForm1Model>) => {
+  const onGenerate = (formikProps: FormikProps<ExpropriationForm9Model>) => {
     formikProps.setSubmitting(true);
     formikProps.submitForm();
   };
 
   return (
-    <Formik<ExpropriationForm1Model>
+    <Formik<ExpropriationForm9Model>
       enableReinitialize
-      initialValues={new ExpropriationForm1Model()}
-      validationSchema={ExpropriationForm1YupSchema}
+      initialValues={new ExpropriationForm9Model()}
+      validationSchema={ExpropriationForm9YupSchema}
       onSubmit={onSubmit}
     >
       {formikProps => (
@@ -72,11 +72,8 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({ acquisi
               ></FilePropertiesTable>
             </FormItem>
           </SectionField>
-          <SectionField label="Nature of interest">
-            <Input field="landInterest" />
-          </SectionField>
-          <SectionField label="Purpose of expropriation">
-            <Input field="purpose" />
+          <SectionField label="Shown on plan(s)">
+            <Input field="registeredPlanNumbers" />
           </SectionField>
 
           <RightFlexRow>
@@ -100,4 +97,4 @@ const RightFlexRow = styled(Row)`
   align-items: center;
 `;
 
-export default ExpropriationForm1;
+export default ExpropriationForm9;

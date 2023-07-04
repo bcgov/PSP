@@ -3,6 +3,8 @@ import { Section } from '@/components/common/Section/Section';
 import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 
 import ExpropriationForm1 from './form1/ExpropriationForm1';
+import ExpropriationForm5 from './form5/ExpropriationForm5';
+import ExpropriationForm9 from './form9/ExpropriationForm9';
 
 export interface IExpropriationTabContainerViewProps {
   loading: boolean;
@@ -12,7 +14,7 @@ export interface IExpropriationTabContainerViewProps {
 export const ExpropriationTabContainerView: React.FunctionComponent<
   IExpropriationTabContainerViewProps
 > = ({ loading, acquisitionFile }) => {
-  // TODO : Load created Forms
+  // TODO: Load Form 8 into this container
   const acquisitionFileTypeCode = acquisitionFile.acquisitionTypeCode?.id;
 
   return (
@@ -35,7 +37,9 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
           initiallyExpanded={false}
           header="Form 5 - Certificate of Approval"
           data-testid="form-5-section"
-        ></Section>
+        >
+          <ExpropriationForm5 acquisitionFile={acquisitionFile}></ExpropriationForm5>
+        </Section>
       )}
 
       <Section
@@ -51,7 +55,9 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
           initiallyExpanded={false}
           header="Form 9 - Vesting Notice"
           data-testid="form-9-section"
-        ></Section>
+        >
+          <ExpropriationForm9 acquisitionFile={acquisitionFile}></ExpropriationForm9>
+        </Section>
       )}
     </>
   );

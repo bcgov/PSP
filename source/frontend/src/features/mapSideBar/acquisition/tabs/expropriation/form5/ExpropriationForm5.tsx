@@ -4,7 +4,6 @@ import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons';
-import { Input } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import FormItem from '@/components/common/form/FormItem';
@@ -14,36 +13,36 @@ import FilePropertiesTable from '@/components/filePropertiesTable/FileProperties
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
-import { ExpropriationForm1Model } from '../models';
-import { ExpropriationForm1YupSchema } from './ExpropriationForm1YupSchema';
+import { ExpropriationForm5Model } from '../models';
+import { ExpropriationForm5YupSchema } from './ExpropriationForm5YupSchema';
 
-export interface IExpropriationForm1Props {
+export interface IExpropriationForm5Props {
   acquisitionFile: Api_AcquisitionFile;
 }
 
-export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({ acquisitionFile }) => {
+export const ExpropriationForm5: React.FC<IExpropriationForm5Props> = ({ acquisitionFile }) => {
   const onSubmit = async (
-    values: ExpropriationForm1Model,
-    formikHelpers: FormikHelpers<ExpropriationForm1Model>,
+    values: ExpropriationForm5Model,
+    formikHelpers: FormikHelpers<ExpropriationForm5Model>,
   ) => {
     // TODO: submit json values to Generate endpoint
     alert(JSON.stringify(values, null, 4));
   };
 
-  const onCancel = (formikProps: FormikProps<ExpropriationForm1Model>) => {
+  const onCancel = (formikProps: FormikProps<ExpropriationForm5Model>) => {
     formikProps.resetForm();
   };
 
-  const onGenerate = (formikProps: FormikProps<ExpropriationForm1Model>) => {
+  const onGenerate = (formikProps: FormikProps<ExpropriationForm5Model>) => {
     formikProps.setSubmitting(true);
     formikProps.submitForm();
   };
 
   return (
-    <Formik<ExpropriationForm1Model>
+    <Formik<ExpropriationForm5Model>
       enableReinitialize
-      initialValues={new ExpropriationForm1Model()}
-      validationSchema={ExpropriationForm1YupSchema}
+      initialValues={new ExpropriationForm5Model()}
+      validationSchema={ExpropriationForm5YupSchema}
       onSubmit={onSubmit}
     >
       {formikProps => (
@@ -72,12 +71,6 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({ acquisi
               ></FilePropertiesTable>
             </FormItem>
           </SectionField>
-          <SectionField label="Nature of interest">
-            <Input field="landInterest" />
-          </SectionField>
-          <SectionField label="Purpose of expropriation">
-            <Input field="purpose" />
-          </SectionField>
 
           <RightFlexRow>
             <Col xs="auto" className="pr-4">
@@ -100,4 +93,4 @@ const RightFlexRow = styled(Row)`
   align-items: center;
 `;
 
-export default ExpropriationForm1;
+export default ExpropriationForm5;
