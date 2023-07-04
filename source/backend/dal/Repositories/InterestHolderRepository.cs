@@ -38,7 +38,9 @@ namespace Pims.Dal.Repositories
             return Context.PimsInterestHolders
                 .Where(ih => ih.AcquisitionFileId == acquisitionFileId)
                 .Include(ih => ih.Organization)
+                    .ThenInclude(ad => ad.PimsOrganizationAddresses)
                 .Include(ih => ih.Person)
+                    .ThenInclude(ad => ad.PimsPersonAddresses)
                 .Include(ih => ih.PimsInthldrPropInterests)
                 .ThenInclude(ip => ip.InterestHolderInterestTypeCodeNavigation)
                 .AsNoTracking()

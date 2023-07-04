@@ -5,6 +5,7 @@ import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { ExternalResultStatus } from '@/models/api/ExternalResult';
 import { Api_GenerateLetter } from '@/models/generate/GenerateLetter';
+import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
 
 export const useGenerateLetter = () => {
   const { getPersonConcept } = useApiContacts();
@@ -14,7 +15,10 @@ export const useGenerateLetter = () => {
 
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
 
-  const generateLetter = async (acquisitionFileId: number) => {
+  const generateLetter = async (
+    acquisitionFileId: number,
+    recipients: Api_GenerateOwner[] | null = null,
+  ) => {
     const file = await getAcquisitionFile(acquisitionFileId);
     if (file) {
       const coordinator = file.acquisitionTeam?.find(
@@ -24,6 +28,7 @@ export const useGenerateLetter = () => {
         ? (await getPersonConcept(coordinator?.personId))?.data
         : null;
       const letterData = new Api_GenerateLetter(file, coordinatorPerson);
+      letterData.owners = recipients ?? letterData.owners;
       const generatedFile = await generate({
         templateType: FormDocumentType.LETTER,
         templateData: letterData,
@@ -34,5 +39,6 @@ export const useGenerateLetter = () => {
         showFile(generatedFile?.payload);
     }
   };
+
   return generateLetter;
 };
