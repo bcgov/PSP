@@ -18,22 +18,29 @@ import { ExpropriationForm5YupSchema } from './ExpropriationForm5YupSchema';
 
 export interface IExpropriationForm5Props {
   acquisitionFile: Api_AcquisitionFile;
+  onGenerate: (values: ExpropriationForm5Model) => Promise<void>;
 }
 
-export const ExpropriationForm5: React.FC<IExpropriationForm5Props> = ({ acquisitionFile }) => {
+export const ExpropriationForm5: React.FC<IExpropriationForm5Props> = ({
+  acquisitionFile,
+  onGenerate,
+}) => {
   const onSubmit = async (
     values: ExpropriationForm5Model,
     formikHelpers: FormikHelpers<ExpropriationForm5Model>,
   ) => {
-    // TODO: submit json values to Generate endpoint
-    alert(JSON.stringify(values, null, 4));
+    try {
+      await onGenerate(values);
+    } finally {
+      formikHelpers?.setSubmitting(false);
+    }
   };
 
-  const onCancel = (formikProps: FormikProps<ExpropriationForm5Model>) => {
+  const onCancelClick = (formikProps: FormikProps<ExpropriationForm5Model>) => {
     formikProps.resetForm();
   };
 
-  const onGenerate = (formikProps: FormikProps<ExpropriationForm5Model>) => {
+  const onGenerateClick = (formikProps: FormikProps<ExpropriationForm5Model>) => {
     formikProps.setSubmitting(true);
     formikProps.submitForm();
   };
@@ -74,12 +81,12 @@ export const ExpropriationForm5: React.FC<IExpropriationForm5Props> = ({ acquisi
 
           <RightFlexRow>
             <Col xs="auto" className="pr-4">
-              <Button variant="secondary" onClick={() => onCancel(formikProps)}>
+              <Button variant="secondary" onClick={() => onCancelClick(formikProps)}>
                 Cancel
               </Button>
             </Col>
             <Col xs="auto">
-              <Button onClick={() => onGenerate(formikProps)}>Generate</Button>
+              <Button onClick={() => onGenerateClick(formikProps)}>Generate</Button>
             </Col>
           </RightFlexRow>
         </React.Fragment>

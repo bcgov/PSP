@@ -1,21 +1,11 @@
-import { mockAcquisitionFileResponse } from '@/mocks/index.mock';
-import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
+import { getMockExpropriationFile } from '@/mocks/index.mock';
+import { EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import {
   ExpropriationTabContainerView,
   IExpropriationTabContainerViewProps,
 } from './ExpropriationTabContainerView';
-
-function getMockExpropriationFile(
-  fileType: string = EnumAcquisitionFileType.SECTN6,
-): Api_AcquisitionFile {
-  const mockAcquisitionFile = mockAcquisitionFileResponse();
-  mockAcquisitionFile.acquisitionTypeCode = {
-    id: fileType,
-  };
-  return mockAcquisitionFile;
-}
 
 describe('Expropriation Tab Container View', () => {
   const setup = async (
