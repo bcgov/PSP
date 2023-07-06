@@ -46,8 +46,10 @@ export interface IBaseAddress {
   regionId?: number;
   districtId?: number;
   provinceId?: number;
+  province?: string;
   countryId?: number;
   countryOther?: string;
+  country?: string;
   postal?: string;
 }
 

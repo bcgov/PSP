@@ -65,11 +65,39 @@ const GenerateFormContainer: React.FunctionComponent<
         }
 
         if (intHolders !== undefined) {
-          const intHolderGenLetterModel: LetterRecipientModel[] = intHolders.map(
-            x => new LetterRecipientModel(i++, 'HLDR', Api_GenerateOwner.fromInterestHolder(x), x),
-          );
+          intHolders.map(async holder => {
+            if (holder.personId) {
+              const person = !!holder?.personId
+                ? (await getPersonConcept(holder?.personId))?.data
+                : null;
 
-          generateRecipientsList.push(...intHolderGenLetterModel);
+              if (person) {
+                generateRecipientsList.push(
+                  new LetterRecipientModel(
+                    i++,
+                    'HLDR',
+                    Api_GenerateOwner.fromApiPerson(person),
+                    holder,
+                  ),
+                );
+              }
+            } else if (holder.organizationId) {
+              const org = !!holder?.organizationId
+                ? (await getOrganization(holder?.organizationId))?.data
+                : null;
+
+              if (org) {
+                generateRecipientsList.push(
+                  new LetterRecipientModel(
+                    i++,
+                    'HLDR',
+                    Api_GenerateOwner.fromApiOrganization(org),
+                    holder,
+                  ),
+                );
+              }
+            }
+          });
         }
       },
     );
@@ -94,7 +122,7 @@ const GenerateFormContainer: React.FunctionComponent<
               ? (await getOrganization(solicitor?.organizationId))?.data
               : null;
             if (org) {
-              const orgSolicitorModel = Api_GenerateOwner.fromOrganization(org);
+              const orgSolicitorModel = Api_GenerateOwner.fromApiOrganization(org);
               generateRecipientsList.push(
                 new LetterRecipientModel(i++, 'SLTR', orgSolicitorModel, solicitor),
               );

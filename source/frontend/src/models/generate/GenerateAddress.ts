@@ -1,3 +1,4 @@
+import { IEditableOrganizationAddress } from '@/interfaces/editable-contact';
 import { Api_Address } from '@/models/api/Address';
 export class Api_GenerateAddress {
   line_1: string;
@@ -28,5 +29,30 @@ export class Api_GenerateAddress {
     ]
       .filter(a => !!a)
       .join('\n');
+  }
+
+  public static fromIEditableOrgAddress(model: IEditableOrganizationAddress): Api_GenerateAddress {
+    let add = new Api_GenerateAddress(null);
+    add.line_1 = model.streetAddress1 ?? '';
+    add.line_2 = model.streetAddress2 ?? '';
+    add.line_3 = model.streetAddress3 ?? '';
+    add.city = model.municipality ?? '';
+    add.province = model.province ?? '';
+    add.postal = model.postal ?? '';
+    add.country = model.country ?? '';
+
+    add.address_string = [
+      add.line_1,
+      add.line_2,
+      add.line_3,
+      add.city,
+      add.province,
+      add.postal,
+      add.country,
+    ]
+      .filter(a => !!a)
+      .join('\n');
+
+    return add;
   }
 }
