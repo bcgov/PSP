@@ -101,8 +101,10 @@ namespace Pims.Dal.Keycloak
             {
 
                 user.PimsUserRoles.Clear();
+                user.PimsRegionUsers.Clear();
                 user.IsDisabled = false;
                 user.PimsUserRoles.Add(new Entity.PimsUserRole() { UserId = user.Internal_Id, RoleId = update.RoleId.Value });
+                user.PimsRegionUsers.Add(new Entity.PimsRegionUser() { UserId = user.Internal_Id, RegionCode = update.RegionCode });
                 await AppendToUserAsync(user);
             }
             update.User = user;
