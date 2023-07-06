@@ -55,12 +55,16 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
   /** This is the payments subtable displayed for each term row. */
   const renderPayments = useDeepCompareMemo(
     () => (row: IFormLeaseTerm) => {
+      const matchingTerm = find(leaseForm.terms, term => term.id === row.id);
+      if (!matchingTerm) {
+        throw Error('Could not find matching term');
+      }
       return (
         <PaymentsForm
           onSave={onSavePayment}
           onEdit={onEditPayment}
           onDelete={onDeletePayment}
-          nameSpace={`terms.${leaseForm.terms.indexOf(row)}`}
+          nameSpace={`terms.${leaseForm.terms.indexOf(matchingTerm)}`}
           isExercised={row?.statusTypeCode?.id === LeaseTermStatusTypes.EXERCISED}
           isGstEligible={row.isGstEligible}
           isReceivable={isReceivable}
