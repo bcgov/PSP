@@ -592,6 +592,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 User = eAccessRequest.User,
                 Role = eRole,
                 RoleId = eRole.Id,
+                RegionCode = eAccessRequest.RegionCode,
             };
 
             var accessRequestRepository = helper.GetMock<IAccessRequestRepository>();
@@ -611,8 +612,60 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             var updated = values.First();
             updated.Role.Should().Be(eRole);
+            updated.RegionCode.Should().Be(eAccessRequest.RegionCode);
             updated.AccessRequestStatusTypeCode.Should().Be(AccessRequestStatusTypes.APPROVED);
             updated.User.IsDisabled.Should().BeFalse();
+        }
+
+        [Fact]
+        public async Task UpdateAccessRequestAsync_Approved_RegionUpdate()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AdminUsers);
+            var service = helper.Create<PimsKeycloakService>(user);
+
+            var eAccessRequest = EntityHelper.CreateAccessRequest(1);
+            var eRole = EntityHelper.CreateRole("test-role");
+            eRole.KeycloakGroupId = Guid.NewGuid();
+
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var groups = new string[] { eRole.KeycloakGroupId.ToString() };
+            var kuser = new Pims.Keycloak.Models.UserModel()
+            {
+                Username = eAccessRequest.User.BusinessIdentifierValue,
+                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { "serviceaccount" } } }
+            };
+            keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
+
+            var updatedAccessRequest = new Entity.PimsAccessRequest()
+            {
+                AccessRequestId = eAccessRequest.AccessRequestId,
+                AccessRequestStatusTypeCode = AccessRequestStatusTypes.APPROVED,
+                User = eAccessRequest.User,
+                Role = eRole,
+                RoleId = eRole.Id,
+                RegionCode = 10,
+            };
+
+            var accessRequestRepository = helper.GetMock<IAccessRequestRepository>();
+            var userRepository = helper.GetMock<IUserRepository>();
+            var roleRepository = helper.GetMock<IRoleRepository>();
+
+            var values = new List<Entity.PimsUser>();
+            accessRequestRepository.Setup(m => m.GetById(It.IsAny<long>())).Returns(eAccessRequest);
+            userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(updatedAccessRequest.User);
+            userRepository.Setup(m => m.GetById(It.IsAny<long>())).Returns(updatedAccessRequest.User);
+            userRepository.Setup(m => m.UpdateOnly(Capture.In(values))).Returns(updatedAccessRequest.User);
+            roleRepository.Setup(m => m.Find(It.IsAny<long>())).Returns(updatedAccessRequest.Role);
+            accessRequestRepository.Setup(m => m.Update(It.IsAny<PimsAccessRequest>())).Returns(updatedAccessRequest);
+
+            // Act
+            var response = await service.UpdateAccessRequestAsync(updatedAccessRequest);
+
+            values.Should().HaveCount(1);
+            values.FirstOrDefault().PimsRegionUsers.Should().HaveCount(1);
+            values.FirstOrDefault().PimsRegionUsers.FirstOrDefault(u => u.RegionCode == updatedAccessRequest.RegionCode);
         }
 
         [Fact]

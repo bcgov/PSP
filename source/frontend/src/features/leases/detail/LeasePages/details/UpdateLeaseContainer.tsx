@@ -1,9 +1,9 @@
 import { FormikProps } from 'formik/dist/types';
 import * as React from 'react';
-import { useEffect } from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
 import { useUpdateLease } from '@/features/leases/hooks/useUpdateLease';
@@ -31,6 +31,7 @@ export const UpdateLeaseContainer: React.FunctionComponent<
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
   >('Failed to update Lease File');
+  const { searchMany } = useMapSearch();
 
   const leaseId = lease?.id;
   //TODO: For now we make a duplicate request here for the lease in the newer format. In the future all lease pages will use the new format so this will no longer be necessary.
@@ -59,6 +60,7 @@ export const UpdateLeaseContainer: React.FunctionComponent<
     if (!!updatedLease?.id) {
       formikRef?.current?.resetForm({ values: formikRef?.current?.values });
       await refresh();
+      await searchMany();
       onEdit(false);
     }
   };
