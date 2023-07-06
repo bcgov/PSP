@@ -165,7 +165,12 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
             >
               <p className="mb-0 text-right">{formatMoney(payeeDetails?.preTaxAmount ?? 0)}</p>
             </HeaderField>
-            <HeaderField label="Applicable GST:" labelWidth="8" contentWidth="4" valueTestId="header-tax-amount">
+            <HeaderField
+              label="Applicable GST:"
+              labelWidth="8"
+              contentWidth="4"
+              valueTestId="header-tax-amount"
+            >
               <p className="mb-0 text-right">{formatMoney(payeeDetails?.taxAmount ?? 0)}</p>
             </HeaderField>
             <HeaderField

@@ -141,7 +141,9 @@ const onCancel = jest.fn();
 
 describe('UpdateCompensationRequisition Container component', () => {
   const setup = async (
-    renderOptions: RenderOptions & { props?: Partial<UpdateCompensationRequisitionContainerProps> },
+    renderOptions: RenderOptions & {
+      props?: Partial<UpdateCompensationRequisitionContainerProps>;
+    } = {},
   ) => {
     const component = render(
       <UpdateCompensationRequisitionContainer
@@ -176,7 +178,7 @@ describe('UpdateCompensationRequisition Container component', () => {
   });
 
   it('Renders the underlying form', async () => {
-    const { getByText } = await setup({});
+    const { getByText } = await setup();
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
 
