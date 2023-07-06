@@ -4,10 +4,10 @@ namespace Pims.Api.Services
 {
     public interface ISecurityDepositReturnService
     {
-        PimsLease AddLeaseDepositReturn(long leaseId, long leaseRowVersion, PimsSecurityDepositReturn deposit);
+        PimsSecurityDepositReturn AddLeaseDepositReturn(long leaseId, PimsSecurityDepositReturn deposit);
 
-        PimsLease UpdateLeaseDepositReturn(long leaseId, long leaseRowVersion, PimsSecurityDepositReturn deposit);
+        PimsSecurityDepositReturn UpdateLeaseDepositReturn(long leaseId, PimsSecurityDepositReturn deposit);
 
-        PimsLease DeleteLeaseDepositReturn(long leaseId, long leaseRowVersion, PimsSecurityDepositReturn deposit);
+        bool DeleteLeaseDepositReturn(long leaseId, PimsSecurityDepositReturn deposit);
     }
 }

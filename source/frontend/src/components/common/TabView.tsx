@@ -15,9 +15,6 @@ const TabView: React.FunctionComponent<
 };
 
 const StyledTabWrapper = styled.div`
-  .nav-tabs {
-    height: 2.4rem;
-  }
   .tab-content {
     .tab-pane {
       position: relative;

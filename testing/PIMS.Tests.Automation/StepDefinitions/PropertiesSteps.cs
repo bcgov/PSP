@@ -15,8 +15,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private PropertyInformation propertyInformation;
         private readonly GenericSteps genericSteps;
 
-        //private readonly string userName = "TRANPSP1";
-        private readonly string userName = "sutairak";
+        private readonly string userName = "TRANPSP1";
 
         private Property property;
         private SearchProperty searchProperty;
@@ -151,26 +150,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.VerifyPropertyDetailsView();
 
         }
-
-        //[StepDefinition(@"I update a Property details from row number (.*)")]
-        //public void UpdatePropertyDetailsFromFile(int rowNumber)
-        //{
-        //    /* TEST COVERAGE:  */
-
-        //    //Navigate to Property Information Tab
-        //    propertyInformation.NavigatePropertyDetailsTab();
-
-        //    //Click on the Edit Property Information Button
-        //    //propertyInformation.EditPropertyInfoResearchBttn();
-        //    propertyInformation.EditPropertyInfoBttn();
-
-        //    //Insert some changes
-        //    PopulateProperty(rowNumber);
-        //    propertyInformation.UpdatePropertyDetails(property);
-
-        //    //Save changes
-        //    propertyInformation.SavePropertyDetails();
-        //}
 
         [StepDefinition(@"LTSA Pop-up Information validation is successful")]
         public void ValidateLTSAPopUp()

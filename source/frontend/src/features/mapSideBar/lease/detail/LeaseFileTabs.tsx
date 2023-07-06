@@ -40,6 +40,8 @@ export const LeaseFileTabs: React.FC<ILeaseFileTabsProps> = ({
   return (
     <TabView
       defaultActiveKey={defaultTabKey}
+      mountOnEnter
+      unmountOnExit
       activeKey={activeTab}
       onSelect={(eventKey: string | null) => {
         const tab = Object.values(LeaseFileTabNames).find(value => value === eventKey);

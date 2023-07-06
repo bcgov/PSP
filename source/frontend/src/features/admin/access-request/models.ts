@@ -3,7 +3,7 @@ import { UserTypes } from '@/constants/index';
 import { Api_AccessRequest } from '@/models/api/AccessRequest';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { getPreferredContactMethodValue } from '@/utils/contactMethodUtil';
-import { fromTypeCode, stringToNull, toTypeCode } from '@/utils/formUtils';
+import { fromTypeCode, stringToUndefined, toTypeCode } from '@/utils/formUtils';
 
 export class FormAccessRequest {
   public id: NumberFieldValue;
@@ -56,9 +56,9 @@ export class FormAccessRequest {
 
   public toApi(): Api_AccessRequest {
     return {
-      id: stringToNull(this.id),
-      userId: stringToNull(this.userId),
-      roleId: stringToNull(this.roleId),
+      id: stringToUndefined(this.id),
+      userId: stringToUndefined(this.userId),
+      roleId: stringToUndefined(this.roleId),
       note: this.note,
       accessRequestStatusTypeCode: toTypeCode(this.accessRequestStatusTypeCodeId),
       regionCode: this.regionCodeId ? toTypeCode<number>(this.regionCodeId) : undefined,

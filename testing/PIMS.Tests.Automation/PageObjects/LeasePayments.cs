@@ -181,6 +181,9 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(licensePaymentMethodSelect, payment.PaymentMethod);
 
             webDriver.FindElement(licensePaymentAmountReceivedInput).SendKeys(payment.PaymentTotalReceived);
+            webDriver.FindElement(licensePaymentAmountReceivedInput).Click();
+            webDriver.FindElement(licensePaymentExpPaymentInput).Click();
+            webDriver.FindElement(licensePaymentGSTInput).Click();
 
             ButtonElement("Save payment");
 

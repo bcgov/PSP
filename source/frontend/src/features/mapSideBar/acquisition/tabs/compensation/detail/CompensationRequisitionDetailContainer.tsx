@@ -12,7 +12,6 @@ export interface CompensationRequisitionDetailContainerProps {
   compensation: Api_CompensationRequisition;
   acquisitionFile: Api_AcquisitionFile;
   clientConstant: string;
-  gstConstant: number;
   loading: boolean;
   setEditMode: (editMode: boolean) => void;
   View: React.FunctionComponent<React.PropsWithChildren<CompensationRequisitionDetailViewProps>>;
@@ -20,15 +19,7 @@ export interface CompensationRequisitionDetailContainerProps {
 
 export const CompensationRequisitionDetailContainer: React.FunctionComponent<
   React.PropsWithChildren<CompensationRequisitionDetailContainerProps>
-> = ({
-  compensation,
-  setEditMode,
-  View,
-  clientConstant,
-  acquisitionFile,
-  gstConstant,
-  loading,
-}) => {
+> = ({ compensation, setEditMode, View, clientConstant, acquisitionFile, loading }) => {
   const onGenerate = useGenerateH120();
   const [compensationPayee, setCompensationPayee] = useState<Api_CompensationPayee | undefined>();
   const {
@@ -60,7 +51,6 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
       acqFileProduct={acquisitionFile?.product}
       setEditMode={setEditMode}
       clientConstant={clientConstant}
-      gstConstant={gstConstant}
       onGenerate={onGenerate}
     ></View>
   ) : null;

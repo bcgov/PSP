@@ -5,6 +5,7 @@ export * from './DisplayError';
 export * from './FastCurrencyInput';
 export * from './FastDatePicker';
 export * from './Form';
+export * from './FormItem';
 export * from './Input';
 export * from './InputGroup';
 export * from './Multiselect';

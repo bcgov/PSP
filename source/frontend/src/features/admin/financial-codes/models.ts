@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 import { Api_FinancialCode } from '@/models/api/FinancialCode';
-import { stringToNull } from '@/utils/formUtils';
+import { stringToUndefined } from '@/utils/formUtils';
 
 export class FinancialCodeForm {
   id?: number;
@@ -22,7 +22,7 @@ export class FinancialCodeForm {
       description: this.description,
       displayOrder: this.displayOrder !== undefined ? Number(this.displayOrder) : undefined,
       effectiveDate: this.effectiveDate,
-      expiryDate: stringToNull(this.expiryDate),
+      expiryDate: stringToUndefined(this.expiryDate),
     };
   }
 

@@ -1,27 +1,29 @@
 import { Claims } from '@/constants/index';
 import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import { EditFormType } from '../EditFormNames';
 import AcquisitionMenu, { IAcquisitionMenuProps } from './AcquisitionMenu';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
 
 const onChange = jest.fn();
-const setContainerState = jest.fn();
+const onShowPropertySelector = jest.fn();
 
 const testData = ['one', 'two', 'three'];
 
 describe('AcquisitionMenu component', () => {
   // render component under test
-  const setup = (props: IAcquisitionMenuProps, renderOptions: RenderOptions = {}) => {
+  const setup = (
+    props: Omit<IAcquisitionMenuProps, 'onChange' | 'onShowPropertySelector'>,
+    renderOptions: RenderOptions = {},
+  ) => {
     const utils = render(
       <AcquisitionMenu
         acquisitionFileId={props.acquisitionFileId}
         selectedIndex={props.selectedIndex}
         items={props.items}
-        onChange={props.onChange}
-        setContainerState={props.setContainerState}
+        onChange={onChange}
+        onShowPropertySelector={onShowPropertySelector}
       />,
       {
         useMockAuthentication: true,
@@ -42,8 +44,6 @@ describe('AcquisitionMenu component', () => {
       acquisitionFileId: 1,
       items: testData,
       selectedIndex: 0,
-      onChange,
-      setContainerState,
     });
     expect(asFragment()).toMatchSnapshot();
   });
@@ -53,8 +53,6 @@ describe('AcquisitionMenu component', () => {
       acquisitionFileId: 1,
       items: testData,
       selectedIndex: 0,
-      onChange,
-      setContainerState,
     });
 
     expect(getByText('one')).toBeVisible();
@@ -67,8 +65,6 @@ describe('AcquisitionMenu component', () => {
       acquisitionFileId: 1,
       items: testData,
       selectedIndex: 1,
-      onChange,
-      setContainerState,
     });
 
     expect(getByTestId('menu-item-row-0')).not.toHaveClass('selected');
@@ -81,8 +77,6 @@ describe('AcquisitionMenu component', () => {
       acquisitionFileId: 1,
       items: testData,
       selectedIndex: 1,
-      onChange,
-      setContainerState,
     });
 
     const lastItem = getByText('three');
@@ -97,8 +91,6 @@ describe('AcquisitionMenu component', () => {
         acquisitionFileId: 1,
         items: testData,
         selectedIndex: 1,
-        onChange,
-        setContainerState,
       },
       { claims: [Claims.ACQUISITION_EDIT] },
     );
@@ -108,10 +100,7 @@ describe('AcquisitionMenu component', () => {
 
     userEvent.click(button);
 
-    expect(setContainerState).toHaveBeenCalledWith({
-      isEditing: true,
-      activeEditForm: EditFormType.PROPERTY_SELECTOR,
-    });
+    expect(onShowPropertySelector).toHaveBeenCalled();
   });
 
   it(`doesn't render the edit button for users without edit permissions`, () => {
@@ -120,8 +109,6 @@ describe('AcquisitionMenu component', () => {
         acquisitionFileId: 1,
         items: testData,
         selectedIndex: 1,
-        onChange,
-        setContainerState,
       },
       { claims: [Claims.ACQUISITION_VIEW] }, // no edit permissions, just view.
     );

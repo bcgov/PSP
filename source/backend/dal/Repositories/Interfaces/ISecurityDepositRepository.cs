@@ -16,6 +16,6 @@ namespace Pims.Dal.Repositories
 
         PimsSecurityDeposit Update(PimsSecurityDeposit securityDeposit);
 
-        void Delete(long id);
+        bool Delete(long id);
     }
 }

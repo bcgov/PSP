@@ -7,7 +7,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - Primary key to identify Security Deposit Return.
         /// </summary>
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         /// get/set - Foreign key to identify the parent Security Deposit.

@@ -1,9 +1,11 @@
+import { useContext } from 'react';
+
 import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
-import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 
 const DocumentsPage: React.FunctionComponent = () => {
-  const { lease } = useLeaseDetail();
+  const { lease } = useContext(LeaseStateContext);
   return (
     <>
       <DocumentListContainer

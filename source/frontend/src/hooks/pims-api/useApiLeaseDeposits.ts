@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { ILease } from '@/interfaces';
-import { IParentConcurrencyGuard } from '@/interfaces/IParentConcurrencyGuard';
 import { Api_SecurityDeposit } from '@/models/api/SecurityDeposit';
 
 import useAxiosApi from './useApi';
@@ -15,14 +13,21 @@ export const useApiLeaseDeposits = () => {
 
   return React.useMemo(
     () => ({
-      deleteLeaseDeposit: (request: IParentConcurrencyGuard<Api_SecurityDeposit>) =>
-        api.delete<ILease>(`/leases/${request.parentId}/deposits`, { data: request }),
-      putLeaseDeposit: (request: IParentConcurrencyGuard<Api_SecurityDeposit>) =>
-        api.put<ILease>(`/leases/${request.parentId}/deposits/${request.payload.id}`, request),
-      putLeaseDepositNote: (request: IParentConcurrencyGuard<{ note: string }>) =>
-        api.put<ILease>(`/leases/${request.parentId}/deposits/note`, request),
-      postLeaseDeposit: (request: IParentConcurrencyGuard<Api_SecurityDeposit>) =>
-        api.post<ILease>(`/leases/${request.parentId}/deposits`, request),
+      getLeaseDeposits: (leaseId: number) =>
+        api.get<Api_SecurityDeposit[]>(`/leases/${leaseId}/deposits`),
+      deleteLeaseDeposit: (leaseId: number, securityDeposit: Api_SecurityDeposit) =>
+        api.delete<void>(`/leases/${leaseId}/deposits/${securityDeposit.id}`, {
+          data: securityDeposit,
+        }),
+      putLeaseDeposit: (leaseId: number, securityDeposit: Api_SecurityDeposit) =>
+        api.put<Api_SecurityDeposit>(
+          `/leases/${leaseId}/deposits/${securityDeposit.id}`,
+          securityDeposit,
+        ),
+      putLeaseDepositNote: (leaseId: number, note: string) =>
+        api.put<void>(`/leases/${leaseId}/deposits/note`, { note: note }),
+      postLeaseDeposit: (leaseId: number, securityDeposit: Api_SecurityDeposit) =>
+        api.post<Api_SecurityDeposit>(`/leases/${leaseId}/deposits`, securityDeposit),
     }),
     [api],
   );

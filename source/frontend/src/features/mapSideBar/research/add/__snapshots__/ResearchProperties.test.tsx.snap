@@ -221,7 +221,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
 }
 
 .c4 .nav-tabs {
-  height: 2.4rem;
+  height: auto;
 }
 
 .c4 .nav-item {
@@ -299,10 +299,6 @@ exports[`ResearchProperties component renders as expected when provided no prope
 
 .c2 {
   height: 100%;
-}
-
-.c2 .nav-tabs {
-  height: 2.4rem;
 }
 
 .c2 .tab-content {

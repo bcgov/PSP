@@ -203,7 +203,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
 }
 
 .c1 .nav-tabs {
-  height: 2.4rem;
+  height: auto;
 }
 
 .c1 .nav-item {
@@ -238,10 +238,6 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
 
 .c0 {
   height: 100%;
-}
-
-.c0 .nav-tabs {
-  height: 2.4rem;
 }
 
 .c0 .tab-content {

@@ -10,7 +10,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { StyledAddButton } from '@/components/common/styles';
-import { Claims } from '@/constants';
+import { Claims, Roles } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
@@ -26,7 +26,6 @@ export interface CompensationRequisitionDetailViewProps {
   acqFileProject?: Api_Project;
   acqFileProduct?: Api_Product | undefined;
   clientConstant: string;
-  gstConstant: number | undefined;
   loading: boolean;
   setEditMode: (editMode: boolean) => void;
   onGenerate: (compensation: Api_CompensationRequisition) => void;
@@ -56,7 +55,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   setEditMode,
   onGenerate,
 }) => {
-  const { hasClaim } = useKeycloakWrapper();
+  const { hasClaim, hasRole } = useKeycloakWrapper();
   const getPayeeDetails = (
     compensationPayee: Api_CompensationPayee | null | undefined,
   ): PayeeViewDetails | null => {
@@ -120,27 +119,66 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
   const payeeDetails = getPayeeDetails(compensationPayee);
 
+  const userCanEditCompensationReq = (): boolean => {
+    if (compensation.isDraft && hasClaim(Claims.COMPENSATION_REQUISITION_EDIT)) {
+      return true;
+    }
+
+    if (!compensation.isDraft && hasRole(Roles.SYSTEM_ADMINISTRATOR)) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const editButtonBlock = (
+    <EditButton
+      title="Edit compensation requisition"
+      onClick={() => {
+        setEditMode(true);
+      }}
+    />
+  );
   return (
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
       <Section>
         <StyledRow className="no-gutters">
           <Col xs="6">
-            <HeaderField label="Client:" labelWidth="8" valueTestId={'compensation-client'}>
+            <HeaderField label="Client:" labelWidth="8" valueTestId="compensation-client">
               {clientConstant}
             </HeaderField>
-            <HeaderField label="Requisition number:" labelWidth="8">
+            <HeaderField
+              label="Requisition number:"
+              labelWidth="8"
+              valueTestId="compensation-number"
+            >
               {compensation.isDraft ? 'Draft' : compensation.id}
             </HeaderField>
           </Col>
           <Col xs="6">
-            <HeaderField label="Compensation amount:" labelWidth="8" contentWidth="4">
+            <HeaderField
+              label="Compensation amount:"
+              labelWidth="8"
+              contentWidth="4"
+              valueTestId="header-pretax-amount"
+            >
               <p className="mb-0 text-right">{formatMoney(payeeDetails?.preTaxAmount ?? 0)}</p>
             </HeaderField>
-            <HeaderField label="Applicable GST:" labelWidth="8" contentWidth="4">
+            <HeaderField
+              label="Applicable GST:"
+              labelWidth="8"
+              contentWidth="4"
+              valueTestId="header-tax-amount"
+            >
               <p className="mb-0 text-right">{formatMoney(payeeDetails?.taxAmount ?? 0)}</p>
             </HeaderField>
-            <HeaderField label="Total cheque amount:" labelWidth="8" contentWidth="4">
+            <HeaderField
+              label="Total cheque amount:"
+              labelWidth="8"
+              contentWidth="4"
+              valueTestId="header-total-amount"
+            >
               <p className="mb-0 text-right">{formatMoney(payeeDetails?.totalAmount ?? 0)}</p>
             </HeaderField>
           </Col>
@@ -152,14 +190,8 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           <FlexDiv>
             Requisition Details
             <RightFlexDiv>
-              {setEditMode !== undefined && hasClaim(Claims.COMPENSATION_REQUISITION_EDIT) && (
-                <EditButton
-                  title="Edit compensation requisition"
-                  onClick={() => {
-                    setEditMode(true);
-                  }}
-                />
-              )}
+              {setEditMode !== undefined && userCanEditCompensationReq() && editButtonBlock}
+
               <StyledAddButton
                 onClick={() => {
                   onGenerate(compensation);
@@ -172,7 +204,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           </FlexDiv>
         }
       >
-        <SectionField label="Status" labelWidth="4">
+        <SectionField label="Status" labelWidth="4" data-testid="compensation-status">
           {compensation.isDraft ? 'Draft' : 'Final'}
         </SectionField>
         <SectionField label="Agreement date" labelWidth="4">

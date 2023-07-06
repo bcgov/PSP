@@ -9,7 +9,6 @@ import {
 } from '@/constants/index';
 import { IAddress, IOrganization } from '@/interfaces';
 
-import { ILease } from './ILease';
 import IPropertySurplus from './IPropertySurplus';
 import ITypeCode from './ITypeCode';
 
@@ -64,7 +63,6 @@ export interface IProperty {
   updatedByEmail?: string;
   updatedByName?: string;
   rowVersion?: number;
-  leases?: ILease[];
 }
 
 export interface IFormProperty

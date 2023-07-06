@@ -181,7 +181,7 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
 }
 
 .c9 .nav-tabs {
-  height: 2.4rem;
+  height: auto;
 }
 
 .c9 .nav-item {
@@ -213,21 +213,6 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
   text-decoration: none;
 }
 
-.c4.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c3 {
-  font-weight: bold;
-}
-
-.c22 {
-  background-color: none;
-}
-
 .c23.c23.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
@@ -249,6 +234,19 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
   opacity: unset;
 }
 
+.c22 {
+  background: none;
+  position: relative;
+  border-radius: 0.3rem;
+  padding: 0.6rem;
+  padding-right: 2.1rem;
+  border: solid 0.1rem;
+}
+
+.c22.is-invalid {
+  border: solid 0.1rem;
+}
+
 .c2 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -261,6 +259,17 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
 }
 
 .c12:hover {
@@ -290,10 +299,6 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
 
 .c7 {
   height: 100%;
-}
-
-.c7 .nav-tabs {
-  height: 2.4rem;
 }
 
 .c7 .tab-content {

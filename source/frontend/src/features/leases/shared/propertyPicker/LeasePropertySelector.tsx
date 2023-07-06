@@ -193,7 +193,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
                   <Col>
                     <MapSelectorContainer
                       addSelectedProperties={processAddedProperties}
-                      modifiedProperties={values.getPropertiesAsForm()}
+                      modifiedProperties={LeaseFormModel.getPropertiesAsForm(values)}
                     />
                   </Col>
                 </Row>

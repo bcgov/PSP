@@ -6,8 +6,8 @@ import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { defaultLease } from '@/interfaces';
 import * as MOCK from '@/mocks/data.mock';
+import { defaultApiLease } from '@/models/api/Lease';
 
 import { useUpdateLease } from './useUpdateLease';
 
@@ -33,7 +33,7 @@ const setup = (values?: any) => {
   const { result } = renderHook(useUpdateLease, { wrapper: getWrapper(getStore(values)) });
   return result.current;
 };
-const defaultLeaseWithId = { ...defaultLease, id: 1 };
+const defaultLeaseWithId = { ...defaultApiLease, id: 1 };
 
 describe('useUpdateLease functions', () => {
   afterAll(() => {
@@ -43,8 +43,8 @@ describe('useUpdateLease functions', () => {
     it('Request successful, dispatches success with correct response', async () => {
       mockAxios.onPut().reply(200, defaultLeaseWithId);
 
-      const { updateLease } = setup();
-      const leaseResponse = await updateLease.execute(defaultLeaseWithId, 'tenants', []);
+      const { updateApiLease } = setup();
+      const leaseResponse = await updateApiLease.execute(defaultLeaseWithId, []);
 
       expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
@@ -54,8 +54,8 @@ describe('useUpdateLease functions', () => {
     it('400 Request failure, dispatches error with correct response', async () => {
       mockAxios.onPut().reply(400, MOCK.ERROR);
 
-      const { updateLease } = setup();
-      expect(() => updateLease.execute(defaultLeaseWithId, 'tenants', [])).rejects.toThrow();
+      const { updateApiLease } = setup();
+      expect(() => updateApiLease.execute(defaultLeaseWithId, [])).rejects.toThrow();
     });
   });
 });

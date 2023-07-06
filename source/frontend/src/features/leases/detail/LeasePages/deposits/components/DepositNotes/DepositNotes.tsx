@@ -8,11 +8,10 @@ import { Section } from '@/components/common/Section/Section';
 import { Claims } from '@/constants/index';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { ILease } from '@/interfaces';
 
 export interface IDepositNotesProps {
   disabled?: boolean;
-  onSave: (notes: string) => Promise<ILease | undefined>;
+  onSave: (notes: string) => Promise<void>;
   onEdit: () => void;
   onCancel: () => void;
 }
