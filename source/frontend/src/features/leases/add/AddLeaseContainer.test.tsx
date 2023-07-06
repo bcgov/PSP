@@ -5,6 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { Api_Lease } from '@/models/api/Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -21,6 +22,27 @@ jest.mock('@react-keycloak/web');
     userInfo: {
       roles: [],
     },
+  },
+});
+
+const retrieveUserInfo = jest.fn();
+jest.mock('@/hooks/repositories/useUserInfoRepository');
+(useUserInfoRepository as jest.Mock).mockReturnValue({
+  retrieveUserInfo,
+  retrieveUserInfoLoading: true,
+  retrieveUserInfoResponse: {
+    userRegions: [
+      {
+        id: 1,
+        userId: 5,
+        regionCode: 1,
+      },
+      {
+        id: 2,
+        userId: 5,
+        regionCode: 2,
+      },
+    ],
   },
 });
 

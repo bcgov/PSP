@@ -7,7 +7,7 @@ import { Api_Property } from '@/models/api/Property';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
-interface IInterestHolderPropertiesProps {
+interface IFilePropertiesTableProps {
   fileProperties: Api_PropertyFile[];
   setSelectedFileProperties: (properties: Api_PropertyFile[]) => void;
   selectedFileProperties: Api_PropertyFile[];
@@ -28,25 +28,28 @@ const columns: ColumnWithProps<Api_PropertyFile>[] = [
   },
 ];
 
-const InterestHolderPropertiesTable: React.FunctionComponent<
-  React.PropsWithChildren<IInterestHolderPropertiesProps>
-> = ({ fileProperties, selectedFileProperties, setSelectedFileProperties, disabledSelection }) => {
+const FilePropertiesTable: React.FunctionComponent<IFilePropertiesTableProps> = ({
+  fileProperties,
+  selectedFileProperties,
+  setSelectedFileProperties,
+  disabledSelection,
+}) => {
   return (
     <>
       <Table<Api_PropertyFile>
-        name="selectableProperties"
-        columns={columns}
-        manualPagination
+        name="selectableFileProperties"
+        hideHeaders
         hideToolbar
+        manualPagination
         showSelectedRowCount
+        columns={columns}
         data={fileProperties}
         setSelectedRows={setSelectedFileProperties}
         selectedRows={selectedFileProperties}
         disableSelection={disabledSelection}
-        hideHeaders
       />
     </>
   );
 };
 
-export default InterestHolderPropertiesTable;
+export default FilePropertiesTable;

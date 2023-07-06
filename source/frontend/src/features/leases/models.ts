@@ -104,10 +104,9 @@ export class LeaseFormModel {
     leaseDetail.otherProgramTypeDescription = apiModel?.otherProgramType || '';
     leaseDetail.otherPurposeTypeDescription = apiModel?.otherPurposeType || '';
     leaseDetail.otherLeaseTypeDescription = apiModel?.otherType || '';
-    leaseDetail.project =
-      apiModel?.project !== undefined
-        ? { id: apiModel?.project?.id || 0, text: apiModel?.project?.description || '' }
-        : undefined;
+    leaseDetail.project = !!apiModel?.project
+      ? { id: apiModel?.project?.id || 0, text: apiModel?.project?.description || '' }
+      : undefined;
     leaseDetail.apiProject = apiModel?.project || null;
 
     const sortedConsultations = apiModel?.consultations?.sort(

@@ -1,35 +1,93 @@
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
-import { EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
+import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 
-export interface IExpropriationTabcontainerViewProps {
+import ExpropriationForm1 from './form1/ExpropriationForm1';
+import ExpropriationForm5 from './form5/ExpropriationForm5';
+import ExpropriationForm9 from './form9/ExpropriationForm9';
+import {
+  ExpropriationForm1Model,
+  ExpropriationForm5Model,
+  ExpropriationForm9Model,
+} from './models';
+
+export interface IExpropriationTabContainerViewProps {
   loading: boolean;
-  acquisitionFileTypeCode: string;
+  acquisitionFile: Api_AcquisitionFile;
 }
 
-export const ExpropriationTabcontainerView: React.FunctionComponent<
-  IExpropriationTabcontainerViewProps
-> = ({ loading, acquisitionFileTypeCode }) => {
-  // TODO : Load created Forms
+export const ExpropriationTabContainerView: React.FunctionComponent<
+  IExpropriationTabContainerViewProps
+> = ({ loading, acquisitionFile }) => {
+  // TODO: Load Form 8 into this container
+  const acquisitionFileTypeCode = acquisitionFile.acquisitionTypeCode?.id;
+
+  // TODO: submit json values to Generate endpoint
+  const onGenerateForm1 = async (values: ExpropriationForm1Model) => {
+    alert(JSON.stringify(values, null, 4));
+  };
+
+  const onGenerateForm5 = async (values: ExpropriationForm5Model) => {
+    alert(JSON.stringify(values, null, 4));
+  };
+
+  const onGenerateForm9 = async (values: ExpropriationForm9Model) => {
+    alert(JSON.stringify(values, null, 4));
+  };
 
   return (
     <>
       <LoadingBackdrop show={loading} />
       {acquisitionFileTypeCode === EnumAcquisitionFileType.SECTN6 && (
-        <Section header="Form 1 - Notice of Expropiation" data-testid="form-1-section"></Section>
+        <Section
+          isCollapsable
+          initiallyExpanded
+          header="Form 1 - Notice of Expropriation"
+          data-testid="form-1-section"
+        >
+          <ExpropriationForm1
+            acquisitionFile={acquisitionFile}
+            onGenerate={onGenerateForm1}
+          ></ExpropriationForm1>
+        </Section>
       )}
 
       {acquisitionFileTypeCode === EnumAcquisitionFileType.SECTN6 && (
-        <Section header="Form 5 - Certificate of Approval" data-testid="form-5-section"></Section>
+        <Section
+          isCollapsable
+          initiallyExpanded={false}
+          header="Form 5 - Certificate of Approval"
+          data-testid="form-5-section"
+        >
+          <ExpropriationForm5
+            acquisitionFile={acquisitionFile}
+            onGenerate={onGenerateForm5}
+          ></ExpropriationForm5>
+        </Section>
       )}
 
-      <Section header="Form 8 - Notice of Advance Payment" data-testid="form-8-section"></Section>
+      <Section
+        isCollapsable
+        initiallyExpanded={false}
+        header="Form 8 - Notice of Advance Payment"
+        data-testid="form-8-section"
+      ></Section>
 
       {acquisitionFileTypeCode === EnumAcquisitionFileType.SECTN6 && (
-        <Section header="Form 9 - Vesting Notice" data-testid="form-9-section"></Section>
+        <Section
+          isCollapsable
+          initiallyExpanded={false}
+          header="Form 9 - Vesting Notice"
+          data-testid="form-9-section"
+        >
+          <ExpropriationForm9
+            acquisitionFile={acquisitionFile}
+            onGenerate={onGenerateForm9}
+          ></ExpropriationForm9>
+        </Section>
       )}
     </>
   );
 };
 
-export default ExpropriationTabcontainerView;
+export default ExpropriationTabContainerView;
