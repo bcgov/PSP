@@ -17,7 +17,7 @@ import CompensationListContainer from './compensation/list/CompensationListConta
 import CompensationListView from './compensation/list/CompensationListView';
 import AcquisitionDocumentsTab from './documents/AcquisitionDocumentsTab';
 import ExpropriationTabContainer from './expropriation/ExpropriationTabContainer';
-import ExpropriationTabcontainerView from './expropriation/ExpropriationTabContainerView';
+import ExpropriationTabContainerView from './expropriation/ExpropriationTabContainerView';
 import AcquisitionSummaryView from './fileDetails/detail/AcquisitionSummaryView';
 import StakeHolderContainer from './stakeholders/detail/StakeHolderContainer';
 import StakeHolderView from './stakeholders/detail/StakeHolderView';
@@ -144,9 +144,8 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     tabViews.push({
       content: (
         <ExpropriationTabContainer
-          acquisitionFileId={acquisitionFile.id}
-          acquisitionFileTypeCode={acquisitionFile.acquisitionTypeCode?.id}
-          View={ExpropriationTabcontainerView}
+          acquisitionFile={acquisitionFile}
+          View={ExpropriationTabContainerView}
         ></ExpropriationTabContainer>
       ),
       key: FileTabType.EXPROPRIATION,

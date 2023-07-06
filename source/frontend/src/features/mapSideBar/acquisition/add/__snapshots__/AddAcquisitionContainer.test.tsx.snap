@@ -296,21 +296,6 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   width: 100%;
 }
 
-.c7.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c6 {
-  font-weight: bold;
-}
-
-.c25 {
-  background-color: none;
-}
-
 .c26.c26.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
@@ -332,6 +317,19 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   opacity: unset;
 }
 
+.c25 {
+  background: none;
+  position: relative;
+  border-radius: 0.3rem;
+  padding: 0.6rem;
+  padding-right: 2.1rem;
+  border: solid 0.1rem;
+}
+
+.c25.is-invalid {
+  border: solid 0.1rem;
+}
+
 .c5 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -344,6 +342,17 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c7.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c6 {
+  font-weight: bold;
 }
 
 .c15:hover {
