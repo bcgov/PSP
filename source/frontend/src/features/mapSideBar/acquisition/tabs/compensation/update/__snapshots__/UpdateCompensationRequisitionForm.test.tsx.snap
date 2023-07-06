@@ -586,7 +586,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               </label>
             </div>
             <div
-              class="c4 required text-left col-4"
+              class="c4 required text-left col"
             >
               <div
                 class="form-group"
