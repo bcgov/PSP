@@ -86,11 +86,12 @@ export const useMapSearch = () => {
         findByPidTask = fullyAttributedService.findByPid(filter?.PID);
       }
 
-      const pidPinInventoryData = await loadPropertiesTask;
-      const pinFullyAttributedData = await findByPinTask;
-      const pidFullyAttributedData = await findByPidTask;
-
-      if (pidPinInventoryData?.features === undefined) {
+      let pidPinInventoryData:
+        | FeatureCollection<Geometry, PIMS_Property_Location_View2>
+        | undefined;
+      try {
+        pidPinInventoryData = await loadPropertiesTask;
+      } catch (err) {
         setModalContent({
           title: 'Unable to connect to PIMS Inventory',
           message:
@@ -106,6 +107,10 @@ export const useMapSearch = () => {
         });
         setDisplayModal(true);
       }
+      const [pinFullyAttributedData, pidFullyAttributedData] = await Promise.all([
+        findByPinTask,
+        findByPidTask,
+      ]);
 
       // If the property was found on the pims inventory, use that.
       if (pidPinInventoryData?.features && pidPinInventoryData?.features?.length > 0) {
