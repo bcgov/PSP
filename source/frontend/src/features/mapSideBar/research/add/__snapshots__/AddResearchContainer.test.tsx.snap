@@ -250,7 +250,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
 }
 
 .c15 .nav-tabs {
-  height: 2.4rem;
+  height: auto;
 }
 
 .c15 .nav-item {
@@ -380,10 +380,6 @@ exports[`AddResearchContainer component renders as expected 1`] = `
 
 .c13 {
   height: 100%;
-}
-
-.c13 .nav-tabs {
-  height: 2.4rem;
 }
 
 .c13 .tab-content {

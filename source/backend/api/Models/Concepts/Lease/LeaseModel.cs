@@ -1,3 +1,4 @@
+using Pims.Api.Models.Tenant;
 using System;
 using System.Collections.Generic;
 
@@ -161,29 +162,19 @@ namespace Pims.Api.Models.Concepts
         public TypeModel<string> ProgramType { get; set; }
 
         /// <summary>
+        /// get/set - Notes accompanying Lease.
+        /// </summary>
+        public string ReturnNotes { get; set; }
+
+        /// <summary>
         /// get/set - The date this entity assumed responsibility for this lease.
         /// </summary>
         public DateTime? ResponsibilityEffectiveDate { get; set; }
 
         /// <summary>
-        /// get/set - A list of tenant notes.
-        /// </summary>
-        public IEnumerable<string> TenantNotes { get; set; }
-
-        /// <summary>
-        /// get/set - A list of persons tenants associated with this lease.
-        /// </summary>
-        public IEnumerable<PersonModel> Persons { get; set; }
-
-        /// <summary>
-        /// get/set - A list of organization tenants associated with this lease.
-        /// </summary>
-        public IEnumerable<OrganizationModel> Organizations { get; set; }
-
-        /// <summary>
         /// get/set - A list of properties associated with this lease.
         /// </summary>
-        public IEnumerable<Pims.Api.Models.Concepts.PropertyLeaseModel> Properties { get; set; }
+        public IEnumerable<PropertyLeaseModel> Properties { get; set; }
 
         /// <summary>
         /// get/set - A collection of Security Deposits associated to this Lease.
@@ -196,9 +187,9 @@ namespace Pims.Api.Models.Concepts
         public IEnumerable<ConsultationLeaseModel> Consultations { get; set; }
 
         /// <summary>
-        /// get/set - Notes accompanying Lease.
+        /// get/set - A collection of the tenants for this lease.
         /// </summary>
-        public string ReturnNotes { get; set; }
+        public IEnumerable<TenantModel> Tenants { get; set; }
 
         /// <summary>
         /// get/set - Whether this improvement contains a building that is subject to RTA (Residential Tenancy Act).

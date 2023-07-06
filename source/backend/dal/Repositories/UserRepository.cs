@@ -344,6 +344,8 @@ namespace Pims.Dal.Repositories
                 .ThenInclude(r => r.Role)
                 .Include(u => u.Person)
                 .ThenInclude(p => p.PimsContactMethods)
+                .Include(u => u.PimsRegionUsers)
+                    .ThenInclude(ru => ru.RegionCodeNavigation)
                 .AsNoTracking()
                 .SingleOrDefault(u => u.GuidIdentifierValue == keycloakUserId) ?? throw new KeyNotFoundException();
         }

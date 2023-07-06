@@ -174,21 +174,6 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
   line-height: 2rem;
 }
 
-.c5.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c4 {
-  font-weight: bold;
-}
-
-.c6 {
-  background-color: none;
-}
-
 .c8.c8.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
@@ -210,6 +195,19 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
   opacity: unset;
 }
 
+.c6 {
+  background: none;
+  position: relative;
+  border-radius: 0.3rem;
+  padding: 0.6rem;
+  padding-right: 2.1rem;
+  border: solid 0.1rem;
+}
+
+.c6.is-invalid {
+  border: solid 0.1rem;
+}
+
 .c0 {
   padding-top: 1rem;
 }
@@ -228,8 +226,15 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c3 {
-  padding: 0 0.4rem;
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
 }
 
 .c10 {
@@ -239,6 +244,10 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+}
+
+.c3 {
+  padding: 0 0.4rem;
 }
 
 <div
@@ -485,7 +494,7 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
           >
             <div
               class="table"
-              data-testid="selectableProperties"
+              data-testid="selectableFileProperties"
               role="table"
             >
               <div
@@ -823,7 +832,7 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
           >
             <div
               class="table"
-              data-testid="selectableProperties"
+              data-testid="selectableFileProperties"
               role="table"
             >
               <div
@@ -1161,7 +1170,7 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
           >
             <div
               class="table"
-              data-testid="selectableProperties"
+              data-testid="selectableFileProperties"
               role="table"
             >
               <div

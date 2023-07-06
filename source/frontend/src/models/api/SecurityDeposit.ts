@@ -4,23 +4,24 @@ import { Api_Contact } from '@/models/api/Contact';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 
 export interface Api_SecurityDeposit extends Api_ConcurrentVersion {
-  id?: number;
+  id: number | null;
+  leaseId: number | null;
   description: string;
   amountPaid: number;
-  depositDate?: string;
+  depositDate: string;
   depositType: Api_TypeCode<string>;
-  otherTypeDescription?: string;
-  contactHolder?: Api_Contact;
+  otherTypeDescription: string | null;
+  contactHolder: Api_Contact | null;
   depositReturns: Api_SecurityDepositReturn[];
 }
 
 export interface Api_SecurityDepositReturn extends Api_ConcurrentVersion {
-  id?: number;
-  parentDepositId?: number;
-  terminationDate?: string;
-  claimsAgainst?: number;
-  returnAmount?: number;
-  interestPaid?: number;
-  returnDate?: string;
-  contactHolder?: Api_Contact;
+  id: number | null;
+  parentDepositId: number;
+  terminationDate: string;
+  claimsAgainst: number | null;
+  returnAmount: number;
+  interestPaid: number | null;
+  returnDate: string;
+  contactHolder: Api_Contact | null;
 }

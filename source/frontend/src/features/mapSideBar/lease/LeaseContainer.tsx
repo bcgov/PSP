@@ -6,23 +6,22 @@ import * as Yup from 'yup';
 import { ReactComponent as Fence } from '@/assets/images/fence.svg';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { Claims } from '@/constants/claims';
+import { Claims } from '@/constants';
 import { useLeaseDetail } from '@/features/leases';
 import { AddLeaseYupSchema } from '@/features/leases/add/AddLeaseYupSchema';
 import DepositsContainer from '@/features/leases/detail/LeasePages/deposits/DepositsContainer';
 import DetailContainer from '@/features/leases/detail/LeasePages/details/DetailContainer';
 import DocumentsPage from '@/features/leases/detail/LeasePages/documents/DocumentsPage';
-import ImprovementsContainer from '@/features/leases/detail/LeasePages/improvements/ImprovementsContainer';
+import { ImprovementsContainer } from '@/features/leases/detail/LeasePages/improvements/ImprovementsContainer';
 import InsuranceContainer from '@/features/leases/detail/LeasePages/insurance/InsuranceContainer';
 import TermPaymentsContainer from '@/features/leases/detail/LeasePages/payment/TermPaymentsContainer';
 import { TermPaymentsYupSchema } from '@/features/leases/detail/LeasePages/payment/TermPaymentsYupSchema';
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import TenantContainer from '@/features/leases/detail/LeasePages/tenant/TenantContainer';
 import { LeaseFormModel } from '@/features/leases/models';
-import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
-import { IFormLease } from '@/interfaces';
 
 import { SideBarContext } from '../context/sidebarContext';
+import MapSideBarLayout from '../layout/MapSideBarLayout';
 import SidebarFooter from '../shared/SidebarFooter';
 import LeaseHeader from './common/LeaseHeader';
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
@@ -51,7 +50,7 @@ const initialState: LeaseContainerState = {
 export interface LeasePageProps {
   isEditing: boolean;
   onEdit?: (isEditing: boolean) => void;
-  formikRef: React.RefObject<FormikProps<LeaseFormModel | IFormLease>>;
+  formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
 }
 
 export interface ILeasePage {
@@ -131,10 +130,11 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     initialState,
   );
 
-  const formikRef = useRef<FormikProps<LeaseFormModel | IFormLease>>(null);
+  const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
-  const { lease, setLease, refresh } = useLeaseDetail(leaseId);
+  const { lease, setLease, refresh, loading } = useLeaseDetail(leaseId);
+
   const { setFullWidth, setStaleFile, staleFile } = useContext(SideBarContext);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
@@ -157,10 +157,6 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       refreshLease();
     }
   }, [staleFile, refresh, setStaleFile]);
-
-  if (lease === undefined) {
-    return <LoadingBackdrop show={true} parentScreen={true} />;
-  }
 
   const handleCancelConfirm = () => {
     if (formikRef !== undefined) {
@@ -244,6 +240,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
         show
       />
       <StyledFormWrapper>
+        <LoadingBackdrop show={loading} />
         <ViewSelector
           formikRef={formikRef}
           lease={lease}

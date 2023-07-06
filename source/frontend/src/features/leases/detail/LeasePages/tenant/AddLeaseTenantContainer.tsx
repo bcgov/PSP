@@ -1,27 +1,28 @@
 import { FormikProps } from 'formik';
 import { filter, find, orderBy, some } from 'lodash';
-import * as React from 'react';
-import { useContext } from 'react';
-import { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { useUpdateLease } from '@/features/leases/hooks/useUpdateLease';
-import { apiLeaseToFormLease, formLeaseToApiLease } from '@/features/leases/leaseUtils';
+import { LeaseFormModel } from '@/features/leases/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { defaultFormLease, IContactSearchResult, IFormLease, ILease } from '@/interfaces';
+import { IContactSearchResult } from '@/interfaces';
+import { Api_Lease } from '@/models/api/Lease';
+import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
 import { Api_Person } from '@/models/api/Person';
 
 import { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
+import { FormTenant } from './models';
 import {
   getOrgsWithNoPrimaryContact,
   IPrimaryContactWarningModalProps,
 } from './PrimaryContactWarningModal';
-import { FormTenant } from './ViewTenantForm';
 
 interface IAddLeaseTenantContainerProps {
-  formikRef: React.RefObject<FormikProps<IFormLease>>;
+  formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
   onEdit?: (isEditing: boolean) => void;
+  tenants: FormTenant[];
   View: React.FunctionComponent<
     React.PropsWithChildren<IAddLeaseTenantFormProps & IPrimaryContactWarningModalProps>
   >;
@@ -29,15 +30,34 @@ interface IAddLeaseTenantContainerProps {
 
 export const AddLeaseTenantContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddLeaseTenantContainerProps>
-> = ({ formikRef, onEdit, children, View }) => {
-  const { lease, setLease } = useContext(LeaseStateContext);
-  const [tenants, setTenants] = useState<FormTenant[]>(apiLeaseToFormLease(lease)?.tenants || []);
+> = ({ formikRef, onEdit, children, View, tenants: initialTenants }) => {
+  const { lease } = useContext(LeaseStateContext);
+  const [tenants, setTenants] = useState<FormTenant[]>(initialTenants);
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>(
-    apiLeaseToFormLease(lease)?.tenants.map(t => t.toContactSearchResult()) || [],
+    tenants.map(t => FormTenant.toContactSearchResult(t)) || [],
   );
   const [showContactManager, setShowContactManager] = React.useState<boolean>(false);
   const [handleSubmit, setHandleSubmit] = useState<Function | undefined>(undefined);
-  const { updateLease } = useUpdateLease();
+  const {
+    updateLeaseTenants,
+    getLeaseTenants: { execute: getLeaseTenants, loading },
+  } = useLeaseTenantRepository();
+  const leaseId = lease?.id;
+  useEffect(() => {
+    const tenantFunc = async () => {
+      const tenants = await getLeaseTenants(leaseId ?? 0);
+      if (tenants !== undefined) {
+        setTenants(tenants.map((t: Api_LeaseTenant) => new FormTenant(t)));
+        setSelectedContacts(
+          tenants.map((t: Api_LeaseTenant) =>
+            FormTenant.toContactSearchResult(new FormTenant(t)),
+          ) || [],
+        );
+      }
+    };
+    tenantFunc();
+  }, [leaseId, getLeaseTenants]);
+
   const { getPersonConcept } = useApiContacts();
   const { execute } = useApiRequestWrapper({
     requestFunction: getPersonConcept,
@@ -78,34 +98,43 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     setTenants([...formTenants, ...matchingExistingTenants]);
   };
 
-  const submit = async (leaseToUpdate: ILease) => {
-    try {
-      const updatedLease = await updateLease.execute(leaseToUpdate, 'tenants', []);
-      if (!!updatedLease?.id) {
-        formikRef?.current?.resetForm({ values: apiLeaseToFormLease(updatedLease) });
-        setLease(updatedLease);
+  const submit = async (leaseToUpdate: Api_Lease) => {
+    if (leaseToUpdate?.id) {
+      try {
+        const updatedTenants = await updateLeaseTenants.execute(
+          leaseToUpdate?.id,
+          leaseToUpdate.tenants,
+        );
+        if (!!updatedTenants) {
+          formikRef?.current?.resetForm({
+            values: LeaseFormModel.fromApi({
+              ...leaseToUpdate,
+              tenants: updatedTenants,
+            }),
+          });
+          onEdit && onEdit(false);
+        }
+      } finally {
+        formikRef?.current?.setSubmitting(false);
       }
-    } finally {
-      formikRef?.current?.setSubmitting(false);
-      onEdit && onEdit(false);
     }
   };
 
-  const onSubmit = async (lease: IFormLease) => {
-    const leaseToUpdate = formLeaseToApiLease(lease);
-    if (getOrgsWithNoPrimaryContact(lease)?.length > 0) {
+  const onSubmit = async (lease: LeaseFormModel) => {
+    const leaseToUpdate = LeaseFormModel.toApi(lease);
+    if (getOrgsWithNoPrimaryContact(lease.tenants)?.length > 0) {
       setHandleSubmit(() => () => submit(leaseToUpdate));
     } else {
       submit(leaseToUpdate);
     }
   };
 
-  return (
+  return lease ? (
     <View
-      initialValues={{ ...defaultFormLease, ...apiLeaseToFormLease(lease as ILease) }}
+      initialValues={{ ...new LeaseFormModel(), ...LeaseFormModel.fromApi(lease) }}
       selectedContacts={selectedContacts}
-      setTenants={setSelectedTenantsWithPersonData}
-      tenants={tenants}
+      setSelectedTenants={setSelectedTenantsWithPersonData}
+      selectedTenants={tenants}
       setSelectedContacts={setSelectedContacts}
       onSubmit={onSubmit}
       formikRef={formikRef}
@@ -113,10 +142,12 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
       setShowContactManager={setShowContactManager}
       saveCallback={handleSubmit}
       onCancel={() => setHandleSubmit(undefined)}
-      lease={formikRef?.current?.values}
+      loading={loading}
     >
       {children}
     </View>
+  ) : (
+    <></>
   );
 };
 // get a unique list of all tenant organization person-ids that are associated to organization tenants.
