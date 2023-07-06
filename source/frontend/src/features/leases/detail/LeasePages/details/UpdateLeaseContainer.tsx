@@ -60,7 +60,6 @@ export const UpdateLeaseContainer: React.FunctionComponent<
     }
   };
 
-  //const initialValues = LeaseFormModel.fromApi(apiLease);
   return (
     <>
       <LoadingBackdrop show={loading} parentScreen></LoadingBackdrop>
