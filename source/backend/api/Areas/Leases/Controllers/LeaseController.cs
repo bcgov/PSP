@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Extensions;
+using Pims.Core.Json;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -25,6 +29,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #region Variables
         private readonly ILeaseService _leaseService;
         private readonly IMapper _mapper;
+        private readonly ILogger<LeaseController> _logger;
         #endregion
 
         #region Constructors
@@ -34,11 +39,13 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// </summary>
         /// <param name="leaseService"></param>
         /// <param name="mapper"></param>
+        /// <param name="logger"></param>
         ///
-        public LeaseController(ILeaseService leaseService, IMapper mapper)
+        public LeaseController(ILeaseService leaseService, IMapper mapper, ILogger<LeaseController> logger)
         {
             _mapper = mapper;
             _leaseService = leaseService;
+            _logger = logger;
         }
         #endregion
 
@@ -53,8 +60,16 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Api.Models.Concepts.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetLease(int id)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LeaseController),
+                nameof(GetLease),
+                User.GetUsername(),
+                DateTime.Now);
+
             var lease = _leaseService.GetById(id);
             var mapped = _mapper.Map<Api.Models.Concepts.LeaseModel>(lease);
             return new JsonResult(mapped);
@@ -69,8 +84,16 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Api.Models.Concepts.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult AddLease(Api.Models.Concepts.LeaseModel leaseModel, [FromQuery] string[] userOverrideCodes)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LeaseController),
+                nameof(AddLease),
+                User.GetUsername(),
+                DateTime.Now);
+
             var leaseEntity = _mapper.Map<Pims.Dal.Entities.PimsLease>(leaseModel);
             var userOverrides = userOverrideCodes.Select(x => UserOverrideCode.Parse(x));
             var lease = _leaseService.Add(leaseEntity, userOverrides);
@@ -87,8 +110,16 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Api.Models.Concepts.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateLease(Api.Models.Concepts.LeaseModel leaseModel, [FromQuery] string[] userOverrideCodes)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LeaseController),
+                nameof(UpdateLease),
+                User.GetUsername(),
+                DateTime.Now);
+
             var leaseEntity = _mapper.Map<Pims.Dal.Entities.PimsLease>(leaseModel);
             var userOverrides = userOverrideCodes.Select(x => UserOverrideCode.Parse(x));
             var updatedLease = _leaseService.Update(leaseEntity, userOverrides);

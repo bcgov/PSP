@@ -48,7 +48,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, bool loadPayments = false)
+        public IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
@@ -57,7 +57,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            var query = this.Context.GenerateLeaseQuery(filter, loadPayments);
+            var query = this.Context.GenerateLeaseQuery(filter, regionCodes, loadPayments);
 
             var leases = query.OrderBy(l => l.LeaseId).ToArray();
 
@@ -234,7 +234,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public Paged<PimsLease> GetPage(LeaseFilter filter)
+        public Paged<PimsLease> GetPage(LeaseFilter filter, HashSet<short> regions)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
@@ -244,7 +244,7 @@ namespace Pims.Dal.Repositories
             }
 
             var skip = (filter.Page - 1) * filter.Quantity;
-            var query = this.Context.GenerateLeaseQuery(filter);
+            var query = this.Context.GenerateLeaseQuery(filter, regions);
             var items = query
                 .Skip(skip)
                 .Take(filter.Quantity)

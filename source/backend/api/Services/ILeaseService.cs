@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 
 namespace Pims.Api.Services
@@ -9,6 +10,8 @@ namespace Pims.Api.Services
         bool IsRowVersionEqual(long leaseId, long rowVersion);
 
         PimsLease GetById(long leaseId);
+
+        Paged<PimsLease> GetPage(LeaseFilter filter, bool? all = false);
 
         PimsLease Add(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides);
 

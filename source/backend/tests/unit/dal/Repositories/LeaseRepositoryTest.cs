@@ -5,6 +5,7 @@ using System.Linq;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using NSubstitute;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
@@ -85,7 +86,7 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
-            var result = service.GetAllByFilter(filter);
+            var result = service.GetAllByFilter(filter, new HashSet<short>());
 
             // Assert
             Assert.NotNull(result);
@@ -105,7 +106,7 @@ namespace Pims.Dal.Test.Repositories
             // Act
             // Assert
             Assert.Throws<NotAuthorizedException>(() =>
-                service.GetAllByFilter(null));
+                service.GetAllByFilter(null, new HashSet<short>()));
         }
 
         [Theory]
@@ -126,7 +127,7 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
-            var result = service.GetPage(filter);
+            var result = service.GetPage(filter, new HashSet<short>());
 
             // Assert
             Assert.NotNull(result);
@@ -380,6 +381,9 @@ namespace Pims.Dal.Test.Repositories
 
             var propertyLeaseRepository = helper.GetService<Mock<IPropertyLeaseRepository>>();
             propertyLeaseRepository.Setup(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<List<PimsPropertyLease>>()));
+
+            var userRepository = helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("test"));
 
             // Act
             var updateProperty = EntityHelper.CreateProperty(context, 2);

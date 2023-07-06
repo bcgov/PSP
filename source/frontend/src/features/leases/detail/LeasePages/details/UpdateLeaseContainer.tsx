@@ -24,10 +24,7 @@ export const UpdateLeaseContainer: React.FunctionComponent<
   React.PropsWithChildren<UpdateLeaseContainerProps>
 > = ({ formikRef, onEdit, View }) => {
   const { lease } = useContext(LeaseStateContext);
-  const {
-    getApiLeaseById: { execute, response: apiLease, loading },
-    refresh,
-  } = useLeaseDetail(lease?.id ?? undefined);
+  const { getCompleteLease, refresh, loading } = useLeaseDetail(lease?.id ?? undefined);
   const { updateApiLease } = useUpdateLease();
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
@@ -37,12 +34,12 @@ export const UpdateLeaseContainer: React.FunctionComponent<
   useEffect(() => {
     const exec = async () => {
       if (leaseId) {
-        var lease = await execute(leaseId);
+        var lease = await getCompleteLease();
         formikRef?.current?.resetForm({ values: LeaseFormModel.fromApi(lease) });
       }
     };
     exec();
-  }, [execute, leaseId, formikRef]);
+  }, [getCompleteLease, leaseId, formikRef]);
 
   const onSubmit = async (lease: LeaseFormModel, userOverrideCodes: UserOverrideCode[] = []) => {
     try {
@@ -63,7 +60,6 @@ export const UpdateLeaseContainer: React.FunctionComponent<
     }
   };
 
-  const initialValues = LeaseFormModel.fromApi(apiLease);
   return (
     <>
       <LoadingBackdrop show={loading} parentScreen></LoadingBackdrop>
@@ -73,7 +69,6 @@ export const UpdateLeaseContainer: React.FunctionComponent<
             onSubmit(lease, userOverrideCodes),
           )
         }
-        initialValues={initialValues}
         formikRef={formikRef}
       />
     </>

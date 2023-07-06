@@ -37,7 +37,7 @@ namespace Pims.Api.Areas.Reports.Controllers
     {
         #region Variables
         private readonly ILookupRepository _lookupRepository;
-        private readonly ILeaseRepository _leaseRepository;
+        private readonly ILeaseService _leaseService;
         private readonly ILeaseReportsService _leaseReportService;
         private readonly ILeasePaymentService _leasePaymentService;
         private readonly IMapper _mapper;
@@ -50,15 +50,15 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// Creates a new instance of a ReportController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="lookupRepository"></param>
-        /// <param name="leaseRepository"></param>
+        /// <param name="leaseService"></param>
         /// <param name="leaseReportService"></param>
         /// <param name="leasePaymentService"></param>
         /// <param name="webHostEnvironment"></param>
         /// <param name="mapper"></param>
-        public LeaseController(ILookupRepository lookupRepository, ILeaseRepository leaseRepository, ILeaseReportsService leaseReportService, ILeasePaymentService leasePaymentService, IWebHostEnvironment webHostEnvironment, IMapper mapper)
+        public LeaseController(ILookupRepository lookupRepository, ILeaseService leaseService, ILeaseReportsService leaseReportService, ILeasePaymentService leasePaymentService, IWebHostEnvironment webHostEnvironment, IMapper mapper)
         {
             _lookupRepository = lookupRepository;
-            _leaseRepository = leaseRepository;
+            _leaseService = leaseService;
             _leaseReportService = leaseReportService;
             _leasePaymentService = leasePaymentService;
             _mapper = mapper;
@@ -202,8 +202,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <returns></returns>
         public IEnumerable<LeaseModel> GetCrossJoinLeases(Lease.Models.Search.LeaseFilterModel filter, bool all = false)
         {
-            filter.Quantity = all ? _leaseRepository.Count() : filter.Quantity;
-            var page = _leaseRepository.GetPage((LeaseFilter)filter);
+            var page = _leaseService.GetPage((LeaseFilter)filter, all);
             var allLeases = page.Items.SelectMany(l => l.PimsLeaseTerms.DefaultIfEmpty(), (lease, term) => (lease, term))
                 .SelectMany(lt => lt.lease.PimsPropertyLeases.DefaultIfEmpty(), (leaseTerm, property) => (leaseTerm.term, leaseTerm.lease, property))
                 .SelectMany(ltp => ltp.lease.PimsLeaseTenants.DefaultIfEmpty(), (leaseTermProperty, tenant) => (leaseTermProperty.term, leaseTermProperty.lease, leaseTermProperty.property, tenant));
