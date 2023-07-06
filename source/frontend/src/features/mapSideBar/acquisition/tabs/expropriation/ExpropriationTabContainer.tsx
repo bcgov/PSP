@@ -1,27 +1,26 @@
 import { useContext } from 'react';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
-import { IExpropriationTabcontainerViewProps } from './ExpropriationTabContainerView';
+import { IExpropriationTabContainerViewProps } from './ExpropriationTabContainerView';
 
 export interface IExpropriationTabContainer {
-  acquisitionFileId: number;
-  acquisitionFileTypeCode: string;
-  View: React.FunctionComponent<React.PropsWithChildren<IExpropriationTabcontainerViewProps>>;
+  acquisitionFile: Api_AcquisitionFile;
+  View: React.FunctionComponent<IExpropriationTabContainerViewProps>;
 }
 
-export const ExpropriationTabContainer: React.FunctionComponent<
-  React.PropsWithChildren<IExpropriationTabContainer>
-> = ({ View, acquisitionFileTypeCode }) => {
-  const { file, fileLoading } = useContext(SideBarContext);
-  if (!!file && file?.id === undefined && fileLoading === false) {
+export const ExpropriationTabContainer: React.FunctionComponent<IExpropriationTabContainer> = ({
+  View,
+  acquisitionFile,
+}) => {
+  const { fileLoading } = useContext(SideBarContext);
+  if (!!acquisitionFile && acquisitionFile?.id === undefined && fileLoading === false) {
     throw new Error('Unable to determine id of current file.');
   }
 
-  return !!file?.id ? (
-    <>
-      <View loading={fileLoading} acquisitionFileTypeCode={acquisitionFileTypeCode}></View>
-    </>
+  return !!acquisitionFile?.id ? (
+    <View loading={fileLoading} acquisitionFile={acquisitionFile}></View>
   ) : null;
 };
 

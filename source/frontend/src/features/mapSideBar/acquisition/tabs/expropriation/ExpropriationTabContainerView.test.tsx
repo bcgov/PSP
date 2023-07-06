@@ -1,21 +1,21 @@
+import { getMockExpropriationFile } from '@/mocks/index.mock';
 import { EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 import { render, RenderOptions } from '@/utils/test-utils';
 
-import ExpropiationTabcontainerView, {
-  IExpropriationTabcontainerViewProps,
+import {
+  ExpropriationTabContainerView,
+  IExpropriationTabContainerViewProps,
 } from './ExpropriationTabContainerView';
 
 describe('Expropriation Tab Container View', () => {
   const setup = async (
-    renderOptions: RenderOptions & { props?: Partial<IExpropriationTabcontainerViewProps> },
+    renderOptions: RenderOptions & { props?: Partial<IExpropriationTabContainerViewProps> } = {},
   ) => {
     const utils = render(
-      <ExpropiationTabcontainerView
+      <ExpropriationTabContainerView
         {...renderOptions.props}
         loading={renderOptions.props?.loading ?? false}
-        acquisitionFileTypeCode={
-          renderOptions.props?.acquisitionFileTypeCode ?? EnumAcquisitionFileType.SECTN6
-        }
+        acquisitionFile={renderOptions.props?.acquisitionFile ?? getMockExpropriationFile()}
       />,
       {
         ...renderOptions,
@@ -47,7 +47,7 @@ describe('Expropriation Tab Container View', () => {
 
   it('shows the sections for Acquisition file type "Section 3"', async () => {
     const { queryByTestId } = await setup({
-      props: { acquisitionFileTypeCode: EnumAcquisitionFileType.SECTN3 },
+      props: { acquisitionFile: getMockExpropriationFile(EnumAcquisitionFileType.SECTN3) },
     });
 
     expect(queryByTestId('form-1-section')).not.toBeInTheDocument();

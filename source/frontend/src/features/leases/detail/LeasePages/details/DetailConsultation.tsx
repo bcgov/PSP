@@ -66,7 +66,7 @@ export const DetailConsultation: React.FunctionComponent<
     <Section header="Consultation" initiallyExpanded isCollapsable>
       {values.consultations.map((consultation, index) => (
         <SectionField
-          key={`consultations-${consultation.consultationType}`}
+          key={`consultations-${consultation.consultationType?.id}`}
           label={generateLabel(consultation)}
           labelWidth="4"
           contentWidth="8"

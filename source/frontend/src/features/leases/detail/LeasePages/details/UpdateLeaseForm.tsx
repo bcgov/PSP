@@ -25,7 +25,7 @@ export const UpdateLeaseForm: React.FunctionComponent<
       <Formik<LeaseFormModel>
         validationSchema={AddLeaseYupSchema}
         onSubmit={values => onSubmit(values)}
-        initialValues={initialValues ?? getDefaultFormLease()}
+        initialValues={getDefaultFormLease()}
         innerRef={formikRef}
       >
         {formikProps => (

@@ -142,18 +142,6 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   return (
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
-      <RightFlexDiv>
-        {setEditMode !== undefined && userCanEditCompensationReq() && editButtonBlock}
-
-        <StyledAddButton
-          onClick={() => {
-            onGenerate(compensation);
-          }}
-        >
-          <FaMoneyCheck className="mr-2" />
-          Generate H120
-        </StyledAddButton>
-      </RightFlexDiv>
       <Section>
         <StyledRow className="no-gutters">
           <Col xs="6">
@@ -172,32 +160,57 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
             <HeaderField
               label="Compensation amount:"
               labelWidth="8"
+              contentWidth="4"
               valueTestId="header-pretax-amount"
             >
-              {formatMoney(payeeDetails?.preTaxAmount ?? 0)}
+              <p className="mb-0 text-right">{formatMoney(payeeDetails?.preTaxAmount ?? 0)}</p>
             </HeaderField>
-            <HeaderField label="Applicable GST:" labelWidth="8" valueTestId="header-tax-amount">
-              {formatMoney(payeeDetails?.taxAmount ?? 0)}
+            <HeaderField
+              label="Applicable GST:"
+              labelWidth="8"
+              contentWidth="4"
+              valueTestId="header-tax-amount"
+            >
+              <p className="mb-0 text-right">{formatMoney(payeeDetails?.taxAmount ?? 0)}</p>
             </HeaderField>
             <HeaderField
               label="Total cheque amount:"
               labelWidth="8"
+              contentWidth="4"
               valueTestId="header-total-amount"
             >
-              {formatMoney(payeeDetails?.totalAmount ?? 0)}
+              <p className="mb-0 text-right">{formatMoney(payeeDetails?.totalAmount ?? 0)}</p>
             </HeaderField>
           </Col>
         </StyledRow>
       </Section>
 
-      <Section header="Requisition Details">
+      <Section
+        header={
+          <FlexDiv>
+            Requisition Details
+            <RightFlexDiv>
+              {setEditMode !== undefined && userCanEditCompensationReq() && editButtonBlock}
+
+              <StyledAddButton
+                onClick={() => {
+                  onGenerate(compensation);
+                }}
+              >
+                <FaMoneyCheck className="mr-2" />
+                Generate H120
+              </StyledAddButton>
+            </RightFlexDiv>
+          </FlexDiv>
+        }
+      >
         <SectionField label="Status" labelWidth="4" data-testid="compensation-status">
           {compensation.isDraft ? 'Draft' : 'Final'}
         </SectionField>
         <SectionField label="Agreement date" labelWidth="4">
           {prettyFormatDate(compensation.agreementDate)}
         </SectionField>
-        <SectionField label="Expropriation notice server date" labelWidth="4">
+        <SectionField label="Expropriation notice served date" labelWidth="4">
           {prettyFormatDate(compensation.expropriationNoticeServedDate)}
         </SectionField>
         <SectionField label="Expropriation vesting date" labelWidth="4">
@@ -225,7 +238,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           {compensation.fiscalYear ?? ''}
         </SectionField>
         <SectionField label="STOB" labelWidth="4">
-          {compensation.yearlyFinancial?.code ?? ''}
+          {compensation.yearlyFinancial?.code ?? ''} - {compensation.yearlyFinancial?.description}
         </SectionField>
         <SectionField label="Service line" labelWidth="4">
           {compensation.chartOfAccounts && (
@@ -234,7 +247,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
             </label>
           )}
         </SectionField>
-        <SectionField label="Responsiblity centre" labelWidth="4">
+        <SectionField label="Responsibility centre" labelWidth="4">
           {compensation.responsibility && (
             <label>
               {compensation.responsibility?.code} - {compensation.responsibility?.description}
@@ -283,7 +296,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
               <label>Activity {index + 1}</label>
             </StyledSubHeader>
             <SectionField label="Code & Description" labelWidth="4">
-              {item.financialActivityCode?.id} - {item.financialActivityCode?.description}
+              {item.financialActivityCode?.code} - {item.financialActivityCode?.description}
             </SectionField>
             <SectionField label="Amount (before tax)" labelWidth="4">
               {formatMoney(item.pretaxAmount ?? 0)}
@@ -309,21 +322,30 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
       <Section>
         <StyledCompensationFooter>
-          <div>
-            <label>
-              Compensation amount: <span>{formatMoney(payeeDetails?.preTaxAmount ?? 0)}</span>
-            </label>
-          </div>
-          <div>
-            <label>
-              Applicable GST: <span>{formatMoney(payeeDetails?.taxAmount ?? 0)}</span>
-            </label>
-          </div>
-          <div>
-            <label>
-              Total cheque amount: <span>{formatMoney(payeeDetails?.totalAmount ?? 0)}</span>
-            </label>
-          </div>
+          <Row>
+            <Col className="pr-0 text-right">
+              <label>Compensation amount:</label>
+            </Col>
+            <Col xs="3" className="pl-1 text-right">
+              <span>{formatMoney(payeeDetails?.preTaxAmount ?? 0)}</span>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="pr-0 text-right">
+              <label>Applicable GST:</label>
+            </Col>
+            <Col xs="3" className="pl-1 text-right">
+              <span>{formatMoney(payeeDetails?.taxAmount ?? 0)}</span>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="pr-0 text-right">
+              <label>Total cheque amount:</label>
+            </Col>
+            <Col xs="3" className="pl-1 text-right">
+              <span>{formatMoney(payeeDetails?.totalAmount ?? 0)}</span>
+            </Col>
+          </Row>
         </StyledCompensationFooter>
       </Section>
     </StyledSummarySection>
@@ -343,21 +365,22 @@ const StyledLink = styled(Link)`
   align-items: center;
 `;
 
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+`;
+
 const RightFlexDiv = styled.div`
   display: flex;
   flex-direction: row-reverse;
 `;
 
 const StyledCompensationFooter = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
   font-size: 16px;
   font-weight: 600;
-  span {
-    margin-left: 1.25rem;
-  }
 `;
 
 const StyledPayeeDisplayName = styled.div`

@@ -28,6 +28,7 @@ namespace Pims.Api.Test.Services
     {
         public TestHelper helper;
         public Mock<ILeaseRepository> leaseRepository;
+        public Mock<IUserRepository> userRepository;
         public ILeaseReportsService leaseReportsService;
 
         public LeaseReportsServiceTest()
@@ -44,6 +45,7 @@ namespace Pims.Api.Test.Services
         {
             this.leaseReportsService = this.helper.Create<LeaseReportsService>();
             this.leaseRepository = this.helper.GetService<Mock<ILeaseRepository>>();
+            this.userRepository = this.helper.GetService<Mock<IUserRepository>>();
         }
 
         #region Tests
@@ -59,7 +61,7 @@ namespace Pims.Api.Test.Services
             var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
 
             this.MockCommonServices();
-            this.leaseRepository.Setup(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), true)).Returns(new List<PimsLease>() { lease });
+            this.leaseRepository.Setup(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), It.IsAny<HashSet<short>>(), true)).Returns(new List<PimsLease>() { lease });
 
             // Act
             // Assert
@@ -78,7 +80,9 @@ namespace Pims.Api.Test.Services
             var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
 
             this.MockCommonServices();
-            this.leaseRepository.Setup(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), true)).Returns(new List<PimsLease>() { lease });
+            this.leaseRepository.Setup(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), It.IsAny<HashSet<short>>(), true)).Returns(new List<PimsLease>() { lease });
+            this.userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser() { PimsRegionUsers = new List<PimsRegionUser>() });
+            
 
             // Act
             var leases = this.leaseReportsService.GetAggregatedLeaseReport(2022);
@@ -86,7 +90,8 @@ namespace Pims.Api.Test.Services
             // Assert
             leases.Should().HaveCount(1);
             leases.FirstOrDefault().Should().Be(lease);
-            this.leaseRepository.Verify(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), true));
+            this.leaseRepository.Verify(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), It.IsAny<HashSet<short>>(), true));
+            this.userRepository.Verify(x => x.GetByKeycloakUserId(It.IsAny<Guid>()));
         }
         #endregion
         #endregion
