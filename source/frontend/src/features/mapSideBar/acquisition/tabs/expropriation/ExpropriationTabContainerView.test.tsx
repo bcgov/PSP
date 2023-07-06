@@ -5,7 +5,7 @@ import ExpropiationTabcontainerView, {
   IExpropriationTabcontainerViewProps,
 } from './ExpropriationTabContainerView';
 
-describe('Expropiatin Tab Container View', () => {
+describe('Expropriation Tab Container View', () => {
   const setup = async (
     renderOptions: RenderOptions & { props?: Partial<IExpropriationTabcontainerViewProps> },
   ) => {

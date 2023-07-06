@@ -109,7 +109,7 @@ const GenerateLetterRecipientsModal: React.FunctionComponent<
                 />
               </StyledDiv>
               {Object.values(formikProps.errors).length > 0 && (
-                <div className="invalid-feedback" data-testid="team-profile-dup-error">
+                <div className="invalid-feedback" data-testid="missing-recipient-error">
                   {formikProps.errors?.recipients?.toString()}
                 </div>
               )}
