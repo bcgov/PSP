@@ -29,14 +29,12 @@ const GenerateFormContainer: React.FunctionComponent<
   } = useAcquisitionProvider();
   const [isGenerateLetterModalOpened, openGenerateLetterModal, closeGenerateLetterModal] =
     useModalManagement();
-
   const {
     getAcquisitionOwners: {
       execute: retrieveAcquisitionFileOwners,
       loading: loadingAcquisitionFileOwners,
     },
   } = useAcquisitionProvider();
-
   const {
     getAcquisitionInterestHolders: {
       execute: fetchInterestHolders,
@@ -56,6 +54,7 @@ const GenerateFormContainer: React.FunctionComponent<
     const fileOwnersFetchCall = retrieveAcquisitionFileOwners(acquisitionFileId);
     const interestHoldersFetchCall = fetchInterestHolders(acquisitionFileId);
 
+    // Add owners and interest holders
     await Promise.all([fileOwnersFetchCall, interestHoldersFetchCall]).then(
       ([fileOwners, intHolders]) => {
         if (fileOwners !== undefined) {
@@ -66,12 +65,11 @@ const GenerateFormContainer: React.FunctionComponent<
         }
 
         if (intHolders !== undefined) {
-          const generateHolders =
-            intHolders.map(x => Api_GenerateOwner.fromInterestHolder(x)) ?? [];
+          const intHolderGenLetterModel: LetterRecipientModel[] = intHolders.map(
+            x => new LetterRecipientModel(i++, 'HLDR', Api_GenerateOwner.fromInterestHolder(x), x),
+          );
 
-          const intHolderGenLetter =
-            generateHolders.map(x => new LetterRecipientModel(i++, 'HLDR', x)) ?? [];
-          generateRecipientsList.push(...intHolderGenLetter);
+          generateRecipientsList.push(...intHolderGenLetterModel);
         }
       },
     );
@@ -88,7 +86,7 @@ const GenerateFormContainer: React.FunctionComponent<
             if (person) {
               const personSolicitorModel = Api_GenerateOwner.fromApiPerson(person);
               generateRecipientsList.push(
-                new LetterRecipientModel(i++, 'SLTR', personSolicitorModel),
+                new LetterRecipientModel(i++, 'SLTR', personSolicitorModel, solicitor),
               );
             }
           } else if (solicitor.organizationId) {
@@ -97,7 +95,9 @@ const GenerateFormContainer: React.FunctionComponent<
               : null;
             if (org) {
               const orgSolicitorModel = Api_GenerateOwner.fromOrganization(org);
-              generateRecipientsList.push(new LetterRecipientModel(i++, 'SLTR', orgSolicitorModel));
+              generateRecipientsList.push(
+                new LetterRecipientModel(i++, 'SLTR', orgSolicitorModel, solicitor),
+              );
             }
           }
         }),
@@ -116,7 +116,7 @@ const GenerateFormContainer: React.FunctionComponent<
             if (person) {
               const personSolicitorModel = Api_GenerateOwner.fromApiPerson(person);
               generateRecipientsList.push(
-                new LetterRecipientModel(i++, 'REPT', personSolicitorModel),
+                new LetterRecipientModel(i++, 'REPT', personSolicitorModel, person),
               );
             }
           }

@@ -1,5 +1,7 @@
 import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
+import { FaExternalLinkAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Form } from '@/components/common/form/Form';
@@ -80,7 +82,25 @@ const GenerateLetterRecipientsModal: React.FunctionComponent<
                             onChange={formikProps.handleChange}
                           />
                           <Form.Check.Label htmlFor={'recipient-' + index}>
-                            {rec.generateModel?.owner_string} <span>{rec.InterestTypeString}</span>
+                            {rec.interestType === 'OWNR' && (
+                              <label>
+                                {rec.generateModel?.owner_string}
+                                <span className="type">{rec.getInterestTypeString()}</span>
+                              </label>
+                            )}
+                            {rec.interestType !== 'OWNR' && rec.getContactRouteParam() && (
+                              <StyledLinkWrapper>
+                                <StyledLink
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  to={`/contact/${rec.getContactRouteParam()}`}
+                                >
+                                  <span>{rec.getDisplayName()}</span>
+                                  <FaExternalLinkAlt className="ml-2" size="1rem" />
+                                </StyledLink>
+                                <span className="type">{rec.getInterestTypeString()}</span>
+                              </StyledLinkWrapper>
+                            )}
                           </Form.Check.Label>
                         </Form.Check>
                       ))}
@@ -111,6 +131,16 @@ const GenerateLetterRecipientsModal: React.FunctionComponent<
 
 export default GenerateLetterRecipientsModal;
 
+const StyledLinkWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const StyledLink = styled(Link)`
+  display: flex;
+  align-items: center;
+`;
+
 const StyledModal = styled(GenericModal)`
   min-width: 70rem;
 
@@ -134,7 +164,7 @@ const StyledDiv = styled.div`
 
   .form-check {
     input {
-      margin-top: 0.7rem;
+      margin-top: 0.6rem;
     }
   }
 
@@ -144,10 +174,11 @@ const StyledDiv = styled.div`
       line-height: 1rem;
       color: ${props => props.theme.css.textColor};
 
-      span {
+      span.type {
         font-size: 1.5rem;
         font-family: BCSans-Italic;
         font-style: italic;
+        margin-left: 0.5rem;
       }
     }
   }
