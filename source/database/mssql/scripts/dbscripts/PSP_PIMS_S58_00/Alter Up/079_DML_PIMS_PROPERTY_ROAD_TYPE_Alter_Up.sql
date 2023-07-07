@@ -1,0 +1,94 @@
+/* -----------------------------------------------------------------------------
+Alter the data in the PIMS_PROPERTY_ROAD_TYPE table.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+Author        Date         Comment
+------------  -----------  -----------------------------------------------------
+Doug Filteau  2023-Jun-19  Initial version
+----------------------------------------------------------------------------- */
+
+SET XACT_ABORT ON
+GO
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+GO
+BEGIN TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Disable multiple types
+UPDATE PIMS_PROPERTY_ROAD_TYPE
+SET    IS_DISABLED                = CONVERT([bit],(1))
+     , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+WHERE  PROPERTY_ROAD_TYPE_CODE IN (N'GAZSURVD', N'GAZUNSURVD', N'107REF', N'107EXP');
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Update the "GAZMOTI" type
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'GAZMOTI'
+
+SELECT PROPERTY_ROAD_TYPE_CODE
+FROM   PIMS_PROPERTY_ROAD_TYPE
+WHERE  PROPERTY_ROAD_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+  BEGIN
+  UPDATE PIMS_PROPERTY_ROAD_TYPE
+  SET    DESCRIPTION                = N'Gazetted'
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+  WHERE  PROPERTY_ROAD_TYPE_CODE = N'GAZMOTI';
+  END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Insert the "CMMNLAW" type
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'CMMNLAW'
+
+SELECT PROPERTY_ROAD_TYPE_CODE
+FROM   PIMS_PROPERTY_ROAD_TYPE
+WHERE  PROPERTY_ROAD_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 0
+  BEGIN
+  INSERT INTO PIMS_PROPERTY_ROAD_TYPE (PROPERTY_ROAD_TYPE_CODE, DESCRIPTION)
+    VALUES
+      (N'CMMNLAW', N'Common law dedication');
+  END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Insert the "S107PLN" type
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'S107PLN'
+
+SELECT PROPERTY_ROAD_TYPE_CODE
+FROM   PIMS_PROPERTY_ROAD_TYPE
+WHERE  PROPERTY_ROAD_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 0
+  BEGIN
+  INSERT INTO PIMS_PROPERTY_ROAD_TYPE (PROPERTY_ROAD_TYPE_CODE, DESCRIPTION)
+    VALUES
+      (N'S107PLN', N'Section 107 Plan');
+  END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+COMMIT TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+DECLARE @Success AS BIT
+SET @Success = 1
+SET NOEXEC OFF
+IF (@Success = 1) PRINT 'The database update succeeded'
+ELSE BEGIN
+   IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
+   PRINT 'The database update failed'
+END
+GO
