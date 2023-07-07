@@ -12,7 +12,7 @@ export class Api_GenerateCompensationFinancial {
     this.pretax_amount = formatMoney(compensation.pretaxAmount) ?? '';
     this.tax_amount = formatMoney(compensation.taxAmount) ?? '';
     this.total_amount = formatMoney(compensation.totalAmount) ?? '';
-    this.financial_activity_code = compensation.financialActivityCode?.id?.toString() ?? '';
+    this.financial_activity_code = compensation.financialActivityCode?.code?.toString() ?? '';
     this.financial_activity_description = compensation.financialActivityCode?.description ?? '';
   }
 }
