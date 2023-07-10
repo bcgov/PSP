@@ -318,12 +318,16 @@ namespace Pims.Api.Services
             return updatedAgreements;
         }
 
-        public IEnumerable<PimsInterestHolder> GetInterestHolders(long id)
+        public IEnumerable<PimsInterestHolder> GetInterestHolders(long id, bool? fullDetails)
         {
             _logger.LogInformation("Getting acquisition file InterestHolders with AcquisitionFile id: {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
+            if (fullDetails == true)
+            {
+                return _interestHolderRepository.GetInterestHoldersFullDetailsByAcquisitionFile(id);
+            }
             return _interestHolderRepository.GetInterestHoldersByAcquisitionFile(id);
         }
 
@@ -619,7 +623,7 @@ namespace Pims.Api.Services
                 return;
             }
 
-            foreach(var compReq in compensationRequisitions)
+            foreach (var compReq in compensationRequisitions)
             {
                 var payee = compReq.PimsAcquisitionPayees.FirstOrDefault();
                 if (payee is null || !payee.HasPayeeAssigned)
@@ -628,7 +632,7 @@ namespace Pims.Api.Services
                 }
 
                 // Check for Acquisition File Owner removed
-                if(payee.AcquisitionOwnerId is not null
+                if (payee.AcquisitionOwnerId is not null
                     && !acquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(payee.AcquisitionOwnerId))
                     && currentAquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(payee.AcquisitionOwnerId)))
                 {

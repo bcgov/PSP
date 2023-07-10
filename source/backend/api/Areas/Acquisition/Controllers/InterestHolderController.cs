@@ -55,9 +55,9 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [ProducesResponseType(typeof(IEnumerable<InterestHolderModel>), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetAcquisitionFileInterestHolders([FromRoute] long id)
+        public IActionResult GetAcquisitionFileInterestHolders([FromRoute] long id, bool? fullDetails)
         {
-            var interestHolders = _acquisitionService.GetInterestHolders(id);
+            var interestHolders = _acquisitionService.GetInterestHolders(id, fullDetails);
             return new JsonResult(_mapper.Map<List<Api.Models.Concepts.InterestHolderModel>>(interestHolders));
         }
 

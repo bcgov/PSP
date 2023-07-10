@@ -40,7 +40,41 @@ namespace Pims.Dal.Repositories
                 .Include(ih => ih.Organization)
                 .Include(ih => ih.Person)
                 .Include(ih => ih.PimsInthldrPropInterests)
-                .ThenInclude(ip => ip.InterestHolderInterestTypeCodeNavigation)
+                    .ThenInclude(ip => ip.InterestHolderInterestTypeCodeNavigation)
+                .AsNoTracking()
+                .ToList();
+        }
+
+        public List<PimsInterestHolder> GetInterestHoldersFullDetailsByAcquisitionFile(long acquisitionFileId)
+        {
+            using var scope = Logger.QueryScope();
+
+            return Context.PimsInterestHolders
+                .Where(ih => ih.AcquisitionFileId == acquisitionFileId)
+                .Include(ih => ih.Organization)
+                    .ThenInclude(o => o.PimsOrganizationAddresses)
+                    .ThenInclude(oa => oa.Address)
+                    .ThenInclude(a => a.Country)
+                .Include(ih => ih.Organization)
+                    .ThenInclude(o => o.PimsOrganizationAddresses)
+                    .ThenInclude(oa => oa.Address)
+                    .ThenInclude(a => a.ProvinceState)
+                .Include(ih => ih.Organization)
+                    .ThenInclude(o => o.PimsOrganizationAddresses)
+                    .ThenInclude(oa => oa.AddressUsageTypeCodeNavigation)
+                .Include(ih => ih.Person)
+                    .ThenInclude(p => p.PimsPersonAddresses)
+                    .ThenInclude(oa => oa.Address)
+                    .ThenInclude(a => a.Country)
+                .Include(ih => ih.Person)
+                    .ThenInclude(p => p.PimsPersonAddresses)
+                    .ThenInclude(oa => oa.Address)
+                    .ThenInclude(a => a.ProvinceState)
+                .Include(ih => ih.Person)
+                    .ThenInclude(p => p.PimsPersonAddresses)
+                    .ThenInclude(oa => oa.AddressUsageTypeCodeNavigation)
+                .Include(ih => ih.PimsInthldrPropInterests)
+                    .ThenInclude(ip => ip.InterestHolderInterestTypeCodeNavigation)
                 .AsNoTracking()
                 .ToList();
         }
