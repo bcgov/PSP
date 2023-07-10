@@ -20,6 +20,11 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The property address.
         /// </summary>
         public string Address { get; set; }
+
+        /// <summary>
+        /// get/set - The property plan number.
+        /// </summary>
+        public string PlanNumber { get; set; }
         #endregion
 
         #region Constructors
@@ -44,6 +49,7 @@ namespace Pims.Dal.Entities.Models
 
             this.Address = filter.GetStringValue(nameof(this.Address));
             this.PinOrPid = filter.GetStringValue(nameof(this.PinOrPid));
+            this.PlanNumber = filter.GetStringValue(nameof(this.PlanNumber));
         }
         #endregion
 

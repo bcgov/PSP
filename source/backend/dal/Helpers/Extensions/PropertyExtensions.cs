@@ -77,6 +77,10 @@ namespace Pims.Dal.Helpers.Extensions
             {
                 query = query.Where(p => EF.Functions.Like(p.Address.StreetAddress1, $"%{filter.Address}%") || EF.Functions.Like(p.Address.MunicipalityName, $"%{filter.Address}%"));
             }
+            if (!string.IsNullOrWhiteSpace(filter.PlanNumber))
+            {
+                query = query.Where(p => p != null && p.SurveyPlanNumber.Equals(filter.PlanNumber));
+            }
 
             if (filter.Sort?.Any() == true)
             {

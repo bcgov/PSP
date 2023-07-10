@@ -126,6 +126,7 @@ describe('MapFilterBar', () => {
       longitude: '',
       page: undefined,
       pinOrPid: '',
+      planNumber: '',
       quantity: undefined,
       searchBy: 'pinOrPid',
     });
@@ -142,6 +143,7 @@ describe('MapFilterBar', () => {
     });
     expect(onFilterChange).toBeCalledWith<[IPropertyFilter]>({
       pinOrPid: '',
+      planNumber: '',
       address: '',
       searchBy: 'pinOrPid',
       page: undefined,

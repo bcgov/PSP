@@ -119,6 +119,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           const geoLat = Number(geoFilter.latitude);
           const geoLng = Number(geoFilter.longitude);
           return mapSearch.searchOneLocation(geoLat, geoLng);
+        } else if (geoFilter?.SURVEY_PLAN_NUMBER && !geoFilter?.PID && !geoFilter?.PIN) {
+          return mapSearch.searchByPlanNumber(geoFilter);
         } else {
           return mapSearch.searchMany(geoFilter);
         }
@@ -320,6 +322,7 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
     PID: pinOrPidValue,
     PIN: pinOrPidValue,
     STREET_ADDRESS_1: filter.address,
+    SURVEY_PLAN_NUMBER: filter.planNumber,
     latitude: filter.latitude,
     longitude: filter.longitude,
     forceExactMatch: true,
