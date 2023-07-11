@@ -34,7 +34,7 @@ describe('GenerateFile tests', () => {
       interestHolders: [],
     });
     expect(file.primary_owner).not.toBeNull();
-    expect(file.primary_owner?.owner_string).toBe('John Doe Jr.');
+    expect(file.primary_owner?.owner_string).toBe('John Doe (Jr.)');
   });
 
   it('saves a list of the person owners on the file', () => {
@@ -44,7 +44,7 @@ describe('GenerateFile tests', () => {
       interestHolders: [],
     });
     expect(file.person_owners).toHaveLength(1);
-    expect(file.person_owners[0].owner_string).toBe('John Doe Jr.');
+    expect(file.person_owners[0].owner_string).toBe('John Doe (Jr.)');
   });
 
   it('saves a list of the organization owners on the file', () => {
