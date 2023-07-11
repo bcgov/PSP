@@ -1,7 +1,7 @@
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { getMockPerson } from '@/mocks/contacts.mock';
 
 import { Api_GenerateOwner } from './GenerateOwner';
-import { getMockPerson } from '@/mocks/contacts.mock';
 
 describe('GenerateOwner tests', () => {
   it('Can Generate an empty owner without throwing an error', () => {
