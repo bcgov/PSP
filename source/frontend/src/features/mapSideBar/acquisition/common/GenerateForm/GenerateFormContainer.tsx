@@ -43,9 +43,7 @@ const GenerateFormContainer: React.FunctionComponent<
   } = useInterestHolderRepository();
 
   const fetchAllRecipients = useCallback(async () => {
-    let i = 0;
     const generateRecipientsList: LetterRecipientModel[] = [];
-
     const file = await getAcquisitionFile(acquisitionFileId);
     if (file === undefined) {
       return;
@@ -58,23 +56,21 @@ const GenerateFormContainer: React.FunctionComponent<
     await Promise.all([fileOwnersFetchCall, interestHoldersFetchCall]).then(
       ([fileOwners, intHolders]) => {
         if (fileOwners !== undefined) {
-          const ownersLetterModel = fileOwners?.map(owner => new Api_GenerateOwner(owner)) ?? [];
-          const ownerRecipientsLetterModel =
-            ownersLetterModel.map(x => new LetterRecipientModel(i++, 'OWNR', x)) ?? [];
-          generateRecipientsList.push(...ownerRecipientsLetterModel);
+          fileOwners?.map(owner =>
+            generateRecipientsList.push(
+              new LetterRecipientModel(owner.id!, 'OWNR', new Api_GenerateOwner(owner), owner),
+            ),
+          );
         }
 
         if (intHolders !== undefined) {
           intHolders.map(async holder => {
             if (holder.personId) {
-              const person = !!holder?.personId
-                ? (await getPersonConcept(holder?.personId))?.data
-                : null;
-
+              const person = (await getPersonConcept(holder?.personId))?.data;
               if (person) {
                 generateRecipientsList.push(
                   new LetterRecipientModel(
-                    i++,
+                    holder.interestHolderId!,
                     'HLDR',
                     Api_GenerateOwner.fromApiPerson(person),
                     holder,
@@ -82,14 +78,11 @@ const GenerateFormContainer: React.FunctionComponent<
                 );
               }
             } else if (holder.organizationId) {
-              const org = !!holder?.organizationId
-                ? (await getOrganization(holder?.organizationId))?.data
-                : null;
-
+              const org = (await getOrganization(holder?.organizationId))?.data;
               if (org) {
                 generateRecipientsList.push(
                   new LetterRecipientModel(
-                    i++,
+                    holder.interestHolderId!,
                     'HLDR',
                     Api_GenerateOwner.fromApiOrganization(org),
                     holder,
@@ -107,24 +100,19 @@ const GenerateFormContainer: React.FunctionComponent<
       await Promise.all(
         file.acquisitionFileOwnerSolicitors.map(async solicitor => {
           if (solicitor.personId) {
-            const person = !!solicitor?.personId
-              ? (await getPersonConcept(solicitor?.personId))?.data
-              : null;
-
+            const person = (await getPersonConcept(solicitor?.personId))?.data;
             if (person) {
               const personSolicitorModel = Api_GenerateOwner.fromApiPerson(person);
               generateRecipientsList.push(
-                new LetterRecipientModel(i++, 'SLTR', personSolicitorModel, solicitor),
+                new LetterRecipientModel(person.id!, 'SLTR', personSolicitorModel, solicitor),
               );
             }
           } else if (solicitor.organizationId) {
-            const org = !!solicitor?.organizationId
-              ? (await getOrganization(solicitor?.organizationId))?.data
-              : null;
+            const org = (await getOrganization(solicitor?.organizationId))?.data;
             if (org) {
               const orgSolicitorModel = Api_GenerateOwner.fromApiOrganization(org);
               generateRecipientsList.push(
-                new LetterRecipientModel(i++, 'SLTR', orgSolicitorModel, solicitor),
+                new LetterRecipientModel(org.id!, 'SLTR', orgSolicitorModel, solicitor),
               );
             }
           }
@@ -140,11 +128,11 @@ const GenerateFormContainer: React.FunctionComponent<
       await Promise.all(
         file.acquisitionFileOwnerRepresentatives.map(async rep => {
           if (rep.personId) {
-            const person = !!rep?.personId ? (await getPersonConcept(rep?.personId))?.data : null;
+            const person = (await getPersonConcept(rep?.personId))?.data;
             if (person) {
               const personSolicitorModel = Api_GenerateOwner.fromApiPerson(person);
               generateRecipientsList.push(
-                new LetterRecipientModel(i++, 'REPT', personSolicitorModel, person),
+                new LetterRecipientModel(rep.id!, 'REPT', personSolicitorModel, person),
               );
             }
           }

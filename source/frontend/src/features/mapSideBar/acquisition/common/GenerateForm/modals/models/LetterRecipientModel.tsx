@@ -7,18 +7,18 @@ import { formatApiPersonNames } from '@/utils/personUtils';
 type RecipientType = 'OWNR' | 'HLDR' | 'SLTR' | 'REPT';
 
 export class LetterRecipientModel {
-  readonly id: number;
+  readonly id: string;
   interestType: RecipientType;
   generateModel: Api_GenerateOwner;
   conceptModel: Api_Person | Api_InterestHolder | Api_AcquisitionFileSolicitor | null;
 
   constructor(
-    id: number,
+    conceptId: number,
     type: RecipientType,
     model: Api_GenerateOwner,
     conceptModel: Api_Person | Api_InterestHolder | Api_AcquisitionFileSolicitor | null = null,
   ) {
-    this.id = id;
+    this.id = `${type}${conceptId}`;
     this.interestType = type;
     this.generateModel = model;
     this.conceptModel = conceptModel;

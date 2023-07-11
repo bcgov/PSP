@@ -33,9 +33,9 @@ const GenerateLetterRecipientsModal: React.FunctionComponent<
     values: LetterRecipientsForm,
     formikHelpers: FormikHelpers<LetterRecipientsForm>,
   ) => {
-    const selectedRecipientsIds = values.recipients.map(x => +x);
+    const ids = values.recipients.map<string>(x => x as unknown as string);
     const selectedGenerateOwner = recipientList
-      .filter(x => selectedRecipientsIds.includes(x.id))
+      .filter(x => ids.includes(x.id))
       .map(rec => rec.generateModel);
 
     onGenerateLetterOk(selectedGenerateOwner);
