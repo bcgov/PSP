@@ -2,9 +2,9 @@ import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 
 import { Form, Input } from '@/components/common/form';
-import { IFormLease } from '@/interfaces';
 import { withNameSpace } from '@/utils/formUtils';
 
+import { LeaseFormModel } from '../../models';
 import { FieldValue } from '../styles';
 
 export interface IAddressSubFormProps {
@@ -15,7 +15,7 @@ export interface IAddressSubFormProps {
 export const AddressSubForm: React.FunctionComponent<
   React.PropsWithChildren<IAddressSubFormProps>
 > = ({ disabled, nameSpace }) => {
-  const formikProps = useFormikContext<IFormLease>();
+  const formikProps = useFormikContext<LeaseFormModel>();
   const address = getIn(formikProps.values, withNameSpace(nameSpace));
   const municipality = getIn(formikProps.values, withNameSpace(nameSpace, 'municipality'));
   const postal = getIn(formikProps.values, withNameSpace(nameSpace, 'postal'));

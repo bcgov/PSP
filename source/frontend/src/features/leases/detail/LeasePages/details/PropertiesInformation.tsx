@@ -3,7 +3,8 @@ import * as React from 'react';
 
 import { Section } from '@/components/common/Section/Section';
 import { PropertyInformation } from '@/features/leases';
-import { ILease, IProperty } from '@/interfaces';
+import { LeaseFormModel } from '@/features/leases/models';
+import { IProperty } from '@/interfaces';
 import { withNameSpace } from '@/utils/formUtils';
 
 export interface IPropertiesInformationProps {
@@ -19,7 +20,7 @@ export interface IPropertiesInformationProps {
 export const PropertiesInformation: React.FunctionComponent<
   React.PropsWithChildren<IPropertiesInformationProps>
 > = ({ nameSpace, disabled, hideAddress }) => {
-  const { values } = useFormikContext<ILease>();
+  const { values } = useFormikContext<LeaseFormModel>();
   const properties: IProperty[] = getIn(values, withNameSpace(nameSpace, 'properties')) ?? [];
   return properties?.length ? (
     <Section initiallyExpanded={true} isCollapsable={true} header="Property Information">
@@ -29,7 +30,7 @@ export const PropertiesInformation: React.FunctionComponent<
           properties.map((property: IProperty, index) => (
             <PropertyInformation
               {...renderProps}
-              nameSpace={withNameSpace(nameSpace, `properties.${index}`)}
+              nameSpace={withNameSpace(nameSpace, `properties.${index}.property`)}
               disabled={disabled}
               hideAddress={hideAddress}
             />

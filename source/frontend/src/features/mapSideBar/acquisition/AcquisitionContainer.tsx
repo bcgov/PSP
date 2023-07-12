@@ -1,20 +1,22 @@
 import { FormikProps } from 'formik';
-import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useReducer, useRef } from 'react';
+import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapSearch } from '@/components/common/mapFSM/useMapSearch';
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_File } from '@/models/api/File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
 import { IAcquisitionViewProps } from './AcquisitionView';
-import { EditFormType } from './EditFormNames';
 
 export interface IAcquisitionContainerProps {
   acquisitionFileId: number;
@@ -25,7 +27,6 @@ export interface IAcquisitionContainerProps {
 // Interface for our internal state
 export interface AcquisitionContainerState {
   isEditing: boolean;
-  activeEditForm?: EditFormType;
   selectedMenuIndex: number;
   showConfirmModal: boolean;
   acquisitionFile: Api_AcquisitionFile | undefined;
@@ -35,7 +36,6 @@ export interface AcquisitionContainerState {
 
 const initialState: AcquisitionContainerState = {
   isEditing: false,
-  activeEditForm: undefined,
   selectedMenuIndex: 0,
   showConfirmModal: false,
   acquisitionFile: undefined,
@@ -62,6 +62,30 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   } = useAcquisitionProvider();
 
   const formikRef = useRef<FormikProps<any>>(null);
+
+  const location = useLocation();
+  const history = useHistory();
+  const match = useRouteMatch();
+  const query = useQuery();
+  const isEditing = query.get('edit') === 'true';
+
+  const setIsEditing = (value: boolean) => {
+    if (value) {
+      query.set('edit', value.toString());
+    } else {
+      query.delete('edit');
+    }
+    history.push({ search: query.toString() });
+  };
+
+  const isPropertySelector = useMemo(
+    () =>
+      matchPath<Record<string, string>>(
+        location.pathname,
+        `${stripTrailingSlash(match.path)}/property/selector`,
+      ),
+    [location.pathname, match.path],
+  );
 
   /**
    See here that we are using `newState: Partial<AcquisitionContainerState>` in our reducer
@@ -115,22 +139,31 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
+  const navigateToMenuRoute = (selectedIndex: number) => {
+    const route = selectedIndex === 0 ? '' : `/property/${selectedIndex}`;
+    history.push(`${stripTrailingSlash(match.url)}${route}`);
+  };
+
   const onMenuChange = (selectedIndex: number) => {
-    if (containerState.isEditing) {
+    if (isEditing) {
       if (formikRef?.current?.dirty) {
         if (
           window.confirm('You have made changes on this form. Do you wish to leave without saving?')
         ) {
           handleCancelClick();
-          setContainerState({ selectedMenuIndex: selectedIndex });
+          navigateToMenuRoute(selectedIndex);
         }
       } else {
         handleCancelClick();
-        setContainerState({ selectedMenuIndex: selectedIndex });
+        navigateToMenuRoute(selectedIndex);
       }
     } else {
-      setContainerState({ selectedMenuIndex: selectedIndex });
+      navigateToMenuRoute(selectedIndex);
     }
+  };
+
+  const onShowPropertySelector = () => {
+    history.push(`${stripTrailingSlash(match.url)}/property/selector`);
   };
 
   const handleSaveClick = () => {
@@ -156,17 +189,14 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
     }
-    setContainerState({
-      showConfirmModal: false,
-      isEditing: false,
-      activeEditForm: undefined,
-    });
+    setContainerState({ showConfirmModal: false });
+    setIsEditing(false);
   };
 
   const onSuccess = () => {
     fetchAcquisitionFile();
     searchMany();
-    setContainerState({ activeEditForm: undefined, isEditing: false });
+    setIsEditing(false);
   };
 
   const canRemove = async (propertyId: number) => {
@@ -183,27 +213,29 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     return withUserOverride((userOverrideCodes: UserOverrideCode[]) => {
       return updateAcquisitionProperties
         .execute({ ...file, productId: null, projectId: null }, userOverrideCodes)
-        .then(() => onSuccess());
+        .then(response => {
+          onSuccess();
+          return response;
+        });
     });
   };
 
   // UI components
-  if (
-    loadingAcquisitionFile ||
-    (loadingAcquisitionFileProperties &&
-      containerState.activeEditForm !== EditFormType.PROPERTY_SELECTOR)
-  ) {
+  if (loadingAcquisitionFile || (loadingAcquisitionFileProperties && !isPropertySelector)) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 
   return (
     <View
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
       containerState={containerState}
       setContainerState={setContainerState}
       onClose={close}
       onCancel={handleCancelClick}
       onSave={handleSaveClick}
       onMenuChange={onMenuChange}
+      onShowPropertySelector={onShowPropertySelector}
       onCancelConfirm={handleCancelConfirm}
       onUpdateProperties={onUpdateProperties}
       onSuccess={onSuccess}

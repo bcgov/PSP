@@ -11,6 +11,7 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
@@ -18,7 +19,6 @@ import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
-import InterestHolderPropertiesTable from './InterestHolderPropertiesTable';
 import { InterestHolderForm, StakeHolderForm } from './models';
 import { UpdateStakeHolderYupSchema } from './UpdateStakeHolderYupSchema';
 
@@ -114,7 +114,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                           label="Impacted properties"
                           tooltip="The interest holder will show on the Compensation Request form relevant to these properties."
                         >
-                          <InterestHolderPropertiesTable
+                          <FilePropertiesTable
                             fileProperties={file.fileProperties ?? []}
                             selectedFileProperties={
                               (interestHolder.impactedProperties
@@ -216,7 +216,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                           label="Impacted properties"
                           tooltip="The non-interest payee will show on the Compensation Request form relevant to these properties."
                         >
-                          <InterestHolderPropertiesTable
+                          <FilePropertiesTable
                             fileProperties={file.fileProperties ?? []}
                             selectedFileProperties={
                               (interestHolder.impactedProperties

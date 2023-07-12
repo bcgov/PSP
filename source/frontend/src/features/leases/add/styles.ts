@@ -2,7 +2,7 @@ import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons/Button';
-import { FastDatePicker, Form, TextArea } from '@/components/common/form';
+import { FastDatePicker, TextArea } from '@/components/common/form';
 import { InlineInput, InlineSelect } from '@/components/common/form/styles';
 
 export const PropertyCol = styled(Col)`
@@ -88,5 +88,3 @@ export const EndAlignCol = styled(Col)`
   display: flex;
   align-items: flex-end;
 `;
-
-export const LeaseForm = styled(Form)``;

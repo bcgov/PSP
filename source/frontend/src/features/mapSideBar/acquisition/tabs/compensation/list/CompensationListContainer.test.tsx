@@ -3,7 +3,11 @@ import { createMemoryHistory } from 'history';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
-import { getMockApiCompensationList } from '@/mocks/compensations.mock';
+import {
+  getMockApiCompensationList,
+  getMockApiDefaultCompensation,
+  getMockDefaultCreateCompenReq,
+} from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
@@ -16,7 +20,7 @@ import { ICompensationListViewProps } from './CompensationListView';
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
-const mockApi = {
+const mockPostApi = {
   error: undefined,
   response: undefined,
   execute: jest.fn(),
@@ -28,6 +32,7 @@ const mockGetApi = {
   execute: jest.fn(),
   loading: false,
 };
+
 jest.mock('@/hooks/repositories/useRequisitionCompensationRepository');
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
@@ -43,7 +48,7 @@ jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
       getAcquisitionCompensationRequisitions: mockGetApi,
-      postAcquisitionCompensationRequisition: mockApi,
+      postAcquisitionCompensationRequisition: mockPostApi,
     };
   },
 }));
@@ -55,13 +60,15 @@ const CompensationListView = (props: ICompensationListViewProps) => {
 };
 
 describe('compensation list view container', () => {
-  const setup = (renderOptions?: RenderOptions & Partial<ICompensationListContainerProps>) => {
+  const setup = async (
+    renderOptions?: RenderOptions & Partial<ICompensationListContainerProps>,
+  ) => {
     // render component under test
     const component = render(
       <SideBarContextProvider>
         <CompensationListContainer
           View={CompensationListView}
-          fileId={renderOptions?.fileId ?? 0}
+          fileId={renderOptions?.fileId ?? 1}
         />
       </SideBarContextProvider>,
       {
@@ -79,12 +86,12 @@ describe('compensation list view container', () => {
 
   beforeEach(() => {
     (useCompensationRequisitionRepository as jest.Mock).mockImplementation(() => ({
-      deleteCompensation: mockApi,
+      deleteCompensation: mockPostApi,
     }));
   });
 
   it('renders as expected', async () => {
-    const { asFragment } = setup({
+    const { asFragment } = await setup({
       claims: [],
     });
     const fragment = await waitFor(() => asFragment());
@@ -109,7 +116,7 @@ describe('compensation list view container', () => {
     const continueButton = await screen.findByText('Continue');
     act(() => userEvent.click(continueButton));
 
-    expect(mockApi.execute).toHaveBeenCalledWith(1);
+    expect(mockPostApi.execute).toHaveBeenCalledWith(1);
   });
 
   it('fetchs data when no data is currently available in container', async () => {
@@ -118,5 +125,16 @@ describe('compensation list view container', () => {
     });
 
     expect(mockGetApi.execute).toHaveBeenCalledTimes(0);
+  });
+
+  it('Creates the Compensation Requisition with the default data', async () => {
+    mockPostApi.execute.mockResolvedValue(getMockApiDefaultCompensation());
+
+    await setup({});
+    await act(async () => {
+      viewProps?.onAdd();
+    });
+
+    expect(mockPostApi.execute).toHaveBeenCalledWith(1, getMockDefaultCreateCompenReq());
   });
 });

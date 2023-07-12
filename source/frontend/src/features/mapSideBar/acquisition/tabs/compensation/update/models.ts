@@ -10,7 +10,7 @@ import { Api_CompensationRequisition } from '@/models/api/CompensationRequisitio
 import { Api_FinancialCode } from '@/models/api/FinancialCode';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { isNullOrWhitespace } from '@/utils';
-import { booleanToString, stringToBoolean, stringToNull, toTypeCode } from '@/utils/formUtils';
+import { booleanToString, stringToBoolean, stringToUndefined, toTypeCode } from '@/utils/formUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 export class CompensationRequisitionFormModel {
@@ -60,19 +60,19 @@ export class CompensationRequisitionFormModel {
       id: this.id,
       acquisitionFileId: this.acquisitionFileId,
       isDraft: this.status === 'draft' ? true : false,
-      fiscalYear: stringToNull(this.fiscalYear),
+      fiscalYear: stringToUndefined(this.fiscalYear),
       yearlyFinancialId: this.stob === '' ? null : Number(this.stob),
       yearlyFinancial: null,
       chartOfAccountsId: this.serviceLine === '' ? null : Number(this.serviceLine),
       chartOfAccounts: null,
       responsibilityId: this.responsibilityCentre === '' ? null : Number(this.responsibilityCentre),
       responsibility: null,
-      agreementDate: stringToNull(this.agreementDateTime),
-      expropriationNoticeServedDate: stringToNull(this.expropriationNoticeServedDateTime),
-      expropriationVestingDate: stringToNull(this.expropriationVestingDateTime),
-      generationDate: stringToNull(this.generationDatetTime),
-      specialInstruction: stringToNull(this.specialInstruction),
-      detailedRemarks: stringToNull(this.detailedRemarks),
+      agreementDate: stringToUndefined(this.agreementDateTime),
+      expropriationNoticeServedDate: stringToUndefined(this.expropriationNoticeServedDateTime),
+      expropriationVestingDate: stringToUndefined(this.expropriationVestingDateTime),
+      generationDate: stringToUndefined(this.generationDatetTime),
+      specialInstruction: stringToUndefined(this.specialInstruction),
+      detailedRemarks: stringToUndefined(this.detailedRemarks),
       isDisabled: stringToBoolean(this.isDisabled),
       financials: this.financials
         .filter(x => !x.isEmpty())

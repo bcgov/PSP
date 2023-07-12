@@ -19,7 +19,7 @@ import {
 } from '@/interfaces/editable-contact';
 import { IContactPerson } from '@/interfaces/IContact';
 import { Api_Organization, Api_OrganizationPerson } from '@/models/api/Organization';
-import { fromTypeCode, stringToBoolean, stringToNull, toTypeCode } from '@/utils/formUtils';
+import { fromTypeCode, stringToBoolean, stringToUndefined, toTypeCode } from '@/utils/formUtils';
 import { formatFullName } from '@/utils/personUtils';
 
 import { Api_Address } from './../../models/api/Address';
@@ -228,7 +228,7 @@ export function apiAddressToFormAddress(address?: IBaseAddress) {
 function formContactMethodToApiContactMethod(formContactMethod: IEditableContactMethodForm) {
   return {
     ...formContactMethod,
-    value: stringToNull(formContactMethod.value),
+    value: stringToUndefined(formContactMethod.value),
     contactMethodTypeCode: toTypeCode(formContactMethod.contactMethodTypeCode),
   } as IEditableContactMethod;
 }

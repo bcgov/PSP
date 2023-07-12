@@ -9,7 +9,7 @@ import {
 } from '@/models/api/AcquisitionFile';
 import { Api_Address } from '@/models/api/Address';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { fromTypeCode, stringToBoolean, stringToNull, toTypeCode } from '@/utils/formUtils';
+import { fromTypeCode, stringToBoolean, stringToUndefined, toTypeCode } from '@/utils/formUtils';
 
 export interface WithAcquisitionTeam {
   team: AcquisitionTeamFormModel[];
@@ -277,8 +277,8 @@ export class OwnerAddressFormModel {
       id: model.id,
       rowVersion: model.rowVersion,
       streetAddress1: model.streetAddress1,
-      streetAddress2: stringToNull(model.streetAddress2),
-      streetAddress3: stringToNull(model.streetAddress3),
+      streetAddress2: stringToUndefined(model.streetAddress2),
+      streetAddress3: stringToUndefined(model.streetAddress3),
       municipality: model.municipality,
       postal: model.postal,
       provinceStateId: isEmpty(model.provinceId) ? undefined : Number(model.provinceId),

@@ -32,6 +32,7 @@ export const useMapProperties = () => {
   const loadProperties = useApiRequestWrapper({
     requestFunction: loadPropertiesRequest,
     requestName: 'LOAD_PROPERTIES',
+    throwError: true,
   });
   return { loadProperties };
 };

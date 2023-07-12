@@ -364,14 +364,8 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Invalid acquisitionFileId.");
             }
 
-            // The compensation requisition can only have one payee and one checke, for now add them at creation.
-            var newPayee = new PimsAcquisitionPayee();
-            // TODO fix this
-            /*var newCheque = new PimsAcqPayeeCheque();
-            newPayee.PimsAcqPayeeCheques = new List<PimsAcqPayeeCheque>() { newCheque };*/
-
             compensationRequisition.IsDraft = compensationRequisition.IsDraft ?? true;
-            compensationRequisition.PimsAcquisitionPayees = new List<PimsAcquisitionPayee>() { newPayee };
+            compensationRequisition.PimsAcquisitionPayees = new List<PimsAcquisitionPayee>() { new PimsAcquisitionPayee() };
 
             var newCompensationRequisition = _compensationRequisitionRepository.Add(compensationRequisition);
 

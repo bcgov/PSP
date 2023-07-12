@@ -79,8 +79,8 @@ export const getFilePropertyName = (
     fileProperty.propertyName !== '' &&
     skipName === false
   ) {
-    return { label: NameSourceType.NAME, value: fileProperty.propertyName };
-  } else if (fileProperty.property !== undefined) {
+    return { label: NameSourceType.NAME, value: fileProperty.propertyName ?? '' };
+  } else if (!!fileProperty.property) {
     const property = fileProperty.property;
     return getApiPropertyName(property);
   }

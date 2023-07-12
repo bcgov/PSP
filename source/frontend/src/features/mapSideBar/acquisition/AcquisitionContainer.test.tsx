@@ -1,6 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
+import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
@@ -25,8 +26,8 @@ import {
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { AcquisitionContainer, IAcquisitionContainerProps } from './AcquisitionContainer';
 import { IAcquisitionViewProps } from './AcquisitionView';
-import { EditFormType } from './EditFormNames';
 
+const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 const generateFn = jest.fn();
 
@@ -91,6 +92,7 @@ describe('AcquisitionContainer component', () => {
         },
         useMockAuthentication: true,
         claims: renderOptions?.claims ?? [],
+        history,
         ...renderOptions,
       },
     );
@@ -143,11 +145,9 @@ describe('AcquisitionContainer component', () => {
     await waitForElementToBeRemoved(spinner);
 
     mockAxios.onGet(new RegExp('acquisitionfiles/1/properties')).timeout();
-    await act(async () => {
-      viewProps.setContainerState({ activeEditForm: EditFormType.PROPERTY_SELECTOR });
-      viewProps.canRemove(1);
-      expect(spinner).not.toBeVisible();
-    });
+    await act(async () => viewProps.onShowPropertySelector());
+    await act(async () => viewProps.canRemove(1));
+    expect(spinner).not.toBeVisible();
   });
 
   it('canRemove returns true if file property has no associated entities', async () => {
@@ -165,10 +165,8 @@ describe('AcquisitionContainer component', () => {
         },
       },
     ]);
-    await act(async () => {
-      viewProps.setContainerState({ activeEditForm: EditFormType.PROPERTY_SELECTOR });
-    });
-    const canRemoveResponse = await viewProps.canRemove(1);
+    await act(async () => viewProps.onShowPropertySelector());
+    const canRemoveResponse = await act(() => viewProps.canRemove(1));
     expect(canRemoveResponse).toBe(true);
   });
 
@@ -188,10 +186,9 @@ describe('AcquisitionContainer component', () => {
         activityInstanceProperties: [{}],
       },
     ]);
-    await act(async () => {
-      viewProps.setContainerState({ activeEditForm: EditFormType.PROPERTY_SELECTOR });
-    });
-    expect(await viewProps.canRemove(1)).toBe(false);
+    await act(async () => viewProps.onShowPropertySelector());
+    const canRemoveResponse = await act(() => viewProps.canRemove(1));
+    expect(canRemoveResponse).toBe(false);
   });
 
   it('should change menu index when not editing', async () => {
@@ -201,7 +198,7 @@ describe('AcquisitionContainer component', () => {
     await waitForElementToBeRemoved(spinner);
 
     await act(async () => viewProps.onMenuChange(1));
-    await waitFor(async () => expect(viewProps.containerState.selectedMenuIndex).toBe(1));
+    expect(history.location.pathname).toBe('/property/1');
   });
 
   it('displays a warning if form is dirty and menu index changes', async () => {
@@ -211,13 +208,15 @@ describe('AcquisitionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    await act(async () => viewProps.setContainerState({ isEditing: true }));
+    await act(async () => viewProps.setIsEditing(true));
     await act(async () => (viewProps.formikRef.current as any).setFieldValue('value', 1));
     await screen.findByText('1');
     await act(async () => viewProps.onMenuChange(1));
 
-    await waitFor(async () => expect(viewProps.containerState.showConfirmModal).toBe(true));
-    await waitFor(async () => expect(viewProps.containerState.isEditing).toBe(true));
+    expect(viewProps.containerState.showConfirmModal).toBe(true);
+    expect(history.location.pathname).toBe('/property/1');
+    const params = new URLSearchParams(history.location.search);
+    expect(params.has('edit')).toBe(false);
   });
 
   it('cancels edit if form is not dirty and menu index changes', async () => {
@@ -227,10 +226,11 @@ describe('AcquisitionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    await act(async () => viewProps.setContainerState({ isEditing: true }));
+    await act(async () => viewProps.setIsEditing(true));
     await act(async () => viewProps.onMenuChange(1));
 
-    await waitFor(async () => expect(viewProps.containerState.isEditing).toBe(false));
+    const params = new URLSearchParams(history.location.search);
+    expect(params.has('edit')).toBe(false);
   });
 
   it('on success function refetches acq file', async () => {
@@ -252,10 +252,11 @@ describe('AcquisitionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    await act(async () => viewProps.setContainerState({ isEditing: true }));
+    await act(async () => viewProps.setIsEditing(true));
     await act(async () => viewProps.onSuccess());
 
-    expect(viewProps.containerState.isEditing).toBe(false);
+    const params = new URLSearchParams(history.location.search);
+    expect(params.has('edit')).toBe(false);
   });
 
   it('on save function submits the form', async () => {

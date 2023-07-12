@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -29,66 +28,19 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Methods
-        public PimsInsurance GetById(long id)
+        IEnumerable<PimsInsurance> IInsuranceRepository.GetByLeaseId(long leaseId)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
+            using var scope = Logger.QueryScope();
             return this.Context.PimsInsurances
-                .FirstOrDefault(i => i.InsuranceId == id) ?? throw new KeyNotFoundException();
+                .Include(i => i.InsuranceTypeCodeNavigation)
+                .Where(l => l.LeaseId == leaseId).AsNoTracking() ?? throw new KeyNotFoundException();
         }
 
-        /// <summary>
-        /// Add the passed lease to the database assuming the user has the require claims.
-        /// </summary>
-        /// <param name="insurance"></param>
-        /// <param name="commit"></param>
-        /// <returns></returns>
-        public PimsInsurance Add(PimsInsurance insurance, bool commit = true)
+        IEnumerable<PimsInsurance> IInsuranceRepository.UpdateLeaseInsurance(long leaseId, IEnumerable<PimsInsurance> insurances)
         {
-            if (insurance == null)
-            {
-                throw new ArgumentNullException(nameof(insurance), "insurance cannot be null.");
-            }
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-
-            var entityEntry = this.Context.PimsInsurances.Add(insurance);
-            if (commit)
-            {
-                this.Context.CommitTransaction();
-            }
-            return entityEntry.Entity;
-        }
-
-        public PimsInsurance Update(PimsInsurance insurance, bool commit = true)
-        {
-            if (insurance == null)
-            {
-                throw new ArgumentNullException(nameof(insurance), "insurance cannot be null.");
-            }
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-
-            this.Context.PimsInsurances.Update(insurance);
-            if (commit)
-            {
-                this.Context.CommitTransaction();
-            }
-            return GetById(insurance.InsuranceId);
-        }
-
-        public PimsInsurance Delete(PimsInsurance insurance, bool commit = true)
-        {
-            if (insurance == null)
-            {
-                throw new ArgumentNullException(nameof(insurance), "insurance cannot be null.");
-            }
-
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-
-            this.Context.PimsInsurances.Remove(insurance);
-            if (commit)
-            {
-                this.Context.CommitTransaction();
-            }
-            return insurance;
+            using var scope = Logger.QueryScope();
+            this.Context.UpdateChild<PimsLease, long, PimsInsurance, long>(l => l.PimsInsurances, leaseId, insurances.ToArray());
+            return insurances;
         }
         #endregion
     }

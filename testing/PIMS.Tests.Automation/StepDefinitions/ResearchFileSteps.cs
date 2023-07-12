@@ -41,7 +41,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void CreateResearchFile(int rowNumber)
         {
             /* TEST COVERAGE: PSP-3266, PSP-3267, PSP-3357, PSP-3358, PSP-3367, PSP-3595, PSP-3596, PSP-3597, PSP-3598, PSP-3600, 
-             * PSP-3721, PSP-3849, PSP-4333, PSP-4556, PSP-5360, PSP-5541, PSP-5545 */
+             * PSP-3721, PSP-3849, PSP-4333, PSP-4556, PSP-5360, PSP-5541, PSP-5545, PSP-6303 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -88,31 +88,31 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (researchFile.SearchProperties.PID != "")
             {
                 sharedSearchProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(false);
             }
             //Search for a property by PIN
             if (researchFile.SearchProperties.PIN != "")
             {
                 sharedSearchProperties.SelectPropertyByPIN(researchFile.SearchProperties.PIN);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(false);
             }
             //Search for a property by Plan
             if (researchFile.SearchProperties.PlanNumber != "")
             {
                 sharedSearchProperties.SelectPropertyByPlan(researchFile.SearchProperties.PlanNumber);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(false);
             }
             //Search for a property by Address
             if (researchFile.SearchProperties.Address != "")
             {
                 sharedSearchProperties.SelectPropertyByAddress(researchFile.SearchProperties.Address);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(false);
             }
             //Search for a property by Legal Description
             if (researchFile.SearchProperties.LegalDescription != "")
             {
                 sharedSearchProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(false);
             }
 
             //Save Research File
@@ -282,7 +282,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             sharedSearchProperties.VerifySearchPropertiesFeature();
             sharedSearchProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
-            sharedSearchProperties.SelectFirstOption();
+            sharedSearchProperties.SelectFirstOption(true);
 
             //Delete first property
             sharedSearchProperties.DeleteProperty();

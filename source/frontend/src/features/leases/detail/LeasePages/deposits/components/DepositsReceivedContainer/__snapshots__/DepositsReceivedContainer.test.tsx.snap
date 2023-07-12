@@ -310,16 +310,14 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                Pet deposit
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
                 style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Test deposit 1
+                Pet deposit collected for one cat and one medium size dog.
               </div>
               <div
                 class="td"
@@ -327,7 +325,7 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                $1,234.00
+                $500.00
               </div>
               <div
                 class="td"
@@ -335,7 +333,7 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Feb 9, 2022
+                Sep 15, 2021
               </div>
               <div
                 class="td"
@@ -344,9 +342,9 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
                 title=""
               >
                 <a
-                  href="/contact/O3"
+                  href="/contact/P1"
                 >
-                  test organization
+                  test person
                 </a>
               </div>
               <div
@@ -374,16 +372,16 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                TestCustomDeposit (Other)
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
                 style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Test deposit 2
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+
+Integer nec odio.
               </div>
               <div
                 class="td"
@@ -391,7 +389,7 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                $444.00
+                $2,000.00
               </div>
               <div
                 class="td"
@@ -399,7 +397,7 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Feb 9, 2022
+                Mar 1, 2019
               </div>
               <div
                 class="td"
@@ -408,9 +406,9 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
                 title=""
               >
                 <a
-                  href="/contact/P1"
+                  href="/contact/O1"
                 >
-                  test person
+                  test organization
                 </a>
               </div>
               <div

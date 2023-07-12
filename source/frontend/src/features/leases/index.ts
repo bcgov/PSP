@@ -1,7 +1,6 @@
 export * from './add/AddLeaseContainer';
 export * from './add/AddLeaseContainer';
 export * from './add/AddLeaseLayout';
-export * from './detail/LeaseHeader';
 export * from './detail/LeaseLayout';
 export * from './detail/LeasePages/details/DetailAdministration';
 export * from './detail/LeasePages/details/DetailDescription';

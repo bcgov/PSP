@@ -2,11 +2,11 @@ import React from 'react';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { IInsurance } from '@/interfaces';
+import { Api_Insurance } from '@/models/api/Insurance';
 import { formatMoney, prettyFormatDate } from '@/utils';
 
 interface PolicyProps {
-  insurance: IInsurance;
+  insurance: Api_Insurance;
 }
 
 interface PolicyView {
@@ -24,7 +24,7 @@ const Policy: React.FunctionComponent<React.PropsWithChildren<PolicyProps>> = ({
     limit: insurance.coverageLimit ? formatMoney(insurance.coverageLimit) : '',
     expiryDate: prettyFormatDate(insurance.expiryDate),
     coverageDescription: insurance.coverageDescription || '',
-    otherInsuranceType: insurance.otherInsuranceType,
+    otherInsuranceType: insurance.otherInsuranceType ?? undefined,
     insuranceType: insurance.insuranceType.description,
   };
   return (
