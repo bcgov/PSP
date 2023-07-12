@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { useMapSearch } from '@/components/common/mapFSM/useMapSearch';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
@@ -44,7 +43,6 @@ export const AddResearchContainer: React.FunctionComponent<
     return researchForm;
   }, [selectedFeatureDataset]);
   const { addResearchFile } = useAddResearch();
-  const { searchMany } = useMapSearch();
   const { bcaLoading, initialProperty } = useInitialMapSelectorProperties(selectedFeatureDataset);
   if (initialForm?.properties.length && initialProperty) {
     initialForm.properties[0].address = initialProperty.address;
@@ -75,7 +73,6 @@ export const AddResearchContainer: React.FunctionComponent<
             { autoClose: 15000 },
           );
         }
-        await searchMany();
         history.replace(`/mapview/sidebar/research/${response.id}`);
         formikRef.current?.resetForm({ values: ResearchForm.fromApi(response) });
       }

@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { useMapSearch } from '@/components/common/mapFSM/useMapSearch';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
@@ -30,8 +29,6 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const close = useCallback(() => onClose && onClose(), [onClose]);
   const mapMachine = useMapStateMachine();
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
-
-  const { searchMany } = useMapSearch();
 
   const initialForm = useMemo(() => {
     const acquisitionForm = new AcquisitionForm();
@@ -68,7 +65,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         { autoClose: 15000 },
       );
     }
-    await searchMany();
+
     history.replace(`/mapview/sidebar/acquisition/${acqFile.id}`);
     formikRef.current?.resetForm({ values: AcquisitionForm.fromApi(acqFile) });
   };

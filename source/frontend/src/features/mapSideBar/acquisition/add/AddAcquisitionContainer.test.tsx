@@ -8,7 +8,6 @@ import {
   emptyFullyFeaturedFeatureCollection,
   emptyPimsFeatureCollection,
 } from '@/components/common/mapFSM/models';
-import { useMapSearch } from '@/components/common/mapFSM/useMapSearch';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
@@ -65,10 +64,6 @@ jest.mock('@/hooks/repositories/useUserInfoRepository');
 });
 
 // Mock API service calls
-jest.mock('@/components/common/mapFSM/useMapSearch');
-(useMapSearch as jest.MockedFunction<typeof useMapSearch>).mockReturnValue({
-  searchMany: jest.fn().mockResolvedValue({}),
-} as any);
 
 jest.mock('@/hooks/repositories/useAcquisitionProvider');
 const addAcquisitionFile = jest.fn();

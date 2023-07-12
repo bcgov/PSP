@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 
 import { ReactComponent as Fence } from '@/assets/images/fence.svg';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { useMapSearch } from '@/components/common/mapFSM/useMapSearch';
 import { IMapProperty } from '@/components/propertySelector/models';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
@@ -35,8 +34,6 @@ export const AddLeaseContainer: React.FunctionComponent<
   const withUserOverride = useApiUserOverride('Failed to save Lease File');
   const { addLease } = useAddLease();
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
-
-  const { searchMany } = useMapSearch();
 
   const initialProperty = useMemo<IMapProperty | null>(() => {
     if (selectedFeatureDataset) {
@@ -67,7 +64,7 @@ export const AddLeaseContainer: React.FunctionComponent<
           { autoClose: 15000 },
         );
       }
-      await searchMany();
+
       history.replace(`/mapview/sidebar/lease/${response.id}`);
     }
   };

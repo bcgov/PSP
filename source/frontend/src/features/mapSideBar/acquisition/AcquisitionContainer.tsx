@@ -3,7 +3,6 @@ import React, { useCallback, useContext, useEffect, useMemo, useReducer, useRef 
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { useMapSearch } from '@/components/common/mapFSM/useMapSearch';
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
@@ -47,7 +46,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   // Load state from props and side-bar context
   const { acquisitionFileId, onClose, View } = props;
   const { setFile, setFileLoading, staleFile, setStaleFile } = useContext(SideBarContext);
-  const { searchMany } = useMapSearch();
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
   >('Failed to update Acquisition File');
@@ -195,7 +193,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const onSuccess = () => {
     fetchAcquisitionFile();
-    searchMany();
     setIsEditing(false);
   };
 
