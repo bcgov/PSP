@@ -10,13 +10,13 @@ namespace Pims.Api.Models.Concepts
 
         public long? PersonId { get; set; }
 
+        public long? PrimaryContactId { get; set; }
+
         public PersonModel Person { get; set; }
 
         public long? OrganizationId { get; set; }
 
         public OrganizationModel Organization { get; set; }
-
-        public long? PrimaryContactId { get; set; }
 
         public virtual PersonModel PrimaryContact { get; set; }
 
