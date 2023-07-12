@@ -2,14 +2,11 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 
+import { useGenerateExpropriationForm1 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm1';
 import ExpropriationForm1 from './form1/ExpropriationForm1';
 import ExpropriationForm5 from './form5/ExpropriationForm5';
 import ExpropriationForm9 from './form9/ExpropriationForm9';
-import {
-  ExpropriationForm1Model,
-  ExpropriationForm5Model,
-  ExpropriationForm9Model,
-} from './models';
+import { ExpropriationForm5Model, ExpropriationForm9Model } from './models';
 
 export interface IExpropriationTabContainerViewProps {
   loading: boolean;
@@ -22,11 +19,9 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
   // TODO: Load Form 8 into this container
   const acquisitionFileTypeCode = acquisitionFile.acquisitionTypeCode?.id;
 
-  // TODO: submit json values to Generate endpoint
-  const onGenerateForm1 = async (values: ExpropriationForm1Model) => {
-    alert(JSON.stringify(values, null, 4));
-  };
+  const onGenerateForm1 = useGenerateExpropriationForm1();
 
+  // TODO: submit json values to Generate endpoint
   const onGenerateForm5 = async (values: ExpropriationForm5Model) => {
     alert(JSON.stringify(values, null, 4));
   };
