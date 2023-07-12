@@ -13,7 +13,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { cleanup, deferred, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { createPoints } from './leaflet/Layers/util';
-import Map from './MapView';
+import MapView from './MapView';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -88,8 +88,8 @@ function createProps(): TestProps {
 
 // component under test
 function Template(props: Omit<TestProps, 'renderOptions'>) {
-  const { done, setMap, zoom = 6, ...rest } = props;
-  return <Map showSideBar={false} {...rest} />;
+  //const { done, setMap, zoom = 6 } = props;
+  return <MapView />;
 }
 
 function setup(props: Omit<TestProps, 'done'>) {

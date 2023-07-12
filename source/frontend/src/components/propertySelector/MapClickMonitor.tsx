@@ -1,36 +1,36 @@
 import * as React from 'react';
-import { useContext } from 'react';
 
-import { MapStateContext } from '@/components/maps/providers/MapStateContext';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { usePrevious } from '@/hooks/usePrevious';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
+import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { IMapProperty } from './models';
 
 interface IMapClickMonitorProps {
   addProperty: (property: IMapProperty) => void;
-  modifiedProperties: IMapProperty[];
+  modifiedProperties: IMapProperty[]; // TODO: this should be just a list of lat longs
 }
 
 export const MapClickMonitor: React.FunctionComponent<
   React.PropsWithChildren<IMapClickMonitorProps>
 > = ({ addProperty, modifiedProperties }) => {
-  const { selectedFeature } = useContext(MapStateContext);
-  const previous = usePrevious(selectedFeature);
+  const mapMachine = useMapStateMachine();
+
+  const previous = usePrevious(mapMachine.mapLocationFeatureDataset);
   useDraftMarkerSynchronizer(modifiedProperties);
 
   useDeepCompareEffect(() => {
     if (
-      selectedFeature &&
-      previous !== selectedFeature &&
-      previous !== undefined &&
-      selectedFeature?.properties?.IS_SELECTED
+      mapMachine.iSelecting &&
+      mapMachine.mapLocationFeatureDataset &&
+      previous !== mapMachine.mapLocationFeatureDataset &&
+      previous !== undefined
     ) {
-      addProperty(mapFeatureToProperty(selectedFeature));
+      addProperty(featuresetToMapProperty(mapMachine.mapLocationFeatureDataset));
     }
-  }, [addProperty, selectedFeature, previous]);
+  }, [addProperty, mapMachine.iSelecting, mapMachine.mapLocationFeatureDataset, previous]);
   return <></>;
 };
 

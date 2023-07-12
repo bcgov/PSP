@@ -1,28 +1,26 @@
 import './PointClusterer.scss';
 
-import { BBox } from 'geojson';
-import L, { LatLng, LatLngLiteral } from 'leaflet';
+import { BBox, Feature, FeatureCollection, Geometry } from 'geojson';
+import L, { geoJSON, LatLng } from 'leaflet';
 import { find } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FeatureGroup, Marker, Polyline, useMap } from 'react-leaflet';
-import Supercluster from 'supercluster';
+import Supercluster, { ClusterFeature, ClusterProperties, PointFeature } from 'supercluster';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import useSupercluster from '@/components/maps/hooks/useSupercluster';
 import { useFilterContext } from '@/components/maps/providers/FIlterProvider';
-import { MapStateActionTypes, MapStateContext } from '@/components/maps/providers/MapStateContext';
-import { ICluster, PointFeature } from '@/components/maps/types';
+import { ICluster } from '@/components/maps/types';
 import { MAX_ZOOM } from '@/constants/strings';
-import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { IProperty } from '@/interfaces';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 
-import SelectedPropertyMarker from '../Markers/SelectedPropertyMarker';
-import { Spiderfier } from './Spiderfier';
-import { getDraftIcon, getMarkerIcon, pointToLayer, zoomToCluster } from './util';
+import SinglePropertyMarker from '../Markers/SingleMarker';
+import { Spiderfier, SpiderSet } from './Spiderfier';
+import { getDraftIcon, pointToLayer, zoomToCluster } from './util';
 
 export type PointClustererProps = {
-  points: Array<PointFeature>;
-  draftPoints: Array<PointFeature>;
   bounds?: BBox;
   zoom: number;
   minZoom?: number;
@@ -31,53 +29,8 @@ export type PointClustererProps = {
   zoomToBoundsOnClick?: boolean;
   /** When you click a cluster at the bottom zoom level we spiderfy it so you can see all of its markers. Default: true */
   spiderfyOnMaxZoom?: boolean;
-  /** Action when a marker is clicked */
-  onMarkerClick: (property: IProperty) => void;
-  tilesLoaded: boolean;
-};
 
-/**
- * Converts the flat list of properties into the correct type of inventory property.
- * @param property A flat list of property values (from a Feature).
- */
-export const convertToProperty = (
-  property: any,
-  latitude?: number,
-  longitude?: number,
-): IProperty | null => {
-  return {
-    pid: property.PID,
-    latitude: latitude,
-    longitude: longitude,
-    address: {
-      id: property.ADDRESS_ID,
-      municipality: property.MUNICIPALITY_NAME,
-      provinceId: 1,
-      province: property.PROVINCE_STATE_CODE,
-      streetAddress1: property.STREET_ADDRESS_1,
-      postal: property.POSTAL_CODE,
-      country: property.COUNTRY_CODE,
-    },
-    pin: property.PIN,
-    landArea: property.LAND_AREA,
-    landLegalDescription: property.LAND_LEGAL_DESCRIPTION,
-    name: property.NAME,
-    description: property.DESCRIPTION,
-    isSensitive: property.IS_SENSITIVE,
-    isOwned: property.IS_OWNED,
-    encumbranceReason: property.ENCUMBRANCE_REASON,
-    isPropertyOfInterest: property.IS_PROPERTY_OF_INTEREST,
-    isPayableLease: property.IS_PAYABLE_LEASE,
-    isVisibleToOtherAgencies: property.IS_VISIBLE_TO_OTHER_AGENCIES,
-    areaUnit: property.PROPERTY_AREA_UNIT_TYPE_CODE,
-    classificationId: property.PROPERTY_CLASSIFICATION_TYPE_CODE,
-    id: property.PROPERTY_ID,
-    status: property.PROPERTY_STATUS_TYPE_CODE,
-    tenure: property.PROPERTY_TENURE_TYPE_CODE,
-    regionId: property.REGION_CODE,
-    zoning: property.ZONING,
-    zoningPotential: property.ZONING_POTENTIAL,
-  };
+  tilesLoaded: boolean;
 };
 
 /**
@@ -85,11 +38,8 @@ export const convertToProperty = (
  * @param param0 Point cluster properties.
  */
 export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProps>> = ({
-  points,
-  draftPoints,
   bounds,
   zoom,
-  onMarkerClick,
   minZoom: minZoomProps,
   maxZoom: maxZoomProps,
   zoomToBoundsOnClick = true,
@@ -97,17 +47,22 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   tilesLoaded,
 }) => {
   // state and refs
-  const spiderfierRef = useRef<Spiderfier>();
+  const spiderfierRef =
+    useRef<Spiderfier<PIMS_Property_Location_View | PMBC_FullyAttributed_Feature_Properties>>();
   const featureGroupRef = useRef<L.FeatureGroup>(null);
   const draftFeatureGroupRef = useRef<L.FeatureGroup>(null);
   const filterState = useFilterContext();
-  const mapStateContext = React.useContext(MapStateContext);
-  const { selectedInventoryProperty: selected } = mapStateContext;
 
-  const [currentSelected, setCurrentSelected] = useState(selected);
-  const [currentCluster, setCurrentCluster] = useState<
-    ICluster<any, Supercluster.AnyProps> | undefined
-  >(undefined);
+  // TODO: Figure out if the currentCluster is needed
+  const [, setCurrentCluster] = useState<ICluster<any, Supercluster.AnyProps> | undefined>(
+    undefined,
+  );
+
+  const mapMachine = useMapStateMachine();
+
+  const selectedFeature = useMemo(() => {
+    return mapMachine.mapFeatureSelected;
+  }, [mapMachine.mapFeatureSelected]);
 
   const mapInstance: L.Map = useMap();
   if (!mapInstance) {
@@ -117,29 +72,44 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   const minZoom = minZoomProps ?? 0;
   const maxZoom = maxZoomProps ?? 18;
 
-  const [spider, setSpider] = useState<any>({});
+  const [spider, setSpider] = useState<
+    SpiderSet<PIMS_Property_Location_View | PMBC_FullyAttributed_Feature_Properties>
+  >({});
+
+  const draftPoints = useMemo(() => {
+    return mapMachine.draftLocations.map(x => {
+      // The values on the feature are rounded to the 4th decimal. Do the same to the draft points.
+      return {
+        lat: parseFloat(x.lat.toFixed(4)),
+        lng: parseFloat(x.lng.toFixed(4)),
+      };
+    });
+  }, [mapMachine.draftLocations]);
+
+  const pimsFeatures = mapMachine.mapFeatureData.pimsFeatures;
+  const fullyAttributedFeatures = mapMachine.mapFeatureData.fullyAttributedFeatures;
+
+  const featurePoints: Supercluster.PointFeature<
+    PIMS_Property_Location_View | PMBC_FullyAttributed_Feature_Properties
+  >[] = useMemo(() => {
+    const pimsPoints =
+      featureCollectionResponseToPointFeature<PIMS_Property_Location_View>(pimsFeatures);
+    const fullyAttributedPoints =
+      featureCollectionResponseToPointFeature<PMBC_FullyAttributed_Feature_Properties>(
+        fullyAttributedFeatures,
+      );
+    return [...pimsPoints, ...fullyAttributedPoints];
+  }, [pimsFeatures, fullyAttributedFeatures]);
 
   // get clusters
   // clusters are an array of GeoJSON Feature objects, but some of them
   // represent a cluster of points, and some represent individual points.
   const { clusters, supercluster } = useSupercluster({
-    points,
+    points: featurePoints,
     bounds,
     zoom,
     options: { radius: 60, extent: 256, minZoom, maxZoom, enableClustering: !filterState.changed },
   });
-  const currentClusterIds = useMemo(() => {
-    if (!currentCluster?.properties?.cluster_id) {
-      return [];
-    }
-    try {
-      const clusteredPoints =
-        supercluster?.getLeaves(currentCluster?.properties?.cluster_id, Infinity) ?? [];
-      return clusteredPoints.map(p => p.properties.id);
-    } catch (error) {
-      return [];
-    }
-  }, [currentCluster, supercluster]);
 
   // Register event handlers to shrink and expand clusters when map is interacted with
   const componentDidMount = useCallback(() => {
@@ -170,15 +140,12 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
   // on-click handler
   const zoomOrSpiderfy = useCallback(
-    (cluster: ICluster) => {
+    (cluster: ClusterFeature<ClusterProperties>) => {
       if (!supercluster || !spiderfierRef.current || !cluster) {
         return;
       }
       const { cluster_id } = cluster.properties;
-      const expansionZoom = Math.min(
-        supercluster.getClusterExpansionZoom(cluster_id as number),
-        maxZoom,
-      );
+      const expansionZoom = Math.min(supercluster.getClusterExpansionZoom(cluster_id), maxZoom);
 
       // already at maxZoom, need to spiderfy child markers
       if (expansionZoom === maxZoom && spiderfyOnMaxZoom) {
@@ -200,22 +167,14 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
    * Update the map bounds and zoom to make all draft properties visible.
    */
   useDeepCompareEffect(() => {
-    const isDraft = draftPoints.length > 0;
-    if (draftFeatureGroupRef.current && isDraft) {
+    const hasDraftPoints = draftPoints.length > 0;
+    if (draftFeatureGroupRef.current && hasDraftPoints) {
       const group: L.FeatureGroup = draftFeatureGroupRef.current;
-
-      const validLatLngs = draftPoints.map(p => {
-        const latLng: LatLngLiteral = {
-          lat: p.geometry?.coordinates[1],
-          lng: p.geometry?.coordinates[0],
-        };
-        return latLng;
-      });
 
       //react-leaflet is not displaying removed drafts but the layer is still present, this
       //causes the fitbounds calculation to be off. Fixed by manually cleaning up layers referencing removed drafts.
       group.getLayers().forEach((l: any) => {
-        if (!find(validLatLngs, vl => (l._latlng as LatLng).equals(vl))) {
+        if (!find(draftPoints, vl => (l._latlng as LatLng).equals(vl))) {
           group.removeLayer(l);
         }
       });
@@ -237,7 +196,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       const group: L.FeatureGroup = featureGroupRef.current;
       const groupBounds = group.getBounds();
 
-      if (groupBounds.isValid() && filterState.changed && !selected && tilesLoaded) {
+      if (groupBounds.isValid() && filterState.changed && !selectedFeature && tilesLoaded) {
         filterState.setChanged(false);
         mapInstance.fitBounds(groupBounds, { maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM });
       }
@@ -246,9 +205,8 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       spiderfierRef.current?.unspiderfy();
       setCurrentCluster(undefined);
     }
-  }, [featureGroupRef, mapInstance, clusters, tilesLoaded]);
+  }, [featureGroupRef, mapInstance, clusters, selectedFeature, tilesLoaded]);
 
-  const keycloak = useKeycloakWrapper();
   return (
     <>
       <FeatureGroup ref={featureGroupRef}>
@@ -258,14 +216,13 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
         {clusters.map((cluster, index) => {
           // every cluster point has coordinates
           const [longitude, latitude] = cluster.geometry.coordinates;
-          const {
-            cluster: isCluster,
-            point_count: pointCount,
-            point_count_abbreviated,
-          } = cluster.properties as any;
-          const size = pointCount < 100 ? 'small' : pointCount < 1000 ? 'medium' : 'large';
-          // we have a cluster to render
-          if (isCluster) {
+
+          // Only clusters have the cluster property, if so we have a cluster to render
+          if ('cluster' in cluster.properties) {
+            const clusterFeature = cluster as ClusterFeature<ClusterProperties>;
+            const { point_count: pointCount, point_count_abbreviated } = clusterFeature.properties;
+
+            const sizeClass = pointCount < 100 ? 'small' : pointCount < 1000 ? 'medium' : 'large';
             return (
               // render the cluster marker
               <Marker
@@ -273,129 +230,84 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
                 position={[latitude, longitude]}
                 eventHandlers={{
                   click: e => {
-                    zoomOrSpiderfy(cluster);
+                    zoomOrSpiderfy(clusterFeature);
                     e.target.closePopup();
                   },
                 }}
                 icon={
                   new L.DivIcon({
                     html: `<div><span>${point_count_abbreviated}</span></div>`,
-                    className: `marker-cluster marker-cluster-${size}`,
+                    className: `marker-cluster marker-cluster-${sizeClass}`,
                     iconSize: [40, 40],
                   })
                 }
               />
             );
+          } else {
+            const clusterFeature = cluster as PointFeature<
+              PIMS_Property_Location_View | PMBC_FullyAttributed_Feature_Properties
+            >;
+
+            const isSelected =
+              selectedFeature !== null ? clusterFeature.id === selectedFeature.clusterId : false;
+            // TODO: There might be a cleaner way to know if a marker is from a different source.
+            const isOwned =
+              clusterFeature.id?.toString().startsWith('PIMS_PROPERTY_LOCATION_VW') ?? false;
+
+            const latlng = { lat: latitude, lng: longitude };
+
+            return (
+              <SinglePropertyMarker
+                key={index}
+                pointFeature={clusterFeature}
+                markerPosition={latlng}
+                isSelected={isSelected}
+                isOwned={isOwned}
+              />
+            );
           }
-
-          return (
-            // render single marker, not in a cluster
-            <Marker
-              {...(cluster.properties as any)}
-              key={index}
-              position={[latitude, longitude]}
-              icon={getMarkerIcon(cluster)}
-              eventHandlers={{
-                click: e => {
-                  const convertedProperty = convertToProperty(
-                    cluster.properties,
-                    latitude,
-                    longitude,
-                  );
-                  convertedProperty && onMarkerClick(convertedProperty); //open information slideout
-                  setCurrentSelected(convertedProperty);
-
-                  mapStateContext.setState({
-                    type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
-                    selectedInventoryProperty: convertedProperty,
-                  });
-                },
-              }}
-            />
-          );
         })}
         {/**
          * Render markers from a spiderfied cluster click
          */}
-        {spider.markers?.map((m: any, index: number) => {
-          return (
-            <Marker
-              {...m.properties}
-              key={index}
-              position={m.position}
-              //highlight pin if currently selected
-              icon={getMarkerIcon(
-                m,
-                (m.properties.PROPERTY_ID as number) === (selected?.id as number),
-              )}
-              eventHandlers={{
-                click: e => {
-                  //sets this pin as currently selected
-                  const convertedProperty = convertToProperty(
-                    m.properties,
-                    m.geometry.coordinates[1],
-                    m.geometry.coordinates[0],
-                  );
+        {spider.markers?.map((m, index: number) => {
+          const clusterFeature = m as PointFeature<
+            PIMS_Property_Location_View | PMBC_FullyAttributed_Feature_Properties
+          >;
 
-                  if (keycloak.canUserViewProperty(m.properties as IProperty)) {
-                    convertedProperty && onMarkerClick(convertedProperty); //open information slideout
-                    mapStateContext.setState({
-                      type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
-                      selectedInventoryProperty: convertedProperty,
-                    });
-                  }
-                },
-              }}
+          // TODO: There might be a cleaner way to know if a marker is from a different source.
+          const isOwned = m.id?.toString().startsWith('PIMS_PROPERTY_LOCATION_VW') ?? false;
+
+          return (
+            <SinglePropertyMarker
+              key={index}
+              pointFeature={clusterFeature}
+              markerPosition={m.position}
+              isSelected={false}
+              isOwned={isOwned}
             />
           );
         })}
         {/**
          * Render lines/legs from a spiderfied cluster click
          */}
-        {spider.lines?.map((m: any, index: number) => (
+        {spider.lines?.map((m, index: number) => (
           <Polyline key={index} positions={m.coords} {...m.options} />
         ))}
-        {/**
-         * render selected property marker, auto opens the property popup
-         */}
-        {!!selected &&
-          selected?.id === currentSelected?.id &&
-          !currentClusterIds.includes(Number(selected?.id)) && (
-            <SelectedPropertyMarker
-              {...selected}
-              icon={getMarkerIcon({ properties: selected } as any, true)}
-              className={'active-selected'}
-              position={[selected.latitude as number, selected.longitude as number]}
-              map={mapInstance}
-              eventHandlers={{
-                click: () => {
-                  mapStateContext.setState({
-                    type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
-                    selectedInventoryProperty: selected,
-                  });
-                  selected && onMarkerClick(selected);
-                },
-              }}
-            />
-          )}
       </FeatureGroup>
+      {/**
+       * Render all of the unclustered DRAFT MARKERS.
+       **/}
       <FeatureGroup ref={draftFeatureGroupRef}>
         {draftPoints.map((draftPoint, index) => {
-          //render all of the unclustered draft markers.
-          if (draftPoint?.geometry?.coordinates) {
-            const [longitude, latitude] = draftPoint.geometry.coordinates;
-            if (!latitude || !longitude) return <></>;
-            return (
-              <Marker
-                {...(draftPoint.properties as any)}
-                key={index}
-                position={[latitude, longitude]}
-                icon={getDraftIcon((index + 1).toString())}
-                zIndexOffset={500}
-              ></Marker>
-            );
-          }
-          return <></>;
+          return (
+            <Marker
+              key={index}
+              position={draftPoint}
+              icon={getDraftIcon((index + 1).toString())}
+              zIndexOffset={500}
+            ></Marker>
+          );
         })}
       </FeatureGroup>
     </>
@@ -403,3 +315,43 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 };
 
 export default PointClusterer;
+
+/**
+ * @param feature the feature to obtain lat/lng coordinates for.
+ * @returns [lat, lng]
+ */
+const getLatLng = <P,>(feature: Feature<Geometry, P>) => {
+  if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
+    const latLng = geoJSON(feature.geometry).getBounds().getCenter();
+    return [latLng.lng, latLng.lat];
+  } else if ('coordinates' in feature.geometry) {
+    // TODO: This is only needed to satisfy the types. Fix this.
+    const latLng = geoJSON(feature.geometry).getBounds().getCenter();
+    return [latLng.lng, latLng.lat];
+  } else {
+    return [];
+  }
+};
+
+const featureCollectionResponseToPointFeature = <P,>(
+  response: FeatureCollection<Geometry, P> | undefined,
+): PointFeature<P>[] => {
+  const validFeatures = response?.features.filter(feature => !!feature?.geometry) ?? [];
+  const data: PointFeature<P>[] = validFeatures.map(feature => {
+    return featureResponseToPointFeature(feature);
+  });
+
+  return data;
+};
+
+const featureResponseToPointFeature = <P,>(feature: Feature<Geometry, P>): PointFeature<P> => {
+  const data: PointFeature<P> = {
+    ...feature,
+    geometry: { type: 'Point', coordinates: getLatLng(feature) },
+    properties: {
+      ...feature.properties,
+    },
+  };
+
+  return data;
+};

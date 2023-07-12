@@ -56,6 +56,10 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
       pinOrPid: (newProperty.pid || newProperty.pin || '')?.toString(),
       searchBy: 'pinOrPid',
       address: '',
+      page: undefined,
+      quantity: undefined,
+      latitude: undefined,
+      longitude: undefined,
     };
 
     const result = await getProperties.execute(params);

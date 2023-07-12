@@ -2,6 +2,7 @@ import { act, screen, waitFor } from '@testing-library/react';
 import axios, { AxiosError } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
@@ -22,6 +23,12 @@ jest.mock('react-visibility-sensor', () => {
     return children;
   });
 });
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+const mapMachineBaseMock = {
+  setDraftLocations: jest.fn(),
+};
+(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 const setIsShowingPropertySelector = jest.fn();
 const onSuccess = jest.fn();

@@ -1,9 +1,8 @@
+import { LatLngLiteral } from 'leaflet';
 import debounce from 'lodash/debounce';
 import * as React from 'react';
-import { useContext, useEffect } from 'react';
 
-import { MapStateActionTypes, MapStateContext } from '@/components/maps/providers/MapStateContext';
-import { PointFeature } from '@/components/maps/types';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { IMapProperty } from '@/components/propertySelector/models';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useIsMounted from '@/hooks/util/useIsMounted';
@@ -13,19 +12,9 @@ import useIsMounted from '@/hooks/util/useIsMounted';
  * As long as a parcel/building has both a lat and a lng it will be returned by this method.
  * @param modifiedProperties the current form values to extract lat/lngs from.
  */
-const getDraftMarkers = (modifiedProperties: IMapProperty[]): PointFeature[] => {
-  return modifiedProperties.map<PointFeature>((property: IMapProperty) => {
-    return {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [+(property?.longitude ?? 0), +(property?.latitude ?? 0)],
-      },
-      properties: {
-        id: 0,
-        name: property.name?.length ? property.name : 'New Parcel',
-      },
-    };
+const getDraftLocations = (modifiedProperties: IMapProperty[]): LatLngLiteral[] => {
+  return modifiedProperties.map<LatLngLiteral>((property: IMapProperty) => {
+    return { lat: Number(property?.latitude ?? 0), lng: Number(property?.longitude ?? 0) };
   });
 };
 
@@ -34,11 +23,9 @@ const getDraftMarkers = (modifiedProperties: IMapProperty[]): PointFeature[] => 
  * @param modifiedProperties array that contains the properties to be drawn.
  */
 const useDraftMarkerSynchronizer = (modifiedProperties: IMapProperty[]) => {
-  const { setState } = useContext(MapStateContext);
   const isMounted = useIsMounted();
-  useEffect(() => {
-    return () => setState({ type: MapStateActionTypes.DRAFT_PROPERTIES, draftProperties: [] });
-  }, [setState]);
+
+  const { setDraftLocations } = useMapStateMachine();
 
   /**
    * Synchronize the markers that have been updated in the parcel form with the map, adding all new markers as drafts.
@@ -47,18 +34,15 @@ const useDraftMarkerSynchronizer = (modifiedProperties: IMapProperty[]) => {
   const synchronizeMarkers = React.useCallback(
     (modifiedProperties: IMapProperty[]) => {
       if (isMounted()) {
-        const draftMarkers = getDraftMarkers(modifiedProperties);
-        if (draftMarkers.length) {
-          setState({
-            type: MapStateActionTypes.DRAFT_PROPERTIES,
-            draftProperties: draftMarkers,
-          });
+        const draftLocations = getDraftLocations(modifiedProperties);
+        if (draftLocations.length) {
+          setDraftLocations(draftLocations);
         } else {
-          setState({ type: MapStateActionTypes.DRAFT_PROPERTIES, draftProperties: [] });
+          setDraftLocations([]);
         }
       }
     },
-    [setState, isMounted],
+    [setDraftLocations, isMounted],
   );
 
   const synchronize = React.useRef(

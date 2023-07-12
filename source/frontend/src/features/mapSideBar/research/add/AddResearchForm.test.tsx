@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fakeText, fillInput, render, RenderOptions } from '@/utils/test-utils';
@@ -16,6 +17,12 @@ jest.mock('@react-keycloak/web');
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+const mapMachineBaseMock = {
+  setDraftLocations: jest.fn(),
+};
+(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 describe('AddResearchForm component', () => {
   // render component under test

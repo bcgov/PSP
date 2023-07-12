@@ -3,11 +3,6 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { Button } from '@/components/common/buttons';
-import {
-  MapCursors,
-  MapStateActionTypes,
-  MapStateContext,
-} from '@/components/maps/providers/MapStateContext';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import { getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
@@ -17,15 +12,14 @@ import { PropertySelectorTabsView, SelectorTabNames } from './PropertySelectorTa
 import PropertySelectorSearchContainer from './search/PropertySelectorSearchContainer';
 
 export interface IMapSelectorContainerProps {
-  addSelectedProperties: (properties: IMapProperty[]) => void;
-  modifiedProperties: PropertyForm[];
+  addSelectedProperties: (properties: IMapProperty[]) => void; // TODO: This component should be providing the featureDataset instead of the IMapProperty.
+  modifiedProperties: PropertyForm[]; // TODO: Figure out if this component really needs the entire propertyForm. It could be that only the lat long are needed.
 }
 
 export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainerProps> = ({
   addSelectedProperties,
   modifiedProperties,
 }) => {
-  const { setState } = React.useContext(MapStateContext);
   const [searchSelectedProperties, setSearchSelectedProperties] = useState<IMapProperty[]>([]);
   const [activeSelectorTab, setActiveSelectorTab] = useState<SelectorTabNames>(
     SelectorTabNames.map,
@@ -36,10 +30,6 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
       ? modifiedMapProperties[0]
       : undefined,
   );
-
-  React.useEffect(() => {
-    return () => setState({ type: MapStateActionTypes.CURSOR, cursor: MapCursors.DEFAULT });
-  }, [setState]);
 
   return (
     <>

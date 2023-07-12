@@ -1,13 +1,20 @@
-import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
 
-import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
-import { MapStateContextProvider } from '@/components/maps/providers/MapStateContext';
+import {
+  IMapStateMachineContext,
+  useMapStateMachine,
+} from '@/components/common/mapFSM/MapStateMachineContext';
+import {
+  emptyFullyFeaturedFeatureCollection,
+  emptyPimsFeatureCollection,
+} from '@/components/common/mapFSM/models';
+import { useMapSearch } from '@/components/common/mapFSM/useMapSearch';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { Api_User } from '@/models/api/User';
+import { emptyRegion } from '@/models/layers/motRegionalBoundary';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, renderAsync, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
@@ -58,7 +65,7 @@ jest.mock('@/hooks/repositories/useUserInfoRepository');
 });
 
 // Mock API service calls
-jest.mock('@/components/maps/hooks/useMapSearch');
+jest.mock('@/components/common/mapFSM/useMapSearch');
 (useMapSearch as jest.MockedFunction<typeof useMapSearch>).mockReturnValue({
   searchMany: jest.fn().mockResolvedValue({}),
 } as any);
@@ -74,17 +81,58 @@ const addAcquisitionFile = jest.fn();
   },
 } as ReturnType<typeof useAcquisitionProvider>);
 
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+const mapMachineBaseMock = {
+  requestFlyToBounds: jest.fn(),
+  mapFeatureData: {
+    pimsFeatures: emptyPimsFeatureCollection,
+    fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
+  },
+
+  isSidebarOpen: false,
+  hasPendingFlyTo: false,
+  requestedFlyTo: {
+    location: null,
+    bounds: null,
+  },
+  mapFeatureSelected: null,
+  mapLocationSelected: null,
+  mapLocationFeatureDataset: null,
+  selectedFeatureDataset: null,
+  showPopup: false,
+  isLoading: false,
+  mapFilter: null,
+
+  draftLocations: [],
+  pendingRefresh: false,
+  iSelecting: false,
+  requestFlyToLocation: jest.fn(),
+
+  processFlyTo: jest.fn(),
+  processPendingRefresh: jest.fn(),
+  openSidebar: jest.fn(),
+  closeSidebar: jest.fn(),
+  closePopup: jest.fn(),
+  mapClick: jest.fn(),
+  mapMarkerClick: jest.fn(),
+  setMapFilter: jest.fn(),
+  refreshMapProperties: jest.fn(),
+  prepareForCreation: jest.fn(),
+  startSelection: jest.fn(),
+  finishSelection: jest.fn(),
+  setDraftLocations: jest.fn(),
+};
+
 describe('AddAcquisitionContainer component', () => {
   // render component under test
   const setup = async (
     props: IAddAcquisitionContainerProps = DEFAULT_PROPS,
     renderOptions: RenderOptions = {},
-    selectedProperty: Feature<Geometry, GeoJsonProperties> | null = null,
   ) => {
     const utils = await renderAsync(
-      <MapStateContextProvider values={{ selectedFileFeature: selectedProperty }}>
+      <>
         <AddAcquisitionContainer {...props} />
-      </MapStateContextProvider>,
+      </>,
       {
         ...renderOptions,
         store: {
@@ -155,6 +203,7 @@ describe('AddAcquisitionContainer component', () => {
     formValues.fundingTypeCode = 'OTHER';
     formValues.fundingTypeOtherDescription = 'A different type of funding';
     addAcquisitionFile.mockResolvedValue(mockAcquisitionFileResponse(1, formValues.fileName));
+    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
   });
 
   afterEach(() => {
@@ -190,28 +239,60 @@ describe('AddAcquisitionContainer component', () => {
   });
 
   it('should pre-populate the region if a property is selected', async () => {
-    await act(async () => {
-      setup(undefined, undefined, {
-        properties: { REGION_NUMBER: 1 },
-        geometry: {
-          type: 'Polygon',
-          coordinates: [[[-120.69195885, 50.25163372]]],
+    const testMockMahine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      selectedFeatureDataset: {
+        location: { lng: -120.69195885, lat: 50.25163372 },
+        pimsFeature: null,
+        parcelFeature: null,
+        regionFeature: {
+          type: 'Feature',
+          properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
+          geometry: {
+            type: 'Polygon',
+            coordinates: [[[-120.69195885, 50.25163372]]],
+          },
         },
-      } as any);
+        districtFeature: null,
+        municipalityFeature: null,
+      },
+    };
+    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
+      testMockMahine,
+    );
+
+    await act(async () => {
+      setup();
     });
     const text = await screen.findByDisplayValue(/South Coast Region/i);
     expect(text).toBeVisible();
   });
 
   it('should not pre-populate the region if a property is selected and the region cannot be determined', async () => {
-    await act(async () => {
-      setup(undefined, undefined, {
-        properties: { REGION_NUMBER: 4 },
-        geometry: {
-          type: 'Polygon',
-          coordinates: [[[-120.69195885, 50.25163372]]],
+    const testMockMahine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      selectedFeatureDataset: {
+        location: { lng: -120.69195885, lat: 50.25163372 },
+        pimsFeature: null,
+        parcelFeature: null,
+        regionFeature: {
+          type: 'Feature',
+          properties: { ...emptyRegion, REGION_NUMBER: 4 },
+          geometry: {
+            type: 'Polygon',
+            coordinates: [[[-120.69195885, 50.25163372]]],
+          },
         },
-      } as any);
+        districtFeature: null,
+        municipalityFeature: null,
+      },
+    };
+    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
+      testMockMahine,
+    );
+
+    await act(async () => {
+      setup();
     });
     const text = await screen.findByDisplayValue(/Select region.../i);
     expect(text).toBeVisible();

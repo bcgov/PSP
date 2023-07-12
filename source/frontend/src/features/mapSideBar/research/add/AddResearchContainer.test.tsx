@@ -1,15 +1,19 @@
 import { screen } from '@testing-library/react';
-import { Feature, GeoJsonProperties, Geometry } from 'geojson';
+import { Feature, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import {
-  IMapStateContext,
-  MapStateContextProvider,
-} from '@/components/maps/providers/MapStateContext';
-import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
+  IMapStateMachineContext,
+  useMapStateMachine,
+} from '@/components/common/mapFSM/MapStateMachineContext';
+import {
+  emptyFullyFeaturedFeatureCollection,
+  emptyPimsFeatureCollection,
+} from '@/components/common/mapFSM/models';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import AddResearchContainer, { IAddResearchContainerProps } from './AddResearchContainer';
@@ -30,20 +34,58 @@ jest.mock('react-visibility-sensor', () => {
   });
 });
 
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+const mapMachineBaseMock = {
+  requestFlyToBounds: jest.fn(),
+  mapFeatureData: {
+    pimsFeatures: emptyPimsFeatureCollection,
+    fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
+  },
+
+  isSidebarOpen: false,
+  hasPendingFlyTo: false,
+  requestedFlyTo: {
+    location: null,
+    bounds: null,
+  },
+  mapFeatureSelected: null,
+  mapLocationSelected: null,
+  mapLocationFeatureDataset: null,
+  selectedFeatureDataset: null,
+  showPopup: false,
+  isLoading: false,
+  mapFilter: null,
+
+  draftLocations: [],
+  pendingRefresh: false,
+  iSelecting: false,
+  requestFlyToLocation: jest.fn(),
+
+  processFlyTo: jest.fn(),
+  processPendingRefresh: jest.fn(),
+  openSidebar: jest.fn(),
+  closeSidebar: jest.fn(),
+  closePopup: jest.fn(),
+  mapClick: jest.fn(),
+  mapMarkerClick: jest.fn(),
+  setMapFilter: jest.fn(),
+  refreshMapProperties: jest.fn(),
+  prepareForCreation: jest.fn(),
+  startSelection: jest.fn(),
+  finishSelection: jest.fn(),
+  setDraftLocations: jest.fn(),
+};
+(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+
 describe('AddResearchContainer component', () => {
   const setup = (
-    renderOptions: RenderOptions & IAddResearchContainerProps & Partial<IMapStateContext>,
+    renderOptions: RenderOptions & IAddResearchContainerProps & Partial<IMapStateMachineContext>,
   ) => {
     // render component under test
     const component = render(
-      <MapStateContextProvider
-        values={{
-          selectedFileFeature: renderOptions.selectedFileFeature,
-          setState: renderOptions.setState,
-        }}
-      >
+      <>
         <AddResearchContainer onClose={renderOptions.onClose} />
-      </MapStateContextProvider>,
+      </>,
       {
         ...renderOptions,
         claims: [],
@@ -64,60 +106,58 @@ describe('AddResearchContainer component', () => {
   });
 
   it('displays the currently selected property', async () => {
+    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue({
+      ...mapMachineBaseMock,
+      selectedFeatureDataset: {
+        location: { lat: 0, lng: 0 },
+        pimsFeature: null,
+        parcelFeature: selectedFeature,
+        regionFeature: null,
+        districtFeature: null,
+        municipalityFeature: null,
+      },
+    });
+
     const {
       component: { findByText },
-    } = setup({ onClose: noop, selectedFileFeature: selectedFeature });
+    } = setup({ onClose: noop });
     await act(async () => {
       const pidText = await findByText('PID: 002-225-255');
       expect(pidText).toBeVisible();
     });
   });
 
-  it('resets the form if selected features already contains properties', async () => {
-    const {
-      component: { queryByText },
-    } = setup({
-      onClose: noop,
-      selectedFeature: null,
-      draftProperties: [mapFeatureToProperty(selectedFeature) as any],
-    });
-    history.push('/mapview/sidebar/research/new');
-    const pidText = await queryByText('PID: 002-225-255');
-    expect(pidText).toBeNull();
-  });
-
   it('resets the list of draft properties when closed', async () => {
-    const setDraftMarkers = jest.fn();
+    const testMockMahine = {
+      ...mapMachineBaseMock,
+    };
+    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
+      testMockMahine,
+    );
+
     const {
       component: { getByTitle },
     } = setup({
       onClose: noop,
-      selectedFeature: null,
-      setState: setDraftMarkers,
     });
 
     const closeButton = getByTitle('close');
 
     await waitFor(async () => {
       userEvent.click(closeButton);
-      expect(setDraftMarkers).toHaveBeenCalledWith({
-        draftProperties: [],
-        type: 'DRAFT_PROPERTIES',
-      });
+      expect(testMockMahine.setDraftLocations).toHaveBeenCalledWith([]);
     });
   });
 
   it('should have the Help with choosing a name text in the component', async () => {
     setup({
       onClose: noop,
-      selectedFeature: null,
-      setState: noop,
     });
     expect(screen.getByText(`Help with choosing a name`)).toBeInTheDocument();
   });
 });
 
-const selectedFeature = {
+const selectedFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> = {
   type: 'Feature',
   id: 'WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW.fid-570f7aaf_180481054f6_-993',
   geometry: {
@@ -132,7 +172,6 @@ const selectedFeature = {
       ],
     ],
   },
-  geometry_name: 'SHAPE',
   properties: {
     PARCEL_FABRIC_POLY_ID: 5156389,
     PARCEL_NAME: '002225255',
@@ -151,10 +190,21 @@ const selectedFeature = {
     FEATURE_LENGTH_M: 103.8813,
     OBJECTID: 584001723,
     SE_ANNO_CAD_DATA: null,
-    IS_SELECTED: false,
-    REGION_NUMBER: 2,
-    REGION_NAME: 'South Coast',
-    DISTRICT_NUMBER: 2,
-    DISTRICT_NAME: 'Vancouver Island',
+    GLOBAL_UID: null,
+    PLAN_ID: null,
+    PID_FORMATTED: null,
+    SOURCE_PARCEL_ID: null,
+    SURVEY_DESIGNATION_1: null,
+    SURVEY_DESIGNATION_2: null,
+    SURVEY_DESIGNATION_3: null,
+    LEGAL_DESCRIPTION: null,
+    IS_REMAINDER_IND: null,
+    GEOMETRY_SOURCE: null,
+    POSITIONAL_ERROR: null,
+    ERROR_REPORTED_BY: null,
+    CAPTURE_METHOD: null,
+    COMPILED_IND: null,
+    STATED_AREA: null,
+    WHEN_CREATED: null,
   },
-} as Feature<Geometry, GeoJsonProperties>;
+};

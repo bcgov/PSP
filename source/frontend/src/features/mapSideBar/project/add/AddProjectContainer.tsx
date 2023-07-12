@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
-import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
+import { useMapSearch } from '@/components/common/mapFSM/useMapSearch';
 import * as API from '@/constants/API';
 import { FinancialCodeTypes } from '@/constants/index';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';

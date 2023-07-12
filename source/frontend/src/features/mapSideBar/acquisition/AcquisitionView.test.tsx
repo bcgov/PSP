@@ -2,6 +2,11 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import React from 'react';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import {
+  emptyFullyFeaturedFeatureCollection,
+  emptyPimsFeatureCollection,
+} from '@/components/common/mapFSM/models';
 import { Claims } from '@/constants/claims';
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
@@ -20,6 +25,48 @@ const mockAxios = new MockAdapter(axios);
 
 // mock auth library
 jest.mock('@react-keycloak/web');
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+const mapMachineBaseMock = {
+  requestFlyToBounds: jest.fn(),
+  mapFeatureData: {
+    pimsFeatures: emptyPimsFeatureCollection,
+    fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
+  },
+
+  isSidebarOpen: false,
+  hasPendingFlyTo: false,
+  requestedFlyTo: {
+    location: null,
+    bounds: null,
+  },
+  mapFeatureSelected: null,
+  mapLocationSelected: null,
+  mapLocationFeatureDataset: null,
+  selectedFeatureDataset: null,
+  showPopup: false,
+  isLoading: false,
+  mapFilter: null,
+
+  draftLocations: [],
+  pendingRefresh: false,
+  iSelecting: false,
+  requestFlyToLocation: jest.fn(),
+
+  processFlyTo: jest.fn(),
+  processPendingRefresh: jest.fn(),
+  openSidebar: jest.fn(),
+  closeSidebar: jest.fn(),
+  closePopup: jest.fn(),
+  mapClick: jest.fn(),
+  mapMarkerClick: jest.fn(),
+  setMapFilter: jest.fn(),
+  refreshMapProperties: jest.fn(),
+  prepareForCreation: jest.fn(),
+  startSelection: jest.fn(),
+  finishSelection: jest.fn(),
+  setDraftLocations: jest.fn(),
+};
 
 const onClose = jest.fn();
 const onSave = jest.fn();
@@ -96,6 +143,7 @@ describe('AcquisitionView component', () => {
   beforeEach(() => {
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
     mockAxios.onGet(new RegExp('notes/*')).reply(200, mockNotesResponse());
+    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
   });
 
   afterEach(() => {

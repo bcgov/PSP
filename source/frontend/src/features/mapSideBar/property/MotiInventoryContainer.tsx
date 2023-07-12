@@ -1,11 +1,10 @@
 import { FormikProps } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { ReactComponent as LotSvg } from '@/assets/images/icon-lot.svg';
 import GenericModal from '@/components/common/GenericModal';
-import { useMapStateMachine } from '@/components/maps/hooks/MapStateMachineContext';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import PropertyViewSelector from '@/features/mapSideBar/property/PropertyViewSelector';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { Api_Property } from '@/models/api/Property';
@@ -82,14 +81,9 @@ export const MotiInventoryContainer: React.FunctionComponent<
     setShowCancelConfirmModal(false);
   };
 
-  //const zoom = useSelector(zoomToPropery);
-
-  const dispatch = useDispatch();
-
   const handleZoom = (apiProperty?: Api_Property | undefined) => {
     if (apiProperty !== undefined && apiProperty?.longitude && apiProperty?.latitude) {
-      //dispatch(zoomToPropery(apiProperty));
-      mapMachine.requestFlyTo({ lat: apiProperty?.latitude, lng: apiProperty?.longitude });
+      mapMachine.requestFlyToLocation({ lat: apiProperty?.latitude, lng: apiProperty?.longitude });
     }
   };
 

@@ -1,5 +1,6 @@
 import { createMemoryHistory } from 'history';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { getMockApiCompensationList } from '@/mocks/compensations.mock';
@@ -28,6 +29,12 @@ const mockGetApi = {
   loading: false,
 };
 jest.mock('@/hooks/repositories/useRequisitionCompensationRepository');
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+const mapMachineBaseMock = {
+  setDraftLocations: jest.fn(),
+};
+(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');

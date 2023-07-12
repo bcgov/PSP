@@ -1,18 +1,11 @@
 import { BBox } from 'geojson';
 import { LatLngBounds } from 'leaflet';
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useMap } from 'react-leaflet';
 import { tilesInBbox } from 'tiles-in-bbox';
 
-import { IGeoSearchParams } from '@/constants/API';
-import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { IProperty } from '@/interfaces';
-import { defaultBounds } from '@/store/slices/mapViewZoom/mapViewZoomSlice';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 
-import { useMapRefreshEvent } from '../../hooks/useMapRefreshEvent';
-import { useMapSearch } from '../../hooks/useMapSearch';
-import { useFilterContext } from '../../providers/FIlterProvider';
-import { MapStateContext } from '../../providers/MapStateContext';
 import { PointFeature } from '../../types';
 import PointClusterer from './PointClusterer';
 
@@ -25,10 +18,6 @@ export type InventoryLayerProps = {
   minZoom?: number;
   /** Maximum zoom level allowed. */
   maxZoom?: number;
-  /** Search filter to apply to properties. */
-  filter?: IGeoSearchParams;
-  /** What to do when the marker is clicked. */
-  onMarkerClick: (property: IProperty) => void;
 };
 
 /**
@@ -121,59 +110,23 @@ export const getTiles = (bounds: LatLngBounds, zoom: number): ITile[] => {
 export const InventoryLayer: React.FC<React.PropsWithChildren<InventoryLayerProps>> = ({
   bounds,
   zoom,
-  filter,
-  onMarkerClick,
 }) => {
   const mapInstance = useMap();
-  const { searchByParams, properties, loadingPimsProperties } = useMapSearch();
-  const { changed: filterChanged } = useFilterContext();
-  const { draftProperties } = useContext(MapStateContext);
+  const mapMachine = useMapStateMachine();
 
   if (!mapInstance) {
     throw new Error('<InventoryLayer /> must be used under a <Map> leaflet component');
   }
 
   const bbox = useMemo(() => getBbox(bounds), [bounds]);
-  useEffect(() => {
-    const fit = async () => {
-      if (filterChanged) {
-        mapInstance.fitBounds(defaultBounds, { maxZoom: 5 });
-      }
-    };
-
-    fit();
-  }, [mapInstance, filter, filterChanged]);
-
-  const searchParams = useMemo((): IGeoSearchParams[] => {
-    const tiles = getTiles(defaultBounds, 5);
-    return tiles.map<IGeoSearchParams>(tile => ({
-      STREET_ADDRESS_1: filter?.STREET_ADDRESS_1,
-      PID: filter?.PID,
-      PIN: filter?.PIN,
-      BBOX: tile.bbox,
-      forceExactMatch: filter?.forceExactMatch,
-      latitude: filter?.latitude,
-      longitude: filter?.longitude,
-    }));
-  }, [filter]);
-
-  useMapRefreshEvent(() => searchByParams(searchParams));
-  useDeepCompareEffect(() => {
-    if (filterChanged || !properties?.length) {
-      searchByParams(searchParams);
-    }
-  }, [searchParams, filterChanged]);
 
   return (
     <PointClusterer
-      draftPoints={draftProperties}
-      points={properties}
       zoom={zoom}
       bounds={bbox}
-      onMarkerClick={onMarkerClick}
       zoomToBoundsOnClick={true}
       spiderfyOnMaxZoom={true}
-      tilesLoaded={!loadingPimsProperties}
+      tilesLoaded={!mapMachine.isLoading}
     />
   );
 };

@@ -1,10 +1,13 @@
+import { LatLngLiteral } from 'leaflet';
 import { findIndex } from 'lodash';
 import * as React from 'react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FileTypes } from '@/constants/fileTypes';
 import { Api_File } from '@/models/api/File';
 import { Api_Project } from '@/models/api/Project';
+import { getLatLng } from '@/utils/mapPropertyUtils';
 
 export interface TypedFile extends Api_File {
   fileType: FileTypes;
@@ -86,6 +89,21 @@ export const SideBarContextProvider = (props: {
 
   const getFilePropertyIndexById = (filePropertyId: number) =>
     findIndex(file?.fileProperties, fp => fp.id === filePropertyId);
+
+  const { setDraftLocations } = useMapStateMachine();
+
+  const fileProperties = file?.fileProperties;
+  useEffect(() => {
+    if (fileProperties !== undefined) {
+      const propertyLocations = fileProperties
+        .map(x => getLatLng(x.property?.location))
+        .filter((x): x is LatLngLiteral => x !== undefined && x !== null);
+
+      setDraftLocations(propertyLocations);
+    } else {
+      setDraftLocations([]);
+    }
+  }, [fileProperties, setDraftLocations]);
 
   return (
     <SideBarContext.Provider

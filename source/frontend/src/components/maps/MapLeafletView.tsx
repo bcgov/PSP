@@ -1,35 +1,21 @@
 import axios from 'axios';
+import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import {
+  geoJSON,
   LatLng,
   LatLngBounds,
   LeafletEvent,
-  LeafletMouseEvent,
   Map as LeafletMap,
   Popup as LeafletPopup,
-  PopupEvent,
 } from 'leaflet';
 import isEqual from 'lodash/isEqual';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { LayerGroup, MapContainer as ReactLeafletMap, TileLayer } from 'react-leaflet';
-import { useDispatch, useSelector } from 'react-redux';
-import { useResizeDetector } from 'react-resize-detector';
-import { useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import styled from 'styled-components';
 
-import { IGeoSearchParams } from '@/constants/API';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM } from '@/constants/strings';
-import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
-import { IProperty } from '@/interfaces';
-import {
-  DEFAULT_MAP_ZOOM,
-  defaultBounds,
-  defaultLatLng,
-} from '@/store/slices/mapViewZoom/mapViewZoomSlice';
-import { pidParser } from '@/utils/propertyUtils';
 
-import { useMapStateMachine } from './hooks/MapStateMachineContext';
-import useActiveFeatureLayer from './hooks/useActiveFeatureLayer';
+import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
 import BasemapToggle, {
   BaseLayer,
   BasemapToggleEvent,
@@ -37,20 +23,13 @@ import BasemapToggle, {
 import LayersControl from './leaflet/Control/LayersControl/LayersControl';
 import { LegendControl } from './leaflet/Control/Legend/LegendControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
-import {
-  LayerPopupContainer,
-  LayerPopupInformation,
-} from './leaflet/LayerPopup/LayerPopupContainer';
+import { LayerPopupContainer } from './leaflet/LayerPopup/LayerPopupContainer';
 import { InventoryLayer } from './leaflet/Layers/InventoryLayer';
 import { MapEvents } from './leaflet/MapEvents/MapEvents';
 import * as Styled from './leaflet/styles';
-//import * as Styled from './leaflet/styles';
-import { MapStateActionTypes, MapStateContext } from './providers/MapStateContext';
 
 export type MapLeafletViewProps = {
-  //showSideBar: boolean;
   parentWidth: number | undefined;
-  geoFilter?: IGeoSearchParams;
 };
 
 type BaseLayerFile = {
@@ -63,82 +42,90 @@ type BaseLayerFile = {
  */
 const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = ({
   parentWidth,
-  geoFilter,
 }) => {
-  const dispatch = useDispatch();
-
   const [baseLayers, setBaseLayers] = useState<BaseLayer[]>([]);
 
   const [activeBasemap, setActiveBasemap] = useState<BaseLayer | null>(null);
-  //const smallScreen = useMediaQuery({ maxWidth: 1800 });
 
   const [bounds, setBounds] = useState<LatLngBounds>(defaultBounds);
-  const [layerPopup, setLayerPopup] = useState<LayerPopupInformation>();
 
   // a reference to the layer popup
   const popupRef = useRef<LeafletPopup>(null);
 
-  const history = useHistory();
-  const onPropertyViewClicked = (pid?: string | null, id?: number) => {
-    if (id !== undefined) {
-      history.push(`/mapview/sidebar/property/${id}?pid=${pid}`);
-    } else if (pid !== undefined && pid !== null) {
-      const parsedPid = pidParser(pid);
-      history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
-    } else {
-      console.warn('Invalid marker when trying to see property information');
-      toast.warn('A map parcel must have a PID in order to view detailed information');
-    }
-  };
-
-  const {
-    setState,
-    selectedInventoryProperty,
-    loading: mapLoading,
-    selectedFeature,
-  } = useContext(MapStateContext);
-
   const mapRef = useRef<LeafletMap | null>(null);
 
-  const parcelLayerFeature = selectedFeature;
-  const { showLocationDetails } = useActiveFeatureLayer({
-    selectedProperty: selectedInventoryProperty,
-    layerPopup,
-    mapRef,
-    parcelLayerFeature,
-    setLayerPopup,
-  });
+  const [activeFeatureLayer, setActiveFeatureLayer] = useState<L.GeoJSON>();
 
-  const handleClickEvent = (latlng: LatLng) => {
-    showLocationDetails(latlng);
+  // add geojson layer to the map
+  if (!!mapRef.current && !activeFeatureLayer) {
+    setActiveFeatureLayer(geoJSON().addTo(mapRef.current));
+  }
+
+  const handleMapClickEvent = (latlng: LatLng) => {
+    mapMachine.mapClick(latlng);
+    //showLocationDetails(latlng);
   };
 
   const [zoom, setZoom] = useState(DEFAULT_MAP_ZOOM);
 
   const handleZoomUpdate = (zoomLevel: number) => {
-    console.log(zoomLevel);
     setZoom(zoomLevel);
   };
 
   //const requestedZoom = useSelector(zoomRequest);
   const mapMachine = useMapStateMachine();
-  const flyToPending = mapMachine.flyToPending;
 
+  const mapMachinePendingRefresh = mapMachine.pendingRefresh;
+  const mapMachineProcessPendingRefresh = mapMachine.processPendingRefresh;
   useEffect(() => {
-    if (flyToPending !== null) {
-      mapRef?.current?.flyTo(flyToPending, MAP_MAX_ZOOM, {
-        animate: false,
-      });
-
-      //dispatch(zoomToPropery(null));
-      mapMachine.processFlyTo();
+    if (mapMachinePendingRefresh === true && mapRef.current !== null) {
+      mapRef.current.fitBounds(defaultBounds, { maxZoom: 5 });
+      mapMachineProcessPendingRefresh();
     }
-  }, [flyToPending]);
+  }, [mapMachinePendingRefresh, mapMachineProcessPendingRefresh]);
 
-  // Todo: Verify that the resize is needed
-  //const { width } = useResizeDetector();
+  const mapMachineMapLocationFeatureDataset = mapMachine.mapLocationFeatureDataset;
   useEffect(() => {
-    console.log('resized!');
+    activeFeatureLayer?.clearLayers();
+    if (mapMachineMapLocationFeatureDataset !== null) {
+      const location = mapMachineMapLocationFeatureDataset.location;
+
+      let activeFeature: Feature<Geometry, GeoJsonProperties> = {
+        geometry: { coordinates: [location.lng, location.lat], type: 'Point' },
+        type: 'Feature',
+        properties: {},
+      };
+      if (mapMachineMapLocationFeatureDataset.parcelFeature !== null) {
+        activeFeature = mapMachineMapLocationFeatureDataset.parcelFeature;
+      } else if (mapMachineMapLocationFeatureDataset.municipalityFeature) {
+        activeFeature = mapMachineMapLocationFeatureDataset.municipalityFeature;
+      }
+
+      if (mapMachineMapLocationFeatureDataset.municipalityFeature?.geometry?.type === 'Polygon') {
+        activeFeatureLayer?.addData(activeFeature);
+      }
+    }
+  }, [activeFeatureLayer, mapMachineMapLocationFeatureDataset]);
+
+  const hasPendingFlyTo = mapMachine.hasPendingFlyTo;
+  const requestedFlyTo = mapMachine.requestedFlyTo;
+  const mapMachineProcessFlyTo = mapMachine.processFlyTo;
+  useEffect(() => {
+    if (hasPendingFlyTo) {
+      if (requestedFlyTo.bounds !== null) {
+        mapRef?.current?.flyToBounds(requestedFlyTo.bounds, { animate: false });
+      }
+      if (requestedFlyTo.location !== null) {
+        mapRef?.current?.flyTo(requestedFlyTo.location, MAP_MAX_ZOOM, {
+          animate: false,
+        });
+      }
+
+      mapMachineProcessFlyTo();
+    }
+  }, [hasPendingFlyTo, requestedFlyTo, mapMachineProcessFlyTo]);
+
+  useEffect(() => {
     mapRef.current?.invalidateSize();
   }, [mapRef, parentWidth]);
 
@@ -163,8 +150,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   };
 
   const handleMapReady = () => {
-    console.log('when ready!');
-
     fitMapBounds();
   };
 
@@ -175,20 +160,9 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   };
 
   const handleBounds = (event: LeafletEvent) => {
-    console.log('handleBounds', event);
     const boundsData: LatLngBounds = event.target.getBounds();
     if (!isEqual(boundsData.getNorthEast(), boundsData.getSouthWest())) {
       setBounds(boundsData);
-    }
-  };
-
-  const onPopupClose = (event: PopupEvent) => {
-    if (event.popup === popupRef.current) {
-      setLayerPopup(undefined);
-      setState({
-        type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
-        selectedInventoryProperty: null,
-      });
     }
   };
 
@@ -204,15 +178,14 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         center={[defaultLatLng.lat, defaultLatLng.lng]}
         zoom={DEFAULT_MAP_ZOOM}
         maxZoom={MAP_MAX_ZOOM}
-        closePopupOnClick={true}
+        closePopupOnClick={false}
         ref={handleMapCreated}
         whenReady={handleMapReady}
       >
         <MapEvents
-          click={e => handleClickEvent(e.latlng)}
+          click={e => handleMapClickEvent(e.latlng)}
           zoomend={e => handleZoomUpdate(e.sourceTarget.getZoom())}
           moveend={handleBounds}
-          popupclose={onPopupClose}
         />
         {activeBasemap && (
           // Draws the map itself
@@ -228,13 +201,9 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
             ))}
           </LayerGroup>
         )}
-        {!!layerPopup && (
+        {mapMachine.showPopup && (
           // Draws the popup on top of the map
-          <LayerPopupContainer
-            ref={popupRef}
-            layerPopup={layerPopup}
-            onViewPropertyInfo={onPropertyViewClicked}
-          />
+          <LayerPopupContainer ref={popupRef} />
         )}
 
         <LegendControl />
@@ -245,26 +214,10 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
             setLayersOpen(!layersOpen);
           }}
         />
-        <InventoryLayer
-          zoom={zoom}
-          bounds={bounds}
-          onMarkerClick={(property: IProperty) => {
-            setLayersOpen(false);
-            onPropertyViewClicked(property.pid, property.id);
-          }}
-          filter={geoFilter}
-        ></InventoryLayer>
+        <InventoryLayer zoom={zoom} bounds={bounds}></InventoryLayer>
       </ReactLeafletMap>
     </Styled.MapContainer>
   );
 };
 
 export default MapLeafletView;
-
-const MapContainerStyled = styled.div`
-  border: 5px solid red;
-  /*width: 500px;
-  height: 500px;*/
-  /*width: 100%;
-  height: 100%;*/
-`;

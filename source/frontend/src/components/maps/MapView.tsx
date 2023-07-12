@@ -1,28 +1,27 @@
 import classNames from 'classnames';
-import React, { useContext } from 'react';
+import React from 'react';
 import { useResizeDetector } from 'react-resize-detector';
 import VisibilitySensor from 'react-visibility-sensor';
+
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 
 import LoadingBackdrop from '../common/LoadingBackdrop';
 import * as Styled from './leaflet/styles';
 import MapLeafletView from './MapLeafletView';
 import MapSearch from './MapSearch';
-import { MapStateContext } from './providers/MapStateContext';
-import { PropertyContext } from './providers/PropertyContext';
 
-export type MapViewProps = {
-  showSideBar: boolean;
-};
+export type MapViewProps = {};
 
 /**
  * Creates a Leaflet map and by default includes a number of preconfigured layers.
  * @param param0
  */
 
-const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = ({ showSideBar }) => {
-  const { loading: mapLoading } = useContext(MapStateContext);
-  const { propertiesLoading } = useContext(PropertyContext);
+const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = () => {
   const { width, ref: resizeRef } = useResizeDetector();
+
+  const mapMachine = useMapStateMachine();
+  const showSideBar = mapMachine.isSidebarOpen;
 
   return (
     <VisibilitySensor partialVisibility={true}>
@@ -31,7 +30,7 @@ const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = ({ showSideBar 
           ref={resizeRef}
           className={classNames('px-0', 'map', { sidebar: showSideBar })}
         >
-          <LoadingBackdrop show={propertiesLoading || mapLoading} parentScreen />
+          <LoadingBackdrop show={mapMachine.isLoading} parentScreen />
           {!showSideBar ? <MapSearch /> : null}
           {isVisible && <MapLeafletView parentWidth={width} />}
         </Styled.MapGrid>

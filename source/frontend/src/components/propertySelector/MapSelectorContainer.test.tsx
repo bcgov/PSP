@@ -11,6 +11,11 @@ import { featuresToIdentifiedMapProperty } from '@/utils/mapPropertyUtils';
 import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { PropertyForm } from '../../features/mapSideBar/shared/models';
+import { useMapStateMachine } from '../common/mapFSM/MapStateMachineContext';
+import {
+  emptyFullyFeaturedFeatureCollection,
+  emptyPimsFeatureCollection,
+} from '../common/mapFSM/models';
 import MapSelectorContainer, { IMapSelectorContainerProps } from './MapSelectorContainer';
 import { IMapProperty } from './models';
 
@@ -31,6 +36,48 @@ const testProperty: IMapProperty = {
   regionName: 'South Coast',
   district: 5,
   districtName: 'Okanagan-Shuswap',
+};
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+const mapMachineBaseMock = {
+  requestFlyToBounds: jest.fn(),
+  mapFeatureData: {
+    pimsFeatures: emptyPimsFeatureCollection,
+    fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
+  },
+
+  isSidebarOpen: false,
+  hasPendingFlyTo: false,
+  requestedFlyTo: {
+    location: null,
+    bounds: null,
+  },
+  mapFeatureSelected: null,
+  mapLocationSelected: null,
+  mapLocationFeatureDataset: null,
+  selectedFeatureDataset: null,
+  showPopup: false,
+  isLoading: false,
+  mapFilter: null,
+
+  draftLocations: [],
+  pendingRefresh: false,
+  iSelecting: false,
+  requestFlyToLocation: jest.fn(),
+
+  processFlyTo: jest.fn(),
+  processPendingRefresh: jest.fn(),
+  openSidebar: jest.fn(),
+  closeSidebar: jest.fn(),
+  closePopup: jest.fn(),
+  mapClick: jest.fn(),
+  mapMarkerClick: jest.fn(),
+  setMapFilter: jest.fn(),
+  refreshMapProperties: jest.fn(),
+  prepareForCreation: jest.fn(),
+  startSelection: jest.fn(),
+  finishSelection: jest.fn(),
+  setDraftLocations: jest.fn(),
 };
 
 describe('MapSelectorContainer component', () => {
@@ -65,6 +112,8 @@ describe('MapSelectorContainer component', () => {
       .reply(200, mockFAParcelLayerResponse)
       .onGet(new RegExp('tools/geocoder/nearest*'))
       .reply(200, mockGeocoderOptions[0]);
+
+    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
   });
 
   afterEach(() => {

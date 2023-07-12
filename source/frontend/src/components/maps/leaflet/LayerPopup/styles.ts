@@ -6,7 +6,7 @@ export const LayerPopupTitle = styled.h5`
   font-weight: bold;
   font-size: 1.6rem;
   color: ${props => props.theme.css.headingTextColor};
-  border-bottom: 0.2rem ${props => props.theme.css.headingBorderColor} solid;
+
   line-height: 2.4rem;
 `;
 

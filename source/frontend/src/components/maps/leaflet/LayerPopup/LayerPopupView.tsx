@@ -1,8 +1,14 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { FiX } from 'react-icons/fi';
 import { useHistory } from 'react-router';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
-import { MapStateActionTypes, MapStateContext } from '@/components/maps/providers/MapStateContext';
+import { StyledIconButton } from '@/components/common/buttons';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLoactionFeatureLoader';
+import { pidParser } from '@/utils';
 
 import { LayerPopupContent } from './components/LayerPopupContent';
 import { LayerPopupFlyout } from './components/LayerPopupFlyout';
@@ -12,63 +18,88 @@ import { LayerPopupTitle } from './styles';
 
 export interface ILayerPopupViewProps {
   layerPopup: LayerPopupInformation;
-  onViewPropertyInfo: (pid?: string | null, id?: number) => void;
+  featureDataset: LocationFeatureDataset | null;
 }
 
 export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewProps>> = ({
   layerPopup,
-  onViewPropertyInfo,
+  featureDataset,
 }) => {
   const history = useHistory();
-  const { setState, selectedFeature } = useContext(MapStateContext);
 
-  // We are interested in the PID field that comes back from parcel map layer attributes
-  const pid = layerPopup?.data?.PID;
-  // Attempt to get the id field, the id will be populated if the user clicked on a lat/lng that belongs to an existing PIMS Property Boundary.
-  const id = layerPopup?.pimsProperty?.properties?.PROPERTY_ID;
   // open/close map popup fly-out menu
   const [showFlyout, setShowFlyout] = useState(false);
   const openFlyout = useCallback(() => setShowFlyout(true), []);
   const closeFlyout = useCallback(() => setShowFlyout(false), []);
 
-  // bubble up the non-inventory property - based on their PID
-  const handleViewPropertyInfo = () => {
-    onViewPropertyInfo(pid, id);
+  const mapMachine = useMapStateMachine();
+
+  const onPropertyViewClicked = () => {
+    if (featureDataset?.pimsFeature?.properties.PROPERTY_ID) {
+      mapMachine.prepareForCreation();
+      closeFlyout();
+      const pimsFeature = featureDataset.pimsFeature;
+      history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
+    } else if (featureDataset?.parcelFeature?.properties.PID) {
+      mapMachine.prepareForCreation();
+      closeFlyout();
+      const parcelFeature = featureDataset?.parcelFeature;
+      const parsedPid = pidParser(parcelFeature.properties.PID);
+      history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
+    } else {
+      console.warn('Invalid marker when trying to see property information');
+      toast.warn('A map parcel must have a PID in order to view detailed information');
+    }
   };
 
-  const handleCreateResearchFile = () => {
-    selectedFeature &&
-      setState({
-        type: MapStateActionTypes.SELECTED_FILE_FEATURE,
-        selectedFileFeature: selectedFeature,
-      });
+  const onCloseButtonPressed = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    mapMachine.closePopup();
+  };
+
+  const handleViewPropertyInfo = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.stopPropagation();
+    mapMachine.prepareForCreation();
+    closeFlyout();
+    onPropertyViewClicked();
+  };
+
+  const handleCreateResearchFile = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.stopPropagation();
+    mapMachine.prepareForCreation();
+    closeFlyout();
     history.push('/mapview/sidebar/research/new');
   };
 
-  const handleCreateAcquisitionFile = () => {
-    selectedFeature &&
-      setState({
-        type: MapStateActionTypes.SELECTED_FILE_FEATURE,
-        selectedFileFeature: selectedFeature,
-      });
+  const handleCreateAcquisitionFile = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.stopPropagation();
+    mapMachine.prepareForCreation();
+    closeFlyout();
     history.push('/mapview/sidebar/acquisition/new');
   };
 
-  const handleCreateLeaseLicence = () => {
-    selectedFeature &&
-      setState({
-        type: MapStateActionTypes.SELECTED_FILE_FEATURE,
-        selectedFileFeature: selectedFeature,
-      });
+  const handleCreateLeaseLicence = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.stopPropagation();
+    mapMachine.prepareForCreation();
+    closeFlyout();
     history.push('/mapview/sidebar/lease/new');
   };
 
   return (
     <StyledContainer>
-      <LayerPopupTitle>{layerPopup.title}</LayerPopupTitle>
+      <StyledRow>
+        <Col className="p-0 m-0">
+          <LayerPopupTitle>{layerPopup.title}</LayerPopupTitle>
+        </Col>
+        <Col xs="1" className="p-0 m-0">
+          <StyledIconButton className="p-0 m-0" onClick={onCloseButtonPressed}>
+            <FiX size="1.5rem" />
+          </StyledIconButton>
+        </Col>
+      </StyledRow>
       <LayerPopupContent layerPopup={layerPopup} />
       <LayerPopupLinks
-        layerPopup={layerPopup}
+        bounds={layerPopup.bounds}
         onEllipsisClick={showFlyout ? closeFlyout : openFlyout}
       />
 
@@ -104,6 +135,11 @@ const StyledContainer = styled.div`
       padding-top: 0.8rem;
     }
   }
+`;
+
+const StyledRow = styled(Row)`
+  margin: 0rem;
+  border-bottom: 0.2rem ${props => props.theme.css.headingBorderColor} solid;
 `;
 
 const StyledFlyoutContainer = styled.div`

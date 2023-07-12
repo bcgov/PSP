@@ -1,13 +1,9 @@
 import queryString from 'query-string';
-import { memo, useContext, useEffect, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
 
-import { useMapStateMachine } from '@/components/maps/hooks/MapStateMachineContext';
-import {
-  MapState,
-  MapStateActionTypes,
-  MapStateContext,
-} from '@/components/maps/providers/MapStateContext';
+import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import Claims from '@/constants/claims';
 import { AddLeaseContainer } from '@/features/leases';
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
@@ -24,17 +20,13 @@ import ProjectContainerView from '../project/ProjectContainerView';
 import AddResearchContainer from '../research/add/AddResearchContainer';
 import ResearchContainer from '../research/ResearchContainer';
 
-interface IMapRouterProps {
-  //showSideBar: boolean;
-  //setShowSideBar: (show: boolean) => void;
-}
+interface IMapRouterProps {}
 
 export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props => {
   const location = useLocation();
   const history = useHistory();
-  const { setState } = useContext(MapStateContext);
 
-  const { isSidebarOpen, openSidebar, closeSidebar } = useMapStateMachine();
+  const { openSidebar, closeSidebar } = useMapStateMachine();
 
   const matched = useMemo(
     () =>
@@ -98,25 +90,23 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
 
   useEffect(() => {
     if (matched !== null) {
-      let mapState: MapState = MapState.NOT_DEFINED;
+      let mapState: SideBarType = SideBarType.NOT_DEFINED;
 
       if (isAcquisition) {
-        mapState = MapState.ACQUISITION_FILE;
+        mapState = SideBarType.ACQUISITION_FILE;
       } else if (isResearch) {
-        mapState = MapState.RESEARCH_FILE;
+        mapState = SideBarType.RESEARCH_FILE;
       } else if (isLease) {
-        mapState = MapState.LEASE_FILE;
+        mapState = SideBarType.LEASE_FILE;
       } else if (isProject) {
-        mapState = MapState.PROJECT;
+        mapState = SideBarType.PROJECT;
       } else if (isProperty) {
-        mapState = MapState.PROPERTY_INFORMATION;
+        mapState = SideBarType.PROPERTY_INFORMATION;
       }
 
       openSidebar(mapState);
-      setState({ type: MapStateActionTypes.MAP_STATE, mapState });
     } else {
       closeSidebar();
-      setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.MAP });
     }
   }, [
     isAcquisition,
@@ -127,7 +117,6 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
     matched,
     openSidebar,
     closeSidebar,
-    setState,
   ]);
 
   const onClose = () => {

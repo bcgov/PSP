@@ -1,7 +1,7 @@
 import { FormikProps } from 'formik';
-import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { useCallback } from 'react';
 
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLoactionFeatureLoader';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
@@ -15,7 +15,7 @@ export interface IUseAddAcquisitionFormManagementProps {
   /** Optional - callback to execute after acquisition file has been added to the datastore */
   onSuccess?: (acquisitionFile: Api_AcquisitionFile) => Promise<void>;
   initialForm?: AcquisitionForm;
-  selectedFeature: Feature<Geometry, GeoJsonProperties> | null;
+  selectedFeature: LocationFeatureDataset | null;
   formikRef: React.RefObject<FormikProps<AcquisitionForm>>;
 }
 

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FormDocumentType } from '@/constants/formDocumentTypes';
 import { FileTypes } from '@/constants/index';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
@@ -35,6 +36,12 @@ jest.mock('react-visibility-sensor', () => {
     return children;
   });
 });
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+const mapMachineBaseMock = {
+  setDraftLocations: jest.fn(),
+};
+(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 let viewProps: IGenerateFormViewProps = {} as any;
 const GenerateFormViewStub = (props: IGenerateFormViewProps) => {

@@ -13,7 +13,7 @@ import MotiInventoryContainer, { IMotiInventoryContainerProps } from './MotiInve
 jest.mock('@react-keycloak/web');
 
 const onClose = jest.fn();
-const onZoom = jest.fn();
+//const onZoom = jest.fn();
 
 // Need to mock this library for unit tests
 jest.mock('react-visibility-sensor', () => {

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons/Button';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
-import { defaultBounds } from '@/store/slices/mapViewZoom/mapViewZoomSlice';
+import { defaultBounds } from '@/components/maps/constants';
 
 import Control from '../Control';
 

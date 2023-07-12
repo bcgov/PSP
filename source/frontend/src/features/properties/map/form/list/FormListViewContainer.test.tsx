@@ -1,6 +1,7 @@
 import { createMemoryHistory } from 'history';
 import { filter, sortBy } from 'lodash';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FileTypes } from '@/constants/fileTypes';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentRepository';
@@ -28,6 +29,12 @@ const mockGetApi = {
   loading: false,
 };
 jest.mock('@/hooks/repositories/useFormDocumentRepository');
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+const mapMachineBaseMock = {
+  setDraftLocations: jest.fn(),
+};
+(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');

@@ -1,116 +1,48 @@
-import { Map as LeafletMap } from 'leaflet';
-import { isEqualWith } from 'lodash';
-import isEqual from 'lodash/isEqual';
-import React, { useContext, useRef, useState } from 'react';
+import { dequal } from 'dequal';
+import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import { IGeoSearchParams } from '@/constants/API';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { PropertyFilter } from '@/features/properties/filter';
-import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
-
-import { useFilterContext } from './providers/FIlterProvider';
-//import * as Styled from './leaflet/styles';
-import { MapStateActionTypes, MapStateContext } from './providers/MapStateContext';
+import {
+  defaultPropertyFilter,
+  IPropertyFilter,
+} from '@/features/properties/filter/IPropertyFilter';
 
 export type MapSearchProps = {};
-
-const defaultFilterValues: IPropertyFilter = {
-  searchBy: 'pinOrPid',
-  pinOrPid: '',
-  address: '',
-  latitude: '',
-  longitude: '',
-};
-
-// TODO: Check that this makes sense as the filter types should match IPropertyFilter
-const whitelistedFilterKeys = [
-  'PID',
-  'PIN',
-  'STREET_ADDRESS_1',
-  'LOCATION',
-  'latitude',
-  'longitude',
-];
-
-/**
- * Converts the map filter to a geo search filter.
- * @param filter The map filter.
- */
-const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
-  // The map will search for either identifier.
-  const pinOrPidValue = filter.pinOrPid ? filter.pinOrPid?.replace(/-/g, '') : undefined;
-  return {
-    PID: pinOrPidValue,
-    PIN: pinOrPidValue,
-    STREET_ADDRESS_1: filter.address,
-    latitude: filter.latitude,
-    longitude: filter.longitude,
-    forceExactMatch: true,
-  };
-};
 
 /**
  * Creates a Leaflet map and by default includes a number of preconfigured layers.
  * @param param0
  */
 const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
-  const { setState, selectedInventoryProperty } = useContext(MapStateContext);
+  const { mapFilter: mapMachineMapFilter, setMapFilter: mapMachineSetMapFilter } =
+    useMapStateMachine();
 
-  const mapRef = useRef<LeafletMap | null>(null);
+  const [mapFilter, setMapFilter] = useState<IPropertyFilter | null>(null);
 
-  if (mapRef.current && !selectedInventoryProperty) {
-    const center = mapRef.current.getCenter();
-    /*lat = center.lat;
-    lng = center.lng;*/
-  }
-
-  //const something = useMap();
-
-  /*useEffect(() => {
-    dispatch(setMapRef(mapRef));
-  }, [mapRef]);*/
-
-  const [geoFilter, setGeoFilter] = useState<IGeoSearchParams>({
-    ...defaultFilterValues,
-  });
-
-  const [triggerFilterChanged, setTriggerFilterChanged] = useState(true);
-
-  const { setChanged } = useFilterContext();
-
-  const handleMapFilterChange = async (filter: IPropertyFilter) => {
-    const compareValues = (objValue: IPropertyFilter, othValue: IPropertyFilter) => {
-      type filterKey = keyof IPropertyFilter;
-      return whitelistedFilterKeys.reduce((acc, key) => {
-        return (
-          (isEqual(objValue[key as filterKey], othValue[key as filterKey]) ||
-            (!objValue[key as filterKey] && !othValue[key as filterKey])) &&
-          acc
-        );
-      }, true);
-    };
-    // Search button will always trigger filter changed (triggerFilterChanged is set to true when search button is clicked)
-    if (!isEqualWith(geoFilter, getQueryParams(filter), compareValues) || triggerFilterChanged) {
-      setState({
-        type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
-        selectedInventoryProperty: null,
-      });
-      setGeoFilter(getQueryParams(filter));
-      setChanged(true);
-      setTriggerFilterChanged(false);
+  useEffect(() => {
+    if (mapFilter !== null && !dequal(mapFilter, mapMachineMapFilter)) {
+      mapMachineSetMapFilter(mapFilter);
     }
+  }, [mapFilter, mapMachineSetMapFilter, mapMachineMapFilter]);
+
+  const handleMapFilterChange = (filter: IPropertyFilter) => {
+    setMapFilter(filter);
   };
+
+  const searchButtonClicked = () => {};
 
   return (
     <StyledFilterContainer fluid className="px-0">
       <PropertyFilter
         useGeocoder={true}
         defaultFilter={{
-          ...defaultFilterValues,
+          ...defaultPropertyFilter,
         }}
         onChange={handleMapFilterChange}
-        setTriggerFilterChanged={setTriggerFilterChanged}
+        searchButtonClicked={searchButtonClicked}
       />
     </StyledFilterContainer>
   );

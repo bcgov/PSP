@@ -1,29 +1,28 @@
+import { LatLngBounds } from 'leaflet';
 import noop from 'lodash/noop';
 import React, { useCallback } from 'react';
 import { FaEllipsisH } from 'react-icons/fa';
-import { useMap } from 'react-leaflet';
 import styled from 'styled-components';
 
 import { LinkButton } from '@/components/common/buttons';
-
-import { LayerPopupInformation } from '../LayerPopupContainer';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 
 export interface ILayerPopupLinksProps {
-  layerPopup: LayerPopupInformation;
+  bounds: LatLngBounds | undefined;
   onEllipsisClick?: () => void;
 }
 
 export const LayerPopupLinks: React.FC<React.PropsWithChildren<ILayerPopupLinksProps>> = ({
-  layerPopup,
+  bounds,
   onEllipsisClick,
 }) => {
-  const mapInstance = useMap();
-  const { bounds } = { ...layerPopup };
+  const { requestFlyToBounds } = useMapStateMachine();
 
-  const onZoomToBounds = useCallback(
-    () => bounds && mapInstance.flyToBounds(bounds, { animate: false }),
-    [mapInstance, bounds],
-  );
+  const onZoomToBounds = useCallback(() => {
+    if (bounds !== undefined) {
+      requestFlyToBounds(bounds);
+    }
+  }, [requestFlyToBounds, bounds]);
 
   return (
     <StyledContainer>

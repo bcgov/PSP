@@ -2,7 +2,7 @@ import { FormikProps } from 'formik';
 import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
+import { useMapSearch } from '@/components/common/mapFSM/useMapSearch';
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
