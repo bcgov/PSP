@@ -57,7 +57,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetAcquisitionFileInterestHolders([FromRoute] long id, bool? fullDetails)
         {
-            var interestHolders = _acquisitionService.GetInterestHolders(id, fullDetails);
+            var interestHolders = _acquisitionService.GetInterestHolders(id, fullDetails ?? false);
             return new JsonResult(_mapper.Map<List<Api.Models.Concepts.InterestHolderModel>>(interestHolders));
         }
 

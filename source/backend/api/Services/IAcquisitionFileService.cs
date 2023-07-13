@@ -33,7 +33,7 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements);
 
-        IEnumerable<PimsInterestHolder> GetInterestHolders(long id, bool? fullDetails);
+        IEnumerable<PimsInterestHolder> GetInterestHolders(long id, bool fullDetails = false);
 
         IEnumerable<PimsInterestHolder> UpdateInterestHolders(long acquisitionFileId, List<PimsInterestHolder> interestHolders);
 
