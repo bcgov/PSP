@@ -11,7 +11,7 @@ import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/Gener
 import { Api_GenerateExpropriationForm1 } from '@/models/generate/acquisition/GenerateExpropriationForm1';
 
 export const useGenerateExpropriationForm1 = () => {
-  const { getOrganizationConcept } = useApiContacts();
+  const { getOrganizationConcept, getPersonConcept } = useApiContacts();
   const { getAcquisitionFile, getAcquisitionProperties } = useAcquisitionProvider();
   const { getAcquisitionInterestHolders } = useInterestHolderRepository();
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
@@ -35,9 +35,18 @@ export const useGenerateExpropriationForm1 = () => {
     }
     file.fileProperties = properties;
 
+    const ownerSolicitor = file.acquisitionFileOwnerSolicitors?.length
+      ? file.acquisitionFileOwnerSolicitors[0]
+      : null;
+
+    const ownerSolicitorPerson = ownerSolicitor?.personId
+      ? (await getPersonConcept(ownerSolicitor?.personId)).data
+      : null;
+
     const fileData = new Api_GenerateAcquisitionFile({
       file: file,
       interestHolders: interestHolders ?? [],
+      ownerSolicitor: ownerSolicitorPerson,
     });
 
     const filePropertyIds = new Set(

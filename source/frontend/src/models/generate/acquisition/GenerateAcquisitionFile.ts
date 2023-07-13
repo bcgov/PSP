@@ -45,7 +45,8 @@ export class Api_GenerateAcquisitionFile {
     ownerSolicitor = null,
     interestHolders = [],
   }: IApiGenerateAcquisitionFileInput) {
-    this.owners = file?.acquisitionFileOwners?.map(owner => new Api_GenerateOwner(owner)) ?? [];
+    this.owners =
+      file?.acquisitionFileOwners?.map((owner, index) => new Api_GenerateOwner(owner, index)) ?? [];
     this.property_coordinator = new Api_GeneratePerson(coordinatorContact);
     this.neg_agent = new Api_GeneratePerson(negotiatingAgent);
     const allInterestHoldersPropertes = interestHolders.flatMap(

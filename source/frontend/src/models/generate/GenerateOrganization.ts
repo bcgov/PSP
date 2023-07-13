@@ -1,5 +1,6 @@
 import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { getApiPersonOrOrgMailingAddress } from '@/features/contacts/contactUtils';
+import { phoneFormatter } from '@/utils/formUtils';
 
 import { Api_Organization } from '../api/Organization';
 import { Api_GenerateAddress } from './GenerateAddress';
@@ -40,9 +41,9 @@ export class Api_GenerateOrganization {
       ) ?? [];
     this.phone =
       workPhone?.length > 0
-        ? workPhone.map(p => p.value).join(', ')
+        ? workPhone.map(p => phoneFormatter(p.value)).join(', ')
         : personalPhone?.length > 0
-        ? personalPhone.map(p => p.value).join(', ')
+        ? personalPhone.map(p => phoneFormatter(p.value)).join(', ')
         : '';
     this.address = organization
       ? new Api_GenerateAddress(getApiPersonOrOrgMailingAddress(organization) ?? null)
