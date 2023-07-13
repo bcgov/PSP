@@ -1903,17 +1903,17 @@ CREATE TABLE [dbo].[PIMS_ACQUISITION_OWNER_SOLICITOR]  (
 	CONSTRAINT [AQOWSO_PK] PRIMARY KEY CLUSTERED([OWNER_SOLICITOR_ID])
  ON [PRIMARY])
 GO
---EXEC sp_addextendedproperty 
---	@name = N'MS_Description', @value = N'Indicates if the code value is inactive.' , 
---	@level0type = N'Schema', @level0name = N'dbo', 
---	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_SOLICITOR', 
---	@level2type = N'Column', @level2name = N'IS_DISABLED'
---GO
---EXEC sp_addextendedproperty 
---	@name = N'MS_Description', @value = N'Table describing the owners'' solicitor that is assigned to the acquisition file.' , 
---	@level0type = N'Schema', @level0name = N'dbo', 
---	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_SOLICITOR'
---GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Indicates if the code value is inactive.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_SOLICITOR', 
+	@level2type = N'Column', @level2name = N'IS_DISABLED'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Table describing the owners'' solicitor that is assigned to the acquisition file.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_SOLICITOR'
+GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
@@ -1936,6 +1936,23 @@ GO
 ALTER TABLE [dbo].[PIMS_ACQUISITION_OWNER_SOLICITOR]
 	ADD CONSTRAINT [AQOWSO_%column%_TCC] CHECK ([PERSON_ID] IS NULL AND [ORGANIZATION_ID] IS NOT NULL OR [PERSON_ID] IS NOT NULL AND [ORGANIZATION_ID] IS NULL)
 GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop dynamically-named default constraints
+PRINT N'Drop dynamically-named default constraints'
+GO
+DECLARE @sqlQry  VARCHAR(1000)
+DECLARE @defName VARCHAR(100)
+SET @defName = (SELECT obj.NAME
+                FROM   SYSOBJECTS obj                          INNER JOIN
+                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
+                       SYSOBJECTS tbl on col.ID = tbl.ID
+                WHERE  obj.XTYPE = 'D'
+                   AND tbl.NAME = 'PIMS_INTEREST_HOLDER' 
+                   AND col.NAME = 'INTEREST_HOLDER_TYPE_CODE')
+SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_INTEREST_HOLDER] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
+EXEC (@sqlQry)
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
@@ -1982,23 +1999,23 @@ CREATE TABLE [dbo].[PIMS_ACQUISITION_OWNER_REP]  (
 	CONSTRAINT [AQOWRP_PK] PRIMARY KEY CLUSTERED([OWNER_REPRESENTATIVE_ID])
  ON [PRIMARY])
 GO
---EXEC sp_addextendedproperty 
---	@name = N'MS_Description', @value = N'Additional comment concerning this owener representative.' , 
---	@level0type = N'Schema', @level0name = N'dbo', 
---	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_REP', 
---	@level2type = N'Column', @level2name = N'COMMENT'
---GO
---EXEC sp_addextendedproperty 
---	@name = N'MS_Description', @value = N'Indicates if the code value is inactive.' , 
---	@level0type = N'Schema', @level0name = N'dbo', 
---	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_REP', 
---	@level2type = N'Column', @level2name = N'IS_DISABLED'
---GO
---EXEC sp_addextendedproperty 
---	@name = N'MS_Description', @value = N'Table describing the owners'' representative that is assigned to the acquisition file.' , 
---	@level0type = N'Schema', @level0name = N'dbo', 
---	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_REP'
---GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Additional comment concerning this owener representative.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_REP', 
+	@level2type = N'Column', @level2name = N'COMMENT'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Indicates if the code value is inactive.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_REP', 
+	@level2type = N'Column', @level2name = N'IS_DISABLED'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Table describing the owners'' representative that is assigned to the acquisition file.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_REP'
+GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
@@ -2016,21 +2033,21 @@ IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
 -- Create table dbo.PIMS_PROPERTY_ADJACENT_LAND_TYPE
-PRINT N'Create table dbo.PIMS_PROPERTY_ADJACENT_LAND_TYPE'
-GO
-CREATE TABLE [dbo].[PIMS_PROPERTY_ADJACENT_LAND_TYPE]  ( 
-	[PROPERTY_ADJACENT_LAND_TYPE_CODE]	nvarchar(20) NOT NULL,
-	[DESCRIPTION]                     	nvarchar(200) NOT NULL,
-	[IS_DISABLED]                     	bit NOT NULL CONSTRAINT [PRADJL_IS_DISABLED_DEF]  DEFAULT (CONVERT([bit],(0))),
-	[DISPLAY_ORDER]                   	int NULL,
-	[CONCURRENCY_CONTROL_NUMBER]      	bigint NOT NULL CONSTRAINT [PRADJL_CONCURRENCY_CONTROL_NUMBER_DEF]  DEFAULT ((1)),
-	[DB_CREATE_TIMESTAMP]             	datetime NOT NULL CONSTRAINT [PRADJL_DB_CREATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
-	[DB_CREATE_USERID]                	nvarchar(30) NOT NULL CONSTRAINT [PRADJL_DB_CREATE_USERID_DEF]  DEFAULT (user_name()),
-	[DB_LAST_UPDATE_TIMESTAMP]        	datetime NOT NULL CONSTRAINT [PRADJL_DB_LAST_UPDATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
-	[DB_LAST_UPDATE_USERID]           	nvarchar(30) NOT NULL CONSTRAINT [PRADJL_DB_LAST_UPDATE_USERID_DEF]  DEFAULT (user_name()),
-	CONSTRAINT [PRADJL_PK] PRIMARY KEY CLUSTERED([PROPERTY_ADJACENT_LAND_TYPE_CODE])
- ON [PRIMARY])
-GO
+--PRINT N'Create table dbo.PIMS_PROPERTY_ADJACENT_LAND_TYPE'
+--GO
+--CREATE TABLE [dbo].[PIMS_PROPERTY_ADJACENT_LAND_TYPE]  ( 
+--	[PROPERTY_ADJACENT_LAND_TYPE_CODE]	nvarchar(20) NOT NULL,
+--	[DESCRIPTION]                     	nvarchar(200) NOT NULL,
+--	[IS_DISABLED]                     	bit NOT NULL CONSTRAINT [PRADJL_IS_DISABLED_DEF]  DEFAULT (CONVERT([bit],(0))),
+--	[DISPLAY_ORDER]                   	int NULL,
+--	[CONCURRENCY_CONTROL_NUMBER]      	bigint NOT NULL CONSTRAINT [PRADJL_CONCURRENCY_CONTROL_NUMBER_DEF]  DEFAULT ((1)),
+--	[DB_CREATE_TIMESTAMP]             	datetime NOT NULL CONSTRAINT [PRADJL_DB_CREATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+--	[DB_CREATE_USERID]                	nvarchar(30) NOT NULL CONSTRAINT [PRADJL_DB_CREATE_USERID_DEF]  DEFAULT (user_name()),
+--	[DB_LAST_UPDATE_TIMESTAMP]        	datetime NOT NULL CONSTRAINT [PRADJL_DB_LAST_UPDATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+--	[DB_LAST_UPDATE_USERID]           	nvarchar(30) NOT NULL CONSTRAINT [PRADJL_DB_LAST_UPDATE_USERID_DEF]  DEFAULT (user_name()),
+--	CONSTRAINT [PRADJL_PK] PRIMARY KEY CLUSTERED([PROPERTY_ADJACENT_LAND_TYPE_CODE])
+-- ON [PRIMARY])
+--GO
 --EXEC sp_addextendedproperty 
 --	@name = N'MS_Description', @value = N'Property adjacent land code.' , 
 --	@level0type = N'Schema', @level0name = N'dbo', 
@@ -2060,52 +2077,52 @@ GO
 --	@level0type = N'Schema', @level0name = N'dbo', 
 --	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ADJACENT_LAND_TYPE'
 --GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create table dbo.PIMS_PROP_PROP_ADJACENT_LAND_TYPE
-PRINT N'Create table dbo.PIMS_PROP_PROP_ADJACENT_LAND_TYPE'
-GO
-CREATE TABLE [dbo].[PIMS_PROP_PROP_ADJACENT_LAND_TYPE]  ( 
-	[PROP_PROP_ADJACENT_LAND_TYPE_ID] 	bigint NOT NULL CONSTRAINT [PRPALT_PROP_PROP_ADJACENT_LAND_TYPE_ID_DEF]  DEFAULT (NEXT VALUE FOR [PIMS_PROP_PROP_ADJACENT_LAND_TYPE_ID_SEQ]),
-	[PROPERTY_ID]                     	bigint NOT NULL,
-	[PROPERTY_ADJACENT_LAND_TYPE_CODE]	nvarchar(20) NOT NULL,
-	[APP_CREATE_TIMESTAMP]            	datetime NOT NULL CONSTRAINT [PRPALT_APP_CREATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
-	[APP_CREATE_USER_DIRECTORY]       	nvarchar(30) NOT NULL CONSTRAINT [PRPALT_APP_CREATE_USER_DIRECTORY_DEF]  DEFAULT (user_name()),
-	[APP_CREATE_USER_GUID]            	uniqueidentifier NULL,
-	[APP_CREATE_USERID]               	nvarchar(30) NOT NULL CONSTRAINT [PRPALT_APP_CREATE_USERID_DEF]  DEFAULT (user_name()),
-	[APP_LAST_UPDATE_TIMESTAMP]       	datetime NOT NULL CONSTRAINT [PRPALT_APP_LAST_UPDATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
-	[APP_LAST_UPDATE_USER_DIRECTORY]  	nvarchar(30) NOT NULL CONSTRAINT [PRPALT_APP_LAST_UPDATE_USER_DIRECTORY_DEF]  DEFAULT (user_name()),
-	[APP_LAST_UPDATE_USER_GUID]       	uniqueidentifier NULL,
-	[APP_LAST_UPDATE_USERID]          	nvarchar(30) NOT NULL CONSTRAINT [PRPALT_APP_LAST_UPDATE_USERID_DEF]  DEFAULT (user_name()),
-	[CONCURRENCY_CONTROL_NUMBER]      	bigint NOT NULL CONSTRAINT [PRPALT_CONCURRENCY_CONTROL_NUMBER_DEF]  DEFAULT ((1)),
-	[DB_CREATE_TIMESTAMP]             	datetime NOT NULL CONSTRAINT [PRPALT_DB_CREATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
-	[DB_CREATE_USERID]                	nvarchar(30) NOT NULL CONSTRAINT [PRPALT_DB_CREATE_USERID_DEF]  DEFAULT (user_name()),
-	[DB_LAST_UPDATE_TIMESTAMP]        	datetime NOT NULL CONSTRAINT [PRPALT_DB_LAST_UPDATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
-	[DB_LAST_UPDATE_USERID]           	nvarchar(30) NOT NULL CONSTRAINT [PRPALT_DB_LAST_UPDATE_USERID_DEF]  DEFAULT (user_name()),
-	CONSTRAINT [PRPALT_PK] PRIMARY KEY CLUSTERED([PROP_PROP_ADJACENT_LAND_TYPE_ID])
- ON [PRIMARY])
-GO
+--PRINT N'Create table dbo.PIMS_PROP_PROP_ADJACENT_LAND_TYPE'
+--GO
+--CREATE TABLE [dbo].[PIMS_PROP_PROP_ADJACENT_LAND_TYPE]  ( 
+--	[PROP_PROP_ADJACENT_LAND_TYPE_ID] 	bigint NOT NULL CONSTRAINT [PRPALT_PROP_PROP_ADJACENT_LAND_TYPE_ID_DEF]  DEFAULT (NEXT VALUE FOR [PIMS_PROP_PROP_ADJACENT_LAND_TYPE_ID_SEQ]),
+--	[PROPERTY_ID]                     	bigint NOT NULL,
+--	[PROPERTY_ADJACENT_LAND_TYPE_CODE]	nvarchar(20) NOT NULL,
+--	[APP_CREATE_TIMESTAMP]            	datetime NOT NULL CONSTRAINT [PRPALT_APP_CREATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+--	[APP_CREATE_USER_DIRECTORY]       	nvarchar(30) NOT NULL CONSTRAINT [PRPALT_APP_CREATE_USER_DIRECTORY_DEF]  DEFAULT (user_name()),
+--	[APP_CREATE_USER_GUID]            	uniqueidentifier NULL,
+--	[APP_CREATE_USERID]               	nvarchar(30) NOT NULL CONSTRAINT [PRPALT_APP_CREATE_USERID_DEF]  DEFAULT (user_name()),
+--	[APP_LAST_UPDATE_TIMESTAMP]       	datetime NOT NULL CONSTRAINT [PRPALT_APP_LAST_UPDATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+--	[APP_LAST_UPDATE_USER_DIRECTORY]  	nvarchar(30) NOT NULL CONSTRAINT [PRPALT_APP_LAST_UPDATE_USER_DIRECTORY_DEF]  DEFAULT (user_name()),
+--	[APP_LAST_UPDATE_USER_GUID]       	uniqueidentifier NULL,
+--	[APP_LAST_UPDATE_USERID]          	nvarchar(30) NOT NULL CONSTRAINT [PRPALT_APP_LAST_UPDATE_USERID_DEF]  DEFAULT (user_name()),
+--	[CONCURRENCY_CONTROL_NUMBER]      	bigint NOT NULL CONSTRAINT [PRPALT_CONCURRENCY_CONTROL_NUMBER_DEF]  DEFAULT ((1)),
+--	[DB_CREATE_TIMESTAMP]             	datetime NOT NULL CONSTRAINT [PRPALT_DB_CREATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+--	[DB_CREATE_USERID]                	nvarchar(30) NOT NULL CONSTRAINT [PRPALT_DB_CREATE_USERID_DEF]  DEFAULT (user_name()),
+--	[DB_LAST_UPDATE_TIMESTAMP]        	datetime NOT NULL CONSTRAINT [PRPALT_DB_LAST_UPDATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+--	[DB_LAST_UPDATE_USERID]           	nvarchar(30) NOT NULL CONSTRAINT [PRPALT_DB_LAST_UPDATE_USERID_DEF]  DEFAULT (user_name()),
+--	CONSTRAINT [PRPALT_PK] PRIMARY KEY CLUSTERED([PROP_PROP_ADJACENT_LAND_TYPE_ID])
+-- ON [PRIMARY])
+--GO
 --EXEC sp_addextendedproperty 
 --	@name = N'MS_Description', @value = N'Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_ADJACENT_LAND_TYPE' , 
 --	@level0type = N'Schema', @level0name = N'dbo', 
 --	@level1type = N'Table', @level1name = N'PIMS_PROP_PROP_ADJACENT_LAND_TYPE'
 --GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create unique constraint dbo.PRPALT_PROP_ADJACENT_LAND_TYPE_TUC
-PRINT N'Create unique constraint dbo.PRPALT_PROP_ADJACENT_LAND_TYPE_TUC'
-GO
-ALTER TABLE [dbo].[PIMS_PROP_PROP_ADJACENT_LAND_TYPE]
-	ADD CONSTRAINT [PRPALT_PROP_ADJACENT_LAND_TYPE_TUC]
-	UNIQUE ([PROPERTY_ADJACENT_LAND_TYPE_CODE], [PROPERTY_ID]) 
-	WITH (
-		DATA_COMPRESSION = NONE
-	) ON [PRIMARY]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+--PRINT N'Create unique constraint dbo.PRPALT_PROP_ADJACENT_LAND_TYPE_TUC'
+--GO
+--ALTER TABLE [dbo].[PIMS_PROP_PROP_ADJACENT_LAND_TYPE]
+--	ADD CONSTRAINT [PRPALT_PROP_ADJACENT_LAND_TYPE_TUC]
+--	UNIQUE ([PROPERTY_ADJACENT_LAND_TYPE_CODE], [PROPERTY_ID]) 
+--	WITH (
+--		DATA_COMPRESSION = NONE
+--	) ON [PRIMARY]
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Alter table dbo.PIMS_ACQUISITION_PAYEE
 PRINT N'Alter table dbo.PIMS_ACQUISITION_PAYEE'
@@ -3526,6 +3543,23 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
+-- Drop dynamically-named default constraints
+PRINT N'Drop dynamically-named default constraints'
+GO
+DECLARE @sqlQry  VARCHAR(1000)
+DECLARE @defName VARCHAR(100)
+SET @defName = (SELECT obj.NAME
+                FROM   SYSOBJECTS obj                          INNER JOIN
+                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
+                       SYSOBJECTS tbl on col.ID = tbl.ID
+                WHERE  obj.XTYPE = 'D'
+                   AND tbl.NAME = 'PIMS_INTEREST_HOLDER_HIST' 
+                   AND col.NAME = 'INTEREST_HOLDER_TYPE_CODE')
+SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_INTEREST_HOLDER_HIST] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
+EXEC (@sqlQry)
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
 -- Alter table dbo.PIMS_INTEREST_HOLDER_HIST
 PRINT N'Alter table dbo.PIMS_INTEREST_HOLDER_HIST'
 GO
@@ -4570,13 +4604,13 @@ IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
 -- Create index dbo.PRPALT_PROPERTY_ADJACENT_LAND_TYPE_CODE_IDX
-PRINT N'Create index dbo.PRPALT_PROPERTY_ADJACENT_LAND_TYPE_CODE_IDX'
-GO
-CREATE NONCLUSTERED INDEX [PRPALT_PROPERTY_ADJACENT_LAND_TYPE_CODE_IDX]
-	ON [dbo].[PIMS_PROP_PROP_ADJACENT_LAND_TYPE]([PROPERTY_ADJACENT_LAND_TYPE_CODE])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+--PRINT N'Create index dbo.PRPALT_PROPERTY_ADJACENT_LAND_TYPE_CODE_IDX'
+--GO
+--CREATE NONCLUSTERED INDEX [PRPALT_PROPERTY_ADJACENT_LAND_TYPE_CODE_IDX]
+--	ON [dbo].[PIMS_PROP_PROP_ADJACENT_LAND_TYPE]([PROPERTY_ADJACENT_LAND_TYPE_CODE])
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create index dbo.AQOWRP_PERSON_ID_IDX
 PRINT N'Create index dbo.AQOWRP_PERSON_ID_IDX'
@@ -4588,13 +4622,13 @@ IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
 -- Create index dbo.PRPALT_PROPERTY_ID_IDX
-PRINT N'Create index dbo.PRPALT_PROPERTY_ID_IDX'
-GO
-CREATE NONCLUSTERED INDEX [PRPALT_PROPERTY_ID_IDX]
-	ON [dbo].[PIMS_PROP_PROP_ADJACENT_LAND_TYPE]([PROPERTY_ID])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+--PRINT N'Create index dbo.PRPALT_PROPERTY_ID_IDX'
+--GO
+--CREATE NONCLUSTERED INDEX [PRPALT_PROPERTY_ID_IDX]
+--	ON [dbo].[PIMS_PROP_PROP_ADJACENT_LAND_TYPE]([PROPERTY_ID])
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create index dbo.ACQPAY_OWNER_REPRESENTATIVE_ID_IDX
 PRINT N'Create index dbo.ACQPAY_OWNER_REPRESENTATIVE_ID_IDX'
@@ -6121,37 +6155,37 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Create trigger dbo.PIMS_PRADJL_I_S_I_TR
-PRINT N'Create trigger dbo.PIMS_PRADJL_I_S_I_TR'
-GO
-CREATE TRIGGER [dbo].[PIMS_PRADJL_I_S_I_TR] ON PIMS_PROPERTY_ADJACENT_LAND_TYPE INSTEAD OF INSERT AS
-SET NOCOUNT ON
-BEGIN TRY
-  IF NOT EXISTS(SELECT * FROM inserted) 
-    RETURN;
-
-  
-  insert into PIMS_PROPERTY_ADJACENT_LAND_TYPE ("PROPERTY_ADJACENT_LAND_TYPE_CODE",
-      "DESCRIPTION",
-      "IS_DISABLED",
-      "DISPLAY_ORDER",
-      "CONCURRENCY_CONTROL_NUMBER")
-    select "PROPERTY_ADJACENT_LAND_TYPE_CODE",
-      "DESCRIPTION",
-      "IS_DISABLED",
-      "DISPLAY_ORDER",
-      "CONCURRENCY_CONTROL_NUMBER"
-    from inserted;
-
-END TRY
-BEGIN CATCH
-   IF @@trancount > 0 ROLLBACK TRANSACTION
-   EXEC pims_error_handling
-END CATCH;
-
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create trigger dbo.PIMS_PRADJL_I_S_I_TR
+--PRINT N'Create trigger dbo.PIMS_PRADJL_I_S_I_TR'
+--GO
+--CREATE TRIGGER [dbo].[PIMS_PRADJL_I_S_I_TR] ON PIMS_PROPERTY_ADJACENT_LAND_TYPE INSTEAD OF INSERT AS
+--SET NOCOUNT ON
+--BEGIN TRY
+--  IF NOT EXISTS(SELECT * FROM inserted) 
+--    RETURN;
+--
+--  
+--  insert into PIMS_PROPERTY_ADJACENT_LAND_TYPE ("PROPERTY_ADJACENT_LAND_TYPE_CODE",
+--      "DESCRIPTION",
+--      "IS_DISABLED",
+--      "DISPLAY_ORDER",
+--      "CONCURRENCY_CONTROL_NUMBER")
+--    select "PROPERTY_ADJACENT_LAND_TYPE_CODE",
+--      "DESCRIPTION",
+--      "IS_DISABLED",
+--      "DISPLAY_ORDER",
+--      "CONCURRENCY_CONTROL_NUMBER"
+--    from inserted;
+--
+--END TRY
+--BEGIN CATCH
+--   IF @@trancount > 0 ROLLBACK TRANSACTION
+--   EXEC pims_error_handling
+--END CATCH;
+--
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create trigger dbo.PIMS_TKSTST_I_S_U_TR
 PRINT N'Create trigger dbo.PIMS_TKSTST_I_S_U_TR'
@@ -6290,45 +6324,45 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Create trigger dbo.PIMS_PRPALT_I_S_U_TR
-PRINT N'Create trigger dbo.PIMS_PRPALT_I_S_U_TR'
-GO
-CREATE TRIGGER [dbo].[PIMS_PRPALT_I_S_U_TR] ON PIMS_PROP_PROP_ADJACENT_LAND_TYPE INSTEAD OF UPDATE AS
-SET NOCOUNT ON
-BEGIN TRY
-  IF NOT EXISTS(SELECT * FROM deleted) 
-    RETURN;
-
-  -- validate concurrency control
-  if exists (select 1 from inserted, deleted where inserted.CONCURRENCY_CONTROL_NUMBER != deleted.CONCURRENCY_CONTROL_NUMBER+1 AND inserted.PROP_PROP_ADJACENT_LAND_TYPE_ID = deleted.PROP_PROP_ADJACENT_LAND_TYPE_ID)
-    raiserror('CONCURRENCY FAILURE.',16,1)
-
-
-  -- update statement
-  update PIMS_PROP_PROP_ADJACENT_LAND_TYPE
-    set "PROP_PROP_ADJACENT_LAND_TYPE_ID" = inserted."PROP_PROP_ADJACENT_LAND_TYPE_ID",
-      "PROPERTY_ID" = inserted."PROPERTY_ID",
-      "PROPERTY_ADJACENT_LAND_TYPE_CODE" = inserted."PROPERTY_ADJACENT_LAND_TYPE_CODE",
-      "APP_LAST_UPDATE_TIMESTAMP" = inserted."APP_LAST_UPDATE_TIMESTAMP",
-      "APP_LAST_UPDATE_USER_DIRECTORY" = inserted."APP_LAST_UPDATE_USER_DIRECTORY",
-      "APP_LAST_UPDATE_USER_GUID" = inserted."APP_LAST_UPDATE_USER_GUID",
-      "APP_LAST_UPDATE_USERID" = inserted."APP_LAST_UPDATE_USERID",
-      "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER"
-    , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
-    , DB_LAST_UPDATE_USERID = user_name()
-    from PIMS_PROP_PROP_ADJACENT_LAND_TYPE
-    inner join inserted
-    on (PIMS_PROP_PROP_ADJACENT_LAND_TYPE.PROP_PROP_ADJACENT_LAND_TYPE_ID = inserted.PROP_PROP_ADJACENT_LAND_TYPE_ID);
-
-END TRY
-BEGIN CATCH
-   IF @@trancount > 0 ROLLBACK TRANSACTION
-   EXEC pims_error_handling
-END CATCH;
-
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create trigger dbo.PIMS_PRPALT_I_S_U_TR
+--PRINT N'Create trigger dbo.PIMS_PRPALT_I_S_U_TR'
+--GO
+--CREATE TRIGGER [dbo].[PIMS_PRPALT_I_S_U_TR] ON PIMS_PROP_PROP_ADJACENT_LAND_TYPE INSTEAD OF UPDATE AS
+--SET NOCOUNT ON
+--BEGIN TRY
+--  IF NOT EXISTS(SELECT * FROM deleted) 
+--    RETURN;
+--
+--  -- validate concurrency control
+--  if exists (select 1 from inserted, deleted where inserted.CONCURRENCY_CONTROL_NUMBER != deleted.CONCURRENCY_CONTROL_NUMBER+1 AND inserted.PROP_PROP_ADJACENT_LAND_TYPE_ID = deleted.PROP_PROP_ADJACENT_LAND_TYPE_ID)
+--    raiserror('CONCURRENCY FAILURE.',16,1)
+--
+--
+--  -- update statement
+--  update PIMS_PROP_PROP_ADJACENT_LAND_TYPE
+--    set "PROP_PROP_ADJACENT_LAND_TYPE_ID" = inserted."PROP_PROP_ADJACENT_LAND_TYPE_ID",
+--      "PROPERTY_ID" = inserted."PROPERTY_ID",
+--      "PROPERTY_ADJACENT_LAND_TYPE_CODE" = inserted."PROPERTY_ADJACENT_LAND_TYPE_CODE",
+--      "APP_LAST_UPDATE_TIMESTAMP" = inserted."APP_LAST_UPDATE_TIMESTAMP",
+--      "APP_LAST_UPDATE_USER_DIRECTORY" = inserted."APP_LAST_UPDATE_USER_DIRECTORY",
+--      "APP_LAST_UPDATE_USER_GUID" = inserted."APP_LAST_UPDATE_USER_GUID",
+--      "APP_LAST_UPDATE_USERID" = inserted."APP_LAST_UPDATE_USERID",
+--      "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER"
+--    , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
+--    , DB_LAST_UPDATE_USERID = user_name()
+--    from PIMS_PROP_PROP_ADJACENT_LAND_TYPE
+--    inner join inserted
+--    on (PIMS_PROP_PROP_ADJACENT_LAND_TYPE.PROP_PROP_ADJACENT_LAND_TYPE_ID = inserted.PROP_PROP_ADJACENT_LAND_TYPE_ID);
+--
+--END TRY
+--BEGIN CATCH
+--   IF @@trancount > 0 ROLLBACK TRANSACTION
+--   EXEC pims_error_handling
+--END CATCH;
+--
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create trigger dbo.PIMS_AGRMNT_A_S_IUD_TR
 PRINT N'Create trigger dbo.PIMS_AGRMNT_A_S_IUD_TR'
@@ -6359,51 +6393,51 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Create trigger dbo.PIMS_PRPALT_I_S_I_TR
-PRINT N'Create trigger dbo.PIMS_PRPALT_I_S_I_TR'
-GO
-CREATE TRIGGER [dbo].[PIMS_PRPALT_I_S_I_TR] ON PIMS_PROP_PROP_ADJACENT_LAND_TYPE INSTEAD OF INSERT AS
-SET NOCOUNT ON
-BEGIN TRY
-  IF NOT EXISTS(SELECT * FROM inserted) 
-    RETURN;
-
-  
-  insert into PIMS_PROP_PROP_ADJACENT_LAND_TYPE ("PROP_PROP_ADJACENT_LAND_TYPE_ID",
-      "PROPERTY_ID",
-      "PROPERTY_ADJACENT_LAND_TYPE_CODE",
-      "APP_CREATE_TIMESTAMP",
-      "APP_CREATE_USER_DIRECTORY",
-      "APP_CREATE_USER_GUID",
-      "APP_CREATE_USERID",
-      "APP_LAST_UPDATE_TIMESTAMP",
-      "APP_LAST_UPDATE_USER_DIRECTORY",
-      "APP_LAST_UPDATE_USER_GUID",
-      "APP_LAST_UPDATE_USERID",
-      "CONCURRENCY_CONTROL_NUMBER")
-    select "PROP_PROP_ADJACENT_LAND_TYPE_ID",
-      "PROPERTY_ID",
-      "PROPERTY_ADJACENT_LAND_TYPE_CODE",
-      "APP_CREATE_TIMESTAMP",
-      "APP_CREATE_USER_DIRECTORY",
-      "APP_CREATE_USER_GUID",
-      "APP_CREATE_USERID",
-      "APP_LAST_UPDATE_TIMESTAMP",
-      "APP_LAST_UPDATE_USER_DIRECTORY",
-      "APP_LAST_UPDATE_USER_GUID",
-      "APP_LAST_UPDATE_USERID",
-      "CONCURRENCY_CONTROL_NUMBER"
-    from inserted;
-
-END TRY
-BEGIN CATCH
-   IF @@trancount > 0 ROLLBACK TRANSACTION
-   EXEC pims_error_handling
-END CATCH;
-
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create trigger dbo.PIMS_PRPALT_I_S_I_TR
+--PRINT N'Create trigger dbo.PIMS_PRPALT_I_S_I_TR'
+--GO
+--CREATE TRIGGER [dbo].[PIMS_PRPALT_I_S_I_TR] ON PIMS_PROP_PROP_ADJACENT_LAND_TYPE INSTEAD OF INSERT AS
+--SET NOCOUNT ON
+--BEGIN TRY
+--  IF NOT EXISTS(SELECT * FROM inserted) 
+--    RETURN;
+--
+--  
+--  insert into PIMS_PROP_PROP_ADJACENT_LAND_TYPE ("PROP_PROP_ADJACENT_LAND_TYPE_ID",
+--      "PROPERTY_ID",
+--      "PROPERTY_ADJACENT_LAND_TYPE_CODE",
+--      "APP_CREATE_TIMESTAMP",
+--      "APP_CREATE_USER_DIRECTORY",
+--      "APP_CREATE_USER_GUID",
+--      "APP_CREATE_USERID",
+--      "APP_LAST_UPDATE_TIMESTAMP",
+--      "APP_LAST_UPDATE_USER_DIRECTORY",
+--      "APP_LAST_UPDATE_USER_GUID",
+--      "APP_LAST_UPDATE_USERID",
+--      "CONCURRENCY_CONTROL_NUMBER")
+--    select "PROP_PROP_ADJACENT_LAND_TYPE_ID",
+--      "PROPERTY_ID",
+--      "PROPERTY_ADJACENT_LAND_TYPE_CODE",
+--      "APP_CREATE_TIMESTAMP",
+--      "APP_CREATE_USER_DIRECTORY",
+--      "APP_CREATE_USER_GUID",
+--      "APP_CREATE_USERID",
+--      "APP_LAST_UPDATE_TIMESTAMP",
+--      "APP_LAST_UPDATE_USER_DIRECTORY",
+--      "APP_LAST_UPDATE_USER_GUID",
+--      "APP_LAST_UPDATE_USERID",
+--      "CONCURRENCY_CONTROL_NUMBER"
+--    from inserted;
+--
+--END TRY
+--BEGIN CATCH
+--   IF @@trancount > 0 ROLLBACK TRANSACTION
+--   EXEC pims_error_handling
+--END CATCH;
+--
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create trigger dbo.PIMS_AQOWRP_I_S_U_TR
 PRINT N'Create trigger dbo.PIMS_AQOWRP_I_S_U_TR'
@@ -6447,42 +6481,42 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Create trigger dbo.PIMS_PRADJL_I_S_U_TR
-PRINT N'Create trigger dbo.PIMS_PRADJL_I_S_U_TR'
-GO
-CREATE TRIGGER [dbo].[PIMS_PRADJL_I_S_U_TR] ON PIMS_PROPERTY_ADJACENT_LAND_TYPE INSTEAD OF UPDATE AS
-SET NOCOUNT ON
-BEGIN TRY
-  IF NOT EXISTS(SELECT * FROM deleted) 
-    RETURN;
-
-  -- validate concurrency control
-  if exists (select 1 from inserted, deleted where inserted.CONCURRENCY_CONTROL_NUMBER != deleted.CONCURRENCY_CONTROL_NUMBER+1 AND inserted.PROPERTY_ADJACENT_LAND_TYPE_CODE = deleted.PROPERTY_ADJACENT_LAND_TYPE_CODE)
-    raiserror('CONCURRENCY FAILURE.',16,1)
-
-
-  -- update statement
-  update PIMS_PROPERTY_ADJACENT_LAND_TYPE
-    set "PROPERTY_ADJACENT_LAND_TYPE_CODE" = inserted."PROPERTY_ADJACENT_LAND_TYPE_CODE",
-      "DESCRIPTION" = inserted."DESCRIPTION",
-      "IS_DISABLED" = inserted."IS_DISABLED",
-      "DISPLAY_ORDER" = inserted."DISPLAY_ORDER",
-      "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER"
-    , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
-    , DB_LAST_UPDATE_USERID = user_name()
-    from PIMS_PROPERTY_ADJACENT_LAND_TYPE
-    inner join inserted
-    on (PIMS_PROPERTY_ADJACENT_LAND_TYPE.PROPERTY_ADJACENT_LAND_TYPE_CODE = inserted.PROPERTY_ADJACENT_LAND_TYPE_CODE);
-
-END TRY
-BEGIN CATCH
-   IF @@trancount > 0 ROLLBACK TRANSACTION
-   EXEC pims_error_handling
-END CATCH;
-
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create trigger dbo.PIMS_PRADJL_I_S_U_TR
+--PRINT N'Create trigger dbo.PIMS_PRADJL_I_S_U_TR'
+--GO
+--CREATE TRIGGER [dbo].[PIMS_PRADJL_I_S_U_TR] ON PIMS_PROPERTY_ADJACENT_LAND_TYPE INSTEAD OF UPDATE AS
+--SET NOCOUNT ON
+--BEGIN TRY
+--  IF NOT EXISTS(SELECT * FROM deleted) 
+--    RETURN;
+--
+--  -- validate concurrency control
+--  if exists (select 1 from inserted, deleted where inserted.CONCURRENCY_CONTROL_NUMBER != deleted.CONCURRENCY_CONTROL_NUMBER+1 AND inserted.PROPERTY_ADJACENT_LAND_TYPE_CODE = deleted.PROPERTY_ADJACENT_LAND_TYPE_CODE)
+--    raiserror('CONCURRENCY FAILURE.',16,1)
+--
+--
+--  -- update statement
+--  update PIMS_PROPERTY_ADJACENT_LAND_TYPE
+--    set "PROPERTY_ADJACENT_LAND_TYPE_CODE" = inserted."PROPERTY_ADJACENT_LAND_TYPE_CODE",
+--      "DESCRIPTION" = inserted."DESCRIPTION",
+--      "IS_DISABLED" = inserted."IS_DISABLED",
+--      "DISPLAY_ORDER" = inserted."DISPLAY_ORDER",
+--      "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER"
+--    , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
+--    , DB_LAST_UPDATE_USERID = user_name()
+--    from PIMS_PROPERTY_ADJACENT_LAND_TYPE
+--    inner join inserted
+--    on (PIMS_PROPERTY_ADJACENT_LAND_TYPE.PROPERTY_ADJACENT_LAND_TYPE_CODE = inserted.PROPERTY_ADJACENT_LAND_TYPE_CODE);
+--
+--END TRY
+--BEGIN CATCH
+--   IF @@trancount > 0 ROLLBACK TRANSACTION
+--   EXEC pims_error_handling
+--END CATCH;
+--
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create trigger dbo.PIMS_AQOWRP_A_S_IUD_TR
 PRINT N'Create trigger dbo.PIMS_AQOWRP_A_S_IUD_TR'
@@ -8374,31 +8408,31 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Create foreign key constraint dbo.PIM_PRPRTY_PIM_PRPALT_FK
-PRINT N'Create foreign key constraint dbo.PIM_PRPRTY_PIM_PRPALT_FK'
-GO
-ALTER TABLE [dbo].[PIMS_PROP_PROP_ADJACENT_LAND_TYPE]
-	ADD CONSTRAINT [PIM_PRPRTY_PIM_PRPALT_FK]
-	FOREIGN KEY([PROPERTY_ID])
-	REFERENCES [dbo].[PIMS_PROPERTY]([PROPERTY_ID])
-	ON DELETE NO ACTION 
-	ON UPDATE NO ACTION 
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create foreign key constraint dbo.PIM_PRPRTY_PIM_PRPALT_FK
+--PRINT N'Create foreign key constraint dbo.PIM_PRPRTY_PIM_PRPALT_FK'
+--GO
+--ALTER TABLE [dbo].[PIMS_PROP_PROP_ADJACENT_LAND_TYPE]
+--	ADD CONSTRAINT [PIM_PRPRTY_PIM_PRPALT_FK]
+--	FOREIGN KEY([PROPERTY_ID])
+--	REFERENCES [dbo].[PIMS_PROPERTY]([PROPERTY_ID])
+--	ON DELETE NO ACTION 
+--	ON UPDATE NO ACTION 
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
--- Create foreign key constraint dbo.PIM_PRADJL_PIM_PRPALT_FK
-PRINT N'Create foreign key constraint dbo.PIM_PRADJL_PIM_PRPALT_FK'
-GO
-ALTER TABLE [dbo].[PIMS_PROP_PROP_ADJACENT_LAND_TYPE]
-	ADD CONSTRAINT [PIM_PRADJL_PIM_PRPALT_FK]
-	FOREIGN KEY([PROPERTY_ADJACENT_LAND_TYPE_CODE])
-	REFERENCES [dbo].[PIMS_PROPERTY_ADJACENT_LAND_TYPE]([PROPERTY_ADJACENT_LAND_TYPE_CODE])
-	ON DELETE NO ACTION 
-	ON UPDATE NO ACTION 
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create foreign key constraint dbo.PIM_PRADJL_PIM_PRPALT_FK
+--PRINT N'Create foreign key constraint dbo.PIM_PRADJL_PIM_PRPALT_FK'
+--GO
+--ALTER TABLE [dbo].[PIMS_PROP_PROP_ADJACENT_LAND_TYPE]
+--	ADD CONSTRAINT [PIM_PRADJL_PIM_PRPALT_FK]
+--	FOREIGN KEY([PROPERTY_ADJACENT_LAND_TYPE_CODE])
+--	REFERENCES [dbo].[PIMS_PROPERTY_ADJACENT_LAND_TYPE]([PROPERTY_ADJACENT_LAND_TYPE_CODE])
+--	ON DELETE NO ACTION 
+--	ON UPDATE NO ACTION 
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create foreign key constraint dbo.PIM_AQOWRP_PIM_ACQPAY_FK
 PRINT N'Create foreign key constraint dbo.PIM_AQOWRP_PIM_ACQPAY_FK'

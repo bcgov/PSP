@@ -9,45 +9,45 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Add extend properties to PIMS_ACQUISITION_OWNER_REP
-PRINT N'Add extend properties to PIMS_ACQUISITION_OWNER_REP'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Additional comment concerning this owener representative.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_REP', 
-	@level2type = N'Column', @level2name = N'COMMENT'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Indicates if the code value is inactive.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_REP', 
-	@level2type = N'Column', @level2name = N'IS_DISABLED'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Table describing the owners'' representative that is assigned to the acquisition file.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_REP'
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Add extend properties to PIMS_ACQUISITION_OWNER_REP
+--PRINT N'Add extend properties to PIMS_ACQUISITION_OWNER_REP'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'Additional comment concerning this owener representative.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_REP', 
+--	@level2type = N'Column', @level2name = N'COMMENT'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'Indicates if the code value is inactive.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_REP', 
+--	@level2type = N'Column', @level2name = N'IS_DISABLED'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'Table describing the owners'' representative that is assigned to the acquisition file.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_REP'
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
--- Add extend properties to PIMS_ACQUISITION_OWNER_SOLICITOR
-PRINT N'Add extend properties to PIMS_ACQUISITION_OWNER_SOLICITOR'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Indicates if the code value is inactive.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_SOLICITOR', 
-	@level2type = N'Column', @level2name = N'IS_DISABLED'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Table describing the owners'' solicitor that is assigned to the acquisition file.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_SOLICITOR'
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Add extend properties to PIMS_ACQUISITION_OWNER_SOLICITOR
+--PRINT N'Add extend properties to PIMS_ACQUISITION_OWNER_SOLICITOR'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'Indicates if the code value is inactive.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_SOLICITOR', 
+--	@level2type = N'Column', @level2name = N'IS_DISABLED'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'Table describing the owners'' solicitor that is assigned to the acquisition file.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_ACQUISITION_OWNER_SOLICITOR'
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Add extend properties to PIMS_INSURANCE
 PRINT N'Add extend properties to PIMS_INSURANCE'
@@ -356,51 +356,51 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Add extend properties to PIMS_PROPERTY_ADJACENT_LAND_TYPE
-PRINT N'Add extend properties to PIMS_PROPERTY_ADJACENT_LAND_TYPE'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Property adjacent land code.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ADJACENT_LAND_TYPE', 
-	@level2type = N'Column', @level2name = N'PROPERTY_ADJACENT_LAND_TYPE_CODE'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Property adjacent land code description.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ADJACENT_LAND_TYPE', 
-	@level2type = N'Column', @level2name = N'DESCRIPTION'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Indicates if the code is disabled.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ADJACENT_LAND_TYPE', 
-	@level2type = N'Column', @level2name = N'IS_DISABLED'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Force the display order of the codes.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ADJACENT_LAND_TYPE', 
-	@level2type = N'Column', @level2name = N'DISPLAY_ORDER'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Code table to describe property adjacent land type.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ADJACENT_LAND_TYPE'
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Add extend properties to PIMS_PROPERTY_ADJACENT_LAND_TYPE
+--PRINT N'Add extend properties to PIMS_PROPERTY_ADJACENT_LAND_TYPE'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'Property adjacent land code.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ADJACENT_LAND_TYPE', 
+--	@level2type = N'Column', @level2name = N'PROPERTY_ADJACENT_LAND_TYPE_CODE'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'Property adjacent land code description.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ADJACENT_LAND_TYPE', 
+--	@level2type = N'Column', @level2name = N'DESCRIPTION'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'Indicates if the code is disabled.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ADJACENT_LAND_TYPE', 
+--	@level2type = N'Column', @level2name = N'IS_DISABLED'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'Force the display order of the codes.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ADJACENT_LAND_TYPE', 
+--	@level2type = N'Column', @level2name = N'DISPLAY_ORDER'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'Code table to describe property adjacent land type.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ADJACENT_LAND_TYPE'
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
--- Add extend properties to PIMS_PROP_PROP_ADJACENT_LAND_TYPE
-PRINT N'Add extend properties to PIMS_PROP_PROP_ADJACENT_LAND_TYPE'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_ADJACENT_LAND_TYPE' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROP_PROP_ADJACENT_LAND_TYPE'
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Add extend properties to PIMS_PROP_PROP_ADJACENT_LAND_TYPE
+--PRINT N'Add extend properties to PIMS_PROP_PROP_ADJACENT_LAND_TYPE'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_ADJACENT_LAND_TYPE' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROP_PROP_ADJACENT_LAND_TYPE'
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Add extend properties to PIMS_PROPERTY_IMPROVEMENT
 PRINT N'Add extend properties to PIMS_PROPERTY_IMPROVEMENT'
