@@ -66,7 +66,7 @@ export const useCompensationRequisitionRepository = () => {
     ),
     requestName: 'getCompensationPayee',
     onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to load Compensation requisition payee.'),
+    throwError: true,
   });
 
   return useMemo(

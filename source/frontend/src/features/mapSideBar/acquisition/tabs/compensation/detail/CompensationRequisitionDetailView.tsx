@@ -35,9 +35,6 @@ interface PayeeViewDetails {
   displayName: string;
   isGstApplicable: boolean;
   gstNumber: string;
-  preTaxAmount: number;
-  taxAmount: number;
-  totalAmount: number;
   goodTrust: boolean;
   contactEnabled: boolean;
   personId: number | null;
@@ -91,22 +88,6 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       payeeDetail.personId = compensationPayee.motiSolicitor?.id!;
     }
 
-    const payeePretaxAmount = compensation?.financials
-      .map(f => f.pretaxAmount ?? 0)
-      .reduce((prev, next) => prev + next, 0);
-
-    const payeeTaxAmount = compensation?.financials
-      .map(f => f.taxAmount ?? 0)
-      .reduce((prev, next) => prev + next, 0);
-
-    const payeeTotalAmount = compensation?.financials
-      .map(f => f.totalAmount ?? 0)
-      .reduce((prev, next) => prev + next, 0);
-
-    payeeDetail.preTaxAmount = payeePretaxAmount;
-    payeeDetail.taxAmount = payeeTaxAmount;
-    payeeDetail.totalAmount = payeeTotalAmount;
-
     var results =
       compensation.financials?.filter(el => {
         return el.isGstRequired === true;
@@ -118,6 +99,18 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   };
 
   const payeeDetails = getPayeeDetails(compensationPayee);
+
+  const compPretaxAmount = compensation?.financials
+    .map(f => f.pretaxAmount ?? 0)
+    .reduce((prev, next) => prev + next, 0);
+
+  const compTaxAmount = compensation?.financials
+    .map(f => f.taxAmount ?? 0)
+    .reduce((prev, next) => prev + next, 0);
+
+  const compTotalAmount = compensation?.financials
+    .map(f => f.totalAmount ?? 0)
+    .reduce((prev, next) => prev + next, 0);
 
   const userCanEditCompensationReq = (): boolean => {
     if (compensation.isDraft && hasClaim(Claims.COMPENSATION_REQUISITION_EDIT)) {
@@ -139,6 +132,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       }}
     />
   );
+
   return (
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
@@ -163,7 +157,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
               contentWidth="4"
               valueTestId="header-pretax-amount"
             >
-              <p className="mb-0 text-right">{formatMoney(payeeDetails?.preTaxAmount ?? 0)}</p>
+              <p className="mb-0 text-right">{formatMoney(compPretaxAmount ?? 0)}</p>
             </HeaderField>
             <HeaderField
               label="Applicable GST:"
@@ -171,7 +165,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
               contentWidth="4"
               valueTestId="header-tax-amount"
             >
-              <p className="mb-0 text-right">{formatMoney(payeeDetails?.taxAmount ?? 0)}</p>
+              <p className="mb-0 text-right">{formatMoney(compTaxAmount ?? 0)}</p>
             </HeaderField>
             <HeaderField
               label="Total cheque amount:"
@@ -179,7 +173,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
               contentWidth="4"
               valueTestId="header-total-amount"
             >
-              <p className="mb-0 text-right">{formatMoney(payeeDetails?.totalAmount ?? 0)}</p>
+              <p className="mb-0 text-right">{formatMoney(compTotalAmount ?? 0)}</p>
             </HeaderField>
           </Col>
         </StyledRow>
@@ -274,19 +268,15 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           </StyledPayeeDisplayName>
         </SectionField>
         <SectionField label="Amount (before tax)">
-          {formatMoney(payeeDetails?.preTaxAmount ?? 0)}
+          {formatMoney(compPretaxAmount ?? 0)}
         </SectionField>
         <SectionField label="GST applicable?">
           {payeeDetails?.isGstApplicable ? 'Yes' : 'No'}
         </SectionField>
         {payeeDetails?.isGstApplicable && (
-          <SectionField label="GST amount">
-            {formatMoney(payeeDetails?.taxAmount ?? 0)}
-          </SectionField>
+          <SectionField label="GST amount">{formatMoney(compTaxAmount ?? 0)}</SectionField>
         )}
-        <SectionField label="Total amount">
-          {formatMoney(payeeDetails?.totalAmount ?? 0)}
-        </SectionField>
+        <SectionField label="Total amount">{formatMoney(compTotalAmount ?? 0)}</SectionField>
       </Section>
 
       <Section header="Financial Activities" isCollapsable initiallyExpanded>
@@ -327,7 +317,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
               <label>Compensation amount:</label>
             </Col>
             <Col xs="3" className="pl-1 text-right">
-              <span>{formatMoney(payeeDetails?.preTaxAmount ?? 0)}</span>
+              <span>{formatMoney(compPretaxAmount ?? 0)}</span>
             </Col>
           </Row>
           <Row>
@@ -335,7 +325,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
               <label>Applicable GST:</label>
             </Col>
             <Col xs="3" className="pl-1 text-right">
-              <span>{formatMoney(payeeDetails?.taxAmount ?? 0)}</span>
+              <span>{formatMoney(compTaxAmount ?? 0)}</span>
             </Col>
           </Row>
           <Row>
@@ -343,7 +333,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
               <label>Total cheque amount:</label>
             </Col>
             <Col xs="3" className="pl-1 text-right">
-              <span>{formatMoney(payeeDetails?.totalAmount ?? 0)}</span>
+              <span>{formatMoney(compTotalAmount ?? 0)}</span>
             </Col>
           </Row>
         </StyledCompensationFooter>
