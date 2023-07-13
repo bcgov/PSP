@@ -40,13 +40,13 @@ export const useGenerateExpropriationForm1 = () => {
       : null;
 
     const ownerSolicitorPerson = ownerSolicitor?.personId
-      ? (await getPersonConcept(ownerSolicitor?.personId)).data
+      ? (await getPersonConcept(ownerSolicitor?.personId))?.data
       : null;
 
     const fileData = new Api_GenerateAcquisitionFile({
       file: file,
       interestHolders: interestHolders ?? [],
-      ownerSolicitor: ownerSolicitorPerson,
+      ownerSolicitor: ownerSolicitorPerson ?? null,
     });
 
     const filePropertyIds = new Set(
