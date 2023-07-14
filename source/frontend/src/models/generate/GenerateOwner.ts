@@ -3,7 +3,6 @@ import { phoneFormatter } from '@/utils/formUtils';
 
 import { Api_GenerateAddress } from './GenerateAddress';
 export class Api_GenerateOwner {
-  owner_row: number;
   given_name: string;
   last_name_or_corp_name: string;
   other_name: string;
@@ -16,8 +15,7 @@ export class Api_GenerateOwner {
   phone: string;
   is_primary_contact: boolean;
 
-  constructor(owner: Api_AcquisitionFileOwner | null, index: number = 0) {
-    this.owner_row = index;
+  constructor(owner: Api_AcquisitionFileOwner | null) {
     this.given_name = owner?.givenName ?? '';
     this.last_name_or_corp_name = owner?.lastNameAndCorpName ?? '';
     this.other_name = owner?.otherName ?? '';

@@ -318,16 +318,12 @@ namespace Pims.Api.Services
             return updatedAgreements;
         }
 
-        public IEnumerable<PimsInterestHolder> GetInterestHolders(long id, bool fullDetails = false)
+        public IEnumerable<PimsInterestHolder> GetInterestHolders(long id)
         {
             _logger.LogInformation("Getting acquisition file InterestHolders with AcquisitionFile id: {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
-            if (fullDetails)
-            {
-                return _interestHolderRepository.GetInterestHoldersFullDetailsByAcquisitionFile(id);
-            }
             return _interestHolderRepository.GetInterestHoldersByAcquisitionFile(id);
         }
 

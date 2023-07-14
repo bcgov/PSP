@@ -42,14 +42,14 @@ namespace Pims.Api.Test.Controllers
         public void GetInterestHolderByAcquisitionFileId_Success()
         {
             // Arrange
-            _service.Setup(m => m.GetInterestHolders(It.IsAny<long>(), It.IsAny<bool>()));
+            _service.Setup(m => m.GetInterestHolders(It.IsAny<long>()));
 
             // Act
-            var result = _controller.GetAcquisitionFileInterestHolders(1, false);
+            var result = _controller.GetAcquisitionFileInterestHolders(1);
 
             // Assert
             result.Should().BeOfType<JsonResult>();
-            _service.Verify(m => m.GetInterestHolders(It.IsAny<long>(), It.IsAny<bool>()), Times.Once());
+            _service.Verify(m => m.GetInterestHolders(It.IsAny<long>()), Times.Once());
         }
 
         [Fact]
