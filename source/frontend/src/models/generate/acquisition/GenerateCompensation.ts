@@ -58,11 +58,8 @@ export class Api_GenerateCompensation {
       .filter(summary => summary.file_total !== '$0.00' || summary.total !== '$0.00')
       .value();
 
-    const otherFileFinancials = finalFileFinancials?.filter(
-      f => !compensation?.financials?.find(cf => cf?.id === f?.id),
-    );
     this.file_financial_total = formatMoney(
-      otherFileFinancials?.reduce((acc, curr) => acc + (curr?.totalAmount ?? 0), 0) ?? 0,
+      finalFileFinancials?.reduce((acc, curr) => acc + (curr?.totalAmount ?? 0), 0) ?? 0,
     );
     this.financial_total = formatMoney(
       compensation?.financials?.reduce((acc, curr) => acc + (curr?.totalAmount ?? 0), 0) ?? 0,
