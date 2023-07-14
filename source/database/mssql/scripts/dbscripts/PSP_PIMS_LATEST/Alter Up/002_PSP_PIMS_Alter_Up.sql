@@ -731,6 +731,18 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
+-- Populate the PIMS_INTEREST_HOLDER_TYPE table
+PRINT N'Populate the PIMS_INTEREST_HOLDER_TYPE table'
+GO
+INSERT INTO PIMS_INTEREST_HOLDER_TYPE (INTEREST_HOLDER_TYPE_CODE, DESCRIPTION, DISPLAY_ORDER)
+VALUES
+  (N'INTHLDR', N'Interest Holder',                  1),
+  (N'AOREP',   N'Acquisition Owner Representative', 2),
+  (N'AOSLCTR', N'Acquisition Owner Solicitor',      3);
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
 -- Alter table dbo.PIMS_INTEREST_HOLDER
 PRINT N'Alter table dbo.PIMS_INTEREST_HOLDER'
 GO
