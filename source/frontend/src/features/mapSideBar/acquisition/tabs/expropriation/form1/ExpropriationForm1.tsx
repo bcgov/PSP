@@ -19,7 +19,7 @@ import { ExpropriationForm1YupSchema } from './ExpropriationForm1YupSchema';
 
 export interface IExpropriationForm1Props {
   acquisitionFile: Api_AcquisitionFile;
-  onGenerate: (values: ExpropriationForm1Model) => Promise<void>;
+  onGenerate: (acquisitionFileId: number, values: ExpropriationForm1Model) => Promise<void>;
 }
 
 export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({
@@ -31,7 +31,9 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({
     formikHelpers: FormikHelpers<ExpropriationForm1Model>,
   ) => {
     try {
-      await onGenerate(values);
+      if (acquisitionFile.id) {
+        await onGenerate(acquisitionFile.id, values);
+      }
     } finally {
       formikHelpers?.setSubmitting(false);
     }

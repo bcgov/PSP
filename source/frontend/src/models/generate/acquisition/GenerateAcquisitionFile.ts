@@ -26,6 +26,7 @@ export class Api_GenerateAcquisitionFile {
   person_owners: Api_GenerateOwner[];
   organization_owners: Api_GenerateOwner[];
   all_owners_string: string;
+  all_owners_string_and: string;
   file_number: string;
   file_name: string;
   project_number: string;
@@ -85,5 +86,6 @@ export class Api_GenerateAcquisitionFile {
     this.project = new Api_GenerateProject(file?.project ?? null);
     this.product = new Api_GenerateProduct(file?.product ?? null);
     this.all_owners_string = this.owners.map(owner => owner.owner_string).join(', ');
+    this.all_owners_string_and = this.owners.map(owner => owner.owner_string).join(' And ');
   }
 }
