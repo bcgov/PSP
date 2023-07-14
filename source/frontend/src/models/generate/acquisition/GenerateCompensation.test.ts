@@ -106,7 +106,7 @@ describe('GenerateCompensation tests', () => {
     );
 
     expect(compensation.payee.gst_number).toBe('3262');
-    // expect(compensation.payee.payment_in_trust).toBe(false);
+    expect(compensation.payee.payment_in_trust).toBe(false);
 
     mockPayee.cheques![0].isPaymentInTrust = true;
     const compensationInTrust = new Api_GenerateCompensation(
@@ -118,7 +118,7 @@ describe('GenerateCompensation tests', () => {
     );
 
     expect(compensationInTrust.payee.gst_number).toBe('3262');
-    // expect(compensationInTrust.payee.payment_in_trust).toBe(true);
+    expect(compensationInTrust.payee.payment_in_trust).toBe(true);
   });
 
   it('can generate a payee with no cheques', () => {
