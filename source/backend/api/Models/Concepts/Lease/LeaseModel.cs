@@ -1,6 +1,6 @@
-using Pims.Api.Models.Tenant;
 using System;
 using System.Collections.Generic;
+using Pims.Api.Models.Tenant;
 
 namespace Pims.Api.Models.Concepts
 {
