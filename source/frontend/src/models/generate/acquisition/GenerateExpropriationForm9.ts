@@ -3,31 +3,27 @@ import {
   IApiGenerateExpropriationFormBaseInput,
 } from './GenerateExpropriationFormBase';
 
-export interface IApiGenerateExpropriationForm1Input
+export interface IApiGenerateExpropriationForm9Input
   extends IApiGenerateExpropriationFormBaseInput {
-  landInterest?: string;
-  purpose?: string;
+  registeredPlanNumbers?: string;
 }
 
-export class Api_GenerateExpropriationForm1 extends Api_GenerateExpropriationFormBase {
-  land_interest: string;
-  purpose: string;
+export class Api_GenerateExpropriationForm9 extends Api_GenerateExpropriationFormBase {
+  registered_plan_numbers: string;
 
   constructor({
     file,
     interestHolders = [],
     expropriationAuthority,
     impactedProperties = [],
-    landInterest,
-    purpose,
-  }: IApiGenerateExpropriationForm1Input) {
+    registeredPlanNumbers,
+  }: IApiGenerateExpropriationForm9Input) {
     super({
       file,
       interestHolders,
       expropriationAuthority,
       impactedProperties,
     });
-    this.land_interest = landInterest ?? '';
-    this.purpose = purpose ?? '';
+    this.registered_plan_numbers = registeredPlanNumbers ?? '';
   }
 }
