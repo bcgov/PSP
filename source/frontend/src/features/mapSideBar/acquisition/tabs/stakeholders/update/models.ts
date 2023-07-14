@@ -106,7 +106,7 @@ export class InterestHolderForm {
   personId: string = '';
   organizationId: string = '';
   contact: IContactSearchResult | null = null;
-
+  primaryContactId: number | null = null;
   impactedProperties: InterestHolderPropertyForm[] = [];
   interestTypeCode: string = '';
   propertyInterestTypeCode: string = '';
@@ -146,6 +146,7 @@ export class InterestHolderForm {
     };
     interestHolderForm.acquisitionFileId = apiModel.acquisitionFileId;
     interestHolderForm.comment = apiModel.comment;
+    interestHolderForm.primaryContactId = apiModel.primaryContactId;
 
     return interestHolderForm;
   }
@@ -173,7 +174,7 @@ export class InterestHolderForm {
       comment: model.comment,
       interestHolderType: { id: model.interestTypeCode },
       primaryContact: null,
-      primaryContactId: null,
+      primaryContactId: model.primaryContactId,
     };
   }
 }

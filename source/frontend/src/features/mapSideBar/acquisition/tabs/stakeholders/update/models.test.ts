@@ -6,6 +6,7 @@ import { InterestHolderForm, StakeHolderForm } from './models';
 
 const emptyInterestHolderForm: InterestHolderForm = {
   interestHolderId: null,
+  primaryContactId: null,
   isDisabled: false,
   impactedProperties: [],
   contact: null,

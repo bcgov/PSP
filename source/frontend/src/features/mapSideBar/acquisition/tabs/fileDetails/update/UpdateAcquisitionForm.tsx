@@ -20,10 +20,13 @@ import { StyledSectionParagraph } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from '@/constants/API';
+import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { IAutocompletePrediction } from '@/interfaces';
+import { Api_OrganizationPerson } from '@/models/api/Organization';
 import { Api_Product } from '@/models/api/Project';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 import UpdateAcquisitionOwnersSubForm from '../../../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
 import { UpdateAcquisitionTeamSubForm } from '../../../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
@@ -90,6 +93,7 @@ const AcquisitionDetailSubForm: React.FC<{
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
   const fileStatusTypeCodes = getOptionsByType(API.ACQUISITION_FILE_STATUS_TYPES);
   const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
+  const ownerSolicitorContact = formikProps.values.ownerSolicitor.contact;
 
   const onMinistryProjectSelected = React.useCallback(
     async (param: IAutocompletePrediction[]) => {
@@ -119,6 +123,35 @@ const AcquisitionDetailSubForm: React.FC<{
       setFieldValue('completionDate', '');
     }
   }, [fileStatusTypeCode, setFieldValue]);
+
+  const {
+    getOrganizationDetail: { execute: fetchOrganization, response: organization },
+  } = useOrganizationRepository();
+
+  React.useEffect(() => {
+    if (ownerSolicitorContact?.organizationId) {
+      fetchOrganization(ownerSolicitorContact?.organizationId);
+    }
+  }, [ownerSolicitorContact?.organizationId, fetchOrganization]);
+
+  const orgPersons = organization?.organizationPersons;
+
+  React.useEffect(() => {
+    if (orgPersons?.length === 0) {
+      setFieldValue('ownerSolicitor.primaryContactId', null);
+    }
+    if (orgPersons?.length === 1) {
+      setFieldValue('ownerSolicitor.primaryContactId', orgPersons[0].personId);
+    }
+  }, [orgPersons, setFieldValue]);
+
+  const primaryContacts: SelectOption[] =
+    orgPersons?.map((orgPerson: Api_OrganizationPerson) => {
+      return {
+        label: `${formatApiPersonNames(orgPerson.person)}`,
+        value: orgPerson.personId ?? ' ',
+      };
+    }) ?? [];
 
   return (
     <Container>
@@ -266,6 +299,21 @@ const AcquisitionDetailSubForm: React.FC<{
             View={ContactInputView}
           ></ContactInputContainer>
         </SectionField>
+        {ownerSolicitorContact?.organizationId && !ownerSolicitorContact?.personId && (
+          <SectionField label="Primary contact" className="mt-4">
+            {primaryContacts.length > 1 ? (
+              <Select
+                field="ownerSolicitor.primaryContactId"
+                options={primaryContacts}
+                placeholder="Select a primary contact..."
+              ></Select>
+            ) : primaryContacts.length === 1 ? (
+              primaryContacts[0].label
+            ) : (
+              'No contacts available'
+            )}
+          </SectionField>
+        )}
         <SectionField label="Owner representative">
           <ContactInputContainer
             field="ownerRepresentative.contact"
