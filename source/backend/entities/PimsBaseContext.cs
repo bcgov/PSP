@@ -3135,6 +3135,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.InterestHolderTypeCode).HasDefaultValueSql("(N'INTHLDR')");
+
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the code value is inactive.");
@@ -3177,6 +3179,8 @@ namespace Pims.Dal
                 entity.Property(e => e.InterestHolderHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INTEREST_HOLDER_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.InterestHolderTypeCode).HasDefaultValueSql("(N'INTHLDR')");
             });
 
             modelBuilder.Entity<PimsInterestHolderInterestType>(entity =>
@@ -5116,50 +5120,6 @@ namespace Pims.Dal
                     .HasComment("Indicates if the code value is inactive.");
             });
 
-            modelBuilder.Entity<PimsPropPropAdjacentLandType>(entity =>
-            {
-                entity.HasKey(e => e.PropPropAdjacentLandTypeId)
-                    .HasName("PRPALT_PK");
-
-                entity.HasComment("Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_ADJACENT_LAND_TYPE");
-
-                entity.Property(e => e.PropPropAdjacentLandTypeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_ADJACENT_LAND_TYPE_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.HasOne(d => d.PropertyAdjacentLandTypeCodeNavigation)
-                    .WithMany(p => p.PimsPropPropAdjacentLandTypes)
-                    .HasForeignKey(d => d.PropertyAdjacentLandTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PRADJL_PIM_PRPALT_FK");
-
-                entity.HasOne(d => d.Property)
-                    .WithMany(p => p.PimsPropPropAdjacentLandTypes)
-                    .HasForeignKey(d => d.PropertyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PRPRTY_PIM_PRPALT_FK");
-            });
-
             modelBuilder.Entity<PimsPropInthldrInterestType>(entity =>
             {
                 entity.HasKey(e => e.PropInthldrInterestTypeId)
@@ -5204,6 +5164,50 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.PimsInthldrPropInterestId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_IHPRIN_PIM_PIHITY_FK");
+            });
+
+            modelBuilder.Entity<PimsPropPropAdjacentLandType>(entity =>
+            {
+                entity.HasKey(e => e.PropPropAdjacentLandTypeId)
+                    .HasName("PRPALT_PK");
+
+                entity.HasComment("Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_ADJACENT_LAND_TYPE");
+
+                entity.Property(e => e.PropPropAdjacentLandTypeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_ADJACENT_LAND_TYPE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.HasOne(d => d.PropertyAdjacentLandTypeCodeNavigation)
+                    .WithMany(p => p.PimsPropPropAdjacentLandTypes)
+                    .HasForeignKey(d => d.PropertyAdjacentLandTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRADJL_PIM_PRPALT_FK");
+
+                entity.HasOne(d => d.Property)
+                    .WithMany(p => p.PimsPropPropAdjacentLandTypes)
+                    .HasForeignKey(d => d.PropertyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRPRTY_PIM_PRPALT_FK");
             });
 
             modelBuilder.Entity<PimsPropPropAnomalyType>(entity =>
@@ -8691,6 +8695,7 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_RESPONSIBILITY_CODE_SEQ")
+                .StartsAt(991)
                 .HasMin(1)
                 .HasMax(2147483647);
 
