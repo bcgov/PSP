@@ -619,7 +619,7 @@ namespace Pims.Api.Services
                 return;
             }
 
-            foreach(var compReq in compensationRequisitions)
+            foreach (var compReq in compensationRequisitions)
             {
                 var payee = compReq.PimsAcquisitionPayees.FirstOrDefault();
                 if (payee is null || !payee.HasPayeeAssigned)
@@ -628,7 +628,7 @@ namespace Pims.Api.Services
                 }
 
                 // Check for Acquisition File Owner removed
-                if(payee.AcquisitionOwnerId is not null
+                if (payee.AcquisitionOwnerId is not null
                     && !acquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(payee.AcquisitionOwnerId))
                     && currentAquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(payee.AcquisitionOwnerId)))
                 {
