@@ -3,10 +3,11 @@ import { Section } from '@/components/common/Section/Section';
 import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 
 import { useGenerateExpropriationForm1 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm1';
+import { useGenerateExpropriationForm5 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm5';
+import { useGenerateExpropriationForm9 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm9';
 import ExpropriationForm1 from './form1/ExpropriationForm1';
 import ExpropriationForm5 from './form5/ExpropriationForm5';
 import ExpropriationForm9 from './form9/ExpropriationForm9';
-import { ExpropriationForm5Model, ExpropriationForm9Model } from './models';
 
 export interface IExpropriationTabContainerViewProps {
   loading: boolean;
@@ -20,15 +21,8 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
   const acquisitionFileTypeCode = acquisitionFile.acquisitionTypeCode?.id;
 
   const onGenerateForm1 = useGenerateExpropriationForm1();
-
-  // TODO: submit json values to Generate endpoint
-  const onGenerateForm5 = async (values: ExpropriationForm5Model) => {
-    alert(JSON.stringify(values, null, 4));
-  };
-
-  const onGenerateForm9 = async (values: ExpropriationForm9Model) => {
-    alert(JSON.stringify(values, null, 4));
-  };
+  const onGenerateForm5 = useGenerateExpropriationForm5();
+  const onGenerateForm9 = useGenerateExpropriationForm9();
 
   return (
     <>
