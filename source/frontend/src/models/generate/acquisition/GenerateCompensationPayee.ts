@@ -7,6 +7,7 @@ export class Api_GenerateCompensationPayee {
   pre_tax_amount: string;
   tax_amount: string;
   total_amount: string;
+  payment_in_trust: boolean;
   gst_number: string;
 
   constructor(payee: Api_CompensationPayee | null) {
@@ -48,5 +49,8 @@ export class Api_GenerateCompensationPayee {
     this.tax_amount = payee?.cheques?.length ? formatMoney(payee.cheques[0].taxAmount) : '';
     this.total_amount = payee?.cheques?.length ? formatMoney(payee.cheques[0].totalAmount) : '';
     this.gst_number = payee?.cheques?.length ? payee.cheques[0]?.gstNumber ?? '' : '';
+    this.payment_in_trust = payee?.cheques?.length
+      ? payee.cheques[0]?.isPaymentInTrust ?? false
+      : false;
   }
 }
