@@ -20,11 +20,13 @@ import { ExpropriationForm9YupSchema } from './ExpropriationForm9YupSchema';
 export interface IExpropriationForm9Props {
   acquisitionFile: Api_AcquisitionFile;
   onGenerate: (acquisitionFileId: number, values: ExpropriationForm9Model) => Promise<void>;
+  onError?: (e: Error) => void;
 }
 
 export const ExpropriationForm9: React.FC<IExpropriationForm9Props> = ({
   acquisitionFile,
   onGenerate,
+  onError,
 }) => {
   const onSubmit = async (
     values: ExpropriationForm9Model,
@@ -33,6 +35,10 @@ export const ExpropriationForm9: React.FC<IExpropriationForm9Props> = ({
     try {
       if (acquisitionFile.id) {
         await onGenerate(acquisitionFile.id, values);
+      }
+    } catch (e) {
+      if (typeof onError === 'function') {
+        onError(e as Error);
       }
     } finally {
       formikHelpers?.setSubmitting(false);

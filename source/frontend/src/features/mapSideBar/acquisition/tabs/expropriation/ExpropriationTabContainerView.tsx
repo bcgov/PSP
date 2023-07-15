@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify';
+
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
@@ -24,6 +26,12 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
   const onGenerateForm5 = useGenerateExpropriationForm5();
   const onGenerateForm9 = useGenerateExpropriationForm9();
 
+  const onError = (error: Error) => {
+    if (error) {
+      toast.error(error?.message, { autoClose: 7000 });
+    }
+  };
+
   return (
     <>
       <LoadingBackdrop show={loading} />
@@ -37,6 +45,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
           <ExpropriationForm1
             acquisitionFile={acquisitionFile}
             onGenerate={onGenerateForm1}
+            onError={onError}
           ></ExpropriationForm1>
         </Section>
       )}
@@ -51,6 +60,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
           <ExpropriationForm5
             acquisitionFile={acquisitionFile}
             onGenerate={onGenerateForm5}
+            onError={onError}
           ></ExpropriationForm5>
         </Section>
       )}
@@ -72,6 +82,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
           <ExpropriationForm9
             acquisitionFile={acquisitionFile}
             onGenerate={onGenerateForm9}
+            onError={onError}
           ></ExpropriationForm9>
         </Section>
       )}
