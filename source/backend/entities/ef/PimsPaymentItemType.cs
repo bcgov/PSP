@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACQ_CHKLST_ITEM_STATUS_TYPE")]
-    public partial class PimsAcqChklstItemStatusType
+    [Table("PIMS_PAYMENT_ITEM_TYPE")]
+    public partial class PimsPaymentItemType
     {
-        public PimsAcqChklstItemStatusType()
+        public PimsPaymentItemType()
         {
-            PimsAcquisitionChecklistItems = new HashSet<PimsAcquisitionChecklistItem>();
+            PimsForm8s = new HashSet<PimsForm8>();
         }
 
         [Key]
-        [Column("ACQ_CHKLST_ITEM_STATUS_TYPE_CODE")]
+        [Column("PAYMENT_ITEM_TYPE_CODE")]
         [StringLength(20)]
-        public string AcqChklstItemStatusTypeCode { get; set; }
+        public string PaymentItemTypeCode { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
@@ -44,7 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsAcquisitionChecklistItem.AcqChklstItemStatusTypeCodeNavigation))]
-        public virtual ICollection<PimsAcquisitionChecklistItem> PimsAcquisitionChecklistItems { get; set; }
+        [InverseProperty(nameof(PimsForm8.PaymentItemTypeCodeNavigation))]
+        public virtual ICollection<PimsForm8> PimsForm8s { get; set; }
     }
 }

@@ -37,6 +37,7 @@ namespace Pims.Dal.Repositories
 
             return Context.PimsInterestHolders
                 .Where(ih => ih.AcquisitionFileId == acquisitionFileId)
+                .Include(ih => ih.InterestHolderTypeCodeNavigation)
                 .Include(ih => ih.Organization)
                     .ThenInclude(o => o.PimsOrganizationAddresses)
                     .ThenInclude(oa => oa.Address)
@@ -60,7 +61,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.PimsPersonAddresses)
                     .ThenInclude(oa => oa.AddressUsageTypeCodeNavigation)
                 .Include(ih => ih.PimsInthldrPropInterests)
-                    .ThenInclude(ip => ip.InterestHolderInterestTypeCodeNavigation)
+                    .ThenInclude(ip => ip.PimsPropInthldrInterestTypes)
                 .AsNoTracking()
                 .ToList();
         }
@@ -70,18 +71,30 @@ namespace Pims.Dal.Repositories
             // TODO: remove when cascade implemented.
             var existingInterestHolders = GetInterestHoldersByAcquisitionFile(acquisitionFileId);
             var deletedInterestHolders = existingInterestHolders.Where(existingInterestHolder => !interestHolders.Any(interestHolder => interestHolder.InterestHolderId == existingInterestHolder.InterestHolderId));
-            deletedInterestHolders.SelectMany(deletedInterestHolder => deletedInterestHolder.PimsInthldrPropInterests).ForEach(deletedPropertyInterest => Context.Remove(deletedPropertyInterest));
 
-            Context.UpdateChild<PimsAcquisitionFile, long, PimsInterestHolder, long>(p => p.PimsInterestHolders, acquisitionFileId, interestHolders.ToArray());
+            deletedInterestHolders.SelectMany(deletedInterestHolder => deletedInterestHolder.PimsInthldrPropInterests)
+                .ForEach(deletedPropertyInterest => deletedPropertyInterest.PimsPropInthldrInterestTypes
+                    .ForEach(deletedPropInterestType => Context.Remove(deletedPropInterestType)));
+            deletedInterestHolders.SelectMany(deletedInterestHolder => deletedInterestHolder.PimsInthldrPropInterests).ForEach(deletedPropertyInterest => Context.Remove(deletedPropertyInterest));
 
             interestHolders.ForEach(ih =>
             {
                 // ignore interest holders with no id, as those are new and do not require updates, the will be inserted by the parent's updateChild.
                 if (ih.InterestHolderId > 0)
                 {
+                    ih.PimsInthldrPropInterests.ForEach(ihp =>
+                    {
+                        // ignore interest holders properties, as those are new and do not require updates, the will be inserted by the parent's updateChild.
+                        if (ihp.PimsInthldrPropInterestId > 0)
+                        {
+                            Context.UpdateChild<PimsInthldrPropInterest, long, PimsPropInthldrInterestType, long>(p => p.PimsPropInthldrInterestTypes, ihp.PimsInthldrPropInterestId, ihp.PimsPropInthldrInterestTypes.ToArray());
+                        }
+                    });
                     Context.UpdateChild<PimsInterestHolder, long, PimsInthldrPropInterest, long>(p => p.PimsInthldrPropInterests, ih.InterestHolderId, ih.PimsInthldrPropInterests.ToArray());
                 }
             });
+
+            Context.UpdateChild<PimsAcquisitionFile, long, PimsInterestHolder, long>(p => p.PimsInterestHolders, acquisitionFileId, interestHolders.ToArray());
 
             return GetInterestHoldersByAcquisitionFile(acquisitionFileId);
         }

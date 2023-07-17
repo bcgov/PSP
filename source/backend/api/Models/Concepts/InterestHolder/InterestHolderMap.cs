@@ -15,6 +15,10 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.Organization, src => src.Organization)
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)
+                .Map(dest => dest.PrimaryContact, src => src.PrimaryContact)
+                .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
+                .Map(dest => dest.Comment, src => src.Comment)
+                .Map(dest => dest.InterestHolderType, src => src.InterestHolderTypeCodeNavigation)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
@@ -26,6 +30,9 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.Organization, src => src.Organization)
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)
+                .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
+                .Map(dest => dest.Comment, src => src.Comment)
+                .Map(dest => dest.InterestHolderTypeCode, src => src.InterestHolderType.Id)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }

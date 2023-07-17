@@ -112,24 +112,6 @@ namespace Pims.Api.Services
             return _acquisitionFilePropertyRepository.GetOwnersByAcquisitionFileId(id);
         }
 
-        public IEnumerable<PimsAcquisitionOwnerRep> GetOwnerRepresentatives(long id)
-        {
-            _logger.LogInformation("Getting acquisition file owner representatives with AcquisitionFile id: {id}", id);
-            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
-
-            return _acquisitionFilePropertyRepository.GetOwnerRepresentatives(id);
-        }
-
-        public IEnumerable<PimsAcquisitionOwnerSolicitor> GetOwnerSolicitors(long id)
-        {
-            _logger.LogInformation("Getting acquisition file owner solicitors with AcquisitionFile id: {id}", id);
-            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
-
-            return _acquisitionFilePropertyRepository.GetOwnerSolicitors(id);
-        }
-
         public IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id)
         {
             _logger.LogInformation("Getting acquisition file checklist with AcquisitionFile id: {id}", id);
@@ -635,20 +617,12 @@ namespace Pims.Api.Services
                     throw new ForeignKeyDependencyException("Acquisition File Owner can not be removed since it's assigned as a payee for a compensation requisition");
                 }
 
-                // Check for Owner Solicitor
-                if (payee.OwnerSolicitorId is not null
-                    && !acquisitionFile.PimsAcquisitionOwnerSolicitors.Any(x => x.Internal_Id.Equals(payee.OwnerSolicitorId))
-                    && currentAquisitionFile.PimsAcquisitionOwnerSolicitors.Any(x => x.Internal_Id.Equals(payee.OwnerSolicitorId)))
+                // Check for Acquisition InterestHolders
+                if (payee.InterestHolderId is not null
+                    && !acquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(payee.InterestHolderId))
+                    && currentAquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(payee.InterestHolderId)))
                 {
-                    throw new ForeignKeyDependencyException("Acquisition File Owner Solicitor can not be removed since it's assigned as a payee for a compensation requisition");
-                }
-
-                // Check for Owner Rep
-                if (payee.OwnerRepresentativeId is not null
-                    && !acquisitionFile.PimsAcquisitionOwnerReps.Any(x => x.Internal_Id.Equals(payee.OwnerRepresentativeId))
-                    && currentAquisitionFile.PimsAcquisitionOwnerReps.Any(x => x.Internal_Id.Equals(payee.OwnerRepresentativeId)))
-                {
-                    throw new ForeignKeyDependencyException("Acquisition File Owner Representative can not be removed since it's assigned as a payee for a compensation requisition");
+                    throw new ForeignKeyDependencyException("Acquisition File Interest Holders can not be removed since it's assigned as a payee for a compensation requisition");
                 }
 
                 // Check for File Person

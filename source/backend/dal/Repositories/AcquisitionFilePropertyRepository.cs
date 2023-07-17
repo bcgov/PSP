@@ -68,25 +68,6 @@ namespace Pims.Dal.Repositories
                 .ToList();
         }
 
-        public List<PimsAcquisitionOwnerRep> GetOwnerRepresentatives(long acquisitionFileId)
-        {
-            return Context.PimsAcquisitionOwnerReps
-                .Where(x => x.AcquisitionFileId == acquisitionFileId)
-                .Include(aor => aor.Person)
-                .AsNoTracking()
-                .ToList();
-        }
-
-        public List<PimsAcquisitionOwnerSolicitor> GetOwnerSolicitors(long acquisitionFileId)
-        {
-            return Context.PimsAcquisitionOwnerSolicitors
-                .Where(x => x.AcquisitionFileId == acquisitionFileId)
-                .Include(aos => aos.Person)
-                .Include(aos => aos.Organization)
-                .AsNoTracking()
-                .ToList();
-        }
-
         public int GetAcquisitionFilePropertyRelatedCount(long propertyId)
         {
             return Context.PimsPropertyAcquisitionFiles

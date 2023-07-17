@@ -29,8 +29,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.FileProperties, src => src.PimsPropertyAcquisitionFiles)
                 .Map(dest => dest.AcquisitionTeam, src => src.PimsAcquisitionFilePeople)
                 .Map(dest => dest.AcquisitionFileOwners, src => src.PimsAcquisitionOwners)
-                .Map(dest => dest.AcquisitionFileOwnerSolicitors, src => src.PimsAcquisitionOwnerSolicitors)
-                .Map(dest => dest.AcquisitionFileOwnerRepresentatives, src => src.PimsAcquisitionOwnerReps)
+                .Map(dest => dest.AcquisitionFileInterestHolders, src => src.PimsInterestHolders)
                 .Map(dest => dest.AcquisitionFileChecklist, src => src.PimsAcquisitionChecklistItems)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
@@ -54,8 +53,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PimsPropertyAcquisitionFiles, src => src.FileProperties)
                 .Map(dest => dest.PimsAcquisitionFilePeople, src => src.AcquisitionTeam)
                 .Map(dest => dest.PimsAcquisitionOwners, src => src.AcquisitionFileOwners)
-                .Map(dest => dest.PimsAcquisitionOwnerSolicitors, src => src.AcquisitionFileOwnerSolicitors)
-                .Map(dest => dest.PimsAcquisitionOwnerReps, src => src.AcquisitionFileOwnerRepresentatives)
+                .Map(dest => dest.PimsInterestHolders, src => src.AcquisitionFileInterestHolders)
                 .Map(dest => dest.PimsAcquisitionChecklistItems, src => src.AcquisitionFileChecklist)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }

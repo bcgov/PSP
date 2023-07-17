@@ -27,10 +27,6 @@ namespace Pims.Dal.Entities
         public long? AcquisitionOwnerId { get; set; }
         [Column("INTEREST_HOLDER_ID")]
         public long? InterestHolderId { get; set; }
-        [Column("OWNER_REPRESENTATIVE_ID")]
-        public long? OwnerRepresentativeId { get; set; }
-        [Column("OWNER_SOLICITOR_ID")]
-        public long? OwnerSolicitorId { get; set; }
         [Column("ACQUISITION_FILE_PERSON_ID")]
         public long? AcquisitionFilePersonId { get; set; }
         [Column("GST_NUMBER")]

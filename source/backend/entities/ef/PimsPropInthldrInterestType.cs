@@ -8,27 +8,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACQUISITION_OWNER_REP")]
-    [Index(nameof(AcquisitionFileId), Name = "AQOWRP_ACQUISITION_FILE_ID_IDX")]
-    [Index(nameof(AcquisitionFileId), nameof(PersonId), Name = "AQOWRP_ACQUISITION_FILE_PERSON_TUC", IsUnique = true)]
-    [Index(nameof(PersonId), Name = "AQOWRP_PERSON_ID_IDX")]
-    public partial class PimsAcquisitionOwnerRep
+    [Table("PIMS_PROP_INTHLDR_INTEREST_TYPE")]
+    [Index(nameof(InterestHolderInterestTypeCode), Name = "PIHITY_INTEREST_HOLDER_INTEREST_TYPE_CODE_IDX")]
+    [Index(nameof(PimsInthldrPropInterestId), Name = "PIHITY_PIMS_INTHLDR_PROP_INTEREST_ID_IDX")]
+    public partial class PimsPropInthldrInterestType
     {
-        public PimsAcquisitionOwnerRep()
-        {
-            PimsAcquisitionPayees = new HashSet<PimsAcquisitionPayee>();
-        }
-
         [Key]
-        [Column("OWNER_REPRESENTATIVE_ID")]
-        public long OwnerRepresentativeId { get; set; }
-        [Column("ACQUISITION_FILE_ID")]
-        public long AcquisitionFileId { get; set; }
-        [Column("PERSON_ID")]
-        public long PersonId { get; set; }
-        [Column("COMMENT")]
-        [StringLength(2000)]
-        public string Comment { get; set; }
+        [Column("PROP_INTHLDR_INTEREST_TYPE_ID")]
+        public long PropInthldrInterestTypeId { get; set; }
+        [Column("PIMS_INTHLDR_PROP_INTEREST_ID")]
+        public long PimsInthldrPropInterestId { get; set; }
+        [Required]
+        [Column("INTEREST_HOLDER_INTEREST_TYPE_CODE")]
+        [StringLength(20)]
+        public string InterestHolderInterestTypeCode { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -70,13 +63,11 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [ForeignKey(nameof(AcquisitionFileId))]
-        [InverseProperty(nameof(PimsAcquisitionFile.PimsAcquisitionOwnerReps))]
-        public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
-        [ForeignKey(nameof(PersonId))]
-        [InverseProperty(nameof(PimsPerson.PimsAcquisitionOwnerReps))]
-        public virtual PimsPerson Person { get; set; }
-        [InverseProperty(nameof(PimsAcquisitionPayee.OwnerRepresentative))]
-        public virtual ICollection<PimsAcquisitionPayee> PimsAcquisitionPayees { get; set; }
+        [ForeignKey(nameof(InterestHolderInterestTypeCode))]
+        [InverseProperty(nameof(PimsInterestHolderInterestType.PimsPropInthldrInterestTypes))]
+        public virtual PimsInterestHolderInterestType InterestHolderInterestTypeCodeNavigation { get; set; }
+        [ForeignKey(nameof(PimsInthldrPropInterestId))]
+        [InverseProperty("PimsPropInthldrInterestTypes")]
+        public virtual PimsInthldrPropInterest PimsInthldrPropInterest { get; set; }
     }
 }

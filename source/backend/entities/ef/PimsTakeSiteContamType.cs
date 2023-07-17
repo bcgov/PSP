@@ -26,6 +26,9 @@ namespace Pims.Dal.Entities
         public string Description { get; set; }
         [Column("DISPLAY_ORDER")]
         public int? DisplayOrder { get; set; }
+        [Required]
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]

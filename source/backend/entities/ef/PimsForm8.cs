@@ -8,29 +8,39 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACQUISITION_PAYEE")]
-    [Index(nameof(AcquisitionFilePersonId), Name = "ACQPAY_ACQUISITION_FILE_PERSON_ID_IDX")]
-    [Index(nameof(AcquisitionOwnerId), Name = "ACQPAY_ACQUISITION_OWNER_ID_IDX")]
-    [Index(nameof(CompensationRequisitionId), Name = "ACQPAY_COMPENSATION_REQUISITION_ID_IDX")]
-    [Index(nameof(InterestHolderId), Name = "ACQPAY_INTEREST_HOLDER_ID_IDX")]
-    public partial class PimsAcquisitionPayee
+    [Table("PIMS_FORM_8")]
+    [Index(nameof(AcquisitionFileId), Name = "FORM8_ACQUISITION_FILE_ID_IDX")]
+    [Index(nameof(AcquisitionOwnerId), Name = "FORM8_ACQUISITION_OWNER_ID_IDX")]
+    [Index(nameof(ExpropriatingAuthority), Name = "FORM8_EXPROPRIATING_AUTHORITY_IDX")]
+    [Index(nameof(InterestHolderId), Name = "FORM8_INTEREST_HOLDER_ID_IDX")]
+    [Index(nameof(PaymentItemTypeCode), Name = "FORM8_PAYMENT_ITEM_TYPE_CODE_IDX")]
+    public partial class PimsForm8
     {
         [Key]
-        [Column("ACQUISITION_PAYEE_ID")]
-        public long AcquisitionPayeeId { get; set; }
-        [Column("COMPENSATION_REQUISITION_ID")]
-        public long CompensationRequisitionId { get; set; }
+        [Column("FORM_8_ID")]
+        public long Form8Id { get; set; }
+        [Column("ACQUISITION_FILE_ID")]
+        public long AcquisitionFileId { get; set; }
         [Column("ACQUISITION_OWNER_ID")]
         public long? AcquisitionOwnerId { get; set; }
         [Column("INTEREST_HOLDER_ID")]
         public long? InterestHolderId { get; set; }
-        [Column("ACQUISITION_FILE_PERSON_ID")]
-        public long? AcquisitionFilePersonId { get; set; }
-        [Column("GST_NUMBER")]
-        [StringLength(50)]
-        public string GstNumber { get; set; }
-        [Column("IS_PAYMENT_IN_TRUST")]
-        public bool? IsPaymentInTrust { get; set; }
+        [Column("EXPROPRIATING_AUTHORITY")]
+        public long? ExpropriatingAuthority { get; set; }
+        [Column("PAYMENT_ITEM_TYPE_CODE")]
+        [StringLength(20)]
+        public string PaymentItemTypeCode { get; set; }
+        [Column("DESCRIPTION")]
+        [StringLength(2000)]
+        public string Description { get; set; }
+        [Column("IS_GST_REQUIRED")]
+        public bool? IsGstRequired { get; set; }
+        [Column("PRETAX_AMT", TypeName = "money")]
+        public decimal? PretaxAmt { get; set; }
+        [Column("TAX_AMT", TypeName = "money")]
+        public decimal? TaxAmt { get; set; }
+        [Column("TOTAL_AMT", TypeName = "money")]
+        public decimal? TotalAmt { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -72,17 +82,20 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [ForeignKey(nameof(AcquisitionFilePersonId))]
-        [InverseProperty(nameof(PimsAcquisitionFilePerson.PimsAcquisitionPayees))]
-        public virtual PimsAcquisitionFilePerson AcquisitionFilePerson { get; set; }
+        [ForeignKey(nameof(AcquisitionFileId))]
+        [InverseProperty(nameof(PimsAcquisitionFile.PimsForm8s))]
+        public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
         [ForeignKey(nameof(AcquisitionOwnerId))]
-        [InverseProperty(nameof(PimsAcquisitionOwner.PimsAcquisitionPayees))]
+        [InverseProperty(nameof(PimsAcquisitionOwner.PimsForm8s))]
         public virtual PimsAcquisitionOwner AcquisitionOwner { get; set; }
-        [ForeignKey(nameof(CompensationRequisitionId))]
-        [InverseProperty(nameof(PimsCompensationRequisition.PimsAcquisitionPayees))]
-        public virtual PimsCompensationRequisition CompensationRequisition { get; set; }
+        [ForeignKey(nameof(ExpropriatingAuthority))]
+        [InverseProperty(nameof(PimsOrganization.PimsForm8s))]
+        public virtual PimsOrganization ExpropriatingAuthorityNavigation { get; set; }
         [ForeignKey(nameof(InterestHolderId))]
-        [InverseProperty(nameof(PimsInterestHolder.PimsAcquisitionPayees))]
+        [InverseProperty(nameof(PimsInterestHolder.PimsForm8s))]
         public virtual PimsInterestHolder InterestHolder { get; set; }
+        [ForeignKey(nameof(PaymentItemTypeCode))]
+        [InverseProperty(nameof(PimsPaymentItemType.PimsForm8s))]
+        public virtual PimsPaymentItemType PaymentItemTypeCodeNavigation { get; set; }
     }
 }
