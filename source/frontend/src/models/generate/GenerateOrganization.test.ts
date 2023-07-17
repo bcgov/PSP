@@ -1,16 +1,17 @@
 import { ContactMethodTypes } from '@/constants/contactMethodType';
-import { getMockPerson } from '@/mocks/contacts.mock';
+import { getMockOrganization } from '@/mocks/organization.mock';
 
-import { Api_GeneratePerson } from './GeneratePerson';
+import { Api_GenerateOrganization } from './GenerateOrganization';
 
-describe('GeneratePerson tests', () => {
-  it('Can generate an empty contact without throwing an error', () => {
-    const contact = new Api_GeneratePerson(null);
-    expect(contact.given_name).toBe('');
+describe('GenerateOrganization tests', () => {
+  it('generates an empty contact without throwing an error', () => {
+    const contact = new Api_GenerateOrganization(null);
+    expect(contact.name).toBe('');
   });
-  it('Can generate a contact email, preferring work email', () => {
-    const contact = new Api_GeneratePerson({
-      ...getMockPerson({ id: 1, surname: 'last', firstName: 'first' }),
+
+  it('generates a contact email, preferring work email', () => {
+    const contact = new Api_GenerateOrganization({
+      ...getMockOrganization(),
       contactMethods: [
         {
           id: 3,
@@ -37,9 +38,9 @@ describe('GeneratePerson tests', () => {
     expect(contact.email).toBe(`myworkemail@biz.com`);
   });
 
-  it('Can generate a contact email if only personal email is present', () => {
-    const contact = new Api_GeneratePerson({
-      ...getMockPerson({ id: 1, surname: 'last', firstName: 'first' }),
+  it('generates a contact email if only personal email is present', () => {
+    const contact = new Api_GenerateOrganization({
+      ...getMockOrganization(),
       contactMethods: [
         {
           id: 3,
@@ -56,9 +57,9 @@ describe('GeneratePerson tests', () => {
     expect(contact.email).toBe(`mypersonalemail@hotmail.com`);
   });
 
-  it('Can generate a contact phone, preferring work phone', () => {
-    const contact = new Api_GeneratePerson({
-      ...getMockPerson({ id: 1, surname: 'last', firstName: 'first' }),
+  it('generates a contact phone, preferring work phone', () => {
+    const contact = new Api_GenerateOrganization({
+      ...getMockOrganization(),
       contactMethods: [
         {
           id: 3,
@@ -85,9 +86,9 @@ describe('GeneratePerson tests', () => {
     expect(contact.phone).toBe(`1 111-111-1111`);
   });
 
-  it('Can generate a contact phone if only personal phone is present', () => {
-    const contact = new Api_GeneratePerson({
-      ...getMockPerson({ id: 1, surname: 'last', firstName: 'first' }),
+  it('generates a contact phone if only personal phone is present', () => {
+    const contact = new Api_GenerateOrganization({
+      ...getMockOrganization(),
       contactMethods: [
         {
           id: 3,
@@ -104,17 +105,18 @@ describe('GeneratePerson tests', () => {
     expect(contact.phone).toBe(`1 111-111-1111`);
   });
 
-  it('Can generate organization names', () => {
-    const mockPerson = getMockPerson({ id: 1, surname: 'last', firstName: 'first' });
-    const contact = new Api_GeneratePerson({
-      ...mockPerson,
-      personOrganizations: [
-        ...(mockPerson.personOrganizations ?? []),
-        ...(mockPerson.personOrganizations ?? []),
-      ],
-    });
-    expect(contact.organizations).toBe(
-      `Dairy Queen Forever! Property Management, Dairy Queen Forever! Property Management`,
+  it('generates organization address if present', () => {
+    const contact = new Api_GenerateOrganization(getMockOrganization());
+    expect(contact.address?.address_single_line_string).toBe(
+      `1234 mock Street, N/A, Victoria, British Columbia, V1V1V1, Canada`,
     );
+  });
+
+  it('generates organization full name', () => {
+    const contact = new Api_GenerateOrganization({
+      ...getMockOrganization({ name: 'ABC Corp' }),
+      incorporationNumber: 'BC123456',
+    });
+    expect(contact.full_name_string).toBe(`ABC Corp (Inc. No. BC123456)`);
   });
 });

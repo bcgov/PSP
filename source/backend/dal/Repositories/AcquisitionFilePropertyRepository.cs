@@ -37,7 +37,6 @@ namespace Pims.Dal.Repositories
             return Context.PimsPropertyAcquisitionFiles
                 .Where(x => x.AcquisitionFileId == acquisitionFileId)
                 .Include(rp => rp.PimsActInstPropAcqFiles)
-                .Include(rp => rp.Property)
                 .Include(rp => rp.PimsTakes)
                 .Include(rp => rp.Property)
                     .ThenInclude(rp => rp.RegionCodeNavigation)
@@ -45,6 +44,10 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(rp => rp.DistrictCodeNavigation)
                 .Include(rp => rp.Property)
                     .ThenInclude(rp => rp.Address)
+                    .ThenInclude(a => a.Country)
+                .Include(rp => rp.Property)
+                    .ThenInclude(rp => rp.Address)
+                    .ThenInclude(a => a.ProvinceState)
                 .AsNoTracking()
                 .ToList();
         }
