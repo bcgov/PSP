@@ -26,7 +26,6 @@ export interface TakesForm {
 
 export const TakesUpdateForm = React.forwardRef<FormikProps<any>, ITakesUpdateFormProps>(
   ({ takes, loading, fileProperty, onSubmit }, ref) => {
-    debugger;
     if (loading) {
       return (
         <StyledSummarySection>
