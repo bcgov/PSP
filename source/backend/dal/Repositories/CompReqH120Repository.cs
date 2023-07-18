@@ -33,7 +33,10 @@ namespace Pims.Dal.Repositories
         {
             this._user.ThrowIfNotAllAuthorized(Security.Permissions.CompensationRequisitionView);
 
-            var query = Context.PimsCompReqH120s.Include(c => c.CompensationRequisition).Where(c => c.CompensationRequisition.AcquisitionFileId == acquisitionFileId);
+            var query = Context.PimsCompReqH120s
+                .Include(c => c.CompensationRequisition)
+                .Where(c => c.CompensationRequisition.AcquisitionFileId == acquisitionFileId);
+
             if (finalOnly == true)
             {
                 query = query.Where(c => c.CompensationRequisition.IsDraft == false);
