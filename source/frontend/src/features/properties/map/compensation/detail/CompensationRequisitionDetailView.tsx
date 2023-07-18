@@ -171,7 +171,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           {acqFileProduct?.code ?? ''}
         </SectionField>
         <SectionField label="Business function" labelWidth="4">
-          {acqFileProject?.code ?? ''}
+          {acqFileProject?.businessFunctionCode?.code ?? ''}
         </SectionField>
         <SectionField label="Work activity" labelWidth="4">
           {acqFileProject?.workActivityCode?.code ?? ''}
