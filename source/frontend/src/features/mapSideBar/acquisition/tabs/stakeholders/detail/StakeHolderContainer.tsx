@@ -35,13 +35,16 @@ export const StakeHolderContainer: React.FunctionComponent<IStakeHolderContainer
 
   const form = StakeHolderForm.fromApi(apiInterestHolders ?? []);
 
-  const allInterestProperties = form.interestHolders
+  // TODO: Fix this
+  const interestProperties: Api_InterestHolderProperty[] = [];
+  const nonInterestProperties: Api_InterestHolderProperty[] = [];
+  /*const allInterestProperties = form.interestHolders
     .concat(form.nonInterestPayees)
     .flatMap(interestHolder => interestHolder.impactedProperties);
   const interestProperties = allInterestProperties.filter(ip => ip.interestTypeCode?.id !== 'NIP');
   const nonInterestProperties = allInterestProperties.filter(
     ip => ip.interestTypeCode?.id === 'NIP',
-  );
+  );*/
 
   return (
     <View

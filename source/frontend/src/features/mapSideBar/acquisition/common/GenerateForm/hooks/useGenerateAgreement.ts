@@ -31,9 +31,9 @@ export const useGenerateAgreement = () => {
     const provincialSolicitor = file.acquisitionTeam?.find(
       team => team.personProfileTypeCode === 'MOTILAWYER',
     );
-    const ownerSolicitor = file.acquisitionFileOwnerSolicitors?.length
+    const ownerSolicitor = {}; /*TODO:file.acquisitionFileOwnerSolicitors?.length
       ? file.acquisitionFileOwnerSolicitors[0]
-      : undefined;
+      : undefined;*/
 
     const coordinatorConcept = coordinator?.personId
       ? getPersonConcept(coordinator?.personId)
@@ -44,15 +44,15 @@ export const useGenerateAgreement = () => {
     const provincialSolicitorConcept = provincialSolicitor?.personId
       ? getPersonConcept(provincialSolicitor?.personId)
       : Promise.resolve(null);
-    const ownerSolicitorConcept = ownerSolicitor?.personId
+    /*const ownerSolicitorConcept = ownerSolicitor?.personId
       ? getPersonConcept(ownerSolicitor?.personId)
-      : Promise.resolve(null);
+      : Promise.resolve(null);*/
 
     const persons = await Promise.all([
       coordinatorConcept,
       negotiatingAgentConcept,
       provincialSolicitorConcept,
-      ownerSolicitorConcept,
+      //ownerSolicitorConcept,
     ]);
 
     const fileData = new Api_GenerateAcquisitionFile({
@@ -60,7 +60,7 @@ export const useGenerateAgreement = () => {
       coordinatorContact: persons[0]?.data ?? null,
       negotiatingAgent: persons[1]?.data ?? null,
       provincialSolicitor: persons[2]?.data ?? null,
-      ownerSolicitor: persons[3]?.data ?? null,
+      //ownerSolicitor: persons[3]?.data ?? null,
       interestHolders: [],
     });
     const agreementData = new Api_GenerateAgreement(agreement, fileData);

@@ -14,6 +14,7 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
 import * as API from '@/constants/API';
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
@@ -41,7 +42,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
   loading,
 }) => {
   const { getOptionsByType } = useLookupCodeHelpers();
-  const interestHolderTypes = getOptionsByType(API.INTEREST_HOLDER_TYPES);
+  const interestHolderInterestTypes = getOptionsByType(API.INTEREST_HOLDER_INTEREST_TYPES);
   return (
     <Formik<StakeHolderForm>
       enableReinitialize
@@ -104,7 +105,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                         </SectionField>
                         <SectionField label="Interest type">
                           <Select
-                            options={interestHolderTypes}
+                            options={interestHolderInterestTypes}
                             field={`interestHolders.${index}.interestTypeCode`}
                             placeholder="Select an interest type"
                           />
@@ -116,19 +117,23 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                           <FilePropertiesTable
                             fileProperties={file.fileProperties ?? []}
                             selectedFileProperties={
-                              (interestHolder.impactedProperties
+                              []
+                              // TODO: Fix this
+                              /*(interestHolder.impactedProperties
                                 .map(ip =>
                                   file.fileProperties?.find(
                                     fp => fp.id === ip.acquisitionFilePropertyId,
                                   ),
                                 )
-                                .filter(fp => !!fp) as Api_PropertyFile[]) ?? []
+                                .filter(fp => !!fp) as Api_PropertyFile[]) ?? []*/
                             }
                             setSelectedFileProperties={(fileProperties: Api_PropertyFile[]) => {
                               const interestHolderProperties = fileProperties.map(fileProperty => {
-                                const matchingProperty = interestHolder.impactedProperties.find(
+                                // TODO: Fix this
+                                const matchingProperty = undefined;
+                                /*const matchingProperty = interestHolder.impactedProperties.find(
                                   ip => ip.acquisitionFileProperty?.id === fileProperty.id,
-                                );
+                                );*/
 
                                 return matchingProperty
                                   ? matchingProperty
@@ -153,7 +158,11 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                     <hr />
                     <Button
                       variant="link"
-                      onClick={() => arrayHelpers.push(new InterestHolderForm(file.id))}
+                      onClick={() =>
+                        arrayHelpers.push(
+                          new InterestHolderForm(InterestHolderType.INTEREST_HOLDER, file.id),
+                        )
+                      }
                     >
                       + Add an Interest holder
                     </Button>
@@ -218,19 +227,23 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                           <FilePropertiesTable
                             fileProperties={file.fileProperties ?? []}
                             selectedFileProperties={
-                              (interestHolder.impactedProperties
+                              []
+                              // TODO:Fix this
+                              /*(interestHolder.impactedProperties
                                 .map(ip =>
                                   file.fileProperties?.find(
                                     fp => fp.id === ip.acquisitionFilePropertyId,
                                   ),
                                 )
-                                .filter(fp => !!fp) as Api_PropertyFile[]) ?? []
+                                .filter(fp => !!fp) as Api_PropertyFile[]) ?? []*/
                             }
                             setSelectedFileProperties={(fileProperties: Api_PropertyFile[]) => {
                               const interestHolderProperties = fileProperties.map(fileProperty => {
-                                const matchingProperty = interestHolder.impactedProperties.find(
+                                //TODO: Fix this
+                                const matchingProperty = undefined;
+                                /*const matchingProperty = interestHolder.impactedProperties.find(
                                   ip => ip.acquisitionFileProperty?.id === fileProperty.id,
-                                );
+                                );*/
 
                                 return matchingProperty
                                   ? matchingProperty
@@ -257,7 +270,10 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                     <Button
                       variant="link"
                       onClick={() => {
-                        const interestHolderForm = new InterestHolderForm(file.id);
+                        const interestHolderForm = new InterestHolderForm(
+                          InterestHolderType.INTEREST_HOLDER,
+                          file.id,
+                        );
                         interestHolderForm.interestTypeCode = 'NIP';
                         arrayHelpers.push(interestHolderForm);
                       }}

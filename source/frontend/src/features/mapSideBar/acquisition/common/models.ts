@@ -1,12 +1,7 @@
 import { isEmpty } from 'lodash';
 
-import { fromApiOrganization, fromApiPerson, IContactSearchResult } from '@/interfaces';
-import {
-  Api_AcquisitionFileOwner,
-  Api_AcquisitionFilePerson,
-  Api_AcquisitionFileRepresentative,
-  Api_AcquisitionFileSolicitor,
-} from '@/models/api/AcquisitionFile';
+import { fromApiPerson, IContactSearchResult } from '@/interfaces';
+import { Api_AcquisitionFileOwner, Api_AcquisitionFilePerson } from '@/models/api/AcquisitionFile';
 import { Api_Address } from '@/models/api/Address';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { fromTypeCode, stringToBoolean, stringToUndefined, toTypeCode } from '@/utils/formUtils';
@@ -53,83 +48,6 @@ export class AcquisitionTeamFormModel {
     newForm.rowVersion = model.rowVersion;
     //newForm.acquisitionFileId = model.acquisitionFileId;
 
-    return newForm;
-  }
-}
-
-export class AcquisitionSolicitorFormModel {
-  contact: IContactSearchResult | null;
-  id: number | null = null;
-  acquisitionFileId: number | null = null;
-  isDisabled: boolean | null = null;
-  rowVersion: number | null = null;
-
-  constructor(contact: IContactSearchResult | null) {
-    this.contact = contact;
-  }
-
-  toApi(): Api_AcquisitionFileSolicitor {
-    return {
-      id: this.id ?? null,
-      personId: this.contact?.personId ?? null,
-      person: null,
-      organizationId: !this.contact?.personId ? this.contact?.organizationId ?? null : null,
-      organization: null,
-      isDisabled: this.isDisabled,
-      rowVersion: this.rowVersion ?? undefined,
-      acquisitionFileId: this.acquisitionFileId ?? null,
-    };
-  }
-
-  static fromApi(model: Api_AcquisitionFileSolicitor): AcquisitionSolicitorFormModel {
-    const newForm = new AcquisitionSolicitorFormModel(
-      model.person !== null && model.person !== undefined
-        ? fromApiPerson(model.person) ?? null
-        : model.organization
-        ? fromApiOrganization(model.organization)
-        : null,
-    );
-    newForm.id = model.id;
-    newForm.isDisabled = model.isDisabled;
-    newForm.rowVersion = model.rowVersion ?? null;
-    newForm.acquisitionFileId = model.acquisitionFileId ?? null;
-    return newForm;
-  }
-}
-
-export class AcquisitionRepresentativeFormModel {
-  contact: IContactSearchResult | null;
-  id: number | null = null;
-  acquisitionFileId: number | null = null;
-  comment: string | '' = '';
-  isDisabled: boolean | null = null;
-  rowVersion: number | null = null;
-
-  constructor(contact: IContactSearchResult | null) {
-    this.contact = contact;
-  }
-
-  toApi(): Api_AcquisitionFileRepresentative {
-    return {
-      personId: this.contact?.personId ?? null,
-      id: this.id ?? null,
-      person: null,
-      comment: this.comment.trim() === '' ? null : this.comment.trim(),
-      isDisabled: this.isDisabled,
-      rowVersion: this.rowVersion ?? undefined,
-      acquisitionFileId: this.acquisitionFileId ?? null,
-    };
-  }
-
-  static fromApi(model: Api_AcquisitionFileRepresentative): AcquisitionRepresentativeFormModel {
-    const newForm = new AcquisitionRepresentativeFormModel(
-      model.person !== null ? fromApiPerson(model.person) ?? null : null,
-    );
-    newForm.id = model.id;
-    newForm.isDisabled = model.isDisabled;
-    newForm.comment = model.comment || '';
-    newForm.rowVersion = model.rowVersion ?? null;
-    newForm.acquisitionFileId = model.acquisitionFileId ?? null;
     return newForm;
   }
 }

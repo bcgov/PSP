@@ -17,7 +17,12 @@ export class Api_GenerateInterestHolder {
           interestHolder.person.surname,
         ])
       : interestHolder?.organization?.name ?? '';
-    this.interestHolderType = matchingInterestHolderProperty.interestTypeCode?.description ?? '';
-    this.interestHolderString = `${this.interestHolderName}: ${this.interestHolderType}`;
+
+    // TODO: Fix this
+    //this.interestHolderType = matchingInterestHolderProperty.interestTypeCode?.description ?? '';
+    //this.interestHolderString = `${this.interestHolderName}: ${this.interestHolderType}`;
+
+    this.interestHolderType = '';
+    this.interestHolderString = '';
   }
 }

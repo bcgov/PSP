@@ -12,8 +12,12 @@ export interface Api_InterestHolder extends Api_ConcurrentVersion, Api_AuditFiel
   person: Api_Person | null;
   organizationId: number | null;
   organization: Api_Organization | null;
-  isDisabled: boolean;
   interestHolderProperties: Api_InterestHolderProperty[];
+  primaryContactId: number | null;
+  primaryContact: Api_Person | null;
+  comment: string | null;
+  interestHolderType: Api_TypeCode<string>;
+  isDisabled: boolean;
 }
 
 export interface Api_InterestHolderProperty extends Api_ConcurrentVersion, Api_AuditFields {
@@ -21,6 +25,6 @@ export interface Api_InterestHolderProperty extends Api_ConcurrentVersion, Api_A
   interestHolderId: number | null;
   acquisitionFileProperty: Api_AcquisitionFileProperty | null;
   acquisitionFilePropertyId: number | null;
-  interestTypeCode: Api_TypeCode<string> | null;
+  propertyInterestTypes: Api_TypeCode<string>[] | null;
   isDisabled: boolean;
 }

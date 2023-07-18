@@ -1,19 +1,20 @@
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { IAutocompletePrediction } from '@/interfaces';
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFileOwner,
   Api_AcquisitionFilePerson,
 } from '@/models/api/AcquisitionFile';
+import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { fromTypeCode, stringToUndefined, toTypeCode } from '@/utils/formUtils';
 
 import {
   AcquisitionOwnerFormModel,
-  AcquisitionRepresentativeFormModel,
-  AcquisitionSolicitorFormModel,
   AcquisitionTeamFormModel,
   WithAcquisitionOwners,
   WithAcquisitionTeam,
 } from '../../../common/models';
+import { InterestHolderForm } from '../../stakeholders/update/models';
 
 export class UpdateAcquisitionSummaryFormModel
   implements WithAcquisitionTeam, WithAcquisitionOwners
@@ -40,9 +41,10 @@ export class UpdateAcquisitionSummaryFormModel
   product: string = '';
   fundingTypeCode?: string;
   fundingTypeOtherDescription: string = '';
-  ownerSolicitor: AcquisitionSolicitorFormModel = new AcquisitionSolicitorFormModel(null);
-  ownerRepresentative: AcquisitionRepresentativeFormModel = new AcquisitionRepresentativeFormModel(
-    null,
+
+  ownerSolicitor: InterestHolderForm = new InterestHolderForm(InterestHolderType.OWNER_SOLICITOR);
+  ownerRepresentative: InterestHolderForm = new InterestHolderForm(
+    InterestHolderType.OWNER_REPRESENTATIVE,
   );
 
   toApi(): Api_AcquisitionFile {
@@ -70,12 +72,10 @@ export class UpdateAcquisitionSummaryFormModel
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
         .map<Api_AcquisitionFilePerson>(x => x.toApi(this.id || 0)),
-      acquisitionFileOwnerSolicitors: this.ownerSolicitor.contact
-        ? [this.ownerSolicitor.toApi()]
-        : [],
-      acquisitionFileOwnerRepresentatives: this.ownerRepresentative.contact
-        ? [this.ownerRepresentative.toApi()]
-        : [],
+      acquisitionFileInterestHolders: [
+        InterestHolderForm.toApi(this.ownerSolicitor),
+        InterestHolderForm.toApi(this.ownerRepresentative),
+      ].filter((x): x is Api_InterestHolder => x !== null),
     };
   }
 
@@ -104,12 +104,16 @@ export class UpdateAcquisitionSummaryFormModel
         ? { id: model.project?.id || 0, text: model.project?.description || '' }
         : undefined;
     newForm.product = model.product?.id?.toString() ?? '';
-    newForm.ownerSolicitor = model.acquisitionFileOwnerSolicitors?.length
-      ? AcquisitionSolicitorFormModel.fromApi(model.acquisitionFileOwnerSolicitors[0])
-      : new AcquisitionSolicitorFormModel(null);
-    newForm.ownerRepresentative = model.acquisitionFileOwnerRepresentatives?.length
-      ? AcquisitionRepresentativeFormModel.fromApi(model.acquisitionFileOwnerRepresentatives[0])
-      : new AcquisitionRepresentativeFormModel(null);
+
+    const interestHolders = model.acquisitionFileInterestHolders?.map(x =>
+      InterestHolderForm.fromApi(x),
+    );
+    newForm.ownerSolicitor =
+      interestHolders?.find(x => x.interestTypeCode === InterestHolderType.OWNER_SOLICITOR) ??
+      new InterestHolderForm(InterestHolderType.OWNER_SOLICITOR, model.id);
+    newForm.ownerRepresentative =
+      interestHolders?.find(x => x.interestTypeCode === InterestHolderType.OWNER_REPRESENTATIVE) ??
+      new InterestHolderForm(InterestHolderType.OWNER_REPRESENTATIVE, model.id);
 
     return newForm;
   }

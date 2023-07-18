@@ -3,13 +3,13 @@ import { createMemoryHistory } from 'history';
 import { forwardRef } from 'react';
 
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { emptyApiInterestHolder, emptyInterestHolderProperty } from '@/mocks/interestHolder.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, waitFor } from '@/utils/test-utils';
 
-import { emptyApiInterestHolder, emptyInterestHolderProperty } from '../update/models';
 import StakeHolderContainer, { IStakeHolderContainerProps } from './StakeHolderContainer';
 import { IStakeHolderViewProps } from './StakeHolderView';
 
@@ -99,7 +99,7 @@ describe('StakeHolderContainer component', () => {
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
-            interestTypeCode: { id: 'NIP' },
+            propertyInterestTypes: [{ id: 'NIP' }],
             acquisitionFilePropertyId: 1,
           },
         ],
@@ -109,7 +109,7 @@ describe('StakeHolderContainer component', () => {
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
-            interestTypeCode: { id: 'IP' },
+            propertyInterestTypes: [{ id: 'IP' }],
             acquisitionFilePropertyId: 1,
           },
         ],
