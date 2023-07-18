@@ -7,6 +7,7 @@ import Api_TypeCode from './TypeCode';
 
 export interface Api_InterestHolder extends Api_ConcurrentVersion, Api_AuditFields {
   interestHolderId: number | null;
+  interestHolderType: Api_TypeCode<string> | null;
   acquisitionFileId: number | null;
   personId: number | null;
   person: Api_Person | null;
@@ -21,6 +22,6 @@ export interface Api_InterestHolderProperty extends Api_ConcurrentVersion, Api_A
   interestHolderId: number | null;
   acquisitionFileProperty: Api_AcquisitionFileProperty | null;
   acquisitionFilePropertyId: number | null;
-  interestTypeCode: Api_TypeCode<string> | null;
+  propertyInterestTypes: Api_TypeCode<string>[];
   isDisabled: boolean;
 }

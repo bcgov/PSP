@@ -1,4 +1,5 @@
 import { Api_InterestHolder, Api_InterestHolderProperty } from '@/models/api/InterestHolder';
+import Api_TypeCode from '@/models/api/TypeCode';
 import { formatNames } from '@/utils/personUtils';
 
 export class Api_GenerateInterestHolder {
@@ -9,6 +10,7 @@ export class Api_GenerateInterestHolder {
   constructor(
     interestHolder: Api_InterestHolder | null,
     matchingInterestHolderProperty: Api_InterestHolderProperty,
+    interestTypeCode: Api_TypeCode<string>,
   ) {
     this.interestHolderName = interestHolder?.person
       ? formatNames([
@@ -17,7 +19,7 @@ export class Api_GenerateInterestHolder {
           interestHolder.person.surname,
         ])
       : interestHolder?.organization?.name ?? '';
-    this.interestHolderType = matchingInterestHolderProperty.interestTypeCode?.description ?? '';
+    this.interestHolderType = interestTypeCode.description ?? '';
     this.interestHolderString = `${this.interestHolderName}: ${this.interestHolderType}`;
   }
 }

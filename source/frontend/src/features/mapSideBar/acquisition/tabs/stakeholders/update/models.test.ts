@@ -14,8 +14,16 @@ describe('Interest Holder model tests', () => {
       ...emptyApiInterestHolder,
       interestHolderId: 1,
       interestHolderProperties: [
-        { ...emptyInterestHolderProperty, interestTypeCode: { id: 'NIP' }, interestHolderId: 1 },
-        { ...emptyInterestHolderProperty, interestTypeCode: { id: 'IP' }, interestHolderId: 1 },
+        {
+          ...emptyInterestHolderProperty,
+          propertyInterestTypes: [{ id: 'NIP' }],
+          interestHolderId: 1,
+        },
+        {
+          ...emptyInterestHolderProperty,
+          propertyInterestTypes: [{ id: 'IP' }],
+          interestHolderId: 1,
+        },
       ],
     };
     const stakeholderModel = StakeHolderForm.fromApi([apiInterestHolders]);
@@ -28,8 +36,16 @@ describe('Interest Holder model tests', () => {
       ...emptyApiInterestHolder,
       interestHolderId: 1,
       interestHolderProperties: [
-        { ...emptyInterestHolderProperty, interestTypeCode: { id: 'PI' }, interestHolderId: 1 },
-        { ...emptyInterestHolderProperty, interestTypeCode: { id: 'IP' }, interestHolderId: 1 },
+        {
+          ...emptyInterestHolderProperty,
+          propertyInterestTypes: [{ id: 'PI' }],
+          interestHolderId: 1,
+        },
+        {
+          ...emptyInterestHolderProperty,
+          propertyInterestTypes: [{ id: 'IP' }],
+          interestHolderId: 1,
+        },
       ],
     };
     const stakeholderModel = StakeHolderForm.fromApi([apiInterestHolders]);
@@ -43,7 +59,11 @@ describe('Interest Holder model tests', () => {
         interestHolderId: 1,
         personId: 2,
         interestHolderProperties: [
-          { ...emptyInterestHolderProperty, interestTypeCode: { id: 'ip' }, interestHolderId: 1 },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'ip' }],
+            interestHolderId: 1,
+          },
         ],
       },
       {
@@ -51,7 +71,11 @@ describe('Interest Holder model tests', () => {
         interestHolderId: 2,
         personId: 1,
         interestHolderProperties: [
-          { ...emptyInterestHolderProperty, interestTypeCode: { id: 'ip' }, interestHolderId: 2 },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'ip' }],
+            interestHolderId: 2,
+          },
         ],
       },
     ];
@@ -65,16 +89,32 @@ describe('Interest Holder model tests', () => {
         ...emptyApiInterestHolder,
         interestHolderId: 1,
         interestHolderProperties: [
-          { ...emptyInterestHolderProperty, interestTypeCode: { id: 'NIP' }, interestHolderId: 1 },
-          { ...emptyInterestHolderProperty, interestTypeCode: { id: 'IP' }, interestHolderId: 1 },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'NIP' }],
+            interestHolderId: 1,
+          },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'IP' }],
+            interestHolderId: 1,
+          },
         ],
       },
       {
         ...emptyApiInterestHolder,
         interestHolderId: 2,
         interestHolderProperties: [
-          { ...emptyInterestHolderProperty, interestTypeCode: { id: 'NIP' }, interestHolderId: 2 },
-          { ...emptyInterestHolderProperty, interestTypeCode: { id: 'PI' }, interestHolderId: 2 },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'NIP' }],
+            interestHolderId: 2,
+          },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'PI' }],
+            interestHolderId: 2,
+          },
         ],
       },
     ];
@@ -156,7 +196,7 @@ describe('Interest Holder model tests', () => {
             ...emptyInterestHolderProperty,
             interestHolderPropertyId: 1,
             acquisitionFilePropertyId: 1,
-            interestTypeCode: { id: 'IP' },
+            propertyInterestTypes: [{ id: 'IP' }],
           },
         ],
       },
@@ -170,7 +210,7 @@ describe('Interest Holder model tests', () => {
             ...emptyInterestHolderProperty,
             interestHolderPropertyId: 1,
             acquisitionFilePropertyId: 1,
-            interestTypeCode: { id: 'NIP' },
+            propertyInterestTypes: [{ id: 'NIP' }],
           },
         ],
       },
@@ -216,7 +256,7 @@ describe('Interest Holder model tests', () => {
   it('InterestHolderForm sets contact based on api response', () => {
     const apiInterestHolder: Api_InterestHolder = { ...emptyApiInterestHolder, personId: 1 };
 
-    const interestHolderModel = InterestHolderForm.fromApi(apiInterestHolder);
+    const interestHolderModel = InterestHolderForm.fromApi(apiInterestHolder, '');
     expect(interestHolderModel.contact?.personId).toBe(1);
     expect(interestHolderModel.contact?.id).toBe('P1');
   });

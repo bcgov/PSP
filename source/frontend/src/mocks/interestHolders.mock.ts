@@ -17,6 +17,7 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
     organizationId: null,
     organization: null,
     isDisabled: false,
+    interestHolderType: { id: 'INTHLDR' },
     interestHolderProperties: [
       {
         interestHolderId: 14,
@@ -24,11 +25,13 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
         acquisitionFilePropertyId: 1,
         acquisitionFileProperty: null,
         isDisabled: false,
-        interestTypeCode: {
-          id: 'AC',
-          description: 'Agriculture Credit Act',
-          isDisabled: false,
-        },
+        propertyInterestTypes: [
+          {
+            id: 'AC',
+            description: 'Agriculture Credit Act',
+            isDisabled: false,
+          },
+        ],
         appCreateTimestamp: '2023-06-01T20:41:47.8',
         appLastUpdateTimestamp: '2023-06-01T20:41:47.8',
         appLastUpdateUserid: 'DESMITH',
@@ -43,11 +46,13 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
         acquisitionFilePropertyId: 2,
         acquisitionFileProperty: null,
         isDisabled: false,
-        interestTypeCode: {
-          id: 'AC',
-          description: 'Agriculture Credit Act',
-          isDisabled: false,
-        },
+        propertyInterestTypes: [
+          {
+            id: 'AC',
+            description: 'Agriculture Credit Act',
+            isDisabled: false,
+          },
+        ],
         appCreateTimestamp: '2023-06-01T20:41:47.8',
         appLastUpdateTimestamp: '2023-06-01T20:41:47.8',
         appLastUpdateUserid: 'DESMITH',
@@ -67,6 +72,7 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
   },
   {
     interestHolderId: 51,
+    interestHolderType: { id: 'INTHLDR' },
     acquisitionFileId: 1,
     personId: 9,
     person: {
@@ -89,11 +95,13 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
         acquisitionFilePropertyId: 1,
         acquisitionFileProperty: null,
         isDisabled: false,
-        interestTypeCode: {
-          id: 'AC',
-          description: 'Agriculture Credit Act',
-          isDisabled: false,
-        },
+        propertyInterestTypes: [
+          {
+            id: 'AC',
+            description: 'Agriculture Credit Act',
+            isDisabled: false,
+          },
+        ],
         appCreateTimestamp: '2023-06-01T20:41:47.797',
         appLastUpdateTimestamp: '2023-06-01T20:41:47.797',
         appLastUpdateUserid: 'DESMITH',
@@ -108,11 +116,13 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
         acquisitionFilePropertyId: 2,
         acquisitionFileProperty: null,
         isDisabled: false,
-        interestTypeCode: {
-          id: 'AC',
-          description: 'Agriculture Credit Act',
-          isDisabled: false,
-        },
+        propertyInterestTypes: [
+          {
+            id: 'AC',
+            description: 'Agriculture Credit Act',
+            isDisabled: false,
+          },
+        ],
         appCreateTimestamp: '2023-06-01T20:41:47.8',
         appLastUpdateTimestamp: '2023-06-01T20:41:47.8',
         appLastUpdateUserid: 'DESMITH',

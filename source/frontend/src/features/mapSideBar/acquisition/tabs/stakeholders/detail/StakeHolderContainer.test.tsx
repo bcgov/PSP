@@ -99,7 +99,7 @@ describe('StakeHolderContainer component', () => {
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
-            interestTypeCode: { id: 'NIP' },
+            propertyInterestTypes: [{ id: 'NIP' }],
             acquisitionFilePropertyId: 1,
           },
         ],
@@ -109,7 +109,7 @@ describe('StakeHolderContainer component', () => {
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
-            interestTypeCode: { id: 'IP' },
+            propertyInterestTypes: [{ id: 'IP' }],
             acquisitionFilePropertyId: 1,
           },
         ],

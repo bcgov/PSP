@@ -62,6 +62,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(oa => oa.AddressUsageTypeCodeNavigation)
                 .Include(ih => ih.PimsInthldrPropInterests)
                     .ThenInclude(ip => ip.PimsPropInthldrInterestTypes)
+                    .ThenInclude(ipt => ipt.InterestHolderInterestTypeCodeNavigation)
                 .AsNoTracking()
                 .ToList();
         }

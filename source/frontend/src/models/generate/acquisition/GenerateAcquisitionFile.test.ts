@@ -72,7 +72,7 @@ describe('GenerateFile tests', () => {
           interestHolderProperties: [
             {
               ...emptyInterestHolderProperty,
-              interestTypeCode: { description: 'interest' },
+              propertyInterestTypes: [{ description: 'interest' }],
               interestHolderId: 1,
               acquisitionFilePropertyId: 1,
             },
@@ -96,7 +96,7 @@ describe('GenerateFile tests', () => {
           interestHolderProperties: [
             {
               ...emptyInterestHolderProperty,
-              interestTypeCode: { description: 'interest' },
+              propertyInterestTypes: [{ description: 'interest' }],
               interestHolderId: 1,
               acquisitionFilePropertyId: 1,
             },
@@ -110,7 +110,7 @@ describe('GenerateFile tests', () => {
           interestHolderProperties: [
             {
               ...emptyInterestHolderProperty,
-              interestTypeCode: { description: 'interest 2' },
+              propertyInterestTypes: [{ description: 'interest 2' }],
               interestHolderId: 2,
               acquisitionFilePropertyId: 1,
             },
@@ -136,15 +136,15 @@ describe('GenerateFile tests', () => {
           interestHolderProperties: [
             {
               ...emptyInterestHolderProperty,
-              interestTypeCode: { description: 'interest' },
+              propertyInterestTypes: [{ description: 'interest' }],
               interestHolderId: 1,
               acquisitionFilePropertyId: 1,
             },
             {
               ...emptyInterestHolderProperty,
-              interestTypeCode: { description: 'interest 2' },
+              propertyInterestTypes: [{ description: 'interest 2' }],
               interestHolderId: 1,
-              acquisitionFilePropertyId: 1,
+              acquisitionFilePropertyId: 2,
             },
           ],
         },
@@ -168,7 +168,7 @@ describe('GenerateFile tests', () => {
           interestHolderProperties: [
             {
               ...emptyInterestHolderProperty,
-              interestTypeCode: { description: 'interest', id: 'NIP' },
+              propertyInterestTypes: [{ description: 'interest', id: 'NIP' }],
               interestHolderId: 1,
               acquisitionFilePropertyId: 1,
             },

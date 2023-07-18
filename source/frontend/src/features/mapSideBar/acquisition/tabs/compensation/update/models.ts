@@ -452,7 +452,7 @@ export class PayeeOption {
     // The interest holders should always have a property
     const typeDescription =
       model.interestHolderProperties.length > 0
-        ? model.interestHolderProperties[0].interestTypeCode?.description
+        ? model.interestHolderProperties[0].propertyInterestTypes[0]?.description
         : 'ERROR: Missing interest type';
 
     return new PayeeOption(
