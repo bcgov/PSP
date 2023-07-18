@@ -167,7 +167,7 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
     requestFunction: useCallback(
       async (pid: string, allBy?: boolean): Promise<AxiosResponse<FeatureCollection>> => {
         //Do not make a request if we our currently cached response matches the requested pid.
-        const formattedPid = pid.replace(/-/g, '');
+        const formattedPid = pid.replace(/[-\s]/g, '').padStart(9, '0');
         const data: AxiosResponse<FeatureCollection> = await wfsAxios({
           timeout: 20000,
           authenticated,
@@ -188,7 +188,9 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
         const data: AxiosResponse<FeatureCollection> = await wfsAxios({
           timeout: 20000,
           authenticated,
-        }).get<FeatureCollection>(`${allBy ? baseAllUrl : baseUrl}&${toCqlFilter({ PIN: pin })}`);
+        }).get<FeatureCollection>(
+          `${allBy ? baseAllUrl : baseUrl}&${toCqlFilter({ PIN: pin }, true)},`,
+        );
         return data;
       },
       [baseAllUrl, baseUrl, authenticated],

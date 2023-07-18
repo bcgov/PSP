@@ -15,7 +15,7 @@ export const useMapProperties = () => {
     (params?: IGeoSearchParams) => {
       const geoserver_params = {
         STREET_ADDRESS_1: params?.STREET_ADDRESS_1,
-        PID_PADDED: params?.PID,
+        PID_PADDED: params?.PID?.replace(/[-\s]/g, ''),
         PIN: params?.PIN,
       };
       const url = `${propertiesUrl}${

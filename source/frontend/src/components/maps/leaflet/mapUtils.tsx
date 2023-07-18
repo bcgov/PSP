@@ -270,6 +270,8 @@ export const toCqlFilterValue = (object: Record<string, string>, flags?: IWfsCql
         flags?.forceExactMatch
       ) {
         cql.push(`${key} = '${object[key]}'`);
+      } else if (key === 'PIN' && flags?.forceExactMatch) {
+        cql.push(`${key}=${object[key].replace(/[^0-9]/g, '')}`);
       } else {
         cql.push(`${key} ilike '%${object[key]}%'`);
       }
