@@ -1,4 +1,4 @@
-import { chain, find, uniqBy } from 'lodash';
+import { chain, uniqBy } from 'lodash';
 
 import { IContactSearchResult } from '@/interfaces';
 import { Api_InterestHolder, Api_InterestHolderProperty } from '@/models/api/InterestHolder';
@@ -13,26 +13,18 @@ export class StakeHolderForm {
 
   static fromApi(apiModel: Api_InterestHolder[]): StakeHolderForm {
     const stakeHolderForm = new StakeHolderForm();
-    const interestHolderByType: InterestHolderForm[] = [];
+    const interestHoldersByType: InterestHolderForm[] = [];
     apiModel.forEach((ih: Api_InterestHolder) => {
       ih.interestHolderProperties.forEach((ihp: Api_InterestHolderProperty) => {
         ihp.propertyInterestTypes.forEach(pit => {
-          const formInterestHolderWithSameType = find(
-            interestHolderByType,
-            (ihbp: InterestHolderForm) => ihbp.interestTypeCode === pit.id,
-          );
-          if (formInterestHolderWithSameType) {
-            formInterestHolderWithSameType.impactedProperties.push(ihp);
-          } else {
-            interestHolderByType.push(InterestHolderForm.fromApi(ih, pit?.id ?? ''));
-          }
+          interestHoldersByType.push(InterestHolderForm.fromApi(ih, pit?.id ?? ''));
         });
       });
     });
-    stakeHolderForm.interestHolders = interestHolderByType.filter(
+    stakeHolderForm.interestHolders = interestHoldersByType.filter(
       ihp => ihp.interestTypeCode !== 'NIP',
     );
-    stakeHolderForm.nonInterestPayees = interestHolderByType.filter(
+    stakeHolderForm.nonInterestPayees = interestHoldersByType.filter(
       ihp => ihp.interestTypeCode === 'NIP',
     );
 
@@ -42,40 +34,31 @@ export class StakeHolderForm {
   static toApi(model: StakeHolderForm): Api_InterestHolder[] {
     // Group by personId or organizationId, create a unique list of all impacted properties for each group, and then map back to API model.
     return chain(model.interestHolders.concat(model.nonInterestPayees))
-      .forEach(
-        (
-          ih: InterestHolderForm, // copy the interest type from the interest holder to the impacted properties
-        ) =>
-          ih.impactedProperties.forEach(
-            (ihp: Api_InterestHolderProperty) =>
-              (ihp.propertyInterestTypes = ih.interestTypeCode
-                ? [{ id: ih.interestTypeCode }]
-                : []),
-          ),
-      )
       .groupBy((ih: InterestHolderForm) => ih.contact?.personId ?? ih.contact?.organizationId)
       .map(groupedByInterestHolder => {
         const allPropertiesForInterestHolder = groupedByInterestHolder.flatMap(
           (ih: InterestHolderForm) => ih.impactedProperties,
         );
-        const interestHolderProperties = uniqBy(
+
+        const mergedInterestHolderProperties = uniqBy(
           allPropertiesForInterestHolder,
-          (ihp: Api_InterestHolderProperty) => `${ihp.acquisitionFilePropertyId}`,
-        ); // combine interest holder properties with the same acquisition file property id.
-
-        interestHolderProperties.forEach((ihp: Api_InterestHolderProperty) => {
-          ihp.propertyInterestTypes = allPropertiesForInterestHolder
-            .filter(
-              allProperties =>
-                allProperties.acquisitionFilePropertyId === ihp.acquisitionFilePropertyId,
+          'acquisitionFilePropertyId',
+        ).map((ihp: InterestHolderPropertyForm) => {
+          const matchingInterestTypes = groupedByInterestHolder
+            .filter(gih =>
+              gih.impactedProperties.some(
+                ih => ih.acquisitionFilePropertyId === ihp.acquisitionFilePropertyId,
+              ),
             )
-            .flatMap(matchingIhp => matchingIhp.propertyInterestTypes);
-        }); // assign all of the interest type codes back to the interest holder properties
-
-        return InterestHolderForm.toApi({
-          ...groupedByInterestHolder[0],
-          impactedProperties: interestHolderProperties,
+            .map(gih => gih.interestTypeCode) as string[];
+          return InterestHolderPropertyForm.toApi(ihp, matchingInterestTypes);
         });
+
+        const apiInterestHolder = InterestHolderForm.toApi({
+          ...groupedByInterestHolder[0],
+        });
+        apiInterestHolder.interestHolderProperties = mergedInterestHolderProperties;
+        return apiInterestHolder;
       })
       .value();
   }
@@ -88,7 +71,7 @@ export class InterestHolderForm {
   organizationId: number | null = null;
   organization: Api_Organization | null = null;
   contact: IContactSearchResult | null = null;
-  impactedProperties: Api_InterestHolderProperty[] = [];
+  impactedProperties: InterestHolderPropertyForm[] = [];
   interestTypeCode: string | null = null;
   acquisitionFileId: number | null = null;
   isDisabled: boolean = false;
@@ -103,7 +86,9 @@ export class InterestHolderForm {
     interestHolderForm.interestHolderId = apiModel.interestHolderId;
     interestHolderForm.personId = apiModel.personId;
     interestHolderForm.organizationId = apiModel.organizationId;
-    interestHolderForm.impactedProperties = apiModel.interestHolderProperties;
+    interestHolderForm.impactedProperties = apiModel.interestHolderProperties.map(ihp =>
+      InterestHolderPropertyForm.fromApi(ihp),
+    );
     interestHolderForm.rowVersion = apiModel.rowVersion ?? null;
     interestHolderForm.isDisabled = apiModel.isDisabled;
     interestHolderForm.interestTypeCode = interestTypeCode ?? '';
@@ -130,17 +115,47 @@ export class InterestHolderForm {
       organizationId: !model.contact?.personId ? model.contact?.organizationId ?? null : null,
       organization: null,
       isDisabled: model.isDisabled,
-      interestHolderProperties: model.impactedProperties.map(ihp => ({
-        interestHolderPropertyId: ihp.interestHolderPropertyId,
-        interestHolderId: ihp.interestHolderId,
-        acquisitionFilePropertyId: ihp.acquisitionFilePropertyId,
-        propertyInterestTypes: ihp.propertyInterestTypes ?? [],
-        rowVersion: ihp.rowVersion ?? undefined,
-        acquisitionFileProperty: null,
-        isDisabled: false,
-      })),
+      interestHolderProperties: model.impactedProperties.map(ip =>
+        InterestHolderPropertyForm.toApi(
+          ip,
+          model.interestTypeCode ? [model.interestTypeCode] : [],
+        ),
+      ),
       acquisitionFileId: model.acquisitionFileId,
       rowVersion: model.rowVersion ?? undefined,
+    };
+  }
+}
+
+export class InterestHolderPropertyForm {
+  interestHolderPropertyId: number | null = null;
+  interestHolderId: number | null = null;
+  acquisitionFilePropertyId: number | null = null;
+  isDisabled: boolean = false;
+  rowVersion: number | null = null;
+
+  static fromApi(apiModel: Api_InterestHolderProperty): InterestHolderPropertyForm {
+    const interestHolderPropertyForm = new InterestHolderPropertyForm();
+    interestHolderPropertyForm.interestHolderPropertyId = apiModel.interestHolderPropertyId;
+    interestHolderPropertyForm.interestHolderId = apiModel.interestHolderId;
+    interestHolderPropertyForm.acquisitionFilePropertyId = apiModel.acquisitionFilePropertyId;
+    interestHolderPropertyForm.isDisabled = apiModel.isDisabled;
+
+    return interestHolderPropertyForm;
+  }
+
+  static toApi(
+    model: InterestHolderPropertyForm,
+    interestTypeCodes: string[],
+  ): Api_InterestHolderProperty {
+    return {
+      interestHolderId: model.interestHolderId,
+      interestHolderPropertyId: model.interestHolderPropertyId ?? null,
+      acquisitionFilePropertyId: model.acquisitionFilePropertyId,
+      acquisitionFileProperty: null,
+      isDisabled: model.isDisabled,
+      rowVersion: model.rowVersion ?? undefined,
+      propertyInterestTypes: interestTypeCodes.map(itc => ({ id: itc })),
     };
   }
 }
