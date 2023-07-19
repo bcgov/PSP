@@ -126,7 +126,7 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
     requestFunction: useCallback(
       async (pid: string, allBy?: boolean): Promise<AxiosResponse<FeatureCollection>> => {
         //Do not make a request if we our currently cached response matches the requested pid.
-        const formattedPid = pid.replace(/-/g, '');
+        const formattedPid = pid.replace(/[-\s]/g, '').padStart(9, '0');
         return executeWfs({ PID: formattedPid }, allBy, true);
       },
       [executeWfs],
@@ -137,7 +137,7 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
   const { execute: findByPin, loading: findByPinLoading } = useApiRequestWrapper({
     requestFunction: useCallback(
       async (pin: string, allBy?: boolean): Promise<AxiosResponse<FeatureCollection>> => {
-        return executeWfs({ PIN: pin }, allBy);
+        return executeWfs({ PIN: pin }, allBy, true);
       },
       [executeWfs],
     ),
