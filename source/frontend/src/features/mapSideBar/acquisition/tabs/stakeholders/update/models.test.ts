@@ -6,10 +6,6 @@ import { InterestHolderForm, StakeHolderForm } from './models';
 
 const emptyInterestHolderForm: InterestHolderForm = {
   interestHolderId: null,
-  //person: null,
-  //personId: '',
-  //organization: null,
-  //organizationId: '',
   isDisabled: false,
   impactedProperties: [],
   contact: null,

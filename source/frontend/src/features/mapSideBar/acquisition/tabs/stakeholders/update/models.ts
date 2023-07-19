@@ -82,7 +82,6 @@ export class StakeHolderForm {
 }
 
 export class InterestHolderPropertyFormModel {
-  //acquisitionFileProperty = {};
   interestHolderPropertyId: string = '';
   acquisitionFilePropertyId: string = '';
   propertyInterestType: string = '';
