@@ -36,6 +36,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(ih => ih.Person)
                 .Include(ap => ap.InterestHolder)
                     .ThenInclude(ih => ih.Organization)
+                .Include(ap => ap.InterestHolder)
+                    .ThenInclude(ih => ih.InterestHolderTypeCodeNavigation)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.AcquisitionPayeeId.Equals(payeeId)) ?? throw new KeyNotFoundException();
 

@@ -41,7 +41,7 @@ export class Api_GenerateExpropriationForm1 {
     const matchingInterestHolders = interestHolders.filter(ih =>
       ih?.interestHolderProperties?.some(
         ihp =>
-          ihp.interestTypeCode?.id !== 'NIP' &&
+          ihp?.propertyInterestTypes.some(pit => pit.id !== 'NIP') &&
           filePropertyIds.has(Number(ihp.acquisitionFilePropertyId)),
       ),
     );
