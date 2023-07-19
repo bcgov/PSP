@@ -105,9 +105,7 @@ export class InterestHolderPropertyFormModel {
 export class InterestHolderForm {
   interestHolderId: number | null = null;
   personId: string = '';
-  //person: Api_Person | null = null;
   organizationId: string = '';
-  //organization: Api_Organization | null = null;
   contact: IContactSearchResult | null = null;
 
   impactedProperties: InterestHolderPropertyForm[] = [];
@@ -171,12 +169,6 @@ export class InterestHolderForm {
       organization: null,
       isDisabled: model.isDisabled,
       interestHolderProperties: properties,
-      /*interestHolderProperties: model.impactedProperties.map(ip =>
-        InterestHolderPropertyForm.toApi(
-          ip,
-          model.propertyInterestTypeCode ? [model.propertyInterestTypeCode] : [],
-        ),
-      ),*/
       acquisitionFileId: model.acquisitionFileId,
       rowVersion: model.rowVersion ?? undefined,
       comment: model.comment,
@@ -193,7 +185,6 @@ export class InterestHolderPropertyForm {
   acquisitionFilePropertyId: number | null = null;
   isDisabled: boolean = false;
   rowVersion: number | null = null;
-  //propertyInterestType: string = '';
 
   static fromApi(apiModel: Api_InterestHolderProperty): InterestHolderPropertyForm {
     const interestHolderPropertyForm = new InterestHolderPropertyForm();
@@ -202,12 +193,6 @@ export class InterestHolderPropertyForm {
     interestHolderPropertyForm.acquisitionFilePropertyId = apiModel.acquisitionFilePropertyId;
     interestHolderPropertyForm.isDisabled = apiModel.isDisabled;
     interestHolderPropertyForm.rowVersion = apiModel.rowVersion;
-    /*const stringTypes = apiModel.propertyInterestTypes
-      .map(x => x.id)
-      .filter((x): x is string => x !== undefined);*/
-
-    // Currently there is only one interest type per form
-    //interestHolderPropertyForm.propertyInterestType = stringTypes.length > 0 ? stringTypes[0] : '';
 
     return interestHolderPropertyForm;
   }
