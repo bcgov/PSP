@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { IApiError } from '@/interfaces/IApiError';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
@@ -45,9 +46,16 @@ export const UpdateStakeHolderContainer: React.FunctionComponent<
   ) => {
     try {
       if (acquisitionFile?.id) {
+        const stakeholders = StakeHolderForm.toApi(interestHolders);
+        // Add the other non interest holder concats
+        const otherInterestHolders =
+          apiInterestHolders?.filter(
+            x => x.interestHolderType?.id !== InterestHolderType.INTEREST_HOLDER,
+          ) || [];
+
         const result = await updateInterestHolders(
           acquisitionFile?.id,
-          StakeHolderForm.toApi(interestHolders),
+          stakeholders.concat(otherInterestHolders),
         );
         if (result !== undefined) {
           onSuccess();

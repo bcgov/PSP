@@ -1,3 +1,4 @@
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { Api_AcquisitionFileOwner, Api_AcquisitionFilePerson } from '@/models/api/AcquisitionFile';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
@@ -287,23 +288,23 @@ export class PayeeOption {
         return PayeeOption.generateKey(apiModel.acquisitionOwnerId, PayeeType.Owner);
       }
 
-      /*if (apiModel.ownerRepresentativeId) {
-        return PayeeOption.generateKey(
-          apiModel.ownerRepresentativeId,
-          PayeeType.OwnerRepresentative,
-        );
-      }
-
-      if (apiModel.ownerSolicitorId) {
-        return PayeeOption.generateKey(apiModel.ownerSolicitorId, PayeeType.OwnerSolicitor);
-      }*/
-
       if (apiModel.motiSolicitorId) {
         return PayeeOption.generateKey(apiModel.motiSolicitorId, PayeeType.AcquisitionTeam);
       }
 
       if (apiModel.interestHolderId) {
-        return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.InterestHolder);
+        if (
+          apiModel.interestHolder?.interestHolderType?.id ===
+          InterestHolderType.OWNER_REPRESENTATIVE
+        ) {
+          return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.OwnerRepresentative);
+        } else if (
+          apiModel.interestHolder?.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR
+        ) {
+          return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.OwnerSolicitor);
+        } else {
+          return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.InterestHolder);
+        }
       }
     }
     return '';
@@ -346,12 +347,12 @@ export class PayeeOption {
       case PayeeType.AcquisitionTeam:
         payee.motiSolicitorId = payeeOption.api_id;
         break;
-      /*case PayeeType.OwnerRepresentative:
-        payee.ownerRepresentativeId = payeeOption.api_id;
+      case PayeeType.OwnerRepresentative:
+        payee.interestHolderId = payeeOption.api_id;
         break;
       case PayeeType.OwnerSolicitor:
-        payee.ownerSolicitorId = payeeOption.api_id;
-        break;*/
+        payee.interestHolderId = payeeOption.api_id;
+        break;
       case PayeeType.Owner:
         payee.acquisitionOwnerId = payeeOption.api_id;
         break;
@@ -386,7 +387,7 @@ export class PayeeOption {
     );
   }
 
-  /*public static createOwnerSolicitor(model: Api_AcquisitionFileSolicitor): PayeeOption {
+  public static createOwnerSolicitor(model: Api_InterestHolder): PayeeOption {
     let name = '';
     if (model.person) {
       name = formatApiPersonNames(model.person);
@@ -394,24 +395,24 @@ export class PayeeOption {
       name = model.organization?.name || '';
     }
     return new PayeeOption(
-      model.id || 0,
+      model.interestHolderId || 0,
       name,
       `Owner's Solicitor`,
-      PayeeOption.generateKey(model.id, PayeeType.OwnerSolicitor),
+      PayeeOption.generateKey(model.interestHolderId, PayeeType.OwnerSolicitor),
       PayeeType.OwnerSolicitor,
     );
   }
 
-  public static createOwnerRepresentative(model: Api_AcquisitionFileRepresentative): PayeeOption {
+  public static createOwnerRepresentative(model: Api_InterestHolder): PayeeOption {
     let name = formatApiPersonNames(model.person);
     return new PayeeOption(
-      model.id || 0,
+      model.interestHolderId || 0,
       name,
       `Owner's Representative`,
-      PayeeOption.generateKey(model.id, PayeeType.OwnerRepresentative),
+      PayeeOption.generateKey(model.interestHolderId, PayeeType.OwnerRepresentative),
       PayeeType.OwnerRepresentative,
     );
-  }*/
+  }
 
   public static createTeamMember(model: Api_AcquisitionFilePerson): PayeeOption {
     let name = formatApiPersonNames(model.person);
@@ -425,6 +426,12 @@ export class PayeeOption {
   }
 
   public static createInterestHolder(model: Api_InterestHolder): PayeeOption {
+    if (model.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR) {
+      return this.createOwnerSolicitor(model);
+    } else if (model.interestHolderType?.id === InterestHolderType.OWNER_REPRESENTATIVE) {
+      return this.createOwnerRepresentative(model);
+    }
+
     let name = '';
     if (model.person) {
       name = formatApiPersonNames(model.person);

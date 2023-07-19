@@ -83,6 +83,12 @@ const UpdateCompensationRequisitionContainer: React.FC<
 
       await Promise.all([acquisitionOwnersCall, interestHoldersCall]).then(
         ([acquisitionOwners, interestHolders]) => {
+          compensation.payees.forEach(p => {
+            const matchedInterestHolder =
+              interestHolders?.find(ih => ih.interestHolderId === p.interestHolderId) ?? null;
+            p.interestHolder = matchedInterestHolder;
+          });
+
           const options = payeeOptions;
 
           if (acquisitionOwners !== undefined) {
@@ -91,20 +97,6 @@ const UpdateCompensationRequisitionContainer: React.FC<
             );
             options.push(...ownersOptions);
           }
-
-          /*if (acquisitionSolicitors !== undefined) {
-            const acquisitionSolicitorOptions: PayeeOption[] = acquisitionSolicitors.map(x =>
-              PayeeOption.createOwnerSolicitor(x),
-            );
-            options.push(...acquisitionSolicitorOptions);
-          }
-
-          if (acquisitionRepresentatives !== undefined) {
-            const acquisitionSolicitorOptions: PayeeOption[] = acquisitionRepresentatives.map(x =>
-              PayeeOption.createOwnerRepresentative(x),
-            );
-            options.push(...acquisitionSolicitorOptions);
-          }*/
 
           if (interestHolders !== undefined) {
             const interestHolderOptions: PayeeOption[] = interestHolders.map(x =>
@@ -125,6 +117,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
       );
     }
   }, [
+    compensation,
     payeeOptions,
     acquisitionFile.acquisitionTeam,
     acquisitionFile.id,

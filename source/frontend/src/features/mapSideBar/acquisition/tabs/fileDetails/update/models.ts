@@ -46,6 +46,7 @@ export class UpdateAcquisitionSummaryFormModel
   ownerRepresentative: InterestHolderForm = new InterestHolderForm(
     InterestHolderType.OWNER_REPRESENTATIVE,
   );
+  otherInterestHolders: Api_InterestHolder[] = [];
 
   toApi(): Api_AcquisitionFile {
     return {
@@ -73,6 +74,7 @@ export class UpdateAcquisitionSummaryFormModel
         .filter(x => !!x.contact && !!x.contactTypeCode)
         .map<Api_AcquisitionFilePerson>(x => x.toApi(this.id || 0)),
       acquisitionFileInterestHolders: [
+        ...this.otherInterestHolders,
         InterestHolderForm.toApi(this.ownerSolicitor, []),
         InterestHolderForm.toApi(this.ownerRepresentative, []),
       ].filter((x): x is Api_InterestHolder => x !== null),
@@ -114,6 +116,13 @@ export class UpdateAcquisitionSummaryFormModel
     newForm.ownerRepresentative =
       interestHolders?.find(x => x.interestTypeCode === InterestHolderType.OWNER_REPRESENTATIVE) ??
       new InterestHolderForm(InterestHolderType.OWNER_REPRESENTATIVE, model.id);
+
+    newForm.otherInterestHolders =
+      model.acquisitionFileInterestHolders?.filter(
+        x =>
+          x.interestHolderType?.id !== InterestHolderType.OWNER_SOLICITOR &&
+          x.interestHolderType?.id !== InterestHolderType.OWNER_REPRESENTATIVE,
+      ) || [];
 
     return newForm;
   }
