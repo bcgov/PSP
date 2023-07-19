@@ -41,11 +41,11 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
       : '';
 
   const ownerSolicitor = acquisitionFile?.acquisitionFileInterestHolders?.find(
-    x => x.interestHolderType.id === InterestHolderType.OWNER_SOLICITOR,
+    x => x.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR,
   );
 
   const ownerRepresentative = acquisitionFile?.acquisitionFileInterestHolders?.find(
-    x => x.interestHolderType.id === InterestHolderType.OWNER_REPRESENTATIVE,
+    x => x.interestHolderType?.id === InterestHolderType.OWNER_REPRESENTATIVE,
   );
 
   return (

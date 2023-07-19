@@ -141,7 +141,7 @@ describe('GenerateFile tests', () => {
               ...emptyInterestHolderProperty,
               propertyInterestTypes: [{ description: 'interest 2' }],
               interestHolderId: 1,
-              acquisitionFilePropertyId: 2,
+              acquisitionFilePropertyId: 1,
             },
           ],
         },

@@ -7,7 +7,6 @@ import { Api_Address } from './Address';
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_InterestHolder } from './InterestHolder';
-import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
 import { Api_Product, Api_Project } from './Project';
 import { Api_PropertyFile } from './PropertyFile';

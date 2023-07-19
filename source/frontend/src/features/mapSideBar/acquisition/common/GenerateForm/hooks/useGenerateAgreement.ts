@@ -1,3 +1,4 @@
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { showFile } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
@@ -5,6 +6,7 @@ import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { AgreementTypes, Api_Agreement } from '@/models/api/Agreement';
 import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateAgreement } from '@/models/generate/GenerateAgreement';
 
@@ -31,9 +33,11 @@ export const useGenerateAgreement = () => {
     const provincialSolicitor = file.acquisitionTeam?.find(
       team => team.personProfileTypeCode === 'MOTILAWYER',
     );
-    const ownerSolicitor = {}; /*TODO:file.acquisitionFileOwnerSolicitors?.length
-      ? file.acquisitionFileOwnerSolicitors[0]
-      : undefined;*/
+    const solicitors = file.acquisitionFileInterestHolders
+      ?.filter(x => x.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR)
+      .filter((x): x is Api_InterestHolder => !!x);
+    const ownerSolicitor =
+      solicitors !== undefined && solicitors.length > 0 ? solicitors[0] : undefined;
 
     const coordinatorConcept = coordinator?.personId
       ? getPersonConcept(coordinator?.personId)
@@ -44,15 +48,15 @@ export const useGenerateAgreement = () => {
     const provincialSolicitorConcept = provincialSolicitor?.personId
       ? getPersonConcept(provincialSolicitor?.personId)
       : Promise.resolve(null);
-    /*const ownerSolicitorConcept = ownerSolicitor?.personId
+    const ownerSolicitorConcept = ownerSolicitor?.personId
       ? getPersonConcept(ownerSolicitor?.personId)
-      : Promise.resolve(null);*/
+      : Promise.resolve(null);
 
     const persons = await Promise.all([
       coordinatorConcept,
       negotiatingAgentConcept,
       provincialSolicitorConcept,
-      //ownerSolicitorConcept,
+      ownerSolicitorConcept,
     ]);
 
     const fileData = new Api_GenerateAcquisitionFile({
@@ -60,7 +64,7 @@ export const useGenerateAgreement = () => {
       coordinatorContact: persons[0]?.data ?? null,
       negotiatingAgent: persons[1]?.data ?? null,
       provincialSolicitor: persons[2]?.data ?? null,
-      //ownerSolicitor: persons[3]?.data ?? null,
+      ownerSolicitor: persons[3]?.data ?? null,
       interestHolders: [],
     });
     const agreementData = new Api_GenerateAgreement(agreement, fileData);

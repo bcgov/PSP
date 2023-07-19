@@ -2,6 +2,7 @@ import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { forwardRef } from 'react';
 
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { emptyApiInterestHolder, emptyInterestHolderProperty } from '@/mocks/interestHolder.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
@@ -122,23 +123,29 @@ describe('StakeHolderContainer component', () => {
     });
   });
 
-  it('does not group interest holders for different properties', async () => {
+  it('does not group interest holders for different properties interest types', async () => {
     mockGetApi.response = [
       {
         ...emptyApiInterestHolder,
+        personId: 1,
+        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
             acquisitionFilePropertyId: 1,
+            propertyInterestTypes: [{ id: 'test_interest_1' }],
           },
         ],
       },
       {
         ...emptyApiInterestHolder,
+        personId: 1,
+        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
             acquisitionFilePropertyId: 2,
+            propertyInterestTypes: [{ id: 'test_interest_2' }],
           },
         ],
       },

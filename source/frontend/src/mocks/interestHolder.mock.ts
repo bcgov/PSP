@@ -17,9 +17,10 @@ export const emptyApiInterestHolder: Api_InterestHolder = {
 
 export const emptyInterestHolderProperty: Api_InterestHolderProperty = {
   interestHolderId: null,
-  propertyInterestTypes: null,
+  propertyInterestTypes: [],
   interestHolderPropertyId: null,
   acquisitionFileProperty: null,
   acquisitionFilePropertyId: null,
   isDisabled: false,
+  rowVersion: 0,
 };

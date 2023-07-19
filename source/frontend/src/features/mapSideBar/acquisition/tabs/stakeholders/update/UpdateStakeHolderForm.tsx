@@ -106,7 +106,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                         <SectionField label="Interest type">
                           <Select
                             options={interestHolderInterestTypes}
-                            field={`interestHolders.${index}.interestTypeCode`}
+                            field={`interestHolders.${index}.propertyInterestTypeCode`}
                             placeholder="Select an interest type"
                           />
                         </SectionField>
@@ -117,15 +117,13 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                           <FilePropertiesTable
                             fileProperties={file.fileProperties ?? []}
                             selectedFileProperties={
-                              []
-                              // TODO: Fix this
-                              /*(interestHolder.impactedProperties
+                              interestHolder.impactedProperties
                                 .map(ip =>
                                   file.fileProperties?.find(
                                     fp => fp.id === ip.acquisitionFilePropertyId,
                                   ),
                                 )
-                                .filter(fp => !!fp) as Api_PropertyFile[]) ?? []*/
+                                .filter((fp): fp is Api_PropertyFile => !!fp) ?? []
                             }
                             setSelectedFileProperties={(fileProperties: Api_PropertyFile[]) => {
                               const interestHolderProperties = fileProperties.map(fileProperty => {
@@ -225,15 +223,13 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                           <FilePropertiesTable
                             fileProperties={file.fileProperties ?? []}
                             selectedFileProperties={
-                              []
-                              // TODO:Fix this
-                              /*(interestHolder.impactedProperties
+                              interestHolder.impactedProperties
                                 .map(ip =>
                                   file.fileProperties?.find(
                                     fp => fp.id === ip.acquisitionFilePropertyId,
                                   ),
                                 )
-                                .filter(fp => !!fp) as Api_PropertyFile[]) ?? []*/
+                                .filter((fp): fp is Api_PropertyFile => !!fp) ?? []
                             }
                             setSelectedFileProperties={(fileProperties: Api_PropertyFile[]) => {
                               const interestHolderProperties = fileProperties.map(fileProperty => {
@@ -270,7 +266,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                           InterestHolderType.INTEREST_HOLDER,
                           file.id,
                         );
-                        interestHolderForm.interestTypeCode = 'NIP';
+                        interestHolderForm.propertyInterestTypeCode = 'NIP';
                         arrayHelpers.push(interestHolderForm);
                       }}
                     >

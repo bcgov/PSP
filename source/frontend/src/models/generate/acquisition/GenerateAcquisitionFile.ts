@@ -52,9 +52,7 @@ export class Api_GenerateAcquisitionFile {
       ih => ih?.interestHolderProperties ?? [],
     );
 
-    // TODO: Fix this
-    this.properties = [];
-    /*this.properties =
+    this.properties =
       file?.fileProperties?.map(fp => {
         const matchingInterestHolderProperties =
           allInterestHoldersPropertes.filter(
@@ -62,7 +60,6 @@ export class Api_GenerateAcquisitionFile {
               ihp.acquisitionFilePropertyId === fp?.id &&
               ihp.propertyInterestTypes.some(pit => pit.id !== 'NIP'),
           ) ?? [];
-        matchingInterestHolderProperties.forEach(ihp => console.log(ihp));
 
         const interestHoldersForAcquisitionFile = matchingInterestHolderProperties.flatMap(
           (mihp: Api_InterestHolderProperty) =>
@@ -75,8 +72,9 @@ export class Api_GenerateAcquisitionFile {
                 ),
             ),
         );
+
         return new Api_GenerateH120Property(fp?.property, interestHoldersForAcquisitionFile);
-      }) ?? [];*/
+      }) ?? [];
 
     this.file_name = file?.fileName ?? '';
     this.file_number = file?.fileNumber ?? '';

@@ -1,4 +1,5 @@
 import { ConvertToTypes } from '@/constants/convertToTypes';
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { showFile } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { ExpropriationForm1Model } from '@/features/mapSideBar/acquisition/tabs/expropriation/models';
@@ -35,9 +36,9 @@ export const useGenerateExpropriationForm1 = () => {
     }
     file.fileProperties = properties;
 
-    const ownerSolicitor = file.acquisitionFileOwnerSolicitors?.length
-      ? file.acquisitionFileOwnerSolicitors[0]
-      : null;
+    const ownerSolicitor = file.acquisitionFileInterestHolders?.find(
+      x => x.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR,
+    );
 
     const ownerSolicitorPerson = ownerSolicitor?.personId
       ? (await getPersonConcept(ownerSolicitor?.personId))?.data

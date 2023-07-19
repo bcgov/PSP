@@ -73,8 +73,8 @@ export class UpdateAcquisitionSummaryFormModel
         .filter(x => !!x.contact && !!x.contactTypeCode)
         .map<Api_AcquisitionFilePerson>(x => x.toApi(this.id || 0)),
       acquisitionFileInterestHolders: [
-        InterestHolderForm.toApi(this.ownerSolicitor),
-        InterestHolderForm.toApi(this.ownerRepresentative),
+        InterestHolderForm.toApi(this.ownerSolicitor, []),
+        InterestHolderForm.toApi(this.ownerRepresentative, []),
       ].filter((x): x is Api_InterestHolder => x !== null),
     };
   }
@@ -106,7 +106,7 @@ export class UpdateAcquisitionSummaryFormModel
     newForm.product = model.product?.id?.toString() ?? '';
 
     const interestHolders = model.acquisitionFileInterestHolders?.map(x =>
-      InterestHolderForm.fromApi(x),
+      InterestHolderForm.fromApi(x, x.interestHolderType?.id as InterestHolderType),
     );
     newForm.ownerSolicitor =
       interestHolders?.find(x => x.interestTypeCode === InterestHolderType.OWNER_SOLICITOR) ??
