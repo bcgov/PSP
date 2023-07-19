@@ -4,8 +4,9 @@ import { useEffect } from 'react';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_InterestHolder, Api_InterestHolderProperty } from '@/models/api/InterestHolder';
+import Api_TypeCode from '@/models/api/TypeCode';
 
-import { InterestHolderViewForm, InterestHolderViewRow, StakeHolderForm } from '../update/models';
+import { InterestHolderViewForm, InterestHolderViewRow } from '../update/models';
 import { IStakeHolderViewProps } from './StakeHolderView';
 
 export interface IStakeHolderContainerProps {
@@ -33,18 +34,14 @@ export const StakeHolderContainer: React.FunctionComponent<IStakeHolderContainer
     }
   }, [acquisitionFile.id, getInterestHolders]);
 
-  const form = StakeHolderForm.fromApi(apiInterestHolders ?? []);
-
-  // TODO: Fix this
-  const interestProperties: Api_InterestHolderProperty[] = [];
-  const nonInterestProperties: Api_InterestHolderProperty[] = [];
-  /*const allInterestProperties = form.interestHolders
-    .concat(form.nonInterestPayees)
-    .flatMap(interestHolder => interestHolder.impactedProperties);
-  const interestProperties = allInterestProperties.filter(ip => ip.interestTypeCode?.id !== 'NIP');
-  const nonInterestProperties = allInterestProperties.filter(
-    ip => ip.interestTypeCode?.id === 'NIP',
-  );*/
+  const allInterestProperties =
+    apiInterestHolders?.flatMap(interestHolder => interestHolder.interestHolderProperties) ?? [];
+  const interestProperties = allInterestProperties.filter(ip =>
+    ip.propertyInterestTypes.some(pit => pit?.id !== 'NIP'),
+  );
+  const nonInterestProperties = allInterestProperties.filter(ip =>
+    ip.propertyInterestTypes.some(pit => pit?.id === 'NIP'),
+  );
 
   return (
     <View
@@ -85,13 +82,16 @@ const getGroupedInterestProperties = (
     );
     if (!matchingGroup) {
       const newGroup = InterestHolderViewForm.fromApi(interestHolderProperty);
-      newGroup.groupedPropertyInterests = [
-        InterestHolderViewRow.fromApi(interestHolderProperty, interestHolder),
-      ];
+      newGroup.groupedPropertyInterests = interestHolderProperty.propertyInterestTypes.map(
+        (itc: Api_TypeCode<string>) =>
+          InterestHolderViewRow.fromApi(interestHolderProperty, interestHolder, itc),
+      );
       groupedInterestProperties.push(newGroup);
     } else {
-      matchingGroup.groupedPropertyInterests.push(
-        InterestHolderViewRow.fromApi(interestHolderProperty, interestHolder),
+      interestHolderProperty.propertyInterestTypes.forEach((itc: Api_TypeCode<string>) =>
+        matchingGroup.groupedPropertyInterests.push(
+          InterestHolderViewRow.fromApi(interestHolderProperty, interestHolder, itc),
+        ),
       );
     }
   });

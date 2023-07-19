@@ -129,11 +129,9 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                             }
                             setSelectedFileProperties={(fileProperties: Api_PropertyFile[]) => {
                               const interestHolderProperties = fileProperties.map(fileProperty => {
-                                // TODO: Fix this
-                                const matchingProperty = undefined;
-                                /*const matchingProperty = interestHolder.impactedProperties.find(
-                                  ip => ip.acquisitionFileProperty?.id === fileProperty.id,
-                                );*/
+                                const matchingProperty = interestHolder.impactedProperties.find(
+                                  ip => ip.acquisitionFilePropertyId === fileProperty.id,
+                                );
 
                                 return matchingProperty
                                   ? matchingProperty
@@ -239,11 +237,9 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                             }
                             setSelectedFileProperties={(fileProperties: Api_PropertyFile[]) => {
                               const interestHolderProperties = fileProperties.map(fileProperty => {
-                                //TODO: Fix this
-                                const matchingProperty = undefined;
-                                /*const matchingProperty = interestHolder.impactedProperties.find(
-                                  ip => ip.acquisitionFileProperty?.id === fileProperty.id,
-                                );*/
+                                const matchingProperty = interestHolder.impactedProperties.find(
+                                  ip => ip.acquisitionFilePropertyId === fileProperty.id,
+                                );
 
                                 return matchingProperty
                                   ? matchingProperty

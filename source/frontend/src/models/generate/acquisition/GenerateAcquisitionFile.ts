@@ -58,13 +58,21 @@ export class Api_GenerateAcquisitionFile {
       file?.fileProperties?.map(fp => {
         const matchingInterestHolderProperties =
           allInterestHoldersPropertes.filter(
-            ihp => ihp.acquisitionFilePropertyId === fp?.id && ihp.interestTypeCode?.id !== 'NIP',
+            ihp =>
+              ihp.acquisitionFilePropertyId === fp?.id &&
+              ihp.propertyInterestTypes.some(pit => pit.id !== 'NIP'),
           ) ?? [];
-        const interestHoldersForAcquisitionFile = matchingInterestHolderProperties.map(
+        matchingInterestHolderProperties.forEach(ihp => console.log(ihp));
+
+        const interestHoldersForAcquisitionFile = matchingInterestHolderProperties.flatMap(
           (mihp: Api_InterestHolderProperty) =>
-            new Api_GenerateInterestHolder(
-              interestHolders.find(ih => ih.interestHolderId === mihp.interestHolderId) ?? null,
-              mihp,
+            mihp.propertyInterestTypes.map(
+              pit =>
+                new Api_GenerateInterestHolder(
+                  interestHolders.find(ih => ih.interestHolderId === mihp.interestHolderId) ?? null,
+                  mihp,
+                  pit,
+                ),
             ),
         );
         return new Api_GenerateH120Property(fp?.property, interestHoldersForAcquisitionFile);

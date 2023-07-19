@@ -17,6 +17,7 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
     organizationId: null,
     organization: null,
     isDisabled: false,
+    interestHolderType: { id: 'INTHLDR' },
     interestHolderProperties: [
       {
         interestHolderId: 14,
@@ -75,6 +76,7 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
   },
   {
     interestHolderId: 51,
+    interestHolderType: { id: 'INTHLDR' },
     acquisitionFileId: 1,
     personId: 9,
     person: {
