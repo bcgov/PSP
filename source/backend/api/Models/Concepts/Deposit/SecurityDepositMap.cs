@@ -9,6 +9,7 @@ namespace Pims.Api.Models.Concepts
         {
             config.NewConfig<Entity.PimsSecurityDeposit, SecurityDepositModel>()
                 .Map(dest => dest.Id, src => src.SecurityDepositId)
+                .Map(dest => dest.LeaseId, src => src.LeaseId)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.AmountPaid, src => src.AmountPaid)
                 .Map(dest => dest.DepositDate, src => src.DepositDate)

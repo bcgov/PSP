@@ -1,10 +1,11 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Claims, NoteTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/lookups.mock';
-import { mockNoteResponse } from 'mocks/noteResponses.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
+
+import { Claims, NoteTypes } from '@/constants/index';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { mockNoteResponse } from '@/mocks/noteResponses.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   render,
@@ -12,7 +13,7 @@ import {
   userEvent,
   waitFor,
   waitForElementToBeRemoved,
-} from 'utils/test-utils';
+} from '@/utils/test-utils';
 
 import { INotesDetailContainerProps, NoteContainer } from './NoteContainer';
 

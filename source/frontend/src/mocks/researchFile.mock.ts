@@ -1,4 +1,4 @@
-import { Api_ResearchFile } from 'models/api/ResearchFile';
+import { Api_ResearchFile } from '@/models/api/ResearchFile';
 export const getMockResearchFile = (): Api_ResearchFile => ({
   id: 109,
   fileName: 'fsdgsdf',

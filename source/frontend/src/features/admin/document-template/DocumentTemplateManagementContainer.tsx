@@ -1,5 +1,6 @@
-import { useFormDocumentRepository } from 'hooks/repositories/useFormDocumentRepository';
 import { useState } from 'react';
+
+import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentRepository';
 
 import DocumentTemplateManagementView from './DocumentTemplateManagementView';
 

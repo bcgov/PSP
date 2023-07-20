@@ -1,6 +1,7 @@
-import { AreaUnitTypes } from 'constants/areaUnitTypes';
-import { VolumeUnitTypes } from 'constants/volumeUnitTypes';
 import convert, { Area, Volume } from 'convert';
+
+import { AreaUnitTypes } from '@/constants/areaUnitTypes';
+import { VolumeUnitTypes } from '@/constants/volumeUnitTypes';
 
 export function convertArea(value: number, from: string, to: string): number {
   const _from = getAreaUnit(from);

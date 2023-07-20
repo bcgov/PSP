@@ -1,18 +1,18 @@
-import { Button } from 'components/common/buttons';
-import TooltipWrapper from 'components/common/TooltipWrapper';
+import { getIn, useFormikContext } from 'formik';
+import * as React from 'react';
+import { Col, Form, FormControlProps, Row } from 'react-bootstrap';
+import { FaAddressBook } from 'react-icons/fa';
+import { MdClose } from 'react-icons/md';
+import styled from 'styled-components';
+
+import { Button } from '@/components/common/buttons';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import {
   ContactManagerModal,
   IContactManagerModalProps,
-} from 'components/contact/ContactManagerModal';
-import { StyledDiv } from 'features/properties/map/acquisition/common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
-import { getIn, useFormikContext } from 'formik';
-import { IContactSearchResult } from 'interfaces';
-import * as React from 'react';
-import { Col, FormControlProps, Row } from 'react-bootstrap';
-import { Form } from 'react-bootstrap';
-import { FaAddressBook } from 'react-icons/fa';
-import { MdClose } from 'react-icons/md';
-import { formatNames } from 'utils/personUtils';
+} from '@/components/contact/ContactManagerModal';
+import { IContactSearchResult } from '@/interfaces';
+import { formatNames } from '@/utils/personUtils';
 
 import { StyledRemoveLinkButton } from '../ContactInput';
 import { DisplayError } from '../DisplayError';
@@ -65,7 +65,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
         <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
           <Row>
             <Col>
-              <StyledDiv className={!!error ? 'is-invalid' : ''}>
+              <StyledDiv className={!!error && !!touch ? 'is-invalid' : ''}>
                 {text}
                 <StyledRemoveLinkButton
                   onClick={() => {
@@ -113,3 +113,16 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
 };
 
 export default ContactInputView;
+
+const StyledDiv = styled.div`
+  background: none;
+  position: relative;
+  border-radius: 0.3rem;
+  padding: 0.6rem;
+  padding-right: 2.1rem;
+  color: ${props => props.theme.css.formControlTextColor};
+  border: ${props => props.theme.css.lightVariantColor} solid 0.1rem;
+  &.is-invalid {
+    border: ${props => props.theme.css.dangerColor} solid 0.1rem;
+  }
+`;

@@ -1,6 +1,7 @@
-import { Api_CompensationPayee } from 'models/api/CompensationPayee';
-import { formatMoney } from 'utils';
-import { formatNames } from 'utils/personUtils';
+import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
+import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
+import { formatMoney } from '@/utils';
+import { formatNames } from '@/utils/personUtils';
 
 export class Api_GenerateCompensationPayee {
   name: string;
@@ -10,7 +11,12 @@ export class Api_GenerateCompensationPayee {
   payment_in_trust: boolean;
   gst_number: string;
 
-  constructor(payee: Api_CompensationPayee | null) {
+  constructor(
+    payee: Api_CompensationPayee | null,
+    financialActivities: Api_CompensationFinancial[] | [],
+  ) {
+    this.gst_number = payee?.gstNumber ? payee.gstNumber ?? '' : '';
+
     if (payee?.acquisitionOwner) {
       this.name = formatNames([
         payee.acquisitionOwner.givenName,
@@ -45,12 +51,21 @@ export class Api_GenerateCompensationPayee {
       this.name = '';
     }
 
-    this.pre_tax_amount = payee?.cheques?.length ? formatMoney(payee.cheques[0].pretaxAmout) : '';
-    this.tax_amount = payee?.cheques?.length ? formatMoney(payee.cheques[0].taxAmount) : '';
-    this.total_amount = payee?.cheques?.length ? formatMoney(payee.cheques[0].totalAmount) : '';
-    this.gst_number = payee?.cheques?.length ? payee.cheques[0]?.gstNumber ?? '' : '';
-    this.payment_in_trust = payee?.cheques?.length
-      ? payee.cheques[0]?.isPaymentInTrust ?? false
-      : false;
+    const preTaxAmount = financialActivities
+      .map(f => f.pretaxAmount ?? 0)
+      .reduce((prev, next) => prev + next, 0);
+
+    const taxAmount = financialActivities
+      .map(f => f.taxAmount ?? 0)
+      .reduce((prev, next) => prev + next, 0);
+
+    const totalAmount = financialActivities
+      .map(f => f.totalAmount ?? 0)
+      .reduce((prev, next) => prev + next, 0);
+
+    this.pre_tax_amount = formatMoney(preTaxAmount) ?? '';
+    this.tax_amount = formatMoney(taxAmount) ?? '';
+    this.total_amount = formatMoney(totalAmount) ?? '';
+    this.payment_in_trust = !!payee?.isPaymentInTrust;
   }
 }

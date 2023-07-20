@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ERROR, REQUEST, SUCCESS } from './../../../constants/actionTypes';
+import { ERROR, REQUEST, SUCCESS } from '@/constants/actionTypes';
+
 import { IGenericNetworkAction, IGenericNetworkState } from './interfaces';
 
 const initialState: IGenericNetworkState = {};

@@ -1,10 +1,3 @@
-import { Button, StyledIconButton } from 'components/common/buttons';
-import TooltipWrapper from 'components/common/TooltipWrapper';
-import Claims from 'constants/claims';
-import { useApiLeases } from 'hooks/pims-api/useApiLeases';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { useSearch } from 'hooks/useSearch';
-import { ILeaseSearchResult } from 'interfaces';
 import { isEmpty } from 'lodash';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
@@ -14,8 +7,16 @@ import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
-import { generateMultiSortCriteria } from 'utils';
-import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
+
+import { Button, StyledIconButton } from '@/components/common/buttons';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
+import Claims from '@/constants/claims';
+import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { useSearch } from '@/hooks/useSearch';
+import { ILeaseSearchResult } from '@/interfaces';
+import { generateMultiSortCriteria } from '@/utils';
+import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
 
 import { useLeaseExport } from '../hooks/useLeaseExport';
 import { ILeaseFilter } from '../interfaces';

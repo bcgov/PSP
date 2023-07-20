@@ -1,6 +1,6 @@
 import { createMemoryHistory } from 'history';
-import { defaultLease } from 'interfaces';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import StackedPidTenantFields, { IStackedTenantFieldsProps } from './StackedTenantFields';
 
@@ -8,11 +8,9 @@ const history = createMemoryHistory();
 const onClickManagement = jest.fn();
 
 describe('StackedPidTenantFields component', () => {
-  const setup = (
-    renderOptions: RenderOptions & IStackedTenantFieldsProps = { lease: { ...defaultLease } },
-  ) => {
+  const setup = (renderOptions: RenderOptions & IStackedTenantFieldsProps = { tenants: [] }) => {
     // render component under test
-    const component = render(<StackedPidTenantFields lease={renderOptions.lease} />, {
+    const component = render(<StackedPidTenantFields tenants={renderOptions.tenants} />, {
       ...renderOptions,
       history,
     });
@@ -30,11 +28,12 @@ describe('StackedPidTenantFields component', () => {
   });
   it('renders as expected when provided data', () => {
     const { component } = setup({
-      lease: {
-        ...defaultLease,
-        properties: [{ pid: '111-111-111' } as any],
-        persons: [{ firstName: 'First', surname: 'Last' }],
-      },
+      tenants: [
+        {
+          leaseId: 1,
+          person: { firstName: 'First', surname: 'Last' },
+        },
+      ],
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
@@ -43,7 +42,7 @@ describe('StackedPidTenantFields component', () => {
     const {
       component: { getByText },
     } = setup({
-      lease: { ...defaultLease, persons: [{ firstName: 'tenantFirst', surname: 'tenantSurname' }] },
+      tenants: [{ leaseId: 1, person: { firstName: 'tenantFirst', surname: 'tenantSurname' } }],
     });
     expect(getByText('tenantFirst tenantSurname')).toBeVisible();
   });

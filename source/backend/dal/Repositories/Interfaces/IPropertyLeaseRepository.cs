@@ -13,5 +13,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsPropertyLease> GetAllByLeaseId(long leaseId);
 
         void Delete(PimsPropertyLease propertyLeaseFile);
+
+        IEnumerable<PimsPropertyLease> UpdatePropertyLeases(long leaseId, ICollection<PimsPropertyLease> pimsPropertyLeases);
     }
 }

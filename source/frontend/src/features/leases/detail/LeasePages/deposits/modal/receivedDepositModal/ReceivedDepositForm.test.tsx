@@ -1,10 +1,11 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { MAX_SQL_MONEY_SIZE } from 'constants/API';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fakeText, fillInput, render, RenderOptions } from 'utils/test-utils';
+
+import { MAX_SQL_MONEY_SIZE } from '@/constants/API';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { fakeText, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
 import { FormLeaseDeposit } from '../../models/FormLeaseDeposit';
 import ReceivedDepositForm from './ReceivedDepositForm';
@@ -43,7 +44,7 @@ describe('ReceivedDepositForm component', () => {
   beforeEach(() => {
     mockAxios.resetHistory();
     jest.clearAllMocks();
-    initialValues = FormLeaseDeposit.createEmpty();
+    initialValues = FormLeaseDeposit.createEmpty(1);
   });
 
   it('renders as expected', () => {

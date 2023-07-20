@@ -1,9 +1,3 @@
-import { Button } from 'components/common/buttons/Button';
-import Claims from 'constants/claims';
-import { useApiAcquisitionFile } from 'hooks/pims-api/useApiAcquisitionFile';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { useSearch } from 'hooks/useSearch';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useEffect } from 'react';
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
@@ -11,6 +5,13 @@ import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+
+import { Button } from '@/components/common/buttons/Button';
+import Claims from '@/constants/claims';
+import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { useSearch } from '@/hooks/useSearch';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
 import { AcquisitionFilter, defaultAcquisitionFilter } from './AcquisitionFilter/AcquisitionFilter';
 import { AcquisitionSearchResults } from './AcquisitionSearchResults/AcquisitionSearchResults';

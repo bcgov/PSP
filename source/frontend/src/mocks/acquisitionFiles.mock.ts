@@ -2,7 +2,8 @@ import {
   Api_AcquisitionFile,
   Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
-} from 'models/api/AcquisitionFile';
+  EnumAcquisitionFileType,
+} from '@/models/api/AcquisitionFile';
 
 export const mockAcquisitionFileResponse = (
   id = 1,
@@ -289,6 +290,16 @@ export const mockAcquisitionFileResponse = (
   appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
 });
+
+export const getMockExpropriationFile = (
+  fileType: string = EnumAcquisitionFileType.SECTN6,
+): Api_AcquisitionFile => {
+  const mockFile = mockAcquisitionFileResponse();
+  mockFile.acquisitionTypeCode = {
+    id: fileType,
+  };
+  return mockFile;
+};
 
 export const mockAcquisitionFileOwnersResponse = (
   acquisitionFileId: number = 1,

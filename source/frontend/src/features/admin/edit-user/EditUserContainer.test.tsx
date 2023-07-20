@@ -2,11 +2,12 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/lookups.mock';
-import { getUserMock } from 'mocks/user.mock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
+
+import { mockLookups } from '@/mocks/lookups.mock';
+import { getUserMock } from '@/mocks/user.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   render,
@@ -14,7 +15,7 @@ import {
   userEvent,
   waitFor,
   waitForElementToBeRemoved,
-} from 'utils/test-utils';
+} from '@/utils/test-utils';
 
 import { FormUser } from '../users/models';
 import EditUserContainer, { IEditUserContainerProps } from './EditUserContainer';

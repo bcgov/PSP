@@ -1,10 +1,11 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 const mockAxios = new MockAdapter(axios);
 
-jest.mock('hooks/useKeycloakWrapper');
+jest.mock('@/hooks/useKeycloakWrapper');
 (useKeycloakWrapper as jest.Mock).mockReturnValue({ hasClaim: () => true });
 
 // This is required to mock react-redux so that the App can render.

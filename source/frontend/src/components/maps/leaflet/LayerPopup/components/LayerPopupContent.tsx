@@ -2,7 +2,7 @@ import keys from 'lodash/keys';
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 
-import { LayerPopupInformation } from '../LayerPopup';
+import { LayerPopupInformation } from '../LayerPopupContainer';
 
 /**
  * A configuration used to display the properties fields in the popup content

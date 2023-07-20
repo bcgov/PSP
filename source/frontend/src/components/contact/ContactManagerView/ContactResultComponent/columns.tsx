@@ -1,18 +1,19 @@
-import { ReactComponent as Active } from 'assets/images/active.svg';
-import { ReactComponent as Inactive } from 'assets/images/inactive.svg';
-import { StyledIconButton } from 'components/common/buttons';
-import { InlineFlexDiv } from 'components/common/styles';
-import { ColumnWithProps } from 'components/Table';
-import { Claims } from 'constants/claims';
-import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
-import { IContactSearchResult } from 'interfaces';
 import React from 'react';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import { MdContactMail, MdEdit } from 'react-icons/md';
 import { Link, useHistory } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
-import { stringToFragment } from 'utils';
+
+import { ReactComponent as Active } from '@/assets/images/active.svg';
+import { ReactComponent as Inactive } from '@/assets/images/inactive.svg';
+import { StyledIconButton } from '@/components/common/buttons';
+import { InlineFlexDiv } from '@/components/common/styles';
+import { ColumnWithProps } from '@/components/Table';
+import { Claims } from '@/constants/claims';
+import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { IContactSearchResult } from '@/interfaces';
+import { stringToFragment } from '@/utils';
 
 const columns: ColumnWithProps<IContactSearchResult>[] = [
   {

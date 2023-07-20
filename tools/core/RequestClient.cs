@@ -10,6 +10,8 @@ using Microsoft.Extensions.Options;
 using Pims.Core.Exceptions;
 using Pims.Core.Http.Configuration;
 using Pims.Tools.Core.Configuration;
+using Polly;
+using Polly.Retry;
 
 namespace Pims.Tools.Core
 {
@@ -22,6 +24,7 @@ namespace Pims.Tools.Core
         private readonly RequestOptions _requestOptions;
         private readonly ILogger _logger;
         private readonly JsonSerializerOptions _serializerOptions;
+        private readonly AsyncRetryPolicy _retryPolicy;
         #endregion
 
         #region Constructors
@@ -54,72 +57,13 @@ namespace Pims.Tools.Core
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             };
+            _retryPolicy = Policy
+                .Handle<HttpRequestException>(result => result?.StatusCode != null && (int)result.StatusCode >= 500 && (int)result.StatusCode < 600 && _requestOptions.RetryAfterFailure)
+                 .WaitAndRetryAsync(_requestOptions.RetryAttempts, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
         }
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Recursively retry after a failure based on configuration.
-        /// </summary>
-        /// <param name="method"></param>
-        /// <param name="url"></param>
-        /// <param name="attempt"></param>
-        /// <returns></returns>
-        public async Task<TR> RetryAsync<TR>(HttpMethod method, string url, int attempt = 1)
-            where TR : class
-        {
-            try
-            {
-                return await HandleRequestAsync<TR>(method, url);
-            }
-            catch (HttpClientRequestException)
-            {
-                // Make another attempt;
-                if (_requestOptions.RetryAfterFailure && attempt <= _requestOptions.RetryAttempts)
-                {
-                    _logger.LogInformation($"Retry attempt: {attempt} of {_requestOptions.RetryAttempts}");
-                    return await RetryAsync<TR>(method, url, ++attempt);
-                }
-                else
-                {
-                    throw;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Recursively retry after a failure based on configuration.
-        /// </summary>
-        /// <param name="method"></param>
-        /// <param name="url"></param>
-        /// <param name="data"></param>
-        /// <param name="attempt"></param>
-        /// <returns></returns>
-        public async Task<TR> RetryAsync<TR, T>(HttpMethod method, string url, T data = default, int attempt = 1)
-            where TR : class
-            where T : class
-        {
-            try
-            {
-                return await HandleRequestAsync<TR, T>(method, url, data);
-            }
-            catch (HttpClientRequestException ex)
-            {
-                _logger.LogError($"Request failed: status: {ex.StatusCode} Details: {ex.Message}");
-
-                // Make another attempt;
-                if (_requestOptions.RetryAfterFailure && attempt <= _requestOptions.RetryAttempts)
-                {
-                    _logger.LogInformation($"Retry attempt: {attempt} of {_requestOptions.RetryAttempts}");
-                    return await RetryAsync<TR, T>(method, url, data, ++attempt);
-                }
-                else
-                {
-                    throw;
-                }
-            }
-        }
 
         /// <summary>
         /// Send an HTTP GET request.
@@ -131,12 +75,11 @@ namespace Pims.Tools.Core
         public async Task<TR> HandleGetAsync<TR>(string url, Func<HttpResponseMessage, bool> onError = null)
             where TR : class
         {
-            var response = await SendAsync(url, HttpMethod.Get);
+            var response = await _retryPolicy.ExecuteAsync(async () => await SendAsync(url, HttpMethod.Get));
 
             if (response.IsSuccessStatusCode)
             {
                 using var stream = await response.Content.ReadAsStreamAsync();
-
                 try
                 {
                     return await JsonSerializer.DeserializeAsync<TR>(stream, _serializerOptions);
@@ -167,7 +110,7 @@ namespace Pims.Tools.Core
         public virtual async Task<TR> HandleRequestAsync<TR>(HttpMethod method, string url, Func<HttpResponseMessage, bool> onError = null)
             where TR : class
         {
-            var response = await SendAsync(url, method);
+            var response = await _retryPolicy.ExecuteAsync(async () => await SendAsync(url, method));
 
             if (response.IsSuccessStatusCode)
             {
@@ -179,53 +122,6 @@ namespace Pims.Tools.Core
             if ((onError?.Invoke(response) ?? false) == false)
             {
                 throw new HttpClientRequestException(response);
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Send the items in an HTTP request.
-        /// Deserialize the result into the specified 'TR' type.
-        /// </summary>
-        /// <param name="method"></param>
-        /// <param name="url"></param>
-        /// <param name="data"></param>
-        /// <param name="onError"></param>
-        /// <returns></returns>
-        public async Task<TR> HandleRequestAsync<TR, T>(HttpMethod method, string url, T data, Func<HttpResponseMessage, bool> onError = null)
-            where TR : class
-            where T : class
-        {
-            StringContent body = null;
-            if (data != null)
-            {
-                var json = JsonSerializer.Serialize(data, _serializerOptions);
-                body = new StringContent(json, Encoding.UTF8, "application/json");
-            }
-
-            try
-            {
-                var response = await SendAsync(url, method, body);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    using var stream = await response.Content.ReadAsStreamAsync();
-                    return await JsonSerializer.DeserializeAsync<TR>(stream, _serializerOptions);
-                }
-
-                // If the error handle is not provided, or if it returns false throw an error.
-                if ((onError?.Invoke(response) ?? false) == false)
-                {
-                    throw new HttpClientRequestException(response);
-                }
-            }
-            finally
-            {
-                if (body != null)
-                {
-                    body.Dispose();
-                }
             }
 
             return null;

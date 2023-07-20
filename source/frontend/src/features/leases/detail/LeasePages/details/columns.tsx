@@ -1,16 +1,17 @@
-import { ColumnWithProps, DateCell } from 'components/Table';
-import { ILeaseTerm } from 'interfaces/ILeaseTerm';
-import ITypeCode from 'interfaces/ITypeCode';
 import { CellProps } from 'react-table';
-import { stringToFragment } from 'utils';
 
-export const leaseTermColumns: ColumnWithProps<ILeaseTerm>[] = [
+import { ColumnWithProps, DateCell } from '@/components/Table';
+import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
+import Api_TypeCode from '@/models/api/TypeCode';
+import { stringToFragment } from '@/utils';
+
+export const leaseTermColumns: ColumnWithProps<Api_LeaseTerm>[] = [
   {
     Header: 'Term ID',
     accessor: 'id',
     align: 'left',
     sortable: false,
-    Cell: ({ cell }: CellProps<ILeaseTerm, number | undefined>) =>
+    Cell: ({ cell }: CellProps<Api_LeaseTerm, number | null>) =>
       stringToFragment(cell.row.index === 0 ? 'initial term' : `renewal ${cell.row.index}`),
   },
   {
@@ -39,7 +40,7 @@ export const leaseTermColumns: ColumnWithProps<ILeaseTerm>[] = [
     accessor: 'statusTypeCode',
     align: 'left',
     sortable: false,
-    Cell: ({ cell: { value } }: CellProps<ILeaseTerm, ITypeCode<string> | undefined>) =>
+    Cell: ({ cell: { value } }: CellProps<Api_LeaseTerm, Api_TypeCode<string> | null>) =>
       stringToFragment(value?.description ?? ''),
   },
 ];

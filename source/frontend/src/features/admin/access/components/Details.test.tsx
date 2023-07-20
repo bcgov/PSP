@@ -1,6 +1,7 @@
-import { AccessRequestStatus } from 'constants/accessStatus';
 import React from 'react';
-import { render } from 'utils/test-utils';
+
+import { AccessRequestStatus } from '@/constants/accessStatus';
+import { render } from '@/utils/test-utils';
 
 import { IAccessRequestModel } from '../interfaces';
 import { AccessRequestDetails } from './Details';

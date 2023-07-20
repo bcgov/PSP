@@ -1,4 +1,4 @@
-import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
+import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 
 export const mockCompReqH120s: () => Api_CompensationFinancial[] = () => [
   {

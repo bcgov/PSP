@@ -10,6 +10,7 @@ namespace Pims.Api.Models.Concepts
         {
             config.NewConfig<Entity.PimsPropertyLease, Model.PropertyLeaseModel>()
                 .Map(dest => dest.Property, src => src.Property)
+                .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.Lease.Id, src => src.LeaseId)
                 .Map(dest => dest.AreaUnitType, src => src.AreaUnitTypeCodeNavigation)
                 .Map(dest => dest.LeaseArea, src => src.LeaseArea)
@@ -19,7 +20,7 @@ namespace Pims.Api.Models.Concepts
 
             config.NewConfig<Model.PropertyLeaseModel, Entity.PimsPropertyLease>()
                 .Map(dest => dest.Property, src => src.Property)
-                .Map(dest => dest.LeaseId, src => src.Lease.Id)
+                .Map(dest => dest.LeaseId, src => src.LeaseId)
                 .Map(dest => dest.AreaUnitTypeCode, src => src.AreaUnitType.Id)
                 .Map(dest => dest.LeaseArea, src => src.LeaseArea)
                 .Map(dest => dest.Name, src => src.PropertyName)

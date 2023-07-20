@@ -1,13 +1,14 @@
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { LeaseTermStatusTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { defaultFormLeaseTerm } from 'interfaces';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
+import { LeaseTermStatusTypes } from '@/constants/index';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
+
+import { defaultFormLeaseTerm } from '../../models';
 import TermModal, { ITermModalProps } from './TermModal';
 
 const history = createMemoryHistory();
@@ -70,7 +71,7 @@ describe('TermModal component', () => {
     await fillInput(document.body, 'paymentDueDate', 'A due date');
     await fillInput(document.body, 'statusTypeCode.id', 'NEXER', 'select');
     const saveButton = getByText('Save term');
-    userEvent.click(saveButton);
+    act(() => userEvent.click(saveButton));
     await waitFor(() => expect(onSave).toHaveBeenCalled());
     expect(onSave).toHaveBeenCalledWith({
       effectiveDateHist: '',
@@ -79,13 +80,13 @@ describe('TermModal component', () => {
       gstAmount: '',
       isGstEligible: false,
       isTermExercised: false,
-      leaseId: undefined,
+      leaseId: 0,
+      id: null,
       leasePmtFreqTypeCode: {
         description: '',
         id: '',
         isDisabled: false,
       },
-      leaseRowVersion: undefined,
       paymentAmount: 1000,
       paymentDueDate: 'A due date',
       paymentNote: '',
@@ -103,7 +104,7 @@ describe('TermModal component', () => {
       component: { getByText },
     } = await setup({});
     const cancelButton = getByText('Cancel');
-    userEvent.click(cancelButton);
+    act(() => userEvent.click(cancelButton));
     expect(onCancel).toHaveBeenCalled();
   });
 });

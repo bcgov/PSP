@@ -6,11 +6,11 @@ namespace Pims.Api.Services
 {
     public interface ILeasePaymentService
     {
-        PimsLease AddPayment(long leaseId, long leaseRowVersion, PimsLeasePayment payment);
+        PimsLeasePayment AddPayment(long leaseId, PimsLeasePayment payment);
 
-        PimsLease UpdatePayment(long leaseId, long paymentId, long leaseRowVersion, PimsLeasePayment payment);
+        PimsLeasePayment UpdatePayment(long leaseId, long paymentId, PimsLeasePayment payment);
 
-        PimsLease DeletePayment(long leaseId, long leaseRowVersion, PimsLeasePayment payment);
+        bool DeletePayment(long leaseId, PimsLeasePayment payment);
 
         IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate);
     }

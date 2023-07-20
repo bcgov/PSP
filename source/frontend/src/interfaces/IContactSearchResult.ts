@@ -1,6 +1,7 @@
-import { Api_Contact } from 'models/api/Contact';
-import { Api_Organization } from 'models/api/Organization';
-import { Api_Person } from 'models/api/Person';
+import { Api_Contact } from '@/models/api/Contact';
+import { Api_Organization } from '@/models/api/Organization';
+import { Api_Person } from '@/models/api/Person';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 export interface IContactSearchResult {
   id: string;
@@ -32,10 +33,9 @@ export function fromContact(baseModel: Api_Contact): IContactSearchResult {
     organizationId: baseModel.organization?.id,
 
     isDisabled: baseModel.person?.isDisabled || baseModel.organization?.isDisabled || false,
-    summary:
-      baseModel.organization !== undefined
-        ? baseModel.organization.name || ''
-        : baseModel.person?.firstName + ' ' + baseModel.person?.surname,
+    summary: !!baseModel.person
+      ? formatApiPersonNames(baseModel.person)
+      : baseModel.organization?.name,
     surname: baseModel.person?.surname,
     firstName: baseModel.person?.firstName,
     middleNames: baseModel.person?.middleNames,

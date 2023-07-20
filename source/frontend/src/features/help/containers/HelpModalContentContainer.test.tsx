@@ -1,7 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import TestCommonWrapper from 'utils/TestCommonWrapper';
+
+import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
 import HelpModalContentContainer from './HelpModalContentContainer';
 

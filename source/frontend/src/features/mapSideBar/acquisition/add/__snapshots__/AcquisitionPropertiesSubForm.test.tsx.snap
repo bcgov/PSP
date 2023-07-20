@@ -1,0 +1,1344 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AcquisitionProperties component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  <div
+    class="py-2"
+  >
+    Select one or more properties that you want to include in this acquisition. You can choose a location from the map, or search by other criteria.
+  </div>
+  .c13.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c13.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c13.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c13.btn.btn-primary {
+  border: none;
+}
+
+.c13.btn.btn-secondary {
+  background: none;
+}
+
+.c13.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c13.btn.btn-info:hover,
+.c13.btn.btn-info:active,
+.c13.btn.btn-info:focus {
+  background: none;
+}
+
+.c13.btn.btn-light {
+  border: none;
+}
+
+.c13.btn.btn-dark {
+  border: none;
+}
+
+.c13.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c13.btn.btn-link:hover,
+.c13.btn.btn-link:active,
+.c13.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c13.btn.btn-link:disabled,
+.c13.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c13.btn:disabled,
+.c13.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c13.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c13.Button--icon-only:focus {
+  outline: none;
+}
+
+.c13.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c11 {
+  padding-right: 0;
+}
+
+.c11 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c12:not(:first-child) {
+  padding-left: 0;
+}
+
+.c12:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c14 {
+  font-size: 1.4rem;
+}
+
+.c2 {
+  background-color: white;
+  font-size: 1.4rem;
+  border-color: transparent;
+}
+
+.c2 .nav-tabs {
+  height: auto;
+}
+
+.c2 .nav-item {
+  min-width: 5rem;
+  padding: 0.1rem 0.6rem;
+}
+
+.c2 .nav-item:hover {
+  border-color: transparent;
+}
+
+.c2 .nav-item.active {
+  font-family: 'BCSans-Bold';
+  border-color: transparent;
+}
+
+.c4 {
+  font-family: 'BCSans-Bold';
+  font-size: 2rem;
+  border-bottom: solid 0.2rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.c3 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c6:hover {
+  cursor: pointer;
+}
+
+.c9.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c8 {
+  font-weight: bold;
+}
+
+.c5.c5.c5 input,
+.c5.c5.c5 select,
+.c5.c5.c5 textarea {
+  background: none;
+  border: none;
+  resize: none;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 0;
+}
+
+.c5.c5.c5 .form-label {
+  font-weight: bold;
+}
+
+.c7 {
+  font-family: 'BcSans-Bold';
+  margin-bottom: 1rem;
+}
+
+.c0 {
+  height: 100%;
+}
+
+.c0 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.4rem);
+  overflow-y: auto;
+}
+
+.c0 .tab-content .tab-pane {
+  position: relative;
+}
+
+.c1 {
+  height: auto;
+}
+
+.c1.tab-content {
+  height: auto;
+}
+
+.c10 {
+  border-radius: 0.5rem;
+}
+
+.c10 .idir-input-group .input-group-prepend select {
+  width: 16rem;
+}
+
+.c10 .idir-input-group input {
+  width: 18rem;
+  max-width: 100%;
+}
+
+<div
+    class="py-3 no-gutters row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="c0 c1"
+      >
+        <nav
+          class="c2 nav nav-tabs"
+          role="tablist"
+        >
+          <a
+            aria-selected="true"
+            class="nav-item nav-link active"
+            data-rb-event-key="map"
+            href="#"
+            role="tab"
+          >
+            Locate on Map
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="list"
+            href="#"
+            role="tab"
+          >
+            Search
+          </a>
+        </nav>
+        <div
+          class="tab-content"
+        >
+          <div
+            aria-hidden="false"
+            class="fade tab-pane active show"
+            role="tabpanel"
+          >
+            <div
+              class="c3 form-section"
+            >
+              <div
+                class="collapse show"
+              >
+                <h3
+                  class="c4"
+                >
+                  Select a property
+                </h3>
+                <div
+                  class="c5 row"
+                >
+                  <div
+                    class="col-md-4"
+                  >
+                    <div
+                      class="d-flex flex-column align-items-center"
+                    >
+                      <svg
+                        class="c6"
+                        height="97"
+                        title="Click once to enter property selection mode."
+                        width="97"
+                      >
+                        icon-draft.svg
+                      </svg>
+                      <ol>
+                        <li>
+                          Single-click blue marker above
+                        </li>
+                        <li>
+                          Mouse to a parcel on the map
+                        </li>
+                        <li>
+                          Single-click on parcel to select it
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
+                  <div
+                    class="col-md-8"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="c7 col"
+                      >
+                        Selected property attributes
+                      </div>
+                    </div>
+                    <div
+                      class="pb-2 row"
+                    >
+                      <div
+                        class="pr-0 text-left col-4"
+                      >
+                        <label
+                          class="c8"
+                        >
+                          PID:
+                        </label>
+                      </div>
+                      <div
+                        class="c9 text-left col"
+                      />
+                    </div>
+                    <div
+                      class="pb-2 row"
+                    >
+                      <div
+                        class="pr-0 text-left col-4"
+                      >
+                        <label
+                          class="c8"
+                        >
+                          Plan #:
+                        </label>
+                      </div>
+                      <div
+                        class="c9 text-left col"
+                      />
+                    </div>
+                    <div
+                      class="pb-2 row"
+                    >
+                      <div
+                        class="pr-0 text-left col-4"
+                      >
+                        <label
+                          class="c8"
+                        >
+                          Address:
+                        </label>
+                      </div>
+                      <div
+                        class="c9 text-left col"
+                      />
+                    </div>
+                    <div
+                      class="pb-2 row"
+                    >
+                      <div
+                        class="pr-0 text-left col-4"
+                      >
+                        <label
+                          class="c8"
+                        >
+                          Region:
+                        </label>
+                      </div>
+                      <div
+                        class="c9 text-left col"
+                      />
+                    </div>
+                    <div
+                      class="pb-2 row"
+                    >
+                      <div
+                        class="pr-0 text-left col-4"
+                      >
+                        <label
+                          class="c8"
+                        >
+                          District:
+                        </label>
+                      </div>
+                      <div
+                        class="c9 text-left col"
+                      />
+                    </div>
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="col-md-12"
+                      >
+                        <label
+                          class="form-label"
+                        >
+                          Legal Description:
+                        </label>
+                      </div>
+                      <div
+                        class="col-md-12"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="fade tab-pane"
+            role="tabpanel"
+          >
+            <div
+              class="c3 form-section"
+            >
+              <div
+                class="collapse show"
+              >
+                <h3
+                  class="c4"
+                >
+                  Search for a property
+                </h3>
+                <form
+                  class="c10 p-3"
+                  novalidate=""
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-xl-6"
+                    >
+                      <div
+                        class="flex-nowrap input-group row"
+                      >
+                        <div
+                          class="c11 col-auto"
+                        >
+                          <div
+                            class="input-group-prepend"
+                          >
+                            <div
+                              class="form-group"
+                            >
+                              <select
+                                class="form-select form-control"
+                                id="input-searchBy"
+                                name="searchBy"
+                              >
+                                <option
+                                  class="option"
+                                  data-testid="select-option-pid"
+                                  value="pid"
+                                >
+                                  PID
+                                </option>
+                                <option
+                                  class="option"
+                                  data-testid="select-option-pin"
+                                  value="pin"
+                                >
+                                  PIN
+                                </option>
+                                <option
+                                  class="option"
+                                  data-testid="select-option-address"
+                                  value="address"
+                                >
+                                  Address
+                                </option>
+                                <option
+                                  class="option"
+                                  data-testid="select-option-planNumber"
+                                  value="planNumber"
+                                >
+                                  Plan #
+                                </option>
+                                <option
+                                  class="option"
+                                  data-testid="select-option-legalDescription"
+                                  value="legalDescription"
+                                >
+                                  Legal Description
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="c12 col"
+                        >
+                          <div
+                            class="input form-group"
+                          >
+                            <input
+                              autocomplete="off"
+                              class="form-control"
+                              id="input-pid"
+                              name="pid"
+                              placeholder="Enter a PID"
+                              title=""
+                              value=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="pr-0 col-xl-2"
+                    >
+                      <div
+                        class="row"
+                      >
+                        <div
+                          class="pr-0 col"
+                        >
+                          <button
+                            class="c13 Button Button--icon-only primary btn btn-primary"
+                            data-testid="search"
+                            id="search-button"
+                            title="search"
+                            type="button"
+                          >
+                            <div
+                              class="Button__icon"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="20"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                width="20"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                                />
+                              </svg>
+                            </div>
+                          </button>
+                        </div>
+                        <div
+                          class="pl-0 col"
+                        >
+                          <button
+                            class="c13 Button Button--icon-only btn btn-info"
+                            data-testid="reset-button"
+                            id="reset-button"
+                            title="reset-button"
+                            type="reset"
+                          >
+                            <div
+                              class="Button__icon"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="20"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                width="20"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
+                                />
+                              </svg>
+                            </div>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div
+              class="c3 form-section"
+            >
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="table"
+                  data-testid="map-properties"
+                  role="table"
+                >
+                  <div
+                    class="thead thead-light"
+                  >
+                    <div
+                      class="tr"
+                      role="row"
+                      style="display: flex; flex: 1 0 auto; min-width: 150px;"
+                    >
+                      <div
+                        class="th"
+                        colspan="1"
+                        role="columnheader"
+                        style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      >
+                        <div
+                          class="sortable-column"
+                        >
+                          <div>
+                            <input
+                              data-testid="selectrow-parent"
+                              name=""
+                              style="cursor: pointer;"
+                              title="Click to deselect all."
+                              type="checkbox"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="th"
+                        colspan="1"
+                        role="columnheader"
+                        style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      >
+                        <div
+                          class="sortable-column"
+                        >
+                          PID
+                        </div>
+                      </div>
+                      <div
+                        class="th"
+                        colspan="1"
+                        role="columnheader"
+                        style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      >
+                        <div
+                          class="sortable-column"
+                        >
+                          PIN
+                        </div>
+                      </div>
+                      <div
+                        class="th"
+                        colspan="1"
+                        role="columnheader"
+                        style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      >
+                        <div
+                          class="sortable-column"
+                        >
+                          Plan #
+                        </div>
+                      </div>
+                      <div
+                        class="th"
+                        colspan="1"
+                        role="columnheader"
+                        style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      >
+                        <div
+                          class="sortable-column"
+                        >
+                          Address
+                        </div>
+                      </div>
+                      <div
+                        class="th"
+                        colspan="1"
+                        role="columnheader"
+                        style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      >
+                        <div
+                          class="sortable-column"
+                        >
+                          Legal Description
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="no-rows-message"
+                  >
+                    No results found for your search criteria.
+                  </div>
+                </div>
+                <div
+                  class="row"
+                >
+                  <div
+                    class="align-self-center col-auto"
+                  />
+                  <div
+                    class="ml-auto align-self-center col-auto"
+                  >
+                    <p
+                      class="c14"
+                    >
+                      0 selected
+                    </p>
+                  </div>
+                  <div
+                    class="align-self-center col-auto"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  .c7.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c7.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c7.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c7.btn.btn-primary {
+  border: none;
+}
+
+.c7.btn.btn-secondary {
+  background: none;
+}
+
+.c7.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
+  background: none;
+}
+
+.c7.btn.btn-light {
+  border: none;
+}
+
+.c7.btn.btn-dark {
+  border: none;
+}
+
+.c7.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c7.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c7.Button--icon-only:focus {
+  outline: none;
+}
+
+.c7.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c8.c8.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c8.c8.btn .text {
+  display: none;
+}
+
+.c8.c8.btn:hover,
+.c8.c8.btn:active,
+.c8.c8.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c8.c8.btn:hover .text,
+.c8.c8.btn:active .text,
+.c8.c8.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c6 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c2 {
+  font-size: 1.6rem;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.25rem;
+  font-family: 'BcSans-Bold';
+}
+
+.c5 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.c3 {
+  min-width: 3rem;
+  min-height: 4.5rem;
+}
+
+.c4 {
+  font-size: 1.2rem;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          Selected properties
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="c2 no-gutters row"
+      >
+        <div
+          class="col-md-3"
+        >
+          Identifier
+        </div>
+        <div
+          class="col-md-9"
+        >
+          Provide a descriptive name for this land
+          <span
+            class="tooltip-icon"
+            data-testid="tooltip-icon-property-selector-tooltip"
+            id="property-selector-tooltip"
+          >
+            <svg
+              class="tooltip-icon"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+              />
+            </svg>
+          </span>
+        </div>
+      </div>
+      <div
+        class="align-items-center mb-3 no-gutters row"
+      >
+        <div
+          class="col-md-3"
+        >
+          <div
+            class="mb-0 d-flex align-items-center"
+          >
+            <svg
+              class="c3"
+              height="45"
+              id="Layer_2"
+              viewBox="0 0 20 30"
+              width="30"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <style />
+              </defs>
+              <g
+                id="PDF_preview"
+              >
+                <path
+                  class="cls-1"
+                  d="M.02,9.77c.4,7.19,9.81,20.23,9.81,20.23,0,0,9.14-13.08,9.43-20.23C19.79-3.33-.7-3.19,.02,9.77Zm9.61,5.13c-3.31,0-6-2.69-6-6S6.32,2.91,9.63,2.91s6,2.69,6,6-2.68,6-6,6Z"
+                  fill="#2a81cb"
+                />
+              </g>
+              <svg
+                height="16"
+                overflow="visible"
+                preserveAspectRatio="none"
+                version="1.2"
+                viewBox="0 0 22 21"
+                width="16"
+                x="2"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                y="2"
+              >
+                <g
+                  transform="translate(1, 1)"
+                >
+                  <defs>
+                    <path
+                      d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                      id="path-1648484224573577"
+                      vector-effect="non-scaling-stroke"
+                    />
+                  </defs>
+                  <g
+                    transform="translate(0, 0)"
+                  >
+                    <path
+                      class="path-2"
+                      d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                      fill="rgb(252, 186, 25)"
+                      stroke="rgb(255, 255, 255)"
+                      stroke-linecap="butt"
+                      stroke-linejoin="miter"
+                      stroke-width="1"
+                      vector-effect="non-scaling-stroke"
+                    />
+                  </g>
+                </g>
+                <text
+                  class="c4"
+                  textLength="1.25rem"
+                  x="7"
+                  y="15"
+                >
+                  1
+                </text>
+              </svg>
+              <title>
+                1
+              </title>
+            </svg>
+            <div
+              class="c5 pl-3"
+            >
+              PID: 123-456-789
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-md-7"
+        >
+          <div
+            class="c6 mb-0 w-100 input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-properties.0.name"
+              name="properties.0.name"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="col-md-2"
+        >
+          <button
+            class="c7 Button c8 btn btn-link"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              <svg
+                data-testid="remove-button"
+                fill="currentColor"
+                height="2rem"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="2rem"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>
+                  remove
+                </title>
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                />
+              </svg>
+               
+              <span
+                class="text"
+              >
+                Remove
+              </span>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div
+        class="align-items-center mb-3 no-gutters row"
+      >
+        <div
+          class="col-md-3"
+        >
+          <div
+            class="mb-0 d-flex align-items-center"
+          >
+            <svg
+              class="c3"
+              height="45"
+              id="Layer_2"
+              viewBox="0 0 20 30"
+              width="30"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <style />
+              </defs>
+              <g
+                id="PDF_preview"
+              >
+                <path
+                  class="cls-1"
+                  d="M.02,9.77c.4,7.19,9.81,20.23,9.81,20.23,0,0,9.14-13.08,9.43-20.23C19.79-3.33-.7-3.19,.02,9.77Zm9.61,5.13c-3.31,0-6-2.69-6-6S6.32,2.91,9.63,2.91s6,2.69,6,6-2.68,6-6,6Z"
+                  fill="#2a81cb"
+                />
+              </g>
+              <svg
+                height="16"
+                overflow="visible"
+                preserveAspectRatio="none"
+                version="1.2"
+                viewBox="0 0 22 21"
+                width="16"
+                x="2"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                y="2"
+              >
+                <g
+                  transform="translate(1, 1)"
+                >
+                  <defs>
+                    <path
+                      d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                      id="path-1648484224573577"
+                      vector-effect="non-scaling-stroke"
+                    />
+                  </defs>
+                  <g
+                    transform="translate(0, 0)"
+                  >
+                    <path
+                      class="path-2"
+                      d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                      fill="rgb(252, 186, 25)"
+                      stroke="rgb(255, 255, 255)"
+                      stroke-linecap="butt"
+                      stroke-linejoin="miter"
+                      stroke-width="1"
+                      vector-effect="non-scaling-stroke"
+                    />
+                  </g>
+                </g>
+                <text
+                  class="c4"
+                  textLength="1.25rem"
+                  x="7"
+                  y="15"
+                >
+                  2
+                </text>
+              </svg>
+              <title>
+                2
+              </title>
+            </svg>
+            <div
+              class="c5 pl-3"
+            >
+              PIN: 1111222
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-md-7"
+        >
+          <div
+            class="c6 mb-0 w-100 input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-properties.1.name"
+              name="properties.1.name"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="col-md-2"
+        >
+          <button
+            class="c7 Button c8 btn btn-link"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              <svg
+                data-testid="remove-button"
+                fill="currentColor"
+                height="2rem"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="2rem"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>
+                  remove
+                </title>
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                />
+              </svg>
+               
+              <span
+                class="text"
+              >
+                Remove
+              </span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

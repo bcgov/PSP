@@ -1,8 +1,9 @@
-import { FinancialCodeTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { mockFinancialCode } from 'mocks/index.mock';
-import { Api_FinancialCode } from 'models/api/FinancialCode';
-import { act, createAxiosError, render, RenderOptions, screen } from 'utils/test-utils';
+
+import { FinancialCodeTypes } from '@/constants/index';
+import { mockFinancialCode } from '@/mocks/index.mock';
+import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { act, createAxiosError, render, RenderOptions, screen } from '@/utils/test-utils';
 
 import UpdateFinancialCodeContainer, {
   IUpdateFinancialCodeFormProps,
@@ -22,7 +23,7 @@ const mockUpdateApi = {
   loading: false,
 };
 
-jest.mock('hooks/repositories/useFinancialCodeRepository', () => ({
+jest.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
   useFinancialCodeRepository: () => {
     return {
       getFinancialCode: mockGetApi,

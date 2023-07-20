@@ -1,14 +1,15 @@
-import { LinkButton, RemoveButton } from 'components/common/buttons';
-import { Input, Select, SelectOption } from 'components/common/form';
-import { Stack } from 'components/common/Stack/Stack';
-import { CountryCodes } from 'constants/countryCodes';
 import { getIn, useFormikContext } from 'formik';
-import useCounter from 'hooks/useCounter';
-import { Dictionary } from 'interfaces/Dictionary';
 import React, { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { MdClose } from 'react-icons/md';
-import { withNameSpace } from 'utils/formUtils';
+
+import { LinkButton, RemoveButton } from '@/components/common/buttons';
+import { Input, Select, SelectOption } from '@/components/common/form';
+import { Stack } from '@/components/common/Stack/Stack';
+import { CountryCodes } from '@/constants/countryCodes';
+import useCounter from '@/hooks/useCounter';
+import { Dictionary } from '@/interfaces/Dictionary';
+import { withNameSpace } from '@/utils/formUtils';
 
 import useAddressHelpers from './useAddressHelpers';
 

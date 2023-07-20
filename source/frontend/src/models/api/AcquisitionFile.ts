@@ -1,6 +1,7 @@
-import { Api_File } from 'models/api/File';
-import Api_TypeCode from 'models/api/TypeCode';
 import moment from 'moment';
+
+import { Api_File } from '@/models/api/File';
+import Api_TypeCode from '@/models/api/TypeCode';
 
 import { Api_Address } from './Address';
 import { Api_AuditFields } from './AuditFields';
@@ -9,6 +10,12 @@ import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
 import { Api_Product, Api_Project } from './Project';
 import { Api_PropertyFile } from './PropertyFile';
+
+export enum EnumAcquisitionFileType {
+  CONSEN = 'CONSEN',
+  SECTN3 = 'SECTN3',
+  SECTN6 = 'SECTN6',
+}
 
 export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFields, Api_File {
   id?: number;

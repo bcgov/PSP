@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Exceptions;
@@ -365,13 +364,11 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Invalid acquisitionFileId.");
             }
 
-            // The compensation requisition can only have one payee and one checke, for now add them at creation.
-            var newPayee = new PimsAcquisitionPayee();
-            var newCheque = new PimsAcqPayeeCheque();
-            newPayee.PimsAcqPayeeCheques = new List<PimsAcqPayeeCheque>() { newCheque };
+            compensationRequisition.IsDraft = compensationRequisition.IsDraft ?? true;
+            compensationRequisition.PimsAcquisitionPayees = new List<PimsAcquisitionPayee>() { new PimsAcquisitionPayee() };
 
-            compensationRequisition.PimsAcquisitionPayees = new List<PimsAcquisitionPayee>() { newPayee };
             var newCompensationRequisition = _compensationRequisitionRepository.Add(compensationRequisition);
+
             _compensationRequisitionRepository.CommitTransaction();
 
             return newCompensationRequisition;

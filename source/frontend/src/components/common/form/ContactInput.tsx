@@ -1,8 +1,5 @@
 import classNames from 'classnames';
-import { Button } from 'components/common/buttons/Button';
-import { Input } from 'components/common/form';
 import { getIn, useFormikContext } from 'formik';
-import { IContactSearchResult } from 'interfaces';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -10,7 +7,11 @@ import { FormControlProps } from 'react-bootstrap/FormControl';
 import { FaAddressBook } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 import styled from 'styled-components';
-import { formatNames } from 'utils/personUtils';
+
+import { Button } from '@/components/common/buttons/Button';
+import { Input } from '@/components/common/form';
+import { IContactSearchResult } from '@/interfaces';
+import { formatNames } from '@/utils/personUtils';
 
 import { LinkButton } from '../buttons';
 import TooltipWrapper from '../TooltipWrapper';

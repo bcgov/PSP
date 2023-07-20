@@ -1,4 +1,4 @@
-import { NumberFieldValue } from 'typings/NumberFieldValue';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
 
 /**
  * An address represents a location of a property or person.

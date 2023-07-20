@@ -1,21 +1,21 @@
-import { Check, FastCurrencyInput, FastDatePicker, Input, Select } from 'components/common/form';
-import * as API from 'constants/API';
-import { LeaseTermStatusTypes } from 'constants/index';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { Formik, FormikProps } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { defaultFormLeaseTerm, IFormLeaseTerm } from 'interfaces/ILeaseTerm';
-import * as React from 'react';
 import { useContext } from 'react';
 
-import * as Styled from '../../styles';
+import { Check, FastCurrencyInput, FastDatePicker, Input, Select } from '@/components/common/form';
+import { LeaseTermStatusTypes } from '@/constants';
+import * as API from '@/constants/API';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+
+import { defaultFormLeaseTerm, FormLeaseTerm } from '../../models';
 import { StyledFormBody } from '../../styles';
+import * as Styled from '../../styles';
 import { LeaseTermSchema } from './TermsYupSchema';
 
 export interface ITermFormProps {
-  formikRef: React.Ref<FormikProps<IFormLeaseTerm>>;
-  onSave: (values: IFormLeaseTerm) => void;
-  initialValues?: IFormLeaseTerm;
+  formikRef: React.Ref<FormikProps<FormLeaseTerm>>;
+  onSave: (values: FormLeaseTerm) => void;
+  initialValues?: FormLeaseTerm;
 }
 
 /**
@@ -43,11 +43,10 @@ export const TermForm: React.FunctionComponent<React.PropsWithChildren<ITermForm
       initialValues={{
         ...defaultFormLeaseTerm,
         ...initialValues,
-        leaseId: lease?.id,
+        leaseId: lease?.id ?? 0,
         statusTypeCode: initialValues?.statusTypeCode?.id
           ? initialValues?.statusTypeCode
           : { id: LeaseTermStatusTypes.NOT_EXERCISED },
-        leaseRowVersion: lease?.rowVersion,
       }}
     >
       {formikProps => (

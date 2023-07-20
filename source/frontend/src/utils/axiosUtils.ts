@@ -1,8 +1,9 @@
 import axios, { AxiosError } from 'axios';
-import { IApiError } from 'interfaces/IApiError';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
+
+import { IApiError } from '@/interfaces/IApiError';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 /**
  * Provides default boilerplate applicable to handling axios requests completed successfully.

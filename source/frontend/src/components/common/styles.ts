@@ -1,8 +1,9 @@
-import { LoadingBackdropProps } from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { CSSProperties } from 'react';
 import { Breadcrumb as BsBreadcrumb } from 'react-bootstrap';
 import { Tabs as BsTabs } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
+
+import { LoadingBackdropProps } from '@/components/common/LoadingBackdrop';
 
 import { Button } from './buttons';
 import { Form } from './form';
@@ -85,13 +86,14 @@ export const Tabs = styled(BsTabs)`
   font-size: 1.4rem;
   border-color: transparent;
   .nav-tabs {
-    height: 2.4rem;
+    height: auto;
   }
   .nav-item {
     min-width: 5rem;
     padding: 0.1rem 0.6rem;
 
     &:hover {
+      color: ${props => props.theme.css.secondaryVariantColor};
       border-color: transparent;
     }
     &.active {

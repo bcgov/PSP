@@ -1,8 +1,9 @@
-import { IMapProperty } from 'components/propertySelector/models';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { IMapProperty } from '@/components/propertySelector/models';
 
 import { FormLeaseProperty, getDefaultFormLease, LeaseFormModel } from '../models';
 import LeasePropertySelector from '../shared/propertyPicker/LeasePropertySelector';
@@ -11,7 +12,6 @@ import AdministrationSubForm from './AdministrationSubForm';
 import ConsultationSubForm from './ConsultationSubForm';
 import LeaseDetailSubForm from './LeaseDetailSubForm';
 import DocumentationSubForm from './ReferenceSubForm';
-import * as Styled from './styles';
 
 interface IAddLeaseFormProps {
   onSubmit: (
@@ -28,7 +28,6 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
   propertyInfo,
 }) => {
   const defaultFormLease = getDefaultFormLease();
-
   if (propertyInfo) {
     defaultFormLease.properties = [];
     defaultFormLease.properties.push(FormLeaseProperty.fromMapProperty(propertyInfo));
@@ -39,8 +38,7 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
     values: LeaseFormModel,
     formikHelpers: FormikHelpers<LeaseFormModel>,
   ) => {
-    formikHelpers.setSubmitting(false);
-    await onSubmit(values, formikHelpers);
+    return await onSubmit(values, formikHelpers);
   };
 
   return (
@@ -58,13 +56,13 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
               when={formikProps.dirty && formikProps.submitCount === 0}
               message="You have made changes on this form. Do you wish to leave without saving?"
             />
-            <Styled.LeaseForm>
+            <>
               <LeaseDetailSubForm formikProps={formikProps}></LeaseDetailSubForm>
               <LeasePropertySelector formikProps={formikProps} />
               <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
               <ConsultationSubForm formikProps={formikProps}></ConsultationSubForm>
               <DocumentationSubForm />
-            </Styled.LeaseForm>
+            </>
           </>
         )}
       </Formik>

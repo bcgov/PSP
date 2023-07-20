@@ -1,7 +1,8 @@
-import TooltipIcon from 'components/common/TooltipIcon';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import TooltipIcon from '@/components/common/TooltipIcon';
 
 interface ISelectedPropertyHeaderRowProps {}
 

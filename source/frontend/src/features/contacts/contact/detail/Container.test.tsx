@@ -1,6 +1,7 @@
-import { Claims } from 'constants/claims';
 import { createMemoryHistory } from 'history';
-import { mockKeycloak, render, RenderOptions } from 'utils/test-utils';
+
+import { Claims } from '@/constants/claims';
+import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
 import ContactViewContainer from './Container';
 

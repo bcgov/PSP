@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
@@ -7,10 +8,8 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IInsuranceRepository : IRepository<PimsInsurance>
     {
-        PimsInsurance Add(PimsInsurance insurance, bool commit = true);
+        IEnumerable<PimsInsurance> GetByLeaseId(long leaseId);
 
-        PimsInsurance Update(PimsInsurance insurance, bool commit = true);
-
-        PimsInsurance Delete(PimsInsurance insurance, bool commit = true);
+        IEnumerable<PimsInsurance> UpdateLeaseInsurance(long leaseId, IEnumerable<PimsInsurance> insurances);
     }
 }

@@ -1,9 +1,10 @@
-import { TextArea } from 'components/common/form';
-import { Claims } from 'constants/claims';
 import { getIn, useFormikContext } from 'formik';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import * as React from 'react';
-import { withNameSpace } from 'utils/formUtils';
+
+import { TextArea } from '@/components/common/form';
+import { Claims } from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { withNameSpace } from '@/utils/formUtils';
 
 import { ActivityModel } from './models';
 

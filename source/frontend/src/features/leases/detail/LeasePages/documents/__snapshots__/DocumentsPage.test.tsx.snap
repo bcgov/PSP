@@ -140,6 +140,25 @@ exports[`Lease Documents Page renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c3 {
+  float: right;
+  cursor: pointer;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
 .c7 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -183,25 +202,6 @@ exports[`Lease Documents Page renders as expected 1`] = `
 
 .c2 .btn {
   margin: 0;
-}
-
-.c3 {
-  float: right;
-  cursor: pointer;
-}
-
-.c1 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
 }
 
 .c4 {

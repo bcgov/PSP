@@ -1,29 +1,27 @@
-import { Form } from 'components/common/form/Form';
-import { FormSectionClear } from 'components/common/form/styles';
 import { FieldArray, Formik, FormikProps } from 'formik';
-import { IInsurance } from 'interfaces';
-import { IBatchUpdateRequest, IEntryModification, UpdateOperation } from 'interfaces/batchUpdate';
 import React from 'react';
-import { ILookupCode } from 'store/slices/lookupCodes/interfaces';
-import { withNameSpace } from 'utils/formUtils';
 
-import { useUpdateInsurance } from './hooks/useUpdateInsurance';
+import { Form } from '@/components/common/form/Form';
+import { FormSectionClear } from '@/components/common/form/styles';
+import { Api_Insurance } from '@/models/api/Insurance';
+import { ILookupCode } from '@/store/slices/lookupCodes/interfaces';
+import { withNameSpace } from '@/utils/formUtils';
+
 import InsuranceForm from './InsuranceForm';
 import { InsuranceYupSchema } from './InsuranceYupSchema';
 import { FormInsurance, IUpdateFormInsurance } from './models';
 
 export interface InsuranceEditContainerProps {
   leaseId: number;
-  insuranceList: IInsurance[];
+  insuranceList: Api_Insurance[];
   insuranceTypes: ILookupCode[];
-  onCancel: (dirty?: boolean) => void;
-  onSuccess: () => void;
+  onSave: (insurances: Api_Insurance[]) => Promise<void>;
   formikRef: React.RefObject<FormikProps<any>>;
 }
 
 const InsuranceEditContainer: React.FunctionComponent<
   React.PropsWithChildren<InsuranceEditContainerProps>
-> = ({ leaseId, insuranceList, insuranceTypes, onSuccess, onCancel, formikRef }) => {
+> = ({ leaseId, insuranceList, insuranceTypes, onSave, formikRef }) => {
   const handleOnChange = (e: any, codeType: any, arrayHelpers: any) => {
     if (formikRef.current) {
       let found = initialInsurances.findIndex(x => x.insuranceType.id === codeType.id);
@@ -39,21 +37,12 @@ const InsuranceEditContainer: React.FunctionComponent<
     }
   };
 
-  const { batchUpdateInsurances } = useUpdateInsurance();
-
-  const handleSave = async (lease: IBatchUpdateRequest<IInsurance>) => {
-    const leaseResponse = await batchUpdateInsurances(leaseId, lease);
-    if (leaseResponse?.errorMessages.length === 0) {
-      onSuccess();
-    }
-  };
-
   const initialInsurances = insuranceTypes.map<FormInsurance>(x => {
     let foundInsurance = insuranceList.find(i => i.insuranceType.id === x.id);
     if (foundInsurance) {
       return FormInsurance.createFromModel(foundInsurance);
     } else {
-      return FormInsurance.createEmpty(x);
+      return FormInsurance.createEmpty(x, leaseId);
     }
   });
 
@@ -68,40 +57,10 @@ const InsuranceEditContainer: React.FunctionComponent<
     <Formik<IUpdateFormInsurance>
       initialValues={initialValues}
       validationSchema={InsuranceYupSchema}
-      onSubmit={(values: IUpdateFormInsurance, formikHelpers) => {
-        const updatedVals = values.insurances.reduce(
-          (accumulator: IEntryModification<IInsurance>[], entry: FormInsurance) => {
-            const existingEntry = initialValues.insurances.find(i => i.id === entry.id && !i.isNew);
-            if (existingEntry) {
-              if (!entry.isShown) {
-                accumulator.push({
-                  entry: entry.toInterfaceModel(),
-                  operation: UpdateOperation.DELETE,
-                });
-              } else if (!existingEntry.isEqual(entry)) {
-                accumulator.push({
-                  entry: entry.toInterfaceModel(),
-                  operation: UpdateOperation.UPDATE,
-                });
-              }
-            } else if (entry.isNew && entry.isShown) {
-              accumulator.push({
-                entry: entry.toInterfaceModel(),
-                operation: UpdateOperation.ADD,
-              });
-            }
-
-            return accumulator;
-          },
-          [],
+      onSubmit={(values: IUpdateFormInsurance) => {
+        return onSave(
+          values.insurances.filter(i => i.isShown).map<Api_Insurance>(x => x.toInterfaceModel()),
         );
-
-        formikHelpers.setSubmitting(false);
-
-        if (updatedVals.length > 0) {
-          const updateRequest: IBatchUpdateRequest<IInsurance> = { payload: updatedVals };
-          handleSave(updateRequest);
-        }
       }}
       innerRef={formikRef}
     >

@@ -1,8 +1,9 @@
-import { FormDescriptionLabel } from 'features/leases/detail/styles';
 import styled from 'styled-components';
 
+import { FormDescriptionLabel } from '@/features/leases/detail/styles';
+
 // common ui styling
-export * from 'features/leases/detail/styles';
+export * from '@/features/leases/detail/styles';
 
 export const ImprovementsContainer = styled.div`
   display: flex;
