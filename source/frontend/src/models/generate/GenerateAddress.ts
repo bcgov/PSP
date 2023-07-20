@@ -1,4 +1,3 @@
-import { IEditableOrganizationAddress } from '@/interfaces/editable-contact';
 import { Api_Address } from '@/models/api/Address';
 export class Api_GenerateAddress {
   line_1: string;
