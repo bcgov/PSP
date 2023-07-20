@@ -8,6 +8,7 @@ import { useDocumentGenerationRepository } from '@/features/documents/hooks/useD
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useH120CategoryRepository } from '@/hooks/repositories/useH120CategoryRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
+import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getMockApiCompensationList } from '@/mocks/compensations.mock';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
@@ -23,6 +24,7 @@ const getAcquisitionPropertiesFn = jest.fn();
 const getAcquisitionCompReqH120s = jest.fn();
 const getH120sCategoryFn = jest.fn();
 const getInterestHolderFn = jest.fn();
+const getCompensationRequisitionPayeeFn = jest.fn();
 
 jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
 (useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
@@ -43,6 +45,10 @@ jest.mock('@/hooks/repositories/useAcquisitionProvider');
 jest.mock('@/hooks/repositories/useInterestHolderRepository');
 (useInterestHolderRepository as jest.Mock).mockImplementation(() => ({
   getAcquisitionInterestHolders: { execute: getInterestHolderFn },
+}));
+jest.mock('@/hooks/repositories/useRequisitionCompensationRepository');
+(useCompensationRequisitionRepository as jest.Mock).mockImplementation(() => ({
+  getCompensationRequisitionPayee: { execute: getCompensationRequisitionPayeeFn },
 }));
 
 let currentStore: MockStoreEnhanced<any, {}>;

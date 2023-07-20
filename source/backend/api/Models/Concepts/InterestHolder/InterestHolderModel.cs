@@ -16,8 +16,16 @@ namespace Pims.Api.Models.Concepts
 
         public OrganizationModel Organization { get; set; }
 
-        public bool IsDisabled { get; set; }
+        public long? PrimaryContactId { get; set; }
+
+        public virtual PersonModel PrimaryContact { get; set; }
+
+        public string Comment { get; set; }
 
         public IEnumerable<InterestHolderPropertyModel> InterestHolderProperties { get; set; }
+
+        public virtual TypeModel<string> InterestHolderType { get; set; }
+
+        public bool IsDisabled { get; set; }
     }
 }

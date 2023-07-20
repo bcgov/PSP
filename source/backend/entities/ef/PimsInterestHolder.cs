@@ -10,13 +10,16 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_INTEREST_HOLDER")]
     [Index(nameof(AcquisitionFileId), Name = "INTHLD_ACQUISITION_FILE_ID_IDX")]
+    [Index(nameof(InterestHolderTypeCode), Name = "INTHLD_INTEREST_HOLDER_TYPE_CODE_IDX")]
     [Index(nameof(OrganizationId), Name = "INTHLD_ORGANIZATION_ID_IDX")]
     [Index(nameof(PersonId), Name = "INTHLD_PERSON_ID_IDX")]
+    [Index(nameof(PrimaryContactId), Name = "INTHLD_PRIMARY_CONTACT_ID_IDX")]
     public partial class PimsInterestHolder
     {
         public PimsInterestHolder()
         {
             PimsAcquisitionPayees = new HashSet<PimsAcquisitionPayee>();
+            PimsForm8s = new HashSet<PimsForm8>();
             PimsInthldrPropInterests = new HashSet<PimsInthldrPropInterest>();
         }
 
@@ -29,6 +32,15 @@ namespace Pims.Dal.Entities
         public long? PersonId { get; set; }
         [Column("ORGANIZATION_ID")]
         public long? OrganizationId { get; set; }
+        [Column("PRIMARY_CONTACT_ID")]
+        public long? PrimaryContactId { get; set; }
+        [Required]
+        [Column("INTEREST_HOLDER_TYPE_CODE")]
+        [StringLength(20)]
+        public string InterestHolderTypeCode { get; set; }
+        [Column("COMMENT")]
+        [StringLength(2000)]
+        public string Comment { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -73,14 +85,22 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(AcquisitionFileId))]
         [InverseProperty(nameof(PimsAcquisitionFile.PimsInterestHolders))]
         public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
+        [ForeignKey(nameof(InterestHolderTypeCode))]
+        [InverseProperty(nameof(PimsInterestHolderType.PimsInterestHolders))]
+        public virtual PimsInterestHolderType InterestHolderTypeCodeNavigation { get; set; }
         [ForeignKey(nameof(OrganizationId))]
         [InverseProperty(nameof(PimsOrganization.PimsInterestHolders))]
         public virtual PimsOrganization Organization { get; set; }
         [ForeignKey(nameof(PersonId))]
-        [InverseProperty(nameof(PimsPerson.PimsInterestHolders))]
+        [InverseProperty(nameof(PimsPerson.PimsInterestHolderPeople))]
         public virtual PimsPerson Person { get; set; }
+        [ForeignKey(nameof(PrimaryContactId))]
+        [InverseProperty(nameof(PimsPerson.PimsInterestHolderPrimaryContacts))]
+        public virtual PimsPerson PrimaryContact { get; set; }
         [InverseProperty(nameof(PimsAcquisitionPayee.InterestHolder))]
         public virtual ICollection<PimsAcquisitionPayee> PimsAcquisitionPayees { get; set; }
+        [InverseProperty(nameof(PimsForm8.InterestHolder))]
+        public virtual ICollection<PimsForm8> PimsForm8s { get; set; }
         [InverseProperty(nameof(PimsInthldrPropInterest.InterestHolder))]
         public virtual ICollection<PimsInthldrPropInterest> PimsInthldrPropInterests { get; set; }
     }

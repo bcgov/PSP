@@ -37,33 +37,56 @@ namespace Pims.Dal.Repositories
 
             return Context.PimsInterestHolders
                 .Where(ih => ih.AcquisitionFileId == acquisitionFileId)
+                .Include(ih => ih.InterestHolderTypeCodeNavigation)
                 .Include(ih => ih.Organization)
-                    .ThenInclude(ad => ad.PimsOrganizationAddresses)
+                    .ThenInclude(o => o.PimsOrganizationAddresses)
+                    .ThenInclude(oa => oa.Address)
+                    .ThenInclude(a => a.Country)
+                .Include(ih => ih.Organization)
+                    .ThenInclude(o => o.PimsOrganizationAddresses)
+                    .ThenInclude(oa => oa.Address)
+                    .ThenInclude(a => a.ProvinceState)
+                .Include(ih => ih.Organization)
+                    .ThenInclude(o => o.PimsOrganizationAddresses)
+                    .ThenInclude(oa => oa.AddressUsageTypeCodeNavigation)
                 .Include(ih => ih.Person)
-                    .ThenInclude(ad => ad.PimsPersonAddresses)
+                    .ThenInclude(p => p.PimsPersonAddresses)
+                    .ThenInclude(oa => oa.Address)
+                    .ThenInclude(a => a.Country)
+                .Include(ih => ih.Person)
+                    .ThenInclude(p => p.PimsPersonAddresses)
+                    .ThenInclude(oa => oa.Address)
+                    .ThenInclude(a => a.ProvinceState)
+                .Include(ih => ih.Person)
+                    .ThenInclude(p => p.PimsPersonAddresses)
+                    .ThenInclude(oa => oa.AddressUsageTypeCodeNavigation)
                 .Include(ih => ih.PimsInthldrPropInterests)
-                .ThenInclude(ip => ip.InterestHolderInterestTypeCodeNavigation)
+                    .ThenInclude(ip => ip.PimsPropInthldrInterestTypes)
+                    .ThenInclude(ipt => ipt.InterestHolderInterestTypeCodeNavigation)
                 .AsNoTracking()
                 .ToList();
         }
 
         public List<PimsInterestHolder> UpdateAllForAcquisition(long acquisitionFileId, List<PimsInterestHolder> interestHolders)
         {
-            // TODO: remove when cascade implemented.
-            var existingInterestHolders = GetInterestHoldersByAcquisitionFile(acquisitionFileId);
-            var deletedInterestHolders = existingInterestHolders.Where(existingInterestHolder => !interestHolders.Any(interestHolder => interestHolder.InterestHolderId == existingInterestHolder.InterestHolderId));
-            deletedInterestHolders.SelectMany(deletedInterestHolder => deletedInterestHolder.PimsInthldrPropInterests).ForEach(deletedPropertyInterest => Context.Remove(deletedPropertyInterest));
-
-            Context.UpdateChild<PimsAcquisitionFile, long, PimsInterestHolder, long>(p => p.PimsInterestHolders, acquisitionFileId, interestHolders.ToArray());
-
             interestHolders.ForEach(ih =>
             {
                 // ignore interest holders with no id, as those are new and do not require updates, the will be inserted by the parent's updateChild.
                 if (ih.InterestHolderId > 0)
                 {
+                    ih.PimsInthldrPropInterests.ForEach(ihp =>
+                    {
+                        // ignore interest holders properties, as those are new and do not require updates, the will be inserted by the parent's updateChild.
+                        if (ihp.PimsInthldrPropInterestId > 0)
+                        {
+                            Context.UpdateChild<PimsInthldrPropInterest, long, PimsPropInthldrInterestType, long>(p => p.PimsPropInthldrInterestTypes, ihp.PimsInthldrPropInterestId, ihp.PimsPropInthldrInterestTypes.ToArray());
+                        }
+                    });
                     Context.UpdateChild<PimsInterestHolder, long, PimsInthldrPropInterest, long>(p => p.PimsInthldrPropInterests, ih.InterestHolderId, ih.PimsInthldrPropInterests.ToArray());
                 }
             });
+
+            Context.UpdateChild<PimsAcquisitionFile, long, PimsInterestHolder, long>(p => p.PimsInterestHolders, acquisitionFileId, interestHolders.ToArray());
 
             return GetInterestHoldersByAcquisitionFile(acquisitionFileId);
         }

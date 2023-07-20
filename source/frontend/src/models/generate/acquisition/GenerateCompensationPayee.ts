@@ -8,6 +8,7 @@ export class Api_GenerateCompensationPayee {
   pre_tax_amount: string;
   tax_amount: string;
   total_amount: string;
+  payment_in_trust: boolean;
   gst_number: string;
 
   constructor(
@@ -30,20 +31,6 @@ export class Api_GenerateCompensationPayee {
       } else {
         this.name = payee.interestHolder.organization?.name ?? '';
       }
-    } else if (payee?.ownerRepresentative) {
-      this.name = formatNames([
-        payee.ownerRepresentative.person?.firstName,
-        payee.ownerRepresentative.person?.surname,
-      ]);
-    } else if (payee?.ownerSolicitor) {
-      if (payee.ownerSolicitor.person) {
-        this.name = formatNames([
-          payee.ownerSolicitor.person.firstName,
-          payee.ownerSolicitor.person.surname,
-        ]);
-      } else {
-        this.name = payee.ownerSolicitor.organization?.name ?? '';
-      }
     } else if (payee?.motiSolicitor) {
       this.name = formatNames([payee.motiSolicitor?.firstName, payee.motiSolicitor?.surname]);
     } else {
@@ -65,5 +52,6 @@ export class Api_GenerateCompensationPayee {
     this.pre_tax_amount = formatMoney(preTaxAmount) ?? '';
     this.tax_amount = formatMoney(taxAmount) ?? '';
     this.total_amount = formatMoney(totalAmount) ?? '';
+    this.payment_in_trust = !!payee?.isPaymentInTrust;
   }
 }

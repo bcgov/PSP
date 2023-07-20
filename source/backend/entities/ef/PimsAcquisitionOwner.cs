@@ -17,6 +17,7 @@ namespace Pims.Dal.Entities
         public PimsAcquisitionOwner()
         {
             PimsAcquisitionPayees = new HashSet<PimsAcquisitionPayee>();
+            PimsForm8s = new HashSet<PimsForm8>();
         }
 
         [Key]
@@ -104,5 +105,7 @@ namespace Pims.Dal.Entities
         public virtual PimsAddress Address { get; set; }
         [InverseProperty(nameof(PimsAcquisitionPayee.AcquisitionOwner))]
         public virtual ICollection<PimsAcquisitionPayee> PimsAcquisitionPayees { get; set; }
+        [InverseProperty(nameof(PimsForm8.AcquisitionOwner))]
+        public virtual ICollection<PimsForm8> PimsForm8s { get; set; }
     }
 }

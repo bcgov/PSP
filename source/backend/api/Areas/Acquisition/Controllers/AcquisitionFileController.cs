@@ -183,7 +183,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerModel>>(owners));
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Get the acquisition file Owner representatives.
         /// </summary>
         /// <returns></returns>
@@ -213,7 +213,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             var owners = _acquisitionService.GetOwnerSolicitors(id);
 
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerSolicitorModel>>(owners));
-        }
+        }*/
 
         /// <summary>
         /// Get all the compensations corresponding to the passed file id.
@@ -239,7 +239,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// <returns></returns>
         [HttpGet("{id:long}/comp-req-h120s")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<H120CategoryModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<CompensationFinancialModel>), 200)]
         [SwaggerOperation(Tags = new[] { "comp-req-h120s" })]
         public IActionResult GetFileCompReqH120(long id, bool? finalOnly)
         {
@@ -251,9 +251,9 @@ namespace Pims.Api.Areas.Acquisition.Controllers
                 DateTime.Now);
             _logger.LogInformation("Dispatching to service: {Service}", _compReqH120Service.GetType());
 
-            var h120Categories = _compReqH120Service.GetAllByAcquisitionFileId(id, finalOnly);
+            var h120s = _compReqH120Service.GetAllByAcquisitionFileId(id, finalOnly);
 
-            return new JsonResult(_mapper.Map<IEnumerable<CompensationFinancialModel>>(h120Categories));
+            return new JsonResult(_mapper.Map<IEnumerable<CompensationFinancialModel>>(h120s));
         }
 
         /// <summary>

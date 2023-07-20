@@ -39,6 +39,8 @@ describe('LeaseHeader component', () => {
     const { getByText, getAllByText } = setup({ lease: testLease });
 
     expect(getByText(testLease.lFileNo!)).toBeVisible();
+    expect(getByText(testLease.appCreateUserid!)).toBeVisible();
+    expect(getByText(testLease.appLastUpdateUserid!)).toBeVisible();
     expect(getAllByText(prettyFormatDate(testLease.appCreateTimestamp))[0]).toBeVisible();
     expect(getAllByText(prettyFormatDate(testLease.appLastUpdateTimestamp))[0]).toBeVisible();
   });
