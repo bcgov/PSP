@@ -1,4 +1,3 @@
-import { IEditableOrganizationAddress } from '@/interfaces/editable-contact';
 import { getMockApiAddress } from '@/mocks/address.mock';
 
 import { Api_GenerateAddress } from './GenerateAddress';
