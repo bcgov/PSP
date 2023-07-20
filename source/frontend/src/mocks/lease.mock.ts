@@ -246,4 +246,8 @@ export const getMockApiLease: () => Api_Lease = () => ({
   consultations: [],
   appCreateTimestamp: '2022-01-01T00:56:06.693',
   appLastUpdateTimestamp: '2022-01-01T00:56:06.693',
+  appLastUpdateUserid: 'USER_A',
+  appCreateUserid: 'USER_B',
+  appLastUpdateUserGuid: '77777777-7777-7777-7777-777777777777',
+  appCreateUserGuid: '77777777-7777-7777-7777-777777777777',
 });

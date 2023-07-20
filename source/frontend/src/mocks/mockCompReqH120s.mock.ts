@@ -3,7 +3,7 @@ import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 export const mockCompReqH120s: () => Api_CompensationFinancial[] = () => [
   {
     id: 4,
-    compensationId: 2,
+    compensationId: 100,
     pretaxAmount: 99,
     isGstRequired: false,
     taxAmount: 1,
@@ -19,7 +19,7 @@ export const mockCompReqH120s: () => Api_CompensationFinancial[] = () => [
   },
   {
     id: 5,
-    compensationId: 2,
+    compensationId: 100,
     pretaxAmount: 1,
     isGstRequired: false,
     taxAmount: 99,
@@ -35,7 +35,7 @@ export const mockCompReqH120s: () => Api_CompensationFinancial[] = () => [
   },
   {
     id: 6,
-    compensationId: 2,
+    compensationId: 100,
     pretaxAmount: 999,
     isGstRequired: false,
     taxAmount: 1,

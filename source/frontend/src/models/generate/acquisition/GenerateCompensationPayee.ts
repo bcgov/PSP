@@ -8,6 +8,7 @@ export class Api_GenerateCompensationPayee {
   pre_tax_amount: string;
   tax_amount: string;
   total_amount: string;
+  payment_in_trust: boolean;
   gst_number: string;
 
   constructor(
@@ -51,5 +52,6 @@ export class Api_GenerateCompensationPayee {
     this.pre_tax_amount = formatMoney(preTaxAmount) ?? '';
     this.tax_amount = formatMoney(taxAmount) ?? '';
     this.total_amount = formatMoney(totalAmount) ?? '';
+    this.payment_in_trust = !!payee?.isPaymentInTrust;
   }
 }
