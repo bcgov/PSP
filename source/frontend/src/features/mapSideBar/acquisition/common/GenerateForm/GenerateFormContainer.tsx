@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import { FormDocumentType } from '@/constants/formDocumentTypes';
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
@@ -12,7 +13,7 @@ import { IGenerateFormViewProps } from './GenerateFormView';
 import { useGenerateH120 } from './hooks/useGenerateH120';
 import { useGenerateH0443 } from './hooks/useGenerateH0443';
 import { useGenerateLetter } from './hooks/useGenerateLetter';
-import { LetterRecipientModel } from './modals/models/LetterRecipientModel';
+import { LetterRecipientModel, RecipientType } from './modals/models/LetterRecipientModel';
 
 export interface IGenerateFormContainerProps {
   acquisitionFileId: number;
@@ -53,86 +54,44 @@ const GenerateFormContainer: React.FunctionComponent<
     const interestHoldersFetchCall = fetchInterestHolders(acquisitionFileId);
 
     // Add owners and interest holders
-    await Promise.all([fileOwnersFetchCall, interestHoldersFetchCall]).then(
-      ([fileOwners, intHolders]) => {
-        if (fileOwners !== undefined) {
-          fileOwners?.map(owner =>
-            generateRecipientsList.push(
-              new LetterRecipientModel(owner.id!, 'OWNR', new Api_GenerateOwner(owner), owner),
-            ),
-          );
-        }
+    const [fileOwners, intHolders] = await Promise.all([
+      fileOwnersFetchCall,
+      interestHoldersFetchCall,
+    ]);
 
-        if (intHolders !== undefined) {
-          intHolders.map(async holder => {
-            if (holder.personId) {
-              const person = (await getPersonConcept(holder?.personId))?.data;
-              if (person) {
-                generateRecipientsList.push(
-                  new LetterRecipientModel(
-                    holder.interestHolderId!,
-                    'HLDR',
-                    Api_GenerateOwner.fromApiPerson(person),
-                    holder,
-                  ),
-                );
-              }
-            } else if (holder.organizationId) {
-              const org = (await getOrganization(holder?.organizationId))?.data;
-              if (org) {
-                generateRecipientsList.push(
-                  new LetterRecipientModel(
-                    holder.interestHolderId!,
-                    'HLDR',
-                    Api_GenerateOwner.fromApiOrganization(org),
-                    holder,
-                  ),
-                );
-              }
-            }
-          });
-        }
-      },
-    );
-
-    // Add owners solicitors to recipients list
-    if (file.acquisitionFileOwnerSolicitors && file.acquisitionFileOwnerSolicitors.length > 0) {
-      await Promise.all(
-        file.acquisitionFileOwnerSolicitors.map(async solicitor => {
-          if (solicitor.personId) {
-            const person = (await getPersonConcept(solicitor?.personId))?.data;
-            if (person) {
-              const personSolicitorModel = Api_GenerateOwner.fromApiPerson(person);
-              generateRecipientsList.push(
-                new LetterRecipientModel(person.id!, 'SLTR', personSolicitorModel, solicitor),
-              );
-            }
-          } else if (solicitor.organizationId) {
-            const org = (await getOrganization(solicitor?.organizationId))?.data;
-            if (org) {
-              const orgSolicitorModel = Api_GenerateOwner.fromApiOrganization(org);
-              generateRecipientsList.push(
-                new LetterRecipientModel(org.id!, 'SLTR', orgSolicitorModel, solicitor),
-              );
-            }
-          }
-        }),
+    if (fileOwners) {
+      fileOwners?.map(owner =>
+        generateRecipientsList.push(
+          new LetterRecipientModel(owner.id!, 'OWNR', new Api_GenerateOwner(owner), owner),
+        ),
       );
     }
 
-    //Add Owner Representatives
-    if (
-      file.acquisitionFileOwnerRepresentatives &&
-      file.acquisitionFileOwnerRepresentatives.length > 0
-    ) {
+    if (intHolders) {
       await Promise.all(
-        file.acquisitionFileOwnerRepresentatives.map(async rep => {
-          if (rep.personId) {
-            const person = (await getPersonConcept(rep?.personId))?.data;
+        intHolders.map(async holder => {
+          if (holder.personId) {
+            const person = (await getPersonConcept(holder?.personId))?.data;
             if (person) {
-              const personSolicitorModel = Api_GenerateOwner.fromApiPerson(person);
               generateRecipientsList.push(
-                new LetterRecipientModel(rep.id!, 'REPT', personSolicitorModel, person),
+                new LetterRecipientModel(
+                  holder.interestHolderId!,
+                  getInterestTypeString(holder.interestHolderType?.id ?? ''),
+                  Api_GenerateOwner.fromApiPerson(person),
+                  holder,
+                ),
+              );
+            }
+          } else if (holder.organizationId) {
+            const org = (await getOrganization(holder?.organizationId))?.data;
+            if (org) {
+              generateRecipientsList.push(
+                new LetterRecipientModel(
+                  holder.interestHolderId!,
+                  getInterestTypeString(holder.interestHolderType?.id ?? ''),
+                  Api_GenerateOwner.fromApiOrganization(org),
+                  holder,
+                ),
               );
             }
           }
@@ -141,6 +100,7 @@ const GenerateFormContainer: React.FunctionComponent<
     }
 
     setFullRecipientsList(generateRecipientsList);
+    console.table(generateRecipientsList);
     openGenerateLetterModal();
   }, [
     acquisitionFileId,
@@ -193,3 +153,23 @@ const GenerateFormContainer: React.FunctionComponent<
 };
 
 export default GenerateFormContainer;
+
+const getInterestTypeString = (codeType: string): RecipientType => {
+  let interestString: RecipientType = 'HLDR';
+  switch (codeType) {
+    case InterestHolderType.INTEREST_HOLDER:
+      interestString = 'HLDR';
+      break;
+    case InterestHolderType.OWNER_SOLICITOR:
+      interestString = 'SLTR';
+      break;
+    case InterestHolderType.OWNER_REPRESENTATIVE:
+      interestString = 'REPT';
+      break;
+    default:
+      interestString = 'OWNR';
+      break;
+  }
+
+  return interestString;
+};
