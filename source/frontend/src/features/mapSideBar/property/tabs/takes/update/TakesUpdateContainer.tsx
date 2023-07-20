@@ -2,6 +2,7 @@ import { FormikProps } from 'formik';
 import * as React from 'react';
 
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { Api_Take } from '@/models/api/Take';
 
 import { useTakesRepository } from '../repositories/useTakesRepository';
 import { TakeModel } from './models';
@@ -17,16 +18,31 @@ export interface ITakesDetailContainerProps {
 
 export const TakesUpdateContainer = React.forwardRef<FormikProps<any>, ITakesDetailContainerProps>(
   ({ fileProperty, View, onSuccess }, ref) => {
+    const [propertyTakes, setPropertyTakes] = React.useState<Api_Take[]>([]);
+
     if (!fileProperty?.id) {
       throw Error('File property must have id');
     }
     const {
-      getTakesByFileId: { loading: takesByFileLoading, response: takes, execute: getTakesByFile },
+      getTakesByFileId: { loading: takesByFileLoading, execute: getTakesByFile },
       updateTakesByAcquisitionPropertyId: { execute: updateTakesByPropertyFile },
     } = useTakesRepository();
 
     React.useEffect(() => {
-      fileProperty.fileId && getTakesByFile(fileProperty.fileId);
+      const fetchTakes = async () => {
+        if (fileProperty.fileId) {
+          const fileTakes = await getTakesByFile(fileProperty.fileId);
+          if (fileTakes !== undefined) {
+            const propertyTakesRetrieved = fileTakes.filter(
+              x => x.propertyAcquisitionFileId === fileProperty.id,
+            );
+            setPropertyTakes(propertyTakesRetrieved);
+          } else {
+            setPropertyTakes([]);
+          }
+        }
+      };
+      fetchTakes();
     }, [getTakesByFile, fileProperty]);
 
     return (
@@ -46,7 +62,11 @@ export const TakesUpdateContainer = React.forwardRef<FormikProps<any>, ITakesDet
           }
         }}
         loading={takesByFileLoading}
-        takes={takes?.length ? takes?.map(t => new TakeModel(t)) : [new TakeModel(emptyTake)]}
+        takes={
+          propertyTakes?.length
+            ? propertyTakes?.map(t => new TakeModel(t))
+            : [new TakeModel(emptyTake)]
+        }
         fileProperty={fileProperty}
         ref={ref}
       />
