@@ -1,9 +1,9 @@
 import { AddressTypes } from '@/constants/addressTypes';
 import { getApiPersonOrOrgMailingAddress } from '@/features/contacts/contactUtils';
-import { IEditableOrganization } from '@/interfaces/editable-contact';
 import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
 import { phoneFormatter } from '@/utils/formUtils';
 
+import { Api_Organization } from '../api/Organization';
 import { Api_Person } from '../api/Person';
 import { Api_GenerateAddress } from './GenerateAddress';
 
@@ -63,7 +63,7 @@ export class Api_GenerateOwner {
     return generateOwner;
   }
 
-  static fromApiOrganization(model: IEditableOrganization): Api_GenerateOwner {
+  static fromApiOrganization(model: Api_Organization): Api_GenerateOwner {
     let generateOwner = new Api_GenerateOwner(null);
 
     generateOwner.given_name = '';
@@ -72,10 +72,10 @@ export class Api_GenerateOwner {
     generateOwner.incorporation_number = model.incorporationNumber ?? '';
     generateOwner.registration_number = '';
 
-    const mailingAddress = model.addresses?.find(
-      addr => addr?.addressTypeId.id === AddressTypes.Mailing,
+    const mailingAddress = model.organizationAddresses?.find(
+      addr => addr?.addressUsageType?.id === AddressTypes.Mailing,
     );
-    generateOwner.address = Api_GenerateAddress.fromIEditableOrgAddress(mailingAddress!);
+    generateOwner.address = new Api_GenerateAddress(mailingAddress!);
     generateOwner.is_corporation = true;
     generateOwner.owner_string = `${generateOwner.last_name_or_corp_name}, Inc. No. ${generateOwner.incorporation_number}`;
 

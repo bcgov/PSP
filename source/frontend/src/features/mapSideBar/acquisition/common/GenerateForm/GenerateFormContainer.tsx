@@ -24,7 +24,7 @@ const GenerateFormContainer: React.FunctionComponent<
   React.PropsWithChildren<IGenerateFormContainerProps>
 > = ({ acquisitionFileId, View }) => {
   const [fullRecipientsList, setFullRecipientsList] = useState<LetterRecipientModel[]>([]);
-  const { getPersonConcept, getOrganization } = useApiContacts();
+  const { getPersonConcept, getOrganizationConcept } = useApiContacts();
   const {
     getAcquisitionFile: { execute: getAcquisitionFile },
   } = useAcquisitionProvider();
@@ -83,7 +83,7 @@ const GenerateFormContainer: React.FunctionComponent<
               );
             }
           } else if (holder.organizationId) {
-            const org = (await getOrganization(holder?.organizationId))?.data;
+            const org = (await getOrganizationConcept(holder?.organizationId))?.data;
             if (org) {
               generateRecipientsList.push(
                 new LetterRecipientModel(
@@ -106,7 +106,7 @@ const GenerateFormContainer: React.FunctionComponent<
     acquisitionFileId,
     fetchInterestHolders,
     getAcquisitionFile,
-    getOrganization,
+    getOrganizationConcept,
     getPersonConcept,
     openGenerateLetterModal,
     retrieveAcquisitionFileOwners,
