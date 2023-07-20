@@ -112,8 +112,6 @@ describe('GenerateFormContainer component', () => {
   it('generates the documment letter on confirmation', async () => {
     await act(async () => viewProps.onGenerateLetterOk([]));
     await waitFor(async () => {
-      // expect(handleGenerateLetterOk).toHaveBeenCalledTimes(1);
-
       expect(generateLetterFn).toHaveBeenCalledTimes(1);
     });
   });
