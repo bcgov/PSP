@@ -1800,7 +1800,6 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
                 id="input-ownerRepresentative.comment"
                 name="ownerRepresentative.comment"
                 placeholder="Remarks or additional representative(s)"
-                title=""
               />
             </div>
           </div>

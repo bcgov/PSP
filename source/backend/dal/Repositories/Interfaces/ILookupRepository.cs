@@ -124,6 +124,6 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsAgreementType> GetAllAgreementTypes();
 
-        IEnumerable<PimsInterestHolderInterestType> GetAllInterestHolderTypes();
+        IEnumerable<PimsInterestHolderInterestType> GetAllInterestHolderInterestTypes();
     }
 }

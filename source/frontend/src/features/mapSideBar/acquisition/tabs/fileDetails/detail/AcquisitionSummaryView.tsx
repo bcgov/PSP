@@ -8,6 +8,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { Claims } from '@/constants';
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { prettyFormatDate } from '@/utils';
@@ -38,6 +39,14 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
     acquisitionFile?.product !== undefined
       ? acquisitionFile?.product?.code + ' ' + acquisitionFile?.product?.description
       : '';
+
+  const ownerSolicitor = acquisitionFile?.acquisitionFileInterestHolders?.find(
+    x => x.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR,
+  );
+
+  const ownerRepresentative = acquisitionFile?.acquisitionFileInterestHolders?.find(
+    x => x.interestHolderType?.id === InterestHolderType.OWNER_REPRESENTATIVE,
+  );
 
   return (
     <StyledSummarySection>
@@ -107,45 +116,39 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
             View={AcquisitionOwnersSummaryView}
           ></AcquisitionOwnersSummaryContainer>
         )}
-        {!!acquisitionFile?.acquisitionFileOwnerSolicitors?.length && (
+        {!!ownerSolicitor && (
           <SectionField label="Owner solicitor">
             <StyledLink
               target="_blank"
               rel="noopener noreferrer"
               to={
-                acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.personId
-                  ? `/contact/P${acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.personId}`
-                  : `/contact/O${acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.organizationId}`
+                ownerSolicitor?.personId
+                  ? `/contact/P${ownerSolicitor?.personId}`
+                  : `/contact/O${ownerSolicitor?.organizationId}`
               }
             >
               <span>
-                {acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.personId
-                  ? formatApiPersonNames(acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.person)
-                  : acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.organization?.name ?? ''}
+                {ownerSolicitor?.personId
+                  ? formatApiPersonNames(ownerSolicitor?.person)
+                  : ownerSolicitor?.organization?.name ?? ''}
               </span>
               <FaExternalLinkAlt className="ml-2" size="1rem" />
             </StyledLink>
           </SectionField>
         )}
-        {!!acquisitionFile?.acquisitionFileOwnerRepresentatives?.length && (
+        {!!ownerRepresentative && (
           <>
             <SectionField label="Owner representative">
               <StyledLink
                 target="_blank"
                 rel="noopener noreferrer"
-                to={`/contact/P${acquisitionFile?.acquisitionFileOwnerRepresentatives[0]?.personId}`}
+                to={`/contact/P${ownerRepresentative?.personId}`}
               >
-                <span>
-                  {formatApiPersonNames(
-                    acquisitionFile?.acquisitionFileOwnerRepresentatives[0]?.person ?? undefined,
-                  )}
-                </span>
+                <span>{formatApiPersonNames(ownerRepresentative?.person ?? undefined)}</span>
                 <FaExternalLinkAlt className="ml-2" size="1rem" />
               </StyledLink>
             </SectionField>
-            <SectionField label="Comment">
-              {acquisitionFile?.acquisitionFileOwnerRepresentatives[0]?.comment}
-            </SectionField>
+            <SectionField label="Comment">{ownerRepresentative?.comment}</SectionField>
           </>
         )}
       </Section>

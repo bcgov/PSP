@@ -1,9 +1,5 @@
-import {
-  Api_AcquisitionFileOwner,
-  Api_AcquisitionFilePerson,
-  Api_AcquisitionFileRepresentative,
-  Api_AcquisitionFileSolicitor,
-} from '@/models/api/AcquisitionFile';
+import { InterestHolderType } from '@/constants/interestHolderTypes';
+import { Api_AcquisitionFileOwner, Api_AcquisitionFilePerson } from '@/models/api/AcquisitionFile';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
@@ -205,8 +201,6 @@ export class AcquisitionPayeeFormModel {
   totalAmount: number = 0;
   acquisitionOwnerId: string = '';
   interestHolderId: string = '';
-  ownerRepresentativeId: string = '';
-  ownerSolicitorId: string = '';
   acquisitionFilePersonId: string = '';
   rowVersion: number | null = null;
   isDisabled: string = '';
@@ -226,8 +220,6 @@ export class AcquisitionPayeeFormModel {
     payeeModel.gstNumber = apiModel.gstNumber ?? '';
     payeeModel.acquisitionOwnerId = apiModel.acquisitionOwnerId?.toString() ?? '';
     payeeModel.interestHolderId = apiModel.interestHolderId?.toString() ?? '';
-    payeeModel.ownerRepresentativeId = apiModel.ownerRepresentativeId?.toString() ?? '';
-    payeeModel.ownerSolicitorId = apiModel.ownerSolicitorId?.toString() ?? '';
     payeeModel.acquisitionFilePersonId = apiModel.acquisitionFilePersonId?.toString() ?? '';
     payeeModel.rowVersion = apiModel.rowVersion ?? null;
 
@@ -250,10 +242,6 @@ export class AcquisitionPayeeFormModel {
       acquisitionOwnerId: this.acquisitionOwnerId === '' ? null : +this.acquisitionOwnerId,
       interestHolderId: null,
       interestHolder: null,
-      ownerRepresentativeId: null,
-      ownerRepresentative: null,
-      ownerSolicitorId: null,
-      ownerSolicitor: null,
       motiSolicitor: null,
       motiSolicitorId: null,
       acquisitionFilePersonId: null,
@@ -288,7 +276,7 @@ export class PayeeOption {
   ) {
     this.api_id = api_id;
     this.fullText = `${name}(${key})`;
-    this.text = `${truncateName(name)}(${key})`;
+    this.text = `${PayeeOption.truncateName(name)}(${key})`;
     this.value = value;
     this.payeeType = payeeType;
   }
@@ -300,23 +288,23 @@ export class PayeeOption {
         return PayeeOption.generateKey(apiModel.acquisitionOwnerId, PayeeType.Owner);
       }
 
-      if (apiModel.ownerRepresentativeId) {
-        return PayeeOption.generateKey(
-          apiModel.ownerRepresentativeId,
-          PayeeType.OwnerRepresentative,
-        );
-      }
-
       if (apiModel.motiSolicitorId) {
         return PayeeOption.generateKey(apiModel.motiSolicitorId, PayeeType.AcquisitionTeam);
       }
 
-      if (apiModel.ownerSolicitorId) {
-        return PayeeOption.generateKey(apiModel.ownerSolicitorId, PayeeType.OwnerSolicitor);
-      }
-
       if (apiModel.interestHolderId) {
-        return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.InterestHolder);
+        if (
+          apiModel.interestHolder?.interestHolderType?.id ===
+          InterestHolderType.OWNER_REPRESENTATIVE
+        ) {
+          return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.OwnerRepresentative);
+        } else if (
+          apiModel.interestHolder?.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR
+        ) {
+          return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.OwnerSolicitor);
+        } else {
+          return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.InterestHolder);
+        }
       }
     }
     return '';
@@ -345,16 +333,12 @@ export class PayeeOption {
       gstNumber: null,
       acquisitionOwnerId: null,
       interestHolderId: null,
-      ownerRepresentativeId: null,
-      ownerSolicitorId: null,
       motiSolicitorId: null,
       isDisabled: null,
       motiSolicitor: null,
       acquisitionOwner: null,
       compensationRequisition: null,
       interestHolder: null,
-      ownerRepresentative: null,
-      ownerSolicitor: null,
       acquisitionFilePersonId: null,
       rowVersion: null,
     };
@@ -364,10 +348,10 @@ export class PayeeOption {
         payee.motiSolicitorId = payeeOption.api_id;
         break;
       case PayeeType.OwnerRepresentative:
-        payee.ownerRepresentativeId = payeeOption.api_id;
+        payee.interestHolderId = payeeOption.api_id;
         break;
       case PayeeType.OwnerSolicitor:
-        payee.ownerSolicitorId = payeeOption.api_id;
+        payee.interestHolderId = payeeOption.api_id;
         break;
       case PayeeType.Owner:
         payee.acquisitionOwnerId = payeeOption.api_id;
@@ -403,7 +387,7 @@ export class PayeeOption {
     );
   }
 
-  public static createOwnerSolicitor(model: Api_AcquisitionFileSolicitor): PayeeOption {
+  public static createOwnerSolicitor(model: Api_InterestHolder): PayeeOption {
     let name = '';
     if (model.person) {
       name = formatApiPersonNames(model.person);
@@ -411,21 +395,21 @@ export class PayeeOption {
       name = model.organization?.name || '';
     }
     return new PayeeOption(
-      model.id || 0,
+      model.interestHolderId || 0,
       name,
       `Owner's Solicitor`,
-      PayeeOption.generateKey(model.id, PayeeType.OwnerSolicitor),
+      PayeeOption.generateKey(model.interestHolderId, PayeeType.OwnerSolicitor),
       PayeeType.OwnerSolicitor,
     );
   }
 
-  public static createOwnerRepresentative(model: Api_AcquisitionFileRepresentative): PayeeOption {
+  public static createOwnerRepresentative(model: Api_InterestHolder): PayeeOption {
     let name = formatApiPersonNames(model.person);
     return new PayeeOption(
-      model.id || 0,
+      model.interestHolderId || 0,
       name,
       `Owner's Representative`,
-      PayeeOption.generateKey(model.id, PayeeType.OwnerRepresentative),
+      PayeeOption.generateKey(model.interestHolderId, PayeeType.OwnerRepresentative),
       PayeeType.OwnerRepresentative,
     );
   }
@@ -442,6 +426,12 @@ export class PayeeOption {
   }
 
   public static createInterestHolder(model: Api_InterestHolder): PayeeOption {
+    if (model.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR) {
+      return this.createOwnerSolicitor(model);
+    } else if (model.interestHolderType?.id === InterestHolderType.OWNER_REPRESENTATIVE) {
+      return this.createOwnerRepresentative(model);
+    }
+
     let name = '';
     if (model.person) {
       name = formatApiPersonNames(model.person);
@@ -452,7 +442,7 @@ export class PayeeOption {
     // The interest holders should always have a property
     const typeDescription =
       model.interestHolderProperties.length > 0
-        ? model.interestHolderProperties[0].interestTypeCode?.description
+        ? model.interestHolderProperties[0].propertyInterestTypes[0]?.description
         : 'ERROR: Missing interest type';
 
     return new PayeeOption(
@@ -466,13 +456,5 @@ export class PayeeOption {
 
   private static generateKey(modelId: number | null | undefined, payeeType: PayeeType) {
     return `${payeeType}-${modelId}`;
-  }
-}
-
-function truncateName(name: string): string {
-  if (name.length > 50) {
-    return name.slice(0, 50) + '...';
-  } else {
-    return name;
   }
 }

@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities
     {
         public PimsInterestHolderInterestType()
         {
-            PimsInthldrPropInterests = new HashSet<PimsInthldrPropInterest>();
+            PimsPropInthldrInterestTypes = new HashSet<PimsPropInthldrInterestType>();
         }
 
         [Key]
@@ -43,7 +43,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsInthldrPropInterest.InterestHolderInterestTypeCodeNavigation))]
-        public virtual ICollection<PimsInthldrPropInterest> PimsInthldrPropInterests { get; set; }
+        [InverseProperty(nameof(PimsPropInthldrInterestType.InterestHolderInterestTypeCodeNavigation))]
+        public virtual ICollection<PimsPropInthldrInterestType> PimsPropInthldrInterestTypes { get; set; }
     }
 }
