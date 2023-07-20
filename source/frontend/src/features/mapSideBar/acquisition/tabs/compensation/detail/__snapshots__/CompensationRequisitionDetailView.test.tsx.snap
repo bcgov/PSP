@@ -180,17 +180,6 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c11 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
 .c4 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -220,7 +209,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   flex-direction: row-reverse;
 }
 
-.c13 {
+.c12 {
   font-size: 16px;
   font-weight: 600;
 }
@@ -243,7 +232,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   padding-bottom: 1rem;
 }
 
-.c12 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -263,14 +252,14 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   margin-bottom: 2rem;
 }
 
-.c12 label {
+.c11 label {
   font-family: 'BCSans-Bold';
   font-size: 1.75rem;
   width: 100%;
   text-align: left;
 }
 
-.c12 button {
+.c11 button {
   margin-bottom: 1rem;
 }
 
@@ -781,30 +770,6 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             <div
               class="c10"
             >
-              <a
-                class="c11"
-                href="/contact/P9"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <span>
-                  Aman Monga
-                </span>
-                <svg
-                  class="ml-2"
-                  fill="currentColor"
-                  height="1rem"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="1rem"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-                  />
-                </svg>
-              </a>
               <label>
                 , in trust
               </label>
@@ -930,7 +895,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c12"
+          class="c11"
         >
           <label>
             Activity 1
@@ -1027,7 +992,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c12"
+          class="c11"
         >
           <label>
             Activity 2
@@ -1158,7 +1123,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c13"
+          class="c12"
         >
           <div
             class="row"
