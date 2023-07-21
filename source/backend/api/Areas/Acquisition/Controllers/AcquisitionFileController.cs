@@ -183,7 +183,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerModel>>(owners));
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Get the acquisition file Owner representatives.
         /// </summary>
         /// <returns></returns>
@@ -213,7 +213,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             var owners = _acquisitionService.GetOwnerSolicitors(id);
 
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerSolicitorModel>>(owners));
-        }
+        }*/
 
         /// <summary>
         /// Get all the compensations corresponding to the passed file id.

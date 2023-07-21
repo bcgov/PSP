@@ -10,10 +10,14 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_INTHLDR_PROP_INTEREST")]
     [Index(nameof(InterestHolderId), Name = "IHPRIN_INTEREST_HOLDER_ID_IDX")]
-    [Index(nameof(InterestHolderInterestTypeCode), Name = "IHPRIN_INTEREST_HOLDER_INTEREST_TYPE_CODE_IDX")]
     [Index(nameof(PropertyAcquisitionFileId), Name = "IHPRIN_PROPERTY_ACQUISITION_FILE_ID_IDX")]
     public partial class PimsInthldrPropInterest
     {
+        public PimsInthldrPropInterest()
+        {
+            PimsPropInthldrInterestTypes = new HashSet<PimsPropInthldrInterestType>();
+        }
+
         [Key]
         [Column("PIMS_INTHLDR_PROP_INTEREST_ID")]
         public long PimsInthldrPropInterestId { get; set; }
@@ -21,10 +25,6 @@ namespace Pims.Dal.Entities
         public long InterestHolderId { get; set; }
         [Column("PROPERTY_ACQUISITION_FILE_ID")]
         public long? PropertyAcquisitionFileId { get; set; }
-        [Required]
-        [Column("INTEREST_HOLDER_INTEREST_TYPE_CODE")]
-        [StringLength(20)]
-        public string InterestHolderInterestTypeCode { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -69,11 +69,10 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(InterestHolderId))]
         [InverseProperty(nameof(PimsInterestHolder.PimsInthldrPropInterests))]
         public virtual PimsInterestHolder InterestHolder { get; set; }
-        [ForeignKey(nameof(InterestHolderInterestTypeCode))]
-        [InverseProperty(nameof(PimsInterestHolderInterestType.PimsInthldrPropInterests))]
-        public virtual PimsInterestHolderInterestType InterestHolderInterestTypeCodeNavigation { get; set; }
         [ForeignKey(nameof(PropertyAcquisitionFileId))]
         [InverseProperty(nameof(PimsPropertyAcquisitionFile.PimsInthldrPropInterests))]
         public virtual PimsPropertyAcquisitionFile PropertyAcquisitionFile { get; set; }
+        [InverseProperty(nameof(PimsPropInthldrInterestType.PimsInthldrPropInterest))]
+        public virtual ICollection<PimsPropInthldrInterestType> PimsPropInthldrInterestTypes { get; set; }
     }
 }

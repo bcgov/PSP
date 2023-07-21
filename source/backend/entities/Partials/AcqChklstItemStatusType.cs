@@ -15,12 +15,6 @@ namespace Pims.Dal.Entities
         [NotMapped]
         public string Id { get => AcqChklstItemStatusTypeCode; set => AcqChklstItemStatusTypeCode = value; }
 
-        [NotMapped]
-        public bool? IsDisabled
-        {
-            get => false;
-            set { }
-        }
         #endregion
 
         #region Constructors

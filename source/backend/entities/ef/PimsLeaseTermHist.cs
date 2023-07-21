@@ -35,7 +35,7 @@ namespace Pims.Dal.Entities
         public DateTime? TermExpiryDate { get; set; }
         [Column("TERM_RENEWAL_DATE", TypeName = "datetime")]
         public DateTime? TermRenewalDate { get; set; }
-        [Column("PAYMENT AMOUNT", TypeName = "money")]
+        [Column("PAYMENT_AMOUNT", TypeName = "money")]
         public decimal? PaymentAmount { get; set; }
         [Column("PAYMENT_DUE_DATE")]
         [StringLength(200)]

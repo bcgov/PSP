@@ -6,7 +6,7 @@ import Api_TypeCode from '@/models/api/TypeCode';
 import { Api_Address } from './Address';
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
-import { Api_Organization } from './Organization';
+import { Api_InterestHolder } from './InterestHolder';
 import { Api_Person } from './Person';
 import { Api_Product, Api_Project } from './Project';
 import { Api_PropertyFile } from './PropertyFile';
@@ -31,8 +31,7 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   regionCode?: Api_TypeCode<number>;
   acquisitionTeam?: Api_AcquisitionFilePerson[];
   acquisitionFileOwners?: Api_AcquisitionFileOwner[];
-  acquisitionFileOwnerSolicitors?: Api_AcquisitionFileSolicitor[];
-  acquisitionFileOwnerRepresentatives?: Api_AcquisitionFileRepresentative[];
+  acquisitionFileInterestHolders?: Api_InterestHolder[];
   acquisitionFileChecklist?: Api_AcquisitionFileChecklistItem[];
   project?: Api_Project;
   projectId: number | null;
@@ -55,25 +54,6 @@ export interface Api_AcquisitionFilePerson extends Api_ConcurrentVersion, Api_Au
   personProfileTypeCode?: string;
   personProfileType?: Api_TypeCode<string>;
   isDisabled?: boolean;
-}
-
-export interface Api_AcquisitionFileSolicitor extends Api_ConcurrentVersion, Api_AuditFields {
-  id: number | null;
-  acquisitionFileId: number | null;
-  personId: number | null;
-  person: Api_Person | null;
-  organizationId: number | null;
-  organization: Api_Organization | null;
-  isDisabled: boolean | null;
-}
-
-export interface Api_AcquisitionFileRepresentative extends Api_ConcurrentVersion, Api_AuditFields {
-  id: number | null;
-  acquisitionFileId: number | null;
-  personId: number | null;
-  person: Api_Person | null;
-  comment: string | null;
-  isDisabled: boolean | null;
 }
 
 export interface Api_AcquisitionFileOwner extends Api_ConcurrentVersion, Api_AuditFields {

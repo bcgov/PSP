@@ -21,10 +21,6 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsAcquisitionOwner> GetOwners(long id);
 
-        IEnumerable<PimsAcquisitionOwnerRep> GetOwnerRepresentatives(long id);
-
-        IEnumerable<PimsAcquisitionOwnerSolicitor> GetOwnerSolicitors(long id);
-
         IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id);
 
         PimsAcquisitionFile UpdateChecklistItems(PimsAcquisitionFile acquisitionFile);

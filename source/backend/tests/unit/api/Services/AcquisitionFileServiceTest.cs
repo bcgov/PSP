@@ -913,8 +913,6 @@ namespace Pims.Api.Test.Services
                                 CompensationRequisitionId = 1,
                                 AcquisitionOwnerId = null,
                                 InterestHolderId = null,
-                                OwnerRepresentativeId = null,
-                                OwnerSolicitorId = null,
                                 AcquisitionFilePersonId = null
                             },
                         },
@@ -965,8 +963,6 @@ namespace Pims.Api.Test.Services
                                 CompensationRequisitionId = 1,
                                 AcquisitionOwnerId = 100,
                                 InterestHolderId = null,
-                                OwnerRepresentativeId = null,
-                                OwnerSolicitorId = null,
                                 AcquisitionFilePersonId = null
                             },
                         },
@@ -994,9 +990,10 @@ namespace Pims.Api.Test.Services
             var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionOwnerSolicitors = new List<PimsAcquisitionOwnerSolicitor>() {
-                new PimsAcquisitionOwnerSolicitor() {
-                    OwnerSolicitorId = 100,
+            acqFile.PimsInterestHolders = new List<PimsInterestHolder>() {
+                new PimsInterestHolder() {
+                    InterestHolderTypeCode = "AOSLCTR",
+                    InterestHolderId = 100,
                 },
             };
 
@@ -1018,9 +1015,7 @@ namespace Pims.Api.Test.Services
                                 Internal_Id = 1,
                                 CompensationRequisitionId = 1,
                                 AcquisitionOwnerId = null,
-                                InterestHolderId = null,
-                                OwnerRepresentativeId = null,
-                                OwnerSolicitorId = 100,
+                                InterestHolderId = 100,
                                 AcquisitionFilePersonId = null
                             },
                         },
@@ -1048,9 +1043,10 @@ namespace Pims.Api.Test.Services
             var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionOwnerReps = new List<PimsAcquisitionOwnerRep>() {
-                new PimsAcquisitionOwnerRep() {
-                    OwnerRepresentativeId = 100,
+            acqFile.PimsInterestHolders = new List<PimsInterestHolder>() {
+                new PimsInterestHolder() {
+                    InterestHolderTypeCode = "AOREP",
+                    InterestHolderId = 100,
                 },
             };
 
@@ -1072,9 +1068,7 @@ namespace Pims.Api.Test.Services
                                 Internal_Id = 1,
                                 CompensationRequisitionId = 1,
                                 AcquisitionOwnerId = null,
-                                InterestHolderId = null,
-                                OwnerRepresentativeId = 100,
-                                OwnerSolicitorId = null,
+                                InterestHolderId = 100,
                                 AcquisitionFilePersonId = null
                             },
                         },
@@ -1096,7 +1090,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Update_FKExeption_Removed_PeronOfInterest()
+        public void Update_FKExeption_Removed_PersonOfInterest()
         {
             // Arrange
             var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
@@ -1127,8 +1121,6 @@ namespace Pims.Api.Test.Services
                                 CompensationRequisitionId = 1,
                                 AcquisitionOwnerId = null,
                                 InterestHolderId = null,
-                                OwnerRepresentativeId = null,
-                                OwnerSolicitorId = null,
                                 AcquisitionFilePersonId = 100
                             },
                         },
@@ -1667,8 +1659,6 @@ namespace Pims.Api.Test.Services
                                 CompensationRequisitionId = 1,
                                 AcquisitionOwnerId = null,
                                 InterestHolderId = null,
-                                OwnerRepresentativeId = null,
-                                OwnerSolicitorId = null,
                                 AcquisitionFilePersonId = null
                             },
                         },
@@ -1712,8 +1702,6 @@ namespace Pims.Api.Test.Services
                                 CompensationRequisitionId = 1,
                                 AcquisitionOwnerId = null,
                                 InterestHolderId = 100,
-                                OwnerRepresentativeId = null,
-                                OwnerSolicitorId = null,
                                 AcquisitionFilePersonId = null
                             },
                         },

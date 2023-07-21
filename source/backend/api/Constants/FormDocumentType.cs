@@ -33,5 +33,21 @@ namespace Pims.Api.Constants
         // License of Occupation (H0074)
         [EnumMember(Value = "H0074")]
         H0074,
+
+        // Notice of Expropriation (Form 1)
+        [EnumMember(Value = "FORM1")]
+        FORM1,
+
+        // Certificate of Approval of Expropriation (Form 5)
+        [EnumMember(Value = "FORM5")]
+        FORM5,
+
+        // Notice of Advance Payment (Form 8)
+        [EnumMember(Value = "FORM8")]
+        FORM8,
+
+        // Vesting Notice (Form 9)
+        [EnumMember(Value = "FORM9")]
+        FORM9,
     }
 }
