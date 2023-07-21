@@ -1,4 +1,4 @@
-import { LatLngLiteral } from 'leaflet';
+import { LatLngBounds, LatLngLiteral } from 'leaflet';
 
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
@@ -30,6 +30,7 @@ export type MachineContext = {
 
   isLoading: boolean;
   sideBarType: SideBarType;
+  requestedFitBounds: LatLngBounds;
   requestedFlyTo: RequestedFlyTo;
   draftLocations: LatLngLiteral[];
 };

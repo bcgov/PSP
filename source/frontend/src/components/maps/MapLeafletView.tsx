@@ -13,7 +13,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { LayerGroup, MapContainer as ReactLeafletMap, TileLayer } from 'react-leaflet';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM } from '@/constants/strings';
+import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
 
 import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
 import BasemapToggle, {
@@ -63,26 +63,34 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
   const handleMapClickEvent = (latlng: LatLng) => {
     mapMachine.mapClick(latlng);
-    //showLocationDetails(latlng);
   };
 
   const [zoom, setZoom] = useState(DEFAULT_MAP_ZOOM);
+  const [isMapReady, setIsMapReady] = useState(false);
 
   const handleZoomUpdate = (zoomLevel: number) => {
     setZoom(zoomLevel);
   };
 
-  //const requestedZoom = useSelector(zoomRequest);
   const mapMachine = useMapStateMachine();
 
-  const mapMachinePendingRefresh = mapMachine.pendingRefresh;
-  const mapMachineProcessPendingRefresh = mapMachine.processPendingRefresh;
+  const mapMachinePendingRefresh = mapMachine.pendingFitBounds;
+  const mapMachineProcessFitBounds = mapMachine.processFitBounds;
+  const mapMachineRequestedFitBounds = mapMachine.requestedFitBounds;
   useEffect(() => {
-    if (mapMachinePendingRefresh === true && mapRef.current !== null) {
-      mapRef.current.fitBounds(defaultBounds, { maxZoom: 5 });
-      mapMachineProcessPendingRefresh();
+    if (isMapReady && mapMachinePendingRefresh && mapRef.current !== null) {
+      mapRef.current.fitBounds(mapMachineRequestedFitBounds, {
+        maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM,
+      });
+      mapMachineProcessFitBounds();
     }
-  }, [mapMachinePendingRefresh, mapMachineProcessPendingRefresh]);
+  }, [
+    isMapReady,
+    mapMachinePendingRefresh,
+    mapMachineProcessFitBounds,
+    mapMachineRequestedFitBounds,
+    zoom,
+  ]);
 
   const mapMachineMapLocationFeatureDataset = mapMachine.mapLocationFeatureDataset;
   useEffect(() => {
@@ -97,21 +105,21 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
       };
       if (mapMachineMapLocationFeatureDataset.parcelFeature !== null) {
         activeFeature = mapMachineMapLocationFeatureDataset.parcelFeature;
-      } else if (mapMachineMapLocationFeatureDataset.municipalityFeature) {
-        activeFeature = mapMachineMapLocationFeatureDataset.municipalityFeature;
-      }
-
-      if (mapMachineMapLocationFeatureDataset.municipalityFeature?.geometry?.type === 'Polygon') {
         activeFeatureLayer?.addData(activeFeature);
+      } else if (mapMachineMapLocationFeatureDataset.municipalityFeature !== null) {
+        activeFeature = mapMachineMapLocationFeatureDataset.municipalityFeature;
+        if (mapMachineMapLocationFeatureDataset.municipalityFeature?.geometry?.type === 'Polygon') {
+          activeFeatureLayer?.addData(activeFeature);
+        }
       }
     }
   }, [activeFeatureLayer, mapMachineMapLocationFeatureDataset]);
 
-  const hasPendingFlyTo = mapMachine.hasPendingFlyTo;
+  const hasPendingFlyTo = mapMachine.pendingFlyTo;
   const requestedFlyTo = mapMachine.requestedFlyTo;
   const mapMachineProcessFlyTo = mapMachine.processFlyTo;
   useEffect(() => {
-    if (hasPendingFlyTo) {
+    if (hasPendingFlyTo && isMapReady) {
       if (requestedFlyTo.bounds !== null) {
         mapRef?.current?.flyToBounds(requestedFlyTo.bounds, { animate: false });
       }
@@ -123,7 +131,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
       mapMachineProcessFlyTo();
     }
-  }, [hasPendingFlyTo, requestedFlyTo, mapMachineProcessFlyTo]);
+  }, [isMapReady, hasPendingFlyTo, requestedFlyTo, mapMachineProcessFlyTo]);
 
   useEffect(() => {
     mapRef.current?.invalidateSize();
@@ -145,7 +153,8 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
   const fitMapBounds = () => {
     if (mapRef.current) {
-      mapRef.current.fitBounds(defaultBounds);
+      // TODO: Is this necessary?
+      //mapRef.current.fitBounds(defaultBounds);
     }
   };
 
@@ -154,6 +163,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   };
 
   const handleMapCreated = (mapInstance: L.Map) => {
+    setIsMapReady(true);
     if (mapInstance !== null) {
       mapRef.current = mapInstance;
     }

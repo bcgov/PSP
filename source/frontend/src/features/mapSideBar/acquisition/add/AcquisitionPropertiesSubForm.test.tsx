@@ -4,10 +4,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import {
-  emptyFullyFeaturedFeatureCollection,
-  emptyPimsFeatureCollection,
-} from '@/components/common/mapFSM/models';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { PropertyForm } from '../../shared/models';
@@ -17,49 +14,9 @@ import { AcquisitionForm } from './models';
 const mockStore = configureMockStore([thunk]);
 jest.mock('@react-keycloak/web');
 
-const setDraftProperties = jest.fn();
+const customSetDraftProperties = jest.fn();
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-const mapMachineBaseMock = {
-  requestFlyToBounds: jest.fn(),
-  mapFeatureData: {
-    pimsFeatures: emptyPimsFeatureCollection,
-    fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
-  },
-
-  isSidebarOpen: false,
-  hasPendingFlyTo: false,
-  requestedFlyTo: {
-    location: null,
-    bounds: null,
-  },
-  mapFeatureSelected: null,
-  mapLocationSelected: null,
-  mapLocationFeatureDataset: null,
-  selectedFeatureDataset: null,
-  showPopup: false,
-  isLoading: false,
-  mapFilter: null,
-
-  draftLocations: [],
-  pendingRefresh: false,
-  iSelecting: false,
-  requestFlyToLocation: jest.fn(),
-
-  processFlyTo: jest.fn(),
-  processPendingRefresh: jest.fn(),
-  openSidebar: jest.fn(),
-  closeSidebar: jest.fn(),
-  closePopup: jest.fn(),
-  mapClick: jest.fn(),
-  mapMarkerClick: jest.fn(),
-  setMapFilter: jest.fn(),
-  refreshMapProperties: jest.fn(),
-  prepareForCreation: jest.fn(),
-  startSelection: jest.fn(),
-  finishSelection: jest.fn(),
-  setDraftLocations: setDraftProperties,
-};
 
 describe('AcquisitionProperties component', () => {
   // render component under test
@@ -89,12 +46,14 @@ describe('AcquisitionProperties component', () => {
       PropertyForm.fromMapProperty({ pid: '123-456-789' }),
       PropertyForm.fromMapProperty({ pin: '1111222' }),
     ];
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+    (useMapStateMachine as jest.Mock).mockImplementation(() => {
+      return { ...mapMachineBaseMock, setDraftLocations: customSetDraftProperties };
+    });
   });
 
   afterEach(() => {
     jest.clearAllMocks();
-    setDraftProperties.mockReset();
+    customSetDraftProperties.mockReset();
   });
 
   it('renders as expected', () => {
@@ -106,7 +65,7 @@ describe('AcquisitionProperties component', () => {
     const { getByText } = setup({ initialForm: testForm });
 
     await waitFor(() => {
-      expect(setDraftProperties).toHaveBeenCalledWith([
+      expect(customSetDraftProperties).toHaveBeenCalledWith([
         { lat: 0, lng: 0 },
         { lat: 0, lng: 0 },
       ]);
@@ -122,7 +81,7 @@ describe('AcquisitionProperties component', () => {
     userEvent.click(pidRow);
 
     await waitFor(() => {
-      expect(setDraftProperties).toHaveBeenCalledWith([{ lat: 0, lng: 0 }]);
+      expect(customSetDraftProperties).toHaveBeenCalledWith([{ lat: 0, lng: 0 }]);
     });
 
     expect(queryByText('PID: 123-456-789')).toBeNull();
@@ -132,7 +91,7 @@ describe('AcquisitionProperties component', () => {
     const { getByTitle } = setup({ initialForm: testForm });
 
     await waitFor(() => {
-      expect(setDraftProperties).toHaveBeenCalledWith([
+      expect(customSetDraftProperties).toHaveBeenCalledWith([
         { lat: 0, lng: 0 },
         { lat: 0, lng: 0 },
       ]);
@@ -149,7 +108,7 @@ describe('AcquisitionProperties component', () => {
     setup({ initialForm: formWithProperties });
 
     await waitFor(() => {
-      expect(setDraftProperties).toHaveBeenCalledWith([
+      expect(customSetDraftProperties).toHaveBeenCalledWith([
         { lat: 1, lng: 2 },
         { lat: 0, lng: 0 },
       ]);
@@ -166,7 +125,7 @@ describe('AcquisitionProperties component', () => {
     setup({ initialForm: formWithProperties });
 
     await waitFor(() => {
-      expect(setDraftProperties).toHaveBeenCalledWith([
+      expect(customSetDraftProperties).toHaveBeenCalledWith([
         { lat: 1, lng: 2 },
         { lat: 3, lng: 4 },
       ]);

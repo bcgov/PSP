@@ -1,5 +1,7 @@
+import { latLngBounds } from 'leaflet';
 import { assign, createMachine, raise } from 'xstate';
 
+import { defaultBounds } from '@/components/maps/constants';
 import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
 import { emptyFeatureData } from '../models';
@@ -28,9 +30,9 @@ const featureDataStates = {
           actions: [
             assign({
               isLoading: () => false,
-              mapFeatureData: (context, event: any) => event.data,
+              mapFeatureData: (_, event: any) => event.data,
             }),
-            raise('REQUEST_REFRESH'),
+            raise('REQUEST_FIT_BOUNDS'),
           ],
         },
       },
@@ -50,6 +52,7 @@ const mapRequestStates = {
               location: event.latlng,
             }),
           }),
+          target: 'pendingFlyTo',
         },
         REQUEST_FLY_TO_BOUNDS: {
           actions: assign({
@@ -58,9 +61,17 @@ const mapRequestStates = {
               location: null,
             }),
           }),
+          target: 'pendingFlyTo',
         },
-        REQUEST_REFRESH: {
-          target: 'pendingRefresh',
+        REQUEST_FIT_BOUNDS: {
+          actions: assign((context: any) => {
+            if (context.draftLocations.length > 0) {
+              context.requestedFitBounds = latLngBounds(context.draftLocations);
+            } else {
+              context.requestedFitBounds = defaultBounds;
+            }
+          }),
+          target: 'pendingFitBounds',
         },
       },
     },
@@ -68,15 +79,21 @@ const mapRequestStates = {
       on: {
         PROCESS_FLY_TO: {
           actions: assign({
-            requestedFlyTo: () => null,
+            requestedFlyTo: () => ({
+              bounds: null,
+              location: null,
+            }),
           }),
           target: 'nothingPending',
         },
       },
     },
-    pendingRefresh: {
+    pendingFitBounds: {
       on: {
-        PROCESS_REFRESH: {
+        PROCESS_FIT_BOUNDS: {
+          actions: assign({
+            requestedFitBounds: () => defaultBounds,
+          }),
           target: 'nothingPending',
         },
       },
@@ -127,10 +144,19 @@ const selectedFeatureStates = {
         src: 'loadLocationData',
         onDone: {
           target: 'idle',
+          actions: [
+            assign({
+              isLoading: () => false,
+              showPopup: () => true,
+              mapLocationFeatureDataset: (context, event: any) => event.data,
+            }),
+            // 'navigateToProperty', // TODO:uncomment this to show property information sidebar
+          ],
+        },
+        onError: {
+          target: 'idle',
           actions: assign({
             isLoading: () => false,
-            showPopup: () => true,
-            mapLocationFeatureDataset: (context, event: any) => event.data,
           }),
         },
       },
@@ -168,7 +194,12 @@ const sideBarStates = {
           target: 'selecting',
         },
         SET_DRAFT_LOCATIONS: {
-          actions: assign({ draftLocations: (_, event: any) => event.locations }),
+          actions: [
+            assign((context: any, event: any) => {
+              context.draftLocations = event.locations || [];
+            }),
+            raise('REQUEST_FIT_BOUNDS'),
+          ],
         },
       },
     },
@@ -176,7 +207,10 @@ const sideBarStates = {
       on: {
         FINISH_SELECTION: { target: 'sidebarOpen' },
         SET_DRAFT_LOCATIONS: {
-          actions: assign({ draftLocations: (_, event: any) => event.locations }),
+          actions: [
+            assign({ draftLocations: (_, event: any) => event.locations }),
+            raise('REQUEST_FIT_BOUNDS'),
+          ],
         },
       },
     },
@@ -196,6 +230,7 @@ export const mapMachine = createMachine<MachineContext>({
       location: null,
       bounds: null,
     },
+    requestedFitBounds: defaultBounds,
     mapLocationSelected: null,
     mapFeatureSelected: null,
     mapLocationFeatureDataset: null,

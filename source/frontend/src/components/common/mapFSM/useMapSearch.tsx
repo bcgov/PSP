@@ -29,6 +29,60 @@ export const useMapSearch = () => {
   const fullyAttributedServiceFindByPin = fullyAttributedService.findByPin;
   const fullyAttributedServiceFindByPid = fullyAttributedService.findByPid;
 
+  const fullyAttributedServiceFindOne = fullyAttributedService.findOne;
+  const pimsPropertyLayerServiceFindOne = pimsPropertyLayerService.findOne;
+
+  const searchOneLocation = useCallback(
+    async (latitude: number, longitude: number) => {
+      debugger;
+      let result: MapFeatureData = emptyFeatureData;
+      try {
+        const findOneParcelTask = fullyAttributedServiceFindOne({
+          lat: latitude,
+          lng: longitude,
+        });
+        const findOnePropertyTask = pimsPropertyLayerServiceFindOne(
+          {
+            lat: latitude,
+            lng: longitude,
+          },
+          'GEOMETRY',
+        );
+        const parcelFeature = await findOneParcelTask;
+        const pimsPropertyFeature = await findOnePropertyTask;
+
+        //if found in inventory return or else non inventory
+        const foundGeometry = pimsPropertyFeature
+          ? pimsPropertyFeature.geometry
+          : parcelFeature?.geometry;
+        if (pimsPropertyFeature !== undefined) {
+          result.pimsFeatures = { type: 'FeatureCollection', features: [pimsPropertyFeature] };
+        } else if (parcelFeature !== undefined) {
+          result.fullyAttributedFeatures = { type: 'FeatureCollection', features: [parcelFeature] };
+        }
+
+        if (foundGeometry !== undefined) {
+          if (pimsPropertyFeature !== undefined) {
+            result.pimsFeatures = { type: 'FeatureCollection', features: [pimsPropertyFeature] };
+          } else if (parcelFeature !== undefined) {
+            result.fullyAttributedFeatures = {
+              type: 'FeatureCollection',
+              features: [parcelFeature],
+            };
+          }
+          toast.info(`Property found`);
+        } else {
+          toast.info('No search results found');
+        }
+      } catch (error) {
+        toast.error((error as Error).message, { autoClose: 7000 });
+      } finally {
+      }
+      return result;
+    },
+    [fullyAttributedServiceFindOne, pimsPropertyLayerServiceFindOne],
+  );
+
   const searchMany = useCallback(
     async (filter?: IGeoSearchParams) => {
       let result: MapFeatureData = emptyFeatureData;
@@ -142,6 +196,7 @@ export const useMapSearch = () => {
   );
 
   return {
+    searchOneLocation,
     searchMany,
     loadingPimsProperties: pimsPropertyLayerService.loadPropertyLayer,
     loadingPimsPropertiesResponse: pimsPropertyLayerService.loadPropertyLayer.response,

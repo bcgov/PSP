@@ -2,12 +2,9 @@ import { createMemoryHistory } from 'history';
 import { useMap } from 'react-leaflet';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import {
-  emptyFullyFeaturedFeatureCollection,
-  emptyPimsFeatureCollection,
-} from '@/components/common/mapFSM/models';
 import Claims from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { emptyFullyAttributed } from '@/models/layers/parcelMapBC';
 import { EmptyProperty } from '@/models/layers/pimsPropertyLocationView';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -20,46 +17,6 @@ jest.mock('@react-keycloak/web');
 jest.mock('react-leaflet');
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-const mapMachineBaseMock = {
-  requestFlyToBounds: jest.fn(),
-  mapFeatureData: {
-    pimsFeatures: emptyPimsFeatureCollection,
-    fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
-  },
-
-  isSidebarOpen: false,
-  hasPendingFlyTo: false,
-  requestedFlyTo: {
-    location: null,
-    bounds: null,
-  },
-  mapFeatureSelected: null,
-  mapLocationSelected: null,
-  mapLocationFeatureDataset: null,
-  selectedFeatureDataset: null,
-  showPopup: false,
-  isLoading: false,
-  mapFilter: null,
-
-  draftLocations: [],
-  pendingRefresh: false,
-  iSelecting: false,
-  requestFlyToLocation: jest.fn(),
-
-  processFlyTo: jest.fn(),
-  processPendingRefresh: jest.fn(),
-  openSidebar: jest.fn(),
-  closeSidebar: jest.fn(),
-  closePopup: jest.fn(),
-  mapClick: jest.fn(),
-  mapMarkerClick: jest.fn(),
-  setMapFilter: jest.fn(),
-  refreshMapProperties: jest.fn(),
-  prepareForCreation: jest.fn(),
-  startSelection: jest.fn(),
-  finishSelection: jest.fn(),
-  setDraftLocations: jest.fn(),
-};
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },

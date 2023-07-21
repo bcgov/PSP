@@ -29,6 +29,7 @@ const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
   }, [mapFilter, mapMachineSetMapFilter, mapMachineMapFilter]);
 
   const handleMapFilterChange = (filter: IPropertyFilter) => {
+    console.log('handleMapFilterChange', filter);
     setMapFilter(filter);
   };
 

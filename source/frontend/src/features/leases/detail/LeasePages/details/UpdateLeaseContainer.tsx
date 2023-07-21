@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useContext, useEffect } from 'react';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
 import { useUpdateLease } from '@/features/leases/hooks/useUpdateLease';
@@ -28,6 +29,8 @@ export const UpdateLeaseContainer: React.FunctionComponent<
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
   >('Failed to update Lease File');
+
+  const mapMachine = useMapStateMachine();
 
   const leaseId = lease?.id;
   useEffect(() => {
@@ -55,6 +58,7 @@ export const UpdateLeaseContainer: React.FunctionComponent<
     if (!!updatedLease?.id) {
       formikRef?.current?.resetForm({ values: formikRef?.current?.values });
       await refresh();
+      mapMachine.refreshMapProperties();
       onEdit(false);
     }
   };

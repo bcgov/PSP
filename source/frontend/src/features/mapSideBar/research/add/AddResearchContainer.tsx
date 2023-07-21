@@ -73,6 +73,7 @@ export const AddResearchContainer: React.FunctionComponent<
             { autoClose: 15000 },
           );
         }
+        mapMachine.refreshMapProperties();
         history.replace(`/mapview/sidebar/research/${response.id}`);
         formikRef.current?.resetForm({ values: ResearchForm.fromApi(response) });
       }

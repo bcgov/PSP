@@ -36,12 +36,10 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
 
   const onPropertyViewClicked = () => {
     if (featureDataset?.pimsFeature?.properties.PROPERTY_ID) {
-      mapMachine.prepareForCreation();
       closeFlyout();
       const pimsFeature = featureDataset.pimsFeature;
       history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
     } else if (featureDataset?.parcelFeature?.properties.PID) {
-      mapMachine.prepareForCreation();
       closeFlyout();
       const parcelFeature = featureDataset?.parcelFeature;
       const parsedPid = pidParser(parcelFeature.properties.PID);

@@ -1,9 +1,11 @@
 import { useInterpret, useSelector } from '@xstate/react';
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 import React, { useCallback, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { IGeoSearchParams } from '@/constants/API';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
+import { pidParser } from '@/utils/propertyUtils';
 
 import { mapMachine } from './machineDefinition/mapMachine';
 import { SideBarType } from './machineDefinition/types';
@@ -13,7 +15,7 @@ import { useMapSearch } from './useMapSearch';
 
 export interface IMapStateMachineContext {
   isSidebarOpen: boolean;
-  hasPendingFlyTo: boolean;
+  pendingFlyTo: boolean;
   requestedFlyTo: RequestedFlyTo;
   mapFeatureSelected: FeatureSelected | null;
   mapLocationSelected: LatLngLiteral | null;
@@ -24,13 +26,14 @@ export interface IMapStateMachineContext {
   mapFilter: IPropertyFilter | null;
   mapFeatureData: MapFeatureData;
   draftLocations: LatLngLiteral[];
-  pendingRefresh: boolean;
+  pendingFitBounds: boolean;
+  requestedFitBounds: LatLngBounds;
   iSelecting: boolean;
 
   requestFlyToLocation: (latlng: LatLngLiteral) => void;
   requestFlyToBounds: (bounds: LatLngBounds) => void;
   processFlyTo: () => void;
-  processPendingRefresh: () => void;
+  processFitBounds: () => void;
   openSidebar: (sidebarType: SideBarType) => void;
   closeSidebar: () => void;
   closePopup: () => void;
@@ -63,8 +66,22 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 }) => {
   const locationLoader = useLoactionFeatureLoader();
   const mapSearch = useMapSearch();
+  const history = useHistory();
 
   const service = useInterpret(mapMachine, {
+    actions: {
+      navigateToProperty: (context, event: any) => {
+        const selectedFeatureData = context.mapLocationFeatureDataset;
+        if (selectedFeatureData?.pimsFeature?.properties.PROPERTY_ID) {
+          const pimsFeature = selectedFeatureData.pimsFeature;
+          history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
+        } else if (selectedFeatureData?.parcelFeature?.properties.PID) {
+          const parcelFeature = selectedFeatureData.parcelFeature;
+          const parsedPid = pidParser(parcelFeature.properties.PID);
+          history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
+        }
+      },
+    },
     services: {
       loadLocationData: (context, event: any) => {
         let latLng: LatLngLiteral = { lat: 0, lng: 0 };
@@ -79,7 +96,14 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
       },
       loadFeatures: (context: any, event: any) => {
         const geoFilter = getQueryParams(context.mapFilter);
-        return mapSearch.searchMany(geoFilter);
+        if (geoFilter.latitude !== undefined && geoFilter.longitude) {
+          return mapSearch.searchOneLocation(
+            Number(geoFilter.latitude),
+            Number(geoFilter.longitude),
+          );
+        } else {
+          return mapSearch.searchMany(geoFilter);
+        }
       },
     },
   });
@@ -148,9 +172,9 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     });
   }, [serviceSend]);
 
-  const processPendingRefresh = useCallback(() => {
+  const processFitBounds = useCallback(() => {
     serviceSend({
-      type: 'PROCESS_REFRESH',
+      type: 'PROCESS_FIT_BOUNDS',
     });
   }, [serviceSend]);
 
@@ -192,12 +216,6 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     return state.context.mapLocationFeatureDataset !== null;
   }, [state.context.mapLocationFeatureDataset]);
 
-  const hasPendingFlyTo = useMemo(() => {
-    return (
-      state.context.requestedFlyTo.bounds !== null || state.context.requestedFlyTo.location !== null
-    );
-  }, [state.context.requestedFlyTo.bounds, state.context.requestedFlyTo.location]);
-
   return (
     <MapStateMachineContext.Provider
       value={{
@@ -205,7 +223,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           { mapVisible: { sideBar: 'sidebarOpen' } },
           { mapVisible: { sideBar: 'selecting' } },
         ].some(state.matches),
-        hasPendingFlyTo,
+        pendingFlyTo: state.matches({ mapVisible: { mapRequest: 'pendingFlyTo' } }),
         requestedFlyTo: state.context.requestedFlyTo,
         mapFeatureSelected: state.context.mapFeatureSelected,
         mapLocationSelected: state.context.mapLocationSelected,
@@ -216,13 +234,14 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         mapFilter: state.context.mapFilter,
         mapFeatureData: state.context.mapFeatureData,
         draftLocations: state.context.draftLocations,
-        pendingRefresh: state.matches({ mapVisible: { mapRequest: 'pendingRefresh' } }),
+        pendingFitBounds: state.matches({ mapVisible: { mapRequest: 'pendingFitBounds' } }),
+        requestedFitBounds: state.context.requestedFitBounds,
         iSelecting: state.matches({ mapVisible: { sideBar: 'selecting' } }),
 
         setMapFilter,
         refreshMapProperties,
         processFlyTo,
-        processPendingRefresh,
+        processFitBounds,
         openSidebar,
         closeSidebar,
         requestFlyToLocation,
@@ -244,6 +263,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
   // The map will search for either identifier.
   const pinOrPidValue = filter.pinOrPid ? filter.pinOrPid?.replace(/-/g, '') : undefined;
+  debugger;
   return {
     PID: pinOrPidValue,
     PIN: pinOrPidValue,

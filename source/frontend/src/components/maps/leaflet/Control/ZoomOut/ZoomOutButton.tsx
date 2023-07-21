@@ -1,9 +1,9 @@
 import React from 'react';
 import { FaExpandArrowsAlt } from 'react-icons/fa';
-import { useMap } from 'react-leaflet';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons/Button';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { defaultBounds } from '@/components/maps/constants';
 
@@ -26,9 +26,9 @@ export type ZoomOutProps = {};
  * @param bounds The latlng bounds to zoom out to
  */
 export const ZoomOutButton: React.FC<React.PropsWithChildren<ZoomOutProps>> = () => {
-  const mapInstance = useMap();
+  const mapMachine = useMapStateMachine();
   const zoomOut = () => {
-    mapInstance.fitBounds(defaultBounds);
+    mapMachine.requestFlyToBounds(defaultBounds);
   };
   return (
     <Control position="topleft">

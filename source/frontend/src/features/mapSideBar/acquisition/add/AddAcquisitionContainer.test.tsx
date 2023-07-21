@@ -4,14 +4,11 @@ import {
   IMapStateMachineContext,
   useMapStateMachine,
 } from '@/components/common/mapFSM/MapStateMachineContext';
-import {
-  emptyFullyFeaturedFeatureCollection,
-  emptyPimsFeatureCollection,
-} from '@/components/common/mapFSM/models';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { Api_User } from '@/models/api/User';
 import { emptyRegion } from '@/models/layers/motRegionalBoundary';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -77,46 +74,6 @@ const addAcquisitionFile = jest.fn();
 } as ReturnType<typeof useAcquisitionProvider>);
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-const mapMachineBaseMock = {
-  requestFlyToBounds: jest.fn(),
-  mapFeatureData: {
-    pimsFeatures: emptyPimsFeatureCollection,
-    fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
-  },
-
-  isSidebarOpen: false,
-  hasPendingFlyTo: false,
-  requestedFlyTo: {
-    location: null,
-    bounds: null,
-  },
-  mapFeatureSelected: null,
-  mapLocationSelected: null,
-  mapLocationFeatureDataset: null,
-  selectedFeatureDataset: null,
-  showPopup: false,
-  isLoading: false,
-  mapFilter: null,
-
-  draftLocations: [],
-  pendingRefresh: false,
-  iSelecting: false,
-  requestFlyToLocation: jest.fn(),
-
-  processFlyTo: jest.fn(),
-  processPendingRefresh: jest.fn(),
-  openSidebar: jest.fn(),
-  closeSidebar: jest.fn(),
-  closePopup: jest.fn(),
-  mapClick: jest.fn(),
-  mapMarkerClick: jest.fn(),
-  setMapFilter: jest.fn(),
-  refreshMapProperties: jest.fn(),
-  prepareForCreation: jest.fn(),
-  startSelection: jest.fn(),
-  finishSelection: jest.fn(),
-  setDraftLocations: jest.fn(),
-};
 
 describe('AddAcquisitionContainer component', () => {
   // render component under test

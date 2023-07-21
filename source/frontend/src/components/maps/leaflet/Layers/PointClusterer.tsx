@@ -11,7 +11,6 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import useSupercluster from '@/components/maps/hooks/useSupercluster';
 import { useFilterContext } from '@/components/maps/providers/FIlterProvider';
 import { ICluster } from '@/components/maps/types';
-import { MAX_ZOOM } from '@/constants/strings';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
@@ -164,7 +163,8 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   );
 
   /**
-   * Update the map bounds and zoom to make all draft properties visible.
+   * Cleanup draft layers.
+   * TODO: Figure out if this is still necessary now that this does not fit the map bounds
    */
   useDeepCompareEffect(() => {
     const hasDraftPoints = draftPoints.length > 0;
@@ -183,13 +183,13 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
       if (groupBounds.isValid()) {
         filterState.setChanged(false);
-        mapInstance.fitBounds(groupBounds, { maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM });
       }
     }
   }, [draftFeatureGroupRef, mapInstance, draftPoints]);
 
   /**
-   * Update the map bounds and zoom to make all property clusters visible.
+   * Updates the state of the cluster if the feature group has been updated.
+   * TODO: Figure out if this is still necessary
    */
   useDeepCompareEffect(() => {
     if (featureGroupRef.current) {
@@ -198,7 +198,6 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
       if (groupBounds.isValid() && filterState.changed && !selectedFeature && tilesLoaded) {
         filterState.setChanged(false);
-        mapInstance.fitBounds(groupBounds, { maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM });
       }
 
       setSpider({});

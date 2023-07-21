@@ -64,7 +64,7 @@ export const AddLeaseContainer: React.FunctionComponent<
           { autoClose: 15000 },
         );
       }
-
+      mapMachine.refreshMapProperties();
       history.replace(`/mapview/sidebar/lease/${response.id}`);
     }
   };
