@@ -4,8 +4,8 @@ import * as React from 'react';
 
 import { InlineInput } from '@/components/common/form/styles';
 import * as Styled from '@/features/leases/detail/styles';
-import { IFormLease } from '@/interfaces';
-import { ILeaseTerm } from '@/interfaces/ILeaseTerm';
+import { LeaseFormModel } from '@/features/leases/models';
+import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { leaseTermColumns } from './columns';
@@ -23,10 +23,10 @@ export const DetailTerms: React.FunctionComponent<React.PropsWithChildren<IDetai
   disabled,
   nameSpace,
 }) => {
-  const formikProps = useFormikContext<IFormLease>();
+  const formikProps = useFormikContext<LeaseFormModel>();
   const { values } = formikProps;
   const terms = getIn(values, withNameSpace(nameSpace, 'terms'));
-  const currentTerm = terms.find((term: ILeaseTerm) =>
+  const currentTerm = terms.find((term: Api_LeaseTerm) =>
     moment().isSameOrBefore(moment(term.expiryDate), 'day'),
   );
 
@@ -47,7 +47,7 @@ export const DetailTerms: React.FunctionComponent<React.PropsWithChildren<IDetai
         />
         <InlineInput disabled={disabled} label="Total renewal terms:" field="renewalCount" />
       </Styled.TableHeadFields>
-      <Styled.TermsTable<ILeaseTerm>
+      <Styled.TermsTable<Api_LeaseTerm>
         name="leaseTermsTable"
         data={terms || []}
         columns={leaseTermColumns}

@@ -19,7 +19,8 @@ import { LoginStyled } from './LoginStyled';
  * @returns Login component.
  */
 const Login = () => {
-  const { redirect } = useQuery();
+  const query = useQuery();
+  const redirect = query.get('redirect');
   const keyCloakWrapper = useKeycloakWrapper();
   const keycloak = keyCloakWrapper.obj;
   const isIE = usingIE();

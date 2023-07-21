@@ -26,6 +26,7 @@ export class Api_GenerateAcquisitionFile {
   person_owners: Api_GenerateOwner[];
   organization_owners: Api_GenerateOwner[];
   all_owners_string: string;
+  all_owners_string_and: string;
   file_number: string;
   file_name: string;
   project_number: string;
@@ -50,21 +51,31 @@ export class Api_GenerateAcquisitionFile {
     const allInterestHoldersPropertes = interestHolders.flatMap(
       ih => ih?.interestHolderProperties ?? [],
     );
+
     this.properties =
       file?.fileProperties?.map(fp => {
         const matchingInterestHolderProperties =
           allInterestHoldersPropertes.filter(
-            ihp => ihp.acquisitionFilePropertyId === fp?.id && ihp.interestTypeCode?.id !== 'NIP',
+            ihp =>
+              ihp.acquisitionFilePropertyId === fp?.id &&
+              ihp.propertyInterestTypes.some(pit => pit.id !== 'NIP'),
           ) ?? [];
-        const interestHoldersForAcquisitionFile = matchingInterestHolderProperties.map(
+
+        const interestHoldersForAcquisitionFile = matchingInterestHolderProperties.flatMap(
           (mihp: Api_InterestHolderProperty) =>
-            new Api_GenerateInterestHolder(
-              interestHolders.find(ih => ih.interestHolderId === mihp.interestHolderId) ?? null,
-              mihp,
+            mihp.propertyInterestTypes.map(
+              pit =>
+                new Api_GenerateInterestHolder(
+                  interestHolders.find(ih => ih.interestHolderId === mihp.interestHolderId) ?? null,
+                  mihp,
+                  pit,
+                ),
             ),
         );
+
         return new Api_GenerateH120Property(fp?.property, interestHoldersForAcquisitionFile);
       }) ?? [];
+
     this.file_name = file?.fileName ?? '';
     this.file_number = file?.fileNumber ?? '';
     this.project_name = file?.project?.description ?? '';
@@ -85,5 +96,6 @@ export class Api_GenerateAcquisitionFile {
     this.project = new Api_GenerateProject(file?.project ?? null);
     this.product = new Api_GenerateProduct(file?.product ?? null);
     this.all_owners_string = this.owners.map(owner => owner.owner_string).join(', ');
+    this.all_owners_string_and = this.owners.map(owner => owner.owner_string).join(' And ');
   }
 }

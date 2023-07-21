@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Areas.Lease.Controllers;
+using Pims.Api.Areas.Lease.Models.Lease;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal;
@@ -14,7 +15,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
-using Model = Pims.Api.Areas.Lease.Models.Lease;
 
 namespace Pims.Api.Test.Controllers.Lease
 {
@@ -24,7 +24,7 @@ namespace Pims.Api.Test.Controllers.Lease
     [ExcludeFromCodeCoverage]
     public class LeaseImprovementControllerTest
     {
-        private Mock<ILeaseRepository> _repository;
+        private Mock<ILeaseService> _repository;
         private PropertyImprovementController _controller;
         private IMapper _mapper;
         private TestHelper _helper;
@@ -34,7 +34,7 @@ namespace Pims.Api.Test.Controllers.Lease
             _helper = new TestHelper();
             _controller = _helper.CreateController<PropertyImprovementController>(Permissions.LeaseView);
             _mapper = _helper.GetService<IMapper>();
-            _repository = _helper.GetService<Mock<ILeaseRepository>>();
+            _repository = _helper.GetService<Mock<ILeaseService>>();
         }
 
         #region Tests
@@ -49,13 +49,13 @@ namespace Pims.Api.Test.Controllers.Lease
             var lease = EntityHelper.CreateLease(1);
             lease.PimsPropertyImprovements = new List<Pims.Dal.Entities.PimsPropertyImprovement>() { new Dal.Entities.PimsPropertyImprovement() { Internal_Id = 1 } };
 
-            _repository.Setup(m => m.UpdateLeaseImprovements(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>())).Returns(lease);
+            _repository.Setup(m => m.UpdateImprovementsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>())).Returns(lease.PimsPropertyImprovements);
 
             // Act
-            var result = _controller.UpdateImprovements(lease.Internal_Id, _mapper.Map<Model.LeaseModel>(lease));
+            var result = _controller.UpdateImprovements(lease.Internal_Id, _mapper.Map<IEnumerable<Models.Concepts.PropertyImprovementModel>>(lease.PimsPropertyImprovements));
 
             // Assert
-            _repository.Verify(m => m.UpdateLeaseImprovements(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>()), Times.Once());
+            _repository.Verify(m => m.UpdateImprovementsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>()), Times.Once());
         }
         #endregion
         #endregion

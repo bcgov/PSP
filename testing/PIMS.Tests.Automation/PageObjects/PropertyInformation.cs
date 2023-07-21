@@ -419,6 +419,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearMultiSelectInput(propertyDetailsRoadEstablishInput);
                 foreach (string status in property.HighwayEstablishedBy)
                 {
+                    Wait();
                     FocusAndClick(propertyDetailsRoadEstablishInput);
                     ChooseMultiSelectSpecificOption(propertyDetailsRoadEstablishOptions, status);
                 }

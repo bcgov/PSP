@@ -194,9 +194,7 @@ exports[`DepositsReturnedContainer component renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                Pet deposit
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
@@ -211,7 +209,7 @@ exports[`DepositsReturnedContainer component renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                $1,234.00
+                $2,000.00
               </div>
               <div
                 class="td"
@@ -250,13 +248,7 @@ exports[`DepositsReturnedContainer component renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                <a
-                  href="/contact/O3"
-                >
-                  test organization
-                </a>
-              </div>
+              />
               <div
                 class="td"
                 role="cell"

@@ -341,7 +341,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyDocumentFields(string documentType)
         {
-            Wait(4000);
+            Wait(5000);
             ChooseSpecificSelectOption(documentUploadDocTypeModalSelect, documentType);
 
             Wait();
@@ -413,7 +413,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyDocumentsListView(string fileType)
         {
             Wait();
-            if (fileType == "Lease")
+            if (fileType.Equals("Lease") || fileType.Equals("CDOGS Templates"))
             {
                 Assert.True(webDriver.FindElement(documentsLeasesTitle).Displayed);
                 Assert.True(webDriver.FindElement(addDocumentLeasesBttn).Displayed);

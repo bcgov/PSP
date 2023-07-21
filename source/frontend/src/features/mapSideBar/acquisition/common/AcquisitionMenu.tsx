@@ -8,8 +8,6 @@ import EditButton from '@/components/common/EditButton';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 
-import { AcquisitionContainerState } from '../AcquisitionContainer';
-import { EditFormType } from '../EditFormNames';
 import GenerateFormContainer from './GenerateForm/GenerateFormContainer';
 import GenerateFormView from './GenerateForm/GenerateFormView';
 
@@ -18,7 +16,7 @@ export interface IAcquisitionMenuProps {
   items: string[];
   selectedIndex: number;
   onChange: (index: number) => void;
-  setContainerState: (value: Partial<AcquisitionContainerState>) => void;
+  onShowPropertySelector: () => void;
 }
 
 const AcquisitionMenu: React.FunctionComponent<
@@ -31,41 +29,49 @@ const AcquisitionMenu: React.FunctionComponent<
   return (
     <>
       <StyledMenuWrapper>
-        {props.items.map((label: string, index: number) => (
-          <StyledRow
-            key={`menu-item-row-${index}`}
-            data-testid={`menu-item-row-${index}`}
-            className={cx('no-gutters', { selected: props.selectedIndex === index })}
-            onClick={() => (props.selectedIndex !== index ? handleClick(index) : '')}
-          >
-            <Col xs="1">{props.selectedIndex === index && <FaCaretRight />}</Col>
-            {index !== 0 && (
-              <Col xs="auto" className="pr-2">
-                <StyledIconWrapper className={cx({ selected: props.selectedIndex === index })}>
-                  {index}
-                </StyledIconWrapper>
-              </Col>
-            )}
-            <Col>{label}</Col>
-            {index === 0 && (
-              <StyledMenuHeaderWrapper>
-                <StyledMenuHeader>Properties</StyledMenuHeader>
-                {hasClaim(Claims.ACQUISITION_EDIT) && (
-                  <EditButton
-                    title="Change properties"
-                    icon={<EditMapMarker width="2.4rem" height="2.4rem" />}
-                    onClick={() => {
-                      props.setContainerState({
-                        isEditing: true,
-                        activeEditForm: EditFormType.PROPERTY_SELECTOR,
-                      });
-                    }}
-                  />
-                )}
-              </StyledMenuHeaderWrapper>
-            )}
-          </StyledRow>
-        ))}
+        {props.items.map((label: string, index: number) => {
+          if (index === 0) {
+            return (
+              <StyledRow
+                key={`menu-item-row-${index}`}
+                data-testid={`menu-item-row-${index}`}
+                className={cx('no-gutters', { selected: props.selectedIndex === index })}
+              >
+                <Col xs="1">{props.selectedIndex === index && <FaCaretRight />}</Col>
+                <Col onClick={() => (props.selectedIndex !== index ? handleClick(index) : '')}>
+                  {label}
+                </Col>
+                <StyledMenuHeaderWrapper>
+                  <StyledMenuHeader>Properties</StyledMenuHeader>
+                  {hasClaim(Claims.ACQUISITION_EDIT) && (
+                    <EditButton
+                      title="Change properties"
+                      icon={<EditMapMarker width="2.4rem" height="2.4rem" />}
+                      onClick={props.onShowPropertySelector}
+                    />
+                  )}
+                </StyledMenuHeaderWrapper>
+              </StyledRow>
+            );
+          } else {
+            return (
+              <StyledRow
+                key={`menu-item-row-${index}`}
+                data-testid={`menu-item-row-${index}`}
+                className={cx('no-gutters', { selected: props.selectedIndex === index })}
+                onClick={() => (props.selectedIndex !== index ? handleClick(index) : '')}
+              >
+                <Col xs="1">{props.selectedIndex === index && <FaCaretRight />}</Col>
+                <Col xs="auto" className="pr-2">
+                  <StyledIconWrapper className={cx({ selected: props.selectedIndex === index })}>
+                    {index}
+                  </StyledIconWrapper>
+                </Col>
+                <Col>{label}</Col>
+              </StyledRow>
+            );
+          }
+        })}
       </StyledMenuWrapper>
       <GenerateFormContainer acquisitionFileId={props.acquisitionFileId} View={GenerateFormView} />
     </>

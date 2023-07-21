@@ -24,5 +24,5 @@ export const renderPercentage = <T extends object>({ cell: { value } }: CellProp
 export const renderBooleanAsYesNo = ({ value }: CellProps<any, boolean | undefined>) =>
   stringToFragment(value ? 'Y' : 'N');
 
-export const renderTypeCode = ({ value }: CellProps<any, Api_TypeCode<any> | undefined>) =>
+export const renderTypeCode = ({ value }: CellProps<any, Api_TypeCode<any> | undefined | null>) =>
   stringToFragment(value?.description ?? '');

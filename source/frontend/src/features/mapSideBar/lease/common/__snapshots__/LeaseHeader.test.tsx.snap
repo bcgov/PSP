@@ -204,13 +204,11 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
                     class="c1 c2"
                   >
                     <span>
-                      100187539
+                      L-0000001
                     </span>
                     <span
                       class=""
-                    >
-                      Receivable
-                    </span>
+                    />
                   </div>
                 </strong>
               </div>
@@ -237,23 +235,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
                 class="pl-1 text-left col-9"
               >
                 <strong>
-                  <div>
-                    <span>
-                      45 - 904 Hollywood Crescent, Hollywood North
-                      <br />
-                    </span>
-                    <button
-                      class="c3 Button btn btn-link"
-                      data-testid="expand"
-                      type="button"
-                    >
-                      <div
-                        class="Button__value"
-                      >
-                        [+5 more...]
-                      </div>
-                    </button>
-                  </div>
+                  <div />
                 </strong>
               </div>
             </div>
@@ -279,7 +261,22 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
                 class="pl-1 text-left col-9"
               >
                 <strong>
-                  <div />
+                  <div>
+                    <span>
+                      <br />
+                    </span>
+                    <button
+                      class="c3 Button btn btn-link"
+                      data-testid="expand"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        [+2 more...]
+                      </div>
+                    </button>
+                  </div>
                 </strong>
               </div>
             </div>
@@ -300,7 +297,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
             >
               Created: 
               <strong>
-                Aug 25, 2022
+                Jan 1, 2022
               </strong>
                by 
               <span
@@ -309,7 +306,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
                 id="userNameTooltip"
               >
                 <strong>
-                  Lease Seed Data
+                  USER_B
                 </strong>
               </span>
             </span>
@@ -326,7 +323,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
             >
               Last updated: 
               <strong>
-                Oct 15, 2022
+                Jan 1, 2022
               </strong>
                by 
               <span
@@ -335,7 +332,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
                 id="userNameTooltip"
               >
                 <strong>
-                  Lease Seed Data
+                  USER_A
                 </strong>
               </span>
             </span>
@@ -360,9 +357,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
               <div
                 class="pl-1 text-left col-auto"
               >
-                <strong>
-                  Active
-                </strong>
+                <strong />
               </div>
             </div>
           </div>
@@ -394,9 +389,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
               <div
                 class="pl-1 text-left col-3"
               >
-                <strong>
-                  Sep 30, 2006
-                </strong>
+                <strong />
               </div>
               <div
                 class="pr-0 text-left col-auto"

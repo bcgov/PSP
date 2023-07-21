@@ -355,7 +355,7 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsFormTypes.AsNoTracking().ToArray();
         }
 
-        public IEnumerable<PimsInterestHolderInterestType> GetAllInterestHolderTypes()
+        public IEnumerable<PimsInterestHolderInterestType> GetAllInterestHolderInterestTypes()
         {
             return this.Context.PimsInterestHolderInterestTypes.AsNoTracking().ToArray();
         }

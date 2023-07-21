@@ -45,7 +45,7 @@ export const useGenerateH120 = () => {
     }
     const filePromise = getAcquisitionFile.execute(compensation.acquisitionFileId);
     const propertiesPromise = getAcquisitionProperties.execute(compensation.acquisitionFileId);
-    const compReqH120sPromise = getAcquisitionCompReqH120s.execute(
+    const compReqFinalH120sPromise = getAcquisitionCompReqH120s.execute(
       compensation.acquisitionFileId,
       true,
     );
@@ -55,12 +55,12 @@ export const useGenerateH120 = () => {
     );
     const payeePromise = getCompensationRequisitionPayee.execute(compensation.id);
 
-    const [file, properties, h120Categories, compReqH120s, interestHolders, payee] =
+    const [file, properties, h120Categories, compReqFinalH120s, interestHolders, payee] =
       await Promise.all([
         filePromise,
         propertiesPromise,
         h120CategoriesPromise,
-        compReqH120sPromise,
+        compReqFinalH120sPromise,
         interestHoldersPromise,
         payeePromise,
       ]);
@@ -89,7 +89,7 @@ export const useGenerateH120 = () => {
       compensation,
       fileData,
       h120Categories ?? [],
-      compReqH120s ?? [],
+      compReqFinalH120s ?? [],
       payee,
       client?.value,
     );

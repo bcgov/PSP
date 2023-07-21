@@ -174,7 +174,7 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
 }
 
 .c2 .nav-tabs {
-  height: 2.4rem;
+  height: auto;
 }
 
 .c2 .nav-item {
@@ -246,10 +246,6 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
 
 .c0 {
   height: 100%;
-}
-
-.c0 .nav-tabs {
-  height: 2.4rem;
 }
 
 .c0 .tab-content {

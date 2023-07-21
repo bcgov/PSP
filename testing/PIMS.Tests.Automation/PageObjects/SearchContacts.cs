@@ -97,7 +97,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Click on Create new contact
         public void CreateNewContactFromSearch()
         {
-            Wait();
+            Wait(4000);
             ButtonElement("Add new contact");
 
         }

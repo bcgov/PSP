@@ -1,0 +1,190 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tenant component renders as expected 1`] = `
+<DocumentFragment>
+  @media only screen and (max-width:1500px) {
+
+}
+
+<div
+    class="Toastify"
+  />
+  @media only screen and (max-width:1500px) {
+
+}
+
+<div />
+  .c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c3 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c2 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c1 {
+  padding: 0;
+  -webkit-column-count: 1;
+  column-count: 1;
+  -webkit-column-gap: 10rem;
+  column-gap: 10rem;
+  background-color: light-gray;
+  min-width: 75rem;
+}
+
+.c1 > * {
+  -webkit-break-inside: avoid-column;
+  break-inside: avoid-column;
+}
+
+.c1 li {
+  list-style-type: none;
+  padding: 2rem 0;
+  margin: 0;
+}
+
+.c4 {
+  background-color: transparent;
+  padding-left: 0.5rem;
+  margin-bottom: 0;
+}
+
+@media only screen and (max-width:1500px) {
+  .c1 {
+    -webkit-column-count: 1;
+    column-count: 1;
+  }
+}
+
+<div
+    class="c0 c1"
+  >
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Assignee
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      />
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Tenant
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      />
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Representative
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      />
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Property Manager
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      />
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Unknown
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      />
+    </div>
+    <div
+      class="c2 form-section c4"
+    >
+      <div
+        class="collapse show"
+      >
+        <p>
+          There are no tenants associated to this lease.
+        </p>
+        <p>
+          Click the edit icon to add tenants.
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

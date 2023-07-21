@@ -29,9 +29,5 @@ namespace Pims.Api.Models.Concepts
         public CompensationRequisitionModel CompensationRequisition { get; set; }
 
         public InterestHolderModel InterestHolder { get; set; }
-
-        public AcquisitionFileOwnerRepresentativeModel OwnerRepresentative { get; set; }
-
-        public AcquisitionFileOwnerSolicitorModel OwnerSolicitor { get; set; }
     }
 }

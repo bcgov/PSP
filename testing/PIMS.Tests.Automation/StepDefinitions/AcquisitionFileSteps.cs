@@ -32,6 +32,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties = new SharedSearchProperties(driver.Current);
             searchProperties = new SearchProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
+            notes = new Notes(driver.Current);
             acquisitionFile = new AcquisitionFile();
         }
 
@@ -63,7 +64,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I add additional information to the Acquisition File")]
         public void AddAdditionalInfoAcquisitionFile()
         {
-            /* TEST COVERAGE: PSP-4163, PSP-4323, PSP-4471, PSP-4553, PSP-4331, PSP-4469, PSP-5308, PSP-4327, PSP-4163, PSP-4593, PSP-4334, PSP-4329, PSP-4328, PSP-4327, PSP-4326, PSP-4325 */
+            /* TEST COVERAGE: PSP-4163, PSP-4323, PSP-4325, PSP-4326, PSP-4327, PSP-4328, PSP-4329, PSP-4331, PSP-4334, PSP-4469, PSP-4471, PSP-4553, PSP-4593, PSP-5308, PSP-5589, 
+             * PSP-5590, PSP-5790, PSP-6041, PSP-6268 */
 
             //Enter to Edit mode of Acquisition File
             acquisitionFiles.EditAcquisitionFileDetails();
@@ -77,7 +79,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Validate View File Details View Mode
             acquisitionFiles.VerifyAcquisitionFileView(acquisitionFile);
 
-            //Navigate to Edit Research File
+            //Verify automatic note created when
+            if (acquisitionFile.AcquisitionStatus != "Active")
+            {
+                notes.NavigateNotesTab();
+                notes.VerifyAutomaticNotes("Acquisition File", "Active", acquisitionFile.AcquisitionStatus);
+            }
+
+            //Navigate to Edit Acquisition File
             acquisitionFiles.NavigateToAddPropertiesAcquisitionFile();
 
             //Navigate to Add Properties by search and verify Add Properties UI/UX
@@ -88,42 +97,42 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (acquisitionFile.SearchProperties.PID != "")
             {
                 sharedSearchProperties.SelectPropertyByPID(acquisitionFile.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(false);
             }
 
             //Search for a property by PIN
             if (acquisitionFile.SearchProperties.PIN != "")
             {
                 sharedSearchProperties.SelectPropertyByPIN(acquisitionFile.SearchProperties.PIN);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(false);
             }
 
             //Search for a property by Plan
             if (acquisitionFile.SearchProperties.PlanNumber != "")
             {
                 sharedSearchProperties.SelectPropertyByPlan(acquisitionFile.SearchProperties.PlanNumber);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(false);
             }
 
             //Search for a property by Address
             if (acquisitionFile.SearchProperties.Address != "")
             {
                 sharedSearchProperties.SelectPropertyByAddress(acquisitionFile.SearchProperties.Address);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(false);
             }
 
             //Search for a property by Legal Description
             if (acquisitionFile.SearchProperties.LegalDescription != "")
             {
                 sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(false);
             }
 
             //Search for a duplicate property
             if (acquisitionFile.SearchProperties.PID != "")
             {
                 sharedSearchProperties.SelectPropertyByPID(acquisitionFile.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(true);
             }
 
             //Save Research File
@@ -273,7 +282,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Search for a property by Legal Description
             sharedSearchProperties.NavigateToSearchTab();
             sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
-            sharedSearchProperties.SelectFirstOption();
+            sharedSearchProperties.SelectFirstOption(false);
 
             //Save changes
             acquisitionFiles.SaveAcquisitionFileProperties();
@@ -341,6 +350,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"An existing Acquisition file has been edited successfully")]
         public void EditAcquisitionFileSuccess()
         {
+            acquisitionFiles.NavigateToFileDetailsTab();
             acquisitionFiles.VerifyAcquisitionFileView(acquisitionFile);
         }
 
@@ -360,23 +370,27 @@ namespace PIMS.Tests.Automation.StepDefinitions
             DataTable acquisitionSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionFiles"];
             ExcelDataContext.PopulateInCollection(acquisitionSheet);
 
-            //Lease Details
+            //Acquisition Status
             acquisitionFile.AcquisitionStatus = ExcelDataContext.ReadData(rowNumber, "AcquisitionStatus");
 
+            //Project
             acquisitionFile.AcquisitionProject = ExcelDataContext.ReadData(rowNumber, "AcquisitionProject");
             acquisitionFile.AcquisitionProjCode = ExcelDataContext.ReadData(rowNumber, "AcquisitionProjCode");
             acquisitionFile.AcquisitionProjProduct = ExcelDataContext.ReadData(rowNumber, "AcquisitionProjProduct");
             acquisitionFile.AcquisitionProjFunding = ExcelDataContext.ReadData(rowNumber, "AcquisitionProjFunding");
             acquisitionFile.AcquisitionFundingOther = ExcelDataContext.ReadData(rowNumber, "AcquisitionFundingOther");
 
+            //Schedule
+            acquisitionFile.AssignedDate = ExcelDataContext.ReadData(rowNumber, "AssignedDate");
             acquisitionFile.DeliveryDate = ExcelDataContext.ReadData(rowNumber, "DeliveryDate");
             acquisitionFile.AcquisitionCompletedDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionCompletedDate");
 
+            //Acquisition Details
             acquisitionFile.AcquisitionFileName = ExcelDataContext.ReadData(rowNumber, "AcquisitionFileName");
             acquisitionFile.HistoricalFileNumber = ExcelDataContext.ReadData(rowNumber, "HistoricalFileNumber");
             acquisitionFile.PhysicalFileStatus = ExcelDataContext.ReadData(rowNumber, "PhysicalFileStatus");
             acquisitionFile.AcquisitionType = ExcelDataContext.ReadData(rowNumber, "AcquisitionType");
-            acquisitionFile.MOTIRegion = ExcelDataContext.ReadData(rowNumber, "MOTIRegion");
+            acquisitionFile.AcquisitionMOTIRegion = ExcelDataContext.ReadData(rowNumber, "AcquisitionMOTIRegion");
 
             acquisitionFile.AcquisitionTeamStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionTeamStartRow"));
             acquisitionFile.AcquisitionTeamCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionTeamCount"));

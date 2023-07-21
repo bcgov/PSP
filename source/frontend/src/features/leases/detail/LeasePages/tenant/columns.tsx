@@ -9,7 +9,8 @@ import { ColumnWithProps } from '@/components/Table';
 import { getPrimaryContact } from '@/features/contacts/contactUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { FormTenant } from './ViewTenantForm';
+import { FormTenant } from './models';
+
 const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] => {
   return [
     {
