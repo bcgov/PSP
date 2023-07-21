@@ -1,4 +1,4 @@
-name: CI-CD PIMS Test
+name: CI-CD Release Dev to Tst
 env:
   OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
   # service account: gitaction
@@ -8,8 +8,8 @@ env:
 
   ## variables for scripts under git\openshift\4.0\scripts\oc-*.sh
   APP_PORT: 8080
-  DESTINATION: "test"
-  OC_JOB_NAME: "test"
+  DESTINATION: "dev"
+  OC_JOB_NAME: "dev"
   GIT_URL: "${{github.server_url}}/${{github.repository}}"
   GIT_BRANCH: "${{github.ref}}"
   APP_NAME: "pims"
@@ -21,17 +21,11 @@ env:
   TAG_DEV: "dev"
   TAG_TEST: "test"
   TAG_PROD: "prod"
-  INSTANCE: "-test"
-  NAMESPACE_OVERRIDE: "3cd915-dev"
 
-on:
-  pull_request_target:
-    branches: [test]
-    types: [closed]
+on: workflow_dispatch
 
 jobs:
   ci-cd-start-notification:
-    if: github.event.pull_request.merged == true
     name: CI-CD Start Notification to Teams Channel
     runs-on: ubuntu-latest
     steps:
@@ -40,19 +34,17 @@ jobs:
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
-          notification-summary: PIMS CI-CD GitHub Action STARTED in TEST environment
+          notification-summary: PIMS Release DEV to TST Started
           notification-color: 17a2b8
           timezone: America/Los_Angeles
 
-  build-frontend:
+  retag:
     name: Build frontend
     needs: ci-cd-start-notification
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v3
-        with:
-          ref: test
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
         with:
@@ -60,62 +52,18 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Call script to build frontend (pims-app and pims-app-base)
+      - name: Retag api/app images)
         run: |
-          ./openshift/4.0/player.sh build app-base -apply
-          ./openshift/4.0/player.sh build app -apply
-
-  build-api:
-    name: Build api
-    needs: ci-cd-start-notification
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v3
-        with:
-          ref: test
-      - name: Login to OpenShift
-        uses: redhat-actions/oc-login@v1
-        with:
-          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
-          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
-          insecure_skip_tls_verify: true
-          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Call script to build backend (pims-api)
-        run: |
-          ./openshift/4.0/player.sh build api -apply
-
-  tag-images:
-    name: Tag frontend and api images with version number
-    needs: [build-frontend, build-api]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v3
-        with:
-          ref: test
-      - name: Fetch Tags
-        run: git fetch --unshallow --tags
-      - name: Login to OpenShift
-        uses: redhat-actions/oc-login@v1
-        with:
-          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
-          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
-          insecure_skip_tls_verify: true
-          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: call script to tag frontend and api images with version number
-        run: |
-          ./openshift/4.0/scripts/oc-tag.sh $OC_JOB_NAME
+          oc tag pims-api:dev pims-api:test
+          oc tag pims-app:dev pims-app:test
 
   deploy:
     name: Deploy frontend and api to OpenShift
-    needs: [tag-images]
+    needs: retag
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v3
-        with:
-          ref: test
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
         with:
@@ -132,7 +80,6 @@ jobs:
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-latest
     needs: deploy
-    if: ${{ always() && github.event.pull_request.merged == true }}
     steps:
       - name: check workflow status
         uses: martialonline/workflow-status@v4
@@ -142,6 +89,6 @@ jobs:
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
-          notification-summary: PIMS CI-CD GitHub Action COMPLETED in TEST environment with status ${{ steps.check.outputs.status }}
+          notification-summary: PIMS Release DEV to TST COMPLETED with status ${{ steps.check.outputs.status }}
           notification-color: 17a2b8
           timezone: America/Los_Angeles
