@@ -1,4 +1,6 @@
+using System.Linq;
 using Mapster;
+using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts
@@ -12,7 +14,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.InterestHolderPropertyId, src => src.PimsInthldrPropInterestId)
                 .Map(dest => dest.AcquisitionFilePropertyId, src => src.PropertyAcquisitionFileId)
                 .Map(dest => dest.AcquisitionFileProperty, src => src.PropertyAcquisitionFile)
-                .Map(dest => dest.InterestTypeCode, src => src.InterestHolderInterestTypeCodeNavigation)
+                .Map(dest => dest.PropertyInterestTypes, src => src.PimsPropInthldrInterestTypes.Select(pit => pit.InterestHolderInterestTypeCodeNavigation))
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
@@ -20,9 +22,12 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.InterestHolderId, src => src.InterestHolderId)
                 .Map(dest => dest.PimsInthldrPropInterestId, src => src.InterestHolderPropertyId)
                 .Map(dest => dest.PropertyAcquisitionFileId, src => src.AcquisitionFilePropertyId)
-                .Map(dest => dest.InterestHolderInterestTypeCode, src => src.InterestTypeCode.Id)
+                .Map(dest => dest.PimsPropInthldrInterestTypes, src => src.PropertyInterestTypes)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
+
+            config.NewConfig<TypeModel<string>, Entity.PimsPropInthldrInterestType>()
+                .Map(dest => dest.InterestHolderInterestTypeCode, src => src.Id);
         }
     }
 }

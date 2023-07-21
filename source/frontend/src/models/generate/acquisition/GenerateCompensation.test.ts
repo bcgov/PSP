@@ -70,7 +70,8 @@ describe('GenerateCompensation tests', () => {
       getMockH120Categories(),
       mockCompReqH120s(),
     );
-    expect(compensation.file_financial_total).toBe('$1,100.00');
+
+    expect(compensation.financial_total).toBe('$35.00');
   });
 
   it('adds file financial totals', () => {
@@ -90,18 +91,33 @@ describe('GenerateCompensation tests', () => {
       getMockH120Categories(),
       [],
     );
+
     expect(compensation.financial_total).toBe('$35.00');
   });
 
   it('generates with a payee', () => {
+    let mockPayee = getMockAcquisitionPayee();
+
     const compensation = new Api_GenerateCompensation(
       getMockApiCompensationList()[1],
       {} as any,
       getMockH120Categories(),
       [],
-      getMockAcquisitionPayee(),
+      mockPayee,
     );
     expect(compensation.payee.gst_number).toBe('1');
+    expect(compensation.payee.payment_in_trust).toBe(false);
+
+    mockPayee.isPaymentInTrust = true;
+    const compensationInTrust = new Api_GenerateCompensation(
+      getMockApiCompensationList()[1],
+      {} as any,
+      getMockH120Categories(),
+      [],
+      mockPayee,
+    );
+
+    expect(compensationInTrust.payee.payment_in_trust).toBe(true);
   });
 
   it('can generate a payee with no cheques', () => {
@@ -113,5 +129,6 @@ describe('GenerateCompensation tests', () => {
       { ...getMockAcquisitionPayee() },
     );
     expect(compensation.payee.total_amount).toBe('$35.00');
+    expect(compensation.payee.payment_in_trust).toBe(false);
   });
 });

@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACQ_CHKLST_ITEM_STATUS_TYPE")]
-    public partial class PimsAcqChklstItemStatusType
+    [Table("PIMS_INTEREST_HOLDER_TYPE")]
+    public partial class PimsInterestHolderType
     {
-        public PimsAcqChklstItemStatusType()
+        public PimsInterestHolderType()
         {
-            PimsAcquisitionChecklistItems = new HashSet<PimsAcquisitionChecklistItem>();
+            PimsInterestHolders = new HashSet<PimsInterestHolder>();
         }
 
         [Key]
-        [Column("ACQ_CHKLST_ITEM_STATUS_TYPE_CODE")]
+        [Column("INTEREST_HOLDER_TYPE_CODE")]
         [StringLength(20)]
-        public string AcqChklstItemStatusTypeCode { get; set; }
+        public string InterestHolderTypeCode { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
@@ -44,7 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsAcquisitionChecklistItem.AcqChklstItemStatusTypeCodeNavigation))]
-        public virtual ICollection<PimsAcquisitionChecklistItem> PimsAcquisitionChecklistItems { get; set; }
+        [InverseProperty(nameof(PimsInterestHolder.InterestHolderTypeCodeNavigation))]
+        public virtual ICollection<PimsInterestHolder> PimsInterestHolders { get; set; }
     }
 }

@@ -25,10 +25,6 @@ namespace Pims.Dal.Entities
         public long InterestHolderId { get; set; }
         [Column("PROPERTY_ACQUISITION_FILE_ID")]
         public long? PropertyAcquisitionFileId { get; set; }
-        [Required]
-        [Column("INTEREST_HOLDER_INTEREST_TYPE_CODE")]
-        [StringLength(20)]
-        public string InterestHolderInterestTypeCode { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
