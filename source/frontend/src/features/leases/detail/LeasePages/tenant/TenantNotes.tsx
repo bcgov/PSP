@@ -1,6 +1,7 @@
-import { TextArea } from 'components/common/form';
 import * as React from 'react';
-import { withNameSpace } from 'utils/formUtils';
+
+import { TextArea } from '@/components/common/form';
+import { withNameSpace } from '@/utils/formUtils';
 
 import { LeaseH5 } from '../../styles';
 

@@ -1,19 +1,20 @@
 import axios, { AxiosResponse } from 'axios';
-import * as actionTypes from 'constants/actionTypes';
-import * as API from 'constants/API';
-import { catchAxiosError } from 'customAxios';
-import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
-import { useApiProperties } from 'hooks/pims-api';
-import { useGeoServer } from 'hooks/pims-api/useGeoServer';
-import { IPagedItems, IProperty } from 'interfaces';
 import fileDownload from 'js-file-download';
-import { Api_Property } from 'models/api/Property';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { logRequest, logSuccess } from 'store/slices/network/networkSlice';
 
-import { useApiRequestWrapper } from '../pims-api/useApiRequestWrapper';
+import * as actionTypes from '@/constants/actionTypes';
+import * as API from '@/constants/API';
+import { catchAxiosError } from '@/customAxios';
+import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
+import { useGeoServer } from '@/hooks/layer-api/useGeoServer';
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
+import { IPagedItems, IProperty } from '@/interfaces';
+import { Api_Property } from '@/models/api/Property';
+import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
+
+import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
 
 const ignoreErrorCodes = [404];
 

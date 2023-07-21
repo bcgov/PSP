@@ -1,12 +1,13 @@
-import { StyledIconButton } from 'components/common/buttons';
-import { ProtectedComponent } from 'components/common/ProtectedComponent';
-import { Claims } from 'constants/claims';
-import { useContactDetail } from 'features/contacts/hooks/useContactDetail';
 import React from 'react';
 import { Col } from 'react-bootstrap';
 import { MdEdit } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { StyledIconButton } from '@/components/common/buttons';
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { Claims } from '@/constants/claims';
+import { useContactDetail } from '@/features/contacts/hooks/useContactDetail';
 
 import { ContactBreadcrumb } from '../..';
 import * as Styled from '../../styles';

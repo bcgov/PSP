@@ -33,6 +33,7 @@ namespace Pims.Api.Services
         private readonly IAcquisitionFileChecklistRepository _checklistRepository;
         private readonly IAgreementRepository _agreementRepository;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
+        private readonly IInterestHolderRepository _interestHolderRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -46,7 +47,8 @@ namespace Pims.Api.Services
             IEntityNoteRepository entityNoteRepository,
             IAcquisitionFileChecklistRepository checklistRepository,
             IAgreementRepository agreementRepository,
-            ICompensationRequisitionRepository compensationRequisitionRepository)
+            ICompensationRequisitionRepository compensationRequisitionRepository,
+            IInterestHolderRepository interestHolderRepository)
         {
             _user = user;
             _logger = logger;
@@ -60,6 +62,7 @@ namespace Pims.Api.Services
             _checklistRepository = checklistRepository;
             _agreementRepository = agreementRepository;
             _compensationRequisitionRepository = compensationRequisitionRepository;
+            _interestHolderRepository = interestHolderRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -107,24 +110,6 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
             return _acquisitionFilePropertyRepository.GetOwnersByAcquisitionFileId(id);
-        }
-
-        public IEnumerable<PimsAcquisitionOwnerRep> GetOwnerRepresentatives(long id)
-        {
-            _logger.LogInformation("Getting acquisition file owner representatives with AcquisitionFile id: {id}", id);
-            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
-
-            return _acquisitionFilePropertyRepository.GetOwnerRepresentatives(id);
-        }
-
-        public IEnumerable<PimsAcquisitionOwnerSolicitor> GetOwnerSolicitors(long id)
-        {
-            _logger.LogInformation("Getting acquisition file owner solicitors with AcquisitionFile id: {id}", id);
-            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
-
-            return _acquisitionFilePropertyRepository.GetOwnerSolicitors(id);
         }
 
         public IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id)
@@ -186,6 +171,8 @@ namespace Pims.Api.Services
             }
 
             ValidateStaff(acquisitionFile);
+
+            ValidatePayeeDependency(acquisitionFile);
 
             // reset the region
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
@@ -313,6 +300,28 @@ namespace Pims.Api.Services
             return updatedAgreements;
         }
 
+        public IEnumerable<PimsInterestHolder> GetInterestHolders(long id)
+        {
+            _logger.LogInformation("Getting acquisition file InterestHolders with AcquisitionFile id: {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
+
+            return _interestHolderRepository.GetInterestHoldersByAcquisitionFile(id);
+        }
+
+        public IEnumerable<PimsInterestHolder> UpdateInterestHolders(long acquisitionFileId, List<PimsInterestHolder> interestHolders)
+        {
+            _logger.LogInformation("Updating acquisition file InterestHolders with AcquisitionFile id: {acquisitionFileId}", acquisitionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            ValidateInterestHoldersDependency(acquisitionFileId, interestHolders);
+            _interestHolderRepository.UpdateAllForAcquisition(acquisitionFileId, interestHolders);
+            _interestHolderRepository.CommitTransaction();
+
+            return _interestHolderRepository.GetInterestHoldersByAcquisitionFile(acquisitionFileId);
+        }
+
         public IList<PimsCompensationRequisition> GetAcquisitionCompensations(long acquisitionFileId)
         {
             _logger.LogInformation("Getting compensations for acquisition file id ...", acquisitionFileId);
@@ -337,7 +346,11 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Invalid acquisitionFileId.");
             }
 
+            compensationRequisition.IsDraft = compensationRequisition.IsDraft ?? true;
+            compensationRequisition.PimsAcquisitionPayees = new List<PimsAcquisitionPayee>() { new PimsAcquisitionPayee() };
+
             var newCompensationRequisition = _compensationRequisitionRepository.Add(compensationRequisition);
+
             _compensationRequisitionRepository.CommitTransaction();
 
             return newCompensationRequisition;
@@ -576,6 +589,79 @@ namespace Pims.Api.Services
                     pimsAcquisitionChecklistItems.Add(checklistItem);
                 }
             }
+        }
+
+        private void ValidatePayeeDependency(PimsAcquisitionFile acquisitionFile)
+        {
+            var currentAquisitionFile = _acqFileRepository.GetById(acquisitionFile.Internal_Id);
+            var compensationRequisitions = _compensationRequisitionRepository.GetAllByAcquisitionFileId(acquisitionFile.Internal_Id);
+
+            if (compensationRequisitions.Count == 0 || !compensationRequisitions.Any(y => y.PimsAcquisitionPayees.Count > 0))
+            {
+                return;
+            }
+
+            foreach (var compReq in compensationRequisitions)
+            {
+                var payee = compReq.PimsAcquisitionPayees.FirstOrDefault();
+                if (payee is null || !payee.HasPayeeAssigned)
+                {
+                    continue;
+                }
+
+                // Check for Acquisition File Owner removed
+                if (payee.AcquisitionOwnerId is not null
+                    && !acquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(payee.AcquisitionOwnerId))
+                    && currentAquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(payee.AcquisitionOwnerId)))
+                {
+                    throw new ForeignKeyDependencyException("Acquisition File Owner can not be removed since it's assigned as a payee for a compensation requisition");
+                }
+
+                // Check for Acquisition InterestHolders
+                if (payee.InterestHolderId is not null
+                    && !acquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(payee.InterestHolderId))
+                    && currentAquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(payee.InterestHolderId)))
+                {
+                    throw new ForeignKeyDependencyException("Acquisition File Interest Holders can not be removed since it's assigned as a payee for a compensation requisition");
+                }
+
+                // Check for File Person
+                if (payee.AcquisitionFilePersonId is not null
+                    && !acquisitionFile.PimsAcquisitionFilePeople.Any(x => x.Internal_Id.Equals(payee.AcquisitionFilePersonId))
+                    && currentAquisitionFile.PimsAcquisitionFilePeople.Any(x => x.Internal_Id.Equals(payee.AcquisitionFilePersonId)))
+                {
+                    throw new ForeignKeyDependencyException("Acquisition File team member can not be removed since it's assigned as a payee for a compensation requisition");
+                }
+            }
+        }
+
+        private void ValidateInterestHoldersDependency(long acquisitionFileId, List<PimsInterestHolder> interestHolders)
+        {
+            var currentAquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
+            var compensationRequisitions = _compensationRequisitionRepository.GetAllByAcquisitionFileId(acquisitionFileId);
+
+            if (compensationRequisitions.Count == 0 || !compensationRequisitions.Any(y => y.PimsAcquisitionPayees.Count > 0))
+            {
+                return;
+            }
+
+            foreach (var compReq in compensationRequisitions)
+            {
+                var payee = compReq.PimsAcquisitionPayees.FirstOrDefault();
+                if (payee is null || !payee.HasPayeeAssigned)
+                {
+                    continue;
+                }
+
+                // Check for Interest Holder
+                if (payee.InterestHolderId is not null
+                && !interestHolders.Any(x => x.InterestHolderId.Equals(payee.InterestHolderId))
+                && currentAquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(payee.InterestHolderId)))
+                {
+                    throw new ForeignKeyDependencyException("Acquisition File Interest Holder can not be removed since it's assigned as a payee for a compensation requisition");
+                }
+            }
+
         }
     }
 }

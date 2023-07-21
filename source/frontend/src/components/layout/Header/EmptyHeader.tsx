@@ -1,9 +1,10 @@
-import { BCGovLogo } from 'components/common/BCGovLogo';
-import { VerticalBar } from 'components/common/VerticalBar';
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Logo, useTenant } from 'tenants';
+
+import { BCGovLogo } from '@/components/common/BCGovLogo';
+import { VerticalBar } from '@/components/common/VerticalBar';
+import { Logo, useTenant } from '@/tenants';
 
 import { HeaderStyled } from './HeaderStyled';
 

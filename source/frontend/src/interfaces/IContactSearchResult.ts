@@ -1,6 +1,7 @@
-import { Api_Contact } from 'models/api/Contact';
-import { Api_Organization } from 'models/api/Organization';
-import { Api_Person } from 'models/api/Person';
+import { Api_Contact } from '@/models/api/Contact';
+import { Api_Organization } from '@/models/api/Organization';
+import { Api_Person } from '@/models/api/Person';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 export interface IContactSearchResult {
   id: string;
@@ -32,10 +33,9 @@ export function fromContact(baseModel: Api_Contact): IContactSearchResult {
     organizationId: baseModel.organization?.id,
 
     isDisabled: baseModel.person?.isDisabled || baseModel.organization?.isDisabled || false,
-    summary:
-      baseModel.organization !== undefined
-        ? baseModel.organization.name || ''
-        : baseModel.person?.firstName + ' ' + baseModel.person?.surname,
+    summary: !!baseModel.person
+      ? formatApiPersonNames(baseModel.person)
+      : baseModel.organization?.name,
     surname: baseModel.person?.surname,
     firstName: baseModel.person?.firstName,
     middleNames: baseModel.person?.middleNames,
@@ -50,7 +50,7 @@ export function fromContact(baseModel: Api_Contact): IContactSearchResult {
 
 export function fromApiPerson(baseModel: Api_Person): IContactSearchResult {
   var personOrganizations =
-    baseModel.personOrganizations !== undefined ? baseModel.personOrganizations : undefined;
+    baseModel?.personOrganizations !== undefined ? baseModel.personOrganizations : undefined;
 
   var organization =
     personOrganizations !== undefined && personOrganizations.length > 0
@@ -58,14 +58,14 @@ export function fromApiPerson(baseModel: Api_Person): IContactSearchResult {
       : undefined;
 
   return {
-    id: 'P' + baseModel.id,
-    personId: baseModel.id,
+    id: 'P' + baseModel?.id,
+    personId: baseModel?.id,
     organizationId: organization?.id,
-    isDisabled: baseModel.isDisabled,
-    summary: baseModel.firstName + ' ' + baseModel.surname,
-    surname: baseModel.surname,
-    firstName: baseModel.firstName,
-    middleNames: baseModel.middleNames,
+    isDisabled: baseModel?.isDisabled,
+    summary: baseModel?.firstName + ' ' + baseModel?.surname,
+    surname: baseModel?.surname,
+    firstName: baseModel?.firstName,
+    middleNames: baseModel?.middleNames,
     organizationName: organization?.name,
     email: '',
     mailingAddress: '',

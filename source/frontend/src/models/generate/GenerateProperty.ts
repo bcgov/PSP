@@ -1,5 +1,5 @@
-import { Api_Geometry, Api_Property } from 'models/api/Property';
-import { pidFormatter } from 'utils';
+import { Api_Geometry, Api_Property } from '@/models/api/Property';
+import { pidFormatter } from '@/utils';
 
 import { Api_GenerateAddress } from './GenerateAddress';
 export class Api_GenerateProperty {
@@ -24,6 +24,6 @@ export class Api_GenerateProperty {
     this.region = property?.region?.description ?? '';
     this.district = property?.district?.description ?? '';
     this.electoral_dist = '';
-    this.location_of_land = ''; // TODO
+    this.location_of_land = property?.generalLocation ?? '';
   }
 }

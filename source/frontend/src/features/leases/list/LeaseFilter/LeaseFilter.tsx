@@ -1,17 +1,18 @@
-import { ResetButton, SearchButton } from 'components/common/buttons';
-import { FastDatePicker, Input, Select } from 'components/common/form';
-import { SelectInput } from 'components/common/List/SelectInput';
-import { FilterBoxForm } from 'components/common/styles';
-import TooltipIcon from 'components/common/TooltipIcon';
-import { LEASE_PROGRAM_TYPES, LEASE_STATUS_TYPES, REGION_TYPES } from 'constants/API';
 import { Formik } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import Multiselect from 'multiselect-react-dropdown';
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
-import { mapLookupCode } from 'utils';
+
+import { ResetButton, SearchButton } from '@/components/common/buttons';
+import { FastDatePicker, Input } from '@/components/common/form';
+import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
+import { SelectInput } from '@/components/common/List/SelectInput';
+import { FilterBoxForm } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import { LEASE_PROGRAM_TYPES, LEASE_STATUS_TYPES } from '@/constants/API';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 
 import { ILeaseFilter, ILeaseSearchBy } from '../../interfaces';
 import { LeaseFilterSchema } from './LeaseFilterYupSchema';
@@ -69,8 +70,6 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
   const multiselectStatusRef = React.createRef<Multiselect>();
 
   const lookupCodes = useLookupCodeHelpers();
-
-  const regionOptions = lookupCodes.getByType(REGION_TYPES).map(c => mapLookupCode(c));
 
   const leaseStatusOptions = lookupCodes.getByType(LEASE_STATUS_TYPES);
 
@@ -230,11 +229,7 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                   </Row>
                   <Row>
                     <Col>
-                      <Select
-                        field="regionType"
-                        options={regionOptions}
-                        placeholder="All Regions"
-                      />
+                      <UserRegionSelectContainer field="regionType" placeholder="All Regions" />
                     </Col>
                     <Col>
                       <Row>

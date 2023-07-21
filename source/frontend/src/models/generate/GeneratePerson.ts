@@ -1,7 +1,8 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { getApiPersonOrOrgMailingAddress } from 'features/contacts/contactUtils';
-import { Api_Person } from 'models/api/Person';
-import { formatNames } from 'utils/personUtils';
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { getApiPersonOrOrgMailingAddress } from '@/features/contacts/contactUtils';
+import { Api_Person } from '@/models/api/Person';
+import { phoneFormatter } from '@/utils/formUtils';
+import { formatNames } from '@/utils/personUtils';
 
 import { Api_GenerateAddress } from './GenerateAddress';
 export class Api_GeneratePerson {
@@ -42,9 +43,9 @@ export class Api_GeneratePerson {
       ) ?? [];
     this.phone =
       workPhone?.length > 0
-        ? workPhone.map(p => p.value).join(', ')
+        ? workPhone.map(p => phoneFormatter(p.value)).join(', ')
         : personalPhone?.length > 0
-        ? personalPhone.map(p => p.value).join(', ')
+        ? personalPhone.map(p => phoneFormatter(p.value)).join(', ')
         : '';
     this.organizations =
       person?.personOrganizations?.map(o => o.organization?.name).join(', ') ?? '';

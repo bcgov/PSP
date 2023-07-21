@@ -51,6 +51,62 @@ namespace Pims.Api.Controllers
         {
             return new JsonResult(_financialCodeService.GetFinancialCodesByType(type));
         }
+
+        /// <summary>
+        /// Gets financial Activity Type Codes.
+        /// </summary>
+        /// <returns>An array with financial activity types codes.</returns>
+        [HttpGet("financial-activities")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<FinancialCodeModel>), 200)]
+        [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
+        [SwaggerOperation(Tags = new[] { "financialcodes" })]
+        public IActionResult GetFinancialActivityCodes()
+        {
+            return new JsonResult(_financialCodeService.GetFinancialCodesByType(FinancialCodeTypes.FinancialActivity));
+        }
+
+        /// <summary>
+        /// Gets Chart of Acccounts Type Codes.
+        /// </summary>
+        /// <returns>An array with chart of accounts types codes.</returns>
+        [HttpGet("chart-accounts")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<FinancialCodeModel>), 200)]
+        [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
+        [SwaggerOperation(Tags = new[] { "financialcodes" })]
+        public IActionResult GetChartOfAccounts()
+        {
+            return new JsonResult(_financialCodeService.GetFinancialCodesByType(FinancialCodeTypes.ChartOfAccounts));
+        }
+
+        /// <summary>
+        /// Gets Responsibility Type Codes.
+        /// </summary>
+        /// <returns>An array with Responsibility types codes.</returns>
+        [HttpGet("responsibilities")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<FinancialCodeModel>), 200)]
+        [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
+        [SwaggerOperation(Tags = new[] { "financialcodes" })]
+        public IActionResult GetResponsibilities()
+        {
+            return new JsonResult(_financialCodeService.GetFinancialCodesByType(FinancialCodeTypes.Responsibility));
+        }
+
+        /// <summary>
+        /// Gets Yearly Financials Type Codes.
+        /// </summary>
+        /// <returns>An array with yearly financials types codes.</returns>
+        [HttpGet("yearly-financials")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<FinancialCodeModel>), 200)]
+        [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
+        [SwaggerOperation(Tags = new[] { "financialcodes" })]
+        public IActionResult GetYearlyFinancials()
+        {
+            return new JsonResult(_financialCodeService.GetFinancialCodesByType(FinancialCodeTypes.YearlyFinancial));
+        }
         #endregion
     }
 }

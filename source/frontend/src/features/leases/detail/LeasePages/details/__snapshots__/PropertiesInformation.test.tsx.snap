@@ -36,6 +36,14 @@ exports[`PropertiesInformation component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c6 {
+  grid-column: controls;
+  border-left: 1px solid black !important;
+  padding: 0.6rem 1.2rem;
+  color: #495057;
+  font-family: 'BCSans-Bold';
+}
+
 .c3 {
   margin-top: 4rem;
 }
@@ -107,8 +115,8 @@ exports[`PropertiesInformation component renders as expected 1`] = `
             >
               <input
                 class="form-control"
-                id="input-properties.0.propertyName"
-                name="properties.0.propertyName"
+                id="input-properties.0.property.propertyName"
+                name="properties.0.property.propertyName"
                 value=""
               />
             </div>
@@ -129,7 +137,7 @@ exports[`PropertiesInformation component renders as expected 1`] = `
           <div
             class="c5 text-left col"
           >
-            123.00 
+            NaN 
           </div>
         </div>
         <div
@@ -147,61 +155,16 @@ exports[`PropertiesInformation component renders as expected 1`] = `
           <div
             class="c5 text-left col"
           >
-            <div
-              class="input form-group"
+            <label
+              class="form-label"
             >
-              <input
-                class="form-control"
-                id="input-properties.0.address.streetAddress1"
-                name="properties.0.address.streetAddress1"
-                title="1234 mock Street"
-                value="1234 mock Street"
-              />
-            </div>
-            <div
-              class="input form-group"
+              Address:
+            </label>
+            <p
+              class="c6"
             >
-              <input
-                class="form-control"
-                id="input-properties.0.address.streetAddress2"
-                name="properties.0.address.streetAddress2"
-                title="N/A"
-                value="N/A"
-              />
-            </div>
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-properties.0.address.municipality"
-                name="properties.0.address.municipality"
-                title="Victoria"
-                value="Victoria"
-              />
-            </div>
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-properties.0.address.postal"
-                name="properties.0.address.postal"
-                title="V1V1V1"
-                value="V1V1V1"
-              />
-            </div>
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-properties.0.address.province"
-                name="properties.0.address.province"
-                title="BC"
-                value="BC"
-              />
-            </div>
+              Address not available in PIMS
+            </p>
           </div>
         </div>
         <div
@@ -218,9 +181,7 @@ exports[`PropertiesInformation component renders as expected 1`] = `
           </div>
           <div
             class="c5 text-left col"
-          >
-            PID: 000-000-000
-          </div>
+          />
         </div>
         <hr />
       </div>

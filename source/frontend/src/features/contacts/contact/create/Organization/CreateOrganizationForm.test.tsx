@@ -1,12 +1,13 @@
 import userEvent from '@testing-library/user-event';
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { AddressTypes } from 'constants/index';
-import useAddContact from 'features/contacts/hooks/useAddContact';
 import { createMemoryHistory } from 'history';
-import { IEditableOrganization, IEditableOrganizationAddress } from 'interfaces/editable-contact';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { AddressTypes } from '@/constants/index';
+import useAddContact from '@/features/contacts/hooks/useAddContact';
+import { IEditableOrganization, IEditableOrganizationAddress } from '@/interfaces/editable-contact';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import CreateOrganizationForm from './CreateOrganizationForm';
 
@@ -16,7 +17,7 @@ const storeState = {
 };
 
 // Mock API service calls
-jest.mock('features/contacts/hooks/useAddContact');
+jest.mock('@/features/contacts/hooks/useAddContact');
 
 const addOrganization = jest.fn();
 
@@ -80,7 +81,7 @@ describe('CreateOrganizationForm', () => {
       });
 
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       expect(addOrganization).toBeCalledWith(expectedFormData, expect.anything(), false);
       expect(history.location.pathname).toBe('/contact/O1');
@@ -104,7 +105,7 @@ describe('CreateOrganizationForm', () => {
       });
 
       // wait for re-render upon changing country to OTHER
-      await act(() => fillInput(container, 'mailingAddress.countryId', 4, 'select'));
+      await act(async () => fillInput(container, 'mailingAddress.countryId', 4, 'select'));
 
       await act(async () => {
         await fillInput(container, 'mailingAddress.countryOther', mockAddress.countryOther);
@@ -112,7 +113,7 @@ describe('CreateOrganizationForm', () => {
       });
 
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       const formDataWithAddress: IEditableOrganization = {
         ...expectedFormData,

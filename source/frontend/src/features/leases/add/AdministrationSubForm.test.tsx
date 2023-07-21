@@ -1,9 +1,10 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
+
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
 
 import { getDefaultFormLease } from '../models';
 import AdministrationSubForm, { IAdministrationSubFormProps } from './AdministrationSubForm';
@@ -12,6 +13,9 @@ const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
+
+// mock auth library
+jest.mock('@react-keycloak/web');
 
 describe('AdministrationSubForm component', () => {
   const setup = async (
@@ -24,6 +28,7 @@ describe('AdministrationSubForm component', () => {
       </Formik>,
       {
         ...renderOptions,
+        claims: [],
         store: storeState,
         history,
       },

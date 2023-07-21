@@ -1,8 +1,9 @@
-import ErrorModal from 'components/common/ErrorModal';
-import { Footer, Header } from 'components/layout';
 import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import LoadingBar from 'react-redux-loading-bar';
+
+import ErrorModal from '@/components/common/ErrorModal';
+import { Footer, Header } from '@/components/layout';
 
 import FooterStyled from './Footer';
 import HeaderStyled from './Header';

@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from 'utils/test-utils';
+import { fireEvent, render, waitFor } from '@/utils/test-utils';
 
 import GenericModal from './GenericModal';
 

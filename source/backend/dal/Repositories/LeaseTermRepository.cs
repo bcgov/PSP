@@ -32,19 +32,34 @@ namespace Pims.Dal.Repositories
         public PimsLeaseTerm Update(PimsLeaseTerm pimsLeaseTerm)
         {
             this.Context.Entry(pimsLeaseTerm).Collection(t => t.PimsLeasePayments).IsModified = false;
-            this.Context.Update(pimsLeaseTerm);
-            return pimsLeaseTerm;
+            var updatedEntity = this.Context.Update(pimsLeaseTerm);
+            return updatedEntity.Entity;
         }
 
         public PimsLeaseTerm Add(PimsLeaseTerm pimsLeaseTerm)
         {
-            this.Context.Add(pimsLeaseTerm);
-            return pimsLeaseTerm;
+            var updatedEntity = this.Context.Add(pimsLeaseTerm);
+            return updatedEntity.Entity;
         }
 
         public IEnumerable<PimsLeaseTerm> GetAllByLeaseId(long leaseId)
         {
-            return this.Context.PimsLeaseTerms.AsNoTracking().Where(t => t.LeaseId == leaseId).ToArray();
+            var terms = this.Context.PimsLeaseTerms.AsNoTracking()
+                .Include(t => t.LeasePmtFreqTypeCodeNavigation)
+                .Include(t => t.LeaseTermStatusTypeCodeNavigation)
+                .Include(t => t.PimsLeasePayments)
+                    .ThenInclude(p => p.LeasePaymentMethodTypeCodeNavigation)
+                .Include(t => t.PimsLeasePayments)
+                    .ThenInclude(p => p.LeasePaymentStatusTypeCodeNavigation)
+                .Where(t => t.LeaseId == leaseId).ToArray();
+
+            terms = terms.OrderBy(t => t.TermStartDate).ThenBy(t => t.LeaseTermId).Select(t =>
+            {
+                t.PimsLeasePayments = t.PimsLeasePayments.OrderBy(p => p.PaymentReceivedDate).ThenBy(p => p.LeasePaymentId).ToArray();
+                return t;
+            }).ToArray();
+
+            return terms;
         }
 
         public PimsLeaseTerm GetById(long leaseTermId, bool loadPayments = false)

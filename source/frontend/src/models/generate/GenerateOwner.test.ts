@@ -1,4 +1,4 @@
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 
 import { Api_GenerateOwner } from './GenerateOwner';
 
@@ -12,7 +12,7 @@ describe('GenerateOwner tests', () => {
     const owner = new Api_GenerateOwner(
       acqFile?.acquisitionFileOwners ? acqFile?.acquisitionFileOwners[0] : null,
     );
-    expect(owner.owner_string).toBe(`John Doe Jr.`);
+    expect(owner.owner_string).toBe(`John Doe (Jr.)`);
   });
 
   it('Can Generate an owner organization string in the expected format', () => {

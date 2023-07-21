@@ -1,15 +1,16 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { NoteTypes } from 'constants/index';
 import { FormikHelpers } from 'formik';
 import { createMemoryHistory } from 'history';
-import { mockEntityNote } from 'mocks/noteResponses.mock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { fakeText } from 'utils/test-utils';
-import TestCommonWrapper from 'utils/TestCommonWrapper';
 import { ValidationError } from 'yup';
+
+import { NoteTypes } from '@/constants/index';
+import { mockEntityNote } from '@/mocks/noteResponses.mock';
+import { fakeText } from '@/utils/test-utils';
+import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
 import { EntityNoteForm } from '../add/models';
 import {
@@ -90,7 +91,7 @@ describe('useAddNotesFormManagement hook', () => {
       resetForm: jest.fn(),
     };
 
-    await act(() => handleSubmit(formValues, formikHelpers as any));
+    await act(async () => handleSubmit(formValues, formikHelpers as any));
 
     expect(formikHelpers.setSubmitting).toBeCalledWith(false);
     expect(formikHelpers.resetForm).toBeCalled();

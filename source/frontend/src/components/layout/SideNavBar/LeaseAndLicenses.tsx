@@ -1,11 +1,12 @@
-import { Claims } from 'constants/claims';
-import { LeaseH3 } from 'features/leases/detail/styles';
-import ExportAggregatedLeasesContainer from 'features/leases/reports/aggregated/ExportAggregatedLeasesContainer';
-import ExportLeasePaymentsContainer from 'features/leases/reports/payments/ExportLeasePaymentsContainer';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { FaRegFileExcel } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { Claims } from '@/constants/claims';
+import { LeaseH3 } from '@/features/leases/detail/styles';
+import ExportAggregatedLeasesContainer from '@/features/leases/reports/aggregated/ExportAggregatedLeasesContainer';
+import ExportLeasePaymentsContainer from '@/features/leases/reports/payments/ExportLeasePaymentsContainer';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 import { ISideTrayPageProps } from './SideTray';
 import * as Styled from './styles';

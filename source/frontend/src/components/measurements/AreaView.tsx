@@ -1,6 +1,7 @@
-import { AreaUnitTypes } from 'constants/areaUnitTypes';
 import { Col, Row } from 'react-bootstrap';
-import { convertArea, formatNumber } from 'utils';
+
+import { AreaUnitTypes } from '@/constants/areaUnitTypes';
+import { convertArea, formatNumber } from '@/utils';
 
 import { StyledGreenCol, StyledGreenGrey } from './styles';
 

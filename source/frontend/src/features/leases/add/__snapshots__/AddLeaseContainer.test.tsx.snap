@@ -69,7 +69,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
       class="c2"
     />
   </div>
-  .c18.btn {
+  .c19.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -99,49 +99,49 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c18.btn:hover {
+.c19.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c18.btn:focus {
+.c19.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c18.btn.btn-primary {
+.c19.btn.btn-primary {
   border: none;
 }
 
-.c18.btn.btn-secondary {
+.c19.btn.btn-secondary {
   background: none;
 }
 
-.c18.btn.btn-info {
+.c19.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c18.btn.btn-info:hover,
-.c18.btn.btn-info:active,
-.c18.btn.btn-info:focus {
+.c19.btn.btn-info:hover,
+.c19.btn.btn-info:active,
+.c19.btn.btn-info:focus {
   background: none;
 }
 
-.c18.btn.btn-light {
+.c19.btn.btn-light {
   border: none;
 }
 
-.c18.btn.btn-dark {
+.c19.btn.btn-dark {
   border: none;
 }
 
-.c18.btn.btn-link {
+.c19.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -162,9 +162,9 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c18.btn.btn-link:hover,
-.c18.btn.btn-link:active,
-.c18.btn.btn-link:focus {
+.c19.btn.btn-link:hover,
+.c19.btn.btn-link:active,
+.c19.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -173,14 +173,14 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c18.btn.btn-link:disabled,
-.c18.btn.btn-link.disabled {
+.c19.btn.btn-link:disabled,
+.c19.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c18.btn:disabled,
-.c18.btn:disabled:hover {
+.c19.btn:disabled,
+.c19.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -191,15 +191,15 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c18.Button .Button__icon {
+.c19.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c18.Button--icon-only:focus {
+.c19.Button--icon-only:focus {
   outline: none;
 }
 
-.c18.Button--icon-only .Button__icon {
+.c19.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -215,25 +215,25 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   border-color: #d8292f !important;
 }
 
-.c16 {
+.c17 {
   padding-right: 0;
 }
 
-.c16 .form-control {
+.c17 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c17:not(:first-child) {
+.c18:not(:first-child) {
   padding-left: 0;
 }
 
-.c17:not(:first-child) .form-control {
+.c18:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c21 {
+.c22 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -245,13 +245,13 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c21 .form-label {
+.c22 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c24 {
+.c25 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -263,13 +263,13 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c24 .form-label {
+.c25 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c19 {
+.c20 {
   font-size: 1.4rem;
 }
 
@@ -280,7 +280,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
 }
 
 .c11 .nav-tabs {
-  height: 2.4rem;
+  height: auto;
 }
 
 .c11 .nav-item {
@@ -320,7 +320,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   width: 100%;
 }
 
-.c23 {
+.c24 {
   float: right;
   cursor: pointer;
 }
@@ -379,10 +379,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   height: 100%;
 }
 
-.c9 .nav-tabs {
-  height: 2.4rem;
-}
-
 .c9 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   height: calc(100% - 2.4rem);
@@ -401,7 +397,20 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   height: auto;
 }
 
-.c20 {
+.c16 {
+  border-radius: 0.5rem;
+}
+
+.c16 .idir-input-group .input-group-prepend select {
+  width: 16rem;
+}
+
+.c16 .idir-input-group input {
+  width: 18rem;
+  max-width: 100%;
+}
+
+.c21 {
   font-size: 1.6rem;
   border-bottom: 0.2rem solid;
   margin-bottom: 0.9rem;
@@ -409,12 +418,12 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c25 input.form-control {
+.c26 input.form-control {
   min-width: 50rem;
   max-width: 50rem;
 }
 
-.c22 textarea.form-control {
+.c23 textarea.form-control {
   min-width: 80rem;
   height: 7rem;
   resize: none;
@@ -434,293 +443,288 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
       <div
         class="c2"
       >
-        <form
-          class=""
-          novalidate=""
+        <div
+          class="c3 form-section"
         >
           <div
-            class="c3 form-section"
+            class="collapse show"
           >
             <div
-              class="collapse show"
+              class="pb-2 row"
             >
               <div
-                class="pb-2 row"
+                class="pr-0 text-left col-2"
               >
-                <div
-                  class="pr-0 text-left col-2"
+                <label
+                  class="c4"
                 >
-                  <label
-                    class="c4"
-                  >
-                    Ministry project:
-                  </label>
-                </div>
-                <div
-                  class="c5 text-left col"
-                >
-                  <div
-                    class="c6 form-group"
-                    data-testid="typeahead-project"
-                  >
-                    <div
-                      class="rbt"
-                      style="outline: none; position: relative;"
-                      tabindex="-1"
-                    >
-                      <div
-                        style="display: flex; flex: 1; height: 100%; position: relative;"
-                      >
-                        <input
-                          aria-autocomplete="both"
-                          aria-expanded="false"
-                          aria-haspopup="listbox"
-                          autocomplete="off"
-                          class="rbt-input-main form-control rbt-input"
-                          id="typeahead-project"
-                          name="typeahead-project"
-                          role="combobox"
-                          type="text"
-                          value=""
-                        />
-                        <input
-                          aria-hidden="true"
-                          class="rbt-input-hint"
-                          readonly=""
-                          style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
-                          tabindex="-1"
-                          value=""
-                        />
-                      </div>
-                      <div
-                        class="rbt-aux"
-                      >
-                        <svg
-                          color="#bcbec5"
-                          fill="currentColor"
-                          height="2.5rem"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          style="color: rgb(188, 190, 197);"
-                          viewBox="0 0 512 512"
-                          width="2.5rem"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  Ministry project:
+                </label>
               </div>
               <div
-                class="pb-2 row"
+                class="c5 text-left col"
               >
                 <div
-                  class="pr-0 text-left col-2"
-                >
-                  <label
-                    class="c4"
-                  >
-                    Status:
-                  </label>
-                </div>
-                <div
-                  class="c5 required text-left col-4"
+                  class="c6 form-group"
+                  data-testid="typeahead-project"
                 >
                   <div
-                    class="required form-group"
+                    class="rbt"
+                    style="outline: none; position: relative;"
+                    tabindex="-1"
                   >
-                    <select
-                      class="form-select form-control"
-                      id="input-statusTypeCode"
-                      name="statusTypeCode"
-                      required=""
+                    <div
+                      style="display: flex; flex: 1; height: 100%; position: relative;"
                     >
-                      <option
+                      <input
+                        aria-autocomplete="both"
+                        aria-expanded="false"
+                        aria-haspopup="listbox"
+                        autocomplete="off"
+                        class="rbt-input-main form-control rbt-input"
+                        id="typeahead-project"
+                        name="typeahead-project"
+                        role="combobox"
+                        type="text"
                         value=""
-                      >
-                        Select Status
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-ACTIVE"
-                        value="ACTIVE"
-                      >
-                        Active
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-DISCARD"
-                        value="DISCARD"
-                      >
-                        Discarded
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-DRAFT"
-                        value="DRAFT"
-                      >
-                        Draft
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-DUPLICATE"
-                        value="DUPLICATE"
-                      >
-                        Duplicate
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-INACTIVE"
-                        value="INACTIVE"
-                      >
-                        Inactive
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-TERMINATED"
-                        value="TERMINATED"
-                      >
-                        Terminated
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="pb-2 row"
-              >
-                <div
-                  class="pr-0 text-left col-2"
-                >
-                  <label
-                    class="c4"
-                  >
-                    Account type:
-                  </label>
-                </div>
-                <div
-                  class="c5 required text-left col-5"
-                >
-                  <div
-                    class="form-group"
-                  >
-                    <select
-                      class="form-select form-control"
-                      id="input-paymentReceivableTypeCode"
-                      name="paymentReceivableTypeCode"
-                    >
-                      <option
-                        class="option"
-                        data-testid="select-option-PYBLBCTFA"
-                        value="PYBLBCTFA"
-                      >
-                        Payable (BCTFA as tenant)
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-PYBLMOTI"
-                        value="PYBLMOTI"
-                      >
-                        Payable (MOTI as tenant)
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-RCVBL"
-                        value="RCVBL"
-                      >
-                        Receivable
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="row"
-              >
-                <div
-                  class="col"
-                >
-                  <div
-                    class="pb-2 row"
-                  >
-                    <div
-                      class="pr-0 text-left col-4"
-                    >
-                      <label
-                        class="c4"
-                      >
-                        Start date:
-                      </label>
+                      />
+                      <input
+                        aria-hidden="true"
+                        class="rbt-input-hint"
+                        readonly=""
+                        style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                        tabindex="-1"
+                        value=""
+                      />
                     </div>
                     <div
-                      class="c5 required text-left col"
+                      class="rbt-aux"
+                    >
+                      <svg
+                        color="#bcbec5"
+                        fill="currentColor"
+                        height="2.5rem"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        style="color: rgb(188, 190, 197);"
+                        viewBox="0 0 512 512"
+                        width="2.5rem"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-2"
+              >
+                <label
+                  class="c4"
+                >
+                  Status:
+                </label>
+              </div>
+              <div
+                class="c5 required text-left col-4"
+              >
+                <div
+                  class="required form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-statusTypeCode"
+                    name="statusTypeCode"
+                    required=""
+                  >
+                    <option
+                      value=""
+                    >
+                      Select Status
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-ACTIVE"
+                      value="ACTIVE"
+                    >
+                      Active
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-DISCARD"
+                      value="DISCARD"
+                    >
+                      Discarded
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-DRAFT"
+                      value="DRAFT"
+                    >
+                      Draft
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-DUPLICATE"
+                      value="DUPLICATE"
+                    >
+                      Duplicate
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-INACTIVE"
+                      value="INACTIVE"
+                    >
+                      Inactive
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-TERMINATED"
+                      value="TERMINATED"
+                    >
+                      Terminated
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-2"
+              >
+                <label
+                  class="c4"
+                >
+                  Account type:
+                </label>
+              </div>
+              <div
+                class="c5 required text-left col-5"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-paymentReceivableTypeCode"
+                    name="paymentReceivableTypeCode"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-PYBLBCTFA"
+                      value="PYBLBCTFA"
+                    >
+                      Payable (BCTFA as tenant)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-PYBLMOTI"
+                      value="PYBLMOTI"
+                    >
+                      Payable (MOTI as tenant)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-RCVBL"
+                      value="RCVBL"
+                    >
+                      Receivable
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Start date:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 required text-left col"
+                  >
+                    <div
+                      class="required form-group"
                     >
                       <div
-                        class="required form-group"
+                        class="react-datepicker-wrapper d-block"
                       >
                         <div
-                          class="react-datepicker-wrapper d-block"
+                          class="react-datepicker__input-container"
                         >
-                          <div
-                            class="react-datepicker__input-container"
-                          >
-                            <input
-                              autocomplete="off"
-                              class="c7 form-control date-picker"
-                              id="datepicker-startDate"
-                              name="startDate"
-                              placeholder="--/--/----"
-                              required=""
-                              type="text"
-                              value=""
-                            />
-                          </div>
+                          <input
+                            autocomplete="off"
+                            class="c7 form-control date-picker"
+                            id="datepicker-startDate"
+                            name="startDate"
+                            placeholder="--/--/----"
+                            required=""
+                            type="text"
+                            value=""
+                          />
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
+              <div
+                class="col"
+              >
                 <div
-                  class="col"
+                  class="pb-2 row"
                 >
                   <div
-                    class="pb-2 row"
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Expiry date:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
                   >
                     <div
-                      class="pr-0 text-left col-4"
-                    >
-                      <label
-                        class="c4"
-                      >
-                        Expiry date:
-                      </label>
-                    </div>
-                    <div
-                      class="c5 text-left col"
+                      class="form-group"
                     >
                       <div
-                        class="form-group"
+                        class="react-datepicker-wrapper d-block"
                       >
                         <div
-                          class="react-datepicker-wrapper d-block"
+                          class="react-datepicker__input-container"
                         >
-                          <div
-                            class="react-datepicker__input-container"
-                          >
-                            <input
-                              autocomplete="off"
-                              class="c7 form-control date-picker"
-                              id="datepicker-expiryDate"
-                              name="expiryDate"
-                              placeholder="--/--/----"
-                              type="text"
-                              value=""
-                            />
-                          </div>
+                          <input
+                            autocomplete="off"
+                            class="c7 form-control date-picker"
+                            id="datepicker-expiryDate"
+                            name="expiryDate"
+                            placeholder="--/--/----"
+                            type="text"
+                            value=""
+                          />
                         </div>
                       </div>
                     </div>
@@ -729,243 +733,245 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               </div>
             </div>
           </div>
-          <div
-            class="c3 form-section"
+        </div>
+        <div
+          class="c3 form-section"
+        >
+          <h2
+            class="c8"
           >
-            <h2
-              class="c8"
-            >
-              <div
-                class="no-gutters row"
-              >
-                <div
-                  class="col"
-                >
-                  Properties to include in this file:
-                </div>
-                <div
-                  class="col-1"
-                />
-              </div>
-            </h2>
             <div
-              class="collapse show"
+              class="no-gutters row"
             >
               <div
-                class="py-2"
+                class="col"
               >
-                Select one or more properties that you want to include in this lease/license file. You can choose a location from the map, or search by other criteria.
+                Properties to include in this file:
               </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <div
+              class="py-2"
+            >
+              Select one or more properties that you want to include in this lease/license file. You can choose a location from the map, or search by other criteria.
+            </div>
+            <div
+              class="py-3 no-gutters row"
+            >
               <div
-                class="py-3 no-gutters row"
+                class="col"
               >
                 <div
-                  class="col"
+                  class="c9 c10"
                 >
-                  <div
-                    class="c9 c10"
+                  <nav
+                    class="c11 nav nav-tabs"
+                    role="tablist"
                   >
-                    <nav
-                      class="c11 nav nav-tabs"
-                      role="tablist"
+                    <a
+                      aria-selected="true"
+                      class="nav-item nav-link active"
+                      data-rb-event-key="map"
+                      href="#"
+                      role="tab"
                     >
-                      <a
-                        aria-selected="true"
-                        class="nav-item nav-link active"
-                        data-rb-event-key="map"
-                        href="#"
-                        role="tab"
-                      >
-                        Locate on Map
-                      </a>
-                      <a
-                        aria-selected="false"
-                        class="nav-item nav-link"
-                        data-rb-event-key="list"
-                        href="#"
-                        role="tab"
-                      >
-                        Search
-                      </a>
-                    </nav>
+                      Locate on Map
+                    </a>
+                    <a
+                      aria-selected="false"
+                      class="nav-item nav-link"
+                      data-rb-event-key="list"
+                      href="#"
+                      role="tab"
+                    >
+                      Search
+                    </a>
+                  </nav>
+                  <div
+                    class="tab-content"
+                  >
                     <div
-                      class="tab-content"
+                      aria-hidden="false"
+                      class="fade tab-pane active show"
+                      role="tabpanel"
                     >
                       <div
-                        aria-hidden="false"
-                        class="fade tab-pane active show"
-                        role="tabpanel"
+                        class="c3 form-section"
                       >
                         <div
-                          class="c3 form-section"
+                          class="collapse show"
                         >
-                          <div
-                            class="collapse show"
+                          <h3
+                            class="c12"
                           >
-                            <h3
-                              class="c12"
-                            >
-                              Select a property
-                            </h3>
+                            Select a property
+                          </h3>
+                          <div
+                            class="c13 row"
+                          >
                             <div
-                              class="c13 row"
+                              class="col-md-4"
                             >
                               <div
-                                class="col-md-4"
+                                class="d-flex flex-column align-items-center"
+                              >
+                                <svg
+                                  class="c14"
+                                  height="97"
+                                  title="Click once to enter property selection mode."
+                                  width="97"
+                                >
+                                  icon-draft.svg
+                                </svg>
+                                <ol>
+                                  <li>
+                                    Single-click blue marker above
+                                  </li>
+                                  <li>
+                                    Mouse to a parcel on the map
+                                  </li>
+                                  <li>
+                                    Single-click on parcel to select it
+                                  </li>
+                                </ol>
+                              </div>
+                            </div>
+                            <div
+                              class="col-md-8"
+                            >
+                              <div
+                                class="row"
                               >
                                 <div
-                                  class="d-flex flex-column align-items-center"
+                                  class="c15 col"
                                 >
-                                  <svg
-                                    class="c14"
-                                    height="97"
-                                    title="Click once to enter property selection mode."
-                                    width="97"
-                                  >
-                                    icon-draft.svg
-                                  </svg>
-                                  <ol>
-                                    <li>
-                                      Single-click blue marker above
-                                    </li>
-                                    <li>
-                                      Mouse to a parcel on the map
-                                    </li>
-                                    <li>
-                                      Single-click on parcel to select it
-                                    </li>
-                                  </ol>
+                                  Selected property attributes
                                 </div>
                               </div>
                               <div
-                                class="col-md-8"
+                                class="pb-2 row"
                               >
                                 <div
-                                  class="row"
+                                  class="pr-0 text-left col-4"
                                 >
-                                  <div
-                                    class="c15 col"
+                                  <label
+                                    class="c4"
                                   >
-                                    Selected property attributes
-                                  </div>
+                                    PID:
+                                  </label>
                                 </div>
                                 <div
-                                  class="pb-2 row"
+                                  class="c5 text-left col"
+                                />
+                              </div>
+                              <div
+                                class="pb-2 row"
+                              >
+                                <div
+                                  class="pr-0 text-left col-4"
                                 >
-                                  <div
-                                    class="pr-0 text-left col-4"
+                                  <label
+                                    class="c4"
                                   >
-                                    <label
-                                      class="c4"
-                                    >
-                                      PID:
-                                    </label>
-                                  </div>
-                                  <div
-                                    class="c5 text-left col"
-                                  />
+                                    Plan #:
+                                  </label>
                                 </div>
                                 <div
-                                  class="pb-2 row"
+                                  class="c5 text-left col"
+                                />
+                              </div>
+                              <div
+                                class="pb-2 row"
+                              >
+                                <div
+                                  class="pr-0 text-left col-4"
                                 >
-                                  <div
-                                    class="pr-0 text-left col-4"
+                                  <label
+                                    class="c4"
                                   >
-                                    <label
-                                      class="c4"
-                                    >
-                                      Plan #:
-                                    </label>
-                                  </div>
-                                  <div
-                                    class="c5 text-left col"
-                                  />
+                                    Address:
+                                  </label>
                                 </div>
                                 <div
-                                  class="pb-2 row"
+                                  class="c5 text-left col"
+                                />
+                              </div>
+                              <div
+                                class="pb-2 row"
+                              >
+                                <div
+                                  class="pr-0 text-left col-4"
                                 >
-                                  <div
-                                    class="pr-0 text-left col-4"
+                                  <label
+                                    class="c4"
                                   >
-                                    <label
-                                      class="c4"
-                                    >
-                                      Address:
-                                    </label>
-                                  </div>
-                                  <div
-                                    class="c5 text-left col"
-                                  />
+                                    Region:
+                                  </label>
                                 </div>
                                 <div
-                                  class="pb-2 row"
+                                  class="c5 text-left col"
+                                />
+                              </div>
+                              <div
+                                class="pb-2 row"
+                              >
+                                <div
+                                  class="pr-0 text-left col-4"
                                 >
-                                  <div
-                                    class="pr-0 text-left col-4"
+                                  <label
+                                    class="c4"
                                   >
-                                    <label
-                                      class="c4"
-                                    >
-                                      Region:
-                                    </label>
-                                  </div>
-                                  <div
-                                    class="c5 text-left col"
-                                  />
+                                    District:
+                                  </label>
                                 </div>
                                 <div
-                                  class="pb-2 row"
+                                  class="c5 text-left col"
+                                />
+                              </div>
+                              <div
+                                class="row"
+                              >
+                                <div
+                                  class="col-md-12"
                                 >
-                                  <div
-                                    class="pr-0 text-left col-4"
+                                  <label
+                                    class="form-label"
                                   >
-                                    <label
-                                      class="c4"
-                                    >
-                                      District:
-                                    </label>
-                                  </div>
-                                  <div
-                                    class="c5 text-left col"
-                                  />
+                                    Legal Description:
+                                  </label>
                                 </div>
                                 <div
-                                  class="row"
-                                >
-                                  <div
-                                    class="col-md-12"
-                                  >
-                                    <label
-                                      class="form-label"
-                                    >
-                                      Legal Description:
-                                    </label>
-                                  </div>
-                                  <div
-                                    class="col-md-12"
-                                  />
-                                </div>
+                                  class="col-md-12"
+                                />
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
+                    </div>
+                    <div
+                      aria-hidden="true"
+                      class="fade tab-pane"
+                      role="tabpanel"
+                    >
                       <div
-                        aria-hidden="true"
-                        class="fade tab-pane"
-                        role="tabpanel"
+                        class="c3 form-section"
                       >
                         <div
-                          class="c3 form-section"
+                          class="collapse show"
                         >
-                          <div
-                            class="collapse show"
+                          <h3
+                            class="c12"
                           >
-                            <h3
-                              class="c12"
-                            >
-                              Search for a property
-                            </h3>
+                            Search for a property
+                          </h3>
+                          <form
+                            class="c16 p-3"
+                            novalidate=""
+                          >
                             <div
                               class="row"
                             >
@@ -976,7 +982,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                   class="flex-nowrap input-group row"
                                 >
                                   <div
-                                    class="c16 col-auto"
+                                    class="c17 col-auto"
                                   >
                                     <div
                                       class="input-group-prepend"
@@ -1029,12 +1035,13 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                     </div>
                                   </div>
                                   <div
-                                    class="c17 col"
+                                    class="c18 col"
                                   >
                                     <div
                                       class="input form-group"
                                     >
                                       <input
+                                        autocomplete="off"
                                         class="form-control"
                                         id="input-pid"
                                         name="pid"
@@ -1056,7 +1063,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                     class="pr-0 col"
                                   >
                                     <button
-                                      class="c18 Button Button--icon-only primary btn btn-primary"
+                                      class="c19 Button Button--icon-only primary btn btn-primary"
                                       data-testid="search"
                                       id="search-button"
                                       title="search"
@@ -1085,7 +1092,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                     class="pl-0 col"
                                   >
                                     <button
-                                      class="c18 Button Button--icon-only btn btn-info"
+                                      class="c19 Button Button--icon-only btn btn-info"
                                       data-testid="reset-button"
                                       id="reset-button"
                                       title="reset-button"
@@ -1113,134 +1120,134 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </form>
                         </div>
+                      </div>
+                      <div
+                        class="c3 form-section"
+                      >
                         <div
-                          class="c3 form-section"
+                          class="collapse show"
                         >
                           <div
-                            class="collapse show"
+                            class="table"
+                            data-testid="map-properties"
+                            role="table"
                           >
                             <div
-                              class="table"
-                              data-testid="map-properties"
-                              role="table"
+                              class="thead thead-light"
                             >
                               <div
-                                class="thead thead-light"
+                                class="tr"
+                                role="row"
+                                style="display: flex; flex: 1 0 auto; min-width: 150px;"
                               >
                                 <div
-                                  class="tr"
-                                  role="row"
-                                  style="display: flex; flex: 1 0 auto; min-width: 150px;"
+                                  class="th"
+                                  colspan="1"
+                                  role="columnheader"
+                                  style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                                 >
                                   <div
-                                    class="th"
-                                    colspan="1"
-                                    role="columnheader"
-                                    style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                    class="sortable-column"
                                   >
-                                    <div
-                                      class="sortable-column"
-                                    >
-                                      <div>
-                                        <input
-                                          data-testid="selectrow-parent"
-                                          name=""
-                                          style="cursor: pointer;"
-                                          title="Click to deselect all."
-                                          type="checkbox"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div
-                                    class="th"
-                                    colspan="1"
-                                    role="columnheader"
-                                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                                  >
-                                    <div
-                                      class="sortable-column"
-                                    >
-                                      PID
-                                    </div>
-                                  </div>
-                                  <div
-                                    class="th"
-                                    colspan="1"
-                                    role="columnheader"
-                                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                                  >
-                                    <div
-                                      class="sortable-column"
-                                    >
-                                      PIN
-                                    </div>
-                                  </div>
-                                  <div
-                                    class="th"
-                                    colspan="1"
-                                    role="columnheader"
-                                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                                  >
-                                    <div
-                                      class="sortable-column"
-                                    >
-                                      Plan #
-                                    </div>
-                                  </div>
-                                  <div
-                                    class="th"
-                                    colspan="1"
-                                    role="columnheader"
-                                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                                  >
-                                    <div
-                                      class="sortable-column"
-                                    >
-                                      Address
-                                    </div>
-                                  </div>
-                                  <div
-                                    class="th"
-                                    colspan="1"
-                                    role="columnheader"
-                                    style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                                  >
-                                    <div
-                                      class="sortable-column"
-                                    >
-                                      Legal Description
+                                    <div>
+                                      <input
+                                        data-testid="selectrow-parent"
+                                        name=""
+                                        style="cursor: pointer;"
+                                        title="Click to deselect all."
+                                        type="checkbox"
+                                      />
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div
-                                class="no-rows-message"
-                              >
-                                No results found for your search criteria.
+                                <div
+                                  class="th"
+                                  colspan="1"
+                                  role="columnheader"
+                                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                >
+                                  <div
+                                    class="sortable-column"
+                                  >
+                                    PID
+                                  </div>
+                                </div>
+                                <div
+                                  class="th"
+                                  colspan="1"
+                                  role="columnheader"
+                                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                >
+                                  <div
+                                    class="sortable-column"
+                                  >
+                                    PIN
+                                  </div>
+                                </div>
+                                <div
+                                  class="th"
+                                  colspan="1"
+                                  role="columnheader"
+                                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                >
+                                  <div
+                                    class="sortable-column"
+                                  >
+                                    Plan #
+                                  </div>
+                                </div>
+                                <div
+                                  class="th"
+                                  colspan="1"
+                                  role="columnheader"
+                                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                >
+                                  <div
+                                    class="sortable-column"
+                                  >
+                                    Address
+                                  </div>
+                                </div>
+                                <div
+                                  class="th"
+                                  colspan="1"
+                                  role="columnheader"
+                                  style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                >
+                                  <div
+                                    class="sortable-column"
+                                  >
+                                    Legal Description
+                                  </div>
+                                </div>
                               </div>
                             </div>
                             <div
-                              class="row"
+                              class="no-rows-message"
                             >
-                              <div
-                                class="align-self-center col-auto"
-                              />
-                              <div
-                                class="ml-auto align-self-center col-auto"
-                              >
-                                <p
-                                  class="c19"
-                                >
-                                  0 selected
-                                </p>
-                              </div>
-                              <div
-                                class="align-self-center col-auto"
-                              />
+                              No results found for your search criteria.
                             </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="align-self-center col-auto"
+                            />
+                            <div
+                              class="ml-auto align-self-center col-auto"
+                            >
+                              <p
+                                class="c20"
+                              >
+                                0 selected
+                              </p>
+                            </div>
+                            <div
+                              class="align-self-center col-auto"
+                            />
                           </div>
                         </div>
                       </div>
@@ -1248,75 +1255,72 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                   </div>
                 </div>
               </div>
-              <div
-                class="c3 form-section"
+            </div>
+            <div
+              class="c3 form-section"
+            >
+              <h2
+                class="c8"
               >
-                <h2
-                  class="c8"
-                >
-                  <div
-                    class="no-gutters row"
-                  >
-                    <div
-                      class="col"
-                    >
-                      Selected properties
-                    </div>
-                    <div
-                      class="col-1"
-                    />
-                  </div>
-                </h2>
                 <div
-                  class="collapse show"
+                  class="no-gutters row"
                 >
                   <div
-                    class="c20 no-gutters row"
+                    class="col"
                   >
-                    <div
-                      class="col-3"
-                    >
-                      Identifier
-                    </div>
-                    <div
-                      class="col-md-6"
-                    >
-                      Provide a descriptive name for this land
-                      <span
-                        class="tooltip-icon"
-                        data-testid="tooltip-icon-property-selector-tooltip"
-                        id="property-selector-tooltip"
-                      >
-                        <svg
-                          class="tooltip-icon"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 512 512"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                          />
-                        </svg>
-                      </span>
-                    </div>
-                    <div
-                      class="col-3"
-                    >
-                      Area included
-                    </div>
+                    Selected properties
                   </div>
-                  <span>
-                    No Properties selected
-                  </span>
                 </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="c21 no-gutters row"
+                >
+                  <div
+                    class="col-3"
+                  >
+                    Identifier
+                  </div>
+                  <div
+                    class="col-md-6"
+                  >
+                    Provide a descriptive name for this land
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-property-selector-tooltip"
+                      id="property-selector-tooltip"
+                    >
+                      <svg
+                        class="tooltip-icon"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                  <div
+                    class="col-3"
+                  >
+                    Area included
+                  </div>
+                </div>
+                <span>
+                  No Properties selected
+                </span>
               </div>
             </div>
           </div>
-        </form>
+        </div>
         <div
           class="c3 form-section"
         >
@@ -1331,9 +1335,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               >
                 Administration
               </div>
-              <div
-                class="col-1"
-              />
             </div>
           </h2>
           <div
@@ -1355,7 +1356,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col-8"
               >
                 <div
-                  class="c21 input form-group"
+                  class="c22 input form-group"
                 >
                   <input
                     class="form-control"
@@ -1383,7 +1384,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 required text-left col-4"
               >
                 <div
-                  class="required form-group"
+                  class="required d-flex form-group"
                 >
                   <select
                     class="form-select form-control"
@@ -1409,20 +1410,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                       value="2"
                     >
                       Southern Interior Region
-                    </option>
-                    <option
-                      class="option"
-                      data-testid="select-option-3"
-                      value="3"
-                    >
-                      Northern Region
-                    </option>
-                    <option
-                      class="option"
-                      data-testid="select-option-4"
-                      value="4"
-                    >
-                      Cannot determine
                     </option>
                   </select>
                 </div>
@@ -2228,7 +2215,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col"
               >
                 <div
-                  class="c22 textarea input form-group"
+                  class="c23 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -2259,7 +2246,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c23"
+                  class="c24"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -2783,9 +2770,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               >
                 Documentation
               </div>
-              <div
-                class="col-1"
-              />
             </div>
           </h2>
           <div
@@ -2807,7 +2791,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col-5"
               >
                 <div
-                  class="c24 form-group"
+                  class="c25 form-group"
                 >
                   <select
                     class="form-control"
@@ -2849,7 +2833,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col-5"
               >
                 <div
-                  class="c24 form-group"
+                  class="c25 form-group"
                 >
                   <select
                     class="form-control"
@@ -2915,7 +2899,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col"
               >
                 <div
-                  class="c22 textarea input form-group"
+                  class="c23 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -2942,7 +2926,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col"
               >
                 <div
-                  class="c21 c25 input form-group"
+                  class="c22 c26 input form-group"
                 >
                   <input
                     class="form-control"
@@ -2970,7 +2954,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col"
               >
                 <div
-                  class="c21 c25 input form-group"
+                  class="c22 c26 input form-group"
                 >
                   <input
                     class="form-control"
@@ -2998,7 +2982,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col"
               >
                 <div
-                  class="c22 textarea input form-group"
+                  class="c23 textarea input form-group"
                 >
                   <textarea
                     class="form-control"

@@ -1,13 +1,14 @@
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { IInsurance } from 'interfaces';
 import React, { useMemo } from 'react';
-import { ILookupCode } from 'store/slices/lookupCodes';
+
+import { Section } from '@/components/common/Section/Section';
+import { Api_Insurance } from '@/models/api/Insurance';
+import { ILookupCode } from '@/store/slices/lookupCodes';
 
 import Policy from './Policy';
 import { InsuranceTypeList } from './styles';
 
 export interface InsuranceDetailsViewProps {
-  insuranceList: IInsurance[];
+  insuranceList: Api_Insurance[];
   insuranceTypes: ILookupCode[];
 }
 
@@ -30,8 +31,8 @@ const InsuranceDetailsView: React.FunctionComponent<
     <div data-testid="insurance-section">
       <Section header="Required insurance">
         <InsuranceTypeList>
-          {sortedInsuranceList.map((insurance: IInsurance, index: number) => (
-            <li key={index + insurance.id}>
+          {sortedInsuranceList.map((insurance: Api_Insurance, index: number) => (
+            <li key={`insurance-section-${insurance?.id?.toString() ?? index}`}>
               {insurance.insuranceType.description}
               {insurance.insuranceType.id === 'OTHER' && insurance.otherInsuranceType
                 ? `: ${insurance.otherInsuranceType}`
@@ -41,8 +42,11 @@ const InsuranceDetailsView: React.FunctionComponent<
         </InsuranceTypeList>
       </Section>
 
-      {sortedInsuranceList.map((insurance: IInsurance, index: number) => (
-        <div key={index + insurance.id} data-testid="insurance-section">
+      {sortedInsuranceList.map((insurance: Api_Insurance, index: number) => (
+        <div
+          key={`insurance-${insurance?.id?.toString() ?? index}`}
+          data-testid="insurance-section"
+        >
           <Policy insurance={insurance} />
         </div>
       ))}

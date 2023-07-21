@@ -1,13 +1,14 @@
-import { FastCurrencyInput, FastDatePicker, Select } from 'components/common/form';
-import { InlineFlexDiv } from 'components/common/styles';
-import TooltipIcon from 'components/common/TooltipIcon';
-import * as API from 'constants/API';
 import { useFormikContext } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { IFormLeasePayment } from 'interfaces';
 import * as React from 'react';
 
+import { FastCurrencyInput, FastDatePicker, Select } from '@/components/common/form';
+import { InlineFlexDiv } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import * as API from '@/constants/API';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+
 import { useCalculateActualGst } from '../../hooks/useCalculateActualGst';
+import { FormLeasePayment } from '../../models';
 import * as Styled from '../../styles';
 
 interface IPaymentFormContentProps {
@@ -18,7 +19,7 @@ interface IPaymentFormContentProps {
 const PaymentFormContent: React.FunctionComponent<
   React.PropsWithChildren<IPaymentFormContentProps>
 > = ({ isReceived, isGstEligible }) => {
-  const formikProps = useFormikContext<IFormLeasePayment>();
+  const formikProps = useFormikContext<FormLeasePayment>();
   const lookups = useLookupCodeHelpers();
   useCalculateActualGst(isGstEligible);
   const paymentMethodOptions = lookups.getOptionsByType(API.LEASE_PAYMENT_METHOD_TYPES);

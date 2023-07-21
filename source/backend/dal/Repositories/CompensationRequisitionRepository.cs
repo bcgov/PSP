@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -32,6 +31,7 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsCompensationRequisitions
                 .Include(c => c.PimsCompReqH120s)
+                .Include(x => x.PimsAcquisitionPayees)
                 .AsNoTracking()
                 .Where(c => c.AcquisitionFileId == acquisitionFileId).ToList();
         }
@@ -46,8 +46,14 @@ namespace Pims.Dal.Repositories
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
         {
             var entity = Context.PimsCompensationRequisitions
+                .Include(x => x.YearlyFinancial)
+                .Include(x => x.ChartOfAccounts)
+                .Include(x => x.Responsibility)
                 .Include(c => c.PimsCompReqH120s)
-                .Include(c => c.PimsAcquisitionPayees)
+                    .ThenInclude(y => y.FinancialActivityCode)
+                .Include(x => x.PimsAcquisitionPayees)
+                    .ThenInclude(y => y.AcquisitionOwner)
+                .Include(x => x.PimsAcquisitionPayees)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
 
@@ -60,20 +66,71 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.CompensationRequisitionId)) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
-            Context.UpdateChild<PimsCompensationRequisition, long, PimsAcquisitionPayee, long>(a => a.PimsAcquisitionPayees, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsAcquisitionPayees.ToArray(), false);
+            Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqH120, long>(a => a.PimsCompReqH120s, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqH120s.ToArray(), true);
+
+            if (compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is not null)
+            {
+                UpdatePayee(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault());
+            }
 
             return compensationRequisition;
         }
 
+        public PimsAcquisitionPayee UpdatePayee(PimsAcquisitionPayee compensationPayee)
+        {
+            var existingCompensationPayee = Context.PimsAcquisitionPayees
+                .FirstOrDefault(x => x.AcquisitionPayeeId.Equals(compensationPayee.Internal_Id)) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingCompensationPayee).CurrentValues.SetValues(compensationPayee);
+
+            return compensationPayee;
+        }
+
         public bool TryDelete(long compensationId)
         {
-            var deletedEntity = Context.PimsCompensationRequisitions.FirstOrDefault(c => c.CompensationRequisitionId == compensationId);
+            var deletedEntity = Context.PimsCompensationRequisitions
+                .Include(fa => fa.PimsCompReqH120s)
+                .Include(cr => cr.PimsAcquisitionPayees)
+                .AsNoTracking()
+                .FirstOrDefault(c => c.CompensationRequisitionId == compensationId);
+
             if (deletedEntity != null)
             {
-                Context.Remove(deletedEntity);
+                foreach (var payee in deletedEntity.PimsAcquisitionPayees)
+                {
+                    Context.PimsAcquisitionPayees.Remove(new PimsAcquisitionPayee() { AcquisitionPayeeId = payee.AcquisitionPayeeId });
+                }
+
+                foreach (var financial in deletedEntity.PimsCompReqH120s)
+                {
+                    Context.PimsCompReqH120s.Remove(new PimsCompReqH120() { CompReqFinActivity = financial.CompReqFinActivity });
+                }
+
+                Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
+
+                Context.PimsCompensationRequisitions.Remove(new PimsCompensationRequisition() { CompensationRequisitionId = deletedEntity.CompensationRequisitionId });
                 return true;
             }
             return false;
+        }
+
+        public PimsAcquisitionPayee GetPayee(long payeeId)
+        {
+
+            var payeeEntity = Context.PimsAcquisitionPayees
+                .Include(ap => ap.AcquisitionFilePerson)
+                    .ThenInclude(afp => afp.Person)
+                .Include(ap => ap.AcquisitionOwner)
+                .Include(ap => ap.InterestHolder)
+                    .ThenInclude(ih => ih.InterestHolderTypeCodeNavigation)
+                .Include(ap => ap.InterestHolder)
+                    .ThenInclude(ih => ih.Person)
+                .Include(ap => ap.InterestHolder)
+                    .ThenInclude(ih => ih.Organization)
+                .AsNoTracking()
+                .FirstOrDefault(x => x.AcquisitionPayeeId.Equals(payeeId)) ?? throw new KeyNotFoundException();
+
+            return payeeEntity;
         }
     }
 }

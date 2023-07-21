@@ -95,10 +95,12 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.PimsAcquisitionOwners)
                     .ThenInclude(x => x.Address)
                         .ThenInclude(x => x.Country)
-                .Include(r => r.PimsAcquisitionOwnerSolicitors)
+                .Include(r => r.PimsInterestHolders)
+                    .ThenInclude(rp => rp.InterestHolderTypeCodeNavigation)
+                .Include(r => r.PimsInterestHolders)
                     .ThenInclude(rp => rp.Person)
-                .Include(r => r.PimsAcquisitionOwnerReps)
-                    .ThenInclude(rp => rp.Person)
+                .Include(r => r.PimsInterestHolders)
+                    .ThenInclude(rp => rp.Organization)
                 .FirstOrDefault(x => x.AcquisitionFileId == id) ?? throw new KeyNotFoundException();
         }
 
@@ -157,8 +159,7 @@ namespace Pims.Dal.Repositories
 
             Context.Entry(existingAcqFile).CurrentValues.SetValues(acquisitionFile);
             Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFilePerson, long>(p => p.PimsAcquisitionFilePeople, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionFilePeople.ToArray());
-            Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionOwnerSolicitor, long>(p => p.PimsAcquisitionOwnerSolicitors, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwnerSolicitors.ToArray());
-            Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionOwnerRep, long>(p => p.PimsAcquisitionOwnerReps, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwnerReps.ToArray());
+            Context.UpdateChild<PimsAcquisitionFile, long, PimsInterestHolder, long>(p => p.PimsInterestHolders, acquisitionFile.Internal_Id, acquisitionFile.PimsInterestHolders.ToArray());
             Context.UpdateGrandchild<PimsAcquisitionFile, long, PimsAcquisitionOwner>(o => o.PimsAcquisitionOwners, oa => oa.Address, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwners.ToArray());
 
             return acquisitionFile;

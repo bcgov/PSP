@@ -1,13 +1,14 @@
-import { ColumnWithProps, DateCell, renderTypeCode, Table } from 'components/Table';
-import { TableSort } from 'components/Table/TableSort';
-import { Claims } from 'constants/claims';
-import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
-import { ResearchSearchResultModel } from 'interfaces/IResearchSearchResult';
-import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
-import { stringToFragment } from 'utils';
+
+import { ColumnWithProps, DateCell, renderTypeCode, Table } from '@/components/Table';
+import { TableSort } from '@/components/Table/TableSort';
+import { Claims } from '@/constants/claims';
+import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { ResearchSearchResultModel } from '@/interfaces/IResearchSearchResult';
+import { Api_ResearchFileProperty } from '@/models/api/ResearchFile';
+import { stringToFragment } from '@/utils';
 
 const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
   {

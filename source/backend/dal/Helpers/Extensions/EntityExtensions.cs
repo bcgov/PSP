@@ -225,8 +225,9 @@ namespace Pims.Dal.Helpers.Extensions
                     var dbChildEntry = context.Entry(existingChild);
                     dbChildEntry.CurrentValues.SetValues(child);
 
-                    // load grandchild navigation property
                     var grandchildReference = dbChildEntry.Reference(grandchildPropertyName);
+
+                    // load grandchild navigation property
                     grandchildReference.Load();
 
                     // Update grandchild navigation with values passed in the array

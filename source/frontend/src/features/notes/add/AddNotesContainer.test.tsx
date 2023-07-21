@@ -1,12 +1,13 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { NoteTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/lookups.mock';
-import { mockEntityNote } from 'mocks/noteResponses.mock';
-import { Api_EntityNote } from 'models/api/Note';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
+
+import { NoteTypes } from '@/constants/index';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { mockEntityNote } from '@/mocks/noteResponses.mock';
+import { Api_EntityNote } from '@/models/api/Note';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { AddNotesContainer, IAddNotesContainerProps } from './AddNotesContainer';
 import { EntityNoteForm } from './models';
@@ -76,7 +77,7 @@ describe('AddNotesContainer component', () => {
     const { getCancelButton, getByText } = setup();
 
     expect(getByText(/Notes/i)).toBeVisible();
-    await act(() => {
+    await act(async () => {
       userEvent.click(getCancelButton());
     });
 
@@ -96,7 +97,7 @@ describe('AddNotesContainer component', () => {
     });
 
     mockAxios.onPost().reply(200, mockEntityNote(1));
-    await act(() => {
+    await act(async () => {
       userEvent.click(getSaveButton());
     });
 
@@ -129,7 +130,7 @@ describe('AddNotesContainer component', () => {
     });
 
     mockAxios.onPost().reply(200, mockEntityNote(1));
-    await act(() => {
+    await act(async () => {
       userEvent.click(getSaveButton());
     });
 

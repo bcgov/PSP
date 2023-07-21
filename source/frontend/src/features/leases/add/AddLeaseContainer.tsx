@@ -1,19 +1,19 @@
-import { ReactComponent as Fence } from 'assets/images/fence.svg';
-import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import { MapStateContext } from 'components/maps/providers/MapStateContext';
-import { IMapProperty } from 'components/propertySelector/models';
-import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
 import { FormikHelpers, FormikProps } from 'formik';
-import useApiUserOverride from 'hooks/useApiUserOverride';
-import { useInitialMapSelectorProperties } from 'hooks/useInitialMapSelectorProperties';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import * as React from 'react';
-import { useMemo, useState } from 'react';
-import { useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
+
+import { ReactComponent as Fence } from '@/assets/images/fence.svg';
+import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
+import { MapStateContext } from '@/components/maps/providers/MapStateContext';
+import { IMapProperty } from '@/components/propertySelector/models';
+import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
+import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
 import { useAddLease } from '../hooks/useAddLease';
 import { LeaseFormModel } from '../models';
@@ -33,7 +33,7 @@ export const AddLeaseContainer: React.FunctionComponent<
   const { addLease } = useAddLease();
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
-  const { search } = useMapSearch();
+  const { searchMany } = useMapSearch();
 
   const initialProperty = useMemo<IMapProperty | null>(() => {
     if (selectedFileFeature) {
@@ -52,9 +52,10 @@ export const AddLeaseContainer: React.FunctionComponent<
     formikHelpers: FormikHelpers<LeaseFormModel>,
     userOverrideCodes: UserOverrideCode[],
   ) => {
-    const leaseApi = leaseFormModel.toApi();
+    const leaseApi = LeaseFormModel.toApi(leaseFormModel);
     const response = await addLease.execute(leaseApi, userOverrideCodes);
     formikHelpers.setSubmitting(false);
+
     if (!!response?.id) {
       if (leaseApi.properties?.find(p => !p.property?.address && !p.property?.id)) {
         toast.warn(
@@ -62,7 +63,7 @@ export const AddLeaseContainer: React.FunctionComponent<
           { autoClose: 15000 },
         );
       }
-      await search();
+      await searchMany();
       history.replace(`/mapview/sidebar/lease/${response.id}`);
     }
   };

@@ -1,8 +1,9 @@
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import produce from 'immer';
-import { IProperty } from 'interfaces';
 import { noop } from 'lodash';
 import React, { useCallback, useReducer } from 'react';
+
+import { IProperty } from '@/interfaces';
 
 import { PointFeature } from '../types';
 

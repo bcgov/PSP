@@ -1,8 +1,10 @@
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
-} from 'models/api/AcquisitionFile';
+  EnumAcquisitionFileType,
+} from '@/models/api/AcquisitionFile';
 
 export const mockAcquisitionFileResponse = (
   id = 1,
@@ -246,9 +248,10 @@ export const mockAcquisitionFileResponse = (
       appCreateUserid: 'dbo',
     },
   ],
-  acquisitionFileOwnerSolicitors: [
+  acquisitionFileInterestHolders: [
     {
-      id: 1,
+      interestHolderId: 1,
+      interestHolderType: { id: InterestHolderType.OWNER_SOLICITOR },
       acquisitionFileId: 1,
       personId: 1,
       person: {
@@ -264,12 +267,15 @@ export const mockAcquisitionFileResponse = (
         incorporationNumber: '1234',
         comment: '',
       },
+      interestHolderProperties: [],
+      primaryContactId: null,
+      primaryContact: null,
+      comment: null,
       isDisabled: false,
     },
-  ],
-  acquisitionFileOwnerRepresentatives: [
     {
-      id: 1,
+      interestHolderId: 1,
+      interestHolderType: { id: InterestHolderType.OWNER_REPRESENTATIVE },
       acquisitionFileId: 1,
       personId: 2,
       person: {
@@ -277,6 +283,11 @@ export const mockAcquisitionFileResponse = (
         firstName: 'Han',
         surname: 'Solo',
       },
+      organization: null,
+      organizationId: null,
+      interestHolderProperties: [],
+      primaryContactId: null,
+      primaryContact: null,
       comment: 'test representative comment',
       isDisabled: false,
     },
@@ -289,6 +300,16 @@ export const mockAcquisitionFileResponse = (
   appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
 });
+
+export const getMockExpropriationFile = (
+  fileType: string = EnumAcquisitionFileType.SECTN6,
+): Api_AcquisitionFile => {
+  const mockFile = mockAcquisitionFileResponse();
+  mockFile.acquisitionTypeCode = {
+    id: fileType,
+  };
+  return mockFile;
+};
 
 export const mockAcquisitionFileOwnersResponse = (
   acquisitionFileId: number = 1,

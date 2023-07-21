@@ -6,16 +6,7 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c0 {
-  min-width: 3rem;
-  min-height: 4.5rem;
-}
-
-.c1 {
-  font-size: 1.2rem;
-}
-
-.c4.btn {
+  .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -208,6 +199,15 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+}
+
+.c0 {
+  min-width: 3rem;
+  min-height: 4.5rem;
+}
+
+.c1 {
+  font-size: 1.2rem;
 }
 
 <div

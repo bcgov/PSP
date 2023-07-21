@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Microsoft.Data.SqlClient;
@@ -20,13 +21,13 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="context"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public static IQueryable<Entities.PimsLease> GenerateLeaseQuery(this PimsContext context, Entity.Models.LeaseFilter filter, bool loadPayments = false)
+        public static IQueryable<Entities.PimsLease> GenerateLeaseQuery(this PimsContext context, Entity.Models.LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false)
         {
             filter.ThrowIfNull(nameof(filter));
 
             var query = context.PimsLeases.AsNoTracking();
 
-            query = query.GenerateCommonLeaseQuery(filter, loadPayments);
+            query = query.GenerateCommonLeaseQuery(filter, regionCodes, loadPayments);
 
             return query;
         }
@@ -146,16 +147,20 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="query"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        private static IQueryable<Entities.PimsLease> GenerateCommonLeaseQuery(this IQueryable<Entities.PimsLease> query, Entity.Models.LeaseFilter filter, bool loadPayments = false)
+        private static IQueryable<Entities.PimsLease> GenerateCommonLeaseQuery(this IQueryable<Entities.PimsLease> query, Entity.Models.LeaseFilter filter, HashSet<short> regions, bool loadPayments = false)
         {
             filter.ThrowIfNull(nameof(filter));
 
+            query = query.Where(l => !l.RegionCode.HasValue || regions.Contains(l.RegionCode.Value));
+
             if (!string.IsNullOrWhiteSpace(filter.TenantName))
             {
-                query = query.Where(l => l.PimsLeaseTenants.Any(tenant => tenant.Person != null && EF.Functions.Like(tenant.Person.Surname + ", " + tenant.Person.FirstName + ", " + tenant.Person.MiddleNames, $"%{filter.TenantName}%"))
-                || l.PimsLeaseTenants.Any(tenant => tenant.Organization != null && EF.Functions.Like(tenant.Organization.OrganizationName, $"%{filter.TenantName}%")));
+                query = query.Where(l => l.PimsLeaseTenants.Any(tenant => tenant.Person != null && EF.Functions.Like(
+                    ((!string.IsNullOrWhiteSpace(tenant.Person.FirstName) ? tenant.Person.FirstName + " " : string.Empty) +
+                    (!string.IsNullOrWhiteSpace(tenant.Person.MiddleNames) ? tenant.Person.MiddleNames + " " : string.Empty) +
+                    (tenant.Person.Surname ?? string.Empty)).Trim(), $"%{filter.TenantName}%"))
+                 || l.PimsLeaseTenants.Any(tenant => tenant.Organization != null && EF.Functions.Like(tenant.Organization.OrganizationName, $"%{filter.TenantName}%")));
             }
-
             if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
             {
                 var pinOrPidValue = filter.PinOrPid.Replace("-", string.Empty).Trim().TrimStart('0');

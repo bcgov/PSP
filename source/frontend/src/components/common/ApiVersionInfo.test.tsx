@@ -1,5 +1,6 @@
 import { cleanup, render, waitForElementToBeRemoved } from '@testing-library/react';
-import { IApiVersion } from 'hooks/pims-api';
+
+import IApiVersion from '@/hooks/pims-api/interfaces/IApiVersion';
 
 import { ApiVersionInfo } from './ApiVersionInfo';
 
@@ -14,7 +15,7 @@ const mockGetVersion = jest.fn(async () => {
   return Promise.resolve({ data: defaultVersion });
 });
 
-jest.mock('hooks/pims-api', () => ({
+jest.mock('@/hooks/pims-api/useApiHealth', () => ({
   useApiHealth: () => ({
     getVersion: mockGetVersion,
   }),

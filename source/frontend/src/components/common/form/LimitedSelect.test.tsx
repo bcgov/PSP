@@ -1,6 +1,6 @@
 // import React from 'react';
 
-// import { PropertyClassificationTypes } from 'constants/propertyClassificationTypes';
+// import { PropertyClassificationTypes } from '@/constants/propertyClassificationTypes';
 // import { getIn, useFormikContext } from 'formik';
 // import renderer from 'react-test-renderer';
 

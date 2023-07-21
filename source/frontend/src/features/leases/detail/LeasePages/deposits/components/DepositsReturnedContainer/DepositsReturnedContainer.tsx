@@ -1,6 +1,6 @@
-import { Table } from 'components/Table';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
+import { Section } from '@/components/common/Section/Section';
+import { Table } from '@/components/Table';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
 
 import { getColumns, ReturnListEntry } from './columns';
 
@@ -17,7 +17,7 @@ const DepositsReturnedContainer: React.FC<
   const columns = getColumns({ onEdit, onDelete });
   const dataSource = depositReturns.reduce(
     (accumulator: ReturnListEntry[], returnDeposit: Api_SecurityDepositReturn) => {
-      var parentDeposit = securityDeposits.find(r => r.id === returnDeposit.parentDepositId);
+      var parentDeposit = securityDeposits.find(r => r?.id === returnDeposit?.parentDepositId);
       if (parentDeposit) {
         accumulator.push(new ReturnListEntry(returnDeposit, parentDeposit));
       }

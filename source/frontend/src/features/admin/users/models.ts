@@ -1,11 +1,11 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { UserTypes } from 'constants/userTypes';
-import { Api_Person } from 'models/api/Person';
-import { Api_Role } from 'models/api/Role';
-import Api_TypeCode from 'models/api/TypeCode';
-import { Api_User } from 'models/api/User';
-import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { getPreferredContactMethodValue } from 'utils/contactMethodUtil';
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { UserTypes } from '@/constants/userTypes';
+import { Api_Person } from '@/models/api/Person';
+import { Api_Role } from '@/models/api/Role';
+import Api_TypeCode from '@/models/api/TypeCode';
+import { Api_User } from '@/models/api/User';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { getPreferredContactMethodValue } from '@/utils/contactMethodUtil';
 
 export class FormUser {
   id?: number;

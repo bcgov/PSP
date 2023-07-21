@@ -1,4 +1,4 @@
-import { Api_Address } from 'models/api/Address';
+import { Api_Address } from '@/models/api/Address';
 
 export const getMockApiAddress: () => Api_Address = () => ({
   id: 1,
@@ -7,4 +7,5 @@ export const getMockApiAddress: () => Api_Address = () => ({
   municipality: 'Victoria',
   province: { id: 1, code: 'BC', description: 'British Columbia' },
   postal: 'V1V1V1',
+  country: { id: 1, code: 'CA', description: 'Canada' },
 });

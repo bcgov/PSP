@@ -1,17 +1,18 @@
 import { screen } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Input } from 'components/common/form';
-import { Claims } from 'constants/claims';
-import { FileTypes } from 'constants/fileTypes';
 import { useFormikContext } from 'formik';
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
-import { getMockActivityResponse } from 'mocks/activities.mock';
-import { mockLookups } from 'mocks/index.mock';
 import { act } from 'react-test-renderer';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
 import * as Yup from 'yup';
+
+import { Input } from '@/components/common/form';
+import { Claims } from '@/constants/claims';
+import { FileTypes } from '@/constants/fileTypes';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { getMockActivityResponse } from '@/mocks/activities.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ActivityForm, IActivityFormProps } from './ActivityForm';
 import { ActivityModel } from './models';
@@ -106,7 +107,7 @@ describe('ActivityForm test', () => {
     const saveButton = getByText('Save').closest('button');
     await fillInput(container, 'description', 'another description', 'textarea');
     expect(saveButton).not.toBeDisabled();
-    await act(() => userEvent.click(getByText('Save')));
+    await act(async () => userEvent.click(getByText('Save')));
 
     expect(saveButton).toBeDisabled();
   });
@@ -116,7 +117,7 @@ describe('ActivityForm test', () => {
     await findByText('No matching Documents found');
 
     const cancelButton = getByText('Cancel');
-    await act(() => userEvent.click(cancelButton));
+    await act(async () => userEvent.click(cancelButton));
 
     expect(setEditMode).toHaveBeenCalledWith(false);
   });
@@ -127,7 +128,7 @@ describe('ActivityForm test', () => {
 
     await fillInput(container, 'description', 'another description', 'textarea');
     const cancelButton = getByText('Cancel');
-    await act(() => userEvent.click(cancelButton));
+    await act(async () => userEvent.click(cancelButton));
 
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
     expect(await findByDisplayValue('another description')).toBeVisible();
@@ -139,10 +140,10 @@ describe('ActivityForm test', () => {
 
     await fillInput(container, 'description', 'another description', 'textarea');
     const cancelButton = getByText('Cancel');
-    await act(() => userEvent.click(cancelButton));
+    await act(async () => userEvent.click(cancelButton));
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
     const confirmButton = getByText('Confirm');
-    await act(() => userEvent.click(confirmButton));
+    await act(async () => userEvent.click(confirmButton));
 
     expect(setEditMode).toHaveBeenCalledWith(false);
     expect(await findByDisplayValue('test description')).toBeVisible();
@@ -154,10 +155,10 @@ describe('ActivityForm test', () => {
 
     await fillInput(container, 'description', 'another description', 'textarea');
     const cancelButton = getByText('Cancel');
-    await act(() => userEvent.click(cancelButton));
+    await act(async () => userEvent.click(cancelButton));
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
     const noButton = getByText('No');
-    await act(() => userEvent.click(noButton));
+    await act(async () => userEvent.click(noButton));
 
     expect(setEditMode).not.toHaveBeenCalled();
     expect(await findByDisplayValue('another description')).toBeVisible();
@@ -242,7 +243,7 @@ describe('ActivityForm test', () => {
       await fillInput(container, 'activityData.test', 'test string');
       const saveButton = getByText('Save').closest('button');
       expect(saveButton).not.toBeDisabled();
-      await act(() => userEvent.click(saveButton!));
+      await act(async () => userEvent.click(saveButton!));
 
       expect(onSave).toHaveBeenCalledWith(
         expect.objectContaining({ activityDataJson: '{"test":"test string","version":"1.0"}' }),
@@ -268,7 +269,7 @@ describe('ActivityForm test', () => {
       await fillInput(container, 'description', 'another description', 'textarea');
       const saveButton = getByText('Save').closest('button');
       expect(saveButton).not.toBeDisabled();
-      await act(() => userEvent.click(saveButton!));
+      await act(async () => userEvent.click(saveButton!));
 
       expect(await findByText('test is required')).toBeVisible();
     });
@@ -290,7 +291,7 @@ describe('ActivityForm test', () => {
       await fillInput(container, 'description', 'another description', 'textarea');
       const saveButton = getByText('Save').closest('button');
       expect(saveButton).not.toBeDisabled();
-      await act(() => userEvent.click(saveButton!));
+      await act(async () => userEvent.click(saveButton!));
 
       expect(await findByText('test is required')).toBeVisible();
     });

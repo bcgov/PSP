@@ -1,9 +1,9 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { getMockPerson } from 'mocks/contacts.mock';
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { getMockPerson } from '@/mocks/contacts.mock';
 
 import { Api_GeneratePerson } from './GeneratePerson';
 
-describe('GenerateContact tests', () => {
+describe('GeneratePerson tests', () => {
   it('Can generate an empty contact without throwing an error', () => {
     const contact = new Api_GeneratePerson(null);
     expect(contact.given_name).toBe('');
@@ -82,7 +82,7 @@ describe('GenerateContact tests', () => {
         },
       ],
     });
-    expect(contact.phone).toBe(`11111111111`);
+    expect(contact.phone).toBe(`1 111-111-1111`);
   });
 
   it('Can generate a contact phone if only personal phone is present', () => {
@@ -101,7 +101,7 @@ describe('GenerateContact tests', () => {
         },
       ],
     });
-    expect(contact.phone).toBe(`1111111111`);
+    expect(contact.phone).toBe(`1 111-111-1111`);
   });
 
   it('Can generate organization names', () => {

@@ -1,10 +1,11 @@
 import clsx from 'classnames';
-import TooltipWrapper from 'components/common/TooltipWrapper';
-import { Claims, Roles } from 'constants/index';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import _ from 'lodash';
 import { Nav } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { Claims, Roles } from '@/constants/index';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 interface INavIconProps {
   icon: React.ReactElement;

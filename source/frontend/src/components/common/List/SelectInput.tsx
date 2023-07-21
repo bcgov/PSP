@@ -1,6 +1,7 @@
-import { InputGroup, Select, SelectOption } from 'components/common/form';
 import { getIn, useFormikContext } from 'formik';
 import React from 'react';
+
+import { InputGroup, Select, SelectOption } from '@/components/common/form';
 
 interface ISelectInputProps<SelectTypes> {
   /** Specifies that the HTML element should be disabled */
@@ -19,6 +20,7 @@ interface ISelectInputProps<SelectTypes> {
     label: string;
     placeholder: string;
   }[];
+  autoSetting?: string;
   /** Callback to notify when the selected option in the drop-down changes */
   onSelectItemChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }

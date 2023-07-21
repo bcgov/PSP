@@ -1,12 +1,13 @@
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { getIn, useFormikContext } from 'formik';
-import { IFormLease } from 'interfaces';
-import { ILeaseTerm } from 'interfaces/ILeaseTerm';
 import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
-import { withNameSpace } from 'utils/formUtils';
+
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { Api_Lease } from '@/models/api/Lease';
+import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
+import { withNameSpace } from '@/utils/formUtils';
 
 import { DetailTermInformationBox } from './DetailTermInformationBox';
 
@@ -21,17 +22,18 @@ export interface IDetailTermInformationProps {
 export const DetailTermInformation: React.FunctionComponent<
   React.PropsWithChildren<IDetailTermInformationProps>
 > = ({ nameSpace }) => {
-  const { values } = useFormikContext<IFormLease>();
+  const { values } = useFormikContext<Api_Lease>();
   const startDate = getIn(values, withNameSpace(nameSpace, 'startDate'));
   const expiryDate = getIn(values, withNameSpace(nameSpace, 'expiryDate'));
   const terms = getIn(values, withNameSpace(nameSpace, 'terms'));
-  const currentTerm = terms.find((term: ILeaseTerm) =>
-    moment().isSameOrBefore(moment(term.expiryDate), 'day'),
+  const currentTerm = terms.find(
+    (term: Api_LeaseTerm) =>
+      moment().isSameOrBefore(moment(term.expiryDate), 'day') ||
+      (moment().isSameOrAfter(moment(term.startDate), 'day') && term.expiryDate === null),
   );
-  const projectName =
-    values?.project !== undefined
-      ? `${values?.project?.code} - ${values?.project?.description}`
-      : '';
+  const projectName = !!values?.project
+    ? `${values?.project?.code} - ${values?.project?.description}`
+    : '';
 
   return (
     <>

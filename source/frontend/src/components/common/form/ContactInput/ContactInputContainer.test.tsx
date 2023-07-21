@@ -1,8 +1,9 @@
 import { Formik, FormikProps } from 'formik';
 import noop from 'lodash/noop';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions } from 'utils/test-utils';
+
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { ContactInputContainer, IContactInputContainerProps } from './ContactInputContainer';
 import { IContactInputViewProps } from './ContactInputView';
@@ -55,7 +56,7 @@ describe('ContactInputContainer component', () => {
 
   it('shows the contact manager if setShowContactManager called', async () => {
     setup();
-    await act(() => viewProps.setShowContactManager(true));
+    await act(async () => viewProps.setShowContactManager(true));
     expect(viewProps.contactManagerProps.display).toBe(true);
   });
 
@@ -81,7 +82,7 @@ describe('ContactInputContainer component', () => {
 
   it('cancel sets field to undefined', async () => {
     setup({ field: 'test' });
-    await act(() => viewProps.onClear());
+    await act(async () => viewProps.onClear());
     expect(testFormikProps.values.test).toBe(null);
   });
 });

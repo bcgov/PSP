@@ -2,9 +2,13 @@ namespace Pims.Api.Models.Concepts
 {
     public class CompensationPayeeModel : BaseAppModel
     {
-        public long AcquisitionPayeeId { get; set; }
+        public long? Id { get; set; }
 
         public long CompensationRequisitionId { get; set; }
+
+        public bool? IsPaymentInTrust { get; set; }
+
+        public string GstNumber { get; set; }
 
         public long? AcquisitionOwnerId { get; set; }
 
@@ -25,9 +29,5 @@ namespace Pims.Api.Models.Concepts
         public CompensationRequisitionModel CompensationRequisition { get; set; }
 
         public InterestHolderModel InterestHolder { get; set; }
-
-        public AcquisitionFileOwnerRepresentativeModel OwnerRepresentative { get; set; }
-
-        public AcquisitionFileOwnerSolicitorModel OwnerSolicitor { get; set; }
     }
 }

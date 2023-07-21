@@ -4,6 +4,8 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -35,7 +37,11 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public IEnumerable<PimsPropertyLease> GetAllByPropertyId(long propertyId)
         {
-            return this.Context.PimsPropertyLeases.AsNoTracking().Include(p => p.Property).Include(l => l.Lease).Where(p => p.PropertyId == propertyId);
+            return this.Context.PimsPropertyLeases.AsNoTracking()
+                .Include(p => p.Property)
+                    .ThenInclude(p => p.Address)
+                .Include(l => l.Lease)
+                .Where(p => p.PropertyId == propertyId);
         }
 
         /// <summary>
@@ -45,7 +51,11 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public IEnumerable<PimsPropertyLease> GetAllByLeaseId(long leaseId)
         {
-            return this.Context.PimsPropertyLeases.AsNoTracking().Include(p => p.Property).Include(l => l.Lease).Where(p => p.LeaseId == leaseId);
+            return this.Context.PimsPropertyLeases.AsNoTracking()
+                .Include(p => p.Property)
+                    .ThenInclude(p => p.Address)
+                .Include(l => l.Lease)
+                .Where(p => p.LeaseId == leaseId);
         }
 
         /// <summary>
@@ -55,6 +65,21 @@ namespace Pims.Dal.Repositories
         public void Delete(PimsPropertyLease propertyLeaseFile)
         {
             Context.Remove(new PimsPropertyResearchFile() { Internal_Id = propertyLeaseFile.Internal_Id });
+        }
+
+        /// <summary>
+        /// update the properties on the lease.
+        /// </summary>
+        /// <param name="leaseId"></param>
+        /// <param name="pimsPropertyLeases"></param>
+        /// <returns></returns>
+        public IEnumerable<PimsPropertyLease> UpdatePropertyLeases(long leaseId, ICollection<PimsPropertyLease> pimsPropertyLeases)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+
+            this.Context.UpdateChild<PimsLease, long, PimsPropertyLease, long>(l => l.PimsPropertyLeases, leaseId, pimsPropertyLeases.ToArray());
+
+            return GetAllByLeaseId(leaseId);
         }
 
         #endregion

@@ -32,14 +32,14 @@ namespace Pims.Dal.Repositories
 
         public PimsLeasePayment Update(PimsLeasePayment pimsLeasePayment)
         {
-            this.Context.Update(pimsLeasePayment);
-            return pimsLeasePayment;
+            var updatedEntity = this.Context.Update(pimsLeasePayment);
+            return updatedEntity.Entity;
         }
 
         public PimsLeasePayment Add(PimsLeasePayment pimsLeasePayment)
         {
-            this.Context.Add(pimsLeasePayment);
-            return pimsLeasePayment;
+            var updatedEntity = this.Context.Add(pimsLeasePayment);
+            return updatedEntity.Entity;
         }
 
         public PimsLeasePayment GetById(long leasePaymentId)

@@ -1,6 +1,7 @@
 import { noop } from 'lodash';
-import { Api_Project } from 'models/api/Project';
 import * as React from 'react';
+
+import { Api_Project } from '@/models/api/Project';
 
 export interface IProjectState {
   project?: Api_Project;

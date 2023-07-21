@@ -28,7 +28,6 @@ namespace Pims.Api.Test.Services
     {
         public TestHelper helper;
         public ILeasePaymentService paymentService;
-        public Mock<ILeaseService> leaseService;
         public Mock<ILeaseTermRepository> leaseTermRepository;
         public Mock<ILeasePaymentRepository> leasePaymentRepository;
 
@@ -39,7 +38,6 @@ namespace Pims.Api.Test.Services
 
         public void Dispose()
         {
-            this.leaseService = null;
             this.leaseTermRepository = null;
             this.leasePaymentRepository = null;
         }
@@ -47,7 +45,6 @@ namespace Pims.Api.Test.Services
         private void MockCommonServices()
         {
             this.paymentService = this.helper.Create<LeasePaymentService>();
-            this.leaseService = this.helper.GetService<Mock<ILeaseService>>();
             this.leaseTermRepository = this.helper.GetService<Mock<ILeaseTermRepository>>();
             this.leasePaymentRepository = this.helper.GetService<Mock<ILeasePaymentRepository>>();
         }
@@ -65,18 +62,15 @@ namespace Pims.Api.Test.Services
             var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
 
             this.MockCommonServices();
-            this.leaseService.Setup(x => x.IsRowVersionEqual(It.IsAny<long>(), It.IsAny<long>())).Returns(true);
-            this.leaseService.Setup(x => x.GetById(It.IsAny<long>())).Returns(lease);
             this.leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(term);
 
             // Act
             var payment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
 
-            var updatedLease = this.paymentService.AddPayment(lease.Internal_Id, 1, payment);
+            var updatedLease = this.paymentService.AddPayment(lease.Internal_Id, payment);
 
             // Assert
             this.leasePaymentRepository.Verify(x => x.Add(payment), Times.Once);
-            this.leaseService.Verify(x => x.GetById(lease.Internal_Id), Times.Once);
         }
 
         [Fact]
@@ -90,8 +84,6 @@ namespace Pims.Api.Test.Services
             var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10), GstAmount = 1, PaymentAmount = 1 };
 
             this.MockCommonServices();
-            this.leaseService.Setup(x => x.IsRowVersionEqual(It.IsAny<long>(), It.IsAny<long>())).Returns(true);
-            this.leaseService.Setup(x => x.GetById(It.IsAny<long>())).Returns(lease);
             this.leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(term);
 
             // Act
@@ -100,48 +92,16 @@ namespace Pims.Api.Test.Services
             var paidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 2 };
             var partialPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 1 };
 
-            this.paymentService.AddPayment(lease.Internal_Id, 1, unpaidPayment);
-            this.paymentService.AddPayment(lease.Internal_Id, 1, overpaidPayment);
-            this.paymentService.AddPayment(lease.Internal_Id, 1, paidPayment);
-            this.paymentService.AddPayment(lease.Internal_Id, 1, partialPayment);
+            this.paymentService.AddPayment(lease.Internal_Id, unpaidPayment);
+            this.paymentService.AddPayment(lease.Internal_Id, overpaidPayment);
+            this.paymentService.AddPayment(lease.Internal_Id, paidPayment);
+            this.paymentService.AddPayment(lease.Internal_Id, partialPayment);
 
             // Assert
             this.leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeasePaymentStatusTypes.UNPAID && x.PaymentAmountTotal == 0)));
             this.leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeasePaymentStatusTypes.OVERPAID && x.PaymentAmountTotal == 3)));
             this.leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeasePaymentStatusTypes.PAID && x.PaymentAmountTotal == 2)));
             this.leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeasePaymentStatusTypes.PARTIAL && x.PaymentAmountTotal == 1)));
-        }
-
-        [Fact]
-        public void AddPayment_NotAuthorized()
-        {
-            // Arrange
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
-
-            var lease = EntityHelper.CreateLease(1);
-            this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
-            this.MockCommonServices();
-
-            // Act
-            var payment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
-
-            Assert.Throws<NotAuthorizedException>(() => this.paymentService.AddPayment(lease.Internal_Id, 1, payment));
-        }
-
-        [Fact]
-        public void AddPayment_InvalidRowVersion()
-        {
-            // Arrange
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView, Permissions.LeaseEdit);
-
-            var lease = EntityHelper.CreateLease(1);
-            this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
-            this.MockCommonServices();
-
-            // Act
-            var payment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
-
-            Assert.Throws<DbUpdateConcurrencyException>(() => this.paymentService.AddPayment(lease.Internal_Id, 1, payment));
         }
 
         [Fact]
@@ -155,14 +115,12 @@ namespace Pims.Api.Test.Services
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
-            this.leaseService.Setup(x => x.IsRowVersionEqual(It.IsAny<long>(), It.IsAny<long>())).Returns(true);
-            this.leaseService.Setup(x => x.GetById(It.IsAny<long>())).Returns(lease);
             this.leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(term);
 
             // Act
             var addPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now.AddDays(30) };
 
-            var ex = Assert.Throws<InvalidOperationException>(() => this.paymentService.AddPayment(lease.Internal_Id, 1, addPayment));
+            var ex = Assert.Throws<InvalidOperationException>(() => this.paymentService.AddPayment(lease.Internal_Id, addPayment));
             ex.Message.Should().Be("Payment received date must be within the start and expiry date of the term.");
         }
         #endregion
@@ -180,50 +138,15 @@ namespace Pims.Api.Test.Services
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
-            this.leaseService.Setup(x => x.IsRowVersionEqual(It.IsAny<long>(), It.IsAny<long>())).Returns(true);
-            this.leaseService.Setup(x => x.GetById(It.IsAny<long>())).Returns(lease);
             this.leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(term);
 
             // Act
             var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now };
 
-            var updatedLease = this.paymentService.UpdatePayment(lease.Internal_Id, 1, 1, payment);
+            var updatedLease = this.paymentService.UpdatePayment(lease.Internal_Id, 1, payment);
 
             // Assert
             this.leasePaymentRepository.Verify(x => x.Update(payment), Times.Once);
-            this.leaseService.Verify(x => x.GetById(lease.Internal_Id), Times.Once);
-        }
-
-        [Fact]
-        public void UpdatePayment_NotAuthorized()
-        {
-            // Arrange
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
-
-            var lease = EntityHelper.CreateLease(1);
-            this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
-            this.MockCommonServices();
-
-            // Act
-            var payment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
-
-            Assert.Throws<NotAuthorizedException>(() => this.paymentService.UpdatePayment(lease.Internal_Id, 1, 1, payment));
-        }
-
-        [Fact]
-        public void UpdatePayment_InvalidRowVersion()
-        {
-            // Arrange
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView, Permissions.LeaseEdit);
-
-            var lease = EntityHelper.CreateLease(1);
-            this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
-            this.MockCommonServices();
-
-            // Act
-            var payment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
-
-            Assert.Throws<DbUpdateConcurrencyException>(() => this.paymentService.UpdatePayment(lease.Internal_Id, 1, 1, payment));
         }
 
         [Fact]
@@ -238,13 +161,12 @@ namespace Pims.Api.Test.Services
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
-            this.leaseService.Setup(x => x.IsRowVersionEqual(It.IsAny<long>(), It.IsAny<long>())).Returns(true);
             this.leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(term);
 
             // Act
             var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now.AddDays(30) };
 
-            var ex = Assert.Throws<InvalidOperationException>(() => this.paymentService.UpdatePayment(lease.Internal_Id, 1, 1, payment));
+            var ex = Assert.Throws<InvalidOperationException>(() => this.paymentService.UpdatePayment(lease.Internal_Id, 1, payment));
             ex.Message.Should().Be("Payment received date must be within the start and expiry date of the term.");
         }
         #endregion
@@ -261,47 +183,14 @@ namespace Pims.Api.Test.Services
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
-            this.leaseService.Setup(x => x.IsRowVersionEqual(It.IsAny<long>(), It.IsAny<long>())).Returns(true);
 
             // Act
             var payment = new PimsLeasePayment();
 
-            this.paymentService.DeletePayment(lease.Internal_Id, 1, payment);
+            this.paymentService.DeletePayment(lease.Internal_Id, payment);
 
             // Assert
             this.leasePaymentRepository.Verify(x => x.Delete(It.IsAny<long>()), Times.Once);
-        }
-
-        [Fact]
-        public void DeletePayment_NotAuthorized()
-        {
-            // Arrange
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView, Permissions.LeaseDelete);
-
-            var lease = EntityHelper.CreateLease(1);
-            this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
-            this.MockCommonServices();
-
-            // Act
-            var payment = new PimsLeasePayment();
-
-            Assert.Throws<NotAuthorizedException>(() => this.paymentService.DeletePayment(lease.Internal_Id, 1, payment));
-        }
-
-        [Fact]
-        public void DeletePayment_InvalidRowVersion()
-        {
-            // Arrange
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView, Permissions.LeaseEdit);
-
-            var lease = EntityHelper.CreateLease(1);
-            this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
-            this.MockCommonServices();
-
-            // Act
-            var payment = new PimsLeasePayment();
-
-            Assert.Throws<DbUpdateConcurrencyException>(() => this.paymentService.DeletePayment(lease.Internal_Id, 1, payment));
         }
         #endregion
         #endregion

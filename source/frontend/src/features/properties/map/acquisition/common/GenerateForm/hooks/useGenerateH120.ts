@@ -1,63 +1,79 @@
-import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
-import { ConvertToTypes } from 'constants/convertToTypes';
-import { showFile } from 'features/documents/DownloadDocumentButton';
-import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
-import { FormTemplateTypes } from 'features/properties/map/shared/content/models';
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { useH120CategoryRepository } from 'hooks/repositories/useH120CategoryRepository';
 import chunk from 'lodash/chunk';
-import { Api_Compensation } from 'models/api/Compensation';
-import { ExternalResultStatus } from 'models/api/ExternalResult';
-import { Api_GenerateCompensation } from 'models/generate/GenerateCompensation';
-import { Api_GenerateFile } from 'models/generate/GenerateFile';
-import { Api_GenerateProperty } from 'models/generate/GenerateProperty';
-import { useTenant } from 'tenants';
-import { getLatLng } from 'utils/mapPropertyUtils';
+
+import { ConvertToTypes } from '@/constants/convertToTypes';
+import { showFile } from '@/features/documents/DownloadDocumentButton';
+import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
+import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
+import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useH120CategoryRepository } from '@/hooks/repositories/useH120CategoryRepository';
+import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
+import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
+import { Api_GenerateCompensation } from '@/models/generate/acquisition/GenerateCompensation';
+import { Api_GenerateH120Property } from '@/models/generate/acquisition/GenerateH120Property';
+import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
+import { getLatLng } from '@/utils/mapPropertyUtils';
 
 export const useGenerateH120 = () => {
   const { getAcquisitionFile, getAcquisitionProperties, getAcquisitionCompReqH120s } =
     useAcquisitionProvider();
+  const { getAcquisitionInterestHolders } = useInterestHolderRepository();
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
   const getH120Categories = useH120CategoryRepository();
+  const { getCompensationRequisitionPayee } = useCompensationRequisitionRepository();
 
-  const { electoralLayerUrl } = useTenant();
-  const electoralService = useLayerQuery(electoralLayerUrl);
+  const adminBoundaryService = useAdminBoundaryMapLayer();
+  const { getSystemConstant } = useSystemConstants();
+  const client = getSystemConstant(SystemConstants.CLIENT);
 
-  const getElectoralDistrict = async (property: Api_GenerateProperty) => {
+  const getElectoralDistrict = async (property: Api_GenerateH120Property) => {
     const latLng = getLatLng(property.location);
     const layerData =
-      latLng !== null ? await electoralService.findMetadataByLocation(latLng) : null;
+      latLng !== null ? await adminBoundaryService.findElectoralDistrict(latLng) : null;
 
-    return (layerData?.ED_NAME as string) ?? '';
+    return layerData?.properties.ED_NAME ?? '';
   };
 
-  const generateCompensation = async (compensation: Api_Compensation) => {
-    if (compensation?.id === undefined) {
+  const generateCompensation = async (compensation: Api_CompensationRequisition) => {
+    if (!compensation?.id) {
       throw Error(
         'user must choose a valid compensation requisition in order to generate a document',
       );
     }
     const filePromise = getAcquisitionFile.execute(compensation.acquisitionFileId);
     const propertiesPromise = getAcquisitionProperties.execute(compensation.acquisitionFileId);
-    const compReqH120sPromise = getAcquisitionCompReqH120s.execute(
+    const compReqFinalH120sPromise = getAcquisitionCompReqH120s.execute(
       compensation.acquisitionFileId,
       true,
     );
     const h120CategoriesPromise = getH120Categories.execute();
+    const interestHoldersPromise = getAcquisitionInterestHolders.execute(
+      compensation.acquisitionFileId,
+    );
+    const payeePromise = getCompensationRequisitionPayee.execute(compensation.id);
 
-    const [file, properties, h120Categories, compReqH120s] = await Promise.all([
-      filePromise,
-      propertiesPromise,
-      h120CategoriesPromise,
-      compReqH120sPromise,
-    ]);
+    const [file, properties, h120Categories, compReqFinalH120s, interestHolders, payee] =
+      await Promise.all([
+        filePromise,
+        propertiesPromise,
+        h120CategoriesPromise,
+        compReqFinalH120sPromise,
+        interestHoldersPromise,
+        payeePromise,
+      ]);
     if (!file) {
       throw Error('Acquisition file not found');
     }
     file.fileProperties = properties;
 
     // Add ELECTORAL_DISTRICT info to each property (from map layer request)
-    const fileData = new Api_GenerateFile(file);
+    const fileData = new Api_GenerateAcquisitionFile({
+      file: file,
+      interestHolders: interestHolders ?? [],
+    });
     const batches = chunk(fileData.properties, 5);
 
     // Run async functions batch-by-batch, with each batch of functions executed in parallel
@@ -73,7 +89,9 @@ export const useGenerateH120 = () => {
       compensation,
       fileData,
       h120Categories ?? [],
-      compReqH120s ?? [],
+      compReqFinalH120s ?? [],
+      payee,
+      client?.value,
     );
     const generatedFile = await generate({
       templateType: FormTemplateTypes.H120,

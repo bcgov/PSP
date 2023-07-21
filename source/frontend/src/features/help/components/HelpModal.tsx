@@ -1,14 +1,15 @@
-import variables from 'assets/scss/_variables.module.scss';
-import { Button } from 'components/common/buttons/Button';
-import TooltipIcon from 'components/common/TooltipIcon';
 import React, { FunctionComponent } from 'react';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import ModalDialog from 'react-bootstrap/ModalDialog';
 import Draggable from 'react-draggable';
-import { useAppSelector } from 'store/hooks';
-import { useTenants } from 'store/slices/tenants';
 import styled from 'styled-components';
+
+import variables from '@/assets/scss/_variables.module.scss';
+import { Button } from '@/components/common/buttons/Button';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import { useAppSelector } from '@/store/hooks';
+import { useTenants } from '@/store/slices/tenants';
 
 import HelpModalContentContainer from '../containers/HelpModalContentContainer';
 import IMailMessage from './IMailMessage';

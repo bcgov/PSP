@@ -11,6 +11,11 @@ namespace Pims.Api.Models.Concepts
         public long? Id { get; set; }
 
         /// <summary>
+        /// get/set - Security deposit parent lease id.
+        /// </summary>
+        public long LeaseId { get; set; }
+
+        /// <summary>
         /// get/set - Security deposit description.
         /// </summary>
         public string Description { get; set; }

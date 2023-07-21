@@ -1,22 +1,26 @@
-import { Button } from 'components/common/buttons/Button';
-import { FormSection } from 'components/common/form/styles';
-import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
-import { FlexBox } from 'components/common/styles';
+import { Formik, FormikHelpers, FormikProps, getIn } from 'formik';
+import { useMemo, useRef, useState } from 'react';
+import { AiOutlineExclamationCircle } from 'react-icons/ai';
+import { useHistory } from 'react-router-dom';
+
+import { Button } from '@/components/common/buttons/Button';
+import { FormSection } from '@/components/common/form/styles';
+import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
+import { FlexBox } from '@/components/common/styles';
 import {
   Address,
   CancelConfirmationModal,
   CommentNotes,
   DuplicateContactModal,
   useAddressHelpers,
-} from 'features/contacts/contact/create/components';
-import * as Styled from 'features/contacts/contact/create/styles';
-import { formOrganizationToApiOrganization } from 'features/contacts/contactUtils';
-import useAddContact from 'features/contacts/hooks/useAddContact';
-import { Formik, FormikHelpers, FormikProps, getIn } from 'formik';
-import { defaultCreateOrganization, IEditableOrganizationForm } from 'interfaces/editable-contact';
-import { useMemo, useRef, useState } from 'react';
-import { AiOutlineExclamationCircle } from 'react-icons/ai';
-import { useHistory } from 'react-router-dom';
+} from '@/features/contacts/contact/create/components';
+import * as Styled from '@/features/contacts/contact/create/styles';
+import { formOrganizationToApiOrganization } from '@/features/contacts/contactUtils';
+import useAddContact from '@/features/contacts/hooks/useAddContact';
+import {
+  defaultCreateOrganization,
+  IEditableOrganizationForm,
+} from '@/interfaces/editable-contact';
 
 import OrganizationSubForm from '../../Organization/OrganizationSubForm';
 import { onValidateOrganization } from '../../utils/contactUtils';
