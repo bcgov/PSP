@@ -31,20 +31,6 @@ export class Api_GenerateCompensationPayee {
       } else {
         this.name = payee.interestHolder.organization?.name ?? '';
       }
-    } else if (payee?.ownerRepresentative) {
-      this.name = formatNames([
-        payee.ownerRepresentative.person?.firstName,
-        payee.ownerRepresentative.person?.surname,
-      ]);
-    } else if (payee?.ownerSolicitor) {
-      if (payee.ownerSolicitor.person) {
-        this.name = formatNames([
-          payee.ownerSolicitor.person.firstName,
-          payee.ownerSolicitor.person.surname,
-        ]);
-      } else {
-        this.name = payee.ownerSolicitor.organization?.name ?? '';
-      }
     } else if (payee?.motiSolicitor) {
       this.name = formatNames([payee.motiSolicitor?.firstName, payee.motiSolicitor?.surname]);
     } else {

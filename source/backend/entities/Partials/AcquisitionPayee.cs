@@ -11,6 +11,6 @@ namespace Pims.Dal.Entities
         public override long Internal_Id { get => AcquisitionPayeeId; set => AcquisitionPayeeId = value; }
 
         [NotMapped]
-        public bool HasPayeeAssigned => AcquisitionOwnerId != null || InterestHolderId != null || OwnerRepresentativeId != null || OwnerSolicitorId != null || AcquisitionFilePersonId != null;
+        public bool HasPayeeAssigned => AcquisitionOwnerId != null || InterestHolderId != null || AcquisitionFilePersonId != null;
     }
 }

@@ -13,6 +13,7 @@ describe('GenerateAddress tests', () => {
 N/A
 Victoria
 British Columbia
-V1V1V1`);
+V1V1V1
+Canada`);
   });
 });

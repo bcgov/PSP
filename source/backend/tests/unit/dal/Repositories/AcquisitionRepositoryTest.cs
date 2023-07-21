@@ -218,17 +218,17 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var acquisitionUpdated = EntityHelper.CreateAcquisitionFile(acqFileId: 1, region: context.PimsRegions.FirstOrDefault());
-            acquisitionUpdated.PimsAcquisitionOwnerReps.Add(
-                new PimsAcquisitionOwnerRep() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah" }
+            acquisitionUpdated.PimsInterestHolders.Add(
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" }
             );
 
             var result = repository.Update(acquisitionUpdated);
 
             // Assert
             result.Should().NotBeNull();
-            result.PimsAcquisitionOwnerReps.Should().HaveCount(1);
-            result.PimsAcquisitionOwnerReps.First().Person.Should().Be(person);
-            result.PimsAcquisitionOwnerReps.First().Comment.Should().Be("blah blah");
+            result.PimsInterestHolders.Should().HaveCount(1);
+            result.PimsInterestHolders.First().Person.Should().Be(person);
+            result.PimsInterestHolders.First().Comment.Should().Be("blah blah");
         }
 
         [Fact]
@@ -246,8 +246,8 @@ namespace Pims.Dal.Test.Repositories
             context.AddAndSaveChanges(person, updatePerson);
 
             var acqFile = EntityHelper.CreateAcquisitionFile(region: context.PimsRegions.FirstOrDefault());
-            acqFile.PimsAcquisitionOwnerReps.Add(
-                new PimsAcquisitionOwnerRep() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah" }
+            acqFile.PimsInterestHolders.Add(
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" }
             );
             context.AddAndSaveChanges(acqFile);
 
@@ -255,17 +255,17 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var acquisitionUpdated = EntityHelper.CreateAcquisitionFile(acqFileId: 1, region: context.PimsRegions.FirstOrDefault());
-            acquisitionUpdated.PimsAcquisitionOwnerReps.Add(
-                new PimsAcquisitionOwnerRep() { AcquisitionFileId = acqFile.Internal_Id, PersonId = updatePerson.Internal_Id, Comment = "updated comment" }
+            acquisitionUpdated.PimsInterestHolders.Add(
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = updatePerson.Internal_Id, Comment = "updated comment", InterestHolderTypeCode = "AOREP" }
             );
 
             var result = repository.Update(acquisitionUpdated);
 
             // Assert
             result.Should().NotBeNull();
-            result.PimsAcquisitionOwnerReps.Should().HaveCount(1);
-            result.PimsAcquisitionOwnerReps.First().Person.Should().Be(updatePerson);
-            result.PimsAcquisitionOwnerReps.First().Comment.Should().Be("updated comment");
+            result.PimsInterestHolders.Should().HaveCount(1);
+            result.PimsInterestHolders.First().Person.Should().Be(updatePerson);
+            result.PimsInterestHolders.First().Comment.Should().Be("updated comment");
         }
 
         [Fact]
@@ -281,8 +281,8 @@ namespace Pims.Dal.Test.Repositories
             context.AddAndSaveChanges(person);
 
             var acqFile = EntityHelper.CreateAcquisitionFile(region: context.PimsRegions.FirstOrDefault());
-            acqFile.PimsAcquisitionOwnerReps.Add(
-                new PimsAcquisitionOwnerRep() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah" }
+            acqFile.PimsInterestHolders.Add(
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" }
             );
             context.AddAndSaveChanges(acqFile);
 
@@ -294,7 +294,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             result.Should().NotBeNull();
-            result.PimsAcquisitionOwnerReps.Should().BeEmpty();
+            result.PimsInterestHolders.Should().BeEmpty();
         }
 
         [Fact]
