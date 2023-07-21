@@ -8,7 +8,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class LeaseImprovements : PageObjectBase
     {
         private By licenseImprovementLink = By.XPath("//a[contains(text(),'Improvements')]");
-        private By improvementEditIcon = By.XPath("//div[@role='tabpanel'][3]/div/div/button");
+        private By improvementEditIcon = By.XPath("//div[@role='tabpanel']/div/div/button");
 
         private By licenseImprovCommecialSubtitle = By.XPath("//div[contains(text(),'Commercial Improvements')]/parent::div/parent::h2");
         private By licenseImprovCommercialUnitNbrLabel = By.XPath("//div[contains(text(),'Commercial Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Unit #')]");
