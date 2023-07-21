@@ -2,21 +2,25 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { defaultFormLease, IAddress, IFormLease } from '@/interfaces';
+import { IAddress } from '@/interfaces/IAddress';
 import { mockParcel } from '@/mocks/filterData.mock';
 import { render, RenderOptions } from '@/utils/test-utils';
 
+import { LeaseFormModel } from '../../models';
 import AddressSubForm, { IAddressSubFormProps } from './AddressSubForm';
 
 const history = createMemoryHistory();
 
 const defaultLeaseWithPropertyAddress = (address?: Partial<IAddress>) => {
   return {
-    ...defaultFormLease,
+    ...new LeaseFormModel(),
     properties: [
       {
         ...mockParcel,
+        areaUnitTypeCode: 'test',
+        landArea: '0',
         address: address !== undefined ? { ...mockParcel.address, ...address } : (undefined as any),
+        leaseId: null,
       },
     ],
   };
@@ -24,13 +28,13 @@ const defaultLeaseWithPropertyAddress = (address?: Partial<IAddress>) => {
 
 describe('AddressSubForm component', () => {
   const setup = (
-    renderOptions: RenderOptions & IAddressSubFormProps & { lease?: IFormLease } = {
+    renderOptions: RenderOptions & IAddressSubFormProps & { lease?: LeaseFormModel } = {
       nameSpace: 'address',
     },
   ) => {
     // render component under test
     const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
+      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? new LeaseFormModel()}>
         <AddressSubForm disabled={renderOptions.disabled} nameSpace={renderOptions.nameSpace} />
       </Formik>,
       {
@@ -46,7 +50,10 @@ describe('AddressSubForm component', () => {
   it('renders minimally as expected', () => {
     const { component } = setup({
       nameSpace: 'properties.0.address',
-      lease: { ...defaultFormLease, properties: [mockParcel] },
+      lease: {
+        ...new LeaseFormModel(),
+        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '0', leaseId: null }],
+      },
     });
     expect(component.asFragment()).toMatchSnapshot();
   });

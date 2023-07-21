@@ -12,9 +12,9 @@ Scenario: Create a new complete Acquisition File with pins
 
 Scenario: Edit existing Acquisition File and Properties
 	Given I edit an existing Acquisition File from row number 2
-	When I edit a Digital Document for a "Acquisition File" from row number 7
-	And I update a Property details from row number 4
+	When I update a Property details from row number 4
 	And I navigate back to the Acquisition File Summary
+	And I edit a Digital Document for a "Acquisition File" from row number 7
 	Then An existing Acquisition file has been edited successfully
 
 Scenario: Create an Acquisition File from Pin

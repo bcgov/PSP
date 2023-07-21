@@ -1,34 +1,37 @@
-import { act, waitFor } from '@testing-library/react';
+import { RenderOptions, waitFor } from '@testing-library/react';
 import { useFormikContext } from 'formik';
 import { createMemoryHistory } from 'history';
 import React from 'react';
+import { act } from 'react-test-renderer';
 
-import { Claims } from '@/constants/claims';
+import { Claims } from '@/constants';
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
-import { useUpdateLease } from '@/features/leases/hooks/useUpdateLease';
-import { apiLeaseToFormLease } from '@/features/leases/leaseUtils';
+import { LeaseFormModel } from '@/features/leases/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
-import { defaultFormLease, defaultLease, IFormLease, ILease } from '@/interfaces';
+import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
 import {
   getMockContactOrganizationWithMultiplePeople,
   getMockContactOrganizationWithOnePerson,
 } from '@/mocks/contacts.mock';
-import { mockLookups } from '@/mocks/index.mock';
-import { getMockLease } from '@/mocks/lease.mock';
+import { getMockApiLease } from '@/mocks/lease.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_Lease, defaultApiLease } from '@/models/api/Lease';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { mockKeycloak, renderAsync, RenderOptions } from '@/utils/test-utils';
+import { mockKeycloak, renderAsync } from '@/utils/test-utils';
 
-import { AddLeaseTenantContainer } from './AddLeaseTenantContainer';
+import AddLeaseTenantContainer from './AddLeaseTenantContainer';
 import { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
+import { FormTenant } from './models';
 import { IPrimaryContactWarningModalProps } from './PrimaryContactWarningModal';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
 jest.mock('@/hooks/pims-api/useApiContacts');
 jest.mock('@/features/leases/hooks/useUpdateLease');
+jest.mock('@/hooks/repositories/useLeaseTenantRepository');
 
 const getPersonConcept = jest.fn();
-const updateLease = jest.fn().mockResolvedValue({ ...defaultLease, id: 1 });
+const updateTenants = jest.fn().mockResolvedValue({ ...defaultApiLease, id: 1 });
 const onEdit = jest.fn();
 
 const history = createMemoryHistory();
@@ -47,12 +50,26 @@ const View = (props: IAddLeaseTenantFormProps & IPrimaryContactWarningModalProps
   return <></>;
 };
 
+const getLeaseTenantsObj = {
+  execute: jest.fn().mockResolvedValue(defaultApiLease.tenants),
+  loading: false,
+  error: undefined,
+  response: [],
+};
+
 describe('AddLeaseTenantContainer component', () => {
-  const setup = async (renderOptions: RenderOptions & { lease?: ILease } = {}) => {
+  const setup = async (
+    renderOptions: RenderOptions & { lease?: Api_Lease; tenants?: FormTenant[] } = {},
+  ) => {
     // render component under test
     const component = await renderAsync(
-      <LeaseContextProvider initialLease={renderOptions.lease ?? { ...defaultLease, id: 1 }}>
-        <AddLeaseTenantContainer formikRef={React.createRef()} View={View} onEdit={onEdit}>
+      <LeaseContextProvider initialLease={renderOptions.lease ?? { ...defaultApiLease, id: 1 }}>
+        <AddLeaseTenantContainer
+          formikRef={React.createRef()}
+          View={View}
+          onEdit={onEdit}
+          tenants={renderOptions.tenants ?? []}
+        >
           <SaveButton />
         </AddLeaseTenantContainer>
       </LeaseContextProvider>,
@@ -69,7 +86,10 @@ describe('AddLeaseTenantContainer component', () => {
     jest.resetAllMocks();
     mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
     (useApiContacts as jest.Mock).mockReturnValue({ getPersonConcept: getPersonConcept });
-    (useUpdateLease as jest.Mock).mockReturnValue({ updateLease: { execute: updateLease } });
+    (useLeaseTenantRepository as jest.Mock).mockReturnValue({
+      updateLeaseTenants: { execute: updateTenants.mockResolvedValue([]) },
+      getLeaseTenants: getLeaseTenantsObj,
+    });
   });
   it('renders as expected', async () => {
     const { component } = await setup({});
@@ -81,10 +101,10 @@ describe('AddLeaseTenantContainer component', () => {
     await setup({});
 
     await waitFor(() => {
-      viewProps.setTenants([getMockContactOrganizationWithOnePerson()]);
+      viewProps.setSelectedTenants([getMockContactOrganizationWithOnePerson()]);
 
       expect(getPersonConcept).toHaveBeenCalledTimes(1);
-      expect(viewProps.tenants[0].organizationPersons).toHaveLength(1);
+      expect(viewProps.selectedTenants[0].organizationPersons).toHaveLength(1);
     });
   });
 
@@ -92,12 +112,12 @@ describe('AddLeaseTenantContainer component', () => {
     await setup({});
 
     await waitFor(() => {
-      viewProps.setTenants([
+      viewProps.setSelectedTenants([
         getMockContactOrganizationWithOnePerson(),
         getMockContactOrganizationWithOnePerson(),
       ]);
       expect(getPersonConcept).toHaveBeenCalledTimes(1);
-      expect(viewProps.tenants[0].organizationPersons).toHaveLength(1);
+      expect(viewProps.selectedTenants[0].organizationPersons).toHaveLength(1);
     });
   });
 
@@ -105,7 +125,7 @@ describe('AddLeaseTenantContainer component', () => {
     await setup({});
 
     await waitFor(() => {
-      viewProps.setTenants([
+      viewProps.setSelectedTenants([
         {
           ...getMockContactOrganizationWithOnePerson(),
           organization: { organizationPersons: [{ person: {} }] },
@@ -120,14 +140,14 @@ describe('AddLeaseTenantContainer component', () => {
 
     //setup
     await waitFor(() => {
-      viewProps.setTenants([getMockContactOrganizationWithOnePerson()]);
+      viewProps.setSelectedTenants([getMockContactOrganizationWithOnePerson()]);
       expect(getPersonConcept).toHaveBeenCalledTimes(1);
-      expect(viewProps.tenants).toHaveLength(1);
+      expect(viewProps.selectedTenants).toHaveLength(1);
     });
 
     await waitFor(() => {
       //act
-      viewProps.setTenants([getMockContactOrganizationWithOnePerson()]);
+      viewProps.setSelectedTenants([getMockContactOrganizationWithOnePerson()]);
     });
     //assert
     expect(getPersonConcept).toHaveBeenCalledTimes(1);
@@ -137,12 +157,12 @@ describe('AddLeaseTenantContainer component', () => {
     await setup({});
 
     await waitFor(() => {
-      viewProps.setTenants([getMockContactOrganizationWithMultiplePeople()]);
-      expect(viewProps.tenants).toHaveLength(1);
+      viewProps.setSelectedTenants([getMockContactOrganizationWithMultiplePeople()]);
+      expect(viewProps.selectedTenants).toHaveLength(1);
     });
     viewProps.onSubmit({
-      ...(apiLeaseToFormLease(getMockLease()) as IFormLease),
-      tenants: viewProps.tenants,
+      ...LeaseFormModel.fromApi(getMockApiLease()),
+      tenants: viewProps.selectedTenants,
     });
     await waitFor(() => {
       expect(viewProps.saveCallback).not.toBeUndefined();
@@ -153,12 +173,12 @@ describe('AddLeaseTenantContainer component', () => {
     await setup({});
 
     await waitFor(() => {
-      viewProps.setTenants([getMockContactOrganizationWithMultiplePeople()]);
-      expect(viewProps.tenants).toHaveLength(1);
+      viewProps.setSelectedTenants([getMockContactOrganizationWithMultiplePeople()]);
+      expect(viewProps.selectedTenants).toHaveLength(1);
     });
     viewProps.onSubmit({
-      ...(apiLeaseToFormLease(getMockLease()) as IFormLease),
-      tenants: viewProps.tenants,
+      ...LeaseFormModel.fromApi(getMockApiLease()),
+      tenants: viewProps.selectedTenants,
     });
     await waitFor(() => {
       expect(viewProps.saveCallback).not.toBeUndefined();
@@ -166,16 +186,16 @@ describe('AddLeaseTenantContainer component', () => {
 
     viewProps.saveCallback && viewProps.saveCallback();
     await waitFor(() => {
-      expect(updateLease).toHaveBeenCalledTimes(1);
-      expect(updateLease.mock.calls[0][0].tenants[0].primaryContactId).toBeUndefined();
+      expect(updateTenants).toHaveBeenCalledTimes(1);
+      expect(updateTenants.mock.calls[0][0].primaryContactId).toBeUndefined();
     });
   });
 
   it('onSubmit calls api with expected data', async () => {
     await setup({});
-    viewProps.onSubmit(defaultFormLease);
+    viewProps.onSubmit({ ...new LeaseFormModel(), id: 1 });
     await waitFor(() => {
-      expect(updateLease).toHaveBeenCalledTimes(1);
+      expect(updateTenants).toHaveBeenCalledTimes(1);
       expect(onEdit).toHaveBeenCalledWith(false);
     });
   });
@@ -185,8 +205,8 @@ describe('AddLeaseTenantContainer component', () => {
 
     //setup
     await waitFor(() => {
-      viewProps.setTenants([getMockContactOrganizationWithMultiplePeople()]);
-      expect(viewProps.tenants).toHaveLength(1);
+      viewProps.setSelectedTenants([getMockContactOrganizationWithMultiplePeople()]);
+      expect(viewProps.selectedTenants).toHaveLength(1);
       expect(viewProps.saveCallback).not.toBeNull();
     });
     //act

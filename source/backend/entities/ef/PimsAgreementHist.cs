@@ -54,6 +54,10 @@ namespace Pims.Dal.Entities
         public DateTime? SignedDate { get; set; }
         [Column("INSPECTION_DATE", TypeName = "date")]
         public DateTime? InspectionDate { get; set; }
+        [Column("EXPROPRIATION_DATE", TypeName = "date")]
+        public DateTime? ExpropriationDate { get; set; }
+        [Column("POSSESSION_DATE", TypeName = "date")]
+        public DateTime? PossessionDate { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

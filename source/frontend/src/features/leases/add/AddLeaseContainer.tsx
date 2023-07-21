@@ -52,9 +52,10 @@ export const AddLeaseContainer: React.FunctionComponent<
     formikHelpers: FormikHelpers<LeaseFormModel>,
     userOverrideCodes: UserOverrideCode[],
   ) => {
-    const leaseApi = leaseFormModel.toApi();
+    const leaseApi = LeaseFormModel.toApi(leaseFormModel);
     const response = await addLease.execute(leaseApi, userOverrideCodes);
     formikHelpers.setSubmitting(false);
+
     if (!!response?.id) {
       if (leaseApi.properties?.find(p => !p.property?.address && !p.property?.id)) {
         toast.warn(

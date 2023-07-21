@@ -43,7 +43,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateAdminTools()
         {
-            Wait();
+            Wait(5000);
             webDriver.FindElement(mainMenuAdminToolLink).Click();
         }
 

@@ -30,7 +30,6 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
   }
 
   const isLoading = props.isLoading;
-  console.log(isLoading);
   return (
     <>
       <LoadingBackdrop show={isLoading} parentScreen={true} />

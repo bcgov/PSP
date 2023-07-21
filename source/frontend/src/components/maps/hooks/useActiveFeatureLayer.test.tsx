@@ -3,7 +3,6 @@ import { renderHook } from '@testing-library/react-hooks';
 import { createMemoryHistory } from 'history';
 import { geoJSON } from 'leaflet';
 import { noop } from 'lodash';
-import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
@@ -12,7 +11,9 @@ import thunk from 'redux-thunk';
 import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
+import { useMapProperties } from '@/hooks/repositories/useMapProperties';
 
+import { createPoints } from '../leaflet/Layers/util';
 import useActiveFeatureLayer from './useActiveFeatureLayer';
 
 const mapRef = { current: { leafletMap: {} } };
@@ -21,6 +22,7 @@ jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
 jest.mock('@/hooks/layer-api/useLayerQuery');
 jest.mock('@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer');
 jest.mock('@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer');
+jest.mock('@/hooks/repositories/useMapProperties');
 
 let clearLayers = jest.fn();
 let addData = jest.fn();
@@ -58,6 +60,24 @@ const useLayerQueryMock = {
   findOneWhereContainsWrapped: { execute: jest.fn() },
 };
 (useLayerQuery as jest.Mock).mockReturnValue(useLayerQueryMock);
+
+(useMapProperties as unknown as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
+  loadProperties: {
+    execute: jest.fn().mockResolvedValue({
+      features: createPoints([
+        {
+          id: 1,
+          latitude: 54.917061,
+          longitude: -122.749672,
+          pid: '123-456-789',
+          address: { provinceId: 1, streetAddress1: 'test' },
+        },
+      ]),
+      type: 'FeatureCollection',
+      bbox: undefined,
+    }),
+  },
+});
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
@@ -226,6 +246,9 @@ describe('useActiveFeatureLayer hook tests', () => {
   });
 
   it('sets the layer popup with no data', async () => {
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockResolvedValueOnce({
+      features: [],
+    });
     useLayerQueryMock.findOneWhereContainsWrapped.execute.mockResolvedValueOnce({
       features: [],
     });

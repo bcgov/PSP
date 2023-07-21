@@ -10,7 +10,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { StyledAddButton } from '@/components/common/styles';
-import { Claims } from '@/constants';
+import { Claims, Roles } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
@@ -26,7 +26,6 @@ export interface CompensationRequisitionDetailViewProps {
   acqFileProject?: Api_Project;
   acqFileProduct?: Api_Product | undefined;
   clientConstant: string;
-  gstConstant: number | undefined;
   loading: boolean;
   setEditMode: (editMode: boolean) => void;
   onGenerate: (compensation: Api_CompensationRequisition) => void;
@@ -36,9 +35,6 @@ interface PayeeViewDetails {
   displayName: string;
   isGstApplicable: boolean;
   gstNumber: string;
-  preTaxAmount: number;
-  taxAmount: number;
-  totalAmount: number;
   goodTrust: boolean;
   contactEnabled: boolean;
   personId: number | null;
@@ -56,7 +52,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   setEditMode,
   onGenerate,
 }) => {
-  const { hasClaim } = useKeycloakWrapper();
+  const { hasClaim, hasRole } = useKeycloakWrapper();
   const getPayeeDetails = (
     compensationPayee: Api_CompensationPayee | null | undefined,
   ): PayeeViewDetails | null => {
@@ -79,34 +75,10 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         ? formatApiPersonNames(compensationPayee.interestHolder?.person)
         : compensationPayee.interestHolder?.organization?.name ?? '';
       payeeDetail.personId = compensationPayee.interestHolder?.person?.id!;
-    } else if (compensationPayee.ownerRepresentativeId) {
-      payeeDetail.displayName = formatApiPersonNames(compensationPayee.ownerRepresentative?.person);
-      payeeDetail.personId = compensationPayee.ownerRepresentative?.person?.id!;
-    } else if (compensationPayee.ownerSolicitorId) {
-      payeeDetail.displayName = compensationPayee.ownerSolicitor?.person
-        ? formatApiPersonNames(compensationPayee.ownerSolicitor?.person)
-        : compensationPayee.ownerSolicitor?.organization?.name ?? '';
-      payeeDetail.personId = compensationPayee.ownerSolicitor?.person?.id!;
     } else if (compensationPayee.motiSolicitorId) {
       payeeDetail.displayName = formatApiPersonNames(compensationPayee.motiSolicitor);
       payeeDetail.personId = compensationPayee.motiSolicitor?.id!;
     }
-
-    const payeePretaxAmount = compensation?.financials
-      .map(f => f.pretaxAmount ?? 0)
-      .reduce((prev, next) => prev + next, 0);
-
-    const payeeTaxAmount = compensation?.financials
-      .map(f => f.taxAmount ?? 0)
-      .reduce((prev, next) => prev + next, 0);
-
-    const payeeTotalAmount = compensation?.financials
-      .map(f => f.totalAmount ?? 0)
-      .reduce((prev, next) => prev + next, 0);
-
-    payeeDetail.preTaxAmount = payeePretaxAmount;
-    payeeDetail.taxAmount = payeeTaxAmount;
-    payeeDetail.totalAmount = payeeTotalAmount;
 
     var results =
       compensation.financials?.filter(el => {
@@ -120,59 +92,111 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
   const payeeDetails = getPayeeDetails(compensationPayee);
 
+  const compPretaxAmount = compensation?.financials
+    .map(f => f.pretaxAmount ?? 0)
+    .reduce((prev, next) => prev + next, 0);
+
+  const compTaxAmount = compensation?.financials
+    .map(f => f.taxAmount ?? 0)
+    .reduce((prev, next) => prev + next, 0);
+
+  const compTotalAmount = compensation?.financials
+    .map(f => f.totalAmount ?? 0)
+    .reduce((prev, next) => prev + next, 0);
+
+  const userCanEditCompensationReq = (): boolean => {
+    if (compensation.isDraft && hasClaim(Claims.COMPENSATION_REQUISITION_EDIT)) {
+      return true;
+    }
+
+    if (!compensation.isDraft && hasRole(Roles.SYSTEM_ADMINISTRATOR)) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const editButtonBlock = (
+    <EditButton
+      title="Edit compensation requisition"
+      onClick={() => {
+        setEditMode(true);
+      }}
+    />
+  );
+
   return (
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
-      <RightFlexDiv>
-        {setEditMode !== undefined && hasClaim(Claims.COMPENSATION_REQUISITION_EDIT) && (
-          <EditButton
-            title="Edit compensation requisition"
-            onClick={() => {
-              setEditMode(true);
-            }}
-          />
-        )}
-        <StyledAddButton
-          onClick={() => {
-            onGenerate(compensation);
-          }}
-        >
-          <FaMoneyCheck className="mr-2" />
-          Generate H120
-        </StyledAddButton>
-      </RightFlexDiv>
       <Section>
         <StyledRow className="no-gutters">
           <Col xs="6">
-            <HeaderField label="Client:" labelWidth="8" valueTestId={'compensation-client'}>
+            <HeaderField label="Client:" labelWidth="8" valueTestId="compensation-client">
               {clientConstant}
             </HeaderField>
-            <HeaderField label="Requisition number:" labelWidth="8">
+            <HeaderField
+              label="Requisition number:"
+              labelWidth="8"
+              valueTestId="compensation-number"
+            >
               {compensation.isDraft ? 'Draft' : compensation.id}
             </HeaderField>
           </Col>
           <Col xs="6">
-            <HeaderField label="Compensation amount:" labelWidth="8">
-              {formatMoney(payeeDetails?.preTaxAmount ?? 0)}
+            <HeaderField
+              label="Compensation amount:"
+              labelWidth="8"
+              contentWidth="4"
+              valueTestId="header-pretax-amount"
+            >
+              <p className="mb-0 text-right">{formatMoney(compPretaxAmount ?? 0)}</p>
             </HeaderField>
-            <HeaderField label="Applicable GST:" labelWidth="8">
-              {formatMoney(payeeDetails?.taxAmount ?? 0)}
+            <HeaderField
+              label="Applicable GST:"
+              labelWidth="8"
+              contentWidth="4"
+              valueTestId="header-tax-amount"
+            >
+              <p className="mb-0 text-right">{formatMoney(compTaxAmount ?? 0)}</p>
             </HeaderField>
-            <HeaderField label="Total cheque amount:" labelWidth="8">
-              {formatMoney(payeeDetails?.totalAmount ?? 0)}
+            <HeaderField
+              label="Total cheque amount:"
+              labelWidth="8"
+              contentWidth="4"
+              valueTestId="header-total-amount"
+            >
+              <p className="mb-0 text-right">{formatMoney(compTotalAmount ?? 0)}</p>
             </HeaderField>
           </Col>
         </StyledRow>
       </Section>
 
-      <Section header="Requisition Details">
-        <SectionField label="Status" labelWidth="4">
+      <Section
+        header={
+          <FlexDiv>
+            Requisition Details
+            <RightFlexDiv>
+              {setEditMode !== undefined && userCanEditCompensationReq() && editButtonBlock}
+
+              <StyledAddButton
+                onClick={() => {
+                  onGenerate(compensation);
+                }}
+              >
+                <FaMoneyCheck className="mr-2" />
+                Generate H120
+              </StyledAddButton>
+            </RightFlexDiv>
+          </FlexDiv>
+        }
+      >
+        <SectionField label="Status" labelWidth="4" data-testid="compensation-status">
           {compensation.isDraft ? 'Draft' : 'Final'}
         </SectionField>
         <SectionField label="Agreement date" labelWidth="4">
           {prettyFormatDate(compensation.agreementDate)}
         </SectionField>
-        <SectionField label="Expropriation notice server date" labelWidth="4">
+        <SectionField label="Expropriation notice served date" labelWidth="4">
           {prettyFormatDate(compensation.expropriationNoticeServedDate)}
         </SectionField>
         <SectionField label="Expropriation vesting date" labelWidth="4">
@@ -188,7 +212,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           {acqFileProduct?.code ?? ''}
         </SectionField>
         <SectionField label="Business function" labelWidth="4">
-          {acqFileProject?.code ?? ''}
+          {acqFileProject?.businessFunctionCode?.code ?? ''}
         </SectionField>
         <SectionField label="Work activity" labelWidth="4">
           {acqFileProject?.workActivityCode?.code ?? ''}
@@ -200,7 +224,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           {compensation.fiscalYear ?? ''}
         </SectionField>
         <SectionField label="STOB" labelWidth="4">
-          {compensation.yearlyFinancial?.code ?? ''}
+          {compensation.yearlyFinancial?.code ?? ''} - {compensation.yearlyFinancial?.description}
         </SectionField>
         <SectionField label="Service line" labelWidth="4">
           {compensation.chartOfAccounts && (
@@ -209,7 +233,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
             </label>
           )}
         </SectionField>
-        <SectionField label="Responsiblity centre" labelWidth="4">
+        <SectionField label="Responsibility centre" labelWidth="4">
           {compensation.responsibility && (
             <label>
               {compensation.responsibility?.code} - {compensation.responsibility?.description}
@@ -236,19 +260,15 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           </StyledPayeeDisplayName>
         </SectionField>
         <SectionField label="Amount (before tax)">
-          {formatMoney(payeeDetails?.preTaxAmount ?? 0)}
+          {formatMoney(compPretaxAmount ?? 0)}
         </SectionField>
         <SectionField label="GST applicable?">
           {payeeDetails?.isGstApplicable ? 'Yes' : 'No'}
         </SectionField>
         {payeeDetails?.isGstApplicable && (
-          <SectionField label="GST amount">
-            {formatMoney(payeeDetails?.taxAmount ?? 0)}
-          </SectionField>
+          <SectionField label="GST amount">{formatMoney(compTaxAmount ?? 0)}</SectionField>
         )}
-        <SectionField label="Total amount">
-          {formatMoney(payeeDetails?.totalAmount ?? 0)}
-        </SectionField>
+        <SectionField label="Total amount">{formatMoney(compTotalAmount ?? 0)}</SectionField>
       </Section>
 
       <Section header="Financial Activities" isCollapsable initiallyExpanded>
@@ -258,7 +278,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
               <label>Activity {index + 1}</label>
             </StyledSubHeader>
             <SectionField label="Code & Description" labelWidth="4">
-              {item.financialActivityCode?.id} - {item.financialActivityCode?.description}
+              {item.financialActivityCode?.code} - {item.financialActivityCode?.description}
             </SectionField>
             <SectionField label="Amount (before tax)" labelWidth="4">
               {formatMoney(item.pretaxAmount ?? 0)}
@@ -284,21 +304,30 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
       <Section>
         <StyledCompensationFooter>
-          <div>
-            <label>
-              Compensation amount: <span>{formatMoney(payeeDetails?.preTaxAmount ?? 0)}</span>
-            </label>
-          </div>
-          <div>
-            <label>
-              Applicable GST: <span>{formatMoney(payeeDetails?.taxAmount ?? 0)}</span>
-            </label>
-          </div>
-          <div>
-            <label>
-              Total cheque amount: <span>{formatMoney(payeeDetails?.totalAmount ?? 0)}</span>
-            </label>
-          </div>
+          <Row>
+            <Col className="pr-0 text-right">
+              <label>Compensation amount:</label>
+            </Col>
+            <Col xs="3" className="pl-1 text-right">
+              <span>{formatMoney(compPretaxAmount ?? 0)}</span>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="pr-0 text-right">
+              <label>Applicable GST:</label>
+            </Col>
+            <Col xs="3" className="pl-1 text-right">
+              <span>{formatMoney(compTaxAmount ?? 0)}</span>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="pr-0 text-right">
+              <label>Total cheque amount:</label>
+            </Col>
+            <Col xs="3" className="pl-1 text-right">
+              <span>{formatMoney(compTotalAmount ?? 0)}</span>
+            </Col>
+          </Row>
         </StyledCompensationFooter>
       </Section>
     </StyledSummarySection>
@@ -318,21 +347,22 @@ const StyledLink = styled(Link)`
   align-items: center;
 `;
 
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+`;
+
 const RightFlexDiv = styled.div`
   display: flex;
   flex-direction: row-reverse;
 `;
 
 const StyledCompensationFooter = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
   font-size: 16px;
   font-weight: 600;
-  span {
-    margin-left: 1.25rem;
-  }
 `;
 
 const StyledPayeeDisplayName = styled.div`

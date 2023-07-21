@@ -26,6 +26,7 @@ export enum FileTabType {
   AGREEMENTS = 'agreements',
   COMPENSATIONS = 'compensations',
   STAKEHOLDERS = 'stakeholders',
+  EXPROPRIATION = 'expropriation',
 }
 /**
  * Tab wrapper, provides styling and nests form components within their corresponding tabs.
@@ -43,7 +44,9 @@ export const FileTabs: React.FunctionComponent<React.PropsWithChildren<IFileTabs
       activeKey={activeTab}
       onSelect={(eventKey: string | null) => {
         const tab = Object.values(FileTabType).find(value => value === eventKey);
-        tab && setActiveTab(tab);
+        if (tab && tab !== activeTab) {
+          setActiveTab(tab);
+        }
       }}
     >
       {tabViews.map((view: TabFileView, index: number) => (

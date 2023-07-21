@@ -23,6 +23,7 @@ namespace Pims.Core.Test
     public class TestHelper
     {
         #region Properties
+
         /// <summary>
         /// get - The service provider.
         /// </summary>

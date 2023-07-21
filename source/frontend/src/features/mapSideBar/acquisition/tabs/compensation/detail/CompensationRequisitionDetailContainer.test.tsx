@@ -26,7 +26,6 @@ describe('Compensation Detail View container', () => {
         setEditMode={setEditMode}
         compensation={renderOptions.props?.compensation ?? getMockApiCompensation()}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
-        gstConstant={renderOptions.props?.gstConstant ?? 0}
         clientConstant={renderOptions.props?.clientConstant ?? '034'}
       />,
       {

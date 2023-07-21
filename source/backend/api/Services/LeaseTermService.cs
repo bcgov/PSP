@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -14,63 +14,54 @@ namespace Pims.Api.Services
     public class LeaseTermService : ILeaseTermService
     {
         private readonly ILeaseTermRepository _leaseTermRepository;
-        private readonly ILeaseRepository _leaseRepository;
-        private readonly ILeaseService _leaseService;
         private readonly ClaimsPrincipal _user;
+        private readonly ILogger _logger;
 
-        public LeaseTermService(ILeaseTermRepository leaseTermRepository, ILeaseRepository leaseRepository, ILeaseService leaseService, ClaimsPrincipal user)
+        public LeaseTermService(ILeaseTermRepository leaseTermRepository, ClaimsPrincipal user, ILogger<LeaseTermService> logger)
         {
             _leaseTermRepository = leaseTermRepository;
-            _leaseRepository = leaseRepository;
-            _leaseService = leaseService;
             _user = user;
+            _logger = logger;
         }
 
-        public PimsLease DeleteTerm(long leaseId, long leaseRowVersion, PimsLeaseTerm term)
+        public IEnumerable<PimsLeaseTerm> GetTerms(long leaseId)
         {
-            ValidateTermServiceCall(leaseId, leaseRowVersion);
+            _logger.LogInformation("Getting terms from lease with id: {id}", leaseId);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+            return _leaseTermRepository.GetAllByLeaseId(leaseId);
+        }
+
+        public bool DeleteTerm(long leaseId, PimsLeaseTerm term)
+        {
+            _logger.LogInformation("Deleting term to lease with id: {id}", leaseId);
             ValidateDeletionRules(term);
 
             _leaseTermRepository.Delete(term.Internal_Id);
             _leaseTermRepository.CommitTransaction();
 
-            return _leaseRepository.Get(leaseId);
+            return true;
         }
 
-        public PimsLease UpdateTerm(long leaseId, long termId, long leaseRowVersion, PimsLeaseTerm term)
+        public PimsLeaseTerm UpdateTerm(long leaseId, long termId, PimsLeaseTerm term)
         {
-            ValidateTermServiceCall(leaseId, leaseRowVersion);
+            _logger.LogInformation("Updating term to lease with id: {id}", leaseId);
             ValidateUpdateRules(term, termId);
 
             _leaseTermRepository.Update(term);
             _leaseTermRepository.CommitTransaction();
 
-            return _leaseRepository.Get(leaseId);
+            return term;
         }
 
-        public PimsLease AddTerm(long leaseId, long leaseRowVersion, PimsLeaseTerm term)
+        public PimsLeaseTerm AddTerm(long leaseId, PimsLeaseTerm term)
         {
-            ValidateTermServiceCall(leaseId, leaseRowVersion);
+            _logger.LogInformation("Adding term to lease with id: {id}", leaseId);
             ValidateAddRules(term);
 
             _leaseTermRepository.Add(term);
             _leaseTermRepository.CommitTransaction();
 
-            return _leaseRepository.Get(leaseId);
-        }
-
-        /// <summary>
-        /// For a term service call to be valid, the user must have the lease edit claim and the lease being edited must be up to date.
-        /// </summary>
-        /// <param name="leaseId"></param>
-        /// <param name="leaseRowVersion"></param>
-        private void ValidateTermServiceCall(long leaseId, long leaseRowVersion)
-        {
-            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            if (!_leaseService.IsRowVersionEqual(leaseId, leaseRowVersion))
-            {
-                throw new DbUpdateConcurrencyException("You are working with an older version of this lease, please refresh the application and retry.");
-            }
+            return term;
         }
 
         private void ValidateDeletionRules(PimsLeaseTerm term)
