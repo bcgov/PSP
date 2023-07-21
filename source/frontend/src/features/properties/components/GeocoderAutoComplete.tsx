@@ -1,17 +1,18 @@
 import './GeocoderAutoComplete.scss';
 
 import classNames from 'classnames';
-import { DisplayError } from 'components/common/form';
-import TooltipIcon from 'components/common/TooltipIcon';
-import TooltipWrapper from 'components/common/TooltipWrapper';
 import { useFormikContext } from 'formik';
-import { IGeocoderResponse } from 'hooks/pims-api/interfaces/IGeocoder';
-import { useGeocoderRepository } from 'hooks/useGeocoderRepository';
 import debounce from 'lodash/debounce';
 import * as React from 'react';
 import Form from 'react-bootstrap/Form';
 import { FormControlProps } from 'react-bootstrap/FormControl';
 import ClickAwayListener from 'react-click-away-listener';
+
+import { DisplayError } from '@/components/common/form';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
+import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 
 interface IGeocoderAutoCompleteProps {
   field: string;

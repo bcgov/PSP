@@ -1,9 +1,10 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultFormLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
-import { mockParcel } from 'mocks/filterData.mock';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
+import { mockParcel } from '@/mocks/filterData.mock';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import DetailDocumentation, { IDetailDocumentationProps } from './DetailDocumentation';
 
@@ -11,11 +12,11 @@ const history = createMemoryHistory();
 
 describe('DetailDocumentation component', () => {
   const setup = (
-    renderOptions: RenderOptions & IDetailDocumentationProps & { lease?: IFormLease } = {},
+    renderOptions: RenderOptions & IDetailDocumentationProps & { lease?: LeaseFormModel } = {},
   ) => {
     // render component under test
     const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
+      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? new LeaseFormModel()}>
         <DetailDocumentation
           disabled={renderOptions.disabled}
           nameSpace={renderOptions.nameSpace}
@@ -33,7 +34,10 @@ describe('DetailDocumentation component', () => {
   };
   it('renders minimally as expected', () => {
     const { component } = setup({
-      lease: { ...defaultFormLease, properties: [mockParcel] },
+      lease: {
+        ...new LeaseFormModel(),
+        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
+      },
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
@@ -41,8 +45,8 @@ describe('DetailDocumentation component', () => {
   it('renders a complete lease as expected', () => {
     const { component } = setup({
       lease: {
-        ...defaultFormLease,
-        properties: [mockParcel],
+        ...new LeaseFormModel(),
+        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
         amount: 1,
         description: 'a test description',
         programName: 'A program',
@@ -52,8 +56,8 @@ describe('DetailDocumentation component', () => {
         motiName: 'test moti name',
         note: 'a test note',
         expiryDate: '2022-01-01',
-        hasDigitalLicense: 'Yes',
-        hasPhysicalLicense: 'No',
+        hasDigitalLicense: true,
+        hasPhysicalLicense: false,
         startDate: '2020-01-01',
       },
     });
@@ -62,28 +66,28 @@ describe('DetailDocumentation component', () => {
 
   it('renders the Physical lease/license exists field', () => {
     const {
-      component: { getAllByDisplayValue },
+      component: { getByDisplayValue },
     } = setup({
       lease: {
-        ...defaultFormLease,
-        hasPhysicalLicense: 'Unknown',
-        hasDigitalLicense: 'Yes',
+        ...getDefaultFormLease(),
+        hasPhysicalLicense: true,
+        hasDigitalLicense: undefined,
       },
     });
-    expect(getAllByDisplayValue('Unknown')[1]).toBeVisible();
+    expect(getByDisplayValue('Yes')).toBeVisible();
   });
 
   it('renders the Digital lease/license exists field', () => {
     const {
-      component: { getAllByDisplayValue },
+      component: { getByDisplayValue },
     } = setup({
       lease: {
-        ...defaultFormLease,
-        hasPhysicalLicense: 'Yes',
-        hasDigitalLicense: 'Unknown',
+        ...getDefaultFormLease(),
+        hasPhysicalLicense: undefined,
+        hasDigitalLicense: true,
       },
     });
-    expect(getAllByDisplayValue('Unknown')[0]).toBeVisible();
+    expect(getByDisplayValue('Yes')).toBeVisible();
   });
 
   it('renders the Location of documents field', () => {
@@ -91,7 +95,7 @@ describe('DetailDocumentation component', () => {
       component: { getByText },
     } = setup({
       lease: {
-        ...defaultFormLease,
+        ...getDefaultFormLease(),
         documentationReference: 'documentation Reference',
       },
     });
@@ -103,7 +107,7 @@ describe('DetailDocumentation component', () => {
       component: { getByDisplayValue },
     } = setup({
       lease: {
-        ...defaultFormLease,
+        ...getDefaultFormLease(),
         psFileNo: 'A PS File No',
       },
     });

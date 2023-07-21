@@ -1,6 +1,6 @@
-import { Table } from 'components/Table';
-import { TableSort } from 'components/Table/TableSort';
-import { Api_Note } from 'models/api/Note';
+import { Table } from '@/components/Table';
+import { TableSort } from '@/components/Table/TableSort';
+import { Api_Note } from '@/models/api/Note';
 
 import { createTableColumns } from './columns';
 

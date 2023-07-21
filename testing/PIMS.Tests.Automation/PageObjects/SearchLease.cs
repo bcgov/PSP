@@ -62,7 +62,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Search a Lease/License
         public void NavigateToSearchLicense()
         {
-            Wait();
+            Wait(5000);
             webDriver.FindElement(menuManagementButton).Click();
 
             Wait();

@@ -1,0 +1,1222 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Compensation Detail View Component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c6.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c6.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c6.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c6.btn.btn-primary {
+  border: none;
+}
+
+.c6.btn.btn-secondary {
+  background: none;
+}
+
+.c6.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
+  background: none;
+}
+
+.c6.btn.btn-light {
+  border: none;
+}
+
+.c6.btn.btn-dark {
+  border: none;
+}
+
+.c6.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c6.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c6.Button--icon-only:focus {
+  outline: none;
+}
+
+.c6.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c9 {
+  float: right;
+  cursor: pointer;
+}
+
+.c0 {
+  padding-top: 1rem;
+}
+
+.c3 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c8.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c7 {
+  font-weight: bold;
+}
+
+.c2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.c11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+.c13 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: 1rem;
+}
+
+.c12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: solid 0.1rem;
+  margin-bottom: 2rem;
+}
+
+.c12 label {
+  font-family: 'BCSans-Bold';
+  font-size: 1.75rem;
+  width: 100%;
+  text-align: left;
+}
+
+.c12 button {
+  margin-bottom: 1rem;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 form-section"
+    >
+      <div
+        class="collapse show"
+      >
+        <div
+          class="c2 no-gutters row"
+        >
+          <div
+            class="col-6"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-8"
+              >
+                <label>
+                  Client:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-auto"
+                data-testid="compensation-client"
+              >
+                <strong>
+                  034
+                </strong>
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-8"
+              >
+                <label>
+                  Requisition number:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-auto"
+                data-testid="compensation-number"
+              >
+                <strong>
+                  Draft
+                </strong>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-6"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-8"
+              >
+                <label>
+                  Compensation amount:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-4"
+                data-testid="header-pretax-amount"
+              >
+                <strong>
+                  <p
+                    class="mb-0 text-right"
+                  >
+                    $30,000.00
+                  </p>
+                </strong>
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-8"
+              >
+                <label>
+                  Applicable GST:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-4"
+                data-testid="header-tax-amount"
+              >
+                <strong>
+                  <p
+                    class="mb-0 text-right"
+                  >
+                    $1,500.00
+                  </p>
+                </strong>
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-8"
+              >
+                <label>
+                  Total cheque amount:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-4"
+                data-testid="header-total-amount"
+              >
+                <strong>
+                  <p
+                    class="mb-0 text-right"
+                  >
+                    $31,500.00
+                  </p>
+                </strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            <div
+              class="c4"
+            >
+              Requisition Details
+              <div
+                class="c5"
+              >
+                <button
+                  class="c6 Button btn btn-primary"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      class="mr-2"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 640 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 448c0 17.67 14.33 32 32 32h576c17.67 0 32-14.33 32-32V128H0v320zm448-208c0-8.84 7.16-16 16-16h96c8.84 0 16 7.16 16 16v32c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-32zm0 120c0-4.42 3.58-8 8-8h112c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H456c-4.42 0-8-3.58-8-8v-16zM64 264c0-4.42 3.58-8 8-8h304c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zm0 96c0-4.42 3.58-8 8-8h176c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zM624 32H16C7.16 32 0 39.16 0 48v48h640V48c0-8.84-7.16-16-16-16z"
+                      />
+                    </svg>
+                    Generate H120
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Status:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            Draft
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Agreement date:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Expropriation notice served date:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Expropriation vesting date:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c7"
+            >
+              Special instructions:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            SPECIAL INSTRUCTION
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Financial Coding
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c9"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Product:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Business function:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Work activity:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Cost type:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Fiscal year:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            2023/2024
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              STOB:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+             - 
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Service line:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Responsibility centre:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Payment
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c9"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Payee:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            <div
+              class="c10"
+            >
+              <a
+                class="c11"
+                href="/contact/P9"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span>
+                  Aman Monga
+                </span>
+                <svg
+                  class="ml-2"
+                  fill="currentColor"
+                  height="1rem"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1rem"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                  />
+                </svg>
+              </a>
+              <label>
+                , in trust
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Amount (before tax):
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            $30,000.00
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              GST applicable?:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            Yes
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              GST amount:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            $1,500.00
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Total amount:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            $31,500.00
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Financial Activities
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c9"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="c12"
+        >
+          <label>
+            Activity 1
+          </label>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Code & Description:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+             - Market
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Amount (before tax):
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            $10,000.00
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              GST applicable?:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            Yes
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              GST amount:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            $500.00
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Total amount:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            $10,500.00
+          </div>
+        </div>
+        <div
+          class="c12"
+        >
+          <label>
+            Activity 2
+          </label>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Code & Description:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+             - Owners Entitlements
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Amount (before tax):
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            $20,000.00
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              GST applicable?:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            Yes
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              GST amount:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            $1,000.00
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
+              Total amount:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            $21,000.00
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c7"
+            >
+              Detailed remarks:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          >
+            DETAILED REMARKS
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <div
+        class="collapse show"
+      >
+        <div
+          class="c13"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-right col"
+            >
+              <label>
+                Compensation amount:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-right col-3"
+            >
+              <span>
+                $30,000.00
+              </span>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-right col"
+            >
+              <label>
+                Applicable GST:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-right col-3"
+            >
+              <span>
+                $1,500.00
+              </span>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-right col"
+            >
+              <label>
+                Total cheque amount:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-right col-3"
+            >
+              <span>
+                $31,500.00
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

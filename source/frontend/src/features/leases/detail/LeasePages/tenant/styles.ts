@@ -1,5 +1,6 @@
-import ContactManagerView from 'components/contact/ContactManagerView/ContactManagerView';
 import styled from 'styled-components';
+
+import ContactManagerView from '@/components/contact/ContactManagerView/ContactManagerView';
 
 export const TenantH2 = styled.h2`
   font-size: 2rem;

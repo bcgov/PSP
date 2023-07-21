@@ -1,5 +1,7 @@
 import { AxiosResponse } from 'axios';
-import { FinancialCodeTypes } from 'constants/index';
+import { useCallback, useMemo } from 'react';
+
+import { FinancialCodeTypes } from '@/constants/index';
 import {
   getChartOfAccountsCodes,
   getFinancialActivitiesCodes,
@@ -10,11 +12,10 @@ import {
   getYearlyFinancialCodes,
   postFinancialCode,
   putFinancialCode,
-} from 'hooks/pims-api/useApiFinancialCodes';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { Api_FinancialCode } from 'models/api/FinancialCode';
-import { useCallback, useMemo } from 'react';
-import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
+} from '@/hooks/pims-api/useApiFinancialCodes';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 const ignoreErrorCodes = [409];
 

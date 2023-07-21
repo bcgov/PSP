@@ -1,10 +1,11 @@
 import { cleanup } from '@testing-library/react';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { mockLookups } from 'mocks/index.mock';
 import renderer from 'react-test-renderer';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import TestCommonWrapper from 'utils/TestCommonWrapper';
+
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { mockLookups } from '@/mocks/index.mock';
+import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
 import HelpContainer from './HelpContainer';
 
@@ -14,12 +15,12 @@ const mockData = {
   config: { settings: { helpDeskEmail: 'test@test.com' } },
 };
 
-jest.mock('store/hooks', () => ({
+jest.mock('@/store/hooks', () => ({
   useAppSelector: () => mockData,
   useAppDispatch: () => jest.fn(),
 }));
 
-jest.mock('hooks/useLookupCodeHelpers');
+jest.mock('@/hooks/useLookupCodeHelpers');
 (useLookupCodeHelpers as jest.Mock).mockReturnValue({ getByType: () => mockLookups });
 
 afterEach(() => {

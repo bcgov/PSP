@@ -1,10 +1,11 @@
-import * as Styled from 'components/common/styles';
-import TooltipWrapper from 'components/common/TooltipWrapper';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaWindowClose } from 'react-icons/fa';
 import VisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
+
+import * as Styled from '@/components/common/styles';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 
 interface IMapSideBarLayoutProps {
   title: React.ReactNode;

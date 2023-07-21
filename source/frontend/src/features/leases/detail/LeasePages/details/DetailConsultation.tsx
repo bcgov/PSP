@@ -1,11 +1,11 @@
-import * as API from 'constants/API';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { useFormikContext } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { IFormLease } from 'interfaces';
-import { Api_LeaseConsultation } from 'models/api/Lease';
-import * as React from 'react';
+
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import * as API from '@/constants/API';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { Api_Lease, Api_LeaseConsultation } from '@/models/api/Lease';
+
 export interface IDetailConsultationProps {
   nameSpace?: string;
 }
@@ -17,7 +17,7 @@ export interface IDetailConsultationProps {
 export const DetailConsultation: React.FunctionComponent<
   React.PropsWithChildren<IDetailConsultationProps>
 > = ({ nameSpace }) => {
-  const { values, setFieldValue } = useFormikContext<IFormLease>();
+  const { values, setFieldValue } = useFormikContext<Api_Lease>();
 
   const { getByType } = useLookupCodeHelpers();
   const consultationTypes = getByType(API.CONSULTATION_TYPES);
@@ -41,7 +41,7 @@ export const DetailConsultation: React.FunctionComponent<
 
       // If there is a consultation with the type, set the status to the existing one
       let existingConsultation = values.consultations.find(
-        consultation => consultation.consultationType?.id === consultationType.id,
+        consultation => consultation.consultationType === consultationType.id,
       );
       if (existingConsultation !== undefined) {
         newConsultation.id = existingConsultation.id;

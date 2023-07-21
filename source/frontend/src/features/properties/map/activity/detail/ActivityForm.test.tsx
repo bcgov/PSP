@@ -1,17 +1,18 @@
 import { screen } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Input } from 'components/common/form';
-import { Claims } from 'constants/claims';
-import { FileTypes } from 'constants/fileTypes';
 import { useFormikContext } from 'formik';
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
-import { getMockActivityResponse } from 'mocks/activities.mock';
-import { mockLookups } from 'mocks/index.mock';
 import { act } from 'react-test-renderer';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
 import * as Yup from 'yup';
+
+import { Input } from '@/components/common/form';
+import { Claims } from '@/constants/claims';
+import { FileTypes } from '@/constants/fileTypes';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { getMockActivityResponse } from '@/mocks/activities.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ActivityForm, IActivityFormProps } from './ActivityForm';
 import { ActivityModel } from './models';

@@ -1,4 +1,4 @@
-import { Api_EntityNote } from 'models/api/Note';
+import { Api_EntityNote } from '@/models/api/Note';
 
 import { NoteForm } from '../models';
 

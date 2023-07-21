@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { useApiTenants } from '.';
+import { useApiTenants } from './useApiTenants';
 
 const mockAxios = new MockAdapter(axios);
 

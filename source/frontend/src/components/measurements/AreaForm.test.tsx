@@ -1,5 +1,5 @@
-import { AreaUnitTypes } from 'constants/index';
-import { fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
+import { AreaUnitTypes } from '@/constants/index';
+import { fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { AreaForm, IAreaFormProps } from './AreaForm';
 

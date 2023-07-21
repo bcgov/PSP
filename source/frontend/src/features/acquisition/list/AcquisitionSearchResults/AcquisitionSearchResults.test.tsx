@@ -1,5 +1,5 @@
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { render, RenderOptions } from 'utils/test-utils';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import {
   AcquisitionSearchResults,

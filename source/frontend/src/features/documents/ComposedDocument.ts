@@ -1,4 +1,4 @@
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import {
   Api_Document,
   Api_DocumentMetadataUpdate,
@@ -6,13 +6,13 @@ import {
   Api_DocumentType,
   Api_DocumentUpdateRequest,
   Api_DocumentUploadRequest,
-} from 'models/api/Document';
+} from '@/models/api/Document';
 import {
   Api_Storage_DocumentDetail,
   Api_Storage_DocumentMetadata,
   Api_Storage_DocumentTypeMetadataType,
-} from 'models/api/DocumentStorage';
-import Api_TypeCode from 'models/api/TypeCode';
+} from '@/models/api/DocumentStorage';
+import Api_TypeCode from '@/models/api/TypeCode';
 
 export interface ComposedDocument {
   mayanMetadata?: Api_Storage_DocumentMetadata[];

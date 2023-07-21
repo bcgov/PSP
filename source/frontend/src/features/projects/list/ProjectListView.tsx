@@ -1,13 +1,14 @@
-import { StyledAddButton } from 'components/common/styles';
-import { Claims } from 'constants/claims';
-import { useApiProjects } from 'hooks/pims-api/useApiProjects';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { useSearch } from 'hooks/useSearch';
-import { Api_Project } from 'models/api/Project';
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
+
+import { StyledAddButton } from '@/components/common/styles';
+import { Claims } from '@/constants/claims';
+import { useApiProjects } from '@/hooks/pims-api/useApiProjects';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { useSearch } from '@/hooks/useSearch';
+import { Api_Project } from '@/models/api/Project';
 
 import { IProjectFilter } from '../interfaces';
 import { defaultFilter, ProjectFilter } from './ProjectFilter/ProjectFilter';

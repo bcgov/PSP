@@ -1,7 +1,8 @@
 import { uniq } from 'lodash';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useAxiosErrorHandlerWithConfirmation } from 'utils';
+
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { useAxiosErrorHandlerWithConfirmation } from '@/utils';
 
 import { useModalContext } from './useModalContext';
 

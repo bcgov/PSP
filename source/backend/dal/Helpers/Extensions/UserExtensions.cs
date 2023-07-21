@@ -1,3 +1,6 @@
+using System.Linq;
+using Pims.Dal.Exceptions;
+
 namespace Pims.Dal.Entities
 {
     /// <summary>
@@ -13,6 +16,14 @@ namespace Pims.Dal.Entities
         public static string GetIdirUsername(this PimsUser user)
         {
             return $"{user.GuidIdentifierValue.ToString().Replace("-", string.Empty)}@idir";
+        }
+
+        public static void ThrowInvalidAccessToLeaseFile(this PimsUser pimsUser, short? leaseRegionCode)
+        {
+            if (leaseRegionCode.HasValue && !pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == leaseRegionCode))
+            {
+                throw new NotAuthorizedException("User is not assigned to the Lease File's region");
+            }
         }
     }
 }

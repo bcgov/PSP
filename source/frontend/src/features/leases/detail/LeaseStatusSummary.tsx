@@ -1,9 +1,10 @@
-import { ILease } from 'interfaces';
 import * as React from 'react';
 import styled from 'styled-components';
 
+import { Api_Lease } from '@/models/api/Lease';
+
 export interface ILeaseStatusSummaryProps {
-  lease?: ILease;
+  lease?: Api_Lease;
 }
 
 /**
@@ -14,7 +15,7 @@ export const LeaseStatusSummary: React.FunctionComponent<
   React.PropsWithChildren<ILeaseStatusSummaryProps>
 > = ({ lease }) => {
   return !!lease ? (
-    <StyledLeaseStatusSummary className={lease?.statusType?.id.toLowerCase()}>
+    <StyledLeaseStatusSummary className={lease?.statusType?.id?.toLowerCase()}>
       <b>{lease?.statusType?.description}</b>
       <b>{lease?.lFileNo ?? ''}</b>
     </StyledLeaseStatusSummary>

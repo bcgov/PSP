@@ -1,8 +1,9 @@
 import { Formik, FormikProps } from 'formik';
 import noop from 'lodash/noop';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions } from 'utils/test-utils';
+
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { ContactInputContainer, IContactInputContainerProps } from './ContactInputContainer';
 import { IContactInputViewProps } from './ContactInputView';

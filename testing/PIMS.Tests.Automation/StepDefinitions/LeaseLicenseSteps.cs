@@ -50,12 +50,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void CreateLeaseLicense(int rowNumber)
         {
             /* TEST COVERAGE: 
-             * Lease Details: PSP-2550, PSP-1966, PSP-5100, PSP-5334, PSP-5335, PSP-5336, PSP-5337, PSP-5338, PSP-5340, PSP-5340, PSP-4558, PSP-2644
-             * Tenants: PSP-3495, PSP-3496, PSP-3498, PSP-3499
+             * Lease Details: PSP-1966, PSP-2550, PSP-2644, PSP-4558, PSP-5100, PSP-5245, PSP-5334, PSP-5335, PSP-5336, PSP-5337, PSP-5338, PSP-5340, PSP-5654, PSP-5668, PSP-5923, PSP-6266
+             * Tenants: PSP-3492, PSP-3494, PSP-3495, PSP-3496, PSP-3498, PSP-3499
              * Improvements: PSP-2637, PSP-2640
-             * Insurance: PSP-2677, PSP-2099
+             * Insurance: PSP-2099,  PSP-2677
              * Deposits: PSP-2094, PSP-2921, PSP-2922
-             * Payments: PSP-2755, PSP-2915, PSP-2918, PSP-2927, PSP-2815
+             * Payments: PSP-2755, PSP-2815, PSP-2915, PSP-2918, PSP-2927
              * Surplus: PSP-2157
              */
 
@@ -83,21 +83,21 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (lease.SearchProperties.PID != "")
             {
                 sharedSearchProperties.SelectPropertyByPID(lease.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(false);
             }
 
             //Search for a property by PIN
             if (lease.SearchProperties.PIN != "")
             {
                 sharedSearchProperties.SelectPropertyByPIN(lease.SearchProperties.PIN);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(false);
             }
 
             //Search for a property by Plan
             if (lease.SearchProperties.PlanNumber != "")
             {
                 sharedSearchProperties.SelectPropertyByPlan(lease.SearchProperties.PlanNumber);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(false);
             }
 
 
@@ -105,21 +105,21 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (lease.SearchProperties.Address != "")
             {
                 sharedSearchProperties.SelectPropertyByAddress(lease.SearchProperties.Address);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(false);
             }
 
             //Search for a property by Legal Description
             if (lease.SearchProperties.LegalDescription != "")
             {
                 sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(false);
             }
 
             //Search for a duplicate property
             if (lease.SearchProperties.PID != "")
             {
                 sharedSearchProperties.SelectPropertyByPID(lease.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOption(true);
             }
 
             //Save the new license details
@@ -347,7 +347,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseDetails.VerifyLicenseHeader();
 
             //Insert an update
-            leaseDetails.EditLeaseFileDetails();
+            leaseDetails.EditLeaseFileDetailsBttn();
             leaseDetails.UpdateLeaseFileDetails(lease);
 
             //Cancel changes
@@ -433,7 +433,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update an existing lease from row number (.*)")]
         public void UpdateExistingLease(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-2096, PSP-2637, PSP-2638, PSP-2642, PSP-2923, PSP-4195, PSP-4196, PSP-4558, PSP-5161, PSP-5342 */
+            /* TEST COVERAGE: PSP-2096, PSP-2637, PSP-2638, PSP-2642, PSP-2923, PSP-4195, PSP-4196, PSP-4558, PSP-5161, PSP-5342, PSP-5667, PSP-5924 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -448,7 +448,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //FILE DETAILS
             //Edit File Details Section
             PopulateLeaseLicense(rowNumber);
-            leaseDetails.EditLeaseFileDetails();
+            leaseDetails.EditLeaseFileDetailsBttn();
 
             //Verify the edit File details form
             leaseDetails.VerifyLicenseDetailsUpdateForm();

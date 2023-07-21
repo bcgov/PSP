@@ -1,4 +1,4 @@
-import { DisplayError } from 'components/common/form';
+import { DisplayError } from '@/components/common/form';
 
 import { AreaForm } from './AreaForm';
 import AreaView from './AreaView';

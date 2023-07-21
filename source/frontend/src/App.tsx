@@ -1,23 +1,24 @@
-import 'assets/scss/App.scss';
-import 'assets/scss/Stepper.scss';
+import '@/assets/scss/App.scss';
+import '@/assets/scss/Stepper.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-import AppRouter from 'AppRouter';
-import { ModalContainer } from 'components/common/ModalContainer';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { RoleMismatchModal } from 'components/modals/roleMismatch';
-import { AuthStateContext, IAuthState } from 'contexts/authStateContext';
-import { useUsers } from 'features/admin/users/hooks/useUsers';
-import { useFavicon } from 'hooks/useFavicon';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { IUser } from 'interfaces';
-import PublicLayout from 'layouts/PublicLayout';
 import React, { useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import { ToastContainer } from 'react-toastify';
-import { useLookupCodes } from 'store/slices/lookupCodes';
-import { useSystemConstants } from 'store/slices/systemConstants';
+
+import AppRouter from '@/AppRouter';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { ModalContainer } from '@/components/common/ModalContainer';
+import { RoleMismatchModal } from '@/components/modals/roleMismatch';
+import { AuthStateContext, IAuthState } from '@/contexts/authStateContext';
+import { useUsers } from '@/features/admin/users/hooks/useUsers';
+import { useFavicon } from '@/hooks/useFavicon';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { IUser } from '@/interfaces';
+import PublicLayout from '@/layouts/PublicLayout';
+import { useLookupCodes } from '@/store/slices/lookupCodes';
+import { useSystemConstants } from '@/store/slices/systemConstants';
 
 const App = () => {
   const keycloakWrapper = useKeycloakWrapper();

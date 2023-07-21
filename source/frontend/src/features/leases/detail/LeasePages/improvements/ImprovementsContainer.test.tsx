@@ -1,15 +1,17 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { createMemoryHistory } from 'history';
-import { defaultLease, ILeaseImprovement } from 'interfaces';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/lookups.mock';
 import React from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { renderAsync, RenderOptions } from 'utils/test-utils';
 
-import ImprovementsContainer from './ImprovementsContainer';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { defaultApiLease } from '@/models/api/Lease';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { renderAsync, RenderOptions } from '@/utils/test-utils';
+
+import { ImprovementsContainer } from './ImprovementsContainer';
+import { ILeaseImprovementForm } from './models';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -19,15 +21,14 @@ const mockAxios = new MockAdapter(axios);
 
 describe('Improvements Container component', () => {
   const setup = async (
-    renderOptions: RenderOptions & { improvements?: Partial<ILeaseImprovement>[] } = {},
+    renderOptions: RenderOptions & { improvements?: Partial<ILeaseImprovementForm>[] } = {},
   ) => {
     // render component under test
     const component = await renderAsync(
       <LeaseStateContext.Provider
         value={{
           lease: {
-            ...defaultLease,
-            improvements: renderOptions.improvements ?? ([] as any),
+            ...defaultApiLease,
             id: 1,
           },
           setLease: noop,

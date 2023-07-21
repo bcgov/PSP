@@ -1,7 +1,8 @@
 import userEvent from '@testing-library/user-event';
-import { ILeaseFilter } from 'features/leases';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions } from 'utils/test-utils';
+
+import { ILeaseFilter } from '@/features/leases';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
 import { ILeaseFilterProps, LeaseFilter } from './LeaseFilter';
 
@@ -11,12 +12,17 @@ const storeState = {
 
 const setFilter = jest.fn();
 
+jest.mock('@react-keycloak/web');
+
 // render component under test
 const setup = (
   renderOptions: RenderOptions & ILeaseFilterProps = { store: storeState, setFilter },
 ) => {
   const { filter, setFilter: setFilterFn, ...rest } = renderOptions;
-  const utils = render(<LeaseFilter filter={filter} setFilter={setFilterFn} />, { ...rest });
+  const utils = render(<LeaseFilter filter={filter} setFilter={setFilterFn} />, {
+    ...rest,
+    claims: [],
+  });
   const searchButton = utils.getByTestId('search');
   const resetButton = utils.getByTestId('reset-button');
   return { searchButton, resetButton, setFilter: setFilterFn, ...utils };

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import Claims from 'constants/claims';
-import { NoteTypes } from 'constants/noteTypes';
-import { mockNotesResponse } from 'mocks/noteResponses.mock';
+
+import Claims from '@/constants/claims';
+import { NoteTypes } from '@/constants/noteTypes';
+import { mockNotesResponse } from '@/mocks/noteResponses.mock';
 import {
   mockKeycloak,
   render,
@@ -11,7 +12,7 @@ import {
   waitFor,
   waitForElementToBeRemoved,
   within,
-} from 'utils/test-utils';
+} from '@/utils/test-utils';
 
 import { INoteListViewProps, NoteListView } from './NoteListView';
 

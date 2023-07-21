@@ -1,12 +1,13 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { NoteTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/lookups.mock';
-import { mockNoteResponse } from 'mocks/noteResponses.mock';
-import { Api_Note } from 'models/api/Note';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
+
+import { NoteTypes } from '@/constants/index';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { mockNoteResponse } from '@/mocks/noteResponses.mock';
+import { Api_Note } from '@/models/api/Note';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { NoteForm } from '../models';
 import { IUpdateNoteContainerProps, UpdateNoteContainer } from './UpdateNoteContainer';

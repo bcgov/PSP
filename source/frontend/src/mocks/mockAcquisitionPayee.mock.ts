@@ -1,4 +1,4 @@
-import { Api_CompensationPayee } from 'models/api/CompensationPayee';
+import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
 
 export const getMockAcquisitionPayee = (): Api_CompensationPayee => ({
   id: 1,
@@ -16,24 +16,8 @@ export const getMockAcquisitionPayee = (): Api_CompensationPayee => ({
   motiSolicitorId: null,
   compensationRequisitionId: 2,
   isDisabled: false,
-  cheques: [
-    {
-      id: 2,
-      acquisitionPayeeId: 2,
-      isPaymentInTrust: false,
-      pretaxAmout: 0,
-      taxAmount: 0,
-      gstNumber: '3262',
-      totalAmount: 0,
-      appCreateTimestamp: '2023-06-16T00:39:19.833',
-      appLastUpdateTimestamp: '2023-06-16T00:39:19.833',
-      appLastUpdateUserid: 'DESMITH',
-      appCreateUserid: 'DESMITH',
-      appLastUpdateUserGuid: '7db28007-0d47-4ef0-bb46-c365a4b95a73',
-      appCreateUserGuid: '7db28007-0d47-4ef0-bb46-c365a4b95a73',
-      rowVersion: 1,
-    },
-  ],
+  isPaymentInTrust: false,
+  gstNumber: '1',
   appCreateTimestamp: '2023-06-16T00:39:19.833',
   appLastUpdateTimestamp: '2023-06-16T00:39:19.833',
   appLastUpdateUserid: 'DESMITH',

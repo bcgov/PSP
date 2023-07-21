@@ -1,13 +1,14 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, render, waitFor } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import { useConfiguration } from 'hooks/useConfiguration';
 import React from 'react';
 import { Router } from 'react-router-dom';
 
+import { useConfiguration } from '@/hooks/useConfiguration';
+
 import { LogoutPage } from './Logout';
 jest.mock('@react-keycloak/web');
-jest.mock('hooks/useConfiguration');
+jest.mock('@/hooks/useConfiguration');
 
 describe('logout', () => {
   const history = createMemoryHistory();

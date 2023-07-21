@@ -1,23 +1,28 @@
 import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
-import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
-import { useMapProperties } from 'features/properties/map/hooks/useMapProperties';
 import { createMemoryHistory } from 'history';
 import { geoJSON } from 'leaflet';
 import { noop } from 'lodash';
-import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { createPoints } from '../leaflet/mapUtils';
+import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
+import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
+import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
+import { useMapProperties } from '@/hooks/repositories/useMapProperties';
+
+import { createPoints } from '../leaflet/Layers/util';
 import useActiveFeatureLayer from './useActiveFeatureLayer';
 
 const mapRef = { current: { leafletMap: {} } };
 jest.mock('leaflet');
-jest.mock('components/maps/leaflet/LayerPopup');
-jest.mock('features/properties/map/hooks/useMapProperties');
+jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
+jest.mock('@/hooks/layer-api/useLayerQuery');
+jest.mock('@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer');
+jest.mock('@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer');
+jest.mock('@/hooks/repositories/useMapProperties');
 
 let clearLayers = jest.fn();
 let addData = jest.fn();
@@ -27,9 +32,32 @@ const setLayerPopup = jest.fn();
   getBounds: jest.fn(),
 });
 
+const useFullyAttributedParcelMapLayerMock = {
+  findByLegalDescription: jest.fn(),
+  findByPid: jest.fn(),
+  findByPin: jest.fn(),
+  findByPlanNumber: jest.fn(),
+  findByWrapper: jest.fn(),
+  findOne: jest.fn(),
+};
+(useFullyAttributedParcelMapLayer as jest.Mock).mockReturnValue(
+  useFullyAttributedParcelMapLayerMock,
+);
+
+const useAdminBoundaryMapLayerMock = {
+  findRegion: jest.fn(),
+  findDistrict: jest.fn(),
+  findElectoralDistrict: jest.fn(),
+};
+(useAdminBoundaryMapLayer as jest.Mock).mockReturnValue(useAdminBoundaryMapLayerMock);
+
 const useLayerQueryMock = {
   findOneWhereContains: jest.fn(),
+  findByPid: jest.fn(),
+  findByPin: jest.fn(),
+  findByPlanNumber: jest.fn(),
   findMetadataByLocation: jest.fn(),
+  findOneWhereContainsWrapped: { execute: jest.fn() },
 };
 (useLayerQuery as jest.Mock).mockReturnValue(useLayerQueryMock);
 
@@ -65,25 +93,35 @@ const getWrapper =
 
 describe('useActiveFeatureLayer hook tests', () => {
   beforeEach(() => {
-    useLayerQueryMock.findMetadataByLocation.mockResolvedValue({
-      REGION_NUMBER: 2,
-      REGION_NAME: 'South Coast',
-      DISTRICT_NUMBER: 2,
-      DISTRICT_NAME: 'Vancouver Island',
+    useAdminBoundaryMapLayerMock.findDistrict.mockResolvedValue({
+      properties: {
+        DISTRICT_NUMBER: 2,
+        DISTRICT_NAME: 'Vancouver Island',
+      },
+    });
+
+    useAdminBoundaryMapLayerMock.findRegion.mockResolvedValue({
+      properties: {
+        REGION_NUMBER: 2,
+        REGION_NAME: 'South Coast',
+      },
     });
   });
   afterEach(() => {
     clearLayers.mockClear();
     addData.mockClear();
-    useLayerQueryMock.findOneWhereContains.mockClear();
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockClear();
     useLayerQueryMock.findMetadataByLocation.mockClear();
+    useAdminBoundaryMapLayerMock.findDistrict.mockClear();
+    useAdminBoundaryMapLayerMock.findRegion.mockClear();
   });
 
   it('sets the active feature only when there is a selected property', async () => {
-    useLayerQueryMock.findOneWhereContains.mockClear();
-    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
-      features: [{ geometry: { type: 'Polygon', coordinates: [1, 2] }, properties: [{}] }],
+    useFullyAttributedParcelMapLayerMock.findOne.mockResolvedValueOnce({
+      geometry: { type: 'Polygon', coordinates: [1, 2] },
+      properties: [{}],
     });
+
     renderHook(
       () =>
         useActiveFeatureLayer({
@@ -98,9 +136,11 @@ describe('useActiveFeatureLayer hook tests', () => {
     );
     expect(clearLayers).toHaveBeenCalled();
     // call to parcelmap BC and to internal pims layer
-    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(1);
+    expect(useFullyAttributedParcelMapLayerMock.findOne).toHaveBeenCalledTimes(1);
     // calls to region and district layers
-    expect(useLayerQueryMock.findMetadataByLocation).toHaveBeenCalledTimes(2);
+    expect(useAdminBoundaryMapLayerMock.findDistrict).toHaveBeenCalledTimes(1);
+    expect(useAdminBoundaryMapLayerMock.findRegion).toHaveBeenCalledTimes(1);
+
     await waitFor(() => {
       expect(geoJSON().addTo({} as any).addData).toHaveBeenCalledTimes(1);
       expect(geoJSON().addTo({} as any).addData).toHaveBeenCalledWith(
@@ -117,7 +157,7 @@ describe('useActiveFeatureLayer hook tests', () => {
   });
 
   it('does not set the active parcel when the selected property has no matching parcel data', async () => {
-    useLayerQueryMock.findOneWhereContains.mockResolvedValue({});
+    useFullyAttributedParcelMapLayerMock.findOne.mockResolvedValueOnce(undefined);
     renderHook(
       () =>
         useActiveFeatureLayer({
@@ -132,19 +172,25 @@ describe('useActiveFeatureLayer hook tests', () => {
     );
     expect(clearLayers).toHaveBeenCalled();
     // call to parcelmap BC and to internal pims layer
-    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(1);
+    expect(useFullyAttributedParcelMapLayerMock.findOne).toHaveBeenCalledTimes(1);
     // calls to region and district layers
-    expect(useLayerQueryMock.findMetadataByLocation).toHaveBeenCalledTimes(2);
+    expect(useAdminBoundaryMapLayerMock.findDistrict).toHaveBeenCalledTimes(1);
+    expect(useAdminBoundaryMapLayerMock.findRegion).toHaveBeenCalledTimes(1);
     await waitFor(() => {
       expect(geoJSON().addTo({} as any).addData).not.toHaveBeenCalled();
     });
   });
 
   it('sets the layer popup with the expected data', async () => {
-    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+    useFullyAttributedParcelMapLayerMock.findOne.mockResolvedValueOnce({
+      geometry: { type: 'Polygon', coordinates: [1, 2] },
+      properties: { PID: '123456789' },
+    });
+
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockResolvedValueOnce({
       features: [{ properties: { pid: '123456789' } }],
     });
-    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockResolvedValueOnce({
       features: [{ properties: { PROPERTY_ID: 200 } }],
     });
     renderHook(
@@ -162,7 +208,7 @@ describe('useActiveFeatureLayer hook tests', () => {
     await waitFor(() => {
       expect(setLayerPopup).toHaveBeenCalledWith(
         expect.objectContaining({
-          data: { pid: '123456789' },
+          data: { PID: '123456789' },
           title: 'LTSA ParcelMap data',
         }),
       );
@@ -170,10 +216,10 @@ describe('useActiveFeatureLayer hook tests', () => {
   });
 
   it('sets the layer popup with the expected municipality data', async () => {
-    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockResolvedValueOnce({
       features: [],
     });
-    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockResolvedValueOnce({
       features: [{ properties: { PROPERTY_ID: 200 } }],
     });
     //this will return data for the municipality layer.
@@ -200,13 +246,13 @@ describe('useActiveFeatureLayer hook tests', () => {
   });
 
   it('sets the layer popup with no data', async () => {
-    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockResolvedValueOnce({
       features: [],
     });
-    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockResolvedValueOnce({
       features: [],
     });
-    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockResolvedValueOnce({
       features: [],
     });
     renderHook(

@@ -1,7 +1,8 @@
-import { LtsaOrders, ParcelInfoOrder, TitleSummary } from 'interfaces/ltsaModels';
 import React from 'react';
 
-import { useAxiosApi } from '.';
+import { LtsaOrders, ParcelInfoOrder, TitleSummary } from '@/interfaces/ltsaModels';
+
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the ltsa endpoints.

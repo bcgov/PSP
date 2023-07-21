@@ -1,4 +1,4 @@
-import { SelectOption } from 'components/common/form';
+import { SelectOption } from '@/components/common/form';
 
 export const generateFiscalYearOptions = (minYear: number, maxYear: number) => {
   const options: SelectOption[] = [];

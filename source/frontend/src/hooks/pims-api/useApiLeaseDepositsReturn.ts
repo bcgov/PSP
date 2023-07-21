@@ -1,9 +1,8 @@
-import { ILease } from 'interfaces';
-import { IParentConcurrencyGuard } from 'interfaces/IParentConcurrencyGuard';
-import { Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import React from 'react';
 
-import { useAxiosApi } from '.';
+import { Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
+
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the lease return deposits endpoints.
@@ -14,19 +13,18 @@ export const useApiLeaseDepositReturns = () => {
 
   return React.useMemo(
     () => ({
-      deleteLeaseDepositReturn: (request: IParentConcurrencyGuard<Api_SecurityDepositReturn>) =>
-        api.delete<ILease>(
-          `/leases/${request.parentId}/deposits/${request.payload.parentDepositId}/returns`,
-          { data: request },
-        ),
-      putLeaseDepositReturn: (request: IParentConcurrencyGuard<Api_SecurityDepositReturn>) =>
-        api.put<ILease>(
-          `/leases/${request.parentId}/deposits/${request.payload.parentDepositId}/returns/${request.payload.id}`,
+      deleteLeaseDepositReturn: (leaseId: number, request: Api_SecurityDepositReturn) =>
+        api.delete<void>(`/leases/${leaseId}/deposits/${request.parentDepositId}/returns`, {
+          data: request,
+        }),
+      putLeaseDepositReturn: (leaseId: number, request: Api_SecurityDepositReturn) =>
+        api.put<Api_SecurityDepositReturn>(
+          `/leases/${leaseId}/deposits/${request.parentDepositId}/returns/${request.id}`,
           request,
         ),
-      postLeaseDepositReturn: (request: IParentConcurrencyGuard<Api_SecurityDepositReturn>) =>
-        api.post<ILease>(
-          `/leases/${request.parentId}/deposits/${request.payload.parentDepositId}/returns`,
+      postLeaseDepositReturn: (leaseId: number, request: Api_SecurityDepositReturn) =>
+        api.post<Api_SecurityDepositReturn>(
+          `/leases/${leaseId}/deposits/${request.parentDepositId}/returns`,
           request,
         ),
     }),

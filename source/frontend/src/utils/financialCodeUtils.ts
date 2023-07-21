@@ -1,7 +1,8 @@
-import { SelectOption } from 'components/common/form';
 import orderBy from 'lodash/orderBy';
-import { Api_FinancialCode } from 'models/api/FinancialCode';
 import moment from 'moment';
+
+import { SelectOption } from '@/components/common/form';
+import { Api_FinancialCode } from '@/models/api/FinancialCode';
 
 export function toDropDownOptions(
   values: Api_FinancialCode[],

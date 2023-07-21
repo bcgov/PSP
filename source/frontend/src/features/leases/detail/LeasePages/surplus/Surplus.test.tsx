@@ -1,20 +1,26 @@
-import { LeaseContextProvider } from 'features/leases/context/LeaseContext';
-import { formLeaseToApiLease } from 'features/leases/leaseUtils';
 import { createMemoryHistory } from 'history';
-import { defaultFormLease, IFormLease, IProperty } from 'interfaces';
-import { mockOrganization, mockPerson, mockProperties } from 'mocks/filterData.mock';
-import { prettyFormatDate } from 'utils';
-import { render, RenderOptions, RenderResult } from 'utils/test-utils';
+import noop from 'lodash/noop';
+
+import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
+import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
+import { getMockApiProperty } from '@/mocks/properties.mock';
+import { Api_Lease, defaultApiLease } from '@/models/api/Lease';
+import { Api_Property } from '@/models/api/Property';
+import { prettyFormatDate } from '@/utils';
+import { render, RenderOptions, RenderResult, waitFor } from '@/utils/test-utils';
 
 import Surplus from './Surplus';
 
 const history = createMemoryHistory();
 
+usePropertyLeaseRepository as jest.MockedFunction<typeof usePropertyLeaseRepository>;
+jest.mock('@/hooks/repositories/usePropertyLeaseRepository');
+
 describe('Lease Surplus Declaration', () => {
-  const setup = (renderOptions: RenderOptions & { lease?: IFormLease } = {}): RenderResult => {
+  const setup = (renderOptions: RenderOptions & { lease?: Api_Lease } = {}): RenderResult => {
     // render component under test
     const result = render(
-      <LeaseContextProvider initialLease={formLeaseToApiLease(renderOptions.lease ?? ({} as any))}>
+      <LeaseContextProvider initialLease={renderOptions.lease ?? defaultApiLease}>
         <Surplus />
       </LeaseContextProvider>,
       {
@@ -26,64 +32,103 @@ describe('Lease Surplus Declaration', () => {
   };
 
   it('renders as expected', () => {
+    (
+      usePropertyLeaseRepository as jest.MockedFunction<typeof usePropertyLeaseRepository>
+    ).mockReturnValue({
+      getPropertyLeases: {
+        execute: noop as any,
+        error: undefined,
+        loading: false,
+        response: [],
+      },
+    });
     const result = setup({
-      lease: { ...defaultFormLease, persons: [mockPerson], organizations: [mockOrganization] },
+      lease: {
+        ...defaultApiLease,
+      },
     });
     expect(result.asFragment()).toMatchSnapshot();
   });
 
-  it('Table row count is equal to the number of properties', () => {
-    const result = setup({
-      lease: {
-        ...defaultFormLease,
-        properties: mockProperties,
-        persons: [mockPerson],
-        organizations: [mockOrganization],
+  it('Table row count is equal to the number of properties + header', async () => {
+    (
+      usePropertyLeaseRepository as jest.MockedFunction<typeof usePropertyLeaseRepository>
+    ).mockReturnValue({
+      getPropertyLeases: {
+        execute: noop as any,
+        error: undefined,
+        loading: false,
+        response: [
+          {
+            property: getMockApiProperty(),
+            lease: null,
+            leaseId: 0,
+            leaseArea: null,
+            areaUnitType: null,
+          },
+        ],
       },
     });
-    const rows = result.getAllByRole('row');
-    expect(rows.length).toBe(mockProperties.length + 1);
+    const result = setup();
+    await waitFor(async () => {
+      const rows = result.getAllByRole('row');
+
+      expect(rows.length).toBe(2);
+    });
   });
 
-  it('Default type value is unknown', () => {
-    const testProperty: IProperty = mockProperties[0];
-    testProperty.surplusDeclaration = undefined;
-    const result = setup({
-      lease: {
-        ...defaultFormLease,
-        properties: [testProperty],
-        persons: [mockPerson],
-        organizations: [mockOrganization],
+  it('Default type value is unknown', async () => {
+    const testProperty: Api_Property = getMockApiProperty();
+    testProperty.surplusDeclarationType = undefined;
+    (
+      usePropertyLeaseRepository as jest.MockedFunction<typeof usePropertyLeaseRepository>
+    ).mockReturnValue({
+      getPropertyLeases: {
+        execute: noop as any,
+        error: undefined,
+        loading: false,
+        response: [
+          { property: testProperty, lease: null, leaseId: 0, leaseArea: null, areaUnitType: null },
+        ],
       },
     });
-    const dataRow = result.getAllByRole('row')[1];
-    const columns = dataRow.querySelectorAll('[role="cell"]');
+    const result = setup();
+    await waitFor(async () => {
+      const dataRow = result.getAllByRole('row')[1];
+      const columns = dataRow.querySelectorAll('[role="cell"]');
 
-    expect(columns[1].textContent).toBe('Unknown');
+      expect(columns[1].textContent).toBe('Unknown');
+    });
   });
 
-  it('Values are displayed', () => {
-    const testProperty: IProperty = { ...mockProperties[0], pid: '1' };
-    testProperty.surplusDeclaration = {
-      type: { id: 'YES', isDisabled: false, description: 'Yes' },
-      date: '2021-01-01',
-      comment: 'Test Comment',
-    };
-
-    const result = setup({
-      lease: {
-        ...defaultFormLease,
-        properties: [testProperty],
-        persons: [mockPerson],
-        organizations: [mockOrganization],
+  it('Values are displayed', async () => {
+    const testProperty: Api_Property = { ...getMockApiProperty(), pid: 1 };
+    testProperty.surplusDeclarationComment = 'Test Comment';
+    testProperty.surplusDeclarationType = { id: 'YES', isDisabled: false, description: 'Yes' };
+    testProperty.surplusDeclarationDate = '2021-01-01';
+    (
+      usePropertyLeaseRepository as jest.MockedFunction<typeof usePropertyLeaseRepository>
+    ).mockReturnValue({
+      getPropertyLeases: {
+        execute: noop as any,
+        error: undefined,
+        loading: false,
+        response: [
+          { property: testProperty, lease: null, leaseId: 0, leaseArea: null, areaUnitType: null },
+        ],
       },
     });
-    const dataRow = result.getAllByRole('row')[1];
-    const columns = dataRow.querySelectorAll('[role="cell"]');
 
-    expect(columns[0].textContent).toBe('000-000-001');
-    expect(columns[1].textContent).toBe(testProperty.surplusDeclaration?.type?.description);
-    expect(columns[2].textContent).toBe(prettyFormatDate(testProperty.surplusDeclaration?.date));
-    expect(columns[3].textContent).toBe(testProperty.surplusDeclaration?.comment);
+    const result = setup();
+
+    await waitFor(async () => {
+      const dataRow = result.getAllByRole('row')[1];
+      const columns = dataRow.querySelectorAll('[role="cell"]');
+
+      expect(columns[0].textContent).toBe('000-000-001');
+      expect(columns[1].textContent).toBe(testProperty.surplusDeclarationType?.description);
+      expect(columns[2].textContent).toBe(prettyFormatDate(testProperty.surplusDeclarationDate));
+      expect(columns[3].textContent).toBe(testProperty.surplusDeclarationComment);
+    });
   });
 });

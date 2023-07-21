@@ -1,6 +1,7 @@
-import { Scrollable as ScrollableBase } from 'components/common/Scrollable/Scrollable';
-import ContactManagerView from 'components/contact/ContactManagerView/ContactManagerView';
 import styled from 'styled-components';
+
+import { Scrollable as ScrollableBase } from '@/components/common/Scrollable/Scrollable';
+import ContactManagerView from '@/components/contact/ContactManagerView/ContactManagerView';
 
 /**
  * Page that displays a list of contacts.

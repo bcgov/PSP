@@ -1,15 +1,16 @@
-import { Button } from 'components/common/buttons';
-import * as actionTypes from 'constants/actionTypes';
-import { Roles } from 'constants/roles';
-import { useQuery } from 'hooks/use-query';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner';
 import { Redirect } from 'react-router-dom';
-import { useAppSelector } from 'store/hooks';
-import { Logo, useTenant } from 'tenants';
+
+import { Button } from '@/components/common/buttons';
+import * as actionTypes from '@/constants/actionTypes';
+import { Roles } from '@/constants/roles';
+import { useQuery } from '@/hooks/use-query';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { useAppSelector } from '@/store/hooks';
+import { Logo, useTenant } from '@/tenants';
 
 import { LoginStyled } from './LoginStyled';
 
@@ -18,7 +19,8 @@ import { LoginStyled } from './LoginStyled';
  * @returns Login component.
  */
 const Login = () => {
-  const { redirect } = useQuery();
+  const query = useQuery();
+  const redirect = query.get('redirect');
   const keyCloakWrapper = useKeycloakWrapper();
   const keycloak = keyCloakWrapper.obj;
   const isIE = usingIE();

@@ -1,17 +1,17 @@
-import { TextArea } from 'components/common/form';
-import { Claims } from 'constants/index';
-import SaveCancelButtons from 'features/leases/SaveCancelButtons';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { getIn, useFormikContext } from 'formik';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { ILease } from 'interfaces';
 import * as React from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import styled from 'styled-components';
 
+import { TextArea } from '@/components/common/form';
+import { Section } from '@/components/common/Section/Section';
+import { Claims } from '@/constants/index';
+import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+
 export interface IDepositNotesProps {
   disabled?: boolean;
-  onSave: (notes: string) => Promise<ILease | undefined>;
+  onSave: (notes: string) => Promise<void>;
   onEdit: () => void;
   onCancel: () => void;
 }

@@ -1,5 +1,5 @@
-import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
-import { render, RenderOptions } from 'utils/test-utils';
+import { IResearchSearchResult } from '@/interfaces/IResearchSearchResult';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import { IResearchSearchResultsProps, ResearchSearchResults } from './ResearchSearchResults';
 

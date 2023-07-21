@@ -1,7 +1,8 @@
 import React from 'react';
-import { ILookupCode } from 'store/slices/lookupCodes';
 
-import { useAxiosApi } from '.';
+import { ILookupCode } from '@/store/slices/lookupCodes';
+
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the lookup code endpoints.

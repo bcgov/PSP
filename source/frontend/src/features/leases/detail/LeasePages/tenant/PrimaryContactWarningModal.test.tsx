@@ -1,25 +1,25 @@
-import { screen } from '@testing-library/react';
-import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
 import { createMemoryHistory } from 'history';
-import { defaultFormLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
-import { mockApiPerson, mockOrganization } from 'mocks/filterData.mock';
-import { getMockLeaseWithNoTenants } from 'mocks/lease.mock';
-import React from 'react';
-import { render, RenderOptions, userEvent } from 'utils/test-utils';
 
+import { LeaseFormModel } from '@/features/leases/models';
+import { mockApiPerson, mockOrganization } from '@/mocks/filterData.mock';
+import { getMockApiLease } from '@/mocks/lease.mock';
+import { defaultApiLease } from '@/models/api/Lease';
+import { render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+
+import { FormTenant } from './models';
 import PrimaryContactWarningModal from './PrimaryContactWarningModal';
 
 const history = createMemoryHistory();
 
 describe('PrimaryContactWarningModal component', () => {
   const setup = (
-    renderOptions: RenderOptions & { lease?: IFormLease; saveCallback?: Function } = {},
+    renderOptions: RenderOptions & { tenants?: FormTenant[]; saveCallback?: Function } = {},
   ) => {
     // render component under test
     const component = render(
       <PrimaryContactWarningModal
-        lease={renderOptions.lease}
+        selectedTenants={renderOptions.tenants ?? []}
         saveCallback={renderOptions.saveCallback}
       />,
       {
@@ -34,7 +34,13 @@ describe('PrimaryContactWarningModal component', () => {
   };
   it('renders as expected', () => {
     const { component } = setup({
-      lease: { ...defaultFormLease, persons: [mockApiPerson], organizations: [mockOrganization] },
+      tenants: LeaseFormModel.fromApi({
+        ...defaultApiLease,
+        tenants: [
+          { leaseId: 1, person: mockApiPerson },
+          { leaseId: 1, organization: mockOrganization },
+        ],
+      }).tenants,
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
@@ -42,7 +48,13 @@ describe('PrimaryContactWarningModal component', () => {
     const saveCallback = jest.fn();
     const { component } = setup({
       saveCallback: saveCallback,
-      lease: { ...defaultFormLease, persons: [mockApiPerson, mockApiPerson] },
+      tenants: LeaseFormModel.fromApi({
+        ...defaultApiLease,
+        tenants: [
+          { leaseId: 1, person: mockApiPerson },
+          { leaseId: 1, person: mockApiPerson },
+        ],
+      }).tenants,
     });
     const { getByText } = component;
     const save = getByText('Save');
@@ -53,7 +65,16 @@ describe('PrimaryContactWarningModal component', () => {
 
   it('displays all organization tenants that have multiple persons and no primary contact', () => {
     setup({
-      lease: apiLeaseToFormLease(getMockLeaseWithNoTenants()),
+      tenants: LeaseFormModel.fromApi({
+        ...getMockApiLease(),
+        tenants: [
+          {
+            ...getMockApiLease().tenants[0],
+            primaryContactId: undefined,
+            primaryContact: undefined,
+          },
+        ],
+      }).tenants,
       saveCallback: noop,
     });
     const tenantText = screen.getByText(content =>

@@ -1,7 +1,8 @@
-import * as Styled from 'components/common/styles';
 import * as React from 'react';
 import { TabsProps } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import * as Styled from '@/components/common/styles';
 
 const TabView: React.FunctionComponent<
   React.PropsWithChildren<TabsProps & { className?: string }>
@@ -14,9 +15,6 @@ const TabView: React.FunctionComponent<
 };
 
 const StyledTabWrapper = styled.div`
-  .nav-tabs {
-    height: 2.4rem;
-  }
   .tab-content {
     .tab-pane {
       position: relative;

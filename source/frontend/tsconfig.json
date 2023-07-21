@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "baseUrl": "src",
+    "baseUrl": ".",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -19,8 +19,9 @@
     "noFallthroughCasesInSwitch": true,
     "typeRoots": ["src/typings", "node_modules/@types"],
     "paths": {
+      "@/*": ["src/*"],
       "react-draggable": ["typings/react-draggable"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "src/**/*.ts", "src/**/*.tsx"]
 }

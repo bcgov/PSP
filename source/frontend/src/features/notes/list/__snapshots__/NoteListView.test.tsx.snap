@@ -6,7 +6,26 @@ exports[`Note List View renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c7 {
+  .c6 {
+  float: right;
+  cursor: pointer;
+}
+
+.c4 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c3 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -55,25 +74,6 @@ exports[`Note List View renders as expected 1`] = `
 
 .c5 .btn {
   margin: 0;
-}
-
-.c6 {
-  float: right;
-  cursor: pointer;
-}
-
-.c4 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c3 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
 }
 
 .c1 {

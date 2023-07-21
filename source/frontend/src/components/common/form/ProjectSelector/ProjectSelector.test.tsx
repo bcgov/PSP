@@ -1,11 +1,12 @@
 import { Formik } from 'formik';
-import { useProjectTypeahead } from 'hooks/useProjectTypeahead';
 import noop from 'lodash/noop';
-import { act, render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
+
+import { useProjectTypeahead } from '@/hooks/useProjectTypeahead';
+import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
 
 import { ProjectSelector } from './ProjectSelector';
 
-jest.mock('hooks/useProjectTypeahead');
+jest.mock('@/hooks/useProjectTypeahead');
 const mockUseProjectTypeahead = useProjectTypeahead as jest.MockedFunction<
   typeof useProjectTypeahead
 >;
@@ -95,7 +96,7 @@ describe('ProjectSelector component', () => {
 
     const items = await findItems();
     expect(items).toHaveLength(1);
-    items[0].focus();
+    act(() => items[0].focus());
     await act(async () => userEvent.keyboard('{Enter}'));
     expect(onChange).toHaveBeenCalled();
   });

@@ -1,5 +1,5 @@
-import Api_TypeCode from 'interfaces/ITypeCode';
-import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
+import Api_TypeCode from '@/interfaces/ITypeCode';
+import { Api_ResearchFileProperty } from '@/models/api/ResearchFile';
 
 export interface IResearchSearchResult {
   id: number;

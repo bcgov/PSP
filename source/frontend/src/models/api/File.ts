@@ -1,4 +1,4 @@
-import { Api_PropertyFile } from 'models/api/PropertyFile';
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import Api_TypeCode from './TypeCode';

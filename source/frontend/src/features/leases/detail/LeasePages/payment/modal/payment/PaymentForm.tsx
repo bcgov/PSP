@@ -1,17 +1,18 @@
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { Formik, FormikProps } from 'formik';
-import { defaultFormLeasePayment, IFormLeasePayment } from 'interfaces';
-import * as React from 'react';
 import { useContext } from 'react';
 
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { LeaseFormModel } from '@/features/leases/models';
+
+import { defaultFormLeasePayment, FormLeasePayment } from '../../models';
 import { isActualGstEligible } from '../../TermPaymentsContainer';
 import PaymentFormContent from './PaymentFormContent';
 import { PaymentsYupSchema } from './PaymentsYupSchema';
 
 export interface IPaymentFormProps {
-  formikRef: React.Ref<FormikProps<IFormLeasePayment>>;
-  onSave: (values: IFormLeasePayment) => void;
-  initialValues?: IFormLeasePayment;
+  formikRef: React.Ref<FormikProps<FormLeasePayment>>;
+  onSave: (values: FormLeasePayment) => void;
+  initialValues?: FormLeasePayment;
   isReceived?: boolean;
 }
 
@@ -29,7 +30,10 @@ export const PaymentForm: React.FunctionComponent<React.PropsWithChildren<IPayme
   const { lease } = useContext(LeaseStateContext);
   let isGstEligible = false;
   if (initialValues?.leaseTermId) {
-    isGstEligible = isActualGstEligible(initialValues?.leaseTermId, lease?.terms ?? []);
+    isGstEligible = isActualGstEligible(
+      initialValues?.leaseTermId,
+      lease ? LeaseFormModel.fromApi(lease).terms ?? [] : [],
+    );
   }
 
   return (

@@ -1,4 +1,4 @@
-import { Api_Address } from 'models/api/Address';
+import { Api_Address } from '@/models/api/Address';
 
 export const getMockApiAddress: () => Api_Address = () => ({
   id: 1,

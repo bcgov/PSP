@@ -1,9 +1,10 @@
 import classNames from 'classnames';
-import { Button } from 'components/common/buttons/Button';
 import { noop } from 'lodash';
 import React, { useState } from 'react';
 import { Modal, ModalProps as BsModalProps } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import { Button } from '@/components/common/buttons/Button';
 
 export enum ModalSize {
   XLARGE = 'modal-xl',
