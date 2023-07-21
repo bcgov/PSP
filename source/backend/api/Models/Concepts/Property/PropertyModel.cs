@@ -227,6 +227,14 @@ namespace Pims.Api.Models.Concepts
         /// </summary>
         public string Notes { get; set; }
         #endregion
+
+        #region Surplus
+        public TypeModel<string> SurplusDeclarationType { get; set; }
+
+        public string SurplusDeclarationComment { get; set; }
+
+        public DateTime SurplusDeclarationDate { get; set; }
         #endregion
+    #endregion
     }
 }

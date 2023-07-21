@@ -5,6 +5,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Lease.Controllers;
+using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal;
@@ -21,7 +22,7 @@ namespace Pims.Api.Test.Controllers.Lease
     [ExcludeFromCodeCoverage]
     public class LeaseTenantControllerTest
     {
-        private Mock<ILeaseRepository> _repository;
+        private Mock<ILeaseService> _repository;
         private LeaseTenantController _controller;
         private IMapper _mapper;
         private TestHelper _helper;
@@ -31,7 +32,7 @@ namespace Pims.Api.Test.Controllers.Lease
             _helper = new TestHelper();
             _controller = _helper.CreateController<LeaseTenantController>(Permissions.LeaseView);
             _mapper = _helper.GetService<IMapper>();
-            _repository = _helper.GetService<Mock<ILeaseRepository>>();
+            _repository = _helper.GetService<Mock<ILeaseService>>();
         }
 
         #region Tests
@@ -45,13 +46,13 @@ namespace Pims.Api.Test.Controllers.Lease
             // Arrange
             var lease = EntityHelper.CreateLease(1);
 
-            _repository.Setup(m => m.UpdateLeaseTenants(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>())).Returns(lease);
+            _repository.Setup(m => m.UpdateTenantsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>())).Returns(lease.PimsLeaseTenants);
 
             // Act
-            var result = _controller.UpdateTenants(lease.LeaseId, _mapper.Map<Model.LeaseModel>(lease));
+            var result = _controller.UpdateTenants(lease.LeaseId, _mapper.Map<IEnumerable<LeaseTenantModel>>(new List<LeaseTenantModel>()));
 
             // Assert
-            _repository.Verify(m => m.UpdateLeaseTenants(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>()), Times.Once());
+            _repository.Verify(m => m.UpdateTenantsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>()), Times.Once());
         }
         #endregion
         #endregion

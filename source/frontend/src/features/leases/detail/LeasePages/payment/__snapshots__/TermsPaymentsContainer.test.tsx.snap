@@ -188,321 +188,6 @@ exports[`TermsPaymentsContainer component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c1 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-<div
-    class="c0 form-section"
-  >
-    <h2
-      class="c1"
-    >
-      <div
-        class="no-gutters row"
-      >
-        <div
-          class="col"
-        >
-          Payments by Term
-        </div>
-      </div>
-    </h2>
-    <div
-      class="collapse show"
-    >
-      <div
-        class="table"
-        data-testid="leasePaymentsTable"
-        role="table"
-      >
-        <div
-          class="thead thead-light"
-        >
-          <div
-            class="tr"
-            role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 390px;"
-          >
-            <div
-              class="th"
-              style="width: 4.7rem;"
-            />
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              />
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 60px; width: 100px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Start date - End date
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Payment frequency
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Payment due
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Expected payment ($)
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-expectedPaymentTooltip"
-                  id="expectedPaymentTooltip"
-                >
-                  <svg
-                    class="tooltip-icon"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                    />
-                  </svg>
-                </span>
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                GST?
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                GST ($)
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-gstAmountTooltip"
-                  id="gstAmountTooltip"
-                >
-                  <svg
-                    class="tooltip-icon"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                    />
-                  </svg>
-                </span>
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Expected total ($)
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-expectedTotalTooltip"
-                  id="expectedTotalTooltip"
-                >
-                  <svg
-                    class="tooltip-icon"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                    />
-                  </svg>
-                </span>
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Expected term ($)
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-expectedTermTooltip"
-                  id="expectedTermTooltip"
-                >
-                  <svg
-                    class="tooltip-icon"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                    />
-                  </svg>
-                </span>
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 55 0 auto; min-width: 30px; width: 55px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Actual total ($)
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-actualTotalTooltip"
-                  id="actualTotalTooltip"
-                >
-                  <svg
-                    class="tooltip-icon"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                    />
-                  </svg>
-                </span>
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Exercised?
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Actions
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="no-rows-message"
-        >
-          There is no corresponding data
-        </div>
-      </div>
-    </div>
-  </div>
-  <div />
-  <div />
-  <div />
-  <div />
-</DocumentFragment>
-`;
-
-exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
-<DocumentFragment>
-  <div
-    class="Toastify"
-  />
-  <div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -637,6 +322,29 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
   margin-right: 0;
 }
 
+.c8.c8.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c8.c8.btn:hover,
+.c8.c8.btn:focus,
+.c8.c8.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c8.c8.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c8.c8.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
 .c2 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -645,6 +353,45 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
+}
+
+.c7.c7.table {
+  width: 100%;
+}
+
+.c7.c7.table .tbody {
+  padding-left: 0;
+}
+
+.c7.c7.table .thead .tr .th {
+  padding: 0.5rem 0.5rem;
+  font-size: 1.4rem;
+  position: relative;
+  background-color: transparent;
+}
+
+.c7.c7.table .thead .tr .th .tooltip-icon {
+  float: right;
+  -webkit-align-self: baseline;
+  -ms-flex-item-align: baseline;
+  align-self: baseline;
+  margin-left: 0.5rem;
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
+.c7.c7.table .thead .tr .th .sortable-column {
+  width: 100%;
+}
+
+.c7.c7.table .thead .tr .th .td {
+  word-break: normal;
+}
+
+.c7.c7.table .tfoot {
+  border-top: 0.1rem solid;
+  border-bottom: 0.1rem solid;
+  font-family: 'BCSans-Bold';
 }
 
 .c5 {
@@ -669,10 +416,9 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
   flex-direction: column;
 }
 
-.c7 {
-  gap: 3rem;
-  background-color: white;
-  min-height: 6rem;
+.c9 .btn.btn-primary {
+  background-color: transparent;
+  padding: 0;
 }
 
 .c1 {
@@ -720,6 +466,9 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
     <div
       class="collapse show"
     >
+      <b>
+        last payment received: Jan 1, 2020
+      </b>
       <div
         class="table"
         data-testid="leasePaymentsTable"
@@ -1138,33 +887,26 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
                       </svg>
                     </div>
                   </button>
-                  <button
-                    class="c4 Button Button--icon-only btn btn-primary"
-                    title="delete term"
-                    type="button"
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-no-delete-tooltip-term-null"
+                    id="no-delete-tooltip-term-null"
                   >
-                    <div
-                      class="Button__icon"
+                    <svg
+                      class="tooltip-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <svg
-                        fill="currentColor"
-                        height="24"
-                        id="delete-term-0"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 448 512"
-                        width="24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <title>
-                          delete term
-                        </title>
-                        <path
-                          d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
-                        />
-                      </svg>
-                    </div>
-                  </button>
+                      <path
+                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                      />
+                    </svg>
+                  </span>
                 </div>
               </div>
             </div>
@@ -1200,7 +942,7 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
                     class="c6"
                   >
                     <b>
-                      Payments Received
+                      Payments Sent
                     </b>
                   </div>
                 </div>
@@ -1208,14 +950,1674 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
                   class="col-md-10"
                 >
                   <div
-                    class="c2 c7"
+                    class="table c7"
+                    data-testid="securityDepositsTable"
+                    role="table"
                   >
-                    <p>
-                      There are no recorded payments for this term.
-                    </p>
-                    <p>
-                      Term must be exercised to add payments.
-                    </p>
+                    <div
+                      class="thead thead-light"
+                    >
+                      <div
+                        class="tr"
+                        role="row"
+                        style="display: flex; flex: 1 0 auto; min-width: 240px;"
+                      >
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            Sent date
+                          </div>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            Payment method
+                          </div>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            Sent payment ($)
+                            <span
+                              class="tooltip-icon"
+                              data-testid="tooltip-icon-actualReceivedPaymentTooltip"
+                              id="actualReceivedPaymentTooltip"
+                            >
+                              <svg
+                                class="tooltip-icon"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                                />
+                              </svg>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            GST ($)
+                            <span
+                              class="tooltip-icon"
+                              data-testid="tooltip-icon-actualGstTooltip"
+                              id="actualGstTooltip"
+                            >
+                              <svg
+                                class="tooltip-icon"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                                />
+                              </svg>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            Sent total ($)
+                            <span
+                              class="tooltip-icon"
+                              data-testid="tooltip-icon-receivedTotalTooltip"
+                              id="receivedTotalTooltip"
+                            >
+                              <svg
+                                class="tooltip-icon"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                                />
+                              </svg>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            Payment status
+                            <span
+                              class="tooltip-icon"
+                              data-testid="tooltip-icon-paymentStatusTooltip"
+                              id="paymentStatusTooltip"
+                            >
+                              <svg
+                                class="tooltip-icon"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                                />
+                              </svg>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            Notes
+                          </div>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            Actions
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="tbody"
+                      role="rowgroup"
+                    >
+                      <div
+                        class="tr-wrapper"
+                      >
+                        <div
+                          class="tr"
+                          role="row"
+                          style="display: flex; flex: 1 0 auto; min-width: 240px;"
+                        >
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          >
+                            Jan 1, 2020
+                          </div>
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          />
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          >
+                            $1,100.00
+                          </div>
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          >
+                            -
+                          </div>
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          >
+                            $1,200.00
+                          </div>
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          />
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          >
+                            <button
+                              class="c4 Button c8 btn btn-light"
+                              title="notes"
+                              type="button"
+                            >
+                              <div
+                                class="Button__value"
+                              >
+                                <svg
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 384 512"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M288 248v28c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-28c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm-12 72H108c-6.6 0-12 5.4-12 12v28c0 6.6 5.4 12 12 12h168c6.6 0 12-5.4 12-12v-28c0-6.6-5.4-12-12-12zm108-188.1V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V48C0 21.5 21.5 0 48 0h204.1C264.8 0 277 5.1 286 14.1L369.9 98c9 8.9 14.1 21.2 14.1 33.9zm-128-80V128h76.1L256 51.9zM336 464V176H232c-13.3 0-24-10.7-24-24V48H48v416h288z"
+                                  />
+                                </svg>
+                              </div>
+                            </button>
+                            <div />
+                          </div>
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          >
+                            <div
+                              class="c2 c9"
+                            >
+                              <button
+                                class="c4 Button Button--icon-only btn btn-primary"
+                                title="edit actual"
+                                type="button"
+                              >
+                                <div
+                                  class="Button__icon"
+                                >
+                                  <svg
+                                    fill="currentColor"
+                                    height="24"
+                                    id="edit-actual-0"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 24 24"
+                                    width="24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <title>
+                                      edit actual
+                                    </title>
+                                    <path
+                                      d="M0 0h24v24H0z"
+                                      fill="none"
+                                    />
+                                    <path
+                                      d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 000-1.41l-2.34-2.34a.996.996 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                                    />
+                                  </svg>
+                                </div>
+                              </button>
+                              <button
+                                class="c4 Button Button--icon-only btn btn-primary"
+                                title="delete actual"
+                                type="button"
+                              >
+                                <div
+                                  class="Button__icon"
+                                >
+                                  <svg
+                                    fill="currentColor"
+                                    height="24"
+                                    id="delete-actual-0"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 448 512"
+                                    width="24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <title>
+                                      delete actual
+                                    </title>
+                                    <path
+                                      d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                                    />
+                                  </svg>
+                                </div>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="tfoot tfoot-light"
+                    >
+                      <div
+                        class="tr"
+                        role="row"
+                        style="display: flex; flex: 1 0 auto; min-width: 240px;"
+                      >
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <span>
+                            <svg
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20z"
+                              />
+                            </svg>
+                             Payment Summary
+                          </span>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          (1) payments
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          $1,100.00
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          -
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          $1,200.00
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                           
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                           
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                           
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div />
+  <div />
+  <div />
+  <div />
+</DocumentFragment>
+`;
+
+exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c4.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c4.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c4.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c4.btn.btn-primary {
+  border: none;
+}
+
+.c4.btn.btn-secondary {
+  background: none;
+}
+
+.c4.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
+  background: none;
+}
+
+.c4.btn.btn-light {
+  border: none;
+}
+
+.c4.btn.btn-dark {
+  border: none;
+}
+
+.c4.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c4.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c4.Button--icon-only:focus {
+  outline: none;
+}
+
+.c4.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c8.c8.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c8.c8.btn:hover,
+.c8.c8.btn:focus,
+.c8.c8.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c8.c8.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c8.c8.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c7.c7.table {
+  width: 100%;
+}
+
+.c7.c7.table .tbody {
+  padding-left: 0;
+}
+
+.c7.c7.table .thead .tr .th {
+  padding: 0.5rem 0.5rem;
+  font-size: 1.4rem;
+  position: relative;
+  background-color: transparent;
+}
+
+.c7.c7.table .thead .tr .th .tooltip-icon {
+  float: right;
+  -webkit-align-self: baseline;
+  -ms-flex-item-align: baseline;
+  align-self: baseline;
+  margin-left: 0.5rem;
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
+.c7.c7.table .thead .tr .th .sortable-column {
+  width: 100%;
+}
+
+.c7.c7.table .thead .tr .th .td {
+  word-break: normal;
+}
+
+.c7.c7.table .tfoot {
+  border-top: 0.1rem solid;
+  border-bottom: 0.1rem solid;
+  font-family: 'BCSans-Bold';
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 2rem;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c9 .btn.btn-primary {
+  background-color: transparent;
+  padding: 0;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c3 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c3 .btn.btn-primary {
+  background-color: transparent;
+  padding: 0;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          Payments by Term
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <b>
+        last payment received: Jan 1, 2020
+      </b>
+      <div
+        class="table"
+        data-testid="leasePaymentsTable"
+        role="table"
+      >
+        <div
+          class="thead thead-light"
+        >
+          <div
+            class="tr"
+            role="row"
+            style="display: flex; flex: 1 0 auto; min-width: 390px;"
+          >
+            <div
+              class="th"
+              style="width: 4.7rem;"
+            />
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              />
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 60px; width: 100px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Start date - End date
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Payment frequency
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Payment due
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Expected payment ($)
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-expectedPaymentTooltip"
+                  id="expectedPaymentTooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                GST?
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                GST ($)
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-gstAmountTooltip"
+                  id="gstAmountTooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Expected total ($)
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-expectedTotalTooltip"
+                  id="expectedTotalTooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Expected term ($)
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-expectedTermTooltip"
+                  id="expectedTermTooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 55 0 auto; min-width: 30px; width: 55px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Actual total ($)
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-actualTotalTooltip"
+                  id="actualTotalTooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Exercised?
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Actions
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="tbody"
+          role="rowgroup"
+        >
+          <div
+            class="tr-wrapper"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 390px;"
+            >
+              <div
+                class="td expander svg-btn"
+              >
+                <svg
+                  fill="currentColor"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10 17l5-5-5-5v10z"
+                  />
+                  <path
+                    d="M0 24V0h24v24H0z"
+                    fill="none"
+                  />
+                </svg>
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Initial term
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 100 0 auto; min-width: 60px; width: 100px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                 - 
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                $0.00
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                N
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                -
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                $0.00
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                -
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 55 0 auto; min-width: 30px; width: 55px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                -
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                N
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <div
+                  class="c2 c3"
+                >
+                  <button
+                    class="c4 Button Button--icon-only btn btn-primary"
+                    title="edit term"
+                    type="button"
+                  >
+                    <div
+                      class="Button__icon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="24"
+                        id="edit-term-0"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <title>
+                          edit term
+                        </title>
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 000-1.41l-2.34-2.34a.996.996 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-no-delete-tooltip-term-null"
+                    id="no-delete-tooltip-term-null"
+                  >
+                    <svg
+                      class="tooltip-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="collapse"
+              style="padding: 10px;"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="c5 col-md-2"
+                >
+                  <svg
+                    class="receipt"
+                    fill="currentColor"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20z"
+                    />
+                  </svg>
+                  <div
+                    class="c6"
+                  >
+                    <b>
+                      Payments Sent
+                    </b>
+                  </div>
+                </div>
+                <div
+                  class="col-md-10"
+                >
+                  <div
+                    class="table c7"
+                    data-testid="securityDepositsTable"
+                    role="table"
+                  >
+                    <div
+                      class="thead thead-light"
+                    >
+                      <div
+                        class="tr"
+                        role="row"
+                        style="display: flex; flex: 1 0 auto; min-width: 240px;"
+                      >
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            Sent date
+                          </div>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            Payment method
+                          </div>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            Sent payment ($)
+                            <span
+                              class="tooltip-icon"
+                              data-testid="tooltip-icon-actualReceivedPaymentTooltip"
+                              id="actualReceivedPaymentTooltip"
+                            >
+                              <svg
+                                class="tooltip-icon"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                                />
+                              </svg>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            GST ($)
+                            <span
+                              class="tooltip-icon"
+                              data-testid="tooltip-icon-actualGstTooltip"
+                              id="actualGstTooltip"
+                            >
+                              <svg
+                                class="tooltip-icon"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                                />
+                              </svg>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            Sent total ($)
+                            <span
+                              class="tooltip-icon"
+                              data-testid="tooltip-icon-receivedTotalTooltip"
+                              id="receivedTotalTooltip"
+                            >
+                              <svg
+                                class="tooltip-icon"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                                />
+                              </svg>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            Payment status
+                            <span
+                              class="tooltip-icon"
+                              data-testid="tooltip-icon-paymentStatusTooltip"
+                              id="paymentStatusTooltip"
+                            >
+                              <svg
+                                class="tooltip-icon"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                                />
+                              </svg>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            Notes
+                          </div>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <div
+                            class="sortable-column"
+                          >
+                            Actions
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="tbody"
+                      role="rowgroup"
+                    >
+                      <div
+                        class="tr-wrapper"
+                      >
+                        <div
+                          class="tr"
+                          role="row"
+                          style="display: flex; flex: 1 0 auto; min-width: 240px;"
+                        >
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          >
+                            Jan 1, 2020
+                          </div>
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          />
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          >
+                            $1,100.00
+                          </div>
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          >
+                            -
+                          </div>
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          >
+                            $1,200.00
+                          </div>
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          />
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          >
+                            <button
+                              class="c4 Button c8 btn btn-light"
+                              title="notes"
+                              type="button"
+                            >
+                              <div
+                                class="Button__value"
+                              >
+                                <svg
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 384 512"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M288 248v28c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-28c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm-12 72H108c-6.6 0-12 5.4-12 12v28c0 6.6 5.4 12 12 12h168c6.6 0 12-5.4 12-12v-28c0-6.6-5.4-12-12-12zm108-188.1V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V48C0 21.5 21.5 0 48 0h204.1C264.8 0 277 5.1 286 14.1L369.9 98c9 8.9 14.1 21.2 14.1 33.9zm-128-80V128h76.1L256 51.9zM336 464V176H232c-13.3 0-24-10.7-24-24V48H48v416h288z"
+                                  />
+                                </svg>
+                              </div>
+                            </button>
+                            <div />
+                          </div>
+                          <div
+                            class="td"
+                            role="cell"
+                            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                            title=""
+                          >
+                            <div
+                              class="c2 c9"
+                            >
+                              <button
+                                class="c4 Button Button--icon-only btn btn-primary"
+                                title="edit actual"
+                                type="button"
+                              >
+                                <div
+                                  class="Button__icon"
+                                >
+                                  <svg
+                                    fill="currentColor"
+                                    height="24"
+                                    id="edit-actual-0"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 24 24"
+                                    width="24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <title>
+                                      edit actual
+                                    </title>
+                                    <path
+                                      d="M0 0h24v24H0z"
+                                      fill="none"
+                                    />
+                                    <path
+                                      d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 000-1.41l-2.34-2.34a.996.996 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                                    />
+                                  </svg>
+                                </div>
+                              </button>
+                              <button
+                                class="c4 Button Button--icon-only btn btn-primary"
+                                title="delete actual"
+                                type="button"
+                              >
+                                <div
+                                  class="Button__icon"
+                                >
+                                  <svg
+                                    fill="currentColor"
+                                    height="24"
+                                    id="delete-actual-0"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 448 512"
+                                    width="24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <title>
+                                      delete actual
+                                    </title>
+                                    <path
+                                      d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                                    />
+                                  </svg>
+                                </div>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="tfoot tfoot-light"
+                    >
+                      <div
+                        class="tr"
+                        role="row"
+                        style="display: flex; flex: 1 0 auto; min-width: 240px;"
+                      >
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          <span>
+                            <svg
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20z"
+                              />
+                            </svg>
+                             Payment Summary
+                          </span>
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          (1) payments
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          $1,100.00
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          -
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                          $1,200.00
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                           
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                           
+                        </div>
+                        <div
+                          class="th"
+                          colspan="1"
+                          role="columnheader"
+                          style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                        >
+                           
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

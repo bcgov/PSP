@@ -112,24 +112,6 @@ namespace Pims.Api.Services
             return _acquisitionFilePropertyRepository.GetOwnersByAcquisitionFileId(id);
         }
 
-        public IEnumerable<PimsAcquisitionOwnerRep> GetOwnerRepresentatives(long id)
-        {
-            _logger.LogInformation("Getting acquisition file owner representatives with AcquisitionFile id: {id}", id);
-            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
-
-            return _acquisitionFilePropertyRepository.GetOwnerRepresentatives(id);
-        }
-
-        public IEnumerable<PimsAcquisitionOwnerSolicitor> GetOwnerSolicitors(long id)
-        {
-            _logger.LogInformation("Getting acquisition file owner solicitors with AcquisitionFile id: {id}", id);
-            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
-
-            return _acquisitionFilePropertyRepository.GetOwnerSolicitors(id);
-        }
-
         public IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id)
         {
             _logger.LogInformation("Getting acquisition file checklist with AcquisitionFile id: {id}", id);
@@ -364,14 +346,8 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Invalid acquisitionFileId.");
             }
 
-            // The compensation requisition can only have one payee and one checke, for now add them at creation.
-            var newPayee = new PimsAcquisitionPayee();
-            // TODO fix this
-            /*var newCheque = new PimsAcqPayeeCheque();
-            newPayee.PimsAcqPayeeCheques = new List<PimsAcqPayeeCheque>() { newCheque };*/
-
             compensationRequisition.IsDraft = compensationRequisition.IsDraft ?? true;
-            compensationRequisition.PimsAcquisitionPayees = new List<PimsAcquisitionPayee>() { newPayee };
+            compensationRequisition.PimsAcquisitionPayees = new List<PimsAcquisitionPayee>() { new PimsAcquisitionPayee() };
 
             var newCompensationRequisition = _compensationRequisitionRepository.Add(compensationRequisition);
 
@@ -625,7 +601,7 @@ namespace Pims.Api.Services
                 return;
             }
 
-            foreach(var compReq in compensationRequisitions)
+            foreach (var compReq in compensationRequisitions)
             {
                 var payee = compReq.PimsAcquisitionPayees.FirstOrDefault();
                 if (payee is null || !payee.HasPayeeAssigned)
@@ -634,27 +610,19 @@ namespace Pims.Api.Services
                 }
 
                 // Check for Acquisition File Owner removed
-                if(payee.AcquisitionOwnerId is not null
+                if (payee.AcquisitionOwnerId is not null
                     && !acquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(payee.AcquisitionOwnerId))
                     && currentAquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(payee.AcquisitionOwnerId)))
                 {
                     throw new ForeignKeyDependencyException("Acquisition File Owner can not be removed since it's assigned as a payee for a compensation requisition");
                 }
 
-                // Check for Owner Solicitor
-                if (payee.OwnerSolicitorId is not null
-                    && !acquisitionFile.PimsAcquisitionOwnerSolicitors.Any(x => x.Internal_Id.Equals(payee.OwnerSolicitorId))
-                    && currentAquisitionFile.PimsAcquisitionOwnerSolicitors.Any(x => x.Internal_Id.Equals(payee.OwnerSolicitorId)))
+                // Check for Acquisition InterestHolders
+                if (payee.InterestHolderId is not null
+                    && !acquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(payee.InterestHolderId))
+                    && currentAquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(payee.InterestHolderId)))
                 {
-                    throw new ForeignKeyDependencyException("Acquisition File Owner Solicitor can not be removed since it's assigned as a payee for a compensation requisition");
-                }
-
-                // Check for Owner Rep
-                if (payee.OwnerRepresentativeId is not null
-                    && !acquisitionFile.PimsAcquisitionOwnerReps.Any(x => x.Internal_Id.Equals(payee.OwnerRepresentativeId))
-                    && currentAquisitionFile.PimsAcquisitionOwnerReps.Any(x => x.Internal_Id.Equals(payee.OwnerRepresentativeId)))
-                {
-                    throw new ForeignKeyDependencyException("Acquisition File Owner Representative can not be removed since it's assigned as a payee for a compensation requisition");
+                    throw new ForeignKeyDependencyException("Acquisition File Interest Holders can not be removed since it's assigned as a payee for a compensation requisition");
                 }
 
                 // Check for File Person

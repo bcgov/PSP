@@ -32,7 +32,7 @@ export const CompensationRequisitionRouter: React.FunctionComponent<
   }, [matched, props]);
 
   const onClose = () => {
-    const backUrl = history.location.pathname.split('compensation-requisition')[0];
+    const backUrl = location.pathname.split('/compensation-requisition')[0];
     history.push(backUrl);
   };
 

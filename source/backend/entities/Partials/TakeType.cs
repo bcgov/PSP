@@ -15,8 +15,6 @@ namespace Pims.Dal.Entities
         [NotMapped]
         public string Id { get => TakeTypeCode; set => TakeTypeCode = value; }
 
-        [NotMapped]
-        public bool? IsDisabled { get; set; }
         #endregion
 
         #region Constructors

@@ -140,10 +140,6 @@ exports[`ContactInputView component renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c0 {
-  background-color: none;
-}
-
 .c2.c2.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
@@ -163,6 +159,19 @@ exports[`ContactInputView component renders as expected 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
+}
+
+.c0 {
+  background: none;
+  position: relative;
+  border-radius: 0.3rem;
+  padding: 0.6rem;
+  padding-right: 2.1rem;
+  border: solid 0.1rem;
+}
+
+.c0.is-invalid {
+  border: solid 0.1rem;
 }
 
 <div

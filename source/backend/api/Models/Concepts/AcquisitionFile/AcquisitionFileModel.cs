@@ -93,19 +93,15 @@ namespace Pims.Api.Models.Concepts
         public IList<AcquisitionFileOwnerModel> AcquisitionFileOwners { get; set; }
 
         /// <summary>
+        /// get/set - A list of acquisition file interest holder relationships.
+        /// </summary>
+        public IList<InterestHolderModel> AcquisitionFileInterestHolders { get; set; }
+
+        /// <summary>
         /// get/set - A list of acquisition file checklist items.
         /// </summary>
         public IList<AcquisitionFileChecklistItemModel> AcquisitionFileChecklist { get; set; }
 
-        /// <summary>
-        /// get/set - A list of acquisition file owner solicitors.
-        /// </summary>
-        public IList<AcquisitionFileOwnerSolicitorModel> AcquisitionFileOwnerSolicitors { get; set; }
-
-        /// <summary>
-        /// get/set - A list of acquisition file owner representatives.
-        /// </summary>
-        public IList<AcquisitionFileOwnerRepresentativeModel> AcquisitionFileOwnerRepresentatives { get; set; }
         #endregion
     }
 }

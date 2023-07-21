@@ -21,7 +21,7 @@ export const AdminTools = ({ onLinkClick }: ISideTrayPageProps) => {
         Manage Form Document Templates
       </Link>
       <Link to="/admin/financial-code/list" onClick={onLinkClick}>
-        Manage Financial Codes
+        Manage Project and Financial Codes
       </Link>
     </>
   );

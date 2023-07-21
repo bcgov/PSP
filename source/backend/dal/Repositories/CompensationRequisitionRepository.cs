@@ -68,7 +68,7 @@ namespace Pims.Dal.Repositories
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqH120, long>(a => a.PimsCompReqH120s, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqH120s.ToArray(), true);
 
-            if(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is not null)
+            if (compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is not null)
             {
                 UpdatePayee(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault());
             }
@@ -122,15 +122,11 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(afp => afp.Person)
                 .Include(ap => ap.AcquisitionOwner)
                 .Include(ap => ap.InterestHolder)
+                    .ThenInclude(ih => ih.InterestHolderTypeCodeNavigation)
+                .Include(ap => ap.InterestHolder)
                     .ThenInclude(ih => ih.Person)
                 .Include(ap => ap.InterestHolder)
                     .ThenInclude(ih => ih.Organization)
-                .Include(ap => ap.OwnerRepresentative)
-                    .ThenInclude(or => or.Person)
-                .Include(ap => ap.OwnerSolicitor)
-                    .ThenInclude(os => os.Organization)
-                .Include(ap => ap.OwnerSolicitor)
-                    .ThenInclude(os => os.Person)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.AcquisitionPayeeId.Equals(payeeId)) ?? throw new KeyNotFoundException();
 

@@ -14,6 +14,9 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
+// mock auth library
+jest.mock('@react-keycloak/web');
+
 describe('AdministrationSubForm component', () => {
   const setup = async (
     renderOptions: RenderOptions & Partial<IAdministrationSubFormProps> = {},
@@ -25,6 +28,7 @@ describe('AdministrationSubForm component', () => {
       </Formik>,
       {
         ...renderOptions,
+        claims: [],
         store: storeState,
         history,
       },

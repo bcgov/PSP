@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
 
 import { SelectOption } from '@/components/common/form';
@@ -40,14 +41,6 @@ const UpdateCompensationRequisitionContainer: React.FC<
 
   const {
     getAcquisitionOwners: { execute: retrieveAcquisitionOwners, loading: loadingAcquisitionOwners },
-    getAcquisitionFileSolicitors: {
-      execute: retrieveAcquisitionFileSolicitors,
-      loading: loadingAcquisitionFileSolicitors,
-    },
-    getAcquisitionFileRepresentatives: {
-      execute: retrieveAcquisitionFileRepresentatives,
-      loading: loadingAcquisitionFileRepresentatives,
-    },
   } = useAcquisitionProvider();
 
   const {
@@ -86,24 +79,16 @@ const UpdateCompensationRequisitionContainer: React.FC<
   const fetchContacts = useCallback(async () => {
     if (acquisitionFile.id) {
       const acquisitionOwnersCall = retrieveAcquisitionOwners(acquisitionFile.id);
-      const acquisitionSolicitorsCall = retrieveAcquisitionFileSolicitors(acquisitionFile.id);
-      const acquisitionRepresentativesCall = retrieveAcquisitionFileRepresentatives(
-        acquisitionFile.id,
-      );
       const interestHoldersCall = fetchInterestHolders(acquisitionFile.id);
 
-      await Promise.all([
-        acquisitionOwnersCall,
-        acquisitionSolicitorsCall,
-        acquisitionRepresentativesCall,
-        interestHoldersCall,
-      ]).then(
-        ([
-          acquisitionOwners,
-          acquisitionSolicitors,
-          acquisitionRepresentatives,
-          interestHolders,
-        ]) => {
+      await Promise.all([acquisitionOwnersCall, interestHoldersCall]).then(
+        ([acquisitionOwners, interestHolders]) => {
+          compensation.payees.forEach(p => {
+            const matchedInterestHolder =
+              interestHolders?.find(ih => ih.interestHolderId === p.interestHolderId) ?? null;
+            p.interestHolder = matchedInterestHolder;
+          });
+
           const options = payeeOptions;
 
           if (acquisitionOwners !== undefined) {
@@ -111,20 +96,6 @@ const UpdateCompensationRequisitionContainer: React.FC<
               PayeeOption.createOwner(x),
             );
             options.push(...ownersOptions);
-          }
-
-          if (acquisitionSolicitors !== undefined) {
-            const acquisitionSolicitorOptions: PayeeOption[] = acquisitionSolicitors.map(x =>
-              PayeeOption.createOwnerSolicitor(x),
-            );
-            options.push(...acquisitionSolicitorOptions);
-          }
-
-          if (acquisitionRepresentatives !== undefined) {
-            const acquisitionSolicitorOptions: PayeeOption[] = acquisitionRepresentatives.map(x =>
-              PayeeOption.createOwnerRepresentative(x),
-            );
-            options.push(...acquisitionSolicitorOptions);
           }
 
           if (interestHolders !== undefined) {
@@ -146,12 +117,11 @@ const UpdateCompensationRequisitionContainer: React.FC<
       );
     }
   }, [
+    compensation,
     payeeOptions,
     acquisitionFile.acquisitionTeam,
     acquisitionFile.id,
     retrieveAcquisitionOwners,
-    retrieveAcquisitionFileSolicitors,
-    retrieveAcquisitionFileRepresentatives,
     fetchInterestHolders,
   ]);
 
@@ -167,37 +137,62 @@ const UpdateCompensationRequisitionContainer: React.FC<
       fetchResponsibilityCodesCall,
       fetchYearlyFinancialsCall,
     ]).then(([activities, charts, responsibilities, yearly]) => {
+      const currentDate = moment();
       const activityOptions: SelectOption[] =
-        activities?.map(item => {
-          return {
-            label: `${item.code} - ${item.description}`,
-            value: item.id!,
-          };
-        }) ?? [];
+        activities
+          ?.filter(
+            a =>
+              currentDate >= moment(a.effectiveDate) &&
+              (!a.expiryDate || currentDate <= moment(a.expiryDate)),
+          )
+          ?.map(item => {
+            return {
+              label: `${item.code} - ${item.description}`,
+              value: item.id!,
+            };
+          }) ?? [];
 
       const chartsOptions: SelectOption[] =
-        charts?.map(item => {
-          return {
-            label: `${item.code} - ${item.description}`,
-            value: item.id!,
-          };
-        }) ?? [];
+        charts
+          ?.filter(
+            c =>
+              currentDate >= moment(c.effectiveDate) &&
+              (!c.expiryDate || currentDate <= moment(c.expiryDate)),
+          )
+          ?.map(item => {
+            return {
+              label: `${item.code} - ${item.description}`,
+              value: item.id!,
+            };
+          }) ?? [];
 
       const responsibilitiesOptions: SelectOption[] =
-        responsibilities?.map(item => {
-          return {
-            label: `${item.code} - ${item.description}`,
-            value: item.id!,
-          };
-        }) ?? [];
+        responsibilities
+          ?.filter(
+            r =>
+              currentDate >= moment(r.effectiveDate) &&
+              (!r.expiryDate || currentDate <= moment(r.expiryDate)),
+          )
+          ?.map(item => {
+            return {
+              label: `${item.code} - ${item.description}`,
+              value: item.id!,
+            };
+          }) ?? [];
 
       const yearlyOptions: SelectOption[] =
-        yearly?.map(item => {
-          return {
-            label: `${item.code}`,
-            value: item.id!,
-          };
-        }) ?? [];
+        yearly
+          ?.filter(
+            y =>
+              currentDate >= moment(y.effectiveDate) &&
+              (!y.expiryDate || currentDate <= moment(y.expiryDate)),
+          )
+          ?.map(item => {
+            return {
+              label: `${item.code} - ${item.description}`,
+              value: item.id!,
+            };
+          }) ?? [];
 
       setFinancialActivityOptions(activityOptions);
       setChartOfAccountOptions(chartsOptions);
@@ -224,8 +219,6 @@ const UpdateCompensationRequisitionContainer: React.FC<
       isLoading={
         isUpdating ||
         loadingAcquisitionOwners ||
-        loadingAcquisitionFileSolicitors ||
-        loadingAcquisitionFileRepresentatives ||
         loadingFinancialActivities ||
         loadingChartOfAccounts ||
         loadingResponsibilityCodes ||

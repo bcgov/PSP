@@ -169,7 +169,7 @@ exports[`AddResearchForm component renders as expected 1`] = `
 }
 
 .c12 .nav-tabs {
-  height: 2.4rem;
+  height: auto;
 }
 
 .c12 .nav-item {
@@ -285,10 +285,6 @@ exports[`AddResearchForm component renders as expected 1`] = `
 
 .c10 {
   height: 100%;
-}
-
-.c10 .nav-tabs {
-  height: 2.4rem;
 }
 
 .c10 .tab-content {

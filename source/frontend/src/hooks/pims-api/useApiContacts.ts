@@ -5,6 +5,7 @@ import { IContactFilter } from '@/components/contact/ContactManagerView/IContact
 import { IContactSearchResult, IPagedItems } from '@/interfaces';
 import { IEditableOrganization, IEditablePerson } from '@/interfaces/editable-contact';
 import { IContact } from '@/interfaces/IContact';
+import { Api_Organization } from '@/models/api/Organization';
 import { Api_Person } from '@/models/api/Person';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
@@ -33,6 +34,8 @@ export const useApiContacts = () => {
       putPerson: (person: IEditablePerson) =>
         api.put<IEditablePerson>(`/persons/${person.id}`, person),
       getOrganization: (id: number) => api.get<IEditableOrganization>(`/organizations/${id}`),
+      getOrganizationConcept: (id: number) =>
+        api.get<Api_Organization>(`/organizations/concept/${id}`),
       postOrganization: (organization: IEditableOrganization, userOverride: boolean) =>
         api.post<IEditableOrganization>(
           `/organizations?userOverride=${userOverride}`,

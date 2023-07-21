@@ -4,7 +4,7 @@ import { AreaUnitTypes } from '@/constants/areaUnitTypes';
 import { Api_Take } from '@/models/api/Take';
 import { convertArea } from '@/utils/convertUtils';
 /* eslint-disable no-template-curly-in-string */
-import { stringToNull, toTypeCode } from '@/utils/formUtils';
+import { stringToUndefined, toTypeCode } from '@/utils/formUtils';
 
 export const TakesYupSchema = Yup.object().shape({
   takes: Yup.array().of(
@@ -160,8 +160,8 @@ export class TakeModel {
           this.statutoryRightOfWayAreaUnitTypeCode,
           AreaUnitTypes.SquareMeters.toString(),
         ) || null,
-      ltcEndDt: stringToNull(this.ltcEndDt),
-      landActEndDt: stringToNull(this.landActEndDt),
+      ltcEndDt: stringToUndefined(this.ltcEndDt),
+      landActEndDt: stringToUndefined(this.landActEndDt),
       landActTypeCode: toTypeCode(this.landActTypeCode),
       isSurplus: this.isSurplus === 'true',
       isNewRightOfWay: this.isNewRightOfWay === 'true',

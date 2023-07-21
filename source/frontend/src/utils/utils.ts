@@ -9,6 +9,16 @@ import { TableSort } from '@/components/Table/TableSort';
 import { logError, logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
 /**
+ * Removes a trailing slash from a string.
+ * Useful when creating nested URLs or routes.
+ * @param value The input string
+ * @returns The string without trailing slash
+ */
+export function stripTrailingSlash(value: string) {
+  return value ? value.replace(/\/$/, '') : value;
+}
+
+/**
  * Rounds the supplied number to a certain number of decimal places
  * @param value The number to round
  * @param decimalPlaces The number of decimal places. Defaults to 2

@@ -41,7 +41,7 @@ export const useFullyAttributedParcelMapLayer = () => {
   const findByPid = useCallback(
     async (pid: string, forceExactMatch = false) => {
       // Removes dashes to match expectations of the map layer.
-      const formattedPid = pid.replace(/-/g, '');
+      const formattedPid = pid.replace(/[-\s]/g, '');
       const data = await getAllFeatures(
         { PID: formattedPid },
         { forceExactMatch: forceExactMatch, timeout: 30000 },

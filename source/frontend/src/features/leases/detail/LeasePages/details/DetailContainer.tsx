@@ -8,6 +8,7 @@ import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 
 import LeaseDetailsForm from './LeaseDetailsForm';
+import UpdateLeaseForm from './UpdateLeaseForm';
 
 const DetailContainer: React.FunctionComponent<React.PropsWithChildren<LeasePageProps>> = ({
   isEditing,
@@ -17,6 +18,7 @@ const DetailContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
   return !!isEditing && !!onEdit ? (
     <ProtectedComponent claims={[Claims.LEASE_EDIT]}>
       <UpdateLeaseContainer
+        View={UpdateLeaseForm}
         onEdit={onEdit}
         formikRef={formikRef as React.RefObject<FormikProps<LeaseFormModel>>}
       />

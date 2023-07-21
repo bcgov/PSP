@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Input } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { IFormLease } from '@/interfaces';
+import { Api_Lease } from '@/models/api/Lease';
 import { prettyFormatDate } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 export interface IDetailAdministrationProps {
@@ -20,7 +20,7 @@ export interface IDetailAdministrationProps {
 export const DetailAdministration: React.FunctionComponent<
   React.PropsWithChildren<IDetailAdministrationProps>
 > = ({ nameSpace, disabled }) => {
-  const { values } = useFormikContext<IFormLease>();
+  const { values } = useFormikContext<Api_Lease>();
   const responsibilityDate = getIn(values, withNameSpace(nameSpace, 'responsibilityEffectiveDate'));
   return (
     <>

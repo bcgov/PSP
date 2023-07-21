@@ -41,10 +41,10 @@
                 <SSIS:Property SSIS:Name="Name">Package</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">1193</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">1255</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{7AC54920-9F5F-40FA-8A0D-71B376D97ED5}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{F6CA5D49-4381-4699-9F52-428EADF4CDF4}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>

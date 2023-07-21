@@ -43,15 +43,14 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.IsResidential, src => src.IsSubjectToRta)
                 .Map(dest => dest.IsCommercialBuilding, src => src.IsCommBldg)
                 .Map(dest => dest.IsOtherImprovement, src => src.IsOtherImprovement)
-                .Map(dest => dest.Persons, src => src.GetPersons())
-                .Map(dest => dest.Organizations, src => src.GetOrganizations())
                 .Map(dest => dest.ReturnNotes, src => src.ReturnNotes)
                 .Map(dest => dest.IsExpired, src => src.IsExpired)
                 .Map(dest => dest.HasPhysicalFile, src => src.HasPhysicalFile)
                 .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
                 .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
                 .Map(dest => dest.HasPhysicalLicense, src => src.HasPhysicialLicense)
-                .Map(dest => dest.Project, src => src.Project);
+                .Map(dest => dest.Project, src => src.Project)
+                .Map(dest => dest.Tenants, src => src.PimsLeaseTenants);
 
             config.NewConfig<LeaseModel, Entity.PimsLease>()
                 .Map(dest => dest.LeaseId, src => src.Id)

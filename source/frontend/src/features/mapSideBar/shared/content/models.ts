@@ -26,6 +26,10 @@ export enum FormTemplateTypes {
   H179T = 'H179T',
   GENERATE_LETTER = 'LETTER',
   H0074 = 'H0074',
+  EXPROP_FORM_1 = 'FORM1',
+  EXPROP_FORM_5 = 'FORM5',
+  EXPROP_FORM_8 = 'FORM8',
+  EXPROP_FORM_9 = 'FORM9',
 }
 
 export enum ActivityTemplateTypes {
