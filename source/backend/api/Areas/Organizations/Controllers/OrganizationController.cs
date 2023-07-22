@@ -8,6 +8,7 @@ using Pims.Core.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
+using Concepts = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Areas.Organizations.Controllers
 {
@@ -60,6 +61,21 @@ namespace Pims.Api.Areas.Organizations.Controllers
         {
             var organization = _organizationService.GetOrganization(id);
             return new JsonResult(_mapper.Map<Models.Organization.OrganizationModel>(organization));
+        }
+
+        /// <summary>
+        /// Get the organization concept for the specified primary key 'id'.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("concept/{id:long}")]
+        [HasPermission(Permissions.ContactView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Concepts.OrganizationModel), 200)]
+        [SwaggerOperation(Tags = new[] { "organization" })]
+        public IActionResult GetOrganizationConcept(int id)
+        {
+            var organization = _organizationService.GetOrganization(id);
+            return new JsonResult(_mapper.Map<Concepts.OrganizationModel>(organization));
         }
 
         /// <summary>

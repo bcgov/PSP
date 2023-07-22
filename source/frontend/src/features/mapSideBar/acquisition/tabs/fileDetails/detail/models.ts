@@ -6,8 +6,6 @@ import {
 import { Api_Address } from '@/models/api/Address';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { AcquisitionSolicitorFormModel } from '../../../common/models';
-
 export class DetailAcquisitionFile {
   fileName?: string;
   legacyFileNumber?: string;
@@ -18,7 +16,6 @@ export class DetailAcquisitionFile {
   acquisitionTypeDescription?: string;
   regionDescription?: string;
   acquisitionTeam: DetailAcquisitionFilePerson[] = [];
-  ownerSolicitor: AcquisitionSolicitorFormModel = new AcquisitionSolicitorFormModel(null);
 
   static fromApi(model?: Api_AcquisitionFile): DetailAcquisitionFile {
     const detail = new DetailAcquisitionFile();
@@ -33,9 +30,6 @@ export class DetailAcquisitionFile {
     detail.regionDescription = model?.regionCode?.description;
     detail.acquisitionTeam =
       model?.acquisitionTeam?.map(x => DetailAcquisitionFilePerson.fromApi(x)) || [];
-    detail.ownerSolicitor = model?.acquisitionFileOwnerSolicitors?.length
-      ? AcquisitionSolicitorFormModel.fromApi(model?.acquisitionFileOwnerSolicitors[0])
-      : new AcquisitionSolicitorFormModel(null);
 
     return detail;
   }

@@ -27,6 +27,15 @@ namespace Pims.Dal.Entities
         public long? PersonId { get; set; }
         [Column("ORGANIZATION_ID")]
         public long? OrganizationId { get; set; }
+        [Column("PRIMARY_CONTACT_ID")]
+        public long? PrimaryContactId { get; set; }
+        [Required]
+        [Column("INTEREST_HOLDER_TYPE_CODE")]
+        [StringLength(20)]
+        public string InterestHolderTypeCode { get; set; }
+        [Column("COMMENT")]
+        [StringLength(2000)]
+        public string Comment { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]

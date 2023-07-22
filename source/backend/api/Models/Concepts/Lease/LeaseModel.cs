@@ -1,13 +1,13 @@
-using Pims.Api.Models.Tenant;
 using System;
 using System.Collections.Generic;
+using Pims.Api.Models.Tenant;
 
 namespace Pims.Api.Models.Concepts
 {
     /// <summary>
     /// Provides a lease-oriented model.
     /// </summary>
-    public class LeaseModel
+    public class LeaseModel : BaseAppModel
     {
         #region Properties
 
@@ -15,11 +15,6 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The primary key to identify the lease.
         /// </summary>
         public long Id { get; set; }
-
-        /// <summary>
-        /// get/set - The concurrency row version.
-        /// </summary>
-        public long RowVersion { get; set; }
 
         /// <summary>
         /// get/set - The lease amount.

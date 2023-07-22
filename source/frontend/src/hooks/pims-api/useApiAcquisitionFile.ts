@@ -8,8 +8,6 @@ import {
   Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
-  Api_AcquisitionFileRepresentative,
-  Api_AcquisitionFileSolicitor,
 } from '@/models/api/AcquisitionFile';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
@@ -66,12 +64,6 @@ export const useApiAcquisitionFile = () => {
         api.get<Api_AcquisitionFileProperty[]>(`/acquisitionfiles/${acqFileId}/properties`),
       getAcquisitionFileOwners: (acqFileId: number) =>
         api.get<Api_AcquisitionFileOwner[]>(`/acquisitionfiles/${acqFileId}/owners`),
-      getAcquisitionFileSolicitors: (acqFileId: number) =>
-        api.get<Api_AcquisitionFileSolicitor[]>(`/acquisitionfiles/${acqFileId}/owner-solicitors`),
-      getAcquisitionFileRepresentatives: (acqFileId: number) =>
-        api.get<Api_AcquisitionFileRepresentative[]>(
-          `/acquisitionfiles/${acqFileId}/owner-representatives`,
-        ),
       getAcquisitionFileProject: (acqFileId: number) =>
         api.get<Api_Project>(`/acquisitionfiles/${acqFileId}/project`),
       getAcquisitionFileProduct: (acqFileId: number) =>

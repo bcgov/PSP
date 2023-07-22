@@ -41,14 +41,6 @@ const UpdateCompensationRequisitionContainer: React.FC<
 
   const {
     getAcquisitionOwners: { execute: retrieveAcquisitionOwners, loading: loadingAcquisitionOwners },
-    getAcquisitionFileSolicitors: {
-      execute: retrieveAcquisitionFileSolicitors,
-      loading: loadingAcquisitionFileSolicitors,
-    },
-    getAcquisitionFileRepresentatives: {
-      execute: retrieveAcquisitionFileRepresentatives,
-      loading: loadingAcquisitionFileRepresentatives,
-    },
   } = useAcquisitionProvider();
 
   const {
@@ -87,24 +79,16 @@ const UpdateCompensationRequisitionContainer: React.FC<
   const fetchContacts = useCallback(async () => {
     if (acquisitionFile.id) {
       const acquisitionOwnersCall = retrieveAcquisitionOwners(acquisitionFile.id);
-      const acquisitionSolicitorsCall = retrieveAcquisitionFileSolicitors(acquisitionFile.id);
-      const acquisitionRepresentativesCall = retrieveAcquisitionFileRepresentatives(
-        acquisitionFile.id,
-      );
       const interestHoldersCall = fetchInterestHolders(acquisitionFile.id);
 
-      await Promise.all([
-        acquisitionOwnersCall,
-        acquisitionSolicitorsCall,
-        acquisitionRepresentativesCall,
-        interestHoldersCall,
-      ]).then(
-        ([
-          acquisitionOwners,
-          acquisitionSolicitors,
-          acquisitionRepresentatives,
-          interestHolders,
-        ]) => {
+      await Promise.all([acquisitionOwnersCall, interestHoldersCall]).then(
+        ([acquisitionOwners, interestHolders]) => {
+          compensation.payees.forEach(p => {
+            const matchedInterestHolder =
+              interestHolders?.find(ih => ih.interestHolderId === p.interestHolderId) ?? null;
+            p.interestHolder = matchedInterestHolder;
+          });
+
           const options = payeeOptions;
 
           if (acquisitionOwners !== undefined) {
@@ -112,20 +96,6 @@ const UpdateCompensationRequisitionContainer: React.FC<
               PayeeOption.createOwner(x),
             );
             options.push(...ownersOptions);
-          }
-
-          if (acquisitionSolicitors !== undefined) {
-            const acquisitionSolicitorOptions: PayeeOption[] = acquisitionSolicitors.map(x =>
-              PayeeOption.createOwnerSolicitor(x),
-            );
-            options.push(...acquisitionSolicitorOptions);
-          }
-
-          if (acquisitionRepresentatives !== undefined) {
-            const acquisitionSolicitorOptions: PayeeOption[] = acquisitionRepresentatives.map(x =>
-              PayeeOption.createOwnerRepresentative(x),
-            );
-            options.push(...acquisitionSolicitorOptions);
           }
 
           if (interestHolders !== undefined) {
@@ -147,12 +117,11 @@ const UpdateCompensationRequisitionContainer: React.FC<
       );
     }
   }, [
+    compensation,
     payeeOptions,
     acquisitionFile.acquisitionTeam,
     acquisitionFile.id,
     retrieveAcquisitionOwners,
-    retrieveAcquisitionFileSolicitors,
-    retrieveAcquisitionFileRepresentatives,
     fetchInterestHolders,
   ]);
 
@@ -250,8 +219,6 @@ const UpdateCompensationRequisitionContainer: React.FC<
       isLoading={
         isUpdating ||
         loadingAcquisitionOwners ||
-        loadingAcquisitionFileSolicitors ||
-        loadingAcquisitionFileRepresentatives ||
         loadingFinancialActivities ||
         loadingChartOfAccounts ||
         loadingResponsibilityCodes ||

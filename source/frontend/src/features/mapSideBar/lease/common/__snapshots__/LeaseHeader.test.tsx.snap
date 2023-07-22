@@ -306,7 +306,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
                 id="userNameTooltip"
               >
                 <strong>
-                  USER
+                  USER_B
                 </strong>
               </span>
             </span>
@@ -332,7 +332,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
                 id="userNameTooltip"
               >
                 <strong>
-                  USER
+                  USER_A
                 </strong>
               </span>
             </span>

@@ -20,7 +20,7 @@ export class Api_GenerateCompensationFinancialSummary {
     );
     this.file_total = formatMoney(
       finalFileFinancials
-        .filter(f => f.financialActivityCode?.id === h120Category?.financialActivityId)
+        .filter(f => f.financialActivityCodeId === h120Category?.financialActivityId)
         .reduce((acc, curr) => acc + (curr?.totalAmount ?? 0), 0),
     );
   }

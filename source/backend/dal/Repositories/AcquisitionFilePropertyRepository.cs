@@ -37,7 +37,6 @@ namespace Pims.Dal.Repositories
             return Context.PimsPropertyAcquisitionFiles
                 .Where(x => x.AcquisitionFileId == acquisitionFileId)
                 .Include(rp => rp.PimsActInstPropAcqFiles)
-                .Include(rp => rp.Property)
                 .Include(rp => rp.PimsTakes)
                 .Include(rp => rp.Property)
                     .ThenInclude(rp => rp.RegionCodeNavigation)
@@ -45,6 +44,10 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(rp => rp.DistrictCodeNavigation)
                 .Include(rp => rp.Property)
                     .ThenInclude(rp => rp.Address)
+                    .ThenInclude(a => a.Country)
+                .Include(rp => rp.Property)
+                    .ThenInclude(rp => rp.Address)
+                    .ThenInclude(a => a.ProvinceState)
                 .AsNoTracking()
                 .ToList();
         }
@@ -61,25 +64,6 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(x => x.ProvinceState)
                 .Include(x => x.Address)
                     .ThenInclude(x => x.DistrictCodeNavigation)
-                .AsNoTracking()
-                .ToList();
-        }
-
-        public List<PimsAcquisitionOwnerRep> GetOwnerRepresentatives(long acquisitionFileId)
-        {
-            return Context.PimsAcquisitionOwnerReps
-                .Where(x => x.AcquisitionFileId == acquisitionFileId)
-                .Include(aor => aor.Person)
-                .AsNoTracking()
-                .ToList();
-        }
-
-        public List<PimsAcquisitionOwnerSolicitor> GetOwnerSolicitors(long acquisitionFileId)
-        {
-            return Context.PimsAcquisitionOwnerSolicitors
-                .Where(x => x.AcquisitionFileId == acquisitionFileId)
-                .Include(aos => aos.Person)
-                .Include(aos => aos.Organization)
                 .AsNoTracking()
                 .ToList();
         }
