@@ -94,16 +94,6 @@ describe('GenerateFormContainer component', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('calls document letter generation', async () => {
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
-
-    await act(async () => viewProps.onGenerateClick(FormDocumentType.LETTER));
-    await waitFor(async () => {
-      expect(generateLetterFn).toHaveBeenCalledTimes(1);
-      expect(generateH0443Fn).toHaveBeenCalledTimes(0);
-    });
-  });
-
   it('calls document H0443 generation', async () => {
     jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
@@ -111,6 +101,23 @@ describe('GenerateFormContainer component', () => {
     await waitFor(async () => {
       expect(generateLetterFn).toHaveBeenCalledTimes(0);
       expect(generateH0443Fn).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('opens document letter generation modal', async () => {
+    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+
+    await act(async () => viewProps.onGenerateClick(FormDocumentType.LETTER));
+    await waitFor(async () => {
+      expect(generateLetterFn).toHaveBeenCalledTimes(0);
+      expect(generateH0443Fn).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  it('generates the documment letter on confirmation', async () => {
+    await act(async () => viewProps.onGenerateLetterOk([]));
+    await waitFor(async () => {
+      expect(generateLetterFn).toHaveBeenCalledTimes(1);
     });
   });
 });

@@ -151,6 +151,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             project.ProjectStatus = ExcelDataContext.ReadData(rowNumber, "ProjectStatus");
             project.MOTIRegion = ExcelDataContext.ReadData(rowNumber, "MOTIRegion");
             project.Summary = ExcelDataContext.ReadData(rowNumber, "Summary");
+            project.CostType = ExcelDataContext.ReadData(rowNumber, "CostType");
+            project.WorkActivity = ExcelDataContext.ReadData(rowNumber, "WorkActivity");
+            project.BusinessFunction = ExcelDataContext.ReadData(rowNumber, "BusinessFunction");
             project.CreatedBy = ExcelDataContext.ReadData(rowNumber, "CreatedBy");
             project.UpdatedBy = ExcelDataContext.ReadData(rowNumber, "UpdatedBy");
             project.ProductsCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "ProductsCount"));

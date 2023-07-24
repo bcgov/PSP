@@ -241,7 +241,7 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
         [Xunit.TraitAttribute("Description", "Search for a non-existing Contact")]
         [Xunit.InlineDataAttribute("Individual", "6", new string[0])]
-        [Xunit.InlineDataAttribute("Organization", "4", new string[0])]
+        [Xunit.InlineDataAttribute("Organization", "5", new string[0])]
         public void SearchForANon_ExistingContact(string contactType, string rowNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
