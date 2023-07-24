@@ -14,10 +14,10 @@ namespace PIMS.Tests.Automation.PageObjects
         //private By addDocumentBttn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/h2/div/div/div/div[contains(text(),'Documents')]/following-sibling::div/button");
 
         //Documents Tab List Header
-        private By documentsTitle = By.XPath("//div[contains(text(),'File Documents')]");
+        private By documentsTitle = By.XPath("//div[contains(text(),'Documents')]");
         private By documentsLeasesTitle = By.XPath("//div[contains(text(),'Documents')]");
-        private By addDocumentBttn = By.XPath("//div[contains(text(),'File Documents')]/following-sibling::div/button");
-        private By addDocumentLeasesBttn = By.XPath("//div[contains(text(),'Documents')]/following-sibling::div/button");
+        private By addFileDocumentBttn = By.XPath("//div[contains(text(),'File Documents')]/following-sibling::div/button");
+        private By addDocumentBttn = By.XPath("//div[contains(text(),'Documents')]/following-sibling::div/button");
 
         //Upload Documents Dialog General Elements
         private By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4'] span");
@@ -89,7 +89,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Upload Photos/Images/Video and Correspondence Fields
         private By documentCivicAddressInput = By.Id("input-documentMetadata.96");
-        private By documentPhotosCorrespondenceTypeDateLabel = By.XPath("//label[contains(text(),'Date')]");
+        private By documentPhotosCorrespondenceTypeDateLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Date')]");
         private By documentPhotosCorrespondenceTypeDateInput = By.Id("input-documentMetadata.57");
         private By documentOwnerLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Owner')]");
         private By documentTypeOwnerInput = By.Id("input-documentMetadata.51");
@@ -197,7 +197,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentViewCanadaLandSurveyContent = By.XPath("//label[contains(text(),'Canada land survey')]/parent::div/following-sibling::div");
         private By documentViewCivicAddressContent = By.XPath("//label[contains(text(),'Civic address')]/parent::div/following-sibling::div");
         private By documentViewCrownGrantContent = By.XPath("//label[contains(text(),'Crown grant #')]/parent::div/following-sibling::div");
-        private By documentViewDateContent = By.XPath("//label[contains(text(),'Date')]/parent::div/following-sibling::div");
+        private By documentViewDateContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Date')]/parent::div/following-sibling::div");
         private By documentViewDateSignedContent = By.XPath("//label[contains(text(),'Date signed')]/parent::div/following-sibling::div");
         private By documentViewDistrictLotContent = By.XPath("//label[contains(text(),'District lot')]/parent::div/following-sibling::div");
         private By documentViewElectoralDistrictContent = By.XPath("//label[contains(text(),'Electoral district')]/parent::div/following-sibling::div");
@@ -333,10 +333,10 @@ namespace PIMS.Tests.Automation.PageObjects
         public void AddNewDocument(string fileType)
         {
             Wait();
-            if (fileType == "Lease")
-                FocusAndClick(addDocumentLeasesBttn);
-            else
+            if (fileType.Equals("Lease") || fileType.Equals("CDOGS Templates") || fileType.Equals("Project"))
                 FocusAndClick(addDocumentBttn);
+            else
+                FocusAndClick(addFileDocumentBttn);
         }
 
         public void VerifyDocumentFields(string documentType)
@@ -413,15 +413,15 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyDocumentsListView(string fileType)
         {
             Wait();
-            if (fileType.Equals("Lease") || fileType.Equals("CDOGS Templates"))
+            if (fileType.Equals("Lease") || fileType.Equals("CDOGS Templates") || fileType.Equals("Project"))
             {
                 Assert.True(webDriver.FindElement(documentsLeasesTitle).Displayed);
-                Assert.True(webDriver.FindElement(addDocumentLeasesBttn).Displayed);
+                Assert.True(webDriver.FindElement(addDocumentBttn).Displayed);
             }
             else
             {
                 Assert.True(webDriver.FindElement(documentsTitle).Displayed);
-                Assert.True(webDriver.FindElement(addDocumentBttn).Displayed);
+                Assert.True(webDriver.FindElement(addFileDocumentBttn).Displayed);
             
             }
             Assert.True(webDriver.FindElement(documentFilterTypeSelect).Displayed);
@@ -498,18 +498,16 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(documentTableResults1stViewBttn).Click();
         }
 
-        public void ViewIthDocument(int index)
+        public void ViewLastDocument(int index)
         {
-            Wait();
+            Wait(5000);
 
-            var elementChild = index + 1;
-
-            if (elementChild > 10)
+            if (index > 9)
             {
-                elementChild -= 10;
                 FocusAndClick(documentPaginationNextPageLink);
             }
-            
+
+            var elementChild = webDriver.FindElements(documentTableContentTotal).Count;
             FocusAndClick(By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[" + elementChild + "]/div/div[5]/div/div/button[@data-testid='document-view-button']"));
         }
 
@@ -976,6 +974,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Header
             Assert.True(webDriver.FindElement(documentViewDocumentTypeLabel).Displayed);
+            System.Diagnostics.Debug.WriteLine(webDriver.FindElement(documentViewDocumentTypeContent).Text);
+            System.Diagnostics.Debug.WriteLine(document.DocumentType);
 
             Assert.True(webDriver.FindElement(documentViewDocumentTypeContent).Text.Equals(document.DocumentType));
             Assert.True(webDriver.FindElement(documenyViewDocumentNameLabel).Displayed);

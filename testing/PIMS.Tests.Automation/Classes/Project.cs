@@ -9,6 +9,9 @@ namespace PIMS.Tests.Automation.Classes
         public string ProjectStatus { get; set; } = null!;
         public string MOTIRegion { get; set; } = null!;
         public string? Summary { get; set; } = String.Empty;
+        public string? CostType { get; set; } = String.Empty;
+        public string? WorkActivity { get; set; } = String.Empty;
+        public string? BusinessFunction { get; set; } = String.Empty;
         public string CreatedBy { get; set; } = null!;
         public string UpdatedBy { get; set; } = null!;
         public int ProductsCount { get; set; } = 0;
