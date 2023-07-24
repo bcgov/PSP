@@ -1,11 +1,11 @@
-import { LatLngBounds } from 'leaflet';
 import React from 'react';
 import { FaExpandArrowsAlt } from 'react-icons/fa';
-import { useMap } from 'react-leaflet';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons/Button';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { defaultBounds } from '@/components/maps/constants';
 
 import Control from '../Control';
 
@@ -18,20 +18,15 @@ const ZoomButton = styled(Button)`
   }
 `;
 
-export type ZoomOutProps = {
-  /** the default bounds of the map to zoom out to */
-  bounds: LatLngBounds;
-};
-
 /**
  * Displays a button that zooms out to show the entire map when clicked
  * @param map The leaflet map
  * @param bounds The latlng bounds to zoom out to
  */
-export const ZoomOutButton: React.FC<React.PropsWithChildren<ZoomOutProps>> = ({ bounds }) => {
-  const mapInstance = useMap();
+export const ZoomOutButton: React.FC = () => {
+  const mapMachine = useMapStateMachine();
   const zoomOut = () => {
-    mapInstance.fitBounds(bounds);
+    mapMachine.requestFlyToBounds(defaultBounds);
   };
   return (
     <Control position="topleft">

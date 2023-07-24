@@ -1,7 +1,9 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mockLookups } from '@/mocks/index.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { mockProjectGetResponse } from '@/mocks/projects.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, waitFor } from '@/utils/test-utils';
@@ -29,6 +31,8 @@ jest.mock('react-visibility-sensor', () => {
     return children;
   });
 });
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 describe('ProjectContainer component', () => {
   // render component under test
@@ -60,7 +64,7 @@ describe('ProjectContainer component', () => {
 
   beforeEach(() => {
     jest.resetAllMocks();
-
+    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
     mockAxios.onGet(new RegExp('projects/*')).reply(200, mockProjectGetResponse());
   });
