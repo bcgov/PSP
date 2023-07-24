@@ -28,8 +28,8 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   isLoading: false,
   mapFilter: null,
 
-  draftLocations: [],
-  iSelecting: false,
+  filePropertyLocations: [],
+  isSelecting: false,
   requestFlyToLocation: jest.fn(),
 
   processFlyTo: jest.fn(),
@@ -44,5 +44,5 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   prepareForCreation: jest.fn(),
   startSelection: jest.fn(),
   finishSelection: jest.fn(),
-  setDraftLocations: jest.fn(),
+  setFilePropertyLocations: jest.fn(),
 };

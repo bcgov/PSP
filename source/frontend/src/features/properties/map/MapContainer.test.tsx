@@ -23,6 +23,7 @@ import {
   PropertyStatusTypes,
   PropertyTenureTypes,
 } from '@/constants/index';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import {
   EmptyProperty,
   PIMS_Property_Location_View,
@@ -118,47 +119,6 @@ const mockParcels: ParcelSeed[] = [
 ];
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-const mapMachineBaseMock = {
-  requestFlyToBounds: jest.fn(),
-  mapFeatureData: {
-    pimsFeatures: emptyPimsFeatureCollection,
-    fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
-  },
-
-  isSidebarOpen: false,
-  hasPendingFlyTo: false,
-  requestedFlyTo: {
-    location: null,
-    bounds: null,
-  },
-  mapFeatureSelected: null,
-  mapLocationSelected: null,
-  mapLocationFeatureDataset: null,
-  selectedFeatureDataset: null,
-  showPopup: false,
-  isLoading: false,
-  mapFilter: null,
-
-  draftLocations: [],
-  pendingRefresh: false,
-  iSelecting: false,
-  requestFlyToLocation: jest.fn(),
-
-  processFlyTo: jest.fn(),
-  processPendingRefresh: jest.fn(),
-  openSidebar: jest.fn(),
-  closeSidebar: jest.fn(),
-  closePopup: jest.fn(),
-  mapClick: jest.fn(),
-  mapMarkerClick: jest.fn(),
-  setMapFilter: jest.fn(),
-  refreshMapProperties: jest.fn(),
-  prepareForCreation: jest.fn(),
-  startSelection: jest.fn(),
-  finishSelection: jest.fn(),
-  setDraftLocations: jest.fn(),
-};
-(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails = {

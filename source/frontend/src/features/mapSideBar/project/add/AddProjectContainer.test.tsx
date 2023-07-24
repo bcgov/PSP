@@ -67,7 +67,7 @@ describe('AddProjectContainer component', () => {
     selectedProperty: Feature<Geometry, GeoJsonProperties> | null = null,
   ) => {
     const utils = render(
-      <MapStateMachineProvider /*values={{ selectedFileFeature: selectedProperty }}*/>
+      <MapStateMachineProvider>
         <AddProjectContainer {...props} />
       </MapStateMachineProvider>,
       {

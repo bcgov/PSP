@@ -7,6 +7,7 @@ import { FileTypes } from '@/constants/index';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
@@ -38,9 +39,6 @@ jest.mock('react-visibility-sensor', () => {
 });
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-const mapMachineBaseMock = {
-  setDraftLocations: jest.fn(),
-};
 (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 let viewProps: IGenerateFormViewProps = {} as any;

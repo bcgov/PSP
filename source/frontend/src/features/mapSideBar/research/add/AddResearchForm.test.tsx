@@ -5,6 +5,7 @@ import { noop } from 'lodash';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fakeText, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
@@ -19,9 +20,6 @@ const storeState = {
 };
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-const mapMachineBaseMock = {
-  setDraftLocations: jest.fn(),
-};
 (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 describe('AddResearchForm component', () => {

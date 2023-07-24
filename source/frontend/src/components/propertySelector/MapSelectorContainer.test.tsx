@@ -7,15 +7,12 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { mockFAParcelLayerResponse, mockGeocoderOptions } from '@/mocks/index.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { featuresToIdentifiedMapProperty } from '@/utils/mapPropertyUtils';
 import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { PropertyForm } from '../../features/mapSideBar/shared/models';
 import { useMapStateMachine } from '../common/mapFSM/MapStateMachineContext';
-import {
-  emptyFullyFeaturedFeatureCollection,
-  emptyPimsFeatureCollection,
-} from '../common/mapFSM/models';
 import MapSelectorContainer, { IMapSelectorContainerProps } from './MapSelectorContainer';
 import { IMapProperty } from './models';
 
@@ -39,46 +36,6 @@ const testProperty: IMapProperty = {
 };
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-const mapMachineBaseMock = {
-  requestFlyToBounds: jest.fn(),
-  mapFeatureData: {
-    pimsFeatures: emptyPimsFeatureCollection,
-    fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
-  },
-
-  isSidebarOpen: false,
-  hasPendingFlyTo: false,
-  requestedFlyTo: {
-    location: null,
-    bounds: null,
-  },
-  mapFeatureSelected: null,
-  mapLocationSelected: null,
-  mapLocationFeatureDataset: null,
-  selectedFeatureDataset: null,
-  showPopup: false,
-  isLoading: false,
-  mapFilter: null,
-
-  draftLocations: [],
-  pendingRefresh: false,
-  iSelecting: false,
-  requestFlyToLocation: jest.fn(),
-
-  processFlyTo: jest.fn(),
-  processPendingRefresh: jest.fn(),
-  openSidebar: jest.fn(),
-  closeSidebar: jest.fn(),
-  closePopup: jest.fn(),
-  mapClick: jest.fn(),
-  mapMarkerClick: jest.fn(),
-  setMapFilter: jest.fn(),
-  refreshMapProperties: jest.fn(),
-  prepareForCreation: jest.fn(),
-  startSelection: jest.fn(),
-  finishSelection: jest.fn(),
-  setDraftLocations: jest.fn(),
-};
 
 describe('MapSelectorContainer component', () => {
   const setup = (renderOptions: RenderOptions & Partial<IMapSelectorContainerProps>) => {

@@ -128,7 +128,6 @@ describe('LayerPopupView component', () => {
       act(() => userEvent.click(ellipsis));
       const link = getByText('View more property info');
       act(() => userEvent.click(link));
-      console.log(link);
       expect(history.location.pathname).toBe(
         `/mapview/sidebar/non-inventory-property/${parsedPid}`,
       );

@@ -59,9 +59,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
   const mapMachine = useMapStateMachine();
 
-  const selectedFeature = useMemo(() => {
-    return mapMachine.mapFeatureSelected;
-  }, [mapMachine.mapFeatureSelected]);
+  const selectedFeature = mapMachine.mapFeatureSelected;
 
   const mapInstance: L.Map = useMap();
   if (!mapInstance) {
@@ -76,14 +74,14 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   >({});
 
   const draftPoints = useMemo(() => {
-    return mapMachine.draftLocations.map(x => {
+    return mapMachine.filePropertyLocations.map(x => {
       // The values on the feature are rounded to the 4th decimal. Do the same to the draft points.
       return {
         lat: parseFloat(x.lat.toFixed(4)),
         lng: parseFloat(x.lng.toFixed(4)),
       };
     });
-  }, [mapMachine.draftLocations]);
+  }, [mapMachine.filePropertyLocations]);
 
   const pimsFeatures = mapMachine.mapFeatureData.pimsFeatures;
   const fullyAttributedFeatures = mapMachine.mapFeatureData.fullyAttributedFeatures;
@@ -249,9 +247,6 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
             const isSelected =
               selectedFeature !== null ? clusterFeature.id === selectedFeature.clusterId : false;
-            // TODO: There might be a cleaner way to know if a marker is from a different source.
-            const isOwned =
-              clusterFeature.id?.toString().startsWith('PIMS_PROPERTY_LOCATION_VW') ?? false;
 
             const latlng = { lat: latitude, lng: longitude };
 
@@ -261,7 +256,6 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
                 pointFeature={clusterFeature}
                 markerPosition={latlng}
                 isSelected={isSelected}
-                isOwned={isOwned}
               />
             );
           }
@@ -274,16 +268,12 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
             PIMS_Property_Location_View | PMBC_FullyAttributed_Feature_Properties
           >;
 
-          // TODO: There might be a cleaner way to know if a marker is from a different source.
-          const isOwned = m.id?.toString().startsWith('PIMS_PROPERTY_LOCATION_VW') ?? false;
-
           return (
             <SinglePropertyMarker
               key={index}
               pointFeature={clusterFeature}
               markerPosition={m.position}
               isSelected={false}
-              isOwned={isOwned}
             />
           );
         })}

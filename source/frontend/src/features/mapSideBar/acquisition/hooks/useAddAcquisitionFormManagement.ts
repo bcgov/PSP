@@ -1,7 +1,7 @@
 import { FormikProps } from 'formik';
 import { useCallback } from 'react';
 
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLoactionFeatureLoader';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';

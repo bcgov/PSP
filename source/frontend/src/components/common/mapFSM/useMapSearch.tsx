@@ -25,7 +25,7 @@ export const useMapSearch = () => {
   const keycloak = useKeycloakWrapper();
   const logout = keycloak.obj.logout;
 
-  const pimsExecute = pimsPropertyLayerService.loadPropertyLayer.execute;
+  const loadPimsProperties = pimsPropertyLayerService.loadPropertyLayer.execute;
   const fullyAttributedServiceFindByPin = fullyAttributedService.findByPin;
   const fullyAttributedServiceFindByPid = fullyAttributedService.findByPid;
 
@@ -34,7 +34,6 @@ export const useMapSearch = () => {
 
   const searchOneLocation = useCallback(
     async (latitude: number, longitude: number) => {
-      debugger;
       let result: MapFeatureData = emptyFeatureData;
       try {
         const findOneParcelTask = fullyAttributedServiceFindOne({
@@ -48,35 +47,29 @@ export const useMapSearch = () => {
           },
           'GEOMETRY',
         );
-        const parcelFeature = await findOneParcelTask;
-        const pimsPropertyFeature = await findOnePropertyTask;
+
+        const [parcelFeature, pimsPropertyFeature] = await Promise.all([
+          findOneParcelTask,
+          findOnePropertyTask,
+        ]);
 
         //if found in inventory return or else non inventory
-        const foundGeometry = pimsPropertyFeature
-          ? pimsPropertyFeature.geometry
-          : parcelFeature?.geometry;
         if (pimsPropertyFeature !== undefined) {
+          toast.info(`Property found`);
           result.pimsFeatures = { type: 'FeatureCollection', features: [pimsPropertyFeature] };
         } else if (parcelFeature !== undefined) {
-          result.fullyAttributedFeatures = { type: 'FeatureCollection', features: [parcelFeature] };
-        }
-
-        if (foundGeometry !== undefined) {
-          if (pimsPropertyFeature !== undefined) {
-            result.pimsFeatures = { type: 'FeatureCollection', features: [pimsPropertyFeature] };
-          } else if (parcelFeature !== undefined) {
-            result.fullyAttributedFeatures = {
-              type: 'FeatureCollection',
-              features: [parcelFeature],
-            };
-          }
           toast.info(`Property found`);
+          result.fullyAttributedFeatures = {
+            type: 'FeatureCollection',
+            features: [parcelFeature],
+          };
         } else {
           toast.info('No search results found');
         }
       } catch (error) {
         toast.error((error as Error).message, { autoClose: 7000 });
       } finally {
+        // TODO: Remove once try above is no longer necessary
       }
       return result;
     },
@@ -104,7 +97,7 @@ export const useMapSearch = () => {
             >
           | undefined = undefined;
 
-        loadPropertiesTask = pimsExecute(filter);
+        loadPropertiesTask = loadPimsProperties(filter);
         if (filter?.PIN) {
           findByPinTask = fullyAttributedServiceFindByPin(filter?.PIN);
         }
@@ -144,7 +137,11 @@ export const useMapSearch = () => {
           const validFeatures = pidPinInventoryData.features.filter(feature => !!feature?.geometry);
 
           result = {
-            pimsFeatures: pidPinInventoryData,
+            pimsFeatures: {
+              type: pidPinInventoryData.type,
+              bbox: pidPinInventoryData.bbox,
+              features: validFeatures,
+            },
             fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
           };
 
@@ -169,7 +166,11 @@ export const useMapSearch = () => {
           const validFeatures = attributedFeatures.features.filter(feature => !!feature?.geometry);
           result = {
             pimsFeatures: emptyPimsFeatureCollection,
-            fullyAttributedFeatures: attributedFeatures,
+            fullyAttributedFeatures: {
+              type: attributedFeatures.type,
+              bbox: attributedFeatures.bbox,
+              features: validFeatures,
+            },
           };
 
           if (validFeatures.length === 0) {
@@ -181,6 +182,7 @@ export const useMapSearch = () => {
       } catch (error) {
         toast.error((error as Error).message, { autoClose: 7000 });
       } finally {
+        // TODO: Remove once try above is no longer necessary
       }
 
       return result;
@@ -189,7 +191,7 @@ export const useMapSearch = () => {
       logout,
       setDisplayModal,
       setModalContent,
-      pimsExecute,
+      loadPimsProperties,
       fullyAttributedServiceFindByPin,
       fullyAttributedServiceFindByPid,
     ],

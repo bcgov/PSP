@@ -3,7 +3,7 @@ import { LatLngBounds, LatLngLiteral } from 'leaflet';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
 import { FeatureSelected, MapFeatureData, RequestedFlyTo } from '../models';
-import { LocationFeatureDataset } from '../useLoactionFeatureLoader';
+import { LocationFeatureDataset } from '../useLocationFeatureLoader';
 
 export enum SideBarType {
   NOT_DEFINED = 'NOT_DEFINED',
@@ -32,7 +32,7 @@ export type MachineContext = {
   sideBarType: SideBarType;
   requestedFitBounds: LatLngBounds;
   requestedFlyTo: RequestedFlyTo;
-  draftLocations: LatLngLiteral[];
+  filePropertyLocations: LatLngLiteral[];
 };
 
 // Possible state machine states

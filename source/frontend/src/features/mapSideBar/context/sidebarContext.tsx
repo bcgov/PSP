@@ -90,7 +90,7 @@ export const SideBarContextProvider = (props: {
   const getFilePropertyIndexById = (filePropertyId: number) =>
     findIndex(file?.fileProperties, fp => fp.id === filePropertyId);
 
-  const { setDraftLocations } = useMapStateMachine();
+  const { setFilePropertyLocations } = useMapStateMachine();
 
   const fileProperties = file?.fileProperties;
   useEffect(() => {
@@ -99,11 +99,11 @@ export const SideBarContextProvider = (props: {
         .map(x => getLatLng(x.property?.location))
         .filter((x): x is LatLngLiteral => x !== undefined && x !== null);
 
-      setDraftLocations(propertyLocations);
+      setFilePropertyLocations(propertyLocations);
     } else {
-      setDraftLocations([]);
+      setFilePropertyLocations([]);
     }
-  }, [fileProperties, setDraftLocations]);
+  }, [fileProperties, setFilePropertyLocations]);
 
   return (
     <SideBarContext.Provider

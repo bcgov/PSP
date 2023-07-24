@@ -9,7 +9,7 @@ import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 import { IMapProperty } from './models';
 
 interface IMapClickMonitorProps {
-  addProperty: (property: IMapProperty) => void;
+  addProperty: (property: IMapProperty) => void; // TODO: This should be a featureDataset
   modifiedProperties: IMapProperty[]; // TODO: this should be just a list of lat longs
 }
 
@@ -23,14 +23,14 @@ export const MapClickMonitor: React.FunctionComponent<
 
   useDeepCompareEffect(() => {
     if (
-      mapMachine.iSelecting &&
+      mapMachine.isSelecting &&
       mapMachine.mapLocationFeatureDataset &&
       previous !== mapMachine.mapLocationFeatureDataset &&
       previous !== undefined
     ) {
       addProperty(featuresetToMapProperty(mapMachine.mapLocationFeatureDataset));
     }
-  }, [addProperty, mapMachine.iSelecting, mapMachine.mapLocationFeatureDataset, previous]);
+  }, [addProperty, mapMachine.isSelecting, mapMachine.mapLocationFeatureDataset, previous]);
   return <></>;
 };
 

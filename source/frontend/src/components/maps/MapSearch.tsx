@@ -13,7 +13,7 @@ import {
 export type MapSearchProps = {};
 
 /**
- * Creates a Leaflet map and by default includes a number of preconfigured layers.
+ * Creates a component that handles searches that affect the map.
  * @param param0
  */
 const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
@@ -29,7 +29,6 @@ const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
   }, [mapFilter, mapMachineSetMapFilter, mapMachineMapFilter]);
 
   const handleMapFilterChange = (filter: IPropertyFilter) => {
-    console.log('handleMapFilterChange', filter);
     setMapFilter(filter);
   };
 

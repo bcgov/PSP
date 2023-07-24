@@ -16,7 +16,7 @@ const MapSideBar: React.FunctionComponent<React.PropsWithChildren<IMapSideBarPro
 
   return (
     <StyledMapSideBar show={mapMachine.isSidebarOpen} fullWidth={fullWidth}>
-      {mapMachine.iSelecting && (
+      {mapMachine.isSelecting && (
         <StyledBackdrop parentScreen onClick={() => mapMachine.finishSelection()}>
           <StyledSelectingText
             style={{ color: 'white', fontFamily: 'BCSans-Bold', fontSize: '2.5rem' }}

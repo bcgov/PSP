@@ -9,6 +9,7 @@ import { FileTypes } from '@/constants/fileTypes';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { mockActivitiesResponse } from '@/mocks/activities.mock';
 import { mockLookups } from '@/mocks/index.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -33,9 +34,6 @@ const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-const mapMachineBaseMock = {
-  setDraftLocations: jest.fn(),
-};
 (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 describe('Activity List View', () => {

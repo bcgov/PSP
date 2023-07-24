@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 import { StyledIconButton } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLoactionFeatureLoader';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { pidParser } from '@/utils';
 
 import { LayerPopupContent } from './components/LayerPopupContent';

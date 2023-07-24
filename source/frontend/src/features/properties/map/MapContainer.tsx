@@ -1,5 +1,5 @@
 import clsx from 'classnames';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import DraftSvg from '@/assets/images/pins/icon-draft.svg';
@@ -23,11 +23,9 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
   //const [showSideBar, setShowSideBar] = useState(false);
   const [showActionBar, setShowActionBar] = useState(false);
 
-  const { iSelecting } = useMapStateMachine();
+  const { isSelecting } = useMapStateMachine();
 
-  const cursorClass = useMemo(() => {
-    return iSelecting ? MapCursors.DRAFT : MapCursors.DEFAULT;
-  }, [iSelecting]);
+  const cursorClass = isSelecting ? MapCursors.DRAFT : MapCursors.DEFAULT;
 
   return (
     <StyleMapView className={clsx(cursorClass)}>

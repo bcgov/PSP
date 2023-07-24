@@ -88,7 +88,6 @@ function createProps(): TestProps {
 
 // component under test
 function Template(props: Omit<TestProps, 'renderOptions'>) {
-  //const { done, setMap, zoom = 6 } = props;
   return <MapView />;
 }
 

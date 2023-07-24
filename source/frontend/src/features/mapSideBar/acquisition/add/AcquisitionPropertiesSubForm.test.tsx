@@ -14,7 +14,7 @@ import { AcquisitionForm } from './models';
 const mockStore = configureMockStore([thunk]);
 jest.mock('@react-keycloak/web');
 
-const customSetDraftProperties = jest.fn();
+const customSetFilePropertyLocations = jest.fn();
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
@@ -47,13 +47,13 @@ describe('AcquisitionProperties component', () => {
       PropertyForm.fromMapProperty({ pin: '1111222' }),
     ];
     (useMapStateMachine as jest.Mock).mockImplementation(() => {
-      return { ...mapMachineBaseMock, setDraftLocations: customSetDraftProperties };
+      return { ...mapMachineBaseMock, setFilePropertyLocations: customSetFilePropertyLocations };
     });
   });
 
   afterEach(() => {
     jest.clearAllMocks();
-    customSetDraftProperties.mockReset();
+    customSetFilePropertyLocations.mockReset();
   });
 
   it('renders as expected', () => {
@@ -65,7 +65,7 @@ describe('AcquisitionProperties component', () => {
     const { getByText } = setup({ initialForm: testForm });
 
     await waitFor(() => {
-      expect(customSetDraftProperties).toHaveBeenCalledWith([
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
         { lat: 0, lng: 0 },
         { lat: 0, lng: 0 },
       ]);
@@ -81,7 +81,7 @@ describe('AcquisitionProperties component', () => {
     userEvent.click(pidRow);
 
     await waitFor(() => {
-      expect(customSetDraftProperties).toHaveBeenCalledWith([{ lat: 0, lng: 0 }]);
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([{ lat: 0, lng: 0 }]);
     });
 
     expect(queryByText('PID: 123-456-789')).toBeNull();
@@ -91,7 +91,7 @@ describe('AcquisitionProperties component', () => {
     const { getByTitle } = setup({ initialForm: testForm });
 
     await waitFor(() => {
-      expect(customSetDraftProperties).toHaveBeenCalledWith([
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
         { lat: 0, lng: 0 },
         { lat: 0, lng: 0 },
       ]);
@@ -108,7 +108,7 @@ describe('AcquisitionProperties component', () => {
     setup({ initialForm: formWithProperties });
 
     await waitFor(() => {
-      expect(customSetDraftProperties).toHaveBeenCalledWith([
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
         { lat: 1, lng: 2 },
         { lat: 0, lng: 0 },
       ]);
@@ -125,7 +125,7 @@ describe('AcquisitionProperties component', () => {
     setup({ initialForm: formWithProperties });
 
     await waitFor(() => {
-      expect(customSetDraftProperties).toHaveBeenCalledWith([
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
         { lat: 1, lng: 2 },
         { lat: 3, lng: 4 },
       ]);

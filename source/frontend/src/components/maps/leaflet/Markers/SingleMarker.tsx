@@ -6,22 +6,22 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 
-import { getMarkerIcon, getNotOwnerMarkerIcon } from '../Layers/util';
+import { getMarkerIcon, getNotOwnerMarkerIcon, isPimsFeature } from '../Layers/util';
 
-interface SinlePropertyMarkerProps {
+interface SinglePropertyMarkerProps {
   pointFeature: PointFeature<PIMS_Property_Location_View | PMBC_FullyAttributed_Feature_Properties>;
   markerPosition: LatLngLiteral;
   isSelected: boolean;
-  isOwned: boolean;
 }
 
-const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinlePropertyMarkerProps>> = ({
+const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarkerProps>> = ({
   pointFeature,
   markerPosition,
   isSelected,
-  isOwned,
 }) => {
   const mapMachine = useMapStateMachine();
+
+  const isOwned = isPimsFeature(pointFeature);
 
   const getIcon = () => {
     if (isOwned) {

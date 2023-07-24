@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLoactionFeatureLoader';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { AddressForm, PropertyForm } from '@/features/mapSideBar/shared/models';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { featuresetToMapProperty, pidFromFeatureSet } from '@/utils/mapPropertyUtils';

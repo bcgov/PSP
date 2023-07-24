@@ -13,7 +13,7 @@ import MapSearch from './MapSearch';
 export type MapViewProps = {};
 
 /**
- * Creates a Leaflet map and by default includes a number of preconfigured layers.
+ * Container for the map component.
  * @param param0
  */
 

@@ -3,6 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mockLookups } from '@/mocks/index.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { mockProjectGetResponse } from '@/mocks/projects.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, waitFor } from '@/utils/test-utils';
@@ -32,9 +33,6 @@ jest.mock('react-visibility-sensor', () => {
 });
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-const mapMachineBaseMock = {
-  setDraftLocations: jest.fn(),
-};
 
 describe('ProjectContainer component', () => {
   // render component under test

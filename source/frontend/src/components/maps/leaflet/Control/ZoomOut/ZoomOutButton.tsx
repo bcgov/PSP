@@ -18,14 +18,12 @@ const ZoomButton = styled(Button)`
   }
 `;
 
-export type ZoomOutProps = {};
-
 /**
  * Displays a button that zooms out to show the entire map when clicked
  * @param map The leaflet map
  * @param bounds The latlng bounds to zoom out to
  */
-export const ZoomOutButton: React.FC<React.PropsWithChildren<ZoomOutProps>> = () => {
+export const ZoomOutButton: React.FC = () => {
   const mapMachine = useMapStateMachine();
   const zoomOut = () => {
     mapMachine.requestFlyToBounds(defaultBounds);

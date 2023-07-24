@@ -10,6 +10,7 @@ import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarCon
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getMockActivityResponse } from '@/mocks/activities.mock';
 import { mockLookups } from '@/mocks/index.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
@@ -31,9 +32,6 @@ const mockAxios = new MockAdapter(axios);
 let viewProps: IActivityTrayProps | undefined;
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-const mapMachineBaseMock = {
-  setDraftLocations: jest.fn(),
-};
 (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 const ActivityView = (props: IActivityTrayProps) => {

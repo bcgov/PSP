@@ -87,7 +87,6 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                                 View={ContactInputView}
                               ></ContactInputContainer>
                             </Col>
-                            {interestHolder.contact?.organization?.organizationPersons?.length}
                             <Col xs="auto">
                               <StyledRemoveLinkButton
                                 title="Remove Interest"

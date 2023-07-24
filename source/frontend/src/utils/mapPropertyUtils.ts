@@ -3,7 +3,7 @@ import { geoJSON, LatLngLiteral } from 'leaflet';
 import { compact, isNumber } from 'lodash';
 import polylabel from 'polylabel';
 
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLoactionFeatureLoader';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { DistrictCodes } from '@/constants/districtCodes';
 import { RegionCodes } from '@/constants/regionCodes';
@@ -168,7 +168,7 @@ export function featuresetToMapProperty(
     longitude: featureSet.location.lng,
     planNumber: parcelFeature?.properties.PLAN_NUMBER?.toString() ?? undefined,
     address: address,
-    legalDescription: parcelFeature?.properties?.LEGAL_DESCRIPTION ?? undefined,
+    legalDescription: parcelFeature?.properties.LEGAL_DESCRIPTION ?? undefined,
     region: isNumber(regionFeature?.properties.REGION_NUMBER)
       ? regionFeature?.properties.REGION_NUMBER
       : RegionCodes.Unknown,
@@ -177,7 +177,7 @@ export function featuresetToMapProperty(
       ? districtFeature?.properties.DISTRICT_NUMBER
       : DistrictCodes.Unknown,
     districtName: districtFeature?.properties.DISTRICT_NAME ?? 'Cannot determine',
-    name: pimsFeature?.properties?.NAME ?? undefined,
+    name: pimsFeature?.properties.NAME ?? undefined,
   };
 }
 

@@ -21,7 +21,7 @@ export interface LocationFeatureDataset {
   municipalityFeature: Feature<Geometry, WHSE_Municipalities_Feature_Properties> | null;
 }
 
-const useLoactionFeatureLoader = () => {
+const useLocationFeatureLoader = () => {
   const fullyAttributedService = useFullyAttributedParcelMapLayer();
   const adminBoundaryLayerService = useAdminBoundaryMapLayer();
   const adminLegalBoundaryLayerService = useLegalAdminBoundariesMapLayer();
@@ -52,9 +52,12 @@ const useLoactionFeatureLoader = () => {
         const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'GEOMETRY');
         const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'GEOMETRY');
 
-        const parcelFeature = await fullyAttributedTask;
-        const regionFeature = await regionTask;
-        const districtFeature = await districtTask;
+        const [parcelFeature, regionFeature, districtFeature] = await Promise.all([
+          fullyAttributedTask,
+          regionTask,
+          districtTask,
+        ]);
+
         let pimsLocationProperties:
           | FeatureCollection<Geometry, PIMS_Property_Location_View>
           | undefined = undefined;
@@ -73,13 +76,19 @@ const useLoactionFeatureLoader = () => {
             latLng,
           );
 
-          result.pimsFeature = pimsLocationProperties?.features[0] ?? null;
+          if (
+            pimsLocationProperties?.features !== undefined &&
+            pimsLocationProperties.features.length > 0
+          ) {
+            result.pimsFeature = pimsLocationProperties.features[0] ?? null;
+          }
           result.parcelFeature = parcelFeature ?? null;
           result.regionFeature = regionFeature ?? null;
           result.districtFeature = districtFeature ?? null;
           result.municipalityFeature = municipalityFeature ?? null;
         }
       } finally {
+        // TODO: Remove once the try above is deemed no longer necessary.
       }
 
       return result;
@@ -98,4 +107,4 @@ const useLoactionFeatureLoader = () => {
   };
 };
 
-export default useLoactionFeatureLoader;
+export default useLocationFeatureLoader;

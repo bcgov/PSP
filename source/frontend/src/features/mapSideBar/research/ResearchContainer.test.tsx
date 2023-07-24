@@ -5,6 +5,7 @@ import { createMemoryHistory } from 'history';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims } from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -28,9 +29,6 @@ jest.mock('react-visibility-sensor', () => {
 });
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-const mapMachineBaseMock = {
-  setDraftLocations: jest.fn(),
-};
 (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 const onClose = jest.fn();

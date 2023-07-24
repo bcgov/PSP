@@ -65,8 +65,8 @@ const mapRequestStates = {
         },
         REQUEST_FIT_BOUNDS: {
           actions: assign((context: any) => {
-            if (context.draftLocations.length > 0) {
-              context.requestedFitBounds = latLngBounds(context.draftLocations);
+            if (context.filePropertyLocations.length > 0) {
+              context.requestedFitBounds = latLngBounds(context.filePropertyLocations);
             } else {
               context.requestedFitBounds = defaultBounds;
             }
@@ -170,13 +170,10 @@ const sideBarStates = {
     fullScreen: {
       entry: assign({
         sideBarType: () => SideBarType.NOT_DEFINED,
-        draftLocations: () => [],
+        filePropertyLocations: () => [],
       }),
       on: {
         OPEN_SIDEBAR: {
-          actions: assign({
-            sideBarType: (_, event: any) => event.sidebarType,
-          }),
           target: 'sidebarOpen',
         },
       },
@@ -193,10 +190,10 @@ const sideBarStates = {
         START_SELECTION: {
           target: 'selecting',
         },
-        SET_DRAFT_LOCATIONS: {
+        SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
             assign((context: any, event: any) => {
-              context.draftLocations = event.locations || [];
+              context.filePropertyLocations = event.locations || [];
             }),
             raise('REQUEST_FIT_BOUNDS'),
           ],
@@ -206,9 +203,9 @@ const sideBarStates = {
     selecting: {
       on: {
         FINISH_SELECTION: { target: 'sidebarOpen' },
-        SET_DRAFT_LOCATIONS: {
+        SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
-            assign({ draftLocations: (_, event: any) => event.locations }),
+            assign({ filePropertyLocations: (_, event: any) => event.locations }),
             raise('REQUEST_FIT_BOUNDS'),
           ],
         },
@@ -238,7 +235,7 @@ export const mapMachine = createMachine<MachineContext>({
     isLoading: false,
     mapFilter: null,
     mapFeatureData: emptyFeatureData,
-    draftLocations: [],
+    filePropertyLocations: [],
   },
 
   // State definitions

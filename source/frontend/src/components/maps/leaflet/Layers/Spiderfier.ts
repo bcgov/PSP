@@ -94,34 +94,38 @@ export class Spiderfier<P> {
     }
     this.unspiderfy();
     this.cluster = cluster;
-    const clusterX = cluster?.geometry?.coordinates[0];
-    const clusterY = cluster?.geometry?.coordinates[1];
-    const centerLatlng = GeoJSON.coordsToLatLng([clusterX, clusterY]);
-    const centerXY = this.map.latLngToLayerPoint(centerLatlng); // screen coordinates
-    const clusterId = getClusterId(cluster);
-    const children = getClusterPoints(clusterId).map(p => cloneDeep(p)); // work with a copy of the data
+    if (cluster.geometry.coordinates !== undefined && cluster.geometry.coordinates.length > 1) {
+      const clusterX = cluster.geometry.coordinates[0];
+      const clusterY = cluster.geometry.coordinates[1];
+      const centerLatlng = GeoJSON.coordsToLatLng([clusterX, clusterY]);
 
-    let positions: LeafletPoint[];
-    if (children.length >= this.circleSpiralSwitchover) {
-      positions = this.generatePointsSpiral(children.length, centerXY);
-    } else {
-      positions = this.generatePointsCircle(children.length, centerXY);
-    }
+      const centerXY = this.map.latLngToLayerPoint(centerLatlng); // screen coordinates
+      const clusterId = getClusterId(cluster);
+      const children = getClusterPoints(clusterId).map(p => cloneDeep(p)); // work with a copy of the data
 
-    // add expanded cluster points to map
-    const results = this.addToMap(centerXY, children, positions);
-
-    // dim cluster icon
-    this.map.eachLayer(layer => {
-      if (this.layerMatchesCluster(layer, this.cluster)) {
-        const clusterMarker = layer as Marker;
-        if (clusterMarker.setOpacity) {
-          clusterMarker.setOpacity(0.75);
-        }
+      let positions: LeafletPoint[];
+      if (children.length >= this.circleSpiralSwitchover) {
+        positions = this.generatePointsSpiral(children.length, centerXY);
+      } else {
+        positions = this.generatePointsCircle(children.length, centerXY);
       }
-    });
 
-    return results;
+      // add expanded cluster points to map
+      const results = this.addToMap(centerXY, children, positions);
+
+      // dim cluster icon
+      this.map.eachLayer(layer => {
+        if (this.layerMatchesCluster(layer, this.cluster)) {
+          const clusterMarker = layer as Marker;
+          if (clusterMarker.setOpacity) {
+            clusterMarker.setOpacity(0.75);
+          }
+        }
+      });
+      return results;
+    } else {
+      return {};
+    }
   }
 
   // shrink an expanded cluster (unspiderfy)

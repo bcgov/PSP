@@ -12,6 +12,7 @@ import {
   mockAcquisitionFileResponse,
 } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -39,9 +40,6 @@ jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
 }));
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-const mapMachineBaseMock = {
-  setDraftLocations: jest.fn(),
-};
 (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 const onClose = jest.fn();

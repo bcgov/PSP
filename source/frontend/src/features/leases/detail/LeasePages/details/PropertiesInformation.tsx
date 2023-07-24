@@ -26,9 +26,8 @@ export const PropertiesInformation: React.FunctionComponent<
   const properties: FormLeaseProperty[] = React.useMemo(() => {
     return getIn(values, withNameSpace(nameSpace, 'properties')) ?? [];
   }, [values, nameSpace]);
-  console.log(properties);
 
-  const { setDraftLocations } = useMapStateMachine();
+  const { setFilePropertyLocations } = useMapStateMachine();
 
   const locations: LatLngLiteral[] = React.useMemo(() => {
     return (
@@ -45,8 +44,8 @@ export const PropertiesInformation: React.FunctionComponent<
   }, [properties]);
 
   React.useEffect(() => {
-    setDraftLocations(locations);
-  }, [setDraftLocations, locations]);
+    setFilePropertyLocations(locations);
+  }, [setFilePropertyLocations, locations]);
 
   return properties?.length ? (
     <Section initiallyExpanded={true} isCollapsable={true} header="Property Information">

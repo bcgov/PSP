@@ -9,10 +9,7 @@ import {
   IMapStateMachineContext,
   useMapStateMachine,
 } from '@/components/common/mapFSM/MapStateMachineContext';
-import {
-  emptyFullyFeaturedFeatureCollection,
-  emptyPimsFeatureCollection,
-} from '@/components/common/mapFSM/models';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
@@ -35,46 +32,6 @@ jest.mock('react-visibility-sensor', () => {
 });
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-const mapMachineBaseMock = {
-  requestFlyToBounds: jest.fn(),
-  mapFeatureData: {
-    pimsFeatures: emptyPimsFeatureCollection,
-    fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
-  },
-
-  isSidebarOpen: false,
-  hasPendingFlyTo: false,
-  requestedFlyTo: {
-    location: null,
-    bounds: null,
-  },
-  mapFeatureSelected: null,
-  mapLocationSelected: null,
-  mapLocationFeatureDataset: null,
-  selectedFeatureDataset: null,
-  showPopup: false,
-  isLoading: false,
-  mapFilter: null,
-
-  draftLocations: [],
-  pendingRefresh: false,
-  iSelecting: false,
-  requestFlyToLocation: jest.fn(),
-
-  processFlyTo: jest.fn(),
-  processPendingRefresh: jest.fn(),
-  openSidebar: jest.fn(),
-  closeSidebar: jest.fn(),
-  closePopup: jest.fn(),
-  mapClick: jest.fn(),
-  mapMarkerClick: jest.fn(),
-  setMapFilter: jest.fn(),
-  refreshMapProperties: jest.fn(),
-  prepareForCreation: jest.fn(),
-  startSelection: jest.fn(),
-  finishSelection: jest.fn(),
-  setDraftLocations: jest.fn(),
-};
 (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 describe('AddResearchContainer component', () => {
@@ -128,7 +85,7 @@ describe('AddResearchContainer component', () => {
   });
 
   it('resets the list of draft properties when closed', async () => {
-    const testMockMahine = {
+    const testMockMahine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
     };
     (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
@@ -145,7 +102,7 @@ describe('AddResearchContainer component', () => {
 
     await waitFor(async () => {
       userEvent.click(closeButton);
-      expect(testMockMahine.setDraftLocations).toHaveBeenCalledWith([]);
+      expect(testMockMahine.setFilePropertyLocations).toHaveBeenCalledWith([]);
     });
   });
 

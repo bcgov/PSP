@@ -53,7 +53,6 @@ export const AddAcquisitionForm = React.forwardRef<
     undefined,
   );
 
-  console.log('AddAcquisitionForm', initialValues);
   const { retrieveProjectProducts } = useProjectProvider();
   const { getOptionsByType } = useLookupCodeHelpers();
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);

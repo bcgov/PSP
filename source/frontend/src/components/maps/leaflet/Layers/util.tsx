@@ -135,13 +135,10 @@ export function pointToLayer<
   point: Supercluster.ClusterFeature<C> | Supercluster.PointFeature<P>,
   latlng: LatLngExpression,
 ): Layer {
-  console.log('point', point);
   if ('cluster' in point.properties) {
-    console.log('point HERE');
     const cluster = point as Supercluster.ClusterFeature<C>;
     return createClusterMarker(cluster, latlng);
   } else {
-    console.log('point NOT');
     const feature = point as Supercluster.PointFeature<P>;
     // we have a single point to render
     return createSingleMarker(feature, latlng);
@@ -207,7 +204,7 @@ export const createSingleMarker = <P,>(
   feature: Supercluster.PointFeature<P>,
   latlng: LatLngExpression,
 ): Layer => {
-  const isOwned = feature.id?.toString().startsWith('PIMS_PROPERTY_LOCATION_VW') ?? false;
+  const isOwned = isPimsFeature(feature);
 
   if (isOwned) {
     const ownedFeature = feature as Supercluster.PointFeature<PIMS_Property_Location_View>;
@@ -217,6 +214,11 @@ export const createSingleMarker = <P,>(
     const icon = getNotOwnerMarkerIcon(false);
     return new Marker(latlng, { icon });
   }
+};
+
+export const isPimsFeature = <P,>(feature: Supercluster.PointFeature<P>): boolean => {
+  // TODO: There might be a cleaner way to know if a marker is from a different source.
+  return feature.id?.toString().startsWith('PIMS_PROPERTY_LOCATION_VW') ?? false;
 };
 
 // Internal cache of cluster icons to avoid re-creating the same icon over and over again.

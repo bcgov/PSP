@@ -10,7 +10,7 @@ import { pidParser } from '@/utils/propertyUtils';
 import { mapMachine } from './machineDefinition/mapMachine';
 import { SideBarType } from './machineDefinition/types';
 import { FeatureSelected, MapFeatureData, RequestedFlyTo } from './models';
-import useLoactionFeatureLoader, { LocationFeatureDataset } from './useLoactionFeatureLoader';
+import useLocationFeatureLoader, { LocationFeatureDataset } from './useLocationFeatureLoader';
 import { useMapSearch } from './useMapSearch';
 
 export interface IMapStateMachineContext {
@@ -25,10 +25,10 @@ export interface IMapStateMachineContext {
   isLoading: boolean;
   mapFilter: IPropertyFilter | null;
   mapFeatureData: MapFeatureData;
-  draftLocations: LatLngLiteral[];
+  filePropertyLocations: LatLngLiteral[];
   pendingFitBounds: boolean;
   requestedFitBounds: LatLngBounds;
-  iSelecting: boolean;
+  isSelecting: boolean;
 
   requestFlyToLocation: (latlng: LatLngLiteral) => void;
   requestFlyToBounds: (bounds: LatLngBounds) => void;
@@ -46,7 +46,7 @@ export interface IMapStateMachineContext {
   prepareForCreation: () => void;
   startSelection: () => void;
   finishSelection: () => void;
-  setDraftLocations: (locations: LatLngLiteral[]) => void;
+  setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
 }
 
 const MapStateMachineContext = React.createContext<IMapStateMachineContext>(
@@ -64,7 +64,7 @@ export function useMapStateMachine() {
 export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
-  const locationLoader = useLoactionFeatureLoader();
+  const locationLoader = useLocationFeatureLoader();
   const mapSearch = useMapSearch();
   const history = useHistory();
 
@@ -96,7 +96,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
       },
       loadFeatures: (context: any, event: any) => {
         const geoFilter = getQueryParams(context.mapFilter);
-        if (geoFilter.latitude !== undefined && geoFilter.longitude) {
+        if (geoFilter.latitude !== undefined && geoFilter.longitude !== undefined) {
           return mapSearch.searchOneLocation(
             Number(geoFilter.latitude),
             Number(geoFilter.longitude),
@@ -205,9 +205,9 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'FINISH_SELECTION' });
   }, [serviceSend]);
 
-  const setDraftLocations = useCallback(
+  const setFilePropertyLocations = useCallback(
     (locations: LatLngLiteral[]) => {
-      serviceSend({ type: 'SET_DRAFT_LOCATIONS', locations });
+      serviceSend({ type: 'SET_FILE_PROPERTY_LOCATIONS', locations });
     },
     [serviceSend],
   );
@@ -233,10 +233,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         isLoading: state.context.isLoading,
         mapFilter: state.context.mapFilter,
         mapFeatureData: state.context.mapFeatureData,
-        draftLocations: state.context.draftLocations,
+        filePropertyLocations: state.context.filePropertyLocations,
         pendingFitBounds: state.matches({ mapVisible: { mapRequest: 'pendingFitBounds' } }),
         requestedFitBounds: state.context.requestedFitBounds,
-        iSelecting: state.matches({ mapVisible: { sideBar: 'selecting' } }),
+        isSelecting: state.matches({ mapVisible: { sideBar: 'selecting' } }),
 
         setMapFilter,
         refreshMapProperties,
@@ -252,7 +252,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         prepareForCreation,
         startSelection,
         finishSelection,
-        setDraftLocations,
+        setFilePropertyLocations,
       }}
     >
       {children}
@@ -263,7 +263,6 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
   // The map will search for either identifier.
   const pinOrPidValue = filter.pinOrPid ? filter.pinOrPid?.replace(/-/g, '') : undefined;
-  debugger;
   return {
     PID: pinOrPidValue,
     PIN: pinOrPidValue,

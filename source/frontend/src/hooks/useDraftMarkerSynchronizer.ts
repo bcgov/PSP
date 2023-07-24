@@ -8,11 +8,11 @@ import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useIsMounted from '@/hooks/util/useIsMounted';
 
 /**
- * Get a list of draft markers from the current form values.
+ * Get a list of file property markers from the current form values.
  * As long as a parcel/building has both a lat and a lng it will be returned by this method.
  * @param modifiedProperties the current form values to extract lat/lngs from.
  */
-const getDraftLocations = (modifiedProperties: IMapProperty[]): LatLngLiteral[] => {
+const getFilePropertyLocations = (modifiedProperties: IMapProperty[]): LatLngLiteral[] => {
   return modifiedProperties.map<LatLngLiteral>((property: IMapProperty) => {
     return { lat: Number(property?.latitude ?? 0), lng: Number(property?.longitude ?? 0) };
   });
@@ -25,24 +25,24 @@ const getDraftLocations = (modifiedProperties: IMapProperty[]): LatLngLiteral[] 
 const useDraftMarkerSynchronizer = (modifiedProperties: IMapProperty[]) => {
   const isMounted = useIsMounted();
 
-  const { setDraftLocations } = useMapStateMachine();
+  const { setFilePropertyLocations } = useMapStateMachine();
 
   /**
-   * Synchronize the markers that have been updated in the parcel form with the map, adding all new markers as drafts.
+   * Synchronize the markers that have been updated in the parcel form with the map, adding all new markers.
    * @param modifiedProperties the current properties
    */
   const synchronizeMarkers = React.useCallback(
     (modifiedProperties: IMapProperty[]) => {
       if (isMounted()) {
-        const draftLocations = getDraftLocations(modifiedProperties);
-        if (draftLocations.length) {
-          setDraftLocations(draftLocations);
+        const filePropertyLocations = getFilePropertyLocations(modifiedProperties);
+        if (filePropertyLocations.length) {
+          setFilePropertyLocations(filePropertyLocations);
         } else {
-          setDraftLocations([]);
+          setFilePropertyLocations([]);
         }
       }
     },
-    [setDraftLocations, isMounted],
+    [setFilePropertyLocations, isMounted],
   );
 
   const synchronize = React.useRef(
