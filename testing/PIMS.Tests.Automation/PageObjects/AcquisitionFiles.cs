@@ -374,9 +374,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     sharedModals.ModalClickOKBttn();
                 }
             }
-
-            Wait();
-            sharedModals.SiteMinderModal();
         }
 
         public void SaveAcquisitionFileProperties()

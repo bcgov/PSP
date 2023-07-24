@@ -9,7 +9,7 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Insurance Menu Elements
         private By licenseInsuranceLink = By.XPath("//a[contains(text(),'Insurance')]");
-        private By insuranceEditIcon = By.XPath("//div[@role='tabpanel'][4]/div/div/button");
+        private By insuranceEditIcon = By.XPath("//div[@role='tabpanel']/div/div/button");
 
         //Insurance Create Form Elements
         private By insuranceSubtitle = By.XPath("//h2[contains(text(),'Required coverage')]");
