@@ -27,15 +27,13 @@ const GenerateFormContainer: React.FunctionComponent<
   const { getPersonConcept, getOrganizationConcept } = useApiContacts();
   const {
     getAcquisitionFile: { execute: getAcquisitionFile },
-  } = useAcquisitionProvider();
-  const [isGenerateLetterModalOpened, openGenerateLetterModal, closeGenerateLetterModal] =
-    useModalManagement();
-  const {
     getAcquisitionOwners: {
       execute: retrieveAcquisitionFileOwners,
       loading: loadingAcquisitionFileOwners,
     },
   } = useAcquisitionProvider();
+  const [isGenerateLetterModalOpened, openGenerateLetterModal, closeGenerateLetterModal] =
+    useModalManagement();
   const {
     getAcquisitionInterestHolders: {
       execute: fetchInterestHolders,
@@ -100,7 +98,6 @@ const GenerateFormContainer: React.FunctionComponent<
     }
 
     setFullRecipientsList(generateRecipientsList);
-    console.table(generateRecipientsList);
     openGenerateLetterModal();
   }, [
     acquisitionFileId,

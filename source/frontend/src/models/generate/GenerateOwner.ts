@@ -1,4 +1,3 @@
-import { AddressTypes } from '@/constants/addressTypes';
 import { getApiPersonOrOrgMailingAddress } from '@/features/contacts/contactUtils';
 import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
 import { phoneFormatter } from '@/utils/formUtils';
@@ -71,11 +70,7 @@ export class Api_GenerateOwner {
     generateOwner.other_name = model.alias ?? '';
     generateOwner.incorporation_number = model.incorporationNumber ?? '';
     generateOwner.registration_number = '';
-
-    const mailingAddress = model.organizationAddresses?.find(
-      addr => addr?.addressUsageType?.id === AddressTypes.Mailing,
-    );
-    generateOwner.address = new Api_GenerateAddress(mailingAddress!);
+    generateOwner.address = new Api_GenerateAddress(getApiPersonOrOrgMailingAddress(model) ?? null);
     generateOwner.is_corporation = true;
     generateOwner.owner_string = `${generateOwner.last_name_or_corp_name}, Inc. No. ${generateOwner.incorporation_number}`;
 
