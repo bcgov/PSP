@@ -124,11 +124,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
             var startDateInputElement = webDriver.FindElement(licensePaymentTermStartDateInput);
 
-            if (startDateInputElement.GetAttribute("value") == "")
+            if (startDateInputElement.GetAttribute("value") != "")
             {
-                startDateInputElement.Click();
-                startDateInputElement.SendKeys(term.TermStartDate);
+                ClearInput(licensePaymentTermStartDateInput);
             }
+
+            startDateInputElement.Click();
+            startDateInputElement.SendKeys(term.TermStartDate);
 
             Wait();
 

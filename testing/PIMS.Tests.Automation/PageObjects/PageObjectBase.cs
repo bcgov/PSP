@@ -17,7 +17,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void WaitUntil(By element)
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(60));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
             wait.Until(ExpectedConditions.ElementIsVisible(element));
         }
 

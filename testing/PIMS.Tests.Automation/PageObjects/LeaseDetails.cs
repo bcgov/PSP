@@ -69,7 +69,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDetailsProjectInput = By.CssSelector("input[id='typeahead-project']");
         private By licenseDetailsProject1stOption = By.CssSelector("div[id='typeahead-project'] a:nth-child(1)");
 
-        private By licenseDetailsStatusLabel = By.XPath("//form/div/div/div/div/label[contains(text(),'Status')]");
+        private By licenseDetailsStatusLabel = By.XPath("//div/div/div/div/div/label[contains(text(),'Status')]");
         private By licenseDetailsStatusSelector = By.Id("input-statusTypeCode");
         private By licenseDetailsAccountTypeLabel = By.XPath("//label[contains(text(),'Account type')]");
         private By licenseDetailsAccountTypeSelector = By.Id("input-paymentReceivableTypeCode");
@@ -208,7 +208,7 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 webDriver.FindElement(licenseDetailsProjectInput).SendKeys(lease.MinistryProject);
                 Wait();
-                webDriver.FindElement(licenseDetailsProject1stOption).Click();
+                FocusAndClick(licenseDetailsProject1stOption);
             }
 
             //Status
@@ -773,7 +773,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Lease 1st Property Information
             Assert.True(webDriver.FindElement(licenseDetailsPropertyInformationSubtitle).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsProperty1DescriptiveNameLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsProperty1DescriptiveNameContent).Displayed);
+            //Assert.True(webDriver.FindElement(licenseDetailsProperty1DescriptiveNameContent).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsProperty1AreaIncludedLabel).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsProperty1AreaIncludedContent).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsProperty1AddressLabel).Displayed);

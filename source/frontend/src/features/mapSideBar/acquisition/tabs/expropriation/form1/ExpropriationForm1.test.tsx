@@ -15,6 +15,7 @@ const getContacts = jest.fn();
 });
 
 const onGenerate = jest.fn();
+const onError = jest.fn();
 
 describe('Expropriation Form 1', () => {
   const setup = async (
@@ -25,6 +26,7 @@ describe('Expropriation Form 1', () => {
         {...renderOptions.props}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? getMockExpropriationFile()}
         onGenerate={onGenerate}
+        onError={onError}
       ></ExpropriationForm1>,
       {
         ...renderOptions,
@@ -85,6 +87,7 @@ describe('Expropriation Form 1', () => {
     await act(() => userEvent.click(getByText('Generate')));
 
     expect(onGenerate).toBeCalled();
+    expect(onError).not.toBeCalled();
   });
 
   it(`clears the form when Cancel button is clicked`, async () => {
@@ -103,5 +106,26 @@ describe('Expropriation Form 1', () => {
     expect(getByTestId('selectrow-1')).not.toBeChecked();
     expect(getNatureOfInterest()).not.toHaveValue();
     expect(getPurpose()).not.toHaveValue();
+  });
+
+  it(`calls onError callback when generate endpoint fails`, async () => {
+    const error = new Error('Network error');
+    onGenerate.mockRejectedValueOnce(error);
+    const { getByText, getByTestId, getByTitle, getNatureOfInterest, getPurpose } = await setup();
+
+    // pick an organization from contact manager
+    await act(() => userEvent.click(getByTitle('Select Contact')));
+    await act(() => userEvent.click(getByTestId('selectrow-O3')));
+    await act(() => userEvent.click(getByText('Select')));
+
+    // fill other form fields
+    await act(() => userEvent.click(getByTestId('selectrow-1')));
+    await act(async () => userEvent.paste(getNatureOfInterest(), 'foo'));
+    await act(async () => userEvent.paste(getPurpose(), 'bar'));
+
+    await act(() => userEvent.click(getByText('Generate')));
+
+    expect(onGenerate).toBeCalled();
+    expect(onError).toBeCalledWith(error);
   });
 });
