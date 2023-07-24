@@ -11,7 +11,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseTenantLink = By.XPath("//a[contains(text(),'Tenant')]");
 
         //Tenants Edit Element
-        private By tenantEditIcon = By.XPath("//div[@role='tabpanel'][2]/div/div/button");
+        private By tenantEditIcon = By.XPath("//div[@role='tabpanel']/div/div/button");
 
         //Tenants Add Tenant(s) button
         private By tenantAddTenantsBttn = By.XPath("//div[contains(text(),'Select Tenant(s)')]/parent::button");
