@@ -58,7 +58,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 digitalDocumentsTab.SaveDigitalDocument();
 
                 //Verify Details View Form
-                digitalDocumentsTab.ViewIthDocument(i);
+                digitalDocumentsTab.ViewLastDocument(i);
                 digitalDocumentsTab.VerifyDocumentDetailsCreateViewForm(digitalDocumentList[i]);
                 digitalDocumentsTab.CloseDigitalDocumentViewDetails();
             }

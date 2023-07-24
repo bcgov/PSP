@@ -40,7 +40,7 @@ Scenario Outline: Search for a non-existing Contact
 	Examples:
 	| ContactType	| RowNumber |
 	| Individual	| 6         |
-	| Organization	| 4         |
+	| Organization	| 5         |
 
 
 

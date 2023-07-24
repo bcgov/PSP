@@ -14,8 +14,6 @@ namespace PIMS.Tests.Automation.Drivers
 
         public BrowserDriver()
         {
-            
-            System.Diagnostics.Debug.WriteLine(Environment.GetEnvironmentVariable("BASE_URL"));
             currentWebDriverLazy = new Lazy<IWebDriver>(CreateEdgeWebDriver);
             configurationLazy = new Lazy<IConfiguration>(ReadConfiguration);
             closeBrowserOnDispose = Configuration.GetValue("CloseBrowserAfterEachTest", true);
@@ -40,7 +38,6 @@ namespace PIMS.Tests.Automation.Drivers
 
             var chromeDriver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), options);
             chromeDriver.Url = Configuration.GetValue<string>("baseUrl");
-            //chromeDriver.Url = Environment.GetEnvironmentVariable("BASE_URL");
 
             return chromeDriver;
         }
@@ -59,8 +56,6 @@ namespace PIMS.Tests.Automation.Drivers
 
             var edgeDriver = new EdgeDriver(EdgeDriverService.CreateDefaultService(), options);
             edgeDriver.Url = Configuration.GetValue<string>("baseUrl");
-            //var baseUrl = Environment.GetEnvironmentVariable("BASE_URL");
-            //edgeDriver.Url = baseUrl;
 
             return edgeDriver;
         }
