@@ -82,8 +82,8 @@ export const MotiInventoryContainer: React.FunctionComponent<
   };
 
   const handleZoom = (apiProperty?: Api_Property | undefined) => {
-    if (apiProperty !== undefined && apiProperty?.longitude && apiProperty?.latitude) {
-      mapMachine.requestFlyToLocation({ lat: apiProperty?.latitude, lng: apiProperty?.longitude });
+    if (apiProperty?.longitude !== undefined && apiProperty?.latitude !== undefined) {
+      mapMachine.requestFlyToLocation({ lat: apiProperty.latitude, lng: apiProperty.longitude });
     }
   };
 
