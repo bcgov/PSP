@@ -3,11 +3,13 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import Claims from '@/constants/claims';
 import { FileTypes } from '@/constants/fileTypes';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { mockActivitiesResponse } from '@/mocks/activities.mock';
 import { mockLookups } from '@/mocks/index.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -30,6 +32,9 @@ const mockTemplateTypes = [
 
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 describe('Activity List View', () => {
   const setup = (renderOptions?: RenderOptions & Partial<IActivityListViewProps>) => {

@@ -3,7 +3,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
-import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
 import * as API from '@/constants/API';
 import { FinancialCodeTypes } from '@/constants/index';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -25,7 +24,6 @@ export interface IAddProjectContainerProps {
 const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainerProps>> = props => {
   const { onClose } = props;
   const history = useHistory();
-  const { searchMany } = useMapSearch();
 
   const {
     getFinancialCodesByType: { execute: getFinancialCodes },
@@ -84,7 +82,6 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
 
   const onSuccess = async (proj: Api_Project) => {
     formikRef.current?.resetForm();
-    await searchMany();
     history.replace(`/mapview/sidebar/project/${proj.id}`);
   };
 

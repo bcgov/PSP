@@ -2,6 +2,7 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Route } from 'react-router-dom';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims } from '@/constants/claims';
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
@@ -11,6 +12,7 @@ import {
 } from '@/mocks/acquisitionFiles.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { rest, server } from '@/mocks/msw/server';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';
 import { getUserMock } from '@/mocks/user.mock';
@@ -24,6 +26,8 @@ import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 const onClose = jest.fn();
 const onSave = jest.fn();
@@ -108,6 +112,8 @@ describe('AcquisitionView component', () => {
   };
 
   beforeEach(() => {
+    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+
     history.replace(`/mapview/sidebar/acquisition/1`);
     server.use(
       rest.get('/api/users/info/*', (req, res, ctx) =>

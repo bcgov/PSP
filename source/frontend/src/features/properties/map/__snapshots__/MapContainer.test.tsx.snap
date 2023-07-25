@@ -140,82 +140,6 @@ exports[`MapContainer Renders the map 1`] = `
   margin-right: 0;
 }
 
-.c8 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c8 div:nth-child(1) div:nth-child(1) {
-  cursor: auto;
-}
-
-.c8 div:nth-child(1) div:nth-child(1) svg {
-  fill: #909090;
-}
-
-.c8 div:nth-child(2) div:nth-child(1) {
-  cursor: pointer;
-}
-
-.c8 div:nth-child(2) div:nth-child(1) svg {
-  fill: #003366;
-}
-
-.c9 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  width: 100%;
-}
-
-.c10 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c10 svg {
-  min-width: -webkit-max-content;
-  min-width: -moz-max-content;
-  min-width: max-content;
-}
-
-.c5 {
-  padding-right: 0 !important;
-}
-
-.c5 .form-control {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.c4 {
-  padding-right: 0 !important;
-  border-right: 0 !important;
-}
-
-.c6 {
-  padding-left: 0 !important;
-}
-
-.c6 .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
 .c11 {
   grid-area: map;
 }
@@ -416,6 +340,82 @@ exports[`MapContainer Renders the map 1`] = `
   background-color: #ffffff;
   width: 4rem;
   height: 4rem;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c8 div:nth-child(1) div:nth-child(1) {
+  cursor: auto;
+}
+
+.c8 div:nth-child(1) div:nth-child(1) svg {
+  fill: #909090;
+}
+
+.c8 div:nth-child(2) div:nth-child(1) {
+  cursor: pointer;
+}
+
+.c8 div:nth-child(2) div:nth-child(1) svg {
+  fill: #003366;
+}
+
+.c9 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  width: 100%;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c10 svg {
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+}
+
+.c5 {
+  padding-right: 0 !important;
+}
+
+.c5 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c4 {
+  padding-right: 0 !important;
+  border-right: 0 !important;
+}
+
+.c6 {
+  padding-left: 0 !important;
+}
+
+.c6 .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .c3 {

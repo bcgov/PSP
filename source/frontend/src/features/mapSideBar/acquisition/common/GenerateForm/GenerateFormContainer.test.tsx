@@ -1,11 +1,13 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FormDocumentType } from '@/constants/formDocumentTypes';
 import { FileTypes } from '@/constants/index';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
@@ -35,6 +37,9 @@ jest.mock('react-visibility-sensor', () => {
     return children;
   });
 });
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 let viewProps: IGenerateFormViewProps = {} as any;
 const GenerateFormViewStub = (props: IGenerateFormViewProps) => {
@@ -89,16 +94,6 @@ describe('GenerateFormContainer component', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('calls document letter generation', async () => {
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
-
-    await act(async () => viewProps.onGenerateClick(FormDocumentType.LETTER));
-    await waitFor(async () => {
-      expect(generateLetterFn).toHaveBeenCalledTimes(1);
-      expect(generateH0443Fn).toHaveBeenCalledTimes(0);
-    });
-  });
-
   it('calls document H0443 generation', async () => {
     jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
@@ -106,6 +101,23 @@ describe('GenerateFormContainer component', () => {
     await waitFor(async () => {
       expect(generateLetterFn).toHaveBeenCalledTimes(0);
       expect(generateH0443Fn).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('opens document letter generation modal', async () => {
+    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+
+    await act(async () => viewProps.onGenerateClick(FormDocumentType.LETTER));
+    await waitFor(async () => {
+      expect(generateLetterFn).toHaveBeenCalledTimes(0);
+      expect(generateH0443Fn).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  it('generates the documment letter on confirmation', async () => {
+    await act(async () => viewProps.onGenerateLetterOk([]));
+    await waitFor(async () => {
+      expect(generateLetterFn).toHaveBeenCalledTimes(1);
     });
   });
 });
