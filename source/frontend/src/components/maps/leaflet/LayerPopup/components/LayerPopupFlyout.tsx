@@ -1,4 +1,3 @@
-import noop from 'lodash/noop';
 import React from 'react';
 import { ListGroup } from 'react-bootstrap';
 
@@ -7,10 +6,10 @@ import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 
 export interface ILayerPopupFlyoutProps {
-  onViewPropertyInfo: () => void;
-  onCreateResearchFile?: () => void;
-  onCreateAcquisitionFile?: () => void;
-  onCreateLeaseLicense?: () => void;
+  onViewPropertyInfo: (event: React.MouseEvent<HTMLElement>) => void;
+  onCreateResearchFile: (event: React.MouseEvent<HTMLElement>) => void;
+  onCreateAcquisitionFile: (event: React.MouseEvent<HTMLElement>) => void;
+  onCreateLeaseLicense: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyoutProps>> = ({
@@ -20,6 +19,7 @@ export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyou
   onCreateLeaseLicense,
 }) => {
   const keycloak = useKeycloakWrapper();
+
   return (
     <ListGroup variant="flush">
       <ListGroup.Item>
@@ -27,19 +27,17 @@ export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyou
       </ListGroup.Item>
       {keycloak.hasClaim(Claims.RESEARCH_ADD) && (
         <ListGroup.Item>
-          <LinkButton onClick={onCreateResearchFile ?? noop}>Research File - Create new</LinkButton>
+          <LinkButton onClick={onCreateResearchFile}>Research File - Create new</LinkButton>
         </ListGroup.Item>
       )}
       {keycloak.hasClaim(Claims.ACQUISITION_ADD) && (
         <ListGroup.Item>
-          <LinkButton onClick={onCreateAcquisitionFile ?? noop}>
-            Acquisition File - Create new
-          </LinkButton>
+          <LinkButton onClick={onCreateAcquisitionFile}>Acquisition File - Create new</LinkButton>
         </ListGroup.Item>
       )}
       {keycloak.hasClaim(Claims.LEASE_ADD) && (
         <ListGroup.Item>
-          <LinkButton onClick={onCreateLeaseLicense ?? noop}>Lease/License - Create new</LinkButton>
+          <LinkButton onClick={onCreateLeaseLicense}>Lease/License - Create new</LinkButton>
         </ListGroup.Item>
       )}
     </ListGroup>

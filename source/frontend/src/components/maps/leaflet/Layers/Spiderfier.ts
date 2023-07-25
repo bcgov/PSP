@@ -9,12 +9,12 @@ import {
   PolylineOptions,
 } from 'leaflet';
 import { cloneDeep } from 'lodash';
-import { AnyProps } from 'supercluster';
+import { AnyProps, PointFeature } from 'supercluster';
 import invariant from 'tiny-invariant';
 
-import { ICluster, PointFeature } from '@/components/maps/types';
+import { ICluster } from '@/components/maps/types';
 
-export interface SpiderfierOptions {
+export interface SpiderfierOptions<P> {
   /** Increase from 1 to increase the distance away from the center that spiderfied markers are placed. Use if you are using big marker icons (Default: 1). */
   spiderfyDistanceMultiplier: number;
   /** Allows you to specify PolylineOptions to style spider legs. By default, they are `{ weight: 1.5, color: '#222', opacity: 0.5 }`. */
@@ -22,43 +22,59 @@ export interface SpiderfierOptions {
   /** A function that returns the cluster ID */
   getClusterId(cluster: ICluster): number;
   /** A function that returns all the points of a cluster */
-  getClusterPoints(clusterId: number): Array<PointFeature>;
+  getClusterPoints(clusterId: number): Array<PointFeature<P>>;
   /** Adds a GeoJSON object to the layer. */
-  pointToLayer(geoJsonPoint: PointFeature, latlng: LatLngExpression): Layer;
+  pointToLayer(geoJsonPoint: PointFeature<P>, latlng: LatLngExpression): Layer;
   /** What happens when a cluster child pin is clicked */
-  onMarkerClick?: (point: PointFeature, position?: [number, number]) => void;
+  onMarkerClick?: (point: PointFeature<P>, position?: [number, number]) => void;
 }
 
-const defaultOptions: SpiderfierOptions = {
-  spiderfyDistanceMultiplier: 1,
-  spiderLegPolylineOptions: { weight: 1.5, color: '#222', opacity: 0.5 },
-  getClusterId: null as any,
-  getClusterPoints: null as any,
-  pointToLayer: null as any,
-  onMarkerClick: null as any,
+interface SpiderLine {
+  coords: LatLng[];
+  options: PolylineOptions;
+}
+
+interface SpiderMarker<P> extends PointFeature<P> {
+  position: LatLng;
+}
+
+export interface SpiderSet<P> {
+  lines?: SpiderLine[];
+  markers?: SpiderMarker<P>[];
+}
+
+const defaultOptions = <P>(): SpiderfierOptions<P> => {
+  return {
+    spiderfyDistanceMultiplier: 1,
+    spiderLegPolylineOptions: { weight: 1.5, color: '#222', opacity: 0.5 },
+    getClusterId: null as any,
+    getClusterPoints: null as any,
+    pointToLayer: null as any,
+    onMarkerClick: null as any,
+  };
 };
 
 /** Deals with overlapping markers in the Leaflet maps API, Google Earth-style */
-export class Spiderfier {
-  private twoPI = Math.PI * 2;
-  private circleFootSeparation = 25; // related to circumference of circle
-  private circleStartAngle = 0;
+export class Spiderfier<P> {
+  private readonly twoPI = Math.PI * 2;
+  private readonly circleFootSeparation = 25; // related to circumference of circle
+  private readonly circleStartAngle = 0;
 
-  private spiralFootSeparation = 28; // related to size of spiral (experiment!)
-  private spiralLengthStart = 11;
-  private spiralLengthFactor = 5;
+  private readonly spiralFootSeparation = 28; // related to size of spiral (experiment!)
+  private readonly spiralLengthStart = 11;
+  private readonly spiralLengthFactor = 5;
 
   // shows a spiral instead of circle from this marker count upwards.
   // 0 -> always spiral; Infinity -> always circle
-  private circleSpiralSwitchover = 9;
+  private readonly circleSpiralSwitchover = 9;
 
   // internal state - the currently spiderfied cluster (if any)
   private cluster: ICluster | null = null;
 
-  options: SpiderfierOptions;
+  private readonly options: SpiderfierOptions<P>;
 
-  constructor(public map: Map, options: Partial<SpiderfierOptions> = {}) {
-    this.options = { ...defaultOptions, ...options };
+  constructor(public map: Map, options: Partial<SpiderfierOptions<P>> = {}) {
+    this.options = { ...defaultOptions<P>(), ...options };
     // check required values - throws an error if callbacks are null
     const { getClusterId, getClusterPoints, pointToLayer } = this.options;
     invariant(getClusterId, 'Must supply getClusterId callback');
@@ -67,7 +83,7 @@ export class Spiderfier {
   }
 
   // expand a cluster (spiderfy)
-  spiderfy(cluster: ICluster): { lines?: any[]; markers?: any[] } {
+  public spiderfy(cluster: ICluster): SpiderSet<P> {
     const { getClusterId, getClusterPoints } = this.options;
 
     // only one cluster expanded at a time
@@ -78,58 +94,42 @@ export class Spiderfier {
     }
     this.unspiderfy();
     this.cluster = cluster;
-    const centerLatlng = GeoJSON.coordsToLatLng(cluster?.geometry?.coordinates as [number, number]);
-    const centerXY = this.map.latLngToLayerPoint(centerLatlng); // screen coordinates
-    const clusterId = getClusterId(cluster);
-    const children = getClusterPoints(clusterId).map(p => cloneDeep(p)); // work with a copy of the data
+    if (cluster.geometry.coordinates !== undefined && cluster.geometry.coordinates.length > 1) {
+      const clusterX = cluster.geometry.coordinates[0];
+      const clusterY = cluster.geometry.coordinates[1];
+      const centerLatlng = GeoJSON.coordsToLatLng([clusterX, clusterY]);
 
-    let positions: LeafletPoint[];
-    if (children.length >= this.circleSpiralSwitchover) {
-      positions = this.generatePointsSpiral(children.length, centerXY);
-    } else {
-      positions = this.generatePointsCircle(children.length, centerXY);
-    }
+      const centerXY = this.map.latLngToLayerPoint(centerLatlng); // screen coordinates
+      const clusterId = getClusterId(cluster);
+      const children = getClusterPoints(clusterId).map(p => cloneDeep(p)); // work with a copy of the data
 
-    // add expanded cluster points to map
-    const results = this.addToMap(centerXY, children, positions);
-
-    // dim cluster icon
-    this.map.eachLayer(layer => {
-      if (this.layerMatchesCluster(layer, this.cluster)) {
-        const clusterMarker = layer as Marker;
-        if (clusterMarker.setOpacity) {
-          clusterMarker.setOpacity(0.75);
-        }
+      let positions: LeafletPoint[];
+      if (children.length >= this.circleSpiralSwitchover) {
+        positions = this.generatePointsSpiral(children.length, centerXY);
+      } else {
+        positions = this.generatePointsCircle(children.length, centerXY);
       }
-    });
 
-    return results;
-  }
+      // add expanded cluster points to map
+      const results = this.addToMap(centerXY, children, positions);
 
-  private addToMap(
-    centerXY: LeafletPoint,
-    points: Array<PointFeature>,
-    positions: Array<LeafletPoint>,
-  ): { lines?: any[]; markers?: any[] } {
-    const { spiderLegPolylineOptions: legOptions } = this.options;
-    const centerLatLng = this.map.layerPointToLatLng(centerXY);
-
-    let newPos: LatLng;
-    let geojson: PointFeature;
-    const markers: any[] = [];
-    const lines: any[] = [];
-    for (let i = 0; i < points.length; i++) {
-      newPos = this.map.layerPointToLatLng(positions[i]);
-      geojson = points[i];
-      markers.push({ ...geojson, position: newPos });
-      lines.push({ coords: [centerLatLng, newPos], options: legOptions });
+      // dim cluster icon
+      this.map.eachLayer(layer => {
+        if (this.layerMatchesCluster(layer, this.cluster)) {
+          const clusterMarker = layer as Marker;
+          if (clusterMarker.setOpacity) {
+            clusterMarker.setOpacity(0.75);
+          }
+        }
+      });
+      return results;
+    } else {
+      return {};
     }
-
-    return { lines, markers };
   }
 
   // shrink an expanded cluster (unspiderfy)
-  unspiderfy() {
+  public unspiderfy() {
     this.map.eachLayer((layer: Layer & AnyProps) => {
       if (layer._spiderfied) {
         layer.remove();
@@ -146,6 +146,26 @@ export class Spiderfier {
     });
 
     this.cluster = null;
+  }
+
+  private addToMap(
+    centerXY: LeafletPoint,
+    points: Array<PointFeature<P>>,
+    positions: Array<LeafletPoint>,
+  ): SpiderSet<P> {
+    const { spiderLegPolylineOptions: legOptions } = this.options;
+    const centerLatLng = this.map.layerPointToLatLng(centerXY);
+
+    const markers: SpiderMarker<P>[] = [];
+    const lines: SpiderLine[] = [];
+    for (let i = 0; i < points.length; i++) {
+      let newPos: LatLng = this.map.layerPointToLatLng(positions[i]);
+      let geojson: PointFeature<P> = points[i];
+      markers.push({ ...geojson, position: newPos });
+      lines.push({ coords: [centerLatLng, newPos], options: legOptions });
+    }
+
+    return { lines, markers };
   }
 
   private layerMatchesCluster(layer: Layer, cluster: ICluster | null): boolean {

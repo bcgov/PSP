@@ -23,15 +23,9 @@ import { generateMultiSortCriteria } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
 
 import { PropertyFilter } from '../filter';
-import { IPropertyFilter } from '../filter/IPropertyFilter';
+import { defaultPropertyFilter, IPropertyFilter } from '../filter/IPropertyFilter';
 import { SearchToggleOption } from '../filter/PropertySearchToggle';
 import { columns as columnDefinitions } from './columns';
-
-const defaultFilterValues: IPropertyFilter = {
-  searchBy: 'pinOrPid',
-  pinOrPid: '',
-  address: '',
-};
 
 const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { getByType } = useLookupCodeHelpers();
@@ -45,7 +39,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const [data, setData] = useState<IProperty[] | undefined>();
 
   // Filtering and pagination state
-  const [filter, setFilter] = useState<IPropertyFilter>(defaultFilterValues);
+  const [filter, setFilter] = useState<IPropertyFilter>(defaultPropertyFilter);
 
   const [pageSize, setPageSize] = useState(10);
   const [pageIndex, setPageIndex] = useState(0);
@@ -152,7 +146,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
         <StyledFilterContainer fluid className="px-0">
           <PropertyFilter
             useGeocoder={false}
-            defaultFilter={defaultFilterValues}
+            defaultFilter={defaultPropertyFilter}
             onChange={handleFilterChange}
             sort={sort}
             onSorting={setSort}

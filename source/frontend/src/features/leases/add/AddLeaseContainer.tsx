@@ -5,15 +5,14 @@ import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { ReactComponent as Fence } from '@/assets/images/fence.svg';
-import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
-import { MapStateContext } from '@/components/maps/providers/MapStateContext';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { IMapProperty } from '@/components/propertySelector/models';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
+import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { useAddLease } from '../hooks/useAddLease';
 import { LeaseFormModel } from '../models';
@@ -28,21 +27,23 @@ export const AddLeaseContainer: React.FunctionComponent<
 > = props => {
   const history = useHistory();
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
-  const { selectedFileFeature } = React.useContext(MapStateContext);
+  const mapMachine = useMapStateMachine();
+
+  const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
+
   const withUserOverride = useApiUserOverride('Failed to save Lease File');
   const { addLease } = useAddLease();
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
-  const { searchMany } = useMapSearch();
-
   const initialProperty = useMemo<IMapProperty | null>(() => {
-    if (selectedFileFeature) {
-      return mapFeatureToProperty(selectedFileFeature);
+    if (selectedFeatureDataset) {
+      return featuresetToMapProperty(selectedFeatureDataset);
     }
     return null;
-  }, [selectedFileFeature]);
+  }, [selectedFeatureDataset]);
+
   const { initialProperty: initialFormProperty, bcaLoading } =
-    useInitialMapSelectorProperties(selectedFileFeature);
+    useInitialMapSelectorProperties(selectedFeatureDataset);
   if (!!initialProperty && !!initialFormProperty) {
     initialProperty.address = initialFormProperty?.formattedAddress;
   }
@@ -63,7 +64,7 @@ export const AddLeaseContainer: React.FunctionComponent<
           { autoClose: 15000 },
         );
       }
-      await searchMany();
+      mapMachine.refreshMapProperties();
       history.replace(`/mapview/sidebar/lease/${response.id}`);
     }
   };
