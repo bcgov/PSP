@@ -6,7 +6,7 @@ exports[`UpdateFinancialCode form renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c4.btn {
+  .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`UpdateFinancialCode form renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c4.btn:hover {
+.c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c4.btn:focus {
+.c5.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c4.btn.btn-primary {
+.c5.btn.btn-primary {
   border: none;
 }
 
-.c4.btn.btn-secondary {
+.c5.btn.btn-secondary {
   background: none;
 }
 
-.c4.btn.btn-info {
+.c5.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c4.btn.btn-info:hover,
-.c4.btn.btn-info:active,
-.c4.btn.btn-info:focus {
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
   background: none;
 }
 
-.c4.btn.btn-light {
+.c5.btn.btn-light {
   border: none;
 }
 
-.c4.btn.btn-dark {
+.c5.btn.btn-dark {
   border: none;
 }
 
-.c4.btn.btn-link {
+.c5.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`UpdateFinancialCode form renders as expected 1`] = `
   padding: 0;
 }
 
-.c4.btn.btn-link:hover,
-.c4.btn.btn-link:active,
-.c4.btn.btn-link:focus {
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`UpdateFinancialCode form renders as expected 1`] = `
   outline: none;
 }
 
-.c4.btn.btn-link:disabled,
-.c4.btn.btn-link.disabled {
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c4.btn:disabled,
-.c4.btn:disabled:hover {
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,23 +128,39 @@ exports[`UpdateFinancialCode form renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c4.Button .Button__icon {
+.c5.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c4.Button--icon-only:focus {
+.c5.Button--icon-only:focus {
   outline: none;
 }
 
-.c4.Button--icon-only .Button__icon {
+.c5.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c3.c3.form-control.is-valid {
+.c3 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c3 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c3 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c4.c4.form-control.is-valid {
   background-image: none;
 }
 
-.c3.c3.form-control.is-invalid {
+.c4.c4.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
@@ -167,10 +183,6 @@ exports[`UpdateFinancialCode form renders as expected 1`] = `
 .c0 .tab-pane .form-section {
   margin: 1.5rem;
   padding-left: 1.5rem;
-}
-
-.c0 .react-datepicker-wrapper {
-  max-width: 14rem;
 }
 
 <div
@@ -296,20 +308,29 @@ exports[`UpdateFinancialCode form renders as expected 1`] = `
         class="c2 required text-left col"
       >
         <div
-          class="form-group"
+          class="c3 form-group"
         >
           <div
             class="react-datepicker-wrapper d-block"
           >
             <div
-              class="react-datepicker__input-container"
+              class="react-datepicker__input-container react-datepicker__view-calendar-icon"
             >
+              <svg
+                class="react-datepicker__calendar-icon"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                />
+              </svg>
               <input
                 autocomplete="off"
-                class="c3 form-control date-picker"
+                class="c4 form-control date-picker"
                 id="datepicker-effectiveDate"
                 name="effectiveDate"
-                placeholder="--/--/----"
+                placeholder="MTH DD, YYYY"
                 type="text"
                 value="Nov 22, 1999"
               />
@@ -358,20 +379,29 @@ exports[`UpdateFinancialCode form renders as expected 1`] = `
         class="c2 text-left col"
       >
         <div
-          class="form-group"
+          class="c3 form-group"
         >
           <div
             class="react-datepicker-wrapper d-block"
           >
             <div
-              class="react-datepicker__input-container"
+              class="react-datepicker__input-container react-datepicker__view-calendar-icon"
             >
+              <svg
+                class="react-datepicker__calendar-icon"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                />
+              </svg>
               <input
                 autocomplete="off"
-                class="c3 form-control date-picker"
+                class="c4 form-control date-picker"
                 id="datepicker-expiryDate"
                 name="expiryDate"
-                placeholder="--/--/----"
+                placeholder="MTH DD, YYYY"
                 type="text"
                 value=""
               />
@@ -416,7 +446,7 @@ exports[`UpdateFinancialCode form renders as expected 1`] = `
         role="toolbar"
       >
         <button
-          class="c4 Button mr-5 btn btn-secondary"
+          class="c5 Button mr-5 btn btn-secondary"
           type="button"
         >
           <div
@@ -426,7 +456,7 @@ exports[`UpdateFinancialCode form renders as expected 1`] = `
           </div>
         </button>
         <button
-          class="c4 Button mr-5 btn btn-primary"
+          class="c5 Button mr-5 btn btn-primary"
           type="button"
         >
           <div

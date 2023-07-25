@@ -10,11 +10,27 @@ exports[`LeaseDetailSubForm component renders as expected 1`] = `
   font-size: 2.4rem;
 }
 
-.c4.c4.form-control.is-valid {
+.c4 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c4 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c4 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c5.c5.form-control.is-valid {
   background-image: none;
 }
 
-.c4.c4.form-control.is-invalid {
+.c5.c5.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
@@ -259,20 +275,29 @@ exports[`LeaseDetailSubForm component renders as expected 1`] = `
               class="c2 required text-left col"
             >
               <div
-                class="required form-group"
+                class="c4 required form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
                 >
                   <div
-                    class="react-datepicker__input-container"
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                   >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
                     <input
                       autocomplete="off"
-                      class="c4 form-control date-picker"
+                      class="c5 form-control date-picker"
                       id="datepicker-startDate"
                       name="startDate"
-                      placeholder="--/--/----"
+                      placeholder="MTH DD, YYYY"
                       required=""
                       type="text"
                       value=""
@@ -302,20 +327,29 @@ exports[`LeaseDetailSubForm component renders as expected 1`] = `
               class="c2 text-left col"
             >
               <div
-                class="form-group"
+                class="c4 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
                 >
                   <div
-                    class="react-datepicker__input-container"
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                   >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
                     <input
                       autocomplete="off"
-                      class="c4 form-control date-picker"
+                      class="c5 form-control date-picker"
                       id="datepicker-expiryDate"
                       name="expiryDate"
-                      placeholder="--/--/----"
+                      placeholder="MTH DD, YYYY"
                       type="text"
                       value=""
                     />

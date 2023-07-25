@@ -6,15 +6,31 @@ exports[`PaymentForm component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c1.c1.form-control.is-valid {
+  .c1 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c1 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c1 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c2.c2.form-control.is-valid {
   background-image: none;
 }
 
-.c1.c1.form-control.is-invalid {
+.c2.c2.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c2 {
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -76,7 +92,7 @@ exports[`PaymentForm component renders as expected 1`] = `
   content: ' *';
 }
 
-.c3 {
+.c4 {
   margin-left: -1rem;
   padding-left: 1rem;
   -webkit-flex-wrap: wrap;
@@ -85,11 +101,11 @@ exports[`PaymentForm component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c3 input {
+.c4 input {
   width: 100%;
 }
 
-.c4 {
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -108,7 +124,7 @@ exports[`PaymentForm component renders as expected 1`] = `
     class="c0"
   >
     <div
-      class="required form-group"
+      class="c1 required form-group"
     >
       <label
         class="form-label"
@@ -120,14 +136,23 @@ exports[`PaymentForm component renders as expected 1`] = `
         class="react-datepicker-wrapper d-block"
       >
         <div
-          class="react-datepicker__input-container"
+          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
         >
+          <svg
+            class="react-datepicker__calendar-icon"
+            viewBox="0 0 448 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+            />
+          </svg>
           <input
             autocomplete="off"
-            class="c1 form-control date-picker"
+            class="c2 form-control date-picker"
             id="datepicker-receivedDate"
             name="receivedDate"
-            placeholder="--/--/----"
+            placeholder="MTH DD, YYYY"
             required=""
             type="text"
             value=""
@@ -224,10 +249,10 @@ exports[`PaymentForm component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c2 c3"
+      class="c3 c4"
     >
       <div
-        class="c4"
+        class="c5"
       >
         <span
           class="tooltip-icon"
@@ -251,7 +276,7 @@ exports[`PaymentForm component renders as expected 1`] = `
         </span>
       </div>
       <div
-        class="c2"
+        class="c3"
       >
         <div
           class="form-group"
@@ -311,15 +336,31 @@ exports[`PaymentForm component renders with data as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c1.c1.form-control.is-valid {
+  .c1 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c1 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c1 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c2.c2.form-control.is-valid {
   background-image: none;
 }
 
-.c1.c1.form-control.is-invalid {
+.c2.c2.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c2 {
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -381,7 +422,7 @@ exports[`PaymentForm component renders with data as expected 1`] = `
   content: ' *';
 }
 
-.c3 {
+.c4 {
   margin-left: -1rem;
   padding-left: 1rem;
   -webkit-flex-wrap: wrap;
@@ -390,11 +431,11 @@ exports[`PaymentForm component renders with data as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c3 input {
+.c4 input {
   width: 100%;
 }
 
-.c4 {
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -413,7 +454,7 @@ exports[`PaymentForm component renders with data as expected 1`] = `
     class="c0"
   >
     <div
-      class="required form-group"
+      class="c1 required form-group"
     >
       <label
         class="form-label"
@@ -425,14 +466,23 @@ exports[`PaymentForm component renders with data as expected 1`] = `
         class="react-datepicker-wrapper d-block"
       >
         <div
-          class="react-datepicker__input-container"
+          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
         >
+          <svg
+            class="react-datepicker__calendar-icon"
+            viewBox="0 0 448 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+            />
+          </svg>
           <input
             autocomplete="off"
-            class="c1 form-control date-picker"
+            class="c2 form-control date-picker"
             id="datepicker-receivedDate"
             name="receivedDate"
-            placeholder="--/--/----"
+            placeholder="MTH DD, YYYY"
             required=""
             type="text"
             value=""
@@ -529,10 +579,10 @@ exports[`PaymentForm component renders with data as expected 1`] = `
       </div>
     </div>
     <div
-      class="c2 c3"
+      class="c3 c4"
     >
       <div
-        class="c4"
+        class="c5"
       >
         <span
           class="tooltip-icon"
@@ -556,7 +606,7 @@ exports[`PaymentForm component renders with data as expected 1`] = `
         </span>
       </div>
       <div
-        class="c2"
+        class="c3"
       >
         <div
           class="form-group"
