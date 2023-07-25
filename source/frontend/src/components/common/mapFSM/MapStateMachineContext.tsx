@@ -90,17 +90,17 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         } else if (event.type === 'MAP_MARKER_CLICK') {
           latLng = event.featureSelected.latlng;
         }
-        const result = locationLoader.showLocationDetails(latLng, context.isSelecting);
+        const result = locationLoader.loadLocationDetails(latLng);
 
         return result;
       },
       loadFeatures: (context: any, event: any) => {
         const geoFilter = getQueryParams(context.mapFilter);
-        if (geoFilter.latitude !== undefined && geoFilter.longitude !== undefined) {
-          return mapSearch.searchOneLocation(
-            Number(geoFilter.latitude),
-            Number(geoFilter.longitude),
-          );
+
+        if (geoFilter?.latitude && geoFilter?.longitude) {
+          const geoLat = Number(geoFilter.latitude);
+          const geoLng = Number(geoFilter.longitude);
+          return mapSearch.searchOneLocation(geoLat, geoLng);
         } else {
           return mapSearch.searchMany(geoFilter);
         }

@@ -150,7 +150,7 @@ const selectedFeatureStates = {
               showPopup: () => true,
               mapLocationFeatureDataset: (context, event: any) => event.data,
             }),
-            // 'navigateToProperty', // TODO:uncomment this to show property information sidebar
+            raise('FINISHED_LOCATION_DATA_LOAD'),
           ],
         },
         onError: {
@@ -176,16 +176,26 @@ const sideBarStates = {
         OPEN_SIDEBAR: {
           target: 'sidebarOpen',
         },
+        FINISHED_LOCATION_DATA_LOAD: {
+          actions: 'navigateToProperty',
+        },
       },
     },
     sidebarOpen: {
       entry: assign({
-        sideBarType: (_, event: any) => event.sidebarType,
+        sideBarType: (context: any, event: any) =>
+          event ? event.sidebarType : context.sideBarType,
       }),
       on: {
+        OPEN_SIDEBAR: {
+          actions: assign({
+            sideBarType: (context: any, event: any) =>
+              event ? event.sidebarType : context.sideBarType,
+          }),
+        },
         CLOSE_SIDEBAR: {
-          target: 'fullScreen',
           actions: assign({ selectedFeatureDataset: () => null }),
+          target: 'fullScreen',
         },
         START_SELECTION: {
           target: 'selecting',
@@ -221,7 +231,6 @@ export const mapMachine = createMachine<MachineContext>({
 
   // Local context for entire machine
   context: {
-    isSelecting: false,
     sideBarType: SideBarType.NOT_DEFINED,
     requestedFlyTo: {
       location: null,
