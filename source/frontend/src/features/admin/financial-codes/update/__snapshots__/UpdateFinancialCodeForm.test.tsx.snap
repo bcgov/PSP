@@ -311,7 +311,7 @@ exports[`UpdateFinancialCode form renders as expected 1`] = `
                 name="effectiveDate"
                 placeholder="--/--/----"
                 type="text"
-                value="11/22/1999"
+                value="Nov 22, 1999"
               />
             </div>
           </div>

@@ -1295,7 +1295,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                         name="products.0.startDate"
                         placeholder="--/--/----"
                         type="text"
-                        value="02/01/2023"
+                        value="Feb 01, 2023"
                       />
                     </div>
                   </div>
@@ -1377,7 +1377,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                             name="products.0.costEstimateDate"
                             placeholder="--/--/----"
                             type="text"
-                            value="02/02/2023"
+                            value="Feb 02, 2023"
                           />
                         </div>
                       </div>
@@ -1582,7 +1582,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                         name="products.1.startDate"
                         placeholder="--/--/----"
                         type="text"
-                        value="02/03/2023"
+                        value="Feb 03, 2023"
                       />
                     </div>
                   </div>
@@ -1664,7 +1664,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                             name="products.1.costEstimateDate"
                             placeholder="--/--/----"
                             type="text"
-                            value="02/04/2023"
+                            value="Feb 04, 2023"
                           />
                         </div>
                       </div>

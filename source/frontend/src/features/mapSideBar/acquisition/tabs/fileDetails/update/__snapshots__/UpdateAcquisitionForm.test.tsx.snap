@@ -744,7 +744,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     name="assignedDate"
                     placeholder="--/--/----"
                     type="text"
-                    value="06/27/2022"
+                    value="Jun 27, 2022"
                   />
                 </div>
               </div>
@@ -806,7 +806,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     name="deliveryDate"
                     placeholder="--/--/----"
                     type="text"
-                    value="07/29/2022"
+                    value="Jul 29, 2022"
                   />
                 </div>
               </div>

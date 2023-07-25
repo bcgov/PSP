@@ -268,7 +268,7 @@ exports[`Edit Lease Insurance renders as expected 1`] = `
                   name="insurances.0.expiryDate"
                   placeholder="--/--/----"
                   type="text"
-                  value="01/01/2022"
+                  value="Jan 01, 2022"
                 />
               </div>
             </div>

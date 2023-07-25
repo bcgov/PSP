@@ -1018,7 +1018,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                       name="agreements.1.agreementDate"
                       placeholder="--/--/----"
                       type="text"
-                      value="04/05/2023"
+                      value="Apr 05, 2023"
                     />
                   </div>
                 </div>
@@ -1056,7 +1056,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                       name="agreements.1.completionDate"
                       placeholder="--/--/----"
                       type="text"
-                      value="04/05/2023"
+                      value="Apr 05, 2023"
                     />
                   </div>
                 </div>
@@ -1094,7 +1094,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                       name="agreements.1.terminationDate"
                       placeholder="--/--/----"
                       type="text"
-                      value="04/05/2023"
+                      value="Apr 05, 2023"
                     />
                   </div>
                 </div>

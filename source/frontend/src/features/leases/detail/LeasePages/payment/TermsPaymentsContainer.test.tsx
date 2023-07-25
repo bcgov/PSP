@@ -135,7 +135,7 @@ describe('TermsPaymentsContainer component', () => {
         userEvent.click(addButton);
       });
 
-      expect(getByDisplayValue('01/01/2020')).toBeVisible();
+      expect(getByDisplayValue('Jan 01, 2020')).toBeVisible();
     });
     it('makes a post request when adding a new term', async () => {
       const {

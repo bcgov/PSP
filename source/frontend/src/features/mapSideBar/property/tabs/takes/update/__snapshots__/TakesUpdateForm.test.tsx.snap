@@ -1260,7 +1260,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             name="takes.0.landActEndDt"
                             placeholder="--/--/----"
                             type="text"
-                            value="01/01/2020"
+                            value="Jan 01, 2020"
                           />
                         </div>
                       </div>
@@ -1497,7 +1497,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             name="takes.0.ltcEndDt"
                             placeholder="--/--/----"
                             type="text"
-                            value="01/01/2020"
+                            value="Jan 01, 2020"
                           />
                         </div>
                       </div>

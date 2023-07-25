@@ -751,7 +751,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                     name="requestDate"
                     placeholder="--/--/----"
                     type="text"
-                    value="04/14/2022"
+                    value="Apr 14, 2022"
                   />
                 </div>
               </div>
@@ -1038,7 +1038,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                     name="researchCompletionDate"
                     placeholder="--/--/----"
                     type="text"
-                    value="03/30/2022"
+                    value="Mar 30, 2022"
                   />
                 </div>
               </div>
