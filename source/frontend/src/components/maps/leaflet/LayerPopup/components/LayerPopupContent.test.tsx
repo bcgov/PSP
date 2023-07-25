@@ -3,7 +3,8 @@ import { createMemoryHistory } from 'history';
 import L from 'leaflet';
 import React from 'react';
 import { useMap } from 'react-leaflet';
-import { createRouteProvider } from 'utils/test-utils';
+
+import { createRouteProvider } from '@/utils/test-utils';
 
 import { IPopupContentProps, LayerPopupContent } from './LayerPopupContent';
 

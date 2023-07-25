@@ -1,14 +1,15 @@
-import GenericModal from 'components/common/GenericModal';
-import { SectionListHeader } from 'components/common/SectionListHeader';
-import { TableSort } from 'components/Table/TableSort';
-import Claims from 'constants/claims';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import { DocumentTypeName } from 'constants/documentType';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { defaultDocumentFilter, IDocumentFilter } from 'interfaces/IDocumentResults';
 import { orderBy } from 'lodash';
-import { Api_Document, Api_DocumentRelationship, Api_DocumentType } from 'models/api/Document';
 import React, { useEffect, useState } from 'react';
+
+import GenericModal from '@/components/common/GenericModal';
+import { Section } from '@/components/common/Section/Section';
+import { SectionListHeader } from '@/components/common/SectionListHeader';
+import { TableSort } from '@/components/Table/TableSort';
+import Claims from '@/constants/claims';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import { DocumentTypeName } from '@/constants/documentType';
+import { defaultDocumentFilter, IDocumentFilter } from '@/interfaces/IDocumentResults';
+import { Api_Document, Api_DocumentRelationship, Api_DocumentType } from '@/models/api/Document';
 
 import { DocumentRow } from '../ComposedDocument';
 import { DocumentDetailModal } from '../documentDetail/DocumentDetailModal';
@@ -58,23 +59,25 @@ export const DocumentListView: React.FunctionComponent<
     defaultFilters ?? defaultDocumentFilter,
   );
 
-  const { retrieveDocumentTypes } = useDocumentProvider();
+  const { getDocumentRelationshipTypes, getDocumentTypes } = useDocumentProvider();
 
   useEffect(() => {
     const fetch = async () => {
-      const axiosResponse = await retrieveDocumentTypes();
-      if (
-        axiosResponse !== undefined &&
-        props.relationshipType === DocumentRelationshipType.TEMPLATES
-      ) {
-        setDocumentTypes(axiosResponse.filter(x => x.documentType === DocumentTypeName.CDOGS));
+      if (props.relationshipType === DocumentRelationshipType.TEMPLATES) {
+        const axiosResponse = await getDocumentTypes();
+        if (axiosResponse !== undefined) {
+          setDocumentTypes(axiosResponse?.filter(x => x.documentType === DocumentTypeName.CDOGS));
+        }
       } else {
-        setDocumentTypes(axiosResponse?.filter(x => x.isDisabled !== true) || []);
+        const axiosResponse = await getDocumentRelationshipTypes(props.relationshipType);
+        if (axiosResponse !== undefined) {
+          setDocumentTypes(axiosResponse?.filter(x => x.isDisabled !== true) || []);
+        }
       }
     };
 
     fetch();
-  }, [props.relationshipType, retrieveDocumentTypes]);
+  }, [props.relationshipType, getDocumentTypes, getDocumentRelationshipTypes]);
 
   const mapSortField = (sortField: string) => {
     if (sortField === 'documentType') {

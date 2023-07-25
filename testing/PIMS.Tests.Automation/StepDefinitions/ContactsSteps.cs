@@ -22,8 +22,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps = new LoginSteps(driver);
             contacts = new Contacts(driver.Current);
             searchContacts = new SearchContacts(driver.Current);
-            individualContact = new IndividualContact();
-            organizationContact = new OrganizationContact();
+            //individualContact = new IndividualContact();
+            //organizationContact = new OrganizationContact();
         }
 
         [StepDefinition(@"I create a new Individual Contact from row number (.*)")]
@@ -85,7 +85,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchContacts.NavigateToSearchContact();
 
             //Search for a contact
-            //var contact = organizationContacts.SingleOrDefault(u => u.OrganizationName.Equals("Automation Test Corp II", StringComparison.OrdinalIgnoreCase));
             PopulateOrganizationContact(rowNumber);
             searchContacts.SearchOrganizationContact(organizationContact.OrganizationName);
 
@@ -93,7 +92,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchContacts.SelectFirstResultLink();
 
             //Update an Organization Contact
-            contacts.UpdateContact(organizationContact.Email2, organizationContact.EmailType2, organizationContact.Phone2, organizationContact.PhoneType2);
+            contacts.UpdateOrganizationContact(organizationContact);
 
             //Save Contact
             contacts.SaveContact();
@@ -118,7 +117,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchContacts.SelectFirstResultLink();
 
             //Update an Organization Contact
-            contacts.UpdateContact(individualContact.Email2, individualContact.EmailType2, individualContact.Phone2, individualContact.PhoneType2);
+            contacts.UpdateIndividualContact(individualContact);
 
             //Save Contact
             contacts.SaveContact();
@@ -261,6 +260,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             DataTable individualContactSheet = ExcelDataContext.GetInstance().Sheets["IndividualContacts"];
             ExcelDataContext.PopulateInCollection(individualContactSheet);
 
+            individualContact = new IndividualContact();
             individualContact.FirstName = ExcelDataContext.ReadData(rowNumber, "FirstName");
             individualContact.MiddleName = ExcelDataContext.ReadData(rowNumber, "MiddleName");
             individualContact.LastName = ExcelDataContext.ReadData(rowNumber, "LastName");
@@ -321,6 +321,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             DataTable organizationContactSheet = ExcelDataContext.GetInstance().Sheets["OrganizationContacts"];
             ExcelDataContext.PopulateInCollection(organizationContactSheet);
 
+            organizationContact = new OrganizationContact();
             organizationContact.OrganizationName = ExcelDataContext.ReadData(rowNumber, "OrganizationName");
             organizationContact.Alias = ExcelDataContext.ReadData(rowNumber, "Alias");
             organizationContact.IncorporationNumber = ExcelDataContext.ReadData(rowNumber, "IncorporationNumber");

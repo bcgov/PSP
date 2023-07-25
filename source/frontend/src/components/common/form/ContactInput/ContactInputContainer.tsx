@@ -1,12 +1,16 @@
 import { useFormikContext } from 'formik';
-import { IContactSearchResult } from 'interfaces/IContactSearchResult';
 import React, { useState } from 'react';
+
+import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
+import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
 
 import { IContactInputViewProps } from './ContactInputView';
 
 export type IContactInputContainerProps = {
   field: string;
   label?: string;
+  restrictContactType?: RestrictContactType;
+  displayErrorAsTooltip?: boolean;
 };
 
 export const ContactInputContainer: React.FC<
@@ -15,7 +19,7 @@ export const ContactInputContainer: React.FC<
       View: React.FunctionComponent<React.PropsWithChildren<IContactInputViewProps>>;
     }
   >
-> = ({ field, View, label }) => {
+> = ({ field, View, label, restrictContactType, displayErrorAsTooltip = true }) => {
   const [showContactManager, setShowContactManager] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>([]);
   const { setFieldValue } = useFormikContext<any>();
@@ -31,7 +35,7 @@ export const ContactInputContainer: React.FC<
       field={field}
       onClear={() => setFieldValue(field, null)}
       label={label}
-      displayErrorTooltips={true}
+      displayErrorTooltips={displayErrorAsTooltip}
       setShowContactManager={() => {
         setShowContactManager(true);
       }}
@@ -47,7 +51,7 @@ export const ContactInputContainer: React.FC<
           setSelectedContacts([]);
         },
         showActiveSelector: true,
-        showOnlyIndividuals: true,
+        restrictContactType: restrictContactType,
       }}
     />
   );

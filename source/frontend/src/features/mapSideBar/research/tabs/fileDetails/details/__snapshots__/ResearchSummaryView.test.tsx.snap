@@ -1,0 +1,368 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResearchSummaryView component renders as expected when research file is provided 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c0 {
+  padding-top: 1rem;
+}
+
+.c1 {
+  text-align: right;
+}
+
+.c3 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c2 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 mr-3 my-1"
+    />
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Project
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Ministry project:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            <div>
+              00048 CLAIMS
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Roads
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Road name:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            Test road name
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Road alias:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            Test road alias
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Research Request
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Research purpose:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Request date:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+             Apr 14, 2022
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Source of request:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            Headquarters (HQ)
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Requester:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            Dairy Queen Forever! Property Management
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Description of request:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+        a request description
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Result
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Research completed on:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            Mar 30, 2022
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Result of request:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+        A research result
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Expropriation
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Expropriation?:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            No
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Expropriation notes:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+        An expropriation note
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

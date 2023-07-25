@@ -1,0 +1,127 @@
+import clsx from 'classnames';
+import React from 'react';
+import { MdClose } from 'react-icons/md';
+import ReactVisibilitySensor from 'react-visibility-sensor';
+import styled from 'styled-components';
+
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import * as Styled from '@/components/common/styles';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+
+import { CompensationRequisitionDetailContainer } from './detail/CompensationRequisitionDetailContainer';
+import CompensationRequisitionDetailView from './detail/CompensationRequisitionDetailView';
+import UpdateCompensationRequisitionContainer from './update/UpdateCompensationRequisitionContainer';
+import UpdateCompensationRequisitionForm from './update/UpdateCompensationRequisitionForm';
+
+export interface CompensationRequisitionTrayViewProps {
+  compensation?: Api_CompensationRequisition;
+  acquisitionFile: Api_AcquisitionFile;
+  clientConstant: string;
+  gstConstant: number | undefined;
+  onClose: () => void;
+  loading: boolean;
+  error: boolean;
+  editMode: boolean;
+  setEditMode: (editMode: boolean) => void;
+  show: boolean;
+  setShow: (show: boolean) => void;
+  onUpdate: () => void;
+}
+
+export const CompensationRequisitionTrayView: React.FunctionComponent<
+  React.PropsWithChildren<CompensationRequisitionTrayViewProps>
+> = ({
+  compensation,
+  acquisitionFile,
+  clientConstant,
+  gstConstant,
+  editMode,
+  setEditMode,
+  show,
+  setShow,
+  loading,
+  error,
+  onClose,
+  onUpdate,
+}) => {
+  let detailViewContent =
+    !editMode && compensation ? (
+      <HalfHeightDiv>
+        {!!compensation?.id && acquisitionFile && (
+          <CompensationRequisitionDetailContainer
+            compensation={compensation}
+            acquisitionFile={acquisitionFile}
+            View={CompensationRequisitionDetailView}
+            clientConstant={clientConstant}
+            loading={loading}
+            setEditMode={setEditMode}
+          ></CompensationRequisitionDetailContainer>
+        )}
+      </HalfHeightDiv>
+    ) : undefined;
+
+  let updateViewConent =
+    editMode && compensation ? (
+      <HalfHeightDiv>
+        <UpdateCompensationRequisitionContainer
+          compensation={compensation}
+          acquisitionFile={acquisitionFile}
+          onSuccess={() => {
+            setEditMode(false);
+            onUpdate();
+          }}
+          onCancel={() => {
+            setEditMode(false);
+          }}
+          View={UpdateCompensationRequisitionForm}
+        ></UpdateCompensationRequisitionContainer>
+      </HalfHeightDiv>
+    ) : undefined;
+
+  let trayContent = editMode ? updateViewConent : detailViewContent;
+
+  if (error) {
+    trayContent = (
+      <b>
+        Failed to load Compensation requisition. Refresh the page or load another compensation
+        requisition.
+      </b>
+    );
+  } else if (!gstConstant) {
+    trayContent = <b>Failed to load Gst Constant</b>;
+  } else if (loading) {
+    trayContent = <LoadingBackdrop parentScreen show={loading} />;
+  }
+
+  return (
+    <ReactVisibilitySensor
+      onChange={(isVisible: boolean) => {
+        !isVisible && setShow(true);
+      }}
+    >
+      <Styled.PopupTray className={clsx({ show: show })}>
+        <Styled.TrayHeader>
+          {editMode ? 'Edit ' : ''}Compensation Requisition (H120)
+          <Styled.CloseButton
+            id="close-tray"
+            icon={<MdClose size={20} />}
+            title="close"
+            onClick={() => {
+              setShow(false);
+              setEditMode(false);
+              onClose();
+            }}
+          ></Styled.CloseButton>
+        </Styled.TrayHeader>
+        <Styled.ActivityTrayPage>{trayContent}</Styled.ActivityTrayPage>
+      </Styled.PopupTray>
+    </ReactVisibilitySensor>
+  );
+};
+
+const HalfHeightDiv = styled.div`
+  flex-direction: column;
+  display: flex;
+  height: 50%;
+`;

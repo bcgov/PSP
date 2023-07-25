@@ -1,14 +1,15 @@
 import clsx from 'classnames';
-import * as Styled from 'components/common/styles';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { Api_Activity } from 'models/api/Activity';
 import React from 'react';
 import { useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
 
-import { IFormContent } from '../../shared/content/models';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import * as Styled from '@/components/common/styles';
+import { IFormContent } from '@/features/mapSideBar/shared/content/models';
+import { Api_Activity } from '@/models/api/Activity';
+
 import { ActivityFile } from '../detail/ActivityContainer';
 import { ActivityForm } from '../detail/ActivityForm';
 

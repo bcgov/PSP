@@ -1,16 +1,17 @@
-import { SelectOption } from 'components/common/form';
-import * as API from 'constants/API';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import { DocumentStatusType } from 'constants/documentStatusType';
-import { DocumentTypeName } from 'constants/documentType';
 import { FormikProps } from 'formik';
-import useIsMounted from 'hooks/useIsMounted';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
-import { Api_DocumentType, Api_DocumentUploadRequest } from 'models/api/Document';
-import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
-import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+
+import { SelectOption } from '@/components/common/form';
+import * as API from '@/constants/API';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import { DocumentStatusType } from '@/constants/documentStatusType';
+import { DocumentTypeName } from '@/constants/documentType';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import useIsMounted from '@/hooks/util/useIsMounted';
+import { Api_DocumentType, Api_DocumentUploadRequest } from '@/models/api/Document';
+import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
+import { ExternalResultStatus } from '@/models/api/ExternalResult';
 
 import { DocumentUploadFormData } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
@@ -56,8 +57,12 @@ export const DocumentUploadContainer: React.FunctionComponent<
   };
 
   const isMounted = useIsMounted();
-  const { retrieveDocumentMetadataLoading, retrieveDocumentTypeMetadata, retrieveDocumentTypes } =
-    useDocumentProvider();
+  const {
+    retrieveDocumentMetadataLoading,
+    retrieveDocumentTypeMetadata,
+    getDocumentRelationshipTypes,
+    getDocumentTypes,
+  } = useDocumentProvider();
 
   const { uploadDocument, uploadDocumentLoading } = useDocumentRelationshipProvider();
 
@@ -97,15 +102,18 @@ export const DocumentUploadContainer: React.FunctionComponent<
   useEffect(() => {
     const retrievedDocumentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
     const fetch = async () => {
-      const axiosResponse = await retrieveDocumentTypes();
-      if (axiosResponse && isMounted()) {
-        if (props.relationshipType === DocumentRelationshipType.TEMPLATES) {
+      if (props.relationshipType === DocumentRelationshipType.TEMPLATES) {
+        const axiosResponse = await getDocumentTypes();
+        if (axiosResponse && isMounted()) {
           setDocumentTypes(axiosResponse.filter(x => x.documentType === DocumentTypeName.CDOGS));
           updateDocumentType(axiosResponse.find(x => x.documentType === DocumentTypeName.CDOGS));
           setDocumentStatusOptions(
             retrievedDocumentStatusTypes.filter(x => x.value === DocumentStatusType.Final),
           );
-        } else {
+        }
+      } else {
+        const axiosResponse = await getDocumentRelationshipTypes(props.relationshipType);
+        if (axiosResponse && isMounted()) {
           setDocumentTypes(axiosResponse.filter(x => x.isDisabled !== true));
           setDocumentStatusOptions(retrievedDocumentStatusTypes);
         }
@@ -115,7 +123,8 @@ export const DocumentUploadContainer: React.FunctionComponent<
     fetch();
   }, [
     props.relationshipType,
-    retrieveDocumentTypes,
+    getDocumentTypes,
+    getDocumentRelationshipTypes,
     isMounted,
     updateDocumentType,
     getOptionsByType,

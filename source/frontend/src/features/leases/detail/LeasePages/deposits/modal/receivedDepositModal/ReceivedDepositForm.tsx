@@ -1,15 +1,16 @@
-import { FastCurrencyInput, TextArea } from 'components/common/form';
-import { ContactInput } from 'components/common/form/ContactInput';
-import { InlineFastDatePicker, InlineInput, InlineSelect } from 'components/common/form/styles';
-import { ContactManagerModal } from 'components/contact/ContactManagerModal';
-import * as API from 'constants/API';
 import { Formik, FormikProps } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { IContactSearchResult } from 'interfaces';
 import * as React from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import { FastCurrencyInput, TextArea } from '@/components/common/form';
+import { ContactInput } from '@/components/common/form/ContactInput';
+import { InlineFastDatePicker, InlineInput, InlineSelect } from '@/components/common/form/styles';
+import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
+import * as API from '@/constants/API';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { IContactSearchResult } from '@/interfaces';
 
 import { FormLeaseDeposit } from '../../models/FormLeaseDeposit';
 import { ReceivedDepositYupSchema } from './ReceivedDepositYupSchema';

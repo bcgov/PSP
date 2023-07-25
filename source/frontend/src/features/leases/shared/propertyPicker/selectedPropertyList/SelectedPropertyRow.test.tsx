@@ -1,11 +1,12 @@
-import { IMapProperty } from 'components/propertySelector/models';
-import { PropertyForm } from 'features/properties/map/shared/models';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/mockLookups';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { renderAsync, RenderOptions, userEvent } from 'utils/test-utils';
+
+import { IMapProperty } from '@/components/propertySelector/models';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { renderAsync, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import SelectedPropertyRow, { ISelectedPropertyRowProps } from './SelectedPropertyRow';
 

@@ -1,35 +1,38 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { useApiDocuments } from 'hooks/pims-api/useApiDocuments';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { IApiError } from 'interfaces/IApiError';
+import { useCallback } from 'react';
+import { toast } from 'react-toastify';
+
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import { useApiDocuments } from '@/hooks/pims-api/useApiDocuments';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { IApiError } from '@/interfaces/IApiError';
 import {
   Api_DocumentType,
   Api_DocumentUpdateRequest,
   Api_DocumentUpdateResponse,
-} from 'models/api/Document';
+} from '@/models/api/Document';
 import {
   Api_FileDownload,
   Api_Storage_DocumentDetail,
   Api_Storage_DocumentMetadata,
   Api_Storage_DocumentTypeMetadataType,
   DocumentQueryResult,
-} from 'models/api/DocumentStorage';
-import { ExternalResult } from 'models/api/ExternalResult';
-import { useCallback } from 'react';
-import { toast } from 'react-toastify';
+} from '@/models/api/DocumentStorage';
+import { ExternalResult } from '@/models/api/ExternalResult';
 
 /**
  * hook that retrieves document information.
  */
 export const useDocumentProvider = () => {
   const {
-    getDocumentMetadata,
-    getDocumentTypeMetadata,
-    getDocumentTypes,
-    getDocumentDetail,
+    getDocumentMetadataApiCall,
+    getDocumentRelationshipTypesApiCall,
+    getDocumentTypeMetadataApiCall,
+    getDocumentDetailApiCall,
     downloadWrappedDocumentFileApiCall,
     downloadWrappedDocumentFileLatestApiCall,
     updateDocumentMetadataApiCall,
+    getDocumentTypesApiCall,
   } = useApiDocuments();
 
   // Provides functionality to retrieve document metadata information
@@ -42,8 +45,8 @@ export const useDocumentProvider = () => {
       >
     >({
       requestFunction: useCallback(
-        async (mayanDocumentId: number) => await getDocumentMetadata(mayanDocumentId),
-        [getDocumentMetadata],
+        async (mayanDocumentId: number) => await getDocumentMetadataApiCall(mayanDocumentId),
+        [getDocumentMetadataApiCall],
       ),
       requestName: 'retrieveDocumentMetadata',
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
@@ -68,8 +71,8 @@ export const useDocumentProvider = () => {
       >
     >({
       requestFunction: useCallback(
-        async (mayanDocumentId: number) => await getDocumentTypeMetadata(mayanDocumentId),
-        [getDocumentTypeMetadata],
+        async (mayanDocumentId: number) => await getDocumentTypeMetadataApiCall(mayanDocumentId),
+        [getDocumentTypeMetadataApiCall],
       ),
       requestName: 'retrieveDocumentTypeMetadata',
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
@@ -82,15 +85,41 @@ export const useDocumentProvider = () => {
     });
 
   // Provides functionality to retrieve document types
-  const { execute: retrieveDocumentTypes, loading: retrieveDocumentTypesLoading } =
-    useApiRequestWrapper<() => Promise<AxiosResponse<Api_DocumentType[], any>>>({
-      requestFunction: useCallback(async () => await getDocumentTypes(), [getDocumentTypes]),
-      requestName: 'retrieveDocumentTypes',
+  const { execute: getDocumentTypes, loading: getDocumentTypesLoading } = useApiRequestWrapper<
+    () => Promise<AxiosResponse<Api_DocumentType[], any>>
+  >({
+    requestFunction: useCallback(
+      async () => await getDocumentTypesApiCall(),
+      [getDocumentTypesApiCall],
+    ),
+    requestName: 'getDocumentTypes',
+    onError: useCallback((axiosError: AxiosError<IApiError>) => {
+      if (axiosError?.response?.status === 400) {
+        toast.error(axiosError?.response.data.error);
+      } else {
+        toast.error('Retrieve document types error. Check responses and try again.');
+      }
+    }, []),
+  });
+
+  // Provides functionality to retrieve document types by relationships
+  const { execute: getDocumentRelationshipTypes, loading: getDocumentRelationshipTypesLoading } =
+    useApiRequestWrapper<
+      (
+        relationshipType: DocumentRelationshipType,
+      ) => Promise<AxiosResponse<Api_DocumentType[], any>>
+    >({
+      requestFunction: useCallback(
+        async (relationshipType: DocumentRelationshipType) =>
+          await getDocumentRelationshipTypesApiCall(relationshipType),
+        [getDocumentRelationshipTypesApiCall],
+      ),
+      requestName: 'getDocumentRelationshipTypes',
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
         } else {
-          toast.error('Retrieve document types error. Check responses and try again.');
+          toast.error('Retrieve document relationship types error. Check responses and try again.');
         }
       }, []),
     });
@@ -125,8 +154,8 @@ export const useDocumentProvider = () => {
       ) => Promise<AxiosResponse<ExternalResult<Api_Storage_DocumentDetail>, any>>
     >({
       requestFunction: useCallback(
-        async (mayanDocumentId: number) => await getDocumentDetail(mayanDocumentId),
-        [getDocumentDetail],
+        async (mayanDocumentId: number) => await getDocumentDetailApiCall(mayanDocumentId),
+        [getDocumentDetailApiCall],
       ),
       requestName: 'DownloadDocumentDetail',
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
@@ -186,8 +215,10 @@ export const useDocumentProvider = () => {
     downloadWrappedDocumentFileLatestLoading,
     retrieveDocumentTypeMetadata,
     retrieveDocumentTypeMetadataLoading,
-    retrieveDocumentTypes,
-    retrieveDocumentTypesLoading,
+    getDocumentTypes,
+    getDocumentTypesLoading,
+    getDocumentRelationshipTypes,
+    getDocumentRelationshipTypesLoading,
     retrieveDocumentDetail,
     retrieveDocumentDetailLoading,
     updateDocument,

@@ -14,8 +14,10 @@ namespace PIMS.Tests.Automation.PageObjects
         //private By addDocumentBttn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/h2/div/div/div/div[contains(text(),'Documents')]/following-sibling::div/button");
 
         //Documents Tab List Header
-        private By documentsTitle = By.XPath("//div[contains(text(),'File Documents')]");
-        private By addDocumentBttn = By.XPath("//div[contains(text(),'File Documents')]/following-sibling::div/button");
+        private By documentsTitle = By.XPath("//div[contains(text(),'Documents')]");
+        private By documentsLeasesTitle = By.XPath("//div[contains(text(),'Documents')]");
+        private By addFileDocumentBttn = By.XPath("//div[contains(text(),'File Documents')]/following-sibling::div/button");
+        private By addDocumentBttn = By.XPath("//div[contains(text(),'Documents')]/following-sibling::div/button");
 
         //Upload Documents Dialog General Elements
         private By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4'] span");
@@ -87,7 +89,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Upload Photos/Images/Video and Correspondence Fields
         private By documentCivicAddressInput = By.Id("input-documentMetadata.96");
-        private By documentPhotosCorrespondenceTypeDateLabel = By.XPath("//label[contains(text(),'Date')]");
+        private By documentPhotosCorrespondenceTypeDateLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Date')]");
         private By documentPhotosCorrespondenceTypeDateInput = By.Id("input-documentMetadata.57");
         private By documentOwnerLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Owner')]");
         private By documentTypeOwnerInput = By.Id("input-documentMetadata.51");
@@ -103,7 +105,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Upload Title search/ Historical title Fields
         private By documentTitleSearchTypePIDLabel = By.XPath("//input[@id='input-documentMetadata.62']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'PID')]");
         private By documentTitleSearchTypePIDInput = By.Id("input-documentMetadata.62");
-        private By documentTitleSearchTypeTitleLabel = By.XPath("//label[contains(text(),'Title')]");
+        private By documentTitleSearchTypeTitleLabel = By.XPath("//input[@id='input-documentMetadata.58']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Title')]");
         private By documentTitleSearchTypeTitleInput = By.Id("input-documentMetadata.58");
 
         //Upload Historical File Fields
@@ -195,7 +197,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentViewCanadaLandSurveyContent = By.XPath("//label[contains(text(),'Canada land survey')]/parent::div/following-sibling::div");
         private By documentViewCivicAddressContent = By.XPath("//label[contains(text(),'Civic address')]/parent::div/following-sibling::div");
         private By documentViewCrownGrantContent = By.XPath("//label[contains(text(),'Crown grant #')]/parent::div/following-sibling::div");
-        private By documentViewDateContent = By.XPath("//label[contains(text(),'Date')]/parent::div/following-sibling::div");
+        private By documentViewDateContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Date')]/parent::div/following-sibling::div");
         private By documentViewDateSignedContent = By.XPath("//label[contains(text(),'Date signed')]/parent::div/following-sibling::div");
         private By documentViewDistrictLotContent = By.XPath("//label[contains(text(),'District lot')]/parent::div/following-sibling::div");
         private By documentViewElectoralDistrictContent = By.XPath("//label[contains(text(),'Electoral district')]/parent::div/following-sibling::div");
@@ -237,7 +239,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentViewRollContent = By.XPath("//label[contains(text(),'Roll')]/parent::div/following-sibling::div");
         private By documentViewSectionContent = By.XPath("//label[contains(text(),'Section')]/parent::div/following-sibling::div");
         private By documentViewShortDescriptorContent = By.XPath("//label[contains(text(),'Short descriptor')]/parent::div/following-sibling::div");
-        private By documentViewStartDateContent = By.XPath("//label[contains(text(),'Start date')]/parent::div/following-sibling::div");
+        private By documentViewStartDateContent = By.XPath("//div[@class='modal-body']/div/div[3]/div/div[4]/div/label[contains(text(),'Start date')]/parent::div/following-sibling::div");
         private By documentViewTitleContent = By.XPath("//label[contains(text(),'Title')]/parent::div/following-sibling::div");
         private By documentViewTransferContent = By.XPath("//label[contains(text(),'Transfer')]/parent::div/following-sibling::div");
         private By documentViewYearContent = By.XPath("//label[contains(text(),'Year')]/parent::div/following-sibling::div");
@@ -278,8 +280,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentFilterTypeSelect = By.XPath("//select[@data-testid='document-type']");
         private By documentFilterStatusSelect = By.XPath("//select[@data-testid='document-status']");
         private By documentFilterNameInput = By.XPath("//input[@data-testid='document-filename']");
-        private By documentFilterSearchBttn = By.XPath("//button[@data-testid='search']");
-        private By documentFilterResetBttn = By.XPath("//button[@data-testid='reset-button']");
+        private By documentFilterSearchBttn = By.XPath("//input[@id='input-filename']/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/button[@data-testid='search']");
+        private By documentFilterResetBttn = By.XPath("//input[@id='input-filename']/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/button[@data-testid='reset-button']");
 
         //Activities Documents List Results
         //private By documentTableResults = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/div[@data-testid='documentsTable']");
@@ -328,15 +330,18 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(documentsTab).Click();
         }
 
-        public void AddNewDocument()
+        public void AddNewDocument(string fileType)
         {
             Wait();
-            FocusAndClick(addDocumentBttn);
+            if (fileType.Equals("Lease") || fileType.Equals("CDOGS Templates") || fileType.Equals("Project"))
+                FocusAndClick(addDocumentBttn);
+            else
+                FocusAndClick(addFileDocumentBttn);
         }
 
         public void VerifyDocumentFields(string documentType)
         {
-            Wait();
+            Wait(5000);
             ChooseSpecificSelectOption(documentUploadDocTypeModalSelect, documentType);
 
             Wait();
@@ -384,7 +389,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 case "Privy council":
                     VerifyPrivyCouncilFields();
                     break;
-                case "OIC":
+                case "Order in Council (OIC)":
                     VerifyOICFields();
                     break;
                 case "Legal survey plan":
@@ -400,17 +405,25 @@ namespace PIMS.Tests.Automation.PageObjects
                     VerifyPAPlansFields();
                     break;
                 default:
-                    VerifyShotDescriptorField();
+                    VerifyShortDescriptorField();
                     break;
             }
         }
 
-        public void VerifyDocumentsListView()
+        public void VerifyDocumentsListView(string fileType)
         {
             Wait();
-            Assert.True(webDriver.FindElement(documentsTitle).Displayed);
-            Assert.True(webDriver.FindElement(addDocumentBttn).Displayed);
-
+            if (fileType.Equals("Lease") || fileType.Equals("CDOGS Templates") || fileType.Equals("Project"))
+            {
+                Assert.True(webDriver.FindElement(documentsLeasesTitle).Displayed);
+                Assert.True(webDriver.FindElement(addDocumentBttn).Displayed);
+            }
+            else
+            {
+                Assert.True(webDriver.FindElement(documentsTitle).Displayed);
+                Assert.True(webDriver.FindElement(addFileDocumentBttn).Displayed);
+            
+            }
             Assert.True(webDriver.FindElement(documentFilterTypeSelect).Displayed);
             Assert.True(webDriver.FindElement(documentFilterStatusSelect).Displayed);
             Assert.True(webDriver.FindElement(documentFilterNameInput).Displayed);
@@ -485,18 +498,16 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(documentTableResults1stViewBttn).Click();
         }
 
-        public void ViewIthDocument(int index)
+        public void ViewLastDocument(int index)
         {
-            Wait();
+            Wait(5000);
 
-            var elementChild = index + 1;
-
-            if (elementChild > 10)
+            if (index > 9)
             {
-                elementChild -= 10;
                 FocusAndClick(documentPaginationNextPageLink);
             }
-            
+
+            var elementChild = webDriver.FindElements(documentTableContentTotal).Count;
             FocusAndClick(By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[" + elementChild + "]/div/div[5]/div/div/button[@data-testid='document-view-button']"));
         }
 
@@ -957,12 +968,15 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void VerifyDocumentDetailsViewForm(DigitalDocument document)
+        public void VerifyDocumentDetailsCreateViewForm(DigitalDocument document)
         {
             Wait(20000);
 
             //Header
             Assert.True(webDriver.FindElement(documentViewDocumentTypeLabel).Displayed);
+            System.Diagnostics.Debug.WriteLine(webDriver.FindElement(documentViewDocumentTypeContent).Text);
+            System.Diagnostics.Debug.WriteLine(document.DocumentType);
+
             Assert.True(webDriver.FindElement(documentViewDocumentTypeContent).Text.Equals(document.DocumentType));
             Assert.True(webDriver.FindElement(documenyViewDocumentNameLabel).Displayed);
             Assert.True(webDriver.FindElement(documentViewFileNameContent).Text != "");
@@ -973,7 +987,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(documentViewDocumentInfoTooltip).Displayed);
             Assert.True(webDriver.FindElement(documentEditBttn).Displayed);
             Assert.True(webDriver.FindElement(documentUploadStatusLabel).Displayed);
-            Assert.True(webDriver.FindElement(documentViewStatusContent).Displayed);
+            Assert.True(webDriver.FindElement(documentViewStatusContent).Text.Equals(document.DocumentStatus));
 
             //Document Details
             Assert.True(webDriver.FindElement(documentUploadDetailsSubtitle).Displayed);
@@ -992,11 +1006,11 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (document.Date != "" && webDriver.FindElements(documentPhotosCorrespondenceTypeDateLabel).Count > 0)
             {
-                Assert.True(webDriver.FindElement(documentViewDateContent).Text == document.Date);
+                Assert.True(webDriver.FindElement(documentViewDateContent).Text == TranformFormatDateDocument(document.Date));
             }
             if (document.DateSigned != "" && webDriver.FindElements(documentDateSignedLabel).Count > 0)
             {
-                Assert.True(webDriver.FindElement(documentViewDateSignedContent).Text == document.DateSigned);
+                Assert.True(webDriver.FindElement(documentViewDateSignedContent).Text == TranformFormatDateDocument(document.DateSigned));
             }
             if (document.DistrictLot != "" && webDriver.FindElements(documentFieldNotesTypeDistrictLotLabel).Count > 0)
             {
@@ -1008,7 +1022,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (document.EndDate != "" && webDriver.FindElements(documentHistoricFileTypeEndDateLabel).Count > 0)
             {
-                Assert.True(webDriver.FindElement(documentViewEndDateContent).Text == document.EndDate);
+                Assert.True(webDriver.FindElement(documentViewEndDateContent).Text == TranformFormatDateDocument(document.EndDate));
             }
             if (document.FieldBook != "" && webDriver.FindElements(documentFieldNotesTypeYearLabel).Count > 0)
             {
@@ -1020,7 +1034,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (document.GazetteDate != "" && webDriver.FindElements(documentGazetteDateLabel).Count > 0)
             {
-                Assert.True(webDriver.FindElement(documentViewGazetteDateContent).Text == document.GazetteDate);
+                Assert.True(webDriver.FindElement(documentViewGazetteDateContent).Text == TranformFormatDateDocument(document.GazetteDate));
             }
             if (document.GazettePage != "" && webDriver.FindElements(documentGazettePageLabel).Count > 0)
             {
@@ -1028,7 +1042,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (document.GazettePublishedDate != "" && webDriver.FindElements(documentGazettePublishedDateLabel).Count > 0)
             {
-                Assert.True(webDriver.FindElement(documentViewGazettePublishedDateContent).Text == document.GazettePublishedDate);
+                Assert.True(webDriver.FindElement(documentViewGazettePublishedDateContent).Text == TranformFormatDateDocument(document.GazettePublishedDate));
             }
             if (document.GazetteType != "" && webDriver.FindElements(documentGazettePublishedTypeLabel).Count > 0)
             {
@@ -1124,7 +1138,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (document.PublishedDate != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyPublishDateLabel).Count > 0)
             {
-                Assert.True(webDriver.FindElement(documentViewPublishedDateContent).Text == document.PublishedDate);
+                Assert.True(webDriver.FindElement(documentViewPublishedDateContent).Text == TranformFormatDateDocument(document.PublishedDate));
             }
             if (document.RelatedGazette != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyRelatedGazetteLabel).Count > 0)
             {
@@ -1148,7 +1162,219 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (document.StartDate != "" && webDriver.FindElements(documentHistoricFileTypeStartDateLabel).Count > 0)
             {
-                Assert.True(webDriver.FindElement(documentViewStartDateContent).Text == document.StartDate);
+                Assert.True(webDriver.FindElement(documentViewStartDateContent).Text == TranformFormatDateDocument(document.StartDate));
+            }
+            if (document.Title != "" && webDriver.FindElements(documentTitleSearchTypeTitleLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewTitleContent).Text == document.Title);
+            }
+            if (document.Transfer != "" && webDriver.FindElements(documentTransferAdmTypeTransferLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewTransferContent).Text == document.Transfer);
+            }
+            if (document.Year != "" && webDriver.FindElements(documentYearLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewYearContent).Text == document.Year);
+            }
+            if (document.YearPrivyCouncil != "" && webDriver.FindElements(documentPrivyCouncilTypePrivyLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewYearPrivyCouncilContent).Text == document.YearPrivyCouncil);
+            }
+        }
+
+        public void VerifyDocumentDetailsUpdateViewForm(DigitalDocument document)
+        {
+            Wait(20000);
+
+            //Header
+            Assert.True(webDriver.FindElement(documentViewDocumentTypeLabel).Displayed);
+
+            Assert.True(webDriver.FindElement(documentViewDocumentTypeContent).Text != "");
+            Assert.True(webDriver.FindElement(documenyViewDocumentNameLabel).Displayed);
+            Assert.True(webDriver.FindElement(documentViewFileNameContent).Text != "");
+            Assert.True(webDriver.FindElement(documentViewDownloadButton).Displayed);
+
+            //Document Information
+            Assert.True(webDriver.FindElement(documentUploadDocInfoSubtitle).Displayed);
+            Assert.True(webDriver.FindElement(documentViewDocumentInfoTooltip).Displayed);
+            Assert.True(webDriver.FindElement(documentEditBttn).Displayed);
+            Assert.True(webDriver.FindElement(documentUploadStatusLabel).Displayed);
+            Assert.True(webDriver.FindElement(documentViewStatusContent).Text.Equals(document.DocumentStatus));
+
+            //Document Details
+            Assert.True(webDriver.FindElement(documentUploadDetailsSubtitle).Displayed);
+
+            if (document.CanadaLandSurvey != "" && webDriver.FindElements(documentCanLandSurveyTypeCanLandSurveyLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewCanadaLandSurveyContent).Text == document.CanadaLandSurvey);
+            }
+            if (document.CivicAddress != "" && webDriver.FindElements(documentCivicAddressLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewCivicAddressContent).Text == document.CivicAddress);
+            }
+            if (document.CrownGrant != "" && webDriver.FindElements(documentCrownGrantTypeCrownLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewCrownGrantContent).Text == document.CrownGrant);
+            }
+            if (document.Date != "" && webDriver.FindElements(documentPhotosCorrespondenceTypeDateLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewDateContent).Text == TranformFormatDateDocument(document.Date));
+            }
+            if (document.DateSigned != "" && webDriver.FindElements(documentDateSignedLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewDateSignedContent).Text == TranformFormatDateDocument(document.DateSigned));
+            }
+            if (document.DistrictLot != "" && webDriver.FindElements(documentFieldNotesTypeDistrictLotLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewDistrictLotContent).Text == document.DistrictLot);
+            }
+            if (document.ElectoralDistrict != "" && webDriver.FindElements(documentDistrictRoadRegisterTypeElectoralDistrictLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewElectoralDistrictContent).Text == document.ElectoralDistrict);
+            }
+            if (document.EndDate != "" && webDriver.FindElements(documentHistoricFileTypeEndDateLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewEndDateContent).Text == TranformFormatDateDocument(document.EndDate));
+            }
+            if (document.FieldBook != "" && webDriver.FindElements(documentFieldNotesTypeYearLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewFieldBookContent).Text == document.FieldBook);
+            }
+            if (document.File != "" && webDriver.FindElements(documentHistoricFileTypeFileLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewFileNumberContent).Text == document.File);
+            }
+            if (document.GazetteDate != "" && webDriver.FindElements(documentGazetteDateLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewGazetteDateContent).Text == TranformFormatDateDocument(document.GazetteDate));
+            }
+            if (document.GazettePage != "" && webDriver.FindElements(documentGazettePageLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewGazettePageContent).Text == document.GazettePage);
+            }
+            if (document.GazettePublishedDate != "" && webDriver.FindElements(documentGazettePublishedDateLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewGazettePublishedDateContent).Text == TranformFormatDateDocument(document.GazettePublishedDate));
+            }
+            if (document.GazetteType != "" && webDriver.FindElements(documentGazettePublishedTypeLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewGazettePublishedTypeContent).Text == document.GazetteType);
+            }
+            if (document.HighwayDistrict != "" && webDriver.FindElements(documentDistrictRoadRegisterTypeHighwayDistrictLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewGazetteHighwayDistrictContent).Text == document.HighwayDistrict);
+            }
+            if (document.IndianReserveOrNationalPark != "" && webDriver.FindElements(documentCanLandSurveyTypeIndianReserveLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewIndianReserveContent).Text == document.IndianReserveOrNationalPark);
+            }
+            if (document.Jurisdiction != "" && webDriver.FindElements(documentBCAssessmentTypeJurisdictionLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewJurisdictionContent).Text == document.Jurisdiction);
+            }
+            if (document.LandDistrict != "" && webDriver.FindElements(documentFieldNotesTypeLandDistrictLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewLandDistrictContent).Text == document.LandDistrict);
+            }
+            if (document.LegalSurveyPlan != "" && webDriver.FindElements(documentLegalSurveyNbrLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewLegalSurveyPlanContent).Text == document.LegalSurveyPlan);
+            }
+            if (document.LTSAScheduleFiling != "" && webDriver.FindElements(documentGazetteLTSALabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewLTSAScheduleFilingContent).Text == document.LTSAScheduleFiling);
+            }
+            if (document.MO != "" && webDriver.FindElements(documentMinisterialOrderTypeMOLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewMOContent).Text == document.MO);
+            }
+            if (document.MoTIFile != "" && webDriver.FindElements(documentMOTIFileLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewMotiFileContent).Text == document.MoTIFile);
+            }
+            if (document.MoTIPlan != "" && webDriver.FindElements(documentMOTIPlanLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewMotiPlanContent).Text == document.MoTIPlan);
+            }
+            if (document.OIC != "" && webDriver.FindElements(documentOICTypeOICLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewOICNumberContent).Text == document.OIC);
+            }
+            if (document.OICRoute != "" && webDriver.FindElements(documentOICTypeOICRouteLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewOICRouteContent).Text == document.OICRoute);
+            }
+            if (document.OICType != "" && webDriver.FindElements(documentOICTypeOICTypeLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewOICTypeContent).Text == document.OICType);
+            }
+            if (document.Owner != "" && webDriver.FindElements(documentOwnerLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewOwnerContent).Text == document.Owner);
+            }
+            if (document.PhysicalLocation != "" && webDriver.FindElements(documentHistoricFileTypePhyLocationLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewPhysicalLocationContent).Text == document.PhysicalLocation);
+            }
+            if (document.PIDNumber != "" && webDriver.FindElements(documentViewPIDLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewPIDContent).Text == document.PIDNumber);
+            }
+            if (document.PINNumber != "" && webDriver.FindElements(documentOtherTypePINLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewPINContent).Text == document.PINNumber);
+            }
+            if (document.Plan != "" && webDriver.FindElements(documentPAPlanNbrLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewPlanNumberContent).Text == document.Plan);
+            }
+            if (document.PlanRevision != "" && webDriver.FindElements(documentPAPlanRevisionLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewPlanRevisionContent).Text == document.PlanRevision);
+            }
+            if (document.PlanType != "" && webDriver.FindElements(documentLegalSurveyPlanTypeLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewPlanTypeContent).Text == document.PlanType);
+            }
+            if (document.Project != "" && webDriver.FindElements(documentPAPlanProjectLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewProjectNumberContent).Text == document.Project);
+            }
+            if (document.ProjectName != "" && webDriver.FindElements(documentViewProjectLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewProjectContent).Text == document.ProjectName);
+            }
+            if (document.PropertyIdentifier != "" && webDriver.FindElements(documentViewPropertyIdentifierLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewPropertyIdentifierContent).Text == document.PropertyIdentifier);
+            }
+            if (document.PublishedDate != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyPublishDateLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewPublishedDateContent).Text == TranformFormatDateDocument(document.PublishedDate));
+            }
+            if (document.RelatedGazette != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyRelatedGazetteLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewRelatedGazetteContent).Text == document.RelatedGazette);
+            }
+            if (document.RoadName != "" && webDriver.FindElements(documentRoadNameLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewRoadNameContent).Text == document.RoadName);
+            }
+            if (document.Roll != "" && webDriver.FindElements(documentBCAssessmentTypeRollLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewRollContent).Text == document.Roll);
+            }
+            if (document.Section != "" && webDriver.FindElements(documentHistoricFileTypeSectionLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewSectionContent).Text == document.Section);
+            }
+            if (document.ShortDescriptor != "" && webDriver.FindElements(documentShortDescriptorLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewShortDescriptorContent).Text == document.ShortDescriptor);
+            }
+            if (document.StartDate != "" && webDriver.FindElements(documentHistoricFileTypeStartDateLabel).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(documentViewStartDateContent).Text == TranformFormatDateDocument(document.StartDate));
             }
             if (document.Title != "" && webDriver.FindElements(documentTitleSearchTypeTitleLabel).Count > 0)
             {
@@ -1263,7 +1489,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(documentTransferAdmTypeMOTIFileMandatory).Displayed);
 
             Assert.True(webDriver.FindElement(documentTransferAdmTypeProIdLabel).Displayed);
-            Assert.True(webDriver.FindElement(documentTypePropIdInput).Displayed);
+            Assert.True(webDriver.FindElement(documentTypePropertyIdentifierInput).Displayed);
 
             Assert.True(webDriver.FindElement(documentRoadNameLabel).Displayed);
             Assert.True(webDriver.FindElement(documentRoadNameInput).Displayed);
@@ -1290,7 +1516,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(documentMOTIFileLabel).Displayed);
             Assert.True(webDriver.FindElement(documentTypeMotiFileInput).Displayed);
             Assert.True(webDriver.FindElement(documentPropertyIdentifierLabel).Displayed);
-            Assert.True(webDriver.FindElement(documentTypePropIdInput).Displayed);
+            Assert.True(webDriver.FindElement(documentTypePropertyIdentifierInput).Displayed);
             Assert.True(webDriver.FindElement(documentRoadNameLabel).Displayed);
             Assert.True(webDriver.FindElement(documentRoadNameInput).Displayed);
         }
@@ -1504,13 +1730,26 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(documentPAPlanProjectNameMandatory).Displayed);
         }
 
-        private void VerifyShotDescriptorField()
+        private void VerifyShortDescriptorField()
         {
             Wait();
             VerifyGeneralUploadDocumentForm();
 
             Assert.True(webDriver.FindElement(documentShortDescriptorLabel).Displayed);
             Assert.True(webDriver.FindElement(documentShortDescriptorInput).Displayed);
+        }
+
+        private string TranformFormatDateDocument(string date)
+        {
+            if (date == "")
+            {
+                return "";
+            }
+            else
+            {
+                var dateObject = DateTime.Parse(date);
+                return dateObject.ToString("G");
+            }
         }
     }
 }

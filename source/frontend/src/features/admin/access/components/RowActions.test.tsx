@@ -2,14 +2,15 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import { cleanup } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { FormAccessRequest } from 'features/admin/access-request/models';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import { mockApiAccessRequest } from 'mocks/filterDataMock';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+
+import { FormAccessRequest } from '@/features/admin/access-request/models';
+import { mockApiAccessRequest } from '@/mocks/filterData.mock';
 
 import { RowActions } from './RowActions';
 

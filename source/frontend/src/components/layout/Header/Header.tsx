@@ -1,16 +1,17 @@
-import { BCGovLogo } from 'components/common/BCGovLogo';
-import { VerticalBar } from 'components/common/VerticalBar';
-import HelpContainer from 'features/help/containers/HelpContainer';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import values from 'lodash/values';
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { FaBomb } from 'react-icons/fa';
-import { useAppSelector } from 'store/hooks';
-import { IGenericNetworkAction } from 'store/slices/network/interfaces';
-import { useTenant } from 'tenants';
-import { Logo } from 'tenants';
+
+import { BCGovLogo } from '@/components/common/BCGovLogo';
+import { VerticalBar } from '@/components/common/VerticalBar';
+import HelpContainer from '@/features/help/containers/HelpContainer';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { useAppSelector } from '@/store/hooks';
+import { IGenericNetworkAction } from '@/store/slices/network/interfaces';
+import { useTenant } from '@/tenants';
+import { Logo } from '@/tenants';
 
 import { ErrorModal } from './ErrorModal';
 import { HeaderStyled } from './HeaderStyled';

@@ -1,8 +1,9 @@
 import userEvent from '@testing-library/user-event';
-import { Claims } from 'constants/index';
-import { useApiLeases } from 'hooks/pims-api/useApiLeases';
-import { ILeaseSearchResult } from 'interfaces';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
+
+import { Claims } from '@/constants/index';
+import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
+import { ILeaseSearchResult } from '@/interfaces';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   fillInput,
@@ -10,7 +11,7 @@ import {
   RenderOptions,
   waitFor,
   waitForElementToBeRemoved,
-} from 'utils/test-utils';
+} from '@/utils/test-utils';
 
 import { ILeaseFilter } from '..';
 import { LeaseListView } from './LeaseListView';
@@ -20,7 +21,7 @@ const storeState = {
 };
 
 jest.mock('@react-keycloak/web');
-jest.mock('hooks/pims-api/useApiLeases');
+jest.mock('@/hooks/pims-api/useApiLeases');
 const getLeases = jest.fn();
 (useApiLeases as jest.Mock).mockReturnValue({
   getLeases,

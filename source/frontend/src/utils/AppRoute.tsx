@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, RouteComponentProps, RouteProps } from 'react-router-dom';
-import PrivateRoute from 'utils/PrivateRoute';
+
+import PrivateRoute from '@/utils/PrivateRoute';
 
 interface BaseAppRoute extends RouteProps {
   protected?: boolean;

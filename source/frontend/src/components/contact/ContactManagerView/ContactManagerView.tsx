@@ -1,9 +1,3 @@
-import { Button } from 'components/common/buttons/Button';
-import { Claims } from 'constants/claims';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
-import { useSearch } from 'hooks/useSearch';
-import { IContactSearchResult } from 'interfaces/IContactSearchResult';
 import { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { IoMdPersonAdd } from 'react-icons/io';
@@ -11,9 +5,17 @@ import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
+import { Button } from '@/components/common/buttons/Button';
+import { Claims } from '@/constants/claims';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { useSearch } from '@/hooks/useSearch';
+import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
+
 import {
   ContactFilterComponent,
   defaultFilter,
+  RestrictContactType,
 } from './ContactFilterComponent/ContactFilterComponent';
 import { ContactResultComponent } from './ContactResultComponent/ContactResultComponent';
 import { IContactFilter } from './IContactFilter';
@@ -28,7 +30,7 @@ interface IContactManagerViewProps {
   showAddButton?: boolean;
   showActiveSelector?: boolean;
   isSingleSelect?: boolean;
-  showOnlyIndividuals?: boolean;
+  restrictContactType?: RestrictContactType;
 }
 
 /**
@@ -44,7 +46,7 @@ const ContactManagerView = ({
   showAddButton,
   showActiveSelector,
   isSingleSelect,
-  showOnlyIndividuals,
+  restrictContactType,
 }: IContactManagerViewProps) => {
   const history = useHistory();
   const { hasClaim } = useKeycloakWrapper();
@@ -100,7 +102,7 @@ const ContactManagerView = ({
             filter={filter}
             setFilter={changeFilter}
             showActiveSelector={showActiveSelector}
-            showOnlyIndividuals={showOnlyIndividuals}
+            restrictContactType={restrictContactType}
           />
         </Col>
         {showAddButton && hasClaim(Claims.CONTACT_ADD) && (

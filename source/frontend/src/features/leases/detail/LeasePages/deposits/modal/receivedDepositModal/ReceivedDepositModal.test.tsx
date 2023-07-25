@@ -2,9 +2,10 @@ import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/mockLookups';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { FormLeaseDeposit } from '../../models/FormLeaseDeposit';
 import ReceivedDepositModal, { IReceivedDepositModalProps } from './ReceivedDepositModal';
@@ -30,7 +31,7 @@ describe('ReceivedDepositModal component', () => {
         onSave={onSave}
         onCancel={onCancel}
         display={true}
-        initialValues={FormLeaseDeposit.createEmpty()}
+        initialValues={FormLeaseDeposit.createEmpty(1)}
       />,
       {
         ...renderOptions,
@@ -56,7 +57,7 @@ describe('ReceivedDepositModal component', () => {
   });
   it('renders with data as expected', async () => {
     const { component } = await setup({
-      initialValues: FormLeaseDeposit.createEmpty(),
+      initialValues: FormLeaseDeposit.createEmpty(1),
     });
 
     expect(component.asFragment()).toMatchSnapshot();
@@ -81,6 +82,7 @@ describe('ReceivedDepositModal component', () => {
       depositTypeCode: 'SECURITY',
       description: 'Test description',
       id: undefined,
+      leaseId: 1,
       otherTypeDescription: '',
       contactHolder: { id: 'p1' },
       rowVersion: 0,

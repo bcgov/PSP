@@ -1,8 +1,9 @@
-import { Claims } from 'constants/claims';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/mockLookups';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, userEvent } from 'utils/test-utils';
+
+import { Claims } from '@/constants/claims';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ILayerPopupFlyoutProps, LayerPopupFlyout } from './LayerPopupFlyout';
 
@@ -22,7 +23,6 @@ describe('LayerPopupFlyout component', () => {
     // render component under test
     const component = render(
       <LayerPopupFlyout
-        pimsPropertyId={''}
         onViewPropertyInfo={onViewPropertyInfo}
         onCreateAcquisitionFile={onCreateAcquisitionFile}
         onCreateResearchFile={onCreateResearchFile}

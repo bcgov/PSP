@@ -9,7 +9,6 @@ namespace PIMS.Tests.Automation.Drivers
     {
         private readonly Lazy<IWebDriver> currentWebDriverLazy;
         private readonly Lazy<IConfiguration> configurationLazy;
-        //private bool _isDisposed;
         private readonly bool closeBrowserOnDispose;
         private readonly bool runAutomationHeadless;
 
@@ -68,17 +67,10 @@ namespace PIMS.Tests.Automation.Drivers
 
         public void Dispose()
         {
-            //if (_isDisposed)
-            //{
-            //    return;
-            //}
-
             if (currentWebDriverLazy.IsValueCreated && closeBrowserOnDispose)
             {
                 Current.Quit();
             }
-
-            //_isDisposed = true;
         }
     }
 }

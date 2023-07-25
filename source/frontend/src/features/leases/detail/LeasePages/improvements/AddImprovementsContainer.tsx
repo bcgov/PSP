@@ -1,56 +1,64 @@
-import * as API from 'constants/API';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
-import { useUpdateLease } from 'features/leases/hooks/useUpdateLease';
-import { apiLeaseToFormLease, formLeaseToApiLease } from 'features/leases/leaseUtils';
-import { FormikProps } from 'formik/dist/types';
-import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
-import { IFormLease, ILeaseImprovement } from 'interfaces';
+import { FormikProps } from 'formik';
 import { sortBy } from 'lodash';
-import * as React from 'react';
 import { useContext } from 'react';
-import { useHistory } from 'react-router';
-import { ILookupCode } from 'store/slices/lookupCodes';
+
+import * as API from '@/constants/API';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { usePropertyImprovementRepository } from '@/hooks/repositories/usePropertyImprovementRepository';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { Api_PropertyImprovement } from '@/models/api/PropertyImprovement';
+import { ILookupCode } from '@/store/slices/lookupCodes';
 
 import AddImprovementsForm from './AddImprovementsForm';
+import { ILeaseImprovementForm, ILeaseImprovementsForm } from './models';
 
 interface IAddImprovementsContainerProps {
-  formikRef: React.RefObject<FormikProps<IFormLease>>;
+  formikRef: React.RefObject<FormikProps<any>>;
   onEdit?: (isEditing: boolean) => void;
+  improvements: Api_PropertyImprovement[];
+  loading: boolean;
 }
 
 export const AddImprovementsContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddImprovementsContainerProps>
-> = ({ formikRef, onEdit, children }) => {
-  const { lease, setLease } = useContext(LeaseStateContext);
-  const { updateLease } = useUpdateLease();
-  const history = useHistory();
+> = ({ formikRef, onEdit, children, loading, improvements }) => {
+  const { lease } = useContext(LeaseStateContext);
+  const { updatePropertyImprovements } = usePropertyImprovementRepository();
   const { getByType } = useLookupCodeHelpers();
   const improvementTypeCodes = getByType(API.PROPERTY_IMPROVEMENT_TYPES);
 
-  const onCancel = () => {
-    history.push(`/lease/${lease?.id}/improvements`);
-  };
-
-  const onSubmit = async (lease: IFormLease) => {
+  const onSubmit = async (form: ILeaseImprovementsForm) => {
     try {
-      const leaseToUpdate = formLeaseToApiLease(removeEmptyImprovements(lease));
-      const updatedLease = await updateLease(leaseToUpdate, 'improvements');
-      if (!!updatedLease?.id) {
-        formikRef?.current?.resetForm({ values: apiLeaseToFormLease(updatedLease) });
-        setLease(updatedLease);
+      const apiImprovements = removeEmptyImprovements(form).improvements.map(i =>
+        ILeaseImprovementForm.toApi(i),
+      );
+      if (lease?.id && lease.rowVersion) {
+        const updatedPropertyImprovements = await updatePropertyImprovements.execute(
+          lease.id,
+          apiImprovements,
+        );
+        if (updatedPropertyImprovements) {
+          const form = new ILeaseImprovementsForm();
+          form.improvements = updatedPropertyImprovements.map(i =>
+            ILeaseImprovementForm.fromApi(i),
+          );
+          formikRef?.current?.resetForm({ values: form });
+          onEdit && onEdit(false);
+        }
       }
     } finally {
       formikRef?.current?.setSubmitting(false);
-      onEdit && onEdit(false);
     }
   };
+  const form = new ILeaseImprovementsForm();
+  form.improvements = improvements?.map(i => ILeaseImprovementForm.fromApi(i)) ?? [];
 
   return (
     <AddImprovementsForm
-      onCancel={onCancel}
+      loading={loading}
       formikRef={formikRef}
       onSubmit={onSubmit}
-      initialValues={addEmptyImprovements(apiLeaseToFormLease(lease), improvementTypeCodes)}
+      initialValues={addEmptyImprovements(form, improvementTypeCodes, lease?.id ?? undefined)}
     >
       {children}
     </AddImprovementsForm>
@@ -63,13 +71,14 @@ export const AddImprovementsContainer: React.FunctionComponent<
  * @param improvementTypes
  */
 const addEmptyImprovements = (
-  lease: IFormLease | undefined,
+  lease: ILeaseImprovementsForm,
   improvementTypes: ILookupCode[],
-): IFormLease | undefined => {
-  const allImprovements: ILeaseImprovement[] = [];
+  leaseId?: number,
+): ILeaseImprovementsForm | undefined => {
+  const allImprovements: ILeaseImprovementForm[] = [];
 
   improvementTypes.forEach(improvementType => {
-    let improvementForType: ILeaseImprovement | undefined = lease?.improvements.find(
+    let improvementForType: ILeaseImprovementForm | undefined = lease?.improvements.find(
       existingImprovement => existingImprovement.propertyImprovementTypeId === improvementType.id,
     );
     if (improvementForType === undefined) {
@@ -79,24 +88,24 @@ const addEmptyImprovements = (
         description: '',
         structureSize: '',
         address: '',
+        leaseId: leaseId ?? 0,
       };
     }
     allImprovements.push(improvementForType);
   });
   return {
-    ...lease,
     improvements: sortBy(allImprovements, 'displayOrder'),
-  } as IFormLease;
+  } as ILeaseImprovementsForm;
 };
 
 /**
  * Remove any improvements that are empty before saving to the API.
  * @param lease
  */
-const removeEmptyImprovements = (lease: IFormLease) => {
+const removeEmptyImprovements = (form: ILeaseImprovementsForm) => {
   return {
-    ...lease,
-    improvements: lease.improvements.filter(
+    ...form,
+    improvements: form.improvements.filter(
       improvement =>
         !!improvement.address || !!improvement.description || !!improvement.structureSize,
     ),

@@ -1,7 +1,32 @@
-import { ENVIRONMENT } from 'constants/environment';
-import { FinancialCodeTypes } from 'constants/index';
-import CustomAxios from 'customAxios';
-import { Api_FinancialCode } from 'models/api/FinancialCode';
+import { ENVIRONMENT } from '@/constants/environment';
+import { FinancialCodeTypes } from '@/constants/index';
+import CustomAxios from '@/customAxios';
+import { Api_FinancialCode } from '@/models/api/FinancialCode';
+
+export const getFinancialCodesByType = (codeType: FinancialCodeTypes) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FinancialCode[]>(
+    `/financial-codes/${codeType}`,
+  );
+
+export const getFinancialActivitiesCodes = () =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FinancialCode[]>(
+    `/financial-codes/financial-activities`,
+  );
+
+export const getChartOfAccountsCodes = () =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FinancialCode[]>(
+    `/financial-codes/chart-accounts`,
+  );
+
+export const getResponsibilityCodes = () =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FinancialCode[]>(
+    `/financial-codes/responsibilities`,
+  );
+
+export const getYearlyFinancialCodes = () =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FinancialCode[]>(
+    `/financial-codes/yearly-financials`,
+  );
 
 export const getFinancialCodes = () =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FinancialCode[]>(`/admin/financial-codes`);

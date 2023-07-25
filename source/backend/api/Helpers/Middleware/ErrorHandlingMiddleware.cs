@@ -78,6 +78,7 @@ namespace Pims.Api.Helpers.Middleware
             var code = HttpStatusCode.InternalServerError;
             var message = "An unhandled error has occurred.";
             string details = null;
+            string errorCode = null;
 
             if (ex is SecurityTokenException)
             {
@@ -145,10 +146,21 @@ namespace Pims.Api.Helpers.Middleware
             }
             else if (ex is UserOverrideException)
             {
+                var exception = ex as UserOverrideException;
                 code = HttpStatusCode.Conflict;
-                message = ex.Message;
+                message = exception.Message;
+                errorCode = (ex as UserOverrideException).UserOverride?.Code;
 
                 _logger.LogError(ex, "User override required to complete this action.");
+            }
+            else if (ex is ForeignKeyDependencyException)
+            {
+                var exception = ex as ForeignKeyDependencyException;
+                code = HttpStatusCode.Conflict;
+                message = exception.Message;
+                errorCode = null;
+
+                _logger.LogError(ex, "User deleting a foreign key dependency");
             }
             else if (ex is ApiHttpRequestException)
             {
@@ -220,7 +232,7 @@ namespace Pims.Api.Helpers.Middleware
 
             if (!context.Response.HasStarted)
             {
-                var result = JsonSerializer.Serialize(new Models.ErrorResponseModel(_env, ex, message, details), _options.JsonSerializerOptions);
+                var result = JsonSerializer.Serialize(new Models.ErrorResponseModel(_env, ex, message, details, errorCode), _options.JsonSerializerOptions);
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int)code;
                 await context.Response.WriteAsync(result);

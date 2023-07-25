@@ -275,9 +275,6 @@ exports[`Activity List View renders as expected 1`] = `
         >
           Activities
         </div>
-        <div
-          class="col-1"
-        />
       </div>
     </h2>
     <div

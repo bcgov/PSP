@@ -14,7 +14,9 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.FileName, src => src.FileName)
                 .Map(dest => dest.LegacyFileNumber, src => src.LegacyFileNumber)
                 .Map(dest => dest.Project, src => src.Project)
+                .Map(dest => dest.ProjectId, src => src.ProjectId)
                 .Map(dest => dest.Product, src => src.Product)
+                .Map(dest => dest.ProductId, src => src.ProductId)
                 .Map(dest => dest.FundingTypeCode, src => src.AcquisitionFundingTypeCodeNavigation)
                 .Map(dest => dest.FundingOther, src => src.FundingOther)
                 .Map(dest => dest.AssignedDate, src => src.AssignedDate)
@@ -27,7 +29,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.FileProperties, src => src.PimsPropertyAcquisitionFiles)
                 .Map(dest => dest.AcquisitionTeam, src => src.PimsAcquisitionFilePeople)
                 .Map(dest => dest.AcquisitionFileOwners, src => src.PimsAcquisitionOwners)
-                .Map(dest => dest.AcquisitionFileOwnerSolicitors, src => src.PimsAcquisitionOwnerSolicitors)
+                .Map(dest => dest.AcquisitionFileInterestHolders, src => src.PimsInterestHolders)
                 .Map(dest => dest.AcquisitionFileChecklist, src => src.PimsAcquisitionChecklistItems)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
@@ -37,8 +39,8 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.FileNumber, src => src.FileNumber)
                 .Map(dest => dest.FileName, src => src.FileName)
                 .Map(dest => dest.LegacyFileNumber, src => src.LegacyFileNumber)
-                .Map(dest => dest.ProjectId, src => src.Project.Id)
-                .Map(dest => dest.ProductId, src => src.Product.Id)
+                .Map(dest => dest.ProjectId, src => src.ProjectId)
+                .Map(dest => dest.ProductId, src => src.ProductId)
                 .Map(dest => dest.AcquisitionFundingTypeCode, src => src.FundingTypeCode.Id)
                 .Map(dest => dest.FundingOther, src => src.FundingOther)
                 .Map(dest => dest.AssignedDate, src => src.AssignedDate)
@@ -51,7 +53,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PimsPropertyAcquisitionFiles, src => src.FileProperties)
                 .Map(dest => dest.PimsAcquisitionFilePeople, src => src.AcquisitionTeam)
                 .Map(dest => dest.PimsAcquisitionOwners, src => src.AcquisitionFileOwners)
-                .Map(dest => dest.PimsAcquisitionOwnerSolicitors, src => src.AcquisitionFileOwnerSolicitors)
+                .Map(dest => dest.PimsInterestHolders, src => src.AcquisitionFileInterestHolders)
                 .Map(dest => dest.PimsAcquisitionChecklistItems, src => src.AcquisitionFileChecklist)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }

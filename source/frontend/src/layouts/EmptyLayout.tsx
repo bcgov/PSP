@@ -1,5 +1,6 @@
-import { EmptyHeader, Footer } from 'components/layout';
 import React from 'react';
+
+import { EmptyHeader, Footer } from '@/components/layout';
 
 import FooterStyled from './Footer';
 import HeaderStyled from './Header';

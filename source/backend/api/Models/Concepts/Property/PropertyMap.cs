@@ -18,6 +18,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.District, src => src.DistrictCodeNavigation)
                 .Map(dest => dest.Region, src => src.RegionCodeNavigation)
                 .Map(dest => dest.Location, src => src.Location)
+                .Map(dest => dest.GeneralLocation, src => src.GeneralLocation)
 
                 .Map(dest => dest.DataSource, src => src.PropertyDataSourceTypeCodeNavigation)
                 .Map(dest => dest.DataSourceEffectiveDate, src => src.PropertyDataSourceEffectiveDate)
@@ -33,6 +34,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PphStatusUpdateUserGuid, src => src.PphStatusUpdateUserGuid)
                 .Map(dest => dest.Notes, src => src.Notes)
                 .Map(dest => dest.IsOwned, src => src.IsOwned)
+                .Map(dest => dest.IsPropertyOfInterest, src => src.IsPropertyOfInterest)
                 .Map(dest => dest.IsVisibleToOtherAgencies, src => src.IsVisibleToOtherAgencies)
 
                 // multi-selects
@@ -57,6 +59,10 @@ namespace Pims.Api.Models.Concepts
 
                 .Map(dest => dest.Latitude, src => src.Location.Coordinate.Y)
                 .Map(dest => dest.Longitude, src => src.Location.Coordinate.X)
+
+                .Map(dest => dest.SurplusDeclarationComment, src => src.SurplusDeclarationComment)
+                .Map(dest => dest.SurplusDeclarationDate, src => src.SurplusDeclarationDate)
+                .Map(dest => dest.SurplusDeclarationType, src => src.SurplusDeclarationTypeCodeNavigation)
                 .Inherits<Entity.IBaseEntity, Api.Models.BaseModel>();
 
             config.NewConfig<PropertyModel, Entity.PimsProperty>()
@@ -70,6 +76,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.DistrictCode, src => src.District.Id)
                 .Map(dest => dest.RegionCode, src => src.Region.Id)
                 .Map(dest => dest.Location, src => src.Location)
+                .Map(dest => dest.GeneralLocation, src => src.GeneralLocation)
 
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)

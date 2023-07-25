@@ -34,9 +34,6 @@ exports[`TermsForm component renders as expected 1`] = `
         >
           Payments by Term
         </div>
-        <div
-          class="col-1"
-        />
       </div>
     </h2>
     <div
@@ -55,6 +52,10 @@ exports[`TermsForm component renders as expected 1`] = `
             role="row"
             style="display: flex; flex: 1 0 auto; min-width: 390px;"
           >
+            <div
+              class="th"
+              style="width: 4.7rem;"
+            />
             <div
               class="th"
               colspan="1"
@@ -528,9 +529,6 @@ exports[`TermsForm component renders with data as expected 1`] = `
         >
           Payments by Term
         </div>
-        <div
-          class="col-1"
-        />
       </div>
     </h2>
     <div
@@ -549,6 +547,10 @@ exports[`TermsForm component renders with data as expected 1`] = `
             role="row"
             style="display: flex; flex: 1 0 auto; min-width: 390px;"
           >
+            <div
+              class="th"
+              style="width: 4.7rem;"
+            />
             <div
               class="th"
               colspan="1"

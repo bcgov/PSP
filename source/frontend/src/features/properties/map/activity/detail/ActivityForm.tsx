@@ -1,17 +1,17 @@
-import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
-import { Claims } from 'constants/claims';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
 import { Formik, validateYupSchema, yupToFormErrors } from 'formik';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
-import { Api_Activity } from 'models/api/Activity';
-import * as React from 'react';
 import * as Yup from 'yup';
 
-import { IFormContent } from '../../shared/content/models';
+import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
+import { Section } from '@/components/common/Section/Section';
+import { Claims } from '@/constants';
+import { IFormContent } from '@/features/mapSideBar/shared/content/models';
+import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { Api_Activity } from '@/models/api/Activity';
+
 import { Activity, ActivityFile } from './ActivityContainer';
-import { ActivityView } from './ActivityView';
+import ActivityView from './ActivityView';
 import { ActivityModel } from './models';
 
 export interface IActivityFormProps {

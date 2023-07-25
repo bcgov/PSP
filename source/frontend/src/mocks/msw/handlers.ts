@@ -1,3 +1,5 @@
+import { rest } from 'msw';
+
 import {
   getMockAddresses,
   getMockDescription,
@@ -5,8 +7,7 @@ import {
   getMockLegalDescriptions,
   getMockSales,
   getMockValues,
-} from 'mocks/bcAssessmentMock';
-import { rest } from 'msw';
+} from '@/mocks/bcAssessment.mock';
 
 export const handlers = [
   rest.get('https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca', (req, res, ctx) => {

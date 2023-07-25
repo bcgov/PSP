@@ -1,7 +1,8 @@
 import { createMemoryHistory } from 'history';
-import { mockFinancialCode } from 'mocks';
-import { Api_FinancialCode } from 'models/api/FinancialCode';
-import { act, createAxiosError, render, RenderOptions, screen } from 'utils/test-utils';
+
+import { mockFinancialCode } from '@/mocks/index.mock';
+import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { act, createAxiosError, render, RenderOptions, screen } from '@/utils/test-utils';
 
 import AddFinancialCodeContainer, { IAddFinancialCodeFormProps } from './AddFinancialCodeContainer';
 
@@ -12,7 +13,7 @@ const mockApi = {
   loading: false,
 };
 
-jest.mock('../hooks/useFinancialCodeRepository', () => ({
+jest.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
   useFinancialCodeRepository: () => {
     return {
       addFinancialCode: mockApi,

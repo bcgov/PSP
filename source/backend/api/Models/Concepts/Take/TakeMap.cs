@@ -16,7 +16,6 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.NewRightOfWayArea, src => src.NewRightOfWayArea)
                 .Map(dest => dest.LandActArea, src => src.LandActArea)
                 .Map(dest => dest.LandActEndDt, src => src.LandActEndDt)
-                .Map(dest => dest.LandActDescription, src => src.LandActDescription)
                 .Map(dest => dest.PropertyAcquisitionFile, src => src.PropertyAcquisitionFile)
                 .Map(dest => dest.PropertyAcquisitionFileId, src => src.PropertyAcquisitionFileId)
                 .Map(dest => dest.StatutoryRightOfWayArea, src => src.StatutoryRightOfWayArea)
@@ -24,6 +23,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.TakeSiteContamTypeCode, src => src.TakeSiteContamTypeCode)
                 .Map(dest => dest.TakeTypeCode, src => src.TakeTypeCode)
                 .Map(dest => dest.TakeStatusTypeCode, src => src.TakeStatusTypeCode)
+                .Map(dest => dest.LandActTypeCode, src => src.LandActTypeCodeNavigation)
                 .Map(dest => dest.IsLicenseToConstruct, src => src.IsLicenseToConstruct)
                 .Map(dest => dest.IsNewRightOfWay, src => src.IsNewRightOfWay)
                 .Map(dest => dest.IsLandAct, src => src.IsLandAct)
@@ -43,7 +43,6 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.NewRightOfWayArea, src => src.NewRightOfWayArea)
                 .Map(dest => dest.LandActArea, src => src.LandActArea)
                 .Map(dest => dest.LandActEndDt, src => src.LandActEndDt)
-                .Map(dest => dest.LandActDescription, src => src.LandActDescription)
                 .Map(dest => dest.PropertyAcquisitionFile, src => src.PropertyAcquisitionFile)
                 .Map(dest => dest.PropertyAcquisitionFileId, src => src.PropertyAcquisitionFileId)
                 .Map(dest => dest.StatutoryRightOfWayArea, src => src.StatutoryRightOfWayArea)
@@ -51,6 +50,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.TakeSiteContamTypeCode, src => src.TakeSiteContamTypeCode)
                 .Map(dest => dest.TakeTypeCode, src => src.TakeTypeCode)
                 .Map(dest => dest.TakeStatusTypeCode, src => src.TakeStatusTypeCode)
+                .Map(dest => dest.LandActTypeCode, src => src.LandActTypeCode.Id)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }

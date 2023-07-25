@@ -1,9 +1,10 @@
-import Claims from 'constants/claims';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks';
-import { getMockApiFileForms } from 'mocks/mockForm';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+
+import Claims from '@/constants/claims';
+import { getMockApiFileForms } from '@/mocks/form.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import FormListView, { IFormListViewProps } from './FormListView';
 

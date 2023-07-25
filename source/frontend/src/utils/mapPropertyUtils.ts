@@ -1,10 +1,11 @@
-import { IMapProperty } from 'components/propertySelector/models';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Polygon } from 'geojson';
-import { geoJSON } from 'leaflet';
+import { geoJSON, LatLng } from 'leaflet';
 import { compact } from 'lodash';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
 import polylabel from 'polylabel';
-import { formatApiAddress, pidFormatter } from 'utils';
+
+import { IMapProperty } from '@/components/propertySelector/models';
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { formatApiAddress, pidFormatter } from '@/utils';
 
 import { Api_Geometry, Api_Property } from '../models/api/Property';
 
@@ -54,6 +55,14 @@ export const getPrettyLatLng = (location?: Api_Geometry) =>
     location?.coordinate?.y?.toFixed(6) ?? 0,
   ]).join(', ');
 
+export const getLatLng = (location?: Api_Geometry | null) => {
+  const coordinate = location?.coordinate;
+  if (coordinate !== null && coordinate !== undefined) {
+    return new LatLng(coordinate.y!, coordinate.x!);
+  }
+  return null;
+};
+
 export const getFilePropertyName = (
   fileProperty?: Api_PropertyFile,
   skipName: boolean = false,
@@ -67,8 +76,8 @@ export const getFilePropertyName = (
     fileProperty.propertyName !== '' &&
     skipName === false
   ) {
-    return { label: NameSourceType.NAME, value: fileProperty.propertyName };
-  } else if (fileProperty.property !== undefined) {
+    return { label: NameSourceType.NAME, value: fileProperty.propertyName ?? '' };
+  } else if (!!fileProperty.property) {
     const property = fileProperty.property;
     return getApiPropertyName(property);
   }

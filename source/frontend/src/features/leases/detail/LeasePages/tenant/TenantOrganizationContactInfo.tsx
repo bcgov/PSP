@@ -1,15 +1,15 @@
-import { getPrimaryContact } from 'features/contacts/contactUtils';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
-import { IFormLease } from 'interfaces';
-import * as React from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { withNameSpace } from 'utils/formUtils';
-import { formatApiPersonNames } from 'utils/personUtils';
 
-import { FormTenant } from './ViewTenantForm';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { getPrimaryContact } from '@/features/contacts/contactUtils';
+import { LeaseFormModel } from '@/features/leases/models';
+import { withNameSpace } from '@/utils/formUtils';
+import { formatApiPersonNames } from '@/utils/personUtils';
+
+import { FormTenant } from './models';
 
 export interface ITenantOrganizationContactInfoProps {
   nameSpace: string;
@@ -23,7 +23,7 @@ export interface ITenantOrganizationContactInfoProps {
 export const TenantOrganizationContactInfo: React.FunctionComponent<
   React.PropsWithChildren<ITenantOrganizationContactInfoProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace, disabled }) => {
-  const { values } = useFormikContext<IFormLease>();
+  const { values } = useFormikContext<LeaseFormModel>();
   const tenant: FormTenant = getIn(values, nameSpace);
   let primaryContact = tenant?.initialPrimaryContact;
   if (primaryContact?.id !== tenant?.primaryContactId) {

@@ -1,8 +1,9 @@
-import { Form } from 'components/common/form';
-import * as Styled from 'features/leases/detail/LeasePages/improvements/styles';
 import { getIn, useFormikContext } from 'formik';
-import { IFormLease } from 'interfaces';
 import { Form as BsForm } from 'react-bootstrap';
+
+import { Form } from '@/components/common/form';
+import * as Styled from '@/features/leases/detail/LeasePages/improvements/styles';
+import { LeaseFormModel } from '@/features/leases/models';
 
 export interface ISummaryProps {
   disabled?: boolean;
@@ -15,7 +16,7 @@ export interface ISummaryProps {
 export const Summary: React.FunctionComponent<React.PropsWithChildren<ISummaryProps>> = ({
   disabled,
 }) => {
-  const { values } = useFormikContext<IFormLease>();
+  const { values } = useFormikContext<LeaseFormModel>();
   const isResidential = getIn(values, 'isResidential');
   const isCommercial = getIn(values, 'isCommercialBuilding');
   const isOther = getIn(values, 'isOtherImprovement');

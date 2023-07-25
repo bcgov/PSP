@@ -1,18 +1,19 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { AddressTypes } from 'constants/index';
-import { usePersonDetail } from 'features/contacts/hooks/usePersonDetail';
-import useUpdateContact from 'features/contacts/hooks/useUpdateContact';
 import { createMemoryHistory } from 'history';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
+
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { AddressTypes } from '@/constants/index';
+import { usePersonDetail } from '@/features/contacts/hooks/usePersonDetail';
+import useUpdateContact from '@/features/contacts/hooks/useUpdateContact';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import {
   IEditableContactMethod,
   IEditableOrganization,
   IEditablePerson,
   IEditablePersonAddress,
-} from 'interfaces/editable-contact';
-import { mockLookups } from 'mocks/mockLookups';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+} from '@/interfaces/editable-contact';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import UpdatePersonForm from './UpdatePersonForm';
 
@@ -87,9 +88,9 @@ const mockAddress: IEditablePersonAddress = {
 };
 
 // Mock API service calls
-jest.mock('hooks/pims-api/useApiContacts');
-jest.mock('features/contacts/hooks/usePersonDetail');
-jest.mock('features/contacts/hooks/useUpdateContact');
+jest.mock('@/hooks/pims-api/useApiContacts');
+jest.mock('@/features/contacts/hooks/usePersonDetail');
+jest.mock('@/features/contacts/hooks/useUpdateContact');
 
 const getOrganization = jest.fn(() => mockOrganization);
 (useApiContacts as jest.Mock).mockReturnValue({ getOrganization });
@@ -166,7 +167,7 @@ describe('UpdatePersonForm', () => {
     it('should save the form with minimal data', async () => {
       const { getSaveButton } = setup();
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       expect(updatePerson).toBeCalledWith(mockPerson);
     });
@@ -204,7 +205,7 @@ describe('UpdatePersonForm', () => {
       });
 
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       expect(updatePerson).toBeCalledWith(newValues);
     });
@@ -253,7 +254,7 @@ describe('UpdatePersonForm', () => {
       });
 
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       expect(updatePerson).toBeCalledWith(newValues);
     });

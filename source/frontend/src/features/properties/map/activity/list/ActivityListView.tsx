@@ -1,18 +1,19 @@
-import { SelectOption } from 'components/common/form/Select';
-import { ModalContent } from 'components/common/GenericModal';
-import { TableSort } from 'components/Table/TableSort';
-import { Claims } from 'constants/claims';
-import { FileTypes } from 'constants/fileTypes';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { getDeleteModalProps, useModalContext } from 'hooks/useModalContext';
-import { defaultActivityFilter, IActivityFilter } from 'interfaces/IActivityResults';
 import { orderBy } from 'lodash';
-import { Api_Activity, Api_ActivityTemplate, Api_FileActivity } from 'models/api/Activity';
 import React, { useCallback, useContext } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
-import { SideBarContext } from '../../context/sidebarContext';
+import { SelectOption } from '@/components/common/form/Select';
+import { ModalContent } from '@/components/common/GenericModal';
+import { Section } from '@/components/common/Section/Section';
+import { TableSort } from '@/components/Table/TableSort';
+import { Claims } from '@/constants/claims';
+import { FileTypes } from '@/constants/fileTypes';
+import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
+import { defaultActivityFilter, IActivityFilter } from '@/interfaces/IActivityResults';
+import { Api_Activity, Api_ActivityTemplate, Api_FileActivity } from '@/models/api/Activity';
+
 import { useActivityRepository } from '../hooks/useActivityRepository';
 import { ActivityFilterForm } from './ActivityFilter/ActivityFilterForm';
 import { ActivityResults } from './ActivityResults/ActivityResults';

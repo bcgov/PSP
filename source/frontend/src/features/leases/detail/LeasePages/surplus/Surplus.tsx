@@ -1,11 +1,12 @@
-import { FormSection } from 'components/common/form/styles';
-import { ColumnWithProps, Table } from 'components/Table';
-import { PidCell } from 'components/Table/PidCell';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
-import { getIn } from 'formik';
-import { IProperty } from 'interfaces';
-import { useContext } from 'react';
-import { prettyFormatDate, stringToFragment } from 'utils';
+import { useContext, useEffect } from 'react';
+
+import { FormSection } from '@/components/common/form/styles';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { ColumnWithProps, Table } from '@/components/Table';
+import { PidCell } from '@/components/Table/PidCell';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
+import { prettyFormatDate, stringToFragment } from '@/utils';
 
 interface IDeclaration {
   id?: number;
@@ -55,20 +56,26 @@ const columns: ColumnWithProps<IDeclaration>[] = [
 
 const Surplus: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { lease } = useContext(LeaseStateContext);
-  const properties: IProperty[] = getIn(lease, 'properties') ?? [];
+  const {
+    getPropertyLeases: { execute: getPropertyLeases, response: properties, loading },
+  } = usePropertyLeaseRepository();
+  useEffect(() => {
+    lease?.id && getPropertyLeases(lease.id);
+  }, [lease, getPropertyLeases]);
 
-  let declarations: IDeclaration[] = properties.map<IDeclaration>(x => {
+  let declarations: IDeclaration[] = (properties ?? []).map<IDeclaration>(x => {
     return {
       id: x.id,
-      identifier: x.pid,
-      comments: x.surplusDeclaration?.comment || '',
-      declarationType: x.surplusDeclaration?.type?.description || 'Unknown',
-      date: x.surplusDeclaration?.date || '',
+      identifier: x?.property?.pid?.toString() ?? '',
+      comments: x?.property?.surplusDeclarationComment || '',
+      declarationType: x?.property?.surplusDeclarationType?.description || 'Unknown',
+      date: x?.property?.surplusDeclarationDate || '',
     };
   });
 
   return (
     <FormSection>
+      <LoadingBackdrop show={loading} parentScreen />
       <p>
         Data shown is from the Surplus Declaration workflow on the property screen and is not
         directly editable on this screen.

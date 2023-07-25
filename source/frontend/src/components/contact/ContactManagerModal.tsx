@@ -1,6 +1,7 @@
-import GenericModal, { ModalSize } from 'components/common/GenericModal';
-import { IContactSearchResult } from 'interfaces';
+import GenericModal, { ModalSize } from '@/components/common/GenericModal';
+import { IContactSearchResult } from '@/interfaces';
 
+import { RestrictContactType } from './ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import ContactManagerView from './ContactManagerView/ContactManagerView';
 
 export interface IContactManagerModalProps {
@@ -13,7 +14,7 @@ export interface IContactManagerModalProps {
   handleModalOk?: Function;
   handleModalCancel?: Function;
   isSingleSelect?: boolean;
-  showOnlyIndividuals?: boolean;
+  restrictContactType?: RestrictContactType;
   isSummary?: boolean;
 }
 
@@ -38,7 +39,7 @@ export const ContactManagerModal: React.FunctionComponent<
             showActiveSelector={props.showActiveSelector}
             noInitialSearch={props.selectedRows.length === 0}
             isSingleSelect={props.isSingleSelect}
-            showOnlyIndividuals={props.showOnlyIndividuals}
+            restrictContactType={props.restrictContactType}
             isSummary={props.isSummary ?? true}
             showSelectedRowCount
           />

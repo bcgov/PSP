@@ -1,11 +1,12 @@
-import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
-import { PointFeature } from 'components/maps/types';
-import { IMapProperty } from 'components/propertySelector/models';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import useIsMounted from 'hooks/useIsMounted';
 import debounce from 'lodash/debounce';
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
+
+import { MapStateActionTypes, MapStateContext } from '@/components/maps/providers/MapStateContext';
+import { PointFeature } from '@/components/maps/types';
+import { IMapProperty } from '@/components/propertySelector/models';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import useIsMounted from '@/hooks/util/useIsMounted';
 
 /**
  * Get a list of draft markers from the current form values.
@@ -13,26 +14,19 @@ import { useContext, useEffect } from 'react';
  * @param modifiedProperties the current form values to extract lat/lngs from.
  */
 const getDraftMarkers = (modifiedProperties: IMapProperty[]): PointFeature[] => {
-  return modifiedProperties
-    .filter((property: IMapProperty) => {
-      if (!property?.latitude || !property?.longitude) {
-        return false;
-      }
-      return true;
-    })
-    .map<PointFeature>((property: IMapProperty) => {
-      return {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [+(property?.longitude ?? 0), +(property?.latitude ?? 0)],
-        },
-        properties: {
-          id: 0,
-          name: property.name?.length ? property.name : 'New Parcel',
-        },
-      };
-    });
+  return modifiedProperties.map<PointFeature>((property: IMapProperty) => {
+    return {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [+(property?.longitude ?? 0), +(property?.latitude ?? 0)],
+      },
+      properties: {
+        id: 0,
+        name: property.name?.length ? property.name : 'New Parcel',
+      },
+    };
+  });
 };
 
 /**

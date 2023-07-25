@@ -1,4 +1,4 @@
-import { Api_File } from 'models/api/File';
+import { Api_File } from '@/models/api/File';
 
 import { Api_PropertyActivity } from './Activity';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';

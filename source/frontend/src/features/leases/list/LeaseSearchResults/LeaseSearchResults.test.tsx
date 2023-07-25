@@ -1,5 +1,5 @@
-import { ILeaseSearchResult } from 'interfaces';
-import { render, RenderOptions } from 'utils/test-utils';
+import { ILeaseSearchResult } from '@/interfaces';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import { ILeaseSearchResultsProps, LeaseSearchResults } from './LeaseSearchResults';
 

@@ -1,5 +1,7 @@
-import { EmailContactMethods, PhoneContactMethods } from 'constants/contactMethodType';
-import { AddressTypes } from 'constants/index';
+import { isEmpty } from 'lodash';
+
+import { EmailContactMethods, PhoneContactMethods } from '@/constants/contactMethodType';
+import { AddressTypes } from '@/constants/index';
 import {
   getDefaultAddress,
   getDefaultContactMethod,
@@ -14,12 +16,11 @@ import {
   IEditablePersonAddress,
   IEditablePersonAddressForm,
   IEditablePersonForm,
-} from 'interfaces/editable-contact';
-import { IContactPerson } from 'interfaces/IContact';
-import { isEmpty } from 'lodash';
-import { Api_Organization, Api_OrganizationPerson } from 'models/api/Organization';
-import { fromTypeCode, stringToBoolean, stringToNull, toTypeCode } from 'utils/formUtils';
-import { formatFullName } from 'utils/personUtils';
+} from '@/interfaces/editable-contact';
+import { IContactPerson } from '@/interfaces/IContact';
+import { Api_Organization, Api_OrganizationPerson } from '@/models/api/Organization';
+import { fromTypeCode, stringToBoolean, stringToUndefined, toTypeCode } from '@/utils/formUtils';
+import { formatFullName } from '@/utils/personUtils';
 
 import { Api_Address } from './../../models/api/Address';
 import { Api_Person } from './../../models/api/Person';
@@ -227,7 +228,7 @@ export function apiAddressToFormAddress(address?: IBaseAddress) {
 function formContactMethodToApiContactMethod(formContactMethod: IEditableContactMethodForm) {
   return {
     ...formContactMethod,
-    value: stringToNull(formContactMethod.value),
+    value: stringToUndefined(formContactMethod.value),
     contactMethodTypeCode: toTypeCode(formContactMethod.contactMethodTypeCode),
   } as IEditableContactMethod;
 }

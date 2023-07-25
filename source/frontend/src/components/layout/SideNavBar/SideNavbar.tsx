@@ -1,19 +1,15 @@
-import { ReactComponent as AdminPanelSettings } from 'assets/images/admin-panel-settings.svg';
-import { ReactComponent as Stops } from 'assets/images/airline-stops.svg';
-import { ReactComponent as Forms } from 'assets/images/dynamic-form.svg';
-import { ReactComponent as Fence } from 'assets/images/fence.svg';
-import { ReactComponent as Insights } from 'assets/images/insights.svg';
-import { ReactComponent as Inventory } from 'assets/images/inventory.svg';
-import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-agent.svg';
-import { ReactComponent as Source } from 'assets/images/source.svg';
 import clsx from 'classnames';
-import { NavIcon } from 'components/layout';
-import { Claims, Roles } from 'constants/index';
-import noop from 'lodash/noop';
 import { useContext, useState } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
 import { MdChevronLeft, MdChevronRight, MdContactMail, MdHome } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
+
+import { ReactComponent as AdminPanelSettings } from '@/assets/images/admin-panel-settings.svg';
+import { ReactComponent as Fence } from '@/assets/images/fence.svg';
+import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
+import { ReactComponent as Source } from '@/assets/images/source.svg';
+import { NavIcon } from '@/components/layout';
+import { Claims, Roles } from '@/constants/index';
 
 import { SidebarStateContext } from './SideNavbarContext';
 import { SidebarContextType, SideTray } from './SideTray';
@@ -61,7 +57,6 @@ export const SideNavBar = () => {
           text="Management"
           showText={expanded}
         />
-        <NavIcon onClick={noop} icon={<Stops />} text="Disposition" showText={expanded} />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.CONTACT)}
           icon={<MdContactMail size={24} />}
@@ -69,9 +64,6 @@ export const SideNavBar = () => {
           showText={expanded}
           claims={[Claims.CONTACT_VIEW]}
         />
-        <NavIcon onClick={noop} icon={<Inventory />} text="Documents" showText={expanded} />
-        <NavIcon onClick={noop} icon={<Forms />} text="Forms" showText={expanded} />
-        <NavIcon onClick={noop} icon={<Insights />} text="Reporting" showText={expanded} />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.ADMIN)}
           icon={<AdminPanelSettings />}

@@ -1,5 +1,5 @@
-import { Api_Address } from 'models/api/Address';
-export class GenerateAddress {
+import { Api_Address } from '@/models/api/Address';
+export class Api_GenerateAddress {
   line_1: string;
   line_2: string;
   line_3: string;
@@ -8,6 +8,7 @@ export class GenerateAddress {
   postal: string;
   country: string;
   address_string: string;
+  address_single_line_string: string;
 
   constructor(address: Api_Address | null) {
     this.line_1 = address?.streetAddress1 ?? '';
@@ -28,5 +29,16 @@ export class GenerateAddress {
     ]
       .filter(a => !!a)
       .join('\n');
+    this.address_single_line_string = [
+      this.line_1,
+      this.line_2,
+      this.line_3,
+      this.city,
+      this.province,
+      this.postal,
+      this.country,
+    ]
+      .filter(a => !!a)
+      .join(', ');
   }
 }

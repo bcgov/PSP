@@ -1,6 +1,7 @@
 import { cleanup, render, waitFor } from '@testing-library/react';
 import { useEffect } from 'react';
-import { createMapContainer, deferred } from 'utils/test-utils';
+
+import { createMapContainer, deferred } from '@/utils/test-utils';
 
 import Control from './Control';
 

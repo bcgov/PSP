@@ -329,7 +329,7 @@ exports[`TermForm component renders as expected 1`] = `
             id="input-isGstEligible-2"
             name="isGstEligible"
             type="radio"
-            value="false"
+            value="true"
           />
           <label
             class="form-check-label"
@@ -704,7 +704,7 @@ exports[`TermForm component renders with data as expected 1`] = `
             id="input-isGstEligible-2"
             name="isGstEligible"
             type="radio"
-            value="false"
+            value="true"
           />
           <label
             class="form-check-label"

@@ -23,17 +23,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
             documentsRowsQuantity = 0;
         }
 
-        [StepDefinition(@"I create Digital Documents from row number (.*)")]
-        public void DocumentTabResearchFile(int rowNumber)
+        [StepDefinition(@"I create Digital Documents for a ""(.*)"" row number (.*)")]
+        public void DocumentTabCreate(string fileType, int rowNumber)
         {
-            /* TEST COVERAGE: PSP-4159, PSP-4339, PSP-4340, PSP-4341 PSP-4342, PSP-4343, PSP-4344, PSP-4345, PSP-4346, PSP-4347, PSP-4348, PSP-4349, PSP-4350, PSP-4351, PSP-4352, PSP-4353, 
-             *                PSP-4354, PSP-4355, PSP-4356, PSP-4357 */
+            /* TEST COVERAGE: PSP-4159, PSP-4172, PSP-4339, PSP-4340, PSP-4341 PSP-4342, PSP-4343, PSP-4344, PSP-4345, PSP-4346, PSP-4347, PSP-4348, PSP-4349, PSP-4350, PSP-4351, PSP-4352, PSP-4353, 
+             *                PSP-4354, PSP-4355, PSP-4356, PSP-4357, PSP-5208, PSP-5435, PSP-5421, PSP-5440, PSP-5755, PSP-5766, PSP-5929, PSP-6018, PSP-6211 */
 
             //Access the documents tab
             digitalDocumentsTab.NavigateDocumentsTab();
 
             //Verify Initial List View
-            digitalDocumentsTab.VerifyDocumentsListView();
+            digitalDocumentsTab.VerifyDocumentsListView(fileType);
 
             //Getting Digital Document Details
             PopulateDigitalDocumentIndex(rowNumber);
@@ -41,7 +41,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (var i = 0; i < digitalDocumentList.Count; i++)
             {
                 //Add a New Document
-                digitalDocumentsTab.AddNewDocument();
+                digitalDocumentsTab.AddNewDocument(fileType);
 
                 //Verify and create a new Document
                 digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[i].DocumentType);
@@ -58,16 +58,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 digitalDocumentsTab.SaveDigitalDocument();
 
                 //Verify Details View Form
-                digitalDocumentsTab.ViewIthDocument(i);
-                digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[i]);
+                digitalDocumentsTab.ViewLastDocument(i);
+                digitalDocumentsTab.VerifyDocumentDetailsCreateViewForm(digitalDocumentList[i]);
                 digitalDocumentsTab.CloseDigitalDocumentViewDetails();
             }
         }
 
-        [StepDefinition(@"I edit a Digital Document from row number (.*)")]
-        public void UpdateDigitalDocuments(int rowNumber)
+        [StepDefinition(@"I edit a Digital Document for a ""(.*)"" from row number (.*)")]
+        public void UpdateDigitalDocuments(string fileType, int rowNumber)
         {
-            /* TEST COVERAGE:  PSP-4030, PSP-4168, PSP-4335, PSP-4336, PSP-4338 */
+            /* TEST COVERAGE: PSP-4030, PSP-4168, PSP-4335, PSP-4336, PSP-4338, PSP-5417, PSP-5418, PSP-5420, PSP-5436, PSP-5437, PSP-5439, PSP-5762, PSP-5765, PSP-5930 */
 
             //Access the documents tab
             digitalDocumentsTab.NavigateDocumentsTab();
@@ -76,7 +76,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             PopulateDigitalDocumentIndex(rowNumber);
 
             //Add new digital document
-            digitalDocumentsTab.AddNewDocument();
+            digitalDocumentsTab.AddNewDocument(fileType);
             Random random = new Random();
             var index2 = random.Next(0, documentFiles.Count());
             var document2 = documentFiles.ElementAt(index2);
@@ -106,7 +106,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Details View Form
             digitalDocumentsTab.View1stDocument();
-            digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[0]);
+            digitalDocumentsTab.VerifyDocumentDetailsUpdateViewForm(digitalDocumentList[0]);
 
             //Close Digital Documents Details View
             digitalDocumentsTab.CloseDigitalDocumentViewDetails();

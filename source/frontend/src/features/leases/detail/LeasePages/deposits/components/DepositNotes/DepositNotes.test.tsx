@@ -1,8 +1,9 @@
-import { Claims } from 'constants/claims';
 import { Formik } from 'formik';
-import { defaultFormLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
-import { fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
+
+import { Claims } from '@/constants/claims';
+import { LeaseFormModel } from '@/features/leases/models';
+import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { DepositNotes, IDepositNotesProps } from './DepositNotes';
 jest.mock('@react-keycloak/web');
@@ -12,11 +13,11 @@ const onSave = jest.fn();
 const onEdit = jest.fn();
 
 const setup = (
-  renderOptions: RenderOptions & Partial<IDepositNotesProps> & { lease?: IFormLease } = {},
+  renderOptions: RenderOptions & Partial<IDepositNotesProps> & { lease?: LeaseFormModel } = {},
 ) => {
   // render component under test
   const result = render(
-    <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
+    <Formik onSubmit={noop} initialValues={renderOptions.lease ?? new LeaseFormModel()}>
       <DepositNotes
         disabled={renderOptions.disabled}
         onCancel={onCancel}
@@ -40,7 +41,7 @@ describe('DepositNotes component', () => {
   });
   it('renders as expected', async () => {
     const { asFragment } = await setup({
-      lease: { ...defaultFormLease, returnNotes: 'security deposit notes' },
+      lease: { ...new LeaseFormModel(), returnNotes: 'security deposit notes' },
       claims: [],
     });
     expect(asFragment()).toMatchSnapshot();
@@ -48,7 +49,7 @@ describe('DepositNotes component', () => {
 
   it('renders the lease notes', async () => {
     const { getByDisplayValue } = await setup({
-      lease: { ...defaultFormLease, returnNotes: 'security deposit notes' },
+      lease: { ...new LeaseFormModel(), returnNotes: 'security deposit notes' },
       claims: [],
     });
     expect(getByDisplayValue('security deposit notes')).toBeVisible();
@@ -56,7 +57,7 @@ describe('DepositNotes component', () => {
 
   it('notes are only editable via correct claims', async () => {
     const { queryByTestId } = setup({
-      lease: { ...defaultFormLease, returnNotes: 'security deposit notes' },
+      lease: { ...new LeaseFormModel(), returnNotes: 'security deposit notes' },
       claims: [],
     });
     expect(queryByTestId('edit-notes')).toBeNull();
@@ -65,7 +66,7 @@ describe('DepositNotes component', () => {
   it('displays notes in read only form by default', async () => {
     const { container } = await setup({
       lease: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         returnNotes: 'security deposit notes',
       },
       disabled: true,
@@ -77,7 +78,7 @@ describe('DepositNotes component', () => {
 
   it('edit button allows notes field to be edited', async () => {
     const { getByTestId } = await setup({
-      lease: { ...defaultFormLease, returnNotes: 'security deposit notes' },
+      lease: { ...new LeaseFormModel(), returnNotes: 'security deposit notes' },
       claims: [Claims.LEASE_EDIT],
       disabled: true,
     });
@@ -88,7 +89,7 @@ describe('DepositNotes component', () => {
 
   it('edited notes can be saved', async () => {
     const { container, getByText } = await setup({
-      lease: { ...defaultFormLease, returnNotes: 'security deposit notes' },
+      lease: { ...new LeaseFormModel(), returnNotes: 'security deposit notes' },
       claims: [Claims.LEASE_EDIT],
       disabled: false,
     });
@@ -100,7 +101,7 @@ describe('DepositNotes component', () => {
 
   it('edited notes can be cancelled', async () => {
     const { getByText } = await setup({
-      lease: { ...defaultFormLease, returnNotes: 'security deposit notes' },
+      lease: { ...new LeaseFormModel(), returnNotes: 'security deposit notes' },
       claims: [Claims.LEASE_EDIT],
       disabled: false,
     });

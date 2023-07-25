@@ -2,12 +2,13 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultActivityFilter } from 'interfaces/IActivityResults';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks';
 import React from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
+
+import { defaultActivityFilter } from '@/interfaces/IActivityResults';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
 
 import { AddActivityForm, IAddActivityFormProps } from './AddActivityForm';
 

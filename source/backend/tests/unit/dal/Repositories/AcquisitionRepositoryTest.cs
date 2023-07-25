@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FluentAssertions;
 using Moq;
 using Pims.Core.Test;
@@ -196,6 +197,104 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             result.Should().NotBeNull();
             result.FileName.Should().Be("updated");
+        }
+
+        [Fact]
+        public void Update_Acquisition_OwnerRep_Add()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileEdit);
+
+            var context = helper.CreatePimsContext(user, true);
+
+            var person = EntityHelper.CreatePerson(1, "tester", "chester");
+            context.AddAndSaveChanges(person);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile(region: context.PimsRegions.FirstOrDefault());
+            context.AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var acquisitionUpdated = EntityHelper.CreateAcquisitionFile(acqFileId: 1, region: context.PimsRegions.FirstOrDefault());
+            acquisitionUpdated.PimsInterestHolders.Add(
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" }
+            );
+
+            var result = repository.Update(acquisitionUpdated);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.PimsInterestHolders.Should().HaveCount(1);
+            result.PimsInterestHolders.First().Person.Should().Be(person);
+            result.PimsInterestHolders.First().Comment.Should().Be("blah blah");
+        }
+
+        [Fact]
+        public void Update_Acquisition_OwnerRep_Update()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileEdit);
+
+            var context = helper.CreatePimsContext(user, true);
+
+            var person = EntityHelper.CreatePerson(1, "tester", "chester");
+            var updatePerson = EntityHelper.CreatePerson(2, "tester", "two");
+            updatePerson.PimsPersonAddresses = person.PimsPersonAddresses;
+            context.AddAndSaveChanges(person, updatePerson);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile(region: context.PimsRegions.FirstOrDefault());
+            acqFile.PimsInterestHolders.Add(
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" }
+            );
+            context.AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var acquisitionUpdated = EntityHelper.CreateAcquisitionFile(acqFileId: 1, region: context.PimsRegions.FirstOrDefault());
+            acquisitionUpdated.PimsInterestHolders.Add(
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = updatePerson.Internal_Id, Comment = "updated comment", InterestHolderTypeCode = "AOREP" }
+            );
+
+            var result = repository.Update(acquisitionUpdated);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.PimsInterestHolders.Should().HaveCount(1);
+            result.PimsInterestHolders.First().Person.Should().Be(updatePerson);
+            result.PimsInterestHolders.First().Comment.Should().Be("updated comment");
+        }
+
+        [Fact]
+        public void Update_Acquisition_OwnerRep_Remove()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileEdit);
+
+            var context = helper.CreatePimsContext(user, true);
+
+            var person = EntityHelper.CreatePerson(1, "tester", "chester");
+            context.AddAndSaveChanges(person);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile(region: context.PimsRegions.FirstOrDefault());
+            acqFile.PimsInterestHolders.Add(
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" }
+            );
+            context.AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var acquisitionUpdated = EntityHelper.CreateAcquisitionFile(acqFileId: 1, region: context.PimsRegions.FirstOrDefault());
+            var result = repository.Update(acquisitionUpdated);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.PimsInterestHolders.Should().BeEmpty();
         }
 
         [Fact]

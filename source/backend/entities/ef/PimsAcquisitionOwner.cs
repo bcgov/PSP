@@ -16,7 +16,8 @@ namespace Pims.Dal.Entities
     {
         public PimsAcquisitionOwner()
         {
-            PimsAcqOwnerCompReqChqs = new HashSet<PimsAcqOwnerCompReqChq>();
+            PimsAcquisitionPayees = new HashSet<PimsAcquisitionPayee>();
+            PimsForm8s = new HashSet<PimsForm8>();
         }
 
         [Key]
@@ -53,6 +54,10 @@ namespace Pims.Dal.Entities
         [Column("CONTACT_PHONE_NUM")]
         [StringLength(20)]
         public string ContactPhoneNum { get; set; }
+        [Column("EFFECTIVE_DATE", TypeName = "datetime")]
+        public DateTime? EffectiveDate { get; set; }
+        [Column("EXPIRY_DATE", TypeName = "datetime")]
+        public DateTime? ExpiryDate { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -98,7 +103,9 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(AddressId))]
         [InverseProperty(nameof(PimsAddress.PimsAcquisitionOwners))]
         public virtual PimsAddress Address { get; set; }
-        [InverseProperty(nameof(PimsAcqOwnerCompReqChq.AcquisitionOwner))]
-        public virtual ICollection<PimsAcqOwnerCompReqChq> PimsAcqOwnerCompReqChqs { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionPayee.AcquisitionOwner))]
+        public virtual ICollection<PimsAcquisitionPayee> PimsAcquisitionPayees { get; set; }
+        [InverseProperty(nameof(PimsForm8.AcquisitionOwner))]
+        public virtual ICollection<PimsForm8> PimsForm8s { get; set; }
     }
 }

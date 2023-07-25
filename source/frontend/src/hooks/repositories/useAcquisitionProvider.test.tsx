@@ -2,13 +2,14 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import find from 'lodash/find';
-import * as MOCK from 'mocks/dataMocks';
-import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { Provider } from 'react-redux';
 import { toast } from 'react-toastify';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { networkSlice } from 'store/slices/network/networkSlice';
+
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import * as MOCK from '@/mocks/data.mock';
+import { networkSlice } from '@/store/slices/network/networkSlice';
 
 import { useAcquisitionProvider } from './useAcquisitionProvider';
 
@@ -52,11 +53,11 @@ describe('useAcquisitionProvider hook', () => {
     jest.restoreAllMocks();
   });
 
-  let url: string;
+  let url: RegExp;
 
   describe('addAcquisitionFile', () => {
     beforeEach(() => {
-      url = `/acquisitionfiles`;
+      url = /acquisitionfiles.*/;
     });
 
     it('Dispatches success with correct response when request is successful', async () => {
@@ -64,7 +65,7 @@ describe('useAcquisitionProvider hook', () => {
       const { addAcquisitionFile } = setup();
 
       await act(async () => {
-        const response = await addAcquisitionFile.execute(mockAcquisitionFileResponse(1));
+        const response = await addAcquisitionFile.execute(mockAcquisitionFileResponse(1), []);
         expect(response).toEqual(mockAcquisitionFileResponse(1));
       });
 
@@ -77,18 +78,15 @@ describe('useAcquisitionProvider hook', () => {
       mockAxios.onPost(url).reply(400, MOCK.ERROR);
       const { addAcquisitionFile } = setup();
 
-      await act(async () => {
-        await addAcquisitionFile.execute(mockAcquisitionFileResponse(1));
-      });
-
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-      expect(toastErrorSpy).toHaveBeenCalled();
+      expect(async () => {
+        await addAcquisitionFile.execute(mockAcquisitionFileResponse(1), []);
+      }).rejects.toThrow();
     });
   });
 
   describe('getAcquisitionFile', () => {
     beforeEach(() => {
-      url = `/acquisitionfiles/1`;
+      url = /acquisitionfiles.*/;
     });
 
     it('Dispatches success with correct response when request is successful', async () => {

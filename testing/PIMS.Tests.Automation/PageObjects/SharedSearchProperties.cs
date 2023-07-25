@@ -94,7 +94,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             webDriver.FindElement(searchByPIDInput).SendKeys(PID);
 
-            webDriver.FindElement(searchByButton).Click();
+            FocusAndClick(searchByButton);
         }
 
         public void SelectPropertyByPIN(string PIN)
@@ -109,7 +109,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             webDriver.FindElement(searchByPINInput).SendKeys(PIN);
 
-            webDriver.FindElement(searchByButton).Click();
+            FocusAndClick(searchByButton);
         }
 
         public void SelectPropertyByAddress(string address)
@@ -141,7 +141,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             webDriver.FindElement(searchByPlanInput).SendKeys(plan);
 
-            webDriver.FindElement(searchByButton).Click();
+            FocusAndClick(searchByButton);
         }
 
         public void SelectPropertyByLegalDescription(string legalDescription)
@@ -156,7 +156,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             webDriver.FindElement(searchByLegalDescriptionInput).SendKeys(legalDescription);
 
-            webDriver.FindElement(searchByButton).Click();
+            FocusAndClick(searchByButton);
         }
 
         public void AddNameSelectedProperty(string name)
@@ -186,18 +186,15 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(PropertiesTotal - PropertiesLeft == 1);
         }
 
-        public void SelectFirstOption()
+        public void SelectFirstOption(Boolean isDuplicateTest)
         {
             WaitUntil(searchProperties1stResultPropDiv);
             FocusAndClick(searchProperties1stResultPropCheckbox);
 
-            Wait();
+            Wait(10000);
             ButtonElement("Add to selection");
 
-            //Wait();
-            //sharedModals.SiteMinderModal();
-
-            if (webDriver.FindElements(generalToastBody).Count() > 0)
+            if (webDriver.FindElements(generalToastBody).Count() > 0 && isDuplicateTest)
             {
                 Assert.True(sharedModals.ToastifyText().Equals("A property that the user is trying to select has already been added to the selected properties list"));
             }

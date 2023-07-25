@@ -1,4 +1,4 @@
-import { Api_Project } from 'models/api/Project';
+import { Api_Project } from '@/models/api/Project';
 
 import { isNullOrWhitespace } from './utils';
 

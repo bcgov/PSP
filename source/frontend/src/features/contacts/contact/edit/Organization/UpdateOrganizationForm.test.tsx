@@ -1,13 +1,14 @@
 import userEvent from '@testing-library/user-event';
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { AddressTypes } from 'constants/index';
-import { useOrganizationDetail } from 'features/contacts/hooks/useOrganizationDetail';
-import { useUpdateContact } from 'features/contacts/hooks/useUpdateContact';
 import { createMemoryHistory } from 'history';
-import { IEditableOrganization, IEditableOrganizationAddress } from 'interfaces/editable-contact';
-import { mockLookups } from 'mocks/mockLookups';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { AddressTypes } from '@/constants/index';
+import { useOrganizationDetail } from '@/features/contacts/hooks/useOrganizationDetail';
+import { useUpdateContact } from '@/features/contacts/hooks/useUpdateContact';
+import { IEditableOrganization, IEditableOrganizationAddress } from '@/interfaces/editable-contact';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import UpdateOrganizationForm from './UpdateOrganizationForm';
 
@@ -43,8 +44,8 @@ const mockAddress: IEditableOrganizationAddress = {
 };
 
 // Mock API service calls
-jest.mock('features/contacts/hooks/useOrganizationDetail');
-jest.mock('features/contacts/hooks/useUpdateContact');
+jest.mock('@/features/contacts/hooks/useOrganizationDetail');
+jest.mock('@/features/contacts/hooks/useUpdateContact');
 
 (useOrganizationDetail as jest.MockedFunction<typeof useOrganizationDetail>).mockReturnValue({
   organization: mockOrganization,
@@ -86,7 +87,7 @@ describe('UpdateOrganizationForm', () => {
     it('should cancel the form and navigate to Contacts Details view', async () => {
       const { getCancelButton } = setup({ id: 1 });
       const cancel = getCancelButton();
-      await act(() => userEvent.click(cancel));
+      await act(async () => userEvent.click(cancel));
       expect(history.location.pathname).toBe('/contact/O1');
     });
   });
@@ -95,7 +96,7 @@ describe('UpdateOrganizationForm', () => {
     it('should update the organization with minimal data', async () => {
       const { getSaveButton } = setup({ id: 1 });
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
       expect(updateOrganization).toBeCalledWith(mockOrganization);
     });
 
@@ -127,7 +128,7 @@ describe('UpdateOrganizationForm', () => {
       );
 
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       expect(updateOrganization).toBeCalledWith(newValues);
     });
@@ -152,7 +153,7 @@ describe('UpdateOrganizationForm', () => {
       await fillInput(container, 'mailingAddress.postal', mockAddress.postal);
 
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       expect(updateOrganization).toBeCalledWith(newValues);
     });

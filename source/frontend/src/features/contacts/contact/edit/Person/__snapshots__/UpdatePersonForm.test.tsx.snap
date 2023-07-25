@@ -468,6 +468,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
             >
               <div
                 class="c6 form-group"
+                data-testid="typeahead-organization"
               >
                 <label
                   class="form-label"

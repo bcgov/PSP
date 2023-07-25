@@ -6,10 +6,24 @@ exports[`Improvements Container component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  <b
-    class="mx-4"
+  .c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+<div
+    class="c0 form-section"
   >
-    If this lease/license includes any commercial, residential or other improvements on the property, switch to edit mode to add details to this record.
-  </b>
+    <div
+      class="collapse show"
+    >
+      <p>
+        There are no commercial, residential, or other improvements indicated with this lease/license.
+      </p>
+    </div>
+  </div>
 </DocumentFragment>
 `;

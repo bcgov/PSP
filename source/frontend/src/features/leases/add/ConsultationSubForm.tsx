@@ -1,11 +1,12 @@
-import { Input, Select } from 'components/common/form';
-import * as API from 'constants/API';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FormikProps } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
+
+import { Input, Select } from '@/components/common/form';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import * as API from '@/constants/API';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 
 import { FormLeaseConsultation, LeaseFormModel } from '../models';
 

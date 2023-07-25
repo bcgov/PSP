@@ -1,4 +1,4 @@
-import { AccessRequestStatus } from 'constants/accessStatus';
+import { AccessRequestStatus } from '@/constants/accessStatus';
 
 export interface IAccessRequestModel {
   id: number;

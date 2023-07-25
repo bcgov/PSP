@@ -106,7 +106,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given(string.Format("I create a new complete Research File from row number {0}", rowNumber), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
- testRunner.When("I create Digital Documents from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I create Digital Documents for a \"Research File\" row number 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 9
  testRunner.And("I create a new Note on the Notes Tab from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -146,7 +146,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("I navigate back to the Research File Summary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 19
- testRunner.And("I edit a Digital Document from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I edit a Digital Document for a \"Research File\" from row number 6", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 20
  testRunner.And("I edit a Note on the Notes Tab from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

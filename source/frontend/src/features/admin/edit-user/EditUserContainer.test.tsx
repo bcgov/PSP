@@ -2,11 +2,12 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/mockLookups';
-import { getUserMock } from 'mocks/userMock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
+
+import { mockLookups } from '@/mocks/lookups.mock';
+import { getUserMock } from '@/mocks/user.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   render,
@@ -14,7 +15,7 @@ import {
   userEvent,
   waitFor,
   waitForElementToBeRemoved,
-} from 'utils/test-utils';
+} from '@/utils/test-utils';
 
 import { FormUser } from '../users/models';
 import EditUserContainer, { IEditUserContainerProps } from './EditUserContainer';
@@ -74,10 +75,10 @@ describe('EditUserContainer component', () => {
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
 
     const textarea = container.querySelector(`textarea[name="note"]`) as HTMLElement;
-    await act(() => userEvent.type(textarea, 'test note'));
+    await act(async () => userEvent.type(textarea, 'test note'));
 
     const saveButton = getByText('Save');
-    await act(() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
 
     expect(mockAxios.history.put[0].url).toBe(
       '/keycloak/users/e81274eb-a007-4f2e-ada3-2817efcdb0a6',

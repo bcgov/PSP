@@ -188,9 +188,6 @@ exports[`DepositsContainer renders as expected 1`] = `
           >
             Deposits Received
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -316,9 +313,6 @@ exports[`DepositsContainer renders as expected 1`] = `
           >
             Deposits Returned
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -510,8 +504,10 @@ exports[`DepositsContainer renders as expected 1`] = `
             id="input-returnNotes"
             name="returnNotes"
             rows="5"
-            title=""
-          />
+            title="Tenant no longer has a dog, deposit returned, less fee for carpet cleaning"
+          >
+            Tenant no longer has a dog, deposit returned, less fee for carpet cleaning
+          </textarea>
         </div>
       </div>
     </div>

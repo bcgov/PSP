@@ -1,0 +1,1080 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddResearchForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c9.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c9.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c9.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c9.btn.btn-primary {
+  border: none;
+}
+
+.c9.btn.btn-secondary {
+  background: none;
+}
+
+.c9.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c9.btn.btn-info:hover,
+.c9.btn.btn-info:active,
+.c9.btn.btn-info:focus {
+  background: none;
+}
+
+.c9.btn.btn-light {
+  border: none;
+}
+
+.c9.btn.btn-dark {
+  border: none;
+}
+
+.c9.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c9.btn.btn-link:hover,
+.c9.btn.btn-link:active,
+.c9.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c9.btn.btn-link:disabled,
+.c9.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c9.btn:disabled,
+.c9.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c9.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c9.Button--icon-only:focus {
+  outline: none;
+}
+
+.c9.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c20 {
+  padding-right: 0;
+}
+
+.c20 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c21:not(:first-child) {
+  padding-left: 0;
+}
+
+.c21:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c22 {
+  font-size: 1.4rem;
+}
+
+.c12 {
+  background-color: white;
+  font-size: 1.4rem;
+  border-color: transparent;
+}
+
+.c12 .nav-tabs {
+  height: auto;
+}
+
+.c12 .nav-item {
+  min-width: 5rem;
+  padding: 0.1rem 0.6rem;
+}
+
+.c12 .nav-item:hover {
+  border-color: transparent;
+}
+
+.c12 .nav-item.active {
+  font-family: 'BCSans-Bold';
+  border-color: transparent;
+}
+
+.c13 {
+  font-family: 'BCSans-Bold';
+  font-size: 2rem;
+  border-bottom: solid 0.2rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.c8 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c3 {
+  font-size: 16px;
+  color: #1a5a96;
+  font-style: italic;
+  font-weight: bold;
+  -webkit-text-decoration: none solid rgb(26,90,150);
+  text-decoration: none solid rgb(26,90,150);
+  line-height: 24px;
+  margin-bottom: 1rem;
+}
+
+.c7 {
+  padding: 1.5rem 1.8rem;
+  border-radius: 4px;
+  background-color: #f0f7fc;
+  margin-bottom: 2rem;
+  font-size: 16px;
+  -webkit-text-decoration: none solid rgb(49,49,50);
+  text-decoration: none solid rgb(49,49,50);
+  line-height: 24px;
+}
+
+.c6 {
+  float: right;
+  cursor: pointer;
+  color: #1a5a96;
+  font-size: 2.8rem;
+}
+
+.c5 {
+  margin-right: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.c4 {
+  cursor: pointer;
+}
+
+.c18.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c17 {
+  font-weight: bold;
+}
+
+.c15:hover {
+  cursor: pointer;
+}
+
+.c14.c14.c14 input,
+.c14.c14.c14 select,
+.c14.c14.c14 textarea {
+  background: none;
+  border: none;
+  resize: none;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 0;
+}
+
+.c14.c14.c14 .form-label {
+  font-weight: bold;
+}
+
+.c16 {
+  font-family: 'BcSans-Bold';
+  margin-bottom: 1rem;
+}
+
+.c10 {
+  height: 100%;
+}
+
+.c10 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.4rem);
+  overflow-y: auto;
+}
+
+.c10 .tab-content .tab-pane {
+  position: relative;
+}
+
+.c11 {
+  height: auto;
+}
+
+.c11.tab-content {
+  height: auto;
+}
+
+.c19 {
+  border-radius: 0.5rem;
+}
+
+.c19 .idir-input-group .input-group-prepend select {
+  width: 16rem;
+}
+
+.c19 .idir-input-group input {
+  width: 18rem;
+  max-width: 100%;
+}
+
+.c23 {
+  font-size: 1.6rem;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.25rem;
+  font-family: 'BcSans-Bold';
+}
+
+.c2 input.form-control {
+  min-width: 50rem;
+  max-width: 50rem;
+}
+
+.c0 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 form-section"
+    >
+      <div
+        class="collapse show"
+      >
+        <div
+          class="py-4 no-gutters row"
+        >
+          <div
+            class="pr-5 col-auto"
+          >
+            <strong>
+              Name this research file:
+            </strong>
+          </div>
+          <div
+            class="col-auto"
+          >
+            <div
+              class="c2 input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-name"
+                name="name"
+                placeholder="Road name - Descriptive text"
+                title=""
+                value=""
+              />
+            </div>
+            A unique file number will be generated for this research file on save.
+          </div>
+        </div>
+        <h2
+          class="c3"
+        >
+          <div
+            class="c4 no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              <svg
+                class="c5"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+              Help with choosing a name
+            </div>
+            <div
+              class="col-1"
+            >
+              <svg
+                class="c6"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M7 10l5 5 5-5z"
+                />
+              </svg>
+            </div>
+          </div>
+        </h2>
+        <div
+          class="c7 collapse"
+        >
+          <p
+            class="mb-4"
+          >
+            Provide a predictable research file name that will be easy to search for. Recommended format is to use the road name(s) followed by some descriptive text that may include (but not limited to) one or more of the following:
+          </p>
+          <ul>
+            <li>
+              Ministry project name
+            </li>
+            <li>
+              Name of the area
+            </li>
+            <li>
+              Name of the MoTI highway district
+            </li>
+            <li>
+              Name of the enquirer
+            </li>
+            <li>
+              Legal description
+            </li>
+          </ul>
+          <p
+            class="mb-4 mt-3"
+          >
+            If the road name is not available /applicable, the descriptive text should make the research file easy to search for in the future
+          </p>
+          <p>
+            <b>
+              Note:
+            </b>
+             This name does not need to be entirely unique, as a unique file number will be generated for your research file when you save it.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c8"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Project
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <button
+          class="c9 Button btn btn-link"
+          data-testid="add-project"
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            + Add another project
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c8"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Properties to include in this file:
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="py-2"
+        >
+          Select one or more properties that you want to include in this research file. You can choose a location from the map, or search by other criteria.
+        </div>
+        <div
+          class="py-3 no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            <div
+              class="c10 c11"
+            >
+              <nav
+                class="c12 nav nav-tabs"
+                role="tablist"
+              >
+                <a
+                  aria-selected="true"
+                  class="nav-item nav-link active"
+                  data-rb-event-key="map"
+                  href="#"
+                  role="tab"
+                >
+                  Locate on Map
+                </a>
+                <a
+                  aria-selected="false"
+                  class="nav-item nav-link"
+                  data-rb-event-key="list"
+                  href="#"
+                  role="tab"
+                >
+                  Search
+                </a>
+              </nav>
+              <div
+                class="tab-content"
+              >
+                <div
+                  aria-hidden="false"
+                  class="fade tab-pane active show"
+                  role="tabpanel"
+                >
+                  <div
+                    class="c1 form-section"
+                  >
+                    <div
+                      class="collapse show"
+                    >
+                      <h3
+                        class="c13"
+                      >
+                        Select a property
+                      </h3>
+                      <div
+                        class="c14 row"
+                      >
+                        <div
+                          class="col-md-4"
+                        >
+                          <div
+                            class="d-flex flex-column align-items-center"
+                          >
+                            <svg
+                              class="c15"
+                              height="97"
+                              title="Click once to enter property selection mode."
+                              width="97"
+                            >
+                              icon-draft.svg
+                            </svg>
+                            <ol>
+                              <li>
+                                Single-click blue marker above
+                              </li>
+                              <li>
+                                Mouse to a parcel on the map
+                              </li>
+                              <li>
+                                Single-click on parcel to select it
+                              </li>
+                            </ol>
+                          </div>
+                        </div>
+                        <div
+                          class="col-md-8"
+                        >
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="c16 col"
+                            >
+                              Selected property attributes
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c17"
+                              >
+                                PID:
+                              </label>
+                            </div>
+                            <div
+                              class="c18 text-left col"
+                            />
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c17"
+                              >
+                                Plan #:
+                              </label>
+                            </div>
+                            <div
+                              class="c18 text-left col"
+                            />
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c17"
+                              >
+                                Address:
+                              </label>
+                            </div>
+                            <div
+                              class="c18 text-left col"
+                            />
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c17"
+                              >
+                                Region:
+                              </label>
+                            </div>
+                            <div
+                              class="c18 text-left col"
+                            />
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c17"
+                              >
+                                District:
+                              </label>
+                            </div>
+                            <div
+                              class="c18 text-left col"
+                            />
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="col-md-12"
+                            >
+                              <label
+                                class="form-label"
+                              >
+                                Legal Description:
+                              </label>
+                            </div>
+                            <div
+                              class="col-md-12"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  aria-hidden="true"
+                  class="fade tab-pane"
+                  role="tabpanel"
+                >
+                  <div
+                    class="c1 form-section"
+                  >
+                    <div
+                      class="collapse show"
+                    >
+                      <h3
+                        class="c13"
+                      >
+                        Search for a property
+                      </h3>
+                      <form
+                        class="c19 p-3"
+                        novalidate=""
+                      >
+                        <div
+                          class="row"
+                        >
+                          <div
+                            class="col-xl-6"
+                          >
+                            <div
+                              class="flex-nowrap input-group row"
+                            >
+                              <div
+                                class="c20 col-auto"
+                              >
+                                <div
+                                  class="input-group-prepend"
+                                >
+                                  <div
+                                    class="form-group"
+                                  >
+                                    <select
+                                      class="form-select form-control"
+                                      id="input-searchBy"
+                                      name="searchBy"
+                                    >
+                                      <option
+                                        class="option"
+                                        data-testid="select-option-pid"
+                                        value="pid"
+                                      >
+                                        PID
+                                      </option>
+                                      <option
+                                        class="option"
+                                        data-testid="select-option-pin"
+                                        value="pin"
+                                      >
+                                        PIN
+                                      </option>
+                                      <option
+                                        class="option"
+                                        data-testid="select-option-address"
+                                        value="address"
+                                      >
+                                        Address
+                                      </option>
+                                      <option
+                                        class="option"
+                                        data-testid="select-option-planNumber"
+                                        value="planNumber"
+                                      >
+                                        Plan #
+                                      </option>
+                                      <option
+                                        class="option"
+                                        data-testid="select-option-legalDescription"
+                                        value="legalDescription"
+                                      >
+                                        Legal Description
+                                      </option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="c21 col"
+                              >
+                                <div
+                                  class="input form-group"
+                                >
+                                  <input
+                                    autocomplete="off"
+                                    class="form-control"
+                                    id="input-pid"
+                                    name="pid"
+                                    placeholder="Enter a PID"
+                                    title=""
+                                    value=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="pr-0 col-xl-2"
+                          >
+                            <div
+                              class="row"
+                            >
+                              <div
+                                class="pr-0 col"
+                              >
+                                <button
+                                  class="c9 Button Button--icon-only primary btn btn-primary"
+                                  data-testid="search"
+                                  id="search-button"
+                                  title="search"
+                                  type="button"
+                                >
+                                  <div
+                                    class="Button__icon"
+                                  >
+                                    <svg
+                                      fill="currentColor"
+                                      height="20"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 512 512"
+                                      width="20"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                                      />
+                                    </svg>
+                                  </div>
+                                </button>
+                              </div>
+                              <div
+                                class="pl-0 col"
+                              >
+                                <button
+                                  class="c9 Button Button--icon-only btn btn-info"
+                                  data-testid="reset-button"
+                                  id="reset-button"
+                                  title="reset-button"
+                                  type="reset"
+                                >
+                                  <div
+                                    class="Button__icon"
+                                  >
+                                    <svg
+                                      fill="currentColor"
+                                      height="20"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 512 512"
+                                      width="20"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
+                                      />
+                                    </svg>
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div
+                    class="c1 form-section"
+                  >
+                    <div
+                      class="collapse show"
+                    >
+                      <div
+                        class="table"
+                        data-testid="map-properties"
+                        role="table"
+                      >
+                        <div
+                          class="thead thead-light"
+                        >
+                          <div
+                            class="tr"
+                            role="row"
+                            style="display: flex; flex: 1 0 auto; min-width: 150px;"
+                          >
+                            <div
+                              class="th"
+                              colspan="1"
+                              role="columnheader"
+                              style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                            >
+                              <div
+                                class="sortable-column"
+                              >
+                                <div>
+                                  <input
+                                    data-testid="selectrow-parent"
+                                    name=""
+                                    style="cursor: pointer;"
+                                    title="Click to deselect all."
+                                    type="checkbox"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="th"
+                              colspan="1"
+                              role="columnheader"
+                              style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                            >
+                              <div
+                                class="sortable-column"
+                              >
+                                PID
+                              </div>
+                            </div>
+                            <div
+                              class="th"
+                              colspan="1"
+                              role="columnheader"
+                              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                            >
+                              <div
+                                class="sortable-column"
+                              >
+                                PIN
+                              </div>
+                            </div>
+                            <div
+                              class="th"
+                              colspan="1"
+                              role="columnheader"
+                              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                            >
+                              <div
+                                class="sortable-column"
+                              >
+                                Plan #
+                              </div>
+                            </div>
+                            <div
+                              class="th"
+                              colspan="1"
+                              role="columnheader"
+                              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                            >
+                              <div
+                                class="sortable-column"
+                              >
+                                Address
+                              </div>
+                            </div>
+                            <div
+                              class="th"
+                              colspan="1"
+                              role="columnheader"
+                              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                            >
+                              <div
+                                class="sortable-column"
+                              >
+                                Legal Description
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="no-rows-message"
+                        >
+                          No results found for your search criteria.
+                        </div>
+                      </div>
+                      <div
+                        class="row"
+                      >
+                        <div
+                          class="align-self-center col-auto"
+                        />
+                        <div
+                          class="ml-auto align-self-center col-auto"
+                        >
+                          <p
+                            class="c22"
+                          >
+                            0 selected
+                          </p>
+                        </div>
+                        <div
+                          class="align-self-center col-auto"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c1 form-section"
+        >
+          <h2
+            class="c8"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                Selected properties
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <div
+              class="c23 no-gutters row"
+            >
+              <div
+                class="col-md-3"
+              >
+                Identifier
+              </div>
+              <div
+                class="col-md-9"
+              >
+                Provide a descriptive name for this land
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-property-selector-tooltip"
+                  id="property-selector-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <span>
+              No Properties selected
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

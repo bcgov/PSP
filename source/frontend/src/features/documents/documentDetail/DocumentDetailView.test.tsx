@@ -1,10 +1,14 @@
-import { Claims } from 'constants/claims';
 import { createMemoryHistory } from 'history';
-import { mockDocumentTypesResponse } from 'mocks/mockDocuments';
-import { mockLookups } from 'mocks/mockLookups';
-import { Api_Storage_DocumentMetadata, Api_Storage_MetadataType } from 'models/api/DocumentStorage';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { mockKeycloak, render, RenderOptions } from 'utils/test-utils';
+
+import { Claims } from '@/constants/claims';
+import { mockDocumentTypesResponse } from '@/mocks/documents.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import {
+  Api_Storage_DocumentMetadata,
+  Api_Storage_MetadataType,
+} from '@/models/api/DocumentStorage';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
 import { ComposedDocument } from '../ComposedDocument';
 import { DocumentDetailView } from './DocumentDetailView';

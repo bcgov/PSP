@@ -1,13 +1,21 @@
-import { Api_File } from 'models/api/File';
-import Api_TypeCode from 'models/api/TypeCode';
 import moment from 'moment';
+
+import { Api_File } from '@/models/api/File';
+import Api_TypeCode from '@/models/api/TypeCode';
 
 import { Api_Address } from './Address';
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import { Api_InterestHolder } from './InterestHolder';
 import { Api_Person } from './Person';
 import { Api_Product, Api_Project } from './Project';
 import { Api_PropertyFile } from './PropertyFile';
+
+export enum EnumAcquisitionFileType {
+  CONSEN = 'CONSEN',
+  SECTN3 = 'SECTN3',
+  SECTN6 = 'SECTN6',
+}
 
 export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFields, Api_File {
   id?: number;
@@ -23,10 +31,12 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   regionCode?: Api_TypeCode<number>;
   acquisitionTeam?: Api_AcquisitionFilePerson[];
   acquisitionFileOwners?: Api_AcquisitionFileOwner[];
-  acquisitionFileOwnerSolicitors?: Api_AcquisitionFileSolicitor[];
+  acquisitionFileInterestHolders?: Api_InterestHolder[];
   acquisitionFileChecklist?: Api_AcquisitionFileChecklistItem[];
   project?: Api_Project;
+  projectId: number | null;
   product?: Api_Product;
+  productId: number | null;
   fundingTypeCode?: Api_TypeCode<string>;
   fundingOther?: string;
 }
@@ -44,21 +54,6 @@ export interface Api_AcquisitionFilePerson extends Api_ConcurrentVersion, Api_Au
   personProfileTypeCode?: string;
   personProfileType?: Api_TypeCode<string>;
   isDisabled?: boolean;
-}
-
-export interface Api_AcquisitionFileSolicitor extends Api_ConcurrentVersion, Api_AuditFields {
-  id: number | null;
-  personId: number | null;
-  person: Api_Person | null;
-  isDisabled: boolean | null;
-}
-
-export interface Api_AcquisitionFileSolicitor extends Api_ConcurrentVersion, Api_AuditFields {
-  id: number | null;
-  acquisitionFileId: number | null;
-  personId: number | null;
-  person: Api_Person | null;
-  isDisabled: boolean | null;
 }
 
 export interface Api_AcquisitionFileOwner extends Api_ConcurrentVersion, Api_AuditFields {
@@ -103,6 +98,9 @@ export function lastModifiedBy(array: Api_AuditFields[] = []): Api_AuditFields |
   let lastModified: Api_AuditFields | undefined = undefined;
 
   for (const item of array) {
+    if (moment(item.appLastUpdateTimestamp).isBefore(moment('1900-01-01T00:00:00.000Z'))) {
+      continue;
+    }
     if (lastModified === undefined) {
       lastModified = item;
       continue;

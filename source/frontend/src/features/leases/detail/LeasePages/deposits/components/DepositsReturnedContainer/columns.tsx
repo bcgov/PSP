@@ -1,17 +1,18 @@
-import { Button } from 'components/common/buttons/Button';
-import { InlineFlexDiv } from 'components/common/styles';
-import { ColumnWithProps, renderDate, renderMoney } from 'components/Table';
-import Claims from 'constants/claims';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_Contact } from 'models/api/Contact';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
-import { formatNames } from 'utils/personUtils';
+
+import { Button } from '@/components/common/buttons/Button';
+import { InlineFlexDiv } from '@/components/common/styles';
+import { ColumnWithProps, renderDate, renderMoney } from '@/components/Table';
+import Claims from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_Contact } from '@/models/api/Contact';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
+import { formatNames } from '@/utils/personUtils';
 
 export class ReturnListEntry {
   public id: number;
@@ -38,20 +39,20 @@ export class ReturnListEntry {
     this.returnAmount = baseDeposit.returnAmount || 0;
     this.interestPaid = baseDeposit.interestPaid || 0;
     this.returnDate = baseDeposit.returnDate || '';
-    this.contactHolder = baseDeposit.contactHolder;
+    this.contactHolder = baseDeposit.contactHolder || undefined;
   }
 }
 
 function renderHolder({ row: { original } }: CellProps<ReturnListEntry, Api_Contact | undefined>) {
-  if (original.contactHolder !== undefined) {
+  if (!!original.contactHolder) {
     const holder = original.contactHolder;
-    if (holder.person !== undefined) {
+    if (!!holder.person) {
       return (
         <Link to={`/contact/${holder.id}`}>
           {formatNames([holder.person.firstName, holder.person.middleNames, holder.person.surname])}
         </Link>
       );
-    } else if (holder.organization !== undefined) {
+    } else if (!!holder.organization) {
       return <Link to={`/contact/${holder.id}`}>{holder.organization.name}</Link>;
     }
   }

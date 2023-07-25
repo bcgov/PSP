@@ -1,12 +1,14 @@
-using System.Collections.Generic;
+using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Areas.Lease.Models.Lease;
+using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models;
+using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Extensions;
+using Pims.Core.Json;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -27,6 +29,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #region Variables
         private readonly ISecurityDepositReturnService _securityDepositReturnService;
         private readonly IMapper _mapper;
+        private readonly ILogger<SecurityDepositReturnController> _logger;
         #endregion
 
         #region Constructors
@@ -36,11 +39,13 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// </summary>
         /// <param name="securityDepositReturnService"></param>
         /// <param name="mapper"></param>
+        /// <param name="logger"></param>
         ///
-        public SecurityDepositReturnController(ISecurityDepositReturnService securityDepositReturnService, IMapper mapper)
+        public SecurityDepositReturnController(ISecurityDepositReturnService securityDepositReturnService, IMapper mapper, ILogger<SecurityDepositReturnController> logger)
         {
             _securityDepositReturnService = securityDepositReturnService;
             _mapper = mapper;
+            _logger = logger;
         }
         #endregion
 
@@ -53,25 +58,28 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpPost("{leaseId:long}/deposits/{depositId:long}/returns")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
+        [ProducesResponseType(typeof(SecurityDepositReturnModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult AddDepositReturn(long leaseId, long depositId, [FromBody] ParentConcurrencyGuardModel<Pims.Api.Models.Concepts.SecurityDepositReturnModel> addRequest)
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult AddDepositReturn(long leaseId, long depositId, [FromBody] Pims.Api.Models.Concepts.SecurityDepositReturnModel securityDepositReturnModel)
         {
-            if (leaseId != addRequest.ParentId)
-            {
-                throw new BadRequestException($"Concurrency parent id mismatch.");
-            }
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(SecurityDepositReturnController),
+                nameof(AddDepositReturn),
+                User.GetUsername(),
+                DateTime.Now);
 
-            if (depositId != addRequest.Payload.ParentDepositId)
+            if (depositId != securityDepositReturnModel.ParentDepositId)
             {
                 throw new BadRequestException($"Bad payload id.");
             }
 
-            var depositEntity = _mapper.Map<PimsSecurityDepositReturn>(addRequest.Payload);
+            var depositEntity = _mapper.Map<PimsSecurityDepositReturn>(securityDepositReturnModel);
 
-            var updatedLease = _securityDepositReturnService.AddLeaseDepositReturn(addRequest.ParentId, addRequest.ParentRowVersion, depositEntity);
+            var depositReturn = _securityDepositReturnService.AddLeaseDepositReturn(leaseId, depositEntity);
 
-            return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
+            return new JsonResult(_mapper.Map<SecurityDepositReturnModel>(depositReturn));
         }
 
         /// <summary>
@@ -81,24 +89,27 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpPut("{leaseId:long}/deposits/{depositId:long}/returns/{depositReturnId:long}")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
+        [ProducesResponseType(typeof(SecurityDepositReturnModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult UpdateDepositReturn(long leaseId, long depositId, long depositReturnId, ParentConcurrencyGuardModel<Pims.Api.Models.Concepts.SecurityDepositReturnModel> updateRequest)
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateDepositReturn(long leaseId, long depositId, long depositReturnId, Pims.Api.Models.Concepts.SecurityDepositReturnModel updateRequest)
         {
-            if (leaseId != updateRequest.ParentId)
-            {
-                throw new BadRequestException($"Concurrency parent id mismatch.");
-            }
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(SecurityDepositReturnController),
+                nameof(UpdateDepositReturn),
+                User.GetUsername(),
+                DateTime.Now);
 
-            if (depositId != updateRequest.Payload.ParentDepositId || depositReturnId != updateRequest.Payload.Id)
+            if (depositId != updateRequest.ParentDepositId || depositReturnId != updateRequest.Id)
             {
                 throw new BadRequestException($"Bad payload id.");
             }
 
-            var depositEntity = _mapper.Map<PimsSecurityDepositReturn>(updateRequest.Payload);
-            var updatedLease = _securityDepositReturnService.UpdateLeaseDepositReturn(updateRequest.ParentId, updateRequest.ParentRowVersion, depositEntity);
+            var depositEntity = _mapper.Map<PimsSecurityDepositReturn>(updateRequest);
+            var updatedDepositReturn = _securityDepositReturnService.UpdateLeaseDepositReturn(leaseId, depositEntity);
 
-            return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
+            return new JsonResult(_mapper.Map<SecurityDepositReturnModel>(updatedDepositReturn));
         }
 
         /// <summary>
@@ -108,24 +119,27 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpDelete("{leaseId:long}/deposits/{depositId:long}/returns")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
+        [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult DeleteDepositReturn(long leaseId, long depositId, [FromBody] ParentConcurrencyGuardModel<Pims.Api.Models.Concepts.SecurityDepositReturnModel> deleteRequest)
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult DeleteDepositReturn(long leaseId, long depositId, [FromBody] Pims.Api.Models.Concepts.SecurityDepositReturnModel deleteRequest)
         {
-            if (leaseId != deleteRequest.ParentId)
-            {
-                throw new BadRequestException($"Concurrency parent id mismatch.");
-            }
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(SecurityDepositReturnController),
+                nameof(DeleteDepositReturn),
+                User.GetUsername(),
+                DateTime.Now);
 
-            if (depositId != deleteRequest.Payload.ParentDepositId)
+            if (depositId != deleteRequest.ParentDepositId)
             {
                 throw new BadRequestException($"Bad payload id.");
             }
 
-            var depositEntity = _mapper.Map<PimsSecurityDepositReturn>(deleteRequest.Payload);
-            var updatedLease = _securityDepositReturnService.DeleteLeaseDepositReturn(deleteRequest.ParentId, deleteRequest.ParentRowVersion, depositEntity);
+            var depositEntity = _mapper.Map<PimsSecurityDepositReturn>(deleteRequest);
+            var updatedLease = _securityDepositReturnService.DeleteLeaseDepositReturn(leaseId, depositEntity);
 
-            return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
+            return new JsonResult(updatedLease);
         }
         #endregion
     }

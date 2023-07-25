@@ -1,8 +1,9 @@
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { IPagedItems } from 'interfaces';
-import { mockParcel } from 'mocks/filterDataMock';
+
+import { IPagedItems } from '@/interfaces';
+import { mockParcel } from '@/mocks/filterData.mock';
 
 import { useApiProperties } from './useApiProperties';
 

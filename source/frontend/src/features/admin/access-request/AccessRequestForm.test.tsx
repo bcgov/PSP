@@ -1,8 +1,8 @@
-import { getMockAccessRequest } from 'mocks/accessRequestMock';
-import { mockLookups } from 'mocks/mockLookups';
-import { Api_AccessRequest } from 'models/api/AccessRequest';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fakeText, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { getMockAccessRequest } from '@/mocks/accessRequest.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_AccessRequest } from '@/models/api/AccessRequest';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { fakeText, fillInput, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import AccessRequestForm from './AccessRequestForm';
 import { FormAccessRequest } from './models';

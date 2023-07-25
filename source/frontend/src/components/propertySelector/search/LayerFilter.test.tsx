@@ -1,7 +1,8 @@
-import { mockGeocoderOptions } from 'mocks';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { fillInput, render, RenderOptions } from 'utils/test-utils';
+
+import { mockGeocoderOptions } from '@/mocks/index.mock';
+import { act, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
 import LayerFilter, { defaultLayerFilter } from './LayerFilter';
 
@@ -54,7 +55,7 @@ describe('LayerFilter component', () => {
   it('shall have an searchBy field', async () => {
     const { container } = setup({});
 
-    await fillInput(container, 'searchBy', 'address', 'select');
+    await act(async () => await fillInput(container, 'searchBy', 'address', 'select'));
 
     const searchByInput = container.querySelector('select[name="searchBy"]');
     expect(searchByInput).toBeInTheDocument();
@@ -63,7 +64,7 @@ describe('LayerFilter component', () => {
   it('shall have an address field', async () => {
     const { container } = setup({});
 
-    await fillInput(container, 'searchBy', 'address', 'select');
+    await act(async () => await fillInput(container, 'searchBy', 'address', 'select'));
 
     const addressInput = container.querySelector('input[name="address"]');
     expect(addressInput).toBeInTheDocument();
@@ -72,8 +73,8 @@ describe('LayerFilter component', () => {
   it('shall have an address suggestions', async () => {
     const { container } = setup({});
 
-    await fillInput(container, 'searchBy', 'address', 'select');
-    await fillInput(container, 'address', '1234 Fake');
+    await act(async () => await fillInput(container, 'searchBy', 'address', 'select'));
+    await act(async () => await fillInput(container, 'address', '1234 Fake'));
 
     const addressInput = container.querySelector('.suggestionList');
     expect(addressInput).toBeInTheDocument();
@@ -82,8 +83,8 @@ describe('LayerFilter component', () => {
   it('shall have an address suggestion option', async () => {
     const { getByText, container } = setup({});
 
-    await fillInput(container, 'searchBy', 'address', 'select');
-    await fillInput(container, 'address', '1234 Fake');
+    await act(async () => await fillInput(container, 'searchBy', 'address', 'select'));
+    await act(async () => await fillInput(container, 'address', '1234 Fake'));
 
     const option = getByText('1234 Fake St');
     expect(option).toBeInTheDocument();
@@ -92,7 +93,7 @@ describe('LayerFilter component', () => {
   it('shall have a legal description TEXTAREA field', async () => {
     const { container, findByText } = setup({ searchBy: 'legalDescription' });
 
-    await fillInput(container, 'searchBy', 'legalDescription', 'select');
+    await act(async () => await fillInput(container, 'searchBy', 'legalDescription', 'select'));
 
     expect(
       await findByText(/Searching by Legal Description may result in a slower search/i),

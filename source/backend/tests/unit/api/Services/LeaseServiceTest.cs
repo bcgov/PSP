@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
@@ -58,12 +59,15 @@ namespace Pims.Api.Test.Services
             };
 
             var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
 
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
 
             // Act
-            var result = service.Update(leaseEntity);
+            var result = service.Update(leaseEntity, new List<UserOverrideCode>());
 
             // Assert
             noteRepository.Verify(x => x.Add(It.IsAny<PimsLeaseNote>()), Times.Never);
@@ -88,12 +92,15 @@ namespace Pims.Api.Test.Services
             };
 
             var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
 
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
 
             // Act
-            var result = service.Update(leaseEntity);
+            var result = service.Update(leaseEntity, new List<UserOverrideCode>());
 
             // Assert
             noteRepository.Verify(x => x.Add(It.IsAny<PimsLeaseNote>()), Times.Once);
@@ -109,12 +116,15 @@ namespace Pims.Api.Test.Services
             var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
             var propertyLeaseRepository = _helper.GetService<Mock<IPropertyLeaseRepository>>();
             var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
 
             // Act
 
-            var updatedLease = service.Update(lease);
+            var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
@@ -131,12 +141,15 @@ namespace Pims.Api.Test.Services
             var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
             var propertyLeaseRepository = _helper.GetService<Mock<IPropertyLeaseRepository>>();
             var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
             propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
 
             // Act
-            updatedLease = service.Update(updatedLease);
+            updatedLease = service.Update(updatedLease, new List<UserOverrideCode>());
 
             // Assert
             propertyRepository.Verify(x => x.Delete(It.IsAny<PimsProperty>()), Times.Never());
@@ -155,14 +168,17 @@ namespace Pims.Api.Test.Services
             var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
             var propertyLeaseRepository = _helper.GetService<Mock<IPropertyLeaseRepository>>();
             var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
 
             propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(deletedProperty);
             propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
 
             // Act
-            updatedLease = service.Update(updatedLease);
+            updatedLease = service.Update(updatedLease, new List<UserOverrideCode>());
 
             // Assert
             propertyRepository.Verify(x => x.Delete(deletedProperty), Times.Once);

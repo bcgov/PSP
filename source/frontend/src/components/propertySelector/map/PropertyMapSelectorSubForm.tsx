@@ -1,20 +1,20 @@
-import { SelectProperty } from 'components/common/mapping/SelectProperty';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import * as React from 'react';
 import { Col, Form as BsForm, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import { SelectProperty } from '@/components/common/mapping/SelectProperty';
+import { SectionField } from '@/components/common/Section/SectionField';
 
 import { IMapProperty } from '../models';
 
 export interface IPropertyMapSelectorSubFormProps {
   onClickDraftMarker: () => void;
-  onClickAway: () => void;
   selectedProperty?: IMapProperty;
 }
 
 export const PropertyMapSelectorSubForm: React.FunctionComponent<
   React.PropsWithChildren<IPropertyMapSelectorSubFormProps>
-> = ({ onClickDraftMarker, onClickAway, selectedProperty }) => {
+> = ({ onClickDraftMarker, selectedProperty }) => {
   const pid = selectedProperty?.pid;
   const planNumber = selectedProperty?.planNumber;
   const address = selectedProperty?.address;
@@ -26,7 +26,7 @@ export const PropertyMapSelectorSubForm: React.FunctionComponent<
   return (
     <StyledFormRow>
       <Col md={4}>
-        <SelectProperty onClickAway={onClickAway} onClick={onClickDraftMarker} />
+        <SelectProperty onClick={onClickDraftMarker} />
       </Col>
       <Col md={8}>
         <Row>

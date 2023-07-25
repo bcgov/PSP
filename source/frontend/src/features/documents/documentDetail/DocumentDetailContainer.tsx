@@ -1,15 +1,16 @@
-import { ModalProps } from 'components/common/GenericModal';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import { ModalContext } from 'contexts/modalContext';
 import { FormikProps } from 'formik';
-import { useApiDocuments } from 'hooks/pims-api/useApiDocuments';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import useIsMounted from 'hooks/useIsMounted';
-import { getCancelModalProps } from 'hooks/useModalContext';
-import { Api_DocumentUpdateRequest } from 'models/api/Document';
-import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
-import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+
+import { ModalProps } from '@/components/common/GenericModal';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import { ModalContext } from '@/contexts/modalContext';
+import { useApiDocuments } from '@/hooks/pims-api/useApiDocuments';
+import { getCancelModalProps } from '@/hooks/useModalContext';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import useIsMounted from '@/hooks/util/useIsMounted';
+import { Api_DocumentUpdateRequest } from '@/models/api/Document';
+import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
+import { ExternalResultStatus } from '@/models/api/ExternalResult';
 
 import { ComposedDocument, DocumentRow, DocumentUpdateFormData } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
@@ -41,7 +42,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
     retrieveDocumentDetail,
     retrieveDocumentDetailLoading,
   } = useDocumentProvider();
-  const { getDocumentTypeMetadata } = useApiDocuments();
+  const { getDocumentTypeMetadataApiCall } = useApiDocuments();
 
   const formikRef = useRef<FormikProps<DocumentUpdateFormData>>(null);
 
@@ -122,7 +123,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
       if (props.pimsDocument.mayanDocumentId !== undefined) {
         const mayanDocumentTypeId = props.pimsDocument.documentType?.mayanId;
         if (mayanDocumentTypeId) {
-          const axiosResponse = await getDocumentTypeMetadata(mayanDocumentTypeId);
+          const axiosResponse = await getDocumentTypeMetadataApiCall(mayanDocumentTypeId);
           if (axiosResponse?.data.status === ExternalResultStatus.Success && isMounted()) {
             let results = axiosResponse?.data.payload.results;
             setDocumentTypeMetadataTypes(results);
@@ -134,7 +135,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
   }, [
     props.pimsDocument.mayanDocumentId,
     props.pimsDocument.documentType?.mayanId,
-    getDocumentTypeMetadata,
+    getDocumentTypeMetadataApiCall,
     isMounted,
   ]);
 

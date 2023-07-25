@@ -1,13 +1,13 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import { IMapProperty } from '../models';
 import PropertyMapSelectorSubForm, {
   IPropertyMapSelectorSubFormProps,
 } from './PropertyMapSelectorSubForm';
 
-const onClickAway = jest.fn();
 const onClickDraftMarker = jest.fn();
 
 const testProperty: IMapProperty = {
@@ -31,7 +31,6 @@ describe('PropertySelectorSubForm component', () => {
     const component = render(
       <PropertyMapSelectorSubForm
         onClickDraftMarker={renderOptions.onClickDraftMarker}
-        onClickAway={renderOptions.onClickAway}
         selectedProperty={renderOptions.selectedProperty}
       />,
       {
@@ -53,7 +52,6 @@ describe('PropertySelectorSubForm component', () => {
   it('renders as expected when provided no properties', () => {
     const { component } = setup({
       selectedProperty: testProperty,
-      onClickAway,
       onClickDraftMarker,
     });
     expect(component.asFragment()).toMatchSnapshot();
@@ -64,7 +62,6 @@ describe('PropertySelectorSubForm component', () => {
       component: { getByText },
     } = await setup({
       selectedProperty: testProperty,
-      onClickAway,
       onClickDraftMarker,
     });
     expect(getByText(`${testProperty.pid}`)).toBeVisible();

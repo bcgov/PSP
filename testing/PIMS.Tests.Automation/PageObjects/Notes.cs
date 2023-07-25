@@ -19,7 +19,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By notesTabTableBody = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']");
         private By notesTabTableContentTotal = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper']");
 
-        private By notesTab1stResultViewBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/button[@title='View Note']");
+        private By notesTab1stResultViewBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][2]/div/div[4]/div/button[@title='View Note']");
         private By notesTab1stResultDeleteBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/button[@title='Delete Note']");
 
         //Notes Add New button Element
@@ -35,8 +35,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Notes 1st result Elements
         private By note1stViewNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(4) div button[title='View Note']");
-        private By note1stDeleteNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(4) div button[title='Delete Note']");
         private By note1stNoteContent = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='tr'] div[class='td']:nth-child(1)");
+        private By note2ndDeleteNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(2) div[role='cell']:nth-child(4) div button[title='Delete Note']");
+        private By note2ndNoteContent = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='tr'] div[class='td']:nth-child(2)");
 
         //Notes Add new notes Details Elements
         private By notesAddDetailsHeader = By.XPath("//div[@class='modal-title h4']");
@@ -67,10 +68,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By notesDeletePopupBody = By.CssSelector("div[class='modal-body']");
         private By notesDeleteOkBttn = By.XPath("//div[contains(text(),'Delete Note')]/parent::div/following-sibling::div[@class='modal-footer']/button[@title='ok-modal']");
 
-        //Notes Toast
-        private By notesToast = By.CssSelector("div[class='Toastify__toast-body']");
-
-
 
         public Notes(IWebDriver webDriver) : base(webDriver)
         {}
@@ -83,7 +80,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateNotesTabButton()
         {
-            Wait();
+            Wait(5000);
             webDriver.FindElement(notesTabAddBttn).Click();
         }
 
@@ -93,7 +90,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(notesAddDetailsTextarea).SendKeys(note);
         }
 
-        public void ViewFirstNoteDetails()
+        public void ViewSecondLastNoteDetails()
         {
             Wait();
             webDriver.FindElement(notesTab1stResultViewBttn).Click();
@@ -119,7 +116,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             webDriver.FindElement(notesAddDetailsCancelBttn).Click();
-           
+
+            Wait();
             if (webDriver.FindElements(notesCancelPopupContent).Count() > 0)
             {
                 Assert.True(webDriver.FindElement(notesCancelPopupHeader).Displayed);
@@ -128,27 +126,16 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void DeleteFirstNote()
+        public void DeleteLastSecondNote()
         {
             Wait();
-            webDriver.FindElement(note1stDeleteNoteBttn).Click();
+            webDriver.FindElement(note2ndDeleteNoteBttn).Click();
 
             Wait();
             Assert.True(webDriver.FindElement(notesDeletePopupHeader).Text.Equals("Delete Note"));
             Assert.True(webDriver.FindElement(notesDeletePopupBody).Text.Equals("Are you sure you want to delete this note?"));
             webDriver.FindElement(notesDeleteOkBttn).Click();
         }
-
-        //public void VerifyNotesListView()
-        //{
-        //    Wait();
-        //    Assert.True(webDriver.FindElement(notesTitle).Displayed);
-        //    Assert.True(webDriver.FindElement(notesAddNoteBttn).Displayed);
-        //    Assert.True(webDriver.FindElement(notesTable).Displayed);
-        //    Assert.True(webDriver.FindElement(notesNoteColumn).Displayed);
-        //    Assert.True(webDriver.FindElement(notesCreatedDateColumn).Displayed);
-        //    Assert.True(webDriver.FindElement(notesCreatedByColumn).Displayed);
-        //}
 
         public void VerifyNotesAddNew()
         {
@@ -167,8 +154,10 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(notesEditCreatedLabel).Displayed);
             Assert.True(webDriver.FindElement(notesEditCreatedDate).Displayed);
             Assert.True(webDriver.FindElement(notesEditCreatedBy).Displayed);
-            Assert.True(webDriver.FindElement(notesEditUpdatedLabel).Displayed);
-            Assert.True(webDriver.FindElement(notesEditUpdatedDate).Displayed);
+
+            if(webDriver.FindElements(notesEditUpdatedLabel).Count > 0)
+                Assert.True(webDriver.FindElement(notesEditUpdatedDate).Displayed);
+
             Assert.True(webDriver.FindElement(notesEditUpdatedBy).Displayed);
             Assert.True(webDriver.FindElement(notedEditBttn).Displayed);
             Assert.True(webDriver.FindElement(noteEditViewTextarea).Displayed);
@@ -205,14 +194,6 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             Assert.True(webDriver.FindElement(note1stNoteContent).Text == fileType + " status changed from "+ fromStatus +" to " + toStatus);
-        }
-
-        public Boolean NoteDeletedSuccessfully()
-        {
-            Wait(500);
-            Assert.True(webDriver.FindElement(notesToast).Text == "Deleted successfully.");
-            return webDriver.FindElements(notesToast).Count > 0;
-            
         }
     }
 }

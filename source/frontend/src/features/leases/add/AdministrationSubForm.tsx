@@ -1,13 +1,15 @@
-import { FastDatePicker, Input, Select } from 'components/common/form';
-import { InlineInput } from 'components/common/form/styles';
-import * as API from 'constants/API';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FormikProps } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
+
+import { FastDatePicker, Input, Select } from '@/components/common/form';
+import { InlineInput } from '@/components/common/form/styles';
+import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import * as API from '@/constants/API';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 
 import { LeaseFormModel } from '../models';
 import * as Styled from './styles';
@@ -28,7 +30,6 @@ const AdministrationSubForm: React.FunctionComponent<
   const purposeTypes = getOptionsByType(API.LEASE_PURPOSE_TYPES);
   const initiatorTypes = getOptionsByType(API.LEASE_INITIATOR_TYPES);
   const responsibilityTypes = getOptionsByType(API.LEASE_RESPONSIBILITY_TYPES);
-  const regionTypes = getOptionsByType(API.REGION_TYPES);
 
   //clear the associated other fields if the corresponding type has its value changed from other to something else.
   useEffect(() => {
@@ -63,7 +64,7 @@ const AdministrationSubForm: React.FunctionComponent<
       </SectionField>
 
       <SectionField label="MOTI region" labelWidth="2" contentWidth="4" required>
-        <Select field="regionId" options={regionTypes} placeholder="Select region" required />
+        <UserRegionSelectContainer field="regionId" placeholder="Select region" required />
       </SectionField>
       <Row>
         <Col>

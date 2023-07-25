@@ -1,6 +1,6 @@
-import { Api_File } from 'models/api/File';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
-import Api_TypeCode from 'models/api/TypeCode';
+import { Api_File } from '@/models/api/File';
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import Api_TypeCode from '@/models/api/TypeCode';
 
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
@@ -49,5 +49,6 @@ export interface Api_ResearchFileProject extends Api_ConcurrentVersion, Api_Audi
   id: number | undefined;
   fileId: number | undefined;
   project: Api_Project | undefined;
+  projectId: number | null;
   isDisabled: boolean | undefined;
 }

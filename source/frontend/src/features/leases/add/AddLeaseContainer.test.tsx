@@ -4,10 +4,13 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/mockLookups';
-import { Api_Lease } from 'models/api/Lease';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_Lease } from '@/models/api/Lease';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, renderAsync, RenderOptions, screen, waitFor } from '@/utils/test-utils';
 
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
 
@@ -19,6 +22,27 @@ jest.mock('@react-keycloak/web');
     userInfo: {
       roles: [],
     },
+  },
+});
+
+const retrieveUserInfo = jest.fn();
+jest.mock('@/hooks/repositories/useUserInfoRepository');
+(useUserInfoRepository as jest.Mock).mockReturnValue({
+  retrieveUserInfo,
+  retrieveUserInfoLoading: true,
+  retrieveUserInfoResponse: {
+    userRegions: [
+      {
+        id: 1,
+        userId: 5,
+        regionCode: 1,
+      },
+      {
+        id: 2,
+        userId: 5,
+        regionCode: 2,
+      },
+    ],
   },
 });
 
@@ -96,10 +120,10 @@ describe('AddLeaseContainer component', () => {
       userEvent.click(getByText(/Save/i));
     });
     await waitFor(() => {
-      expect(mockAxios.history.post[0].data).toEqual(JSON.stringify(leaseData));
+      expect(JSON.parse(mockAxios.history.post[0].data)).toEqual(leaseData);
     });
 
-    expect(mockAxios.history.post[0].data).toEqual(JSON.stringify(leaseData));
+    expect(JSON.parse(mockAxios.history.post[0].data)).toEqual(leaseData);
   });
 
   it('triggers the confirm popup', async () => {
@@ -117,14 +141,16 @@ describe('AddLeaseContainer component', () => {
       await fillInput(container, 'purposeTypeCode', 'BCFERRIES', 'select');
     });
 
-    mockAxios.onPost().reply(409, { error: 'test message' });
+    mockAxios
+      .onPost()
+      .reply(409, { error: 'test message', errorCode: UserOverrideCode.ADD_LOCATION_TO_PROPERTY });
     act(() => userEvent.click(getByText(/Save/i)));
     expect(await findByText('test message')).toBeVisible();
   });
 
   it('clicking on the save anyways popup saves the form', async () => {
     const {
-      component: { findByText, getByText, container },
+      component: { getByText, container },
     } = await setup({});
 
     await act(async () => {
@@ -138,22 +164,25 @@ describe('AddLeaseContainer component', () => {
       await fillInput(container, 'purposeTypeCode', 'BCFERRIES', 'select');
     });
 
-    mockAxios.onPost().reply(409, { error: 'test message' });
+    mockAxios
+      .onPost()
+      .reply(409, { error: 'test message', errorCode: UserOverrideCode.ADD_LOCATION_TO_PROPERTY });
     act(() => userEvent.click(getByText(/Save/i)));
     await waitFor(() => {
-      expect(mockAxios.history.post[0].data).toEqual(JSON.stringify(leaseData));
+      expect(JSON.parse(mockAxios.history.post[0].data)).toEqual(leaseData);
     });
+
+    const popup = await screen.findByText(/test message/i);
+    expect(popup).toBeVisible();
 
     await act(async () => {
-      userEvent.click(await findByText('Save Anyways'));
+      userEvent.click(await screen.findByText('Acknowledge & Continue'));
     });
 
-    expect(mockAxios.history.post[1].data).toEqual(JSON.stringify(leaseData));
+    expect(JSON.parse(mockAxios.history.post[0].data)).toEqual(leaseData);
   });
 });
-
 const leaseData: Api_Lease = {
-  expiryDate: '2020-01-02',
   startDate: '2020-01-01',
   amount: 0,
   paymentReceivableType: { id: 'RCVBL' },
@@ -168,6 +197,24 @@ const leaseData: Api_Lease = {
   isResidential: false,
   isCommercialBuilding: false,
   isOtherImprovement: false,
+  responsibilityType: null,
+  categoryType: null,
+  initiatorType: null,
+  otherType: null,
+  otherCategoryType: null,
+  otherProgramType: null,
+  otherPurposeType: null,
+  tfaFileNumber: null,
+  responsibilityEffectiveDate: null,
+  psFileNo: null,
+  note: null,
+  lFileNo: null,
+  description: null,
+  documentationReference: null,
+  expiryDate: '2020-01-02',
+  tenants: [],
+  terms: [],
+  insurances: [],
   consultations: [
     {
       id: 0,

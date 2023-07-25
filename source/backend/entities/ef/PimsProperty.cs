@@ -25,6 +25,7 @@ namespace Pims.Dal.Entities
     [Index(nameof(PropMgmtOrgId), Name = "PRPRTY_PROP_MGMT_ORG_ID_IDX")]
     [Index(nameof(RegionCode), Name = "PRPRTY_REGION_CODE_IDX")]
     [Index(nameof(SurplusDeclarationTypeCode), Name = "PRPRTY_SURPLUS_DECLARATION_TYPE_CODE_IDX")]
+    [Index(nameof(SurveyPlanNumber), Name = "PRPRTY_SURVEY_PLAN_NUMBER_IDX")]
     [Index(nameof(VolumetricTypeCode), Name = "PRPRTY_VOLUMETRIC_TYPE_CODE_IDX")]
     [Index(nameof(VolumeUnitTypeCode), Name = "PRPRTY_VOLUME_UNIT_TYPE_CODE_IDX")]
     public partial class PimsProperty
@@ -114,6 +115,9 @@ namespace Pims.Dal.Entities
         public Geometry Boundary { get; set; }
         [Column("LOCATION", TypeName = "geometry")]
         public Geometry Location { get; set; }
+        [Column("GENERAL_LOCATION")]
+        [StringLength(2000)]
+        public string GeneralLocation { get; set; }
         [Column("SURVEY_PLAN_NUMBER")]
         [StringLength(250)]
         public string SurveyPlanNumber { get; set; }

@@ -82,18 +82,18 @@ namespace PIMS.Tests.Automation.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="01. Create new Organization Complete Contact")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="Create new Organization Complete Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "01. Create new Organization Complete Contact")]
+        [Xunit.TraitAttribute("Description", "Create new Organization Complete Contact")]
         [Xunit.InlineDataAttribute("Organization", "1", new string[0])]
         [Xunit.InlineDataAttribute("Organization", "3", new string[0])]
-        public void _01_CreateNewOrganizationCompleteContact(string contactType, string rowNumber, string[] exampleTags)
+        public void CreateNewOrganizationCompleteContact(string contactType, string rowNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("ContactType", contactType);
             argumentsOfScenario.Add("RowNumber", rowNumber);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01. Create new Organization Complete Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create new Organization Complete Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -117,19 +117,19 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="02. Create new Individual Complete Contact")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="Create new Individual Complete Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "02. Create new Individual Complete Contact")]
+        [Xunit.TraitAttribute("Description", "Create new Individual Complete Contact")]
         [Xunit.InlineDataAttribute("Individual", "1", new string[0])]
-        [Xunit.InlineDataAttribute("Individual", "3", new string[0])]
+        [Xunit.InlineDataAttribute("Individual", "2", new string[0])]
         [Xunit.InlineDataAttribute("Individual", "4", new string[0])]
-        public void _02_CreateNewIndividualCompleteContact(string contactType, string rowNumber, string[] exampleTags)
+        public void CreateNewIndividualCompleteContact(string contactType, string rowNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("ContactType", contactType);
             argumentsOfScenario.Add("RowNumber", rowNumber);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Create new Individual Complete Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create new Individual Complete Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 15
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -153,14 +153,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="03. Cancel creating a new contact")]
+        [Xunit.SkippableFactAttribute(DisplayName="Cancel creating a new contact")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "03. Cancel creating a new contact")]
-        public void _03_CancelCreatingANewContact()
+        [Xunit.TraitAttribute("Description", "Cancel creating a new contact")]
+        public void CancelCreatingANewContact()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Cancel creating a new contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cancel creating a new contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 25
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -181,14 +181,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Update an Existing Organization Contact")]
+        [Xunit.SkippableFactAttribute(DisplayName="Update an Existing Organization Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "04. Update an Existing Organization Contact")]
-        public void _04_UpdateAnExistingOrganizationContact()
+        [Xunit.TraitAttribute("Description", "Update an Existing Organization Contact")]
+        public void UpdateAnExistingOrganizationContact()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Update an Existing Organization Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update an Existing Organization Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 29
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -200,7 +200,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 30
- testRunner.Given("I update an existing Organization Contact from row number 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I update an existing Organization Contact from row number 4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 31
  testRunner.Then("An Organization contact is successfully updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -209,14 +209,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05. Update an Existing Individual Contact")]
+        [Xunit.SkippableFactAttribute(DisplayName="Update an Existing Individual Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "05. Update an Existing Individual Contact")]
-        public void _05_UpdateAnExistingIndividualContact()
+        [Xunit.TraitAttribute("Description", "Update an Existing Individual Contact")]
+        public void UpdateAnExistingIndividualContact()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Update an Existing Individual Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update an Existing Individual Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 33
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -228,7 +228,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 34
- testRunner.Given("I update an existing Individual Contact from row number 4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I update an existing Individual Contact from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 35
  testRunner.Then("An Individual contact is successfully updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -237,18 +237,18 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="07. Search for a non-existing Contact")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="Search for a non-existing Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "07. Search for a non-existing Contact")]
-        [Xunit.InlineDataAttribute("Individual", "5", new string[0])]
-        [Xunit.InlineDataAttribute("Organization", "4", new string[0])]
-        public void _07_SearchForANon_ExistingContact(string contactType, string rowNumber, string[] exampleTags)
+        [Xunit.TraitAttribute("Description", "Search for a non-existing Contact")]
+        [Xunit.InlineDataAttribute("Individual", "6", new string[0])]
+        [Xunit.InlineDataAttribute("Organization", "5", new string[0])]
+        public void SearchForANon_ExistingContact(string contactType, string rowNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("ContactType", contactType);
             argumentsOfScenario.Add("RowNumber", rowNumber);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Search for a non-existing Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Search for a non-existing Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 37
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

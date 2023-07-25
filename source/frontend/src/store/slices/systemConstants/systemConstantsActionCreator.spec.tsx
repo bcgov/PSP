@@ -3,10 +3,11 @@ import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { find, values } from 'lodash';
-import * as MOCK from 'mocks/dataMocks';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
+
+import * as MOCK from '@/mocks/data.mock';
 
 import { networkSlice } from '../network/networkSlice';
 import { useSystemConstants } from '.';

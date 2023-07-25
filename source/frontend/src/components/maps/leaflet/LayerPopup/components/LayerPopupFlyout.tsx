@@ -1,12 +1,12 @@
-import { LinkButton } from 'components/common/buttons';
-import { Claims } from 'constants/claims';
-import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import noop from 'lodash/noop';
 import React from 'react';
 import { ListGroup } from 'react-bootstrap';
 
+import { LinkButton } from '@/components/common/buttons';
+import { Claims } from '@/constants/claims';
+import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+
 export interface ILayerPopupFlyoutProps {
-  pimsPropertyId: any;
   onViewPropertyInfo: () => void;
   onCreateResearchFile?: () => void;
   onCreateAcquisitionFile?: () => void;
@@ -14,7 +14,6 @@ export interface ILayerPopupFlyoutProps {
 }
 
 export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyoutProps>> = ({
-  pimsPropertyId,
   onViewPropertyInfo,
   onCreateResearchFile,
   onCreateAcquisitionFile,

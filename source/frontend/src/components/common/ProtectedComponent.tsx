@@ -1,8 +1,9 @@
-import { Claims } from 'constants/claims';
-import { Roles } from 'constants/roles';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
+
+import { Claims } from '@/constants/claims';
+import { Roles } from '@/constants/roles';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 interface IProtectedComponentProps {
   /** a list of roles that allow access to this component */

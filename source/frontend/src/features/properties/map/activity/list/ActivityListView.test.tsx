@@ -1,12 +1,14 @@
 import { screen } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import Claims from 'constants/claims';
-import { FileTypes } from 'constants/fileTypes';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks';
-import { mockActivitiesResponse } from 'mocks/mockActivities';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
+
+import Claims from '@/constants/claims';
+import { FileTypes } from '@/constants/fileTypes';
+import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
+import { mockActivitiesResponse } from '@/mocks/activities.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   render,
@@ -14,9 +16,8 @@ import {
   userEvent,
   waitFor,
   waitForElementToBeRemoved,
-} from 'utils/test-utils';
+} from '@/utils/test-utils';
 
-import { SideBarContextProvider } from '../../context/sidebarContext';
 import ActivityListView, { IActivityListViewProps } from './ActivityListView';
 
 const mockAxios = new MockAdapter(axios);
@@ -146,12 +147,12 @@ describe('Activity List View', () => {
     await waitForElementToBeRemoved(getByTitle('table-loading'));
 
     const viewButton = getAllByTitle('View Activity')[0];
-    await act(() => userEvent.click(viewButton));
+    await act(async () => userEvent.click(viewButton));
     const deleteButton = getAllByTitle('Delete Activity')[0];
-    await act(() => userEvent.click(deleteButton));
+    await act(async () => userEvent.click(deleteButton));
     expect(await screen.findByText(/You have chosen to delete this activity/)).toBeVisible();
     const continueButton = await screen.findByText('Continue');
-    await act(() => userEvent.click(continueButton));
+    await act(async () => userEvent.click(continueButton));
 
     expect(history.location.pathname).toBe('/');
   });

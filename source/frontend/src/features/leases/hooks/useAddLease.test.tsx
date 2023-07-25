@@ -2,30 +2,21 @@ import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import find from 'lodash/find';
-import * as MOCK from 'mocks/dataMocks';
-import { defaultApiLease } from 'models/api/Lease';
 import { Provider } from 'react-redux';
-import { toast } from 'react-toastify';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { networkSlice } from 'store/slices/network/networkSlice';
+
+import * as MOCK from '@/mocks/data.mock';
+import { defaultApiLease } from '@/models/api/Lease';
 
 import { useAddLease } from './useAddLease';
 
 const dispatch = jest.fn();
-const toastSuccessSpy = jest.spyOn(toast, 'success');
-const toastErrorSpy = jest.spyOn(toast, 'error');
-const requestSpy = jest.spyOn(networkSlice.actions, 'logRequest');
-const successSpy = jest.spyOn(networkSlice.actions, 'logSuccess');
-const errorSpy = jest.spyOn(networkSlice.actions, 'logError');
 const mockAxios = new MockAdapter(axios);
 
 beforeEach(() => {
   mockAxios.reset();
   dispatch.mockClear();
-  requestSpy.mockClear();
-  successSpy.mockClear();
-  errorSpy.mockClear();
 });
 let currentStore: MockStoreEnhanced<any, {}>;
 const mockStore = configureMockStore([thunk]);
@@ -48,27 +39,22 @@ describe('useAddLease functions', () => {
     jest.restoreAllMocks();
   });
   describe('addLease', () => {
-    const url = `/leases?userOverride=false`;
     it('Request successful, dispatches success with correct response', async () => {
-      mockAxios.onPost(url).reply(200, defaultApiLease);
+      mockAxios.onPost().reply(200, defaultApiLease);
 
       const { addLease } = setup();
-      const leaseResponse = await addLease(defaultApiLease);
+      const leaseResponse = await addLease.execute(defaultApiLease, []);
 
       expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
       expect(leaseResponse).toEqual(defaultApiLease);
-      expect(toastSuccessSpy).toHaveBeenCalled();
     });
 
     it('Request failure, dispatches error with correct response', async () => {
-      mockAxios.onPost(url).reply(400, MOCK.ERROR);
+      mockAxios.onPost().reply(400, MOCK.ERROR);
 
       const { addLease } = setup();
-      await addLease(defaultApiLease);
-
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-      expect(toastErrorSpy).toHaveBeenCalled();
+      expect(async () => await addLease.execute(defaultApiLease, [])).rejects.toThrow();
     });
   });
 });

@@ -1,11 +1,14 @@
-import { IResearchFilter } from 'features/research/interfaces';
-import { IPagedItems } from 'interfaces';
-import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
-import { Api_ResearchFile, Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import queryString from 'query-string';
 import React from 'react';
 
-import { IPaginateRequest, useAxiosApi } from '.';
+import { IResearchFilter } from '@/features/research/interfaces';
+import { IPagedItems } from '@/interfaces';
+import { IResearchSearchResult } from '@/interfaces/IResearchSearchResult';
+import { Api_ResearchFile, Api_ResearchFileProperty } from '@/models/api/ResearchFile';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+
+import { IPaginateRequest } from './interfaces/IPaginateRequest';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the research file endpoints.
@@ -22,12 +25,26 @@ export const useApiResearchFile = () => {
         ),
       getResearchFile: (researchFileId: number) =>
         api.get<Api_ResearchFile>(`/researchFiles/${researchFileId}`),
-      postResearchFile: (researchFile: Api_ResearchFile) =>
-        api.post<Api_ResearchFile>(`/researchFiles`, researchFile),
+      postResearchFile: (
+        researchFile: Api_ResearchFile,
+        userOverrideCodes: UserOverrideCode[] = [],
+      ) =>
+        api.post<Api_ResearchFile>(
+          `/researchFiles?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
+          researchFile,
+        ),
       putResearchFile: (researchFile: Api_ResearchFile) =>
         api.put<Api_ResearchFile>(`/researchFiles/${researchFile.id}`, researchFile),
-      putResearchFileProperties: (researchFile: Api_ResearchFile) =>
-        api.put<Api_ResearchFile>(`/researchFiles/${researchFile?.id}/properties`, researchFile),
+      putResearchFileProperties: (
+        researchFile: Api_ResearchFile,
+        userOverrideCodes: UserOverrideCode[] = [],
+      ) =>
+        api.put<Api_ResearchFile>(
+          `/researchFiles/${researchFile?.id}/properties?${userOverrideCodes
+            .map(o => `userOverrideCodes=${o}`)
+            .join('&')}`,
+          researchFile,
+        ),
       putPropertyResearchFile: (propertyResearchFile: Api_ResearchFileProperty) =>
         api.put<Api_ResearchFile>(
           `/researchFiles/${propertyResearchFile?.file?.id}/properties/${propertyResearchFile.id}`,

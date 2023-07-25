@@ -1,4 +1,4 @@
-import { mockAgreementsResponse } from 'mocks/mockAgreements';
+import { mockAgreementsResponse } from '@/mocks/agreements.mock';
 
 import { Api_GenerateAgreement } from './GenerateAgreement';
 

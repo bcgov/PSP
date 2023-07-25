@@ -1,10 +1,11 @@
-import { FastCurrencyInput, FastDatePicker, Input, TextArea } from 'components/common/form';
-import { RadioGroup } from 'components/common/form/RadioGroup';
-import { FormSection } from 'components/common/form/styles';
 import { getIn, useFormikContext } from 'formik';
-import ITypeCode from 'interfaces/ITypeCode';
 import { Col, Row } from 'react-bootstrap';
-import { withNameSpace } from 'utils/formUtils';
+
+import { FastCurrencyInput, FastDatePicker, Input, TextArea } from '@/components/common/form';
+import { RadioGroup } from '@/components/common/form/RadioGroup';
+import { FormSection } from '@/components/common/form/styles';
+import ITypeCode from '@/interfaces/ITypeCode';
+import { withNameSpace } from '@/utils/formUtils';
 
 import { FormInsurance } from './models';
 import { SubTitle } from './styles';

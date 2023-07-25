@@ -1,11 +1,12 @@
-import { Button } from 'components/common/buttons/Button';
 import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 import { useDispatch } from 'react-redux';
-import { IGenericNetworkAction } from 'store/slices/network/interfaces';
-import { logClear } from 'store/slices/network/networkSlice';
+
+import { Button } from '@/components/common/buttons/Button';
+import { IGenericNetworkAction } from '@/store/slices/network/interfaces';
+import { logClear } from '@/store/slices/network/networkSlice';
 
 export interface IErrorModalProps {
   // An array of network action errors.

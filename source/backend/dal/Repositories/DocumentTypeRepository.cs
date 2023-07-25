@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
 {
@@ -35,7 +36,21 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public IList<PimsDocumentTyp> GetAll()
         {
-            return this.Context.PimsDocumentTyps.AsNoTracking().OrderBy(dt => dt.DisplayOrder).ToList();
+            return this.Context.PimsDocumentTyps.AsNoTracking()
+                .Include(dt => dt.PimsDocumentCategorySubtypes)
+                .OrderBy(dt => dt.DisplayOrder)
+                .ToList();
+        }
+
+        /// <summary>
+        /// Get a list of all the document types for a category type.
+        /// </summary>
+        /// <returns></returns>
+        public IList<PimsDocumentTyp> GetByCategory(string category)
+        {
+            return this.Context.PimsDocumentTyps.AsNoTracking()
+                .Where(dt => dt.PimsDocumentCategorySubtypes.Any(dcs => dcs.DocumentCategoryTypeCode == category))
+                .OrderBy(dt => dt.DisplayOrder).ToList();
         }
 
         /// <summary>
@@ -73,6 +88,9 @@ namespace Pims.Dal.Repositories
             existingDocumentType.MayanId = documentType.MayanId;
             existingDocumentType.DisplayOrder = documentType.DisplayOrder;
             existingDocumentType.IsDisabled = documentType.IsDisabled;
+
+            this.Context.UpdateChild<PimsDocumentTyp, long, PimsDocumentCategorySubtype, long>(l => l.PimsDocumentCategorySubtypes, documentType.DocumentTypeId, documentType.PimsDocumentCategorySubtypes.ToArray());
+
             this.Context.Update(existingDocumentType);
             return existingDocumentType;
         }

@@ -241,6 +241,7 @@ exports[`NoteContainer component renders as expected 1`] = `
         </div>
         <div
           class="modal-body"
+          style="white-space: pre-line;"
         >
           <div
             class="container"
@@ -257,7 +258,9 @@ exports[`NoteContainer component renders as expected 1`] = `
                 class="col"
               >
                 <span>
-                  <strong />
+                  <strong>
+                    Jul 20, 2022
+                  </strong>
                    by
                    
                   <span
@@ -266,7 +269,7 @@ exports[`NoteContainer component renders as expected 1`] = `
                     id="userNameTooltip"
                   >
                     <strong>
-                      USER
+                      admin
                     </strong>
                   </span>
                 </span>
@@ -284,7 +287,9 @@ exports[`NoteContainer component renders as expected 1`] = `
                 class="col"
               >
                 <span>
-                  <strong />
+                  <strong>
+                    Jul 20, 2022
+                  </strong>
                    by
                    
                   <span
@@ -293,7 +298,7 @@ exports[`NoteContainer component renders as expected 1`] = `
                     id="userNameTooltip"
                   >
                     <strong>
-                      USER
+                      admin
                     </strong>
                   </span>
                 </span>
@@ -337,7 +342,9 @@ exports[`NoteContainer component renders as expected 1`] = `
                   readonly=""
                   rows="15"
                   title="Note"
-                />
+                >
+                  Test Note
+                </textarea>
               </div>
             </div>
           </div>

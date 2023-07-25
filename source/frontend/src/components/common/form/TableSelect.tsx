@@ -1,9 +1,10 @@
-import { DisplayError } from 'components/common/form';
-import * as Styled from 'components/common/form/styles';
-import { ColumnWithProps, Table } from 'components/Table';
 import React from 'react';
 import { Container, FormControlProps } from 'react-bootstrap';
-import { getColumnsWithRemove } from 'utils/columnUtils';
+
+import { DisplayError } from '@/components/common/form';
+import * as Styled from '@/components/common/form/styles';
+import { ColumnWithProps, Table } from '@/components/Table';
+import { getColumnsWithRemove } from '@/utils/columnUtils';
 
 export interface ISelectedTableHeaderProps {
   selectedCount?: number;

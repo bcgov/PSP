@@ -1,9 +1,10 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultFormLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
-import { mockParcel } from 'mocks/filterDataMock';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { LeaseFormModel } from '@/features/leases/models';
+import { mockParcel } from '@/mocks/filterData.mock';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertyInformation, { IPropertyInformationProps } from './PropertyInformation';
 
@@ -11,13 +12,13 @@ const history = createMemoryHistory();
 
 describe('PropertyInformation component', () => {
   const setup = (
-    renderOptions: RenderOptions & IPropertyInformationProps & { lease?: IFormLease } = {
+    renderOptions: RenderOptions & IPropertyInformationProps & { lease?: LeaseFormModel } = {
       nameSpace: 'properties',
     },
   ) => {
     // render component under test
     const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
+      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? new LeaseFormModel()}>
         <PropertyInformation
           disabled={renderOptions.disabled}
           nameSpace={renderOptions.nameSpace}
@@ -36,7 +37,10 @@ describe('PropertyInformation component', () => {
   it('renders minimally as expected', () => {
     const { component } = setup({
       nameSpace: 'properties.0',
-      lease: { ...defaultFormLease, properties: [mockParcel] },
+      lease: {
+        ...new LeaseFormModel(),
+        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
+      },
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
@@ -45,8 +49,8 @@ describe('PropertyInformation component', () => {
     const { component } = setup({
       nameSpace: 'properties.0',
       lease: {
-        ...defaultFormLease,
-        properties: [mockParcel],
+        ...new LeaseFormModel(),
+        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
         amount: 1,
         description: 'a test description',
         programName: 'A program',
@@ -66,8 +70,8 @@ describe('PropertyInformation component', () => {
     const { component } = setup({
       nameSpace: 'properties.0',
       lease: {
-        ...defaultFormLease,
-        properties: [{ ...mockParcel, landArea: undefined }],
+        ...new LeaseFormModel(),
+        properties: [{ ...mockParcel, landArea: '1', areaUnitTypeCode: 'test', leaseId: null }],
         amount: 1,
         description: 'a test description',
         programName: 'A program',
@@ -87,8 +91,8 @@ describe('PropertyInformation component', () => {
     const { component } = setup({
       nameSpace: 'properties.0',
       lease: {
-        ...defaultFormLease,
-        properties: [{ ...mockParcel, landArea: 123 }],
+        ...new LeaseFormModel(),
+        properties: [{ ...mockParcel, landArea: '123', areaUnitTypeCode: 'test', leaseId: null }],
         amount: 1,
         description: 'a test description',
         programName: 'A program',

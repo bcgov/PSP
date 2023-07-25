@@ -1,11 +1,13 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
-import { IProperty } from 'interfaces';
-import { mockLookups } from 'mocks/mockLookups';
-import { getMockProperties } from 'mocks/mockProperties';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
+
+import { IProperty } from '@/interfaces';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { getMockProperties } from '@/mocks/properties.mock';
+import { Api_Property } from '@/models/api/Property';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import LeaseHeaderAddresses, { ILeaseHeaderAddressesProps } from './LeaseHeaderAddresses';
 
@@ -18,11 +20,14 @@ describe('LeaseHeaderAddresses component', () => {
   const mockAxios = new MockAdapter(axios);
   const setup = (renderOptions?: RenderOptions & ILeaseHeaderAddressesProps) => {
     // render component under test
-    const component = render(<LeaseHeaderAddresses lease={renderOptions?.lease} />, {
-      ...renderOptions,
-      store: storeState,
-      history,
-    });
+    const component = render(
+      <LeaseHeaderAddresses propertyLeases={renderOptions?.propertyLeases} />,
+      {
+        ...renderOptions,
+        store: storeState,
+        history,
+      },
+    );
 
     return {
       ...component,
@@ -35,7 +40,13 @@ describe('LeaseHeaderAddresses component', () => {
 
   it('renders 2 addresses by default', async () => {
     const { getAllByText, getByText } = setup({
-      lease: { properties: getMockProperties() } as any,
+      propertyLeases: getMockProperties().map(p => ({
+        leaseId: 1,
+        property: p as any,
+        lease: null,
+        leaseArea: null,
+        areaUnitType: null,
+      })),
     });
 
     const text = getAllByText('1234 Mock street, Victoria', { exact: false });
@@ -44,19 +55,47 @@ describe('LeaseHeaderAddresses component', () => {
   });
   it('formats addresses as expected', async () => {
     const { getByText, getAllByText } = setup({
-      lease: {
-        properties: [
-          noStreetOrMunicipality,
-          streetNoMunicipality,
-          noStreetButMunicipality,
-          streetAndMunicipality,
-          undefinedAddress,
-        ],
-      } as any,
+      propertyLeases: [
+        {
+          leaseId: 1,
+          property: noStreetOrMunicipality as Api_Property,
+          lease: null,
+          leaseArea: null,
+          areaUnitType: null,
+        },
+        {
+          leaseId: 1,
+          property: streetNoMunicipality as Api_Property,
+          lease: null,
+          leaseArea: null,
+          areaUnitType: null,
+        },
+        {
+          leaseId: 1,
+          property: noStreetButMunicipality as Api_Property,
+          lease: null,
+          leaseArea: null,
+          areaUnitType: null,
+        },
+        {
+          leaseId: 1,
+          property: streetAndMunicipality as Api_Property,
+          lease: null,
+          leaseArea: null,
+          areaUnitType: null,
+        },
+        {
+          leaseId: 1,
+          property: undefinedAddress as Api_Property,
+          lease: null,
+          leaseArea: null,
+          areaUnitType: null,
+        },
+      ],
     });
 
     const moreButton = getByText('[+3 more...]');
-    await act(() => userEvent.click(moreButton));
+    await act(async () => userEvent.click(moreButton));
 
     expect(
       getAllByText('000-000-000 - Address not available in PIMS', { exact: false }),

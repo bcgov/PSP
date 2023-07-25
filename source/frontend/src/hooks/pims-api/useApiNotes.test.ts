@@ -1,8 +1,9 @@
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { NoteTypes } from 'constants/noteTypes';
-import { mockEntityNote, mockNotesResponse } from 'mocks/mockNoteResponses';
+
+import { NoteTypes } from '@/constants/noteTypes';
+import { mockEntityNote, mockNotesResponse } from '@/mocks/noteResponses.mock';
 
 import { useApiNotes } from './useApiNotes';
 

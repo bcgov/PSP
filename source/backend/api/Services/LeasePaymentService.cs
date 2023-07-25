@@ -1,10 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
 using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
 using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
 
 namespace Pims.Api.Services
@@ -13,47 +11,45 @@ namespace Pims.Api.Services
     {
         private readonly ILeaseTermRepository _leaseTermRepository;
         private readonly ILeasePaymentRepository _leasePaymentRepository;
-        private readonly ILeaseService _leaseService;
-        private readonly ClaimsPrincipal _user;
 
-        public LeasePaymentService(ILeaseTermRepository leaseTermRepository, ILeasePaymentRepository leasePaymentRepository, ILeaseService leaseService, ClaimsPrincipal user)
+        public LeasePaymentService(ILeaseTermRepository leaseTermRepository, ILeasePaymentRepository leasePaymentRepository, ClaimsPrincipal user)
         {
             _leaseTermRepository = leaseTermRepository;
             _leasePaymentRepository = leasePaymentRepository;
-            _leaseService = leaseService;
-            _user = user;
         }
 
-        public PimsLease DeletePayment(long leaseId, long leaseRowVersion, PimsLeasePayment payment)
+        public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate)
         {
-            ValidatePaymentServiceCall(leaseId, leaseRowVersion);
+            return _leasePaymentRepository.GetAll(startDate, endDate);
+        }
+
+        public bool DeletePayment(long leaseId, PimsLeasePayment payment)
+        {
 
             _leasePaymentRepository.Delete(payment.Internal_Id);
             _leasePaymentRepository.CommitTransaction();
 
-            return _leaseService.GetById(leaseId);
+            return true;
         }
 
-        public PimsLease UpdatePayment(long leaseId, long paymentId, long leaseRowVersion, PimsLeasePayment payment)
+        public PimsLeasePayment UpdatePayment(long leaseId, long paymentId, PimsLeasePayment payment)
         {
-            ValidatePaymentServiceCall(leaseId, leaseRowVersion);
             ValidatePaymentRules(payment);
 
-            _leasePaymentRepository.Update(payment);
+            var updatedPayment = _leasePaymentRepository.Update(payment);
             _leasePaymentRepository.CommitTransaction();
 
-            return _leaseService.GetById(leaseId);
+            return updatedPayment;
         }
 
-        public PimsLease AddPayment(long leaseId, long leaseRowVersion, PimsLeasePayment payment)
+        public PimsLeasePayment AddPayment(long leaseId, PimsLeasePayment payment)
         {
-            ValidatePaymentServiceCall(leaseId, leaseRowVersion);
             ValidatePaymentRules(payment);
 
-            _leasePaymentRepository.Add(payment);
+            var updatedPayment = _leasePaymentRepository.Add(payment);
             _leasePaymentRepository.CommitTransaction();
 
-            return _leaseService.GetById(leaseId);
+            return updatedPayment;
         }
 
         private static string GetPaymentStatus(PimsLeasePayment payment, PimsLeaseTerm parent)
@@ -78,20 +74,6 @@ namespace Pims.Api.Services
             else
             {
                 throw new InvalidOperationException("Invalid payment value provided");
-            }
-        }
-
-        /// <summary>
-        /// For a payment service call to be valid, the user must have the lease edit claim and the lease being edited must be up to date.
-        /// </summary>
-        /// <param name="leaseId"></param>
-        /// <param name="leaseRowVersion"></param>
-        private void ValidatePaymentServiceCall(long leaseId, long leaseRowVersion)
-        {
-            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            if (!_leaseService.IsRowVersionEqual(leaseId, leaseRowVersion))
-            {
-                throw new DbUpdateConcurrencyException("You are working with an older version of this lease, please refresh the application and retry.");
             }
         }
 

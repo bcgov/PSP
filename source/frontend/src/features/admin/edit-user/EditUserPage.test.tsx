@@ -1,15 +1,16 @@
 import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
-import { getUserMock } from 'mocks/userMock';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, cleanup, render, waitForElementToBeRemoved } from 'utils/test-utils';
+
+import * as API from '@/constants/API';
+import { getUserMock } from '@/mocks/user.mock';
+import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, cleanup, render, waitForElementToBeRemoved } from '@/utils/test-utils';
 
 import EditUserPage from './EditUserPage';
 

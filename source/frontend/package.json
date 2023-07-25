@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "3.2.0-53.17",
+  "version": "4.0.0-59.4",
   "private": true,
   "dependencies": {
     "@bcgov/bc-sans": "1.0.1",
@@ -31,7 +31,7 @@
     "react-click-away-listener": "2.2.2",
     "react-datepicker": "4.8.0",
     "react-dom": "18.2.0",
-    "react-draggable": "4.4.3",
+    "react-draggable": "4.4.5",
     "react-error-boundary": "3.1.4",
     "react-fast-compare": "3.2.0",
     "react-icons": "4.3.1",
@@ -93,6 +93,7 @@
     "compression-webpack-plugin": "7.1.1",
     "cross-env": "7.0.3",
     "customize-cra": "1.0.0",
+    "dependency-cruiser": "^13.0.3",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-simple-import-sort": "7.0.0",
@@ -120,14 +121,15 @@
     "loader-utils": "2.0.4",
     "decode-uri-component": "0.2.2",
     "json5": "1.0.2",
-    "webpack": "5.76.3"
+    "webpack": "5.76.3",
+    "tough-cookie": "4.1.3"
   },
   "scripts": {
     "start": "react-app-rewired start",
     "build": "cross-env CI=true GENERATE_SOURCEMAP=false INLINE_RUNTIME_CHUNK=false react-app-rewired build",
     "test": "tsc && react-app-rewired test --ci --watchAll=false",
     "test-u": "tsc && react-app-rewired test --ci --watchAll=false -u",
-    "test:watch": "react-app-rewired test",
+    "test:watch": "react-app-rewired test --watchAll",
     "test:clear-cache": "jest --clearCache",
     "coverage": "react-app-rewired test --ci --coverage --testResultsProcessor jest-sonar-reporter --watchAll=false",
     "update-snapshots": "react-app-rewired test --updateSnapshot",
@@ -148,7 +150,8 @@
     "resetMocks": false,
     "clearMocks": true,
     "moduleNameMapper": {
-      "\\.(css|less|sass|scss)$": "<rootDir>/src/mocks/styleMock.js"
+      "@/(.*)$": "<rootDir>/src/$1",
+      "\\.(css|less|sass|scss)$": "<rootDir>/src/mocks/style.mock.js"
     },
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",

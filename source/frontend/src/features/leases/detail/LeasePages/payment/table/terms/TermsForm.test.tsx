@@ -1,26 +1,24 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import Claims from 'constants/claims';
-import { LeaseTermStatusTypes } from 'constants/leaseStatusTypes';
 import { createMemoryHistory } from 'history';
-import {
-  defaultFormLease,
-  defaultFormLeaseTerm,
-  IContactSearchResult,
-  IFormLease,
-  IFormLeasePayment,
-} from 'interfaces';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import React from 'react';
-import { getAllByRole as getAllByRoleBase, renderAsync, RenderOptions } from 'utils/test-utils';
 
-import { ITermsFormProps, TermsForm } from './TermsForm';
+import { Claims } from '@/constants';
+import { LeaseTermStatusTypes } from '@/constants/leaseStatusTypes';
+import { LeaseFormModel } from '@/features/leases/models';
+import { IContactSearchResult } from '@/interfaces';
+import { getAllByRole as getAllByRoleBase, renderAsync, RenderOptions } from '@/utils/test-utils';
+
+import { defaultFormLeaseTerm, FormLeasePayment } from '../../models';
+import TermsForm, { ITermsFormProps } from './TermsForm';
 
 jest.mock('@react-keycloak/web');
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 const defaultTestFormLeaseTerm = {
   ...defaultFormLeaseTerm,
+  id: 1,
   isTermExercised: false,
   startDate: '2020-01-01',
   expiryDate: '2020-12-15',
@@ -31,7 +29,7 @@ describe('TermsForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
       Partial<ITermsFormProps> & {
-        initialValues?: Partial<IFormLease>;
+        initialValues?: Partial<LeaseFormModel>;
         selectedTenants?: IContactSearchResult[];
         onCancel?: () => void;
         setSelectedTenants?: (tenants: IContactSearchResult[]) => void;
@@ -72,7 +70,7 @@ describe('TermsForm component', () => {
     return await setup({
       store: { systemConstant: { systemConstants: [{ name: 'GST', value: '5.0' }] } },
       initialValues: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         terms: [
           {
             ...defaultTestFormLeaseTerm,
@@ -96,7 +94,7 @@ describe('TermsForm component', () => {
 
   it('renders with data as expected', async () => {
     const { component } = await setup({
-      initialValues: { ...defaultFormLease, terms: [defaultFormLeaseTerm] },
+      initialValues: { ...new LeaseFormModel(), terms: [defaultFormLeaseTerm] },
     });
 
     expect(component.asFragment()).toMatchSnapshot();
@@ -129,7 +127,7 @@ describe('TermsForm component', () => {
     const { findFirstRow, findCell } = await setup({
       store: undefined,
       initialValues: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         terms: [
           {
             ...defaultTestFormLeaseTerm,
@@ -149,7 +147,7 @@ describe('TermsForm component', () => {
     const { findFirstRow, findCell } = await setup({
       store: undefined,
       initialValues: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         terms: [
           {
             ...defaultTestFormLeaseTerm,
@@ -170,7 +168,7 @@ describe('TermsForm component', () => {
     const { findFirstRow, findCell } = await setup({
       store: { systemConstant: { systemConstants: [{ name: 'GST', value: '5.0' }] } },
       initialValues: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         terms: [
           {
             ...defaultTestFormLeaseTerm,
@@ -192,7 +190,7 @@ describe('TermsForm component', () => {
     const { findFirstRow, findCell } = await setup({
       store: { systemConstant: { systemConstants: [{ name: 'GST', value: '5.0' }] } },
       initialValues: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         terms: [
           {
             ...defaultTestFormLeaseTerm,
@@ -215,7 +213,7 @@ describe('TermsForm component', () => {
     const { findFirstRow, findCell } = await setup({
       store: { systemConstant: { systemConstants: [{ name: 'GST', value: '5.0' }] } },
       initialValues: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         terms: [
           {
             ...defaultTestFormLeaseTerm,
@@ -235,12 +233,12 @@ describe('TermsForm component', () => {
     const { findFirstRow, findCell } = await setup({
       store: { systemConstant: { systemConstants: [{ name: 'GST', value: '5.0' }] } },
       initialValues: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         terms: [
           {
             ...defaultTestFormLeaseTerm,
             isTermExercised: true,
-            payments: [{ amountTotal: 1 }, { amountTotal: 1 }] as IFormLeasePayment[],
+            payments: [{ amountTotal: 1 }, { amountTotal: 1 }] as FormLeasePayment[],
           },
         ],
       },
@@ -254,7 +252,7 @@ describe('TermsForm component', () => {
   it('displays the first column correctly', async () => {
     const { component, findCell } = await setup({
       initialValues: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         terms: [
           {
             ...defaultTestFormLeaseTerm,
@@ -276,7 +274,7 @@ describe('TermsForm component', () => {
       component: { findByText },
     } = await setup({
       initialValues: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         terms: [
           {
             ...defaultTestFormLeaseTerm,
@@ -284,7 +282,7 @@ describe('TermsForm component', () => {
             payments: [
               { amountTotal: 1, receivedDate: '2020-01-01' },
               { amountTotal: 1, receivedDate: '2021-01-01' },
-            ] as IFormLeasePayment[],
+            ] as FormLeasePayment[],
           },
         ],
       },
@@ -297,13 +295,12 @@ describe('TermsForm component', () => {
       component: { getAllByTitle, getAllByRole },
     } = await setup({
       initialValues: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         terms: [
           {
-            id: 1,
             ...defaultTestFormLeaseTerm,
             isTermExercised: false,
-            payments: [] as IFormLeasePayment[],
+            payments: [] as FormLeasePayment[],
           },
         ],
       },
@@ -320,14 +317,13 @@ describe('TermsForm component', () => {
       component: { getByTestId, queryByTitle },
     } = await setup({
       initialValues: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         terms: [
           {
-            id: 1,
             ...defaultTestFormLeaseTerm,
             isTermExercised: true,
             statusTypeCode: { id: LeaseTermStatusTypes.EXERCISED },
-            payments: [] as IFormLeasePayment[],
+            payments: [] as FormLeasePayment[],
           },
         ],
       },
@@ -344,13 +340,12 @@ describe('TermsForm component', () => {
       component: { getByTestId, queryByTitle },
     } = await setup({
       initialValues: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         terms: [
           {
-            id: 1,
             ...defaultTestFormLeaseTerm,
             isTermExercised: false,
-            payments: [{ amountTotal: 1, receivedDate: '2020-01-01' }] as IFormLeasePayment[],
+            payments: [{ amountTotal: 1, receivedDate: '2020-01-01' }] as FormLeasePayment[],
           },
         ],
       },

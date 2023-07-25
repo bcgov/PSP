@@ -339,10 +339,13 @@ namespace Pims.Dal.Repositories
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
             return this.Context.PimsUsers
+                .Include(u => u.UserTypeCodeNavigation)
                 .Include(u => u.PimsUserRoles)
                 .ThenInclude(r => r.Role)
                 .Include(u => u.Person)
                 .ThenInclude(p => p.PimsContactMethods)
+                .Include(u => u.PimsRegionUsers)
+                    .ThenInclude(ru => ru.RegionCodeNavigation)
                 .AsNoTracking()
                 .SingleOrDefault(u => u.GuidIdentifierValue == keycloakUserId) ?? throw new KeyNotFoundException();
         }
@@ -406,8 +409,26 @@ namespace Pims.Dal.Repositories
         {
             var userRegion = user.PimsRegionUsers.FirstOrDefault(r => r.Internal_Id == regionId);
             user.PimsRegionUsers.Remove(userRegion);
-            this.Context.PimsRegionUsers.Remove(userRegion);
+            Context.PimsRegionUsers.Remove(userRegion);
             return user;
+        }
+
+        public ICollection<PimsUserRole> UpdateAllRolesForUser(long userId, ICollection<PimsUserRole> roles)
+        {
+            Context.UpdateChild<PimsUser, long, PimsUserRole, long>(u => u.PimsUserRoles, userId, roles.ToArray());
+            return roles;
+        }
+
+        public ICollection<PimsRegionUser> UpdateAllRegionsForUser(long userId, ICollection<PimsRegionUser> regions)
+        {
+            foreach (var userRegion in regions)
+            {
+                var region = Context.Find<PimsRegion>(userRegion.RegionCode);
+                userRegion.RegionCodeNavigation = region;
+            }
+
+            Context.UpdateChild<PimsUser, long, PimsRegionUser, long>(u => u.PimsRegionUsers, userId, regions.ToArray());
+            return regions;
         }
 
         /// <summary>
@@ -526,6 +547,7 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsUsers
                 .Include(u => u.Person)
                 .Include(u => u.PimsRegionUsers)
+                .Include(u => u.UserTypeCodeNavigation)
                 .AsNoTracking()
                 .SingleOrDefault(u => u.GuidIdentifierValue == keycloakUserId) ?? throw new KeyNotFoundException();
         }

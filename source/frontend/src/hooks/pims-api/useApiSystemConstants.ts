@@ -1,7 +1,8 @@
 import React from 'react';
-import { ISystemConstant } from 'store/slices/systemConstants';
 
-import { useAxiosApi } from '.';
+import { ISystemConstant } from '@/store/slices/systemConstants';
+
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to retrieve system constants.

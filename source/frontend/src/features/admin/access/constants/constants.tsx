@@ -1,9 +1,10 @@
-import { ColumnWithProps } from 'components/Table';
-import { AccessRequestStatus, AccessStatusDisplayMapper } from 'constants/accessStatus';
-import { FormAccessRequest } from 'features/admin/access-request/models';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
+
+import { ColumnWithProps } from '@/components/Table';
+import { AccessRequestStatus, AccessStatusDisplayMapper } from '@/constants/accessStatus';
+import { FormAccessRequest } from '@/features/admin/access-request/models';
 
 import { RowActions } from '../components/RowActions';
 

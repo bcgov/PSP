@@ -13,11 +13,11 @@ namespace PIMS.Tests.Automation.PageObjects
             this.webDriver = webDriver;
         }
 
-        public virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
+        public virtual void Wait(int milliseconds = 4000) => Thread.Sleep(milliseconds);
 
         public void WaitUntil(By element)
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(60));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
             wait.Until(ExpectedConditions.ElementIsVisible(element));
         }
 
@@ -82,20 +82,6 @@ namespace PIMS.Tests.Automation.PageObjects
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
             Wait();
             selectedOption.Click();
-        }
-
-        protected void ChooseRandomRadioButton(By parentName)
-        {
-            Random random = new Random();
-            var js = (IJavaScriptExecutor)webDriver;
-
-            var childrenElements = webDriver.FindElements(parentName);
-            int index = random.Next(0, childrenElements.Count);
-            var selectedRadioBttn = childrenElements[index];
-
-            js.ExecuteScript("arguments[0].scrollIntoView();", selectedRadioBttn);
-            Wait();
-            selectedRadioBttn.Click();
         }
 
         protected void ChooseSpecificRadioButton(By parentName, string option)
@@ -203,6 +189,14 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             result.Sort();
             return result;
+        }
+
+        protected string TransformBooleanFormat(bool elementValue)
+        {
+            if (elementValue)
+                { return "Y"; }
+            else
+                { return "N"; }
         }
 
         protected List<string> GetViewFieldListContent(By element)

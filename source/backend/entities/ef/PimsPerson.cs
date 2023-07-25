@@ -14,8 +14,9 @@ namespace Pims.Dal.Entities
         public PimsPerson()
         {
             PimsAcquisitionFilePeople = new HashSet<PimsAcquisitionFilePerson>();
-            PimsAcquisitionOwnerSolicitors = new HashSet<PimsAcquisitionOwnerSolicitor>();
             PimsContactMethods = new HashSet<PimsContactMethod>();
+            PimsInterestHolderPeople = new HashSet<PimsInterestHolder>();
+            PimsInterestHolderPrimaryContacts = new HashSet<PimsInterestHolder>();
             PimsLeaseTenantPeople = new HashSet<PimsLeaseTenant>();
             PimsLeaseTenantPrimaryContacts = new HashSet<PimsLeaseTenant>();
             PimsPersonAddresses = new HashSet<PimsPersonAddress>();
@@ -102,10 +103,12 @@ namespace Pims.Dal.Entities
 
         [InverseProperty(nameof(PimsAcquisitionFilePerson.Person))]
         public virtual ICollection<PimsAcquisitionFilePerson> PimsAcquisitionFilePeople { get; set; }
-        [InverseProperty(nameof(PimsAcquisitionOwnerSolicitor.Person))]
-        public virtual ICollection<PimsAcquisitionOwnerSolicitor> PimsAcquisitionOwnerSolicitors { get; set; }
         [InverseProperty(nameof(PimsContactMethod.Person))]
         public virtual ICollection<PimsContactMethod> PimsContactMethods { get; set; }
+        [InverseProperty(nameof(PimsInterestHolder.Person))]
+        public virtual ICollection<PimsInterestHolder> PimsInterestHolderPeople { get; set; }
+        [InverseProperty(nameof(PimsInterestHolder.PrimaryContact))]
+        public virtual ICollection<PimsInterestHolder> PimsInterestHolderPrimaryContacts { get; set; }
         [InverseProperty(nameof(PimsLeaseTenant.Person))]
         public virtual ICollection<PimsLeaseTenant> PimsLeaseTenantPeople { get; set; }
         [InverseProperty(nameof(PimsLeaseTenant.PrimaryContact))]

@@ -1,14 +1,22 @@
 import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import Claims from 'constants/claims';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks';
-import { mockDocumentDetailResponse } from 'mocks/mockDocumentDetail';
-import { mockDocumentsResponse, mockDocumentTypesResponse } from 'mocks/mockDocuments';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, cleanup, render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
+
+import Claims from '@/constants/claims';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import { mockDocumentsResponse, mockDocumentTypesResponse } from '@/mocks/documents.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import {
+  act,
+  cleanup,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+  waitFor,
+} from '@/utils/test-utils';
 
 import { DocumentRow } from '../ComposedDocument';
 import { DocumentListView, IDocumentListViewProps } from './DocumentListView';
@@ -134,7 +142,7 @@ describe('Document List View', () => {
   });
 
   it('should not display the download icon on the listview', async () => {
-    mockAxios.onGet().reply(200, mockDocumentDetailResponse());
+    mockAxios.onGet().reply(200, []);
     const documentRows = mockDocumentRowResponse();
     documentRows[0].isFileAvailable = true;
     const { queryByTestId } = setup({

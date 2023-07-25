@@ -1,0 +1,721 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PropertyDetailsTabView component renders as expected when provided valid data object 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.c0 {
+  padding-top: 1rem;
+}
+
+.c1 {
+  text-align: right;
+}
+
+.c4 {
+  text-align: left;
+}
+
+.c3 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c2 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c6.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c5 {
+  font-weight: bold;
+}
+
+.c8 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c9 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 mr-3 my-1"
+    />
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Property Address
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <p
+          class="c4"
+        >
+          This is the address stored in PIMS application for this property and will be used wherever this property's address is needed.
+        </p>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Address:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            <div>
+              456 Souris Street
+            </div>
+            <div>
+              PO Box 250
+            </div>
+            <div>
+              A Hoot and a holler from the A&W
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              City:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            North Podunk
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Province:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            British Columbia
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Postal code:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            IH8 B0B
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              General location:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Property Attributes
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              MOTI region:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Highways district:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            <div
+              class="c7"
+            >
+              -
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Electoral district:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Agricultural Land Reserve:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            No
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Railway belt / Dominion patent:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            Unknown
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Land parcel type:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            Titled
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Municipal zoning:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            Some municipal zoning comments
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Anomalies:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            <div>
+              <div
+                class="multiselect-container multiSelectContainer disable_ms "
+                id="multiselectContainerReact"
+                style="opacity: 1;"
+              >
+                <div
+                  class="search-wrapper searchWrapper "
+                  style="padding: 0px;"
+                >
+                  <span
+                    class="chip  false disableSelection"
+                    style="opacity: 1; background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                  >
+                    Building liens
+                  </span>
+                  <input
+                    autocomplete="off"
+                    class="searchBox "
+                    disabled=""
+                    id="search_input"
+                    name="search_name_input"
+                    placeholder=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="optionListContainer displayNone"
+                >
+                  <ul
+                    class="optionContainer"
+                  >
+                    <span
+                      class="notFound"
+                    >
+                      No Options Available
+                    </span>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-2"
+          >
+            <label
+              class="c5"
+            >
+              Coordinates:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Tenure Status
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Tenure status:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            <div>
+              <div
+                class="multiselect-container multiSelectContainer disable_ms "
+                id="multiselectContainerReact"
+                style="opacity: 1;"
+              >
+                <div
+                  class="search-wrapper searchWrapper "
+                  style="padding: 0px;"
+                >
+                  <span
+                    class="chip  false disableSelection"
+                    style="opacity: 1; background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                  >
+                    Closed Road
+                  </span>
+                  <input
+                    autocomplete="off"
+                    class="searchBox "
+                    disabled=""
+                    id="search_input"
+                    name="search_name_input"
+                    placeholder=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="optionListContainer displayNone"
+                >
+                  <ul
+                    class="optionContainer"
+                  >
+                    <span
+                      class="notFound"
+                    >
+                      No Options Available
+                    </span>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Provincial Public Hwy:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            Unknown
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Measurements
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-2"
+          >
+            <label
+              class="c5"
+            >
+              Area:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="c8"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="text-right col"
+                    >
+                      10,000
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      sq. metres
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="text-right col"
+                    >
+                      1
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      hectares
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col"
+              >
+                <div
+                  class="c9"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="text-right col"
+                    >
+                      107,639.1
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      sq. feet
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="text-right col"
+                    >
+                      2.47
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      acres
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="py-4 row"
+        >
+          <div
+            class="pr-0 text-left col-auto"
+          >
+            <label
+              class="c5"
+            >
+              Is this a volumetric parcel?:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            <div
+              class="form-check form-check-inline"
+            >
+              <input
+                class="form-check-input"
+                disabled=""
+                id="inline-isVolumetric-yes"
+                name="is-volumetric-radio"
+                type="radio"
+              />
+              <label
+                class="form-check-label"
+                for="inline-isVolumetric-yes"
+                title=""
+              >
+                Yes
+              </label>
+            </div>
+            <div
+              class="form-check form-check-inline"
+            >
+              <input
+                checked=""
+                class="form-check-input"
+                disabled=""
+                id="inline-isVolumetric-no"
+                name="is-volumetric-radio"
+                type="radio"
+                value="yes"
+              />
+              <label
+                class="form-check-label"
+                for="inline-isVolumetric-no"
+                title=""
+              >
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Notes
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor nisl at elit vestibulum vestibulum. Nullam eget consectetur felis, id porta eros. Proin at massa rutrum, molestie lorem a, congue lorem.
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

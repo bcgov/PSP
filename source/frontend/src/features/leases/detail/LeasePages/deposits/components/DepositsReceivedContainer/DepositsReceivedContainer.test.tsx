@@ -1,7 +1,7 @@
-import Claims from 'constants/claims';
-import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
-import { formatMoney, prettyFormatDate } from 'utils';
-import { getAllByRole as getAllByRoleBase, render, RenderOptions } from 'utils/test-utils';
+import Claims from '@/constants/claims';
+import { getMockDeposits } from '@/mocks/deposits.mock';
+import { formatMoney, prettyFormatDate } from '@/utils';
+import { getAllByRole as getAllByRoleBase, render, RenderOptions } from '@/utils/test-utils';
 
 import DepositsReceivedContainer, {
   IDepositsReceivedContainerProps,
@@ -9,38 +9,6 @@ import DepositsReceivedContainer, {
 
 const mockVoidCallback = (): void => {};
 const mockCallback = (id: number): void => {};
-
-const mockDeposits: Api_SecurityDeposit[] = [
-  {
-    id: 1,
-    description: 'Test deposit 1',
-    amountPaid: 1234.0,
-    depositDate: '2022-02-09',
-    depositType: {
-      id: 'PET',
-      description: 'Pet deposit',
-      isDisabled: false,
-    },
-    depositReturns: [],
-    rowVersion: 1,
-    contactHolder: { id: 'O3', organization: { name: 'test organization' } },
-  },
-  {
-    id: 2,
-    description: 'Test deposit 2',
-    amountPaid: 444.0,
-    depositDate: '2022-02-09',
-    depositType: {
-      id: 'OTHER',
-      description: 'Other deposit',
-      isDisabled: false,
-    },
-    otherTypeDescription: 'TestCustomDeposit',
-    depositReturns: [],
-    rowVersion: 1,
-    contactHolder: { id: 'P1', person: { firstName: 'test', surname: 'person' } },
-  },
-];
 
 jest.mock('@react-keycloak/web');
 
@@ -83,7 +51,7 @@ describe('DepositsReceivedContainer component', () => {
   });
   it('renders as expected', () => {
     const { asFragment } = setup({
-      securityDeposits: [...mockDeposits],
+      securityDeposits: [...getMockDeposits()],
       onAdd: mockVoidCallback,
       onEdit: mockCallback,
       onDelete: mockCallback,
@@ -94,18 +62,18 @@ describe('DepositsReceivedContainer component', () => {
 
   it('renders one row for each security deposit', () => {
     const { getAllByRole } = setup({
-      securityDeposits: [...mockDeposits],
+      securityDeposits: [...getMockDeposits()],
       onAdd: mockVoidCallback,
       onEdit: mockCallback,
       onDelete: mockCallback,
       onReturn: mockCallback,
     });
     const rows = getAllByRole('row');
-    expect(rows.length).toBe(mockDeposits.length + 1);
+    expect(rows.length).toBe(getMockDeposits().length + 1);
   });
 
   it('renders security deposit information as expected', () => {
-    const deposit = mockDeposits[0];
+    const deposit = getMockDeposits()[0];
     const { findFirstRow, findCell } = setup({
       securityDeposits: [deposit],
       onAdd: mockVoidCallback,
@@ -116,15 +84,15 @@ describe('DepositsReceivedContainer component', () => {
     const dataRow = findFirstRow() as HTMLElement;
 
     expect(dataRow).not.toBeNull();
-    expect(findCell(dataRow, 0)?.textContent).toBe(deposit.depositType.description);
+    expect(findCell(dataRow, 0)?.textContent).toBe(deposit.depositType.description ?? '');
     expect(findCell(dataRow, 1)?.textContent).toBe(deposit.description);
     expect(findCell(dataRow, 2)?.textContent).toBe(formatMoney(deposit.amountPaid));
     expect(findCell(dataRow, 3)?.textContent).toBe(prettyFormatDate(deposit.depositDate));
-    expect(findCell(dataRow, 4)?.textContent).toBe(deposit.contactHolder?.organization?.name);
+    expect(findCell(dataRow, 4)?.textContent).toBe('test person');
   });
 
   it('renders a delete icon when deposit has no returns', () => {
-    const deposit = mockDeposits[0];
+    const deposit = getMockDeposits()[0];
     deposit.depositReturns = [];
     const { findFirstRow, getAllByTitle, queryByTestId } = setup({
       securityDeposits: [deposit],
@@ -143,7 +111,7 @@ describe('DepositsReceivedContainer component', () => {
   });
 
   it('renders a tooltip instead of a delete icon if a deposit has a return', () => {
-    const deposit = mockDeposits[0];
+    const deposit = getMockDeposits()[0];
     deposit.depositReturns = [{} as any];
     const { findFirstRow, queryByTitle, getByTestId } = setup({
       securityDeposits: [deposit],
@@ -164,14 +132,14 @@ describe('DepositsReceivedContainer component', () => {
 
   it('renders security deposit return holders as links', () => {
     const { getByText } = setup({
-      securityDeposits: mockDeposits,
+      securityDeposits: getMockDeposits(),
       onAdd: mockVoidCallback,
       onEdit: mockCallback,
       onDelete: mockCallback,
       onReturn: mockCallback,
     });
 
-    expect(getByText('test organization')).toHaveAttribute('href', '/contact/O3');
+    expect(getByText('test organization')).toHaveAttribute('href', '/contact/O1');
     expect(getByText('test person')).toHaveAttribute('href', '/contact/P1');
   });
 });

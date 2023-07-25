@@ -2,9 +2,10 @@ import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/mockLookups';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import ExportAggregatedLeasesContainer, {
   IExportAggregatedLeasesContainer,

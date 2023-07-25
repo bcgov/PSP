@@ -3,6 +3,8 @@ import { Breadcrumb as BsBreadcrumb } from 'react-bootstrap';
 import { Tabs as BsTabs } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
 
+import { LoadingBackdropProps } from '@/components/common/LoadingBackdrop';
+
 import { Button } from './buttons';
 import { Form } from './form';
 import GenericModal from './GenericModal';
@@ -84,13 +86,14 @@ export const Tabs = styled(BsTabs)`
   font-size: 1.4rem;
   border-color: transparent;
   .nav-tabs {
-    height: 2.4rem;
+    height: auto;
   }
   .nav-item {
-    min-width: 7rem;
+    min-width: 5rem;
     padding: 0.1rem 0.6rem;
 
     &:hover {
+      color: ${props => props.theme.css.secondaryVariantColor};
       border-color: transparent;
     }
     &.active {
@@ -176,7 +179,7 @@ export const TrayHeader = styled.div`
 `;
 
 export const ActivityTrayPage = styled.div`
-  padding: 1.5rem;
+  padding: 0rem;
 `;
 
 export const CloseButton = styled(Button)`
@@ -199,4 +202,19 @@ export const PopupTray = styled.div`
   text-align: left;
   transition: transform 0.5s ease-in-out;
   position: relative;
+`;
+
+export const Backdrop = styled.div<LoadingBackdropProps>`
+  width: 100%;
+  height: 100%;
+  position: ${(props: any) => (props.parentScreen ? 'absolute' : 'fixed')};
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-items: center;
+  justify-content: center;
 `;

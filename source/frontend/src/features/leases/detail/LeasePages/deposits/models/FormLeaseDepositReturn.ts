@@ -1,6 +1,7 @@
-import { fromContact, IContactSearchResult, toContact } from 'interfaces';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
-import { NumberFieldValue } from 'typings/NumberFieldValue';
+import { fromContact, IContactSearchResult, toContact } from '@/interfaces';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { numberFieldToRequiredNumber } from '@/utils/formUtils';
 
 export class FormLeaseDepositReturn {
   public id?: number;
@@ -41,7 +42,7 @@ export class FormLeaseDepositReturn {
     return returnDeposit;
   }
 
-  public static createFromModel(
+  public static fromApi(
     baseModel: Api_SecurityDepositReturn,
     parentDeposit: Api_SecurityDeposit,
   ): FormLeaseDepositReturn {
@@ -53,29 +54,29 @@ export class FormLeaseDepositReturn {
     model.parentDepositOtherDescription = parentDeposit.otherTypeDescription || '';
     model.parentDepositAmount = parentDeposit.amountPaid;
 
-    model.id = baseModel.id;
-    model.parentDepositId = baseModel.parentDepositId || 0;
+    model.id = baseModel.id ?? undefined;
+    model.parentDepositId = baseModel.parentDepositId;
     model.terminationDate = baseModel.terminationDate || '';
     model.claimsAgainst = baseModel.claimsAgainst || '';
     model.returnAmount = baseModel.returnAmount || '';
     model.interestPaid = baseModel.interestPaid || '';
     model.returnDate = baseModel.returnDate || '';
     model.contactHolder =
-      baseModel.contactHolder !== undefined ? fromContact(baseModel.contactHolder) : undefined;
+      baseModel.contactHolder !== null ? fromContact(baseModel.contactHolder) : undefined;
     model.rowVersion = baseModel.rowVersion || 0;
     return model;
   }
 
-  public toInterfaceModel(): Api_SecurityDepositReturn {
+  public toApi(): Api_SecurityDepositReturn {
     return {
-      id: this.id,
+      id: this.id ?? null,
       parentDepositId: this.parentDepositId,
-      terminationDate: this.terminationDate === '' ? undefined : this.terminationDate,
-      claimsAgainst: this.claimsAgainst === '' ? undefined : this.claimsAgainst,
-      returnAmount: this.returnAmount === '' ? 0 : this.returnAmount,
-      interestPaid: this.interestPaid === '' ? 0 : this.interestPaid,
-      returnDate: this.returnDate === '' ? undefined : this.returnDate,
-      contactHolder: this.contactHolder !== undefined ? toContact(this.contactHolder) : undefined,
+      terminationDate: this.terminationDate,
+      claimsAgainst: numberFieldToRequiredNumber(this.claimsAgainst),
+      returnAmount: numberFieldToRequiredNumber(this.returnAmount),
+      interestPaid: numberFieldToRequiredNumber(this.interestPaid),
+      returnDate: this.returnDate,
+      contactHolder: this.contactHolder !== undefined ? toContact(this.contactHolder) : null,
       rowVersion: this.rowVersion,
     };
   }

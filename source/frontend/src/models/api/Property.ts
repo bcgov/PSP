@@ -41,6 +41,8 @@ export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
 
   address?: Api_Address;
 
+  generalLocation?: string;
+
   isSensitive?: boolean;
   isVisibleToOtherAgencies?: boolean;
   isProvincialPublicHwy?: boolean;
@@ -69,6 +71,10 @@ export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
 
   notes?: string;
   isDisabled?: boolean;
+
+  surplusDeclarationType?: Api_TypeCode<string>;
+  surplusDeclarationComment?: string;
+  surplusDeclarationDate?: string;
 }
 
 export interface Api_PropertyAnomaly extends Api_ConcurrentVersion, Api_AuditFields {

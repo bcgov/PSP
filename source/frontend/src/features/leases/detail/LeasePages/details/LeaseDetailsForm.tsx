@@ -1,17 +1,16 @@
-import {
-  DetailAdministration,
-  DetailTermInformation,
-  PropertiesInformation,
-} from 'features/leases';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { Formik } from 'formik';
-import { defaultLease } from 'interfaces';
 import { noop } from 'lodash';
-import * as React from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { defaultApiLease } from '@/models/api/Lease';
+
+import DetailAdministration from './DetailAdministration';
 import DetailConsultation from './DetailConsultation';
 import DetailDocumentation from './DetailDocumentation';
+import DetailTermInformation from './DetailTermInformation';
+import PropertiesInformation from './PropertiesInformation';
 
 export interface IDetailsProps {}
 
@@ -20,7 +19,11 @@ export const LeaseDetailsForm: React.FunctionComponent<
 > = () => {
   const { lease } = React.useContext(LeaseStateContext);
   return (
-    <Formik initialValues={{ ...defaultLease, ...lease }} enableReinitialize={true} onSubmit={noop}>
+    <Formik
+      initialValues={{ ...defaultApiLease, ...lease }}
+      enableReinitialize={true}
+      onSubmit={noop}
+    >
       <StyledDetails>
         <DetailTermInformation />
         <PropertiesInformation disabled={true} />

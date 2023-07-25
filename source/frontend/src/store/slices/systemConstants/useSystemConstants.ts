@@ -1,8 +1,9 @@
-import * as actionTypes from 'constants/actionTypes';
-import { useApiSystemConstants } from 'hooks/pims-api/useApiSystemConstants';
 import React from 'react';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { useAppDispatch, useAppSelector } from 'store/hooks';
+
+import * as actionTypes from '@/constants/actionTypes';
+import { useApiSystemConstants } from '@/hooks/pims-api/useApiSystemConstants';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 import { IGenericNetworkAction } from '../network/interfaces';
 import { logError, logRequest, logSuccess } from '../network/networkSlice';
@@ -12,6 +13,7 @@ export enum SystemConstants {
   FYEND = 'FYEND',
   FYSTART = 'FYSTART',
   GST = 'GST',
+  CLIENT = 'CLIENT',
 }
 
 export const useSystemConstants = () => {

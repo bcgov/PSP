@@ -1,9 +1,10 @@
 import userEvent from '@testing-library/user-event';
-import { FinancialCodeTypes } from 'constants/financialCodeTypes';
-import { Roles } from 'constants/index';
-import { mockLookups } from 'mocks/mockLookups';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { FinancialCodeTypes } from '@/constants/financialCodeTypes';
+import { Roles } from '@/constants/index';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import {
   defaultFinancialCodeFilter,

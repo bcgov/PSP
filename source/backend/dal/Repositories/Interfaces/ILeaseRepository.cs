@@ -11,7 +11,7 @@ namespace Pims.Dal.Repositories
     {
         int Count();
 
-        IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, bool loadPayments = false);
+        IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false);
 
         long GetRowVersion(long id);
 
@@ -19,23 +19,17 @@ namespace Pims.Dal.Repositories
 
         PimsLease GetNoTracking(long id);
 
-        Paged<PimsLease> GetPage(LeaseFilter filter);
+        Paged<PimsLease> GetPage(LeaseFilter filter, HashSet<short> regions);
 
         IList<PimsLeaseDocument> GetAllLeaseDocuments(long leaseId);
 
-        PimsLease Add(PimsLease lease, bool userOverride = false);
+        PimsLease Add(PimsLease lease);
 
         PimsLeaseDocument AddLeaseDocument(PimsLeaseDocument leaseDocument);
 
         void DeleteLeaseDocument(long leaseDocumentId);
 
         PimsLease Update(PimsLease lease, bool commitTransaction = true);
-
-        PimsLease UpdateLeaseTenants(long leaseId, long? rowVersion, ICollection<PimsLeaseTenant> pimsLeaseTenants);
-
-        PimsLease UpdateLeaseImprovements(long leaseId, long? rowVersion, ICollection<PimsPropertyImprovement> pimsPropertyImprovements);
-
-        PimsLease UpdatePropertyLeases(long leaseId, long? rowVersion, ICollection<PimsPropertyLease> pimsPropertyLeases, bool userOverride = false);
 
         PimsLease UpdateLeaseConsultations(long leaseId, long? rowVersion, ICollection<PimsLeaseConsultation> pimsLeaseConsultations);
     }

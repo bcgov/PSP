@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using PIMS.Tests.Automation.Classes;
 using SeleniumExtras.WaitHelpers;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -10,7 +11,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseTenantLink = By.XPath("//a[contains(text(),'Tenant')]");
 
         //Tenants Edit Element
-        private By tenantEditIcon = By.XPath("//div[@role='tabpanel'][2]/div/div/button");
+        private By tenantEditIcon = By.XPath("//div[@role='tabpanel']/div/div/button");
 
         //Tenants Add Tenant(s) button
         private By tenantAddTenantsBttn = By.XPath("//div[contains(text(),'Select Tenant(s)')]/parent::button");
@@ -74,14 +75,14 @@ namespace PIMS.Tests.Automation.PageObjects
         }
 
         //Search and add a new tenant
-        public void AddIndividualTenant(string searchCriteria, string tenantType)
+        public void AddIndividualTenant(Tenant tenant)
         {
             Wait();
 
             webDriver.FindElement(tenantAddTenantsBttn).Click();
 
             Wait(5000);
-            webDriver.FindElement(tenantSearchInput).SendKeys(searchCriteria);
+            webDriver.FindElement(tenantSearchInput).SendKeys(tenant.Summary);
             webDriver.FindElement(tenantIndividualRadioBttn).Click();
             webDriver.FindElement(tenantSearchBttn).Click();
 
@@ -94,20 +95,20 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Choose tenant type
             Wait();
-            ChooseSpecificSelectOption(tenantType1stSelect, tenantType);
+            ChooseSpecificSelectOption(tenantType1stSelect, tenant.TenantType);
 
             //Verify that the Primary Contact displays "Not applicable"
             Assert.True(webDriver.FindElement(tenantPrimaryContact1stCell).Text.Equals("Not applicable"));
         }
 
-        public void AddOrganizationTenant(string searchCriteria, string tenantType)
+        public void AddOrganizationTenant(Tenant tenant)
         {
             Wait();
 
             webDriver.FindElement(tenantAddTenantsBttn).Click();
 
             Wait();
-            webDriver.FindElement(tenantSearchInput).SendKeys(searchCriteria);
+            webDriver.FindElement(tenantSearchInput).SendKeys(tenant.Summary);
             webDriver.FindElement(tenantOrganizationRadioBttn).Click();
             webDriver.FindElement(tenantSearchBttn).Click();
 
@@ -122,11 +123,11 @@ namespace PIMS.Tests.Automation.PageObjects
             //Choose a primary contact if there's the option
             if (webDriver.FindElements(tenantPrimaryContact1stSelect).Count > 0)
             {
-                ChooseRandomSelectOption(tenantPrimaryContact1stSelect, 1);
+                ChooseSpecificSelectOption(tenantPrimaryContact1stSelect, tenant.PrimaryContact);
             }
 
             //Choose tenant type
-            ChooseSpecificSelectOption(tenantType1stSelect, tenantType);
+            ChooseSpecificSelectOption(tenantType1stSelect, tenant.TenantType);
         }
 
         public void DeleteLastTenant()
@@ -137,13 +138,13 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child("+ totalTenantsSelected +") svg:has(title)")).Click();
         }
 
-        public void EditLastTenant(string tenantType)
+        public void EditTenant(Tenant tenant)
         {
             Wait();
 
             var totalTenantsIndex = webDriver.FindElements(tenantsTotalSelected).Count -1;
             By lastTenantSelector = By.Id("input-tenants."+ totalTenantsIndex +".tenantType");
-            ChooseSpecificSelectOption(lastTenantSelector, tenantType);
+            ChooseSpecificSelectOption(lastTenantSelector, tenant.TenantType);
         }
 
         public void SaveTenant()

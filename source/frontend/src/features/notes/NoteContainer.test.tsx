@@ -1,10 +1,11 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Claims, NoteTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/mockLookups';
-import { mockNoteResponse } from 'mocks/mockNoteResponses';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
+
+import { Claims, NoteTypes } from '@/constants/index';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { mockNoteResponse } from '@/mocks/noteResponses.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   render,
@@ -12,7 +13,7 @@ import {
   userEvent,
   waitFor,
   waitForElementToBeRemoved,
-} from 'utils/test-utils';
+} from '@/utils/test-utils';
 
 import { INotesDetailContainerProps, NoteContainer } from './NoteContainer';
 
@@ -63,7 +64,7 @@ describe('NoteContainer component', () => {
 
   beforeEach(() => {
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
-    mockAxios.onGet(new RegExp('notes/activity/*')).reply(200, mockNoteResponse(1));
+    mockAxios.onGet(new RegExp('notes/*')).reply(200, mockNoteResponse(1));
   });
 
   afterEach(() => {
@@ -207,7 +208,7 @@ describe('NoteContainer component', () => {
       userEvent.type(textarea, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
 
       mockAxios.onPut().reply(200, mockNoteResponse(1));
-      await act(() => userEvent.click(getSaveButton()));
+      await act(async () => userEvent.click(getSaveButton()));
 
       expect(closeModal).toBeCalled();
       expect(onSuccess).toBeCalled();

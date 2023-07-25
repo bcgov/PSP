@@ -1,17 +1,25 @@
+import { RenderOptions } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { IAddLeaseContainerProps } from 'features/leases';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
+import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultLease } from 'interfaces';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/mockLookups';
-import { defaultApiLease } from 'models/api/Lease';
-import React from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { renderAsync, RenderOptions } from 'utils/test-utils';
+import React, { forwardRef } from 'react';
+import { act } from 'react-test-renderer';
 
-import { UpdateLeaseContainer } from './UpdateLeaseContainer';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
+import { getDefaultFormLease } from '@/features/leases/models';
+import { getMockApiLease } from '@/mocks/lease.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_Lease, defaultApiLease } from '@/models/api/Lease';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { renderAsync, screen } from '@/utils/test-utils';
+
+import UpdateLeaseContainer, { UpdateLeaseContainerProps } from './UpdateLeaseContainer';
+import { IUpdateLeaseFormProps } from './UpdateLeaseForm';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -20,12 +28,29 @@ const storeState = {
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 
+jest.mock('@/features/leases/hooks/useLeaseDetail');
+(useLeaseDetail as jest.MockedFunction<typeof useLeaseDetail>).mockReturnValue({
+  lease: getMockApiLease(),
+  setLease: noop,
+  getCompleteLease: jest.fn().mockResolvedValue(getMockApiLease()),
+  refresh: noop as any,
+  loading: false,
+});
+
 describe('Update lease container component', () => {
-  const setup = async (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
+  let viewProps: IUpdateLeaseFormProps;
+  const View = forwardRef<FormikProps<any>, IUpdateLeaseFormProps>((props, ref) => {
+    viewProps = props;
+    return <></>;
+  });
+
+  const setup = async (renderOptions: RenderOptions & Partial<UpdateLeaseContainerProps> = {}) => {
     // render component under test
     const component = await renderAsync(
-      <LeaseStateContext.Provider value={{ lease: { ...defaultLease, id: 1 }, setLease: noop }}>
-        <UpdateLeaseContainer formikRef={React.createRef()} onEdit={noop} />
+      <LeaseStateContext.Provider
+        value={{ lease: { ...getMockApiLease(), id: 1 }, setLease: noop }}
+      >
+        <UpdateLeaseContainer View={View} formikRef={React.createRef()} onEdit={noop} />
       </LeaseStateContext.Provider>,
       {
         ...renderOptions,
@@ -49,50 +74,77 @@ describe('Update lease container component', () => {
     expect(component.asFragment()).toMatchSnapshot();
   });
 
-  // TODOL: Disabled until Lease update refactor is completed
-  /*it('saves the form with minimal data', async () => {
-    const {
-      component: { getByText, findByDisplayValue, container },
-    } = await setup({});
-
-    await findByDisplayValue('BC Ferries');
-    await fillInput(container, 'purposeType.id', 'COMMBLDG', 'select');
+  it('saves the form with minimal data', async () => {
+    await setup({});
 
     mockAxios.onPut().reply(200, {});
-    await act(() => userEvent.click(getByText('Save')));
+    await act(async () =>
+      viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }),
+    );
 
-    expect(mockAxios.history.put[0].data).toEqual(expectedFormData);
+    expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(leaseData);
   });
 
   it('triggers the confirm popup', async () => {
-    const {
-      component: { getByText, findByText, findByDisplayValue, container },
-    } = await setup({});
-
-    await findByDisplayValue('BC Ferries');
-    await fillInput(container, 'purposeType.id', 'COMMBLDG', 'select');
+    await setup({});
 
     mockAxios.onPut().reply(409, { error: 'test message' });
-    await act(() => userEvent.click(getByText('Save')));
-    expect(await findByText('test message')).toBeVisible();
-  });*/
+    await act(async () =>
+      viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }),
+    );
 
-  /*it('clicking on the save anyways popup saves the form', async () => {
-    const {
-      component: { getByText, findByText, findByDisplayValue, container },
-    } = await setup({});
+    expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(leaseData);
+  });
 
-    await findByDisplayValue('BC Ferries');
-    await fillInput(container, 'purposeType.id', 'COMMBLDG', 'select');
+  it('clicking on the save anyways popup saves the form', async () => {
+    await setup({});
 
-    mockAxios.onPut().reply(409, { error: 'test message' });
-    await act(() => userEvent.click(getByText('Save')));
-    await act(async () => userEvent.click(await findByText('Save Anyways')));
+    mockAxios.onPut().reply(409, {
+      error: 'test message',
+      errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
+    });
+    await act(async () =>
+      viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }),
+    );
+    const button = await screen.findByText('Acknowledge & Continue');
+    await act(async () => userEvent.click(button));
 
-    expect(mockAxios.history.put[1].data).toEqual(expectedFormData);
-  });*/
+    expect(JSON.parse(mockAxios.history.put[1].data)).toEqual(leaseData);
+  });
 });
 
-/*const expectedFormData =
-  '{"id":1,"startDate":"2020-01-01","amount":0,"paymentReceivableType":{"id":"RCVBL","description":"Receivable","isDisabled":false},"categoryType":{"id":"COMM","description":"Commercial","isDisabled":false},"purposeType":{"id":"COMMBLDG","description":"BC Ferries","isDisabled":false},"responsibilityType":{"id":"HQ","description":"Headquarters","isDisabled":false},"initiatorType":{"id":"PROJECT","description":"Project","isDisabled":false},"statusType":{"id":"ACTIVE","description":"Active","isDisabled":false},"type":{"id":"LSREG","description":"Lease - Registered","isDisabled":false},"region":{"id":1,"description":"South Coast Region"},"programType":{"id":"OTHER","description":"Other","isDisabled":false},"returnNotes":"","motiName":"Moti, Name, Name","properties":[],"isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"otherCategoryType":"","otherPurposeType":"","otherType":""}';
-  */
+const leaseData: Api_Lease = {
+  startDate: '',
+  amount: 0,
+  paymentReceivableType: { id: 'RCVBL' },
+  purposeType: { id: 'BCFERRIES' },
+  statusType: { id: 'DRAFT' },
+  type: null,
+  region: null,
+  programType: null,
+  returnNotes: '',
+  motiName: '',
+  properties: [],
+  isResidential: false,
+  isCommercialBuilding: false,
+  isOtherImprovement: false,
+  responsibilityType: null,
+  categoryType: null,
+  initiatorType: null,
+  otherType: null,
+  otherCategoryType: null,
+  otherProgramType: null,
+  otherPurposeType: null,
+  tfaFileNumber: null,
+  responsibilityEffectiveDate: null,
+  psFileNo: null,
+  note: null,
+  lFileNo: null,
+  description: null,
+  documentationReference: null,
+  expiryDate: null,
+  tenants: [],
+  terms: [],
+  insurances: [],
+  consultations: [],
+};

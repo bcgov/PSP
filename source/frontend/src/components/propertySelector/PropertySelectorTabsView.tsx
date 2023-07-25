@@ -1,7 +1,8 @@
-import TabView from 'components/common/TabView';
 import * as React from 'react';
 import { Tab } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import TabView from '@/components/common/TabView';
 
 interface IPropertySelectorTabsViewProps {
   MapSelectorView: React.ReactNode;
