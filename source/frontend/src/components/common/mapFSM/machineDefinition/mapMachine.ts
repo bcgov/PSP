@@ -224,6 +224,27 @@ const sideBarStates = {
   },
 };
 
+const advancedFilterSideBarStates = {
+  initial: 'fullScreen',
+  states: {
+    fullScreen: {
+      on: {
+        OPEN_ADVANCED_FILTER_SIDEBAR: {
+          target: 'sidebarOpen',
+        },
+      },
+    },
+    sidebarOpen: {
+      entry: assign({ mapFilter: () => defaultPropertyFilter }),
+      on: {
+        CLOSE_ADVANCED_FILTER_SIDEBAR: {
+          target: 'fullScreen',
+        },
+      },
+    },
+  },
+};
+
 export const mapMachine = createMachine<MachineContext>({
   // Machine identifier
   id: 'map',
@@ -299,6 +320,7 @@ export const mapMachine = createMachine<MachineContext>({
         mapRequest: mapRequestStates,
         selectedFeature: selectedFeatureStates,
         sideBar: sideBarStates,
+        advancedFilterSideBar: advancedFilterSideBarStates,
       },
     },
   },
