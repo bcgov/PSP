@@ -17,7 +17,6 @@ export enum SideBarType {
 
 // Local context for the machine - Not related to React Context!
 export type MachineContext = {
-  isSelecting: boolean;
   mapFeatureSelected: FeatureSelected | null;
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;

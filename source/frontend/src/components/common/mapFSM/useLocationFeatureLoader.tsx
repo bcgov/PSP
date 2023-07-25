@@ -36,8 +36,8 @@ const useLocationFeatureLoader = () => {
   const adminLegalBoundaryLayerServiceFindOneMunicipality =
     adminLegalBoundaryLayerService.findOneMunicipality;
 
-  const showLocationDetails = useCallback(
-    async (latLng: LatLngLiteral, isSelecting: boolean): Promise<LocationFeatureDataset> => {
+  const loadLocationDetails = useCallback(
+    async (latLng: LatLngLiteral): Promise<LocationFeatureDataset> => {
       const result: LocationFeatureDataset = {
         location: latLng,
         pimsFeature: null,
@@ -70,23 +70,19 @@ const useLocationFeatureLoader = () => {
           });
         }
 
-        // If not selecting and there is no other information availiable
-        if (!isSelecting) {
-          const municipalityFeature = await adminLegalBoundaryLayerServiceFindOneMunicipality(
-            latLng,
-          );
+        const municipalityFeature = await adminLegalBoundaryLayerServiceFindOneMunicipality(latLng);
 
-          if (
-            pimsLocationProperties?.features !== undefined &&
-            pimsLocationProperties.features.length > 0
-          ) {
-            result.pimsFeature = pimsLocationProperties.features[0] ?? null;
-          }
-          result.parcelFeature = parcelFeature ?? null;
-          result.regionFeature = regionFeature ?? null;
-          result.districtFeature = districtFeature ?? null;
-          result.municipalityFeature = municipalityFeature ?? null;
+        if (
+          pimsLocationProperties?.features !== undefined &&
+          pimsLocationProperties.features.length > 0
+        ) {
+          result.pimsFeature = pimsLocationProperties.features[0] ?? null;
         }
+
+        result.parcelFeature = parcelFeature ?? null;
+        result.regionFeature = regionFeature ?? null;
+        result.districtFeature = districtFeature ?? null;
+        result.municipalityFeature = municipalityFeature ?? null;
       } finally {
         // TODO: Remove once the try above is deemed no longer necessary.
       }
@@ -103,7 +99,7 @@ const useLocationFeatureLoader = () => {
   );
 
   return {
-    showLocationDetails,
+    loadLocationDetails,
   };
 };
 

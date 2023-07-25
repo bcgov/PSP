@@ -20,7 +20,7 @@ export const usePimsPropertyLayer = () => {
     tenant: { propertiesUrl },
   } = useContext(TenantContext);
 
-  const { findOneWhereContainsWrapped } = useLayerQuery(propertiesUrl);
+  const { findOneWhereContainsWrapped } = useLayerQuery(propertiesUrl, true);
   const findOneWhereContainsWrappedExecute = findOneWhereContainsWrapped.execute;
   const findOneWhereContainsWrappedLoading = findOneWhereContainsWrapped.loading;
 

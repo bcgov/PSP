@@ -112,7 +112,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 onChange={() => {
                   setFieldValue('pinOrPid', '');
                   setFieldValue('latitude', null);
-                  setFieldValue('latitude', null);
+                  setFieldValue('longitude', null);
                 }}
               />
             </NoRightPaddingColumn>

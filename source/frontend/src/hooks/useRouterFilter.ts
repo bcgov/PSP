@@ -40,6 +40,8 @@ const parseAndSanitize = (urlPath: string) => {
   for (const [key, value] of Object.entries(params)) {
     if (value === 'undefined') {
       params[key] = undefined;
+    } else if (value === 'null') {
+      params[key] = null;
     }
   }
   return params;
