@@ -63,7 +63,6 @@ const ControlButton = styled(Button)`
     &.open {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
-      margin-right: 33.1rem;
     }
   }
 `;
