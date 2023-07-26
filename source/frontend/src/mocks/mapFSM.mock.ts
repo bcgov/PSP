@@ -13,6 +13,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   },
 
   isSidebarOpen: false,
+  isAdvancedFilterSidebarOpen: false,
   pendingFlyTo: false,
   pendingFitBounds: false,
   requestedFlyTo: {
@@ -45,4 +46,6 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   startSelection: jest.fn(),
   finishSelection: jest.fn(),
   setFilePropertyLocations: jest.fn(),
+  openAdvancedFilterSidebar: jest.fn(),
+  closeAdvancedFilterSidebar: jest.fn(),
 };
