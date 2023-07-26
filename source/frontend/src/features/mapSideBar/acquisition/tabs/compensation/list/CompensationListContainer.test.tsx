@@ -1,6 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
 import { createMemoryHistory } from 'history';
-import { reject } from 'lodash';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';

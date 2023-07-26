@@ -21,10 +21,7 @@ const View = (props: IToggleSaveInputViewProps) => {
   return <></>;
 };
 
-const setIsEditing = jest.fn();
-const setIsSaving = jest.fn();
 const onSave = jest.fn();
-const setValue = jest.fn();
 
 describe('ToggleSaveInputContainer component', () => {
   // render component under test
