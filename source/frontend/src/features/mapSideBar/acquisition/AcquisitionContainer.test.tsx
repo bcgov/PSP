@@ -5,7 +5,6 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { FileTypes } from '@/constants/index';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import {
   mockAcquisitionFileOwnersResponse,
@@ -76,12 +75,7 @@ describe('AcquisitionContainer component', () => {
     renderOptions: RenderOptions = {},
   ) => {
     const utils = render(
-      <SideBarContextProvider
-        file={{
-          ...mockAcquisitionFileResponse(),
-          fileType: FileTypes.Acquisition,
-        }}
-      >
+      <SideBarContextProvider>
         <AcquisitionContainer {...props} View={AcquisitionContainerView} />
       </SideBarContextProvider>,
       {

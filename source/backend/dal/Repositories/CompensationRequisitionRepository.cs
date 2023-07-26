@@ -62,7 +62,7 @@ namespace Pims.Dal.Repositories
 
         public PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition)
         {
-            var existingCompensationRequisition = Context.PimsCompensationRequisitions
+            var existingCompensationRequisition = Context.PimsCompensationRequisitions.Include(c => c.PimsAcquisitionPayees)
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.CompensationRequisitionId)) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
@@ -70,7 +70,14 @@ namespace Pims.Dal.Repositories
 
             if (compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is not null)
             {
-                UpdatePayee(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault());
+                if (existingCompensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is not null)
+                {
+                    UpdatePayee(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault());
+                }
+                else
+                {
+                    Context.PimsAcquisitionPayees.Add(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault());
+                }
             }
 
             return compensationRequisition;
