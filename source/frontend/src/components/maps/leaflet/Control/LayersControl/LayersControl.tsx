@@ -31,7 +31,7 @@ const LayersContainer = styled.div`
 const LayersHeader = styled.div`
   width: 100%;
   height: 8rem;
-  background-color: ${({ theme }) => theme.css.slideOutBlue};
+  background-color: ${({ theme }) => theme.css.primaryColor};
   color: #fff;
   display: flex;
   flex-direction: column;
