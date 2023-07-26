@@ -3,7 +3,7 @@ import Col from 'react-bootstrap/Col';
 import { Redirect, Switch, useLocation } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { MapStateContextProvider } from '@/components/maps/providers/MapStateContext';
+import { MapStateMachineProvider } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims } from '@/constants/claims';
 import { Roles } from '@/constants/roles';
 import { IENotSupportedPage } from '@/features/account/IENotSupportedPage';
@@ -86,7 +86,7 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
         )
       }
     >
-      <MapStateContextProvider>
+      <MapStateMachineProvider>
         <Switch>
           <Redirect exact from="/" to="/login" />
           <AppRoute
@@ -293,7 +293,7 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
           />
           <AppRoute title="*" path="*" customComponent={() => <Redirect to="/page-not-found" />} />
         </Switch>
-      </MapStateContextProvider>
+      </MapStateMachineProvider>
     </Suspense>
   );
 };

@@ -1,9 +1,12 @@
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Polygon } from 'geojson';
-import { geoJSON, LatLng } from 'leaflet';
-import { compact } from 'lodash';
+import { geoJSON, LatLngLiteral } from 'leaflet';
+import { compact, isNumber } from 'lodash';
 import polylabel from 'polylabel';
 
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IMapProperty } from '@/components/propertySelector/models';
+import { DistrictCodes } from '@/constants/districtCodes';
+import { RegionCodes } from '@/constants/regionCodes';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 import { formatApiAddress, pidFormatter } from '@/utils';
 
@@ -55,10 +58,10 @@ export const getPrettyLatLng = (location?: Api_Geometry) =>
     location?.coordinate?.y?.toFixed(6) ?? 0,
   ]).join(', ');
 
-export const getLatLng = (location?: Api_Geometry | null) => {
+export const getLatLng = (location?: Api_Geometry | null): LatLngLiteral | null => {
   const coordinate = location?.coordinate;
   if (coordinate !== null && coordinate !== undefined) {
-    return new LatLng(coordinate.y!, coordinate.x!);
+    return { lat: coordinate.y!, lng: coordinate.x! };
   }
   return null;
 };
@@ -143,4 +146,60 @@ function toMapProperty(
     districtName: feature?.properties?.DISTRICT_NAME,
     name: feature?.properties?.NAME,
   };
+}
+
+export function featuresetToMapProperty(
+  featureSet: LocationFeatureDataset,
+  address: string = 'unknown',
+): IMapProperty {
+  const pimsFeature = featureSet.pimsFeature;
+  const parcelFeature = featureSet.parcelFeature;
+  const regionFeature = featureSet.regionFeature;
+  const districtFeature = featureSet.districtFeature;
+
+  const propertyId = pimsFeature?.properties.PROPERTY_ID;
+  const pid = pidFromFeatureSet(featureSet);
+  const pin = pinFromFeatureSet(featureSet);
+  return {
+    propertyId: propertyId ? Number.parseInt(propertyId?.toString()) : undefined,
+    pid: pid ?? undefined,
+    pin: pin ?? undefined,
+    latitude: featureSet.location.lat,
+    longitude: featureSet.location.lng,
+    planNumber: parcelFeature?.properties.PLAN_NUMBER?.toString() ?? undefined,
+    address: address,
+    legalDescription: parcelFeature?.properties.LEGAL_DESCRIPTION ?? undefined,
+    region: isNumber(regionFeature?.properties.REGION_NUMBER)
+      ? regionFeature?.properties.REGION_NUMBER
+      : RegionCodes.Unknown,
+    regionName: regionFeature?.properties.REGION_NAME ?? 'Cannot determine',
+    district: isNumber(districtFeature?.properties.DISTRICT_NUMBER)
+      ? districtFeature?.properties.DISTRICT_NUMBER
+      : DistrictCodes.Unknown,
+    districtName: districtFeature?.properties.DISTRICT_NAME ?? 'Cannot determine',
+    name: pimsFeature?.properties.NAME ?? undefined,
+  };
+}
+
+export function pidFromFeatureSet(featureset: LocationFeatureDataset): string | null {
+  if (featureset.pimsFeature !== null) {
+    return featureset.pimsFeature.properties.PID;
+  } else if (featureset.parcelFeature !== null) {
+    return featureset.parcelFeature.properties.PID;
+  } else {
+    return null;
+  }
+}
+
+export function pinFromFeatureSet(featureset: LocationFeatureDataset): string | null {
+  if (featureset.pimsFeature !== null) {
+    return featureset.pimsFeature.properties.PIN;
+  } else if (
+    featureset.parcelFeature !== null &&
+    featureset.parcelFeature.properties.PIN !== null
+  ) {
+    return featureset.parcelFeature.properties.PIN.toString();
+  } else {
+    return null;
+  }
 }

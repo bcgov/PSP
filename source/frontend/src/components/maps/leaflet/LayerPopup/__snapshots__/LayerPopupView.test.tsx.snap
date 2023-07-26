@@ -140,7 +140,30 @@ exports[`LayerPopupView component renders as expected with layer popup content 1
   margin-right: 0;
 }
 
-.c2 {
+.c4.c4.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c4.c4.btn:hover,
+.c4.c4.btn:focus,
+.c4.c4.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c4.c4.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c4.c4.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -157,10 +180,9 @@ exports[`LayerPopupView component renders as expected with layer popup content 1
   margin-top: 0.8rem;
 }
 
-.c1 {
+.c2 {
   font-weight: bold;
   font-size: 1.6rem;
-  border-bottom: 0.2rem solid;
   line-height: 2.4rem;
 }
 
@@ -181,12 +203,62 @@ exports[`LayerPopupView component renders as expected with layer popup content 1
   padding-top: 0.8rem;
 }
 
+.c1 {
+  margin: 0rem;
+  border-bottom: 0.2rem solid;
+}
+
 <div
     class="c0"
   >
-    <h5
-      class="c1"
-    />
+    <div
+      class="c1 row"
+    >
+      <div
+        class="p-0 m-0 col"
+      >
+        <h5
+          class="c2"
+        />
+      </div>
+      <div
+        class="p-0 m-0 col-1"
+      >
+        <button
+          class="c3 Button c4 p-0 m-0 btn btn-primary"
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            <svg
+              fill="none"
+              height="1.5rem"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="1.5rem"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <line
+                x1="18"
+                x2="6"
+                y1="6"
+                y2="18"
+              />
+              <line
+                x1="6"
+                x2="18"
+                y1="6"
+                y2="18"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
     <div
       class="list-group"
     >
@@ -195,7 +267,7 @@ exports[`LayerPopupView component renders as expected with layer popup content 1
       </b>
     </div>
     <div
-      class="c2"
+      class="c5"
     >
       <button
         class="c3 Button btn btn-link"

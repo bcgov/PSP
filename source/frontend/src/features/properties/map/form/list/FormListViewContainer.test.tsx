@@ -1,11 +1,13 @@
 import { createMemoryHistory } from 'history';
 import { filter, sortBy } from 'lodash';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FileTypes } from '@/constants/fileTypes';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentRepository';
 import { getMockApiFileForms } from '@/mocks/form.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
 
@@ -28,6 +30,9 @@ const mockGetApi = {
   loading: false,
 };
 jest.mock('@/hooks/repositories/useFormDocumentRepository');
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');

@@ -5,8 +5,10 @@ import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { Api_Lease } from '@/models/api/Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -56,6 +58,8 @@ jest.mock('react-visibility-sensor', () => {
   });
 });
 
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -79,6 +83,8 @@ describe('AddLeaseContainer component', () => {
   beforeEach(() => {
     mockAxios.resetHistory();
     mockAxios.resetHandlers();
+
+    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
   });
 
   it('renders as expected', async () => {

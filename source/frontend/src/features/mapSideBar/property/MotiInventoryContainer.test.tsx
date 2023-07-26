@@ -13,7 +13,6 @@ import MotiInventoryContainer, { IMotiInventoryContainerProps } from './MotiInve
 jest.mock('@react-keycloak/web');
 
 const onClose = jest.fn();
-const onZoom = jest.fn();
 
 // Need to mock this library for unit tests
 jest.mock('react-visibility-sensor', () => {
@@ -38,7 +37,6 @@ describe('MotiInventoryContainer component', () => {
       <MotiInventoryContainer
         onClose={renderOptions.onClose}
         pid={renderOptions.pid}
-        onZoom={renderOptions.onZoom}
         id={renderOptions.id}
       />,
       {
@@ -111,7 +109,6 @@ describe('MotiInventoryContainer component', () => {
     const { findByText, queryByTestId } = setup({
       id: 9212434,
       onClose,
-      onZoom,
     });
 
     await waitFor(() => {
@@ -140,7 +137,6 @@ describe('MotiInventoryContainer component', () => {
     const { queryByText, getByText, queryAllByTestId } = setup({
       pid: '9212434',
       onClose,
-      onZoom,
     });
 
     expect(queryByText(/property attributes/i)).toBeNull();

@@ -39,3 +39,40 @@ export interface PMBC_FullyAttributed_Feature_Properties {
   readonly OBJECTID: number | null;
   readonly SE_ANNO_CAD_DATA: Blob | null;
 }
+
+export const emptyFullyAttributed: PMBC_FullyAttributed_Feature_Properties = {
+  PARCEL_FABRIC_POLY_ID: null,
+  GLOBAL_UID: null,
+  PARCEL_NAME: null,
+  PLAN_ID: null,
+  PLAN_NUMBER: null,
+  PIN: null,
+  PID: null,
+  PID_FORMATTED: null,
+  PID_NUMBER: null,
+  SOURCE_PARCEL_ID: null,
+  PARCEL_STATUS: null,
+  PARCEL_CLASS: null,
+  OWNER_TYPE: null,
+  PARCEL_START_DATE: null,
+  SURVEY_DESIGNATION_1: null,
+  SURVEY_DESIGNATION_2: null,
+  SURVEY_DESIGNATION_3: null,
+  LEGAL_DESCRIPTION: null,
+  MUNICIPALITY: null,
+  REGIONAL_DISTRICT: null,
+  IS_REMAINDER_IND: null,
+  GEOMETRY_SOURCE: null,
+  POSITIONAL_ERROR: null,
+  ERROR_REPORTED_BY: null,
+  CAPTURE_METHOD: null,
+  COMPILED_IND: null,
+  STATED_AREA: null,
+  WHEN_CREATED: null,
+  WHEN_UPDATED: null,
+  FEATURE_AREA_SQM: null,
+  FEATURE_LENGTH_M: null,
+
+  OBJECTID: null,
+  SE_ANNO_CAD_DATA: null,
+};

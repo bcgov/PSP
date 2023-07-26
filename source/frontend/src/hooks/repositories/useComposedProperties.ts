@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
 import { LtsaOrders } from '@/interfaces/ltsaModels';
@@ -157,31 +157,46 @@ export const useComposedProperties = ({
     id,
     retrievedPid,
     retrievedPin,
-    getLtsaWrapper,
-    getPropertyWrapper,
-    getPropertyAssociationsWrapper,
-    findByWrapper,
-    getPropertyWfsWrapper,
-    getSummaryWrapper,
+    getLtsaWrapper.response,
+    getPropertyWrapper.response,
+    getPropertyAssociationsWrapper.response,
+    findByWrapper.response,
+    getPropertyWfsWrapper.response,
+    getSummaryWrapper.response,
   ]);
 
-  return {
-    id: id,
-    pid: pid?.toString() ?? retrievedPid,
-    pin: retrievedPin,
-    composedProperty: composedProperty,
-    ltsaWrapper: getLtsaWrapper,
-    apiWrapper: getPropertyWrapper,
-    propertyAssociationWrapper: getPropertyAssociationsWrapper,
-    parcelMapWrapper: findByWrapper,
-    geoserverWrapper: getPropertyWfsWrapper,
-    bcAssessmentWrapper: getSummaryWrapper,
-    composedLoading:
-      getLtsaWrapper?.loading ||
-      getPropertyWrapper?.loading ||
-      getPropertyAssociationsWrapper?.loading ||
-      findByWrapper?.loading ||
-      getPropertyWfsWrapper?.loading ||
-      getSummaryWrapper?.loading,
-  };
+  return useMemo(
+    () => ({
+      id: id,
+      pid: pid?.toString() ?? retrievedPid,
+      pin: retrievedPin,
+      composedProperty: composedProperty,
+      ltsaWrapper: getLtsaWrapper,
+      apiWrapper: getPropertyWrapper,
+      propertyAssociationWrapper: getPropertyAssociationsWrapper,
+      parcelMapWrapper: findByWrapper,
+      geoserverWrapper: getPropertyWfsWrapper,
+      bcAssessmentWrapper: getSummaryWrapper,
+      composedLoading:
+        getLtsaWrapper?.loading ||
+        getPropertyWrapper?.loading ||
+        getPropertyAssociationsWrapper?.loading ||
+        findByWrapper?.loading ||
+        getPropertyWfsWrapper?.loading ||
+        getSummaryWrapper?.loading,
+    }),
+    [
+      id,
+      pid,
+      retrievedPid,
+      retrievedPin,
+      composedProperty,
+      getLtsaWrapper,
+      getPropertyWrapper,
+      getPropertyAssociationsWrapper,
+      findByWrapper,
+      getPropertyWfsWrapper,
+      getSummaryWrapper,
+    ],
+  );
 };

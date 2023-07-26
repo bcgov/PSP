@@ -1,37 +1,68 @@
+import { FormikProps } from 'formik';
+import { useRef } from 'react';
 import styled from 'styled-components';
 
 import { LinkButton } from '@/components/common/buttons';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { FormDocumentType } from '@/constants/formDocumentTypes';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
 
 import { generateDocumentEntries } from './formDocumentEntry';
+import GenerateLetterRecipientsModal from './modals/GenerateLetterRecipientsModal';
+import { LetterRecipientModel } from './modals/models/LetterRecipientModel';
+import { LetterRecipientsForm } from './modals/models/LetterRecipientsForm';
 
 export interface IGenerateFormViewProps {
   onGenerateClick: (formType: FormDocumentType) => void;
+  isLoading: boolean;
+  letterRecipientsInitialValues: LetterRecipientModel[];
+  openGenerateLetterModal: boolean;
+  onGenerateLetterCancel: () => void;
+  onGenerateLetterOk: (recipients: Api_GenerateOwner[]) => void;
 }
 
 const GenerateFormView: React.FunctionComponent<
   React.PropsWithChildren<IGenerateFormViewProps>
-> = props => {
+> = ({
+  onGenerateClick,
+  openGenerateLetterModal,
+  isLoading,
+  letterRecipientsInitialValues,
+  onGenerateLetterCancel,
+  onGenerateLetterOk,
+}) => {
   const { hasClaim } = useKeycloakWrapper();
   const entries = generateDocumentEntries;
+  const formikRef = useRef<FormikProps<LetterRecipientsForm>>(null);
+
   return (
     <>
       {hasClaim(Claims.FORM_ADD) && (
-        <StyledMenuGenerateWrapper>
-          <StyledMenuHeaderWrapper>
-            <StyledMenuHeader>Generate a form:</StyledMenuHeader>
-          </StyledMenuHeaderWrapper>
-          {entries.map(entry => (
-            <LinkButton
-              key={`generate-form-entry-${entry.formType}`}
-              onClick={() => props.onGenerateClick(entry.formType)}
-            >
-              {entry.text}
-            </LinkButton>
-          ))}
-        </StyledMenuGenerateWrapper>
+        <>
+          <LoadingBackdrop show={isLoading} />
+          <StyledMenuGenerateWrapper>
+            <StyledMenuHeaderWrapper>
+              <StyledMenuHeader>Generate a form:</StyledMenuHeader>
+            </StyledMenuHeaderWrapper>
+            {entries.map(entry => (
+              <LinkButton
+                key={`generate-form-entry-${entry.formType}`}
+                onClick={() => onGenerateClick(entry.formType)}
+              >
+                {entry.text}
+              </LinkButton>
+            ))}
+          </StyledMenuGenerateWrapper>
+          <GenerateLetterRecipientsModal
+            isOpened={openGenerateLetterModal}
+            recipientList={letterRecipientsInitialValues}
+            onCancelClick={onGenerateLetterCancel}
+            onGenerateLetterOk={onGenerateLetterOk}
+            formikRef={formikRef}
+          ></GenerateLetterRecipientsModal>
+        </>
       )}
     </>
   );

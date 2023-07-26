@@ -59,7 +59,6 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         <SectionField label="Ministry project">{projectName}</SectionField>
         <SectionField label="Product">{productName}</SectionField>
         <SectionField label="Funding">{acquisitionFile?.fundingTypeCode?.description}</SectionField>
-
         {acquisitionFile?.fundingTypeCode?.id === 'OTHER' && (
           <SectionField label="Other funding">{acquisitionFile.fundingOther}</SectionField>
         )}

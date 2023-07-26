@@ -77,7 +77,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SearchLastAcquisitionFile()
         {
-            Wait(4000);
+            Wait(10000);
             webDriver.FindElement(searchAcquisitionFileResetButton).Click();
 
             Wait();
@@ -103,7 +103,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void FilterAcquisitionFiles(string pid, string name, string status)
         {
-            Wait();
+            Wait(10000);
             webDriver.FindElement(searchAcquisitionFileResetButton).Click();
 
             Wait();

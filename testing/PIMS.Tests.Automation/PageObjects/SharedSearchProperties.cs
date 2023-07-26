@@ -94,7 +94,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             webDriver.FindElement(searchByPIDInput).SendKeys(PID);
 
-            webDriver.FindElement(searchByButton).Click();
+            FocusAndClick(searchByButton);
         }
 
         public void SelectPropertyByPIN(string PIN)
@@ -109,7 +109,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             webDriver.FindElement(searchByPINInput).SendKeys(PIN);
 
-            webDriver.FindElement(searchByButton).Click();
+            FocusAndClick(searchByButton);
         }
 
         public void SelectPropertyByAddress(string address)
@@ -141,7 +141,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             webDriver.FindElement(searchByPlanInput).SendKeys(plan);
 
-            webDriver.FindElement(searchByButton).Click();
+            FocusAndClick(searchByButton);
         }
 
         public void SelectPropertyByLegalDescription(string legalDescription)
@@ -156,7 +156,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             webDriver.FindElement(searchByLegalDescriptionInput).SendKeys(legalDescription);
 
-            webDriver.FindElement(searchByButton).Click();
+            FocusAndClick(searchByButton);
         }
 
         public void AddNameSelectedProperty(string name)
@@ -191,7 +191,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntil(searchProperties1stResultPropDiv);
             FocusAndClick(searchProperties1stResultPropCheckbox);
 
-            Wait(5000);
+            Wait(10000);
             ButtonElement("Add to selection");
 
             if (webDriver.FindElements(generalToastBody).Count() > 0 && isDuplicateTest)
