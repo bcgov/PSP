@@ -135,3 +135,12 @@ export function toRequiredTypeCode<T>(value?: Api_TypeCode<T>): Api_TypeCode<T> 
   }
   return value;
 }
+
+/**
+ * This functions returns the numeric value of a currency formated number.
+ * i.e.  ( $1,000.00 ) => 1000.00
+ * @param {string} stringValue This is the target phone number to be formatted
+ */
+export const getCurrencyCleanValue = (stringValue: string): number => {
+  return Number(stringValue.replace(/[^0-9.-]/g, ''));
+};

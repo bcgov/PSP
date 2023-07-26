@@ -36,5 +36,9 @@ namespace Pims.Api.Services
         IList<PimsCompensationRequisition> GetAcquisitionCompensations(long acquisitionFileId);
 
         PimsCompensationRequisition AddCompensationRequisition(long acquisitionFileId, PimsCompensationRequisition compensationRequisition);
+
+        PimsForm8 AddForm8(long acquisitionFileId, PimsForm8 form8);
+
+        IList<PimsForm8> GetAcquisitionForm8s(long acquisitionFileId);
     }
 }

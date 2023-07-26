@@ -16,6 +16,7 @@ describe('Expropriation Tab Container View', () => {
         {...renderOptions.props}
         loading={renderOptions.props?.loading ?? false}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? getMockExpropriationFile()}
+        form8s={renderOptions.props?.form8s ?? []}
       />,
       {
         ...renderOptions,

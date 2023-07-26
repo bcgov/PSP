@@ -1,0 +1,147 @@
+import { Formik, FormikProps } from 'formik';
+import { useRef } from 'react';
+import styled from 'styled-components';
+
+import { Select, SelectOption, TextArea } from '@/components/common/form';
+import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
+import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
+import * as API from '@/constants/API';
+import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOption';
+import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { Api_Form8 } from '@/models/api/Form8';
+
+import Form8PaymentItemsSubForm from './Form8PaymentItemsSubForm';
+import { Form8FormModel } from './models/Form8FormModel';
+import { Form8FormModelYupSchema } from './models/Form8FormYupSchema';
+
+export interface IForm8FormProps {
+  initialValues: Form8FormModel | null;
+  gstConstant: number;
+  payeeOptions: PayeeOption[];
+  onSave: (form8: Api_Form8) => Promise<Api_Form8 | undefined>;
+  onCancel: () => void;
+}
+
+export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
+  initialValues,
+  gstConstant,
+  payeeOptions,
+  onSave,
+  onCancel,
+}) => {
+  const { getOptionsByType } = useLookupCodeHelpers();
+  const formikRef = useRef<FormikProps<Form8FormModel>>(null);
+  const { setModalContent, setDisplayModal } = useModalContext();
+
+  const paymentItemTypesOptions = getOptionsByType(API.PAYMENT_ITEM_TYPES);
+
+  const cancelFunc = (resetForm: () => void, dirty: boolean) => {
+    if (!dirty) {
+      resetForm();
+      onCancel();
+    } else {
+      setModalContent({
+        ...getCancelModalProps(),
+        handleOk: () => {
+          resetForm();
+          setDisplayModal(false);
+          onCancel();
+        },
+      });
+      setDisplayModal(true);
+    }
+  };
+
+  return (
+    initialValues && (
+      <StyledFormWrapper>
+        <Formik<Form8FormModel>
+          enableReinitialize
+          innerRef={formikRef}
+          initialValues={initialValues}
+          onSubmit={async (values, formikHelpers) => {
+            await onSave(values.toApi());
+          }}
+          validationSchema={Form8FormModelYupSchema}
+          validateOnChange={true}
+        >
+          {formikProps => {
+            return (
+              <>
+                <StyledContent>
+                  <Section header="Form 8 Notice of Advance Payment">
+                    <SectionField label="Payee" labelWidth="4" required>
+                      <Select
+                        field="payeeKey"
+                        title={
+                          payeeOptions.find(p => p.value === formikProps.values.payeeKey)?.fullText
+                        }
+                        options={payeeOptions.map<SelectOption>(x => {
+                          return { label: x.text, value: x.value, title: x.fullText };
+                        })}
+                        placeholder="Select..."
+                      />
+                    </SectionField>
+                    <SectionField label="Expropriation authority" required>
+                      <ContactInputContainer
+                        field="expropriationAuthority.contact"
+                        View={ContactInputView}
+                        restrictContactType={RestrictContactType.ONLY_ORGANIZATIONS}
+                        displayErrorAsTooltip={false}
+                      ></ContactInputContainer>
+                    </SectionField>
+                    <SectionField label="Description">
+                      <TextArea field="description" />
+                    </SectionField>
+                  </Section>
+
+                  <Section header="Payment details" isCollapsable initiallyExpanded>
+                    <Form8PaymentItemsSubForm
+                      form8Id={initialValues.id!}
+                      formikProps={formikProps}
+                      paymentItemTypesOptions={paymentItemTypesOptions}
+                      gstConstantPercentage={gstConstant}
+                    ></Form8PaymentItemsSubForm>
+                  </Section>
+                </StyledContent>
+                <StyledFooter>
+                  <SidebarFooter
+                    onSave={() => formikProps.submitForm()}
+                    isOkDisabled={formikProps.isSubmitting || !formikProps.dirty}
+                    onCancel={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
+                  />
+                </StyledFooter>
+              </>
+            );
+          }}
+        </Formik>
+      </StyledFormWrapper>
+    )
+  );
+};
+
+export default UpdateForm8Form;
+
+const StyledFormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: 1rem;
+`;
+
+const StyledContent = styled.div`
+  background-color: ${props => props.theme.css.filterBackgroundColor};
+`;
+
+const StyledFooter = styled.div`
+  margin-right: 1rem;
+  padding-bottom: 1rem;
+`;

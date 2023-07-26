@@ -13,6 +13,7 @@ interface ISectionFieldProps {
   noGutters?: boolean;
   labelWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
   contentWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
+  valueTestId?: string | null;
 }
 
 export const SectionField: React.FunctionComponent<
@@ -31,6 +32,7 @@ export const SectionField: React.FunctionComponent<
       <StyledCol
         xs={props.contentWidth ?? true}
         className={cx({ required: props.required, 'text-left': true })}
+        valueTestId={props.valueTestId}
       >
         {props.children}
       </StyledCol>

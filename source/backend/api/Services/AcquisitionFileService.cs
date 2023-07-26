@@ -34,6 +34,7 @@ namespace Pims.Api.Services
         private readonly IAgreementRepository _agreementRepository;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
         private readonly IInterestHolderRepository _interestHolderRepository;
+        private readonly IForm8Repository _form8Repository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -48,7 +49,8 @@ namespace Pims.Api.Services
             IAcquisitionFileChecklistRepository checklistRepository,
             IAgreementRepository agreementRepository,
             ICompensationRequisitionRepository compensationRequisitionRepository,
-            IInterestHolderRepository interestHolderRepository)
+            IInterestHolderRepository interestHolderRepository,
+            IForm8Repository form8Repository)
         {
             _user = user;
             _logger = logger;
@@ -63,6 +65,7 @@ namespace Pims.Api.Services
             _agreementRepository = agreementRepository;
             _compensationRequisitionRepository = compensationRequisitionRepository;
             _interestHolderRepository = interestHolderRepository;
+            _form8Repository = form8Repository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -346,7 +349,7 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Invalid acquisitionFileId.");
             }
 
-            compensationRequisition.IsDraft = compensationRequisition.IsDraft ?? true;
+            compensationRequisition.IsDraft ??= true;
             compensationRequisition.PimsAcquisitionPayees = new List<PimsAcquisitionPayee>() { new PimsAcquisitionPayee() };
 
             var newCompensationRequisition = _compensationRequisitionRepository.Add(compensationRequisition);
@@ -354,6 +357,37 @@ namespace Pims.Api.Services
             _compensationRequisitionRepository.CommitTransaction();
 
             return newCompensationRequisition;
+        }
+
+        public PimsForm8 AddForm8(long acquisitionFileId, PimsForm8 form8)
+        {
+            _logger.LogInformation("Adding Form 8 for acquisition file id ...", acquisitionFileId);
+
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            form8.ThrowIfNull(nameof(form8));
+
+            var acquisitionFileParent = _acqFileRepository.GetById(acquisitionFileId);
+            if (acquisitionFileId != form8.AcquisitionFileId || acquisitionFileParent is null)
+            {
+                throw new BadRequestException("Invalid acquisitionFileId.");
+            }
+
+            var newForm8 = _form8Repository.Add(form8);
+            _form8Repository.CommitTransaction();
+
+            return newForm8;
+        }
+
+        public IList<PimsForm8> GetAcquisitionForm8s(long acquisitionFileId)
+        {
+
+            _logger.LogInformation("Getting form 8's for acquisition file id ...", acquisitionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            return _form8Repository.GetAllByAcquisitionFileId(acquisitionFileId);
         }
 
         private static void ValidateStaff(PimsAcquisitionFile pimsAcquisitionFile)

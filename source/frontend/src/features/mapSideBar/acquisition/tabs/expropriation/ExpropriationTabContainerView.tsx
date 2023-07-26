@@ -1,24 +1,33 @@
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
+import { SectionListHeader } from '@/components/common/SectionListHeader';
+import { Claims } from '@/constants';
 import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
+import { Api_Form8 } from '@/models/api/Form8';
 
 import { useGenerateExpropriationForm1 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm1';
 import { useGenerateExpropriationForm5 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm5';
 import { useGenerateExpropriationForm9 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm9';
 import ExpropriationForm1 from './form1/ExpropriationForm1';
 import ExpropriationForm5 from './form5/ExpropriationForm5';
+import ExpropriationForm8Details from './form8/details/ExpropriationForm8Details';
 import ExpropriationForm9 from './form9/ExpropriationForm9';
 
 export interface IExpropriationTabContainerViewProps {
   loading: boolean;
   acquisitionFile: Api_AcquisitionFile;
+  form8s: Api_Form8[];
 }
 
 export const ExpropriationTabContainerView: React.FunctionComponent<
   IExpropriationTabContainerViewProps
-> = ({ loading, acquisitionFile }) => {
+> = ({ loading, acquisitionFile, form8s }) => {
+  const history = useHistory();
+  const match = useRouteMatch();
+
   // TODO: Load Form 8 into this container
   const acquisitionFileTypeCode = acquisitionFile.acquisitionTypeCode?.id;
 
@@ -68,9 +77,23 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
       <Section
         isCollapsable
         initiallyExpanded={false}
-        header="Form 8 - Notice of Advance Payment"
         data-testid="form-8-section"
-      ></Section>
+        header={
+          <SectionListHeader
+            claims={[Claims.ACQUISITION_EDIT]}
+            title="Form 8 - Notice of Advance Payment"
+            addButtonText="Add Form 8"
+            addButtonIcon={'add'}
+            onAdd={() => {
+              history.push(`${match.url}/add`);
+            }}
+          />
+        }
+      >
+        {form8s.map((form, index) => (
+          <ExpropriationForm8Details form8={form} form8Index={index}></ExpropriationForm8Details>
+        ))}
+      </Section>
 
       {acquisitionFileTypeCode === EnumAcquisitionFileType.SECTN6 && (
         <Section

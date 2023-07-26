@@ -42,7 +42,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
   loading,
 }) => {
   const { getOptionsByType } = useLookupCodeHelpers();
-  const interestHolderInterestTypes = getOptionsByType(API.INTEREST_HOLDER_INTEREST_TYPES);
+  const interestHolderInterestTypes = getOptionsByType(API.INTEREST_HOLDER_TYPES);
   return (
     <Formik<StakeHolderForm>
       enableReinitialize

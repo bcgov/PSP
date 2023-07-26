@@ -1817,6 +1817,157 @@ namespace Pims.Api.Test.Services
         }
         #endregion
 
+        #region Form8
+
+        [Fact]
+        public void GetForm8s_NoPermissions()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.GetAcquisitionForm8s(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetForm8s_NotAuthorized_Contractor()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionView);
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(EntityHelper.CreateAcquisitionFile());
+
+            // Act
+            Action act = () => service.GetAcquisitionForm8s(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetForm8s_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionView);
+
+            var repository = _helper.GetService<Mock<IForm8Repository>>();
+            repository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsForm8>()
+                {
+                    new PimsForm8(),
+                });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            var result = service.GetAcquisitionForm8s(1);
+
+            // Assert
+            repository.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void AddForm8_NoPermissions()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.AddForm8(1, new PimsForm8());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void AddForm8_NullException()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            Action act = () => service.AddForm8(1, null);
+
+            // Assert
+            act.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void AddForm8_BadRequest_IdMissmatch()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            Action act = () => service.AddForm8(1, new PimsForm8() { Internal_Id = 2 });
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void AddForm8_NotAuthorized_Contractor()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
+            var repository = _helper.GetService<Mock<IForm8Repository>>();
+            var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var newForm8 = EntityHelper.CreateForm8(1, 1);
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+
+            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+            repository.Setup(x => x.Add(It.IsAny<PimsForm8>())).Returns(newForm8);
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            Action act = () => service.AddForm8(1, newForm8);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void AddForm8_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var repository = _helper.GetService<Mock<IForm8Repository>>();
+            var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var newForm8 = EntityHelper.CreateForm8(1, 1);
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+
+            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+            repository.Setup(x => x.Add(It.IsAny<PimsForm8>())).Returns(newForm8);
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            var result = service.AddForm8(1, newForm8);
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsForm8>()), Times.Once);
+        }
+
+        #endregion
 
         #endregion
     }

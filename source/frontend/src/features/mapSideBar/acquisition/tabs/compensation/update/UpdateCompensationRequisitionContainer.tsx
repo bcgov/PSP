@@ -10,7 +10,8 @@ import { Api_AcquisitionFile, Api_AcquisitionFilePerson } from '@/models/api/Acq
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
-import { CompensationRequisitionFormModel, PayeeOption } from './models';
+import { PayeeOption } from '../../../models/PayeeOption';
+import { CompensationRequisitionFormModel } from './models';
 import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitionForm';
 
 export interface UpdateCompensationRequisitionContainerProps {
