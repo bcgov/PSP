@@ -68,9 +68,7 @@ const ControlButton = styled(Button)`
   &.btn {
     width: 5.2rem;
     height: 5.2rem;
-    position: absolute;
-    top: 0;
-    left: -5.1rem;
+    margin-left: -5.1rem;
     background-color: #fff;
     color: ${({ theme }) => theme.css.slideOutBlue};
     border-color: ${({ theme }) => theme.css.slideOutBlue};
@@ -78,7 +76,7 @@ const ControlButton = styled(Button)`
     &.open {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
-      top: 2.6rem;
+      margin-top: -5.2rem;
     }
   }
 `;
