@@ -6,6 +6,7 @@ import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
+import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
 import {
   IMapStateMachineContext,
   useMapStateMachine,
@@ -448,5 +449,26 @@ describe('MapContainer', () => {
     // when showing the property information slide-out, the map filter bar is hidden
     const label = await screen.queryByText('Search:');
     expect(label).toBeNull();
+  });
+
+  it('Given advanced filter sidebar is open, when user navigates to a file, the advanced filter should be closed', async () => {
+    const testMapMock = {
+      ...mapMachineBaseMock,
+      isSidebarOpen: true,
+      isAdvancedFilterSidebarOpen: true,
+      sideBarType: SideBarType.ACQUISITION_FILE,
+      mapFeatureData: {
+        pimsFeatures: createPimsFeatures(mockParcels),
+        fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
+      },
+    };
+    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
+      testMapMock,
+    );
+
+    await setup();
+
+    // verify the advanced filter sidebar was closed
+    expect(testMapMock.closeAdvancedFilterSidebar).toHaveBeenCalled();
   });
 });

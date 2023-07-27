@@ -20,18 +20,22 @@ export type MapViewProps = {};
 const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = () => {
   const { width, ref: resizeRef } = useResizeDetector();
 
+  // hide the top search bar when either the left-hand sidebar or right-hand advanced bar is open
   const mapMachine = useMapStateMachine();
-  const showSideBar = mapMachine.isSidebarOpen;
+  const isSidebarOpen = mapMachine.isSidebarOpen;
+  const isAdvancedFilterSidebarOpen = mapMachine.isAdvancedFilterSidebarOpen;
 
   return (
     <VisibilitySensor partialVisibility={true}>
       {({ isVisible }: { isVisible: boolean }) => (
         <Styled.MapGrid
           ref={resizeRef}
-          className={classNames('px-0', 'map', { sidebar: showSideBar })}
+          className={classNames('px-0', 'map', {
+            sidebar: isSidebarOpen || isAdvancedFilterSidebarOpen,
+          })}
         >
           <LoadingBackdrop show={mapMachine.isLoading} parentScreen />
-          {!showSideBar ? <MapSearch /> : null}
+          {!isSidebarOpen && !isAdvancedFilterSidebarOpen ? <MapSearch /> : null}
           {isVisible && <MapLeafletView parentWidth={width} />}
         </Styled.MapGrid>
       )}

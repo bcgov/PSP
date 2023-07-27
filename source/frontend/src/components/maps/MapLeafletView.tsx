@@ -16,6 +16,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
 
 import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
+import AdvancedFilterButton from './leaflet/Control/AdvancedFilterButton/AdvancedFilterButton';
 import BasemapToggle, {
   BaseLayer,
   BasemapToggleEvent,
@@ -218,10 +219,21 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
         <LegendControl />
         <ZoomOutButton />
+        <AdvancedFilterButton
+          open={mapMachine.isAdvancedFilterSidebarOpen}
+          onOpen={() => {
+            setLayersOpen(false);
+            mapMachine.openAdvancedFilterSidebar();
+          }}
+          onClose={() => mapMachine.closeAdvancedFilterSidebar()}
+        />
         <LayersControl
           open={layersOpen}
           setOpen={() => {
             setLayersOpen(!layersOpen);
+            if (!layersOpen) {
+              mapMachine.closeAdvancedFilterSidebar();
+            }
           }}
         />
         <InventoryLayer zoom={zoom} bounds={bounds}></InventoryLayer>

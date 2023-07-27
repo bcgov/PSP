@@ -15,6 +15,7 @@ import { useMapSearch } from './useMapSearch';
 
 export interface IMapStateMachineContext {
   isSidebarOpen: boolean;
+  sideBarType: SideBarType;
   pendingFlyTo: boolean;
   requestedFlyTo: RequestedFlyTo;
   mapFeatureSelected: FeatureSelected | null;
@@ -29,6 +30,7 @@ export interface IMapStateMachineContext {
   pendingFitBounds: boolean;
   requestedFitBounds: LatLngBounds;
   isSelecting: boolean;
+  isAdvancedFilterSidebarOpen: boolean;
 
   requestFlyToLocation: (latlng: LatLngLiteral) => void;
   requestFlyToBounds: (bounds: LatLngBounds) => void;
@@ -36,6 +38,8 @@ export interface IMapStateMachineContext {
   processFitBounds: () => void;
   openSidebar: (sidebarType: SideBarType) => void;
   closeSidebar: () => void;
+  openAdvancedFilterSidebar: () => void;
+  closeAdvancedFilterSidebar: () => void;
   closePopup: () => void;
 
   mapClick: (latlng: LatLngLiteral) => void;
@@ -107,6 +111,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
       },
     },
   });
+
   const state = useSelector(service, state => state);
   const serviceSend = service.send;
 
@@ -123,6 +128,18 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   const closeSidebar = useCallback(() => {
     serviceSend({
       type: 'CLOSE_SIDEBAR',
+    });
+  }, [serviceSend]);
+
+  const openAdvancedFilterSidebar = useCallback(() => {
+    serviceSend({
+      type: 'OPEN_ADVANCED_FILTER_SIDEBAR',
+    });
+  }, [serviceSend]);
+
+  const closeAdvancedFilterSidebar = useCallback(() => {
+    serviceSend({
+      type: 'CLOSE_ADVANCED_FILTER_SIDEBAR',
     });
   }, [serviceSend]);
 
@@ -223,6 +240,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           { mapVisible: { sideBar: 'sidebarOpen' } },
           { mapVisible: { sideBar: 'selecting' } },
         ].some(state.matches),
+        sideBarType: state.context.sideBarType,
         pendingFlyTo: state.matches({ mapVisible: { mapRequest: 'pendingFlyTo' } }),
         requestedFlyTo: state.context.requestedFlyTo,
         mapFeatureSelected: state.context.mapFeatureSelected,
@@ -237,6 +255,9 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         pendingFitBounds: state.matches({ mapVisible: { mapRequest: 'pendingFitBounds' } }),
         requestedFitBounds: state.context.requestedFitBounds,
         isSelecting: state.matches({ mapVisible: { sideBar: 'selecting' } }),
+        isAdvancedFilterSidebarOpen: state.matches({
+          mapVisible: { advancedFilterSideBar: 'sidebarOpen' },
+        }),
 
         setMapFilter,
         refreshMapProperties,
@@ -244,6 +265,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         processFitBounds,
         openSidebar,
         closeSidebar,
+        openAdvancedFilterSidebar,
+        closeAdvancedFilterSidebar,
         requestFlyToLocation,
         requestFlyToBounds,
         mapClick,
