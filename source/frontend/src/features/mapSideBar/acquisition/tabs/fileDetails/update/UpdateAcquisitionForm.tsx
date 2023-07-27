@@ -335,10 +335,6 @@ const AcquisitionDetailSubForm: React.FC<{
 const Container = styled.div`
   background-color: ${props => props.theme.css.filterBackgroundColor};
 
-  .react-datepicker-wrapper {
-    max-width: 14rem;
-  }
-
   [name='region'] {
     max-width: 25rem;
   }

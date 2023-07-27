@@ -135,8 +135,4 @@ const Container = styled.div`
       padding-left: 1.5rem;
     }
   }
-
-  .react-datepicker-wrapper {
-    max-width: 14rem;
-  }
 `;

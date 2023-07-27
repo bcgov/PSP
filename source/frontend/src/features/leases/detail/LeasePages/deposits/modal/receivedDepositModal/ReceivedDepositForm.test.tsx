@@ -60,7 +60,7 @@ describe('ReceivedDepositForm component', () => {
     const { container, findByDisplayValue } = setup({ initialValues });
 
     const { input } = await fillInput(container, 'depositDate', '2020-01-02', 'datepicker');
-    await findByDisplayValue('01/02/2020');
+    await findByDisplayValue('Jan 02, 2020');
     expect(input).toHaveProperty('required');
   });
 

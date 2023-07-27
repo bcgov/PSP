@@ -82,7 +82,7 @@ const FormikDatePicker: FunctionComponent<React.PropsWithChildren<FastDatePicker
   const isInvalid = error && touch ? 'is-invalid ' : '';
   const isValid = !error && touch && value && !disabled ? 'is-valid ' : '';
   return (
-    <Form.Group
+    <StyledGroup
       className={classNames(!!required ? 'required' : '', className)}
       controlId={`datepicker-${field}`}
     >
@@ -96,9 +96,9 @@ const FormikDatePicker: FunctionComponent<React.PropsWithChildren<FastDatePicker
         autoComplete="off"
         name={field}
         required={required}
-        placeholderText="--/--/----"
+        placeholderText="MTH DD, YYYY"
         className={classNames('form-control', 'date-picker', isInvalid, isValid, innerClassName)}
-        dateFormat="MM/dd/yyyy"
+        dateFormat="MMM dd, yyyy"
         selected={(value && new Date(value)) || null}
         disabled={disabled}
         minDate={minDate ? moment(minDate, 'YYYY-MM-DD').toDate() : undefined}
@@ -111,11 +111,29 @@ const FormikDatePicker: FunctionComponent<React.PropsWithChildren<FastDatePicker
           setFieldValue(field, val ? moment.utc(val).format('YYYY-MM-DD') : '');
         }}
         wrapperClassName="d-block"
+        showIcon
       />
       <ErrorMessage component="div" className="invalid-feedback" name={field}></ErrorMessage>
-    </Form.Group>
+    </StyledGroup>
   );
 };
+
+const StyledGroup = styled(Form.Group)`
+  .react-datepicker__calendar-icon {
+    width: 3rem;
+    height: 3rem;
+    margin-top: 0.5rem;
+    right: 0;
+    fill: ${props => props.theme.css.linkColor};
+    pointer-events: none;
+  }
+  .react-datepicker__view-calendar-icon input {
+    padding: 0.6rem 1rem 0.5rem 0.6rem;
+  }
+  .react-datepicker-wrapper {
+    max-width: 16rem;
+  }
+`;
 
 const StyledDatePicker = styled(DatePicker)`
   && {
