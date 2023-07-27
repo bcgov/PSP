@@ -1,16 +1,16 @@
 import React from 'react';
-import { FaFilter, FaWindowClose } from 'react-icons/fa';
+import { FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
-export interface IAdvancedFilterSideBarProps {
+export interface IAdvancedFilterBarProps {
   isOpen?: boolean;
   showCloseButton?: boolean;
   onClose?: () => void;
 }
 
-const AdvancedFilterSideBar: React.FC<React.PropsWithChildren<IAdvancedFilterSideBarProps>> = ({
+const AdvancedFilterBar: React.FC<React.PropsWithChildren<IAdvancedFilterBarProps>> = ({
   isOpen = false,
   showCloseButton = true,
   onClose,
@@ -19,7 +19,6 @@ const AdvancedFilterSideBar: React.FC<React.PropsWithChildren<IAdvancedFilterSid
   return (
     <StyledMapSideBar show={isOpen} data-testid="advanced-filter-sidebar">
       <StyledHeader>
-        <FaFilter size="1.6em" />
         <StyledTitle>Filter By:</StyledTitle>
         {showCloseButton && (
           <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Advanced Map Filters">
@@ -32,7 +31,7 @@ const AdvancedFilterSideBar: React.FC<React.PropsWithChildren<IAdvancedFilterSid
   );
 };
 
-export default AdvancedFilterSideBar;
+export default AdvancedFilterBar;
 
 const StyledMapSideBar = styled.div<{ show: boolean }>`
   display: flex;

@@ -1,17 +1,15 @@
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import AdvancedFilterSideBar, { IAdvancedFilterSideBarProps } from './AdvancedFilterSideBar';
+import AdvancedFilterBar, { IAdvancedFilterBarProps } from './AdvancedFilterBar';
 
 const onClose = jest.fn();
 
-describe('AdvancedFilterSideBar', () => {
-  const setup = async (
-    renderOptions: RenderOptions & { props?: IAdvancedFilterSideBarProps } = {},
-  ) => {
+describe('AdvancedFilterBar', () => {
+  const setup = async (renderOptions: RenderOptions & { props?: IAdvancedFilterBarProps } = {}) => {
     const props = renderOptions.props || {};
     props.onClose = props.onClose ? props.onClose : onClose;
 
-    const utils = render(<AdvancedFilterSideBar {...props} />, {
+    const utils = render(<AdvancedFilterBar {...props} />, {
       ...renderOptions,
     });
 

@@ -7,7 +7,7 @@ import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types'
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapView from '@/components/maps/MapView';
 import { FilterProvider } from '@/components/maps/providers/FIlterProvider';
-import AdvancedFilterSideBar from '@/features/advancedFilterSideBar/AdvancedFilterSideBar';
+import AdvancedFilterBar from '@/features/advancedFilterSideBar/AdvancedFilterBar';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBar from '@/features/mapSideBar/MapSideBar';
 import ActivityRouter from '@/features/mapSideBar/router/ActivityRouter';
@@ -59,7 +59,7 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
           <MapView />
         </FilterProvider>
       )}
-      <AdvancedFilterSideBar
+      <AdvancedFilterBar
         isOpen={isAdvancedFilterSidebarOpen}
         onClose={closeAdvancedFilterSidebar}
       />
