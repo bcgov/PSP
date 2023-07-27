@@ -589,6 +589,24 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             <label
               class="c4"
             >
+              Primary Contact:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            No contacts available
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
               Owner representative:
             </label>
           </div>
