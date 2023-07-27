@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
-interface IAdvancedFilterSideBarProps {
+export interface IAdvancedFilterSideBarProps {
   isOpen?: boolean;
   showCloseButton?: boolean;
   onClose?: () => void;
@@ -17,7 +17,7 @@ const AdvancedFilterSideBar: React.FC<React.PropsWithChildren<IAdvancedFilterSid
   children,
 }) => {
   return (
-    <StyledMapSideBar show={isOpen}>
+    <StyledMapSideBar show={isOpen} data-testid="advanced-filter-sidebar">
       <StyledHeader>
         <FaFilter size="1.6em" />
         <StyledTitle>Filter By:</StyledTitle>
