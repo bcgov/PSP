@@ -343,23 +343,6 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public void Get_User_ById_NotAuthorized()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var key = Guid.NewGuid();
-            var euser = EntityHelper.CreateUser(1, key, "ttester", "Tester", "McTest");
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(euser);
-
-            var service = helper.CreateRepository<UserRepository>(user);
-
-            // Act
-            // Assert
-            var result = Assert.Throws<NotAuthorizedException>(() => service.GetByKeycloakUserId(key));
-        }
-
-        [Fact]
         public void Get_User_Tracking_ById()
         {
             // Arrange

@@ -6,7 +6,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c8.btn {
+  .c9.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c8.btn:hover {
+.c9.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c8.btn:focus {
+.c9.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c8.btn.btn-primary {
+.c9.btn.btn-primary {
   border: none;
 }
 
-.c8.btn.btn-secondary {
+.c9.btn.btn-secondary {
   background: none;
 }
 
-.c8.btn.btn-info {
+.c9.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c8.btn.btn-info:hover,
-.c8.btn.btn-info:active,
-.c8.btn.btn-info:focus {
+.c9.btn.btn-info:hover,
+.c9.btn.btn-info:active,
+.c9.btn.btn-info:focus {
   background: none;
 }
 
-.c8.btn.btn-light {
+.c9.btn.btn-light {
   border: none;
 }
 
-.c8.btn.btn-dark {
+.c9.btn.btn-dark {
   border: none;
 }
 
-.c8.btn.btn-link {
+.c9.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   padding: 0;
 }
 
-.c8.btn.btn-link:hover,
-.c8.btn.btn-link:active,
-.c8.btn.btn-link:focus {
+.c9.btn.btn-link:hover,
+.c9.btn.btn-link:active,
+.c9.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   outline: none;
 }
 
-.c8.btn.btn-link:disabled,
-.c8.btn.btn-link.disabled {
+.c9.btn.btn-link:disabled,
+.c9.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c8.btn:disabled,
-.c8.btn:disabled:hover {
+.c9.btn:disabled,
+.c9.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,15 +128,15 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c8.Button .Button__icon {
+.c9.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c8.Button--icon-only:focus {
+.c9.Button--icon-only:focus {
   outline: none;
 }
 
-.c8.Button--icon-only .Button__icon {
+.c9.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -144,28 +144,44 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   font-size: 2.4rem;
 }
 
-.c6.c6.form-control.is-valid {
+.c6 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c6 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c6 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c7.c7.form-control.is-valid {
   background-image: none;
 }
 
-.c6.c6.form-control.is-invalid {
+.c7.c7.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c10.c10.btn {
+.c11.c11.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c10.c10.btn .text {
+.c11.c11.btn .text {
   display: none;
 }
 
-.c10.c10.btn:hover,
-.c10.c10.btn:active,
-.c10.c10.btn:focus {
+.c11.c11.btn:hover,
+.c11.c11.btn:active,
+.c11.c11.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -179,14 +195,14 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c10.c10.btn:hover .text,
-.c10.c10.btn:active .text,
-.c10.c10.btn:focus .text {
+.c11.c11.btn:hover .text,
+.c11.c11.btn:active .text,
+.c11.c11.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c14 {
+.c15 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -196,13 +212,13 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c11 {
+.c12 {
   font-size: 1.6rem;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c13.form-group {
+.c14.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -210,7 +226,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   margin-bottom: 0;
 }
 
-.c13.form-group .radio-group {
+.c14.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -223,7 +239,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   column-gap: 0.4rem;
 }
 
-.c13.form-group .radio-group .form-check {
+.c14.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -238,19 +254,19 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   justify-content: center;
 }
 
-.c13.form-group .radio-group .form-check .form-check-input {
+.c14.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c13.form-group .radio-group .form-check-label {
+.c14.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c13 .form-label {
+.c14 .form-label {
   margin-bottom: unset;
 }
 
-.c7 {
+.c8 {
   position: relative;
   border-radius: 0.3rem;
   padding: 0.6rem;
@@ -260,11 +276,11 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   border: solid 0.1rem;
 }
 
-.c7.is-invalid {
+.c8.is-invalid {
   border: solid 0.1rem;
 }
 
-.c9.c9.btn {
+.c10.c10.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
   right: 0.4rem;
@@ -273,19 +289,19 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   line-height: unset;
 }
 
-.c9.c9.btn .text {
+.c10.c10.btn .text {
   display: none;
 }
 
-.c9.c9.btn:hover,
-.c9.c9.btn:active,
-.c9.c9.btn:focus {
+.c10.c10.btn:hover,
+.c10.c10.btn:active,
+.c10.c10.btn:focus {
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
 }
 
-.c19 {
+.c20 {
   background: none;
   position: relative;
   border-radius: 0.3rem;
@@ -294,7 +310,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   border: solid 0.1rem;
 }
 
-.c19.is-invalid {
+.c20.is-invalid {
   border: solid 0.1rem;
 }
 
@@ -323,7 +339,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c18 {
+.c19 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -343,15 +359,15 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   justify-content: flex-end;
 }
 
-.c17 {
+.c18 {
   background-color: none;
 }
 
-.c16 {
+.c17 {
   margin: 1.5rem;
 }
 
-.c12 {
+.c13 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -365,17 +381,13 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   justify-content: end;
 }
 
-.c15 {
+.c16 {
   font-size: 2rem;
   font-weight: 700;
   -webkit-text-decoration: none solid rgb(33,37,41);
   text-decoration: none solid rgb(33,37,41);
   line-height: 2rem;
   margin-bottom: 1rem;
-}
-
-.c0 .react-datepicker-wrapper {
-  max-width: 14rem;
 }
 
 .c0 [name='region'] {
@@ -729,22 +741,31 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             class="c3 text-left col"
           >
             <div
-              class="form-group"
+              class="c6 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
               >
                 <div
-                  class="react-datepicker__input-container"
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                 >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
                   <input
                     autocomplete="off"
-                    class="c6 form-control date-picker"
+                    class="c7 form-control date-picker"
                     id="datepicker-assignedDate"
                     name="assignedDate"
-                    placeholder="--/--/----"
+                    placeholder="MTH DD, YYYY"
                     type="text"
-                    value="06/27/2022"
+                    value="Jun 27, 2022"
                   />
                 </div>
               </div>
@@ -791,22 +812,31 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             class="c3 text-left col"
           >
             <div
-              class="form-group"
+              class="c6 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
               >
                 <div
-                  class="react-datepicker__input-container"
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                 >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
                   <input
                     autocomplete="off"
-                    class="c6 form-control date-picker"
+                    class="c7 form-control date-picker"
                     id="datepicker-deliveryDate"
                     name="deliveryDate"
-                    placeholder="--/--/----"
+                    placeholder="MTH DD, YYYY"
                     type="text"
-                    value="07/29/2022"
+                    value="Jul 29, 2022"
                   />
                 </div>
               </div>
@@ -853,21 +883,30 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             class="c3 text-left col"
           >
             <div
-              class="form-group"
+              class="c6 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
               >
                 <div
-                  class="react-datepicker__input-container"
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                 >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
                   <input
                     autocomplete="off"
-                    class="c6 form-control date-picker"
+                    class="c7 form-control date-picker"
                     disabled=""
                     id="datepicker-completionDate"
                     name="completionDate"
-                    placeholder="--/--/----"
+                    placeholder="MTH DD, YYYY"
                     type="text"
                     value=""
                   />
@@ -1238,11 +1277,11 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c7"
+                    class="c8"
                   >
                     Bob Billy Smith
                     <button
-                      class="c8 Button c9 btn btn-link"
+                      class="c9 Button c10 btn btn-link"
                       type="button"
                     >
                       <div
@@ -1288,7 +1327,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="pl-0 col-auto"
                 >
                   <button
-                    class="c8 Button Button--icon-only px-2 btn btn-primary"
+                    class="c9 Button Button--icon-only px-2 btn btn-primary"
                     type="button"
                   >
                     <div
@@ -1317,7 +1356,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             class="pl-0 mt-2 col-xl-2 col-auto"
           >
             <button
-              class="c8 Button c10 btn btn-link"
+              class="c9 Button c11 btn btn-link"
               type="button"
             >
               <div
@@ -1434,11 +1473,11 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c7"
+                    class="c8"
                   >
                     Stinky Cheese
                     <button
-                      class="c8 Button c9 btn btn-link"
+                      class="c9 Button c10 btn btn-link"
                       type="button"
                     >
                       <div
@@ -1484,7 +1523,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="pl-0 col-auto"
                 >
                   <button
-                    class="c8 Button Button--icon-only px-2 btn btn-primary"
+                    class="c9 Button Button--icon-only px-2 btn btn-primary"
                     type="button"
                   >
                     <div
@@ -1513,7 +1552,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             class="pl-0 mt-2 col-xl-2 col-auto"
           >
             <button
-              class="c8 Button c10 btn btn-link"
+              class="c9 Button c11 btn btn-link"
               type="button"
             >
               <div
@@ -1551,7 +1590,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
           </div>
         </div>
         <button
-          class="c8 Button btn btn-link"
+          class="c9 Button btn btn-link"
           data-testid="add-team-member"
           type="button"
         >
@@ -1585,7 +1624,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
         class="collapse show"
       >
         <p
-          class="c11"
+          class="c12"
         >
           Each property in this file should be owned by the owner(s) in this section
         </p>
@@ -1596,10 +1635,10 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             class="container"
           >
             <div
-              class="c12"
+              class="c13"
             >
               <button
-                class="c8 Button c10 btn btn-link"
+                class="c9 Button c11 btn btn-link"
                 type="button"
               >
                 <div
@@ -1651,13 +1690,13 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 class="c3 text-left col"
               >
                 <div
-                  class="c13 form-group"
+                  class="c14 form-group"
                 >
                   <div
                     class="radio-group"
                   >
                     <div
-                      class="c14"
+                      class="c15"
                     >
                       <div
                         class="form-check"
@@ -1680,7 +1719,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c14"
+                      class="c15"
                     >
                       <div
                         class="form-check"
@@ -1706,12 +1745,12 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
               </div>
             </div>
             <h3
-              class="c15"
+              class="c16"
             >
               Name
             </h3>
             <div
-              class="c16"
+              class="c17"
             >
               <div
                 class="pb-2 row"
@@ -1723,13 +1762,13 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="c3 text-left col"
                 >
                   <div
-                    class="c13 form-group"
+                    class="c14 form-group"
                   >
                     <div
                       class="radio-group"
                     >
                       <div
-                        class="c14"
+                        class="c15"
                       >
                         <div
                           class="form-check"
@@ -1868,10 +1907,10 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c17"
+              class="c18"
             >
               <h3
-                class="c15"
+                class="c16"
               >
                 Mailing Address
               </h3>
@@ -1938,10 +1977,10 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   style="padding-left: 0px; padding-bottom: 2rem;"
                 >
                   <div
-                    class="c18 h-100"
+                    class="c19 h-100"
                   >
                     <button
-                      class="c8 Button c10 btn btn-link"
+                      class="c9 Button c11 btn btn-link"
                       type="button"
                     >
                       <div
@@ -2208,7 +2247,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
               </div>
             </div>
             <h3
-              class="c15"
+              class="c16"
             >
               Contact Information
             </h3>
@@ -2278,10 +2317,10 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             class="container"
           >
             <div
-              class="c12"
+              class="c13"
             >
               <button
-                class="c8 Button c10 btn btn-link"
+                class="c9 Button c11 btn btn-link"
                 type="button"
               >
                 <div
@@ -2333,13 +2372,13 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 class="c3 text-left col"
               >
                 <div
-                  class="c13 form-group"
+                  class="c14 form-group"
                 >
                   <div
                     class="radio-group"
                   >
                     <div
-                      class="c14"
+                      class="c15"
                     >
                       <div
                         class="form-check"
@@ -2361,7 +2400,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c14"
+                      class="c15"
                     >
                       <div
                         class="form-check"
@@ -2388,12 +2427,12 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
               </div>
             </div>
             <h3
-              class="c15"
+              class="c16"
             >
               Name
             </h3>
             <div
-              class="c16"
+              class="c17"
             >
               <div
                 class="pb-2 row"
@@ -2405,13 +2444,13 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="c3 text-left col"
                 >
                   <div
-                    class="c13 form-group"
+                    class="c14 form-group"
                   >
                     <div
                       class="radio-group"
                     >
                       <div
-                        class="c14"
+                        class="c15"
                       >
                         <div
                           class="form-check"
@@ -2602,10 +2641,10 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c17"
+              class="c18"
             >
               <h3
-                class="c15"
+                class="c16"
               >
                 Mailing Address
               </h3>
@@ -2672,10 +2711,10 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   style="padding-left: 0px; padding-bottom: 2rem;"
                 >
                   <div
-                    class="c18 h-100"
+                    class="c19 h-100"
                   >
                     <button
-                      class="c8 Button c10 btn btn-link"
+                      class="c9 Button c11 btn btn-link"
                       type="button"
                     >
                       <div
@@ -2942,7 +2981,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
               </div>
             </div>
             <h3
-              class="c15"
+              class="c16"
             >
               Contact Information
             </h3>
@@ -3005,7 +3044,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
           </div>
         </div>
         <button
-          class="c8 Button btn btn-link"
+          class="c9 Button btn btn-link"
           data-testid="add-file-owner"
           type="button"
         >
@@ -3041,11 +3080,11 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c19"
+                    class="c20"
                   >
                     Luke Skywalker
                     <button
-                      class="c8 Button c9 btn btn-link"
+                      class="c9 Button c10 btn btn-link"
                       title="remove"
                       type="button"
                     >
@@ -3089,7 +3128,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="pl-0 col-auto"
                 >
                   <button
-                    class="c8 Button Button--icon-only px-2 btn btn-primary"
+                    class="c9 Button Button--icon-only px-2 btn btn-primary"
                     title="Select Contact"
                     type="button"
                   >
@@ -3142,11 +3181,11 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c19"
+                    class="c20"
                   >
                     Han Solo
                     <button
-                      class="c8 Button c9 btn btn-link"
+                      class="c9 Button c10 btn btn-link"
                       title="remove"
                       type="button"
                     >
@@ -3190,7 +3229,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="pl-0 col-auto"
                 >
                   <button
-                    class="c8 Button Button--icon-only px-2 btn btn-primary"
+                    class="c9 Button Button--icon-only px-2 btn btn-primary"
                     title="Select Contact"
                     type="button"
                   >
