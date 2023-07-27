@@ -8,7 +8,7 @@ import { TooltipWrapper } from '@/components/common/TooltipWrapper';
 
 import Control from '../Control';
 
-export type IAdvanceMapFilterButtonProps = {
+export type IAdvanceFilterButtonProps = {
   /** whether the advanced filter slide out is open or closed */
   open?: boolean;
   onOpen?: () => void;
@@ -16,9 +16,9 @@ export type IAdvanceMapFilterButtonProps = {
 };
 
 /**
- * Component to launch the Advanced Map Filter sidebar
+ * Component to launch the Advanced Map Filter Bar
  */
-const AdvancedMapFilterButton: React.FC<IAdvanceMapFilterButtonProps> = ({
+const AdvancedFilterButton: React.FC<IAdvanceFilterButtonProps> = ({
   open = false,
   onOpen,
   onClose,
@@ -49,7 +49,7 @@ const AdvancedMapFilterButton: React.FC<IAdvanceMapFilterButtonProps> = ({
   );
 };
 
-export default AdvancedMapFilterButton;
+export default AdvancedFilterButton;
 
 const ControlButton = styled(Button)`
   &.btn {
