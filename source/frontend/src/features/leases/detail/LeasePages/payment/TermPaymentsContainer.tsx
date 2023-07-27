@@ -1,5 +1,6 @@
 import { FormikProps } from 'formik';
 import { find, noop } from 'lodash';
+import { c } from 'msw/lib/glossary-de6278a9';
 import { useCallback, useContext, useEffect, useState } from 'react';
 
 import GenericModal from '@/components/common/GenericModal';
@@ -112,7 +113,6 @@ export const TermPaymentsContainer: React.FunctionComponent<
     setEditPaymentModalValues(values);
   }, []);
 
-  console.log(terms);
   return (
     <>
       <LoadingBackdrop show={getLeaseTerms.loading} parentScreen />

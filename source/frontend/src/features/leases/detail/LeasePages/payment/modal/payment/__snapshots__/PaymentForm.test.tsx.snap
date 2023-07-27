@@ -74,8 +74,7 @@ exports[`PaymentForm component renders as expected 1`] = `
   flex-direction: column;
 }
 
-.c0 .form-group input,
-.c0 .form-group select {
+.c0 .form-group .small {
   width: 70%;
 }
 
@@ -291,7 +290,7 @@ exports[`PaymentForm component renders as expected 1`] = `
             class="input-tooltip-wrapper"
           >
             <input
-              class="form-control input-number"
+              class="form-control input-number small"
               id="input-amountPreTax"
               inputmode="numeric"
               name="amountPreTax"
@@ -314,7 +313,7 @@ exports[`PaymentForm component renders as expected 1`] = `
             class="input-tooltip-wrapper"
           >
             <input
-              class="form-control input-number"
+              class="form-control input-number small"
               id="input-amountGst"
               inputmode="numeric"
               name="amountGst"
@@ -404,8 +403,7 @@ exports[`PaymentForm component renders with data as expected 1`] = `
   flex-direction: column;
 }
 
-.c0 .form-group input,
-.c0 .form-group select {
+.c0 .form-group .small {
   width: 70%;
 }
 
@@ -621,7 +619,7 @@ exports[`PaymentForm component renders with data as expected 1`] = `
             class="input-tooltip-wrapper"
           >
             <input
-              class="form-control input-number"
+              class="form-control input-number small"
               id="input-amountPreTax"
               inputmode="numeric"
               name="amountPreTax"
@@ -644,7 +642,7 @@ exports[`PaymentForm component renders with data as expected 1`] = `
             class="input-tooltip-wrapper"
           >
             <input
-              class="form-control input-number"
+              class="form-control input-number small"
               id="input-amountGst"
               inputmode="numeric"
               name="amountGst"

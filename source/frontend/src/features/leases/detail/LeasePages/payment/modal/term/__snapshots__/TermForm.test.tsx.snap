@@ -64,8 +64,7 @@ exports[`TermForm component renders as expected 1`] = `
   flex-direction: column;
 }
 
-.c0 .form-group input,
-.c0 .form-group select {
+.c0 .form-group .small {
   width: 70%;
 }
 
@@ -473,8 +472,7 @@ exports[`TermForm component renders with data as expected 1`] = `
   flex-direction: column;
 }
 
-.c0 .form-group input,
-.c0 .form-group select {
+.c0 .form-group .small {
   width: 70%;
 }
 
