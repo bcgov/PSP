@@ -1,7 +1,7 @@
-import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
 import { Api_Form8, Api_PaymentItem } from '@/models/api/Form8';
-import { Api_Organization } from '@/models/api/Organization';
 import { booleanToString, toTypeCode } from '@/utils/formUtils';
+
+import { ExpropriationAuthorityFormModel } from '../../models';
 
 export class Form8FormModel {
   acquisitionFileId: number;
@@ -9,7 +9,7 @@ export class Form8FormModel {
   interestHolderId: number | null = null;
   expropriatingAuthorityId: number | null = null;
   expropriationAuthority: ExpropriationAuthorityFormModel | null = null;
-  description: string | null = '';
+  description: string | null = null;
   paymentItems: Form8PaymentItemModel[] = [];
   isDisabled: boolean = false;
   rowVersion: number | null = null;
@@ -57,10 +57,7 @@ export class Form8PaymentItemModel {
   totalAmount: number = 0;
   rowVersion: number | null = null;
 
-  constructor(private id: number | null = 0, private form8Id: number) {
-    this.id = id;
-    this.form8Id = form8Id;
-  }
+  constructor(private id: number | null = null, private form8Id: number | null = null) {}
 
   static fromApi(model: Api_PaymentItem): Form8PaymentItemModel {
     const newPaymentItem = new Form8PaymentItemModel(model.id ?? null, model.form8Id);
@@ -72,10 +69,4 @@ export class Form8PaymentItemModel {
 
     return newPaymentItem;
   }
-}
-
-export class ExpropriationAuthorityFormModel {
-  organizationId: number | null = null;
-  organization: Api_Organization | null = null;
-  contact: IContactSearchResult | null = null;
 }

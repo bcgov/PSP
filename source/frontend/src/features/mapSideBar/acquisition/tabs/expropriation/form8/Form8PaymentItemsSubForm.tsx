@@ -4,30 +4,33 @@ import { FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { LinkButton, StyledRemoveLinkButton } from '@/components/common/buttons';
-import { FastCurrencyInput, Select, SelectOption } from '@/components/common/form';
+import { FastCurrencyInput, Select } from '@/components/common/form';
 import { YesNoSelect } from '@/components/common/form/YesNoSelect';
 import GenericModal from '@/components/common/GenericModal';
 import { SectionField } from '@/components/common/Section/SectionField';
+import * as API from '@/constants/API';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getCurrencyCleanValue, stringToBoolean } from '@/utils/formUtils';
 
 import { Form8FormModel, Form8PaymentItemModel } from './models/Form8FormModel';
 
 export interface IForm8PaymentItemsSubFormProps {
-  form8Id: number;
+  form8Id: number | null;
   formikProps: FormikProps<Form8FormModel>;
-  paymentItemTypesOptions: SelectOption[];
   gstConstantPercentage: number;
 }
 
 export const Form8PaymentItemsSubForm: React.FunctionComponent<IForm8PaymentItemsSubFormProps> = ({
   form8Id,
   formikProps,
-  paymentItemTypesOptions,
   gstConstantPercentage,
 }) => {
   const { values, setFieldValue } = useFormikContext<Form8FormModel>();
   const [showModal, setShowModal] = useState(false);
   const [rowToDelete, setRowToDelete] = useState<number | undefined>(undefined);
+
+  const { getOptionsByType } = useLookupCodeHelpers();
+  const paymentItemTypesOptions = getOptionsByType(API.PAYMENT_ITEM_TYPES);
 
   const onUpdateGstApplicable = (index: number, gstOption: string): void => {
     const isGstRequired = stringToBoolean(gstOption);
@@ -158,7 +161,7 @@ export const Form8PaymentItemsSubForm: React.FunctionComponent<IForm8PaymentItem
             <GenericModal
               display={showModal}
               title="Remove Payment Item"
-              message={'Are you sure you want to remove this payment item?'}
+              message={'Do you wish to remove this payment item?'}
               okButtonText="Remove"
               cancelButtonText="Cancel"
               handleOk={() => {

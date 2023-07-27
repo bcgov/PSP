@@ -93,12 +93,19 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
         <Route path={`${stripTrailingSlash(path)}/property`}>
           <></>
         </Route>
-        <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.EXPROPRIATION}/add`}>
-          <AddForm8Container
-            acquisitionFileId={props.acquisitionFile?.id!}
-            View={UpdateForm8Form}
-          ></AddForm8Container>
-        </Route>
+        <AppRoute
+          exact
+          path={`${stripTrailingSlash(path)}/${FileTabType.EXPROPRIATION}/add`}
+          customRender={() => (
+            <AddForm8Container
+              acquisitionFileId={props.acquisitionFile?.id!}
+              View={UpdateForm8Form}
+            ></AddForm8Container>
+          )}
+          claim={Claims.ACQUISITION_EDIT}
+          key={'expropiation'}
+          title={'Add Expropiation'}
+        />
         <AppRoute
           path={`${stripTrailingSlash(path)}/${FileTabType.EXPROPRIATION}/:form8Id`}
           customRender={({ match }) => (

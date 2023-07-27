@@ -8,10 +8,8 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
-import * as API from '@/constants/API';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOption';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
-import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { Api_Form8 } from '@/models/api/Form8';
 
@@ -34,11 +32,8 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
   onSave,
   onCancel,
 }) => {
-  const { getOptionsByType } = useLookupCodeHelpers();
   const formikRef = useRef<FormikProps<Form8FormModel>>(null);
   const { setModalContent, setDisplayModal } = useModalContext();
-
-  const paymentItemTypesOptions = getOptionsByType(API.PAYMENT_ITEM_TYPES);
 
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
     if (!dirty) {
@@ -104,7 +99,6 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
                     <Form8PaymentItemsSubForm
                       form8Id={initialValues.id!}
                       formikProps={formikProps}
-                      paymentItemTypesOptions={paymentItemTypesOptions}
                       gstConstantPercentage={gstConstant}
                     ></Form8PaymentItemsSubForm>
                   </Section>
