@@ -7,7 +7,7 @@ import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types'
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapView from '@/components/maps/MapView';
 import { FilterProvider } from '@/components/maps/providers/FIlterProvider';
-import AdvancedFilterBar from '@/features/advancedFilterSideBar/AdvancedFilterBar';
+import AdvancedFilterBar from '@/features/advancedFilterBar/AdvancedFilterBar';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBar from '@/features/mapSideBar/MapSideBar';
 import ActivityRouter from '@/features/mapSideBar/router/ActivityRouter';
