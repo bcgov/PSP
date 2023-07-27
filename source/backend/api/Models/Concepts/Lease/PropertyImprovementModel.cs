@@ -14,7 +14,7 @@ namespace Pims.Api.Models.Concepts
 
         public string StructureSize { get; set; }
 
-        public double? ImprovementDescription { get; set; }
+        public string ImprovementDescription { get; set; }
 
         public TypeModel<string> PropertyImprovementTypeCode { get; set; }
 
