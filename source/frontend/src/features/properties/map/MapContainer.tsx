@@ -21,10 +21,8 @@ enum MapCursors {
 interface MapContainerProps {}
 
 const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () => {
-  //const [showSideBar, setShowSideBar] = useState(false);
   const [showActionBar, setShowActionBar] = useState(false);
-
-  const { isSelecting } = useMapStateMachine();
+  const { isSelecting, closeAdvancedFilterSidebar } = useMapStateMachine();
 
   const cursorClass = isSelecting ? MapCursors.DRAFT : MapCursors.DEFAULT;
 
@@ -41,7 +39,7 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
           <MapView />
         </FilterProvider>
       )}
-      <AdvancedFilterSideBar />
+      <AdvancedFilterSideBar onClose={closeAdvancedFilterSidebar} />
     </StyleMapView>
   );
 };
