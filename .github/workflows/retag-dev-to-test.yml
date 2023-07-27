@@ -1,4 +1,4 @@
-name: CI-CD Release Dev to Tst
+name: CI-CD Release Dev to Test
 env:
   OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
   # service account: gitaction
@@ -39,12 +39,10 @@ jobs:
           timezone: America/Los_Angeles
 
   retag:
-    name: Build frontend
+    name: retag frontend
     needs: ci-cd-start-notification
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v3
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
         with:
@@ -89,6 +87,6 @@ jobs:
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
-          notification-summary: PIMS Release DEV to TST COMPLETED with status ${{ steps.check.outputs.status }}
+          notification-summary: PIMS Release DEV to TEST COMPLETED with status ${{ steps.check.outputs.status }}
           notification-color: 17a2b8
           timezone: America/Los_Angeles
