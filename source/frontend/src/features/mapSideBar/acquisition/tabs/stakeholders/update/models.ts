@@ -26,7 +26,20 @@ export class StakeHolderForm {
           ihp.propertyInterestTypes.forEach(pit => {
             const formModel = InterestHolderForm.fromApi(ih, InterestHolderType.INTEREST_HOLDER);
             formModel.propertyInterestTypeCode = pit?.id ?? '';
-            interestHoldersByType.push(formModel);
+
+            const matchingInterestHolder = interestHoldersByType.find(
+              i =>
+                i.interestHolderId === ih.interestHolderId &&
+                i.propertyInterestTypeCode === pit?.id,
+            );
+            if (!matchingInterestHolder) {
+              formModel.impactedProperties = [InterestHolderPropertyForm.fromApi(ihp)];
+              interestHoldersByType.push(formModel);
+            } else {
+              matchingInterestHolder.impactedProperties.push(
+                InterestHolderPropertyForm.fromApi(ihp),
+              );
+            }
           });
         } else {
           ihp.propertyInterestTypes = [];
