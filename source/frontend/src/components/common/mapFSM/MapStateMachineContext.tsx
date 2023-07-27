@@ -15,6 +15,7 @@ import { useMapSearch } from './useMapSearch';
 
 export interface IMapStateMachineContext {
   isSidebarOpen: boolean;
+  sideBarType: SideBarType;
   pendingFlyTo: boolean;
   requestedFlyTo: RequestedFlyTo;
   mapFeatureSelected: FeatureSelected | null;
@@ -239,6 +240,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           { mapVisible: { sideBar: 'sidebarOpen' } },
           { mapVisible: { sideBar: 'selecting' } },
         ].some(state.matches),
+        sideBarType: state.context.sideBarType,
         pendingFlyTo: state.matches({ mapVisible: { mapRequest: 'pendingFlyTo' } }),
         requestedFlyTo: state.context.requestedFlyTo,
         mapFeatureSelected: state.context.mapFeatureSelected,

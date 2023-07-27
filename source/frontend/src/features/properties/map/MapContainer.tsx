@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import DraftSvg from '@/assets/images/pins/icon-draft.svg';
+import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapView from '@/components/maps/MapView';
 import { FilterProvider } from '@/components/maps/providers/FIlterProvider';
@@ -22,7 +23,26 @@ interface MapContainerProps {}
 
 const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () => {
   const [showActionBar, setShowActionBar] = useState(false);
-  const { isSelecting, closeAdvancedFilterSidebar } = useMapStateMachine();
+  const {
+    isSelecting,
+    isSidebarOpen,
+    isAdvancedFilterSidebarOpen,
+    sideBarType,
+    closeAdvancedFilterSidebar,
+  } = useMapStateMachine();
+
+  // Given advanced search is open, when user navigates to a file, the advanced search should be closed.
+  React.useEffect(() => {
+    const fileTypes = [
+      SideBarType.RESEARCH_FILE,
+      SideBarType.ACQUISITION_FILE,
+      SideBarType.LEASE_FILE,
+      SideBarType.PROJECT,
+    ];
+    if (isAdvancedFilterSidebarOpen && isSidebarOpen && fileTypes.includes(sideBarType)) {
+      closeAdvancedFilterSidebar();
+    }
+  }, [closeAdvancedFilterSidebar, isAdvancedFilterSidebarOpen, isSidebarOpen, sideBarType]);
 
   const cursorClass = isSelecting ? MapCursors.DRAFT : MapCursors.DEFAULT;
 
@@ -39,7 +59,10 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
           <MapView />
         </FilterProvider>
       )}
-      <AdvancedFilterSideBar onClose={closeAdvancedFilterSidebar} />
+      <AdvancedFilterSideBar
+        isOpen={isAdvancedFilterSidebarOpen}
+        onClose={closeAdvancedFilterSidebar}
+      />
     </StyleMapView>
   );
 };

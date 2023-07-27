@@ -1,23 +1,23 @@
+import React from 'react';
 import { FaFilter, FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
 interface IAdvancedFilterSideBarProps {
+  isOpen?: boolean;
   showCloseButton?: boolean;
   onClose?: () => void;
 }
 
 const AdvancedFilterSideBar: React.FC<React.PropsWithChildren<IAdvancedFilterSideBarProps>> = ({
+  isOpen = false,
   showCloseButton = true,
   onClose,
   children,
 }) => {
-  const mapMachine = useMapStateMachine();
-
   return (
-    <StyledMapSideBar show={mapMachine.isAdvancedFilterSidebarOpen}>
+    <StyledMapSideBar show={isOpen}>
       <StyledHeader>
         <FaFilter size="1.6em" />
         <StyledTitle>Filter By:</StyledTitle>
