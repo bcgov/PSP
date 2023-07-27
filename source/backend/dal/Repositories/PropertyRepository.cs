@@ -378,6 +378,21 @@ namespace Pims.Dal.Repositories
             return existingProperty;
         }
 
+        public HashSet<long> GetMatchingIds(PropertyFilterCriteria filter)
+        {
+            var query = Context.PimsProperties.AsNoTracking();
+
+            if (filter.ProjectId.HasValue)
+            {
+                query = query.Where(p =>
+                    p.PimsPropertyLeases.Any(pl => pl.Lease.ProjectId == filter.ProjectId) ||
+                    p.PimsPropertyResearchFiles.Any(pr => pr.ResearchFile.PimsResearchFileProjects.Any(r => r.ProjectId == filter.ProjectId)) ||
+                    p.PimsPropertyAcquisitionFiles.Any(pa => pa.AcquisitionFile.ProjectId == filter.ProjectId));
+            }
+
+            return query.Select(p => p.PropertyId).ToHashSet();
+        }
+
         #endregion
     }
 }

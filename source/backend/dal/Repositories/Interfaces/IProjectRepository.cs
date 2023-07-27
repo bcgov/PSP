@@ -14,6 +14,8 @@ namespace Pims.Dal.Repositories
 
         Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, IEnumerable<short> userRegions);
 
+        IList<PimsProject> GetAllProjects(HashSet<short> regions);
+
         IList<PimsProject> SearchProjects(string filter, HashSet<short> regions, int maxResults);
 
         PimsProject Add(PimsProject project);

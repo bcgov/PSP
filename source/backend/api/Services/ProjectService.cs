@@ -57,6 +57,18 @@ namespace Pims.Api.Services
             _entityNoteRepository = entityNoteRepository;
         }
 
+        public IList<PimsProject> GetProjects()
+        {
+            _logger.LogInformation("Retrieving all projects");
+            _user.ThrowIfNotAuthorized(Permissions.ProjectView);
+
+            // Limit search results to user's assigned region(s), but always include "Cannot determine" region
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
+
+            return _projectRepository.GetAllProjects(userRegions);
+        }
+
         public IList<PimsProject> SearchProjects(string filter, int maxResult)
         {
             _logger.LogInformation("Searching for projects that match {filter}", filter);

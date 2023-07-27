@@ -218,6 +218,46 @@ exports[`MapContainer Renders the map 1`] = `
   transition: 1s;
 }
 
+.c22.btn {
+  width: 5.2rem;
+  height: 5.2rem;
+  top: 0;
+  background-color: #fff;
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
+}
+
+.c22.btn.open {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  top: 2.6rem;
+}
+
+.c21 {
+  width: 34.1rem;
+  min-height: 5.2rem;
+  height: 50rem;
+  max-height: 50rem;
+  background-color: #fff;
+  position: relative;
+  border-radius: 0.4rem;
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.c21.closed {
+  width: 0rem;
+  height: 0rem;
+}
+
+.c23 {
+  width: 100%;
+  height: calc(100% - 8rem);
+}
+
+.c23.open {
+  overflow-y: scroll;
+}
+
 .c18 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1137,6 +1177,47 @@ exports[`MapContainer Renders the map 1`] = `
                       </div>
                     </form>
                   </div>
+                </div>
+              </div>
+              <div
+                class="leaflet-control"
+              >
+                <div
+                  class="c21 closed"
+                  id="layersContainer"
+                >
+                  <button
+                    class="c7 Button c22 btn btn-primary"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      <svg
+                        fill="none"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                        />
+                        <circle
+                          cx="12"
+                          cy="10"
+                          r="3"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                  <div
+                    class="c23"
+                  />
                 </div>
               </div>
             </div>

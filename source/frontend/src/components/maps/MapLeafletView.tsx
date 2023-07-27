@@ -20,6 +20,7 @@ import BasemapToggle, {
   BaseLayer,
   BasemapToggleEvent,
 } from './leaflet/Control/BaseMapToggle/BasemapToggle';
+import { FilterControl } from './leaflet/Control/Filter/FilterControl';
 import LayersControl from './leaflet/Control/LayersControl/LayersControl';
 import { LegendControl } from './leaflet/Control/Legend/LegendControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
@@ -224,6 +225,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
             setLayersOpen(!layersOpen);
           }}
         />
+        <FilterControl />
         <InventoryLayer zoom={zoom} bounds={bounds}></InventoryLayer>
       </ReactLeafletMap>
     </Styled.MapContainer>

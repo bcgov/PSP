@@ -1,5 +1,5 @@
 import { latLngBounds } from 'leaflet';
-import { assign, createMachine, raise } from 'xstate';
+import { assign, createMachine, raise, send } from 'xstate';
 
 import { defaultBounds } from '@/components/maps/constants';
 import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
@@ -7,7 +7,46 @@ import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFil
 import { emptyFeatureData } from '../models';
 import { MachineContext, SideBarType } from './types';
 
-const featureDataStates = {
+const featureViewStates = {
+  initial: 'browsing',
+  states: {
+    browsing: {
+      on: {
+        START_SELECTION: {
+          target: 'selecting',
+        },
+        TOGGLE_FILTER: {
+          target: 'filtering',
+        },
+      },
+    },
+    selecting: {
+      on: {
+        FINISH_SELECTION: { target: 'browsing' },
+        SET_FILE_PROPERTY_LOCATIONS: {
+          actions: [
+            assign({ filePropertyLocations: (_, event: any) => event.locations }),
+            raise('REQUEST_FIT_BOUNDS'),
+          ],
+        },
+      },
+    },
+    filtering: {
+      entry: [send({ type: 'REFRESH_PROPERTIES', searchCriteria: defaultPropertyFilter })],
+      exit: [send({ type: 'REFRESH_PROPERTIES' })],
+      on: {
+        TOGGLE_FILTER: {
+          target: 'browsing',
+        },
+        SET_VISIBLE_PROPERTIES: {
+          actions: assign({ activePimsPropertyIds: (_, event: any) => event.propertyIds }),
+        },
+      },
+    },
+  },
+};
+
+const featureDataLoaderStates = {
   initial: 'idle',
   states: {
     idle: {
@@ -16,8 +55,11 @@ const featureDataStates = {
           actions: assign({ isLoading: () => true }),
           target: 'loading',
         },
-        SET_MAP_FILTER: {
-          actions: assign({ isLoading: () => true, mapFilter: (_, event: any) => event.mapFilter }),
+        SET_MAP_SEARCH_CRITERIA: {
+          actions: assign({
+            isLoading: () => true,
+            searchCriteria: (_, event: any) => event.searchCriteria,
+          }),
           target: 'loading',
         },
       },
@@ -64,12 +106,14 @@ const mapRequestStates = {
           target: 'pendingFlyTo',
         },
         REQUEST_FIT_BOUNDS: {
-          actions: assign((context: any) => {
-            if (context.filePropertyLocations.length > 0) {
-              context.requestedFitBounds = latLngBounds(context.filePropertyLocations);
-            } else {
-              context.requestedFitBounds = defaultBounds;
-            }
+          actions: assign({
+            requestedFitBounds: (context: MachineContext) => {
+              if (context.filePropertyLocations.length > 0) {
+                return latLngBounds(context.filePropertyLocations);
+              } else {
+                return defaultBounds;
+              }
+            },
           }),
           target: 'pendingFitBounds',
         },
@@ -101,7 +145,7 @@ const mapRequestStates = {
   },
 };
 
-const selectedFeatureStates = {
+const selectedFeatureLoaderStates = {
   initial: 'idle',
   states: {
     idle: {
@@ -183,13 +227,13 @@ const sideBarStates = {
     },
     sidebarOpen: {
       entry: assign({
-        sideBarType: (context: any, event: any) =>
+        sideBarType: (context: MachineContext, event: any) =>
           event ? event.sidebarType : context.sideBarType,
       }),
       on: {
         OPEN_SIDEBAR: {
           actions: assign({
-            sideBarType: (context: any, event: any) =>
+            sideBarType: (context: MachineContext, event: any) =>
               event ? event.sidebarType : context.sideBarType,
           }),
         },
@@ -197,25 +241,12 @@ const sideBarStates = {
           actions: assign({ selectedFeatureDataset: () => null }),
           target: 'fullScreen',
         },
-        START_SELECTION: {
-          target: 'selecting',
-        },
+
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
-            assign((context: any, event: any) => {
-              context.filePropertyLocations = event.locations || [];
+            assign({
+              filePropertyLocations: (context: MachineContext, event: any) => event.locations || [],
             }),
-            raise('REQUEST_FIT_BOUNDS'),
-          ],
-        },
-      },
-    },
-    selecting: {
-      on: {
-        FINISH_SELECTION: { target: 'sidebarOpen' },
-        SET_FILE_PROPERTY_LOCATIONS: {
-          actions: [
-            assign({ filePropertyLocations: (_, event: any) => event.locations }),
             raise('REQUEST_FIT_BOUNDS'),
           ],
         },
@@ -242,9 +273,10 @@ export const mapMachine = createMachine<MachineContext>({
     mapLocationFeatureDataset: null,
     selectedFeatureDataset: null,
     isLoading: false,
-    mapFilter: null,
+    searchCriteria: null,
     mapFeatureData: emptyFeatureData,
     filePropertyLocations: [],
+    activePimsPropertyIds: [],
   },
 
   // State definitions
@@ -253,13 +285,13 @@ export const mapMachine = createMachine<MachineContext>({
       on: {
         ENTER_MAP: [
           {
-            cond: (context, event: any) => event.type.sidebarType === SideBarType.NOT_DEFINED,
+            cond: (_, event: any) => event.type.sidebarType === SideBarType.NOT_DEFINED,
             target: 'mapVisible',
           },
           {
-            cond: (context, event: any) => context.mapFilter === null,
-            actions: assign({ mapFilter: () => defaultPropertyFilter }),
-            target: ['mapVisible.sideBar.sidebarOpen', 'mapVisible.featureData.loading'],
+            cond: (context: MachineContext, event: any) => context.searchCriteria === null,
+            actions: assign({ searchCriteria: () => defaultPropertyFilter }),
+            target: ['mapVisible.sideBar.sidebarOpen', 'mapVisible.featureDataLoader.loading'],
           },
           {
             target: 'mapVisible.sideBar.sidebarOpen',
@@ -267,9 +299,9 @@ export const mapMachine = createMachine<MachineContext>({
         ],
         OPEN_SIDEBAR: [
           {
-            cond: (context, event: any) => context.mapFilter === null,
-            actions: assign({ mapFilter: () => defaultPropertyFilter }),
-            target: ['mapVisible.sideBar.sidebarOpen', 'mapVisible.featureData.loading'],
+            cond: (context: MachineContext, event: any) => context.searchCriteria === null,
+            actions: assign({ searchCriteria: () => defaultPropertyFilter }),
+            target: ['mapVisible.sideBar.sidebarOpen', 'mapVisible.featureDataLoader.loading'],
           },
           {
             target: 'mapVisible.sideBar.sidebarOpen',
@@ -290,14 +322,15 @@ export const mapMachine = createMachine<MachineContext>({
 
         PREPARE_FOR_CREATION: {
           actions: assign({
-            selectedFeatureDataset: context => context.mapLocationFeatureDataset,
+            selectedFeatureDataset: (context: MachineContext) => context.mapLocationFeatureDataset,
           }),
         },
       },
       states: {
-        featureData: featureDataStates,
+        featureView: featureViewStates,
+        featureDataLoader: featureDataLoaderStates,
         mapRequest: mapRequestStates,
-        selectedFeature: selectedFeatureStates,
+        selectedFeatureLoader: selectedFeatureLoaderStates,
         sideBar: sideBarStates,
       },
     },

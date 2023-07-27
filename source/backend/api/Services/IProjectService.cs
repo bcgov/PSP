@@ -7,6 +7,8 @@ namespace Pims.Api.Services
 {
     public interface IProjectService
     {
+        IList<PimsProject> GetProjects();
+
         IList<PimsProject> SearchProjects(string filter, int maxResult);
 
         Task<Paged<PimsProject>> GetPage(ProjectFilter filter);

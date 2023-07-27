@@ -30,6 +30,20 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Retrieves the matching projects.
+        /// </summary>
+        /// <param name="regions"></param>
+        /// <returns></returns>
+        public IList<PimsProject> GetAllProjects(HashSet<short> regions)
+        {
+            // business requirement - limit search results to user's assigned region(s)
+            return this.Context.PimsProjects.AsNoTracking()
+                .Where(p => regions.Contains(p.RegionCode))
+                .OrderBy(a => a.Code)
+                .ToArray();
+        }
+
+        /// <summary>
         /// Retrieves the matching projects to the given filter.
         /// </summary>
         /// <param name="filter"></param>
