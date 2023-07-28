@@ -94,7 +94,7 @@ exports[`StakeHolderView component renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+              style="display: flex; flex: 1 0 auto; min-width: 180px;"
             >
               <div
                 class="th"
@@ -106,6 +106,18 @@ exports[`StakeHolderView component renders as expected 1`] = `
                   class="sortable-column"
                 >
                   n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Primary Contact
                 </div>
               </div>
               <div
@@ -139,7 +151,7 @@ exports[`StakeHolderView component renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+              style="display: flex; flex: 1 0 auto; min-width: 180px;"
             >
               <div
                 class="th"
@@ -151,6 +163,18 @@ exports[`StakeHolderView component renders as expected 1`] = `
                   class="sortable-column"
                 >
                   n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Primary Contact
                 </div>
               </div>
               <div
@@ -184,7 +208,7 @@ exports[`StakeHolderView component renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+              style="display: flex; flex: 1 0 auto; min-width: 180px;"
             >
               <div
                 class="th"
@@ -196,6 +220,18 @@ exports[`StakeHolderView component renders as expected 1`] = `
                   class="sortable-column"
                 >
                   n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Primary Contact
                 </div>
               </div>
               <div
@@ -229,7 +265,7 @@ exports[`StakeHolderView component renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+              style="display: flex; flex: 1 0 auto; min-width: 180px;"
             >
               <div
                 class="th"
@@ -241,6 +277,18 @@ exports[`StakeHolderView component renders as expected 1`] = `
                   class="sortable-column"
                 >
                   n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Primary Contact
                 </div>
               </div>
               <div
@@ -354,7 +402,7 @@ exports[`StakeHolderView component renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+              style="display: flex; flex: 1 0 auto; min-width: 180px;"
             >
               <div
                 class="th"
@@ -366,6 +414,18 @@ exports[`StakeHolderView component renders as expected 1`] = `
                   class="sortable-column"
                 >
                   n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Primary Contact
                 </div>
               </div>
               <div
@@ -399,7 +459,7 @@ exports[`StakeHolderView component renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+              style="display: flex; flex: 1 0 auto; min-width: 180px;"
             >
               <div
                 class="th"
@@ -411,6 +471,18 @@ exports[`StakeHolderView component renders as expected 1`] = `
                   class="sortable-column"
                 >
                   n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Primary Contact
                 </div>
               </div>
               <div
@@ -444,7 +516,7 @@ exports[`StakeHolderView component renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+              style="display: flex; flex: 1 0 auto; min-width: 180px;"
             >
               <div
                 class="th"
@@ -456,6 +528,18 @@ exports[`StakeHolderView component renders as expected 1`] = `
                   class="sortable-column"
                 >
                   n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Primary Contact
                 </div>
               </div>
               <div
@@ -489,7 +573,7 @@ exports[`StakeHolderView component renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+              style="display: flex; flex: 1 0 auto; min-width: 180px;"
             >
               <div
                 class="th"
@@ -501,6 +585,18 @@ exports[`StakeHolderView component renders as expected 1`] = `
                   class="sortable-column"
                 >
                   n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Primary Contact
                 </div>
               </div>
               <div
