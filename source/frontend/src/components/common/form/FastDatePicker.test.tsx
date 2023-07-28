@@ -1,8 +1,8 @@
-import { act, render } from '@testing-library/react';
+import { act } from '@testing-library/react';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
 
-import { fillInput } from '@/utils/test-utils';
+import { fillInput, render } from '@/utils/test-utils';
 
 import { FastDatePicker } from './FastDatePicker';
 

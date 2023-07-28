@@ -37,6 +37,7 @@ describe('PaymentForm component', () => {
     const component = await renderAsync(
       <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
         <PaymentForm
+          terms={[]}
           initialValues={renderOptions.initialValues}
           onSave={onSave}
           formikRef={{ current: { submitForm } } as any}

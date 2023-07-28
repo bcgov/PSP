@@ -10,6 +10,7 @@ import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentRepository';
 import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
 import { defaultApiLease } from '@/models/api/Lease';
+import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
 import { useDeleteTermsPayments } from './hooks/useDeleteTermsPayments';
@@ -29,6 +30,7 @@ export const TermPaymentsContainer: React.FunctionComponent<
   const [editPaymentModalValues, setEditPaymentModalValues] = useState<
     FormLeasePayment | undefined
   >(undefined);
+  const [terms, setTerms] = useState<Api_LeaseTerm[]>([]);
 
   const { updateLeaseTerm, addLeaseTerm, getLeaseTerms, deleteLeaseTerm } =
     useLeaseTermRepository();
@@ -46,11 +48,16 @@ export const TermPaymentsContainer: React.FunctionComponent<
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
 
-  const terms = getLeaseTerms.response ?? [];
   const leaseId = lease?.id;
   const getLeaseTermsFunc = getLeaseTerms.execute;
   useEffect(() => {
-    leaseId && getLeaseTermsFunc(leaseId);
+    const getLeaseTerms = async () => {
+      if (leaseId) {
+        const response = await getLeaseTermsFunc(leaseId);
+        setTerms(response ?? []);
+      }
+    };
+    getLeaseTerms();
   }, [getLeaseTermsFunc, leaseId]);
 
   /**
@@ -62,12 +69,13 @@ export const TermPaymentsContainer: React.FunctionComponent<
       const updatedTerm = values.id
         ? await updateLeaseTerm.execute(FormLeaseTerm.toApi(values, gstDecimal))
         : await addLeaseTerm.execute(FormLeaseTerm.toApi(values, gstDecimal));
-      if (!!updatedTerm?.id && lease?.id) {
-        getLeaseTerms.execute(lease.id);
+      if (!!updatedTerm?.id && leaseId) {
+        const response = await getLeaseTerms.execute(leaseId);
+        setTerms(response ?? []);
         setEditModalValues(undefined);
       }
     },
-    [addLeaseTerm, getLeaseTerms, gstDecimal, lease, updateLeaseTerm],
+    [addLeaseTerm, getLeaseTerms, gstDecimal, leaseId, updateLeaseTerm],
   );
 
   /**
@@ -81,7 +89,8 @@ export const TermPaymentsContainer: React.FunctionComponent<
           ? await updateLeasePayment.execute(leaseId, FormLeasePayment.toApi(values))
           : await addLeasePayment.execute(leaseId, FormLeasePayment.toApi(values));
         if (!!updatedLeasePayment?.id) {
-          getLeaseTerms.execute(leaseId);
+          const response = await getLeaseTerms.execute(leaseId);
+          setTerms(response ?? []);
           setEditPaymentModalValues(undefined);
         }
       }
@@ -123,6 +132,7 @@ export const TermPaymentsContainer: React.FunctionComponent<
           setEditPaymentModalValues(undefined);
         }}
         onSave={onSavePayment}
+        terms={lease?.terms ?? []}
       />
       <TermModal
         displayModal={!!editModalValues}

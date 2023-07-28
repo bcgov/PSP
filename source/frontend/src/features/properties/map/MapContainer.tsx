@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import DraftSvg from '@/assets/images/pins/icon-draft.svg';
+import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapView from '@/components/maps/MapView';
 import { FilterProvider } from '@/components/maps/providers/FIlterProvider';
+import AdvancedFilterBar from '@/features/advancedFilterBar/AdvancedFilterBar';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBar from '@/features/mapSideBar/MapSideBar';
 import ActivityRouter from '@/features/mapSideBar/router/ActivityRouter';
@@ -20,10 +22,27 @@ enum MapCursors {
 interface MapContainerProps {}
 
 const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () => {
-  //const [showSideBar, setShowSideBar] = useState(false);
   const [showActionBar, setShowActionBar] = useState(false);
+  const {
+    isSelecting,
+    isSidebarOpen,
+    isAdvancedFilterSidebarOpen,
+    sideBarType,
+    closeAdvancedFilterSidebar,
+  } = useMapStateMachine();
 
-  const { isSelecting } = useMapStateMachine();
+  // Given advanced search is open, when user navigates to a file, the advanced search should be closed.
+  React.useEffect(() => {
+    const fileTypes = [
+      SideBarType.RESEARCH_FILE,
+      SideBarType.ACQUISITION_FILE,
+      SideBarType.LEASE_FILE,
+      SideBarType.PROJECT,
+    ];
+    if (isAdvancedFilterSidebarOpen && isSidebarOpen && fileTypes.includes(sideBarType)) {
+      closeAdvancedFilterSidebar();
+    }
+  }, [closeAdvancedFilterSidebar, isAdvancedFilterSidebarOpen, isSidebarOpen, sideBarType]);
 
   const cursorClass = isSelecting ? MapCursors.DRAFT : MapCursors.DEFAULT;
 
@@ -40,6 +59,10 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
           <MapView />
         </FilterProvider>
       )}
+      <AdvancedFilterBar
+        isOpen={isAdvancedFilterSidebarOpen}
+        onClose={closeAdvancedFilterSidebar}
+      />
     </StyleMapView>
   );
 };

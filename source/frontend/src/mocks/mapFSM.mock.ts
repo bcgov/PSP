@@ -1,3 +1,4 @@
+import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
   emptyFullyFeaturedFeatureCollection,
@@ -13,6 +14,8 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   },
 
   isSidebarOpen: false,
+  sideBarType: SideBarType.NOT_DEFINED,
+  isAdvancedFilterSidebarOpen: false,
   pendingFlyTo: false,
   pendingFitBounds: false,
   requestedFlyTo: {
@@ -45,4 +48,6 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   startSelection: jest.fn(),
   finishSelection: jest.fn(),
   setFilePropertyLocations: jest.fn(),
+  openAdvancedFilterSidebar: jest.fn(),
+  closeAdvancedFilterSidebar: jest.fn(),
 };

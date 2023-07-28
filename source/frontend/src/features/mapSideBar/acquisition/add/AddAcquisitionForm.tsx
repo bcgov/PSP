@@ -278,10 +278,6 @@ const Container = styled.div`
     }
   }
 
-  .react-datepicker-wrapper {
-    max-width: 14rem;
-  }
-
   [name='region'] {
     max-width: 25rem;
   }

@@ -1151,6 +1151,24 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             <label
                               class="c17"
                             >
+                              Primary Contact:
+                            </label>
+                          </div>
+                          <div
+                            class="c18 text-left col"
+                          >
+                            No contacts available
+                          </div>
+                        </div>
+                        <div
+                          class="pb-2 row"
+                        >
+                          <div
+                            class="pr-0 text-left col-4"
+                          >
+                            <label
+                              class="c17"
+                            >
                               Owner representative:
                             </label>
                           </div>
