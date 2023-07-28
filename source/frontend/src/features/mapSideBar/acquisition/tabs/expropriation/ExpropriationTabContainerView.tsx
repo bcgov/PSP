@@ -54,7 +54,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
         <Section
           isCollapsable
           initiallyExpanded={false}
-          header="Form 5 - Certificate of Approval"
+          header="Form 5 - Certificate of Approval of Expropriation"
           data-testid="form-5-section"
         >
           <ExpropriationForm5
