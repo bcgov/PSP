@@ -46,7 +46,7 @@ import MapContainer from './MapContainer';
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
-jest.mock('@/components/maps/leaflet/Control/Filter/FilterContainer');
+jest.mock('@/features/advancedFilterBar/AdvancedFilterBar');
 jest.mock('@/hooks/pims-api/useApiProperties');
 jest.mock('@/hooks/useLtsa');
 jest.mock('@/hooks/repositories/useComposedProperties');
@@ -477,7 +477,6 @@ describe('MapContainer', () => {
 
     const clusterIcons = document.querySelectorAll('.leaflet-marker-icon.marker-cluster');
     const markerIcons = document.querySelectorAll('img.leaflet-marker-icon');
-
     expect(clusterIcons.length).toBe(0);
     expect(markerIcons.length).toBe(pimsFeatures.features.length);
   });

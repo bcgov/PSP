@@ -13,6 +13,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   },
 
   isSidebarOpen: false,
+  isShowingSearchBar: false,
   pendingFlyTo: false,
   pendingFitBounds: false,
   requestedFlyTo: {
@@ -32,6 +33,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   activePimsPropertyIds: [],
   isSelecting: false,
   isFiltering: false,
+  isShowingMapLayers: false,
 
   requestFlyToLocation: jest.fn(),
 
@@ -49,6 +51,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   finishSelection: jest.fn(),
   setFilePropertyLocations: jest.fn(),
   setVisiblePimsProperties: jest.fn(),
-
   toggleMapFilter: jest.fn(),
+
+  toggleMapLayer: jest.fn(),
 };

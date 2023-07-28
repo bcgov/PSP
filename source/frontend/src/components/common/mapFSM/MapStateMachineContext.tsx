@@ -18,6 +18,7 @@ import { useMapSearch } from './useMapSearch';
 
 export interface IMapStateMachineContext {
   isSidebarOpen: boolean;
+  isShowingSearchBar: boolean;
   pendingFlyTo: boolean;
   requestedFlyTo: RequestedFlyTo;
   mapFeatureSelected: FeatureSelected | null;
@@ -33,6 +34,7 @@ export interface IMapStateMachineContext {
   requestedFitBounds: LatLngBounds;
   isSelecting: boolean;
   isFiltering: boolean;
+  isShowingMapLayers: boolean;
   activePimsPropertyIds: number[];
 
   requestFlyToLocation: (latlng: LatLngLiteral) => void;
@@ -52,6 +54,7 @@ export interface IMapStateMachineContext {
   startSelection: () => void;
   finishSelection: () => void;
   toggleMapFilter: () => void;
+  toggleMapLayer: () => void;
   setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
 
   setVisiblePimsProperties: (propertyIds: number[]) => void;
@@ -122,6 +125,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
       },
     },
   });
+
   const state = useSelector(service, state => state);
   const serviceSend = service.send;
 
@@ -238,17 +242,34 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'TOGGLE_FILTER' });
   }, [serviceSend]);
 
+  const toggleMapLayer = useCallback(() => {
+    serviceSend({ type: 'TOGGLE_LAYERS' });
+  }, [serviceSend]);
+
   const showPopup = useMemo(() => {
     return state.context.mapLocationFeatureDataset !== null;
   }, [state.context.mapLocationFeatureDataset]);
 
+  const isSidebarOpen = useMemo(() => {
+    return [
+      { mapVisible: { sideBar: 'sidebarOpen' } },
+      { mapVisible: { sideBar: 'selecting' } },
+    ].some(state.matches);
+  }, [state.matches]);
+
+  const isFiltering = useMemo(() => {
+    return state.matches({ mapVisible: { featureView: 'filtering' } });
+  }, [state]);
+
+  const isShowingMapLayers = useMemo(() => {
+    return state.matches({ mapVisible: { featureView: 'layerControl' } });
+  }, [state]);
+
   return (
     <MapStateMachineContext.Provider
       value={{
-        isSidebarOpen: [
-          { mapVisible: { sideBar: 'sidebarOpen' } },
-          { mapVisible: { sideBar: 'selecting' } },
-        ].some(state.matches),
+        isSidebarOpen: isSidebarOpen,
+        isShowingSearchBar: !isSidebarOpen && !isFiltering,
         pendingFlyTo: state.matches({ mapVisible: { mapRequest: 'pendingFlyTo' } }),
         requestedFlyTo: state.context.requestedFlyTo,
         mapFeatureSelected: state.context.mapFeatureSelected,
@@ -263,7 +284,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         pendingFitBounds: state.matches({ mapVisible: { mapRequest: 'pendingFitBounds' } }),
         requestedFitBounds: state.context.requestedFitBounds,
         isSelecting: state.matches({ mapVisible: { featureView: 'selecting' } }),
-        isFiltering: state.matches({ mapVisible: { featureView: 'filtering' } }),
+        isFiltering: isFiltering,
+        isShowingMapLayers: isShowingMapLayers,
         activePimsPropertyIds: state.context.activePimsPropertyIds,
 
         setMapSearchCriteria,
@@ -281,6 +303,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         startSelection,
         finishSelection,
         toggleMapFilter,
+        toggleMapLayer,
         setFilePropertyLocations,
         setVisiblePimsProperties,
       }}

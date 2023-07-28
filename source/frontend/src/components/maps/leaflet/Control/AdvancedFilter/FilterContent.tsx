@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import { Select, SelectOption } from '@/components/common/form/Select';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -36,7 +37,7 @@ const FormObserver: React.FC<IFormObserverProps> = ({ onChange }) => {
   return null;
 };
 
-export const FilterContainer: React.FC<React.PropsWithChildren> = () => {
+export const FilterContent: React.FC<React.PropsWithChildren> = () => {
   const [projects, setProjects] = useState<Api_Project[]>([]);
 
   const mapMachine = useMapStateMachine();
@@ -50,6 +51,10 @@ export const FilterContainer: React.FC<React.PropsWithChildren> = () => {
   const getProjects = getAllProjects.execute;
   const matchProperties = getMatchingProperties.execute;
 
+  const initialFilter = useMemo(() => {
+    return new PropertyFilterFormModel();
+  }, []);
+
   const retrieveProjects = useCallback(async () => {
     const retrievedProjects = await getProjects();
     setProjects(retrievedProjects || []);
@@ -57,18 +62,22 @@ export const FilterContainer: React.FC<React.PropsWithChildren> = () => {
 
   const filterProperties = useCallback(
     async (filter: Api_PropertyFilterCriteria) => {
-      const retrievedProjects = await matchProperties(filter);
+      const retrievedProperties = await matchProperties(filter);
 
-      if (retrievedProjects !== undefined) {
-        setVisiblePimsProperties(retrievedProjects);
+      if (retrievedProperties !== undefined) {
+        setVisiblePimsProperties(retrievedProperties);
       }
     },
     [matchProperties, setVisiblePimsProperties],
   );
 
   useEffect(() => {
-    retrieveProjects();
-  }, [retrieveProjects]);
+    const firstLoad = async () => {
+      await retrieveProjects();
+      await filterProperties(initialFilter.toApi());
+    };
+    firstLoad();
+  }, [retrieveProjects, filterProperties, initialFilter]);
 
   const projectOptions = useMemo(() => {
     return projects.map<SelectOption>(p => {
@@ -85,27 +94,26 @@ export const FilterContainer: React.FC<React.PropsWithChildren> = () => {
   );
 
   return (
-    <div className="border">
-      <Formik<PropertyFilterFormModel>
-        initialValues={new PropertyFilterFormModel()}
-        onSubmit={noop}
-      >
-        <Form>
-          <FormObserver onChange={onChange} />
-          <Section header="Project" isCollapsable initiallyExpanded>
-            <SectionField label={null} contentWidth="12">
-              <Select
-                field="projectId"
-                placeholder="Select a project"
-                options={projectOptions}
-              ></Select>
-            </SectionField>
-            <Row>
-              <Col></Col>
-            </Row>
-          </Section>
-        </Form>
-      </Formik>
-    </div>
+    <Formik<PropertyFilterFormModel> initialValues={initialFilter} onSubmit={noop}>
+      <Form>
+        <FormObserver onChange={onChange} />
+        <LoadingBackdrop
+          show={getAllProjects.loading || getMatchingProperties.loading}
+          parentScreen
+        />
+        <Section header="Project" isCollapsable initiallyExpanded>
+          <SectionField label={null} contentWidth="12">
+            <Select
+              field="projectId"
+              placeholder="Select a project"
+              options={projectOptions}
+            ></Select>
+          </SectionField>
+          <Row>
+            <Col></Col>
+          </Row>
+        </Section>
+      </Form>
+    </Formik>
   );
 };

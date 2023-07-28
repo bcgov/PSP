@@ -18,6 +18,9 @@ const featureViewStates = {
         TOGGLE_FILTER: {
           target: 'filtering',
         },
+        TOGGLE_LAYERS: {
+          target: 'layerControl',
+        },
       },
     },
     selecting: {
@@ -31,12 +34,25 @@ const featureViewStates = {
         },
       },
     },
+    layerControl: {
+      on: {
+        TOGGLE_FILTER: {
+          target: 'filtering',
+        },
+        TOGGLE_LAYERS: {
+          target: 'browsing',
+        },
+      },
+    },
     filtering: {
       entry: [send({ type: 'REFRESH_PROPERTIES', searchCriteria: defaultPropertyFilter })],
       exit: [send({ type: 'REFRESH_PROPERTIES' })],
       on: {
         TOGGLE_FILTER: {
           target: 'browsing',
+        },
+        TOGGLE_LAYERS: {
+          target: 'layerControl',
         },
         SET_VISIBLE_PROPERTIES: {
           actions: assign({ activePimsPropertyIds: (_, event: any) => event.propertyIds }),
@@ -226,16 +242,21 @@ const sideBarStates = {
       },
     },
     sidebarOpen: {
-      entry: assign({
-        sideBarType: (context: MachineContext, event: any) =>
-          event ? event.sidebarType : context.sideBarType,
-      }),
+      entry: [
+        assign({
+          sideBarType: (context: MachineContext, event: any) =>
+            event ? event.sidebarType : context.sideBarType,
+        }),
+      ],
       on: {
         OPEN_SIDEBAR: {
-          actions: assign({
-            sideBarType: (context: MachineContext, event: any) =>
-              event ? event.sidebarType : context.sideBarType,
-          }),
+          actions: [
+            assign({
+              sideBarType: (context: MachineContext, event: any) =>
+                event ? event.sidebarType : context.sideBarType,
+            }),
+          ],
+          target: '#map.mapVisible.featureView.browsing',
         },
         CLOSE_SIDEBAR: {
           actions: assign({ selectedFeatureDataset: () => null }),
@@ -249,6 +270,27 @@ const sideBarStates = {
             }),
             raise('REQUEST_FIT_BOUNDS'),
           ],
+        },
+      },
+    },
+  },
+};
+
+const advancedFilterSideBarStates = {
+  initial: 'fullScreen',
+  states: {
+    fullScreen: {
+      on: {
+        OPEN_ADVANCED_FILTER_SIDEBAR: {
+          target: 'sidebarOpen',
+        },
+      },
+    },
+    sidebarOpen: {
+      entry: assign({ mapFilter: () => defaultPropertyFilter }),
+      on: {
+        CLOSE_ADVANCED_FILTER_SIDEBAR: {
+          target: 'fullScreen',
         },
       },
     },
@@ -332,6 +374,7 @@ export const mapMachine = createMachine<MachineContext>({
         mapRequest: mapRequestStates,
         selectedFeatureLoader: selectedFeatureLoaderStates,
         sideBar: sideBarStates,
+        advancedFilterSideBar: advancedFilterSideBarStates,
       },
     },
   },
