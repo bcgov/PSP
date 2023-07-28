@@ -17,10 +17,10 @@ import { TenantContext } from '@/tenants';
  */
 export const usePimsPropertyLayer = () => {
   const {
-    tenant: { propertiesUrl },
+    tenant: { propertiesUrl, boundaryLayerUrl },
   } = useContext(TenantContext);
 
-  const { findOneWhereContainsWrapped } = useLayerQuery(propertiesUrl, true);
+  const { findOneWhereContainsWrapped } = useLayerQuery(boundaryLayerUrl, true);
   const findOneWhereContainsWrappedExecute = findOneWhereContainsWrapped.execute;
   const findOneWhereContainsWrappedLoading = findOneWhereContainsWrapped.loading;
 
