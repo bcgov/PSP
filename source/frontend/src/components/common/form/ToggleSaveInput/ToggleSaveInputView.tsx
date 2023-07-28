@@ -8,7 +8,7 @@ import { formatMoney } from '@/utils';
 import EditButton from '../../EditButton';
 
 /**
- * Formik-connected input that allows
+ * Non formik form that allows a user to toggle between a value and an input and save the input.
  */
 
 export interface IToggleSaveInputViewProps {

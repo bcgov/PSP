@@ -86,11 +86,6 @@ describe('TogleSaveInputView component', () => {
     expect(getByTitle('confirm')).toBeVisible();
   });
 
-  it('displays confirm button when editing', () => {
-    const { getByTitle } = setup({ props: { isEditing: true } as IToggleSaveInputViewProps });
-    expect(getByTitle('confirm')).toBeVisible();
-  });
-
   it('clicking on edit button calls setIsEdit', async () => {
     const { getByTitle } = setup({
       props: { setIsEditing, onClick, setValue, value: '' } as IToggleSaveInputViewProps,
