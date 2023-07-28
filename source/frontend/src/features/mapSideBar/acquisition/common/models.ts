@@ -134,7 +134,9 @@ export class AcquisitionOwnerFormModel {
     newForm.registrationNumber = model.registrationNumber || '';
     newForm.contactEmailAddress = model.contactEmailAddr || '';
     newForm.contactPhoneNumber = model.contactPhoneNum || '';
-    newForm.address = model.address ? OwnerAddressFormModel.fromApi(model.address!) : undefined;
+    newForm.address = model.address
+      ? OwnerAddressFormModel.fromApi(model.address!)
+      : new OwnerAddressFormModel();
 
     return newForm;
   }
@@ -149,7 +151,7 @@ export class OwnerAddressFormModel {
   municipality?: string;
   postal?: string;
   provinceId?: NumberFieldValue;
-  countryId?: NumberFieldValue;
+  countryId?: NumberFieldValue = 1;
   countryOther?: string;
 
   static addressLines(apiAddress: OwnerAddressFormModel | undefined): number {
