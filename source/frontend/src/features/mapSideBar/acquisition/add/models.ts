@@ -7,7 +7,7 @@ import {
   Api_AcquisitionFileProperty,
 } from '@/models/api/AcquisitionFile';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
-import { fromTypeCode, toTypeCode } from '@/utils/formUtils';
+import { fromTypeCode, stringToNull, toTypeCode } from '@/utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
 import {
@@ -43,6 +43,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   ownerRepresentative: InterestHolderForm = new InterestHolderForm(
     InterestHolderType.OWNER_REPRESENTATIVE,
   );
+  totalAllowableCompensation: number | '' = '';
 
   toApi(): Api_AcquisitionFile {
     return {
@@ -51,6 +52,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       rowVersion: this.rowVersion,
       assignedDate: this.assignedDate,
       deliveryDate: this.deliveryDate,
+      totalAllowableCompensation: stringToNull(this.totalAllowableCompensation),
       legacyFileNumber: this.legacyFileNumber,
       fileStatusTypeCode: toTypeCode(this.acquisitionFileStatusType),
       acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
@@ -93,6 +95,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.rowVersion = model.rowVersion;
     newForm.assignedDate = model.assignedDate;
     newForm.deliveryDate = model.deliveryDate;
+    newForm.totalAllowableCompensation = model.totalAllowableCompensation || '';
     newForm.legacyFileNumber = model.legacyFileNumber;
     newForm.acquisitionFileStatusType = fromTypeCode(model.fileStatusTypeCode);
     newForm.acquisitionPhysFileStatusType = fromTypeCode(model.acquisitionPhysFileStatusTypeCode);
