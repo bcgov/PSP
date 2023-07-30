@@ -57,7 +57,7 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
     () => (row: IFormLeaseTerm) => {
       const matchingTerm = find(leaseForm.terms, term => term.id === row.id);
       if (!matchingTerm) {
-        throw Error('Could not find matching term');
+        return null;
       }
       return (
         <PaymentsForm
