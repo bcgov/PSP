@@ -5,10 +5,11 @@ import styled from 'styled-components';
 import TooltipIcon from '@/components/common/TooltipIcon';
 
 interface ISectionFieldProps {
-  label: string | null;
+  label: React.ReactNode | string | null;
   /** It accepts either a string or a custom React tooltip component  */
   tooltip?: React.ReactNode;
   className?: string;
+  valueClassName?: string;
   required?: boolean;
   noGutters?: boolean;
   labelWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
@@ -31,7 +32,10 @@ export const SectionField: React.FunctionComponent<
       </Col>
       <StyledCol
         xs={props.contentWidth ?? true}
-        className={cx({ required: props.required, 'text-left': true })}
+        className={cx(props.valueClassName, {
+          required: props.required,
+          'text-left': !props.valueClassName,
+        })}
         valueTestId={props.valueTestId}
       >
         {props.children}

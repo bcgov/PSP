@@ -11,7 +11,7 @@ export interface ComposedProperty {
   ltsaOrders: LtsaOrders | undefined;
   pimsProperty: Api_Property | undefined;
   propertyAssociations: Api_PropertyAssociations | undefined;
-  parcelMapFeatureCollection: FeatureCollection<Geometry, GeoJsonProperties> | undefined;
-  geoserverFeatureCollection: FeatureCollection<Geometry, GeoJsonProperties> | undefined;
+  parcelMapFeatureCollection: FeatureCollection<Geometry, GeoJsonProperties> | undefined; // TODO: These need to be strongly typed
+  geoserverFeatureCollection: FeatureCollection<Geometry, GeoJsonProperties> | undefined; // TODO: These need to be strongly typed
   bcAssessmentSummary: IBcAssessmentSummary | undefined;
 }

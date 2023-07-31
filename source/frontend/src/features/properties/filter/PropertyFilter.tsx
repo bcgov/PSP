@@ -11,7 +11,7 @@ import { useRouterFilter } from '@/hooks/useRouterFilter';
 import { FilterBarSchema } from '@/utils/YupSchema';
 
 import { GeocoderAutoComplete } from '../components/GeocoderAutoComplete';
-import { IPropertyFilter } from './IPropertyFilter';
+import { defaultPropertyFilter, IPropertyFilter } from './IPropertyFilter';
 import PropertySearchToggle, { SearchToggleOption } from './PropertySearchToggle';
 
 /**
@@ -27,7 +27,7 @@ export interface IPropertyFilterProps {
   /** Event fire when sorting changes. */
   onSorting?: (sort: TableSort<any>) => void;
   /** Override to trigger filterchanged in the parent */
-  setTriggerFilterChanged?: (used: boolean) => void;
+  searchButtonClicked?: () => void;
   /** Which toggle view is currently active */
   toggle?: SearchToggleOption;
   /** Which toggle view is currently active */
@@ -43,13 +43,13 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   onChange,
   sort,
   onSorting,
-  setTriggerFilterChanged,
+  searchButtonClicked,
   toggle = SearchToggleOption.Map,
   useGeocoder,
 }) => {
   const [propertyFilter, setPropertyFilter] = useState<IPropertyFilter>(defaultFilter);
 
-  useRouterFilter({
+  useRouterFilter<IPropertyFilter>({
     filter: propertyFilter,
     setFilter: filter => {
       onChange(filter);
@@ -73,7 +73,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   };
 
   const resetFilter = () => {
-    changeFilter(defaultFilter);
+    changeFilter(defaultPropertyFilter);
   };
 
   const handlePageToggle = (option: SearchToggleOption) => {
@@ -112,7 +112,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 onChange={() => {
                   setFieldValue('pinOrPid', '');
                   setFieldValue('latitude', null);
-                  setFieldValue('latitude', null);
+                  setFieldValue('longitude', null);
                 }}
               />
             </NoRightPaddingColumn>
@@ -140,7 +140,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
             <Col xs="auto">
               <SearchButton
                 disabled={isSubmitting}
-                onClick={() => setTriggerFilterChanged && setTriggerFilterChanged(true)}
+                onClick={() => searchButtonClicked && searchButtonClicked()}
               />
             </Col>
             <Col xs="auto">

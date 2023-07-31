@@ -1,10 +1,11 @@
 import _ from 'lodash';
 import queryString from 'query-string';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { TableSort } from '@/components/Table/TableSort';
+import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { useAppSelector } from '@/store/hooks';
 import { saveFilter } from '@/store/slices/filter/filterSlice';
 import { generateMultiSortCriteria, resolveSortCriteriaFromUrl } from '@/utils';
@@ -34,13 +35,16 @@ const extractProps = (props: string[], source: any): any => {
   return dest;
 };
 
-const defaultFilter = {
-  address: '',
-  pid: '',
-  pin: '',
-  searchBy: 'pid',
-  latitude: '',
-  longitude: '',
+const parseAndSanitize = (urlPath: string) => {
+  const params = queryString.parse(urlPath);
+  for (const [key, value] of Object.entries(params)) {
+    if (value === 'undefined') {
+      params[key] = undefined;
+    } else if (value === 'null') {
+      params[key] = null;
+    }
+  }
+  return params;
 };
 
 /**
@@ -85,17 +89,24 @@ export const useRouterFilter = <T extends object>({
   // This will only occur the first time the component loads to ensure the URL query parameters are applied.
   useEffect(() => {
     if (setFilter && (!exactPath || exactPath === history.location.pathname)) {
-      const params = queryString.parse(history.location.search);
+      const params = parseAndSanitize(history.location.search);
+
       // Check if query contains filter params.
       const filterProps = Object.keys(filter);
       if (_.intersection(Object.keys(params), filterProps).length) {
-        let merged = { ...defaultFilter, ...extractProps(filterProps, params) };
-        // Only change state if the query parameters are different than the default filter.
-        if (!_.isEqual(merged, filter)) setFilter(merged);
+        let merged = { ...defaultPropertyFilter, ...extractProps(filterProps, params) };
+        // Perform a callback to always, even if there is no actual change.
+        // This is needed to confirm that the hook has processed the URL.
+        setFilter(merged);
       } else if (savedFilter?.hasOwnProperty(key)) {
-        let merged = { ...defaultFilter, ...extractProps(filterProps, savedFilter[key]) };
+        let merged = { ...defaultPropertyFilter, ...extractProps(filterProps, savedFilter[key]) };
         // Only change state if the saved filter is different than the default filter.
-        if (!_.isEqual(merged, filter)) setFilter(merged);
+        if (!_.isEqual(merged, filter)) {
+          setFilter(merged);
+        }
+      } else {
+        // If the filter does not match the expected shape and is not stored, set the default.
+        setFilter({ ...(defaultPropertyFilter as any) });
       }
 
       if (params.sorting && setSorting) {
@@ -112,13 +123,13 @@ export const useRouterFilter = <T extends object>({
   }, [history.location.pathname]);
 
   // If the 'filter' changes save it to redux store and update the URL.
-  React.useEffect(() => {
+  useEffect(() => {
     if (loaded) {
       const filterParams = new URLSearchParams(filter as any);
       const sorting = generateMultiSortCriteria(sort!);
       const allParams = {
-        ...queryString.parse(history.location.search),
-        ...queryString.parse(filterParams.toString()),
+        ...parseAndSanitize(history.location.search),
+        ...parseAndSanitize(filterParams.toString()),
         sorting,
       };
       history.push({
@@ -135,8 +146,8 @@ export const useRouterFilter = <T extends object>({
       const filterParams = new URLSearchParams(newFilter as any);
       const sorting = generateMultiSortCriteria(sort!);
       const allParams = {
-        ...queryString.parse(history.location.search),
-        ...queryString.parse(filterParams.toString()),
+        ...parseAndSanitize(history.location.search),
+        ...parseAndSanitize(filterParams.toString()),
         sort: sorting,
       };
       history.push({

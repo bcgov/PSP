@@ -1,0 +1,305 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AdvancedFilterButton renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c0.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c0.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c0.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c0.btn.btn-primary {
+  border: none;
+}
+
+.c0.btn.btn-secondary {
+  background: none;
+}
+
+.c0.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c0.btn.btn-info:hover,
+.c0.btn.btn-info:active,
+.c0.btn.btn-info:focus {
+  background: none;
+}
+
+.c0.btn.btn-light {
+  border: none;
+}
+
+.c0.btn.btn-dark {
+  border: none;
+}
+
+.c0.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c0.btn.btn-link:hover,
+.c0.btn.btn-link:active,
+.c0.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c0.btn.btn-link:disabled,
+.c0.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c0.btn:disabled,
+.c0.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c0.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c0.Button--icon-only:focus {
+  outline: none;
+}
+
+.c0.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c1.btn {
+  width: 5.2rem;
+  height: 5.2rem;
+  background-color: #fff;
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+.c1.btn.open {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+<div
+    id="mapid"
+    style="width: 500px; height: 500px;"
+  >
+    <div
+      class="leaflet-container leaflet-touch leaflet-grab leaflet-touch-drag leaflet-touch-zoom"
+      style="position: relative;"
+      tabindex="0"
+    >
+      <div
+        class="leaflet-pane leaflet-map-pane"
+        style="left: 0px; top: 0px;"
+      >
+        <div
+          class="leaflet-pane leaflet-tile-pane"
+        />
+        <div
+          class="leaflet-pane leaflet-overlay-pane"
+        />
+        <div
+          class="leaflet-pane leaflet-shadow-pane"
+        />
+        <div
+          class="leaflet-pane leaflet-marker-pane"
+        />
+        <div
+          class="leaflet-pane leaflet-tooltip-pane"
+        />
+        <div
+          class="leaflet-pane leaflet-popup-pane"
+        />
+      </div>
+      <div
+        class="leaflet-control-container"
+      >
+        <div
+          class="leaflet-top leaflet-left"
+        >
+          <div
+            class="leaflet-control-zoom leaflet-bar leaflet-control"
+          >
+            <a
+              aria-disabled="false"
+              aria-label="Zoom in"
+              class="leaflet-control-zoom-in"
+              href="#"
+              role="button"
+              title="Zoom in"
+            >
+              <span
+                aria-hidden="true"
+              >
+                +
+              </span>
+            </a>
+            <a
+              aria-disabled="false"
+              aria-label="Zoom out"
+              class="leaflet-control-zoom-out"
+              href="#"
+              role="button"
+              title="Zoom out"
+            >
+              <span
+                aria-hidden="true"
+              >
+                −
+              </span>
+            </a>
+          </div>
+        </div>
+        <div
+          class="leaflet-top leaflet-right"
+        >
+          <div
+            class="leaflet-control"
+          >
+            <div
+              class="w-100"
+            >
+              <button
+                class="c0 Button c1 btn btn-outline-secondary"
+                title="advanced-filter-button"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1.6em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1.6em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="leaflet-bottom leaflet-left"
+        />
+        <div
+          class="leaflet-bottom leaflet-right"
+        >
+          <div
+            class="leaflet-control-attribution leaflet-control"
+          >
+            <a
+              href="https://leafletjs.com"
+              title="A JavaScript library for interactive maps"
+            >
+              <svg
+                aria-hidden="true"
+                class="leaflet-attribution-flag"
+                height="8"
+                viewBox="0 0 12 8"
+                width="12"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h12v4H0z"
+                  fill="#4C7BE1"
+                />
+                <path
+                  d="M0 4h12v3H0z"
+                  fill="#FFD500"
+                />
+                <path
+                  d="M0 7h12v1H0z"
+                  fill="#E0BC00"
+                />
+              </svg>
+               Leaflet
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -9,6 +9,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { Claims } from '@/constants';
 import { InterestHolderType } from '@/constants/interestHolderTypes';
+import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { prettyFormatDate } from '@/utils';
@@ -44,6 +45,16 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
     x => x.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR,
   );
 
+  const {
+    getPersonDetail: { execute: fetchPerson, response: ownerSolicitorPrimaryContact },
+  } = usePersonRepository();
+
+  useEffect(() => {
+    if (ownerSolicitor?.primaryContactId) {
+      fetchPerson(ownerSolicitor?.primaryContactId);
+    }
+  }, [ownerSolicitor?.primaryContactId, fetchPerson]);
+
   const ownerRepresentative = acquisitionFile?.acquisitionFileInterestHolders?.find(
     x => x.interestHolderType?.id === InterestHolderType.OWNER_REPRESENTATIVE,
   );
@@ -59,7 +70,6 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         <SectionField label="Ministry project">{projectName}</SectionField>
         <SectionField label="Product">{productName}</SectionField>
         <SectionField label="Funding">{acquisitionFile?.fundingTypeCode?.description}</SectionField>
-
         {acquisitionFile?.fundingTypeCode?.id === 'OTHER' && (
           <SectionField label="Other funding">{acquisitionFile.fundingOther}</SectionField>
         )}
@@ -135,6 +145,22 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
               </span>
               <FaExternalLinkAlt className="ml-2" size="1rem" />
             </StyledLink>
+          </SectionField>
+        )}
+        {ownerSolicitor?.organization && (
+          <SectionField label="Primary Contact">
+            {ownerSolicitor?.primaryContactId ? (
+              <StyledLink
+                target="_blank"
+                rel="noopener noreferrer"
+                to={`/contact/P${ownerSolicitor?.primaryContactId}`}
+              >
+                <span>{formatApiPersonNames(ownerSolicitorPrimaryContact)}</span>
+                <FaExternalLinkAlt className="m1-2" size="1rem" />
+              </StyledLink>
+            ) : (
+              'No contacts available'
+            )}
           </SectionField>
         )}
         {!!ownerRepresentative && (

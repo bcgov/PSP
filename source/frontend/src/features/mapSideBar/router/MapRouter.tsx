@@ -1,17 +1,13 @@
 import queryString from 'query-string';
-import { memo, useContext, useEffect, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
 
-import {
-  MapState,
-  MapStateActionTypes,
-  MapStateContext,
-} from '@/components/maps/providers/MapStateContext';
+import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import Claims from '@/constants/claims';
 import { AddLeaseContainer } from '@/features/leases';
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
 import MotiInventoryContainer from '@/features/mapSideBar/property/MotiInventoryContainer';
-import { Api_Property } from '@/models/api/Property';
 import AppRoute from '@/utils/AppRoute';
 
 import AcquisitionContainer from '../acquisition/AcquisitionContainer';
@@ -24,16 +20,13 @@ import ProjectContainerView from '../project/ProjectContainerView';
 import AddResearchContainer from '../research/add/AddResearchContainer';
 import ResearchContainer from '../research/ResearchContainer';
 
-interface IMapRouterProps {
-  showSideBar: boolean;
-  setShowSideBar: (show: boolean) => void;
-  onZoom?: (apiProperty?: Api_Property) => void;
-}
+interface IMapRouterProps {}
 
 export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props => {
   const location = useLocation();
   const history = useHistory();
-  const { setState } = useContext(MapStateContext);
+
+  const { openSidebar, closeSidebar } = useMapStateMachine();
 
   const matched = useMemo(
     () =>
@@ -85,25 +78,45 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
     [location],
   );
 
-  const setShowSideBar = props.setShowSideBar;
+  const isProperty = useMemo(
+    () =>
+      matchPath(location.pathname, {
+        path: '/mapview/sidebar/property/*',
+        exact: true,
+        strict: true,
+      }),
+    [location],
+  );
 
   useEffect(() => {
     if (matched !== null) {
+      let sidebarType: SideBarType = SideBarType.NOT_DEFINED;
       if (isAcquisition) {
-        setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.ACQUISITION_FILE });
+        sidebarType = SideBarType.ACQUISITION_FILE;
       } else if (isResearch) {
-        setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.RESEARCH_FILE });
+        sidebarType = SideBarType.RESEARCH_FILE;
       } else if (isLease) {
-        setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.LEASE_FILE });
+        sidebarType = SideBarType.LEASE_FILE;
       } else if (isProject) {
-        setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.MAP });
+        sidebarType = SideBarType.PROJECT;
+      } else if (isProperty) {
+        sidebarType = SideBarType.PROPERTY_INFORMATION;
       }
-      setShowSideBar(true);
+
+      openSidebar(sidebarType);
     } else {
-      setShowSideBar(false);
-      setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.MAP });
+      closeSidebar();
     }
-  }, [isAcquisition, isResearch, isLease, isProject, matched, setShowSideBar, setState]);
+  }, [
+    isAcquisition,
+    isResearch,
+    isLease,
+    isProject,
+    isProperty,
+    matched,
+    openSidebar,
+    closeSidebar,
+  ]);
 
   const onClose = () => {
     history.push('/mapview');
@@ -156,7 +169,6 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
             onClose={onClose}
             id={Number(match.params.propertyId)}
             pid={pidQueryString}
-            onZoom={props.onZoom}
           />
         )}
         claim={Claims.PROPERTY_VIEW}
@@ -167,7 +179,7 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
       <AppRoute
         path={`/mapview/sidebar/non-inventory-property/:pid`}
         customRender={({ match }) => (
-          <MotiInventoryContainer onClose={onClose} pid={match.params.pid} onZoom={props.onZoom} />
+          <MotiInventoryContainer onClose={onClose} pid={match.params.pid} />
         )}
         claim={Claims.PROPERTY_VIEW}
         exact

@@ -2,13 +2,17 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { LeaseFormModel } from '@/features/leases/models';
 import { mockParcel } from '@/mocks/filterData.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertiesInformation, { IPropertiesInformationProps } from './PropertiesInformation';
 
 const history = createMemoryHistory();
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 describe('PropertiesInformation component', () => {
   const setup = (
@@ -29,6 +33,12 @@ describe('PropertiesInformation component', () => {
       component,
     };
   };
+
+  beforeEach(() => {
+    jest.resetAllMocks();
+    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+  });
+
   it('renders as expected', () => {
     const { component } = setup({
       lease: {

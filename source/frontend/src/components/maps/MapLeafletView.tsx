@@ -1,28 +1,22 @@
 import axios from 'axios';
+import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import {
+  geoJSON,
+  LatLng,
   LatLngBounds,
   LeafletEvent,
   Map as LeafletMap,
   Popup as LeafletPopup,
-  PopupEvent,
 } from 'leaflet';
 import isEqual from 'lodash/isEqual';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { LayerGroup, MapContainer as ReactLeafletMap, TileLayer } from 'react-leaflet';
-import { useDispatch } from 'react-redux';
-import { useResizeDetector } from 'react-resize-detector';
-import { useMediaQuery } from 'react-responsive';
-import { useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
-import { IGeoSearchParams } from '@/constants/API';
-import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM } from '@/constants/strings';
-import { IProperty } from '@/interfaces';
-import { useAppSelector } from '@/store/hooks';
-import { DEFAULT_MAP_ZOOM, setMapViewZoom } from '@/store/slices/mapViewZoom/mapViewZoomSlice';
-import { pidParser } from '@/utils/propertyUtils';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
 
-import useActiveFeatureLayer from './hooks/useActiveFeatureLayer';
+import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
+import AdvancedFilterButton from './leaflet/Control/AdvancedFilterButton/AdvancedFilterButton';
 import BasemapToggle, {
   BaseLayer,
   BasemapToggleEvent,
@@ -30,101 +24,119 @@ import BasemapToggle, {
 import LayersControl from './leaflet/Control/LayersControl/LayersControl';
 import { LegendControl } from './leaflet/Control/Legend/LegendControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
-import {
-  LayerPopupContainer,
-  LayerPopupInformation,
-} from './leaflet/LayerPopup/LayerPopupContainer';
+import { LayerPopupContainer } from './leaflet/LayerPopup/LayerPopupContainer';
 import { InventoryLayer } from './leaflet/Layers/InventoryLayer';
 import { MapEvents } from './leaflet/MapEvents/MapEvents';
 import * as Styled from './leaflet/styles';
-import { MapStateActionTypes, MapStateContext } from './providers/MapStateContext';
 
 export type MapLeafletViewProps = {
-  lat: number;
-  lng: number;
-  zoom?: number;
-  whenCreated?: (map: LeafletMap) => void;
-  whenReady?: () => void;
-  geoFilter?: IGeoSearchParams;
-  mapRef: React.MutableRefObject<LeafletMap | null>;
+  parentWidth: number | undefined;
 };
 
 type BaseLayerFile = {
   basemaps: BaseLayer[];
 };
 
-const defaultBounds = new LatLngBounds([60.09114547, -119.49609429], [48.78370426, -139.35937554]);
-
 /**
  * Creates a Leaflet map and by default includes a number of preconfigured layers.
  * @param param0
  */
 const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = ({
-  lat,
-  lng,
-  zoom: zoomProp,
-  whenReady,
-  whenCreated,
-  geoFilter,
-  mapRef,
+  parentWidth,
 }) => {
-  const dispatch = useDispatch();
-
   const [baseLayers, setBaseLayers] = useState<BaseLayer[]>([]);
 
   const [activeBasemap, setActiveBasemap] = useState<BaseLayer | null>(null);
-  const smallScreen = useMediaQuery({ maxWidth: 1800 });
 
   const [bounds, setBounds] = useState<LatLngBounds>(defaultBounds);
-  const [layerPopup, setLayerPopup] = useState<LayerPopupInformation>();
 
   // a reference to the layer popup
   const popupRef = useRef<LeafletPopup>(null);
 
-  const history = useHistory();
-  const onPropertyViewClicked = (pid?: string | null, id?: number) => {
-    if (id !== undefined) {
-      history.push(`/mapview/sidebar/property/${id}?pid=${pid}`);
-    } else if (pid !== undefined && pid !== null) {
-      const parsedPid = pidParser(pid);
-      history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
-    } else {
-      console.warn('Invalid marker when trying to see property information');
-      toast.warn('A map parcel must have a PID in order to view detailed information');
-    }
-  };
+  const mapRef = useRef<LeafletMap | null>(null);
 
-  const { setState, selectedInventoryProperty, selectedFeature } = useContext(MapStateContext);
+  const [activeFeatureLayer, setActiveFeatureLayer] = useState<L.GeoJSON>();
 
-  if (mapRef.current && !selectedInventoryProperty) {
-    const center = mapRef.current.getCenter();
-    lat = center.lat;
-    lng = center.lng;
+  // add geojson layer to the map
+  if (!!mapRef.current && !activeFeatureLayer) {
+    setActiveFeatureLayer(geoJSON().addTo(mapRef.current));
   }
 
-  const parcelLayerFeature = selectedFeature;
-  const { showLocationDetails } = useActiveFeatureLayer({
-    selectedProperty: selectedInventoryProperty,
-    layerPopup,
-    mapRef,
-    parcelLayerFeature,
-    setLayerPopup,
-  });
+  const handleMapClickEvent = (latlng: LatLng) => {
+    mapMachine.mapClick(latlng);
+  };
 
-  const lastZoom = useAppSelector(state => state.mapViewZoom) ?? zoomProp;
-  const [zoom, setZoom] = useState(lastZoom);
+  const [zoom, setZoom] = useState(DEFAULT_MAP_ZOOM);
+  const [isMapReady, setIsMapReady] = useState(false);
+
+  const handleZoomUpdate = (zoomLevel: number) => {
+    setZoom(zoomLevel);
+  };
+
+  const mapMachine = useMapStateMachine();
+
+  const mapMachinePendingRefresh = mapMachine.pendingFitBounds;
+  const mapMachineProcessFitBounds = mapMachine.processFitBounds;
+  const mapMachineRequestedFitBounds = mapMachine.requestedFitBounds;
   useEffect(() => {
-    if (lastZoom === DEFAULT_MAP_ZOOM) {
-      dispatch(setMapViewZoom(smallScreen ? 4.9 : 5.5));
-    } else if (lastZoom !== zoom && zoom !== DEFAULT_MAP_ZOOM) {
-      dispatch(setMapViewZoom(zoom));
+    if (isMapReady && mapMachinePendingRefresh && mapRef.current !== null) {
+      mapRef.current.fitBounds(mapMachineRequestedFitBounds, {
+        maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM,
+      });
+      mapMachineProcessFitBounds();
     }
-  }, [dispatch, lastZoom, smallScreen, zoom]);
+  }, [
+    isMapReady,
+    mapMachinePendingRefresh,
+    mapMachineProcessFitBounds,
+    mapMachineRequestedFitBounds,
+    zoom,
+  ]);
 
-  const { width } = useResizeDetector();
+  const mapMachineMapLocationFeatureDataset = mapMachine.mapLocationFeatureDataset;
+  useEffect(() => {
+    activeFeatureLayer?.clearLayers();
+    if (mapMachineMapLocationFeatureDataset !== null) {
+      const location = mapMachineMapLocationFeatureDataset.location;
+
+      let activeFeature: Feature<Geometry, GeoJsonProperties> = {
+        geometry: { coordinates: [location.lng, location.lat], type: 'Point' },
+        type: 'Feature',
+        properties: {},
+      };
+      if (mapMachineMapLocationFeatureDataset.parcelFeature !== null) {
+        activeFeature = mapMachineMapLocationFeatureDataset.parcelFeature;
+        activeFeatureLayer?.addData(activeFeature);
+      } else if (mapMachineMapLocationFeatureDataset.municipalityFeature !== null) {
+        activeFeature = mapMachineMapLocationFeatureDataset.municipalityFeature;
+        if (mapMachineMapLocationFeatureDataset.municipalityFeature?.geometry?.type === 'Polygon') {
+          activeFeatureLayer?.addData(activeFeature);
+        }
+      }
+    }
+  }, [activeFeatureLayer, mapMachineMapLocationFeatureDataset]);
+
+  const hasPendingFlyTo = mapMachine.pendingFlyTo;
+  const requestedFlyTo = mapMachine.requestedFlyTo;
+  const mapMachineProcessFlyTo = mapMachine.processFlyTo;
+  useEffect(() => {
+    if (hasPendingFlyTo && isMapReady) {
+      if (requestedFlyTo.bounds !== null) {
+        mapRef?.current?.flyToBounds(requestedFlyTo.bounds, { animate: false });
+      }
+      if (requestedFlyTo.location !== null) {
+        mapRef?.current?.flyTo(requestedFlyTo.location, MAP_MAX_ZOOM, {
+          animate: false,
+        });
+      }
+
+      mapMachineProcessFlyTo();
+    }
+  }, [isMapReady, hasPendingFlyTo, requestedFlyTo, mapMachineProcessFlyTo]);
+
   useEffect(() => {
     mapRef.current?.invalidateSize();
-  }, [mapRef, width]);
+  }, [mapRef, parentWidth]);
 
   const handleBasemapToggle = (e: BasemapToggleEvent) => {
     const { previous, current } = e;
@@ -142,24 +154,19 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
   const fitMapBounds = () => {
     if (mapRef.current) {
-      mapRef.current.fitBounds([
-        [60.09114547, -119.49609429],
-        [48.78370426, -139.35937554],
-      ]);
+      // TODO: Is this necessary?
+      //mapRef.current.fitBounds(defaultBounds);
     }
   };
 
   const handleMapReady = () => {
     fitMapBounds();
-    if (typeof whenReady === 'function') {
-      whenReady();
-    }
   };
 
   const handleMapCreated = (mapInstance: L.Map) => {
-    mapRef.current = mapInstance;
-    if (typeof whenCreated === 'function') {
-      whenCreated(mapInstance);
+    setIsMapReady(true);
+    if (mapInstance !== null) {
+      mapRef.current = mapInstance;
     }
   };
 
@@ -167,16 +174,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     const boundsData: LatLngBounds = event.target.getBounds();
     if (!isEqual(boundsData.getNorthEast(), boundsData.getSouthWest())) {
       setBounds(boundsData);
-    }
-  };
-
-  const onPopupClose = (event: PopupEvent) => {
-    if (event.popup === popupRef.current) {
-      setLayerPopup(undefined);
-      setState({
-        type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
-        selectedInventoryProperty: null,
-      });
     }
   };
 
@@ -189,18 +186,17 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
       )}
 
       <ReactLeafletMap
-        center={[lat, lng]}
-        zoom={lastZoom}
+        center={[defaultLatLng.lat, defaultLatLng.lng]}
+        zoom={DEFAULT_MAP_ZOOM}
         maxZoom={MAP_MAX_ZOOM}
-        closePopupOnClick={true}
+        closePopupOnClick={false}
         ref={handleMapCreated}
         whenReady={handleMapReady}
       >
         <MapEvents
-          click={e => showLocationDetails(e.latlng)}
-          zoomend={e => setZoom(e.sourceTarget.getZoom())}
+          click={e => handleMapClickEvent(e.latlng)}
+          zoomend={e => handleZoomUpdate(e.sourceTarget.getZoom())}
           moveend={handleBounds}
-          popupclose={onPopupClose}
         />
         {activeBasemap && (
           // Draws the map itself
@@ -216,32 +212,31 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
             ))}
           </LayerGroup>
         )}
-        {!!layerPopup && (
+        {mapMachine.showPopup && (
           // Draws the popup on top of the map
-          <LayerPopupContainer
-            ref={popupRef}
-            layerPopup={layerPopup}
-            onViewPropertyInfo={onPropertyViewClicked}
-          />
+          <LayerPopupContainer ref={popupRef} />
         )}
 
         <LegendControl />
-        <ZoomOutButton bounds={defaultBounds} />
+        <ZoomOutButton />
+        <AdvancedFilterButton
+          open={mapMachine.isAdvancedFilterSidebarOpen}
+          onOpen={() => {
+            setLayersOpen(false);
+            mapMachine.openAdvancedFilterSidebar();
+          }}
+          onClose={() => mapMachine.closeAdvancedFilterSidebar()}
+        />
         <LayersControl
           open={layersOpen}
           setOpen={() => {
             setLayersOpen(!layersOpen);
+            if (!layersOpen) {
+              mapMachine.closeAdvancedFilterSidebar();
+            }
           }}
         />
-        <InventoryLayer
-          zoom={zoom}
-          bounds={bounds}
-          onMarkerClick={(property: IProperty) => {
-            setLayersOpen(false);
-            onPropertyViewClicked(property.pid, property.id);
-          }}
-          filter={geoFilter}
-        ></InventoryLayer>
+        <InventoryLayer zoom={zoom} bounds={bounds}></InventoryLayer>
       </ReactLeafletMap>
     </Styled.MapContainer>
   );

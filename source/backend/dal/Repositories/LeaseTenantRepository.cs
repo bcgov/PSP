@@ -40,6 +40,8 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsLeaseTenants
                 .Include(t => t.LessorTypeCodeNavigation)
                 .Include(t => t.Organization)
+                    .ThenInclude(o => o.PimsPersonOrganizations)
+                    .ThenInclude(op => op.Person)
                 .Include(t => t.Person)
                 .Include(t => t.PrimaryContact)
                 .Include(t => t.TenantTypeCodeNavigation)

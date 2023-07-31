@@ -1140,6 +1140,88 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<ForeignKeyDependencyException>();
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
+
+        [Fact]
+        public void Update_NewTotalAllowableCompensation_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() {
+                new PimsAcquisitionFilePerson() {
+                    AcquisitionFilePersonId = 100,
+                },
+            };
+
+            var values = new List<PimsAcquisitionFile>();
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.Update(Capture.In(values))).Returns(acqFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
+
+            var compReqRepository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsCompensationRequisition>() {
+                    new PimsCompensationRequisition() {
+                        CompensationRequisitionId = 1,
+                        AcquisitionFileId = acqFile.Internal_Id,
+                    },
+                });
+
+            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            // Act
+            var updatedAcqFile = EntityHelper.CreateAcquisitionFile();
+            updatedAcqFile.TotalAllowableCompensation = 100;
+            var response = service.Update(updatedAcqFile, new List<UserOverrideCode>() { });
+
+            // Assert
+            values.FirstOrDefault().TotalAllowableCompensation.Should().Be(100);
+        }
+
+        [Fact]
+        public void Update_NewTotalAllowableCompensation_Failure_LessThenCurrentFinancials()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() {
+                new PimsAcquisitionFilePerson() {
+                    AcquisitionFilePersonId = 100,
+                },
+            };
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
+
+            var compReqRepository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsCompensationRequisition>() {
+                    new PimsCompensationRequisition() {
+                        CompensationRequisitionId = 1,
+                        AcquisitionFileId = acqFile.Internal_Id,
+                    },
+                });
+
+            var compReqService = _helper.GetService<Mock<ICompReqH120Service>>();
+            compReqService.Setup(c => c.GetAllByAcquisitionFileId(It.IsAny<long>(), true)).Returns(
+                new List<PimsCompReqH120>() { new PimsCompReqH120() { TotalAmt = 1000 } });
+
+            // Act
+            var updatedAcqFile = EntityHelper.CreateAcquisitionFile();
+            updatedAcqFile.TotalAllowableCompensation = 100;
+            Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { });
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>();
+        }
         #endregion
 
         #region Checklist

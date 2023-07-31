@@ -1,4 +1,5 @@
-import { ConvertToTypes } from '@/constants/convertToTypes';
+import moment from 'moment';
+
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { showFile } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
@@ -67,10 +68,13 @@ export const useGenerateExpropriationForm1 = () => {
     const generatedFile = await generate({
       templateType: FormTemplateTypes.EXPROP_FORM_1,
       templateData: expropriationData,
-      convertToType: ConvertToTypes.PDF,
+      convertToType: null,
     });
+
     if (generatedFile?.status === ExternalResultStatus.Success && generatedFile?.payload) {
-      showFile(generatedFile?.payload);
+      const fileExt = generatedFile?.payload?.fileNameExtension ?? 'docx';
+      const fileName = `Form 1-${file.fileNumber}-${moment().format('yyyyMMDD_hhmmss')}.${fileExt}`;
+      showFile(generatedFile?.payload, fileName);
     } else {
       throw Error('Failed to generate file');
     }

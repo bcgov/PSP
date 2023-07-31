@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
-import { useMemo } from 'react';
 import { useCallback } from 'react';
 
 import { toCqlFilter } from '../layer-api/layerUtils';
@@ -174,28 +173,15 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
     [findOneWhereContains],
   );
 
-  return useMemo(
-    () => ({
-      findOneWhereContains,
-      findByPid,
-      findByPidLoading,
-      findByPin,
-      findByPinLoading,
-      findByPlanNumber,
-      findByPlanNumberLoading,
-      findMetadataByLocation,
-      findOneWhereContainsWrapped,
-    }),
-    [
-      findMetadataByLocation,
-      findByPid,
-      findByPidLoading,
-      findByPin,
-      findByPinLoading,
-      findByPlanNumber,
-      findByPlanNumberLoading,
-      findOneWhereContains,
-      findOneWhereContainsWrapped,
-    ],
-  );
+  return {
+    findOneWhereContains,
+    findByPid,
+    findByPidLoading,
+    findByPin,
+    findByPinLoading,
+    findByPlanNumber,
+    findByPlanNumberLoading,
+    findMetadataByLocation,
+    findOneWhereContainsWrapped,
+  };
 };

@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
 
 import ModalContainer from '@/components/common/ModalContainer';
-import { MapStateContextProvider } from '@/components/maps/providers/MapStateContext';
+//import { MapStateContextProvider } from '@/components/maps/providers/MapStateContext_old';
 import { ModalContextProvider } from '@/contexts/modalContext';
 import { IOrganization } from '@/interfaces';
 import { TenantConsumer, TenantProvider } from '@/tenants';
@@ -53,18 +53,16 @@ const TestCommonWrapper: React.FunctionComponent<
             <TestRouterWrapper history={history}>
               <ThemeProvider theme={{ tenant, css: {} }}>
                 <ModalContextProvider>
-                  <MapStateContextProvider>
-                    <ToastContainer
-                      autoClose={5000}
-                      hideProgressBar
-                      newestOnTop={false}
-                      closeOnClick={false}
-                      rtl={false}
-                      pauseOnFocusLoss={false}
-                    />
-                    <ModalContainer />
-                    {children}
-                  </MapStateContextProvider>
+                  <ToastContainer
+                    autoClose={5000}
+                    hideProgressBar
+                    newestOnTop={false}
+                    closeOnClick={false}
+                    rtl={false}
+                    pauseOnFocusLoss={false}
+                  />
+                  <ModalContainer />
+                  {children}
                 </ModalContextProvider>
               </ThemeProvider>
             </TestRouterWrapper>
