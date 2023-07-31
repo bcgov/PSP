@@ -24,7 +24,7 @@ export const layersTree: ILayerItem[] = [
       },
       {
         key: 'moti',
-        label: 'MOTI Regions',
+        label: 'MOTI Regions (multiple colors)',
         on: false,
         url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.TADM_MOT_REGIONAL_BNDRY_POLY/ows?',
         layers: 'pub:WHSE_ADMIN_BOUNDARIES.TADM_MOT_REGIONAL_BNDRY_POLY',
@@ -38,7 +38,7 @@ export const layersTree: ILayerItem[] = [
       },
       {
         key: 'motiHighwayDistricts',
-        label: 'MOTI Highway Districts',
+        label: 'MOTI Highway Districts (multiple colors)',
         on: false,
         url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.TADM_MOT_DISTRICT_BNDRY_POLY/ows?',
         layers: 'pub:WHSE_ADMIN_BOUNDARIES.TADM_MOT_DISTRICT_BNDRY_POLY',
@@ -66,7 +66,7 @@ export const layersTree: ILayerItem[] = [
       },
       {
         key: 'regionalDistricts ',
-        label: 'Regional Districts ',
+        label: 'Regional Districts (multiple colors)',
         on: false,
         layers: 'pub:WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_REGIONAL_DISTRICTS_SP',
         url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_REGIONAL_DISTRICTS_SP/ows?',
@@ -116,12 +116,13 @@ export const layersTree: ILayerItem[] = [
         format: 'image/png',
         zIndex: 10,
         id: 'firstNationTreatyAreas',
+        color: '#367428',
         maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
         maxZoom: MAP_MAX_ZOOM,
       },
       {
         key: 'firstNationTreatyLands',
-        label: 'First Nations Treaty Lands',
+        label: 'First Nations Treaty Lands (multiple colors)',
         on: false,
         url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.FNT_TREATY_LAND_SP/ows?',
         layers: 'pub:WHSE_LEGAL_ADMIN_BOUNDARIES.FNT_TREATY_LAND_SP',
@@ -134,7 +135,7 @@ export const layersTree: ILayerItem[] = [
       },
       {
         key: 'firstNationTreatyRelatedLands',
-        label: 'First Nations Treaty Related Lands',
+        label: 'First Nations Treaty Related Lands (multiple colors)',
         on: false,
         url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.FNT_TREATY_RELATED_LAND_SP/ows?',
         layers: 'pub:WHSE_LEGAL_ADMIN_BOUNDARIES.FNT_TREATY_RELATED_LAND_SP',
@@ -196,7 +197,7 @@ export const layersTree: ILayerItem[] = [
       },
       {
         key: 'crownInclusions',
-        label: 'Crown Inclusions',
+        label: 'Crown Inclusions (multiple colors)',
         on: false,
         layers: 'pub:WHSE_TANTALIS.TA_CROWN_INCLUSIONS_SVW',
         url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_INCLUSIONS_SVW/ows?',
@@ -217,6 +218,7 @@ export const layersTree: ILayerItem[] = [
         format: 'image/png',
         zIndex: 5,
         id: 'crownLandLicenses',
+        color: '#2C519B',
         maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
         maxZoom: MAP_MAX_ZOOM,
       },
