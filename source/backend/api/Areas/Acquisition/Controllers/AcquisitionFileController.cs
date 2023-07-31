@@ -135,6 +135,8 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
 
+
+
         /// <summary>
         /// Update the acquisition file properties.
         /// </summary>
@@ -182,38 +184,6 @@ namespace Pims.Api.Areas.Acquisition.Controllers
 
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerModel>>(owners));
         }
-
-        /*/// <summary>
-        /// Get the acquisition file Owner representatives.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("{id:long}/owner-representatives")]
-        [HasPermission(Permissions.AcquisitionFileView)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<AcquisitionFileOwnerRepresentativeModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
-        public IActionResult GetAcquisitionFileOwnerRepresentatives([FromRoute] long id)
-        {
-            var owners = _acquisitionService.GetOwnerRepresentatives(id);
-
-            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerRepresentativeModel>>(owners));
-        }
-
-        /// <summary>
-        /// Get the acquisition file Owner solicitors.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("{id:long}/owner-solicitors")]
-        [HasPermission(Permissions.AcquisitionFileView)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<AcquisitionFileOwnerSolicitorModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
-        public IActionResult GetAcquisitionFileOwnerSolicitors([FromRoute] long id)
-        {
-            var owners = _acquisitionService.GetOwnerSolicitors(id);
-
-            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerSolicitorModel>>(owners));
-        }*/
 
         /// <summary>
         /// Get all the compensations corresponding to the passed file id.

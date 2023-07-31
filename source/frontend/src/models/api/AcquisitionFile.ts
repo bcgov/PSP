@@ -39,6 +39,7 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   productId: number | null;
   fundingTypeCode?: Api_TypeCode<string>;
   fundingOther?: string;
+  totalAllowableCompensation?: number;
 }
 
 export interface Api_AcquisitionFileProperty

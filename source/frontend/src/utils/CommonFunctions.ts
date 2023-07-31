@@ -20,10 +20,10 @@ export const toFilteredApiPaginateParams = <T extends object = {}>(
   filter?: T,
 ): IPaginateRequest<T> => {
   const apiPaginateParams = {
+    ...filter,
     page: page + 1,
     quantity: quantity,
     sort: sort,
-    ...filter,
   };
   return apiPaginateParams as IPaginateRequest<T>;
 };

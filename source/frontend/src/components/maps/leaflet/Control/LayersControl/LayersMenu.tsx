@@ -266,7 +266,12 @@ const LayersMenu: React.FC<React.PropsWithChildren<unknown>> = () => {
         //add any layers defined in the configuration.
         const layer = confLayers?.find(cl => cl.key === parent.key);
 
-        const allNodes = [...(parent.nodes ?? []), ...(layer?.nodes ?? [])];
+        const layerNodes = [...(layer?.nodes ?? [])];
+        const parentNodes =
+          parent?.nodes?.filter(node => !layerNodes.find(layerNode => layerNode.id === node.id)) ??
+          [];
+        const allNodes = [...parentNodes, ...layerNodes];
+
         return {
           ...parent,
           nodes: allNodes?.map((node: any, index) => ({
