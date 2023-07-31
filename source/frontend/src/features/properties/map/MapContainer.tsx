@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 import DraftSvg from '@/assets/images/pins/icon-draft.svg';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { FilterContent } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContent';
+import { FilterContentContainer } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentContainer';
+import { FilterContentForm } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentForm';
 import MapView from '@/components/maps/MapView';
 import { FilterProvider } from '@/components/maps/providers/FIlterProvider';
 import AdvancedFilterBar from '@/features/advancedFilterBar/AdvancedFilterBar';
@@ -41,7 +42,7 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
         </FilterProvider>
       )}
       <AdvancedFilterBar isOpen={isFiltering} toggle={toggleMapFilter}>
-        <FilterContent />
+        <FilterContentContainer View={FilterContentForm} />
       </AdvancedFilterBar>
     </StyleMapView>
   );

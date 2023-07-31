@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities.Models
         #region Properties
 
         /// <summary>
-        /// get/set - The property address.
+        /// get/set - The project id to filter by.
         /// </summary>
         public int? ProjectId { get; set; }
 
