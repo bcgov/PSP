@@ -67,7 +67,7 @@ namespace Pims.Dal.Repositories
                 .Take(filter.Quantity)
                 .ToArray();
 
-            if(!string.IsNullOrWhiteSpace(filter.PinOrPid))
+            if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
             {
                 Regex nonInteger = new Regex("[^\\d]");
                 var formattedPidPin = nonInteger.Replace(filter.PinOrPid, string.Empty);
@@ -97,8 +97,6 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
-                .Include(p => p.PimsPropPropAdjacentLandTypes)
-                    .ThenInclude(t => t.PropertyAdjacentLandTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTypes)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -147,8 +145,6 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
-                .Include(p => p.PimsPropPropAdjacentLandTypes)
-                    .ThenInclude(t => t.PropertyAdjacentLandTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTypes)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -200,8 +196,6 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
-                .Include(p => p.PimsPropPropAdjacentLandTypes)
-                    .ThenInclude(t => t.PropertyAdjacentLandTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTypes)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -239,8 +233,6 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
-                .Include(p => p.PimsPropPropAdjacentLandTypes)
-                    .ThenInclude(t => t.PropertyAdjacentLandTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTypes)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -353,7 +345,6 @@ namespace Pims.Dal.Repositories
 
             // update direct relationships - anomalies, tenures, etc
             Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyType, long>(p => p.PimsPropPropAnomalyTypes, propertyId, property.PimsPropPropAnomalyTypes.ToArray());
-            Context.UpdateChild<PimsProperty, long, PimsPropPropAdjacentLandType, long>(p => p.PimsPropPropAdjacentLandTypes, propertyId, property.PimsPropPropAdjacentLandTypes.ToArray());
             Context.UpdateChild<PimsProperty, long, PimsPropPropRoadType, long>(p => p.PimsPropPropRoadTypes, propertyId, property.PimsPropPropRoadTypes.ToArray());
             Context.UpdateChild<PimsProperty, long, PimsPropPropTenureType, long>(p => p.PimsPropPropTenureTypes, propertyId, property.PimsPropPropTenureTypes.ToArray());
 
