@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
+import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
 import { Api_Property } from '@/models/api/Property';
 import { useAxiosErrorHandler } from '@/utils';
 
@@ -12,7 +13,8 @@ import { useAxiosErrorHandler } from '@/utils';
  * hook that retrieves a property from the inventory.
  */
 export const usePimsPropertyRepository = () => {
-  const { getPropertyConceptWithIdApi, putPropertyConceptApi } = useApiProperties();
+  const { getPropertyConceptWithIdApi, putPropertyConceptApi, getMatchingPropertiesApi } =
+    useApiProperties();
 
   const getPropertyWrapper = useApiRequestWrapper({
     requestFunction: useCallback(
@@ -21,6 +23,18 @@ export const usePimsPropertyRepository = () => {
     ),
     requestName: 'getPropertyApiById',
     onError: useAxiosErrorHandler('Failed to retrieve property information from PIMS'),
+  });
+
+  const getMatchingProperties = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (filterCriteria: Api_PropertyFilterCriteria) =>
+        await getMatchingPropertiesApi(filterCriteria),
+      [getMatchingPropertiesApi],
+    ),
+    requestName: 'getMatchingProperties',
+    onError: useAxiosErrorHandler(
+      'Failed to retrieve property information from PIMS matching filter criteria',
+    ),
   });
 
   const updatePropertyWrapper = useApiRequestWrapper({
@@ -40,7 +54,7 @@ export const usePimsPropertyRepository = () => {
   });
 
   return useMemo(
-    () => ({ getPropertyWrapper, updatePropertyWrapper }),
-    [getPropertyWrapper, updatePropertyWrapper],
+    () => ({ getPropertyWrapper, updatePropertyWrapper, getMatchingProperties }),
+    [getPropertyWrapper, updatePropertyWrapper, getMatchingProperties],
   );
 };

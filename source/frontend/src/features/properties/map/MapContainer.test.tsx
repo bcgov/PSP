@@ -6,7 +6,6 @@ import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
 import {
   IMapStateMachineContext,
   useMapStateMachine,
@@ -47,6 +46,7 @@ import MapContainer from './MapContainer';
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
+jest.mock('@/features/advancedFilterBar/AdvancedFilterBar');
 jest.mock('@/hooks/pims-api/useApiProperties');
 jest.mock('@/hooks/useLtsa');
 jest.mock('@/hooks/repositories/useComposedProperties');
@@ -73,6 +73,7 @@ interface ParcelSeed {
   id: number;
   latitude: number;
   longitude: number;
+  propertyId?: string;
   pid?: string;
 }
 
@@ -90,6 +91,13 @@ const largeMockParcels: ParcelSeed[] = [
   { id: 11, latitude: 53.918172, longitude: -122.749772 },
 ];
 
+const distantMockParcels: ParcelSeed[] = [
+  { id: 1, latitude: 53.917061, longitude: -122.749672, propertyId: '1' },
+  { id: 2, latitude: 54.917062, longitude: -123.749692, propertyId: '2' },
+  { id: 3, latitude: 55.917063, longitude: -124.749682, propertyId: '3' },
+  { id: 4, latitude: 56.917064, longitude: -125.749672, propertyId: '4' },
+];
+
 const createPimsFeatures = (
   parcelSeed: ParcelSeed[],
 ): FeatureCollection<Point, PIMS_Property_Location_View> => {
@@ -100,7 +108,7 @@ const createPimsFeatures = (
         type: 'Feature',
         id: x.id,
         geometry: { type: 'Point', coordinates: [x.longitude, x.latitude] },
-        properties: { ...EmptyProperty, PID: x.pid ?? null },
+        properties: { ...EmptyProperty, PROPERTY_ID: x.propertyId ?? null, PID: x.pid ?? null },
       };
     }),
   };
@@ -171,8 +179,6 @@ const store = mockStore({
 let history = createMemoryHistory();
 
 describe('MapContainer', () => {
-  const onMarkerClick = jest.fn();
-
   const setup = async (renderOptions: RenderOptions = {}) => {
     const utils = render(
       <>
@@ -213,7 +219,6 @@ describe('MapContainer', () => {
       unobserve: jest.fn(),
       disconnect: jest.fn(),
     }));
-    onMarkerClick.mockClear();
     jest.clearAllMocks();
     mockAxios.reset();
     mockAxios.onGet('/basemaps.json').reply(200, {
@@ -451,16 +456,18 @@ describe('MapContainer', () => {
     expect(label).toBeNull();
   });
 
-  it('Given advanced filter sidebar is open, when user navigates to a file, the advanced filter should be closed', async () => {
-    const testMapMock = {
+  it('Rendered distant markers', async () => {
+    mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
+
+    const pimsFeatures = createPimsFeatures(distantMockParcels);
+
+    const testMapMock: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      isSidebarOpen: true,
-      isAdvancedFilterSidebarOpen: true,
-      sideBarType: SideBarType.ACQUISITION_FILE,
       mapFeatureData: {
-        pimsFeatures: createPimsFeatures(mockParcels),
+        pimsFeatures: pimsFeatures,
         fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
       },
+      isFiltering: false,
     };
     (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
       testMapMock,
@@ -468,7 +475,54 @@ describe('MapContainer', () => {
 
     await setup();
 
-    // verify the advanced filter sidebar was closed
-    expect(testMapMock.closeAdvancedFilterSidebar).toHaveBeenCalled();
+    const clusterIcons = document.querySelectorAll('.leaflet-marker-icon.marker-cluster');
+    const markerIcons = document.querySelectorAll('img.leaflet-marker-icon');
+    expect(clusterIcons.length).toBe(0);
+    expect(markerIcons.length).toBe(pimsFeatures.features.length);
+  });
+
+  it('Markers can be filtered', async () => {
+    mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
+
+    const pimsFeatures = createPimsFeatures(distantMockParcels);
+    const feature = pimsFeatures.features[0];
+    const [longitude, latitude] = feature.geometry.coordinates;
+
+    const expectedFeature: FeatureSelected = {
+      clusterId: '1',
+      pimsFeature: feature.properties,
+      fullyAttributedFeature: null,
+      latlng: { lng: longitude, lat: latitude },
+    };
+
+    const activeIds = [Number(pimsFeatures.features[0].properties.PROPERTY_ID)];
+    const testMapMock: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      mapFeatureData: {
+        pimsFeatures: pimsFeatures,
+        fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
+      },
+      activePimsPropertyIds: activeIds,
+      isFiltering: true,
+    };
+    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
+      testMapMock,
+    );
+
+    await setup();
+
+    const clusterIcons = document.querySelectorAll('.leaflet-marker-icon.marker-cluster');
+    const markerIcons = document.querySelectorAll('img.leaflet-marker-icon');
+
+    // verify the markers have been filtered
+    expect(clusterIcons.length).toBe(0);
+    expect(markerIcons.length).toBe(activeIds.length);
+
+    // click on single marker
+    const marker = document.querySelector('img.leaflet-marker-icon');
+    await act(async () => userEvent.click(marker!));
+
+    // verify the correct feature got clicked
+    expect(testMapMock.mapMarkerClick).toHaveBeenCalledWith(expectedFeature);
   });
 });

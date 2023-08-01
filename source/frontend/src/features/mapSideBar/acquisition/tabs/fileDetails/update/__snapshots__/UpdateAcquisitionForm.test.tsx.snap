@@ -558,6 +558,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="rbt-input-main form-control rbt-input"
                     id="typeahead-project"
                     name="typeahead-project"
+                    placeholder="Type to search for a Project"
                     role="combobox"
                     type="text"
                     value="Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to"

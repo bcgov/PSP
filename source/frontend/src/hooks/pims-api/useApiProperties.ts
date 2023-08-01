@@ -4,6 +4,7 @@ import React from 'react';
 import { IPaginateProperties } from '@/constants/API';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { IPagedItems, IProperty } from '@/interfaces';
+import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
 import { Api_Property, Api_PropertyAssociations } from '@/models/api/Property';
 
 import useAxiosApi from './useApi';
@@ -21,6 +22,8 @@ export const useApiProperties = () => {
         api.get<IPagedItems<IProperty>>(
           `/properties/search?${params ? queryString.stringify(params) : ''}`,
         ),
+      getMatchingPropertiesApi: (params: Api_PropertyFilterCriteria) =>
+        api.post<number[]>(`/properties/search/advanced-filter`, params),
       getPropertyAssociationsApi: (id: number) =>
         api.get<Api_PropertyAssociations>(`/properties/${id}/associations`),
       exportPropertiesApi: (filter: IPaginateProperties, outputFormat: 'csv' | 'excel' = 'excel') =>

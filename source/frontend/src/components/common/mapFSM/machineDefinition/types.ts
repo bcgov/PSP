@@ -25,13 +25,14 @@ export type MachineContext = {
   mapFeatureData: MapFeatureData;
 
   // TODO: this is partially in the URL. Either move it completly there or remove it
-  mapFilter: IPropertyFilter | null;
+  searchCriteria: IPropertyFilter | null;
 
   isLoading: boolean;
   sideBarType: SideBarType;
   requestedFitBounds: LatLngBounds;
   requestedFlyTo: RequestedFlyTo;
   filePropertyLocations: LatLngLiteral[];
+  activePimsPropertyIds: number[];
 };
 
 // Possible state machine states
