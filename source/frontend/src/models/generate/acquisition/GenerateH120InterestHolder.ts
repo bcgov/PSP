@@ -2,7 +2,7 @@ import { Api_InterestHolder, Api_InterestHolderProperty } from '@/models/api/Int
 import Api_TypeCode from '@/models/api/TypeCode';
 import { formatNames } from '@/utils/personUtils';
 
-export class Api_GenerateInterestHolder {
+export class Api_GenerateH120InterestHolder {
   interestHolderName: string;
   interestHolderType: string;
   interestHolderString: string;
