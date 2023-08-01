@@ -3,12 +3,13 @@ import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { formatNames } from '@/utils/personUtils';
 
 import { Api_GenerateAddress } from '../GenerateAddress';
+import { Api_GeneratePerson } from '../GeneratePerson';
 
-export class Api_GenerateExpropriationInterestHolder {
+export class Api_GenerateInterestHolder {
   is_organization: boolean;
   full_name_string: string;
   address: Api_GenerateAddress | null;
-  org_primary_contact: string;
+  primary_contact: Api_GeneratePerson | null;
 
   constructor(interestHolder: Api_InterestHolder | null) {
     this.is_organization = !!interestHolder?.organization ?? false;
@@ -28,6 +29,9 @@ export class Api_GenerateExpropriationInterestHolder {
           getApiPersonOrOrgMailingAddress(interestHolder.organization) ?? null,
         )
       : null;
-    this.org_primary_contact = ''; // TODO
+    this.primary_contact =
+      this.is_organization && interestHolder?.primaryContact
+        ? new Api_GeneratePerson(interestHolder?.primaryContact)
+        : null;
   }
 }
