@@ -3,6 +3,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
+using Pims.Api.Services.Interfaces;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -21,7 +22,7 @@ namespace Pims.Api.Areas.Contact.Controllers
     public class ContactController : ControllerBase
     {
         #region Variables
-        private readonly IContactRepository _contactRepository;
+        private readonly IContactService _contactService;
         private readonly IPersonRepository _personRepository;
         private readonly IOrganizationRepository _organizationRepository;
         private readonly IMapper _mapper;
@@ -32,18 +33,18 @@ namespace Pims.Api.Areas.Contact.Controllers
         /// <summary>
         /// Creates a new instance of a ContactController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="contactRepository"></param>
+        /// <param name="contactService"></param>
         /// <param name="personRepository"></param>
         /// <param name="organizationRepository"></param>
         /// <param name="mapper"></param>
         ///
         public ContactController(
-            IContactRepository contactRepository,
+            IContactService contactService,
             IPersonRepository personRepository,
             IOrganizationRepository organizationRepository,
             IMapper mapper)
         {
-            _contactRepository = contactRepository;
+            _contactService = contactService;
             _personRepository = personRepository;
             _organizationRepository = organizationRepository;
             _mapper = mapper;
@@ -63,7 +64,7 @@ namespace Pims.Api.Areas.Contact.Controllers
         [SwaggerOperation(Tags = new[] { "contact" })]
         public IActionResult GetContact(string id)
         {
-            var contactView = _contactRepository.GetById(id);
+            var contactView = _contactService.GetById(id);
 
             if (id.StartsWith("P"))
             {
