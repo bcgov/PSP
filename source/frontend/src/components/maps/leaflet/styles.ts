@@ -59,7 +59,7 @@ export const MapGrid = styled.div`
   grid-template-areas:
     'filter filter'
     'map map';
-  &.sidebar {
+  &.hideSearchBar {
     grid-template-rows: 0 1fr;
     transition: 1s;
   }

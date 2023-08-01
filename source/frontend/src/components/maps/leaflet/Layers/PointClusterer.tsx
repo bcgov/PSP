@@ -83,7 +83,21 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
     });
   }, [mapMachine.filePropertyLocations]);
 
-  const pimsFeatures = mapMachine.mapFeatureData.pimsFeatures;
+  const pimsFeatures: FeatureCollection<Geometry, PIMS_Property_Location_View> = useMemo(() => {
+    if (mapMachine.isFiltering && mapMachine.mapFeatureData.pimsFeatures !== null) {
+      const filteredFeatures = mapMachine.mapFeatureData.pimsFeatures.features.filter(x =>
+        mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
+      );
+      return { type: mapMachine.mapFeatureData.pimsFeatures.type, features: filteredFeatures };
+    } else {
+      return mapMachine.mapFeatureData.pimsFeatures;
+    }
+  }, [
+    mapMachine.activePimsPropertyIds,
+    mapMachine.isFiltering,
+    mapMachine.mapFeatureData.pimsFeatures,
+  ]);
+
   const fullyAttributedFeatures = mapMachine.mapFeatureData.fullyAttributedFeatures;
 
   const featurePoints: Supercluster.PointFeature<

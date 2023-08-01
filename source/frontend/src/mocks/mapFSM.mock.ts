@@ -1,4 +1,3 @@
-import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
   emptyFullyFeaturedFeatureCollection,
@@ -14,8 +13,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   },
 
   isSidebarOpen: false,
-  sideBarType: SideBarType.NOT_DEFINED,
-  isAdvancedFilterSidebarOpen: false,
+  isShowingSearchBar: false,
   pendingFlyTo: false,
   pendingFitBounds: false,
   requestedFlyTo: {
@@ -29,10 +27,14 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   selectedFeatureDataset: null,
   showPopup: false,
   isLoading: false,
-  mapFilter: null,
+  mapSearchCriteria: null,
 
   filePropertyLocations: [],
+  activePimsPropertyIds: [],
   isSelecting: false,
+  isFiltering: false,
+  isShowingMapLayers: false,
+
   requestFlyToLocation: jest.fn(),
 
   processFlyTo: jest.fn(),
@@ -42,12 +44,14 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   closePopup: jest.fn(),
   mapClick: jest.fn(),
   mapMarkerClick: jest.fn(),
-  setMapFilter: jest.fn(),
+  setMapSearchCriteria: jest.fn(),
   refreshMapProperties: jest.fn(),
   prepareForCreation: jest.fn(),
   startSelection: jest.fn(),
   finishSelection: jest.fn(),
   setFilePropertyLocations: jest.fn(),
-  openAdvancedFilterSidebar: jest.fn(),
-  closeAdvancedFilterSidebar: jest.fn(),
+  setVisiblePimsProperties: jest.fn(),
+  toggleMapFilter: jest.fn(),
+
+  toggleMapLayer: jest.fn(),
 };
