@@ -1,6 +1,6 @@
 import { FormikProps } from 'formik';
 import { find, noop } from 'lodash';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -9,6 +9,7 @@ import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentRepository';
 import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { defaultApiLease } from '@/models/api/Lease';
 import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
@@ -34,14 +35,6 @@ export const TermPaymentsContainer: React.FunctionComponent<
 
   const { updateLeaseTerm, addLeaseTerm, getLeaseTerms, deleteLeaseTerm } =
     useLeaseTermRepository();
-  const {
-    onDeleteTerm,
-    onDeletePayment,
-    deleteModalWarning,
-    setDeleteModalWarning,
-    setConfirmDeleteModalValues,
-    comfirmDeleteModalValues,
-  } = useDeleteTermsPayments(deleteLeaseTerm, getLeaseTerms);
 
   const { updateLeasePayment, addLeasePayment } = useLeasePaymentRepository();
   const { getSystemConstant } = useSystemConstants();
@@ -50,15 +43,29 @@ export const TermPaymentsContainer: React.FunctionComponent<
 
   const leaseId = lease?.id;
   const getLeaseTermsFunc = getLeaseTerms.execute;
-  useEffect(() => {
-    const getLeaseTerms = async () => {
+  const refreshLeaseTerms = useCallback(
+    async (leaseId: number) => {
       if (leaseId) {
         const response = await getLeaseTermsFunc(leaseId);
         setTerms(response ?? []);
       }
-    };
-    getLeaseTerms();
-  }, [getLeaseTermsFunc, leaseId]);
+    },
+    [getLeaseTermsFunc],
+  );
+  useDeepCompareEffect(() => {
+    if (!!leaseId) {
+      refreshLeaseTerms(leaseId);
+    }
+  }, [refreshLeaseTerms, leaseId]);
+
+  const {
+    onDeleteTerm,
+    onDeletePayment,
+    deleteModalWarning,
+    setDeleteModalWarning,
+    setConfirmDeleteModalValues,
+    comfirmDeleteModalValues,
+  } = useDeleteTermsPayments(deleteLeaseTerm, refreshLeaseTerms);
 
   /**
    * Send the save request (either an update or an add). Use the response to update the parent lease.
