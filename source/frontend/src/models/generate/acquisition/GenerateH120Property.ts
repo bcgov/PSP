@@ -2,7 +2,7 @@ import { Api_Geometry, Api_Property } from '@/models/api/Property';
 import { pidFormatter } from '@/utils';
 
 import { Api_GenerateAddress } from '../GenerateAddress';
-import { Api_GenerateInterestHolder } from './GenerateInterestHolder';
+import { Api_GenerateH120InterestHolder } from './GenerateH120InterestHolder';
 export class Api_GenerateH120Property {
   location: Api_Geometry | null;
   pid: string;
@@ -16,7 +16,7 @@ export class Api_GenerateH120Property {
 
   constructor(
     property: Api_Property | null | undefined,
-    interestHolders: Api_GenerateInterestHolder[],
+    interestHolders: Api_GenerateH120InterestHolder[],
   ) {
     this.location =
       property?.location !== null && property?.location !== undefined ? property.location : null;
