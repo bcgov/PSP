@@ -32,7 +32,6 @@ export const UpdateAcquisitionContainer = React.forwardRef<
     (userOverrideCodes: UserOverrideCode[]) => Promise<Api_AcquisitionFile | void>
   >('Failed to update Acquisition File');
 
-  // save handler
   const handleSubmit = async (
     values: UpdateAcquisitionSummaryFormModel,
     formikHelpers: FormikHelpers<UpdateAcquisitionSummaryFormModel>,

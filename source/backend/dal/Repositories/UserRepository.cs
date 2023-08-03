@@ -336,7 +336,6 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsUser GetByKeycloakUserId(Guid keycloakUserId)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
             return this.Context.PimsUsers
                 .Include(u => u.UserTypeCodeNavigation)

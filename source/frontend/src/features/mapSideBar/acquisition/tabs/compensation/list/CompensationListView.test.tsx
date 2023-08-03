@@ -17,6 +17,7 @@ jest.mock('@react-keycloak/web');
 
 const onDelete = jest.fn();
 const onAddCompensationRequisition = jest.fn();
+const onUpdateTotalCompensation = jest.fn();
 
 describe('compensation list view', () => {
   const setup = (renderOptions?: RenderOptions & Partial<ICompensationListViewProps>) => {
@@ -26,6 +27,7 @@ describe('compensation list view', () => {
         compensations={renderOptions?.compensations ?? []}
         onDelete={onDelete}
         onAdd={onAddCompensationRequisition}
+        onUpdateTotalCompensation={onUpdateTotalCompensation}
       />,
       {
         ...renderOptions,

@@ -4,8 +4,11 @@ import styled from 'styled-components';
 
 import DraftSvg from '@/assets/images/pins/icon-draft.svg';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { FilterContentContainer } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentContainer';
+import { FilterContentForm } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentForm';
 import MapView from '@/components/maps/MapView';
 import { FilterProvider } from '@/components/maps/providers/FIlterProvider';
+import AdvancedFilterBar from '@/features/advancedFilterBar/AdvancedFilterBar';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBar from '@/features/mapSideBar/MapSideBar';
 import ActivityRouter from '@/features/mapSideBar/router/ActivityRouter';
@@ -20,10 +23,8 @@ enum MapCursors {
 interface MapContainerProps {}
 
 const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () => {
-  //const [showSideBar, setShowSideBar] = useState(false);
   const [showActionBar, setShowActionBar] = useState(false);
-
-  const { isSelecting } = useMapStateMachine();
+  const { isSelecting, isFiltering, toggleMapFilter } = useMapStateMachine();
 
   const cursorClass = isSelecting ? MapCursors.DRAFT : MapCursors.DEFAULT;
 
@@ -40,6 +41,9 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
           <MapView />
         </FilterProvider>
       )}
+      <AdvancedFilterBar isOpen={isFiltering} toggle={toggleMapFilter}>
+        <FilterContentContainer View={FilterContentForm} />
+      </AdvancedFilterBar>
     </StyleMapView>
   );
 };

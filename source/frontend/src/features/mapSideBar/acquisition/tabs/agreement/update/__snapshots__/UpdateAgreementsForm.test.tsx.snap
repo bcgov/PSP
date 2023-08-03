@@ -140,11 +140,27 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c9.c9.form-control.is-valid {
+.c9 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c9 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c9 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c10.c10.form-control.is-valid {
   background-image: none;
 }
 
-.c9.c9.form-control.is-invalid {
+.c10.c10.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
@@ -218,7 +234,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
   margin-bottom: 2rem;
 }
 
-.c10 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -236,7 +252,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
   justify-content: flex-start;
 }
 
-.c10 label {
+.c11 label {
   margin-left: 0.5rem;
 }
 
@@ -503,20 +519,29 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
               class="c8 text-left col"
             >
               <div
-                class="form-group"
+                class="c9 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
                 >
                   <div
-                    class="react-datepicker__input-container"
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                   >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
                     <input
                       autocomplete="off"
-                      class="c9 form-control date-picker"
+                      class="c10 form-control date-picker"
                       id="datepicker-agreements.0.agreementDate"
                       name="agreements.0.agreementDate"
-                      placeholder="--/--/----"
+                      placeholder="MTH DD, YYYY"
                       type="text"
                       value=""
                     />
@@ -541,20 +566,29 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
               class="c8 text-left col"
             >
               <div
-                class="form-group"
+                class="c9 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
                 >
                   <div
-                    class="react-datepicker__input-container"
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                   >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
                     <input
                       autocomplete="off"
-                      class="c9 form-control date-picker"
+                      class="c10 form-control date-picker"
                       id="datepicker-agreements.0.commencementDate"
                       name="agreements.0.commencementDate"
-                      placeholder="--/--/----"
+                      placeholder="MTH DD, YYYY"
                       type="text"
                       value=""
                     />
@@ -579,20 +613,29 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
               class="c8 text-left col"
             >
               <div
-                class="form-group"
+                class="c9 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
                 >
                   <div
-                    class="react-datepicker__input-container"
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                   >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
                     <input
                       autocomplete="off"
-                      class="c9 form-control date-picker"
+                      class="c10 form-control date-picker"
                       id="datepicker-agreements.0.completionDate"
                       name="agreements.0.completionDate"
-                      placeholder="--/--/----"
+                      placeholder="MTH DD, YYYY"
                       type="text"
                       value=""
                     />
@@ -617,20 +660,29 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
               class="c8 text-left col"
             >
               <div
-                class="form-group"
+                class="c9 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
                 >
                   <div
-                    class="react-datepicker__input-container"
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                   >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
                     <input
                       autocomplete="off"
-                      class="c9 form-control date-picker"
+                      class="c10 form-control date-picker"
                       id="datepicker-agreements.0.terminationDate"
                       name="agreements.0.terminationDate"
-                      placeholder="--/--/----"
+                      placeholder="MTH DD, YYYY"
                       type="text"
                       value=""
                     />
@@ -718,7 +770,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
               class="c8 text-left col"
             >
               <div
-                class="c10"
+                class="c11"
               >
                 <div
                   class="input form-group"
@@ -1003,22 +1055,31 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
               class="c8 text-left col"
             >
               <div
-                class="form-group"
+                class="c9 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
                 >
                   <div
-                    class="react-datepicker__input-container"
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                   >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
                     <input
                       autocomplete="off"
-                      class="c9 form-control date-picker"
+                      class="c10 form-control date-picker"
                       id="datepicker-agreements.1.agreementDate"
                       name="agreements.1.agreementDate"
-                      placeholder="--/--/----"
+                      placeholder="MTH DD, YYYY"
                       type="text"
-                      value="04/05/2023"
+                      value="Apr 05, 2023"
                     />
                   </div>
                 </div>
@@ -1041,22 +1102,31 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
               class="c8 text-left col"
             >
               <div
-                class="form-group"
+                class="c9 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
                 >
                   <div
-                    class="react-datepicker__input-container"
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                   >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
                     <input
                       autocomplete="off"
-                      class="c9 form-control date-picker"
+                      class="c10 form-control date-picker"
                       id="datepicker-agreements.1.completionDate"
                       name="agreements.1.completionDate"
-                      placeholder="--/--/----"
+                      placeholder="MTH DD, YYYY"
                       type="text"
-                      value="04/05/2023"
+                      value="Apr 05, 2023"
                     />
                   </div>
                 </div>
@@ -1079,22 +1149,31 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
               class="c8 text-left col"
             >
               <div
-                class="form-group"
+                class="c9 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
                 >
                   <div
-                    class="react-datepicker__input-container"
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                   >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
                     <input
                       autocomplete="off"
-                      class="c9 form-control date-picker"
+                      class="c10 form-control date-picker"
                       id="datepicker-agreements.1.terminationDate"
                       name="agreements.1.terminationDate"
-                      placeholder="--/--/----"
+                      placeholder="MTH DD, YYYY"
                       type="text"
-                      value="04/05/2023"
+                      value="Apr 05, 2023"
                     />
                   </div>
                 </div>
@@ -1180,7 +1259,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
               class="c8 text-left col"
             >
               <div
-                class="c10"
+                class="c11"
               >
                 <div
                   class="input form-group"

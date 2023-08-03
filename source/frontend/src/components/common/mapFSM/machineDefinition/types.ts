@@ -17,7 +17,6 @@ export enum SideBarType {
 
 // Local context for the machine - Not related to React Context!
 export type MachineContext = {
-  isSelecting: boolean;
   mapFeatureSelected: FeatureSelected | null;
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
@@ -26,13 +25,14 @@ export type MachineContext = {
   mapFeatureData: MapFeatureData;
 
   // TODO: this is partially in the URL. Either move it completly there or remove it
-  mapFilter: IPropertyFilter | null;
+  searchCriteria: IPropertyFilter | null;
 
   isLoading: boolean;
   sideBarType: SideBarType;
   requestedFitBounds: LatLngBounds;
   requestedFlyTo: RequestedFlyTo;
   filePropertyLocations: LatLngLiteral[];
+  activePimsPropertyIds: number[];
 };
 
 // Possible state machine states

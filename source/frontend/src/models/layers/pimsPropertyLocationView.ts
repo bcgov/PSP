@@ -29,6 +29,7 @@ export interface PIMS_Property_Location_View {
   readonly PROPERTY_AREA_UNIT_TYPE_CODE: string | null;
   readonly LAND_AREA: string | null;
   readonly LAND_LEGAL_DESCRIPTION: string | null;
+  readonly SURVEY_PLAN_NUMBER: string | null;
   readonly ENCUMBRANCE_REASON: string | null;
   readonly IS_SENSITIVE: string | null;
   readonly IS_OWNED: string | null;
@@ -67,6 +68,7 @@ export const EmptyProperty: PIMS_Property_Location_View = {
   PROPERTY_AREA_UNIT_TYPE_CODE: null,
   LAND_AREA: null,
   LAND_LEGAL_DESCRIPTION: null,
+  SURVEY_PLAN_NUMBER: null,
   ENCUMBRANCE_REASON: null,
   IS_SENSITIVE: null,
   IS_OWNED: null,

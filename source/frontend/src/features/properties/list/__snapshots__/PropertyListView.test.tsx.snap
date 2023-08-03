@@ -333,6 +333,13 @@ exports[`Property list view matches snapshot 1`] = `
                   >
                     Address
                   </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-planNumber"
+                    value="planNumber"
+                  >
+                    Plan #
+                  </option>
                 </select>
               </div>
             </div>

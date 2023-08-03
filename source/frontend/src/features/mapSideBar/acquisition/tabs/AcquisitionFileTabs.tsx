@@ -128,6 +128,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       content: (
         <CompensationListContainer
           fileId={acquisitionFile.id}
+          file={acquisitionFile}
           View={CompensationListView}
         ></CompensationListContainer>
       ),

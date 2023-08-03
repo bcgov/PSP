@@ -14,12 +14,15 @@ export interface IPropertyFilter {
   address: string;
   latitude: number | string | undefined;
   longitude: number | string | undefined;
+  /** The plan number of the property. */
+  planNumber?: string;
 }
 
 export const defaultPropertyFilter: IPropertyFilter = {
   searchBy: 'pinOrPid',
   pinOrPid: '',
   address: '',
+  planNumber: '',
   latitude: '',
   longitude: '',
   page: undefined,

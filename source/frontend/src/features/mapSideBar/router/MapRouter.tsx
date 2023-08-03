@@ -90,21 +90,20 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
 
   useEffect(() => {
     if (matched !== null) {
-      let mapState: SideBarType = SideBarType.NOT_DEFINED;
-
+      let sidebarType: SideBarType = SideBarType.NOT_DEFINED;
       if (isAcquisition) {
-        mapState = SideBarType.ACQUISITION_FILE;
+        sidebarType = SideBarType.ACQUISITION_FILE;
       } else if (isResearch) {
-        mapState = SideBarType.RESEARCH_FILE;
+        sidebarType = SideBarType.RESEARCH_FILE;
       } else if (isLease) {
-        mapState = SideBarType.LEASE_FILE;
+        sidebarType = SideBarType.LEASE_FILE;
       } else if (isProject) {
-        mapState = SideBarType.PROJECT;
+        sidebarType = SideBarType.PROJECT;
       } else if (isProperty) {
-        mapState = SideBarType.PROPERTY_INFORMATION;
+        sidebarType = SideBarType.PROPERTY_INFORMATION;
       }
 
-      openSidebar(mapState);
+      openSidebar(sidebarType);
     } else {
       closeSidebar();
     }

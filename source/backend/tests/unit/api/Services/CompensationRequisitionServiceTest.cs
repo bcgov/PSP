@@ -8,6 +8,7 @@ using FluentAssertions;
 using Moq;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities;
@@ -93,6 +94,9 @@ namespace Pims.Api.Test.Services
             var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
             var compensationRepository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
 
             var listPayeeStub = new List<PimsAcquisitionPayee>
                     {
@@ -136,6 +140,9 @@ namespace Pims.Api.Test.Services
             var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
             var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
 
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true });
@@ -214,6 +221,9 @@ namespace Pims.Api.Test.Services
             var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit, Permissions.SystemAdmin);
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
             var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
 
             repository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = false });
@@ -244,6 +254,9 @@ namespace Pims.Api.Test.Services
             var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit, Permissions.SystemAdmin);
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
             var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
 
             repository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = false });
@@ -274,6 +287,9 @@ namespace Pims.Api.Test.Services
             var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
             var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
 
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
@@ -295,6 +311,193 @@ namespace Pims.Api.Test.Services
             repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
             noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'No Status' to 'Draft'"))), Times.Once);
+        }
+
+        [Fact]
+        public void Update_Success_ValidTotalAllowableCompensation()
+        {
+            // Arrange
+            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var compReqH120Service = _helper.GetService<Mock<ICompReqH120Service>>();
+            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
+            repository.Setup(x => x.GetById(It.IsAny<long>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
+
+            compReqH120Service.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true)).Returns(
+                new List<PimsCompReqH120>() { new PimsCompReqH120() { TotalAmt = 100 } });
+
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
+
+            // Act
+            var result = service.Update(new PimsCompensationRequisition()
+            {
+                Internal_Id = 1,
+                AcquisitionFileId = 1,
+                ConcurrencyControlNumber = 2,
+                IsDraft = true,
+                PimsCompReqH120s = new List<PimsCompReqH120>() { new PimsCompReqH120() { TotalAmt = 1000 } }
+            }
+            );
+
+            // Assert
+            result.Should().NotBeNull();
+            repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
+        }
+
+        [Fact]
+        public void Update_Success_ValidMultipleTotalAllowableCompensation()
+        {
+            // Arrange
+            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var compReqH120Service = _helper.GetService<Mock<ICompReqH120Service>>();
+            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
+            repository.Setup(x => x.GetById(It.IsAny<long>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
+
+            compReqH120Service.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true)).Returns(
+                new List<PimsCompReqH120>() { new PimsCompReqH120() { CompensationRequisitionId = 1, TotalAmt = 1000 }, new PimsCompReqH120() { CompensationRequisitionId = 2, TotalAmt = 100 } });
+
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 300,
+                PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { Internal_Id = 1,
+                    PimsCompReqH120s = new List<PimsCompReqH120>() { new PimsCompReqH120() { TotalAmt = 100 } } } } });
+
+            // Act
+            var result = service.Update(new PimsCompensationRequisition()
+            {
+                Internal_Id = 1,
+                AcquisitionFileId = 1,
+                ConcurrencyControlNumber = 2,
+                IsDraft = false,
+                PimsCompReqH120s = new List<PimsCompReqH120>() { new PimsCompReqH120() { TotalAmt = 200 } }
+            }
+            );
+
+            // Assert
+            result.Should().NotBeNull();
+            repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
+        }
+
+        [Fact]
+        public void Update_Success_TotalAllowableExceededDraft()
+        {
+            // Arrange
+            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var compReqH120Service = _helper.GetService<Mock<ICompReqH120Service>>();
+            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
+            repository.Setup(x => x.GetById(It.IsAny<long>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
+
+            compReqH120Service.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true)).Returns(
+                new List<PimsCompReqH120>() { new PimsCompReqH120() { TotalAmt = 100 } });
+
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
+
+            // Act
+            var result = service.Update(new PimsCompensationRequisition()
+            {
+                Internal_Id = 1,
+                AcquisitionFileId = 1,
+                ConcurrencyControlNumber = 2,
+                IsDraft = true,
+                PimsCompReqH120s = new List<PimsCompReqH120>() { new PimsCompReqH120() { TotalAmt = 1000 } }
+            }
+            );
+
+            // Assert
+            result.Should().NotBeNull();
+            repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
+        }
+
+        [Fact]
+        public void Update_Fail_TotalAllowableExceeded()
+        {
+            // Arrange
+            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var compReqH120Service = _helper.GetService<Mock<ICompReqH120Service>>();
+            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
+            repository.Setup(x => x.GetById(It.IsAny<long>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
+
+            compReqH120Service.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true)).Returns(new List<PimsCompReqH120>() {});
+
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
+            {
+                TotalAllowableCompensation = 99,
+                PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { Internal_Id = 1,
+                    PimsCompReqH120s = new List<PimsCompReqH120>() { new PimsCompReqH120() { TotalAmt = 100 } } } }
+            });
+
+            // Act
+            // Assert
+            Action act = () => service.Update(new PimsCompensationRequisition()
+            {
+                Internal_Id = 1,
+                AcquisitionFileId = 1,
+                ConcurrencyControlNumber = 2,
+                IsDraft = false,
+                PimsCompReqH120s = new List<PimsCompReqH120>() { new PimsCompReqH120() { TotalAmt = 200 } }
+            }
+            );
+            act.Should().Throw<BusinessRuleViolationException>();
+        }
+
+        [Fact]
+        public void Update_Fail_ValidMultipleTotalAllowableCompensation()
+        {
+            // Arrange
+            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var compReqH120Service = _helper.GetService<Mock<ICompReqH120Service>>();
+            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
+            repository.Setup(x => x.GetById(It.IsAny<long>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
+
+            compReqH120Service.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true)).Returns(
+                new List<PimsCompReqH120>() { new PimsCompReqH120() { CompensationRequisitionId = 1, TotalAmt = 1000 }, new PimsCompReqH120() { CompensationRequisitionId = 2, TotalAmt = 100 } });
+
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
+            {
+                TotalAllowableCompensation = 299,
+                PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { Internal_Id = 1,
+                    PimsCompReqH120s = new List<PimsCompReqH120>() { new PimsCompReqH120() { TotalAmt = 100 } } } }
+            });
+
+            // Act
+            // Assert
+            Action act = () => service.Update(new PimsCompensationRequisition()
+            {
+                Internal_Id = 1,
+                AcquisitionFileId = 1,
+                ConcurrencyControlNumber = 2,
+                IsDraft = false,
+                PimsCompReqH120s = new List<PimsCompReqH120>() { new PimsCompReqH120() { TotalAmt = 200 } }
+            }
+            );
+            act.Should().Throw<BusinessRuleViolationException>();
         }
 
         [Fact]

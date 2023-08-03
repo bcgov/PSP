@@ -140,15 +140,31 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   margin-right: 0;
 }
 
-.c12.c12.form-control.is-valid {
+.c11 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c11 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c11 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c13.c13.form-control.is-valid {
   background-image: none;
 }
 
-.c12.c12.form-control.is-invalid {
+.c13.c13.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c11 {
+.c12 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -159,13 +175,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   align-items: baseline;
 }
 
-.c11 .form-label {
+.c12 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c16 {
+.c17 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -175,7 +191,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   flex-wrap: nowrap;
 }
 
-.c13 {
+.c14 {
   position: relative;
   border-radius: 0.3rem;
   padding: 0.6rem;
@@ -185,11 +201,11 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   border: solid 0.1rem;
 }
 
-.c13.is-invalid {
+.c14.is-invalid {
   border: solid 0.1rem;
 }
 
-.c14.c14.btn {
+.c15.c15.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
   right: 0.4rem;
@@ -198,19 +214,19 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   line-height: unset;
 }
 
-.c14.c14.btn .text {
+.c15.c15.btn .text {
   display: none;
 }
 
-.c14.c14.btn:hover,
-.c14.c14.btn:active,
-.c14.c14.btn:focus {
+.c15.c15.btn:hover,
+.c15.c15.btn:active,
+.c15.c15.btn:focus {
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
 }
 
-.c15.form-group {
+.c16.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -218,7 +234,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   margin-bottom: 0;
 }
 
-.c15.form-group .radio-group {
+.c16.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -231,7 +247,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   column-gap: unset;
 }
 
-.c15.form-group .radio-group .form-check {
+.c16.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -246,15 +262,15 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   justify-content: center;
 }
 
-.c15.form-group .radio-group .form-check .form-check-input {
+.c16.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c15.form-group .radio-group .form-check-label {
+.c16.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c15 .form-label {
+.c16 .form-label {
   margin-bottom: unset;
 }
 
@@ -736,22 +752,31 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="c4 text-left col"
           >
             <div
-              class="c11 form-group"
+              class="c11 c12 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
               >
                 <div
-                  class="react-datepicker__input-container"
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                 >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
                   <input
                     autocomplete="off"
-                    class="c12 form-control date-picker"
+                    class="c13 form-control date-picker"
                     id="datepicker-requestDate"
                     name="requestDate"
-                    placeholder="--/--/----"
+                    placeholder="MTH DD, YYYY"
                     type="text"
-                    value="04/14/2022"
+                    value="Apr 14, 2022"
                   />
                 </div>
               </div>
@@ -882,11 +907,11 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                   class="col"
                 >
                   <div
-                    class="c13"
+                    class="c14"
                   >
                     Dairy Queen Forever! Property Management
                     <button
-                      class="c10 Button c14 btn btn-link"
+                      class="c10 Button c15 btn btn-link"
                       type="button"
                     >
                       <div
@@ -1023,22 +1048,31 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="c4 text-left col"
           >
             <div
-              class="c11 form-group"
+              class="c11 c12 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
               >
                 <div
-                  class="react-datepicker__input-container"
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                 >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
                   <input
                     autocomplete="off"
-                    class="c12 form-control date-picker"
+                    class="c13 form-control date-picker"
                     id="datepicker-researchCompletionDate"
                     name="researchCompletionDate"
-                    placeholder="--/--/----"
+                    placeholder="MTH DD, YYYY"
                     type="text"
-                    value="03/30/2022"
+                    value="Mar 30, 2022"
                   />
                 </div>
               </div>
@@ -1110,13 +1144,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="c4 text-left col"
           >
             <div
-              class="c15 form-group"
+              class="c16 form-group"
             >
               <div
                 class="radio-group"
               >
                 <div
-                  class="c16"
+                  class="c17"
                 >
                   <div
                     class="form-check"
@@ -1139,7 +1173,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                   </label>
                 </div>
                 <div
-                  class="c16"
+                  class="c17"
                 >
                   <div
                     class="form-check"
