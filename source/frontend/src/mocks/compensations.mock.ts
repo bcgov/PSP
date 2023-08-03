@@ -93,7 +93,7 @@ export const getMockApiCompensation = (): Api_CompensationRequisition => ({
       compensationRequisition: null,
       isPaymentInTrust: true,
       gstNumber: '9999',
-      acquisitionOwnerId: null,
+      acquisitionOwnerId: 1,
       acquisitionOwner: null,
       interestHolderId: null,
       interestHolder: null,
