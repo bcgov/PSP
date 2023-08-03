@@ -11,6 +11,7 @@ import {
   fireEvent,
   render,
   RenderOptions,
+  screen,
   userEvent,
   waitFor,
 } from '@/utils/test-utils';
@@ -136,59 +137,67 @@ describe('Compensation Requisition UpdateForm component', () => {
     expect(getPayeeTotalAmount()).toHaveValue('$31,500.00');
   });
 
-  it('should display confirmation modal when changing the status to "FINAL"', async () => {
-    const { findByText, getByTitle, getStatusDropDown } = await setup({
-      props: { initialValues: defaultCompensation },
+  it('should NOT display confirmation modal when saving a compensation with Status as "Draft"', async () => {
+    const mockCompensation = CompensationRequisitionFormModel.fromApi(getMockApiCompensation());
+    const { queryByText, getSpecialInstructionsTextbox } = await setup({
+      props: { initialValues: mockCompensation },
     });
 
     await act(async () => {
-      fireEvent.change(getStatusDropDown(), { target: { value: 'final' } });
+      await waitFor(() => userEvent.paste(getSpecialInstructionsTextbox(), 'updated value'));
     });
+
+    const saveButton = screen.getByText('Save');
+    await act(async () => userEvent.click(saveButton));
 
     expect(
-      await findByText(/You have selected to change the status from DRAFT to FINAL./i),
-    ).toBeVisible();
-
-    await act(async () => userEvent.click(getByTitle('ok-modal')));
-
-    expect(getStatusDropDown()).toHaveValue('final');
+      queryByText(/You have selected to change the status from DRAFT to FINAL./i),
+    ).not.toBeInTheDocument();
+    expect(onSave).toHaveBeenCalled();
   });
 
-  it('should return status to Draft when confirmation modal cancel', async () => {
-    const { findByText, getByTitle, getStatusDropDown } = await setup({
-      props: { initialValues: defaultCompensation },
+  it('should display confirmation modal when saving a compensation with Status as "FINAL"', async () => {
+    const mockCompensation = CompensationRequisitionFormModel.fromApi(getMockApiCompensation());
+    const { findByText, getStatusDropDown, getByTitle } = await setup({
+      props: { initialValues: mockCompensation },
     });
 
     await act(async () => {
       fireEvent.change(getStatusDropDown(), { target: { value: 'final' } });
     });
 
+    const saveButton = screen.getByText('Save');
+    await act(async () => userEvent.click(saveButton));
+
+    expect(onSave).not.toHaveBeenCalled();
     expect(
       await findByText(/You have selected to change the status from DRAFT to FINAL./i),
     ).toBeVisible();
 
     await act(async () => userEvent.click(getByTitle('cancel-modal')));
-    expect(getStatusDropDown()).toHaveValue('draft');
+    expect(onSave).not.toHaveBeenCalled();
   });
 
-  it('should validate extra fields when changing to final status', async () => {
-    const { getStatusDropDown, findByText, getByText, getByTitle } = await setup({
-      props: { initialValues: defaultCompensation },
+  it('save a compensation with Status as "FINAL" after confirming modal', async () => {
+    const mockCompensation = CompensationRequisitionFormModel.fromApi(getMockApiCompensation());
+    const { findByText, getStatusDropDown, getByTitle } = await setup({
+      props: { initialValues: mockCompensation },
     });
 
     await act(async () => {
       fireEvent.change(getStatusDropDown(), { target: { value: 'final' } });
     });
 
+    const saveButton = screen.getByText('Save');
+    await act(async () => userEvent.click(saveButton));
+
+    expect(onSave).not.toHaveBeenCalled();
     expect(
       await findByText(/You have selected to change the status from DRAFT to FINAL./i),
     ).toBeVisible();
 
     await act(async () => userEvent.click(getByTitle('ok-modal')));
 
-    const saveButton = getByText('Save');
-    userEvent.click(saveButton);
-
-    expect(await findByText(/Fiscal year is required/i)).toBeVisible();
+    expect(onSave).toHaveBeenCalled();
   });
 });

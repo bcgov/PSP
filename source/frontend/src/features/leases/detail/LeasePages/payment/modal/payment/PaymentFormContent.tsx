@@ -12,8 +12,8 @@ import { FormLeasePayment } from '../../models';
 import * as Styled from '../../styles';
 
 interface IPaymentFormContentProps {
-  isReceived?: boolean;
-  isGstEligible?: boolean;
+  isReceived: boolean;
+  isGstEligible: boolean;
 }
 
 const PaymentFormContent: React.FunctionComponent<
@@ -21,7 +21,7 @@ const PaymentFormContent: React.FunctionComponent<
 > = ({ isReceived, isGstEligible }) => {
   const formikProps = useFormikContext<FormLeasePayment>();
   const lookups = useLookupCodeHelpers();
-  useCalculateActualGst(isGstEligible);
+  useCalculateActualGst(!!isGstEligible);
   const paymentMethodOptions = lookups.getOptionsByType(API.LEASE_PAYMENT_METHOD_TYPES);
   return (
     <Styled.StyledFormBody>
@@ -45,8 +45,14 @@ const PaymentFormContent: React.FunctionComponent<
             formikProps={formikProps}
             label="Expected payment ($)"
             field="amountPreTax"
+            innerClassName="small"
           />
-          <FastCurrencyInput formikProps={formikProps} label="GST ($)" field="amountGst" />
+          <FastCurrencyInput
+            formikProps={formikProps}
+            label="GST ($)"
+            field="amountGst"
+            innerClassName="small"
+          />
         </InlineFlexDiv>
       </Styled.ActualPaymentBox>
     </Styled.StyledFormBody>

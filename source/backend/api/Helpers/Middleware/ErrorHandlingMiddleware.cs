@@ -137,6 +137,13 @@ namespace Pims.Api.Helpers.Middleware
 
                 _logger.LogError(ex, ex.Message);
             }
+            else if (ex is BusinessRuleViolationException)
+            {
+                code = HttpStatusCode.BadRequest;
+                message = ex.Message;
+
+                _logger.LogWarning(ex, "Business Rule violation.");
+            }
             else if (ex is BadRequestException || ex is InvalidOperationException)
             {
                 code = HttpStatusCode.BadRequest;

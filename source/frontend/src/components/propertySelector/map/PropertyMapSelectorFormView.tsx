@@ -1,8 +1,8 @@
 import * as React from 'react';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Section } from '@/components/common/Section/Section';
 import * as Styled from '@/components/common/styles';
-import { MapStateActionTypes, MapStateContext } from '@/components/maps/providers/MapStateContext';
 
 import MapClickMonitor from '../MapClickMonitor';
 import { IMapProperty } from '../models';
@@ -17,29 +17,22 @@ export interface IPropertyMapSelectorFormViewProps {
 const PropertyMapSelectorFormView: React.FunctionComponent<
   React.PropsWithChildren<IPropertyMapSelectorFormViewProps>
 > = ({ onSelectedProperty, lastSelectedProperty, selectedProperties }) => {
-  const { setState } = React.useContext(MapStateContext);
+  const mapMachine = useMapStateMachine();
 
   const onClickDraftMarker = () => {
-    setState({ type: MapStateActionTypes.IS_SELECTING, isSelecting: true });
+    mapMachine.startSelection();
   };
 
-  React.useEffect(() => {
-    return () => {
-      setState({ type: MapStateActionTypes.IS_SELECTING, isSelecting: false });
-    };
-  }, [setState]);
-
   return (
-    <>
-      <Section header={undefined}>
-        <Styled.H3>Select a property</Styled.H3>
-        <PropertyMapSelectorSubForm
-          onClickDraftMarker={onClickDraftMarker}
-          selectedProperty={lastSelectedProperty}
-        />
-        <MapClickMonitor addProperty={onSelectedProperty} modifiedProperties={selectedProperties} />
-      </Section>
-    </>
+    <Section header={undefined}>
+      <Styled.H3>Select a property</Styled.H3>
+      <PropertyMapSelectorSubForm
+        onClickDraftMarker={onClickDraftMarker}
+        selectedProperty={lastSelectedProperty}
+      />
+
+      <MapClickMonitor addProperty={onSelectedProperty} modifiedProperties={selectedProperties} />
+    </Section>
   );
 };
 

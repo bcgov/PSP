@@ -6,7 +6,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class FinancialCodes : PageObjectBase
     {
         //Main Menu Element
-        private By financialCodeMainMenuLink = By.XPath("//a[contains(text(),'Manage Financial Codes')]");
+        private By financialCodeMainMenuLink = By.XPath("//a[contains(text(),'Manage Project and Financial Codes')]");
 
         //Financial Codes List View Elements
         //Financial Codes Filters Elements

@@ -12,7 +12,7 @@ import { fillInput } from '@/utils/test-utils';
 import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
 import { PropertyFilter } from '.';
-import { IPropertyFilter } from './IPropertyFilter';
+import { defaultPropertyFilter, IPropertyFilter } from './IPropertyFilter';
 
 const onFilterChange = jest.fn<void, [IPropertyFilter]>();
 //prevent web calls from being made during tests.
@@ -77,12 +77,6 @@ const getStore = (filter: any) =>
     [lookupCodesSlice.name]: lCodes,
   });
 
-const defaultFilter: IPropertyFilter = {
-  searchBy: 'pinOrPid',
-  pinOrPid: '',
-  address: '',
-};
-
 const getUiElement = (filter: IPropertyFilter, showAllOrganizationSelect = true) => (
   <TestCommonWrapper store={getStore(filter)} history={history}>
     <PropertyFilter useGeocoder={true} defaultFilter={filter} onChange={onFilterChange} />
@@ -106,7 +100,7 @@ describe('MapFilterBar', () => {
   it('renders correctly', () => {
     mockKeycloak(['property-view']);
     // Capture any changes
-    const { container } = render(getUiElement(defaultFilter));
+    const { container } = render(getUiElement(defaultPropertyFilter));
     expect(container.firstChild).toMatchSnapshot();
   });
 
@@ -114,7 +108,7 @@ describe('MapFilterBar', () => {
     // Arrange
     mockKeycloak(['admin-properties']);
 
-    const { container } = render(getUiElement(defaultFilter));
+    const { container } = render(getUiElement(defaultPropertyFilter));
     const submit = container.querySelector('button[type="submit"]');
 
     // Act
@@ -127,14 +121,19 @@ describe('MapFilterBar', () => {
 
     // Assert
     expect(onFilterChange).toBeCalledWith({
-      pinOrPid: '',
       address: '',
+      latitude: '',
+      longitude: '',
+      page: undefined,
+      pinOrPid: '',
+      planNumber: '',
+      quantity: undefined,
       searchBy: 'pinOrPid',
     });
   });
 
   it('resets values when reset button is clicked', async () => {
-    const { container, getByTestId } = render(getUiElement(defaultFilter));
+    const { container, getByTestId } = render(getUiElement(defaultPropertyFilter));
 
     // Act
     // Enter values on the form fields, then click the Search button
@@ -144,8 +143,13 @@ describe('MapFilterBar', () => {
     });
     expect(onFilterChange).toBeCalledWith<[IPropertyFilter]>({
       pinOrPid: '',
+      planNumber: '',
       address: '',
       searchBy: 'pinOrPid',
+      page: undefined,
+      quantity: undefined,
+      latitude: '',
+      longitude: '',
     });
   });
 });

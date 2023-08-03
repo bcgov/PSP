@@ -52,6 +52,7 @@ export const AddAcquisitionForm = React.forwardRef<
   const [projectProducts, setProjectProducts] = React.useState<Api_Product[] | undefined>(
     undefined,
   );
+
   const { retrieveProjectProducts } = useProjectProvider();
   const { getOptionsByType } = useLookupCodeHelpers();
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
@@ -275,10 +276,6 @@ const Container = styled.div`
       margin: 1.5rem;
       padding-left: 1.5rem;
     }
-  }
-
-  .react-datepicker-wrapper {
-    max-width: 14rem;
   }
 
   [name='region'] {

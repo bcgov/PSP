@@ -6,6 +6,7 @@ import { Api_GenerateOwner } from '../GenerateOwner';
 import { Api_GeneratePerson } from '../GeneratePerson';
 import { Api_GenerateProduct } from '../GenerateProduct';
 import { Api_GenerateProject } from '../GenerateProject';
+import { Api_GenerateH120InterestHolder } from './GenerateH120InterestHolder';
 import { Api_GenerateH120Property } from './GenerateH120Property';
 import { Api_GenerateInterestHolder } from './GenerateInterestHolder';
 
@@ -14,7 +15,7 @@ export interface IApiGenerateAcquisitionFileInput {
   coordinatorContact?: Api_Person | null;
   negotiatingAgent?: Api_Person | null;
   provincialSolicitor?: Api_Person | null;
-  ownerSolicitor?: Api_Person | null;
+  ownerSolicitor?: Api_InterestHolder | null;
   interestHolders?: Api_InterestHolder[];
 }
 
@@ -32,7 +33,7 @@ export class Api_GenerateAcquisitionFile {
   project_number: string;
   project_name: string;
   prov_solicitor?: Api_GeneratePerson;
-  owner_solicitor?: Api_GeneratePerson;
+  owner_solicitor?: Api_GenerateInterestHolder;
   neg_agent?: Api_GeneratePerson;
   project?: Api_GenerateProject;
   product?: Api_GenerateProduct;
@@ -65,7 +66,7 @@ export class Api_GenerateAcquisitionFile {
           (mihp: Api_InterestHolderProperty) =>
             mihp.propertyInterestTypes.map(
               pit =>
-                new Api_GenerateInterestHolder(
+                new Api_GenerateH120InterestHolder(
                   interestHolders.find(ih => ih.interestHolderId === mihp.interestHolderId) ?? null,
                   mihp,
                   pit,
@@ -84,7 +85,7 @@ export class Api_GenerateAcquisitionFile {
       file?.acquisitionFileOwners?.find(owner => owner.isPrimaryContact) ?? null,
     );
     this.prov_solicitor = new Api_GeneratePerson(provincialSolicitor);
-    this.owner_solicitor = new Api_GeneratePerson(ownerSolicitor);
+    this.owner_solicitor = new Api_GenerateInterestHolder(ownerSolicitor);
     this.person_owners =
       file?.acquisitionFileOwners
         ?.filter(owner => !owner.isOrganization)

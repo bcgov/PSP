@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
 
-import { MapStateContextProvider } from '@/components/maps/providers/MapStateContext';
+import { MapStateMachineProvider } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockProjectPostResponse } from '@/mocks/projects.mock';
@@ -67,9 +67,9 @@ describe('AddProjectContainer component', () => {
     selectedProperty: Feature<Geometry, GeoJsonProperties> | null = null,
   ) => {
     const utils = render(
-      <MapStateContextProvider values={{ selectedFileFeature: selectedProperty }}>
+      <MapStateMachineProvider>
         <AddProjectContainer {...props} />
-      </MapStateContextProvider>,
+      </MapStateMachineProvider>,
       {
         ...renderOptions,
         store: {

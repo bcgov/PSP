@@ -6,7 +6,6 @@ import styled from 'styled-components';
 
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
 import { FileTypes } from '@/constants/fileTypes';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -55,7 +54,6 @@ export const ResearchContainer: React.FunctionComponent<
   const formikRef = useRef<FormikProps<any>>(null);
 
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
-  const { searchMany } = useMapSearch();
 
   const menuItems = researchFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('File Summary');
@@ -145,7 +143,6 @@ export const ResearchContainer: React.FunctionComponent<
     fetchResearchFile();
     setIsEditing(false);
     setEditKey(FormKeys.none);
-    searchMany();
   };
 
   const showPropertiesSelector = () => {

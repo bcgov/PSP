@@ -10,3 +10,13 @@ export interface MOT_RegionalBoundary_Feature_Properties {
   readonly FEATURE_AREA_SQM: number | null;
   readonly FEATURE_LENGTH_M: number | null;
 }
+
+export const emptyRegion: MOT_RegionalBoundary_Feature_Properties = {
+  REGION_NUMBER: null,
+  FEATURE_CODE: null,
+  REGION_NAME: null,
+  OBJECTID: null,
+  SE_ANNO_CAD_DATA: null,
+  FEATURE_AREA_SQM: null,
+  FEATURE_LENGTH_M: null,
+};

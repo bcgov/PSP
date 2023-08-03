@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DotNetEnv;
+using DotNetEnv.Configuration;
+using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
@@ -14,9 +16,7 @@ namespace PIMS.Tests.Automation.Drivers
 
         public BrowserDriver()
         {
-            
-            System.Diagnostics.Debug.WriteLine(Environment.GetEnvironmentVariable("BASE_URL"));
-            currentWebDriverLazy = new Lazy<IWebDriver>(CreateEdgeWebDriver);
+            currentWebDriverLazy = new Lazy<IWebDriver>(CreateChromeWebDriver);
             configurationLazy = new Lazy<IConfiguration>(ReadConfiguration);
             closeBrowserOnDispose = Configuration.GetValue("CloseBrowserAfterEachTest", true);
             runAutomationHeadless = Configuration.GetValue("RunHeadless", true);
@@ -40,7 +40,6 @@ namespace PIMS.Tests.Automation.Drivers
 
             var chromeDriver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), options);
             chromeDriver.Url = Configuration.GetValue<string>("baseUrl");
-            //chromeDriver.Url = Environment.GetEnvironmentVariable("BASE_URL");
 
             return chromeDriver;
         }
@@ -59,8 +58,6 @@ namespace PIMS.Tests.Automation.Drivers
 
             var edgeDriver = new EdgeDriver(EdgeDriverService.CreateDefaultService(), options);
             edgeDriver.Url = Configuration.GetValue<string>("baseUrl");
-            //var baseUrl = Environment.GetEnvironmentVariable("BASE_URL");
-            //edgeDriver.Url = baseUrl;
 
             return edgeDriver;
         }
@@ -68,6 +65,8 @@ namespace PIMS.Tests.Automation.Drivers
         private IConfiguration ReadConfiguration() =>
             new ConfigurationBuilder()
                 .AddUserSecrets<BrowserDriver>()
+                .AddDotNetEnv(".env", LoadOptions.TraversePath())
+                .AddEnvironmentVariables()
                 .Build();
 
         public void Dispose()

@@ -1,4 +1,5 @@
-import { ConvertToTypes } from '@/constants/convertToTypes';
+import moment from 'moment';
+
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { showFile } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
@@ -17,12 +18,12 @@ export const useGenerateExpropriationForm1 = () => {
   const { getAcquisitionInterestHolders } = useInterestHolderRepository();
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
 
-  const generateForm1 = async (acquisitionFileId: number, form1: ExpropriationForm1Model) => {
+  const generateForm1 = async (acquisitionFileId: number, formModel: ExpropriationForm1Model) => {
     const filePromise = getAcquisitionFile.execute(acquisitionFileId);
     const propertiesPromise = getAcquisitionProperties.execute(acquisitionFileId);
     const interestHoldersPromise = getAcquisitionInterestHolders.execute(acquisitionFileId);
-    const expropriationAuthorityPromise = form1.expropriationAuthority?.contact?.organizationId
-      ? getOrganizationConcept(form1.expropriationAuthority.contact.organizationId)
+    const expropriationAuthorityPromise = formModel.expropriationAuthority?.contact?.organizationId
+      ? getOrganizationConcept(formModel.expropriationAuthority.contact.organizationId)
       : Promise.resolve(null);
 
     const [file, properties, interestHolders, expAuthority] = await Promise.all([
@@ -36,22 +37,31 @@ export const useGenerateExpropriationForm1 = () => {
     }
     file.fileProperties = properties;
 
-    const ownerSolicitor = file.acquisitionFileInterestHolders?.find(
+    // fetch primary contact information for organizations within interest holders
+    if (interestHolders) {
+      await Promise.all(
+        interestHolders.map(async holder => {
+          const primaryContactPerson =
+            holder?.organizationId && holder?.primaryContactId
+              ? (await getPersonConcept(holder?.primaryContactId))?.data
+              : null;
+          holder.primaryContact = primaryContactPerson;
+        }),
+      );
+    }
+
+    const ownerSolicitor = interestHolders?.find(
       x => x.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR,
     );
-
-    const ownerSolicitorPerson = ownerSolicitor?.personId
-      ? (await getPersonConcept(ownerSolicitor?.personId))?.data
-      : null;
 
     const fileData = new Api_GenerateAcquisitionFile({
       file: file,
       interestHolders: interestHolders ?? [],
-      ownerSolicitor: ownerSolicitorPerson ?? null,
+      ownerSolicitor: ownerSolicitor ?? null,
     });
 
     const filePropertyIds = new Set(
-      form1.impactedProperties.map(fp => fp?.id).filter((p): p is number => !!p),
+      formModel.impactedProperties.map(fp => fp?.id).filter((p): p is number => !!p),
     );
     const selectedProperties = properties?.filter(fp => filePropertyIds.has(Number(fp.id)));
 
@@ -60,17 +70,20 @@ export const useGenerateExpropriationForm1 = () => {
       interestHolders: interestHolders ?? [],
       expropriationAuthority: expAuthority?.data ?? null,
       impactedProperties: selectedProperties,
-      landInterest: form1?.landInterest,
-      purpose: form1?.purpose,
+      landInterest: formModel?.landInterest,
+      purpose: formModel?.purpose,
     });
 
     const generatedFile = await generate({
       templateType: FormTemplateTypes.EXPROP_FORM_1,
       templateData: expropriationData,
-      convertToType: ConvertToTypes.PDF,
+      convertToType: null,
     });
+
     if (generatedFile?.status === ExternalResultStatus.Success && generatedFile?.payload) {
-      showFile(generatedFile?.payload);
+      const fileExt = generatedFile?.payload?.fileNameExtension ?? 'docx';
+      const fileName = `Form 1-${file.fileNumber}-${moment().format('yyyyMMDD_hhmmss')}.${fileExt}`;
+      showFile(generatedFile?.payload, fileName);
     } else {
       throw Error('Failed to generate file');
     }

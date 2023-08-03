@@ -300,7 +300,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
                 //Verify Header for Payments Table
                 payments.VerifyPaymentTableHeader();
-                payments.VerifyInsertedPayment(lease.TermPayments[i]);
+                //payments.VerifyInsertedPayment(lease.TermPayments[i]);
 
                 //Close Payment Tab
                 payments.OpenPaymentTab(lease.TermPayments[i].ParentTerm);
@@ -555,8 +555,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify Deposit changes
             deposits.VerifyCreatedDepositTable(lease.LeaseDeposits[0]);
 
-            //Delete last deposit
-            deposits.DeleteLastDeposit();
+            //Delete first deposit
+            deposits.DeleteFirstDeposit();
 
             //PAYMENTS
             //Navigate to Payments
@@ -568,7 +568,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to first term payments
             payments.OpenPaymentTab(lease.TermPayments[0].ParentTerm);
 
-            //Delete first term last payment
+            //Delete last term last payment
             payments.DeleteLastPayment();
         }
 

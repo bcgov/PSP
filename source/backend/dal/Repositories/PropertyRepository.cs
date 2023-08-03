@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
@@ -65,6 +66,13 @@ namespace Pims.Dal.Repositories
                 .Skip(skip)
                 .Take(filter.Quantity)
                 .ToArray();
+
+            if(!string.IsNullOrWhiteSpace(filter.PinOrPid))
+            {
+                Regex nonInteger = new Regex("[^\\d]");
+                var formattedPidPin = nonInteger.Replace(filter.PinOrPid, string.Empty);
+                items = items.Where(i => i.Pid.ToString().PadLeft(9, '0').Contains(formattedPidPin) || i.Pin.ToString().Contains(formattedPidPin)).ToArray();
+            }
 
             return new Paged<PimsProperty>(items, filter.Page, filter.Quantity, query.Count());
         }
@@ -376,6 +384,21 @@ namespace Pims.Dal.Repositories
             existingProperty.IsPropertyOfInterest = false;
             existingProperty.IsOwned = true;
             return existingProperty;
+        }
+
+        public HashSet<long> GetMatchingIds(PropertyFilterCriteria filter)
+        {
+            var query = Context.PimsProperties.AsNoTracking();
+
+            if (filter.ProjectId.HasValue)
+            {
+                query = query.Where(p =>
+                    p.PimsPropertyLeases.Any(pl => pl.Lease.ProjectId == filter.ProjectId) ||
+                    p.PimsPropertyResearchFiles.Any(pr => pr.ResearchFile.PimsResearchFileProjects.Any(r => r.ProjectId == filter.ProjectId)) ||
+                    p.PimsPropertyAcquisitionFiles.Any(pa => pa.AcquisitionFile.ProjectId == filter.ProjectId));
+            }
+
+            return query.Select(p => p.PropertyId).ToHashSet();
         }
 
         #endregion

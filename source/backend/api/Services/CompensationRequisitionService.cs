@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
@@ -21,8 +22,9 @@ namespace Pims.Api.Services
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IUserRepository _userRepository;
         private readonly IAcquisitionFileRepository _acqFileRepository;
+        private readonly ICompReqH120Service _compReqH120Service;
 
-        public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository, IAcquisitionPayeeRepository acquisitionPayeeRepository, IEntityNoteRepository entityNoteRepository, IUserRepository userRepository, IAcquisitionFileRepository acqFileRepository)
+        public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository, IAcquisitionPayeeRepository acquisitionPayeeRepository, IEntityNoteRepository entityNoteRepository, IUserRepository userRepository, IAcquisitionFileRepository acqFileRepository, ICompReqH120Service compReqH120Service)
         {
             _user = user;
             _logger = logger;
@@ -31,6 +33,7 @@ namespace Pims.Api.Services
             _entityNoteRepository = entityNoteRepository;
             _userRepository = userRepository;
             _acqFileRepository = acqFileRepository;
+            _compReqH120Service = compReqH120Service;
         }
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
@@ -67,6 +70,7 @@ namespace Pims.Api.Services
             (bool? currentIsDraft, bool? newIsDraft) compReqStatusComparable = (currentIsDraft: currentCompensation.IsDraft, newIsDraft: compensationRequisition.IsDraft);
 
             CheckDraftStatusUpdateAuthorized(compReqStatusComparable);
+            CheckTotalAllowableCompensation(compensationRequisition.AcquisitionFileId, compensationRequisition);
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
             AddNoteIfStatusChanged(compensationRequisition.Internal_Id, compensationRequisition.AcquisitionFileId, compReqStatusComparable);
@@ -132,6 +136,22 @@ namespace Pims.Api.Services
                 && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new NotAuthorizedException();
+            }
+        }
+
+        private void CheckTotalAllowableCompensation(long currentAcquisitionFileId, PimsCompensationRequisition newCompensation)
+        {
+            PimsAcquisitionFile acquisitionFile = _acqFileRepository.GetById(currentAcquisitionFileId);
+            if(!acquisitionFile.TotalAllowableCompensation.HasValue || (newCompensation.IsDraft.HasValue && newCompensation.IsDraft.Value))
+            {
+                return;
+            }
+            IEnumerable<PimsCompReqH120> allFinancialsForFile = _compReqH120Service.GetAllByAcquisitionFileId(currentAcquisitionFileId, true);
+            IEnumerable<PimsCompReqH120> allUnchangedFinancialsForFile = allFinancialsForFile.Where(f => f.CompensationRequisitionId != newCompensation.Internal_Id);
+            decimal newTotalCompensation = allUnchangedFinancialsForFile.Concat(newCompensation.PimsCompReqH120s).Aggregate(0m, (acc, f) => acc + (f.TotalAmt ?? 0m));
+            if(newTotalCompensation > acquisitionFile.TotalAllowableCompensation)
+            {
+                throw new BusinessRuleViolationException("Your compensation requisition cannot be saved in FINAL status, as its compensation amount exceeds total allowable compensation for this file.");
             }
         }
     }

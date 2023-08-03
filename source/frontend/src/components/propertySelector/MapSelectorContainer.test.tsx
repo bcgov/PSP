@@ -7,10 +7,12 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { mockFAParcelLayerResponse, mockGeocoderOptions } from '@/mocks/index.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { featuresToIdentifiedMapProperty } from '@/utils/mapPropertyUtils';
 import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { PropertyForm } from '../../features/mapSideBar/shared/models';
+import { useMapStateMachine } from '../common/mapFSM/MapStateMachineContext';
 import MapSelectorContainer, { IMapSelectorContainerProps } from './MapSelectorContainer';
 import { IMapProperty } from './models';
 
@@ -32,6 +34,8 @@ const testProperty: IMapProperty = {
   district: 5,
   districtName: 'Okanagan-Shuswap',
 };
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 describe('MapSelectorContainer component', () => {
   const setup = (renderOptions: RenderOptions & Partial<IMapSelectorContainerProps>) => {
@@ -65,6 +69,8 @@ describe('MapSelectorContainer component', () => {
       .reply(200, mockFAParcelLayerResponse)
       .onGet(new RegExp('tools/geocoder/nearest*'))
       .reply(200, mockGeocoderOptions[0]);
+
+    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
   });
 
   afterEach(() => {

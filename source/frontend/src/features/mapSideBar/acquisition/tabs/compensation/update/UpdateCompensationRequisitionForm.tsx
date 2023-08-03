@@ -105,15 +105,21 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
     }
   }, [activitiesUpdated]);
 
+  const handleSubmit = async (values: CompensationRequisitionFormModel) => {
+    if (values.status === 'final') {
+      setShowModal(true);
+    } else {
+      await onSave(values);
+    }
+  };
+
   return (
     <StyledFormWrapper>
       <Formik<CompensationRequisitionFormModel>
         enableReinitialize
         innerRef={formikRef}
         initialValues={initialValues}
-        onSubmit={async values => {
-          await onSave(values);
-        }}
+        onSubmit={handleSubmit}
         validationSchema={CompensationRequisitionYupSchema}
         validateOnChange={true}
       >
@@ -139,14 +145,6 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                           value: 'final',
                         },
                       ]}
-                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                        const selectedValue = [].slice
-                          .call(e.target.selectedOptions)
-                          .map((option: HTMLOptionElement & number) => option.value)[0];
-                        if (!!selectedValue && selectedValue === 'final') {
-                          setShowModal(true);
-                        }
-                      }}
                     />
                   </SectionField>
                   <SectionField label="Agreement date" labelWidth="5" contentWidth="4">
@@ -304,9 +302,11 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 ]}
                 okButtonText="Proceed"
                 cancelButtonText="Cancel"
-                handleOk={() => setShowModal(false)}
+                handleOk={async () => {
+                  await onSave(formikRef.current?.values!);
+                  setShowModal(false);
+                }}
                 handleCancel={() => {
-                  formikProps.setFieldValue('status', 'draft');
                   setShowModal(false);
                 }}
               />

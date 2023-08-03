@@ -7,7 +7,7 @@ import CustomAxios from '@/customAxios';
 import { toCqlFilter } from '@/hooks/layer-api/layerUtils';
 import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { PIMS_Property_Location_View2 } from '@/models/layers/pimsPropertyLocationView';
+import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 import { TenantContext } from '@/tenants';
 
 /**
@@ -17,10 +17,10 @@ import { TenantContext } from '@/tenants';
  */
 export const usePimsPropertyLayer = () => {
   const {
-    tenant: { propertiesUrl },
+    tenant: { propertiesUrl, boundaryLayerUrl },
   } = useContext(TenantContext);
 
-  const { findOneWhereContainsWrapped } = useLayerQuery(propertiesUrl);
+  const { findOneWhereContainsWrapped } = useLayerQuery(boundaryLayerUrl, true);
   const findOneWhereContainsWrappedExecute = findOneWhereContainsWrapped.execute;
   const findOneWhereContainsWrappedLoading = findOneWhereContainsWrapped.loading;
 
@@ -31,11 +31,12 @@ export const usePimsPropertyLayer = () => {
           STREET_ADDRESS_1: params?.STREET_ADDRESS_1,
           PID: params?.PID,
           PIN: params?.PIN,
+          SURVEY_PLAN_NUMBER: params?.SURVEY_PLAN_NUMBER,
         };
         const url = `${propertiesUrl}${
           geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''
         }`;
-        return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Location_View2>>(url);
+        return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Location_View>>(url);
       },
       [propertiesUrl],
     ),
@@ -57,7 +58,7 @@ export const usePimsPropertyLayer = () => {
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
       const forceCasted = featureCollection as FeatureCollection<
         Geometry,
-        PIMS_Property_Location_View2
+        PIMS_Property_Location_View
       >;
 
       return forceCasted !== undefined && forceCasted.features.length > 0

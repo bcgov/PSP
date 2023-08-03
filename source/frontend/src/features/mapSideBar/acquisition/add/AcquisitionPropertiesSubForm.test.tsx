@@ -3,12 +3,8 @@ import { noop } from 'lodash';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import {
-  IMapStateContext,
-  MapStateActionTypes,
-  MapStateContextProvider,
-} from '@/components/maps/providers/MapStateContext';
-import { mockDraftProperties } from '@/mocks/mockDraftProperties.mock';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { PropertyForm } from '../../shared/models';
@@ -18,20 +14,19 @@ import { AcquisitionForm } from './models';
 const mockStore = configureMockStore([thunk]);
 jest.mock('@react-keycloak/web');
 
-const setDraftProperties = jest.fn();
+const customSetFilePropertyLocations = jest.fn();
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 describe('AcquisitionProperties component', () => {
   // render component under test
-  const setup = (
-    props: { initialForm: AcquisitionForm } & Partial<IMapStateContext>,
-    renderOptions: RenderOptions = {},
-  ) => {
+  const setup = (props: { initialForm: AcquisitionForm }, renderOptions: RenderOptions = {}) => {
     const utils = render(
-      <MapStateContextProvider values={{ setState: setDraftProperties }}>
+      <>
         <Formik initialValues={props.initialForm} onSubmit={noop}>
           {formikProps => <AcquisitionPropertiesSubForm formikProps={formikProps} />}
         </Formik>
-      </MapStateContextProvider>,
+      </>,
       {
         ...renderOptions,
         store: mockStore({}),
@@ -51,11 +46,14 @@ describe('AcquisitionProperties component', () => {
       PropertyForm.fromMapProperty({ pid: '123-456-789' }),
       PropertyForm.fromMapProperty({ pin: '1111222' }),
     ];
+    (useMapStateMachine as jest.Mock).mockImplementation(() => {
+      return { ...mapMachineBaseMock, setFilePropertyLocations: customSetFilePropertyLocations };
+    });
   });
 
   afterEach(() => {
     jest.clearAllMocks();
-    setDraftProperties.mockReset();
+    customSetFilePropertyLocations.mockReset();
   });
 
   it('renders as expected', () => {
@@ -67,10 +65,10 @@ describe('AcquisitionProperties component', () => {
     const { getByText } = setup({ initialForm: testForm });
 
     await waitFor(() => {
-      expect(setDraftProperties).toHaveBeenCalledWith({
-        type: MapStateActionTypes.DRAFT_PROPERTIES,
-        draftProperties: mockDraftProperties(),
-      });
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
+        { lat: 0, lng: 0 },
+        { lat: 0, lng: 0 },
+      ]);
     });
 
     expect(getByText('PID: 123-456-789')).toBeVisible();
@@ -83,22 +81,7 @@ describe('AcquisitionProperties component', () => {
     userEvent.click(pidRow);
 
     await waitFor(() => {
-      expect(setDraftProperties).toHaveBeenCalledWith({
-        type: MapStateActionTypes.DRAFT_PROPERTIES,
-        draftProperties: [
-          {
-            geometry: {
-              coordinates: [0, 0],
-              type: 'Point',
-            },
-            properties: {
-              id: 0,
-              name: 'New Parcel',
-            },
-            type: 'Feature',
-          },
-        ],
-      });
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([{ lat: 0, lng: 0 }]);
     });
 
     expect(queryByText('PID: 123-456-789')).toBeNull();
@@ -108,10 +91,10 @@ describe('AcquisitionProperties component', () => {
     const { getByTitle } = setup({ initialForm: testForm });
 
     await waitFor(() => {
-      expect(setDraftProperties).toHaveBeenCalledWith({
-        type: MapStateActionTypes.DRAFT_PROPERTIES,
-        draftProperties: mockDraftProperties(),
-      });
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
+        { lat: 0, lng: 0 },
+        { lat: 0, lng: 0 },
+      ]);
     });
 
     expect(getByTitle('1')).toBeInTheDocument();
@@ -125,27 +108,10 @@ describe('AcquisitionProperties component', () => {
     setup({ initialForm: formWithProperties });
 
     await waitFor(() => {
-      expect(setDraftProperties).toHaveBeenCalledWith({
-        type: MapStateActionTypes.DRAFT_PROPERTIES,
-        draftProperties: [
-          {
-            geometry: { coordinates: [2, 1], type: 'Point' },
-            properties: { id: 0, name: 'New Parcel' },
-            type: 'Feature',
-          },
-          {
-            geometry: {
-              coordinates: [0, 0],
-              type: 'Point',
-            },
-            properties: {
-              id: 0,
-              name: 'New Parcel',
-            },
-            type: 'Feature',
-          },
-        ],
-      });
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
+        { lat: 1, lng: 2 },
+        { lat: 0, lng: 0 },
+      ]);
     });
   });
 
@@ -159,21 +125,10 @@ describe('AcquisitionProperties component', () => {
     setup({ initialForm: formWithProperties });
 
     await waitFor(() => {
-      expect(setDraftProperties).toHaveBeenCalledWith({
-        type: MapStateActionTypes.DRAFT_PROPERTIES,
-        draftProperties: [
-          {
-            geometry: { coordinates: [2, 1], type: 'Point' },
-            properties: { id: 0, name: 'New Parcel' },
-            type: 'Feature',
-          },
-          {
-            geometry: { coordinates: [4, 3], type: 'Point' },
-            properties: { id: 0, name: 'New Parcel' },
-            type: 'Feature',
-          },
-        ],
-      });
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
+        { lat: 1, lng: 2 },
+        { lat: 3, lng: 4 },
+      ]);
     });
   });
 });

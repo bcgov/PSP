@@ -1,15 +1,21 @@
+import axios, { AxiosError } from 'axios';
 import React, { useCallback, useContext } from 'react';
+import { toast } from 'react-toastify';
 
+import { FileTypes } from '@/constants';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
+import { IApiError } from '@/interfaces/IApiError';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 
 import { ICompensationListViewProps } from './CompensationListView';
 
 export interface ICompensationListContainerProps {
   fileId: number;
+  file: Api_AcquisitionFile;
   View: React.FunctionComponent<React.PropsWithChildren<ICompensationListViewProps>>;
 }
 
@@ -18,25 +24,49 @@ export interface ICompensationListContainerProps {
  */
 export const CompensationListContainer: React.FunctionComponent<
   React.PropsWithChildren<ICompensationListContainerProps>
-> = ({ fileId, View }: ICompensationListContainerProps) => {
+> = ({ fileId, file, View }: ICompensationListContainerProps) => {
   const {
     getAcquisitionCompensationRequisitions: {
       execute: getAcquisitionCompensationRequisitions,
       response: compensations,
     },
     postAcquisitionCompensationRequisition: { execute: postAcquisitionCompensationRequisition },
+    updateAcquisitionFile: { execute: putAcquisitionFile },
   } = useAcquisitionProvider();
-
   const {
     deleteCompensation: { execute: deleteCompensation },
   } = useCompensationRequisitionRepository();
 
-  const { staleFile, setStaleFile } = useContext(SideBarContext);
+  const { staleFile, setStaleFile, setFile } = useContext(SideBarContext);
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const fetchData = useCallback(async () => {
     await getAcquisitionCompensationRequisitions(fileId);
   }, [getAcquisitionCompensationRequisitions, fileId]);
+
+  const onUpdateTotalCompensation = async (
+    totalAllowableCompensation: number | null,
+  ): Promise<number | null> => {
+    if (file) {
+      try {
+        const response = await putAcquisitionFile(
+          { ...file, totalAllowableCompensation: totalAllowableCompensation ?? undefined },
+          [],
+        );
+        if (response) {
+          setFile({ ...response, fileType: FileTypes.Acquisition });
+          return response.totalAllowableCompensation ?? null;
+        }
+      } catch (e) {
+        if (axios.isAxiosError(e)) {
+          const axiosError = e as AxiosError<IApiError>;
+          toast.error(axiosError.response?.data.error, { autoClose: 20000 });
+          throw Error(axiosError.response?.data.error);
+        }
+      }
+    }
+    return file.totalAllowableCompensation ?? null;
+  };
 
   const onAddCompensationRequisition = (fileId: number) => {
     const defaultCompensationRequisition: Api_CompensationRequisition = {
@@ -78,6 +108,7 @@ export const CompensationListContainer: React.FunctionComponent<
 
   return (
     <View
+      onUpdateTotalCompensation={onUpdateTotalCompensation}
       compensations={compensations || []}
       onAdd={async () => onAddCompensationRequisition(fileId)}
       onDelete={async (compensationId: number) => {
@@ -96,6 +127,7 @@ export const CompensationListContainer: React.FunctionComponent<
         });
         setDisplayModal(true);
       }}
+      totalAllowableCompensation={file?.totalAllowableCompensation || 0}
     />
   );
 };

@@ -32,7 +32,7 @@ export const useLeaseTenantRepository = () => {
       [],
     ),
     requestName: 'updateLeaseTenants',
-    onSuccess: useAxiosSuccessHandler('Improvements saved successfully.'),
+    onSuccess: useAxiosSuccessHandler('Tenants saved successfully.'),
     onError: useAxiosErrorHandler(),
   });
 

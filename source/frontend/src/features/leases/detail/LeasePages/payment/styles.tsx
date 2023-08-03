@@ -22,8 +22,7 @@ export const StyledFormBody = styled.div`
   .form-group {
     display: flex;
     flex-direction: column;
-    input,
-    select {
+    .small {
       width: 70%;
     }
   }

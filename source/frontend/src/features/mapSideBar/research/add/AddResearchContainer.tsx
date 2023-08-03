@@ -6,14 +6,13 @@ import { Prompt, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
-import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
-import { MapStateContext } from '@/components/maps/providers/MapStateContext';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
+import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
@@ -31,20 +30,20 @@ export const AddResearchContainer: React.FunctionComponent<
 > = props => {
   const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
-  const { selectedFileFeature } = React.useContext(MapStateContext);
+  const mapMachine = useMapStateMachine();
+  const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
 
   const initialForm = useMemo(() => {
     const researchForm = new ResearchForm();
-    if (!!selectedFileFeature) {
+    if (!!selectedFeatureDataset) {
       researchForm.properties = [
-        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
+        PropertyForm.fromMapProperty(featuresetToMapProperty(selectedFeatureDataset)),
       ];
     }
     return researchForm;
-  }, [selectedFileFeature]);
+  }, [selectedFeatureDataset]);
   const { addResearchFile } = useAddResearch();
-  const { searchMany } = useMapSearch();
-  const { bcaLoading, initialProperty } = useInitialMapSelectorProperties(selectedFileFeature);
+  const { bcaLoading, initialProperty } = useInitialMapSelectorProperties(selectedFeatureDataset);
   if (initialForm?.properties.length && initialProperty) {
     initialForm.properties[0].address = initialProperty.address;
   }
@@ -74,7 +73,7 @@ export const AddResearchContainer: React.FunctionComponent<
             { autoClose: 15000 },
           );
         }
-        await searchMany();
+        mapMachine.refreshMapProperties();
         history.replace(`/mapview/sidebar/research/${response.id}`);
         formikRef.current?.resetForm({ values: ResearchForm.fromApi(response) });
       }
@@ -120,7 +119,6 @@ export const AddResearchContainer: React.FunctionComponent<
           <StyledFormWrapper>
             <AddResearchForm />
 
-            {}
             <Prompt
               when={
                 (formikProps.dirty ||
