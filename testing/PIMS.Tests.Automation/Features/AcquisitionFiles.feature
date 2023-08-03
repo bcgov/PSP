@@ -3,19 +3,14 @@ Feature: AcquisitionFiles
 
 A short summary of the feature
 
-<<<<<<< HEAD
-Scenario: 01. Create a new complete Acquisition File with pins
-	Given I create a new Acquisition File
-=======
 Scenario: Create a new complete Acquisition File with pins
 	Given I create a new Acquisition File from row number 1
->>>>>>> 0e0e81775d732b98e741f3c5a73db8bb2da31d6d
 	When I add additional information to the Acquisition File
 	And  I create Digital Documents for a "Acquisition File" row number 4
 	And I create a new Note on the Notes Tab from row number 3
 	Then A new Acquisition file is created successfully
 
-Scenario: Edit existing Acquisition File and Properties
+Scenario: Update Acquisition File and Properties
 	Given I edit an existing Acquisition File from row number 2
 	When I update a Property details from row number 4
 	And I navigate back to the Acquisition File Summary

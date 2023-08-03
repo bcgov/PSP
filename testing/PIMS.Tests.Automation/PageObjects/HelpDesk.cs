@@ -1,4 +1,7 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
+using System.Xml.Linq;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -49,41 +52,41 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToHelpDesk()
         {
-            Wait();
+            WaitUntilVisible(mainMenuHelpDeskBttn);
             webDriver.FindElement(mainMenuHelpDeskBttn).Click();
         }
 
         public void VerifyHelpDeskHeader()
         {
-            Wait();
+            WaitUntilVisible(mainMenuHeader);
             Assert.True(webDriver.FindElement(mainMenuHeader).Displayed);
             Assert.True(webDriver.FindElement(mainMenuHelpIcon).Displayed);
         }
 
         public void VerifyMapHelpDesk()
         {
-            Wait();
+            WaitUntilClickable(helpDeskMapButton);
             webDriver.FindElement(helpDeskMapButton).Click();
         }
 
         public void VerifyFilterHelpDesk()
         {
-            Wait();
+            WaitUntilClickable(helpDeskFilterButton);
             webDriver.FindElement(helpDeskFilterButton).Click();
         }
 
         public void VerifyNavigationHelpDesk()
         {
-            Wait();
+            WaitUntilClickable(helpDeskNavigationButton);
             webDriver.FindElement(helpDeskNavigationButton).Click();
         }
 
         public void VerifyQuestionForm()
         {
-            Wait();
+            WaitUntilClickable(helpDeskQuestionInput);
             webDriver.FindElement(helpDeskQuestionInput).Click();
 
-            Wait();
+            WaitUntilVisible(userLabel);
             Assert.True(webDriver.FindElement(userLabel).Displayed);
             Assert.True(webDriver.FindElement(userInput).Displayed);
             Assert.True(webDriver.FindElement(emailLabel).Displayed);
@@ -96,10 +99,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyBugForm()
         {
-            Wait();
+            WaitUntilClickable(helpDeskBugInput);
             webDriver.FindElement(helpDeskBugInput).Click();
 
-            Wait();
+            WaitUntilVisible(userLabel);
             Assert.True(webDriver.FindElement(userLabel).Displayed);
             Assert.True(webDriver.FindElement(userInput).Displayed);
             Assert.True(webDriver.FindElement(emailLabel).Displayed);
@@ -116,10 +119,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyFeatureForm()
         {
-            Wait();
+            WaitUntilClickable(helpDeskFeatureInput);
             webDriver.FindElement(helpDeskFeatureInput).Click();
 
-            Wait();
+            WaitUntilVisible(userLabel);
             Assert.True(webDriver.FindElement(userLabel).Displayed);
             Assert.True(webDriver.FindElement(userInput).Displayed);
             Assert.True(webDriver.FindElement(emailLabel).Displayed);
@@ -130,14 +133,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyButtons()
         {
-            Wait();
+            WaitUntilVisible(submitButton);
             Assert.True(webDriver.FindElement(submitButton).Displayed);
             Assert.True(webDriver.FindElement(cancelButton).Displayed);
         }
 
         public void CancelHelpDeskModal()
         {
-            Wait();
+            WaitUntilClickable(cancelButton);
             webDriver.FindElement(cancelButton).Click();
         }
     }
