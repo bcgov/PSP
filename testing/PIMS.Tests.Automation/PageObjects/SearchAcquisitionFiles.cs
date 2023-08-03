@@ -94,10 +94,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFirstOption()
         {
-            Wait();
+            WaitUntilClickable(searchAcquisitionFile1stResultLink);
             webDriver.FindElement(searchAcquisitionFile1stResultLink).Click();
 
-            Wait();
+            WaitUntilClickable(searchAcquisitionFileHeaderCode);
             Assert.True(webDriver.FindElement(searchAcquisitionFileHeaderCode).Displayed);
         }
 
