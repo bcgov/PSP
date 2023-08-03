@@ -5,7 +5,7 @@ import { Api_Organization } from '@/models/api/Organization';
 import { Api_GenerateOrganization } from '../GenerateOrganization';
 import { Api_GenerateProperty } from '../GenerateProperty';
 import { Api_GenerateAcquisitionFile } from './GenerateAcquisitionFile';
-import { Api_GenerateExpropriationInterestHolder } from './GenerateExpropriationInterestHolder';
+import { Api_GenerateInterestHolder } from './GenerateInterestHolder';
 
 export interface IApiGenerateExpropriationFormBaseInput {
   file: Api_GenerateAcquisitionFile | null;
@@ -18,7 +18,7 @@ export class Api_GenerateExpropriationFormBase {
   file: Api_GenerateAcquisitionFile | null;
   exp_authority: Api_GenerateOrganization | null;
   impacted_properties: Api_GenerateProperty[];
-  impacted_interest_holders: Api_GenerateExpropriationInterestHolder[];
+  impacted_interest_holders: Api_GenerateInterestHolder[];
 
   constructor({
     file,
@@ -40,7 +40,7 @@ export class Api_GenerateExpropriationFormBase {
       ),
     );
     this.impacted_interest_holders = matchingInterestHolders.map(
-      ih => new Api_GenerateExpropriationInterestHolder(ih),
+      ih => new Api_GenerateInterestHolder(ih),
     );
   }
 }
