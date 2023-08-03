@@ -76,7 +76,7 @@ describe('TermForm component', () => {
     } = await setup({});
 
     const { input } = await fillInput(container, 'expiryDate', '2020-01-02', 'datepicker');
-    await findByDisplayValue('01/02/2020');
+    await findByDisplayValue('Jan 02, 2020');
     expect(input).toHaveProperty('required');
   });
 

@@ -74,6 +74,7 @@ describe('AcquisitionHeader component', () => {
     const { getByText, getByTestId } = setup({
       acquisitionFile: {
         ...mockAcquisitionFileResponse,
+        totalAllowableCompensation: 0,
         product: undefined,
         productId: null,
         projectId: null,

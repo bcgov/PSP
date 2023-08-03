@@ -62,10 +62,10 @@ export function useLeaseDetail(leaseId?: number) {
   const loading =
     getApiLeaseById.loading || propertyLeasesLoading || leaseTenantsLoading || leaseTermsLoading;
   useDeepCompareEffect(() => {
-    if (!lease && !loading) {
+    if (!lease) {
       getCompleteLease();
     }
-  }, [getCompleteLease, lease, loading]);
+  }, [getCompleteLease, lease]);
 
   return {
     lease,

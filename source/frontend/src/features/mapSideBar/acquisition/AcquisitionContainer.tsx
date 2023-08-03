@@ -3,13 +3,11 @@ import React, { useCallback, useContext, useEffect, useMemo, useReducer, useRef 
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_File } from '@/models/api/File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { stripTrailingSlash } from '@/utils';
@@ -29,7 +27,6 @@ export interface AcquisitionContainerState {
   isEditing: boolean;
   selectedMenuIndex: number;
   showConfirmModal: boolean;
-  acquisitionFile: Api_AcquisitionFile | undefined;
   defaultFileTab: FileTabType;
   defaultPropertyTab: InventoryTabNames;
 }
@@ -38,7 +35,6 @@ const initialState: AcquisitionContainerState = {
   isEditing: false,
   selectedMenuIndex: 0,
   showConfirmModal: false,
-  acquisitionFile: undefined,
   defaultFileTab: FileTabType.FILE_DETAILS,
   defaultPropertyTab: InventoryTabNames.property,
 };
@@ -46,8 +42,7 @@ const initialState: AcquisitionContainerState = {
 export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainerProps> = props => {
   // Load state from props and side-bar context
   const { acquisitionFileId, onClose, View } = props;
-  const { setFile, setFileLoading, staleFile, setStaleFile } = useContext(SideBarContext);
-  const { searchMany } = useMapSearch();
+  const { setFile, setFileLoading, staleFile, setStaleFile, file } = useContext(SideBarContext);
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
   >('Failed to update Acquisition File');
@@ -98,7 +93,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     }),
     initialState,
   );
-  const acquisitionFile = containerState.acquisitionFile;
+  const acquisitionFile = file;
 
   // Retrieve acquisition file from API and save it to local state and side-bar context
   const fetchAcquisitionFile = useCallback(async () => {
@@ -113,8 +108,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       retrieved.fileProperties = acquisitionProperties;
       retrieved.acquisitionFileChecklist = acquisitionChecklist;
     }
-
-    setContainerState({ acquisitionFile: retrieved });
     setFile({ ...retrieved, fileType: FileTypes.Acquisition });
     setStaleFile(false);
   }, [
@@ -195,7 +188,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const onSuccess = () => {
     fetchAcquisitionFile();
-    searchMany();
     setIsEditing(false);
   };
 

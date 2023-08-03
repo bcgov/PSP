@@ -42,6 +42,7 @@ export interface IGeoSearchParams {
   STREET_ADDRESS_1?: string;
   PID?: string;
   PIN?: string;
+  SURVEY_PLAN_NUMBER?: string;
   BBOX?: string;
   latitude?: number | string;
   longitude?: number | string;

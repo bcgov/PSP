@@ -34,6 +34,7 @@ namespace Pims.Api.Services
         private readonly IAgreementRepository _agreementRepository;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
         private readonly IInterestHolderRepository _interestHolderRepository;
+        private readonly ICompReqH120Service _compReqH120Service;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -48,7 +49,8 @@ namespace Pims.Api.Services
             IAcquisitionFileChecklistRepository checklistRepository,
             IAgreementRepository agreementRepository,
             ICompensationRequisitionRepository compensationRequisitionRepository,
-            IInterestHolderRepository interestHolderRepository)
+            IInterestHolderRepository interestHolderRepository,
+            ICompReqH120Service compReqH120Service)
         {
             _user = user;
             _logger = logger;
@@ -63,6 +65,7 @@ namespace Pims.Api.Services
             _agreementRepository = agreementRepository;
             _compensationRequisitionRepository = compensationRequisitionRepository;
             _interestHolderRepository = interestHolderRepository;
+            _compReqH120Service = compReqH120Service;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -174,6 +177,8 @@ namespace Pims.Api.Services
 
             ValidatePayeeDependency(acquisitionFile);
 
+            ValidateNewTotalAllowableCompensation(acquisitionFile.Internal_Id, acquisitionFile.TotalAllowableCompensation);
+
             // reset the region
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
             if (acquisitionFile.RegionCode == cannotDetermineRegion.RegionCode)
@@ -181,11 +186,11 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Cannot set an acquisition file's region to 'cannot determine'");
             }
 
-            var newAcqFile = _acqFileRepository.Update(acquisitionFile);
+            _acqFileRepository.Update(acquisitionFile);
             AddNoteIfStatusChanged(acquisitionFile);
 
             _acqFileRepository.CommitTransaction();
-            return newAcqFile;
+            return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
         }
 
         public PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides)
@@ -473,6 +478,21 @@ namespace Pims.Api.Services
                     var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
                     acquisitionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
                 }
+            }
+        }
+
+        private void ValidateNewTotalAllowableCompensation(long currentAcquisitionFileId, decimal? newAllowableCompensation)
+        {
+            if(!newAllowableCompensation.HasValue)
+            {
+                return;
+            }
+            IEnumerable<PimsCompReqH120> allFinalFinancialsOnFile = _compReqH120Service.GetAllByAcquisitionFileId(currentAcquisitionFileId, true);
+            var currentActualCompensation = allFinalFinancialsOnFile.Aggregate(0m, (acc, f) => acc + (f.TotalAmt ?? 0m));
+            if(newAllowableCompensation < currentActualCompensation)
+            {
+                throw new BusinessRuleViolationException("The Total Allowable Compensation value cannot be saved because the value provided is less than current sum of the final compensation requisitions in this file. " +
+                    "\n\nTo continue, adjust the value to accommodate the existing compensation requisitions in the file or contact your system administrator to adjust final compensations.");
             }
         }
 

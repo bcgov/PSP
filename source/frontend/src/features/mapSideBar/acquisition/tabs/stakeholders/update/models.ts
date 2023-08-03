@@ -26,7 +26,20 @@ export class StakeHolderForm {
           ihp.propertyInterestTypes.forEach(pit => {
             const formModel = InterestHolderForm.fromApi(ih, InterestHolderType.INTEREST_HOLDER);
             formModel.propertyInterestTypeCode = pit?.id ?? '';
-            interestHoldersByType.push(formModel);
+
+            const matchingInterestHolder = interestHoldersByType.find(
+              i =>
+                i.interestHolderId === ih.interestHolderId &&
+                i.propertyInterestTypeCode === pit?.id,
+            );
+            if (!matchingInterestHolder) {
+              formModel.impactedProperties = [InterestHolderPropertyForm.fromApi(ihp)];
+              interestHoldersByType.push(formModel);
+            } else {
+              matchingInterestHolder.impactedProperties.push(
+                InterestHolderPropertyForm.fromApi(ihp),
+              );
+            }
           });
         } else {
           ihp.propertyInterestTypes = [];
@@ -106,7 +119,7 @@ export class InterestHolderForm {
   personId: string = '';
   organizationId: string = '';
   contact: IContactSearchResult | null = null;
-
+  primaryContactId?: number | null = null;
   impactedProperties: InterestHolderPropertyForm[] = [];
   interestTypeCode: string = '';
   propertyInterestTypeCode: string = '';
@@ -131,6 +144,7 @@ export class InterestHolderForm {
     interestHolderForm.impactedProperties = apiModel.interestHolderProperties.map(ihp =>
       InterestHolderPropertyForm.fromApi(ihp),
     );
+    interestHolderForm.primaryContactId = apiModel.primaryContactId;
     interestHolderForm.rowVersion = apiModel.rowVersion ?? null;
     interestHolderForm.isDisabled = apiModel.isDisabled;
     interestHolderForm.interestTypeCode = interestTypeCode ?? '';
@@ -146,6 +160,7 @@ export class InterestHolderForm {
     };
     interestHolderForm.acquisitionFileId = apiModel.acquisitionFileId;
     interestHolderForm.comment = apiModel.comment;
+    interestHolderForm.primaryContactId = apiModel.primaryContactId;
 
     return interestHolderForm;
   }
@@ -166,6 +181,7 @@ export class InterestHolderForm {
       person: null,
       organizationId: organizationId,
       organization: null,
+      primaryContactId: model.primaryContactId ?? null,
       isDisabled: model.isDisabled,
       interestHolderProperties: properties,
       acquisitionFileId: model.acquisitionFileId,
@@ -173,7 +189,6 @@ export class InterestHolderForm {
       comment: model.comment,
       interestHolderType: { id: model.interestTypeCode },
       primaryContact: null,
-      primaryContactId: null,
     };
   }
 }
@@ -233,6 +248,7 @@ export class InterestHolderViewRow {
   person: Api_Person | null = null;
   organization: Api_Organization | null = null;
   interestHolderType: Api_TypeCode<string> | null = null;
+  primaryContact: Api_Person | null = null;
 
   static fromApi(
     apiInterestHolderProperty: Api_InterestHolderProperty,
@@ -245,6 +261,7 @@ export class InterestHolderViewRow {
     interestHolderViewRow.person = apiInterestHolder?.person ?? null;
     interestHolderViewRow.organization = apiInterestHolder?.organization ?? null;
     interestHolderViewRow.interestHolderType = interestHolderType ?? null;
+    interestHolderViewRow.primaryContact = apiInterestHolder?.primaryContact ?? null;
     return interestHolderViewRow;
   }
 }

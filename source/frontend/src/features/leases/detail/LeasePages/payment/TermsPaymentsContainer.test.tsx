@@ -135,7 +135,7 @@ describe('TermsPaymentsContainer component', () => {
         userEvent.click(addButton);
       });
 
-      expect(getByDisplayValue('01/01/2020')).toBeVisible();
+      expect(getByDisplayValue('Jan 01, 2020')).toBeVisible();
     });
     it('makes a post request when adding a new term', async () => {
       const {
@@ -158,14 +158,14 @@ describe('TermsPaymentsContainer component', () => {
 
     it('makes a put request when updating a term', async () => {
       const {
-        component: { getAllByTitle, getByText },
+        component: { findAllByTitle, getByText },
       } = await setup({
         initialValues: { ...defaultApiLease, terms: [{ ...defaultFormLeaseTerm, id: 1 }] },
         claims: [Claims.LEASE_EDIT],
       });
       mockAxios.onPut().reply(200, { id: 1 });
 
-      const editButton = getAllByTitle('edit term')[0];
+      const editButton = (await findAllByTitle('edit term'))[0];
       act(() => {
         userEvent.click(editButton);
       });
@@ -192,12 +192,12 @@ describe('TermsPaymentsContainer component', () => {
     });
 
     it('displays a warning when deleting the initial term when there are other terms', async () => {
-      mockGetLeaseTerms.response = [
+      mockGetLeaseTerms.execute.mockResolvedValue([
         FormLeaseTerm.toApi({ ...defaultFormLeaseTerm, payments: [], id: 1 }),
         FormLeaseTerm.toApi({ ...defaultFormLeaseTerm, payments: [], id: 1 }),
-      ];
+      ]);
       const {
-        component: { getAllByTitle, getByText },
+        component: { findAllByTitle, getByText },
       } = await setup({
         initialValues: {
           ...defaultApiLease,
@@ -209,18 +209,18 @@ describe('TermsPaymentsContainer component', () => {
         claims: [Claims.LEASE_EDIT],
       });
 
-      const deleteButton = getAllByTitle('delete term')[0];
+      const deleteButton = (await findAllByTitle('delete term'))[0];
       await act(async () => userEvent.click(deleteButton));
       const warning = getByText('You must delete all renewals before deleting the initial term.');
       expect(warning).toBeVisible();
     });
 
     it('asks for confirmation when deleting a term', async () => {
-      mockGetLeaseTerms.response = [
+      mockGetLeaseTerms.execute.mockResolvedValue([
         FormLeaseTerm.toApi({ ...defaultFormLeaseTerm, payments: [], id: 1 }),
-      ];
+      ]);
       const {
-        component: { getAllByTitle },
+        component: { findAllByTitle },
       } = await setup({
         initialValues: {
           ...defaultApiLease,
@@ -229,7 +229,7 @@ describe('TermsPaymentsContainer component', () => {
         claims: [Claims.LEASE_EDIT],
       });
 
-      const deleteButton = getAllByTitle('delete term')[0];
+      const deleteButton = (await findAllByTitle('delete term'))[0];
       await act(async () => userEvent.click(deleteButton));
       const warning = await screen.findByText(
         'You are about to delete a term. Do you wish to continue?',
@@ -238,11 +238,11 @@ describe('TermsPaymentsContainer component', () => {
     });
 
     it('makes a delete request when delete confirmed', async () => {
-      mockGetLeaseTerms.response = [
+      mockGetLeaseTerms.execute.mockResolvedValue([
         FormLeaseTerm.toApi({ ...defaultFormLeaseTerm, payments: [], id: 1 }),
-      ];
+      ]);
       const {
-        component: { getAllByTitle, getByText },
+        component: { findAllByTitle, getByText },
       } = await setup({
         initialValues: {
           ...defaultApiLease,
@@ -252,7 +252,7 @@ describe('TermsPaymentsContainer component', () => {
       });
       mockAxios.onDelete().reply(200, { id: 1 });
 
-      const deleteButton = getAllByTitle('delete term')[0];
+      const deleteButton = (await findAllByTitle('delete term'))[0];
       await act(async () => userEvent.click(deleteButton));
       const warning = getByText('You are about to delete a term. Do you wish to continue?');
       expect(warning).toBeVisible();
@@ -262,12 +262,12 @@ describe('TermsPaymentsContainer component', () => {
     });
   });
   describe('payments logic tests', () => {
-    mockGetLeaseTerms.response = defaultLeaseWithTermsPayments.terms.map(t =>
-      FormLeaseTerm.toApi(t),
+    mockGetLeaseTerms.execute.mockResolvedValue(
+      defaultLeaseWithTermsPayments.terms.map(t => FormLeaseTerm.toApi(t)),
     );
     it('makes a post request when adding a new payment', async () => {
-      mockGetLeaseTerms.response = defaultLeaseWithTermsPayments.terms.map(t =>
-        FormLeaseTerm.toApi(t),
+      mockGetLeaseTerms.execute.mockResolvedValue(
+        defaultLeaseWithTermsPayments.terms.map(t => FormLeaseTerm.toApi(t)),
       );
       const {
         component: { findByText, getByText },
@@ -289,8 +289,8 @@ describe('TermsPaymentsContainer component', () => {
     });
 
     it('makes a put request when updating a payment', async () => {
-      mockGetLeaseTerms.response = defaultLeaseWithTermsPayments.terms.map(t =>
-        FormLeaseTerm.toApi(t),
+      mockGetLeaseTerms.execute.mockResolvedValue(
+        defaultLeaseWithTermsPayments.terms.map(t => FormLeaseTerm.toApi(t)),
       );
       const {
         component: { findAllByTitle, getByText },
@@ -311,8 +311,10 @@ describe('TermsPaymentsContainer component', () => {
       expect(mockAxios.history.put.length).toBe(1);
     });
     it('asks for confirmation when deleting a payment', async () => {
-      mockGetLeaseTerms.response = defaultLeaseWithTermsPayments.terms.map(t =>
-        FormLeaseTerm.toApi(t),
+      mockGetLeaseTerms.execute.mockResolvedValue(
+        (mockGetLeaseTerms.response = defaultLeaseWithTermsPayments.terms.map(t =>
+          FormLeaseTerm.toApi(t),
+        )),
       );
       const {
         component: { findAllByTitle, getByText },
@@ -328,8 +330,10 @@ describe('TermsPaymentsContainer component', () => {
     });
 
     it('makes a delete request when delete payment confirmed', async () => {
-      mockGetLeaseTerms.response = defaultLeaseWithTermsPayments.terms.map(t =>
-        FormLeaseTerm.toApi(t),
+      mockGetLeaseTerms.execute.mockResolvedValue(
+        (mockGetLeaseTerms.response = defaultLeaseWithTermsPayments.terms.map(t =>
+          FormLeaseTerm.toApi(t),
+        )),
       );
       const {
         component: { findAllByTitle, getByText },

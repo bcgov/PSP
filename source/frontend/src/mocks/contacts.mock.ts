@@ -1,5 +1,6 @@
 import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
 import { Api_Person } from '@/models/api/Person';
+
 export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult => ({
   id: 'O3',
   organizationId: 3,
@@ -7,6 +8,8 @@ export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult 
     id: 3,
     isDisabled: false,
     name: 'Dairy Queen Forever! Property Management',
+    alias: 'DQ',
+    incorporationNumber: '56789',
     organizationPersons: [
       {
         personId: 3,
@@ -15,7 +18,39 @@ export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult 
         rowVersion: 1,
       },
     ],
-    organizationAddresses: [],
+    organizationAddresses: [
+      {
+        id: 4,
+        isDisabled: false,
+        address: {
+          id: 3,
+          streetAddress1: '1012 Douglas',
+          streetAddress2: 'Above Freshi',
+          streetAddress3: 'PO BOX 456',
+          municipality: 'Victoria',
+          province: {
+            id: 1,
+            code: 'BC',
+            description: 'British Columbia',
+            displayOrder: 10,
+          },
+          country: {
+            id: 1,
+            code: 'CA',
+            description: 'Canada',
+            displayOrder: 1,
+          },
+          postal: 'V9B 000',
+          rowVersion: 1,
+        },
+        addressUsageType: {
+          id: 'MAILING',
+          description: 'Mailing address',
+          isDisabled: false,
+        },
+        rowVersion: 1,
+      },
+    ],
     contactMethods: [],
     rowVersion: 1,
   },
@@ -23,6 +58,7 @@ export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult 
   organizationName: 'Dairy Queen Forever! Property Management',
   isDisabled: false,
 });
+
 export const getMockContactOrganizationWithMultiplePeople = (): IContactSearchResult => ({
   id: 'O2',
   organizationId: 2,
@@ -125,6 +161,37 @@ export const getMockPerson = ({
         id: 'MAILADDR',
         description: 'Mailing address',
         isDisabled: true,
+      },
+      rowVersion: 1,
+    },
+    {
+      id: 4,
+      isDisabled: false,
+      address: {
+        id: 3,
+        streetAddress1: '123 Main Street',
+        streetAddress2: 'PO Box 456',
+        streetAddress3: 'Across Dairy Queen',
+        municipality: 'West Podunk',
+        province: {
+          id: 1,
+          code: 'BC',
+          description: 'British Columbia',
+          displayOrder: 10,
+        },
+        country: {
+          id: 1,
+          code: 'CA',
+          description: 'Canada',
+          displayOrder: 1,
+        },
+        postal: 'V9B B0B',
+        rowVersion: 1,
+      },
+      addressUsageType: {
+        id: 'MAILING',
+        description: 'Mailing address',
+        isDisabled: false,
       },
       rowVersion: 1,
     },

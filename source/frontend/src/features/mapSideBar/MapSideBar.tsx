@@ -1,33 +1,23 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Backdrop } from '@/components/common/styles';
-import { MapStateActionTypes, MapStateContext } from '@/components/maps/providers/MapStateContext';
-import { Api_Property } from '@/models/api/Property';
 
 import { SideBarContext } from './context/sidebarContext';
 import MapRouter from './router/MapRouter';
 
-interface IMapSideBarProps {
-  showSideBar: boolean;
-  setShowSideBar: (showSideBar: boolean) => void;
-  onZoom?: (apiProperty?: Api_Property) => void;
-}
+interface IMapSideBarProps {}
 
-const MapSideBar: React.FunctionComponent<React.PropsWithChildren<IMapSideBarProps>> = ({
-  showSideBar,
-  setShowSideBar,
-  onZoom,
-}) => {
+const MapSideBar: React.FunctionComponent<React.PropsWithChildren<IMapSideBarProps>> = () => {
   const { fullWidth } = useContext(SideBarContext);
-  const { isSelecting, setState } = useContext(MapStateContext);
+
+  const mapMachine = useMapStateMachine();
+
   return (
-    <StyledMapSideBar show={showSideBar} fullWidth={fullWidth}>
-      {isSelecting && (
-        <StyledBackdrop
-          parentScreen
-          onClick={() => setState({ type: MapStateActionTypes.IS_SELECTING, isSelecting: false })}
-        >
+    <StyledMapSideBar show={mapMachine.isSidebarOpen} fullWidth={fullWidth}>
+      {mapMachine.isSelecting && (
+        <StyledBackdrop parentScreen onClick={() => mapMachine.finishSelection()}>
           <StyledSelectingText
             style={{ color: 'white', fontFamily: 'BCSans-Bold', fontSize: '2.5rem' }}
           >
@@ -36,7 +26,7 @@ const MapSideBar: React.FunctionComponent<React.PropsWithChildren<IMapSideBarPro
           </StyledSelectingText>
         </StyledBackdrop>
       )}
-      <MapRouter showSideBar={showSideBar} setShowSideBar={setShowSideBar} onZoom={onZoom} />
+      <MapRouter />
     </StyledMapSideBar>
   );
 };

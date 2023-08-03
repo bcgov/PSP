@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
 
 import { Button, StyledRemoveLinkButton } from '@/components/common/buttons';
-import { DisplayError, Select } from '@/components/common/form';
+import { DisplayError } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -13,13 +13,12 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
-import * as API from '@/constants/API';
 import { InterestHolderType } from '@/constants/interestHolderTypes';
-import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
+import { InterestHolderSubForm } from './InterestHolderSubForm';
 import { InterestHolderForm, StakeHolderForm } from './models';
 import { UpdateStakeHolderYupSchema } from './UpdateStakeHolderYupSchema';
 
@@ -41,8 +40,6 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
   interestHolders,
   loading,
 }) => {
-  const { getOptionsByType } = useLookupCodeHelpers();
-  const interestHolderInterestTypes = getOptionsByType(API.INTEREST_HOLDER_INTEREST_TYPES);
   return (
     <Formik<StakeHolderForm>
       enableReinitialize
@@ -72,84 +69,13 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                   <>
                     {values.interestHolders.length === 0 && <i>No Interest holders to display</i>}
                     {values.interestHolders.map((interestHolder, index) => (
-                      <React.Fragment
-                        key={
-                          interestHolder?.interestHolderId
-                            ? `interest-holder-${interestHolder?.interestHolderId}`
-                            : `interest-holder-${index}`
-                        }
-                      >
-                        <SectionField label="Interest holder">
-                          <Row className="pb-0">
-                            <Col>
-                              <ContactInputContainer
-                                field={`interestHolders.${index}.contact`}
-                                View={ContactInputView}
-                              ></ContactInputContainer>
-                            </Col>
-                            <Col xs="auto">
-                              <StyledRemoveLinkButton
-                                title="Remove Interest"
-                                variant="light"
-                                onClick={() => {
-                                  arrayHelpers.remove(index);
-                                }}
-                              >
-                                <FaTrash size="2rem" />
-                              </StyledRemoveLinkButton>
-                            </Col>
-                            {getIn(errors, `interestHolders.${index}.contact`) && (
-                              <DisplayError field={`interestHolders.${index}.contact`} />
-                            )}
-                          </Row>
-                        </SectionField>
-                        <SectionField label="Interest type">
-                          <Select
-                            options={interestHolderInterestTypes}
-                            field={`interestHolders.${index}.propertyInterestTypeCode`}
-                            placeholder="Select an interest type"
-                          />
-                        </SectionField>
-                        <SectionField
-                          label="Impacted properties"
-                          tooltip="The interest holder will show on the Compensation Request form relevant to these properties."
-                        >
-                          <FilePropertiesTable
-                            fileProperties={file.fileProperties ?? []}
-                            selectedFileProperties={
-                              interestHolder.impactedProperties
-                                .map(ip =>
-                                  file.fileProperties?.find(
-                                    fp => fp.id === ip.acquisitionFilePropertyId,
-                                  ),
-                                )
-                                .filter((fp): fp is Api_PropertyFile => !!fp) ?? []
-                            }
-                            setSelectedFileProperties={(fileProperties: Api_PropertyFile[]) => {
-                              const interestHolderProperties = fileProperties.map(fileProperty => {
-                                const matchingProperty = interestHolder.impactedProperties.find(
-                                  ip => ip.acquisitionFilePropertyId === fileProperty.id,
-                                );
-
-                                return matchingProperty
-                                  ? matchingProperty
-                                  : {
-                                      acquisitionFileProperty: fileProperty,
-                                      acquisitionFilePropertyId: fileProperty.id,
-                                    };
-                              });
-                              setFieldValue(
-                                `interestHolders.${index}.impactedProperties`,
-                                interestHolderProperties,
-                              );
-                            }}
-                            disabledSelection={false}
-                          />
-                          {getIn(errors, `interestHolders.${index}.impactedProperties`) && (
-                            <DisplayError field={`interestHolders.${index}.impactedProperties`} />
-                          )}
-                        </SectionField>
-                      </React.Fragment>
+                      <InterestHolderSubForm
+                        index={index}
+                        errors={errors}
+                        arrayHelpers={arrayHelpers}
+                        file={file}
+                        interestHolder={interestHolder}
+                      ></InterestHolderSubForm>
                     ))}
                     <hr />
                     <Button

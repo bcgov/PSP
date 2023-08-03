@@ -25,7 +25,7 @@ export function useAxiosErrorHandler(message = 'Network error. Check responses a
   return useCallback(
     (axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
-        toast.error(axiosError?.response.data.error);
+        toast.error(axiosError?.response.data.error, { autoClose: 10000 });
       } else {
         toast.error(message);
       }

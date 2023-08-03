@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useIsMounted from '@/hooks/util/useIsMounted';
@@ -127,15 +127,12 @@ export const useApiRequestWrapper = <
     }
   }, [wrappedApiRequest, invoke]);
 
-  return useMemo(
-    () => ({
-      error: error,
-      response: response,
-      loading: loading,
-      execute: wrappedApiRequest,
-      requestedOn,
-      requestEndOn,
-    }),
-    [error, loading, requestEndOn, requestedOn, response, wrappedApiRequest],
-  );
+  return {
+    error: error,
+    response: response,
+    loading: loading,
+    execute: wrappedApiRequest,
+    requestedOn,
+    requestEndOn,
+  };
 };

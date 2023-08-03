@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DotNetEnv;
+using DotNetEnv.Configuration;
+using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
@@ -67,6 +69,8 @@ namespace PIMS.Tests.Automation.Drivers
         private IConfiguration ReadConfiguration() =>
             new ConfigurationBuilder()
                 .AddUserSecrets<BrowserDriver>()
+                .AddDotNetEnv(".env", LoadOptions.TraversePath())
+                .AddEnvironmentVariables()
                 .Build();
 
         public void Dispose()

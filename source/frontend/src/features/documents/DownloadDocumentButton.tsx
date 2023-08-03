@@ -76,11 +76,16 @@ const DownloadDocumentButton: React.FunctionComponent<
   );
 };
 
-export const showFile = async (response?: Api_FileDownload) => {
+/**
+ * Javascript function to trigger browser to save data to file as if it was downloaded.
+ * @param response The API file download response.
+ * @param fileName Optional file name to override default file name returned from API.
+ */
+export const showFile = async (response?: Api_FileDownload, fileName?: string) => {
   if (response !== undefined && response.size > 0) {
     if (response.encodingType === 'base64') {
       const blob = b64toBlob(response.filePayload, response.mimetype);
-      fileDownload(blob, response.fileName);
+      fileDownload(blob, fileName ? fileName : response.fileName);
     } else {
       throw new Error('Only base64 encoding is supported');
     }
