@@ -16,7 +16,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
 
 import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
-import AdvancedFilterButton from './leaflet/Control/AdvancedFilterButton/AdvancedFilterButton';
+import AdvancedFilterButton from './leaflet/Control/AdvancedFilter/AdvancedFilterButton';
 import BasemapToggle, {
   BaseLayer,
   BasemapToggleEvent,
@@ -177,8 +177,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     }
   };
 
-  const [layersOpen, setLayersOpen] = React.useState(false);
-
   return (
     <Styled.MapContainer>
       {baseLayers?.length > 0 && (
@@ -219,23 +217,8 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
         <LegendControl />
         <ZoomOutButton />
-        <AdvancedFilterButton
-          open={mapMachine.isAdvancedFilterSidebarOpen}
-          onOpen={() => {
-            setLayersOpen(false);
-            mapMachine.openAdvancedFilterSidebar();
-          }}
-          onClose={() => mapMachine.closeAdvancedFilterSidebar()}
-        />
-        <LayersControl
-          open={layersOpen}
-          setOpen={() => {
-            setLayersOpen(!layersOpen);
-            if (!layersOpen) {
-              mapMachine.closeAdvancedFilterSidebar();
-            }
-          }}
-        />
+        <AdvancedFilterButton open={mapMachine.isFiltering} onToggle={mapMachine.toggleMapFilter} />
+        <LayersControl open={mapMachine.isShowingMapLayers} onToggle={mapMachine.toggleMapLayer} />
         <InventoryLayer zoom={zoom} bounds={bounds}></InventoryLayer>
       </ReactLeafletMap>
     </Styled.MapContainer>

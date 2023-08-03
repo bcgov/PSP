@@ -12,7 +12,10 @@ jest.mock('axios');
 // component under test
 function Template({ openByDefault = false }) {
   const [open, setOpen] = useState(openByDefault);
-  return <LayersControl open={open} setOpen={() => setOpen(!open)} />;
+  const toggle = () => {
+    setOpen(!open);
+  };
+  return <LayersControl open={open} onToggle={toggle} />;
 }
 
 function setup(ui = <Template />, setMap = noop) {

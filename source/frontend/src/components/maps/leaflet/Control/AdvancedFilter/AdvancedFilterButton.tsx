@@ -10,27 +10,14 @@ import Control from '../Control';
 
 export type IAdvanceFilterButtonProps = {
   /** whether the advanced filter slide out is open or closed */
-  open?: boolean;
-  onOpen?: () => void;
-  onClose?: () => void;
+  open: boolean;
+  onToggle: () => void;
 };
 
 /**
  * Component to launch the Advanced Map Filter Bar
  */
-const AdvancedFilterButton: React.FC<IAdvanceFilterButtonProps> = ({
-  open = false,
-  onOpen,
-  onClose,
-}) => {
-  const onButtonClick = () => {
-    if (!open) {
-      onOpen?.();
-    } else {
-      onClose?.();
-    }
-  };
-
+const AdvancedFilterButton: React.FC<IAdvanceFilterButtonProps> = ({ open, onToggle }) => {
   return (
     <Control position="topright">
       <div className="w-100">
@@ -38,7 +25,7 @@ const AdvancedFilterButton: React.FC<IAdvanceFilterButtonProps> = ({
           <ControlButton
             title="advanced-filter-button"
             variant="outline-secondary"
-            onClick={onButtonClick}
+            onClick={onToggle}
             className={cx({ open })}
           >
             <FaFilter size="1.6em" />

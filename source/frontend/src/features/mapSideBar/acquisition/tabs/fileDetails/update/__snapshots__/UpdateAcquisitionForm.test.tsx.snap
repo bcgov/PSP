@@ -558,6 +558,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="rbt-input-main form-control rbt-input"
                     id="typeahead-project"
                     name="typeahead-project"
+                    placeholder="Type to search for a Project"
                     role="combobox"
                     type="text"
                     value="Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to"
@@ -3082,7 +3083,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   <div
                     class="c20"
                   >
-                    Luke Skywalker
+                    Millenium Inc
                     <button
                       class="c9 Button c10 btn btn-link"
                       title="remove"
@@ -3119,8 +3120,8 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                       id="input-ownerSolicitor.contact.id"
                       name="ownerSolicitor.contact.id"
                       placeholder="Select from Contacts"
-                      title="P1"
-                      value="P1"
+                      title="O1"
+                      value="O1"
                     />
                   </div>
                 </div>
@@ -3154,6 +3155,24 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
               </div>
             </div>
             <div />
+          </div>
+        </div>
+        <div
+          class="mt-4 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Primary contact:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            No contacts available
           </div>
         </div>
         <div

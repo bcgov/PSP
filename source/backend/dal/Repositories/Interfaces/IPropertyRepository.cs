@@ -32,5 +32,7 @@ namespace Pims.Dal.Repositories
         void Delete(PimsProperty property);
 
         PimsProperty TransferToCoreInventory(PimsProperty property);
+
+        HashSet<long> GetMatchingIds(PropertyFilterCriteria filter);
     }
 }

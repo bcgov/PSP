@@ -4,18 +4,21 @@ import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { IGeoSearchParams } from '@/constants/API';
-import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
+import {
+  defaultPropertyFilter,
+  IPropertyFilter,
+} from '@/features/properties/filter/IPropertyFilter';
 import { pidParser } from '@/utils/propertyUtils';
 
 import { mapMachine } from './machineDefinition/mapMachine';
-import { SideBarType } from './machineDefinition/types';
+import { MachineContext, SideBarType } from './machineDefinition/types';
 import { FeatureSelected, MapFeatureData, RequestedFlyTo } from './models';
 import useLocationFeatureLoader, { LocationFeatureDataset } from './useLocationFeatureLoader';
 import { useMapSearch } from './useMapSearch';
 
 export interface IMapStateMachineContext {
   isSidebarOpen: boolean;
-  sideBarType: SideBarType;
+  isShowingSearchBar: boolean;
   pendingFlyTo: boolean;
   requestedFlyTo: RequestedFlyTo;
   mapFeatureSelected: FeatureSelected | null;
@@ -24,13 +27,15 @@ export interface IMapStateMachineContext {
   selectedFeatureDataset: LocationFeatureDataset | null;
   showPopup: boolean;
   isLoading: boolean;
-  mapFilter: IPropertyFilter | null;
+  mapSearchCriteria: IPropertyFilter | null;
   mapFeatureData: MapFeatureData;
   filePropertyLocations: LatLngLiteral[];
   pendingFitBounds: boolean;
   requestedFitBounds: LatLngBounds;
   isSelecting: boolean;
-  isAdvancedFilterSidebarOpen: boolean;
+  isFiltering: boolean;
+  isShowingMapLayers: boolean;
+  activePimsPropertyIds: number[];
 
   requestFlyToLocation: (latlng: LatLngLiteral) => void;
   requestFlyToBounds: (bounds: LatLngBounds) => void;
@@ -38,19 +43,21 @@ export interface IMapStateMachineContext {
   processFitBounds: () => void;
   openSidebar: (sidebarType: SideBarType) => void;
   closeSidebar: () => void;
-  openAdvancedFilterSidebar: () => void;
-  closeAdvancedFilterSidebar: () => void;
   closePopup: () => void;
 
   mapClick: (latlng: LatLngLiteral) => void;
   mapMarkerClick: (featureSelected: FeatureSelected) => void;
 
-  setMapFilter: (mapFilter: IPropertyFilter) => void;
+  setMapSearchCriteria: (searchCriteria: IPropertyFilter) => void;
   refreshMapProperties: () => void;
   prepareForCreation: () => void;
   startSelection: () => void;
   finishSelection: () => void;
+  toggleMapFilter: () => void;
+  toggleMapLayer: () => void;
   setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
+
+  setVisiblePimsProperties: (propertyIds: number[]) => void;
 }
 
 const MapStateMachineContext = React.createContext<IMapStateMachineContext>(
@@ -87,7 +94,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
       },
     },
     services: {
-      loadLocationData: (context, event: any) => {
+      loadLocationData: (context: MachineContext, event: any) => {
         let latLng: LatLngLiteral = { lat: 0, lng: 0 };
         if (event.type === 'MAP_CLICK') {
           latLng = event.latlng;
@@ -98,8 +105,15 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
         return result;
       },
-      loadFeatures: (context: any, event: any) => {
-        const geoFilter = getQueryParams(context.mapFilter);
+      loadFeatures: (context: MachineContext, event: any) => {
+        // If there is data in the event, use that criteria.
+        // Otherwise, use the stored one in the context.
+        let searchCriteria = context.searchCriteria || defaultPropertyFilter;
+        if (event.searchCriteria !== undefined) {
+          searchCriteria = event.searchCriteria;
+        }
+
+        const geoFilter = getQueryParams(searchCriteria);
 
         if (geoFilter?.latitude && geoFilter?.longitude) {
           const geoLat = Number(geoFilter.latitude);
@@ -128,18 +142,6 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   const closeSidebar = useCallback(() => {
     serviceSend({
       type: 'CLOSE_SIDEBAR',
-    });
-  }, [serviceSend]);
-
-  const openAdvancedFilterSidebar = useCallback(() => {
-    serviceSend({
-      type: 'OPEN_ADVANCED_FILTER_SIDEBAR',
-    });
-  }, [serviceSend]);
-
-  const closeAdvancedFilterSidebar = useCallback(() => {
-    serviceSend({
-      type: 'CLOSE_ADVANCED_FILTER_SIDEBAR',
     });
   }, [serviceSend]);
 
@@ -203,9 +205,9 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'REFRESH_PROPERTIES' });
   }, [serviceSend]);
 
-  const setMapFilter = useCallback(
-    (mapFilter: IPropertyFilter) => {
-      serviceSend({ type: 'SET_MAP_FILTER', mapFilter });
+  const setMapSearchCriteria = useCallback(
+    (searchCriteria: IPropertyFilter) => {
+      serviceSend({ type: 'SET_MAP_SEARCH_CRITERIA', searchCriteria });
     },
     [serviceSend],
   );
@@ -229,18 +231,45 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
+  const setVisiblePimsProperties = useCallback(
+    (propertyIds: number[]) => {
+      serviceSend({ type: 'SET_VISIBLE_PROPERTIES', propertyIds });
+    },
+    [serviceSend],
+  );
+
+  const toggleMapFilter = useCallback(() => {
+    serviceSend({ type: 'TOGGLE_FILTER' });
+  }, [serviceSend]);
+
+  const toggleMapLayer = useCallback(() => {
+    serviceSend({ type: 'TOGGLE_LAYERS' });
+  }, [serviceSend]);
+
   const showPopup = useMemo(() => {
     return state.context.mapLocationFeatureDataset !== null;
   }, [state.context.mapLocationFeatureDataset]);
 
+  const isSidebarOpen = useMemo(() => {
+    return [
+      { mapVisible: { sideBar: 'sidebarOpen' } },
+      { mapVisible: { sideBar: 'selecting' } },
+    ].some(state.matches);
+  }, [state.matches]);
+
+  const isFiltering = useMemo(() => {
+    return state.matches({ mapVisible: { featureView: 'filtering' } });
+  }, [state]);
+
+  const isShowingMapLayers = useMemo(() => {
+    return state.matches({ mapVisible: { featureView: 'layerControl' } });
+  }, [state]);
+
   return (
     <MapStateMachineContext.Provider
       value={{
-        isSidebarOpen: [
-          { mapVisible: { sideBar: 'sidebarOpen' } },
-          { mapVisible: { sideBar: 'selecting' } },
-        ].some(state.matches),
-        sideBarType: state.context.sideBarType,
+        isSidebarOpen: isSidebarOpen,
+        isShowingSearchBar: !isSidebarOpen && !isFiltering,
         pendingFlyTo: state.matches({ mapVisible: { mapRequest: 'pendingFlyTo' } }),
         requestedFlyTo: state.context.requestedFlyTo,
         mapFeatureSelected: state.context.mapFeatureSelected,
@@ -249,24 +278,22 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         selectedFeatureDataset: state.context.selectedFeatureDataset,
         showPopup: showPopup,
         isLoading: state.context.isLoading,
-        mapFilter: state.context.mapFilter,
+        mapSearchCriteria: state.context.searchCriteria,
         mapFeatureData: state.context.mapFeatureData,
         filePropertyLocations: state.context.filePropertyLocations,
         pendingFitBounds: state.matches({ mapVisible: { mapRequest: 'pendingFitBounds' } }),
         requestedFitBounds: state.context.requestedFitBounds,
-        isSelecting: state.matches({ mapVisible: { sideBar: 'selecting' } }),
-        isAdvancedFilterSidebarOpen: state.matches({
-          mapVisible: { advancedFilterSideBar: 'sidebarOpen' },
-        }),
+        isSelecting: state.matches({ mapVisible: { featureView: 'selecting' } }),
+        isFiltering: isFiltering,
+        isShowingMapLayers: isShowingMapLayers,
+        activePimsPropertyIds: state.context.activePimsPropertyIds,
 
-        setMapFilter,
+        setMapSearchCriteria,
         refreshMapProperties,
         processFlyTo,
         processFitBounds,
         openSidebar,
         closeSidebar,
-        openAdvancedFilterSidebar,
-        closeAdvancedFilterSidebar,
         requestFlyToLocation,
         requestFlyToBounds,
         mapClick,
@@ -275,7 +302,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         prepareForCreation,
         startSelection,
         finishSelection,
+        toggleMapFilter,
+        toggleMapLayer,
         setFilePropertyLocations,
+        setVisiblePimsProperties,
       }}
     >
       {children}
