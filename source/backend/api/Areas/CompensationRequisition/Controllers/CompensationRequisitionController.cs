@@ -112,7 +112,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [HttpGet("{id:long}/payee")]
         [HasPermission(Permissions.CompensationRequisitionView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(CompensationPayeeModel), 200)]
+        [ProducesResponseType(typeof(/*CompensationPayeeModel*/string), 200)]
         [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
         public IActionResult GetCompensationRequisitionPayee([FromRoute] long id)
         {
@@ -124,9 +124,12 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
                 DateTime.Now);
             _logger.LogInformation("Dispatching to service: {Service}", _compensationRequisitionService.GetType());
 
-            var compensationPayee = _compensationRequisitionService.GetPayeeByCompensationId(id);
+            // TODO:
+            //var compensationPayee = _compensationRequisitionService.GetPayeeByCompensationId(id);
+            var compensationPayee = string.Empty;
 
-            return new JsonResult(_mapper.Map<CompensationPayeeModel>(compensationPayee));
+            //return new JsonResult(_mapper.Map<CompensationPayeeModel>(compensationPayee));
+            return new JsonResult(string.Empty);
         }
     }
 }

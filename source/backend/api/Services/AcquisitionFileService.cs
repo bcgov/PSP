@@ -34,7 +34,7 @@ namespace Pims.Api.Services
         private readonly IAgreementRepository _agreementRepository;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
         private readonly IInterestHolderRepository _interestHolderRepository;
-        private readonly ICompReqH120Service _compReqH120Service;
+        private readonly ICompReqFinancialService _compReqFinancialService;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -50,7 +50,7 @@ namespace Pims.Api.Services
             IAgreementRepository agreementRepository,
             ICompensationRequisitionRepository compensationRequisitionRepository,
             IInterestHolderRepository interestHolderRepository,
-            ICompReqH120Service compReqH120Service)
+            ICompReqFinancialService compReqFinancialService)
         {
             _user = user;
             _logger = logger;
@@ -65,7 +65,7 @@ namespace Pims.Api.Services
             _agreementRepository = agreementRepository;
             _compensationRequisitionRepository = compensationRequisitionRepository;
             _interestHolderRepository = interestHolderRepository;
-            _compReqH120Service = compReqH120Service;
+            _compReqFinancialService = compReqFinancialService;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -352,7 +352,8 @@ namespace Pims.Api.Services
             }
 
             compensationRequisition.IsDraft = compensationRequisition.IsDraft ?? true;
-            compensationRequisition.PimsAcquisitionPayees = new List<PimsAcquisitionPayee>() { new PimsAcquisitionPayee() };
+            //TODO
+            //compensationRequisition.PimsAcquisitionPayees = new List<PimsAcquisitionPayee>() { new PimsAcquisitionPayee() };
 
             var newCompensationRequisition = _compensationRequisitionRepository.Add(compensationRequisition);
 
@@ -483,13 +484,13 @@ namespace Pims.Api.Services
 
         private void ValidateNewTotalAllowableCompensation(long currentAcquisitionFileId, decimal? newAllowableCompensation)
         {
-            if(!newAllowableCompensation.HasValue)
+            if (!newAllowableCompensation.HasValue)
             {
                 return;
             }
-            IEnumerable<PimsCompReqH120> allFinalFinancialsOnFile = _compReqH120Service.GetAllByAcquisitionFileId(currentAcquisitionFileId, true);
+            IEnumerable<PimsCompReqFinancial> allFinalFinancialsOnFile = _compReqFinancialService.GetAllByAcquisitionFileId(currentAcquisitionFileId, true);
             var currentActualCompensation = allFinalFinancialsOnFile.Aggregate(0m, (acc, f) => acc + (f.TotalAmt ?? 0m));
-            if(newAllowableCompensation < currentActualCompensation)
+            if (newAllowableCompensation < currentActualCompensation)
             {
                 throw new BusinessRuleViolationException("The Total Allowable Compensation value cannot be saved because the value provided is less than current sum of the final compensation requisitions in this file. " +
                     "\n\nTo continue, adjust the value to accommodate the existing compensation requisitions in the file or contact your system administrator to adjust final compensations.");
@@ -616,12 +617,15 @@ namespace Pims.Api.Services
             var currentAquisitionFile = _acqFileRepository.GetById(acquisitionFile.Internal_Id);
             var compensationRequisitions = _compensationRequisitionRepository.GetAllByAcquisitionFileId(acquisitionFile.Internal_Id);
 
-            if (compensationRequisitions.Count == 0 || !compensationRequisitions.Any(y => y.PimsAcquisitionPayees.Count > 0))
-            {
-                return;
-            }
+            // TODO
+            /*     if (compensationRequisitions.Count == 0 || !compensationRequisitions.Any(y => y.PimsAcquisitionPayees.Count > 0))
+                 {
+                     return;
+                 }
+                 */
 
-            foreach (var compReq in compensationRequisitions)
+
+            /*foreach (var compReq in compensationRequisitions)
             {
                 var payee = compReq.PimsAcquisitionPayees.FirstOrDefault();
                 if (payee is null || !payee.HasPayeeAssigned)
@@ -652,7 +656,7 @@ namespace Pims.Api.Services
                 {
                     throw new ForeignKeyDependencyException("Acquisition File team member can not be removed since it's assigned as a payee for a compensation requisition");
                 }
-            }
+            }*/
         }
 
         private void ValidateInterestHoldersDependency(long acquisitionFileId, List<PimsInterestHolder> interestHolders)
@@ -660,14 +664,16 @@ namespace Pims.Api.Services
             var currentAquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
             var compensationRequisitions = _compensationRequisitionRepository.GetAllByAcquisitionFileId(acquisitionFileId);
 
-            if (compensationRequisitions.Count == 0 || !compensationRequisitions.Any(y => y.PimsAcquisitionPayees.Count > 0))
+            // TODO;
+            /*if (compensationRequisitions.Count == 0 || !compensationRequisitions.Any(y => y.PimsAcquisitionPayees.Count > 0))
             {
                 return;
-            }
+            }*/
 
             foreach (var compReq in compensationRequisitions)
             {
-                var payee = compReq.PimsAcquisitionPayees.FirstOrDefault();
+                // TODO
+                /*var payee = compReq.PimsAcquisitionPayees.FirstOrDefault();
                 if (payee is null || !payee.HasPayeeAssigned)
                 {
                     continue;
@@ -679,7 +685,7 @@ namespace Pims.Api.Services
                 && currentAquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(payee.InterestHolderId)))
                 {
                     throw new ForeignKeyDependencyException("Acquisition File Interest Holder can not be removed since it's assigned as a payee for a compensation requisition");
-                }
+                }*/
             }
 
         }

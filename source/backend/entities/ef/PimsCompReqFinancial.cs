@@ -8,14 +8,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_COMP_REQ_H120")]
+    [Table("PIMS_COMP_REQ_FINANCIAL")]
     [Index(nameof(CompensationRequisitionId), Name = "CRH120_COMPENSATION_REQUISITION_ID_IDX")]
     [Index(nameof(FinancialActivityCodeId), Name = "CRH120_FINANCIAL_ACTIVITY_CODE_ID_IDX")]
-    public partial class PimsCompReqH120
+    public partial class PimsCompReqFinancial
     {
         [Key]
-        [Column("COMP_REQ_FIN_ACTIVITY")]
-        public long CompReqFinActivity { get; set; }
+        [Column("COMP_REQ_FINANCIAL_ID")]
+        public long CompReqFinancialId { get; set; }
         [Column("COMPENSATION_REQUISITION_ID")]
         public long CompensationRequisitionId { get; set; }
         [Column("FINANCIAL_ACTIVITY_CODE_ID")]
@@ -70,10 +70,10 @@ namespace Pims.Dal.Entities
         public string DbLastUpdateUserid { get; set; }
 
         [ForeignKey(nameof(CompensationRequisitionId))]
-        [InverseProperty(nameof(PimsCompensationRequisition.PimsCompReqH120s))]
+        [InverseProperty(nameof(PimsCompensationRequisition.PimsCompReqFinancials))]
         public virtual PimsCompensationRequisition CompensationRequisition { get; set; }
         [ForeignKey(nameof(FinancialActivityCodeId))]
-        [InverseProperty(nameof(PimsFinancialActivityCode.PimsCompReqH120s))]
+        [InverseProperty(nameof(PimsFinancialActivityCode.PimsCompReqFinancials))]
         public virtual PimsFinancialActivityCode FinancialActivityCode { get; set; }
     }
 }

@@ -11,29 +11,29 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// Provides a repository to interact with compensation requisition h120s within the datasource.
     /// </summary>
-    public class CompReqH120Repository : BaseRepository<PimsCompReqH120>, ICompReqH120Repository
+    public class CompReqFinancialRepository : BaseRepository<PimsCompReqFinancial>, ICompReqFinancialRepository
     {
         #region Constructors
         private readonly ClaimsPrincipal _user;
 
         /// <summary>
-        /// Creates a new instance of a CompReqH120Repository, and initializes it with the specified arguments.
+        /// Creates a new instance of a CompReqFinancialRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public CompReqH120Repository(PimsContext dbContext, ClaimsPrincipal user, ILogger<BaseRepository> logger)
+        public CompReqFinancialRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<BaseRepository> logger)
             : base(dbContext, user, logger)
         {
             this._user = user;
         }
         #endregion
 
-        public IEnumerable<PimsCompReqH120> GetAllByAcquisitionFileId(long acquisitionFileId, bool? finalOnly)
+        public IEnumerable<PimsCompReqFinancial> GetAllByAcquisitionFileId(long acquisitionFileId, bool? finalOnly)
         {
             this._user.ThrowIfNotAllAuthorized(Security.Permissions.CompensationRequisitionView);
 
-            var query = Context.PimsCompReqH120s
+            var query = Context.PimsCompReqFinancials
                 .Include(c => c.CompensationRequisition)
                 .Where(c => c.CompensationRequisition.AcquisitionFileId == acquisitionFileId);
 

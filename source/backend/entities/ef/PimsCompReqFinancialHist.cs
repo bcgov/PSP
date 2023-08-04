@@ -8,41 +8,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_FORM_8_HIST")]
-    [Index(nameof(Form8HistId), nameof(EndDateHist), Name = "PIMS_FORM8_H_UK", IsUnique = true)]
-    public partial class PimsForm8Hist
+    [Table("PIMS_COMP_REQ_FINANCIAL_HIST")]
+    [Index(nameof(CompReqFinancialHistId), nameof(EndDateHist), Name = "PIMS_CRQFIN_H_UK", IsUnique = true)]
+    public partial class PimsCompReqFinancialHist
     {
         [Key]
-        [Column("_FORM_8_HIST_ID")]
-        public long Form8HistId { get; set; }
+        [Column("_COMP_REQ_FINANCIAL_HIST_ID")]
+        public long CompReqFinancialHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("FORM_8_ID")]
-        public long Form8Id { get; set; }
-        [Column("ACQUISITION_FILE_ID")]
-        public long AcquisitionFileId { get; set; }
-        [Column("ACQUISITION_OWNER_ID")]
-        public long? AcquisitionOwnerId { get; set; }
-        [Column("INTEREST_HOLDER_ID")]
-        public long? InterestHolderId { get; set; }
-        [Column("EXPROPRIATING_AUTHORITY")]
-        public long? ExpropriatingAuthority { get; set; }
-        [Column("PAYMENT_ITEM_TYPE_CODE")]
-        [StringLength(20)]
-        public string PaymentItemTypeCode { get; set; }
-        [Column("DESCRIPTION")]
-        [StringLength(2000)]
-        public string Description { get; set; }
-        [Column("IS_GST_REQUIRED")]
-        public bool? IsGstRequired { get; set; }
+        [Column("COMP_REQ_FINANCIAL_ID")]
+        public long CompReqFinancialId { get; set; }
+        [Column("COMPENSATION_REQUISITION_ID")]
+        public long CompensationRequisitionId { get; set; }
+        [Column("FINANCIAL_ACTIVITY_CODE_ID")]
+        public long FinancialActivityCodeId { get; set; }
         [Column("PRETAX_AMT", TypeName = "money")]
         public decimal? PretaxAmt { get; set; }
         [Column("TAX_AMT", TypeName = "money")]
         public decimal? TaxAmt { get; set; }
         [Column("TOTAL_AMT", TypeName = "money")]
         public decimal? TotalAmt { get; set; }
+        [Column("IS_GST_REQUIRED")]
+        public bool? IsGstRequired { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
