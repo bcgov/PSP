@@ -12,16 +12,16 @@ import {
 
 import AdvancedFilterButton, { IAdvanceFilterButtonProps } from './AdvancedFilterButton';
 
-const onOpen = jest.fn();
-const onClose = jest.fn();
+const toggle = jest.fn();
 
 describe('AdvancedFilterButton', () => {
   const setup = async (
     renderOptions: RenderOptions & { props?: IAdvanceFilterButtonProps } = {},
   ) => {
-    const props = renderOptions.props || {};
-    props.onOpen = props.onOpen ? props.onOpen : onOpen;
-    props.onClose = props.onClose ? props.onClose : onClose;
+    const props: IAdvanceFilterButtonProps = renderOptions.props || {
+      open: false,
+      onToggle: toggle,
+    };
 
     // create a promise to wait for the map to be ready (which happens after initial render)
     const { promise, resolve } = deferred();
@@ -58,7 +58,9 @@ describe('AdvancedFilterButton', () => {
   });
 
   it(`renders the advanced filter button in the 'open' state based on 'isOpen' prop`, async () => {
-    const { mapReady, getAdvancedFilterButton } = await setup({ props: { open: true } });
+    const { mapReady, getAdvancedFilterButton } = await setup({
+      props: { open: true, onToggle: toggle },
+    });
     await waitFor(() => mapReady);
 
     const button = getAdvancedFilterButton();
@@ -66,23 +68,27 @@ describe('AdvancedFilterButton', () => {
     expect(button.className).toContain('open');
   });
 
-  it(`when filter bar is closed, clicking the button calls 'onOpen' callback`, async () => {
-    const { mapReady, getAdvancedFilterButton } = await setup({ props: { open: false } });
+  it(`when filter bar is closed, clicking the button calls 'toggle' callback`, async () => {
+    const { mapReady, getAdvancedFilterButton } = await setup({
+      props: { open: false, onToggle: toggle },
+    });
     await waitFor(() => mapReady);
 
     const button = getAdvancedFilterButton();
     expect(button).toBeInTheDocument();
     await act(async () => userEvent.click(button));
-    expect(onOpen).toHaveBeenCalled();
+    expect(toggle).toHaveBeenCalled();
   });
 
-  it(`when filter bar is open, clicking the button calls 'onClose' callback`, async () => {
-    const { mapReady, getAdvancedFilterButton } = await setup({ props: { open: true } });
+  it(`when filter bar is open, clicking the button calls 'toggle' callback`, async () => {
+    const { mapReady, getAdvancedFilterButton } = await setup({
+      props: { open: true, onToggle: toggle },
+    });
     await waitFor(() => mapReady);
 
     const button = getAdvancedFilterButton();
     expect(button).toBeInTheDocument();
     await act(async () => userEvent.click(button));
-    expect(onClose).toHaveBeenCalled();
+    expect(toggle).toHaveBeenCalled();
   });
 });

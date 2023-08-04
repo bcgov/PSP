@@ -67,8 +67,11 @@ export const useFullyAttributedParcelMapLayer = () => {
   );
 
   const findByPlanNumber = useCallback(
-    async (planNumber: string) => {
-      const data = await getAllFeatures({ PLAN_NUMBER: planNumber }, { timeout: 30000 });
+    async (planNumber: string, forceExactMatch = false) => {
+      const data = await getAllFeatures(
+        { PLAN_NUMBER: planNumber },
+        { forceExactMatch: forceExactMatch, timeout: 30000 },
+      );
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
       return data as
         | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>

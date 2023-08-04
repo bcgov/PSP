@@ -41,24 +41,37 @@ const getColumnsByProperty = (
     },
   },
   {
+    Header: 'Primary Contact',
+    accessor: 'primaryContact',
+    align: 'left',
+    minWidth: 60,
+    maxWidth: 60,
+    Cell: (cellProps: CellProps<InterestHolderViewRow, Api_Person | null>) => {
+      return cellProps.row.original?.primaryContact ? (
+        <StyledLink
+          target="_blank"
+          rel="noopener noreferrer"
+          to={`/contact/${`P${cellProps.row.original.primaryContact?.id}`}`}
+        >
+          {formatApiPersonNames(cellProps.row.original?.primaryContact)}
+        </StyledLink>
+      ) : cellProps.row.original?.person ? (
+        <>{'N/A'}</>
+      ) : (
+        <>{'No contacts available/selected'}</>
+      );
+    },
+  },
+  {
     Header: 'Interest Type',
     accessor: 'interestHolderProperty',
     align: 'left',
     minWidth: 60,
     maxWidth: 60,
     Cell: (cellProps: CellProps<InterestHolderViewRow, Api_InterestHolderProperty | null>) => {
-      const propertyInterestTypes =
-        cellProps.row.original.interestHolderProperty?.propertyInterestTypes;
-      let firstDescription = '';
-      if (
-        propertyInterestTypes !== undefined &&
-        propertyInterestTypes !== null &&
-        propertyInterestTypes.length > 0
-      ) {
-        firstDescription = propertyInterestTypes[0].description || '';
-      }
+      const propertyInterestType = cellProps.row.original.interestHolderType?.description ?? '';
 
-      return <>{firstDescription}</>;
+      return <>{propertyInterestType}</>;
     },
   },
 ];

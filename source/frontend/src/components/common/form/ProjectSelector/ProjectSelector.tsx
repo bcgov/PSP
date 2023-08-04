@@ -16,6 +16,7 @@ export const ProjectSelector: React.FC<IProjectSelectorProps> = props => {
 
   return (
     <AsyncTypeahead
+      placeholder="Type to search for a Project"
       field={props.field}
       labelKey="text"
       multiple={false}

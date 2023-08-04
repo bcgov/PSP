@@ -17,10 +17,10 @@ import { TenantContext } from '@/tenants';
  */
 export const usePimsPropertyLayer = () => {
   const {
-    tenant: { propertiesUrl },
+    tenant: { propertiesUrl, boundaryLayerUrl },
   } = useContext(TenantContext);
 
-  const { findOneWhereContainsWrapped } = useLayerQuery(propertiesUrl, true);
+  const { findOneWhereContainsWrapped } = useLayerQuery(boundaryLayerUrl, true);
   const findOneWhereContainsWrappedExecute = findOneWhereContainsWrapped.execute;
   const findOneWhereContainsWrappedLoading = findOneWhereContainsWrapped.loading;
 
@@ -31,6 +31,7 @@ export const usePimsPropertyLayer = () => {
           STREET_ADDRESS_1: params?.STREET_ADDRESS_1,
           PID: params?.PID,
           PIN: params?.PIN,
+          SURVEY_PLAN_NUMBER: params?.SURVEY_PLAN_NUMBER,
         };
         const url = `${propertiesUrl}${
           geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''

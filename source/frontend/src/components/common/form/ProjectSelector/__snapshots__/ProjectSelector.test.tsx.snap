@@ -30,6 +30,7 @@ exports[`ProjectSelector component renders as expected 1`] = `
           class="rbt-input-main form-control rbt-input"
           id="typeahead-foo"
           name="typeahead-foo"
+          placeholder="Type to search for a Project"
           role="combobox"
           type="text"
           value=""

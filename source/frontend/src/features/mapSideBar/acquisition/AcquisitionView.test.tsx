@@ -65,7 +65,6 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
   onShowPropertySelector: onEditFileProperties,
   setContainerState,
   containerState: {
-    acquisitionFile: mockAcquisitionFileResponse(),
     isEditing: false,
     selectedMenuIndex: 0,
     showConfirmModal: false,
