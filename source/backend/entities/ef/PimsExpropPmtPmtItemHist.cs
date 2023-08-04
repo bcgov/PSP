@@ -8,26 +8,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACQUISITION_OWNER_REP_HIST")]
-    [Index(nameof(AcquisitionOwnerRepHistId), nameof(EndDateHist), Name = "PIMS_AQOWRP_H_UK", IsUnique = true)]
-    public partial class PimsAcquisitionOwnerRepHist
+    [Table("PIMS_EXPROP_PMT_PMT_ITEM_HIST")]
+    [Index(nameof(ExpropPmtPmtItemHistId), nameof(EndDateHist), Name = "PIMS_XPMTIT_H_UK", IsUnique = true)]
+    public partial class PimsExpropPmtPmtItemHist
     {
         [Key]
-        [Column("_ACQUISITION_OWNER_REP_HIST_ID")]
-        public long AcquisitionOwnerRepHistId { get; set; }
+        [Column("_EXPROP_PMT_PMT_ITEM_HIST_ID")]
+        public long ExpropPmtPmtItemHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("OWNER_REPRESENTATIVE_ID")]
-        public long OwnerRepresentativeId { get; set; }
-        [Column("ACQUISITION_FILE_ID")]
-        public long AcquisitionFileId { get; set; }
-        [Column("PERSON_ID")]
-        public long PersonId { get; set; }
-        [Column("COMMENT")]
-        [StringLength(2000)]
-        public string Comment { get; set; }
+        [Column("EXPROP_PMT_PMT_ITEM_ID")]
+        public long ExpropPmtPmtItemId { get; set; }
+        [Column("EXPROPRIATION_PAYMENT_ID")]
+        public long ExpropriationPaymentId { get; set; }
+        [Required]
+        [Column("PAYMENT_ITEM_TYPE_CODE")]
+        [StringLength(20)]
+        public string PaymentItemTypeCode { get; set; }
+        [Column("IS_GST_REQUIRED")]
+        public bool? IsGstRequired { get; set; }
+        [Column("PRETAX_AMT", TypeName = "money")]
+        public decimal? PretaxAmt { get; set; }
+        [Column("TAX_AMT", TypeName = "money")]
+        public decimal? TaxAmt { get; set; }
+        [Column("TOTAL_AMT", TypeName = "money")]
+        public decimal? TotalAmt { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]

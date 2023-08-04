@@ -8,32 +8,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACQUISITION_PAYEE_HIST")]
-    [Index(nameof(AcquisitionPayeeHistId), nameof(EndDateHist), Name = "PIMS_ACQPAY_H_UK", IsUnique = true)]
-    public partial class PimsAcquisitionPayeeHist
+    [Table("PIMS_EXPROP_PMT_PMT_ITEM")]
+    [Index(nameof(ExpropriationPaymentId), Name = "XPMTITY_EXPROPRIATION_PAYMENT_ID_IDX")]
+    [Index(nameof(PaymentItemTypeCode), nameof(ExpropriationPaymentId), Name = "XPMTITY_EXPROP_PMT_PMT_TYPE_TUC", IsUnique = true)]
+    [Index(nameof(PaymentItemTypeCode), Name = "XPMTITY_PAYMENT_ITEM_TYPE_CODE_IDX")]
+    public partial class PimsExpropPmtPmtItem
     {
         [Key]
-        [Column("_ACQUISITION_PAYEE_HIST_ID")]
-        public long AcquisitionPayeeHistId { get; set; }
-        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-        public DateTime EffectiveDateHist { get; set; }
-        [Column("END_DATE_HIST", TypeName = "datetime")]
-        public DateTime? EndDateHist { get; set; }
-        [Column("ACQUISITION_PAYEE_ID")]
-        public long AcquisitionPayeeId { get; set; }
-        [Column("COMPENSATION_REQUISITION_ID")]
-        public long CompensationRequisitionId { get; set; }
-        [Column("ACQUISITION_OWNER_ID")]
-        public long? AcquisitionOwnerId { get; set; }
-        [Column("INTEREST_HOLDER_ID")]
-        public long? InterestHolderId { get; set; }
-        [Column("ACQUISITION_FILE_PERSON_ID")]
-        public long? AcquisitionFilePersonId { get; set; }
-        [Column("GST_NUMBER")]
-        [StringLength(50)]
-        public string GstNumber { get; set; }
-        [Column("IS_PAYMENT_IN_TRUST")]
-        public bool? IsPaymentInTrust { get; set; }
+        [Column("EXPROP_PMT_PMT_ITEM_ID")]
+        public long ExpropPmtPmtItemId { get; set; }
+        [Column("EXPROPRIATION_PAYMENT_ID")]
+        public long ExpropriationPaymentId { get; set; }
+        [Required]
+        [Column("PAYMENT_ITEM_TYPE_CODE")]
+        [StringLength(20)]
+        public string PaymentItemTypeCode { get; set; }
+        [Column("IS_GST_REQUIRED")]
+        public bool? IsGstRequired { get; set; }
+        [Column("PRETAX_AMT", TypeName = "money")]
+        public decimal? PretaxAmt { get; set; }
+        [Column("TAX_AMT", TypeName = "money")]
+        public decimal? TaxAmt { get; set; }
+        [Column("TOTAL_AMT", TypeName = "money")]
+        public decimal? TotalAmt { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -74,5 +71,12 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [ForeignKey(nameof(ExpropriationPaymentId))]
+        [InverseProperty(nameof(PimsExpropriationPayment.PimsExpropPmtPmtItems))]
+        public virtual PimsExpropriationPayment ExpropriationPayment { get; set; }
+        [ForeignKey(nameof(PaymentItemTypeCode))]
+        [InverseProperty(nameof(PimsPaymentItemType.PimsExpropPmtPmtItems))]
+        public virtual PimsPaymentItemType PaymentItemTypeCodeNavigation { get; set; }
     }
 }

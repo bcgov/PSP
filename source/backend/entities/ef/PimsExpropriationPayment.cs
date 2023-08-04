@@ -8,17 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_FORM_8")]
-    [Index(nameof(AcquisitionFileId), Name = "FORM8_ACQUISITION_FILE_ID_IDX")]
-    [Index(nameof(AcquisitionOwnerId), Name = "FORM8_ACQUISITION_OWNER_ID_IDX")]
-    [Index(nameof(ExpropriatingAuthority), Name = "FORM8_EXPROPRIATING_AUTHORITY_IDX")]
-    [Index(nameof(InterestHolderId), Name = "FORM8_INTEREST_HOLDER_ID_IDX")]
-    [Index(nameof(PaymentItemTypeCode), Name = "FORM8_PAYMENT_ITEM_TYPE_CODE_IDX")]
-    public partial class PimsForm8
+    [Table("PIMS_EXPROPRIATION_PAYMENT")]
+    [Index(nameof(AcquisitionFileId), Name = "EXPPMT_ACQUISITION_FILE_ID_IDX")]
+    [Index(nameof(AcquisitionOwnerId), Name = "EXPPMT_ACQUISITION_OWNER_ID_IDX")]
+    [Index(nameof(ExpropriatingAuthority), Name = "EXPPMT_EXPROPRIATING_AUTHORITY_IDX")]
+    [Index(nameof(InterestHolderId), Name = "EXPPMT_INTEREST_HOLDER_ID_IDX")]
+    public partial class PimsExpropriationPayment
     {
+        public PimsExpropriationPayment()
+        {
+            PimsExpropPmtPmtItems = new HashSet<PimsExpropPmtPmtItem>();
+        }
+
         [Key]
-        [Column("FORM_8_ID")]
-        public long Form8Id { get; set; }
+        [Column("EXPROPRIATION_PAYMENT_ID")]
+        public long ExpropriationPaymentId { get; set; }
         [Column("ACQUISITION_FILE_ID")]
         public long AcquisitionFileId { get; set; }
         [Column("ACQUISITION_OWNER_ID")]
@@ -27,20 +31,9 @@ namespace Pims.Dal.Entities
         public long? InterestHolderId { get; set; }
         [Column("EXPROPRIATING_AUTHORITY")]
         public long? ExpropriatingAuthority { get; set; }
-        [Column("PAYMENT_ITEM_TYPE_CODE")]
-        [StringLength(20)]
-        public string PaymentItemTypeCode { get; set; }
         [Column("DESCRIPTION")]
         [StringLength(2000)]
         public string Description { get; set; }
-        [Column("IS_GST_REQUIRED")]
-        public bool? IsGstRequired { get; set; }
-        [Column("PRETAX_AMT", TypeName = "money")]
-        public decimal? PretaxAmt { get; set; }
-        [Column("TAX_AMT", TypeName = "money")]
-        public decimal? TaxAmt { get; set; }
-        [Column("TOTAL_AMT", TypeName = "money")]
-        public decimal? TotalAmt { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -83,19 +76,18 @@ namespace Pims.Dal.Entities
         public string DbLastUpdateUserid { get; set; }
 
         [ForeignKey(nameof(AcquisitionFileId))]
-        [InverseProperty(nameof(PimsAcquisitionFile.PimsForm8s))]
+        [InverseProperty(nameof(PimsAcquisitionFile.PimsExpropriationPayments))]
         public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
         [ForeignKey(nameof(AcquisitionOwnerId))]
-        [InverseProperty(nameof(PimsAcquisitionOwner.PimsForm8s))]
+        [InverseProperty(nameof(PimsAcquisitionOwner.PimsExpropriationPayments))]
         public virtual PimsAcquisitionOwner AcquisitionOwner { get; set; }
         [ForeignKey(nameof(ExpropriatingAuthority))]
-        [InverseProperty(nameof(PimsOrganization.PimsForm8s))]
+        [InverseProperty(nameof(PimsOrganization.PimsExpropriationPayments))]
         public virtual PimsOrganization ExpropriatingAuthorityNavigation { get; set; }
         [ForeignKey(nameof(InterestHolderId))]
-        [InverseProperty(nameof(PimsInterestHolder.PimsForm8s))]
+        [InverseProperty(nameof(PimsInterestHolder.PimsExpropriationPayments))]
         public virtual PimsInterestHolder InterestHolder { get; set; }
-        [ForeignKey(nameof(PaymentItemTypeCode))]
-        [InverseProperty(nameof(PimsPaymentItemType.PimsForm8s))]
-        public virtual PimsPaymentItemType PaymentItemTypeCodeNavigation { get; set; }
+        [InverseProperty(nameof(PimsExpropPmtPmtItem.ExpropriationPayment))]
+        public virtual ICollection<PimsExpropPmtPmtItem> PimsExpropPmtPmtItems { get; set; }
     }
 }

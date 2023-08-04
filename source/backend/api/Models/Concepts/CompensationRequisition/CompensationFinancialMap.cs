@@ -7,7 +7,7 @@ namespace Pims.Api.Models.Concepts
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsCompReqH120, CompensationFinancialModel>()
+            config.NewConfig<Entity.PimsCompReqFinancial, CompensationFinancialModel>()
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.FinancialActivityCodeId, src => src.FinancialActivityCodeId)
@@ -20,9 +20,9 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
-            config.NewConfig<CompensationFinancialModel, Entity.PimsCompReqH120>()
+            config.NewConfig<CompensationFinancialModel, Entity.PimsCompReqFinancial>()
                 .PreserveReference(true)
-                .Map(dest => dest.CompReqFinActivity, src => src.Id)
+                .Map(dest => dest.CompReqFinancialId, src => src.Id)
                 .Map(dest => dest.FinancialActivityCodeId, src => src.FinancialActivityCodeId)
                 .Map(dest => dest.CompensationRequisitionId, src => src.CompensationId)
                 .Map(dest => dest.PretaxAmt, src => src.PretaxAmount)

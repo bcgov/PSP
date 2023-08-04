@@ -23,11 +23,9 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.ExpropriationNoticeServedDate, src => src.ExpropNoticeServedDt)
                 .Map(dest => dest.ExpropriationVestingDate, src => src.ExpropVestingDt)
                 .Map(dest => dest.SpecialInstruction, src => src.SpecialInstruction)
-                .Map(dest => dest.Payees, src => src.PimsAcquisitionPayees)
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.Financials, src => src.PimsCompReqH120s)
-                .Map(dest => dest.Payees, src => src.PimsAcquisitionPayees)
+                .Map(dest => dest.Financials, src => src.PimsCompReqFinancials)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<CompensationRequisitionModel, Entity.PimsCompensationRequisition>()
@@ -46,8 +44,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.SpecialInstruction, src => src.SpecialInstruction)
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.PimsCompReqH120s, src => src.Financials)
-                .Map(dest => dest.PimsAcquisitionPayees, src => src.Payees)
+                .Map(dest => dest.PimsCompReqFinancials, src => src.Financials)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }

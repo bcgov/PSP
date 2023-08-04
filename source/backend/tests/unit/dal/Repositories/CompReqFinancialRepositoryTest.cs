@@ -17,24 +17,24 @@ namespace Pims.Dal.Test.Repositories
     [Trait("category", "dal")]
     [Trait("group", "financialcode")]
     [ExcludeFromCodeCoverage]
-    public class CompReqH120RepositoryTest
+    public class CompReqFinancialRepositoryTest
     {
         // xUnit.net creates a new instance of the test class for every test that is run,
         // so any code which is placed into the constructor of the test class will be run for every single test.
         private readonly TestHelper _helper = new();
 
-        private CompReqH120Repository CreateWithPermissions(params Permissions[] permissions)
+        private CompReqFinancialRepository CreateWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
             _helper.CreatePimsContext(user, true);
-            return _helper.CreateRepository<CompReqH120Repository>(user);
+            return _helper.CreateRepository<CompReqFinancialRepository>(user);
         }
 
         [Fact]
         public void GetAll_Success()
         {
             // Arrange
-            var codeToAdd = new PimsCompReqH120()
+            var codeToAdd = new PimsCompReqFinancial()
             {
                 CompensationRequisitionId = 1,
                 CompensationRequisition = new PimsCompensationRequisition()
@@ -51,7 +51,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeAssignableTo<IEnumerable<PimsCompReqH120>>();
+            result.Should().BeAssignableTo<IEnumerable<PimsCompReqFinancial>>();
             result.Should().HaveCount(1);
         }
 
@@ -59,7 +59,7 @@ namespace Pims.Dal.Test.Repositories
         public void GetAll_FinalOnly()
         {
             // Arrange
-            var codeToAdd = new PimsCompReqH120()
+            var codeToAdd = new PimsCompReqFinancial()
             {
                 CompensationRequisitionId = 1,
                 CompensationRequisition = new PimsCompensationRequisition()
@@ -76,7 +76,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeAssignableTo<IEnumerable<PimsCompReqH120>>();
+            result.Should().BeAssignableTo<IEnumerable<PimsCompReqFinancial>>();
             result.Should().HaveCount(0);
         }
 
