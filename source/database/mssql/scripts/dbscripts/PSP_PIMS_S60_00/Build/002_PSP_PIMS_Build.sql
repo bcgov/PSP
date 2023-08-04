@@ -7941,7 +7941,7 @@ CREATE TABLE [dbo].[PIMS_INTEREST_HOLDER_HIST]  (
 	[PERSON_ID]                     	bigint NULL,
 	[ORGANIZATION_ID]               	bigint NULL,
 	[PRIMARY_CONTACT_ID]            	bigint NULL,
-	[INTEREST_HOLDER_TYPE_CODE]     	nvarchar(20) NOT NULL DEFAULT (N'INTHLD​R'),
+	[INTEREST_HOLDER_TYPE_CODE]     	nvarchar(20) NOT NULL DEFAULT (N'INTHLDR'),
 	[COMMENT]                       	nvarchar(2000) NULL,
 	[IS_DISABLED]                   	bit NULL,
 	[CONCURRENCY_CONTROL_NUMBER]    	bigint NOT NULL,
