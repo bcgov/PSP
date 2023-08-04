@@ -20,11 +20,11 @@ namespace Pims.Api.Test.Services
     [Trait("area", "compensation-requisition")]
     [ExcludeFromCodeCoverage]
 
-    public class CompReqH120ServiceTest
+    public class CompReqFinancialServiceTest
     {
         private readonly TestHelper _helper;
 
-        public CompReqH120ServiceTest()
+        public CompReqFinancialServiceTest()
         {
             _helper = new TestHelper();
         }
@@ -34,7 +34,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = CreateWithPermissions(Permissions.CompensationRequisitionView, Permissions.AcquisitionFileView);
-            var repo = _helper.GetService<Mock<ICompReqH120Repository>>();
+            var repo = _helper.GetService<Mock<ICompReqFinancialRepository>>();
             repo.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), null));
 
             // Act
@@ -49,17 +49,17 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = CreateWithPermissions(Permissions.CompensationRequisitionEdit);
-            var repo = _helper.GetService<Mock<ICompReqH120Repository>>();
+            var repo = _helper.GetService<Mock<ICompReqFinancialRepository>>();
 
             Action act = () => service.GetAllByAcquisitionFileId(1, null);
             act.Should().Throw<NotAuthorizedException>();
         }
 
 
-        private CompReqH120Service CreateWithPermissions(params Permissions[] permissions)
+        private CompReqFinancialService CreateWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
-            return _helper.Create<CompReqH120Service>(user);
+            return _helper.Create<CompReqFinancialService>(user);
         }
     }
 }
