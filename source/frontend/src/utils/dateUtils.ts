@@ -25,6 +25,6 @@ export const formatApiDateTime = (
   date?: string | Date | Moment | null,
   format: string = 'YYYY-MM-DD hh:mm a',
 ) => {
-  if (typeof date === 'string') return moment.utc(date).local().format(format);
+  if (typeof date === 'string' && !!date) return moment.utc(date).local().format(format);
   return !!date ? moment.utc(date).local().format(format) : '';
 };
