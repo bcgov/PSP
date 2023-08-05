@@ -21,7 +21,10 @@ export const prettyFormatDateTime = (date?: string | Date | Moment | null) => {
  * Returns a date formatted for display in the current time zone of the user.
  * @param date utc date/time string.
  */
-export const formatApiDateTime = (date?: string | Date | Moment) => {
-  if (typeof date === 'string') return moment.utc(date).local().format('YYYY-MM-DD hh:mm a');
-  return !!date ? moment.utc(date).local().format('YYYY-MM-DD hh:mm a') : '';
+export const formatApiDateTime = (
+  date?: string | Date | Moment | null,
+  format: string = 'YYYY-MM-DD hh:mm a',
+) => {
+  if (typeof date === 'string') return moment.utc(date).local().format(format);
+  return !!date ? moment.utc(date).local().format(format) : '';
 };
