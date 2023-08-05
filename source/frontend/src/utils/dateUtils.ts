@@ -9,11 +9,11 @@ export const getCurrentFiscalYear = (): number => {
 };
 
 export const prettyFormatDate = (date?: string | Date | Moment | null) => {
-  return !!date ? moment(date).format('MMM D, YYYY') : '';
+  return formatApiDateTime(date, 'MMM D, YYYY');
 };
 
 export const prettyFormatDateTime = (date?: string | Date | Moment | null) => {
-  return !!date ? moment.utc(date).local().format('MMM D, YYYY hh:mm a') : '';
+  return formatApiDateTime(date, 'MMM D, YYYY hh:mm a');
 };
 
 /**
