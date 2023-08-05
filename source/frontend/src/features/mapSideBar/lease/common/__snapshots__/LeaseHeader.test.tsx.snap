@@ -297,7 +297,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
             >
               Created: 
               <strong>
-                Jan 1, 2022
+                Dec 31, 2021
               </strong>
                by 
               <span
@@ -323,7 +323,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
             >
               Last updated: 
               <strong>
-                Jan 1, 2022
+                Dec 31, 2021
               </strong>
                by 
               <span
