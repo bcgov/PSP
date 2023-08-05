@@ -1123,7 +1123,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                               target="_blank"
                             >
                               <span>
-                                Millenium Inc
+                                Millennium Inc
                               </span>
                               <svg
                                 class="ml-2"

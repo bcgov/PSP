@@ -3083,7 +3083,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   <div
                     class="c20"
                   >
-                    Millenium Inc
+                    Millennium Inc
                     <button
                       class="c9 Button c10 btn btn-link"
                       title="remove"
