@@ -288,9 +288,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
         </div>
         <div
           class="c4 text-left col"
-        >
-          Invalid date
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
@@ -641,9 +639,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
         </div>
         <div
           class="c4 text-left col"
-        >
-          Invalid date
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"

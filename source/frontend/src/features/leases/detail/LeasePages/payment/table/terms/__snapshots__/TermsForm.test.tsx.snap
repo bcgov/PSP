@@ -842,7 +842,7 @@ exports[`TermsForm component renders with data as expected 1`] = `
                 style="box-sizing: border-box; flex: 100 0 auto; min-width: 60px; width: 100px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Invalid date - Invalid date
+                 - 
               </div>
               <div
                 class="td"
