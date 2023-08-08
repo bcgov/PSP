@@ -1,5 +1,3 @@
-import moment from 'moment-timezone';
-
 import {
   formatApiDateTime,
   getCurrentFiscalYear,
@@ -8,16 +6,6 @@ import {
 } from './';
 
 describe('Date utils', () => {
-  beforeAll(() => {
-    // make sure the tests run in PST timezone
-    moment().tz('America/Vancouver');
-  });
-
-  afterAll(() => {
-    // reset timezone info
-    moment().tz();
-  });
-
   describe('getCurrentFiscalYear', () => {
     beforeAll(() => {
       jest.useFakeTimers('modern');
