@@ -44,6 +44,8 @@ export interface CompensationRequisitionFormProps {
     compensation: CompensationRequisitionFormModel,
   ) => Promise<Api_CompensationRequisition | undefined>;
   onCancel: () => void;
+  onFooterSave?: () => void;
+  missingFieldsError: string | undefined;
 }
 
 const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormProps> = ({
@@ -58,6 +60,8 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   yearlyFinancialOptions,
   onSave,
   onCancel,
+  onFooterSave,
+  missingFieldsError,
 }) => {
   const fiscalYearOptions = generateFiscalYearOptions();
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -287,9 +291,13 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
 
             <StyledFooter>
               <SidebarFooter
-                onSave={() => formikProps.submitForm()}
+                onSave={() => {
+                  onFooterSave?.();
+                  formikProps.submitForm();
+                }}
                 isOkDisabled={formikProps.isSubmitting || !formikProps.dirty}
                 onCancel={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
+                errorMessage={missingFieldsError}
               />
             </StyledFooter>
 

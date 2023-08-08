@@ -47,6 +47,7 @@ export interface IAcquisitionViewProps {
   containerState: AcquisitionContainerState;
   setContainerState: React.Dispatch<Partial<AcquisitionContainerState>>;
   formikRef: React.RefObject<FormikProps<any>>;
+  missingFieldsError: string | undefined;
 }
 
 export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = ({
@@ -64,6 +65,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   containerState,
   setContainerState,
   formikRef,
+  missingFieldsError,
 }) => {
   // match for the current route
   const location = useLocation();
@@ -135,6 +137,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                 isOkDisabled={formikRef?.current?.isSubmitting}
                 onSave={onSave}
                 onCancel={onCancel}
+                errorMessage={missingFieldsError}
               />
             )
           }

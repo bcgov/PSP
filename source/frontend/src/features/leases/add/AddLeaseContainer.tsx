@@ -8,7 +8,7 @@ import { ReactComponent as Fence } from '@/assets/images/fence.svg';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { IMapProperty } from '@/components/propertySelector/models';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
-import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
+import SidebarFooter, { missingFieldsError } from '@/features/mapSideBar/shared/SidebarFooter';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -70,15 +70,7 @@ export const AddLeaseContainer: React.FunctionComponent<
   };
 
   const handleSave = () => {
-    const isFormValid = formikRef?.current?.isValid;
-
-    if (!isFormValid) {
-      setErrorMessage('Please check the required fields.');
-    }
-
-    if (isFormValid) {
-      setErrorMessage(undefined);
-    }
+    missingFieldsError(setErrorMessage, formikRef?.current?.isValid);
 
     if (formikRef !== undefined) {
       formikRef.current?.setSubmitting(true);
