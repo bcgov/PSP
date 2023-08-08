@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------------
-Migrate the data to PIMS_PROPERTY.
+Migrate the data to PIMS_PROP_PROP_ADJACENT_LAND_TYPE.
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
@@ -15,25 +15,11 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- First pass: Migrate the Adjacent Land data to PIMS_PROPERTY
-INSERT INTO PIMS_PROP_PROP_TENURE_TYPE (PROPERTY_ID, PROPERTY_TENURE_TYPE_CODE)
+-- Migrate the Adjacent Land data to PIMS_PROPERTY
+INSERT INTO PIMS_PROP_PROP_ADJACENT_LAND_TYPE (PROPERTY_ID, PROPERTY_ADJACENT_LAND_TYPE_CODE)
 SELECT PROPERTY_ID
-     , CASE
-         WHEN PROPERTY_ADJACENT_LAND_TYPE_CODE = N'MOLBCTFA'  THEN N'FSBCTFA'
-         WHEN PROPERTY_ADJACENT_LAND_TYPE_CODE = N'MONLBCTFA' THEN N'FSBCTFA'
-         WHEN PROPERTY_ADJACENT_LAND_TYPE_CODE = N'CROWN'     THEN N'FSCROWN'
-       END
+     , PROPERTY_ADJACENT_LAND_TYPE_CODE
 FROM   TMP_PIMS_PROP_PROP_ADJACENT_LAND_TYPE
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-
--- Second pass: Migrate the Adjacent Land data to PIMS_PROPERTY
-INSERT INTO PIMS_PROP_PROP_TENURE_TYPE (PROPERTY_ID, PROPERTY_TENURE_TYPE_CODE)
-SELECT PROPERTY_ID
-     , N'LEASELIC'
-FROM   TMP_PIMS_PROP_PROP_ADJACENT_LAND_TYPE
-WHERE  PROPERTY_ADJACENT_LAND_TYPE_CODE = 'MOLBCTFA'
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
