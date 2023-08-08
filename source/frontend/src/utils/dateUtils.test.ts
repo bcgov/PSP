@@ -1,5 +1,5 @@
 import {
-  formatApiDateTime,
+  formatUTCDateTime,
   getCurrentFiscalYear,
   prettyFormatDate,
   prettyFormatDateTime,
@@ -52,22 +52,22 @@ describe('Date utils', () => {
     });
   });
 
-  describe('formatApiDateTime', () => {
+  describe('formatUTCDateTime', () => {
     it('should format API Date with default date format', () => {
-      expect(formatApiDateTime('2023-07-31T10:00:00-07:00')).toBe('2023-07-31 10:00 am');
+      expect(formatUTCDateTime('2023-07-31T10:00:00-07:00')).toBe('2023-07-31 10:00 am');
     });
     it('should format API Date with custom format passed in parameters', () => {
-      expect(formatApiDateTime('2023-07-31T10:00:00-07:00', 'MMM D, YYYY')).toBe('Jul 31, 2023');
+      expect(formatUTCDateTime('2023-07-31T10:00:00-07:00', 'MMM D, YYYY')).toBe('Jul 31, 2023');
     });
     it('should support Date object as parameter', () => {
-      expect(formatApiDateTime(new Date('2023-07-31T10:00:00-07:00'))).toBe('2023-07-31 10:00 am');
+      expect(formatUTCDateTime(new Date('2023-07-31T10:00:00-07:00'))).toBe('2023-07-31 10:00 am');
     });
     it('should return empty string if no input date is supplied', () => {
-      expect(formatApiDateTime(null)).toBe('');
+      expect(formatUTCDateTime(null)).toBe('');
     });
     it('should format API Date assuming the date was recorded in UTC', () => {
-      expect(formatApiDateTime('2023-07-31T17:00:00', 'YYYY-MM-DD')).toBe('2023-07-31'); // 5pm UTC = 10am PST
-      expect(formatApiDateTime('2023-08-01T02:00:00', 'YYYY-MM-DD')).toBe('2023-07-31'); // 2am (next day) UTC = 7pm PST
+      expect(formatUTCDateTime('2023-07-31T17:00:00', 'YYYY-MM-DD')).toBe('2023-07-31'); // 5pm UTC = 10am PST
+      expect(formatUTCDateTime('2023-08-01T02:00:00', 'YYYY-MM-DD')).toBe('2023-07-31'); // 2am (next day) UTC = 7pm PST
     });
   });
 });

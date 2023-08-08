@@ -1,27 +1,39 @@
 import moment, { Moment } from 'moment-timezone';
 
 /**
- * get the fiscal year (ending in) based on the current date.
+ * Gets the fiscal year (ending in) based on the current date.
  */
 export const getCurrentFiscalYear = (): number => {
   const now = moment();
   return now.month() >= 4 ? now.add(1, 'years').year() : now.year();
 };
 
+/**
+ * Formats the passed string date with custom date format: 'MMM D, YYYY'
+ * @param date UTC date/time string.
+ * @returns A string representing the input date in the supplied date/time format
+ */
 export const prettyFormatDate = (date?: string | Date | Moment | null) => {
-  return formatApiDateTime(date, 'MMM D, YYYY');
-};
-
-export const prettyFormatDateTime = (date?: string | Date | Moment | null) => {
-  return formatApiDateTime(date, 'MMM D, YYYY hh:mm a');
+  return formatUTCDateTime(date, 'MMM D, YYYY');
 };
 
 /**
- * Format the passed string date assuming the date was recorded in UTC (as is the case with the pims API server).
- * Returns a date formatted for display in the current time zone of the user.
- * @param date utc date/time string.
+ * Formats the passed string date with custom date format: 'MMM D, YYYY hh:mm a'
+ * @param date UTC date/time string.
+ * @returns A string representing the input date in the supplied date/time format
  */
-export const formatApiDateTime = (
+export const prettyFormatDateTime = (date?: string | Date | Moment | null) => {
+  return formatUTCDateTime(date, 'MMM D, YYYY hh:mm a');
+};
+
+/**
+ * Formats the passed string date assuming the date was recorded in UTC (as is the case with the pims API server).
+ * Returns a date formatted for display in the current time zone of the user.
+ * @param date UTC date/time string.
+ * @param format (Optional) Date time string format to use. Default value: 'YYYY-MM-DD hh:mm a'
+ * @returns A string representing the input date in the supplied date/time format
+ */
+export const formatUTCDateTime = (
   date?: string | Date | Moment | null,
   format: string = 'YYYY-MM-DD hh:mm a',
 ) => {
