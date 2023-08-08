@@ -201,7 +201,7 @@ exports[`DepositsReturnedContainer component renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Feb 1, 2022
+                Jan 31, 2022
               </div>
               <div
                 class="td"
@@ -241,7 +241,7 @@ exports[`DepositsReturnedContainer component renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Feb 16, 2022
+                Feb 15, 2022
               </div>
               <div
                 class="td"
