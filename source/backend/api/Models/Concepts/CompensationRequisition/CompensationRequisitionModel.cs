@@ -25,6 +25,8 @@ namespace Pims.Api.Models.Concepts
 
         public FinancialCodeModel Responsibility { get; set; }
 
+        public DateTime? FinalizedDate { get; set; }
+
         public DateTime? AgreementDate { get; set; }
 
         public DateTime? ExpropriationNoticeServedDate { get; set; }

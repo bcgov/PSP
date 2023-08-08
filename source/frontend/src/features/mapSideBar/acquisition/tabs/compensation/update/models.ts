@@ -20,6 +20,7 @@ export class CompensationRequisitionFormModel {
   chartOfAccounts: Api_FinancialCode | null = null;
   responsibilityCentre: string = '';
   Responsibility: Api_FinancialCode | null = null;
+  readonly finalizedDate: string = '';
   agreementDateTime: string = '';
   expropriationNoticeServedDateTime: string = '';
   expropriationVestingDateTime: string = '';
@@ -32,9 +33,10 @@ export class CompensationRequisitionFormModel {
   rowVersion: number | null = null;
   payeeKey: string = '';
 
-  constructor(id: number | null, acquisitionFileId: number = 0) {
+  constructor(id: number | null, acquisitionFileId: number = 0, finalizedDate: string) {
     this.id = id;
     this.acquisitionFileId = acquisitionFileId;
+    this.finalizedDate = finalizedDate;
   }
 
   toApi(payeeOptions: PayeeOption[]): Api_CompensationRequisition {
@@ -64,6 +66,7 @@ export class CompensationRequisitionFormModel {
       responsibilityId: this.responsibilityCentre === '' ? null : Number(this.responsibilityCentre),
       responsibility: null,
       agreementDate: stringToUndefined(this.agreementDateTime),
+      finalizedDate: stringToUndefined(this.finalizedDate),
       expropriationNoticeServedDate: stringToUndefined(this.expropriationNoticeServedDateTime),
       expropriationVestingDate: stringToUndefined(this.expropriationVestingDateTime),
       generationDate: stringToUndefined(this.generationDatetTime),
@@ -82,6 +85,7 @@ export class CompensationRequisitionFormModel {
     const compensation = new CompensationRequisitionFormModel(
       apiModel.id,
       apiModel.acquisitionFileId,
+      apiModel.finalizedDate ?? '',
     );
 
     compensation.status =
@@ -282,6 +286,10 @@ export class PayeeOption {
   }
 
   public static fromApi(payeeModels: Api_CompensationPayee[]): string {
+    if (!payeeModels) {
+      return '';
+    }
+
     if (payeeModels.length === 1) {
       const apiModel = payeeModels[0];
       if (apiModel.acquisitionOwnerId) {

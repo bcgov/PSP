@@ -2,7 +2,11 @@ import { FormikProps } from 'formik';
 import { createRef } from 'react';
 
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
-import { getMockApiCompensation, getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
+import {
+  getMockApiCompensation,
+  getMockApiDefaultCompensation,
+  getMockApiFinalCompensation,
+} from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -33,6 +37,7 @@ const defauiltApiCompensation = getMockApiDefaultCompensation();
 const defaultCompensation = new CompensationRequisitionFormModel(
   defauiltApiCompensation.id,
   defauiltApiCompensation.acquisitionFileId,
+  '',
 );
 
 describe('Compensation Requisition UpdateForm component', () => {
@@ -199,5 +204,16 @@ describe('Compensation Requisition UpdateForm component', () => {
     await act(async () => userEvent.click(getByTitle('ok-modal')));
 
     expect(onSave).toHaveBeenCalled();
+  });
+
+  it('displays the compensation finalized date', async () => {
+    const mockCompensation = CompensationRequisitionFormModel.fromApi(
+      getMockApiFinalCompensation(),
+    );
+    const { getByText } = await setup({
+      props: { initialValues: mockCompensation },
+    });
+
+    expect(getByText('Jun 12, 2024')).toBeVisible();
   });
 });
