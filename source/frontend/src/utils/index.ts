@@ -3,6 +3,7 @@ export * from './columnUtils';
 export * from './convertUtils';
 export * from './dateUtils';
 export * from './mapLookupCode';
+export * from './mapPropertyUtils';
 export * from './numberFormatUtils';
 export * from './projectUtils';
 export * from './propertyUtils';
