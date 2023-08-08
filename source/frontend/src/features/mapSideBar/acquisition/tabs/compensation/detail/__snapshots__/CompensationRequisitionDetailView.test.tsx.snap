@@ -471,6 +471,22 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
             <label
               class="c7"
             >
+              Final date:
+            </label>
+          </div>
+          <div
+            class="c8 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c7"
+            >
               Agreement date:
             </label>
           </div>

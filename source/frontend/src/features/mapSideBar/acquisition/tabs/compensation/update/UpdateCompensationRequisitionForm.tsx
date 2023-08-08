@@ -22,6 +22,7 @@ import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { prettyFormatDate } from '@/utils/dateUtils';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { CompensationRequisitionYupSchema } from './CompensationRequisitionYupSchema';
@@ -146,6 +147,14 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                         },
                       ]}
                     />
+                  </SectionField>
+                  <SectionField
+                    label="Final date"
+                    labelWidth="5"
+                    contentWidth="4"
+                    data-testid="compensation-finalized"
+                  >
+                    {prettyFormatDate(initialValues.finalizedDate)}
                   </SectionField>
                   <SectionField label="Agreement date" labelWidth="5" contentWidth="4">
                     <FastDatePicker field="agreementDateTime" formikProps={formikProps} />

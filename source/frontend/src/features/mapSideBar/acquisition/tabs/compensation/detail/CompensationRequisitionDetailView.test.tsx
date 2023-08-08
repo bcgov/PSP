@@ -144,4 +144,14 @@ describe('Compensation Detail View Component', () => {
     const editButton = queryByTitle('Edit compensation requisition');
     expect(editButton).toBeInTheDocument();
   });
+
+  it('displays the compensation finalized date', async () => {
+    const mockFinalCompensation = getMockApiFinalCompensation();
+    const { getByText } = await setup({
+      roles: [Roles.SYSTEM_ADMINISTRATOR],
+      props: { compensation: mockFinalCompensation },
+    });
+
+    expect(getByText('Jun 12, 2024')).toBeVisible();
+  });
 });
