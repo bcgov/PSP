@@ -87,7 +87,6 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<ArgumentNullException>();
         }
 
-        // TODO: Fix payee
         [Fact]
         public void Update_Success_Inserts_StatusChanged_Note()
         {
