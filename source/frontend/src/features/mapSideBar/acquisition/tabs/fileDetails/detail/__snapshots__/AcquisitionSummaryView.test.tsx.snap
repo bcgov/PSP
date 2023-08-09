@@ -189,7 +189,7 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
           <div
             class="c5 text-left col"
           >
-            Jun 27, 2022
+            Jun 26, 2022
           </div>
         </div>
         <div
@@ -231,7 +231,7 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
           <div
             class="c5 text-left col"
           >
-            Jul 29, 2022
+            Jul 28, 2022
           </div>
         </div>
         <div
@@ -561,7 +561,7 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
               target="_blank"
             >
               <span>
-                Millenium Inc
+                Millennium Inc
               </span>
               <svg
                 class="ml-2"

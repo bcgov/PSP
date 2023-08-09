@@ -20,8 +20,8 @@ const defaultTestFormLeaseTerm = {
   ...defaultFormLeaseTerm,
   id: 1,
   isTermExercised: false,
-  startDate: '2020-01-01',
-  expiryDate: '2020-12-15',
+  startDate: '2020-01-01T18:00',
+  expiryDate: '2020-12-15T18:00',
   paymentAmount: 1000,
 };
 
@@ -280,8 +280,8 @@ describe('TermsForm component', () => {
             ...defaultTestFormLeaseTerm,
             isTermExercised: true,
             payments: [
-              { amountTotal: 1, receivedDate: '2020-01-01' },
-              { amountTotal: 1, receivedDate: '2021-01-01' },
+              { amountTotal: 1, receivedDate: '2020-01-01T18:00' },
+              { amountTotal: 1, receivedDate: '2021-01-01T18:00' },
             ] as FormLeasePayment[],
           },
         ],
@@ -345,7 +345,7 @@ describe('TermsForm component', () => {
           {
             ...defaultTestFormLeaseTerm,
             isTermExercised: false,
-            payments: [{ amountTotal: 1, receivedDate: '2020-01-01' }] as FormLeasePayment[],
+            payments: [{ amountTotal: 1, receivedDate: '2020-01-01T18:00' }] as FormLeasePayment[],
           },
         ],
       },
