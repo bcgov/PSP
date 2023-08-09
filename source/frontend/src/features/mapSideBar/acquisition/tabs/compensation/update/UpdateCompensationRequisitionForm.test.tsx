@@ -3,9 +3,8 @@ import { createRef } from 'react';
 
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import {
-  getMockApiCompensation,
+  emptyCompensationFinancial,
   getMockApiDefaultCompensation,
-  getMockApiFinalCompensation,
 } from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -72,17 +71,15 @@ describe('Compensation Requisition UpdateForm component', () => {
       getStatusDropDown: () =>
         utils.container.querySelector(`select[name="status"]`) as HTMLInputElement,
       getPayeeGSTNumber: () =>
-        utils.container.querySelector(`input[name="payees.0.gstNumber"]`) as HTMLInputElement,
+        utils.container.querySelector(`input[name="payee.gstNumber"]`) as HTMLInputElement,
       getPayeePaymentInTrust: () =>
-        utils.container.querySelector(
-          `input[name="payees.0.isPaymentInTrust"]`,
-        ) as HTMLInputElement,
+        utils.container.querySelector(`input[name="payee.isPaymentInTrust"]`) as HTMLInputElement,
       getPayeePreTaxAmount: () =>
-        utils.container.querySelector(`input[name="payees.0.pretaxAmount"]`) as HTMLInputElement,
+        utils.container.querySelector(`input[name="payee.pretaxAmount"]`) as HTMLInputElement,
       getPayeeTaxAmount: () =>
-        utils.container.querySelector(`input[name="payees.0.taxAmount"]`) as HTMLInputElement,
+        utils.container.querySelector(`input[name="payee.taxAmount"]`) as HTMLInputElement,
       getPayeeTotalAmount: () =>
-        utils.container.querySelector(`input[name="payees.0.totalAmount"]`) as HTMLInputElement,
+        utils.container.querySelector(`input[name="payee.totalAmount"]`) as HTMLInputElement,
       getSpecialInstructionsTextbox: () =>
         utils.container.querySelector(`textarea[name="specialInstruction"]`) as HTMLInputElement,
       getDetailedRemarksTextbox: () =>
@@ -124,9 +121,24 @@ describe('Compensation Requisition UpdateForm component', () => {
   });
 
   it('should display the payee information', async () => {
-    const compensationWithPayeeInformation = CompensationRequisitionFormModel.fromApi(
-      getMockApiCompensation(),
-    );
+    const apiCompensation = getMockApiDefaultCompensation();
+    const compensationWithPayeeInformation = CompensationRequisitionFormModel.fromApi({
+      ...apiCompensation,
+      fiscalYear: '2020',
+      acquisitionOwnerId: 1,
+      isDraft: true,
+      gstNumber: '9999',
+      isPaymentInTrust: true,
+      financials: [
+        {
+          ...emptyCompensationFinancial,
+          pretaxAmount: 30000,
+          taxAmount: 1500,
+          totalAmount: 31500,
+        },
+      ],
+    });
+
     const {
       getPayeePreTaxAmount,
       getPayeeTaxAmount,
@@ -143,7 +155,14 @@ describe('Compensation Requisition UpdateForm component', () => {
   });
 
   it('should NOT display confirmation modal when saving a compensation with Status as "Draft"', async () => {
-    const mockCompensation = CompensationRequisitionFormModel.fromApi(getMockApiCompensation());
+    const apiCompensation = getMockApiDefaultCompensation();
+    const mockCompensation = CompensationRequisitionFormModel.fromApi({
+      ...apiCompensation,
+      fiscalYear: '2020',
+      acquisitionOwnerId: 1,
+      isDraft: true,
+    });
+
     const { queryByText, getSpecialInstructionsTextbox } = await setup({
       props: { initialValues: mockCompensation },
     });
@@ -162,7 +181,14 @@ describe('Compensation Requisition UpdateForm component', () => {
   });
 
   it('should display confirmation modal when saving a compensation with Status as "FINAL"', async () => {
-    const mockCompensation = CompensationRequisitionFormModel.fromApi(getMockApiCompensation());
+    const apiCompensation = getMockApiDefaultCompensation();
+    const mockCompensation = CompensationRequisitionFormModel.fromApi({
+      ...apiCompensation,
+      fiscalYear: '2020',
+      acquisitionOwnerId: 1,
+      isDraft: true,
+    });
+
     const { findByText, getStatusDropDown, getByTitle } = await setup({
       props: { initialValues: mockCompensation },
     });
@@ -184,7 +210,13 @@ describe('Compensation Requisition UpdateForm component', () => {
   });
 
   it('save a compensation with Status as "FINAL" after confirming modal', async () => {
-    const mockCompensation = CompensationRequisitionFormModel.fromApi(getMockApiCompensation());
+    const apiCompensation = getMockApiDefaultCompensation();
+    const mockCompensation = CompensationRequisitionFormModel.fromApi({
+      ...apiCompensation,
+      fiscalYear: '2020',
+      acquisitionOwnerId: 1,
+      isDraft: true,
+    });
     const { findByText, getStatusDropDown, getByTitle } = await setup({
       props: { initialValues: mockCompensation },
     });
@@ -207,9 +239,11 @@ describe('Compensation Requisition UpdateForm component', () => {
   });
 
   it('displays the compensation finalized date', async () => {
-    const mockCompensation = CompensationRequisitionFormModel.fromApi(
-      getMockApiFinalCompensation(),
-    );
+    const mockCompensation = CompensationRequisitionFormModel.fromApi({
+      ...getMockApiDefaultCompensation(),
+      isDraft: false,
+      finalizedDate: '2024-06-12T18:00:00',
+    });
     const { getByText } = await setup({
       props: { initialValues: mockCompensation },
     });
