@@ -3,10 +3,8 @@ import { createMemoryHistory } from 'history';
 import Claims from '@/constants/claims';
 import { Roles } from '@/constants/index';
 import {
-  getMockApiCompensation,
-  getMockApiCompensationPayee,
+  emptyCompensationFinancial,
   getMockApiDefaultCompensation,
-  getMockApiFinalCompensation,
 } from '@/mocks/compensations.mock';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
@@ -26,12 +24,13 @@ describe('Compensation Detail View Component', () => {
     // render component under test
     const component = render(
       <CompensationRequisitionDetailView
-        compensation={renderOptions?.props?.compensation ?? getMockApiCompensation()}
-        compensationPayee={renderOptions?.props?.compensationPayee ?? getMockApiCompensationPayee()}
+        compensation={renderOptions?.props?.compensation ?? getMockApiDefaultCompensation()}
         loading={renderOptions.props?.loading ?? false}
         setEditMode={setEditMode}
         clientConstant={renderOptions.props?.clientConstant ?? '034'}
         onGenerate={jest.fn()}
+        compensationContactPerson={undefined}
+        compensationContactOrganization={undefined}
       />,
       {
         ...renderOptions,
@@ -55,11 +54,11 @@ describe('Compensation Detail View Component', () => {
     expect(fragment).toMatchSnapshot();
   });
 
-  it('Displays the Comensation Requisition Header Information with Draft Status', async () => {
+  it('Displays the Compensation Requisition Header Information with Draft Status', async () => {
     const mockCompensation = getMockApiDefaultCompensation();
     const { queryByTestId } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_VIEW],
-      props: { compensation: mockCompensation },
+      props: { compensation: { ...mockCompensation, isDraft: true } },
     });
 
     const editButton = queryByTestId('compensation-client');
@@ -78,11 +77,25 @@ describe('Compensation Detail View Component', () => {
     expect(headerTotalAmount).toHaveTextContent('$0.00');
   });
 
-  it('Displays the Comensation Requisition Header Information with Final Status', async () => {
-    const mockCompensation = getMockApiFinalCompensation();
+  it('Displays the Compensation Requisition Header Information with Final Status', async () => {
+    const mockCompensation = getMockApiDefaultCompensation();
     const { queryByTestId } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_VIEW],
-      props: { compensation: mockCompensation },
+      props: {
+        compensation: {
+          ...mockCompensation,
+          isDraft: false,
+          id: 1,
+          financials: [
+            {
+              ...emptyCompensationFinancial,
+              pretaxAmount: 30000,
+              taxAmount: 1500,
+              totalAmount: 31500,
+            },
+          ],
+        },
+      },
     });
 
     const editButton = queryByTestId('compensation-client');
@@ -111,8 +124,13 @@ describe('Compensation Detail View Component', () => {
   });
 
   it('Can click on the Edit Compensation Button when is in "Draft" status', async () => {
+    const mockCompensation = getMockApiDefaultCompensation();
+
     const { getByTitle } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_EDIT],
+      props: {
+        compensation: { ...mockCompensation, isDraft: true },
+      },
     });
 
     const editButton = getByTitle('Edit compensation requisition');
@@ -124,10 +142,10 @@ describe('Compensation Detail View Component', () => {
   });
 
   it('User does not have the option to Edit Compensation when is in "FINAL" status', async () => {
-    const mockFinalCompensation = getMockApiFinalCompensation();
+    const mockFinalCompensation = getMockApiDefaultCompensation();
     const { queryByTitle } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_EDIT],
-      props: { compensation: mockFinalCompensation },
+      props: { compensation: { ...mockFinalCompensation, isDraft: false } },
     });
 
     const editButton = queryByTitle('Edit compensation requisition');
@@ -135,10 +153,10 @@ describe('Compensation Detail View Component', () => {
   });
 
   it('Admin user should be able to Edit Compensation when is in "FINAL" status', async () => {
-    const mockFinalCompensation = getMockApiFinalCompensation();
+    const mockFinalCompensation = getMockApiDefaultCompensation();
     const { queryByTitle } = await setup({
       roles: [Roles.SYSTEM_ADMINISTRATOR],
-      props: { compensation: mockFinalCompensation },
+      props: { compensation: { ...mockFinalCompensation, isDraft: false } },
     });
 
     const editButton = queryByTitle('Edit compensation requisition');

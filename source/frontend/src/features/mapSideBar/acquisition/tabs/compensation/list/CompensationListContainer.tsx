@@ -88,7 +88,17 @@ export const CompensationListContainer: React.FunctionComponent<
       detailedRemarks: null,
       isDisabled: null,
       financials: [],
-      payees: [],
+      acquisitionFile: null,
+      acquisitionOwnerId: null,
+      acquisitionOwner: null,
+      interestHolderId: null,
+      interestHolder: null,
+      acquisitionFilePersonId: null,
+      acquisitionFilePerson: null,
+      legacyPayee: null,
+      isPaymentInTrust: null,
+      gstNumber: null,
+      finalizedDate: null,
     };
 
     postAcquisitionCompensationRequisition(fileId, defaultCompensationRequisition).then(

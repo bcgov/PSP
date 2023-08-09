@@ -2,7 +2,6 @@ import { chain } from 'lodash';
 import moment from 'moment';
 
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
-import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_H120Category } from '@/models/api/H120Category';
 import { formatMoney } from '@/utils';
@@ -34,7 +33,6 @@ export class Api_GenerateCompensation {
     file: Api_GenerateAcquisitionFile | null,
     h120Categories: Api_H120Category[],
     finalFileFinancials: Api_CompensationFinancial[],
-    payee: Api_CompensationPayee | null = null,
     client: string = '',
   ) {
     this.file = file;
@@ -69,6 +67,6 @@ export class Api_GenerateCompensation {
     this.service_line = compensation?.chartOfAccounts?.code ?? '';
     this.responsibility_center = compensation?.responsibility?.code ?? '';
     this.client = client;
-    this.payee = new Api_GenerateCompensationPayee(payee, compensation?.financials ?? []);
+    this.payee = new Api_GenerateCompensationPayee(compensation, compensation?.financials ?? []);
   }
 }
