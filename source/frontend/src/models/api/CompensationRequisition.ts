@@ -21,6 +21,7 @@ export interface Api_CompensationRequisition extends Api_ConcurrentVersion, Api_
   chartOfAccounts: Api_FinancialCode | null;
   responsibilityId: number | null;
   responsibility: Api_FinancialCode | null;
+  finalizedDate: string | null;
   agreementDate: string | null;
   expropriationNoticeServedDate: string | null;
   expropriationVestingDate: string | null;
@@ -35,7 +36,6 @@ export interface Api_CompensationRequisition extends Api_ConcurrentVersion, Api_
   legacyPayee: string | null;
   isPaymentInTrust: boolean | null;
   gstNumber: string | null;
-  finalizedDate: string | null;
   specialInstruction: string | null;
   detailedRemarks: string | null;
   isDisabled: boolean | null;

@@ -53,9 +53,9 @@ describe('DetailTermInformation component', () => {
             ...defaultFormLeaseTerm,
             id: 1,
             leaseId: 1,
-            startDate: '2020-01-01',
-            expiryDate: '2022-01-01',
-            renewalDate: '2021-01-01',
+            startDate: '2020-01-01T18:00',
+            expiryDate: '2022-01-01T18:00',
+            renewalDate: '2021-01-01T18:00',
             statusTypeCode: { id: 'EX', description: 'exercised', isDisabled: false },
           },
         ],
@@ -63,8 +63,8 @@ describe('DetailTermInformation component', () => {
     });
     expect(getByText('initial term')).toBeVisible();
     expect(getByText('Jan 1, 2020')).toBeVisible();
-    expect(getByText('Jan 1, 2020')).toBeVisible();
     expect(getByText('Jan 1, 2021')).toBeVisible();
+    expect(getByText('Jan 1, 2022')).toBeVisible();
     expect(getByText('exercised')).toBeVisible();
   });
 

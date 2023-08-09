@@ -87,8 +87,7 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<ArgumentNullException>();
         }
 
-        // TODO: Fix payee
-        /*[Fact]
+        [Fact]
         public void Update_Success_Inserts_StatusChanged_Note()
         {
             // Arrange
@@ -99,22 +98,24 @@ namespace Pims.Api.Test.Services
 
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
 
-            var listPayeeStub = new List<PimsAcquisitionPayee>
-                    {
-                        new PimsAcquisitionPayee() { CompensationRequisitionId = 1, }
-                    };
             var currentCompensationStub = new PimsCompensationRequisition
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 7,
                 ConcurrencyControlNumber = 2,
                 IsDraft = true,
-                PimsAcquisitionPayees = listPayeeStub,
             };
 
             compensationRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(currentCompensationStub);
 
-            compensationRepository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>())).Returns(currentCompensationStub);
+            compensationRepository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>())).Returns(new PimsCompensationRequisition
+            {
+                Internal_Id = 1,
+                AcquisitionFileId = 7,
+                ConcurrencyControlNumber = 2,
+                IsDraft = false,
+                FinalizedDate = DateTime.UtcNow,
+            });
 
             // Act
             var result = service.Update(
@@ -124,15 +125,15 @@ namespace Pims.Api.Test.Services
                     AcquisitionFileId = 7,
                     ConcurrencyControlNumber = 2,
                     IsDraft = false,
-                    PimsAcquisitionPayees = listPayeeStub
                 });
 
             // Assert
             result.Should().NotBeNull();
+            result.FinalizedDate.Should().NotBeNull();
             compensationRepository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
             noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 7
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Draft' to 'Final'"))), Times.Once);
-        }*/
+        }
 
         [Fact]
         public void Update_Success_Skips_StatusChanged_Note()
@@ -162,6 +163,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().NotBeNull();
+            result.FinalizedDate.Should().BeNull();
             repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
             noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Draft' to 'Final'"))), Times.Never);
@@ -243,6 +245,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().NotBeNull();
+            result.FinalizedDate.Should().BeNull();
             repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
             noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Final' to 'Draft'"))), Times.Once);
@@ -276,6 +279,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().NotBeNull();
+            result.FinalizedDate.Should().BeNull();
             repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
             noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Final' to 'No Status'"))), Times.Once);
@@ -309,6 +313,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().NotBeNull();
+            result.FinalizedDate.Should().BeNull();
             repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
             noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'No Status' to 'Draft'"))), Times.Once);

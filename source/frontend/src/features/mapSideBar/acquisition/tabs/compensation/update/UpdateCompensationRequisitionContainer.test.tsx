@@ -227,6 +227,7 @@ describe('UpdateCompensationRequisition Container component', () => {
     let updatedCompensationModel = new CompensationRequisitionFormModel(
       mockCompensation.id,
       mockCompensation.acquisitionFileId,
+      '',
     );
     updatedCompensationModel.detailedRemarks = 'my update';
 

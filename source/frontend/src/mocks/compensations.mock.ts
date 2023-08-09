@@ -13,6 +13,7 @@ export const emptyCompensationRequisition: Api_CompensationRequisition = {
   chartOfAccounts: null,
   responsibilityId: null,
   responsibility: null,
+  finalizedDate: null,
   agreementDate: null,
   expropriationNoticeServedDate: null,
   expropriationVestingDate: null,
@@ -27,7 +28,6 @@ export const emptyCompensationRequisition: Api_CompensationRequisition = {
   legacyPayee: null,
   isPaymentInTrust: null,
   gstNumber: null,
-  finalizedDate: null,
   specialInstruction: null,
   detailedRemarks: null,
   isDisabled: null,
@@ -110,7 +110,6 @@ export const getMockApiCompensationWithFinancials = (): Api_CompensationRequisit
   isPaymentInTrust: true,
   gstNumber: '9999',
   acquisitionOwnerId: 1,
-
   rowVersion: 1,
 });
 
@@ -120,7 +119,6 @@ export const getMockApiCompensationList = (): Api_CompensationRequisition[] => [
     id: 1,
     acquisitionFileId: 2,
     isDraft: false,
-
     rowVersion: 1,
   },
   {
@@ -200,7 +198,6 @@ export const getMockApiCompensationList = (): Api_CompensationRequisition[] => [
     id: 5,
     acquisitionFileId: 2,
     isDraft: true,
-
     agreementDate: '2023-04-26T00:00:00',
     isDisabled: false,
     financials: [

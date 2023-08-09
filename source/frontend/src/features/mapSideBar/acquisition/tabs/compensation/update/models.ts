@@ -9,7 +9,7 @@ import { booleanToString, stringToBoolean, stringToUndefined, toTypeCode } from 
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 export class CompensationRequisitionFormModel {
-  id: number | null = null;
+  id: number | null;
   acquisitionFileId: number;
   status: string = '';
   fiscalYear: string = '';
@@ -19,6 +19,7 @@ export class CompensationRequisitionFormModel {
   chartOfAccounts: Api_FinancialCode | null = null;
   responsibilityCentre: string = '';
   Responsibility: Api_FinancialCode | null = null;
+  readonly finalizedDate: string;
   agreementDateTime: string = '';
   expropriationNoticeServedDateTime: string = '';
   expropriationVestingDateTime: string = '';
@@ -30,10 +31,11 @@ export class CompensationRequisitionFormModel {
   isDisabled: string = '';
   rowVersion: number | null = null;
 
-  constructor(id: number | null, acquisitionFileId: number = 0) {
+  constructor(id: number | null, acquisitionFileId: number = 0, finalizedDate: string) {
     this.id = id;
     this.acquisitionFileId = acquisitionFileId;
     this.payee = new AcquisitionPayeeFormModel();
+    this.finalizedDate = finalizedDate;
   }
 
   toApi(payeeOptions: PayeeOption[]): Api_CompensationRequisition {
@@ -52,6 +54,7 @@ export class CompensationRequisitionFormModel {
       responsibilityId: this.responsibilityCentre === '' ? null : Number(this.responsibilityCentre),
       responsibility: null,
       agreementDate: stringToUndefined(this.agreementDateTime),
+      finalizedDate: stringToUndefined(this.finalizedDate),
       expropriationNoticeServedDate: stringToUndefined(this.expropriationNoticeServedDateTime),
       expropriationVestingDate: stringToUndefined(this.expropriationVestingDateTime),
       generationDate: stringToUndefined(this.generationDatetTime),
@@ -69,6 +72,7 @@ export class CompensationRequisitionFormModel {
     const compensation = new CompensationRequisitionFormModel(
       apiModel.id,
       apiModel.acquisitionFileId,
+      apiModel.finalizedDate ?? '',
     );
 
     compensation.status =

@@ -137,7 +137,7 @@ describe('UpdateAcquisitionForm component', () => {
 
   it('displays owner solicitor and owner representative', async () => {
     const { getByText } = setup({ initialValues });
-    expect(getByText('Millenium Inc')).toBeVisible();
+    expect(getByText('Millennium Inc')).toBeVisible();
     expect(getByText('Han Solo')).toBeVisible();
     expect(getByText('test representative comment')).toBeVisible();
   });

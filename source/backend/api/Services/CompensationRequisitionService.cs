@@ -55,12 +55,28 @@ namespace Pims.Api.Services
 
             CheckDraftStatusUpdateAuthorized(currentCompensation.IsDraft, compensationRequisition.IsDraft);
             CheckTotalAllowableCompensation(compensationRequisition.AcquisitionFileId, compensationRequisition);
+            compensationRequisition.FinalizedDate = CheckFinalizedDate(currentCompensation.IsDraft, compensationRequisition.IsDraft, currentCompensation.FinalizedDate);
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
             AddNoteIfStatusChanged(compensationRequisition.Internal_Id, compensationRequisition.AcquisitionFileId, currentCompensation.IsDraft, compensationRequisition.IsDraft);
             _compensationRequisitionRepository.CommitTransaction();
 
             return updatedEntity;
+
+            DateTime? CheckFinalizedDate(bool? currentStatusIsDraft, bool? newStatusIsDraft, DateTime? currentValue)
+            {
+                if (currentStatusIsDraft.Equals(newStatusIsDraft))
+                {
+                    return currentValue;
+                }
+
+                if (newStatusIsDraft.HasValue)
+                {
+                    return newStatusIsDraft.Value ? null : DateTime.UtcNow;
+                }
+
+                return null;
+            }
         }
 
         public bool DeleteCompensation(long compensationId)

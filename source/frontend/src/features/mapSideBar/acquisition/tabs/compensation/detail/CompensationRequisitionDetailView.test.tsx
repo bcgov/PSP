@@ -6,6 +6,7 @@ import {
   emptyCompensationFinancial,
   getMockApiDefaultCompensation,
 } from '@/mocks/compensations.mock';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import CompensationRequisitionDetailView, {
@@ -161,5 +162,19 @@ describe('Compensation Detail View Component', () => {
 
     const editButton = queryByTitle('Edit compensation requisition');
     expect(editButton).toBeInTheDocument();
+  });
+
+  it('displays the compensation finalized date', async () => {
+    const mockFinalCompensation: Api_CompensationRequisition = {
+      ...getMockApiDefaultCompensation(),
+      isDraft: false,
+      finalizedDate: '2024-06-12T18:00:00',
+    };
+    const { getByText } = await setup({
+      roles: [Roles.SYSTEM_ADMINISTRATOR],
+      props: { compensation: mockFinalCompensation },
+    });
+
+    expect(getByText('Jun 12, 2024')).toBeVisible();
   });
 });

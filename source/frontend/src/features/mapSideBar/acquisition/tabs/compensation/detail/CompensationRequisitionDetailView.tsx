@@ -200,6 +200,9 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         <SectionField label="Status" labelWidth="4" data-testid="compensation-status">
           {compensation.isDraft ? 'Draft' : 'Final'}
         </SectionField>
+        <SectionField label="Final date" labelWidth="4" data-testid="compensation-finalized">
+          {prettyFormatDate(compensation.finalizedDate)}
+        </SectionField>
         <SectionField label="Agreement date" labelWidth="4">
           {prettyFormatDate(compensation.agreementDate)}
         </SectionField>

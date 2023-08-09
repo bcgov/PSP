@@ -36,6 +36,7 @@ const defauiltApiCompensation = getMockApiDefaultCompensation();
 const defaultCompensation = new CompensationRequisitionFormModel(
   defauiltApiCompensation.id,
   defauiltApiCompensation.acquisitionFileId,
+  '',
 );
 
 describe('Compensation Requisition UpdateForm component', () => {
@@ -235,5 +236,18 @@ describe('Compensation Requisition UpdateForm component', () => {
     await act(async () => userEvent.click(getByTitle('ok-modal')));
 
     expect(onSave).toHaveBeenCalled();
+  });
+
+  it('displays the compensation finalized date', async () => {
+    const mockCompensation = CompensationRequisitionFormModel.fromApi({
+      ...getMockApiDefaultCompensation(),
+      isDraft: false,
+      finalizedDate: '2024-06-12T18:00:00',
+    });
+    const { getByText } = await setup({
+      props: { initialValues: mockCompensation },
+    });
+
+    expect(getByText('Jun 12, 2024')).toBeVisible();
   });
 });
