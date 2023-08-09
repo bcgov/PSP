@@ -18,22 +18,24 @@ namespace Pims.Api.Services
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
-        private readonly IAcquisitionPayeeRepository _acquisitionPayeeRepository;
+        //private readonly IAcquisitionPayeeRepository _acquisitionPayeeRepository; // TODO
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IUserRepository _userRepository;
         private readonly IAcquisitionFileRepository _acqFileRepository;
-        private readonly ICompReqH120Service _compReqH120Service;
+        private readonly ICompReqFinancialService _compReqFinancialService;
 
-        public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository, IAcquisitionPayeeRepository acquisitionPayeeRepository, IEntityNoteRepository entityNoteRepository, IUserRepository userRepository, IAcquisitionFileRepository acqFileRepository, ICompReqH120Service compReqH120Service)
+        public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository,
+        /*IAcquisitionPayeeRepository acquisitionPayeeRepository,*/
+         IEntityNoteRepository entityNoteRepository, IUserRepository userRepository, IAcquisitionFileRepository acqFileRepository, ICompReqFinancialService compReqFinancialService)
         {
             _user = user;
             _logger = logger;
             _compensationRequisitionRepository = compensationRequisitionRepository;
-            _acquisitionPayeeRepository = acquisitionPayeeRepository;
+            //_acquisitionPayeeRepository = acquisitionPayeeRepository;
             _entityNoteRepository = entityNoteRepository;
             _userRepository = userRepository;
             _acqFileRepository = acqFileRepository;
-            _compReqH120Service = compReqH120Service;
+            _compReqFinancialService = compReqFinancialService;
         }
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
@@ -44,19 +46,19 @@ namespace Pims.Api.Services
             return _compensationRequisitionRepository.GetById(compensationRequisitionId);
         }
 
-        public PimsAcquisitionPayee GetPayeeByCompensationId(long compensationRequisitionId)
-        {
-            _logger.LogInformation($"Getting Compensation Requisition Payee with compensation id {compensationRequisitionId}");
-            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
+        /* public PimsAcquisitionPayee GetPayeeByCompensationId(long compensationRequisitionId)
+         {
+             _logger.LogInformation($"Getting Compensation Requisition Payee with compensation id {compensationRequisitionId}");
+             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
-            var compensationRequisition = _compensationRequisitionRepository.GetById(compensationRequisitionId);
-            if (compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is null)
-            {
-                throw new KeyNotFoundException();
-            }
+             var compensationRequisition = _compensationRequisitionRepository.GetById(compensationRequisitionId);
+             if (compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is null)
+             {
+                 throw new KeyNotFoundException();
+             }
 
-            return _acquisitionPayeeRepository.GetById(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault().AcquisitionPayeeId);
-        }
+             return _acquisitionPayeeRepository.GetById(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault().AcquisitionPayeeId);
+         }*/
 
         public PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition)
         {
@@ -71,12 +73,28 @@ namespace Pims.Api.Services
 
             CheckDraftStatusUpdateAuthorized(compReqStatusComparable);
             CheckTotalAllowableCompensation(compensationRequisition.AcquisitionFileId, compensationRequisition);
+            compensationRequisition.FinalizedDate = CheckFinalizedDate(compReqStatusComparable, currentCompensation.FinalizedDate);
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
             AddNoteIfStatusChanged(compensationRequisition.Internal_Id, compensationRequisition.AcquisitionFileId, compReqStatusComparable);
             _compensationRequisitionRepository.CommitTransaction();
 
             return updatedEntity;
+
+            DateTime? CheckFinalizedDate((bool? currentStatusIsDraft, bool? newStatusIsDraft) statusComparable, DateTime? currentValue)
+            {
+                if (statusComparable.currentStatusIsDraft.Equals(statusComparable.newStatusIsDraft))
+                {
+                    return currentValue;
+                }
+
+                if(statusComparable.newStatusIsDraft.HasValue)
+                {
+                    return statusComparable.newStatusIsDraft.Value ? null : DateTime.UtcNow;
+                }
+
+                return null;
+            }
         }
 
         public bool DeleteCompensation(long compensationId)
@@ -142,14 +160,14 @@ namespace Pims.Api.Services
         private void CheckTotalAllowableCompensation(long currentAcquisitionFileId, PimsCompensationRequisition newCompensation)
         {
             PimsAcquisitionFile acquisitionFile = _acqFileRepository.GetById(currentAcquisitionFileId);
-            if(!acquisitionFile.TotalAllowableCompensation.HasValue || (newCompensation.IsDraft.HasValue && newCompensation.IsDraft.Value))
+            if (!acquisitionFile.TotalAllowableCompensation.HasValue || (newCompensation.IsDraft.HasValue && newCompensation.IsDraft.Value))
             {
                 return;
             }
-            IEnumerable<PimsCompReqH120> allFinancialsForFile = _compReqH120Service.GetAllByAcquisitionFileId(currentAcquisitionFileId, true);
-            IEnumerable<PimsCompReqH120> allUnchangedFinancialsForFile = allFinancialsForFile.Where(f => f.CompensationRequisitionId != newCompensation.Internal_Id);
-            decimal newTotalCompensation = allUnchangedFinancialsForFile.Concat(newCompensation.PimsCompReqH120s).Aggregate(0m, (acc, f) => acc + (f.TotalAmt ?? 0m));
-            if(newTotalCompensation > acquisitionFile.TotalAllowableCompensation)
+            IEnumerable<PimsCompReqFinancial> allFinancialsForFile = _compReqFinancialService.GetAllByAcquisitionFileId(currentAcquisitionFileId, true);
+            IEnumerable<PimsCompReqFinancial> allUnchangedFinancialsForFile = allFinancialsForFile.Where(f => f.CompensationRequisitionId != newCompensation.Internal_Id);
+            decimal newTotalCompensation = allUnchangedFinancialsForFile.Concat(newCompensation.PimsCompReqFinancials).Aggregate(0m, (acc, f) => acc + (f.TotalAmt ?? 0m));
+            if (newTotalCompensation > acquisitionFile.TotalAllowableCompensation)
             {
                 throw new BusinessRuleViolationException("Your compensation requisition cannot be saved in FINAL status, as its compensation amount exceeds total allowable compensation for this file.");
             }

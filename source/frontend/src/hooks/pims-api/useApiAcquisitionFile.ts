@@ -90,9 +90,9 @@ export const useApiAcquisitionFile = () => {
           compensationRequisition,
         ),
       getAcquisitionFileForm8s: (acqFileId: number) =>
-        api.get<Api_Form8[]>(`/acquisitionfiles/${acqFileId}/form8`),
+        api.get<Api_Form8[]>(`/acquisitionfiles/${acqFileId}/expropriation-payment`),
       postFileForm8: (acqFileId: number, form8: Api_Form8) =>
-        api.post<Api_Form8>(`/acquisitionfiles/${acqFileId}/form8`, form8),
+        api.post<Api_Form8>(`/acquisitionfiles/${acqFileId}/expropriation-payment`, form8),
     }),
     [api],
   );

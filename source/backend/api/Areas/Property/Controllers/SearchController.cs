@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -86,6 +87,28 @@ namespace Pims.Api.Areas.Property.Controllers
             var page = _propertyRepository.GetPage((PropertyFilter)filter);
             var result = _mapper.Map<BModel.PageModel<Models.Search.PropertyModel>>(page);
             return new JsonResult(result);
+        }
+
+        /// <summary>
+        /// Get all the properties that satisfy the advanced filter parameters.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpPost("advanced-filter")]
+        [HasPermission(Permissions.PropertyView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(HashSet<long>), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        public IActionResult FilterProperties([FromBody] PropertyFilterCriteria filter)
+        {
+            filter.ThrowBadRequestIfNull($"The request must include a filter.");
+            if (filter == null)
+            {
+                throw new BadRequestException("Property filter must contain valid values.");
+            }
+
+            var page = _propertyRepository.GetMatchingIds(filter);
+            return new JsonResult(page);
         }
         #endregion
         #endregion

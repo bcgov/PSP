@@ -85,14 +85,14 @@ export type ILayersControl = {
   /** whether the slide out is open or closed */
   open: boolean;
   /** set the slide out as open or closed */
-  setOpen: () => void;
+  onToggle: () => void;
 };
 
 /**
  * Component to display the layers control on the map
  * @example ./LayersControl.md
  */
-const LayersControl: React.FC<React.PropsWithChildren<ILayersControl>> = ({ open, setOpen }) => {
+const LayersControl: React.FC<React.PropsWithChildren<ILayersControl>> = ({ open, onToggle }) => {
   useEffect(() => {
     const elem = L.DomUtil.get('layersContainer');
     if (elem) {
@@ -113,7 +113,7 @@ const LayersControl: React.FC<React.PropsWithChildren<ILayersControl>> = ({ open
           <ControlButton
             id="layersControlButton"
             variant="outline-secondary"
-            onClick={setOpen}
+            onClick={onToggle}
             className={clsx({ open })}
           >
             <LayersIcon />

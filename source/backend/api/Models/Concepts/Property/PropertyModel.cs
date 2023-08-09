@@ -37,11 +37,6 @@ namespace Pims.Api.Models.Concepts
         public IList<PropertyRoadModel> RoadTypes { get; set; }
 
         /// <summary>
-        /// get/set - The adjacent land description.
-        /// </summary>
-        public IList<PropertyAdjacentLandModel> AdjacentLands { get; set; }
-
-        /// <summary>
         /// get/set - The status description.
         /// </summary>
         public TypeModel<string> Status { get; set; }
@@ -235,6 +230,6 @@ namespace Pims.Api.Models.Concepts
 
         public DateTime SurplusDeclarationDate { get; set; }
         #endregion
-    #endregion
+        #endregion
     }
 }

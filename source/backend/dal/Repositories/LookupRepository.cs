@@ -244,11 +244,6 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsPropertyRoadTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsPropertyAdjacentLandType> GetAllPropertyAdjacentLandTypes()
-        {
-            return this.Context.PimsPropertyAdjacentLandTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
-        }
-
         public IEnumerable<PimsVolumetricType> GetAllPropertyVolumetricTypes()
         {
             return this.Context.PimsVolumetricTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();

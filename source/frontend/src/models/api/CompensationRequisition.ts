@@ -15,6 +15,7 @@ export interface Api_CompensationRequisition extends Api_ConcurrentVersion, Api_
   chartOfAccounts: Api_FinancialCode | null;
   responsibilityId: number | null;
   responsibility: Api_FinancialCode | null;
+  finalizedDate: string | null;
   agreementDate: string | null;
   expropriationNoticeServedDate: string | null;
   expropriationVestingDate: string | null;

@@ -128,7 +128,7 @@ const fakeProperty: Api_Property = {
   latitude: 925866.6022023489,
   longitude: 1406876.1727310908,
   isSensitive: false,
-  pphStatusUpdateTimestamp: new Date('10-May-2020'),
+  pphStatusUpdateTimestamp: new Date('2020-05-10T20:00'),
   pphStatusUpdateUserGuid: 'A85F259B-FEBF-4508-87A6-1C2419036EFA',
   pphStatusUpdateUserid: 'USER',
   isRwyBeltDomPatent: false,

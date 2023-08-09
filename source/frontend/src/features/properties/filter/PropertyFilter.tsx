@@ -107,6 +107,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 options={[
                   { label: 'PID/PIN', value: 'pinOrPid' },
                   { label: 'Address', value: 'address' },
+                  { label: 'Plan #', value: 'planNumber' },
                 ]}
                 className="idir-input-group"
                 onChange={() => {
@@ -135,6 +136,9 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
               )}
               {values.searchBy === 'address' && !useGeocoder && (
                 <Input field="address" placeholder="Enter address"></Input>
+              )}
+              {values.searchBy === 'planNumber' && (
+                <Input field="planNumber" placeholder="Enter a plan number"></Input>
               )}
             </StyledCol>
             <Col xs="auto">

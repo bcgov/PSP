@@ -40,6 +40,7 @@ using Pims.Api.Models.Config;
 using Pims.Api.Repositories.Cdogs;
 using Pims.Api.Repositories.Mayan;
 using Pims.Api.Services;
+using Pims.Api.Services.Interfaces;
 using Pims.Av;
 using Pims.Core.Converters;
 using Pims.Core.Http;
@@ -405,8 +406,9 @@ namespace Pims.Api
             services.AddScoped<ITakeService, TakeService>();
             services.AddScoped<IFormDocumentService, FormDocumentService>();
             services.AddScoped<ICompensationRequisitionService, CompensationRequisitionService>();
-            services.AddScoped<ICompReqH120Service, CompReqH120Service>();
+            services.AddScoped<ICompReqFinancialService, CompReqFinancialService>();
             services.AddScoped<IH120CategoryService, H120CategoryService>();
+            services.AddScoped<IContactService, ContactService>();
         }
 
         /// <summary>

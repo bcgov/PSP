@@ -22,6 +22,7 @@ import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { prettyFormatDate } from '@/utils/dateUtils';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { PayeeOption } from '../../../models/PayeeOption';
@@ -106,14 +107,20 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
     }
   }, [activitiesUpdated]);
 
+  const handleSubmit = async (values: CompensationRequisitionFormModel) => {
+    if (values.status === 'final') {
+      setShowModal(true);
+    } else {
+      await onSave(values);
+    }
+  };
+
   return (
     <Formik<CompensationRequisitionFormModel>
       enableReinitialize
       innerRef={formikRef}
       initialValues={initialValues}
-      onSubmit={async values => {
-        await onSave(values);
-      }}
+      onSubmit={handleSubmit}
       validationSchema={CompensationRequisitionYupSchema}
       validateOnChange={true}
     >
@@ -139,14 +146,6 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                         value: 'final',
                       },
                     ]}
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                      const selectedValue = [].slice
-                        .call(e.target.selectedOptions)
-                        .map((option: HTMLOptionElement & number) => option.value)[0];
-                      if (!!selectedValue && selectedValue === 'final') {
-                        setShowModal(true);
-                      }
-                    }}
                   />
                 </SectionField>
                 <SectionField label="Agreement date" labelWidth="5" contentWidth="4">
@@ -297,9 +296,11 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               ]}
               okButtonText="Proceed"
               cancelButtonText="Cancel"
-              handleOk={() => setShowModal(false)}
+              handleOk={async () => {
+                await onSave(formikRef.current?.values!);
+                setShowModal(false);
+              }}
               handleCancel={() => {
-                formikProps.setFieldValue('status', 'draft');
                 setShowModal(false);
               }}
             />

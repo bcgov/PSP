@@ -32,7 +32,6 @@ namespace Pims.Dal.Entities
     {
         public PimsProperty()
         {
-            PimsPropPropAdjacentLandTypes = new HashSet<PimsPropPropAdjacentLandType>();
             PimsPropPropAnomalyTypes = new HashSet<PimsPropPropAnomalyType>();
             PimsPropPropRoadTypes = new HashSet<PimsPropPropRoadType>();
             PimsPropPropTenureTypes = new HashSet<PimsPropPropTenureType>();
@@ -248,8 +247,6 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(VolumetricTypeCode))]
         [InverseProperty(nameof(PimsVolumetricType.PimsProperties))]
         public virtual PimsVolumetricType VolumetricTypeCodeNavigation { get; set; }
-        [InverseProperty(nameof(PimsPropPropAdjacentLandType.Property))]
-        public virtual ICollection<PimsPropPropAdjacentLandType> PimsPropPropAdjacentLandTypes { get; set; }
         [InverseProperty(nameof(PimsPropPropAnomalyType.Property))]
         public virtual ICollection<PimsPropPropAnomalyType> PimsPropPropAnomalyTypes { get; set; }
         [InverseProperty(nameof(PimsPropPropRoadType.Property))]

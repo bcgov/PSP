@@ -20,7 +20,7 @@ const emptyInterestHolderForm: InterestHolderForm = {
 };
 
 describe('Interest Holder model tests', () => {
-  it('StakeHolderForm splits a single InterestHolder into interests and non-interests', () => {
+  it('StakeHolderForm fromApi splits a single InterestHolder into interests and non-interests', () => {
     const apiInterestHolders: Api_InterestHolder = {
       ...emptyApiInterestHolder,
       interestHolderId: 1,
@@ -43,7 +43,7 @@ describe('Interest Holder model tests', () => {
     expect(stakeholderModel.nonInterestPayees).toHaveLength(1);
   });
 
-  it('StakeHolderForm splits a single InterestHolder into multiple if an interest holder has multiple properties of different types', () => {
+  it('StakeHolderForm fromApi splits a single InterestHolder into multiple if an interest holder has multiple properties of different types', () => {
     const apiInterestHolders: Api_InterestHolder = {
       ...emptyApiInterestHolder,
       interestHolderId: 1,
@@ -65,7 +65,7 @@ describe('Interest Holder model tests', () => {
     expect(stakeholderModel.interestHolders).toHaveLength(2);
   });
 
-  it('StakeHolderForm does not combine multiple stakeholders even if they have the same type', () => {
+  it('StakeHolderForm fromApi does not combine multiple stakeholders even if they have the same type', () => {
     const apiInterestHolders: Api_InterestHolder[] = [
       {
         ...emptyApiInterestHolder,
@@ -98,7 +98,57 @@ describe('Interest Holder model tests', () => {
     expect(stakeholderModel.interestHolders).toHaveLength(2);
   });
 
-  it('StakeHolderForm splits multiple InterestHolders into interests and non-interests', () => {
+  it('StakeHolderForm fromApi does not split an interest holder with multiple properties if the properties have the same type', () => {
+    const apiInterestHolders: Api_InterestHolder[] = [
+      {
+        ...emptyApiInterestHolder,
+        interestHolderId: 1,
+        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        personId: 2,
+        interestHolderProperties: [
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'ip' }],
+            interestHolderId: 1,
+          },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'ip' }],
+            interestHolderId: 1,
+          },
+        ],
+      },
+    ];
+    const stakeholderModel = StakeHolderForm.fromApi(apiInterestHolders);
+    expect(stakeholderModel.interestHolders).toHaveLength(1);
+  });
+
+  it('StakeHolderForm fromApi does split an interest holder with multiple properties if the properties have different types', () => {
+    const apiInterestHolders: Api_InterestHolder[] = [
+      {
+        ...emptyApiInterestHolder,
+        interestHolderId: 1,
+        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        personId: 2,
+        interestHolderProperties: [
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'ip' }],
+            interestHolderId: 1,
+          },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'ip2' }],
+            interestHolderId: 1,
+          },
+        ],
+      },
+    ];
+    const stakeholderModel = StakeHolderForm.fromApi(apiInterestHolders);
+    expect(stakeholderModel.interestHolders).toHaveLength(2);
+  });
+
+  it('StakeHolderForm fromApi splits multiple InterestHolders into interests and non-interests', () => {
     const apiInterestHolders: Api_InterestHolder[] = [
       {
         ...emptyApiInterestHolder,

@@ -41,7 +41,6 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Anomalies, src => src.PimsPropPropAnomalyTypes)
                 .Map(dest => dest.Tenures, src => src.PimsPropPropTenureTypes)
                 .Map(dest => dest.RoadTypes, src => src.PimsPropPropRoadTypes)
-                .Map(dest => dest.AdjacentLands, src => src.PimsPropPropAdjacentLandTypes)
 
                 .Map(dest => dest.LandArea, src => src.LandArea)
                 .Map(dest => dest.AreaUnit, src => src.PropertyAreaUnitTypeCodeNavigation)
@@ -93,7 +92,6 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PimsPropPropAnomalyTypes, src => src.Anomalies)
                 .Map(dest => dest.PimsPropPropTenureTypes, src => src.Tenures)
                 .Map(dest => dest.PimsPropPropRoadTypes, src => src.RoadTypes)
-                .Map(dest => dest.PimsPropPropAdjacentLandTypes, src => src.AdjacentLands)
 
                 .Map(dest => dest.LandArea, src => src.LandArea)
                 .Map(dest => dest.PropertyAreaUnitTypeCode, src => src.AreaUnit.Id)

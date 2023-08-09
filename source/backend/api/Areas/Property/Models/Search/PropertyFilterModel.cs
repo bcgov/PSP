@@ -22,6 +22,12 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// </summary>
         public string PinOrPid { get; set; }
 
+        /// <summary>
+        /// get/set - The property plan number.
+        /// </summary>
+
+        public string PlanNumber { get; set; }
+
         #endregion
 
         #region Constructors
@@ -47,6 +53,7 @@ namespace Pims.Api.Areas.Property.Models.Search
 
             this.PinOrPid = filter.GetStringValue(nameof(this.PinOrPid));
             this.Address = filter.GetStringValue(nameof(this.Address));
+            this.PlanNumber = filter.GetStringValue(nameof(this.PlanNumber));
         }
         #endregion
 
@@ -66,6 +73,7 @@ namespace Pims.Api.Areas.Property.Models.Search
 
                 PinOrPid = model.PinOrPid,
                 Address = model.Address,
+                PlanNumber = model.PlanNumber,
             };
 
             return filter;

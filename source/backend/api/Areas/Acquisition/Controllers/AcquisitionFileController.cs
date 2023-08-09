@@ -31,7 +31,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
     {
         #region Variables
         private readonly IAcquisitionFileService _acquisitionService;
-        private readonly ICompReqH120Service _compReqH120Service;
+        private readonly ICompReqFinancialService _compReqFinancialService;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         #endregion
@@ -42,14 +42,14 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// Creates a new instance of a AcquisitionFileController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="acquisitionService"></param>
-        /// <param name="compReqH120Service"></param>
+        /// <param name="compReqFinancialService"></param>
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
         ///
-        public AcquisitionFileController(IAcquisitionFileService acquisitionService, ICompReqH120Service compReqH120Service, IMapper mapper, ILogger<AcquisitionFileController> logger)
+        public AcquisitionFileController(IAcquisitionFileService acquisitionService, ICompReqFinancialService compReqFinancialService, IMapper mapper, ILogger<AcquisitionFileController> logger)
         {
             _acquisitionService = acquisitionService;
-            _compReqH120Service = compReqH120Service;
+            _compReqFinancialService = compReqFinancialService;
             _mapper = mapper;
             _logger = logger;
         }
@@ -219,9 +219,9 @@ namespace Pims.Api.Areas.Acquisition.Controllers
                 nameof(GetFileCompReqH120),
                 User.GetUsername(),
                 DateTime.Now);
-            _logger.LogInformation("Dispatching to service: {Service}", _compReqH120Service.GetType());
+            _logger.LogInformation("Dispatching to service: {Service}", _compReqFinancialService.GetType());
 
-            var h120s = _compReqH120Service.GetAllByAcquisitionFileId(id, finalOnly);
+            var h120s = _compReqFinancialService.GetAllByAcquisitionFileId(id, finalOnly);
 
             return new JsonResult(_mapper.Map<IEnumerable<CompensationFinancialModel>>(h120s));
         }

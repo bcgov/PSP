@@ -80,6 +80,7 @@ export const CompensationListContainer: React.FunctionComponent<
       chartOfAccounts: null,
       responsibilityId: null,
       responsibility: null,
+      finalizedDate: null,
       agreementDate: null,
       expropriationNoticeServedDate: null,
       expropriationVestingDate: null,

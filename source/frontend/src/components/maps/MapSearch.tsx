@@ -17,19 +17,18 @@ export type MapSearchProps = {};
  * @param param0
  */
 const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
-  const { mapFilter: mapMachineMapFilter, setMapFilter: mapMachineSetMapFilter } =
-    useMapStateMachine();
+  const { mapSearchCriteria, setMapSearchCriteria } = useMapStateMachine();
 
-  const [mapFilter, setMapFilter] = useState<IPropertyFilter | null>(null);
+  const [propertySearchFilter, setPropertySearchFilter] = useState<IPropertyFilter | null>(null);
 
   useEffect(() => {
-    if (mapFilter !== null && !dequal(mapFilter, mapMachineMapFilter)) {
-      mapMachineSetMapFilter(mapFilter);
+    if (propertySearchFilter !== null && !dequal(mapSearchCriteria, propertySearchFilter)) {
+      setMapSearchCriteria(propertySearchFilter);
     }
-  }, [mapFilter, mapMachineSetMapFilter, mapMachineMapFilter]);
+  }, [propertySearchFilter, mapSearchCriteria, setMapSearchCriteria]);
 
   const handleMapFilterChange = (filter: IPropertyFilter) => {
-    setMapFilter(filter);
+    setPropertySearchFilter(filter);
   };
 
   const searchButtonClicked = () => {};

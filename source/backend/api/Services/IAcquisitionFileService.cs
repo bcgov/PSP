@@ -37,8 +37,8 @@ namespace Pims.Api.Services
 
         PimsCompensationRequisition AddCompensationRequisition(long acquisitionFileId, PimsCompensationRequisition compensationRequisition);
 
-        PimsForm8 AddForm8(long acquisitionFileId, PimsForm8 form8);
+        PimsExpropriationPayment AddExpropriationPayment(long acquisitionFileId, PimsExpropriationPayment expPayment);
 
-        IList<PimsForm8> GetAcquisitionForm8s(long acquisitionFileId);
+        IList<PimsExpropriationPayment> GetAcquisitionExpropriationPayments(long acquisitionFileId);
     }
 }
