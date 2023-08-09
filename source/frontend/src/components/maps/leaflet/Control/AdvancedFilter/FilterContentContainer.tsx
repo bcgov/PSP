@@ -38,8 +38,6 @@ export const FilterContentContainer: React.FC<
   const onChange = useCallback(
     (model: PropertyFilterFormModel) => {
       filterProperties(model.toApi());
-      console.log('here', model);
-      console.log('here api', model.toApi());
     },
     [filterProperties],
   );

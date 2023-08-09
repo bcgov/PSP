@@ -18,20 +18,17 @@ namespace Pims.Api.Services
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
-        //private readonly IAcquisitionPayeeRepository _acquisitionPayeeRepository; // TODO
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IUserRepository _userRepository;
         private readonly IAcquisitionFileRepository _acqFileRepository;
         private readonly ICompReqFinancialService _compReqFinancialService;
 
         public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository,
-        /*IAcquisitionPayeeRepository acquisitionPayeeRepository,*/
          IEntityNoteRepository entityNoteRepository, IUserRepository userRepository, IAcquisitionFileRepository acqFileRepository, ICompReqFinancialService compReqFinancialService)
         {
             _user = user;
             _logger = logger;
             _compensationRequisitionRepository = compensationRequisitionRepository;
-            //_acquisitionPayeeRepository = acquisitionPayeeRepository;
             _entityNoteRepository = entityNoteRepository;
             _userRepository = userRepository;
             _acqFileRepository = acqFileRepository;
@@ -46,20 +43,6 @@ namespace Pims.Api.Services
             return _compensationRequisitionRepository.GetById(compensationRequisitionId);
         }
 
-        /* public PimsAcquisitionPayee GetPayeeByCompensationId(long compensationRequisitionId)
-         {
-             _logger.LogInformation($"Getting Compensation Requisition Payee with compensation id {compensationRequisitionId}");
-             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
-
-             var compensationRequisition = _compensationRequisitionRepository.GetById(compensationRequisitionId);
-             if (compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is null)
-             {
-                 throw new KeyNotFoundException();
-             }
-
-             return _acquisitionPayeeRepository.GetById(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault().AcquisitionPayeeId);
-         }*/
-
         public PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition)
         {
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionEdit);
@@ -69,28 +52,27 @@ namespace Pims.Api.Services
             _logger.LogInformation($"Updating Compensation Requisition with id ${compensationRequisition.CompensationRequisitionId}");
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
-            (bool? currentIsDraft, bool? newIsDraft) compReqStatusComparable = (currentIsDraft: currentCompensation.IsDraft, newIsDraft: compensationRequisition.IsDraft);
 
-            CheckDraftStatusUpdateAuthorized(compReqStatusComparable);
+            CheckDraftStatusUpdateAuthorized(currentCompensation.IsDraft, compensationRequisition.IsDraft);
             CheckTotalAllowableCompensation(compensationRequisition.AcquisitionFileId, compensationRequisition);
-            compensationRequisition.FinalizedDate = CheckFinalizedDate(compReqStatusComparable, currentCompensation.FinalizedDate);
+            compensationRequisition.FinalizedDate = CheckFinalizedDate(currentCompensation.IsDraft, compensationRequisition.IsDraft, currentCompensation.FinalizedDate);
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
-            AddNoteIfStatusChanged(compensationRequisition.Internal_Id, compensationRequisition.AcquisitionFileId, compReqStatusComparable);
+            AddNoteIfStatusChanged(compensationRequisition.Internal_Id, compensationRequisition.AcquisitionFileId, currentCompensation.IsDraft, compensationRequisition.IsDraft);
             _compensationRequisitionRepository.CommitTransaction();
 
             return updatedEntity;
 
-            DateTime? CheckFinalizedDate((bool? currentStatusIsDraft, bool? newStatusIsDraft) statusComparable, DateTime? currentValue)
+            DateTime? CheckFinalizedDate(bool? currentStatusIsDraft, bool? newStatusIsDraft, DateTime? currentValue)
             {
-                if (statusComparable.currentStatusIsDraft.Equals(statusComparable.newStatusIsDraft))
+                if (currentStatusIsDraft.Equals(newStatusIsDraft))
                 {
                     return currentValue;
                 }
 
-                if(statusComparable.newStatusIsDraft.HasValue)
+                if (newStatusIsDraft.HasValue)
                 {
-                    return statusComparable.newStatusIsDraft.Value ? null : DateTime.UtcNow;
+                    return newStatusIsDraft.Value ? null : DateTime.UtcNow;
                 }
 
                 return null;
@@ -120,15 +102,15 @@ namespace Pims.Api.Services
             }
         }
 
-        private void AddNoteIfStatusChanged(long compensationRequisitionId, long acquisitionFileId, (bool? currentStatus, bool? newStatus) statusComparable)
+        private void AddNoteIfStatusChanged(long compensationRequisitionId, long acquisitionFileId, bool? currentStatus, bool? newStatus)
         {
-            if (statusComparable.currentStatus.Equals(statusComparable.newStatus))
+            if (currentStatus.Equals(newStatus))
             {
                 return;
             }
 
-            var curentStatusText = GetCompensationRequisitionStatusText(statusComparable.currentStatus);
-            var newStatusText = GetCompensationRequisitionStatusText(statusComparable.newStatus);
+            var curentStatusText = GetCompensationRequisitionStatusText(currentStatus);
+            var newStatusText = GetCompensationRequisitionStatusText(newStatus);
 
             PimsAcquisitionFileNote fileNoteInstance = new()
             {
@@ -147,10 +129,10 @@ namespace Pims.Api.Services
             _entityNoteRepository.Add(fileNoteInstance);
         }
 
-        private void CheckDraftStatusUpdateAuthorized((bool? currentStatus, bool? newStatus) statusComparable)
+        private void CheckDraftStatusUpdateAuthorized(bool? currentStatus, bool? newStatus)
         {
-            if (statusComparable.currentStatus.HasValue && statusComparable.currentStatus.Value.Equals(false)
-                && ((statusComparable.newStatus.HasValue && statusComparable.newStatus.Value.Equals(true)) || !statusComparable.newStatus.HasValue)
+            if (currentStatus.HasValue && currentStatus.Value.Equals(false)
+                && ((newStatus.HasValue && newStatus.Value.Equals(true)) || !newStatus.HasValue)
                 && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new NotAuthorizedException();
