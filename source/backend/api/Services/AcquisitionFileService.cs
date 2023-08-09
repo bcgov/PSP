@@ -51,7 +51,7 @@ namespace Pims.Api.Services
             IAgreementRepository agreementRepository,
             ICompensationRequisitionRepository compensationRequisitionRepository,
             IInterestHolderRepository interestHolderRepository,
-            ICompReqH120Service compReqH120Service)
+            ICompReqH120Service compReqH120Service,
             IForm8Repository form8Repository)
         {
             _user = user;
