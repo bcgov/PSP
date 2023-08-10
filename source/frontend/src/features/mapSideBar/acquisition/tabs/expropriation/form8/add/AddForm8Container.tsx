@@ -5,7 +5,7 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOption';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
-import { Api_Form8 } from '@/models/api/Form8';
+import { Api_ExpropriationPayment } from '@/models/api/Form8';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
 import { Form8FormModel } from '../models/Form8FormModel';
@@ -68,7 +68,7 @@ export const AddForm8Container: React.FunctionComponent<
     );
   }, [payeeOptions, acquisitionFileId, retrieveAcquisitionOwners, fetchInterestHolders]);
 
-  const handleSave = async (form8: Api_Form8) => {
+  const handleSave = async (form8: Api_ExpropriationPayment) => {
     return postAcquisitionForm8(acquisitionFileId, form8);
   };
 

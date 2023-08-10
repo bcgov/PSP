@@ -6,7 +6,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { Claims } from '@/constants';
 import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
-import { Api_Form8 } from '@/models/api/Form8';
+import { Api_ExpropriationPayment } from '@/models/api/Form8';
 
 import { useGenerateExpropriationForm1 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm1';
 import { useGenerateExpropriationForm5 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm5';
@@ -19,7 +19,7 @@ import ExpropriationForm9 from './form9/ExpropriationForm9';
 export interface IExpropriationTabContainerViewProps {
   loading: boolean;
   acquisitionFile: Api_AcquisitionFile;
-  form8s: Api_Form8[];
+  form8s: Api_ExpropriationPayment[];
 }
 
 export const ExpropriationTabContainerView: React.FunctionComponent<

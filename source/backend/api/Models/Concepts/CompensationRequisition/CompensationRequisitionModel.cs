@@ -9,6 +9,8 @@ namespace Pims.Api.Models.Concepts
 
         public long AcquisitionFileId { get; set; }
 
+        public AcquisitionFileModel AcquisitionFile { get; set; }
+
         public bool? IsDraft { get; set; }
 
         public string FiscalYear { get; set; }
@@ -35,12 +37,30 @@ namespace Pims.Api.Models.Concepts
 
         public DateTime? GenerationDate { get; set; }
 
+        public List<CompensationFinancialModel> Financials { get; set; }
+
+        public long? AcquisitionOwnerId { get; set; }
+
+        public AcquisitionFileOwnerModel AcquisitionOwner { get; set; }
+
+        public long? InterestHolderId { get; set; }
+
+        public InterestHolderModel InterestHolder { get; set; }
+
+        public long? AcquisitionFilePersonId { get; set; }
+
+        public AcquisitionFilePersonModel AcquisitionFilePerson { get; set; }
+
+        public string LegacyPayee { get; set; }
+
+        public bool? IsPaymentInTrust { get; set; }
+
+        public string GstNumber { get; set; }
+
         public string SpecialInstruction { get; set; }
 
         public string DetailedRemarks { get; set; }
 
         public bool? IsDisabled { get; set; }
-
-        public List<CompensationFinancialModel> Financials { get; set; }
     }
 }

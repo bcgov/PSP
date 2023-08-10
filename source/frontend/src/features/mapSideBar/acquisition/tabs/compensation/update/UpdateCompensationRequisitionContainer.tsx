@@ -84,11 +84,10 @@ const UpdateCompensationRequisitionContainer: React.FC<
 
       await Promise.all([acquisitionOwnersCall, interestHoldersCall]).then(
         ([acquisitionOwners, interestHolders]) => {
-          compensation.payees.forEach(p => {
-            const matchedInterestHolder =
-              interestHolders?.find(ih => ih.interestHolderId === p.interestHolderId) ?? null;
-            p.interestHolder = matchedInterestHolder;
-          });
+          const matchedInterestHolder =
+            interestHolders?.find(ih => ih.interestHolderId === compensation.interestHolderId) ??
+            null;
+          compensation.interestHolder = matchedInterestHolder;
 
           const options = payeeOptions;
 

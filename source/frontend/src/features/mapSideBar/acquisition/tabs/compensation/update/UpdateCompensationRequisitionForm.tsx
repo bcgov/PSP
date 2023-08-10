@@ -95,9 +95,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
       .map(f => f.totalAmount)
       .reduce((prev, next) => prev + next, 0);
 
-    formikRef.current?.setFieldValue(`payees.0.pretaxAmount`, pretaxAmount);
-    formikRef.current?.setFieldValue(`payees.0.taxAmount`, taxAmount);
-    formikRef.current?.setFieldValue(`payees.0.totalAmount`, totalAmount);
+    formikRef.current?.setFieldValue(`payee.pretaxAmount`, pretaxAmount);
+    formikRef.current?.setFieldValue(`payee.taxAmount`, taxAmount);
+    formikRef.current?.setFieldValue(`payee.totalAmount`, totalAmount);
   };
 
   useEffect(() => {
@@ -147,6 +147,14 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                       },
                     ]}
                   />
+                </SectionField>
+                <SectionField
+                  label="Final date"
+                  labelWidth="5"
+                  contentWidth="4"
+                  data-testid="compensation-finalized"
+                >
+                  {prettyFormatDate(initialValues.finalizedDate)}
                 </SectionField>
                 <SectionField label="Agreement date" labelWidth="5" contentWidth="4">
                   <FastDatePicker field="agreementDateTime" formikProps={formikProps} />
@@ -207,9 +215,10 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               <Section header="Payment" isCollapsable initiallyExpanded>
                 <SectionField label="Payee" labelWidth="4" required>
                   <Select
-                    field="payeeKey"
+                    field={withNameSpace('payee', 'payeeKey')}
                     title={
-                      payeeOptions.find(p => p.value === formikProps.values.payeeKey)?.fullText
+                      payeeOptions.find(p => p.value === formikProps.values.payee.payeeKey)
+                        ?.fullText
                     }
                     options={payeeOptions.map<SelectOption>(x => {
                       return { label: x.text, value: x.value, title: x.fullText };
@@ -218,22 +227,22 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   />
                 </SectionField>
                 <SectionField label="Payment in Trust?">
-                  <Check field={withNameSpace('payees.0', 'isPaymentInTrust')} />
+                  <Check field={withNameSpace('payee', 'isPaymentInTrust')} />
                 </SectionField>
                 <SectionField label="GST number" tooltip="Include GST # if applicable">
-                  <Input field={withNameSpace('payees.0', 'gstNumber')}></Input>
+                  <Input field={withNameSpace('payee', 'gstNumber')}></Input>
                 </SectionField>
                 <SectionField label="Amount (before tax)">
                   <FastCurrencyInput
                     allowNegative
-                    field={withNameSpace('payees.0', 'pretaxAmount')}
+                    field={withNameSpace('payee', 'pretaxAmount')}
                     formikProps={formikProps}
                     disabled
                   />
                 </SectionField>
                 <SectionField label="GST amount">
                   <FastCurrencyInput
-                    field={withNameSpace('payees.0', 'taxAmount')}
+                    field={withNameSpace('payee', 'taxAmount')}
                     allowNegative
                     formikProps={formikProps}
                     disabled
@@ -244,7 +253,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   tooltip="Calculated total of all activities in this compensation requisition"
                 >
                   <FastCurrencyInput
-                    field={withNameSpace('payees.0', 'totalAmount')}
+                    field={withNameSpace('payee', 'totalAmount')}
                     allowNegative
                     formikProps={formikProps}
                     disabled

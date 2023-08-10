@@ -5,11 +5,11 @@ import { StyledRemoveLinkButton } from '@/components/common/buttons';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
-import { Api_Form8 } from '@/models/api/Form8';
+import { Api_ExpropriationPayment } from '@/models/api/Form8';
 
 export interface IExpropriationForm8DetailsProps {
   form8Index: number;
-  form8: Api_Form8;
+  form8: Api_ExpropriationPayment;
 }
 
 export const ExpropriationForm8Details: React.FunctionComponent<

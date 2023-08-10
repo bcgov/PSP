@@ -1,5 +1,4 @@
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
-import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_FinancialCode } from '@/models/api/FinancialCode';
 import { booleanToString, stringToBoolean, stringToUndefined, toTypeCode } from '@/utils/formUtils';
@@ -7,7 +6,7 @@ import { booleanToString, stringToBoolean, stringToUndefined, toTypeCode } from 
 import { PayeeOption } from '../../../models/PayeeOption';
 
 export class CompensationRequisitionFormModel {
-  id: number | null = null;
+  id: number | null;
   acquisitionFileId: number;
   status: string = '';
   fiscalYear: string = '';
@@ -17,7 +16,7 @@ export class CompensationRequisitionFormModel {
   chartOfAccounts: Api_FinancialCode | null = null;
   responsibilityCentre: string = '';
   Responsibility: Api_FinancialCode | null = null;
-  readonly finalizedDate: string = '';
+  readonly finalizedDate: string;
   agreementDateTime: string = '';
   expropriationNoticeServedDateTime: string = '';
   expropriationVestingDateTime: string = '';
@@ -25,33 +24,22 @@ export class CompensationRequisitionFormModel {
   specialInstruction: string = '';
   detailedRemarks: string = '';
   financials: FinancialActivityFormModel[] = [];
-  payees: AcquisitionPayeeFormModel[] = [];
+  payee: AcquisitionPayeeFormModel;
   isDisabled: string = '';
   rowVersion: number | null = null;
-  payeeKey: string = '';
 
   constructor(id: number | null, acquisitionFileId: number = 0, finalizedDate: string) {
     this.id = id;
     this.acquisitionFileId = acquisitionFileId;
+    this.payee = new AcquisitionPayeeFormModel();
     this.finalizedDate = finalizedDate;
   }
 
   toApi(payeeOptions: PayeeOption[]): Api_CompensationRequisition {
-    let apiPayee: Api_CompensationPayee | null = PayeeOption.toApi(
-      this.payees[0]._id,
-      this.id,
-      this.payeeKey,
-      payeeOptions,
-    );
-
-    if (apiPayee) {
-      apiPayee.id = this.payees[0]._id;
-      apiPayee.gstNumber = this.payees[0].gstNumber;
-      apiPayee.isPaymentInTrust = this.payees[0].isPaymentInTrust;
-      apiPayee.rowVersion = this.payees[0].rowVersion;
-    }
+    let modelWithPayeeInformation = this.payee.toApi(payeeOptions);
 
     return {
+      ...modelWithPayeeInformation,
       id: this.id,
       acquisitionFileId: this.acquisitionFileId,
       isDraft: this.status === 'draft' ? true : false,
@@ -73,7 +61,6 @@ export class CompensationRequisitionFormModel {
       financials: this.financials
         .filter(x => !x.isEmpty())
         .map<Api_CompensationFinancial>(x => x.toApi()),
-      payees: apiPayee === null ? [] : [apiPayee],
       rowVersion: this.rowVersion ?? undefined,
     };
   }
@@ -102,8 +89,7 @@ export class CompensationRequisitionFormModel {
     compensation.financials =
       apiModel.financials?.map(x => FinancialActivityFormModel.fromApi(x)) || [];
     compensation.detailedRemarks = apiModel.detailedRemarks || '';
-    compensation.payees = apiModel.payees?.map(x => AcquisitionPayeeFormModel.fromApi(x)) || [];
-    compensation.payeeKey = PayeeOption.fromApi(apiModel.payees);
+
     compensation.isDisabled = booleanToString(apiModel.isDisabled);
     compensation.rowVersion = apiModel.rowVersion ?? null;
 
@@ -119,18 +105,10 @@ export class CompensationRequisitionFormModel {
       .map(f => f.totalAmount ?? 0)
       .reduce((prev, next) => prev + next, 0);
 
-    if (compensation.payees.length === 0) {
-      let defaultPayee = AcquisitionPayeeFormModel.defatultPayee(compensation.id!);
-      defaultPayee.pretaxAmount = payeePretaxAmount;
-      defaultPayee.taxAmount = payeeTaxAmount;
-      defaultPayee.taxAmount = payeeTotalAmount;
-
-      compensation.payees.push(defaultPayee);
-    } else {
-      compensation.payees[0].pretaxAmount = payeePretaxAmount;
-      compensation.payees[0].taxAmount = payeeTaxAmount;
-      compensation.payees[0].totalAmount = payeeTotalAmount;
-    }
+    compensation.payee = AcquisitionPayeeFormModel.fromApi(apiModel);
+    compensation.payee.pretaxAmount = payeePretaxAmount;
+    compensation.payee.taxAmount = payeeTaxAmount;
+    compensation.payee.totalAmount = payeeTotalAmount;
 
     return compensation;
   }
@@ -191,64 +169,34 @@ export class FinancialActivityFormModel {
 }
 
 export class AcquisitionPayeeFormModel {
-  readonly _id: number | null;
-  readonly _compensationRequisitionId: number | null;
-
-  payeeSelectedOption: string = '';
+  payeeKey: string = '';
   gstNumber: string = '';
   isPaymentInTrust: boolean = false;
+
   pretaxAmount: number = 0;
   taxAmount: number = 0;
   totalAmount: number = 0;
-  acquisitionOwnerId: string = '';
-  interestHolderId: string = '';
-  acquisitionFilePersonId: string = '';
-  rowVersion: number | null = null;
-  isDisabled: string = '';
 
-  constructor(id: number | null = null, compensationRequisitionId: number | null = null) {
-    this._id = id;
-    this._compensationRequisitionId = compensationRequisitionId;
-  }
+  static fromApi(apiModel: Api_CompensationRequisition): AcquisitionPayeeFormModel {
+    const payeeModel = new AcquisitionPayeeFormModel();
 
-  static fromApi(apiModel: Api_CompensationPayee): AcquisitionPayeeFormModel {
-    const payeeModel = new AcquisitionPayeeFormModel(
-      apiModel.id,
-      apiModel.compensationRequisitionId,
-    );
-
+    payeeModel.payeeKey = PayeeOption.fromApi(apiModel);
     payeeModel.isPaymentInTrust = apiModel.isPaymentInTrust ?? false;
     payeeModel.gstNumber = apiModel.gstNumber ?? '';
-    payeeModel.acquisitionOwnerId = apiModel.acquisitionOwnerId?.toString() ?? '';
-    payeeModel.interestHolderId = apiModel.interestHolderId?.toString() ?? '';
-    payeeModel.acquisitionFilePersonId = apiModel.acquisitionFilePersonId?.toString() ?? '';
-    payeeModel.rowVersion = apiModel.rowVersion ?? null;
 
     return payeeModel;
   }
 
-  static defatultPayee(compensationRequisitionId: number): AcquisitionPayeeFormModel {
-    let payeeModel = new AcquisitionPayeeFormModel(null, compensationRequisitionId);
+  toApi(payeeOptions: PayeeOption[]): Api_CompensationRequisition {
+    let modelWithPayeeInformation: Api_CompensationRequisition = PayeeOption.toApi(
+      this.payeeKey,
+      payeeOptions,
+    );
 
-    return payeeModel;
-  }
-
-  toApi(): Api_CompensationPayee {
     return {
-      id: this._id,
-      compensationRequisitionId: this._compensationRequisitionId ?? null,
-      compensationRequisition: null,
+      ...modelWithPayeeInformation,
       isPaymentInTrust: stringToBoolean(this.isPaymentInTrust),
       gstNumber: this.gstNumber,
-      acquisitionOwnerId: this.acquisitionOwnerId === '' ? null : +this.acquisitionOwnerId,
-      interestHolderId: null,
-      interestHolder: null,
-      motiSolicitor: null,
-      motiSolicitorId: null,
-      acquisitionFilePersonId: null,
-      acquisitionOwner: null,
-      isDisabled: stringToBoolean(this.isDisabled),
-      rowVersion: this.rowVersion ?? null,
     };
   }
 }

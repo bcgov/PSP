@@ -11,7 +11,7 @@ import {
 } from '@/models/api/AcquisitionFile';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
-import { Api_Form8 } from '@/models/api/Form8';
+import { Api_ExpropriationPayment } from '@/models/api/Form8';
 import { Api_Product, Api_Project } from '@/models/api/Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
@@ -216,10 +216,14 @@ export const useAcquisitionProvider = () => {
   });
 
   const postFileForm8Api = useApiRequestWrapper<
-    (acqFileId: number, form8: Api_Form8) => Promise<AxiosResponse<Api_Form8, any>>
+    (
+      acqFileId: number,
+      form8: Api_ExpropriationPayment,
+    ) => Promise<AxiosResponse<Api_ExpropriationPayment, any>>
   >({
     requestFunction: useCallback(
-      async (acqFileId: number, form8: Api_Form8) => await postFileForm8(acqFileId, form8),
+      async (acqFileId: number, form8: Api_ExpropriationPayment) =>
+        await postFileForm8(acqFileId, form8),
       [postFileForm8],
     ),
     requestName: 'postFileForm8',
@@ -228,7 +232,7 @@ export const useAcquisitionProvider = () => {
   });
 
   const getAcquisitionForm8sApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_Form8[], any>>
+    (acqFileId: number) => Promise<AxiosResponse<Api_ExpropriationPayment[], any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number) => await getAcquisitionFileForm8s(acqFileId),

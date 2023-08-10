@@ -1,6 +1,6 @@
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { Api_AcquisitionFileOwner, Api_AcquisitionFilePerson } from '@/models/api/AcquisitionFile';
-import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { isNullOrWhitespace } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
@@ -22,95 +22,100 @@ export class PayeeOption {
     payeeType: PayeeType,
   ) {
     this.api_id = api_id;
-    this.fullText = `${name} (${key})`;
-    this.text = `${PayeeOption.truncateName(name)} (${key})`;
+    this.fullText = `${name}(${key})`;
+    this.text = `${PayeeOption.truncateName(name)}(${key})`;
     this.value = value;
     this.payeeType = payeeType;
   }
 
-  public static fromApi(payeeModels: Api_CompensationPayee[]): string {
-    if (payeeModels.length === 1) {
-      const apiModel = payeeModels[0];
-      if (apiModel.acquisitionOwnerId) {
-        return PayeeOption.generateKey(apiModel.acquisitionOwnerId, PayeeType.Owner);
-      }
+  public static fromApi(apiModel: Api_CompensationRequisition): string {
+    if (apiModel.acquisitionOwnerId) {
+      return PayeeOption.generateKey(apiModel.acquisitionOwnerId, PayeeType.Owner);
+    }
 
-      if (apiModel.motiSolicitorId) {
-        return PayeeOption.generateKey(apiModel.motiSolicitorId, PayeeType.AcquisitionTeam);
-      }
+    if (apiModel.acquisitionFilePersonId) {
+      return PayeeOption.generateKey(apiModel.acquisitionFilePersonId, PayeeType.AcquisitionTeam);
+    }
 
-      if (apiModel.interestHolderId) {
-        if (
-          apiModel.interestHolder?.interestHolderType?.id ===
-          InterestHolderType.OWNER_REPRESENTATIVE
-        ) {
-          return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.OwnerRepresentative);
-        } else if (
-          apiModel.interestHolder?.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR
-        ) {
-          return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.OwnerSolicitor);
-        } else {
-          return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.InterestHolder);
-        }
+    if (apiModel.interestHolderId) {
+      if (
+        apiModel.interestHolder?.interestHolderType?.id === InterestHolderType.OWNER_REPRESENTATIVE
+      ) {
+        return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.OwnerRepresentative);
+      } else if (
+        apiModel.interestHolder?.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR
+      ) {
+        return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.OwnerSolicitor);
+      } else {
+        return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.InterestHolder);
       }
     }
+
     return '';
   }
 
-  public static toApi(
-    id: number | null,
-    compensationRequisitionId: number | null,
-    value: string,
-    options: PayeeOption[],
-  ): Api_CompensationPayee | null {
-    if (isNullOrWhitespace(value)) {
-      return null;
-    }
-
-    const payeeOption = options.find(x => x.value === value);
-
-    if (payeeOption === undefined) {
-      return null;
-    }
-
-    const payee: Api_CompensationPayee = {
-      id: id,
-      compensationRequisitionId: compensationRequisitionId || 0,
+  public static toApi(payeeKey: string, options: PayeeOption[]): Api_CompensationRequisition {
+    const compensationModel: Api_CompensationRequisition = {
       isPaymentInTrust: null,
       gstNumber: null,
       acquisitionOwnerId: null,
       interestHolderId: null,
-      motiSolicitorId: null,
+      acquisitionFilePerson: null,
       isDisabled: null,
-      motiSolicitor: null,
       acquisitionOwner: null,
-      compensationRequisition: null,
       interestHolder: null,
       acquisitionFilePersonId: null,
-      rowVersion: null,
+      id: null,
+      acquisitionFileId: 0,
+      acquisitionFile: null,
+      isDraft: null,
+      fiscalYear: null,
+      yearlyFinancialId: null,
+      yearlyFinancial: null,
+      chartOfAccountsId: null,
+      chartOfAccounts: null,
+      responsibilityId: null,
+      responsibility: null,
+      agreementDate: null,
+      expropriationNoticeServedDate: null,
+      expropriationVestingDate: null,
+      generationDate: null,
+      financials: [],
+      legacyPayee: null,
+      finalizedDate: null,
+      specialInstruction: null,
+      detailedRemarks: null,
     };
+
+    if (isNullOrWhitespace(payeeKey)) {
+      return compensationModel;
+    }
+
+    const payeeOption = options.find(x => x.value === payeeKey);
+
+    if (payeeOption === undefined) {
+      return compensationModel;
+    }
 
     switch (payeeOption.payeeType) {
       case PayeeType.AcquisitionTeam:
-        payee.motiSolicitorId = payeeOption.api_id;
+        compensationModel.acquisitionFilePersonId = payeeOption.api_id;
         break;
       case PayeeType.OwnerRepresentative:
-        payee.interestHolderId = payeeOption.api_id;
+        compensationModel.interestHolderId = payeeOption.api_id;
         break;
       case PayeeType.OwnerSolicitor:
-        payee.interestHolderId = payeeOption.api_id;
+        compensationModel.interestHolderId = payeeOption.api_id;
         break;
       case PayeeType.Owner:
-        payee.acquisitionOwnerId = payeeOption.api_id;
+        compensationModel.acquisitionOwnerId = payeeOption.api_id;
         break;
       case PayeeType.InterestHolder:
-        payee.interestHolderId = payeeOption.api_id;
+        compensationModel.interestHolderId = payeeOption.api_id;
         break;
-      default:
-        return null;
     }
 
-    return payee;
+    return compensationModel;
   }
 
   private static truncateName(name: string): string {

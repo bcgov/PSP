@@ -5,11 +5,7 @@ import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
 } from '@/mocks/acquisitionFiles.mock';
-import {
-  getMockApiCompensation,
-  getMockApiDefaultCompensation,
-  getMockApiFinalCompensation,
-} from '@/mocks/compensations.mock';
+import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { Api_FinancialCode } from '@/models/api/FinancialCode';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -148,7 +144,7 @@ describe('UpdateCompensationRequisition Container component', () => {
   ) => {
     const component = render(
       <UpdateCompensationRequisitionContainer
-        compensation={renderOptions?.props?.compensation ?? getMockApiCompensation()}
+        compensation={renderOptions?.props?.compensation ?? getMockApiDefaultCompensation()}
         acquisitionFile={renderOptions?.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
         onSuccess={onSuccess}
         onCancel={onCancel}
@@ -184,7 +180,7 @@ describe('UpdateCompensationRequisition Container component', () => {
   });
 
   it('Calls onSuccess when the compensation is saved successfully', async () => {
-    const mockCompensationUpdate = getMockApiFinalCompensation();
+    const mockCompensationUpdate = getMockApiDefaultCompensation();
     await setup({
       props: { compensation: mockCompensationUpdate },
     });
@@ -203,7 +199,7 @@ describe('UpdateCompensationRequisition Container component', () => {
   });
 
   it('does not call onSucess if the returned value is invalid', async () => {
-    const mockCompensationUpdate = getMockApiFinalCompensation();
+    const mockCompensationUpdate = getMockApiDefaultCompensation();
     mockUpdateCompensation.mockResolvedValue(undefined);
 
     await setup({
@@ -221,7 +217,7 @@ describe('UpdateCompensationRequisition Container component', () => {
   });
 
   it('makes request to update the compensation with payees', async () => {
-    const mockCompensationUpdate = getMockApiFinalCompensation();
+    const mockCompensationUpdate = getMockApiDefaultCompensation();
     await setup({
       props: { compensation: mockCompensationUpdate },
     });
@@ -240,7 +236,7 @@ describe('UpdateCompensationRequisition Container component', () => {
       mockAcquisitionFileOwnersResponse(1)[0],
     );
 
-    updatedCompensationModel.payeeKey = testPayeeOption.value;
+    updatedCompensationModel.payee.payeeKey = testPayeeOption.value;
 
     setTimeout(async () => {
       await act(async () => {

@@ -8,7 +8,6 @@ import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdmin
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useH120CategoryRepository } from '@/hooks/repositories/useH120CategoryRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
-import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { ExternalResultStatus } from '@/models/api/ExternalResult';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
@@ -23,7 +22,6 @@ export const useGenerateH120 = () => {
   const { getAcquisitionInterestHolders } = useInterestHolderRepository();
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
   const getH120Categories = useH120CategoryRepository();
-  const { getCompensationRequisitionPayee } = useCompensationRequisitionRepository();
 
   const adminBoundaryService = useAdminBoundaryMapLayer();
   const { getSystemConstant } = useSystemConstants();
@@ -53,17 +51,14 @@ export const useGenerateH120 = () => {
     const interestHoldersPromise = getAcquisitionInterestHolders.execute(
       compensation.acquisitionFileId,
     );
-    const payeePromise = getCompensationRequisitionPayee.execute(compensation.id);
 
-    const [file, properties, h120Categories, compReqH120s, interestHolders, payee] =
-      await Promise.all([
-        filePromise,
-        propertiesPromise,
-        h120CategoriesPromise,
-        compReqH120sPromise,
-        interestHoldersPromise,
-        payeePromise,
-      ]);
+    const [file, properties, h120Categories, compReqH120s, interestHolders] = await Promise.all([
+      filePromise,
+      propertiesPromise,
+      h120CategoriesPromise,
+      compReqH120sPromise,
+      interestHoldersPromise,
+    ]);
     if (!file) {
       throw Error('Acquisition file not found');
     }
@@ -90,7 +85,6 @@ export const useGenerateH120 = () => {
       fileData,
       h120Categories ?? [],
       compReqH120s ?? [],
-      payee,
       client?.value,
     );
     const generatedFile = await generate({

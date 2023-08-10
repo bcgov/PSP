@@ -7,7 +7,7 @@ import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
-import { Api_Form8 } from '@/models/api/Form8';
+import { Api_ExpropriationPayment } from '@/models/api/Form8';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { stripTrailingSlash } from '@/utils';
 
@@ -78,7 +78,7 @@ export const UpdateForm8Container: React.FunctionComponent<
     }
   }, [fetchInterestHolders, form8Id, getForm8, payeeOptions, retrieveAcquisitionOwners]);
 
-  const handleSave = async (form8: Api_Form8) => {
+  const handleSave = async (form8: Api_ExpropriationPayment) => {
     return updateForm8(form8);
   };
 

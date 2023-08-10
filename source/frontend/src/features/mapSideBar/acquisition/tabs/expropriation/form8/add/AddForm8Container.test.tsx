@@ -6,7 +6,7 @@ import {
   mockAcquisitionFileResponse,
 } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_Form8 } from '@/models/api/Form8';
+import { Api_ExpropriationPayment } from '@/models/api/Form8';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { systemConstantsSlice } from '@/store/slices/systemConstants/systemConstantsSlice';
 import { act, render, RenderOptions, waitFor } from '@/utils/test-utils';
@@ -117,7 +117,7 @@ describe('Add Form8 Container component', () => {
   it('makes request to create a new form8 and returns the response', async () => {
     await setup();
     await act(async () => {
-      viewProps?.onSave({} as Api_Form8);
+      viewProps?.onSave({} as Api_ExpropriationPayment);
     });
 
     await waitFor(async () => {

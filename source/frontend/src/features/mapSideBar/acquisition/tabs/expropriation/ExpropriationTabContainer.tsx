@@ -3,7 +3,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_Form8 } from '@/models/api/Form8';
+import { Api_ExpropriationPayment } from '@/models/api/Form8';
 
 import { IExpropriationTabContainerViewProps } from './ExpropriationTabContainerView';
 
@@ -16,7 +16,7 @@ export const ExpropriationTabContainer: React.FunctionComponent<
   React.PropsWithChildren<IExpropriationTabContainerProps>
 > = ({ View, acquisitionFile }) => {
   const { fileLoading } = useContext(SideBarContext);
-  const [form8s, setForm8s] = useState<Api_Form8[]>([]);
+  const [form8s, setForm8s] = useState<Api_ExpropriationPayment[]>([]);
 
   const {
     getAcquisitionFileForm8s: { execute: getAcquisitionFileForm8s, loading: loadingForm8s },

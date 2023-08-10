@@ -778,8 +778,8 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               >
                 <select
                   class="form-select form-control"
-                  id="input-payeeKey"
-                  name="payeeKey"
+                  id="input-payee.payeeKey"
+                  name="payee.payeeKey"
                 >
                   <option
                     value=""
@@ -816,8 +816,8 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                   >
                     <input
                       class="form-check-input position-static"
-                      id="input-payees.0.isPaymentInTrust"
-                      name="payees.0.isPaymentInTrust"
+                      id="input-payee.isPaymentInTrust"
+                      name="payee.isPaymentInTrust"
                       type="checkbox"
                       value="false"
                     />
@@ -870,8 +870,9 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               >
                 <input
                   class="form-control"
-                  id="input-payees.0.gstNumber"
-                  name="payees.0.gstNumber"
+                  id="input-payee.gstNumber"
+                  name="payee.gstNumber"
+                  title=""
                   value=""
                 />
               </div>
@@ -901,12 +902,12 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                   <input
                     class="form-control input-number"
                     disabled=""
-                    id="input-payees.0.pretaxAmount"
+                    id="input-payee.pretaxAmount"
                     inputmode="numeric"
-                    name="payees.0.pretaxAmount"
+                    name="payee.pretaxAmount"
                     placeholder=""
                     type="text"
-                    value=""
+                    value="$0.00"
                   />
                 </div>
               </div>
@@ -936,12 +937,12 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                   <input
                     class="form-control input-number"
                     disabled=""
-                    id="input-payees.0.taxAmount"
+                    id="input-payee.taxAmount"
                     inputmode="numeric"
-                    name="payees.0.taxAmount"
+                    name="payee.taxAmount"
                     placeholder=""
                     type="text"
-                    value=""
+                    value="$0.00"
                   />
                 </div>
               </div>
@@ -995,12 +996,12 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                   <input
                     class="form-control input-number"
                     disabled=""
-                    id="input-payees.0.totalAmount"
+                    id="input-payee.totalAmount"
                     inputmode="numeric"
-                    name="payees.0.totalAmount"
+                    name="payee.totalAmount"
                     placeholder=""
                     type="text"
-                    value=""
+                    value="$0.00"
                   />
                 </div>
               </div>
