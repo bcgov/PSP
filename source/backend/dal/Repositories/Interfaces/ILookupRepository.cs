@@ -76,8 +76,6 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsPropertyRoadType> GetAllPropertyRoadTypes();
 
-        IEnumerable<PimsPropertyAdjacentLandType> GetAllPropertyAdjacentLandTypes();
-
         IEnumerable<PimsVolumetricType> GetAllPropertyVolumetricTypes();
 
         IEnumerable<PimsPphStatusType> GetAllPPHStatusType();

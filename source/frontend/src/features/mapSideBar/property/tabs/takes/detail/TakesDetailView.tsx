@@ -16,8 +16,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 import { Api_Take } from '@/models/api/Take';
-import { formatApiDateTime, prettyFormatDate } from '@/utils';
-import { getApiPropertyName } from '@/utils/mapPropertyUtils';
+import { getApiPropertyName, prettyFormatDate } from '@/utils';
 
 import { StyledBorderSection, StyledNoTabSection } from '../styles';
 
@@ -79,7 +78,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
         <Section key={take.id} isCollapsable initiallyExpanded data-testid={`take-${index}`}>
           <H2>Take {index + 1}</H2>
           <SectionField label="Take added on">
-            {prettyFormatDate(formatApiDateTime(take.appCreateTimestamp))}
+            {prettyFormatDate(take.appCreateTimestamp)}
           </SectionField>
           <SectionField label="Take type *">
             {take.takeTypeCode ? getCodeById(API.TAKE_TYPES, take.takeTypeCode) : ''}

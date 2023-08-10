@@ -2,12 +2,14 @@ import axios, { AxiosError } from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
+import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
+import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import { useGenerateH120 } from '@/features/properties/map/acquisition/common/GenerateForm/hooks/useGenerateH120';
-import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { IApiError } from '@/interfaces/IApiError';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { Api_Organization } from '@/models/api/Organization';
+import { Api_Person } from '@/models/api/Person';
 
 import { CompensationRequisitionDetailViewProps } from './CompensationRequisitionDetailView';
 
@@ -24,19 +26,37 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
   React.PropsWithChildren<CompensationRequisitionDetailContainerProps>
 > = ({ compensation, setEditMode, View, clientConstant, acquisitionFile, loading }) => {
   const onGenerate = useGenerateH120();
-  const [compensationPayee, setCompensationPayee] = useState<Api_CompensationPayee | undefined>();
+
+  const [contactPerson, setCompensationPayee] = useState<Api_Person | undefined>();
+  const [contactOrganization, setContactOrganization] = useState<Api_Organization | undefined>();
+
   const {
-    getCompensationRequisitionPayee: {
-      execute: getCompensationRequisitionPayee,
-      loading: loadingPayee,
-    },
-  } = useCompensationRequisitionRepository();
+    getPersonDetail: { execute: getPerson, loading: loadingPerson },
+  } = usePersonRepository();
+
+  const {
+    getOrganizationDetail: { execute: getOrganization, loading: loadingOrganization },
+  } = useOrganizationRepository();
 
   const fetchCompensationPayee = useCallback(async () => {
-    if (!!compensation.id) {
+    if (compensation.id !== null) {
       try {
-        const payee = await getCompensationRequisitionPayee(compensation.id);
-        setCompensationPayee(payee);
+        if (!!compensation.acquisitionFilePerson && !!compensation.acquisitionFilePerson.personId) {
+          const person = await getPerson(compensation.acquisitionFilePerson.personId);
+          setCompensationPayee(person);
+        } else if (!!compensation.interestHolder) {
+          if (
+            compensation.interestHolder.personId !== undefined &&
+            compensation.interestHolder.personId !== null
+          ) {
+            const person = await getPerson(compensation.interestHolder.personId);
+            setCompensationPayee(person);
+          }
+          if (!!compensation.interestHolder.organizationId) {
+            const organization = await getOrganization(compensation.interestHolder.organizationId);
+            setContactOrganization(organization);
+          }
+        }
       } catch (e) {
         if (axios.isAxiosError(e)) {
           const axiosError = e as AxiosError<IApiError>;
@@ -48,7 +68,13 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
         }
       }
     }
-  }, [compensation, getCompensationRequisitionPayee]);
+  }, [
+    compensation.acquisitionFilePerson,
+    compensation.id,
+    compensation.interestHolder,
+    getOrganization,
+    getPerson,
+  ]);
 
   useEffect(() => {
     fetchCompensationPayee();
@@ -56,9 +82,10 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
 
   return compensation ? (
     <View
-      loading={loading || loadingPayee}
+      loading={loading || loadingPerson || loadingOrganization}
       compensation={compensation}
-      compensationPayee={compensationPayee}
+      compensationContactPerson={contactPerson}
+      compensationContactOrganization={contactOrganization}
       acqFileProject={acquisitionFile?.project}
       acqFileProduct={acquisitionFile?.product}
       setEditMode={setEditMode}

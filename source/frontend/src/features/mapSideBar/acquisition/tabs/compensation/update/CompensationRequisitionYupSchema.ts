@@ -14,16 +14,15 @@ export const CompensationRequisitionYupSchema = yup.object().shape({
   specialInstruction: yup
     .string()
     .max(2000, 'Special instructions must be at most ${max} characters'),
-  payees: yup.array().of(
-    yup.object().shape({
-      acquisitionOwnerId: yup.string(),
-      pretaxAmount: yup.number(),
-      taxAmount: yup.number(),
-      totalAmount: yup.number(),
-      gstNumber: yup.string().max(50, 'GST # must be at most ${max} characters'),
-      isPaymentInTrust: yup.boolean(),
-    }),
-  ),
+  payee: yup.object().shape({
+    acquisitionOwnerId: yup.string(),
+    pretaxAmount: yup.number(),
+    taxAmount: yup.number(),
+    totalAmount: yup.number(),
+    gstNumber: yup.string().max(50, 'GST # must be at most ${max} characters'),
+    isPaymentInTrust: yup.boolean(),
+    payeeKey: yup.string().required('Payee is required'),
+  }),
   financials: yup.array().of(
     yup.object().shape({
       financialActivityCodeId: yup.string().required('Activity code is required'),
@@ -40,5 +39,4 @@ export const CompensationRequisitionYupSchema = yup.object().shape({
     }),
   ),
   detailedRemarks: yup.string().max(2000, 'Detailed remarks must be at most ${max} characters'),
-  payeeKey: yup.string().required('Payee is required'),
 });

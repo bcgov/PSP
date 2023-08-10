@@ -1,5 +1,5 @@
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
-import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { formatMoney } from '@/utils';
 import { formatNames } from '@/utils/personUtils';
 
@@ -12,27 +12,30 @@ export class Api_GenerateCompensationPayee {
   gst_number: string;
 
   constructor(
-    payee: Api_CompensationPayee | null,
+    compensation: Api_CompensationRequisition | null,
     financialActivities: Api_CompensationFinancial[] | [],
   ) {
-    this.gst_number = payee?.gstNumber ? payee.gstNumber ?? '' : '';
+    this.gst_number = compensation?.gstNumber ? compensation.gstNumber ?? '' : '';
 
-    if (payee?.acquisitionOwner) {
+    if (compensation?.acquisitionOwner) {
       this.name = formatNames([
-        payee.acquisitionOwner.givenName,
-        payee.acquisitionOwner.lastNameAndCorpName,
+        compensation.acquisitionOwner.givenName,
+        compensation.acquisitionOwner.lastNameAndCorpName,
       ]);
-    } else if (payee?.interestHolder) {
-      if (payee.interestHolder.person) {
+    } else if (compensation?.interestHolder) {
+      if (compensation.interestHolder.person) {
         this.name = formatNames([
-          payee.interestHolder.person.firstName,
-          payee.interestHolder.person.surname,
+          compensation.interestHolder.person.firstName,
+          compensation.interestHolder.person.surname,
         ]);
       } else {
-        this.name = payee.interestHolder.organization?.name ?? '';
+        this.name = compensation.interestHolder.organization?.name ?? '';
       }
-    } else if (payee?.motiSolicitor) {
-      this.name = formatNames([payee.motiSolicitor?.firstName, payee.motiSolicitor?.surname]);
+    } else if (compensation?.acquisitionFilePerson) {
+      this.name = formatNames([
+        compensation.acquisitionFilePerson?.person?.firstName,
+        compensation.acquisitionFilePerson?.person?.surname,
+      ]);
     } else {
       this.name = '';
     }
@@ -52,6 +55,6 @@ export class Api_GenerateCompensationPayee {
     this.pre_tax_amount = formatMoney(preTaxAmount) ?? '';
     this.tax_amount = formatMoney(taxAmount) ?? '';
     this.total_amount = formatMoney(totalAmount) ?? '';
-    this.payment_in_trust = !!payee?.isPaymentInTrust;
+    this.payment_in_trust = !!compensation?.isPaymentInTrust;
   }
 }
