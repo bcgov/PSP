@@ -178,7 +178,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update a Financial Code from row number (.*)")]
         public void UpdateFinancialCode(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-5424, PSP-5425 */
+            /* TEST COVERAGE: PSP-5311, PSP-5424, PSP-5425 */
 
             //Choose first result from search
             PopulateFinancialCode(rowNumber);
@@ -192,6 +192,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Cancel changes
             financialCodes.CancelFinancialCode();
+
+            //Filter for non-existent Financial Code
+            financialCodes.FilterFinancialCode("Non-existent");
+
+            //Verify new code exists
+            Assert.True(financialCodes.CountTotalFinancialCodeResults() == 0);
 
             //Filter Financial Code
             financialCodes.FilterFinancialCode(financialCode.CodeValue);

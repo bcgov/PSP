@@ -8,14 +8,14 @@
   DTS:DelayValidation="True"
   DTS:DTSID="{A72DFE5E-8934-4CE4-8ACC-E596CC0081EC}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="15.0.2000.180"
+  DTS:LastModifiedProductVersion="16.0.948.0"
   DTS:LocaleID="1033"
   DTS:MaxConcurrentExecutables="1"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="1255"
-  DTS:VersionGUID="{F6CA5D49-4381-4699-9F52-428EADF4CDF4}">
+  DTS:VersionBuild="1263"
+  DTS:VersionGUID="{75CA76F5-A91F-4A9C-BFB7-266FFFA63939}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -28,7 +28,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_TST;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{A316C315-810F-42B2-9354-9CFD1D7A0AA0}PIMS;" />
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_DEV;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{A316C315-810F-42B2-9354-9CFD1D7A0AA0}PIMS;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -1034,7 +1034,7 @@
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -1209,7 +1209,7 @@
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -1383,7 +1383,7 @@
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -2366,13 +2366,13 @@
                   description="Specifies the SQL statement that generates the lookup table."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_LEASE_NOTE]</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_LEASE_NOTE]</property>
                 <property
                   dataType="System.String"
                   description="Specifies a SQL statement that uses parameters to generate the lookup table."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_LEASE_NOTE]) [refTable]
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_LEASE_NOTE]) [refTable]
 where [refTable].[APP_CREATE_USERID] = ? and [refTable].[APP_LAST_UPDATE_USER_DIRECTORY] = ?</property>
                 <property
                   dataType="System.Int32"
@@ -2555,13 +2555,13 @@ where [refTable].[APP_CREATE_USERID] = ? and [refTable].[APP_LAST_UPDATE_USER_DI
                   description="Specifies the SQL statement that generates the lookup table."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_LEASE]</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_LEASE]</property>
                 <property
                   dataType="System.String"
                   description="Specifies a SQL statement that uses parameters to generate the lookup table."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_LEASE]) [refTable]
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_LEASE]) [refTable]
 where [refTable].[DOCUMENTATION_REFERENCE] = ?</property>
                 <property
                   dataType="System.Int32"
@@ -2713,13 +2713,13 @@ where [refTable].[DOCUMENTATION_REFERENCE] = ?</property>
                   description="Specifies the SQL statement that generates the lookup table."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_NOTE]</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_NOTE]</property>
                 <property
                   dataType="System.String"
                   description="Specifies a SQL statement that uses parameters to generate the lookup table."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_NOTE]) [refTable]
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_NOTE]) [refTable]
 where [refTable].[APP_LAST_UPDATE_USER_DIRECTORY] = ?</property>
                 <property
                   dataType="System.Int32"
@@ -2882,7 +2882,7 @@ where [refTable].[APP_LAST_UPDATE_USER_DIRECTORY] = ?</property>
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -3125,13 +3125,13 @@ where [refTable].[APP_LAST_UPDATE_USER_DIRECTORY] = ?</property>
                   description="Specifies the SQL statement that generates the lookup table."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_LEASE_NOTE]</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_LEASE_NOTE]</property>
                 <property
                   dataType="System.String"
                   description="Specifies a SQL statement that uses parameters to generate the lookup table."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_LEASE_NOTE]) [refTable]
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_LEASE_NOTE]) [refTable]
 where [refTable].[APP_CREATE_USER_DIRECTORY] = ? and [refTable].[APP_LAST_UPDATE_USERID] = ? and [refTable].[APP_LAST_UPDATE_USER_DIRECTORY] = ? and [refTable].[LEASE_ID] = ? and [refTable].[NOTE_ID] = ?</property>
                 <property
                   dataType="System.Int32"
@@ -3168,7 +3168,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ? and [refTable].[APP_LAST_UPDATE
                   containsID="true"
                   dataType="System.String"
                   description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
-                  name="ParameterMap">#{Package\LOAD PIMS_LEASE_NOTE\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_CREATE_USER_DIRECTORY]};#{Package\LOAD PIMS_LEASE_NOTE\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]};#{Package\LOAD PIMS_LEASE_NOTE\561:invalid};#{Package\LOAD PIMS_LEASE_NOTE\562:invalid};#{Package\LOAD PIMS_LEASE_NOTE\Lookup NOTE_ID.Outputs[Lookup Match Output].Columns[NOTE_ID]};</property>
+                  name="ParameterMap">#{Package\LOAD PIMS_LEASE_NOTE\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_CREATE_USER_DIRECTORY]};#{Package\LOAD PIMS_LEASE_NOTE\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]};#{Package\LOAD PIMS_LEASE_NOTE\1726:invalid};#{Package\LOAD PIMS_LEASE_NOTE\1727:invalid};#{Package\LOAD PIMS_LEASE_NOTE\Lookup NOTE_ID.Outputs[Lookup Match Output].Columns[NOTE_ID]};</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -3419,7 +3419,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ? and [refTable].[APP_LAST_UPDATE
                   description="The SQL command to be executed."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">update pims_LEASE_NOTE
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">update pims_LEASE_NOTE
 set	LEASE_ID=?,
 	NOTE_ID=?,
 	CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1,
@@ -4577,7 +4577,7 @@ set	LEASE_ID=?,
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -4752,7 +4752,7 @@ set	LEASE_ID=?,
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -4926,7 +4926,7 @@ set	LEASE_ID=?,
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -5909,13 +5909,13 @@ set	LEASE_ID=?,
                   description="Specifies the SQL statement that generates the lookup table."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_NOTE]</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_NOTE]</property>
                 <property
                   dataType="System.String"
                   description="Specifies a SQL statement that uses parameters to generate the lookup table."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_NOTE]) [refTable]
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_NOTE]) [refTable]
 where [refTable].[APP_CREATE_USER_DIRECTORY] = ? and [refTable].[APP_LAST_UPDATE_USER_DIRECTORY] = ?</property>
                 <property
                   dataType="System.Int32"
@@ -6098,13 +6098,13 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ? and [refTable].[APP_LAST_UPDATE
                   description="Specifies the SQL statement that generates the lookup table."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_LEASE]</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_LEASE]</property>
                 <property
                   dataType="System.String"
                   description="Specifies a SQL statement that uses parameters to generate the lookup table."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_LEASE]) [refTable]
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_LEASE]) [refTable]
 where [refTable].[DOCUMENTATION_REFERENCE] = ?</property>
                 <property
                   dataType="System.Int32"
@@ -6267,7 +6267,7 @@ where [refTable].[DOCUMENTATION_REFERENCE] = ?</property>
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -6458,13 +6458,13 @@ where [refTable].[DOCUMENTATION_REFERENCE] = ?</property>
                   description="Specifies the SQL statement that generates the lookup table."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_NOTE]</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_NOTE]</property>
                 <property
                   dataType="System.String"
                   description="Specifies a SQL statement that uses parameters to generate the lookup table."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_NOTE]) [refTable]
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_NOTE]) [refTable]
 where [refTable].[APP_CREATE_USERID] = ? and [refTable].[APP_CREATE_USER_DIRECTORY] = ? and [refTable].[APP_LAST_UPDATE_USERID] = ? and [refTable].[APP_LAST_UPDATE_USER_DIRECTORY] = ?</property>
                 <property
                   dataType="System.Int32"
@@ -6737,7 +6737,7 @@ where [refTable].[APP_CREATE_USERID] = ? and [refTable].[APP_CREATE_USER_DIRECTO
                   description="The SQL command to be executed."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">update pims_NOTE
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">update pims_NOTE
 set	NOTE_TXT=?,
 	CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1,
 	APP_LAST_UPDATE_USER_DIRECTORY=?
@@ -7274,7 +7274,7 @@ set	NOTE_TXT=?,
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from etl.ETL_OPERATIONAL_SS_LOAD</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from etl.ETL_OPERATIONAL_SS_LOAD</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -8257,13 +8257,13 @@ set	NOTE_TXT=?,
                   description="Specifies the SQL statement that generates the lookup table."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_LEASE]</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_LEASE]</property>
                 <property
                   dataType="System.String"
                   description="Specifies a SQL statement that uses parameters to generate the lookup table."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_LEASE]) [refTable]
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_LEASE]) [refTable]
 where [refTable].[DOCUMENTATION_REFERENCE] = ?</property>
                 <property
                   dataType="System.Int32"
@@ -8736,7 +8736,7 @@ where [refTable].[DOCUMENTATION_REFERENCE] = ?</property>
                   description="The SQL command to be executed."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">UPDATE PIMS_LEASE SET TFA_FILE_NUMBER = ?, CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1,
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">UPDATE PIMS_LEASE SET TFA_FILE_NUMBER = ?, CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1,
 APP_LAST_UPDATE_USERID = 'LISOS_ETL_USER' ,
 APP_LAST_UPDATE_TIMESTAMP = GETDATE(),
 LEASE_NOTES = LEASE_NOTES + ?,
@@ -8954,20 +8954,24 @@ WHERE LEASE_ID = ? AND (TFA_FILE_NUMBER IS NULL OR APP_LAST_UPDATE_USERID = 'LIS
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="214.4,41.6"
+          Size="214,42"
           Id="Package\LOAD PIMS_LEASE_NOTE"
           TopLeft="227.307700645289,308.645156542791" />
         <NodeLayout
-          Size="173.6,41.6"
+          Size="174,42"
           Id="Package\LOAD PIMS_NOTE"
           TopLeft="242.807701012087,224.403222439317" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="211.6,75.2"
-          Size="211.6,118.4"
+          PanelSize="212,75"
+          Size="212,118"
           Id="Package\Sequence Container 1"
           TopLeft="218.230771770139,77.4064562765797" />
+        <NodeLayout
+          Size="183,42"
+          Id="Package\Update PIMS_Leases 1"
+          TopLeft="233.84616242358,136.709675316508" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="326.819236391113,195.80645627658">
@@ -9012,10 +9016,6 @@ WHERE LEASE_ID = ? AND (TFA_FILE_NUMBER IS NULL OR APP_LAST_UPDATE_USERID = 'LIS
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="183.2,41.6"
-          Id="Package\Update PIMS_Leases 1"
-          TopLeft="233.84616242358,136.709675316508" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -9489,23 +9489,23 @@ WHERE LEASE_ID = ? AND (TFA_FILE_NUMBER IS NULL OR APP_LAST_UPDATE_USERID = 'LIS
           Id="Package\LOAD PIMS_NOTE\Derived Column"
           TopLeft="95.718667690741,604.442577671503" />
         <NodeLayout
-          Size="220.8,41.6"
+          Size="221,42"
           Id="Package\LOAD PIMS_NOTE\Existing PIMS_NOTE records"
           TopLeft="66.046153803831,445.522577671503" />
         <NodeLayout
-          Size="132,41.6"
+          Size="132,42"
           Id="Package\LOAD PIMS_NOTE\Error Log 1"
           TopLeft="412.601744684351,675.714006242934" />
         <NodeLayout
-          Size="236.8,42.4"
+          Size="237,42"
           Id="Package\LOAD PIMS_NOTE\ETL_OPERATIONAL_SS_LOAD"
           TopLeft="64.615384784676,0.0322589869305787" />
         <NodeLayout
-          Size="142.4,41.6"
+          Size="142,42"
           Id="Package\LOAD PIMS_NOTE\Lookup lease"
           TopLeft="114.346157838607,295.741242744865" />
         <NodeLayout
-          Size="160.8,42"
+          Size="161,42"
           Id="Package\LOAD PIMS_NOTE\Data Conversion 1"
           TopLeft="101.646131612562,142.951615818829" />
         <NodeLayout
@@ -9513,15 +9513,15 @@ WHERE LEASE_ID = ? AND (TFA_FILE_NUMBER IS NULL OR APP_LAST_UPDATE_USERID = 'LIS
           Id="Package\LOAD PIMS_NOTE\Derived Column 1"
           TopLeft="400.378667690741,600.242577671503" />
         <NodeLayout
-          Size="178.4,41.6"
+          Size="178,42"
           Id="Package\LOAD PIMS_NOTE\Update PIMS_NOTE"
           TopLeft="384.946153803831,525.222577671503" />
         <NodeLayout
-          Size="140.8,41.6"
+          Size="141,42"
           Id="Package\LOAD PIMS_NOTE\PIMS_NOTE"
           TopLeft="99.476445468521,524.142577671503" />
         <NodeLayout
-          Size="248.8,41.6"
+          Size="249,42"
           Id="Package\LOAD PIMS_NOTE\PIMS_NOTE records to be updated"
           TopLeft="350.946153803831,444.622577671503" />
         <NodeLayout
@@ -9529,15 +9529,15 @@ WHERE LEASE_ID = ? AND (TFA_FILE_NUMBER IS NULL OR APP_LAST_UPDATE_USERID = 'LIS
           Id="Package\LOAD PIMS_NOTE\Remove '-' from TFA File No 1"
           TopLeft="80.1076702010695,74.3870996446443" />
         <NodeLayout
-          Size="123.2,42"
+          Size="123,42"
           Id="Package\LOAD PIMS_NOTE\Error Log"
           TopLeft="110.378667690741,684.242577671504" />
         <NodeLayout
-          Size="187.2,42"
+          Size="187,42"
           Id="Package\LOAD PIMS_NOTE\Create Candidate Key"
           TopLeft="91.9538241882992,220.48387380594" />
         <NodeLayout
-          Size="127.2,41.6"
+          Size="127,42"
           Id="Package\LOAD PIMS_NOTE\Audit Trail"
           TopLeft="118.246153620432,374.506450077696" />
         <EdgeLayout
@@ -9559,9 +9559,7 @@ WHERE LEASE_ID = ? AND (TFA_FILE_NUMBER IS NULL OR APP_LAST_UPDATE_USERID = 'LIS
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9727,9 +9725,7 @@ WHERE LEASE_ID = ? AND (TFA_FILE_NUMBER IS NULL OR APP_LAST_UPDATE_USERID = 'LIS
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9751,9 +9747,7 @@ WHERE LEASE_ID = ? AND (TFA_FILE_NUMBER IS NULL OR APP_LAST_UPDATE_USERID = 'LIS
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9775,9 +9769,7 @@ WHERE LEASE_ID = ? AND (TFA_FILE_NUMBER IS NULL OR APP_LAST_UPDATE_USERID = 'LIS
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9799,9 +9791,7 @@ WHERE LEASE_ID = ? AND (TFA_FILE_NUMBER IS NULL OR APP_LAST_UPDATE_USERID = 'LIS
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9823,9 +9813,7 @@ WHERE LEASE_ID = ? AND (TFA_FILE_NUMBER IS NULL OR APP_LAST_UPDATE_USERID = 'LIS
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9847,9 +9835,7 @@ WHERE LEASE_ID = ? AND (TFA_FILE_NUMBER IS NULL OR APP_LAST_UPDATE_USERID = 'LIS
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -9973,103 +9959,37 @@ WHERE LEASE_ID = ? AND (TFA_FILE_NUMBER IS NULL OR APP_LAST_UPDATE_USERID = 'LIS
           Id="Package\Update PIMS_Leases 1\Remove '-' from TFA File No"
           TopLeft="212.499999633202,134.161291135337" />
         <NodeLayout
-          Size="192.8,41.6"
+          Size="193,42"
           Id="Package\Update PIMS_Leases 1\UPDATE PIMS_LEASE"
           TopLeft="232.679487179487,716.718974358974" />
         <NodeLayout
-          Size="254.4,41.6"
+          Size="254,42"
           Id="Package\Update PIMS_Leases 1\Find Existing Leases by PS or TFA #"
           TopLeft="195.679487179487,631.885641025641" />
         <NodeLayout
-          Size="121.6,41.6"
+          Size="122,42"
           Id="Package\Update PIMS_Leases 1\Multicast"
           TopLeft="262.7,542.6072" />
         <NodeLayout
-          Size="160.8,42"
-          Id="Package\Update PIMS_Leases 1\Data Conversion"
-          TopLeft="241.499999633202,203.661291135337" />
-        <NodeLayout
-          Size="240,41.6"
+          Size="240,42"
           Id="Package\Update PIMS_Leases 1\TFA Number added to LeaseNote"
           TopLeft="207.1,458.966666666667" />
         <NodeLayout
-          Size="187.2,42"
+          Size="161,42"
+          Id="Package\Update PIMS_Leases 1\Data Conversion"
+          TopLeft="241.499999633202,203.661291135337" />
+        <NodeLayout
+          Size="181,42"
+          Id="Package\Update PIMS_Leases 1\TFA_FILE_NUMBER"
+          TopLeft="229.833333333333,371.833333333333" />
+        <NodeLayout
+          Size="187,42"
           Id="Package\Update PIMS_Leases 1\Create Candidate Key"
           TopLeft="226.499999633202,282.661291135337" />
         <NodeLayout
-          Size="236.8,42"
+          Size="237,42"
           Id="Package\Update PIMS_Leases 1\ETL_OPERATIONAL_SS_LOAD"
           TopLeft="196.561538221709,58.4354830259584" />
-        <NodeLayout
-          Size="180.8,41.6"
-          Id="Package\Update PIMS_Leases 1\TFA_FILE_NUMBER"
-          TopLeft="229.833333333333,371.833333333333" />
-        <EdgeLayout
-          Id="Package\Update PIMS_Leases 1.Paths[Derived Column Output1]"
-          TopLeft="320.166666483268,324.661291135337">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,47.1720421979963"
-              Start="0,0"
-              End="0,39.6720421979963">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,39.6720421979963" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Update PIMS_Leases 1.Paths[Derived Column Output]"
-          TopLeft="320.699999633202,176.161291135337">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,27.5"
-              Start="0,0"
-              End="0,20">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Update PIMS_Leases 1.Paths[Data Conversion Output]"
-          TopLeft="320.999999633202,245.661291135337">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,37"
-              Start="0,0"
-              End="0,29.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,29.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\Update PIMS_Leases 1.Paths[OLE DB Source Output]"
           TopLeft="317.230768927455,100.435483025958">
@@ -10174,6 +10094,72 @@ WHERE LEASE_ID = ? AND (TFA_FILE_NUMBER IS NULL OR APP_LAST_UPDATE_USERID = 'LIS
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,38.0333333333332" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Update PIMS_Leases 1.Paths[Derived Column Output1]"
+          TopLeft="320.166666483268,324.661291135337">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.1720421979963"
+              Start="0,0"
+              End="0,39.6720421979963">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.6720421979963" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Update PIMS_Leases 1.Paths[Derived Column Output]"
+          TopLeft="320.699999633202,176.161291135337">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27.5"
+              Start="0,0"
+              End="0,20">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Update PIMS_Leases 1.Paths[Data Conversion Output]"
+          TopLeft="320.999999633202,245.661291135337">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

@@ -41,10 +41,10 @@
                 <SSIS:Property SSIS:Name="Name">PAIMS_PIMS_LOAD</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">330</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">338</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{061F8F1E-9765-4C7A-B400-AFC3A7836E94}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{5BF896A6-2969-4CE4-9616-958F6ED19453}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>

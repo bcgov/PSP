@@ -157,45 +157,45 @@ namespace PIMS.Tests.Automation.PageObjects
         }
         public void NavigateToCreateNewResearchFile()
         {
-            Wait(5000);
-            webDriver.FindElement(menuResearchButton).Click();
+            Wait(3000);
+            FocusAndClick(menuResearchButton);
 
-            Wait();
-            webDriver.FindElement(createResearchFileButton).Click();
+            Wait(3000);
+            FocusAndClick(createResearchFileButton);
         }
 
         public void NavigateToFileSummary()
         {
-            Wait();
+            WaitUntilClickable(researchFileSummaryBttn);
             webDriver.FindElement(researchFileSummaryBttn).Click();
         }
 
         public void NavigateToAddPropertiesReseachFile()
         {
-            Wait();
+            WaitUntilVisible(researchFilePropertyCountProps);
             totalAssociatedProps = webDriver.FindElements(researchFilePropertyCountProps).Count() - 1;
 
-            Wait();
+            WaitUntilClickable(researchEditPropertiesBttn);
             webDriver.FindElement(researchEditPropertiesBttn).Click();
         }
 
         public void ChooseFirstPropertyOption()
         {
-            Wait();
+            WaitUntilClickable(researchProperty1stPropLink);
             webDriver.FindElement(researchProperty1stPropLink).Click();
 
-            sharedModals.SiteMinderModal();
+            //sharedModals.SiteMinderModal();
         }
 
         public void CreateResearchFile(ResearchFile researchFile)
         {
-            Wait();
+            WaitUntilVisible(researchFileNameInput);
             webDriver.FindElement(researchFileNameInput).SendKeys(researchFile.ResearchFileName);
         }   
 
         public void AddAdditionalResearchFileInfo(ResearchFile researchFile)
         {
-            WaitUntil(researchFileEditButton);
+            WaitUntilVisible(researchFileEditButton);
             webDriver.FindElement(researchFileEditButton).Click();
 
             //Status
@@ -253,9 +253,9 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(selectContactButton).Click();
                 sharedSelectContact.SelectContact(researchFile.Requester);
             }
-            Wait();
             if (researchFile.RequestDescription != "")
             {
+                WaitUntilVisible(researchDescriptionRequestTextarea);
                 webDriver.FindElement(researchDescriptionRequestTextarea).SendKeys(researchFile.RequestDescription);
             }
 
@@ -286,26 +286,26 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddPropertyResearchInfo(PropertyResearch propertyResearch, int index)
         {
-            Wait();
-
             //Pick Property
             var elementIndex = index + 1;
             By propertyLink = By.CssSelector("div[data-testid='menu-item-row-" + elementIndex + "'] div:nth-child(3)");
+            WaitUntilClickable(propertyLink);
             webDriver.FindElement(propertyLink).Click();
 
             //Add Property Research Information
-            Wait();
+            WaitUntilClickable(researchPropertyResearchEditBttn);
             webDriver.FindElement(researchPropertyResearchEditBttn).Click();
 
-            Wait();
             if (propertyResearch.DescriptiveName != "")
             {
+                WaitUntilClickable(researchPropertyNameInput);
                 webDriver.FindElement(researchPropertyNameInput).SendKeys(propertyResearch.DescriptiveName);
             }
             if (propertyResearch.Purpose != "")
             {
                 webDriver.FindElement(researchPropertyPurposeSelect).Click();
-                Wait(5000);
+
+                WaitUntilVisible(researchPropertyPurposeOptions);
                 ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, propertyResearch.Purpose);
             }
             if (propertyResearch.LegalOpinionRequest != "")
@@ -328,7 +328,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditResearchFileForm(ResearchFile researchFile)
         {
-            WaitUntil(researchFileEditButton);
+            WaitUntilVisible(researchFileEditButton);
             webDriver.FindElement(researchFileEditButton).Click();
 
             //Projects
@@ -350,8 +350,8 @@ namespace PIMS.Tests.Automation.PageObjects
                     By projectInput = By.Id("typeahead-researchFileProjects[" + i + "].project");
                     webDriver.FindElement(projectInput).SendKeys(researchFile.Projects[i]);
 
-                    Wait();
                     By projectOptions = By.Id("typeahead-researchFileProjects[" + i + "].project-item-0");
+                    WaitUntilClickable(projectOptions);
                     webDriver.FindElement(projectOptions).Click();
                 }
             }
@@ -402,7 +402,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(selectContactButton).Click();
                 sharedSelectContact.SelectContact(researchFile.Requester);
             }
-            Wait();
             if (researchFile.RequestDescription != "")
             {
                 ClearInput(researchDescriptionRequestTextarea);
@@ -440,18 +439,16 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditPropertyResearchInfo(PropertyResearch propertyResearch, int index)
         {
-            Wait();
-
             //Pick Property
             var elementIndex = index + 1;
             By propertyLink = By.CssSelector("div[data-testid='menu-item-row-" + elementIndex + "'] div:nth-child(3)");
+            WaitUntilClickable(propertyLink);
             webDriver.FindElement(propertyLink).Click();
 
             //Add Property Research Information
-            Wait();
+            WaitUntilClickable(researchPropertyResearchEditBttn);
             webDriver.FindElement(researchPropertyResearchEditBttn).Click();
 
-            Wait();
             if (propertyResearch.DescriptiveName != "")
             {
                 ClearInput(researchPropertyNameInput);
@@ -485,13 +482,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveResearchFile()
         {
-            Wait();
             ButtonElement("Save");
         }
 
         public void SaveResearchFileProperties()
         {
-            Wait(5000);
             ButtonElement("Save");
 
             Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
@@ -512,7 +507,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelResearchFile()
         {
-            Wait();
             ButtonElement("Cancel");
 
             try {
@@ -533,13 +527,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
             }
 
-            Wait();
-            sharedModals.SiteMinderModal();
+            //Wait();
+            //sharedModals.SiteMinderModal();
         }
 
         public void CancelResearchFileProps()
         {
-            Wait();
             ButtonElement("Cancel");
 
             Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
@@ -551,7 +544,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelResearchFilePropertyDetails()
         {
-            Wait();
             ButtonElement("Cancel");
 
             Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
@@ -564,14 +556,14 @@ namespace PIMS.Tests.Automation.PageObjects
         //Get the research file number
         public string GetResearchFileCode()
         {
-            WaitUntil(researchFileHeaderCode);
+            WaitUntilVisible(researchFileHeaderCode);
             return webDriver.FindElement(researchFileHeaderCode).Text;
         }
 
         //Verify Create Research Init Form
         public void VerifyResearchFileCreateInitForm()
         {
-            Wait();
+            WaitUntilVisible(researchFileNameInput);
 
             //Title and Name
             Assert.True(webDriver.FindElement(researchFileCreateHeader).Displayed);
@@ -590,6 +582,8 @@ namespace PIMS.Tests.Automation.PageObjects
         //Verify Edit Research File Init Form
         public void VerifyResearchFileEditInitForm(ResearchFile researchFile, string user)
         {
+            WaitUntilVisible(researchFileSummaryBttn);
+
             //Header
             VerifyResearchFileHeader(researchFile, user);
             Assert.True(webDriver.FindElement(researchFileHeaderStatusContent).Text.Equals("Active"));
@@ -703,7 +697,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Verify UI/UX Elements - Research Properties - Property Research - View Form
         public void VerifyPropResearchTabFormView(PropertyResearch propertyResearch)
         {
-            Wait();
+            WaitUntilVisible(researchPropertyNameLabel);
 
             Assert.True(webDriver.FindElement(researchPropertyInterestLabel).Displayed);
             Assert.True(webDriver.FindElement(researchPropertyNameLabel).Displayed);
@@ -739,7 +733,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyResearchFileHeader(ResearchFile researchFile, string user)
         {
-            Wait();
+            WaitUntilVisible(researchFileHeaderNbrContent);
             
             Assert.True(webDriver.FindElement(researchFileViewTitle).Displayed);
 

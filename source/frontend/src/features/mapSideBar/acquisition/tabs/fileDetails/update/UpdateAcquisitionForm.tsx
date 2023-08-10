@@ -1,6 +1,5 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
-import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {
@@ -58,15 +57,7 @@ export const UpdateAcquisitionForm: React.FC<IUpdateAcquisitionFormProps> = prop
       onSubmit={onSubmit}
     >
       {formikProps => {
-        return (
-          <>
-            <AcquisitionDetailSubForm formikProps={formikProps}></AcquisitionDetailSubForm>
-            <Prompt
-              when={formikProps.dirty && formikProps.submitCount === 0}
-              message="You have made changes on this form. Do you wish to leave without saving?"
-            />
-          </>
-        );
+        return <AcquisitionDetailSubForm formikProps={formikProps}></AcquisitionDetailSubForm>;
       }}
     </Formik>
   );
