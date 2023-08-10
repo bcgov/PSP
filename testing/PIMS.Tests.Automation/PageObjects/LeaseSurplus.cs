@@ -15,20 +15,19 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseSurplusDeclarationDateColumn = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Declaration Date')]");
         private By licenseSurplusDeclarationCommentsColumn = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Declaration Comments')]");
 
-
         public LeaseSurplus(IWebDriver webDriver) : base(webDriver)
         { }
 
         //Navigates to Surplus Declaration Section
         public void NavigateToSurplusSection()
         {
-            Wait();
+            WaitUntilClickable(licenseSurplusLink);
             webDriver.FindElement(licenseSurplusLink).Click();
         }
 
         public void VerifySurplusForm()
         {
-            Wait();
+            WaitUntilVisible(licenseSurplusTableBody);
             Assert.True(webDriver.FindElement(licenseSurplusInstructions).Displayed);
 
             Assert.True(webDriver.FindElement(licenseSurplusTableBody).Displayed);
