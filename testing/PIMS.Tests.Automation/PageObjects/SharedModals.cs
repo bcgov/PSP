@@ -27,55 +27,55 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string ModalHeader()
         {
-            WaitUntil(generalModal);
+            WaitUntilVisible(generalModal);
             return (webDriver.FindElement(generalModalHeader).Text);
         }
 
         public string ModalContent()
         {
-            WaitUntil(generalModal);
+            WaitUntilVisible(generalModal);
             return (webDriver.FindElement(generalModalContent).Text);
         }
 
         public void ModalClickOKBttn()
         {
-            WaitUntil(generalModal);
+            WaitUntilVisible(generalModal);
             webDriver.FindElement(generalModalOkBttn).Click();
         }
 
         public string SecondaryModalHeader()
         {
-            WaitUntil(secondaryModal);
+            WaitUntilVisible(secondaryModal);
             return (webDriver.FindElement(secondaryModalHeader).Text);
         }
 
         public string SecondaryModalContent()
         {
-            WaitUntil(secondaryModal);
+            WaitUntilVisible(secondaryModal);
             return (webDriver.FindElement(secondaryModalContent).Text);
         }
 
         public void SecondaryModalClickOKBttn()
         {
-            WaitUntil(secondaryModal);
+            WaitUntilVisible(secondaryModal);
             webDriver.FindElement(secondaryModalOkBttn).Click();
         }
 
         public string ToastifyText()
         {
-            WaitUntil(generalToastBody);
+            WaitUntilVisible(generalToastBody);
             return (webDriver.FindElement(generalToastBody).Text);
         }
 
         public string ConfirmationModalText1()
         {
-            WaitUntil(generalConfirmationModalBody1);
+            WaitUntilVisible(generalConfirmationModalBody1);
             return (webDriver.FindElement(generalConfirmationModalBody1).Text);
         }
 
         public string ConfirmationModalText2()
         {
-            WaitUntil(generalConfirmationModalBody2);
+            WaitUntilVisible(generalConfirmationModalBody2);
             return (webDriver.FindElement(generalConfirmationModalBody2).Text);
         }
 

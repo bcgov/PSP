@@ -238,7 +238,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentViewRoadNameContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Road name')]/parent::div/following-sibling::div");
         private By documentViewRollContent = By.XPath("//label[contains(text(),'Roll')]/parent::div/following-sibling::div");
         private By documentViewSectionContent = By.XPath("//label[contains(text(),'Section')]/parent::div/following-sibling::div");
-        private By documentViewShortDescriptorContent = By.XPath("//label[contains(text(),'Short descriptor')]/parent::div/following-sibling::div");
+        private By documentViewShortDescriptorContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Short descriptor')]/parent::div/following-sibling::div");
         private By documentViewStartDateContent = By.XPath("//div[@class='modal-body']/div/div[3]/div/div[4]/div/label[contains(text(),'Start date')]/parent::div/following-sibling::div");
         private By documentViewTitleContent = By.XPath("//label[contains(text(),'Title')]/parent::div/following-sibling::div");
         private By documentViewTransferContent = By.XPath("//label[contains(text(),'Transfer')]/parent::div/following-sibling::div");
@@ -320,31 +320,34 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentMenuPagination = By.XPath("//div[@class='row']/div[3]/div[@class='Menu-root']");
         private By documentPaginationNextPageLink = By.CssSelector("ul[class='pagination'] a[aria-label='Next page']");
 
-
         public DigitalDocuments(IWebDriver webDriver) : base(webDriver)
         {}
 
         public void NavigateDocumentsTab()
         {
-            Wait(2000);
+            WaitUntilVisible(documentsTab);
             webDriver.FindElement(documentsTab).Click();
         }
 
         public void AddNewDocument(string fileType)
         {
-            Wait();
             if (fileType.Equals("Lease") || fileType.Equals("CDOGS Templates") || fileType.Equals("Project"))
+            {
+                WaitUntilClickable(addDocumentBttn);
                 FocusAndClick(addDocumentBttn);
+            }
             else
+            {
+                WaitUntilClickable(addFileDocumentBttn);
                 FocusAndClick(addFileDocumentBttn);
+            } 
         }
 
         public void VerifyDocumentFields(string documentType)
         {
-            Wait(5000);
+            WaitUntilClickable(documentUploadDocTypeModalSelect);
             ChooseSpecificSelectOption(documentUploadDocTypeModalSelect, documentType);
 
-            Wait();
             switch (documentType)
             {
                 case "BC assessment search":
@@ -412,7 +415,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyDocumentsListView(string fileType)
         {
-            Wait();
+            WaitUntilVisible(documentFilterTypeSelect);
             if (fileType.Equals("Lease") || fileType.Equals("CDOGS Templates") || fileType.Equals("Project"))
             {
                 Assert.True(webDriver.FindElement(documentsLeasesTitle).Displayed);
@@ -438,34 +441,61 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(documentTableActionsColumn).Displayed);
         }
 
+        public void FilterByType(string documentType)
+        {
+            WaitUntilVisible(documentFilterTypeSelect);
+            ChooseSpecificSelectOption(documentFilterTypeSelect, documentType);
+            FocusAndClick(documentFilterSearchBttn);
+        }
+
+        public void FilterByStatus(string documentStatus)
+        {
+            WaitUntilVisible(documentFilterStatusSelect);
+            ChooseSpecificSelectOption(documentFilterStatusSelect, documentStatus);
+            FocusAndClick(documentFilterSearchBttn);
+        }
+
+        public void FilterByName(string documentName)
+        {
+            WaitUntilVisible(documentFilterNameInput);
+            webDriver.FindElement(documentFilterNameInput).SendKeys(documentName);
+            FocusAndClick(documentFilterSearchBttn);
+        }
+
+        public int TotalSearchDocuments()
+        {
+            return webDriver.FindElements(documentTableContentTotal).Count();
+        }
+
+
         public void UploadDocument(string documentFile)
         {
-            Wait();
+            WaitUntilVisible(documentUploadDocInput);
             webDriver.FindElement(documentUploadDocInput).SendKeys(documentFile);
         }
 
         public void SaveDigitalDocument()
         {
-            Wait();
+            WaitUntilClickable(documentSaveButton);
             webDriver.FindElement(documentSaveButton).Click();
 
-            WaitUntil(documentGeneralToastBody);
+            WaitUntilVisible(documentGeneralToastBody);
         }
 
         public void SaveEditDigitalDocument()
         {
-            Wait();
+            WaitUntilClickable(documentSaveEditBttn);
             webDriver.FindElement(documentSaveEditBttn).Click();
 
-            Wait(10000);
+            WaitUntilClickable(documentTableResults1stViewBttn);
         }
 
         public void CancelDigitalDocument()
         {
-            Wait();
+            WaitUntilVisible(documentCancelButton);
             webDriver.FindElement(documentCancelButton).Click();
 
-            Wait();
+            WaitUntilVisible(documentConfirmationModal);
             if (webDriver.FindElements(documentConfirmationModal).Count() > 0)
             {
                 Assert.True(webDriver.FindElement(documentConfirmationContent).Text.Equals("You have made changes on this form. Do you wish to leave without saving?"));
@@ -475,10 +505,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelEditDigitalDocument()
         {
-            Wait();
+            WaitUntilVisible(documentCancelEditBttn);
             webDriver.FindElement(documentCancelEditBttn).Click();
 
-            Wait();
+            WaitUntilVisible(documentConfirmationModal);
             if (webDriver.FindElements(documentConfirmationModal).Count() > 0)
             {
                 Assert.True(webDriver.FindElement(documentConfirmationContent).Text.Equals("You have made changes on this form. Do you wish to leave without saving?"));
@@ -488,19 +518,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CloseDigitalDocumentViewDetails()
         {
-            Wait();
+            WaitUntilVisible(documentModalCloseIcon);
             webDriver.FindElement(documentModalCloseIcon).Click();
         }
 
         public void View1stDocument()
         {
-            Wait(5000);
+            WaitUntilVisible(documentTableResults1stViewBttn);
             webDriver.FindElement(documentTableResults1stViewBttn).Click();
         }
 
         public void ViewLastDocument(int index)
         {
-            Wait(5000);
+            WaitUntilClickable(documentTableResults1stViewBttn);
 
             if (index > 9)
             {
@@ -513,10 +543,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void Delete1stDocument()
         {
-            Wait();
+            WaitUntilVisible(documentTableResults1stDeleteBttn);
             webDriver.FindElement(documentTableResults1stDeleteBttn).Click();
            
-            Wait();
+            WaitUntilVisible(documentDeleteHeader);
             Assert.True(webDriver.FindElement(documentDeleteHeader).Text.Equals("Delete a document"));
             Assert.True(webDriver.FindElement(documentDeleteContent1).Text.Equals("You have chosen to delete this document."));
             Assert.True(webDriver.FindElement(documentDeteleContent2).Text.Equals("If the document is linked to other files or entities in PIMS it will still be accessible from there, however if this the only instance then the file will be removed from the document store completely."));
@@ -527,13 +557,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditDocument()
         {
-            Wait(20000);
+            WaitUntilClickable(documentEditBttn);
             webDriver.FindElement(documentEditBttn).Click();
         }
 
         public void CreateNewDocumentType(DigitalDocument document)
         {
-            Wait();
             ChooseSpecificSelectOption(documentUploadStatusSelect, document.DocumentStatus);
 
             if (document.CanadaLandSurvey != "" && webDriver.FindElements(documentCanLandSurveyTypeCanLandSurveyInput).Count > 0)
@@ -728,7 +757,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateNewDocumentType(DigitalDocument document)
         {
-            Wait();
             ChooseSpecificSelectOption(documentUploadStatusSelect, document.DocumentStatus);
 
             if (document.CanadaLandSurvey != "" && webDriver.FindElements(documentCanLandSurveyTypeCanLandSurveyInput).Count > 0)
@@ -970,12 +998,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyDocumentDetailsCreateViewForm(DigitalDocument document)
         {
-            Wait(20000);
+            WaitUntilClickable(documentEditBttn);
 
             //Header
             Assert.True(webDriver.FindElement(documentViewDocumentTypeLabel).Displayed);
-            System.Diagnostics.Debug.WriteLine(webDriver.FindElement(documentViewDocumentTypeContent).Text);
-            System.Diagnostics.Debug.WriteLine(document.DocumentType);
 
             Assert.True(webDriver.FindElement(documentViewDocumentTypeContent).Text.Equals(document.DocumentType));
             Assert.True(webDriver.FindElement(documenyViewDocumentNameLabel).Displayed);
@@ -1184,7 +1210,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyDocumentDetailsUpdateViewForm(DigitalDocument document)
         {
-            Wait(20000);
+            WaitUntilClickable(documentEditBttn);
 
             //Header
             Assert.True(webDriver.FindElement(documentViewDocumentTypeLabel).Displayed);
@@ -1396,7 +1422,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyGeneralUploadDocumentForm()
         {
-            Wait();
+            WaitUntilVisible(documentsUploadHeader);
             Assert.True(webDriver.FindElement(documentsUploadHeader).Displayed);
             Assert.True(webDriver.FindElement(documentUploadInstructions).Displayed);
             Assert.True(webDriver.FindElement(documentUploadDocTypeLabel).Displayed);
@@ -1410,7 +1436,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyOtherTypeFields()
         {
-            Wait();
+            WaitUntilVisible(documentOtherTypePINLabel);
+
             VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentOtherTypePINLabel).Displayed);
             Assert.True(webDriver.FindElement(documentOtherTypePINInput).Displayed);
@@ -1424,7 +1451,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyFieldNotesFields()
         {
-            Wait();
+            WaitUntilVisible(documentFieldNotesTypeDistrictLotLabel);
+
             VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentFieldNotesTypeDistrictLotLabel).Displayed);
             Assert.True(webDriver.FindElement(documentFieldNotesTypeDistrictLotInput).Displayed);
@@ -1436,7 +1464,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyDistrictRoadRegisterFields()
         {
-            Wait();
+            WaitUntilVisible(documentDistrictRoadRegisterTypeElectoralDistrictLabel);
 
             VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentDistrictRoadRegisterTypeElectoralDistrictLabel).Displayed);
@@ -1449,9 +1477,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyBCAssessmentFields()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentCivicAddressLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentCivicAddressLabel).Displayed);
             Assert.True(webDriver.FindElement(documentCivicAddressInput).Displayed);
             webDriver.FindElement(documentCivicAddressInput).Click();
@@ -1476,9 +1504,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyTransferAdministrationFields()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentDateSignedLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentDateSignedLabel).Displayed);
             Assert.True(webDriver.FindElement(documentDateSignedInput).Displayed);
 
@@ -1506,9 +1534,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyMinisterialOrderFields()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentDateSignedLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentDateSignedLabel).Displayed);
             Assert.True(webDriver.FindElement(documentDateSignedInput).Displayed);
             Assert.True(webDriver.FindElement(documentMinisterialOrderTypeMOLabel).Displayed);
@@ -1523,9 +1551,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyCanadaLandsSurveyFields()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentCanLandSurveyTypeCanLandSurveyLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentCanLandSurveyTypeCanLandSurveyLabel).Displayed);
             Assert.True(webDriver.FindElement(documentCanLandSurveyTypeCanLandSurveyInput).Displayed);
             webDriver.FindElement(documentCanLandSurveyTypeCanLandSurveyInput).Click();
@@ -1541,9 +1569,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyPhotosCorrespondenceFields()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentCivicAddressLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentCivicAddressLabel).Displayed);
             Assert.True(webDriver.FindElement(documentCivicAddressInput).Displayed);
             Assert.True(webDriver.FindElement(documentPhotosCorrespondenceTypeDateLabel).Displayed);
@@ -1558,18 +1586,18 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyMiscellaneousNotesFields()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentMiscNotesTypePIDLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentMiscNotesTypePIDLabel).Displayed);
             Assert.True(webDriver.FindElement(documentMiscNotesTypePIDInput).Displayed);
         }
 
         private void VerifyTitleSearchFields()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentOwnerLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentOwnerLabel).Displayed);
             Assert.True(webDriver.FindElement(documentTypeOwnerInput).Displayed);
             Assert.True(webDriver.FindElement(documentTitleSearchTypePIDLabel).Displayed);
@@ -1580,9 +1608,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyHistoricalFileFields()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentHistoricFileTypeEndDateLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentHistoricFileTypeEndDateLabel).Displayed);
             Assert.True(webDriver.FindElement(documentHistoricFileTypeEndDateInput).Displayed);
 
@@ -1602,9 +1630,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyCrownGrantFields()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentCrownGrantTypeCrownLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentCrownGrantTypeCrownLabel).Displayed);
             Assert.True(webDriver.FindElement(documentCrownGrantTypeCrownInput).Displayed);
             webDriver.FindElement(documentCrownGrantTypeCrownInput).Click();
@@ -1614,9 +1642,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyPrivyCouncilFields()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentPrivyCouncilTypePrivyLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentPrivyCouncilTypePrivyLabel).Displayed);
             Assert.True(webDriver.FindElement(documentPrivyCouncilTypePrivyInput).Displayed);
             webDriver.FindElement(documentPrivyCouncilTypePrivyInput).Click();
@@ -1626,9 +1654,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyOICFields()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentOICTypeOICLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentOICTypeOICLabel).Displayed);
             Assert.True(webDriver.FindElement(documentOICTypeInput).Displayed);
             Assert.True(webDriver.FindElement(documentOICTypeOICRouteLabel).Displayed);
@@ -1643,9 +1671,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyLegalSurveyFields()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentLegalSurveyNbrLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentLegalSurveyNbrLabel).Displayed);
             Assert.True(webDriver.FindElement(documentLegalSurveyInput).Displayed);
             Assert.True(webDriver.FindElement(documentMOTIPlanLabel).Displayed);
@@ -1656,9 +1684,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyMOTIPlanFields()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentLegalSurveyNbrLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentLegalSurveyNbrLabel).Displayed);
             Assert.True(webDriver.FindElement(documentLegalSurveyInput).Displayed);
             Assert.True(webDriver.FindElement(documentMOTIFileLabel).Displayed);
@@ -1673,9 +1701,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyGazetteFields()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentGazetteDateLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentGazetteDateLabel).Displayed);
             Assert.True(webDriver.FindElement(documentGazetteDateInput).Displayed);
             Assert.True(webDriver.FindElement(documentGazettePageLabel).Displayed);
@@ -1709,9 +1737,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyPAPlansFields()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentPAPlanNbrLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentPAPlanNbrLabel).Displayed);
             Assert.True(webDriver.FindElement(documentPAPlanNbrInput).Displayed);
             webDriver.FindElement(documentPAPlanNbrInput).Click();
@@ -1732,9 +1760,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyShortDescriptorField()
         {
-            Wait();
-            VerifyGeneralUploadDocumentForm();
+            WaitUntilVisible(documentShortDescriptorLabel);
 
+            VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentShortDescriptorLabel).Displayed);
             Assert.True(webDriver.FindElement(documentShortDescriptorInput).Displayed);
         }

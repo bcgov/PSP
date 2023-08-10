@@ -88,31 +88,31 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (researchFile.SearchProperties.PID != "")
             {
                 sharedSearchProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption(false);
+                sharedSearchProperties.SelectFirstOption();
             }
             //Search for a property by PIN
             if (researchFile.SearchProperties.PIN != "")
             {
                 sharedSearchProperties.SelectPropertyByPIN(researchFile.SearchProperties.PIN);
-                sharedSearchProperties.SelectFirstOption(false);
+                sharedSearchProperties.SelectFirstOption();
             }
             //Search for a property by Plan
             if (researchFile.SearchProperties.PlanNumber != "")
             {
                 sharedSearchProperties.SelectPropertyByPlan(researchFile.SearchProperties.PlanNumber);
-                sharedSearchProperties.SelectFirstOption(false);
+                sharedSearchProperties.SelectFirstOption();
             }
             //Search for a property by Address
             if (researchFile.SearchProperties.Address != "")
             {
                 sharedSearchProperties.SelectPropertyByAddress(researchFile.SearchProperties.Address);
-                sharedSearchProperties.SelectFirstOption(false);
+                sharedSearchProperties.SelectFirstOption();
             }
             //Search for a property by Legal Description
             if (researchFile.SearchProperties.LegalDescription != "")
             {
                 sharedSearchProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
-                sharedSearchProperties.SelectFirstOption(false);
+                sharedSearchProperties.SelectFirstOption();
             }
 
             //Save Research File
@@ -282,7 +282,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             sharedSearchProperties.VerifySearchPropertiesFeature();
             sharedSearchProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
-            sharedSearchProperties.SelectFirstOption(true);
+            sharedSearchProperties.SelectFirstOption();
 
             //Delete first property
             sharedSearchProperties.DeleteProperty();

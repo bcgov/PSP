@@ -45,20 +45,24 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SearchPropertyByPINPID(string PID)
         {
-            Wait(5000);
+            Wait(3000);
+
+            WaitUntilClickable(searchPropertyTypeSelect);
             ChooseSpecificSelectOption(searchPropertyTypeSelect, "PID/PIN");
             ClearInput(searchPropertyByPIDPINInput);
             webDriver.FindElement(searchPropertyByPIDPINInput).SendKeys(PID);
-            webDriver.FindElement(searchPropertySearchBttn).Click();
+            FocusAndClick(searchPropertySearchBttn);
         }
 
         public void SearchPropertyByAddress(string Address)
         {
-            Wait(5000);
+            Wait(3000);
+
+            WaitUntilClickable(searchPropertyTypeSelect);
             ChooseSpecificSelectOption(searchPropertyTypeSelect, "Address");
             webDriver.FindElement(searchPropertyByAddressInput).SendKeys(Address);
 
-            WaitUntil(searchPropertyAddressSuggestionsGroup);
+            WaitUntilVisible(searchPropertyAddressSuggestionsGroup);
             FocusAndClick(searchPropertyAddressSuggestions1stOption);
             
             webDriver.FindElement(searchPropertySearchBttn).Click();
@@ -66,13 +70,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SearchPropertyReset()
         {
-            Wait();
+            WaitUntilClickable(searchPropertyResetBttn);
             webDriver.FindElement(searchPropertyResetBttn).Click();
         }
 
         public void SelectFoundPin()
         {
-            WaitUntil(searchPropertyFoundPin);
+            WaitUntilVisible(searchPropertyFoundPin);
             webDriver.FindElement(searchPropertyFoundPin).Click();
 
             sharedModals.SiteMinderModal();
@@ -80,19 +84,20 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigatePropertyListView()
         {
-            Wait(5000);
+            WaitUntilClickable(searchPropertyListViewIcon);
             webDriver.FindElement(searchPropertyListViewIcon).Click();
         }
 
         public void ChooseFirstPropertyFromList()
         {
-            Wait();
+            WaitUntilClickable(searchPropertyListContent1stViewTabBttn);
             webDriver.FindElement(searchPropertyListContent1stViewTabBttn).Click();
         }
 
         public void ValidatePropertyListView()
         {
-            Wait();
+            WaitUntilVisible(searchPropertyListViewTitle);
+
             Assert.True(webDriver.FindElement(searchPropertyListViewTitle).Displayed);
             Assert.True(webDriver.FindElement(searchPropertyListHeaderPid).Displayed);
             Assert.True(webDriver.FindElement(searchPropertyListHeaderPin).Displayed);
@@ -112,7 +117,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int PropertiesFoundCount()
         {
-            Wait(15000);
+            WaitUntilVisible(searchPropertyFoundPin);
             return webDriver.FindElements(searchPropertyFoundPin).Count();
         }
     }

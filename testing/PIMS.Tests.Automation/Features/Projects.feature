@@ -16,6 +16,8 @@ Scenario Outline: Create new Projects
 
 Scenario: Update Project
 	Given I update an existing project from row number 5
+	When I edit a Digital Document for a "Project" from row number 12
+	And I navigate back to Project Details
 	Then The Project is updated successfully
 
 Scenario: Duplicate Project

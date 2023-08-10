@@ -108,19 +108,18 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Payments Section
         public void NavigateToPaymentSection()
         {
-            Wait();
+            WaitUntilClickable(licensePaymentsLink);
             webDriver.FindElement(licensePaymentsLink).Click();
         }
 
         public void AddTermBttn()
         {
-            Wait();
             ButtonElement("Add a Term");
         }
 
         public void AddTerm(Term term)
         {
-            Wait();
+            WaitUntilClickable(licensePaymentTermStartDateInput);
 
             var startDateInputElement = webDriver.FindElement(licensePaymentTermStartDateInput);
 
@@ -132,7 +131,7 @@ namespace PIMS.Tests.Automation.PageObjects
             startDateInputElement.Click();
             startDateInputElement.SendKeys(term.TermStartDate);
 
-            Wait();
+            WaitUntilClickable(licensePaymentTermEndDateInput);
 
             webDriver.FindElement(licensePaymentTermEndDateInput).Click();
             webDriver.FindElement(licensePaymentTermEndDateInput).SendKeys(term.TermEndDate);
@@ -141,7 +140,6 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(licensePaymentTermFrequencySelect, term.TermPaymentFrequency);
 
             webDriver.FindElement(licensePaymentTermAgreedPaymentInput).SendKeys(term.TermAgreedPayment);
-
             webDriver.FindElement(licensePaymentTermDueInput).SendKeys(term.TermPaymentsDue);
 
             if (term.IsGSTEligible)
@@ -153,27 +151,26 @@ namespace PIMS.Tests.Automation.PageObjects
 
             ButtonElement("Save term");
 
-            Wait();
+            WaitUntilVisible(licenseTermsTotal);
             totalTermsInLease = webDriver.FindElements(licenseTermsTotal).Count;
         }
 
         public void OpenPaymentTab(int index)
         {
-            Wait();
-
             var selectedExpander = webDriver.FindElement(By.XPath("//div[@class='tr-wrapper']["+ index +"]/div/div[@class='td expander svg-btn']"));
+
+            WaitUntilClickable(By.XPath("//div[@class='tr-wrapper']["+ index +"]/div/div[@class='td expander svg-btn']"));
             selectedExpander.Click();
         }
 
         public void AddPaymentBttn()
         {
-            Wait();
             ButtonElement("Record a Payment");
         }
 
         public void AddPayment(Payment payment)
         {
-            Wait();
+            WaitUntilClickable(licensePaymentSendDateInput);
 
             webDriver.FindElement(licensePaymentSendDateInput).Click();
             webDriver.FindElement(licensePaymentSendDateInput).SendKeys(payment.PaymentSentDate);
@@ -189,16 +186,16 @@ namespace PIMS.Tests.Automation.PageObjects
 
             ButtonElement("Save payment");
 
-            Wait();
+            WaitUntilClickable(licensePaymentsTableTotal);
             totalPaymentInTerm = webDriver.FindElements(licensePaymentsTableTotal).Count;
         }
 
         public void DeleteLastTerm()
         {
-            Wait();
+            WaitUntilClickable(licensePaymentDeleteTermBttn);
             webDriver.FindElement(licensePaymentDeleteTermBttn).Click();
 
-            WaitUntil(licensePaymentsModal);
+            WaitUntilVisible(licensePaymentsModal);
             sharedModals.ModalClickOKBttn();
 
             totalTermsInLease = webDriver.FindElements(licenseTermsTotal).Count;
@@ -206,13 +203,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteLastPayment()
         {
-            Wait();
+            WaitUntilVisible(licensePaymentsTableTotal);
 
             var totalPayments = webDriver.FindElements(licensePaymentsTableTotal).Count();
             var lastPaymentDeleteIcon = By.CssSelector("div[class='tbody'] div[class='tr-wrapper']:nth-child("+totalPayments+") button[title='delete actual']");
             webDriver.FindElement(lastPaymentDeleteIcon).Click();
 
-            WaitUntil(licensePaymentsModal);
+            WaitUntilVisible(licensePaymentsModal);
             sharedModals.ModalClickOKBttn();
 
             totalPaymentInTerm = webDriver.FindElements(licensePaymentsTableTotal).Count;
@@ -220,19 +217,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int TotalTerms()
         {
-            Wait();
+            WaitUntilVisible(licenseTermsTotal);
             return webDriver.FindElements(licenseTermsTotal).Count;
         }
 
         public int TotalPayments()
         {
-            Wait();
+            WaitUntilVisible(licensePaymentsTableTotal);
             return webDriver.FindElements(licensePaymentsTableTotal).Count;
         }
 
         public void VerifyPaymentsInitForm()
         {
-            Wait();
+            WaitUntilVisible(licencePaymentColumnStartEndDate);
             Assert.True(webDriver.FindElement(licencePaymentsSubtitle).Displayed);
 
             Assert.True(webDriver.FindElement(licencePaymentAddBttn).Displayed);
@@ -257,7 +254,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreateTermForm()
         {
-            Wait();
+            WaitUntilVisible(licensePaymentTermStartDateInput);
             Assert.True(sharedModals.ModalHeader() == "Add a Term");
 
             Assert.True(webDriver.FindElement(licensePaymentTermStartDateLabel).Displayed);
@@ -281,7 +278,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInsertedTermTable(Term term)
         {
-            Wait();
+            WaitUntilVisible(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[2]"));
 
             //Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[1]")).Text == termType);
             Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[2]")).Text == ConcatenateDates(term.TermStartDate, term.TermEndDate));
@@ -307,7 +304,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreatePaymentForm()
         {
-            Wait();
+            WaitUntilVisible(licensePaymentSendDateInput);
             Assert.True(sharedModals.ModalHeader() == "Payment details");
 
             Assert.True(webDriver.FindElement(licensePaymentSendDateLabel).Displayed);
@@ -327,7 +324,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPaymentTableHeader()
         {
-            Wait();
+            WaitUntilVisible(licensePaymentsPaymentMethodColumn);
 
             if (leaseDetails.GetLeaseAccountType() == "Receivable")
             {
@@ -355,7 +352,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInsertedPayment(Payment payment)
         {
-            Wait();
+            WaitUntilVisible(By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPaymentInTerm +"]/div/div[1]"));
 
             Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPaymentInTerm +"]/div/div[1]")).Text == TransformDateFormat(payment.PaymentSentDate));
             Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPaymentInTerm +"]/div/div[2]")).Text == payment.PaymentMethod);
@@ -455,31 +452,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 return "$0.00";
             else
                 return "-";
-        }
-
-        private string CalculatePaymentStatus(string paymentAmount, string gst, string expectedAmount)
-        {
-            var unitAmount = decimal.Parse(paymentAmount);
-            var totalAmount = decimal.Parse(expectedAmount);
-
-            if (gst == "Y")
-            {
-                unitAmount += decimal.Parse(paymentAmount) * 0.05m;
-                totalAmount += decimal.Parse(expectedAmount) * 0.05m;
-            }
-
-            if (totalAmount > unitAmount)
-            {
-                return "Overpayment";
-            }
-            else if (totalAmount < unitAmount)
-            {
-                return "Partial";
-            }
-            else
-            {
-                return "Paid";
-            }
         }
     }
 }
