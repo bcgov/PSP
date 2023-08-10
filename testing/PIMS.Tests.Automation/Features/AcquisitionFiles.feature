@@ -10,7 +10,7 @@ Scenario: Create a new complete Acquisition File with pins
 	And I create a new Note on the Notes Tab from row number 3
 	Then A new Acquisition file is created successfully
 
-Scenario: Edit existing Acquisition File and Properties
+Scenario: Update Acquisition File and Properties
 	Given I edit an existing Acquisition File from row number 2
 	When I update a Property details from row number 4
 	And I navigate back to the Acquisition File Summary

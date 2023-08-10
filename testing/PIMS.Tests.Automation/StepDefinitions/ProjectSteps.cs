@@ -52,7 +52,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Save Project
-            projects.SaveProject();  
+            projects.SaveProject();
         }
 
         [StepDefinition(@"I verify The Project View Form")]
@@ -83,13 +83,25 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update an existing project from row number (.*)")]
         public void UpdateProject(int rowNumber)
         {
-            /* TEST COVERAGE:  PSP-5536, PSP-5537 */
+            /* TEST COVERAGE: PSP-5321, PSP-5536, PSP-5537 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
 
             //Navigate to Manage Projects
             searchProjects.NavigateToSearchProject();
+
+            //Look for Projects by number
+            searchProjects.SearchProjectByNumber("AU-0003");
+            Assert.True(searchProjects.TotalSearchedProjects().Equals(1));
+
+            //Look for Projects by Region
+            searchProjects.SearchProjectByRegion("Northern Region");
+            Assert.True(searchProjects.TotalSearchedProjects().Equals(10));
+
+            //Look for Projects by Status
+            searchProjects.SearchProjectByStatus("Planning (PL)");
+            Assert.True(searchProjects.TotalSearchedProjects().Equals(2));
 
             //Look for existing Project by name
             PopulateProjectData(rowNumber);
@@ -109,6 +121,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save Project
             projects.SaveProject();
+        }
+
+        [StepDefinition(@"I navigate back to Project Details")]
+        public void NavigateProjectDetails()
+        {
+            projects.NavigateProjectDetails();
         }
 
         [StepDefinition(@"Expected Content is displayed on Projects Table")]
@@ -149,7 +167,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             project.Name = ExcelDataContext.ReadData(rowNumber, "Name");
             project.CodeName = ExcelDataContext.ReadData(rowNumber, "CodeName");
             project.ProjectStatus = ExcelDataContext.ReadData(rowNumber, "ProjectStatus");
-            project.MOTIRegion = ExcelDataContext.ReadData(rowNumber, "MOTIRegion");
+            project.ProjectMOTIRegion = ExcelDataContext.ReadData(rowNumber, "ProjectMOTIRegion");
             project.Summary = ExcelDataContext.ReadData(rowNumber, "Summary");
             project.CostType = ExcelDataContext.ReadData(rowNumber, "CostType");
             project.WorkActivity = ExcelDataContext.ReadData(rowNumber, "WorkActivity");
