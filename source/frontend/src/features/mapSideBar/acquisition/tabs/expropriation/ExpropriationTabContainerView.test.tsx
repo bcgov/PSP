@@ -1,3 +1,6 @@
+import { createMemoryHistory } from 'history';
+
+import Claims from '@/constants/claims';
 import { getMockExpropriationFile } from '@/mocks/index.mock';
 import { EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 import { render, RenderOptions } from '@/utils/test-utils';
@@ -6,6 +9,9 @@ import {
   ExpropriationTabContainerView,
   IExpropriationTabContainerViewProps,
 } from './ExpropriationTabContainerView';
+
+const history = createMemoryHistory();
+jest.mock('@react-keycloak/web');
 
 describe('Expropriation Tab Container View', () => {
   const setup = async (
@@ -21,6 +27,9 @@ describe('Expropriation Tab Container View', () => {
       />,
       {
         ...renderOptions,
+        useMockAuthentication: true,
+        claims: renderOptions?.claims ?? [Claims.ACQUISITION_EDIT],
+        history: history,
       },
     );
 
