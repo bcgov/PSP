@@ -11,15 +11,38 @@ import { IForm8FormProps } from '../UpdateForm8Form';
 import UpdateForm8Container, { IUpdateForm8ContainerProps } from './UpdateForm8Container';
 
 const history = createMemoryHistory();
-const mockForm8Api = mockGetForm8Api(1, 1);
+const mockForm8 = mockGetForm8Api(1, 1);
 
-let viewProps: IForm8FormProps | null;
+const mockGetApi = {
+  error: undefined,
+  response: undefined,
+  execute: jest.fn(),
+  loading: false,
+};
+
+const mockUpdateApi = {
+  error: undefined,
+  response: undefined,
+  execute: jest.fn(),
+  loading: false,
+};
+
+let viewProps: IForm8FormProps | undefined;
 const TestView: React.FC<IForm8FormProps> = props => {
   viewProps = props;
   return <span>Content Rendered</span>;
 };
 
-describe('Add Form8 Container component', () => {
+jest.mock('@/hooks/repositories/useForm8Repository', () => ({
+  useForm8Repository: () => {
+    return {
+      getForm8: mockGetApi,
+      updateForm8: mockUpdateApi,
+    };
+  },
+}));
+
+describe('Update Form8 Container component', () => {
   const setup = async (
     renderOptions: RenderOptions & {
       props?: Partial<IUpdateForm8ContainerProps>;
@@ -27,7 +50,7 @@ describe('Add Form8 Container component', () => {
   ) => {
     const component = render(
       <UpdateForm8Container
-        form8Id={renderOptions?.props?.form8Id ?? mockForm8Api.id!}
+        form8Id={renderOptions?.props?.form8Id ?? mockForm8.id!}
         View={TestView}
       />,
       {
@@ -48,24 +71,23 @@ describe('Add Form8 Container component', () => {
   };
 
   beforeEach(() => {
-    viewProps = null;
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
+    viewProps = undefined;
+    jest.resetAllMocks();
   });
 
   it('Renders the underlying form', async () => {
     const { getByText } = await setup();
     expect(getByText(/Content Rendered/)).toBeVisible();
+    expect(mockGetApi.execute).toHaveBeenCalled();
   });
 
   it('navigates back to expropriation tab when form is cancelled', async () => {
     await setup();
+    expect(mockGetApi.execute).toHaveBeenCalled();
+
     await act(async () => {
       viewProps?.onCancel();
     });
-
-    expect(history.location.pathname).toBe('/expropriation');
+    expect(history.location.pathname).toBe('/');
   });
 });

@@ -1,10 +1,7 @@
 import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants';
-import {
-  mockAcquisitionFileOwnersResponse,
-  mockAcquisitionFileResponse,
-} from '@/mocks/acquisitionFiles.mock';
+import { mockAcquisitionFileOwnersResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockGetForm8Api } from '@/mocks/form8.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
@@ -17,8 +14,8 @@ import { IForm8FormProps } from '../UpdateForm8Form';
 import AddForm8Container, { IAddForm8ContainerProps } from './AddForm8Container';
 
 const history = createMemoryHistory();
-const mockAcquisitionFile = mockAcquisitionFileResponse();
 const mockInteresHoldersResponse = getMockApiInterestHolders();
+const mockFileOwnersResponse = mockAcquisitionFileOwnersResponse();
 
 const mockPostApi = {
   error: undefined,
@@ -27,19 +24,24 @@ const mockPostApi = {
   loading: false,
 };
 
-const onSucces = jest.fn();
+const mockGetInterestHoldersApi = {
+  error: undefined,
+  response: undefined,
+  execute: jest.fn(),
+  loading: false,
+};
+
+const mockGetFileOwnersApi = {
+  error: undefined,
+  response: undefined,
+  execute: jest.fn(),
+  loading: false,
+};
 
 jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
-      getAcquisitionOwners: {
-        error: undefined,
-        response: mockAcquisitionFileOwnersResponse(mockAcquisitionFile.id),
-        execute: jest
-          .fn()
-          .mockReturnValue(mockAcquisitionFileOwnersResponse(mockAcquisitionFile.id)),
-        loading: false,
-      },
+      getAcquisitionOwners: mockGetFileOwnersApi,
       postAcquisitionForm8: mockPostApi,
     };
   },
@@ -48,17 +50,12 @@ jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
 jest.mock('@/hooks/repositories/useInterestHolderRepository', () => ({
   useInterestHolderRepository: () => {
     return {
-      getAcquisitionInterestHolders: {
-        error: undefined,
-        response: mockInteresHoldersResponse,
-        execute: jest.fn().mockReturnValue(mockInteresHoldersResponse),
-        loading: false,
-      },
+      getAcquisitionInterestHolders: mockGetInterestHoldersApi,
     };
   },
 }));
 
-let viewProps: IForm8FormProps | null;
+let viewProps: IForm8FormProps | undefined;
 const TestView: React.FC<IForm8FormProps> = props => {
   viewProps = props;
   return <span>Content Rendered</span>;
@@ -87,7 +84,7 @@ describe('Add Form8 Container component', () => {
   };
 
   beforeEach(() => {
-    viewProps = null;
+    viewProps = undefined;
     jest.resetAllMocks();
   });
 
@@ -105,6 +102,8 @@ describe('Add Form8 Container component', () => {
 
   it('makes request to create a new form8 and returns the response', async () => {
     await setup({ props: { acquisitionFileId: 1 } });
+    mockGetInterestHoldersApi.execute.mockReturnValue(mockInteresHoldersResponse);
+    mockGetFileOwnersApi.execute.mockReturnValue(mockFileOwnersResponse);
     mockPostApi.execute.mockReturnValue(mockGetForm8Api());
 
     let createdForm8: Api_ExpropriationPayment | undefined;
@@ -113,18 +112,18 @@ describe('Add Form8 Container component', () => {
     });
 
     expect(mockPostApi.execute).toHaveBeenCalled();
-    // expect(onSucces).toHaveBeenCalled();
     expect(createdForm8).toStrictEqual({ ...mockGetForm8Api() });
 
-    // expect(history.location.pathname).toBe('/');
+    expect(history.location.pathname).toBe('/');
   });
 
-  // it('navigates back to expropriation tab when form is cancelled', async () => {
-  //   await setup();
-  //   act(() => {
-  //     viewProps?.onCancel();
-  //   });
+  it('navigates back to expropriation tab when form is cancelled', async () => {
+    await setup();
+    act(() => {
+      viewProps?.onCancel();
+    });
 
-  //   expect(history.location.pathname).toBe('/');
-  // });
+    expect(history.location.pathname).toBe('/');
+    expect(mockPostApi.execute).not.toHaveBeenCalled();
+  });
 });
