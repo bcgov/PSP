@@ -11,7 +11,7 @@ namespace Pims.Dal.Repositories
 
         PimsExpropriationPayment GetById(long expropriationPaymentId);
 
-        PimsExpropriationPayment Udpate(PimsExpropriationPayment expropriationPayment);
+        PimsExpropriationPayment Update(PimsExpropriationPayment expropriationPayment);
 
         bool TryDelete(long id);
     }

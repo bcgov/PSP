@@ -15,12 +15,12 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Pims.Api.Areas.ExpropriationPayment
 {
     /// <summary>
-    /// CompensationController class, provides endpoints to handle compensation requests.
+    /// ExpropriationPaymentController class, provides endpoints to handle expropriation payments.
     /// </summary>
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Area("expropriation-payment")]
+    [Area("expropriation-payments")]
     [Route("v{version:apiVersion}/[area]")]
     [Route("[area]")]
     public class ExpropriationPaymentController : ControllerBase
@@ -45,7 +45,7 @@ namespace Pims.Api.Areas.ExpropriationPayment
         [HasPermission(Permissions.AcquisitionFileView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExpropriationPaymentModel), 200)]
-        [SwaggerOperation(Tags = new[] { "expropriation-payment" })]
+        [SwaggerOperation(Tags = new[] { "expropriation-payments" })]
         public IActionResult GetExpropriationPaymentById([FromRoute] long id)
         {
             _logger.LogInformation(
@@ -62,7 +62,7 @@ namespace Pims.Api.Areas.ExpropriationPayment
         }
 
         /// <summary>
-        /// Udpate the Expropriation Payment instance.
+        /// Update the Expropriation Payment instance.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="expropriationPayment"></param>
@@ -72,7 +72,7 @@ namespace Pims.Api.Areas.ExpropriationPayment
         [HasPermission(Permissions.AcquisitionFileEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExpropriationPaymentModel), 200)]
-        [SwaggerOperation(Tags = new[] { "expropriation-payment" })]
+        [SwaggerOperation(Tags = new[] { "expropriation-payments" })]
         public IActionResult UpdateExpropriationPayment([FromRoute] long id, [FromBody] ExpropriationPaymentModel expropriationPayment)
         {
             _logger.LogInformation(
@@ -103,7 +103,7 @@ namespace Pims.Api.Areas.ExpropriationPayment
         [Produces("application/json")]
         [HasPermission(Permissions.AcquisitionFileEdit)]
         [ProducesResponseType(typeof(bool), 200)]
-        [SwaggerOperation(Tags = new[] { "expropriation-payment" })]
+        [SwaggerOperation(Tags = new[] { "expropriation-payments" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult DeleteExpropriationPayment([FromRoute] long id)
         {

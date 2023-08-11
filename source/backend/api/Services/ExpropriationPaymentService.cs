@@ -46,7 +46,7 @@ namespace Pims.Api.Services
 
             _logger.LogInformation($"Updating Expropriation Payment with id ${expropriationPayment.ExpropriationPaymentId}");
 
-            PimsExpropriationPayment updatedEntity = _expropriationPaymentRepository.Udpate(expropriationPayment);
+            PimsExpropriationPayment updatedEntity = _expropriationPaymentRepository.Update(expropriationPayment);
             _expropriationPaymentRepository.CommitTransaction();
 
             return updatedEntity;

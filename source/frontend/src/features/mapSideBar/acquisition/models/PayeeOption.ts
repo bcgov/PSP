@@ -202,7 +202,7 @@ export class PayeeOption {
     );
   }
 
-  private static generateKey(modelId: number | null | undefined, payeeType: PayeeType) {
+  public static generateKey(modelId: number | null | undefined, payeeType: PayeeType) {
     return `${payeeType}-${modelId}`;
   }
 }

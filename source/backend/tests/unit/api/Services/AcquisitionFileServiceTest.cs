@@ -2015,7 +2015,7 @@ namespace Pims.Api.Test.Services
             var service = CreateAcquisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
             var repository = _helper.GetService<Mock<IExpropriationPaymentRepository>>();
             var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
-            var newExpPayment = EntityHelper.CreateExpPayment(1, 1);
+            var newExpPayment = EntityHelper.CreateExpropriationPayment(1, 1);
             var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
 
             acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
@@ -2039,7 +2039,7 @@ namespace Pims.Api.Test.Services
             var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
             var repository = _helper.GetService<Mock<IExpropriationPaymentRepository>>();
             var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
-            var newExpPayment = EntityHelper.CreateExpPayment(1, 1);
+            var newExpPayment = EntityHelper.CreateExpropriationPayment(1, 1);
             var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
 
             acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);

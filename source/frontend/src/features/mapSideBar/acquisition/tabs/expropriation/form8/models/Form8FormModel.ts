@@ -1,5 +1,7 @@
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOption';
 import { PayeeType } from '@/features/mapSideBar/acquisition/models/PayeeTypeModel';
+import { fromApiOrganization } from '@/interfaces';
 import {
   Api_ExpropiationPaymentItem,
   Api_ExpropriationPayment,
@@ -80,6 +82,14 @@ export class Form8FormModel {
     newForm.rowVersion = model.rowVersion;
     newForm.isDisabled = model.isDisabled;
     newForm.paymentItems = model.paymentItems?.map(x => Form8PaymentItemModel.fromApi(x)) ?? [];
+    newForm.payeeKey = getPayeeKey(model);
+    newForm.expropriationAuthority = {
+      organizationId: model.expropriatingAuthorityId,
+      organization: model.expropriatingAuthority,
+      contact: model.expropriatingAuthority
+        ? fromApiOrganization(model.expropriatingAuthority)
+        : null,
+    };
 
     return newForm;
   }
@@ -135,3 +145,25 @@ export class Form8PaymentItemModel {
     };
   }
 }
+
+const getPayeeKey = (form8Api: Api_ExpropriationPayment): string => {
+  if (form8Api.acquisitionOwnerId) {
+    return PayeeOption.generateKey(form8Api.acquisitionOwnerId, PayeeType.Owner);
+  }
+
+  if (form8Api.interestHolderId) {
+    if (
+      form8Api.interestHolder?.interestHolderType?.id === InterestHolderType.OWNER_REPRESENTATIVE
+    ) {
+      return PayeeOption.generateKey(form8Api.interestHolderId, PayeeType.OwnerRepresentative);
+    } else if (
+      form8Api.interestHolder?.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR
+    ) {
+      return PayeeOption.generateKey(form8Api.interestHolderId, PayeeType.OwnerSolicitor);
+    } else {
+      return PayeeOption.generateKey(form8Api.interestHolderId, PayeeType.InterestHolder);
+    }
+  }
+
+  return '';
+};

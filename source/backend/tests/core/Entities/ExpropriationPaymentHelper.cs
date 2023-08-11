@@ -11,9 +11,9 @@ namespace Pims.Core.Test
         /// Createa a new instance of Form8.
         /// </summary>
         /// <param name="id">Internal Id.</param>
-        /// <param name="acquisitionFileId">AcquistionFile Id.</param>
+        /// <param name="acquisitionFileId">AcquisitionFile Id.</param>
         /// <returns>New Form8.</returns>
-        public static PimsExpropriationPayment CreateExpPayment(long id = 1, long acquisitionFileId = 1)
+        public static PimsExpropriationPayment CreateExpropriationPayment(long id = 1, long acquisitionFileId = 1)
         {
             return new PimsExpropriationPayment()
             {

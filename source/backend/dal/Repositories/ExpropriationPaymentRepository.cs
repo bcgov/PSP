@@ -31,6 +31,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(y => y.Person)
                 .Include(x => x.InterestHolder)
                     .ThenInclude(y => y.Organization)
+                .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.InterestHolderTypeCodeNavigation)
                 .Include(x => x.AcquisitionOwner)
                 .Include(x => x.ExpropriatingAuthorityNavigation)
                 .AsNoTracking()
@@ -47,13 +49,15 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(y => y.Person)
                 .Include(x => x.InterestHolder)
                     .ThenInclude(y => y.Organization)
+                .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.InterestHolderTypeCodeNavigation)
                 .Include(x => x.AcquisitionOwner)
                 .Include(x => x.ExpropriatingAuthorityNavigation)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.ExpropriationPaymentId.Equals(expropriationPaymentId)) ?? throw new KeyNotFoundException();
         }
 
-        public PimsExpropriationPayment Udpate(PimsExpropriationPayment expropriationPayment)
+        public PimsExpropriationPayment Update(PimsExpropriationPayment expropriationPayment)
         {
             var existingExpPayment = Context.PimsExpropriationPayments
                 .FirstOrDefault(x => x.ExpropriationPaymentId.Equals(expropriationPayment.ExpropriationPaymentId)) ?? throw new KeyNotFoundException();
