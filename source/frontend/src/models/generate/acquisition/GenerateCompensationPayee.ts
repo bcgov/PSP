@@ -36,6 +36,8 @@ export class Api_GenerateCompensationPayee {
         compensation.acquisitionFilePerson?.person?.firstName,
         compensation.acquisitionFilePerson?.person?.surname,
       ]);
+    } else if (compensation?.legacyPayee) {
+      this.name = compensation.legacyPayee ?? '';
     } else {
       this.name = '';
     }
