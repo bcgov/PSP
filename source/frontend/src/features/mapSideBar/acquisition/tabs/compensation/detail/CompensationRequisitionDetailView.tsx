@@ -79,14 +79,14 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
     } else if (compensation.interestHolderId) {
       if (compensationContactPerson) {
         payeeDetail.displayName = formatApiPersonNames(compensationContactPerson);
-        payeeDetail.contactString = 's' + compensationContactPerson?.id;
+        payeeDetail.contactString = 'P' + compensationContactPerson?.id;
       } else if (compensationContactOrganization) {
         payeeDetail.displayName = compensationContactOrganization?.name ?? '';
-        payeeDetail.contactString = 'p' + compensationContactOrganization.id;
+        payeeDetail.contactString = 'O' + compensationContactOrganization.id;
       }
     } else if (compensation.acquisitionFilePersonId) {
       payeeDetail.displayName = formatApiPersonNames(compensationContactPerson);
-      payeeDetail.contactString = 's' + compensationContactPerson?.id;
+      payeeDetail.contactString = 'P' + compensationContactPerson?.id;
     }
 
     var results =

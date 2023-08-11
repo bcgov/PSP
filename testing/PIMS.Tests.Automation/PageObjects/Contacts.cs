@@ -178,17 +178,19 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Create a new Contact
         public void NavigateToCreateNewContact()
         {
-            Wait(5000);
-            webDriver.FindElement(menuContactsButton).Click();
+            Wait(3000);
 
-            Wait();
-            webDriver.FindElement(createContactButton).Click();
+            WaitUntilClickable(menuContactsButton);
+            FocusAndClick(menuContactsButton);
+
+            WaitUntilClickable(createContactButton);
+            FocusAndClick(createContactButton);
         }
 
         //Creates Individual Contact with all fields
         public void CreateIndividualContact(IndividualContact contact)
         {
-            Wait();
+            WaitUntilClickable(contactIndividualRadioBttn);
 
             //Choosing individual contact option
             FocusAndClick(contactIndividualRadioBttn);
@@ -202,7 +204,7 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 webDriver.FindElement(contactIndOrgInput).SendKeys(contact.Organization);
 
-                Wait();
+                WaitUntilClickable(contactOrgNameSelect);
                 webDriver.FindElement(contactOrgNameSelect).Click();
             }
             //Inserting contact info
@@ -449,18 +451,19 @@ namespace PIMS.Tests.Automation.PageObjects
         //Update Organization Contact
         public void UpdateOrganizationContact(OrganizationContact contact)
         {
-            Wait();
+            WaitUntilClickable(contactEditButton);
             webDriver.FindElement(contactEditButton).Click();
 
-            Wait();
             //Updating organization details
             if (contact.Alias != "")
             {
+                WaitUntilClickable(contactOrgAliasInput);
                 ClearInput(contactOrgAliasInput);
                 webDriver.FindElement(contactOrgAliasInput).SendKeys(contact.Alias);
             }
             if (contact.IncorporationNumber != "")
             {
+                WaitUntilClickable(contactOrgIncNbrInput);
                 ClearInput(contactOrgIncNbrInput);
                 webDriver.FindElement(contactOrgIncNbrInput).SendKeys(contact.IncorporationNumber);
             }
@@ -468,24 +471,28 @@ namespace PIMS.Tests.Automation.PageObjects
             //Updating contact info
             if (contact.Email1 != "")
             {
+                WaitUntilClickable(contactEmailInput1);
                 ClearInput(contactEmailInput1);
                 webDriver.FindElement(contactEmailInput1).SendKeys(contact.Email1);
                 ChooseSpecificSelectOption(contactEmailSelect1, contact.EmailType1);
             }
             if (contact.Email2 != "" && webDriver.FindElement(contactEmailInput2).Displayed)
             {
+                WaitUntilClickable(contactEmailInput2);
                 ClearInput(contactEmailInput2);
                 webDriver.FindElement(contactEmailInput2).SendKeys(contact.Email2);
                 ChooseSpecificSelectOption(contactEmailSelect2, contact.EmailType2);
             }
             if (contact.Phone1 != "")
             {
+                WaitUntilClickable(contactPhoneInput1);
                 ClearInput(contactPhoneInput1);
                 webDriver.FindElement(contactPhoneInput1).SendKeys(contact.Phone1);
                 ChooseSpecificSelectOption(contactPhoneSelect1, contact.PhoneType1);
             }
             if (contact.Phone2 != "" && webDriver.FindElement(contactPhoneInput2).Displayed)
             {
+                WaitUntilClickable(contactPhoneInput2);
                 ClearInput(contactPhoneInput2);
                 webDriver.FindElement(contactPhoneInput2).SendKeys(contact.Phone2);
                 ChooseSpecificSelectOption(contactPhoneSelect2, contact.PhoneType2);
@@ -628,27 +635,30 @@ namespace PIMS.Tests.Automation.PageObjects
         //Update Individual Contact
         public void UpdateIndividualContact(IndividualContact contact)
         {
-            Wait();
+            WaitUntilClickable(contactEditButton);
             webDriver.FindElement(contactEditButton).Click();
 
             Wait();
             //Updating individual personal details
             if (contact.MiddleName != "")
             {
+                WaitUntilClickable(contactIndMiddleNameInput);
                 ClearInput(contactIndMiddleNameInput);
                 webDriver.FindElement(contactIndMiddleNameInput).SendKeys(contact.MiddleName);
             }
             if (contact.PreferableName != "")
             {
+                WaitUntilClickable(contactIndPrefNameInput);
                 ClearInput(contactIndPrefNameInput);
                 webDriver.FindElement(contactIndPrefNameInput).SendKeys(contact.PreferableName);
             }
             if (contact.Organization != "")
             {
+                WaitUntilClickable(contactIndOrgInput);
                 ClearInput(contactIndOrgInput);
                 webDriver.FindElement(contactIndOrgInput).SendKeys(contact.Organization);
 
-                Wait();
+                WaitUntilClickable(contactOrgNameSelect);
                 webDriver.FindElement(contactOrgNameSelect).Click();
             }
 
@@ -814,7 +824,6 @@ namespace PIMS.Tests.Automation.PageObjects
         //Saves Contact
         public void SaveContact()
         {
-            Wait();
 
             //Save
             ButtonElement("Save");
@@ -826,9 +835,10 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.True(sharedModals.ModalContent().Equals("A contact matching this information already exists in the system."));
                 ButtonElement("Continue Save");
             }
-
-            Wait(5000);
+            
             var editButtonElement = webDriver.FindElement(contactEditButton);
+
+            WaitUntilVisible(contactEditButton);
             Assert.True(editButtonElement.Displayed);
 
         }
@@ -836,14 +846,12 @@ namespace PIMS.Tests.Automation.PageObjects
         //Cancel Contact
         public void CancelContact()
         {
-            Wait();
 
             ButtonElement("Cancel");
 
-            Wait();
             ButtonElement("Confirm");
 
-            Wait();
+            WaitUntilVisible(contactsSearchTable);
             var contactTableElement = webDriver.FindElement(contactsSearchTable);
             Assert.True(contactTableElement.Displayed);
         }
@@ -851,7 +859,7 @@ namespace PIMS.Tests.Automation.PageObjects
         // ASSERT FUNCTIONS
         public void VerifyIndividualContactView(IndividualContact contact)
         {
-            Wait();
+            WaitUntilVisible(contactIndFullName);
             Assert.True(webDriver.FindElement(contactTitle).Displayed);
             Assert.True(webDriver.FindElement(contactEditButton).Displayed);
 
@@ -1051,7 +1059,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyOrganizationContactView(OrganizationContact contact)
         {
-            Wait();
+            WaitUntilVisible(contactOrgName);
             Assert.True(webDriver.FindElement(contactTitle).Displayed);
             Assert.True(webDriver.FindElement(contactEditButton).Displayed);
 

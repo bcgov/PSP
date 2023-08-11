@@ -128,7 +128,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.EditPropertyInfoBttn();
 
             //Verify Property Information Edit Form
-            propertyInformation.VerifyPropertyDetailsEditForm("Property Information");
+            propertyInformation.VerifyPropertyDetailsEditForm();
 
             //Apply changes on the Property Information Form
             propertyInformation.UpdatePropertyDetails(property);

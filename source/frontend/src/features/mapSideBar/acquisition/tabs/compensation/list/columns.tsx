@@ -19,13 +19,13 @@ export function createCompensationTableColumns(
 ) {
   const columns: ColumnWithProps<Api_CompensationRequisition>[] = [
     {
-      Header: 'Date',
+      Header: 'Final Date',
       align: 'left',
       sortable: false,
       minWidth: 40,
       maxWidth: 40,
       Cell: (cellProps: CellProps<Api_CompensationRequisition>) => {
-        return stringToFragment(prettyFormatDate(cellProps.row.original.agreementDate));
+        return stringToFragment(prettyFormatDate(cellProps.row.original.finalizedDate));
       },
     },
     {

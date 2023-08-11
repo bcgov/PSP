@@ -184,19 +184,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ClosePropertyInfoModal()
         {
-            Wait();
+            WaitUntilClickable(propertyCloseWindowBttn);
             webDriver.FindElement(propertyCloseWindowBttn).Click();
         }
 
         public void CloseLTSAPopUp()
         {
-            Wait(3000);
+            WaitUntilClickable(propertyLeafletCloseLink);
             webDriver.FindElement(propertyLeafletCloseLink).Click();
         }
 
         public void OpenMoreOptionsPopUp()
         {
-            WaitUntil(propertyLeafletEllipsisBttn);
+            WaitUntilVisible(propertyLeafletEllipsisBttn);
             FocusAndClick(propertyLeafletEllipsisBttn);
         }
 
@@ -208,19 +208,17 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigatePropertyDetailsTab()
         {
-            Wait();
+            WaitUntilClickable(propertyDetailsTab);
             webDriver.FindElement(propertyDetailsTab).Click();
         }
 
         public void EditPropertyInfoBttn()
         {
-            Wait();
             FocusAndClick(propertyDetailsEditBttn);
         }
 
         public void SavePropertyDetails()
         {
-            Wait();
             ButtonElement("Save");
 
             sharedModals.SiteMinderModal();
@@ -228,7 +226,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelPropertyDetails()
         {
-            Wait();
             ButtonElement("Cancel");
 
             Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
@@ -240,79 +237,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateMinPropertyDetails(string notes)
         {
-            Wait();
-            ClearInput(propertyDetailsNotesTextarea);
-            webDriver.FindElement(propertyDetailsNotesTextarea).SendKeys(notes);
-        }
-
-        //To-Do - Erase after updating AcquisitionFiles
-        public void UpdateMaxPropertyDetails(string addressLine1, string addressLine2, string city, string postalCode, string municipalZoning, string sqMts, string cubeMts, string notes)
-        {
-
-            Wait(5000);
-            ClearInput(propertyDetailsAddressLine1Input);
-            webDriver.FindElement(propertyDetailsAddressLine1Input).SendKeys(addressLine1);
-
-            Wait();
-            while (webDriver.FindElements(propertyDetailsAddressLineDeleteBttn).Count > 0)
-            {
-                webDriver.FindElement(propertyDetailsAddressLineDeleteBttn).Click();
-            }
-           
-            webDriver.FindElement(propertyDetailsAddressAddLineBttn).Click();
-            webDriver.FindElement(propertyDetailsAddressLine2Input).SendKeys(addressLine2);
-
-            ClearInput(propertyDetailsAddressCityInput);
-            webDriver.FindElement(propertyDetailsAddressCityInput).SendKeys(city);
-            ClearInput(propertyDetailsPostalCodeInput);
-            webDriver.FindElement(propertyDetailsPostalCodeInput).SendKeys(postalCode);
-
-            ChooseRandomSelectOption(propertyDetailsMotiRegionSelect, 1);
-            ChooseRandomSelectOption(propertyDetailsHighwayDistrictSelect, 1);
-            ChooseRandomSelectOption(propertyDetailsRailwaySelect, 1);
-            ChooseRandomSelectOption(propertyDetailsLandTypeSelect, 1);
-
-            ClearInput(propertyDetailsMunicipalZoneInput);
-            webDriver.FindElement(propertyDetailsMunicipalZoneInput).SendKeys(municipalZoning);
-
-            webDriver.FindElement(propertyDetailsAnomaliesInput).Click();
-            ChooseMultiSelectRandomOptions(propertyDetailsAnomaliesOptions, 1);
-            webDriver.FindElement(propertyDetailsAttrAnomaliesLabel).Click();
-
-            FocusAndClick(propertyDetailsTenureStatusInput);
-            ChooseMultiSelectRandomOptions(propertyDetailsTenureOptions, 1);
-            webDriver.FindElement(propertyDetailsTenureStatusLabel).Click();
-            ChooseRandomSelectOption(propertyDetailsProvPublicHwy, 1);
-
-            if (webDriver.FindElements(propertyDetailsRoadEstablishInput).Count() > 0)
-            {
-                webDriver.FindElement(propertyDetailsRoadEstablishInput).Click();
-                ChooseMultiSelectRandomOptions(propertyDetailsRoadEstablishOptions, 3);
-                webDriver.FindElement(propertyDetailsHighwayRoadEstablishLabel).Click();
-            }
-
-            if (webDriver.FindElements(propertyDetailsAdjacentLandInput).Count() > 0)
-            {
-                webDriver.FindElement(propertyDetailsAdjacentLandInput).Click();
-                ChooseMultiSelectRandomOptions(propertyDetailsAdjacentLandOptions, 1);
-                webDriver.FindElement(propertyDetailsAdjacentLandTypeLabel).Click();
-            }
-
-            ClearDigitsInput(propertyDetailsAreaSqMtsInput);
-            webDriver.FindElement(propertyDetailsAreaSqMtsInput).SendKeys(sqMts);
-            FocusAndClick(propertyDetailsIsVolumeRadioYes);
-
-            Wait();
-            ClearInput(propertyDetailsVolCubeMtsInput);
-            webDriver.FindElement(propertyDetailsVolCubeMtsInput).SendKeys(cubeMts);
-            ChooseRandomSelectOption(propertyDetailsVolTypeSelect, 1);
+            WaitUntilClickable(propertyDetailsNotesTextarea);
             ClearInput(propertyDetailsNotesTextarea);
             webDriver.FindElement(propertyDetailsNotesTextarea).SendKeys(notes);
         }
 
         public void UpdatePropertyDetails(Property property)
         {
-            Wait(5000);
+            Wait(3000);
 
             //Delete previous Line 2 or Line 3 if existing
             while (webDriver.FindElements(propertyDetailsAddressLineDeleteBttn).Count > 0)
@@ -380,9 +312,9 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearMultiSelectInput(propertyDetailsAnomaliesInput);
                 foreach (string anomaly in property.Anomalies)
                 {
-                    Wait();
                     FocusAndClick(propertyDetailsAnomaliesInput);
-                    Wait();
+
+                    WaitUntilClickable(propertyDetailsAnomaliesOptions);
                     ChooseMultiSelectSpecificOption(propertyDetailsAnomaliesOptions, anomaly);
                 }
             }
@@ -393,7 +325,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 FocusAndClick(propertyDetailsTenureStatusInput);
                 while (webDriver.FindElements(propertyDetailsTenureDeleteBttns).Count > 0)
                 {
-                    Wait();
                     webDriver.FindElements(propertyDetailsTenureDeleteBttns)[0].Click();
                 }
             }
@@ -404,7 +335,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     FocusAndClick(propertyDetailsTenureStatusInput);
 
-                    Wait();
+                    WaitUntilClickable(propertyDetailsTenureOptions);
                     ChooseMultiSelectSpecificOption(propertyDetailsTenureOptions, status);
                 }
             }
@@ -419,7 +350,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearMultiSelectInput(propertyDetailsRoadEstablishInput);
                 foreach (string status in property.HighwayEstablishedBy)
                 {
-                    Wait();
                     FocusAndClick(propertyDetailsRoadEstablishInput);
                     ChooseMultiSelectSpecificOption(propertyDetailsRoadEstablishOptions, status);
                 }
@@ -455,7 +385,6 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 FocusAndClick(propertyDetailsIsVolumeRadioNo);
             }
-            Wait();
             if (property.Volume != "")
             {
                 ClearInput(propertyDetailsVolCubeMtsInput);
@@ -474,7 +403,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPropertyMapPopUpView()
         {
-            Wait(10000);
+            WaitUntilVisible(propertyLeafletTitle);
             Assert.True(webDriver.FindElement(propertyLeafletCloseLink).Displayed);
             Assert.True(webDriver.FindElement(propertyLeafletTitle).Displayed);
             Assert.True(webDriver.FindElement(propertyLeafletPIDLabel).Displayed);
@@ -489,7 +418,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPropertyInformationHeader()
         {
-            Wait(5000);
+            WaitUntilVisibleText(propertyInformationHeaderAddressContent, webDriver.FindElement(propertyInformationHeaderAddressContent).Text);
             Assert.True(webDriver.FindElement(propertyInformationHeaderTitle).Displayed);
             Assert.True(webDriver.FindElement(propertyInformationHeaderAddressLabel).Displayed);
             Assert.True(webDriver.FindElement(propertyInformationHeaderAddressContent).Text != null);
@@ -504,7 +433,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPropertyDetailsView()
         {
-            WaitUntil(propertyDetailsEditBttn);
+            WaitUntilVisible(propertyDetailsEditBttn);
             Assert.True(webDriver.FindElement(propertyDetailsAddressTitle).Displayed);
 
             if (webDriver.FindElements(propertyDetailsAddressNotAvailable).Count() > 0)
@@ -592,7 +521,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyUpdatePropertyDetailsView(Property property)
         {
 
-            WaitUntil(propertyDetailsEditBttn);
+            WaitUntilVisible(propertyDetailsEditBttn);
             Assert.True(webDriver.FindElement(propertyDetailsAddressTitle).Displayed);
 
             if (webDriver.FindElements(propertyDetailsAddressNotAvailable).Count() > 0)
@@ -692,9 +621,9 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(propertyDetailsViewNotesTitle).Displayed);
         }
 
-        public void VerifyPropertyDetailsEditForm(string feature)
+        public void VerifyPropertyDetailsEditForm()
         {
-            Wait(5000);
+            WaitUntilVisible(propertyDetailsEditAddressTitle);
 
             Assert.True(webDriver.FindElement(propertyDetailsEditAddressTitle).Displayed);
             Assert.True(webDriver.FindElement(propertyDetailsAddressLine1Label).Displayed);
@@ -787,32 +716,31 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPimsFiles()
         {
-            Wait();
-
+            WaitUntilClickable(propertyPimsFilesLinkTab);
             webDriver.FindElement(propertyPimsFilesLinkTab).Click();
 
-            Wait();
+            WaitUntilVisible(propertyPimsFiles);
             Assert.True(webDriver.FindElement(propertyPimsFiles).Displayed);
                 
             Assert.True(webDriver.FindElement(propertyResearchFileSubtitle).Displayed);
             Assert.True(webDriver.FindElement(propertyResearchCountLabel).Displayed);
             webDriver.FindElement(propertyResearchExpandTableBttn).Click();
 
-            Wait();
+            WaitUntilVisible(propertyResearchTable);
             Assert.True(webDriver.FindElement(propertyResearchTable).Displayed);
 
             Assert.True(webDriver.FindElement(propertyAcquisitionFileSubtitle).Displayed);
             Assert.True(webDriver.FindElement(propertyAcquisitionCountLabel).Displayed);
             webDriver.FindElement(propertyAcquisitionExpandTableBttn).Click();
 
-            Wait();
+            WaitUntilVisible(propertyAcquisitionTable);
             Assert.True(webDriver.FindElement(propertyAcquisitionTable).Displayed);
 
             Assert.True(webDriver.FindElement(propertyLeasesSubtitle).Displayed);
             Assert.True(webDriver.FindElement(propertyLeaseCountLabel).Displayed);
             webDriver.FindElement(propertyLeaseExpandTableBttn).Click();
 
-            Wait();
+            WaitUntilVisible(propertyLeaseTable);
             Assert.True(webDriver.FindElement(propertyLeaseTable).Displayed);
 
             Assert.True(webDriver.FindElement(propertyDispositionFileSubtitle).Displayed);
@@ -821,7 +749,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyNonInventoryPropertyTabs()
         {
-            Wait();
+            WaitUntilVisible(propertyInformationTitleTab);
             Assert.True(webDriver.FindElement(propertyInformationTitleTab).Displayed);
             Assert.True(webDriver.FindElement(propertyInformationValueTab).Displayed);
 
@@ -829,13 +757,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int PropertyTabs()
         {
-            Wait();
+            WaitUntilVisible(propertyInformationTabsTotal);
             return webDriver.FindElements(propertyInformationTabsTotal).Count();
-        }
-
-        private void FiringDriver_FindingElement(object? sender, FindElementEventArgs e)
-        {
-            Debug.WriteLine("TESTING LISTENERS");
         }
     }
 }

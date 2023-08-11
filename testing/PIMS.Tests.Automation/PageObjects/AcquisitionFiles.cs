@@ -90,6 +90,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By acquisitionFileAddAnotherMemberLink = By.CssSelector("button[data-testid='add-team-member']");
         private By acquisitionFileTeamMembersGroup = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row']");
+        private By acquisitionFileTeamLastMemberDeleteBttn = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row'][1]/div[3]/button");
 
         private By acquisitionFileEditButton = By.CssSelector("button[title='Edit acquisition file']");
         private By acquisitionFileEditPropertiesBttn = By.CssSelector("button[title='Change properties']");
@@ -115,65 +116,64 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToCreateNewAcquisitionFile()
         {
-            Wait(5000);
+            Wait(3000);
             webDriver.FindElement(menuAcquisitionButton).Click();
 
-            WaitUntil(createAcquisitionFileButton);
+            WaitUntilVisible(createAcquisitionFileButton);
             FocusAndClick(createAcquisitionFileButton);
         }
 
         public void NavigateToAddPropertiesAcquisitionFile()
         {
-            WaitUntil(acquisitionFileEditPropertiesBttn);
+            WaitUntilVisible(acquisitionFileEditPropertiesBttn);
             webDriver.FindElement(acquisitionFileEditPropertiesBttn).Click();
         }
 
         public void NavigateToFileSummary()
         {
-            Wait();
+            WaitUntilClickable(acquisitionFileSummaryBttn);
             webDriver.FindElement(acquisitionFileSummaryBttn).Click();
         }
 
         public void NavigateToFileDetailsTab()
         {
-            Wait();
+            WaitUntilClickable(acquisitionFileDetailsTab);
             webDriver.FindElement(acquisitionFileDetailsTab).Click();
         }
 
         public void CreateMinimumAcquisitionFile(AcquisitionFile acquisition)
         {
-            Wait();
+            WaitUntilVisible(acquisitionFileNameInput);
+
             webDriver.FindElement(acquisitionFileNameInput).SendKeys(acquisition.AcquisitionFileName);
-
-            Wait();
             webDriver.FindElement(acquisitionFileDetailsTypeSelect);
-
-            Wait();
             ChooseSpecificSelectOption(acquisitionFileDetailsTypeSelect, acquisition.AcquisitionType);
-
-            Wait();
             ChooseSpecificSelectOption(acquisitionFileDetailsRegionSelect, acquisition.AcquisitionMOTIRegion);
         }
 
         public void EditAcquisitionFileDetails()
         {
-            WaitUntil(acquisitionFileEditButton);
+            WaitUntilClickable(acquisitionFileEditButton);
             FocusAndClick(acquisitionFileEditButton);
         }
 
         public void AddAdditionalInformation(AcquisitionFile acquisition)
         {
-            Wait();
-            if(acquisition.AcquisitionStatus != "")
-                ChooseSpecificSelectOption(acquisitionFileStatusSelect, acquisition.AcquisitionStatus);
 
-            Wait();
+            if (acquisition.AcquisitionStatus != "")
+            {
+                WaitUntilClickable(acquisitionFileStatusSelect);
+                ChooseSpecificSelectOption(acquisitionFileStatusSelect, acquisition.AcquisitionStatus);
+            }
+
             if (acquisition.AcquisitionProject != "")
             {
+                WaitUntilVisible(acquisitionFileProjectInput);
+
                 webDriver.FindElement(acquisitionFileProjectInput).SendKeys(acquisition.AcquisitionProject);
                 FocusAndClick(acquisitionFileProject1stOption);
 
-                Wait();
+                WaitUntilVisible(acquisitionFileProjectProductSelect);
                 webDriver.FindElement(acquisitionFileProjectProductSelect).Click();
             }
 
@@ -211,49 +211,62 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateAcquisitionFile(AcquisitionFile acquisition)
         {
-            Wait();
             if (acquisition.AcquisitionFileName != "")
             {
+                WaitUntilVisible(acquisitionFileNameInput);
                 ClearInput(acquisitionFileNameInput);
                 webDriver.FindElement(acquisitionFileNameInput).SendKeys(acquisition.AcquisitionFileName);
             }
 
-            Wait();
             if (acquisition.AcquisitionType != "")
+            {
+                WaitUntilClickable(acquisitionFileDetailsTypeSelect);
                 ChooseSpecificSelectOption(acquisitionFileDetailsTypeSelect, acquisition.AcquisitionType);
-
-            Wait();
+            }
+ 
             if (acquisition.AcquisitionMOTIRegion != "")
+            {
+                WaitUntilClickable(acquisitionFileDetailsRegionSelect);
                 ChooseSpecificSelectOption(acquisitionFileDetailsRegionSelect, acquisition.AcquisitionMOTIRegion);
+            }
 
-            Wait();
             if (acquisition.AcquisitionStatus != "")
+            {
+                WaitUntilClickable(acquisitionFileStatusSelect);
                 ChooseSpecificSelectOption(acquisitionFileStatusSelect, acquisition.AcquisitionStatus);
-
-            Wait();
+            }
+                
             if (acquisition.AcquisitionProject != "")
             {
+                WaitUntilClickable(acquisitionFileProjectInput);
                 ClearInput(acquisitionFileProjectInput);
                 webDriver.FindElement(acquisitionFileProjectInput).SendKeys(acquisition.AcquisitionProject);
                 FocusAndClick(acquisitionFileProject1stOption);
             }
                 
-            Wait();
             if (acquisition.AcquisitionProjProduct != "")
             {
+                WaitUntilClickable(acquisitionFileProjectProductSelect);
                 webDriver.FindElement(acquisitionFileProjectProductSelect).Click();
                 ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, acquisition.AcquisitionProjProduct);
             }
 
             if (acquisition.AcquisitionProjFunding != "")
+            {
+                WaitUntilClickable(acquisitionFileProjectFundingInput);
                 ChooseSpecificSelectOption(acquisitionFileProjectFundingInput, acquisition.AcquisitionProjFunding);
+            }
 
             if (webDriver.FindElements(acquisitionFileProjectOtherFundingLabel).Count > 0 && acquisition.AcquisitionFundingOther != "")
+            {
+                WaitUntilClickable(acquisitionFileProjectOtherFundingInput);
                 ClearInput(acquisitionFileProjectOtherFundingInput);
                 webDriver.FindElement(acquisitionFileProjectOtherFundingInput).SendKeys(acquisition.AcquisitionFundingOther);
-
+            }
+               
             if (acquisition.AssignedDate != "")
             {
+                WaitUntilClickable(acquisitionFileAssignedDateInput);
                 ClearInput(acquisitionFileAssignedDateInput);
                 webDriver.FindElement(acquisitionFileAssignedDateInput).SendKeys(acquisition.AssignedDate);
                 webDriver.FindElement(acquisitionFileAssignedDateInput).SendKeys(Keys.Enter);
@@ -261,6 +274,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (acquisition.DeliveryDate != "")
             {
+                WaitUntilClickable(acquisitionFileDeliveryDateInput);
                 ClearInput(acquisitionFileDeliveryDateInput);
                 webDriver.FindElement(acquisitionFileDeliveryDateInput).SendKeys(acquisition.DeliveryDate);
                 webDriver.FindElement(acquisitionFileDeliveryDateInput).SendKeys(Keys.Enter);
@@ -268,6 +282,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (acquisition.HistoricalFileNumber != "")
             {
+                WaitUntilClickable(acquisitionFileHistoricalNumberInput);
                 ClearInput(acquisitionFileHistoricalNumberInput);
                 webDriver.FindElement(acquisitionFileHistoricalNumberInput).SendKeys(acquisition.HistoricalFileNumber);
             }
@@ -290,10 +305,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteStaffMember()
         {
-            Wait(4000);
-            webDriver.FindElement(By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row'][1]/div[3]/button")).Click();
+            WaitUntilClickable(acquisitionFileTeamLastMemberDeleteBttn);
+            webDriver.FindElement(acquisitionFileTeamLastMemberDeleteBttn).Click();
 
-            WaitUntil(acquisitionFileConfirmationModal);
+            WaitUntilVisible(acquisitionFileConfirmationModal);
             Assert.True(sharedModals.ModalHeader() == "Remove Team Member");
             Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this row?");
 
@@ -302,7 +317,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ChooseFirstPropertyOption()
         {
-            Wait(5000);
+            WaitUntilClickable(acquisitionProperty1stPropLink);
             webDriver.FindElement(acquisitionProperty1stPropLink).Click();
 
             sharedModals.SiteMinderModal();
@@ -312,6 +327,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             var propertyIndex = webDriver.FindElements(acquisitionFilePropertiesTotal).Count();
+
+            WaitUntilClickable(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div["+ propertyIndex +"]/div[3]/button"));
             webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div["+ propertyIndex +"]/div[3]/button")).Click();
 
             Wait();
@@ -322,7 +339,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditAcquisitionFileBttn()
         {
-            Wait(3000);
+            WaitUntilClickable(acquisitionFileEditButton);
             webDriver.FindElement(acquisitionFileEditButton).Click();
         }
 
@@ -347,7 +364,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedModals.ModalClickOKBttn();
             }
 
-            WaitUntil(acquisitionFileEditButton);
+            WaitUntilVisible(acquisitionFileEditButton);
             Assert.True(webDriver.FindElement(acquisitionFileEditButton).Displayed);
         }
 
@@ -378,7 +395,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveAcquisitionFileProperties()
         {
-            Wait(5000);
+            Wait();
             ButtonElement("Save");
 
             Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
@@ -387,7 +404,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             sharedModals.ModalClickOKBttn();
 
-            Wait();
+            WaitUntilVisible(acquisitionFileConfirmationModal);
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 1)
             {
                 Assert.True(sharedModals.SecondaryModalHeader().Equals("User Override Required"));
@@ -399,14 +416,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void AddTeamMembers(string teamRole, string contactName)
         {
-            Wait();
+            WaitUntilClickable(acquisitionFileAddAnotherMemberLink);
             FocusAndClick(acquisitionFileAddAnotherMemberLink);
 
             Wait();
             var teamMemberIndex = webDriver.FindElements(acquisitionFileTeamMembersGroup).Count() -1;
             var teamMemberCount = webDriver.FindElements(acquisitionFileTeamMembersGroup).Count();
 
-            WaitUntil(By.CssSelector("select[id='input-team["+ teamMemberIndex +"].contactTypeCode']"));
+            WaitUntilVisible(By.CssSelector("select[id='input-team["+ teamMemberIndex +"].contactTypeCode']"));
             ChooseSpecificSelectOption(By.CssSelector("select[id='input-team["+ teamMemberIndex +"].contactTypeCode']"), teamRole);
             FocusAndClick(By.CssSelector("div[class='collapse show'] div[class='py-3 row']:nth-child("+ teamMemberCount +") div[class='pl-0 col-auto'] button"));
             sharedSelectContact.SelectContact(contactName);
@@ -415,22 +432,20 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string GetAcquisitionFileCode()
         {
-            WaitUntil(acquisitionFileHeaderCodeContent);
+            WaitUntilVisible(acquisitionFileHeaderCodeContent);
 
             var totalFileName = webDriver.FindElement(acquisitionFileHeaderCodeContent).Text;
-
             return Regex.Match(totalFileName, "^[^ ]+").Value;
         }
 
         public int IsCreateAcquisitionFileFormVisible()
         {
-            Wait();
             return webDriver.FindElements(acquisitionFileMainFormDiv).Count();
         }
 
         public void VerifyAcquisitionFileView(AcquisitionFile acquisition)
         {
-            Wait();
+            WaitUntilVisible(acquisitionFileHeaderCodeLabel);
             Assert.True(webDriver.FindElement(acquisitionFileViewTitle).Displayed);
 
             //Header
@@ -439,7 +454,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(acquisitionFileHeaderProjectLabel).Displayed);
 
             if(acquisition.AcquisitionProject != "")
-                Assert.True(webDriver.FindElement(acquisitionFileHeaderProjectContent).Text.Equals(acquisition.AcquisitionProjCode + " - "  +acquisition.AcquisitionProject));
+                Assert.True(webDriver.FindElement(acquisitionFileHeaderProjectContent).Text.Equals(acquisition.AcquisitionProjCode + " - "  + acquisition.AcquisitionProject));
 
             Assert.True(webDriver.FindElement(acquisitionFileHeaderCreatedDateLabel).Displayed);
             Assert.True(webDriver.FindElement(acquisitionFileHeaderCreatedDateContent).Text != "");
@@ -519,7 +534,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyAcquisitionFileCreate()
         {
-            Wait();
+            WaitUntilVisible(acquisitionFileProjectSubtitle);
 
             Assert.True(webDriver.FindElement(acquisitionFileCreateTitle).Displayed);
 

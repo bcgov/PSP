@@ -97,42 +97,42 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (acquisitionFile.SearchProperties.PID != "")
             {
                 sharedSearchProperties.SelectPropertyByPID(acquisitionFile.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption(false);
+                sharedSearchProperties.SelectFirstOption();
             }
 
             //Search for a property by PIN
             if (acquisitionFile.SearchProperties.PIN != "")
             {
                 sharedSearchProperties.SelectPropertyByPIN(acquisitionFile.SearchProperties.PIN);
-                sharedSearchProperties.SelectFirstOption(false);
+                sharedSearchProperties.SelectFirstOption();
             }
 
             //Search for a property by Plan
             if (acquisitionFile.SearchProperties.PlanNumber != "")
             {
                 sharedSearchProperties.SelectPropertyByPlan(acquisitionFile.SearchProperties.PlanNumber);
-                sharedSearchProperties.SelectFirstOption(false);
+                sharedSearchProperties.SelectFirstOption();
             }
 
             //Search for a property by Address
             if (acquisitionFile.SearchProperties.Address != "")
             {
                 sharedSearchProperties.SelectPropertyByAddress(acquisitionFile.SearchProperties.Address);
-                sharedSearchProperties.SelectFirstOption(false);
+                sharedSearchProperties.SelectFirstOption();
             }
 
             //Search for a property by Legal Description
             if (acquisitionFile.SearchProperties.LegalDescription != "")
             {
                 sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
-                sharedSearchProperties.SelectFirstOption(false);
+                sharedSearchProperties.SelectFirstOption();
             }
 
             //Search for a duplicate property
             if (acquisitionFile.SearchProperties.PID != "")
             {
                 sharedSearchProperties.SelectPropertyByPID(acquisitionFile.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption(true);
+                sharedSearchProperties.SelectFirstOption();
             }
 
             //Save Research File
@@ -282,7 +282,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Search for a property by Legal Description
             sharedSearchProperties.NavigateToSearchTab();
             sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
-            sharedSearchProperties.SelectFirstOption(false);
+            sharedSearchProperties.SelectFirstOption();
 
             //Save changes
             acquisitionFiles.SaveAcquisitionFileProperties();
