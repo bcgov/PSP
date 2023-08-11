@@ -5,8 +5,9 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { Claims } from '@/constants';
+import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
 import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
-import { Api_ExpropriationPayment } from '@/models/api/Form8';
+import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
 
 import { useGenerateExpropriationForm1 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm1';
 import { useGenerateExpropriationForm5 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm5';
@@ -20,15 +21,19 @@ export interface IExpropriationTabContainerViewProps {
   loading: boolean;
   acquisitionFile: Api_AcquisitionFile;
   form8s: Api_ExpropriationPayment[];
+  onForm8Deleted: (form8Id: number) => void;
 }
 
 export const ExpropriationTabContainerView: React.FunctionComponent<
   IExpropriationTabContainerViewProps
-> = ({ loading, acquisitionFile, form8s }) => {
+> = ({ loading, acquisitionFile, form8s, onForm8Deleted }) => {
   const history = useHistory();
   const match = useRouteMatch();
 
-  // TODO: Load Form 8 into this container
+  const {
+    deleteForm8: { execute: deleteForm8, loading: deletingForm8 },
+  } = useForm8Repository();
+
   const acquisitionFileTypeCode = acquisitionFile.acquisitionTypeCode?.id;
 
   const onGenerateForm1 = useGenerateExpropriationForm1();
@@ -41,9 +46,14 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
     }
   };
 
+  const handleDelete = async (form8Id: number) => {
+    await deleteForm8(form8Id);
+    onForm8Deleted(form8Id);
+  };
+
   return (
     <>
-      <LoadingBackdrop show={loading} />
+      <LoadingBackdrop show={loading || deletingForm8} />
       {acquisitionFileTypeCode === EnumAcquisitionFileType.SECTN6 && (
         <Section
           isCollapsable
@@ -76,7 +86,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
 
       <Section
         isCollapsable
-        initiallyExpanded={false}
+        initiallyExpanded={true}
         data-testid="form-8-section"
         header={
           <SectionListHeader
@@ -91,7 +101,11 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
         }
       >
         {form8s.map((form, index) => (
-          <ExpropriationForm8Details form8={form} form8Index={index}></ExpropriationForm8Details>
+          <ExpropriationForm8Details
+            form8={form}
+            form8Index={index}
+            onDelete={handleDelete}
+          ></ExpropriationForm8Details>
         ))}
       </Section>
 

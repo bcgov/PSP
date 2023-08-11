@@ -11,7 +11,7 @@ import {
 } from '@/models/api/AcquisitionFile';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
-import { Api_ExpropriationPayment } from '@/models/api/Form8';
+import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
 import { Api_Product, Api_Project } from '@/models/api/Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';

@@ -3,7 +3,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_ExpropriationPayment } from '@/models/api/Form8';
+import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
 
 import { IExpropriationTabContainerViewProps } from './ExpropriationTabContainerView';
 
@@ -35,6 +35,10 @@ export const ExpropriationTabContainer: React.FunctionComponent<
     fetchForms();
   }, [fetchForms]);
 
+  const handleForm8Deleted = (form8Id: number) => {
+    setForm8s(current => current.filter(form => form.id !== form8Id));
+  };
+
   if (!!acquisitionFile && acquisitionFile?.id === undefined && fileLoading === false) {
     throw new Error('Unable to determine id of current file.');
   }
@@ -44,6 +48,7 @@ export const ExpropriationTabContainer: React.FunctionComponent<
       loading={fileLoading || loadingForm8s}
       acquisitionFile={acquisitionFile}
       form8s={form8s}
+      onForm8Deleted={handleForm8Deleted}
     ></View>
   ) : null;
 };

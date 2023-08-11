@@ -5,7 +5,7 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOption';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
-import { Api_ExpropriationPayment } from '@/models/api/Form8';
+import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
 import { Form8FormModel } from '../models/Form8FormModel';
@@ -28,7 +28,7 @@ export const AddForm8Container: React.FunctionComponent<
   const [payeeOptions, setPayeeOptions] = useState<PayeeOption[]>([]);
 
   const {
-    postAcquisitionForm8: { execute: postAcquisitionForm8, error, loading },
+    postAcquisitionForm8: { execute: postAcquisitionForm8, loading: creatingForm8 },
     getAcquisitionOwners: { execute: retrieveAcquisitionOwners, loading: loadingAcquisitionOwners },
   } = useAcquisitionProvider();
   const {
@@ -47,7 +47,7 @@ export const AddForm8Container: React.FunctionComponent<
 
     await Promise.all([acquisitionOwnersCall, interestHoldersCall]).then(
       ([acquisitionOwners, interestHolders]) => {
-        const options = payeeOptions;
+        let options = [];
 
         if (acquisitionOwners !== undefined) {
           const ownersOptions: PayeeOption[] = acquisitionOwners.map(x =>
@@ -66,17 +66,18 @@ export const AddForm8Container: React.FunctionComponent<
         setPayeeOptions(options);
       },
     );
-  }, [payeeOptions, acquisitionFileId, retrieveAcquisitionOwners, fetchInterestHolders]);
+  }, [acquisitionFileId, retrieveAcquisitionOwners, fetchInterestHolders]);
 
   const handleSave = async (form8: Api_ExpropriationPayment) => {
-    return postAcquisitionForm8(acquisitionFileId, form8);
+    await postAcquisitionForm8(acquisitionFileId, form8);
+    history.push(backUrl);
   };
 
   useEffect(() => {
     fetchContacts();
   }, [fetchContacts]);
 
-  if (loading || loadingAcquisitionOwners || loadingInterestHolders) {
+  if (creatingForm8 || loadingAcquisitionOwners || loadingInterestHolders) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 

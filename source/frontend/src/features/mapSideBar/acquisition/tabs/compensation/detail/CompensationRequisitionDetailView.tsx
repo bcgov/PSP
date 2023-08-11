@@ -20,7 +20,7 @@ import { Api_Product, Api_Project } from '@/models/api/Project';
 import { formatMoney, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { DetailAcquisitionFileOwner } from '../../fileDetails/detail/models';
+import { DetailAcquisitionFileOwner } from '../../../models/DetailAcquisitionFileOwner';
 
 export interface CompensationRequisitionDetailViewProps {
   compensation: Api_CompensationRequisition;

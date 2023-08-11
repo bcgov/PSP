@@ -10,5 +10,9 @@ namespace Pims.Dal.Repositories
         IList<PimsExpropriationPayment> GetAllByAcquisitionFileId(long acquisitionFileId);
 
         PimsExpropriationPayment GetById(long expropriationPaymentId);
+
+        PimsExpropriationPayment Udpate(PimsExpropriationPayment expropriationPayment);
+
+        bool TryDelete(long id);
     }
 }

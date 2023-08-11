@@ -1,15 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOption';
-import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
-import { Api_ExpropriationPayment } from '@/models/api/Form8';
+import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
-import { stripTrailingSlash } from '@/utils';
 
 import { Form8FormModel } from '../models/Form8FormModel';
 import { IForm8FormProps } from '../UpdateForm8Form';
@@ -23,7 +21,8 @@ export const UpdateForm8Container: React.FunctionComponent<
   React.PropsWithChildren<IUpdateForm8ContainerProps>
 > = ({ form8Id, View }) => {
   const history = useHistory();
-  const { path } = useRouteMatch();
+  const location = useLocation();
+
   const { getSystemConstant } = useSystemConstants();
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const gstDecimalPercentage = gstConstant !== undefined ? parseFloat(gstConstant.value) / 100 : 0;
@@ -32,8 +31,8 @@ export const UpdateForm8Container: React.FunctionComponent<
   const [initialValues, setInitialValues] = useState<Form8FormModel | null>(null);
 
   const {
-    getForm8: { execute: getForm8, error, loading },
-    updateForm8: { execute: updateForm8, response: updatedForm8, loading: updatingForm8 },
+    getForm8: { execute: getForm8, loading },
+    updateForm8: { execute: updateForm8, loading: updatingForm8 },
   } = useForm8Repository();
   const {
     getAcquisitionOwners: { execute: retrieveAcquisitionOwners, loading: loadingAcquisitionOwners },
@@ -44,6 +43,8 @@ export const UpdateForm8Container: React.FunctionComponent<
       loading: loadingInterestHolders,
     },
   } = useInterestHolderRepository();
+
+  const backUrl = location.pathname.split(`/${form8Id}`)[0];
 
   const loadForm8Details = useCallback(async () => {
     const form8Api = await getForm8(form8Id);
@@ -56,7 +57,7 @@ export const UpdateForm8Container: React.FunctionComponent<
 
       await Promise.all([acquisitionOwnersCall, interestHoldersCall]).then(
         ([acquisitionOwners, interestHolders]) => {
-          const options = payeeOptions;
+          const options = [];
 
           if (acquisitionOwners !== undefined) {
             const ownersOptions: PayeeOption[] = acquisitionOwners.map(x =>
@@ -76,10 +77,11 @@ export const UpdateForm8Container: React.FunctionComponent<
         },
       );
     }
-  }, [fetchInterestHolders, form8Id, getForm8, payeeOptions, retrieveAcquisitionOwners]);
+  }, [fetchInterestHolders, form8Id, getForm8, retrieveAcquisitionOwners]);
 
   const handleSave = async (form8: Api_ExpropriationPayment) => {
-    return updateForm8(form8);
+    await updateForm8(form8);
+    history.push(backUrl);
   };
 
   useEffect(() => {
@@ -95,7 +97,7 @@ export const UpdateForm8Container: React.FunctionComponent<
       initialValues={initialValues}
       payeeOptions={payeeOptions}
       gstConstant={gstDecimalPercentage}
-      onCancel={() => history.push(`${stripTrailingSlash(path)}/${FileTabType.EXPROPRIATION}`)}
+      onCancel={() => history.push(backUrl)}
       onSave={handleSave}
     ></View>
   );

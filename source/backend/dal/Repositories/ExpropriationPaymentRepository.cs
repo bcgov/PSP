@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
 {
@@ -27,6 +28,9 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.PimsExpropPmtPmtItems)
                     .ThenInclude(y => y.PaymentItemTypeCodeNavigation)
                 .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.Person)
+                .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.Organization)
                 .Include(x => x.AcquisitionOwner)
                 .Include(x => x.ExpropriatingAuthorityNavigation)
                 .AsNoTracking()
@@ -40,10 +44,47 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.PimsExpropPmtPmtItems)
                     .ThenInclude(y => y.PaymentItemTypeCodeNavigation)
                 .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.Person)
+                .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.Organization)
                 .Include(x => x.AcquisitionOwner)
                 .Include(x => x.ExpropriatingAuthorityNavigation)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.ExpropriationPaymentId.Equals(expropriationPaymentId)) ?? throw new KeyNotFoundException();
+        }
+
+        public PimsExpropriationPayment Udpate(PimsExpropriationPayment expropriationPayment)
+        {
+            var existingExpPayment = Context.PimsExpropriationPayments
+                .FirstOrDefault(x => x.ExpropriationPaymentId.Equals(expropriationPayment.ExpropriationPaymentId)) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingExpPayment).CurrentValues.SetValues(expropriationPayment);
+            Context.UpdateChild<PimsExpropriationPayment, long, PimsExpropPmtPmtItem, long>(a => a.PimsExpropPmtPmtItems, expropriationPayment.ExpropriationPaymentId, expropriationPayment.PimsExpropPmtPmtItems.ToArray(), true);
+
+            return existingExpPayment;
+        }
+
+        public bool TryDelete(long id)
+        {
+            var deletedEntity = Context.PimsExpropriationPayments
+                .Include(x => x.PimsExpropPmtPmtItems)
+                .AsNoTracking()
+                .FirstOrDefault(c => c.ExpropriationPaymentId == id);
+
+            if (deletedEntity != null)
+            {
+                foreach (var item in deletedEntity.PimsExpropPmtPmtItems)
+                {
+                    Context.PimsExpropPmtPmtItems.Remove(new PimsExpropPmtPmtItem() { ExpropPmtPmtItemId = item.ExpropPmtPmtItemId });
+                }
+
+                Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
+
+                Context.PimsExpropriationPayments.Remove(new PimsExpropriationPayment() { ExpropriationPaymentId = deletedEntity.ExpropriationPaymentId });
+                return true;
+            }
+
+            return false;
         }
     }
 }

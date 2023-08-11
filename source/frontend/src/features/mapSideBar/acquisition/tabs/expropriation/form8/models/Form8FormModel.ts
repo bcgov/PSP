@@ -1,5 +1,11 @@
-import { Api_ExpropiationPaymentItem, Api_ExpropriationPayment } from '@/models/api/Form8';
+import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOption';
+import { PayeeType } from '@/features/mapSideBar/acquisition/models/PayeeTypeModel';
+import {
+  Api_ExpropiationPaymentItem,
+  Api_ExpropriationPayment,
+} from '@/models/api/ExpropriationPayment';
 import { booleanToString, stringToBoolean, toTypeCode } from '@/utils/formUtils';
+import { isNullOrWhitespace } from '@/utils/utils';
 
 import { ExpropriationAuthorityFormModel } from '../../models';
 
@@ -9,9 +15,9 @@ export class Form8FormModel {
   interestHolderId: number | null = null;
   expropriatingAuthorityId: number | null = null;
   expropriationAuthority: ExpropriationAuthorityFormModel | null = null;
-  description: string | null = null;
+  description: string | null = '';
   paymentItems: Form8PaymentItemModel[] = [];
-  isDisabled: boolean = false;
+  isDisabled: boolean | null = false;
   rowVersion: number | null = null;
   payeeKey: string = '';
 
@@ -20,13 +26,16 @@ export class Form8FormModel {
     this.acquisitionFileId = acquisitionFileId;
   }
 
-  toApi(): Api_ExpropriationPayment {
-    return {
+  toApi(payeeOptions: PayeeOption[]): Api_ExpropriationPayment {
+    let expropiationPaymentApi = {
       id: this.id,
       acquisitionFileId: this.acquisitionFileId,
       acquisitionOwnerId: this.acquisitionOwnerId,
+      acquisitionOwner: null,
       interestHolderId: this.interestHolderId,
-      expropriatingAuthorityId: this.expropriatingAuthorityId,
+      interestHolder: null,
+      expropriatingAuthorityId: this.expropriationAuthority?.contact?.organizationId!,
+      expropriatingAuthority: null,
       description: this.description,
       isDisabled: this.isDisabled,
       rowVersion: this.rowVersion,
@@ -34,6 +43,32 @@ export class Form8FormModel {
         .filter(x => !x.isEmpty())
         .map<Api_ExpropiationPaymentItem>(x => x.toApi()),
     };
+
+    if (isNullOrWhitespace(this.payeeKey)) {
+      return expropiationPaymentApi;
+    }
+
+    const payeeOption = payeeOptions.find(x => x.value === this.payeeKey);
+
+    if (payeeOption === undefined) {
+      return expropiationPaymentApi;
+    }
+
+    switch (payeeOption.payeeType) {
+      case PayeeType.Owner:
+        expropiationPaymentApi.acquisitionOwnerId = payeeOption.api_id;
+        expropiationPaymentApi.interestHolderId = null;
+
+        break;
+      case PayeeType.OwnerRepresentative:
+      case PayeeType.OwnerSolicitor:
+      case PayeeType.InterestHolder:
+        expropiationPaymentApi.interestHolderId = payeeOption.api_id;
+        expropiationPaymentApi.acquisitionOwnerId = null;
+        break;
+    }
+
+    return expropiationPaymentApi;
   }
 
   static fromApi(model: Api_ExpropriationPayment): Form8FormModel {
@@ -43,6 +78,8 @@ export class Form8FormModel {
     newForm.interestHolderId = model.interestHolderId;
     newForm.expropriatingAuthorityId = model.expropriatingAuthorityId;
     newForm.rowVersion = model.rowVersion;
+    newForm.isDisabled = model.isDisabled;
+    newForm.paymentItems = model.paymentItems?.map(x => Form8PaymentItemModel.fromApi(x)) ?? [];
 
     return newForm;
   }

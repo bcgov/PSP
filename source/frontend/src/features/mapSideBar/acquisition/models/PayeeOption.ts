@@ -102,16 +102,12 @@ export class PayeeOption {
         compensationModel.acquisitionFilePersonId = payeeOption.api_id;
         break;
       case PayeeType.OwnerRepresentative:
-        compensationModel.interestHolderId = payeeOption.api_id;
-        break;
       case PayeeType.OwnerSolicitor:
+      case PayeeType.InterestHolder:
         compensationModel.interestHolderId = payeeOption.api_id;
         break;
       case PayeeType.Owner:
         compensationModel.acquisitionOwnerId = payeeOption.api_id;
-        break;
-      case PayeeType.InterestHolder:
-        compensationModel.interestHolderId = payeeOption.api_id;
         break;
     }
 
