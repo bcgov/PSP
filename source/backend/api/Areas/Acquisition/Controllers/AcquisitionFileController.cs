@@ -10,6 +10,7 @@ using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Dal.Exceptions;
@@ -103,10 +104,17 @@ namespace Pims.Api.Areas.Acquisition.Controllers
 
             _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
 
-            var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
-            var acquisitionFile = _acquisitionService.Add(acqFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
+            try
+            {
+                var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
+                var acquisitionFile = _acquisitionService.Add(acqFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
 
-            return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
+                return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
+            }
+            catch(BusinessRuleViolationException ex)
+            {
+                return Conflict(ex.Message);
+            }
         }
 
         /// <summary>
@@ -134,8 +142,6 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             var acquisitionFile = _acquisitionService.Update(acqFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
-
-
 
         /// <summary>
         /// Update the acquisition file properties.

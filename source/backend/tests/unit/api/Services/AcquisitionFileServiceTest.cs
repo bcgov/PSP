@@ -104,6 +104,55 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Add_BusinessRuleValidation_Fail_IsContractor()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.ConcurrencyControlNumber = 1;
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            Action act = () => service.Add(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>();
+        }
+
+        [Fact]
+        public void Add_Success_IsContractor_AssignedToTeam()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionFilePeople.Add(new PimsAcquisitionFilePerson() { PersonId = 1, AcqFlPersonProfileTypeCode = "test" });
+            acqFile.ConcurrencyControlNumber = 1;
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+
+            var newGuid = Guid.NewGuid();
+            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true);
+            contractorUser.PersonId= 1;
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            // Act
+            var result = service.Add(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Once);
+        }
+
+        [Fact]
         public void Add_ThrowIfNull()
         {
             // Arrange

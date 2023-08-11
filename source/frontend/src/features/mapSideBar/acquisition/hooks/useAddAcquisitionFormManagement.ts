@@ -1,5 +1,7 @@
+import axios from 'axios';
 import { FormikProps } from 'formik';
 import { useCallback } from 'react';
+import { toast } from 'react-toastify';
 
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
@@ -35,14 +37,21 @@ export function useAddAcquisitionFormManagement(props: IUseAddAcquisitionFormMan
   const handleSubmit = useCallback(
     async (values: AcquisitionForm, setSubmitting: (isSubmitting: boolean) => void) => {
       return withUserOverride(async (userOverrideCodes: UserOverrideCode[]) => {
-        const acquisitionFile = values.toApi();
-        const response = await addAcquisitionFile.execute(acquisitionFile, userOverrideCodes);
-        if (!!response?.id) {
-          if (typeof onSuccess === 'function') {
-            await onSuccess(response);
+        try {
+          const acquisitionFile = values.toApi();
+          const response = await addAcquisitionFile.execute(acquisitionFile, userOverrideCodes);
+          if (!!response?.id) {
+            if (typeof onSuccess === 'function') {
+              await onSuccess(response);
+            }
           }
+        } catch (e) {
+          if (axios.isAxiosError(e) && e.response?.status === 409) {
+            toast.error(e.response.data as any);
+          }
+        } finally {
+          setSubmitting(false);
         }
-        setSubmitting(false);
       });
     },
     [addAcquisitionFile, onSuccess, withUserOverride],

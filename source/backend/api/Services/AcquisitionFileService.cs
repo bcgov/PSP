@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Helpers.Extensions;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
@@ -134,6 +135,7 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Adding acquisition file with id {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileAdd);
+            acquisitionFile.ThrowMissingContractorInTeam(_user, _userRepository);
 
             // validate the new acq region
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
