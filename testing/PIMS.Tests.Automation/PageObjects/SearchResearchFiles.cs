@@ -60,49 +60,49 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateToSearchResearchFile()
         {
             Wait();
-            webDriver.FindElement(menuResearchButton).Click();
+            FocusAndClick(menuResearchButton);
 
             Wait();
-            webDriver.FindElement(searchResearchButton).Click();
+            FocusAndClick(searchResearchButton);
         }
 
         public void SearchResearchFileByRFile(string RFile)
         {
-            Wait();
+            WaitUntilClickable(searchResearchBySelect);
             ChooseSpecificSelectOption(searchResearchBySelect, "Research file #");
             webDriver.FindElement(searchResearchFileNbrInput).SendKeys(RFile);
             ChooseSpecificSelectOption(searchResearchStatusSelect, "All Status");
 
-            Wait(5000);
+            WaitUntilClickable(searchResearchFileButton);
             webDriver.FindElement(searchResearchFileButton).Click();
         }
 
         public void SearchLastResearchFile()
         {
-            Wait();
+            WaitUntilClickable(searchResearchFileResetButton);
             webDriver.FindElement(searchResearchFileResetButton).Click();
 
-            Wait();
+            WaitUntilClickable(searchResearchFileSortByRFileBttn);
             webDriver.FindElement(searchResearchFileSortByRFileBttn).Click();
             webDriver.FindElement(searchResearchFileSortByRFileBttn).Click();
 
-            Wait();
+            WaitUntilClickable(searchResearchStatusSelect);
             ChooseSpecificSelectOption(searchResearchStatusSelect, "All Status");
             FocusAndClick(searchResearchFileButton);
         }
 
         public void SelectFirstResult()
         {
-            Wait();
+            WaitUntilClickable(searchResearchFile1stResultLink);
             webDriver.FindElement(searchResearchFile1stResultLink).Click();
 
-            Wait(4000);
+            WaitUntilVisible(researchFileHeaderCode);
             Assert.True(webDriver.FindElement(researchFileHeaderCode).Displayed);
         }
 
         public void VerifyResearchFileListView()
         {
-            Wait();
+            WaitUntilVisible(searchResearchRegionInput);
 
             //Search Bar Elements
             Assert.True(webDriver.FindElement(searchResearchRegionInput).Displayed);
@@ -138,14 +138,14 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchResearchFileSortByRFileBttn).Displayed);
 
             //Pagination Elements
-            Wait();
+            WaitUntilVisible(searchResearchFilePaginationMenu);
             Assert.True(webDriver.FindElement(searchResearchFilePaginationMenu).Displayed);
             Assert.True(webDriver.FindElement(searchResearchPaginationList).Displayed);
         }
 
         public void VerifyResearchFileTableContent(ResearchFile researchFile, string user)
         {
-            Wait(1500);
+            WaitUntilVisible(searchResearchFile1stResultLink);
 
             Assert.True(webDriver.FindElement(searchResearchFile1stResultLink).Displayed);
             Assert.True(webDriver.FindElement(searchResearchFile1stResultFileName).Text.Equals(researchFile.ResearchFileName));
@@ -159,10 +159,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void FilterResearchFiles(string name, string status, string roadName, string idir)
         {
-            Wait();
+            WaitUntilClickable(searchResearchFileResetButton);
             webDriver.FindElement(searchResearchFileResetButton).Click();
 
-            Wait();
+            WaitUntilVisible(searchResearchNameInput);
             webDriver.FindElement(searchResearchNameInput).SendKeys(name);
             ChooseSpecificSelectOption(searchResearchStatusSelect, status);
             webDriver.FindElement(searchResearchRoadInput).SendKeys(roadName);
@@ -174,7 +174,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public Boolean SearchFoundResults()
         {
-            Wait();
+            WaitUntilVisible(searchResearchFile1stResult);
             return webDriver.FindElements(searchResearchFile1stResult).Count > 0;
         }
     }

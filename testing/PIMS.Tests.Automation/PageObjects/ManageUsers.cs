@@ -43,31 +43,33 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateAdminTools()
         {
-            Wait(5000);
-            webDriver.FindElement(mainMenuAdminToolLink).Click();
+            Wait(3000);
+
+            WaitUntilClickable(mainMenuAdminToolLink);
+            FocusAndClick(mainMenuAdminToolLink);
         }
 
         public void NavigateUserManagement()
         {
-            Wait();
-            webDriver.FindElement(adminSubmenuManageUserLink).Click();
+            WaitUntilClickable(adminSubmenuManageUserLink);
+            FocusAndClick(adminSubmenuManageUserLink);
         }
 
         public void FilterUsers(string idir, string region)
         {
-            Wait();
+            WaitUntilVisible(userManagementIdirInput);
             webDriver.FindElement(userManagementIdirInput).SendKeys(idir);
             webDriver.FindElement(userManagementSearchButton).Click();
 
-            Wait();
+            WaitUntilVisible(userManagerTableResults);
             Assert.True(webDriver.FindElements(userManagerTableResults).Count() > 0);
             webDriver.FindElement(userManagementResetButton).Click();
 
-            Wait();
+            WaitUntilClickable(userManagementRegionSelect);
             ChooseSpecificSelectOption(userManagementRegionSelect, region);
             webDriver.FindElement(userManagementSearchButton).Click();
 
-            Wait();
+            WaitUntilVisible(userManagerTableResults);
             Assert.True(webDriver.FindElements(userManagerTableResults).Count() == 0);
             webDriver.FindElement(userManagementResetButton).Click();
 
@@ -75,7 +77,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyManageUserListView()
         {
-            Wait();
+            WaitUntilVisible(userManagementIdirInput);
 
             Assert.True(webDriver.FindElement(userManagementRoleSelect).Displayed);
             Assert.True(webDriver.FindElement(userManagementIdirInput).Displayed);

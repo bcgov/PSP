@@ -275,6 +275,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsYearlyFinancialCode> PimsYearlyFinancialCodes { get; set; }
         public virtual DbSet<PimsYearlyFinancialCodeHist> PimsYearlyFinancialCodeHists { get; set; }
         public virtual DbSet<PimsxTableDefinition> PimsxTableDefinitions { get; set; }
+        public virtual DbSet<TmpPimsPropPropAdjacentLandType> TmpPimsPropPropAdjacentLandTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

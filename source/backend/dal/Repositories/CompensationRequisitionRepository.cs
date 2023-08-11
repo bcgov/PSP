@@ -51,6 +51,8 @@ namespace Pims.Dal.Repositories
                 .Include(c => c.PimsCompReqFinancials)
                     .ThenInclude(y => y.FinancialActivityCode)
                 .Include(x => x.AcquisitionOwner)
+                .Include(x => x.AcquisitionFilePerson)
+                .Include(x => x.InterestHolder)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
 
@@ -64,20 +66,6 @@ namespace Pims.Dal.Repositories
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqFinancial, long>(a => a.PimsCompReqFinancials, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqFinancials.ToArray(), true);
-
-            // Todo: fix this
-            /*if (compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is not null)
-            {
-                if (existingCompensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is not null)
-                {
-                    UpdatePayee(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault());
-                }
-                else
-                {
-                    Context.PimsAcquisitionPayees.Add(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault());
-                }
-            }*/
-
             return compensationRequisition;
         }
 
@@ -90,12 +78,6 @@ namespace Pims.Dal.Repositories
 
             if (deletedEntity != null)
             {
-                // TODO: Fix this;
-                /*foreach (var payee in deletedEntity.PimsAcquisitionPayees)
-                {
-                    Context.PimsAcquisitionPayees.Remove(new PimsAcquisitionPayee() { AcquisitionPayeeId = payee.AcquisitionPayeeId });
-                }*/
-
                 foreach (var financial in deletedEntity.PimsCompReqFinancials)
                 {
                     Context.PimsCompReqFinancials.Remove(new PimsCompReqFinancial() { FinancialActivityCode = financial.FinancialActivityCode });
