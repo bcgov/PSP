@@ -43,7 +43,7 @@ export const useGenerateH120 = () => {
     }
     const filePromise = getAcquisitionFile.execute(compensation.acquisitionFileId);
     const propertiesPromise = getAcquisitionProperties.execute(compensation.acquisitionFileId);
-    const compReqH120sPromise = getAcquisitionCompReqH120s.execute(
+    const compReqFinalH120sPromise = getAcquisitionCompReqH120s.execute(
       compensation.acquisitionFileId,
       true,
     );
@@ -52,13 +52,14 @@ export const useGenerateH120 = () => {
       compensation.acquisitionFileId,
     );
 
-    const [file, properties, h120Categories, compReqH120s, interestHolders] = await Promise.all([
-      filePromise,
-      propertiesPromise,
-      h120CategoriesPromise,
-      compReqH120sPromise,
-      interestHoldersPromise,
-    ]);
+    const [file, properties, h120Categories, compReqFinalH120s, interestHolders] =
+      await Promise.all([
+        filePromise,
+        propertiesPromise,
+        h120CategoriesPromise,
+        compReqFinalH120sPromise,
+        interestHoldersPromise,
+      ]);
     if (!file) {
       throw Error('Acquisition file not found');
     }
@@ -84,7 +85,7 @@ export const useGenerateH120 = () => {
       compensation,
       fileData,
       h120Categories ?? [],
-      compReqH120s ?? [],
+      compReqFinalH120s ?? [],
       client?.value,
     );
     const generatedFile = await generate({
