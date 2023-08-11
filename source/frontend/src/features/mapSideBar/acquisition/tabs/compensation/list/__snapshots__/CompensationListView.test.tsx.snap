@@ -370,7 +370,7 @@ exports[`compensation list view renders as expected 1`] = `
               <div
                 class="sortable-column"
               >
-                Date
+                Final Date
               </div>
             </div>
             <div
