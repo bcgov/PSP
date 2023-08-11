@@ -80,7 +80,10 @@ export const UpdateForm8Container: React.FunctionComponent<
   }, [fetchInterestHolders, form8Id, getForm8, retrieveAcquisitionOwners]);
 
   const handleSave = async (form8: Api_ExpropriationPayment) => {
-    await updateForm8(form8);
+    return updateForm8(form8);
+  };
+
+  const onUpdateSuccess = async () => {
     history.push(backUrl);
   };
 
@@ -99,6 +102,7 @@ export const UpdateForm8Container: React.FunctionComponent<
       gstConstant={gstDecimalPercentage}
       onCancel={() => history.push(backUrl)}
       onSave={handleSave}
+      onSuccess={onUpdateSuccess}
     ></View>
   );
 };

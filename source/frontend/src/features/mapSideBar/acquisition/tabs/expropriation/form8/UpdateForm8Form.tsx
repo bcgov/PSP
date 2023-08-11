@@ -21,8 +21,9 @@ export interface IForm8FormProps {
   initialValues: Form8FormModel | null;
   gstConstant: number;
   payeeOptions: PayeeOption[];
-  onSave: (form8: Api_ExpropriationPayment) => void;
+  onSave: (form8: Api_ExpropriationPayment) => Promise<Api_ExpropriationPayment | undefined>;
   onCancel: () => void;
+  onSuccess: () => void;
 }
 
 export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
@@ -31,6 +32,7 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
   payeeOptions,
   onSave,
   onCancel,
+  onSuccess,
 }) => {
   const formikRef = useRef<FormikProps<Form8FormModel>>(null);
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -61,6 +63,8 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
           initialValues={initialValues}
           onSubmit={async (values, formikHelpers) => {
             await onSave(values.toApi(payeeOptions));
+            formikHelpers.setSubmitting(false);
+            onSuccess();
           }}
           validationSchema={Form8FormModelYupSchema}
           validateOnChange={true}

@@ -12,6 +12,7 @@ import UpdateForm8Form, { IForm8FormProps } from './UpdateForm8Form';
 const currentGstPercent = 0.05;
 const onSave = jest.fn();
 const onCancel = jest.fn();
+const onSucces = jest.fn();
 
 const acquisitionFileMock = mockAcquisitionFileResponse();
 const defatulForm8Model = new Form8FormModel(null, acquisitionFileMock.id!);
@@ -24,6 +25,7 @@ describe('Form 8 UpdateForm component', () => {
         {...renderOptions.props}
         onSave={onSave}
         onCancel={onCancel}
+        onSuccess={onSucces}
         payeeOptions={[]}
         initialValues={renderOptions.props?.initialValues ?? defatulForm8Model}
         gstConstant={currentGstPercent}
