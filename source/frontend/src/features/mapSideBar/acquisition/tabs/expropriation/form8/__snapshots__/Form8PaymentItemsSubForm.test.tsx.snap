@@ -151,6 +151,5 @@ exports[`FinancialActivitiesSubForm  component renders as expected 1`] = `
       + Add payment item
     </div>
   </button>
-  <div />
 </DocumentFragment>
 `;
