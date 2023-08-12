@@ -4,6 +4,7 @@ import { ConvertToTypes } from '@/constants/convertToTypes';
 import { showFile } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useH120CategoryRepository } from '@/hooks/repositories/useH120CategoryRepository';
@@ -17,6 +18,7 @@ import { SystemConstants, useSystemConstants } from '@/store/slices/systemConsta
 import { getLatLng } from '@/utils/mapPropertyUtils';
 
 export const useGenerateH120 = () => {
+  const { getPersonConcept } = useApiContacts();
   const { getAcquisitionFile, getAcquisitionProperties, getAcquisitionCompReqH120s } =
     useAcquisitionProvider();
   const { getAcquisitionInterestHolders } = useInterestHolderRepository();
@@ -51,15 +53,26 @@ export const useGenerateH120 = () => {
     const interestHoldersPromise = getAcquisitionInterestHolders.execute(
       compensation.acquisitionFileId,
     );
+    const acquisitionFilePersonPromise = compensation?.acquisitionFilePerson?.personId
+      ? getPersonConcept(compensation.acquisitionFilePerson.personId)
+      : Promise.resolve(null);
 
-    const [file, properties, h120Categories, compReqFinalH120s, interestHolders] =
-      await Promise.all([
-        filePromise,
-        propertiesPromise,
-        h120CategoriesPromise,
-        compReqFinalH120sPromise,
-        interestHoldersPromise,
-      ]);
+    const [
+      file,
+      properties,
+      h120Categories,
+      compReqFinalH120s,
+      interestHolders,
+      acquisitionFilePerson,
+    ] = await Promise.all([
+      filePromise,
+      propertiesPromise,
+      h120CategoriesPromise,
+      compReqFinalH120sPromise,
+      interestHoldersPromise,
+      acquisitionFilePersonPromise,
+    ]);
+
     if (!file) {
       throw Error('Acquisition file not found');
     }
@@ -79,6 +92,15 @@ export const useGenerateH120 = () => {
         return property;
       });
       await Promise.all(currentBatchPromises);
+    }
+
+    // Populate payee information
+    if (compensation?.acquisitionFilePerson && compensation?.acquisitionFilePerson?.personId) {
+      compensation.acquisitionFilePerson.person = acquisitionFilePerson?.data;
+    } else if (compensation?.interestHolderId) {
+      const matchedInterestHolder =
+        interestHolders?.find(ih => ih.interestHolderId === compensation?.interestHolderId) ?? null;
+      compensation.interestHolder = matchedInterestHolder;
     }
 
     const compensationData = new Api_GenerateCompensation(
