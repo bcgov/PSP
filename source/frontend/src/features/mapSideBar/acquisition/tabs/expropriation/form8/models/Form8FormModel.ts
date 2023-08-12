@@ -29,7 +29,7 @@ export class Form8FormModel {
   }
 
   toApi(payeeOptions: PayeeOption[]): Api_ExpropriationPayment {
-    let expropriationPaymentApi = {
+    const expropriationPaymentApi = {
       id: this.id,
       acquisitionFileId: this.acquisitionFileId,
       acquisitionOwnerId: this.acquisitionOwnerId,

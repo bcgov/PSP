@@ -1,15 +1,14 @@
 import { FieldArray, FormikProps, useFormikContext } from 'formik';
-import { useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { LinkButton, StyledRemoveLinkButton } from '@/components/common/buttons';
 import { FastCurrencyInput, Select } from '@/components/common/form';
 import { YesNoSelect } from '@/components/common/form/YesNoSelect';
-import GenericModal from '@/components/common/GenericModal';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { getCurrencyCleanValue, stringToBoolean } from '@/utils/formUtils';
 
 import { Form8FormModel, Form8PaymentItemModel } from './models/Form8FormModel';
@@ -26,8 +25,7 @@ export const Form8PaymentItemsSubForm: React.FunctionComponent<IForm8PaymentItem
   gstConstantPercentage,
 }) => {
   const { values, setFieldValue } = useFormikContext<Form8FormModel>();
-  const [showModal, setShowModal] = useState(false);
-  const [rowToDelete, setRowToDelete] = useState<number | undefined>(undefined);
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const { getOptionsByType } = useLookupCodeHelpers();
   const paymentItemTypesOptions = getOptionsByType(API.PAYMENT_ITEM_TYPES);
@@ -76,7 +74,7 @@ export const Form8PaymentItemsSubForm: React.FunctionComponent<IForm8PaymentItem
         return (
           <>
             {values.paymentItems.map((item, index) => (
-              <div data-testid={`paymentItems[${index}]`}>
+              <div key={index} data-testid={`paymentItems[${index}]`}>
                 <StyledSubHeader>
                   <label>Payment Item {index + 1}</label>
                   <StyledRemoveLinkButton
@@ -84,8 +82,20 @@ export const Form8PaymentItemsSubForm: React.FunctionComponent<IForm8PaymentItem
                     data-testid={`paymentItems[${index}].delete-button`}
                     variant="light"
                     onClick={() => {
-                      setRowToDelete(index);
-                      setShowModal(true);
+                      setModalContent({
+                        ...getDeleteModalProps(),
+                        title: 'Remove Payment Item',
+                        message: 'Do you wish to remove this payment item?',
+                        okButtonText: 'Remove',
+                        handleOk: async () => {
+                          arrayHelpers.remove(index);
+                          setDisplayModal(false);
+                        },
+                        handleCancel: () => {
+                          setDisplayModal(false);
+                        },
+                      });
+                      setDisplayModal(true);
                     }}
                   >
                     <FaTrash size="2rem" />
@@ -107,10 +117,6 @@ export const Form8PaymentItemsSubForm: React.FunctionComponent<IForm8PaymentItem
                     field={`paymentItems[${index}].pretaxAmount`}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       onPretaxAmountUpdated(index, e.target.value);
-                    }}
-                    onBlurChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      // activitiesUpdated();
-                      console.log(e);
                     }}
                   />
                 </SectionField>
@@ -157,23 +163,6 @@ export const Form8PaymentItemsSubForm: React.FunctionComponent<IForm8PaymentItem
             >
               + Add payment item
             </LinkButton>
-
-            <GenericModal
-              display={showModal}
-              title="Remove Payment Item"
-              message={'Do you wish to remove this payment item?'}
-              okButtonText="Remove"
-              cancelButtonText="Cancel"
-              handleOk={() => {
-                setShowModal(false);
-                arrayHelpers.remove(rowToDelete!);
-                setRowToDelete(undefined);
-              }}
-              handleCancel={() => {
-                setShowModal(false);
-                setRowToDelete(undefined);
-              }}
-            />
           </>
         );
       }}

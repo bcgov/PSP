@@ -92,6 +92,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
       >
         {form8s.map((form, index) => (
           <ExpropriationForm8Details
+            key={index}
             form8={form}
             form8Index={index}
             onDelete={() => onForm8Deleted(form.id!)}
