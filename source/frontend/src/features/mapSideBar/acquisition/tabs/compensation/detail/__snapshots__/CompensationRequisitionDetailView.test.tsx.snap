@@ -750,7 +750,9 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           >
             <div
               class="c10"
-            />
+            >
+              <label />
+            </div>
           </div>
         </div>
         <div

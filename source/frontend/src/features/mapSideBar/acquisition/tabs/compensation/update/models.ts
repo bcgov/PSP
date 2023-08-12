@@ -89,11 +89,11 @@ export class CompensationRequisitionFormModel {
     compensation.expropriationVestingDateTime = apiModel.expropriationVestingDate || '';
     compensation.generationDatetTime = apiModel.generationDate || '';
     compensation.specialInstruction = apiModel.specialInstruction || '';
+    compensation.detailedRemarks = apiModel.detailedRemarks || '';
+    compensation.isDisabled = booleanToString(apiModel.isDisabled);
     compensation.financials =
       apiModel.financials?.map(x => FinancialActivityFormModel.fromApi(x)) || [];
-    compensation.detailedRemarks = apiModel.detailedRemarks || '';
 
-    compensation.isDisabled = booleanToString(apiModel.isDisabled);
     compensation.rowVersion = apiModel.rowVersion ?? null;
 
     const payeePretaxAmount = apiModel?.financials
@@ -174,6 +174,7 @@ export class FinancialActivityFormModel {
 export class AcquisitionPayeeFormModel {
   payeeKey: string = '';
   gstNumber: string = '';
+  legacyPayee: string = '';
   isPaymentInTrust: boolean = false;
 
   pretaxAmount: number = 0;
@@ -186,6 +187,7 @@ export class AcquisitionPayeeFormModel {
     payeeModel.payeeKey = PayeeOption.fromApi(apiModel);
     payeeModel.isPaymentInTrust = apiModel.isPaymentInTrust ?? false;
     payeeModel.gstNumber = apiModel.gstNumber ?? '';
+    payeeModel.legacyPayee = apiModel.legacyPayee ?? '';
 
     return payeeModel;
   }
@@ -198,6 +200,7 @@ export class AcquisitionPayeeFormModel {
 
     return {
       ...modelWithPayeeInformation,
+      legacyPayee: stringToUndefined(this.legacyPayee),
       isPaymentInTrust: stringToBoolean(this.isPaymentInTrust),
       gstNumber: this.gstNumber,
     };
@@ -210,6 +213,7 @@ enum PayeeType {
   OwnerSolicitor = 'OWNER_SOLICITOR',
   Owner = 'OWNER',
   InterestHolder = 'INTEREST_HOLDER',
+  LegacyPayee = 'LEGACY_PAYEE',
 }
 
 export class PayeeOption {
@@ -222,13 +226,13 @@ export class PayeeOption {
   private constructor(
     api_id: number,
     name: string,
-    key: string,
+    role: string,
     value: string,
     payeeType: PayeeType,
   ) {
     this.api_id = api_id;
-    this.fullText = `${name}(${key})`;
-    this.text = `${PayeeOption.truncateName(name)}(${key})`;
+    this.fullText = `${name} (${role})`;
+    this.text = `${PayeeOption.truncateName(name)} (${role})`;
     this.value = value;
     this.payeeType = payeeType;
   }
@@ -254,6 +258,11 @@ export class PayeeOption {
       } else {
         return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.InterestHolder);
       }
+    }
+
+    // support legacy payees imported via ETL from PAIMS
+    if (!!apiModel.legacyPayee) {
+      return PayeeOption.generateKey(apiModel.id, PayeeType.LegacyPayee);
     }
 
     return '';
@@ -408,6 +417,16 @@ export class PayeeOption {
       `${typeDescription}`,
       PayeeOption.generateKey(model.interestHolderId, PayeeType.InterestHolder),
       PayeeType.InterestHolder,
+    );
+  }
+
+  public static createLegacyPayee(model: Api_CompensationRequisition): PayeeOption {
+    return new PayeeOption(
+      model.id || 0,
+      model.legacyPayee || '',
+      'Legacy free-text value',
+      PayeeOption.generateKey(model.id, PayeeType.LegacyPayee),
+      PayeeType.LegacyPayee,
     );
   }
 
