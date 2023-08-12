@@ -5,7 +5,6 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { Claims } from '@/constants';
-import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
 import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
 
@@ -30,10 +29,6 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
   const history = useHistory();
   const match = useRouteMatch();
 
-  const {
-    deleteForm8: { execute: deleteForm8, loading: deletingForm8 },
-  } = useForm8Repository();
-
   const acquisitionFileTypeCode = acquisitionFile.acquisitionTypeCode?.id;
 
   const onGenerateForm1 = useGenerateExpropriationForm1();
@@ -46,14 +41,9 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
     }
   };
 
-  const handleDelete = async (form8Id: number) => {
-    await deleteForm8(form8Id);
-    onForm8Deleted(form8Id);
-  };
-
   return (
     <>
-      <LoadingBackdrop show={loading || deletingForm8} />
+      <LoadingBackdrop show={loading} />
       {acquisitionFileTypeCode === EnumAcquisitionFileType.SECTN6 && (
         <Section
           isCollapsable
@@ -104,7 +94,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
           <ExpropriationForm8Details
             form8={form}
             form8Index={index}
-            onDelete={handleDelete}
+            onDelete={() => onForm8Deleted(form.id!)}
           ></ExpropriationForm8Details>
         ))}
       </Section>

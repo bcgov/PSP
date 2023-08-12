@@ -1,9 +1,8 @@
+import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOption';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_FinancialCode } from '@/models/api/FinancialCode';
 import { booleanToString, stringToBoolean, stringToUndefined, toTypeCode } from '@/utils/formUtils';
-
-import { PayeeOption } from '../../../models/PayeeOption';
 
 export class CompensationRequisitionFormModel {
   id: number | null;

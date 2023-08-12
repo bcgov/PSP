@@ -3,8 +3,8 @@ import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptio
 import { PayeeType } from '@/features/mapSideBar/acquisition/models/PayeeTypeModel';
 import { fromApiOrganization } from '@/interfaces';
 import {
-  Api_ExpropiationPaymentItem,
   Api_ExpropriationPayment,
+  Api_ExpropriationPaymentItem,
 } from '@/models/api/ExpropriationPayment';
 import { booleanToString, stringToBoolean, toTypeCode } from '@/utils/formUtils';
 import { isNullOrWhitespace } from '@/utils/utils';
@@ -29,7 +29,7 @@ export class Form8FormModel {
   }
 
   toApi(payeeOptions: PayeeOption[]): Api_ExpropriationPayment {
-    let expropiationPaymentApi = {
+    let expropriationPaymentApi = {
       id: this.id,
       acquisitionFileId: this.acquisitionFileId,
       acquisitionOwnerId: this.acquisitionOwnerId,
@@ -43,34 +43,34 @@ export class Form8FormModel {
       rowVersion: this.rowVersion,
       paymentItems: this.paymentItems
         .filter(x => !x.isEmpty())
-        .map<Api_ExpropiationPaymentItem>(x => x.toApi()),
+        .map<Api_ExpropriationPaymentItem>(x => x.toApi()),
     };
 
     if (isNullOrWhitespace(this.payeeKey)) {
-      return expropiationPaymentApi;
+      return expropriationPaymentApi;
     }
 
     const payeeOption = payeeOptions.find(x => x.value === this.payeeKey);
 
     if (payeeOption === undefined) {
-      return expropiationPaymentApi;
+      return expropriationPaymentApi;
     }
 
     switch (payeeOption.payeeType) {
       case PayeeType.Owner:
-        expropiationPaymentApi.acquisitionOwnerId = payeeOption.api_id;
-        expropiationPaymentApi.interestHolderId = null;
+        expropriationPaymentApi.acquisitionOwnerId = payeeOption.api_id;
+        expropriationPaymentApi.interestHolderId = null;
 
         break;
       case PayeeType.OwnerRepresentative:
       case PayeeType.OwnerSolicitor:
       case PayeeType.InterestHolder:
-        expropiationPaymentApi.interestHolderId = payeeOption.api_id;
-        expropiationPaymentApi.acquisitionOwnerId = null;
+        expropriationPaymentApi.interestHolderId = payeeOption.api_id;
+        expropriationPaymentApi.acquisitionOwnerId = null;
         break;
     }
 
-    return expropiationPaymentApi;
+    return expropriationPaymentApi;
   }
 
   static fromApi(model: Api_ExpropriationPayment): Form8FormModel {
@@ -113,7 +113,7 @@ export class Form8PaymentItemModel {
     return this.paymentItemTypeCode === '' && this.pretaxAmount === 0;
   }
 
-  static fromApi(model: Api_ExpropiationPaymentItem): Form8PaymentItemModel {
+  static fromApi(model: Api_ExpropriationPaymentItem): Form8PaymentItemModel {
     const newPaymentItem = new Form8PaymentItemModel(
       model.id ?? null,
       model.expropriationPaymentId,
@@ -130,7 +130,7 @@ export class Form8PaymentItemModel {
     return newPaymentItem;
   }
 
-  toApi(): Api_ExpropiationPaymentItem {
+  toApi(): Api_ExpropriationPaymentItem {
     return {
       id: this.id,
       expropriationPaymentId: this.expropriationPaymentId,

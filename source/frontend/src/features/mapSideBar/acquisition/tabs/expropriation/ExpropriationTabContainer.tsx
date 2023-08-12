@@ -2,6 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
 
@@ -31,12 +32,20 @@ export const ExpropriationTabContainer: React.FunctionComponent<
     }
   }, [acquisitionFile.id, getAcquisitionFileForm8s, setForm8s]);
 
+  const {
+    deleteForm8: { execute: deleteForm8, loading: deletingForm8 },
+  } = useForm8Repository();
+
   useEffect(() => {
     fetchForms();
   }, [fetchForms]);
 
-  const handleForm8Deleted = (form8Id: number) => {
-    setForm8s(current => current.filter(form => form.id !== form8Id));
+  const handleForm8Deleted = async (form8Id: number) => {
+    await deleteForm8(form8Id);
+    var updatedForms = await getAcquisitionFileForm8s(acquisitionFile.id!);
+    if (updatedForms) {
+      setForm8s(updatedForms);
+    }
   };
 
   if (!!acquisitionFile && acquisitionFile?.id === undefined && fileLoading === false) {
@@ -45,7 +54,7 @@ export const ExpropriationTabContainer: React.FunctionComponent<
 
   return !!acquisitionFile?.id ? (
     <View
-      loading={fileLoading || loadingForm8s}
+      loading={fileLoading || loadingForm8s || deletingForm8}
       acquisitionFile={acquisitionFile}
       form8s={form8s}
       onForm8Deleted={handleForm8Deleted}

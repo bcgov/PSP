@@ -16,10 +16,10 @@ export interface Api_ExpropriationPayment extends Api_ConcurrentVersion_Null, Ap
   expropriatingAuthority: Api_Organization | null;
   description: string | null;
   isDisabled: boolean | null;
-  paymentItems: Api_ExpropiationPaymentItem[] | null;
+  paymentItems: Api_ExpropriationPaymentItem[] | null;
 }
 
-export interface Api_ExpropiationPaymentItem extends Api_ConcurrentVersion_Null, Api_AuditFields {
+export interface Api_ExpropriationPaymentItem extends Api_ConcurrentVersion_Null, Api_AuditFields {
   id: number | null;
   expropriationPaymentId: number | null;
   paymentItemTypeCode: string | null;

@@ -31,7 +31,7 @@ export const ExpropriationForm8Details: React.FunctionComponent<
   const match = useRouteMatch();
   const { setModalContent, setDisplayModal } = useModalContext();
 
-  const expropiationPayeeOwner = form8.acquisitionOwnerId
+  const expropriationPayeeOwner = form8.acquisitionOwnerId
     ? DetailAcquisitionFileOwner.fromApi(form8.acquisitionOwner!)
     : null;
 
@@ -72,8 +72,8 @@ export const ExpropriationForm8Details: React.FunctionComponent<
 
         <SectionField label="Payee" labelWidth="4">
           <StyledPayeeDisplayName>
-            {form8?.acquisitionOwnerId && expropiationPayeeOwner && (
-              <label>{expropiationPayeeOwner.ownerName ?? ''}</label>
+            {form8?.acquisitionOwnerId && expropriationPayeeOwner && (
+              <label>{expropriationPayeeOwner.ownerName ?? ''}</label>
             )}
 
             {form8?.interestHolderId && interestHolderContactLink && interestHolderDisplayName && (

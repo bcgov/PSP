@@ -103,8 +103,8 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             ></AddForm8Container>
           )}
           claim={Claims.ACQUISITION_EDIT}
-          key={'expropiation'}
-          title={'Add Expropiation'}
+          key={'expropriation'}
+          title={'Add Expropriation'}
         />
         <AppRoute
           path={`${stripTrailingSlash(path)}/${FileTabType.EXPROPRIATION}/:form8Id`}
@@ -115,8 +115,8 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             ></UpdateForm8Container>
           )}
           claim={Claims.ACQUISITION_EDIT}
-          key={'expropiation'}
-          title={'Expropiation'}
+          key={'expropriation'}
+          title={'Expropriation'}
         />
         <Route path={`${stripTrailingSlash(path)}/:tab`}>
           <AcquisitionFileTabs

@@ -2,21 +2,21 @@ import * as React from 'react';
 import { CellProps } from 'react-table';
 
 import { ColumnWithProps, Table } from '@/components/Table';
-import { Api_ExpropiationPaymentItem } from '@/models/api/ExpropriationPayment';
+import { Api_ExpropriationPaymentItem } from '@/models/api/ExpropriationPayment';
 import { stringToFragment } from '@/utils/columnUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
 
 export interface IExpropriationPaymentItemsTableProps {
-  paymentItems: Api_ExpropiationPaymentItem[];
+  paymentItems: Api_ExpropriationPaymentItem[];
 }
 
-const columns: ColumnWithProps<Api_ExpropiationPaymentItem>[] = [
+const columns: ColumnWithProps<Api_ExpropriationPaymentItem>[] = [
   {
     Header: 'Item',
     align: 'left',
     sortable: false,
     width: 40,
-    Cell: (cellProps: CellProps<Api_ExpropiationPaymentItem>) => {
+    Cell: (cellProps: CellProps<Api_ExpropriationPaymentItem>) => {
       return stringToFragment(cellProps.row.original.paymentItemType?.description);
     },
   },
@@ -26,7 +26,7 @@ const columns: ColumnWithProps<Api_ExpropiationPaymentItem>[] = [
     sortable: false,
     minWidth: 20,
     maxWidth: 20,
-    Cell: (cellProps: CellProps<Api_ExpropiationPaymentItem>) => {
+    Cell: (cellProps: CellProps<Api_ExpropriationPaymentItem>) => {
       return stringToFragment(formatMoney(cellProps.row.original.pretaxAmount));
     },
   },
@@ -36,7 +36,7 @@ const columns: ColumnWithProps<Api_ExpropiationPaymentItem>[] = [
     sortable: false,
     minWidth: 20,
     maxWidth: 20,
-    Cell: (cellProps: CellProps<Api_ExpropiationPaymentItem>) => {
+    Cell: (cellProps: CellProps<Api_ExpropriationPaymentItem>) => {
       return stringToFragment(formatMoney(cellProps.row.original.taxAmount));
     },
   },
@@ -46,7 +46,7 @@ const columns: ColumnWithProps<Api_ExpropiationPaymentItem>[] = [
     sortable: false,
     minWidth: 20,
     maxWidth: 20,
-    Cell: (cellProps: CellProps<Api_ExpropiationPaymentItem>) => {
+    Cell: (cellProps: CellProps<Api_ExpropriationPaymentItem>) => {
       return stringToFragment(formatMoney(cellProps.row.original.totalAmount));
     },
   },
@@ -57,7 +57,7 @@ const ExpropriationPaymentItemsTable: React.FunctionComponent<
 > = ({ paymentItems }) => {
   return (
     <>
-      <Table<Api_ExpropiationPaymentItem>
+      <Table<Api_ExpropriationPaymentItem>
         name="paymentItems"
         columns={columns}
         hideToolbar
