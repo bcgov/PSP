@@ -1,5 +1,5 @@
 import { FormikProps } from 'formik';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -12,7 +12,7 @@ import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { PropertyForm } from '../../shared/models';
-import SidebarFooter from '../../shared/SidebarFooter';
+import SidebarFooter, { missingFieldsError } from '../../shared/SidebarFooter';
 import { useAddAcquisitionFormManagement } from '../hooks/useAddAcquisitionFormManagement';
 import { AddAcquisitionForm } from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
@@ -25,6 +25,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const { onClose } = props;
   const history = useHistory();
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
   const mapMachine = useMapStateMachine();
@@ -53,6 +54,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   }, [initialForm, selectedFeatureDataset]);
 
   const handleSave = () => {
+    missingFieldsError(setErrorMessage, formikRef?.current?.isValid);
     formikRef.current?.setSubmitting(true);
     formikRef.current?.submitForm();
   };
@@ -92,7 +94,14 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         />
       }
       onClose={close}
-      footer={<SidebarFooter isOkDisabled={helper.loading} onSave={handleSave} onCancel={close} />}
+      footer={
+        <SidebarFooter
+          isOkDisabled={helper.loading}
+          onSave={handleSave}
+          onCancel={close}
+          errorMessage={errorMessage}
+        />
+      }
     >
       <StyledFormWrapper>
         <LoadingBackdrop show={helper.loading} parentScreen={true} />

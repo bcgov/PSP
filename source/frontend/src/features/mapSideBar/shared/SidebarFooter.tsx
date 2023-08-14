@@ -13,6 +13,19 @@ interface ISidebarFooterProps {
   errorMessage?: string | undefined;
 }
 
+export const missingFieldsError = (
+  setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>,
+  isFormValid?: boolean,
+) => {
+  if (!isFormValid) {
+    setErrorMessage('Please check the required fields.');
+  }
+
+  if (isFormValid) {
+    setErrorMessage(undefined);
+  }
+};
+
 const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = ({
   showEdit,
   editMode,

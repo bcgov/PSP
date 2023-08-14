@@ -58,6 +58,7 @@ describe('Compensation Requisition UpdateForm component', () => {
         gstConstant={currentGstPercent ?? 0.05}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
         isLoading={renderOptions.props?.isLoading ?? false}
+        missingFieldsError={undefined}
       />,
       {
         ...renderOptions,
