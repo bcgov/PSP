@@ -104,17 +104,10 @@ namespace Pims.Api.Areas.Acquisition.Controllers
 
             _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
 
-            try
-            {
-                var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
-                var acquisitionFile = _acquisitionService.Add(acqFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
+            var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
+            var acquisitionFile = _acquisitionService.Add(acqFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
 
-                return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
-            }
-            catch(BusinessRuleViolationException ex)
-            {
-                return Conflict(ex.Message);
-            }
+            return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
 
         /// <summary>

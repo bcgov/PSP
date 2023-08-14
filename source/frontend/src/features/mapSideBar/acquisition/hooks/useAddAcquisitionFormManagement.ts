@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
@@ -7,6 +7,7 @@ import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFe
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
+import { IApiError } from '@/interfaces/IApiError';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
@@ -46,8 +47,9 @@ export function useAddAcquisitionFormManagement(props: IUseAddAcquisitionFormMan
             }
           }
         } catch (e) {
+          const axiosError = e as AxiosError<IApiError>;
           if (axios.isAxiosError(e) && e.response?.status === 409) {
-            toast.error(e.response.data as any);
+            toast.error(axiosError?.response?.data.error);
           }
         } finally {
           setSubmitting(false);

@@ -104,7 +104,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Add_BusinessRuleValidation_Fail_IsContractor()
+        public void Add_ContractorNotInTeamException_Fail_IsContractor()
         {
             // Arrange
             var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
@@ -120,7 +120,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Add(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
-            act.Should().Throw<BusinessRuleViolationException>();
+            act.Should().Throw<ContractorNotInTeamException>();
         }
 
         [Fact]

@@ -26,7 +26,7 @@ namespace Pims.Api.Helpers.Extensions
 
             if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFilePeople.Any(x => x.PersonId == pimsUser.PersonId))
             {
-                throw new BusinessRuleViolationException("As a Contractor your user contact information should be assigned to the Acquisition File's team");
+                throw new ContractorNotInTeamException("As a Contractor your user contact information should be assigned to the Acquisition File's team");
             }
         }
     }
