@@ -83,7 +83,7 @@ namespace Pims.Dal.Repositories
             {
                 foreach (var financial in deletedEntity.PimsCompReqFinancials)
                 {
-                    Context.PimsCompReqFinancials.Remove(new PimsCompReqFinancial() { FinancialActivityCode = financial.FinancialActivityCode });
+                    Context.PimsCompReqFinancials.Remove(new PimsCompReqFinancial() { CompReqFinancialId = financial.CompReqFinancialId });
                 }
 
                 Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
