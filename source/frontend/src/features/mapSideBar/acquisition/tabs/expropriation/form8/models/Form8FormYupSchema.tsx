@@ -3,10 +3,10 @@ import * as yup from 'yup';
 
 export const Form8FormModelYupSchema = yup.object().shape({
   payeeKey: yup.string().required('Payee is required'),
-  description: yup.string().max(2000, 'Description must be at most ${max} characters'),
   expropriationAuthority: yup.object().shape({
     contact: yup.object().required('Expropriation authority is required').nullable(),
   }),
+  description: yup.string().max(2000, 'Description must be at most ${max} characters'),
   paymentItems: yup.array().of(
     yup.object().shape({
       paymentItemTypeCode: yup.string().required('Type is required'),

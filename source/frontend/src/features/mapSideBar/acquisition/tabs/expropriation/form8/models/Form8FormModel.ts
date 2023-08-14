@@ -16,7 +16,8 @@ export class Form8FormModel {
   acquisitionOwnerId: number | null = null;
   interestHolderId: number | null = null;
   expropriatingAuthorityId: number | null = null;
-  expropriationAuthority: ExpropriationAuthorityFormModel | null = null;
+  expropriationAuthority: ExpropriationAuthorityFormModel | null =
+    new ExpropriationAuthorityFormModel();
   description: string | null = '';
   paymentItems: Form8PaymentItemModel[] = [];
   isDisabled: boolean | null = false;
@@ -60,7 +61,6 @@ export class Form8FormModel {
       case PayeeType.Owner:
         expropriationPaymentApi.acquisitionOwnerId = payeeOption.api_id;
         expropriationPaymentApi.interestHolderId = null;
-
         break;
       case PayeeType.OwnerRepresentative:
       case PayeeType.OwnerSolicitor:

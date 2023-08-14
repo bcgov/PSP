@@ -1,5 +1,4 @@
-import { Formik, FormikProps } from 'formik';
-import { useRef } from 'react';
+import { Formik } from 'formik';
 import styled from 'styled-components';
 
 import { Select, SelectOption, TextArea } from '@/components/common/form';
@@ -34,7 +33,6 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
   onCancel,
   onSuccess,
 }) => {
-  const formikRef = useRef<FormikProps<Form8FormModel>>(null);
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
@@ -59,7 +57,6 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
       <StyledFormWrapper>
         <Formik<Form8FormModel>
           enableReinitialize
-          innerRef={formikRef}
           initialValues={initialValues}
           onSubmit={async (values, formikHelpers) => {
             await onSave(values.toApi(payeeOptions));
@@ -67,7 +64,7 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
             onSuccess();
           }}
           validationSchema={Form8FormModelYupSchema}
-          validateOnChange={true}
+          validateOnChange={false}
         >
           {formikProps => {
             return (
