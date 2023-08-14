@@ -102,6 +102,12 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
                       formikProps={formikProps}
                       gstConstantPercentage={gstConstant}
                     ></Form8PaymentItemsSubForm>
+                    {formikProps.errors?.paymentItems &&
+                      typeof formikProps.errors?.paymentItems === 'string' && (
+                        <div className="invalid-feedback" data-testid="item-type-dup-error">
+                          {formikProps.errors.paymentItems.toString()}
+                        </div>
+                      )}
                   </Section>
                 </StyledContent>
                 <StyledFooter>
