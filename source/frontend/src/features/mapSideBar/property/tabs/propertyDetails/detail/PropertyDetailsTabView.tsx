@@ -64,7 +64,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
       <StyledEditWrapper className="mr-3 my-1">
         {setEditMode !== undefined && hasClaim(Claims.PROPERTY_EDIT) && (
           <EditButton
-            title="Edit research file"
+            title="Edit property details"
             onClick={() => {
               setEditMode(true);
             }}
