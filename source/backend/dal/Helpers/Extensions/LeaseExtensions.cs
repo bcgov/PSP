@@ -151,7 +151,7 @@ namespace Pims.Dal.Helpers.Extensions
         {
             filter.ThrowIfNull(nameof(filter));
 
-            query = query.Where(l => !l.RegionCode.HasValue || regions.Contains(l.RegionCode.Value));
+            query = query.Where(l => regions.Contains(l.RegionCode.Value));
 
             if (!string.IsNullOrWhiteSpace(filter.TenantName))
             {
