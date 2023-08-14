@@ -10,6 +10,7 @@ import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
 
 import { useGenerateExpropriationForm1 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm1';
 import { useGenerateExpropriationForm5 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm5';
+import { useGenerateExpropriationForm8 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm8';
 import { useGenerateExpropriationForm9 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm9';
 import ExpropriationForm1 from './form1/ExpropriationForm1';
 import ExpropriationForm5 from './form5/ExpropriationForm5';
@@ -33,6 +34,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
 
   const onGenerateForm1 = useGenerateExpropriationForm1();
   const onGenerateForm5 = useGenerateExpropriationForm5();
+  const onGenerateForm8 = useGenerateExpropriationForm8();
   const onGenerateForm9 = useGenerateExpropriationForm9();
 
   const onError = (error: Error) => {
@@ -95,6 +97,8 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
             key={index}
             form8={form}
             form8Index={index}
+            acquisitionFileNumber={acquisitionFile.fileNumber ?? ''}
+            onGenerate={onGenerateForm8}
             onDelete={() => onForm8Deleted(form.id!)}
           ></ExpropriationForm8Details>
         ))}

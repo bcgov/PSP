@@ -4,7 +4,7 @@ import { createRef } from 'react';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { Form8FormModel } from './models/Form8FormModel';
 import UpdateForm8Form, { IForm8FormProps } from './UpdateForm8Form';
@@ -49,6 +49,7 @@ describe('Form 8 UpdateForm component', () => {
         ) as HTMLInputElement,
       getDescriptionTextbox: () =>
         utils.container.querySelector('textarea[name="description"]') as HTMLInputElement,
+      getSaveButton: () => utils.getByText(/Save/i),
     };
   };
 
@@ -69,5 +70,26 @@ describe('Form 8 UpdateForm component', () => {
     expect(getDescriptionTextbox()).toHaveValue('');
 
     expect(queryByTestId(`paymentItems[0]`)).not.toBeInTheDocument();
+  });
+
+  it('validates that only one payment item per type is added', async () => {
+    const { container, getByTestId, findByText, getSaveButton } = await setup({});
+
+    await act(async () => userEvent.click(getByTestId('add-payment-item')));
+    await act(() =>
+      fillInput(container, 'paymentItems[0].paymentItemTypeCode', 'MARKETVALUE', 'select'),
+    );
+
+    await act(async () => userEvent.click(getByTestId('add-payment-item')));
+    await act(() =>
+      fillInput(container, 'paymentItems[1].paymentItemTypeCode', 'MARKETVALUE', 'select'),
+    );
+
+    await act(async () => userEvent.click(getSaveButton()));
+
+    const error = await findByText(
+      'Each payment type can only be added once. Select a different payment type.',
+    );
+    expect(error).toBeVisible();
   });
 });

@@ -8,7 +8,7 @@ export class Api_GenerateAddress {
   postal: string;
   country: string;
   address_string: string;
-  address_String_multiline_compressed: string;
+  address_string_multiline_compressed: string;
   address_single_line_string: string;
 
   constructor(address: Api_Address | null) {
@@ -43,8 +43,9 @@ export class Api_GenerateAddress {
       .filter(a => !!a)
       .join(', ');
 
-    this.address_String_multiline_compressed =
+    this.address_string_multiline_compressed =
       [this.line_1, this.line_2, this.line_3].filter(a => !!a).join('\n') +
+      '\n' +
       [this.city, this.province, this.postal, this.country].filter(a => !!a).join(', ');
   }
 }
