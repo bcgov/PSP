@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOption';
+import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import {
   mockAcquisitionFileOwnersResponse,

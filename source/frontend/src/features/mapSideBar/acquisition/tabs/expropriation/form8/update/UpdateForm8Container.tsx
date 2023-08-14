@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOption';
+import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';

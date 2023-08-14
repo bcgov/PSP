@@ -8,7 +8,7 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
-import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOption';
+import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';

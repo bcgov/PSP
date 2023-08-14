@@ -202,6 +202,16 @@ export class PayeeOption {
     );
   }
 
+  public static createLegacyPayee(model: Api_CompensationRequisition): PayeeOption {
+    return new PayeeOption(
+      model.id || 0,
+      model.legacyPayee || '',
+      'Legacy free-text value',
+      PayeeOption.generateKey(model.id, PayeeType.LegacyPayee),
+      PayeeType.LegacyPayee,
+    );
+  }
+
   public static generateKey(modelId: number | null | undefined, payeeType: PayeeType) {
     return `${payeeType}-${modelId}`;
   }

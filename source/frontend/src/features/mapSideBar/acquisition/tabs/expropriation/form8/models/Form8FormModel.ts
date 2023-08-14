@@ -1,5 +1,5 @@
 import { InterestHolderType } from '@/constants/interestHolderTypes';
-import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOption';
+import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import { PayeeType } from '@/features/mapSideBar/acquisition/models/PayeeTypeModel';
 import { fromApiOrganization } from '@/interfaces';
 import {

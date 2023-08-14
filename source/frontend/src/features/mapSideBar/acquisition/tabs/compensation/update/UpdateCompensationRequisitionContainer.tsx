@@ -2,7 +2,7 @@ import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
 
 import { SelectOption } from '@/components/common/form';
-import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOption';
+import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
@@ -107,10 +107,16 @@ const UpdateCompensationRequisitionContainer: React.FC<
 
           const teamMemberOptions: PayeeOption[] =
             acquisitionFile.acquisitionTeam
-              ?.filter((x): x is Api_AcquisitionFilePerson => !!x)
-              .filter(x => x.personProfileTypeCode === 'MOTILAWYER')
+              ?.filter(
+                (x): x is Api_AcquisitionFilePerson =>
+                  !!x && x.personProfileTypeCode === 'MOTILAWYER',
+              )
               .map(x => PayeeOption.createTeamMember(x)) || [];
           options.push(...teamMemberOptions);
+
+          if (!!compensation.legacyPayee) {
+            options.push(PayeeOption.createLegacyPayee(compensation));
+          }
 
           setPayeeOptions(options);
         },

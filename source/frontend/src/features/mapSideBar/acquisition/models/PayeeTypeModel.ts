@@ -4,4 +4,5 @@ export enum PayeeType {
   OwnerSolicitor = 'OWNER_SOLICITOR',
   Owner = 'OWNER',
   InterestHolder = 'INTEREST_HOLDER',
+  LegacyPayee = 'LEGACY_PAYEE',
 }

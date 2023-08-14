@@ -1,4 +1,4 @@
-import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOption';
+import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_FinancialCode } from '@/models/api/FinancialCode';
@@ -85,11 +85,11 @@ export class CompensationRequisitionFormModel {
     compensation.expropriationVestingDateTime = apiModel.expropriationVestingDate || '';
     compensation.generationDatetTime = apiModel.generationDate || '';
     compensation.specialInstruction = apiModel.specialInstruction || '';
+    compensation.detailedRemarks = apiModel.detailedRemarks || '';
+    compensation.isDisabled = booleanToString(apiModel.isDisabled);
     compensation.financials =
       apiModel.financials?.map(x => FinancialActivityFormModel.fromApi(x)) || [];
-    compensation.detailedRemarks = apiModel.detailedRemarks || '';
 
-    compensation.isDisabled = booleanToString(apiModel.isDisabled);
     compensation.rowVersion = apiModel.rowVersion ?? null;
 
     const payeePretaxAmount = apiModel?.financials
@@ -170,6 +170,7 @@ export class FinancialActivityFormModel {
 export class AcquisitionPayeeFormModel {
   payeeKey: string = '';
   gstNumber: string = '';
+  legacyPayee: string = '';
   isPaymentInTrust: boolean = false;
 
   pretaxAmount: number = 0;
@@ -182,6 +183,7 @@ export class AcquisitionPayeeFormModel {
     payeeModel.payeeKey = PayeeOption.fromApi(apiModel);
     payeeModel.isPaymentInTrust = apiModel.isPaymentInTrust ?? false;
     payeeModel.gstNumber = apiModel.gstNumber ?? '';
+    payeeModel.legacyPayee = apiModel.legacyPayee ?? '';
 
     return payeeModel;
   }
@@ -194,6 +196,7 @@ export class AcquisitionPayeeFormModel {
 
     return {
       ...modelWithPayeeInformation,
+      legacyPayee: stringToUndefined(this.legacyPayee),
       isPaymentInTrust: stringToBoolean(this.isPaymentInTrust),
       gstNumber: this.gstNumber,
     };
