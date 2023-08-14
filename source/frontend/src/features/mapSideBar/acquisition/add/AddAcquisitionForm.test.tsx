@@ -22,10 +22,10 @@ jest.mock('@react-keycloak/web');
 describe('AddAcquisitionForm component', () => {
   // render component under test
   const setup = (props: TestProps, renderOptions: RenderOptions = {}) => {
-    const ref = createRef<FormikProps<AcquisitionForm>>();
+    const formikRef = createRef<FormikProps<AcquisitionForm>>();
     const utils = render(
       <AddAcquisitionForm
-        ref={ref}
+        ref={formikRef}
         initialValues={props.initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
@@ -42,7 +42,8 @@ describe('AddAcquisitionForm component', () => {
 
     return {
       ...utils,
-      getFormikRef: () => ref,
+      formikRef,
+      getFormikRef: () => formikRef,
       getNameTextbox: () =>
         utils.container.querySelector(`input[name="fileName"]`) as HTMLInputElement,
       getRegionDropdown: () =>
