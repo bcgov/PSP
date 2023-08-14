@@ -37,7 +37,7 @@ export const InterestHolderSubForm: React.FunctionComponent<IInterestHolderProps
 }) => {
   const { values, setFieldValue } = useFormikContext<StakeHolderForm>();
   const { getOptionsByType } = useLookupCodeHelpers();
-  const interestHolderInterestTypes = getOptionsByType(API.INTEREST_HOLDER_INTEREST_TYPES);
+  const interestHolderInterestTypes = getOptionsByType(API.INTEREST_HOLDER_TYPES);
   var interestHolderContact = values.interestHolders[index].contact;
 
   const {

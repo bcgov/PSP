@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
-import { useGenerateH120 } from '@/features/properties/map/acquisition/common/GenerateForm/hooks/useGenerateH120';
+import { useGenerateH120 } from '@/features/mapSideBar/acquisition/common/GenerateForm/hooks/useGenerateH120';
 import { IApiError } from '@/interfaces/IApiError';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';

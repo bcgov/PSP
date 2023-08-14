@@ -169,6 +169,15 @@ namespace Pims.Api.Helpers.Middleware
 
                 _logger.LogError(ex, "User deleting a foreign key dependency");
             }
+            else if (ex is ContractorNotInTeamException)
+            {
+                var exception = ex as ContractorNotInTeamException;
+                code = HttpStatusCode.Conflict;
+                message = exception.Message;
+                errorCode = null;
+
+                _logger.LogError(ex, "Contractor User missing as a team member on the creation of Acquisition File");
+            }
             else if (ex is ApiHttpRequestException)
             {
                 var exception = ex as ApiHttpRequestException;

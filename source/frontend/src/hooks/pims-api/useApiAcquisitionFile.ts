@@ -11,6 +11,7 @@ import {
 } from '@/models/api/AcquisitionFile';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
 import { Api_Product, Api_Project } from '@/models/api/Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
@@ -87,6 +88,15 @@ export const useApiAcquisitionFile = () => {
         api.post<Api_CompensationRequisition>(
           `/acquisitionfiles/${acqFileId}/compensation-requisitions`,
           compensationRequisition,
+        ),
+      getAcquisitionFileForm8s: (acqFileId: number) =>
+        api.get<Api_ExpropriationPayment[]>(
+          `/acquisitionfiles/${acqFileId}/expropriation-payments`,
+        ),
+      postFileForm8: (acqFileId: number, form8: Api_ExpropriationPayment) =>
+        api.post<Api_ExpropriationPayment>(
+          `/acquisitionfiles/${acqFileId}/expropriation-payments`,
+          form8,
         ),
     }),
     [api],

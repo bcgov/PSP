@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Helpers.Extensions;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
@@ -35,6 +36,7 @@ namespace Pims.Api.Services
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
         private readonly IInterestHolderRepository _interestHolderRepository;
         private readonly ICompReqFinancialService _compReqFinancialService;
+        private readonly IExpropriationPaymentRepository _expropriationPaymentRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -50,7 +52,8 @@ namespace Pims.Api.Services
             IAgreementRepository agreementRepository,
             ICompensationRequisitionRepository compensationRequisitionRepository,
             IInterestHolderRepository interestHolderRepository,
-            ICompReqFinancialService compReqFinancialService)
+            ICompReqFinancialService compReqFinancialService,
+            IExpropriationPaymentRepository expropriationPaymentRepository)
         {
             _user = user;
             _logger = logger;
@@ -66,6 +69,7 @@ namespace Pims.Api.Services
             _compensationRequisitionRepository = compensationRequisitionRepository;
             _interestHolderRepository = interestHolderRepository;
             _compReqFinancialService = compReqFinancialService;
+            _expropriationPaymentRepository = expropriationPaymentRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -134,6 +138,7 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Adding acquisition file with id {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileAdd);
+            acquisitionFile.ThrowMissingContractorInTeam(_user, _userRepository);
 
             // validate the new acq region
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
@@ -358,6 +363,37 @@ namespace Pims.Api.Services
             _compensationRequisitionRepository.CommitTransaction();
 
             return newCompensationRequisition;
+        }
+
+        public PimsExpropriationPayment AddExpropriationPayment(long acquisitionFileId, PimsExpropriationPayment expPayment)
+        {
+            _logger.LogInformation("Adding Expropiation Payment for acquisition file id ...", acquisitionFileId);
+
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            expPayment.ThrowIfNull(nameof(expPayment));
+
+            var acquisitionFileParent = _acqFileRepository.GetById(acquisitionFileId);
+            if (acquisitionFileId != expPayment.AcquisitionFileId || acquisitionFileParent is null)
+            {
+                throw new BadRequestException("Invalid acquisitionFileId.");
+            }
+
+            var newForm8 = _expropriationPaymentRepository.Add(expPayment);
+            _expropriationPaymentRepository.CommitTransaction();
+
+            return newForm8;
+        }
+
+        public IList<PimsExpropriationPayment> GetAcquisitionExpropriationPayments(long acquisitionFileId)
+        {
+
+            _logger.LogInformation("Getting Expropiation Payments for acquisition file id ...", acquisitionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            return _expropriationPaymentRepository.GetAllByAcquisitionFileId(acquisitionFileId);
         }
 
         private static void ValidateStaff(PimsAcquisitionFile pimsAcquisitionFile)
