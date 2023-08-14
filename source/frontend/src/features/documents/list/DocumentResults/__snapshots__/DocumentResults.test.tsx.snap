@@ -296,7 +296,7 @@ exports[`Document Results Table matches snapshot 1`] = `
               <div
                 class="col"
               >
-                Jan 1, 0001
+                Dec 31, 0000
               </div>
               <div
                 class="col-auto"

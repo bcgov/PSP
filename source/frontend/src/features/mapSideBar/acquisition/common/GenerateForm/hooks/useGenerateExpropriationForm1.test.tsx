@@ -74,6 +74,12 @@ const setup = (params?: { storeValues?: any; acquisitionResponse?: Api_Acquisiti
 };
 
 describe('useGenerateExpropriationForm1 functions', () => {
+  beforeEach(() => {
+    getInterestHoldersFn.mockResolvedValue(
+      mockAcquisitionFileResponse().acquisitionFileInterestHolders,
+    );
+  });
+
   it('makes requests to expected api endpoints', async () => {
     const generate = setup();
     await act(async () => generate(1, new ExpropriationForm1Model()));
@@ -81,7 +87,9 @@ describe('useGenerateExpropriationForm1 functions', () => {
     expect(generateFn).toHaveBeenCalled();
     expect(getAcquisitionFilePropertiesFn).toHaveBeenCalled();
     expect(getInterestHoldersFn).toHaveBeenCalled();
+    // owner solicitor call
     expect(getPersonConceptFn).toHaveBeenCalled();
+    // expropriation authority call (not present)
     expect(getOrganizationConceptFn).not.toHaveBeenCalled();
   });
 
@@ -94,7 +102,9 @@ describe('useGenerateExpropriationForm1 functions', () => {
     expect(generateFn).toHaveBeenCalled();
     expect(getAcquisitionFilePropertiesFn).toHaveBeenCalled();
     expect(getInterestHoldersFn).toHaveBeenCalled();
+    // owner solicitor call
     expect(getPersonConceptFn).toHaveBeenCalled();
+    // expropriation authority call
     expect(getOrganizationConceptFn).toHaveBeenCalled();
   });
 

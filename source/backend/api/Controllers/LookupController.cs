@@ -145,6 +145,7 @@ namespace Pims.Api.Controllers
                 var acqChecklistItemStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionChecklistItemStatusTypes());
                 var agreementTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAgreementTypes());
                 var interestHolderInterestTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllInterestHolderInterestTypes());
+                var expropriationPaymentItemTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllExpropriationPaymentItemTypes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -204,6 +205,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(acqChecklistItemStatusTypes);
                 codes.AddRange(agreementTypes);
                 codes.AddRange(interestHolderInterestTypes);
+                codes.AddRange(expropriationPaymentItemTypes);
 
                 var response = new JsonResult(codes);
 

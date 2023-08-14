@@ -46,8 +46,6 @@ namespace Pims.Dal
         public virtual DbSet<PimsAcquisitionFundingType> PimsAcquisitionFundingTypes { get; set; }
         public virtual DbSet<PimsAcquisitionOwner> PimsAcquisitionOwners { get; set; }
         public virtual DbSet<PimsAcquisitionOwnerHist> PimsAcquisitionOwnerHists { get; set; }
-        public virtual DbSet<PimsAcquisitionPayee> PimsAcquisitionPayees { get; set; }
-        public virtual DbSet<PimsAcquisitionPayeeHist> PimsAcquisitionPayeeHists { get; set; }
         public virtual DbSet<PimsAcquisitionType> PimsAcquisitionTypes { get; set; }
         public virtual DbSet<PimsActInstPropAcqFile> PimsActInstPropAcqFiles { get; set; }
         public virtual DbSet<PimsActInstPropAcqFileHist> PimsActInstPropAcqFileHists { get; set; }
@@ -78,8 +76,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsChartOfAccountsCodeHist> PimsChartOfAccountsCodeHists { get; set; }
         public virtual DbSet<PimsClaim> PimsClaims { get; set; }
         public virtual DbSet<PimsClaimHist> PimsClaimHists { get; set; }
-        public virtual DbSet<PimsCompReqH120> PimsCompReqH120s { get; set; }
-        public virtual DbSet<PimsCompReqH120Hist> PimsCompReqH120Hists { get; set; }
+        public virtual DbSet<PimsCompReqFinancial> PimsCompReqFinancials { get; set; }
+        public virtual DbSet<PimsCompReqFinancialHist> PimsCompReqFinancialHists { get; set; }
         public virtual DbSet<PimsCompensationRequisition> PimsCompensationRequisitions { get; set; }
         public virtual DbSet<PimsCompensationRequisitionHist> PimsCompensationRequisitionHists { get; set; }
         public virtual DbSet<PimsConsultationStatusType> PimsConsultationStatusTypes { get; set; }
@@ -101,11 +99,13 @@ namespace Pims.Dal
         public virtual DbSet<PimsDocumentStatusType> PimsDocumentStatusTypes { get; set; }
         public virtual DbSet<PimsDocumentTyp> PimsDocumentTyps { get; set; }
         public virtual DbSet<PimsDocumentTypHist> PimsDocumentTypHists { get; set; }
+        public virtual DbSet<PimsExpropPmtPmtItem> PimsExpropPmtPmtItems { get; set; }
+        public virtual DbSet<PimsExpropPmtPmtItemHist> PimsExpropPmtPmtItemHists { get; set; }
+        public virtual DbSet<PimsExpropriationPayment> PimsExpropriationPayments { get; set; }
+        public virtual DbSet<PimsExpropriationPaymentHist> PimsExpropriationPaymentHists { get; set; }
         public virtual DbSet<PimsFenceType> PimsFenceTypes { get; set; }
         public virtual DbSet<PimsFinancialActivityCode> PimsFinancialActivityCodes { get; set; }
         public virtual DbSet<PimsFinancialActivityCodeHist> PimsFinancialActivityCodeHists { get; set; }
-        public virtual DbSet<PimsForm8> PimsForm8s { get; set; }
-        public virtual DbSet<PimsForm8Hist> PimsForm8Hists { get; set; }
         public virtual DbSet<PimsFormType> PimsFormTypes { get; set; }
         public virtual DbSet<PimsH120Category> PimsH120Categories { get; set; }
         public virtual DbSet<PimsH120CategoryHist> PimsH120CategoryHists { get; set; }
@@ -181,7 +181,6 @@ namespace Pims.Dal
         public virtual DbSet<PimsProjectPersonRoleType> PimsProjectPersonRoleTypes { get; set; }
         public virtual DbSet<PimsProjectStatusType> PimsProjectStatusTypes { get; set; }
         public virtual DbSet<PimsPropInthldrInterestType> PimsPropInthldrInterestTypes { get; set; }
-        public virtual DbSet<PimsPropPropAdjacentLandType> PimsPropPropAdjacentLandTypes { get; set; }
         public virtual DbSet<PimsPropPropAnomalyType> PimsPropPropAnomalyTypes { get; set; }
         public virtual DbSet<PimsPropPropRoadType> PimsPropPropRoadTypes { get; set; }
         public virtual DbSet<PimsPropPropTenureType> PimsPropPropTenureTypes { get; set; }
@@ -189,7 +188,6 @@ namespace Pims.Dal
         public virtual DbSet<PimsProperty> PimsProperties { get; set; }
         public virtual DbSet<PimsPropertyAcquisitionFile> PimsPropertyAcquisitionFiles { get; set; }
         public virtual DbSet<PimsPropertyAcquisitionFileHist> PimsPropertyAcquisitionFileHists { get; set; }
-        public virtual DbSet<PimsPropertyAdjacentLandType> PimsPropertyAdjacentLandTypes { get; set; }
         public virtual DbSet<PimsPropertyAnomalyType> PimsPropertyAnomalyTypes { get; set; }
         public virtual DbSet<PimsPropertyBoundaryVw> PimsPropertyBoundaryVws { get; set; }
         public virtual DbSet<PimsPropertyClassificationType> PimsPropertyClassificationTypes { get; set; }
@@ -277,6 +275,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsYearlyFinancialCode> PimsYearlyFinancialCodes { get; set; }
         public virtual DbSet<PimsYearlyFinancialCodeHist> PimsYearlyFinancialCodeHists { get; set; }
         public virtual DbSet<PimsxTableDefinition> PimsxTableDefinitions { get; set; }
+        public virtual DbSet<TmpPimsPropPropAdjacentLandType> TmpPimsPropPropAdjacentLandTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -687,6 +686,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.AcquisitionFileId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_ID_SEQ])");
 
+                entity.Property(e => e.AlternateProject).HasComment("Link a file to an \"Alternate Project\", so the user can make alternate payments that may be due after the original file's project closes.");
+
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
@@ -730,6 +731,8 @@ namespace Pims.Dal
                 entity.Property(e => e.FundingOther).HasComment("Description of other funding type.");
 
                 entity.Property(e => e.LegacyFileNumber).HasComment("Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01').   Required due to some files having t");
+
+                entity.Property(e => e.LegacyStakeholder).HasComment("Legacy stakeholders imported from PAIMS.");
 
                 entity.Property(e => e.PaimsAcquisitionFileId).HasComment("Legacy Acquisition File ID from the PAIMS system.");
 
@@ -1157,75 +1160,6 @@ namespace Pims.Dal
                     .HasName("PIMS_ACQOWN_H_PK");
 
                 entity.Property(e => e.AcquisitionOwnerHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_OWNER_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-            });
-
-            modelBuilder.Entity<PimsAcquisitionPayee>(entity =>
-            {
-                entity.HasKey(e => e.AcquisitionPayeeId)
-                    .HasName("ACQPAY_PK");
-
-                entity.HasComment("Person receiving a payment from MoTI.  Associates owners, cheques, and compensation requisitions.");
-
-                entity.Property(e => e.AcquisitionPayeeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_PAYEE_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the acquisition payee is inactive.");
-
-                entity.Property(e => e.IsPaymentInTrust).HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.HasOne(d => d.AcquisitionFilePerson)
-                    .WithMany(p => p.PimsAcquisitionPayees)
-                    .HasForeignKey(d => d.AcquisitionFilePersonId)
-                    .HasConstraintName("PIM_ACQPER_PIM_ACQPAY_FK");
-
-                entity.HasOne(d => d.AcquisitionOwner)
-                    .WithMany(p => p.PimsAcquisitionPayees)
-                    .HasForeignKey(d => d.AcquisitionOwnerId)
-                    .HasConstraintName("PIM_ACQOWN_PIM_ACQPAY_FK");
-
-                entity.HasOne(d => d.CompensationRequisition)
-                    .WithMany(p => p.PimsAcquisitionPayees)
-                    .HasForeignKey(d => d.CompensationRequisitionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_CMPREQ_PIM_ACQPAY_FK");
-
-                entity.HasOne(d => d.InterestHolder)
-                    .WithMany(p => p.PimsAcquisitionPayees)
-                    .HasForeignKey(d => d.InterestHolderId)
-                    .HasConstraintName("PIM_INTHLD_PIM_ACQPAY_FK");
-            });
-
-            modelBuilder.Entity<PimsAcquisitionPayeeHist>(entity =>
-            {
-                entity.HasKey(e => e.AcquisitionPayeeHistId)
-                    .HasName("PIMS_ACQPAY_H_PK");
-
-                entity.Property(e => e.AcquisitionPayeeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_PAYEE_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
@@ -2075,14 +2009,14 @@ namespace Pims.Dal
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
-            modelBuilder.Entity<PimsCompReqH120>(entity =>
+            modelBuilder.Entity<PimsCompReqFinancial>(entity =>
             {
-                entity.HasKey(e => e.CompReqFinActivity)
-                    .HasName("CRH120_PK");
+                entity.HasKey(e => e.CompReqFinancialId)
+                    .HasName("CRQFIN_PK");
 
                 entity.HasComment("Table associating compensation requisitions related to work activities.");
 
-                entity.Property(e => e.CompReqFinActivity).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMP_REQ_FIN_ACTIVITY_SEQ])");
+                entity.Property(e => e.CompReqFinancialId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMP_REQ_FINANCIAL_ID_SEQ])");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -2121,24 +2055,24 @@ namespace Pims.Dal
                 entity.Property(e => e.TotalAmt).HasComment("Total value of the requisition's work activity.");
 
                 entity.HasOne(d => d.CompensationRequisition)
-                    .WithMany(p => p.PimsCompReqH120s)
+                    .WithMany(p => p.PimsCompReqFinancials)
                     .HasForeignKey(d => d.CompensationRequisitionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_CMPREQ_PIM_CRH120_FK");
 
                 entity.HasOne(d => d.FinancialActivityCode)
-                    .WithMany(p => p.PimsCompReqH120s)
+                    .WithMany(p => p.PimsCompReqFinancials)
                     .HasForeignKey(d => d.FinancialActivityCodeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_FINACT_PIM_CRH120_FK");
             });
 
-            modelBuilder.Entity<PimsCompReqH120Hist>(entity =>
+            modelBuilder.Entity<PimsCompReqFinancialHist>(entity =>
             {
-                entity.HasKey(e => e.CompReqH120HistId)
-                    .HasName("PIMS_CRH120_H_PK");
+                entity.HasKey(e => e.CompReqFinancialHistId)
+                    .HasName("PIMS_CRQFIN_H_PK");
 
-                entity.Property(e => e.CompReqH120HistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMP_REQ_H120_H_ID_SEQ])");
+                entity.Property(e => e.CompReqFinancialHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMP_REQ_FINANCIAL_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
@@ -2182,9 +2116,13 @@ namespace Pims.Dal
 
                 entity.Property(e => e.ExpropVestingDt).HasComment("Expropriation vesting date.");
 
+                entity.Property(e => e.FinalizedDate).HasComment("Date that the draft Compensation Req changed from Draft to Final status.");
+
                 entity.Property(e => e.FiscalYear).HasComment("Fiscal year of the compensation requisition.");
 
                 entity.Property(e => e.GenerationDt).HasComment("Document generation date.");
+
+                entity.Property(e => e.GstNumber).HasComment("GST number of the organization receiving the payment.");
 
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
@@ -2194,6 +2132,12 @@ namespace Pims.Dal
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the agreement is in draft format.");
 
+                entity.Property(e => e.IsPaymentInTrust)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the payment was made in trust.");
+
+                entity.Property(e => e.LegacyPayee).HasComment("Payee where only the name is known from the PAIMS system,");
+
                 entity.Property(e => e.SpecialInstruction).HasComment("Special instructions for the compensation requisition.");
 
                 entity.HasOne(d => d.AcquisitionFile)
@@ -2202,10 +2146,25 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACQNFL_PIM_CMPREQ_FK");
 
+                entity.HasOne(d => d.AcquisitionFilePerson)
+                    .WithMany(p => p.PimsCompensationRequisitions)
+                    .HasForeignKey(d => d.AcquisitionFilePersonId)
+                    .HasConstraintName("PIM_ACQPER_PIM_CMPREQ_FK");
+
+                entity.HasOne(d => d.AcquisitionOwner)
+                    .WithMany(p => p.PimsCompensationRequisitions)
+                    .HasForeignKey(d => d.AcquisitionOwnerId)
+                    .HasConstraintName("PIM_ACQOWN_PIM_CMPREQ_FK");
+
                 entity.HasOne(d => d.ChartOfAccounts)
                     .WithMany(p => p.PimsCompensationRequisitions)
                     .HasForeignKey(d => d.ChartOfAccountsId)
                     .HasConstraintName("PIM_CHRTAC_PIM_CMPREQ_FK");
+
+                entity.HasOne(d => d.InterestHolder)
+                    .WithMany(p => p.PimsCompensationRequisitions)
+                    .HasForeignKey(d => d.InterestHolderId)
+                    .HasConstraintName("PIM_INTHLD_PIM_CMPREQ_FK");
 
                 entity.HasOne(d => d.Responsibility)
                     .WithMany(p => p.PimsCompensationRequisitions)
@@ -2752,6 +2711,143 @@ namespace Pims.Dal
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
+            modelBuilder.Entity<PimsExpropPmtPmtItem>(entity =>
+            {
+                entity.HasKey(e => e.ExpropPmtPmtItemId)
+                    .HasName("XPMTITY_PK");
+
+                entity.HasComment("Associative entity to connect expropriation forms (Form 8) to payment item types.  The supports the ability to associate multiple payment item types to a single expropriation form (Form 8).");
+
+                entity.Property(e => e.ExpropPmtPmtItemId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROP_PMT_PMT_ITEM_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the relationship is active.");
+
+                entity.Property(e => e.IsGstRequired)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if GST is required for this transaction.");
+
+                entity.Property(e => e.PretaxAmt).HasComment("Subtotal of the Form 8 payment.");
+
+                entity.Property(e => e.TaxAmt).HasComment("GST on the Form 8 oayment.");
+
+                entity.Property(e => e.TotalAmt).HasComment("Total amount of the Form 8 payment.");
+
+                entity.HasOne(d => d.ExpropriationPayment)
+                    .WithMany(p => p.PimsExpropPmtPmtItems)
+                    .HasForeignKey(d => d.ExpropriationPaymentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_EXPPMT_PIM_XPMTITY_FK");
+
+                entity.HasOne(d => d.PaymentItemTypeCodeNavigation)
+                    .WithMany(p => p.PimsExpropPmtPmtItems)
+                    .HasForeignKey(d => d.PaymentItemTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PMTITM_PIM_XPMTITY_FK");
+            });
+
+            modelBuilder.Entity<PimsExpropPmtPmtItemHist>(entity =>
+            {
+                entity.HasKey(e => e.ExpropPmtPmtItemHistId)
+                    .HasName("PIMS_XPMTIT_H_PK");
+
+                entity.Property(e => e.ExpropPmtPmtItemHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROP_PMT_PMT_ITEM_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsExpropriationPayment>(entity =>
+            {
+                entity.HasKey(e => e.ExpropriationPaymentId)
+                    .HasName("EXPPMT_PK");
+
+                entity.HasComment("Entity continaing the details regarding a Form 8 (Notice of Advance Payment).");
+
+                entity.Property(e => e.ExpropriationPaymentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROPRIATION_PAYMENT_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Form 8 description field.  There are lawyer remarks pending.  This field could be used for: - providing remarks particular to an expropriation form, and /or - for any ETL descriptive fields as well as - a place-holder forfields that do not have a mapping");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the Form 8 payment is inactive.");
+
+                entity.HasOne(d => d.AcquisitionFile)
+                    .WithMany(p => p.PimsExpropriationPayments)
+                    .HasForeignKey(d => d.AcquisitionFileId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_ACQNFL_PIM_FORM8_FK");
+
+                entity.HasOne(d => d.AcquisitionOwner)
+                    .WithMany(p => p.PimsExpropriationPayments)
+                    .HasForeignKey(d => d.AcquisitionOwnerId)
+                    .HasConstraintName("PIM_ACQOWN_PIM_FORM8_FK");
+
+                entity.HasOne(d => d.ExpropriatingAuthorityNavigation)
+                    .WithMany(p => p.PimsExpropriationPayments)
+                    .HasForeignKey(d => d.ExpropriatingAuthority)
+                    .HasConstraintName("PIM_ORG_PIM_FORM8_FK");
+
+                entity.HasOne(d => d.InterestHolder)
+                    .WithMany(p => p.PimsExpropriationPayments)
+                    .HasForeignKey(d => d.InterestHolderId)
+                    .HasConstraintName("PIM_INTHLD_PIM_FORM8_FK");
+            });
+
+            modelBuilder.Entity<PimsExpropriationPaymentHist>(entity =>
+            {
+                entity.HasKey(e => e.ExpropriationPaymentHistId)
+                    .HasName("PIMS_EXPPMT_H_PK");
+
+                entity.Property(e => e.ExpropriationPaymentHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROPRIATION_PAYMENT_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
             modelBuilder.Entity<PimsFenceType>(entity =>
             {
                 entity.HasKey(e => e.FenceTypeCode)
@@ -2831,90 +2927,6 @@ namespace Pims.Dal
                     .HasName("PIMS_FINACT_H_PK");
 
                 entity.Property(e => e.FinancialActivityCodeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_FINANCIAL_ACTIVITY_CODE_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-            });
-
-            modelBuilder.Entity<PimsForm8>(entity =>
-            {
-                entity.HasKey(e => e.Form8Id)
-                    .HasName("FORM8_PK");
-
-                entity.HasComment("Entity continaing the details regarding a Form 8 (Notice of Advance Payment).");
-
-                entity.Property(e => e.Form8Id).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_FORM_8_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description).HasComment("Form 8 description field.  There are lawyer remarks pending.  This field could be used for: - providing remarks particular to an expropriation form, and /or - for any ETL descriptive fields as well as - a place-holder forfields that do not have a mapping");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the Form 8 payment is inactive.");
-
-                entity.Property(e => e.IsGstRequired)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if GST is required for this transaction.");
-
-                entity.Property(e => e.PretaxAmt).HasComment("Subtotal of the Form 8 payment.");
-
-                entity.Property(e => e.TaxAmt).HasComment("GST on the Form 8 oayment.");
-
-                entity.Property(e => e.TotalAmt).HasComment("Total amount of the Form 8 payment.");
-
-                entity.HasOne(d => d.AcquisitionFile)
-                    .WithMany(p => p.PimsForm8s)
-                    .HasForeignKey(d => d.AcquisitionFileId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_ACQNFL_PIM_FORM8_FK");
-
-                entity.HasOne(d => d.AcquisitionOwner)
-                    .WithMany(p => p.PimsForm8s)
-                    .HasForeignKey(d => d.AcquisitionOwnerId)
-                    .HasConstraintName("PIM_ACQOWN_PIM_FORM8_FK");
-
-                entity.HasOne(d => d.ExpropriatingAuthorityNavigation)
-                    .WithMany(p => p.PimsForm8s)
-                    .HasForeignKey(d => d.ExpropriatingAuthority)
-                    .HasConstraintName("PIM_ORG_PIM_FORM8_FK");
-
-                entity.HasOne(d => d.InterestHolder)
-                    .WithMany(p => p.PimsForm8s)
-                    .HasForeignKey(d => d.InterestHolderId)
-                    .HasConstraintName("PIM_INTHLD_PIM_FORM8_FK");
-
-                entity.HasOne(d => d.PaymentItemTypeCodeNavigation)
-                    .WithMany(p => p.PimsForm8s)
-                    .HasForeignKey(d => d.PaymentItemTypeCode)
-                    .HasConstraintName("PIM_PMTITM_PIM_FORM8_FK");
-            });
-
-            modelBuilder.Entity<PimsForm8Hist>(entity =>
-            {
-                entity.HasKey(e => e.Form8HistId)
-                    .HasName("PIMS_FORM8_H_PK");
-
-                entity.Property(e => e.Form8HistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_FORM_8_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
@@ -5162,52 +5174,7 @@ namespace Pims.Dal
                 entity.HasOne(d => d.PimsInthldrPropInterest)
                     .WithMany(p => p.PimsPropInthldrInterestTypes)
                     .HasForeignKey(d => d.PimsInthldrPropInterestId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_IHPRIN_PIM_PIHITY_FK");
-            });
-
-            modelBuilder.Entity<PimsPropPropAdjacentLandType>(entity =>
-            {
-                entity.HasKey(e => e.PropPropAdjacentLandTypeId)
-                    .HasName("PRPALT_PK");
-
-                entity.HasComment("Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_ADJACENT_LAND_TYPE");
-
-                entity.Property(e => e.PropPropAdjacentLandTypeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_ADJACENT_LAND_TYPE_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.HasOne(d => d.PropertyAdjacentLandTypeCodeNavigation)
-                    .WithMany(p => p.PimsPropPropAdjacentLandTypes)
-                    .HasForeignKey(d => d.PropertyAdjacentLandTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PRADJL_PIM_PRPALT_FK");
-
-                entity.HasOne(d => d.Property)
-                    .WithMany(p => p.PimsPropPropAdjacentLandTypes)
-                    .HasForeignKey(d => d.PropertyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PRPRTY_PIM_PRPALT_FK");
             });
 
             modelBuilder.Entity<PimsPropPropAnomalyType>(entity =>
@@ -5606,34 +5573,6 @@ namespace Pims.Dal
                 entity.Property(e => e.PropertyAcquisitionFileHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ACQUISITION_FILE_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-            });
-
-            modelBuilder.Entity<PimsPropertyAdjacentLandType>(entity =>
-            {
-                entity.HasKey(e => e.PropertyAdjacentLandTypeCode)
-                    .HasName("PRADJL_PK");
-
-                entity.HasComment("Code table to describe property adjacent land type.");
-
-                entity.Property(e => e.PropertyAdjacentLandTypeCode).HasComment("Property adjacent land code.");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description).HasComment("Property adjacent land code description.");
-
-                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the code is disabled.");
             });
 
             modelBuilder.Entity<PimsPropertyAnomalyType>(entity =>
@@ -8050,10 +7989,6 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_ACQUISITION_PAYEE_H_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
             modelBuilder.HasSequence("PIMS_ACQUISITION_PAYEE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -8198,11 +8133,11 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_COMP_REQ_FIN_ACTIVITY_SEQ")
+            modelBuilder.HasSequence("PIMS_COMP_REQ_FINANCIAL_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_COMP_REQ_H120_H_ID_SEQ")
+            modelBuilder.HasSequence("PIMS_COMP_REQ_FINANCIAL_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8250,19 +8185,27 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_EXPROP_PMT_PMT_ITEM_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_EXPROP_PMT_PMT_ITEM_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_EXPROPRIATION_PAYMENT_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_EXPROPRIATION_PAYMENT_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_FINANCIAL_ACTIVITY_CODE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_FINANCIAL_ACTIVITY_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("PIMS_FORM_8_H_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("PIMS_FORM_8_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8695,7 +8638,6 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_RESPONSIBILITY_CODE_SEQ")
-                .StartsAt(991)
                 .HasMin(1)
                 .HasMax(2147483647);
 

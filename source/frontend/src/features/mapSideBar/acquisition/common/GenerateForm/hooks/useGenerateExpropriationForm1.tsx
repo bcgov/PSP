@@ -37,18 +37,27 @@ export const useGenerateExpropriationForm1 = () => {
     }
     file.fileProperties = properties;
 
-    const ownerSolicitor = file.acquisitionFileInterestHolders?.find(
+    // fetch primary contact information for organizations within interest holders
+    if (interestHolders) {
+      await Promise.all(
+        interestHolders.map(async holder => {
+          const primaryContactPerson =
+            holder?.organizationId && holder?.primaryContactId
+              ? (await getPersonConcept(holder?.primaryContactId))?.data
+              : null;
+          holder.primaryContact = primaryContactPerson;
+        }),
+      );
+    }
+
+    const ownerSolicitor = interestHolders?.find(
       x => x.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR,
     );
-
-    const ownerSolicitorPerson = ownerSolicitor?.personId
-      ? (await getPersonConcept(ownerSolicitor?.personId))?.data
-      : null;
 
     const fileData = new Api_GenerateAcquisitionFile({
       file: file,
       interestHolders: interestHolders ?? [],
-      ownerSolicitor: ownerSolicitorPerson ?? null,
+      ownerSolicitor: ownerSolicitor ?? null,
     });
 
     const filePropertyIds = new Set(

@@ -5,28 +5,28 @@ import styled from 'styled-components';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
 export interface IAdvancedFilterBarProps {
-  isOpen?: boolean;
-  showCloseButton?: boolean;
-  onClose?: () => void;
+  isOpen: boolean;
+  toggle: () => void;
 }
 
 const AdvancedFilterBar: React.FC<React.PropsWithChildren<IAdvancedFilterBarProps>> = ({
-  isOpen = false,
-  showCloseButton = true,
-  onClose,
+  isOpen,
+  toggle,
   children,
 }) => {
   return (
     <StyledMapSideBar show={isOpen} data-testid="advanced-filter-sidebar">
-      <StyledHeader>
-        <StyledTitle>Filter By:</StyledTitle>
-        {showCloseButton && (
-          <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Advanced Map Filters">
-            <CloseIcon title="close" onClick={onClose} />
-          </TooltipWrapper>
-        )}
-      </StyledHeader>
-      <StyledContent>{children}</StyledContent>
+      {isOpen && (
+        <>
+          <StyledHeader>
+            <StyledTitle>Filter By:</StyledTitle>
+            <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Advanced Map Filters">
+              <CloseIcon title="close" onClick={toggle} />
+            </TooltipWrapper>
+          </StyledHeader>
+          <StyledContent>{children}</StyledContent>
+        </>
+      )}
     </StyledMapSideBar>
   );
 };

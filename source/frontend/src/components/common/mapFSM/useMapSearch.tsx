@@ -28,6 +28,7 @@ export const useMapSearch = () => {
   const loadPimsProperties = pimsPropertyLayerService.loadPropertyLayer.execute;
   const fullyAttributedServiceFindByPin = fullyAttributedService.findByPin;
   const fullyAttributedServiceFindByPid = fullyAttributedService.findByPid;
+  const fullyAttributedServiceFindByPLanNumber = fullyAttributedService.findByPlanNumber;
 
   const fullyAttributedServiceFindOne = fullyAttributedService.findOne;
   const pimsPropertyLayerServiceFindOne = pimsPropertyLayerService.findOne;
@@ -74,6 +75,115 @@ export const useMapSearch = () => {
       return result;
     },
     [fullyAttributedServiceFindOne, pimsPropertyLayerServiceFindOne],
+  );
+
+  const searchByPlanNumber = useCallback(
+    async (filter?: IGeoSearchParams) => {
+      let result: MapFeatureData = emptyFeatureData;
+      try {
+        let loadPropertiesTask: Promise<
+          FeatureCollection<Geometry, PIMS_Property_Location_View> | undefined
+        >;
+
+        let findByPlanNumberTask:
+          | Promise<
+              FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined
+            >
+          | undefined = undefined;
+
+        loadPropertiesTask = loadPimsProperties(filter);
+
+        const forceExactMatch = true;
+
+        if (filter?.SURVEY_PLAN_NUMBER) {
+          findByPlanNumberTask = fullyAttributedServiceFindByPLanNumber(
+            filter?.SURVEY_PLAN_NUMBER,
+            forceExactMatch,
+          );
+        }
+
+        let planNumberInventoryData:
+          | FeatureCollection<Geometry, PIMS_Property_Location_View>
+          | undefined;
+        try {
+          planNumberInventoryData = await loadPropertiesTask;
+        } catch (err) {
+          setModalContent({
+            title: 'Unable to connect to PIMS Inventory',
+            message:
+              'PIMS is unable to connect to connect to the PIMS Inventory map service. You may need to log out and log into the application in order to restore this functionality. If this error persists, contact a site administrator.',
+            okButtonText: 'Log out',
+            cancelButtonText: 'Continue working',
+            handleOk: () => {
+              logout();
+            },
+            handleCancel: () => {
+              setDisplayModal(false);
+            },
+          });
+          setDisplayModal(true);
+        }
+        const planNumberFullyAttributedData = await findByPlanNumberTask;
+
+        // If the property was found on the pims inventory, use that.
+        if (planNumberInventoryData?.features && planNumberInventoryData?.features?.length > 0) {
+          const validFeatures = planNumberInventoryData.features.filter(
+            feature => !!feature?.geometry,
+          );
+
+          result = {
+            pimsFeatures: {
+              type: planNumberInventoryData.type,
+              bbox: planNumberInventoryData.bbox,
+              features: validFeatures,
+            },
+            fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
+          };
+
+          if (validFeatures.length === 0) {
+            toast.info('No search results found');
+          } else {
+            toast.info(`${validFeatures.length} properties found`);
+          }
+        } else {
+          const attributedFeatures: FeatureCollection<
+            Geometry,
+            PMBC_FullyAttributed_Feature_Properties
+          > = {
+            type: 'FeatureCollection',
+            features: [...(planNumberFullyAttributedData?.features || [])],
+            bbox: planNumberFullyAttributedData?.bbox,
+          };
+          const validFeatures = attributedFeatures.features.filter(feature => !!feature?.geometry);
+          result = {
+            pimsFeatures: emptyPimsFeatureCollection,
+            fullyAttributedFeatures: {
+              type: attributedFeatures.type,
+              bbox: attributedFeatures.bbox,
+              features: validFeatures,
+            },
+          };
+
+          if (validFeatures.length === 0) {
+            toast.info('No search results found');
+          } else {
+            toast.info(`${validFeatures.length} properties found`);
+          }
+        }
+      } catch (error) {
+        toast.error((error as Error).message, { autoClose: 7000 });
+      } finally {
+      }
+
+      return result;
+    },
+    [
+      fullyAttributedServiceFindByPLanNumber,
+      loadPimsProperties,
+      logout,
+      setDisplayModal,
+      setModalContent,
+    ],
   );
 
   const searchMany = useCallback(
@@ -199,6 +309,7 @@ export const useMapSearch = () => {
 
   return {
     searchOneLocation,
+    searchByPlanNumber,
     searchMany,
     loadingPimsProperties: pimsPropertyLayerService.loadPropertyLayer,
     loadingPimsPropertiesResponse: pimsPropertyLayerService.loadPropertyLayer.response,

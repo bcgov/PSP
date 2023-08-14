@@ -2,8 +2,7 @@ import { CellProps } from 'react-table';
 
 import { ColumnWithProps, Table } from '@/components/Table';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
-import { formatMoney, stringToFragment } from '@/utils';
-import { prettyFormatDate } from '@/utils/utils';
+import { formatMoney, prettyFormatDate, stringToFragment } from '@/utils';
 
 interface ISalesTableProps {
   salesData?: IBcAssessmentSummary['SALES'];

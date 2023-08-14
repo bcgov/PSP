@@ -18,8 +18,8 @@ namespace Pims.Dal.Entities
     {
         public PimsInterestHolder()
         {
-            PimsAcquisitionPayees = new HashSet<PimsAcquisitionPayee>();
-            PimsForm8s = new HashSet<PimsForm8>();
+            PimsCompensationRequisitions = new HashSet<PimsCompensationRequisition>();
+            PimsExpropriationPayments = new HashSet<PimsExpropriationPayment>();
             PimsInthldrPropInterests = new HashSet<PimsInthldrPropInterest>();
         }
 
@@ -97,10 +97,10 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(PrimaryContactId))]
         [InverseProperty(nameof(PimsPerson.PimsInterestHolderPrimaryContacts))]
         public virtual PimsPerson PrimaryContact { get; set; }
-        [InverseProperty(nameof(PimsAcquisitionPayee.InterestHolder))]
-        public virtual ICollection<PimsAcquisitionPayee> PimsAcquisitionPayees { get; set; }
-        [InverseProperty(nameof(PimsForm8.InterestHolder))]
-        public virtual ICollection<PimsForm8> PimsForm8s { get; set; }
+        [InverseProperty(nameof(PimsCompensationRequisition.InterestHolder))]
+        public virtual ICollection<PimsCompensationRequisition> PimsCompensationRequisitions { get; set; }
+        [InverseProperty(nameof(PimsExpropriationPayment.InterestHolder))]
+        public virtual ICollection<PimsExpropriationPayment> PimsExpropriationPayments { get; set; }
         [InverseProperty(nameof(PimsInthldrPropInterest.InterestHolder))]
         public virtual ICollection<PimsInthldrPropInterest> PimsInthldrPropInterests { get; set; }
     }

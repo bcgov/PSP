@@ -23,6 +23,7 @@ env:
   TAG_PROD: "prod"
   INSTANCE: "-test"
   NAMESPACE_OVERRIDE: "3cd915-dev"
+  RELEASE_TAG: "dev"
 
 on: workflow_dispatch
 
@@ -40,26 +41,9 @@ jobs:
           notification-color: 17a2b8
           timezone: America/Los_Angeles
 
-  retag:
-    name: retag frontend
-    needs: ci-cd-start-notification
-    runs-on: ubuntu-latest
-    steps:
-      - name: Login to OpenShift
-        uses: redhat-actions/oc-login@v1
-        with:
-          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
-          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
-          insecure_skip_tls_verify: true
-          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Retag api/app images)
-        run: |
-          oc tag pims-api:dev pims-api:test
-          oc tag pims-app:dev pims-app:test
-
   deploy:
-    name: Deploy frontend and api to OpenShift
-    needs: retag
+    name: Retag/Deploy frontend and api to OpenShift
+    needs: ci-cd-start-notification
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code

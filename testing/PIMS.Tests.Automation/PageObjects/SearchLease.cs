@@ -62,16 +62,16 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Search a Lease/License
         public void NavigateToSearchLicense()
         {
-            Wait(5000);
-            webDriver.FindElement(menuManagementButton).Click();
+            Wait();
+            FocusAndClick(menuManagementButton);
 
             Wait();
-            webDriver.FindElement(searchLicenseButton).Click();
+            FocusAndClick(searchLicenseButton);
         }
 
         public void SearchLicenseByLFile(string lFile)
         {
-            Wait();
+            WaitUntilVisible(searchLicenseLFileInput);
             webDriver.FindElement(searchLicenseLFileInput).SendKeys(lFile);
             webDriver.FindElement(searchLicenseActiveStatusDeleteBttn).Click();
             webDriver.FindElement(searchLicenseSearchButton).Click();
@@ -79,56 +79,56 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SearchLastLease()
         {
-            Wait();
+            WaitUntilClickable(searchLicenseResetButton);
             webDriver.FindElement(searchLicenseResetButton).Click();
 
-            Wait();
+            WaitUntilClickable(searchLicenseActiveStatusDeleteBttn);
             webDriver.FindElement(searchLicenseActiveStatusDeleteBttn).Click();
             webDriver.FindElement(searchLicenseSearchButton).Click();
 
-            Wait();
+            WaitUntilClickable(searchLicenseOrderByLFileBttn);
             webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
             webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
         }
 
         public void SelectFirstOption()
         {
-            Wait();
+            WaitUntilClickable(searchLicense1stResultLink);
             webDriver.FindElement(searchLicense1stResultLink).Click();
 
-            Wait();
+            WaitUntilVisible(searchLicenseFileHeaderCode);
             Assert.True(webDriver.FindElement(searchLicenseFileHeaderCode).Displayed);
         }
 
         public void FilterLeasesFiles(string pid, string expiryDate, string tenant, string status)
         {
-            Wait();
+            WaitUntilClickable(searchLicenseResetButton);
             webDriver.FindElement(searchLicenseResetButton).Click();
             webDriver.FindElement(searchLicenseActiveStatusDeleteBttn).Click();
 
-            Wait();
+            WaitUntilClickable(searchBySelect);
             ChooseSpecificSelectOption(searchBySelect, "PID/PIN");
             webDriver.FindElement(searchLicensePIDInput).SendKeys(pid);
             webDriver.FindElement(searchLicenceFromDateInput).SendKeys(expiryDate);
             webDriver.FindElement(searchLicenceTenantInput).SendKeys(tenant);
             webDriver.FindElement(searchLicenseStatusInput).Click();
 
-            Wait();
+            WaitUntilClickable(searchLicenseStatusOptions);
             ChooseMultiSelectSpecificOption(searchLicenseStatusOptions, status);
 
-            Wait();
+            WaitUntilClickable(searchLicenseSearchButton);
             webDriver.FindElement(searchLicenseSearchButton).Click();
         }
 
         public Boolean SearchFoundResults()
         {
-            Wait();
+            WaitUntilVisible(searchLicenseResultsTable1stResult);
             return webDriver.FindElements(searchLicenseResultsTable1stResult).Count > 0;
         }
 
         public void VerifySearchLeasesView()
         {
-            Wait();
+            WaitUntilVisible(searchBySelect);
 
             //Search Leases Title
             Assert.True(webDriver.FindElement(searchLicenseTitle).Displayed);
@@ -166,7 +166,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLeaseTableContent(string expiryDate, string program, string status)
         {
-            Wait(1500);
+            WaitUntilVisibleText(searchLicense1stResultExpiryDateContent, webDriver.FindElement(searchLicense1stResultExpiryDateContent).Text);
 
             Assert.True(webDriver.FindElement(searchLicense1stResultLink).Displayed);
             Assert.True(webDriver.FindElement(searchLicense1stResultExpiryDateContent).Text.Equals(TransformDateFormat(expiryDate)));

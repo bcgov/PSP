@@ -34,6 +34,7 @@ const emptyFilter = {
   longitude: '',
   page: undefined,
   pinOrPid: '',
+  planNumber: '',
   quantity: undefined,
   searchBy: 'address',
 };
@@ -52,6 +53,7 @@ const defaultFilter = {
   parcelId: '9',
   rentableArea: '',
   pinOrPid: '',
+  planNumber: '',
   quantity: '',
   maxAssessedValue: '',
   maxMarketValue: '',

@@ -61,40 +61,39 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Tenants Section
         public void NavigateToTenantSection()
         {
-            Wait();
+            WaitUntilClickable(licenseTenantLink);
             webDriver.FindElement(licenseTenantLink).Click();
         }
 
         //Edit Tenant section
         public void EditTenant()
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(20));
-            wait.Until(ExpectedConditions.ElementIsVisible(tenantEditIcon));
-
+            WaitUntilClickable(tenantEditIcon);
             webDriver.FindElement(tenantEditIcon).Click();
         }
 
         //Search and add a new tenant
         public void AddIndividualTenant(Tenant tenant)
         {
-            Wait();
-
+            WaitUntilClickable(tenantAddTenantsBttn);
             webDriver.FindElement(tenantAddTenantsBttn).Click();
 
-            Wait(5000);
+            Wait(3000);
             webDriver.FindElement(tenantSearchInput).SendKeys(tenant.Summary);
             webDriver.FindElement(tenantIndividualRadioBttn).Click();
             webDriver.FindElement(tenantSearchBttn).Click();
 
-            Wait();
+            WaitUntilClickable(tenantSearchInput);
             ScrollToElement(tenantSearchInput);
+
+            WaitUntilClickable(tenantFirstResultRadioBttn);
             webDriver.FindElement(tenantFirstResultRadioBttn).Click();
 
-            Wait();
+            WaitUntilClickable(tenantsAddSelectedButton);
             webDriver.FindElement(tenantsAddSelectedButton).Click();
 
             //Choose tenant type
-            Wait();
+            WaitUntilClickable(tenantType1stSelect);
             ChooseSpecificSelectOption(tenantType1stSelect, tenant.TenantType);
 
             //Verify that the Primary Contact displays "Not applicable"
@@ -103,26 +102,24 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddOrganizationTenant(Tenant tenant)
         {
-            Wait();
-
+            WaitUntilClickable(tenantAddTenantsBttn);
             webDriver.FindElement(tenantAddTenantsBttn).Click();
 
-            Wait();
+            Wait(3000);
             webDriver.FindElement(tenantSearchInput).SendKeys(tenant.Summary);
             webDriver.FindElement(tenantOrganizationRadioBttn).Click();
             webDriver.FindElement(tenantSearchBttn).Click();
 
-            Wait();
             ScrollToElement(tenantSearchInput);
             webDriver.FindElement(tenantFirstResultRadioBttn).Click();
 
-            Wait();
+            WaitUntilClickable(tenantsAddSelectedButton);
             webDriver.FindElement(tenantsAddSelectedButton).Click();
 
-            Wait(5000);
             //Choose a primary contact if there's the option
             if (webDriver.FindElements(tenantPrimaryContact1stSelect).Count > 0)
             {
+                WaitUntilClickable(tenantPrimaryContact1stSelect);
                 ChooseSpecificSelectOption(tenantPrimaryContact1stSelect, tenant.PrimaryContact);
             }
 
@@ -132,7 +129,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteLastTenant()
         {
-            Wait();
+            WaitUntilClickable(tenantsTotalSelected);
 
             var totalTenantsSelected = webDriver.FindElements(tenantsTotalSelected).Count;
             webDriver.FindElement(By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child("+ totalTenantsSelected +") svg:has(title)")).Click();
@@ -140,17 +137,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditTenant(Tenant tenant)
         {
-            Wait();
-
             var totalTenantsIndex = webDriver.FindElements(tenantsTotalSelected).Count -1;
             By lastTenantSelector = By.Id("input-tenants."+ totalTenantsIndex +".tenantType");
+
+            WaitUntilClickable(lastTenantSelector);
             ChooseSpecificSelectOption(lastTenantSelector, tenant.TenantType);
         }
 
         public void SaveTenant()
-        {
-            Wait();
-
+        { 
             //Save
             ButtonElement("Save");
 
@@ -166,32 +161,32 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int TotalTenants()
         {
-            Wait();
+            WaitUntilVisible(tenantsTotalTenantsView);
             return webDriver.FindElements(tenantsTotalTenantsView).Count;
             
         }
 
         public int TotalRepresentatives()
         {
-            Wait();
+            WaitUntilVisible(tenantsTotalRepresentativeView);
             return webDriver.FindElements(tenantsTotalRepresentativeView).Count;
         }
 
         public int TotalManagers()
         {
-            Wait();
+            WaitUntilVisible(tenantsTotalManagerView);
             return webDriver.FindElements(tenantsTotalManagerView).Count;
         }
 
         public int TotalUnknown()
         {
-            Wait();
+            WaitUntilVisible(tenantsTotalUnknownView);
             return webDriver.FindElements(tenantsTotalUnknownView).Count;
         }
 
         public void VerifyTenantsInitForm()
         {
-            Wait();
+            WaitUntilVisible(tenantsSelectedTableSummaryColumn);
 
             Assert.True(webDriver.FindElement(tenantsSubtittle).Displayed);
             Assert.True(webDriver.FindElement(tenantsInstructions).Displayed);

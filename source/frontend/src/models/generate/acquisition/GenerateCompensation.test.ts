@@ -1,10 +1,10 @@
 import moment from 'moment';
 
 import { getMockApiCompensationList } from '@/mocks/compensations.mock';
-import { getMockAcquisitionPayee } from '@/mocks/mockAcquisitionPayee.mock';
 import { mockCompReqH120s } from '@/mocks/mockCompReqH120s.mock';
 import { getMockH120Categories } from '@/mocks/mockH120Categories.mock';
 
+import { Api_GenerateAcquisitionFile } from './GenerateAcquisitionFile';
 import { Api_GenerateCompensation } from './GenerateCompensation';
 
 describe('GenerateCompensation tests', () => {
@@ -96,25 +96,22 @@ describe('GenerateCompensation tests', () => {
   });
 
   it('generates with a payee', () => {
-    let mockPayee = getMockAcquisitionPayee();
-
+    const mockCompensations = getMockApiCompensationList();
     const compensation = new Api_GenerateCompensation(
-      getMockApiCompensationList()[1],
-      {} as any,
+      { ...mockCompensations[0], gstNumber: '1' },
+      new Api_GenerateAcquisitionFile({ file: null }),
       getMockH120Categories(),
       [],
-      mockPayee,
     );
     expect(compensation.payee.gst_number).toBe('1');
     expect(compensation.payee.payment_in_trust).toBe(false);
 
-    mockPayee.isPaymentInTrust = true;
+    mockCompensations[0].isPaymentInTrust = true;
     const compensationInTrust = new Api_GenerateCompensation(
-      getMockApiCompensationList()[1],
-      {} as any,
+      mockCompensations[0],
+      new Api_GenerateAcquisitionFile({ file: null }),
       getMockH120Categories(),
       [],
-      mockPayee,
     );
 
     expect(compensationInTrust.payee.payment_in_trust).toBe(true);
@@ -123,10 +120,9 @@ describe('GenerateCompensation tests', () => {
   it('can generate a payee with no cheques', () => {
     const compensation = new Api_GenerateCompensation(
       getMockApiCompensationList()[1],
-      {} as any,
+      new Api_GenerateAcquisitionFile({ file: null }),
       getMockH120Categories(),
       [],
-      { ...getMockAcquisitionPayee() },
     );
     expect(compensation.payee.total_amount).toBe('$35.00');
     expect(compensation.payee.payment_in_trust).toBe(false);

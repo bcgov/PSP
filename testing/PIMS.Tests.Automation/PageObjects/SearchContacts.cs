@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -53,18 +54,19 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Search a Contact
         public void NavigateToSearchContact()
         {
+            Wait(3000);
 
-            Wait();
-            webDriver.FindElement(menuContactsButton).Click();
+            WaitUntilClickable(menuContactsButton);
+            FocusAndClick(menuContactsButton);
 
-            Wait();
-            webDriver.FindElement(searchContactButton).Click();
+            WaitUntilClickable(searchContactButton);
+            FocusAndClick(searchContactButton);
         }
 
         //Search For a general contact
         public void SearchGeneralContact(string searchCriteria)
         {
-            Wait();
+            WaitUntilClickable(searchContactNameInput);
             webDriver.FindElement(searchContactNameInput).SendKeys(searchCriteria);
             webDriver.FindElement(searchContactResultsBttn).Click();
         }
@@ -72,7 +74,6 @@ namespace PIMS.Tests.Automation.PageObjects
         //Search for an Individual Contact
         public void SearchIndividualContact(string searchCriteria)
         {
-            Wait();
             FocusAndClick(searchContactIndRadioBttn);
             webDriver.FindElement(searchContactNameInput).SendKeys(searchCriteria);
             webDriver.FindElement(searchContactResultsBttn).Click();
@@ -81,7 +82,6 @@ namespace PIMS.Tests.Automation.PageObjects
         //Search for an Organization Contact
         public void SearchOrganizationContact(string searchCriteria)
         {
-            Wait();
             FocusAndClick(searchContactOrgRadioBttn);
             webDriver.FindElement(searchContactNameInput).SendKeys(searchCriteria);
             webDriver.FindElement(searchContactResultsBttn).Click();
@@ -90,43 +90,41 @@ namespace PIMS.Tests.Automation.PageObjects
         //Pick the first Search Result
         public void SelectFirstResultLink()
         {
-            Wait();
+            WaitUntilClickable(searchContactFirstResultLink);
             webDriver.FindElement(searchContactFirstResultLink).Click();
         }
 
         //Click on Create new contact
         public void CreateNewContactFromSearch()
         {
-            Wait(4000);
             ButtonElement("Add new contact");
-
         }
 
         //Verify Links functionality on Search Contacts
         public void VerifySearchLinks(string searchCriteria)
         {
-            Wait();
+            WaitUntilClickable(searchContactNameInput);
             webDriver.FindElement(searchContactNameInput).SendKeys(searchCriteria);
             webDriver.FindElement(searchContactResultsBttn).Click();
 
             //Verify Update link
-            Wait();
+            WaitUntilClickable(searchContactUpdateBttn);
             webDriver.FindElement(searchContactUpdateBttn).Click();
 
-            Wait();
+            WaitUntilVisible(searchUpdateForm);
             Assert.True(webDriver.FindElement(searchUpdateForm).Displayed);
 
             webDriver.FindElement(searchContactBackLink).Click();
 
-            Wait();
+            WaitUntilVisible(searchContactNameInput);
             webDriver.FindElement(searchContactNameInput).SendKeys(searchCriteria);
             webDriver.FindElement(searchContactResultsBttn).Click();
 
             //Verify View Link
-            Wait();
+            WaitUntilClickable(searchContactUpdateBttn);
             webDriver.FindElement(searchContactUpdateBttn).Click();
 
-            Wait();
+            WaitUntilVisible(searchContactViewContactInfoHeader);
             Assert.True(webDriver.FindElement(searchContactViewContactInfoHeader).Displayed);
 
             webDriver.FindElement(searchContactBackLink).Click();
@@ -136,7 +134,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Verify Search Contacts Main Screen
         public Boolean SearchContactRender()
         {
-            Wait();
+            WaitUntilVisible(searchContactMenuItems);
             ScrollToElement(searchContactMenuItems);
 
             return webDriver.FindElement(searchContactTable).Displayed
@@ -147,13 +145,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string GetNoSearchMessage()
         {
-            Wait();
+            WaitUntilVisible(searchContactNoResults);
             return webDriver.FindElement(searchContactNoResults).Text;
         }
 
         public void VerifyContactsListView()
         {
-            Wait();
+            WaitUntilVisible(searchContactTableSummaryColumn);
 
             //Search Bar Elements
             Assert.True(webDriver.FindElement(searchContactOrgRadioBttn).Displayed);
@@ -179,7 +177,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchContactTableUpdateViewColumn).Displayed);
 
             //Pagination Elements
-            Wait();
+            WaitUntilVisible(searchContactMenuItems);
             Assert.True(webDriver.FindElement(searchContactMenuItems).Displayed);
             Assert.True(webDriver.FindElement(searchContactPaginationList).Displayed);
         }

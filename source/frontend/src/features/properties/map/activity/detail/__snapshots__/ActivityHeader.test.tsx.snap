@@ -50,7 +50,7 @@ exports[`ActivityHeader component renders as expected 1`] = `
         >
           Created: 
           <strong>
-            Jan 1, 0001
+            Dec 31, 0000
           </strong>
            by 
           <span
@@ -75,7 +75,7 @@ exports[`ActivityHeader component renders as expected 1`] = `
         >
           Last updated: 
           <strong>
-            Feb 1, 0001
+            Jan 31, 0001
           </strong>
            by 
           <span

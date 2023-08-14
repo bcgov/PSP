@@ -69,18 +69,9 @@ const getColumnsByProperty = (
     minWidth: 60,
     maxWidth: 60,
     Cell: (cellProps: CellProps<InterestHolderViewRow, Api_InterestHolderProperty | null>) => {
-      const propertyInterestTypes =
-        cellProps.row.original.interestHolderProperty?.propertyInterestTypes;
-      let firstDescription = '';
-      if (
-        propertyInterestTypes !== undefined &&
-        propertyInterestTypes !== null &&
-        propertyInterestTypes.length > 0
-      ) {
-        firstDescription = propertyInterestTypes[0].description || '';
-      }
+      const propertyInterestType = cellProps.row.original.interestHolderType?.description ?? '';
 
-      return <>{firstDescription}</>;
+      return <>{propertyInterestType}</>;
     },
   },
 ];
