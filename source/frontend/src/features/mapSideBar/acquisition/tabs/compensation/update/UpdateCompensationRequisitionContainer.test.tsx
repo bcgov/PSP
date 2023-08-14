@@ -1,5 +1,6 @@
 import moment from 'moment';
 
+import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import {
   mockAcquisitionFileOwnersResponse,
@@ -12,7 +13,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { systemConstantsSlice } from '@/store/slices/systemConstants/systemConstantsSlice';
 import { act, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
-import { CompensationRequisitionFormModel, PayeeOption } from './models';
+import { CompensationRequisitionFormModel } from './models';
 import UpdateCompensationRequisitionContainer, {
   UpdateCompensationRequisitionContainerProps,
 } from './UpdateCompensationRequisitionContainer';

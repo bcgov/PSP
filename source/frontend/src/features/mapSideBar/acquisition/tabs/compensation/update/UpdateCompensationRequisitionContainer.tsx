@@ -2,6 +2,7 @@ import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
 
 import { SelectOption } from '@/components/common/form';
+import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
@@ -10,7 +11,7 @@ import { Api_AcquisitionFile, Api_AcquisitionFilePerson } from '@/models/api/Acq
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
-import { CompensationRequisitionFormModel, PayeeOption } from './models';
+import { CompensationRequisitionFormModel } from './models';
 import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitionForm';
 
 export interface UpdateCompensationRequisitionContainerProps {
