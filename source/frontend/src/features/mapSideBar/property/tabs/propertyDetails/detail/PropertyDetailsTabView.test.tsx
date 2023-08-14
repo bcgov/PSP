@@ -1,6 +1,6 @@
 import { createMemoryHistory } from 'history';
 
-import { Claims, PropertyAdjacentLandTypes, PropertyTenureTypes } from '@/constants/index';
+import { Claims, PropertyTenureTypes } from '@/constants/index';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { Api_Property } from '@/models/api/Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -51,7 +51,7 @@ describe('PropertyDetailsTabView component', () => {
     };
 
     const { getByText } = setup({ property });
-    expect(getByText('Highway / Road established by:')).toBeVisible();
+    expect(getByText('Highway / Road Details:')).toBeVisible();
   });
 
   it('does not show highway/road multi-select when tenure status is not Highway/Road', () => {
@@ -61,27 +61,22 @@ describe('PropertyDetailsTabView component', () => {
     };
 
     const { queryByText } = setup({ property });
-    expect(queryByText('Highway / Road established by:')).toBeNull();
+    expect(queryByText('Highway / Road Details:')).toBeNull();
   });
 
-  it('shows first nations information when adjacent land is Indian Reserve', () => {
+  it('shows first nations information when tenure status is Indian Reserve', () => {
     const property: Api_Property = {
       ...mockPropertyInfo,
-      tenures: [{ propertyTenureTypeCode: { id: PropertyTenureTypes.AdjacentLand } }],
-      adjacentLands: [
-        { propertyAdjacentLandTypeCode: { id: PropertyAdjacentLandTypes.IndianReserve } },
-      ],
+      tenures: [{ propertyTenureTypeCode: { id: PropertyTenureTypes.IndianReserve } }],
     };
 
     const { getByText } = setup({ property });
     expect(getByText(/First Nations Information/i)).toBeVisible();
   });
 
-  it('does not show first nations information when adjacent land is not Indian Reserve', () => {
+  it('does not show first nations information when tenure status is not Indian Reserve', () => {
     const property: Api_Property = {
       ...mockPropertyInfo,
-      tenures: [{ propertyTenureTypeCode: { id: PropertyTenureTypes.AdjacentLand } }],
-      adjacentLands: [{ propertyAdjacentLandTypeCode: { id: PropertyAdjacentLandTypes.Crown } }],
     };
 
     const { queryByText } = setup({ property });
