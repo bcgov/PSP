@@ -106,10 +106,16 @@ const UpdateCompensationRequisitionContainer: React.FC<
 
           const teamMemberOptions: PayeeOption[] =
             acquisitionFile.acquisitionTeam
-              ?.filter((x): x is Api_AcquisitionFilePerson => !!x)
-              .filter(x => x.personProfileTypeCode === 'MOTILAWYER')
+              ?.filter(
+                (x): x is Api_AcquisitionFilePerson =>
+                  !!x && x.personProfileTypeCode === 'MOTILAWYER',
+              )
               .map(x => PayeeOption.createTeamMember(x)) || [];
           options.push(...teamMemberOptions);
+
+          if (!!compensation.legacyPayee) {
+            options.push(PayeeOption.createLegacyPayee(compensation));
+          }
 
           setPayeeOptions(options);
         },
