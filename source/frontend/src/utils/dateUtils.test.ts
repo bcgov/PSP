@@ -1,8 +1,8 @@
 import {
   formatUTCDateTime,
   getCurrentFiscalYear,
-  prettyFormatDate,
   prettyFormatDateTime,
+  prettyFormatUTCDate,
 } from './';
 
 describe('Date utils', () => {
@@ -24,16 +24,16 @@ describe('Date utils', () => {
     });
   });
 
-  describe('prettyFormatDate', () => {
+  describe('prettyFormatUTCDate', () => {
     it('should return empty string if no input date is supplied', () => {
-      expect(prettyFormatDate(null)).toBe('');
+      expect(prettyFormatUTCDate(null)).toBe('');
     });
     it('should support Date object as parameter', () => {
-      expect(prettyFormatDate(new Date('2023-07-31T10:00:00-07:00'))).toBe('Jul 31, 2023');
+      expect(prettyFormatUTCDate(new Date('2023-07-31T10:00:00-07:00'))).toBe('Jul 31, 2023');
     });
     it('should format API Date assuming the date was recorded in UTC', () => {
-      expect(prettyFormatDate('2023-07-31T17:00:00')).toBe('Jul 31, 2023'); // 5pm UTC = 10am PST
-      expect(prettyFormatDate('2023-08-01T02:00:00')).toBe('Jul 31, 2023'); // 2am (next day) UTC = 7pm PST
+      expect(prettyFormatUTCDate('2023-07-31T17:00:00')).toBe('Jul 31, 2023'); // 5pm UTC = 10am PST
+      expect(prettyFormatUTCDate('2023-08-01T02:00:00')).toBe('Jul 31, 2023'); // 2am (next day) UTC = 7pm PST
     });
   });
 

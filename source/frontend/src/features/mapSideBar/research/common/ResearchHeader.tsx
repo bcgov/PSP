@@ -6,7 +6,7 @@ import { HeaderField } from '@/components/common/HeaderField/HeaderField';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import Api_TypeCode from '@/models/api/TypeCode';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 
 export interface IResearchHeaderProps {
   researchFile?: Api_ResearchFile;
@@ -75,7 +75,7 @@ const ResearchHeader: React.FunctionComponent<
         <Row className="no-gutters">
           <Col className="text-right">
             <StyleSmallText>
-              Created: <strong>{prettyFormatDate(researchFile?.appCreateTimestamp)}</strong> by{' '}
+              Created: <strong>{prettyFormatUTCDate(researchFile?.appCreateTimestamp)}</strong> by{' '}
               <UserNameTooltip
                 userName={researchFile?.appCreateUserid}
                 userGuid={researchFile?.appCreateUserGuid}
@@ -87,7 +87,7 @@ const ResearchHeader: React.FunctionComponent<
           <Col className="text-right">
             <StyleSmallText>
               Last updated:{' '}
-              <strong>{prettyFormatDate(researchFile?.appLastUpdateTimestamp)}</strong> by{' '}
+              <strong>{prettyFormatUTCDate(researchFile?.appLastUpdateTimestamp)}</strong> by{' '}
               <UserNameTooltip
                 userName={researchFile?.appLastUpdateUserid}
                 userGuid={researchFile?.appLastUpdateUserGuid}

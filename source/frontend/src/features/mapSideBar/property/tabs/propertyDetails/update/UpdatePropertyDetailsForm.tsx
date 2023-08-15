@@ -19,7 +19,7 @@ import * as API from '@/constants/API';
 import { PropertyTenureTypes } from '@/constants/index';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 import { stringToBoolean } from '@/utils/formUtils';
 
 import {
@@ -255,7 +255,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
                 userName={values?.pphStatusUpdateUserid}
                 userGuid={values?.pphStatusUpdateUserGuid}
               />{' '}
-              on {prettyFormatDate(values?.pphStatusUpdateTimestamp)}
+              on {prettyFormatUTCDate(values?.pphStatusUpdateTimestamp)}
             </p>
           )}
         </SectionField>

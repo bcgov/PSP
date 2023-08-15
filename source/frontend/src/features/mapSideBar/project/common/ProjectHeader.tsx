@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Api_Project } from '@/models/api/Project';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 
 export interface IProjectHeaderProps {
   project?: Api_Project;
@@ -35,7 +35,7 @@ const ProjectHeader: React.FunctionComponent<React.PropsWithChildren<IProjectHea
         <Row className="no-gutters">
           <Col className="text-right">
             <StyleSmallText>
-              Created: <strong>{prettyFormatDate(project?.appCreateTimestamp)}</strong> by{' '}
+              Created: <strong>{prettyFormatUTCDate(project?.appCreateTimestamp)}</strong> by{' '}
               <UserNameTooltip
                 userName={project?.appCreateUserid}
                 userGuid={project?.appCreateUserGuid}
@@ -46,7 +46,8 @@ const ProjectHeader: React.FunctionComponent<React.PropsWithChildren<IProjectHea
         <Row className="no-gutters">
           <Col className="text-right">
             <StyleSmallText>
-              Last updated: <strong>{prettyFormatDate(project?.appLastUpdateTimestamp)}</strong> by{' '}
+              Last updated: <strong>{prettyFormatUTCDate(project?.appLastUpdateTimestamp)}</strong>{' '}
+              by{' '}
               <UserNameTooltip
                 userName={project?.appLastUpdateUserid}
                 userGuid={project?.appLastUpdateUserGuid}
