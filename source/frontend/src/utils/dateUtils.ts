@@ -9,11 +9,21 @@ export const getCurrentFiscalYear = (): number => {
 };
 
 /**
- * Formats the passed string date with custom date format: 'MMM D, YYYY'
- * @param date UTC date/time string.
+ * Formats the passed string date (in local timezone) with custom date format: 'MMM D, YYYY'
+ * @param date date/time string in LOCAL timezone (not in UTC).
  * @returns A string representing the input date in the supplied date/time format
  */
 export const prettyFormatDate = (date?: string | Date | Moment | null) => {
+  if (typeof date === 'string' && !!date) return moment.utc(date).local().format('MMM D, YYYY');
+  return !!date ? moment.utc(date).local().format('MMM D, YYYY') : '';
+};
+
+/**
+ * Formats the passed string UTC date with custom date format: 'MMM D, YYYY'
+ * @param date UTC date/time string.
+ * @returns A string representing the input date in the supplied date/time format
+ */
+export const prettyFormatUTCDate = (date?: string | Date | Moment | null) => {
   return formatUTCDateTime(date, 'MMM D, YYYY');
 };
 
