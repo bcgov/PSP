@@ -14,8 +14,8 @@ export const getCurrentFiscalYear = (): number => {
  * @returns A string representing the input date in the supplied date/time format
  */
 export const prettyFormatDate = (date?: string | Date | Moment | null) => {
-  if (typeof date === 'string' && !!date) return moment.utc(date).local().format('MMM D, YYYY');
-  return !!date ? moment.utc(date).local().format('MMM D, YYYY') : '';
+  if (typeof date === 'string' && !!date) return moment(date).format('MMM D, YYYY');
+  return !!date ? moment(date).format('MMM D, YYYY') : '';
 };
 
 /**
