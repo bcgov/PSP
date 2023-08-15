@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
 import { getMockApiLease } from '@/mocks/lease.mock';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { ILeaseHeaderProps, LeaseHeader } from './LeaseHeader';
@@ -41,7 +41,7 @@ describe('LeaseHeader component', () => {
     expect(getByText(testLease.lFileNo!)).toBeVisible();
     expect(getByText(testLease.appCreateUserid!)).toBeVisible();
     expect(getByText(testLease.appLastUpdateUserid!)).toBeVisible();
-    expect(getAllByText(prettyFormatDate(testLease.appCreateTimestamp))[0]).toBeVisible();
-    expect(getAllByText(prettyFormatDate(testLease.appLastUpdateTimestamp))[0]).toBeVisible();
+    expect(getAllByText(prettyFormatUTCDate(testLease.appCreateTimestamp))[0]).toBeVisible();
+    expect(getAllByText(prettyFormatUTCDate(testLease.appLastUpdateTimestamp))[0]).toBeVisible();
   });
 });

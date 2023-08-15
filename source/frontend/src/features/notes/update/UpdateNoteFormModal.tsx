@@ -7,7 +7,7 @@ import { TextArea } from '@/components/common/form';
 import { GenericModal } from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 
 import { NoteForm } from '../models';
 
@@ -81,7 +81,7 @@ const FormBody: React.FC<React.PropsWithChildren<FormikProps<NoteForm>>> = ({ va
         </Col>
         <Col>
           <span>
-            <strong>{prettyFormatDate(values?.appCreateTimestamp)}</strong> by{' '}
+            <strong>{prettyFormatUTCDate(values?.appCreateTimestamp)}</strong> by{' '}
             <UserNameTooltip
               userName={values?.appCreateUserid}
               userGuid={values?.appCreateUserGuid}
@@ -95,7 +95,7 @@ const FormBody: React.FC<React.PropsWithChildren<FormikProps<NoteForm>>> = ({ va
         </Col>
         <Col>
           <span>
-            <strong>{prettyFormatDate(values?.appLastUpdateTimestamp)}</strong> by{' '}
+            <strong>{prettyFormatUTCDate(values?.appLastUpdateTimestamp)}</strong> by{' '}
             <UserNameTooltip
               userName={values?.appLastUpdateUserid}
               userGuid={values?.appLastUpdateUserGuid}
