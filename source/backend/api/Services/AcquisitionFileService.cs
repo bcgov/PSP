@@ -325,6 +325,29 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
+            var currentInterestHolders = _interestHolderRepository.GetInterestHoldersByAcquisitionFile(acquisitionFileId);
+
+            // Verify that the interest holder is still the same (person or org)
+            if (currentInterestHolders.Count > 0)
+            {
+                foreach (var newInterestHolder in interestHolders)
+                {
+                    if (newInterestHolder.InterestHolderId != 0)
+                    {
+                        PimsInterestHolder currentInterestHolder = currentInterestHolders
+                            .FirstOrDefault(oldInth => oldInth.InterestHolderId == newInterestHolder.InterestHolderId);
+
+                        // If the stakeholder has changed (person or org) it means it is actually a new stakeholder, so reset all the ids.
+                        if (newInterestHolder.PersonId != currentInterestHolder.PersonId ||
+                            newInterestHolder.OrganizationId != currentInterestHolder.OrganizationId)
+                        {
+                            newInterestHolder.InterestHolderId = 0;
+                            newInterestHolder.PimsInthldrPropInterests.ForEach(pi => pi.PimsInthldrPropInterestId = 0);
+                        }
+                    }
+                }
+            }
+
             ValidateInterestHoldersDependency(acquisitionFileId, interestHolders);
             _interestHolderRepository.UpdateAllForAcquisition(acquisitionFileId, interestHolders);
             _interestHolderRepository.CommitTransaction();
