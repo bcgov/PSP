@@ -81,6 +81,7 @@ export class Form8FormModel {
     newForm.expropriatingAuthorityId = model.expropriatingAuthorityId;
     newForm.rowVersion = model.rowVersion;
     newForm.isDisabled = model.isDisabled;
+    newForm.description = model.description;
     newForm.paymentItems = model.paymentItems?.map(x => Form8PaymentItemModel.fromApi(x)) ?? [];
     newForm.payeeKey = getPayeeKey(model);
     newForm.expropriationAuthority = {
