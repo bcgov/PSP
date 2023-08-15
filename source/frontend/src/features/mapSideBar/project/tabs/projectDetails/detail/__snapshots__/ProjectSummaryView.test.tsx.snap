@@ -286,7 +286,7 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
               <div
                 class="c6 text-left col"
               >
-                Jan 31, 2023
+                Feb 1, 2023
               </div>
             </div>
             <div
@@ -304,7 +304,7 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
               <div
                 class="c6 text-left col"
               >
-                $60.00 as of Feb 1, 2023
+                $60.00 as of Feb 2, 2023
               </div>
             </div>
             <div
@@ -367,7 +367,7 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
               <div
                 class="c6 text-left col"
               >
-                Feb 2, 2023
+                Feb 3, 2023
               </div>
             </div>
             <div
@@ -385,7 +385,7 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
               <div
                 class="c6 text-left col"
               >
-                $61.00 as of Feb 3, 2023
+                $61.00 as of Feb 4, 2023
               </div>
             </div>
             <div
