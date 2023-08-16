@@ -83,6 +83,11 @@ namespace Pims.Api.Models.Concepts
         public TypeModel<short> RegionCode { get; set; }
 
         /// <summary>
+        /// get/set - List of Legacy Stakeholders.
+        /// </summary>
+        public IList<string> LegacyStakeholders { get; set; }
+
+        /// <summary>
         /// get/set - A list of research property relationships.
         /// </summary>
         public IList<AcquisitionFilePropertyModel> FileProperties { get; set; }

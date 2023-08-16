@@ -47,6 +47,7 @@ export class UpdateAcquisitionSummaryFormModel
     InterestHolderType.OWNER_REPRESENTATIVE,
   );
   otherInterestHolders: Api_InterestHolder[] = [];
+  legacyStakeholders: string[] = [];
 
   toApi(): Api_AcquisitionFile {
     return {
