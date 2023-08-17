@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import { ColumnWithProps } from '@/components/Table';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 
 import { ProjectSearchResultModel } from './models';
 
@@ -72,7 +72,7 @@ export const columns: ColumnWithProps<ProjectSearchResultModel>[] = [
       const updateDate = props.row.original.lastUpdatedDate;
       return (
         <>
-          <span>{prettyFormatDate(updateDate)}</span>
+          <span>{prettyFormatUTCDate(updateDate)}</span>
         </>
       );
     },

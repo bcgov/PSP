@@ -333,7 +333,7 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Sep 14, 2021
+                Sep 15, 2021
               </div>
               <div
                 class="td"
@@ -397,7 +397,7 @@ Integer nec odio.
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Feb 28, 2019
+                Mar 1, 2019
               </div>
               <div
                 class="td"

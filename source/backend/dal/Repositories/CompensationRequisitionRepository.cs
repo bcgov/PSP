@@ -64,22 +64,11 @@ namespace Pims.Dal.Repositories
             var existingCompensationRequisition = Context.PimsCompensationRequisitions
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.CompensationRequisitionId)) ?? throw new KeyNotFoundException();
 
+            // Don't let the frontend override the legacy payee - this is only intended to be populated via ETL
+            compensationRequisition.LegacyPayee = existingCompensationRequisition.LegacyPayee;
+
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqFinancial, long>(a => a.PimsCompReqFinancials, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqFinancials.ToArray(), true);
-
-            // Todo: fix this
-            /*if (compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is not null)
-            {
-                if (existingCompensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is not null)
-                {
-                    UpdatePayee(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault());
-                }
-                else
-                {
-                    Context.PimsAcquisitionPayees.Add(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault());
-                }
-            }*/
-
             return compensationRequisition;
         }
 
@@ -92,15 +81,9 @@ namespace Pims.Dal.Repositories
 
             if (deletedEntity != null)
             {
-                // TODO: Fix this;
-                /*foreach (var payee in deletedEntity.PimsAcquisitionPayees)
-                {
-                    Context.PimsAcquisitionPayees.Remove(new PimsAcquisitionPayee() { AcquisitionPayeeId = payee.AcquisitionPayeeId });
-                }*/
-
                 foreach (var financial in deletedEntity.PimsCompReqFinancials)
                 {
-                    Context.PimsCompReqFinancials.Remove(new PimsCompReqFinancial() { FinancialActivityCode = financial.FinancialActivityCode });
+                    Context.PimsCompReqFinancials.Remove(new PimsCompReqFinancial() { CompReqFinancialId = financial.CompReqFinancialId });
                 }
 
                 Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
@@ -110,7 +93,5 @@ namespace Pims.Dal.Repositories
             }
             return false;
         }
-
-
     }
 }

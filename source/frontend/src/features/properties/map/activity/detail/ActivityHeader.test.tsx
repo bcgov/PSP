@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getMockActivityResponse } from '@/mocks/activities.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import ActivityHeader, { IActivityHeaderProps } from './ActivityHeader';
@@ -52,8 +52,8 @@ describe('ActivityHeader component', () => {
     expect(
       getByText(`${testAcquisitionFile.fileNumber as string} - ${testAcquisitionFile.fileName}`),
     ).toBeVisible();
-    expect(getByText(prettyFormatDate(testActivity.appCreateTimestamp))).toBeVisible();
-    expect(getByText(prettyFormatDate(testActivity.appLastUpdateTimestamp))).toBeVisible();
+    expect(getByText(prettyFormatUTCDate(testActivity.appCreateTimestamp))).toBeVisible();
+    expect(getByText(prettyFormatUTCDate(testActivity.appLastUpdateTimestamp))).toBeVisible();
     expect(getByText(testActivity?.activityStatusTypeCode?.description ?? '')).toBeVisible();
   });
 
@@ -65,8 +65,8 @@ describe('ActivityHeader component', () => {
     expect(
       getByText(`${testResearchFile.fileNumber as string} - ${testResearchFile.fileName}`),
     ).toBeVisible();
-    expect(getByText(prettyFormatDate(testActivity.appCreateTimestamp))).toBeVisible();
-    expect(getByText(prettyFormatDate(testActivity.appLastUpdateTimestamp))).toBeVisible();
+    expect(getByText(prettyFormatUTCDate(testActivity.appCreateTimestamp))).toBeVisible();
+    expect(getByText(prettyFormatUTCDate(testActivity.appLastUpdateTimestamp))).toBeVisible();
     expect(getByText(testActivity?.activityStatusTypeCode?.description ?? '')).toBeVisible();
   });
 });

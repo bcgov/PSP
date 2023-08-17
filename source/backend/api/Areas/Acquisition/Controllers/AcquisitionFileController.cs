@@ -5,13 +5,14 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Areas.CompensationRequisition.Controllers;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
+using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -135,8 +136,6 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
 
-
-
         /// <summary>
         /// Update the acquisition file properties.
         /// </summary>
@@ -241,7 +240,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(CompensationRequisitionController),
+                nameof(AcquisitionFileController),
                 nameof(AddCompensationRequisition),
                 User.GetUsername(),
                 DateTime.Now);
@@ -251,6 +250,60 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             var newCompensationRequisition = _acquisitionService.AddCompensationRequisition(id, compensationReqEntity);
 
             return new JsonResult(_mapper.Map<CompensationRequisitionModel>(newCompensationRequisition));
+        }
+
+        /// <summary>
+        /// Get all Expropriation Payments from the Acquisition File.
+        /// </summary>
+        /// <param name="id">Acquisition File Id.</param>
+        /// <returns>List of all Expropriation Payments created for the acquisition file.</returns>
+        [HttpGet("{id:long}/expropriation-payments")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<ExpropriationPaymentModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "expropriation-payments" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetAcquisitionFileExpropriationPayments([FromRoute] long id)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(AcquisitionFileController),
+                nameof(GetAcquisitionFileExpropriationPayments),
+                User.GetUsername(),
+                DateTime.Now);
+            _logger.LogInformation($"Dispatching to service: {_acquisitionService.GetType()}");
+
+            var pimsForm8s = _acquisitionService.GetAcquisitionExpropriationPayments(id);
+            var form8s = _mapper.Map<List<ExpropriationPaymentModel>>(pimsForm8s);
+
+            return new JsonResult(form8s);
+        }
+
+        /// <summary>
+        /// Creates a new Form8 for the acquisition file.
+        /// </summary>
+        /// <param name="id">Acquisition File Id.</param>
+        /// <param name="expropriationPayment">Form8 Data Model.</param>
+        /// <returns></returns>
+        [HttpPost("{id:long}/expropriation-payments")]
+        [HasPermission(Permissions.AcquisitionFileEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ExpropriationPaymentModel), 201)]
+        [SwaggerOperation(Tags = new[] { "expropriation-payments" })]
+        public IActionResult AddExpropriationPayment([FromRoute] long id, [FromBody] ExpropriationPaymentModel expropriationPayment)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(AcquisitionFileController),
+                nameof(AddExpropriationPayment),
+                User.GetUsername(),
+                DateTime.Now);
+            _logger.LogInformation($"Dispatching to service: {_acquisitionService.GetType()}");
+
+            var expPaymentEntity = _mapper.Map<PimsExpropriationPayment>(expropriationPayment);
+            var newExpPaymentEntity = _acquisitionService.AddExpropriationPayment(id, expPaymentEntity);
+
+            return new JsonResult(_mapper.Map<ExpropriationPaymentModel>(newExpPaymentEntity));
         }
 
         #endregion

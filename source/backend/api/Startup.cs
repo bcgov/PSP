@@ -409,6 +409,7 @@ namespace Pims.Api
             services.AddScoped<ICompReqFinancialService, CompReqFinancialService>();
             services.AddScoped<IH120CategoryService, H120CategoryService>();
             services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<IExpropriationPaymentService, ExpropriationPaymentService>();
         }
 
         /// <summary>

@@ -2,7 +2,7 @@ import { rest, server } from '@/mocks/msw/server';
 import { mockProjectGetResponse } from '@/mocks/projects.mock';
 import { getUserMock } from '@/mocks/user.mock';
 import { Api_Project } from '@/models/api/Project';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import ProjectHeader, { IProjectHeaderProps } from './ProjectHeader';
@@ -38,8 +38,8 @@ describe('ProjectHeader component', () => {
   it('renders values as expected', () => {
     const { getByText } = setup({ project: project });
 
-    const createDateString = prettyFormatDate(project?.appCreateTimestamp);
-    const updateDateString = prettyFormatDate(project?.appLastUpdateTimestamp);
+    const createDateString = prettyFormatUTCDate(project?.appCreateTimestamp);
+    const updateDateString = prettyFormatUTCDate(project?.appLastUpdateTimestamp);
 
     expect(getByText('771 Project Cool A')).toBeVisible();
     expect(getByText('USER_A')).toBeVisible();

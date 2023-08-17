@@ -20,7 +20,7 @@ import { Api_Product, Api_Project } from '@/models/api/Project';
 import { formatMoney, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { DetailAcquisitionFileOwner } from '../../fileDetails/detail/models';
+import { DetailAcquisitionFileOwner } from '../../../models/DetailAcquisitionFileOwner';
 
 export interface CompensationRequisitionDetailViewProps {
   compensation: Api_CompensationRequisition;
@@ -37,7 +37,7 @@ export interface CompensationRequisitionDetailViewProps {
 interface PayeeViewDetails {
   displayName: string;
   isGstApplicable: boolean;
-  goodTrust: boolean;
+  isPaymentInTrust: boolean;
   contactEnabled: boolean;
   contactString: string | null;
 }
@@ -65,28 +65,32 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
     }
 
     let payeeDetail: PayeeViewDetails = {
-      contactEnabled: true,
-      goodTrust: compensation?.isPaymentInTrust || false,
+      contactEnabled: false,
+      isPaymentInTrust: compensation?.isPaymentInTrust || false,
+      isGstApplicable: false,
       contactString: null,
       displayName: '',
-      isGstApplicable: false,
     };
 
     if (!!compensation.acquisitionOwner) {
       const ownerDetail = DetailAcquisitionFileOwner.fromApi(compensation.acquisitionOwner);
       payeeDetail.displayName = ownerDetail.ownerName ?? '';
-      payeeDetail.contactEnabled = false;
     } else if (compensation.interestHolderId) {
       if (compensationContactPerson) {
         payeeDetail.displayName = formatApiPersonNames(compensationContactPerson);
-        payeeDetail.contactString = 's' + compensationContactPerson?.id;
+        payeeDetail.contactString = 'P' + compensationContactPerson?.id;
+        payeeDetail.contactEnabled = true;
       } else if (compensationContactOrganization) {
         payeeDetail.displayName = compensationContactOrganization?.name ?? '';
-        payeeDetail.contactString = 'p' + compensationContactOrganization.id;
+        payeeDetail.contactString = 'O' + compensationContactOrganization.id;
+        payeeDetail.contactEnabled = true;
       }
     } else if (compensation.acquisitionFilePersonId) {
       payeeDetail.displayName = formatApiPersonNames(compensationContactPerson);
-      payeeDetail.contactString = 's' + compensationContactPerson?.id;
+      payeeDetail.contactString = 'P' + compensationContactPerson?.id;
+      payeeDetail.contactEnabled = true;
+    } else if (!!compensation.legacyPayee) {
+      payeeDetail.displayName = `${compensation.legacyPayee}`;
     }
 
     var results =
@@ -267,7 +271,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
             )}
 
             {!payeeDetails?.contactEnabled && <label>{payeeDetails?.displayName ?? ''}</label>}
-            {payeeDetails?.goodTrust && <label>, in trust</label>}
+            {payeeDetails?.isPaymentInTrust && <label>, in trust</label>}
           </StyledPayeeDisplayName>
         </SectionField>
         <SectionField label="Amount (before tax)">
