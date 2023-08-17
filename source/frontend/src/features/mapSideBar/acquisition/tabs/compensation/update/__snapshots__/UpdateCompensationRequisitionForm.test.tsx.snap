@@ -802,6 +802,22 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                   >
                     Select...
                   </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-OWNER-1"
+                    title="JOHH DOE Sr.(Owner)"
+                    value="OWNER-1"
+                  >
+                    JOHH DOE Sr.(Owner)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-OWNER-3"
+                    title="FORTIS BC, Inc. No. 9999 (OR Reg. No. 12345)(Owner)"
+                    value="OWNER-3"
+                  >
+                    FORTIS BC, Inc. No. 9999 (OR Reg. No. 12345)(Owner)
+                  </option>
                 </select>
               </div>
             </div>

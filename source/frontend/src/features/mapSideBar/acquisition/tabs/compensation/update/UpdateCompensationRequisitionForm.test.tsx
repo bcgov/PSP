@@ -1,12 +1,16 @@
 import { FormikProps } from 'formik';
 import { createRef } from 'react';
 
-import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import {
+  mockAcquisitionFileOwnersResponse,
+  mockAcquisitionFileResponse,
+} from '@/mocks/acquisitionFiles.mock';
 import {
   emptyCompensationFinancial,
   getMockApiDefaultCompensation,
 } from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -19,6 +23,7 @@ import {
   waitFor,
 } from '@/utils/test-utils';
 
+import { PayeeOption } from '../../../models/PayeeOptionModel';
 import { CompensationRequisitionFormModel } from './models';
 import UpdateCompensationRequisitionForm, {
   CompensationRequisitionFormProps,
@@ -39,7 +44,18 @@ const defaultCompensation = new CompensationRequisitionFormModel(
   '',
 );
 
+const getPayeeOptions = (owners: Api_AcquisitionFileOwner[]): PayeeOption[] => {
+  const options: PayeeOption[] = [];
+
+  const ownersOptions: PayeeOption[] = owners.map(x => PayeeOption.createOwner(x));
+  options.push(...ownersOptions);
+
+  return options;
+};
+
 describe('Compensation Requisition UpdateForm component', () => {
+  const payeeOptions = getPayeeOptions(mockAcquisitionFileOwnersResponse());
+
   const setup = async (
     renderOptions: RenderOptions & { props?: Partial<CompensationRequisitionFormProps> },
   ) => {
@@ -49,7 +65,7 @@ describe('Compensation Requisition UpdateForm component', () => {
         {...renderOptions.props}
         onSave={onSave}
         onCancel={onCancel}
-        payeeOptions={[]}
+        payeeOptions={renderOptions.props?.payeeOptions ?? payeeOptions}
         initialValues={renderOptions.props?.initialValues ?? defaultCompensation}
         financialActivityOptions={[]}
         chartOfAccountsOptions={[]}
@@ -71,6 +87,8 @@ describe('Compensation Requisition UpdateForm component', () => {
       formikRef,
       getStatusDropDown: () =>
         utils.container.querySelector(`select[name="status"]`) as HTMLInputElement,
+      getPayeeOptionsDropDown: () =>
+        utils.container.querySelector(`select[name="payee.payeeKey"]`) as HTMLInputElement,
       getPayeeGSTNumber: () =>
         utils.container.querySelector(`input[name="payee.gstNumber"]`) as HTMLInputElement,
       getPayeePaymentInTrust: () =>
@@ -250,5 +268,56 @@ describe('Compensation Requisition UpdateForm component', () => {
     });
 
     expect(getByText('Jun 12, 2024')).toBeVisible();
+  });
+
+  it('should display the LEGACY payee information', async () => {
+    const apiCompensation = {
+      ...getMockApiDefaultCompensation(),
+      fiscalYear: '2020',
+      isDraft: true,
+      gstNumber: '9999',
+      isPaymentInTrust: true,
+      acquisitionOwnerId: null,
+      interestHolderId: null,
+      acquisitionFilePersonId: null,
+      legacyPayee: 'Stark, Tony',
+      financials: [
+        {
+          ...emptyCompensationFinancial,
+          pretaxAmount: 30000,
+          taxAmount: 1500,
+          totalAmount: 31500,
+        },
+      ],
+    };
+
+    const compensationWithPayeeInformation =
+      CompensationRequisitionFormModel.fromApi(apiCompensation);
+
+    const payeesAndLegacyOptions = [
+      ...payeeOptions,
+      PayeeOption.createLegacyPayee(apiCompensation),
+    ];
+
+    const {
+      getPayeePreTaxAmount,
+      getPayeeTaxAmount,
+      getPayeeTotalAmount,
+      getPayeeGSTNumber,
+      getPayeePaymentInTrust,
+      getPayeeOptionsDropDown,
+    } = await setup({
+      props: {
+        initialValues: compensationWithPayeeInformation,
+        payeeOptions: payeesAndLegacyOptions,
+      },
+    });
+
+    expect(getPayeeOptionsDropDown()).toHaveValue('LEGACY_PAYEE-1');
+    expect(getPayeePaymentInTrust()).toBeChecked();
+    expect(getPayeeGSTNumber()).toHaveValue('9999');
+    expect(getPayeePreTaxAmount()).toHaveValue('$30,000.00');
+    expect(getPayeeTaxAmount()).toHaveValue('$1,500.00');
+    expect(getPayeeTotalAmount()).toHaveValue('$31,500.00');
   });
 });
