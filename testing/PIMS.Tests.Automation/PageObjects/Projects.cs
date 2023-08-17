@@ -137,6 +137,8 @@ namespace PIMS.Tests.Automation.PageObjects
         }
         public void CreateProduct(Product product, int index)
         {
+            Wait(2000);
+
             By productCodeDynamicInput = By.Id("input-products."+ index +".code");
             By productNameDynamicInput = By.Id("input-products."+ index +".description");
             By productStartDateDynamicInput = By.Id("datepicker-products."+ index +".startDate");
@@ -146,9 +148,8 @@ namespace PIMS.Tests.Automation.PageObjects
             By productScopeDynamicInput = By.Id("input-products."+ index +".scope");
 
             WaitUntilClickable(projectAddProductButton);
-            webDriver.FindElement(projectAddProductButton).Click();
+            FocusAndClick(projectAddProductButton);
 
-            WaitUntilVisible(productCodeDynamicInput);
             webDriver.FindElement(productCodeDynamicInput).SendKeys(product.ProductCode);
             webDriver.FindElement(productNameDynamicInput).SendKeys(product.ProductName);
             if (product.StartDate != "")
@@ -162,6 +163,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (product.EstimateDate != "")
             {
+                WaitUntilClickable(productEstimateDateDynamicInput);
                 webDriver.FindElement(productEstimateDateDynamicInput).SendKeys(product.EstimateDate);
                 webDriver.FindElement(productEstimateDateDynamicInput).SendKeys(Keys.Enter);
             }
@@ -274,7 +276,7 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 Assert.True(sharedModals.ModalHeader().Equals("Remove Product"));
                 Assert.True(sharedModals.ModalContent().Equals("Deleting this product will remove it from all \"Product\" dropdowns. Are you certain you wish to proceed?"));
-                ButtonElement("Remove");
+                sharedModals.ModalClickOKBttn();
             }
         }
         public void SaveProject()
@@ -472,6 +474,7 @@ namespace PIMS.Tests.Automation.PageObjects
         }
         public Boolean duplicateProject()
         {
+            Wait();
             return webDriver.FindElements(duplicateProjectToast).Count > 0;
         }
     }
