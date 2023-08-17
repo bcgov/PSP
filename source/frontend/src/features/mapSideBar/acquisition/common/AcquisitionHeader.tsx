@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 
 export interface IAcquisitionHeaderProps {
   acquisitionFile?: Api_AcquisitionFile;
@@ -58,7 +58,8 @@ export const AcquisitionHeader: React.FunctionComponent<
         <Row className="no-gutters">
           <Col className="text-right">
             <StyleSmallText>
-              Created: <strong>{prettyFormatDate(acquisitionFile?.appCreateTimestamp)}</strong> by{' '}
+              Created: <strong>{prettyFormatUTCDate(acquisitionFile?.appCreateTimestamp)}</strong>{' '}
+              by{' '}
               <UserNameTooltip
                 userName={acquisitionFile?.appCreateUserid}
                 userGuid={acquisitionFile?.appCreateUserGuid}
@@ -70,7 +71,7 @@ export const AcquisitionHeader: React.FunctionComponent<
           <Col className="text-right">
             <StyleSmallText>
               Last updated:{' '}
-              <strong>{prettyFormatDate(acquisitionFile?.appLastUpdateTimestamp)}</strong> by{' '}
+              <strong>{prettyFormatUTCDate(acquisitionFile?.appLastUpdateTimestamp)}</strong> by{' '}
               <UserNameTooltip
                 userName={acquisitionFile?.appLastUpdateUserid}
                 userGuid={acquisitionFile?.appLastUpdateUserGuid}

@@ -10,15 +10,17 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_COMPENSATION_REQUISITION")]
     [Index(nameof(AcquisitionFileId), Name = "CMPREQ_ACQUISITION_FILE_ID_IDX")]
+    [Index(nameof(AcquisitionFilePersonId), Name = "CMPREQ_ACQUISITION_FILE_PERSON_ID_IDX")]
+    [Index(nameof(AcquisitionOwnerId), Name = "CMPREQ_ACQUISITION_OWNER_ID_IDX")]
     [Index(nameof(ChartOfAccountsId), Name = "CMPREQ_CHART_OF_ACCOUNTS_ID_IDX")]
+    [Index(nameof(InterestHolderId), Name = "CMPREQ_INTEREST_HOLDER_ID_IDX")]
     [Index(nameof(ResponsibilityId), Name = "CMPREQ_RESPONSIBILITY_ID_IDX")]
     [Index(nameof(YearlyFinancialId), Name = "CMPREQ_YEARLY_FINANCIAL_ID_IDX")]
     public partial class PimsCompensationRequisition
     {
         public PimsCompensationRequisition()
         {
-            PimsAcquisitionPayees = new HashSet<PimsAcquisitionPayee>();
-            PimsCompReqH120s = new HashSet<PimsCompReqH120>();
+            PimsCompReqFinancials = new HashSet<PimsCompReqFinancial>();
         }
 
         [Key]
@@ -26,14 +28,28 @@ namespace Pims.Dal.Entities
         public long CompensationRequisitionId { get; set; }
         [Column("ACQUISITION_FILE_ID")]
         public long AcquisitionFileId { get; set; }
+        [Column("ACQUISITION_OWNER_ID")]
+        public long? AcquisitionOwnerId { get; set; }
+        [Column("INTEREST_HOLDER_ID")]
+        public long? InterestHolderId { get; set; }
+        [Column("ACQUISITION_FILE_PERSON_ID")]
+        public long? AcquisitionFilePersonId { get; set; }
         [Column("CHART_OF_ACCOUNTS_ID")]
         public long? ChartOfAccountsId { get; set; }
         [Column("RESPONSIBILITY_ID")]
         public long? ResponsibilityId { get; set; }
         [Column("YEARLY_FINANCIAL_ID")]
         public long? YearlyFinancialId { get; set; }
+        [Column("LEGACY_PAYEE")]
+        [StringLength(1000)]
+        public string LegacyPayee { get; set; }
         [Column("IS_DRAFT")]
         public bool? IsDraft { get; set; }
+        [Column("IS_PAYMENT_IN_TRUST")]
+        public bool? IsPaymentInTrust { get; set; }
+        [Column("GST_NUMBER")]
+        [StringLength(50)]
+        public string GstNumber { get; set; }
         [Column("FISCAL_YEAR")]
         [StringLength(9)]
         public string FiscalYear { get; set; }
@@ -45,6 +61,8 @@ namespace Pims.Dal.Entities
         public DateTime? ExpropVestingDt { get; set; }
         [Column("GENERATION_DT", TypeName = "date")]
         public DateTime? GenerationDt { get; set; }
+        [Column("FINALIZED_DATE", TypeName = "date")]
+        public DateTime? FinalizedDate { get; set; }
         [Column("SPECIAL_INSTRUCTION")]
         [StringLength(2000)]
         public string SpecialInstruction { get; set; }
@@ -95,18 +113,25 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(AcquisitionFileId))]
         [InverseProperty(nameof(PimsAcquisitionFile.PimsCompensationRequisitions))]
         public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
+        [ForeignKey(nameof(AcquisitionFilePersonId))]
+        [InverseProperty(nameof(PimsAcquisitionFilePerson.PimsCompensationRequisitions))]
+        public virtual PimsAcquisitionFilePerson AcquisitionFilePerson { get; set; }
+        [ForeignKey(nameof(AcquisitionOwnerId))]
+        [InverseProperty(nameof(PimsAcquisitionOwner.PimsCompensationRequisitions))]
+        public virtual PimsAcquisitionOwner AcquisitionOwner { get; set; }
         [ForeignKey(nameof(ChartOfAccountsId))]
         [InverseProperty(nameof(PimsChartOfAccountsCode.PimsCompensationRequisitions))]
         public virtual PimsChartOfAccountsCode ChartOfAccounts { get; set; }
+        [ForeignKey(nameof(InterestHolderId))]
+        [InverseProperty(nameof(PimsInterestHolder.PimsCompensationRequisitions))]
+        public virtual PimsInterestHolder InterestHolder { get; set; }
         [ForeignKey(nameof(ResponsibilityId))]
         [InverseProperty(nameof(PimsResponsibilityCode.PimsCompensationRequisitions))]
         public virtual PimsResponsibilityCode Responsibility { get; set; }
         [ForeignKey(nameof(YearlyFinancialId))]
         [InverseProperty(nameof(PimsYearlyFinancialCode.PimsCompensationRequisitions))]
         public virtual PimsYearlyFinancialCode YearlyFinancial { get; set; }
-        [InverseProperty(nameof(PimsAcquisitionPayee.CompensationRequisition))]
-        public virtual ICollection<PimsAcquisitionPayee> PimsAcquisitionPayees { get; set; }
-        [InverseProperty(nameof(PimsCompReqH120.CompensationRequisition))]
-        public virtual ICollection<PimsCompReqH120> PimsCompReqH120s { get; set; }
+        [InverseProperty(nameof(PimsCompReqFinancial.CompensationRequisition))]
+        public virtual ICollection<PimsCompReqFinancial> PimsCompReqFinancials { get; set; }
     }
 }

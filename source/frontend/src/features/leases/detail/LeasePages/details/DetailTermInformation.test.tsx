@@ -35,14 +35,14 @@ describe('DetailTermInformation component', () => {
 
   it('renders the start date in the expected format', () => {
     const { getByText } = setup({
-      lease: { ...new LeaseFormModel(), startDate: '2000-01-01' },
+      lease: { ...new LeaseFormModel(), startDate: '2000-01-01T18:00' },
     });
     expect(getByText('Jan 1, 2000')).toBeVisible();
   });
 
   it('renders the end date in the expected format', () => {
     const { getByText } = setup({
-      lease: { ...new LeaseFormModel(), startDate: '2001-01-01' },
+      lease: { ...new LeaseFormModel(), startDate: '2001-01-01T18:00' },
     });
     expect(getByText('Jan 1, 2001')).toBeVisible();
   });

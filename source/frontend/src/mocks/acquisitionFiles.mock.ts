@@ -258,7 +258,7 @@ export const mockAcquisitionFileResponse = (
       organizationId: 1,
       organization: {
         id: 1,
-        name: 'Millenium Inc',
+        name: 'Millennium Inc',
         alias: 'M Inc',
         incorporationNumber: '1234',
         comment: '',

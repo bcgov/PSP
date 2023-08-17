@@ -79,11 +79,22 @@ const getColumnsByProperty = (
 const InterestHolderPropertiesTable: React.FunctionComponent<
   React.PropsWithChildren<IPropertyHoldersViewTableProps>
 > = ({ propertyInterestHolders }) => {
+  const isNonPayeeInterests = propertyInterestHolders.groupedPropertyInterests.find(
+    ih => ih.interestHolderType?.id === 'NIP',
+  );
+
+  const columns = getColumnsByProperty(propertyInterestHolders);
+
+  if (isNonPayeeInterests) {
+    // If interest holders are of type non-interest payees then delete primary contact column
+    columns.splice(1, 1);
+  }
+
   return (
     <>
       <Table
         name="interest-holders-by-property-table"
-        columns={getColumnsByProperty(propertyInterestHolders)}
+        columns={columns}
         hideToolbar
         data={propertyInterestHolders.groupedPropertyInterests}
       />

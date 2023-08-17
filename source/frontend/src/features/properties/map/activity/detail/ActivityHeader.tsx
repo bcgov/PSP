@@ -6,7 +6,7 @@ import { StyledDivider } from '@/components/common/styles';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Api_Activity } from '@/models/api/Activity';
 import { Api_File } from '@/models/api/File';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 
 export interface IActivityHeaderProps {
   file: Api_File;
@@ -28,7 +28,7 @@ export const ActivityHeader: React.FunctionComponent<
             </HeaderField>
           </Col>
           <Col className="text-right">
-            Created: <strong>{prettyFormatDate(activity?.appCreateTimestamp)}</strong> by{' '}
+            Created: <strong>{prettyFormatUTCDate(activity?.appCreateTimestamp)}</strong> by{' '}
             <UserNameTooltip
               userName={activity?.appCreateUserid}
               userGuid={activity?.appCreateUserGuid}
@@ -38,7 +38,8 @@ export const ActivityHeader: React.FunctionComponent<
         <Row className="no-gutters">
           <Col xs={leftColumnWidth}></Col>
           <Col className="text-right">
-            Last updated: <strong>{prettyFormatDate(activity?.appLastUpdateTimestamp)}</strong> by{' '}
+            Last updated: <strong>{prettyFormatUTCDate(activity?.appLastUpdateTimestamp)}</strong>{' '}
+            by{' '}
             <UserNameTooltip
               userName={activity?.appLastUpdateUserid}
               userGuid={activity?.appLastUpdateUserGuid}

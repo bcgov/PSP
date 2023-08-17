@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "4.0.0-59.30",
+  "version": "4.0.0-60.29",
   "private": true,
   "dependencies": {
     "@bcgov/bc-sans": "1.0.1",
@@ -124,7 +124,8 @@
     "decode-uri-component": "0.2.2",
     "json5": "1.0.2",
     "webpack": "5.76.3",
-    "tough-cookie": "4.1.3"
+    "tough-cookie": "4.1.3",
+    "word-wrap": "@aashutoshrathi/word-wrap"
   },
   "scripts": {
     "start": "react-app-rewired start",

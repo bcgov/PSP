@@ -1,8 +1,13 @@
 import { createMemoryHistory } from 'history';
 
 import Claims from '@/constants/claims';
-import { getMockApiCompensationList } from '@/mocks/compensations.mock';
+import {
+  emptyCompensationFinancial,
+  emptyCompensationRequisition,
+  getMockApiCompensationList,
+} from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/index.mock';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
@@ -63,105 +68,32 @@ describe('compensation list view', () => {
   });
 
   it('displays the calculated total for the entire file excluding drafts', async () => {
-    const { getAllByText } = setup({
-      compensations: [
-        {
-          id: 1,
-          acquisitionFileId: 1,
-          isDraft: true,
-          fiscalYear: null,
-          yearlyFinancialId: null,
-          yearlyFinancial: null,
-          chartOfAccountsId: null,
-          chartOfAccounts: null,
-          responsibilityId: null,
-          responsibility: null,
-          agreementDate: null,
-          expropriationNoticeServedDate: null,
-          expropriationVestingDate: null,
-          generationDate: null,
-          specialInstruction: null,
-          detailedRemarks: null,
-          isDisabled: null,
-          financials: [
-            {
-              id: 1,
-              financialActivityCodeId: 1,
-              financialActivityCode: null,
-              compensationId: 1,
-              pretaxAmount: null,
-              isGstRequired: false,
-              taxAmount: null,
-              totalAmount: 3,
-              isDisabled: null,
-              rowVersion: 1,
-            },
-            {
-              id: 2,
-              compensationId: 1,
-              financialActivityCodeId: 1,
-              financialActivityCode: null,
-              pretaxAmount: null,
-              isGstRequired: false,
-              taxAmount: null,
-              totalAmount: 10,
-              isDisabled: null,
-              rowVersion: 1,
-            },
-          ],
-          payees: [],
-        },
-        {
-          id: 2,
-          acquisitionFileId: 1,
-          isDraft: false,
-          fiscalYear: null,
-          yearlyFinancialId: null,
-          yearlyFinancial: null,
-          chartOfAccountsId: null,
-          chartOfAccounts: null,
-          responsibilityId: null,
-          responsibility: null,
-          agreementDate: null,
-          expropriationNoticeServedDate: null,
-          expropriationVestingDate: null,
-          generationDate: null,
-          specialInstruction: null,
-          detailedRemarks: null,
-          isDisabled: null,
-          financials: [
-            {
-              id: 3,
-              financialActivityCodeId: 1,
-              financialActivityCode: null,
-              compensationId: 1,
-              pretaxAmount: null,
-              isGstRequired: false,
-              taxAmount: null,
-              totalAmount: 100,
-              isDisabled: null,
-              rowVersion: 1,
-            },
-            {
-              id: 4,
-              financialActivityCodeId: 1,
-              financialActivityCode: null,
-              compensationId: 1,
-              pretaxAmount: null,
-              isGstRequired: false,
-              taxAmount: null,
-              totalAmount: 500.55,
-              isDisabled: null,
-              rowVersion: 1,
-            },
-          ],
-          payees: [],
-        },
-      ],
-    });
+    const mockList: Api_CompensationRequisition[] = [
+      {
+        ...emptyCompensationRequisition,
+        isDraft: true,
+        financials: [{ ...emptyCompensationFinancial, totalAmount: 500 }],
+      },
+      {
+        ...emptyCompensationRequisition,
+        isDraft: true,
+        financials: [{ ...emptyCompensationFinancial, totalAmount: 100 }],
+      },
+      {
+        ...emptyCompensationRequisition,
+        isDraft: true,
+        financials: [{ ...emptyCompensationFinancial, totalAmount: 0.55 }],
+      },
+      {
+        ...emptyCompensationRequisition,
+        isDraft: false,
+        financials: [{ ...emptyCompensationFinancial, totalAmount: 500 }],
+      },
+    ];
+    const { getAllByText } = setup({ compensations: mockList });
 
     await waitFor(() => {
-      expect(getAllByText('$600.55')[1]).toBeVisible();
+      expect(getAllByText('$600.55')[0]).toBeVisible();
     });
   });
 

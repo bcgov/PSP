@@ -1,5 +1,13 @@
 import { FormikProps } from 'formik';
-import React, { useCallback, useContext, useEffect, useMemo, useReducer, useRef } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'react';
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -14,6 +22,7 @@ import { stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
+import { missingFieldsError } from '../shared/SidebarFooter';
 import { IAcquisitionViewProps } from './AcquisitionView';
 
 export interface IAcquisitionContainerProps {
@@ -43,6 +52,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   // Load state from props and side-bar context
   const { acquisitionFileId, onClose, View } = props;
   const { setFile, setFileLoading, staleFile, setStaleFile, file } = useContext(SideBarContext);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
   >('Failed to update Acquisition File');
@@ -160,6 +170,8 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   };
 
   const handleSaveClick = () => {
+    missingFieldsError(setErrorMessage, formikRef?.current?.isValid);
+
     if (formikRef !== undefined) {
       formikRef.current?.setSubmitting(true);
       formikRef.current?.submitForm();
@@ -233,6 +245,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       onSuccess={onSuccess}
       canRemove={canRemove}
       formikRef={formikRef}
+      missingFieldsError={errorMessage}
     ></View>
   );
 };

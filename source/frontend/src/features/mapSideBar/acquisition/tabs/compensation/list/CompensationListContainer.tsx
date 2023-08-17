@@ -80,6 +80,7 @@ export const CompensationListContainer: React.FunctionComponent<
       chartOfAccounts: null,
       responsibilityId: null,
       responsibility: null,
+      finalizedDate: null,
       agreementDate: null,
       expropriationNoticeServedDate: null,
       expropriationVestingDate: null,
@@ -88,7 +89,16 @@ export const CompensationListContainer: React.FunctionComponent<
       detailedRemarks: null,
       isDisabled: null,
       financials: [],
-      payees: [],
+      acquisitionFile: null,
+      acquisitionOwnerId: null,
+      acquisitionOwner: null,
+      interestHolderId: null,
+      interestHolder: null,
+      acquisitionFilePersonId: null,
+      acquisitionFilePerson: null,
+      legacyPayee: null,
+      isPaymentInTrust: null,
+      gstNumber: null,
     };
 
     postAcquisitionCompensationRequisition(fileId, defaultCompensationRequisition).then(
