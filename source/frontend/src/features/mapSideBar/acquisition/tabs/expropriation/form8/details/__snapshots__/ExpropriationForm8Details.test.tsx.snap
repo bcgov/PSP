@@ -1,0 +1,549 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form 8 Detail View component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c3.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c3.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c3.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c3.btn.btn-primary {
+  border: none;
+}
+
+.c3.btn.btn-secondary {
+  background: none;
+}
+
+.c3.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
+  background: none;
+}
+
+.c3.btn.btn-light {
+  border: none;
+}
+
+.c3.btn.btn-dark {
+  border: none;
+}
+
+.c3.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c3.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c3.Button--icon-only:focus {
+  outline: none;
+}
+
+.c3.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c9 {
+  font-family: 'BCSans-Bold';
+  font-size: 2rem;
+  border-bottom: solid 0.2rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.c4.c4 {
+  display: inline-block;
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c6.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c5 {
+  font-weight: bold;
+}
+
+.c8 {
+  padding: 0 0.4rem;
+}
+
+.c0 {
+  border: solid 0.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: 1rem;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: solid 0.2rem;
+  margin-bottom: 2rem;
+}
+
+.c2 label {
+  font-family: 'BCSans-Bold';
+  font-size: 1.75rem;
+  width: 100%;
+  text-align: left;
+}
+
+.c2 button {
+  margin-bottom: 1rem;
+}
+
+.c10 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 form-section"
+    >
+      <div
+        class="collapse show"
+      >
+        <div
+          class="c2"
+        >
+          <button
+            class="c3 Button c4 btn btn-primary"
+            data-testid="form8[0].generate-form8"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              <svg
+                class="mr-2"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 640 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 448c0 17.67 14.33 32 32 32h576c17.67 0 32-14.33 32-32V128H0v320zm448-208c0-8.84 7.16-16 16-16h96c8.84 0 16 7.16 16 16v32c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-32zm0 120c0-4.42 3.58-8 8-8h112c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H456c-4.42 0-8-3.58-8-8v-16zM64 264c0-4.42 3.58-8 8-8h304c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zm0 96c0-4.42 3.58-8 8-8h176c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zM624 32H16C7.16 32 0 39.16 0 48v48h640V48c0-8.84-7.16-16-16-16z"
+                />
+              </svg>
+              Generate
+            </div>
+          </button>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Payee:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+            data-testid="form8[0].payee-name"
+          >
+            <div
+              class="c7"
+            >
+              <label>
+                John Doe
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Expropriation Authority:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+            data-testid="form8[0].exp-authority"
+          >
+            <a
+              class="c8"
+              href="/contact/O100"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <span>
+                FORTIS BC
+              </span>
+              <svg
+                class="ml-2"
+                fill="currentColor"
+                height="1rem"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1rem"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Description:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+            data-testid="form8[0].description"
+          >
+            MY DESCRIPTION
+          </div>
+        </div>
+        <h3
+          class="c9"
+        >
+          Payment Details
+        </h3>
+        <div
+          class="table"
+          data-testid="paymentItems"
+          role="table"
+        >
+          <div
+            class="thead thead-light"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 90px;"
+            >
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Item
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Amount
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  GST
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Total
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tbody"
+            role="rowgroup"
+          >
+            <div
+              class="tr-wrapper"
+            >
+              <div
+                class="tr"
+                role="row"
+                style="display: flex; flex: 1 0 auto; min-width: 90px;"
+              >
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  Total Amount of Advance Taking
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  $1,000.00
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  $50.00
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  $1,050.00
+                </div>
+              </div>
+            </div>
+            <div
+              class="tr-wrapper"
+            >
+              <div
+                class="tr"
+                role="row"
+                style="display: flex; flex: 1 0 auto; min-width: 90px;"
+              >
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  Market Value
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  $896,365.23
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  $44,818.26
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  $941,183.49
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c10"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-right col"
+            >
+              <label>
+                Total:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-right col-3"
+              data-testid="form8[0].total-amount"
+            >
+              <span>
+                $942,233.49
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
