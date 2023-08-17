@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { queryByAltText, render, RenderOptions } from '@/utils/test-utils';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import { InterestHolderViewForm, InterestHolderViewRow } from '../update/models';
 import StakeHolderView, { IStakeHolderViewProps } from './StakeHolderView';

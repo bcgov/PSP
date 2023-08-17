@@ -3,7 +3,6 @@ import { createMemoryHistory } from 'history';
 import { mockAcquisitionFileResponse } from '@/mocks/index.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
