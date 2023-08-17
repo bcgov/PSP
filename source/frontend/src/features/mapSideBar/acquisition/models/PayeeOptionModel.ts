@@ -51,6 +51,10 @@ export class PayeeOption {
       }
     }
 
+    if (!!apiModel.legacyPayee) {
+      return PayeeOption.generateKey(apiModel.id, PayeeType.LegacyPayee);
+    }
+
     return '';
   }
 
