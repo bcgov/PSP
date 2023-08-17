@@ -3,6 +3,7 @@ import * as React from 'react';
 import EditButton from '@/components/common/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { Claims } from '@/constants/index';
 import { StyledNoData } from '@/features/documents/commonStyles';
@@ -15,6 +16,7 @@ export interface IStakeHolderViewProps {
   loading: boolean;
   groupedInterestProperties: InterestHolderViewForm[];
   groupedNonInterestProperties: InterestHolderViewForm[];
+  legacyStakeHolders: string[];
   onEdit: () => void;
 }
 
@@ -22,6 +24,7 @@ export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = (
   loading,
   groupedInterestProperties,
   groupedNonInterestProperties,
+  legacyStakeHolders,
   onEdit,
 }) => {
   const keycloak = useKeycloakWrapper();
@@ -36,7 +39,7 @@ export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = (
               <EditButton title="Edit Interests" onClick={onEdit} />
             ) : null}
           </StyledEditWrapper>
-          {groupedInterestProperties.length === 0 && (
+          {groupedInterestProperties.length === 0 && legacyStakeHolders.length === 0 && (
             <StyledNoData>
               <p>There are no interest holders associated with this file.</p>
               <p> To add an interest holder, click the edit button.</p>
@@ -48,6 +51,25 @@ export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = (
               propertyInterestHolders={interestPropertyGroup}
             />
           ))}
+          {legacyStakeHolders.length > 0 && (
+            <>
+              <hr />
+              <SectionField
+                label="Legacy interest holders"
+                tooltip="This is read-only field to display legacy information"
+                labelWidth="6"
+                contentWidth="6"
+                valueTestId="acq-file-legacy-stakeholders"
+              >
+                {legacyStakeHolders.map((stakeholder, index) => (
+                  <div key={index}>
+                    <label key={index}>{stakeholder}</label>
+                    {index < legacyStakeHolders.length - 1 && <br />}
+                  </div>
+                ))}
+              </SectionField>
+            </>
+          )}
         </Section>
       </StyledSummarySection>
       <StyledSummarySection>
