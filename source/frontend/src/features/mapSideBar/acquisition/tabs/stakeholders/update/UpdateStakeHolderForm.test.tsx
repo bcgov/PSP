@@ -3,6 +3,7 @@ import { createMemoryHistory } from 'history';
 import { mockAcquisitionFileResponse } from '@/mocks/index.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
@@ -104,5 +105,11 @@ describe('UpdateStakeHolderForm component', () => {
     await act(async () => userEvent.click(getByText('+ Add a Non-interest payee')));
     await act(async () => userEvent.click(getByTestId('selectrow-1')));
     expect(getByTestId('selectrow-1')).toBeChecked();
+  });
+
+  it('it hides the legacy stakeholders', async () => {
+    const { queryByTestId } = setup({});
+
+    expect(queryByTestId('acq-file-legacy-stakeholders')).not.toBeInTheDocument();
   });
 });

@@ -72,7 +72,9 @@ export class Api_GenerateOwner {
     generateOwner.registration_number = '';
     generateOwner.address = new Api_GenerateAddress(getApiPersonOrOrgMailingAddress(model) ?? null);
     generateOwner.is_corporation = true;
-    generateOwner.owner_string = `${generateOwner.last_name_or_corp_name}, Inc. No. ${generateOwner.incorporation_number}`;
+    generateOwner.owner_string = generateOwner.incorporation_number
+      ? `${generateOwner.last_name_or_corp_name}, Inc. No. ${generateOwner.incorporation_number}`
+      : `${generateOwner.last_name_or_corp_name}`;
 
     return generateOwner;
   }

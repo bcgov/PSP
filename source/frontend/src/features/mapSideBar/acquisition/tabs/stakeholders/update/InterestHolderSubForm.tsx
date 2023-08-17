@@ -127,6 +127,8 @@ export const InterestHolderSubForm: React.FunctionComponent<IInterestHolderProps
       <SectionField
         label="Impacted properties"
         tooltip="The interest holder will show on the Compensation Request form relevant to these properties."
+        labelWidth="6"
+        contentWidth="6"
       >
         <FilePropertiesTable
           fileProperties={file.fileProperties ?? []}
