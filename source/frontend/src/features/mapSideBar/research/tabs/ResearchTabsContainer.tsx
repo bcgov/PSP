@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 
 import { Claims } from '@/constants/claims';
-import { FileTypes } from '@/constants/fileTypes';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { NoteTypes } from '@/constants/noteTypes';
 import NoteListView from '@/features/notes/list/NoteListView';
-import ActivityListView from '@/features/properties/map/activity/list/ActivityListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 
 import { FileTabs, FileTabType, TabFileView } from '../../shared/detail/FileTabs';
+import DocumentsTab from '../../shared/tabs/DocumentsTab';
 import { FormKeys } from '../FormKeys';
-import ResearchDocumentsTab from './documents/ResearchDocumentsTab';
 import ResearchSummaryView from './fileDetails/details/ResearchSummaryView';
 
 export interface IResearchTabsContainerProps {
@@ -47,19 +46,14 @@ export const ResearchTabsContainer: React.FunctionComponent<
     name: 'File Details',
   });
 
-  if (researchFile?.id && hasClaim(Claims.ACTIVITY_VIEW)) {
-    tabViews.push({
-      content: (
-        <ActivityListView fileId={researchFile.id} fileType={FileTypes.Research}></ActivityListView>
-      ),
-      key: FileTabType.ACTIVITIES,
-      name: 'Activities',
-    });
-  }
-
   if (researchFile?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
-      content: <ResearchDocumentsTab researchFileId={researchFile.id} />,
+      content: (
+        <DocumentsTab
+          fileId={researchFile.id}
+          relationshipType={DocumentRelationshipType.RESEARCH_FILES}
+        />
+      ),
       key: FileTabType.DOCUMENTS,
       name: 'Documents',
     });

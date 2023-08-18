@@ -2,20 +2,19 @@ import React from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { Claims } from '@/constants/claims';
-import { FileTypes } from '@/constants/fileTypes';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { NoteTypes } from '@/constants/noteTypes';
 import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
 import NoteListView from '@/features/notes/list/NoteListView';
-import ActivityListView from '@/features/properties/map/activity/list/ActivityListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 
+import DocumentsTab from '../../shared/tabs/DocumentsTab';
 import AgreementContainer from './agreement/detail/AgreementContainer';
 import AgreementView from './agreement/detail/AgreementView';
 import { AcquisitionChecklistView } from './checklist/detail/AcquisitionChecklistView';
 import CompensationListContainer from './compensation/list/CompensationListContainer';
 import CompensationListView from './compensation/list/CompensationListView';
-import AcquisitionDocumentsTab from './documents/AcquisitionDocumentsTab';
 import ExpropriationTabContainer from './expropriation/ExpropriationTabContainer';
 import ExpropriationTabContainerView from './expropriation/ExpropriationTabContainerView';
 import AcquisitionSummaryView from './fileDetails/detail/AcquisitionSummaryView';
@@ -66,22 +65,14 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     name: 'Checklist',
   });
 
-  if (acquisitionFile?.id && hasClaim(Claims.ACTIVITY_VIEW)) {
-    tabViews.push({
-      content: (
-        <ActivityListView
-          fileId={acquisitionFile.id}
-          fileType={FileTypes.Acquisition}
-        ></ActivityListView>
-      ),
-      key: FileTabType.ACTIVITIES,
-      name: 'Activities',
-    });
-  }
-
   if (acquisitionFile?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
-      content: <AcquisitionDocumentsTab acquisitionFileId={acquisitionFile.id} />,
+      content: (
+        <DocumentsTab
+          fileId={acquisitionFile.id}
+          relationshipType={DocumentRelationshipType.ACQUISITION_FILES}
+        />
+      ),
       key: FileTabType.DOCUMENTS,
       name: 'Documents',
     });
