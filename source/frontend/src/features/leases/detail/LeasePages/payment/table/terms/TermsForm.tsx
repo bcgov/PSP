@@ -56,9 +56,6 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
   const renderPayments = useDeepCompareMemo(
     () => (row: FormLeaseTerm) => {
       const matchingTerm = leaseForm.terms.find(t => t.id === row.id);
-      if (!matchingTerm) {
-        throw Error('Could not find matching term');
-      }
       return (
         <PaymentsForm
           onSave={onSavePayment}
