@@ -11,6 +11,7 @@ import React, {
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
@@ -65,6 +66,8 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     },
     getAcquisitionFileChecklist: { execute: retrieveAcquisitionFileChecklist },
   } = useAcquisitionProvider();
+
+  const mapMachine = useMapStateMachine();
 
   const formikRef = useRef<FormikProps<any>>(null);
 
@@ -200,6 +203,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const onSuccess = () => {
     fetchAcquisitionFile();
+    mapMachine.refreshMapProperties();
     setIsEditing(false);
   };
 
