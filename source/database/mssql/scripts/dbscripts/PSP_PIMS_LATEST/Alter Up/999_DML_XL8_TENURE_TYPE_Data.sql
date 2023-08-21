@@ -17,13 +17,13 @@ GO
 
 -- Migrate the Payee data to PIMS_COMPENSATION_REQUISITION
 UPDATE PIMS_PROP_PROP_TENURE_TYPE
-SET    PROPERTY_TENURE_TYPE_CODE  = CASE PROPERTY_TENURE_TYPE_CODE
-                                      WHEN N'TT' THEN N'FSBCTFA'
-                                      WHEN N'TM' THEN N'FSMOTI'
-                                      WHEN N'RW' THEN N'SRWOTHER'
-                                      ELSE PROPERTY_TENURE_TYPE_CODE
-                                    END
+SET    PROPERTY_TENURE_TYPE_CODE = CASE PROPERTY_TENURE_TYPE_CODE
+                                     WHEN N'TT' THEN N'FSBCTFA'
+                                     WHEN N'TM' THEN N'FSMOTI'
+                                     WHEN N'RW' THEN N'SRWOTHER'
+                                   END
      , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+WHERE  PROPERTY_TENURE_TYPE_CODE IN (N'TT', N'TM', N'RW')
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
