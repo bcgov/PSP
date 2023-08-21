@@ -18,10 +18,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I log in with IDIR credentials (.*)")]
         public void Idir(string userName)
         {
-            login.Wait();
-
             login.LoginToPIMS();
-            login.Wait();
 
             var user = idirUsers.SingleOrDefault(u => u.User.Equals(userName, StringComparison.OrdinalIgnoreCase));
             if (user == null) throw new InvalidOperationException($"User {userName} not found in the test configuration");

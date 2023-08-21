@@ -150,6 +150,7 @@ exports[`compensation list view renders as expected 1`] = `
           $0.00
           <button
             class="btn btn-link"
+            data-testid="edit-button"
             title="edit"
             type="button"
           >
@@ -370,7 +371,7 @@ exports[`compensation list view renders as expected 1`] = `
               <div
                 class="sortable-column"
               >
-                Date
+                Final Date
               </div>
             </div>
             <div

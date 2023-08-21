@@ -11,7 +11,7 @@ import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IApiError } from '@/interfaces/IApiError';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 
 import { StyledSectionCentered } from '../detail/styles';
 import { AcquisitionChecklistFormModel } from './models';
@@ -66,7 +66,7 @@ export const UpdateAcquisitionChecklistForm: React.FC<IUpdateAcquisitionChecklis
           {lastUpdated && (
             <StyledSectionCentered>
               <em>
-                {`This checklist was last updated ${prettyFormatDate(
+                {`This checklist was last updated ${prettyFormatUTCDate(
                   lastUpdated.appLastUpdateTimestamp,
                 )} by `}
                 <UserNameTooltip

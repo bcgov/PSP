@@ -8,6 +8,7 @@ exports[`TogleSaveInputView component renders as expected 1`] = `
   <div />
   <button
     class="btn btn-link"
+    data-testid="edit-button"
     title="edit"
     type="button"
   >

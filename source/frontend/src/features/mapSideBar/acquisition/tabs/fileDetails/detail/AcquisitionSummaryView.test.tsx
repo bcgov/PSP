@@ -83,7 +83,7 @@ describe('AcquisitionSummaryView component', () => {
       },
       { claims: [] },
     );
-    expect(getByText('Millenium Inc')).toBeVisible();
+    expect(getByText('Millennium Inc')).toBeVisible();
   });
 
   it('renders owner representative information', () => {

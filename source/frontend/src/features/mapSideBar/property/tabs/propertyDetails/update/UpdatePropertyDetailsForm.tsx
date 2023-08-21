@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import { LinkButton, RemoveButton } from '@/components/common/buttons';
 import { Input, Multiselect, Select, Text, TextArea } from '@/components/common/form';
 import { RadioGroup } from '@/components/common/form/RadioGroup';
-import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 import { YesNoSelect } from '@/components/common/form/YesNoSelect';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -16,14 +15,13 @@ import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import VolumeContainer from '@/components/measurements/VolumeContainer';
 import * as API from '@/constants/API';
-import { PropertyAdjacentLandTypes, PropertyTenureTypes } from '@/constants/index';
+import { PropertyTenureTypes } from '@/constants/index';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 import { stringToBoolean } from '@/utils/formUtils';
 
 import {
-  PropertyAdjacentLandFormModel,
   PropertyAnomalyFormModel,
   PropertyRoadFormModel,
   PropertyTenureFormModel,
@@ -64,23 +62,21 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   const roadTypeOptions = getByType(API.PROPERTY_ROAD_TYPES).map(x =>
     PropertyRoadFormModel.fromLookup(x),
   );
-  const adjacentLandOptions = getByType(API.PROPERTY_ADJACENT_LAND_TYPES).map(x =>
-    PropertyAdjacentLandFormModel.fromLookup(x),
-  );
   const regionOptions = getOptionsByType(API.REGION_TYPES);
   const districtOptions = getOptionsByType(API.DISTRICT_TYPES);
 
   // multi-selects
   const tenureStatus = getIn(values, 'tenures') as PropertyTenureFormModel[];
-  const adjacentLands = getIn(values, 'adjacentLands') as PropertyAdjacentLandFormModel[];
+
   // show/hide conditionals
   const isHighwayRoad = tenureStatus?.some(obj => obj.typeCode === PropertyTenureTypes.HighwayRoad);
   const isAdjacentLand = tenureStatus?.some(
     obj => obj.typeCode === PropertyTenureTypes.AdjacentLand,
   );
-  const isIndianReserve =
-    isAdjacentLand &&
-    adjacentLands?.some(obj => obj.typeCode === PropertyAdjacentLandTypes.IndianReserve);
+
+  const isIndianReserve = tenureStatus?.some(
+    obj => obj.typeCode === PropertyTenureTypes.IndianReserve,
+  );
   const isVolumetricParcel = stringToBoolean(getIn(values, 'isVolumetricParcel'));
   // area measurements table inputs
   const landArea = getIn(values, 'landArea') as number | undefined;
@@ -115,7 +111,6 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
 
   return (
     <StyledSummarySection>
-      <UnsavedChangesPrompt />
       <Section header="Property Address">
         <StyledSubtleText>
           This is the address stored in PIMS application for this property and will be used wherever
@@ -258,29 +253,18 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
                 userName={values?.pphStatusUpdateUserid}
                 userGuid={values?.pphStatusUpdateUserGuid}
               />{' '}
-              on {prettyFormatDate(values?.pphStatusUpdateTimestamp)}
+              on {prettyFormatUTCDate(values?.pphStatusUpdateTimestamp)}
             </p>
           )}
         </SectionField>
         {isHighwayRoad && (
-          <SectionField label="Highway / Road established by">
+          <SectionField label="Highway / Road Details">
             <Multiselect
               field="roadTypes"
               displayValue="typeDescription"
               placeholder=""
               hidePlaceholder
               options={roadTypeOptions}
-            />
-          </SectionField>
-        )}
-        {isAdjacentLand && (
-          <SectionField label="Adjacent Land type">
-            <Multiselect
-              field="adjacentLands"
-              displayValue="typeDescription"
-              placeholder=""
-              hidePlaceholder
-              options={adjacentLandOptions}
             />
           </SectionField>
         )}

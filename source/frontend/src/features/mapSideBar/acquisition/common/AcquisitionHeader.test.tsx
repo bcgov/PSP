@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { AcquisitionHeader, IAcquisitionHeaderProps } from './AcquisitionHeader';
@@ -38,8 +38,10 @@ describe('AcquisitionHeader component', () => {
     const { getByText } = setup({ acquisitionFile: testAcquisitionFile });
 
     expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
-    expect(getByText(prettyFormatDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
-    expect(getByText(prettyFormatDate(testAcquisitionFile.appLastUpdateTimestamp))).toBeVisible();
+    expect(getByText(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
+    expect(
+      getByText(prettyFormatUTCDate(testAcquisitionFile.appLastUpdateTimestamp)),
+    ).toBeVisible();
   });
 
   it('renders the file number and name concatenated', async () => {

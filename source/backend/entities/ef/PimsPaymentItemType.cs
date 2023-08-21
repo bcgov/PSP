@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities
     {
         public PimsPaymentItemType()
         {
-            PimsForm8s = new HashSet<PimsForm8>();
+            PimsExpropPmtPmtItems = new HashSet<PimsExpropPmtPmtItem>();
         }
 
         [Key]
@@ -44,7 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsForm8.PaymentItemTypeCodeNavigation))]
-        public virtual ICollection<PimsForm8> PimsForm8s { get; set; }
+        [InverseProperty(nameof(PimsExpropPmtPmtItem.PaymentItemTypeCodeNavigation))]
+        public virtual ICollection<PimsExpropPmtPmtItem> PimsExpropPmtPmtItems { get; set; }
     }
 }

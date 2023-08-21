@@ -65,7 +65,7 @@ export class AcquisitionOwnerFormModel {
   registrationNumber: string | '' = '';
   contactEmailAddress: string | '' = '';
   contactPhoneNumber: string | '' = '';
-  address?: OwnerAddressFormModel;
+  address?: OwnerAddressFormModel = new OwnerAddressFormModel();
 
   isEmpty(): boolean {
     if (this.isOrganization === 'true') {

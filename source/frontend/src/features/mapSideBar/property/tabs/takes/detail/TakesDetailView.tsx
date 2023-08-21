@@ -16,8 +16,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 import { Api_Take } from '@/models/api/Take';
-import { formatApiDateTime, prettyFormatDate } from '@/utils';
-import { getApiPropertyName } from '@/utils/mapPropertyUtils';
+import { getApiPropertyName, prettyFormatDate, prettyFormatUTCDate } from '@/utils';
 
 import { StyledBorderSection, StyledNoTabSection } from '../styles';
 
@@ -75,115 +74,117 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
           </SectionField>
         </StyledBlueSection>
       </Section>
-      {[...nonCancelledTakes, ...cancelledTakes].map((take, index) => (
-        <Section key={take.id} isCollapsable initiallyExpanded data-testid={`take-${index}`}>
-          <H2>Take {index + 1}</H2>
-          <SectionField label="Take added on">
-            {prettyFormatDate(formatApiDateTime(take.appCreateTimestamp))}
-          </SectionField>
-          <SectionField label="Take type *">
-            {take.takeTypeCode ? getCodeById(API.TAKE_TYPES, take.takeTypeCode) : ''}
-          </SectionField>
-          <SectionField label="Take status *">
-            {take.takeStatusTypeCode
-              ? getCodeById(API.TAKE_STATUS_TYPES, take.takeStatusTypeCode)
-              : ''}
-          </SectionField>
-          <SectionField label="Site contamination">
-            {take.takeSiteContamTypeCode
-              ? getCodeById(API.TAKE_SITE_CONTAM_TYPES, take.takeSiteContamTypeCode)
-              : ''}
-          </SectionField>
-          <SectionField label="Description" labelWidth="12">
-            {take.description}
-          </SectionField>
-          <StyledNoTabSection header="Area">
-            <StyledBorderSection>
-              <SectionField label="Is there a new right of way? *" labelWidth="8">
-                <YesNoButtons id="newRightOfWayToggle" disabled value={take.isNewRightOfWay} />
-              </SectionField>
-              {take.isNewRightOfWay && (
-                <SectionField label="Area" labelWidth="12">
-                  <AreaContainer landArea={take.newRightOfWayArea ?? undefined} />
+      {[...nonCancelledTakes, ...cancelledTakes].map((take, index) => {
+        return (
+          <Section key={take.id} isCollapsable initiallyExpanded data-testid={`take-${index}`}>
+            <H2>Take {index + 1}</H2>
+            <SectionField label="Take added on">
+              {prettyFormatUTCDate(take.appCreateTimestamp)}
+            </SectionField>
+            <SectionField label="Take type *">
+              {take.takeTypeCode ? getCodeById(API.TAKE_TYPES, take.takeTypeCode) : ''}
+            </SectionField>
+            <SectionField label="Take status *">
+              {take.takeStatusTypeCode
+                ? getCodeById(API.TAKE_STATUS_TYPES, take.takeStatusTypeCode)
+                : ''}
+            </SectionField>
+            <SectionField label="Site contamination">
+              {take.takeSiteContamTypeCode
+                ? getCodeById(API.TAKE_SITE_CONTAM_TYPES, take.takeSiteContamTypeCode)
+                : ''}
+            </SectionField>
+            <SectionField label="Description" labelWidth="12">
+              {take.description}
+            </SectionField>
+            <StyledNoTabSection header="Area">
+              <StyledBorderSection>
+                <SectionField label="Is there a new right of way? *" labelWidth="8">
+                  <YesNoButtons id="newRightOfWayToggle" disabled value={take.isNewRightOfWay} />
                 </SectionField>
-              )}
-            </StyledBorderSection>
-            <StyledBorderSection>
-              <SectionField label="Is there a Statutory Right of Way: (SRW)? *" labelWidth="8">
-                <YesNoButtons
-                  id="statutoryRightOfWayToggle"
-                  disabled
-                  value={take.isStatutoryRightOfWay}
-                />
-              </SectionField>
-              {take.isStatutoryRightOfWay && (
-                <>
+                {take.isNewRightOfWay && (
                   <SectionField label="Area" labelWidth="12">
-                    <AreaContainer landArea={take.statutoryRightOfWayArea ?? undefined} />
+                    <AreaContainer landArea={take.newRightOfWayArea ?? undefined} />
                   </SectionField>
-                </>
-              )}
-            </StyledBorderSection>
-            <StyledBorderSection>
-              <SectionField
-                label="Is there Land Act-Reserve(s)/Withdrawal(s)/Notation(s)? *"
-                labelWidth="8"
-              >
-                <YesNoButtons id="landActToggle" disabled value={take.isLandAct} />
-              </SectionField>
-              {take.isLandAct && (
-                <>
-                  <SectionField label="Land Act" labelWidth="3">
-                    {take.landActTypeCode
-                      ? take.landActTypeCode.id + ' ' + take.landActTypeCode.description
-                      : ''}
-                  </SectionField>
-
-                  <SectionField label="Area" labelWidth="12">
-                    <AreaContainer landArea={take.landActArea ?? undefined} />
-                  </SectionField>
-
-                  <SectionField label="End date" labelWidth="3" contentWidth="4">
-                    {prettyFormatDate(take.landActEndDt ?? undefined)}
-                  </SectionField>
-                </>
-              )}
-            </StyledBorderSection>
-            <StyledBorderSection>
-              <SectionField label="Is there a License to Construct (LTC)? *" labelWidth="8">
-                <YesNoButtons
-                  id="licenseToConstructToggle"
-                  disabled
-                  value={take.isLicenseToConstruct}
-                />
-              </SectionField>
-              {take.isLicenseToConstruct && (
-                <>
-                  <SectionField label="Area" labelWidth="12">
-                    <AreaContainer landArea={take.licenseToConstructArea ?? undefined} />
-                  </SectionField>
-
-                  <SectionField label="LTC end date" labelWidth="3" contentWidth="4">
-                    {prettyFormatDate(take.ltcEndDt ?? undefined)}
-                  </SectionField>
-                </>
-              )}
-            </StyledBorderSection>
-          </StyledNoTabSection>
-          <StyledNoTabSection header="Surplus">
-            <StyledBorderSection>
-              <SectionField label="Is there a Surplus? *" labelWidth="8">
-                <YesNoButtons id="surplusToggle" disabled value={take.isSurplus} />
-              </SectionField>
-              {take.isSurplus && (
-                <SectionField label="Area" labelWidth="12">
-                  <AreaContainer landArea={take.surplusArea ?? undefined} />
+                )}
+              </StyledBorderSection>
+              <StyledBorderSection>
+                <SectionField label="Is there a Statutory Right of Way: (SRW)? *" labelWidth="8">
+                  <YesNoButtons
+                    id="statutoryRightOfWayToggle"
+                    disabled
+                    value={take.isStatutoryRightOfWay}
+                  />
                 </SectionField>
-              )}
-            </StyledBorderSection>
-          </StyledNoTabSection>
-        </Section>
-      ))}
+                {take.isStatutoryRightOfWay && (
+                  <>
+                    <SectionField label="Area" labelWidth="12">
+                      <AreaContainer landArea={take.statutoryRightOfWayArea ?? undefined} />
+                    </SectionField>
+                  </>
+                )}
+              </StyledBorderSection>
+              <StyledBorderSection>
+                <SectionField
+                  label="Is there Land Act-Reserve(s)/Withdrawal(s)/Notation(s)? *"
+                  labelWidth="8"
+                >
+                  <YesNoButtons id="landActToggle" disabled value={take.isLandAct} />
+                </SectionField>
+                {take.isLandAct && (
+                  <>
+                    <SectionField label="Land Act" labelWidth="3">
+                      {take.landActTypeCode
+                        ? take.landActTypeCode.id + ' ' + take.landActTypeCode.description
+                        : ''}
+                    </SectionField>
+
+                    <SectionField label="Area" labelWidth="12">
+                      <AreaContainer landArea={take.landActArea ?? undefined} />
+                    </SectionField>
+
+                    <SectionField label="End date" labelWidth="3" contentWidth="4">
+                      {prettyFormatDate(take.landActEndDt ?? undefined)}
+                    </SectionField>
+                  </>
+                )}
+              </StyledBorderSection>
+              <StyledBorderSection>
+                <SectionField label="Is there a License to Construct (LTC)? *" labelWidth="8">
+                  <YesNoButtons
+                    id="licenseToConstructToggle"
+                    disabled
+                    value={take.isLicenseToConstruct}
+                  />
+                </SectionField>
+                {take.isLicenseToConstruct && (
+                  <>
+                    <SectionField label="Area" labelWidth="12">
+                      <AreaContainer landArea={take.licenseToConstructArea ?? undefined} />
+                    </SectionField>
+
+                    <SectionField label="LTC end date" labelWidth="3" contentWidth="4">
+                      {prettyFormatDate(take.ltcEndDt ?? undefined)}
+                    </SectionField>
+                  </>
+                )}
+              </StyledBorderSection>
+            </StyledNoTabSection>
+            <StyledNoTabSection header="Surplus">
+              <StyledBorderSection>
+                <SectionField label="Is there a Surplus? *" labelWidth="8">
+                  <YesNoButtons id="surplusToggle" disabled value={take.isSurplus} />
+                </SectionField>
+                {take.isSurplus && (
+                  <SectionField label="Area" labelWidth="12">
+                    <AreaContainer landArea={take.surplusArea ?? undefined} />
+                  </SectionField>
+                )}
+              </StyledBorderSection>
+            </StyledNoTabSection>
+          </Section>
+        );
+      })}
     </StyledSummarySection>
   );
 };

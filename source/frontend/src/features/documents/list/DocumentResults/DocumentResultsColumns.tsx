@@ -11,7 +11,7 @@ import { Claims } from '@/constants/index';
 import { DocumentRow } from '@/features/documents/ComposedDocument';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_DocumentRelationship, Api_DocumentType } from '@/models/api/Document';
-import { prettyFormatDate, stringToFragment } from '@/utils';
+import { prettyFormatUTCDate, stringToFragment } from '@/utils';
 
 export interface IDocumentColumnProps {
   onViewDetails: (values: Api_DocumentRelationship) => void;
@@ -86,7 +86,7 @@ const renderFileName = (onViewDetails: (values: Api_DocumentRelationship) => voi
 function renderUploaded(cell: CellProps<DocumentRow, string | undefined>) {
   return (
     <Row className="no-gutters">
-      <Col>{prettyFormatDate(cell.row.original.appCreateTimestamp)}</Col>
+      <Col>{prettyFormatUTCDate(cell.row.original.appCreateTimestamp)}</Col>
       <Col xs="auto">
         <StyledIcon>
           <TooltipIcon

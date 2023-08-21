@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { FieldArray, Formik, FormikProps } from 'formik';
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
@@ -11,13 +11,14 @@ import MapSelectorContainer from '@/components/propertySelector/MapSelectorConta
 import { IMapProperty } from '@/components/propertySelector/models';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
+import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { Api_File } from '@/models/api/File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { AddressForm, FileForm, PropertyForm } from '../../models';
-import SidebarFooter from '../../SidebarFooter';
+import SidebarFooter, { missingFieldsError } from '../../SidebarFooter';
 import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 
 export interface IUpdatePropertiesProps {
@@ -42,10 +43,14 @@ export const UpdateProperties: React.FunctionComponent<
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
   const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
   const [showAssociatedEntityWarning, setShowAssociatedEntityWarning] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>();
+
+  const { resetFilePropertyLocations } = useContext(SideBarContext);
 
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
 
   const handleSaveClick = async () => {
+    missingFieldsError(setErrorMessage, formikRef?.current?.isValid);
     setShowSaveConfirmModal(true);
   };
 
@@ -72,6 +77,7 @@ export const UpdateProperties: React.FunctionComponent<
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
     }
+    resetFilePropertyLocations();
     setShowCancelConfirmModal(false);
     props.setIsShowingPropertySelector(false);
   };
@@ -109,6 +115,7 @@ export const UpdateProperties: React.FunctionComponent<
             isOkDisabled={formikRef.current?.isSubmitting}
             onSave={handleSaveClick}
             onCancel={handleCancelClick}
+            errorMessage={errorMessage}
           />
         }
       >

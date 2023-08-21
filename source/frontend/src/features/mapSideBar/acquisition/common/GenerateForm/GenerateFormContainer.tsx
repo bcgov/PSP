@@ -6,11 +6,9 @@ import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { useModalManagement } from '@/hooks/useModalManagement';
-import { getMockApiCompensationList } from '@/mocks/compensations.mock';
 import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
 
 import { IGenerateFormViewProps } from './GenerateFormView';
-import { useGenerateH120 } from './hooks/useGenerateH120';
 import { useGenerateH0443 } from './hooks/useGenerateH0443';
 import { useGenerateLetter } from './hooks/useGenerateLetter';
 import { LetterRecipientModel, RecipientType } from './modals/models/LetterRecipientModel';
@@ -111,7 +109,6 @@ const GenerateFormContainer: React.FunctionComponent<
 
   const generateLetter = useGenerateLetter();
   const generateH0443 = useGenerateH0443();
-  const generateH120 = useGenerateH120();
   const onGenerateClick = (formType: FormDocumentType) => {
     switch (formType) {
       case FormDocumentType.LETTER:
@@ -119,9 +116,6 @@ const GenerateFormContainer: React.FunctionComponent<
         break;
       case FormDocumentType.H0443:
         generateH0443(acquisitionFileId);
-        break;
-      case FormDocumentType.H120:
-        generateH120(getMockApiCompensationList()[0]);
         break;
       default:
         console.error('Form Document type not recognized');

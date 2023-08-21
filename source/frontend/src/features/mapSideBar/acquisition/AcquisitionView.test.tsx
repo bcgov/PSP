@@ -17,7 +17,7 @@ import { rest, server } from '@/mocks/msw/server';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { SideBarContextProvider } from '../context/sidebarContext';
@@ -72,6 +72,7 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
     defaultPropertyTab: InventoryTabNames.property,
   },
   formikRef: React.createRef(),
+  missingFieldsError: undefined,
 };
 
 const history = createMemoryHistory();
@@ -146,8 +147,10 @@ describe('AcquisitionView component', () => {
     expect(getByText('Acquisition File')).toBeVisible();
 
     expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
-    expect(getByText(prettyFormatDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
-    expect(getByText(prettyFormatDate(testAcquisitionFile.appLastUpdateTimestamp))).toBeVisible();
+    expect(getByText(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
+    expect(
+      getByText(prettyFormatUTCDate(testAcquisitionFile.appLastUpdateTimestamp)),
+    ).toBeVisible();
   });
 
   it('should close the form when Close button is clicked', async () => {
