@@ -73,6 +73,7 @@ export const CompensationListContainer: React.FunctionComponent<
       id: null,
       acquisitionFileId: fileId,
       alternateProjectId: null,
+      alternateProject: null,
       isDraft: true,
       fiscalYear: null,
       yearlyFinancialId: null,

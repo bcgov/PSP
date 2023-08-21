@@ -14,7 +14,7 @@ export interface Api_CompensationRequisition extends Api_ConcurrentVersion, Api_
   id: number | null;
   acquisitionFileId: number;
   acquisitionFile: Api_AcquisitionFile | null;
-  alternateProject?: Api_Project;
+  alternateProject: Api_Project | null;
   alternateProjectId: number | null;
   isDraft: boolean | null;
   fiscalYear: string | null;
