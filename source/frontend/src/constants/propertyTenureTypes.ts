@@ -3,4 +3,5 @@ export enum PropertyTenureTypes {
   AdjacentLand = 'ADJLAND',
   ClosedRoad = 'CLOSEDRD',
   Unknown = 'UNKNOWN',
+  IndianReserve = 'IRESERVE',
 }

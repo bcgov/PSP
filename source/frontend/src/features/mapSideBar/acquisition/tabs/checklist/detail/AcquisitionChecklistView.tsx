@@ -18,7 +18,7 @@ import {
   lastModifiedBy,
   sortByDisplayOrder,
 } from '@/models/api/AcquisitionFile';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 
 import { StyledChecklistItemStatus, StyledSectionCentered } from './styles';
 
@@ -48,7 +48,7 @@ export const AcquisitionChecklistView: React.FC<IAcquisitionChecklistViewProps> 
       {lastUpdated && (
         <StyledSectionCentered>
           <em>
-            {`This checklist was last updated ${prettyFormatDate(
+            {`This checklist was last updated ${prettyFormatUTCDate(
               lastUpdated.appLastUpdateTimestamp,
             )} by `}
             <UserNameTooltip
@@ -86,7 +86,7 @@ export const AcquisitionChecklistView: React.FC<IAcquisitionChecklistViewProps> 
                             userName={checklistItem.appLastUpdateUserid}
                             userGuid={checklistItem.appLastUpdateUserGuid}
                           />
-                          <em> {prettyFormatDate(checklistItem.appLastUpdateTimestamp)}</em>
+                          <em> {prettyFormatUTCDate(checklistItem.appLastUpdateTimestamp)}</em>
                         </>
                       )}
                     </StyledChecklistItemAudit>

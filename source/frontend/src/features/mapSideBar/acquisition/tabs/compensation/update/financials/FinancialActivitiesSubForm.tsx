@@ -8,7 +8,7 @@ import { FastCurrencyInput } from '@/components/common/form';
 import { Select, SelectOption } from '@/components/common/form/Select';
 import GenericModal from '@/components/common/GenericModal';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { stringToBoolean } from '@/utils/formUtils';
+import { getCurrencyCleanValue, stringToBoolean } from '@/utils/formUtils';
 
 import { CompensationRequisitionFormModel, FinancialActivityFormModel } from '../models';
 
@@ -67,7 +67,6 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
     }
 
     setFieldValue(`financials[${index}].taxAmount`, taxAmount);
-    setFieldValue(`financials[${index}].taxAmount`, taxAmount);
     setFieldValue(`financials[${index}].totalAmount`, totalAmount);
 
     activitiesUpdated();
@@ -109,7 +108,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
                     />
                   </SectionField>
 
-                  <SectionField label={'Amount (before tax)'} required>
+                  <SectionField label="Amount (before tax)" required>
                     <FastCurrencyInput
                       allowNegative
                       formikProps={formikProps}
@@ -199,10 +198,6 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
 };
 
 export default FinancialActivitiesSubForm;
-
-const getCurrencyCleanValue = (stringValue: string): number => {
-  return Number(stringValue.replace(/[^0-9.-]/g, ''));
-};
 
 const StyledSpacer = styled.div`
   border-bottom: 0.1rem solid grey;

@@ -42,13 +42,13 @@ export class DepositListEntry {
 function renderHolder({ row: { original } }: CellProps<DepositListEntry, Api_Contact | undefined>) {
   if (original.contactHolder !== undefined) {
     const holder = original.contactHolder;
-    if (holder.person !== undefined) {
+    if (holder.person !== undefined && holder.person !== null) {
       return (
         <Link to={`/contact/${holder.id}`}>
           {formatNames([holder.person.firstName, holder.person.middleNames, holder.person.surname])}
         </Link>
       );
-    } else if (holder.organization !== undefined) {
+    } else if (holder.organization !== undefined && holder.organization !== null) {
       return <Link to={`/contact/${holder.id}`}>{holder.organization.name}</Link>;
     }
   }

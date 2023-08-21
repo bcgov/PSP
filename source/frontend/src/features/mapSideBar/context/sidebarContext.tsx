@@ -22,6 +22,7 @@ export interface ISideBarContext {
   setStaleFile: (stale: boolean) => void;
   fileLoading: boolean;
   setFileLoading: (loading: boolean) => void;
+  resetFilePropertyLocations: () => void;
   projectLoading: boolean;
   project?: Api_Project;
   setProject: (project?: Api_Project) => void;
@@ -39,6 +40,9 @@ export const SideBarContext = React.createContext<ISideBarContext>({
   fileLoading: false,
   setFileLoading: (loading: boolean) => {
     throw Error('setFileLoading function not defined');
+  },
+  resetFilePropertyLocations: () => {
+    throw Error('resetFilePropertyLocations function not defined');
   },
   staleFile: false,
   setStaleFile: (stale: boolean) => {
@@ -93,7 +97,8 @@ export const SideBarContextProvider = (props: {
   const { setFilePropertyLocations } = useMapStateMachine();
 
   const fileProperties = file?.fileProperties;
-  useEffect(() => {
+
+  const resetFilePropertyLocations = useCallback(() => {
     if (fileProperties !== undefined) {
       const propertyLocations = fileProperties
         .map(x => getLatLng(x.property?.location))
@@ -105,6 +110,10 @@ export const SideBarContextProvider = (props: {
     }
   }, [fileProperties, setFilePropertyLocations]);
 
+  useEffect(() => {
+    resetFilePropertyLocations();
+  }, [resetFilePropertyLocations]);
+
   return (
     <SideBarContext.Provider
       value={{
@@ -112,6 +121,7 @@ export const SideBarContextProvider = (props: {
         file: file,
         setFileLoading: setFileLoading,
         fileLoading: fileLoading,
+        resetFilePropertyLocations,
         staleFile,
         setStaleFile,
         getFilePropertyIndexById,

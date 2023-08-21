@@ -381,12 +381,39 @@ namespace Pims.Dal.Repositories
         {
             var query = Context.PimsProperties.AsNoTracking();
 
+            // Project filters
             if (filter.ProjectId.HasValue)
             {
                 query = query.Where(p =>
                     p.PimsPropertyLeases.Any(pl => pl.Lease.ProjectId == filter.ProjectId) ||
                     p.PimsPropertyResearchFiles.Any(pr => pr.ResearchFile.PimsResearchFileProjects.Any(r => r.ProjectId == filter.ProjectId)) ||
                     p.PimsPropertyAcquisitionFiles.Any(pa => pa.AcquisitionFile.ProjectId == filter.ProjectId));
+            }
+
+            // Lease filters
+            if (!string.IsNullOrEmpty(filter.LeaseStatus))
+            {
+                query = query.Where(p =>
+                    p.PimsPropertyLeases.Any(pl => pl.Lease.LeaseStatusTypeCode == filter.LeaseStatus));
+            }
+
+            if (filter.LeaseTypes != null && filter.LeaseTypes.Count > 0)
+            {
+                query = query.Where(p =>
+                    p.PimsPropertyLeases.Any(pl => filter.LeaseTypes.Contains(pl.Lease.LeaseLicenseTypeCode)));
+            }
+
+            if (filter.LeasePurposes != null && filter.LeasePurposes.Count > 0)
+            {
+                query = query.Where(p =>
+                    p.PimsPropertyLeases.Any(pl => filter.LeasePurposes.Contains(pl.Lease.LeasePurposeTypeCode)));
+            }
+
+            // Anomalies
+            if (filter.AnomalyIds != null && filter.AnomalyIds.Count > 0)
+            {
+                query = query.Where(p =>
+                    p.PimsPropPropAnomalyTypes.Any(at => filter.AnomalyIds.Contains(at.PropertyAnomalyTypeCode)));
             }
 
             return query.Select(p => p.PropertyId).ToHashSet();

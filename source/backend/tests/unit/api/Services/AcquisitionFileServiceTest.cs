@@ -104,6 +104,55 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Add_ContractorNotInTeamException_Fail_IsContractor()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.ConcurrencyControlNumber = 1;
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            Action act = () => service.Add(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
+
+            // Assert
+            act.Should().Throw<ContractorNotInTeamException>();
+        }
+
+        [Fact]
+        public void Add_Success_IsContractor_AssignedToTeam()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionFilePeople.Add(new PimsAcquisitionFilePerson() { PersonId = 1, AcqFlPersonProfileTypeCode = "test" });
+            acqFile.ConcurrencyControlNumber = 1;
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+
+            var newGuid = Guid.NewGuid();
+            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true);
+            contractorUser.PersonId= 1;
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            // Act
+            var result = service.Add(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Once);
+        }
+
+        [Fact]
         public void Add_ThrowIfNull()
         {
             // Arrange
@@ -1905,6 +1954,157 @@ namespace Pims.Api.Test.Services
         }
         #endregion
 
+        #region ExpPayment
+
+        [Fact]
+        public void GetExpPayments_NoPermissions()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.GetAcquisitionExpropriationPayments(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetExpPayments_NotAuthorized_Contractor()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionView);
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(EntityHelper.CreateAcquisitionFile());
+
+            // Act
+            Action act = () => service.GetAcquisitionExpropriationPayments(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetExpPayments_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionView);
+
+            var repository = _helper.GetService<Mock<IExpropriationPaymentRepository>>();
+            repository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsExpropriationPayment>()
+                {
+                    new PimsExpropriationPayment(),
+                });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            var result = service.GetAcquisitionExpropriationPayments(1);
+
+            // Assert
+            repository.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void AddExpPayment_NoPermissions()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.AddExpropriationPayment(1, new PimsExpropriationPayment());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void AddExpPayment_NullException()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            Action act = () => service.AddExpropriationPayment(1, null);
+
+            // Assert
+            act.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void AddExpPayment_BadRequest_IdMissmatch()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            Action act = () => service.AddExpropriationPayment(1, new PimsExpropriationPayment() { Internal_Id = 2 });
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void AddExpPayment_NotAuthorized_Contractor()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
+            var repository = _helper.GetService<Mock<IExpropriationPaymentRepository>>();
+            var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var newExpPayment = EntityHelper.CreateExpropriationPayment(1, 1);
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+
+            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+            repository.Setup(x => x.Add(It.IsAny<PimsExpropriationPayment>())).Returns(newExpPayment);
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            Action act = () => service.AddExpropriationPayment(1, newExpPayment);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void AddExpPayment_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var repository = _helper.GetService<Mock<IExpropriationPaymentRepository>>();
+            var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var newExpPayment = EntityHelper.CreateExpropriationPayment(1, 1);
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+
+            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+            repository.Setup(x => x.Add(It.IsAny<PimsExpropriationPayment>())).Returns(newExpPayment);
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            var result = service.AddExpropriationPayment(1, newExpPayment);
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsExpropriationPayment>()), Times.Once);
+        }
+
+        #endregion
 
         #endregion
     }
