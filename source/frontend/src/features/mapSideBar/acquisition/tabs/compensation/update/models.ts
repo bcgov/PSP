@@ -1,4 +1,5 @@
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
+import { IAutocompletePrediction } from '@/interfaces';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_FinancialCode } from '@/models/api/FinancialCode';
@@ -24,6 +25,7 @@ export class CompensationRequisitionFormModel {
   detailedRemarks: string = '';
   financials: FinancialActivityFormModel[] = [];
   payee: AcquisitionPayeeFormModel;
+  alternateProject: IAutocompletePrediction | null = null;
   isDisabled: string = '';
   rowVersion: number | null = null;
 
@@ -79,6 +81,13 @@ export class CompensationRequisitionFormModel {
     compensation.serviceLine = apiModel.chartOfAccountsId?.toString() || '';
     compensation.chartOfAccounts = apiModel.chartOfAccounts;
     compensation.responsibilityCentre = apiModel.responsibilityId?.toString() || '';
+    compensation.alternateProject =
+      apiModel.alternateProject !== null
+        ? {
+            id: apiModel.alternateProject?.id || 0,
+            text: apiModel.alternateProject?.description || '',
+          }
+        : null;
     compensation.Responsibility = apiModel.responsibility;
     compensation.agreementDateTime = apiModel.agreementDate || '';
     compensation.expropriationNoticeServedDateTime = apiModel.expropriationNoticeServedDate || '';
