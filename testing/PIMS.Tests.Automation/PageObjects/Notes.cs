@@ -68,53 +68,51 @@ namespace PIMS.Tests.Automation.PageObjects
         private By notesDeletePopupBody = By.CssSelector("div[class='modal-body']");
         private By notesDeleteOkBttn = By.XPath("//div[contains(text(),'Delete Note')]/parent::div/following-sibling::div[@class='modal-footer']/button[@title='ok-modal']");
 
-
         public Notes(IWebDriver webDriver) : base(webDriver)
         {}
 
         public void NavigateNotesTab()
         {
-            Wait();
+            WaitUntilClickable(notesTabLink);
             webDriver.FindElement(notesTabLink).Click();
         }
 
         public void CreateNotesTabButton()
         {
-            Wait(5000);
+            WaitUntilClickable(notesTabAddBttn);
             webDriver.FindElement(notesTabAddBttn).Click();
         }
 
         public void AddNewNoteDetails(string note)
         {
-            Wait();
+            WaitUntilVisible(notesAddDetailsTextarea);
             webDriver.FindElement(notesAddDetailsTextarea).SendKeys(note);
         }
 
         public void ViewSecondLastNoteDetails()
         {
-            Wait();
+            WaitUntilClickable(notesTab1stResultViewBttn);
             webDriver.FindElement(notesTab1stResultViewBttn).Click();
         }
 
         public void EditNote(string note)
         {
-            Wait();
+            WaitUntilClickable(notedEditBttn);
             webDriver.FindElement(notedEditBttn).Click();
 
-            Wait();
             ClearInput(noteEditTextarea);
             webDriver.FindElement(noteEditTextarea).SendKeys(note);
         }
 
         public void SaveNote()
         {
-            Wait();
+            WaitUntilClickable(notesAddDetailsSaveBttn);
             webDriver.FindElement(notesAddDetailsSaveBttn).Click();
         }
 
         public void CancelNote()
         {
-            Wait();
+            WaitUntilClickable(notesAddDetailsCancelBttn);
             webDriver.FindElement(notesAddDetailsCancelBttn).Click();
 
             Wait();
@@ -128,10 +126,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteLastSecondNote()
         {
-            Wait();
+            WaitUntilClickable(note2ndDeleteNoteBttn);
             webDriver.FindElement(note2ndDeleteNoteBttn).Click();
 
-            Wait();
+            WaitUntilVisible(notesDeletePopupHeader);
             Assert.True(webDriver.FindElement(notesDeletePopupHeader).Text.Equals("Delete Note"));
             Assert.True(webDriver.FindElement(notesDeletePopupBody).Text.Equals("Are you sure you want to delete this note?"));
             webDriver.FindElement(notesDeleteOkBttn).Click();
@@ -139,7 +137,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyNotesAddNew()
         {
-            Wait();
+            WaitUntilVisible(notesAddDetailsHeader);
             Assert.True(webDriver.FindElement(notesAddDetailsHeader).Displayed);
             Assert.True(webDriver.FindElement(notesAddDetailsHeader).Text == "Notes");
             Assert.True(webDriver.FindElement(notesAddDetailsLabel).Displayed);
@@ -150,7 +148,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyNotesEditForm()
         {
-            Wait();
+            WaitUntilVisible(notesEditCreatedLabel);
             Assert.True(webDriver.FindElement(notesEditCreatedLabel).Displayed);
             Assert.True(webDriver.FindElement(notesEditCreatedDate).Displayed);
             Assert.True(webDriver.FindElement(notesEditCreatedBy).Displayed);
@@ -166,7 +164,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyNotesTabListView()
         {
-            Wait();
+            WaitUntilVisible(notesTabTableHeaderNoteColumn);
 
             Assert.True(webDriver.FindElement(notesTabTitle).Displayed);
             Assert.True(webDriver.FindElement(notesTabAddBttn).Displayed);
@@ -186,13 +184,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int NotesTabCount()
         {
-            Wait();
+            WaitUntilVisible(notesTabTableContentTotal);
             return webDriver.FindElements(notesTabTableContentTotal).Count();
         }
 
         public void VerifyAutomaticNotes(string fileType, string fromStatus, string toStatus)
         {
-            Wait();
+            WaitUntilVisibleText(note1stNoteContent, webDriver.FindElement(note1stNoteContent).Text);
             Assert.True(webDriver.FindElement(note1stNoteContent).Text == fileType + " status changed from "+ fromStatus +" to " + toStatus);
         }
     }

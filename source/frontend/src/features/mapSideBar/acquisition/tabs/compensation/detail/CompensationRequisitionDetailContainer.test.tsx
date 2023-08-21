@@ -1,5 +1,5 @@
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
-import { getMockApiCompensation } from '@/mocks/compensations.mock';
+import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
 import { render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import {
@@ -24,7 +24,7 @@ describe('Compensation Detail View container', () => {
         {...renderOptions.props}
         loading={renderOptions.props?.loading ?? false}
         setEditMode={setEditMode}
-        compensation={renderOptions.props?.compensation ?? getMockApiCompensation()}
+        compensation={renderOptions.props?.compensation ?? getMockApiDefaultCompensation()}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
         clientConstant={renderOptions.props?.clientConstant ?? '034'}
       />,

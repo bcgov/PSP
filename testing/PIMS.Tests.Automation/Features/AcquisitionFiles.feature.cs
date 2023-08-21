@@ -119,14 +119,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Edit existing Acquisition File and Properties")]
+        [Xunit.SkippableFactAttribute(DisplayName="Update Acquisition File and Properties")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "Edit existing Acquisition File and Properties")]
-        public void EditExistingAcquisitionFileAndProperties()
+        [Xunit.TraitAttribute("Description", "Update Acquisition File and Properties")]
+        public void UpdateAcquisitionFileAndProperties()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Edit existing Acquisition File and Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update Acquisition File and Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 13
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

@@ -5,6 +5,8 @@
 import '@testing-library/jest-dom';
 import 'jest-styled-components';
 
+import moment from 'moment-timezone';
+
 import { server } from '@/mocks/msw/server';
 
 var localStorageMock = (function () {
@@ -32,7 +34,7 @@ Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
 });
 
-//workaround to allow polyline and other svg map renderers to function correctly in tests.
+// workaround to allow polyline and other svg map renderers to function correctly in tests.
 var createElementNSOrig = (global as any).document.createElementNS;
 (global as any).document.createElementNS = function (namespaceURI: any, qualifiedName: any) {
   if (namespaceURI === 'http://www.w3.org/2000/svg' && qualifiedName === 'svg') {
@@ -42,6 +44,18 @@ var createElementNSOrig = (global as any).document.createElementNS;
   }
   return createElementNSOrig.apply(this, arguments);
 };
+
+// Mock moment timezone to PST in all our tests
+moment.tz.setDefault('America/Vancouver');
+
+// This allows to run unit tests on GitHub Actions which are in GMT timezone by default
+['Date', 'Day', 'FullYear', 'Hours', 'Minutes', 'Month', 'Seconds'].forEach(prop => {
+  (Date.prototype as any)[`get${prop}`] = function () {
+    return (new Date(this.getTime() + moment(this.getTime()).utcOffset() * 60000) as any)[
+      `getUTC${prop}`
+    ]();
+  };
+});
 
 window.scrollTo = jest.fn(); // not implemented by jsdom.
 

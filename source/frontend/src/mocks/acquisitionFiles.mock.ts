@@ -258,7 +258,7 @@ export const mockAcquisitionFileResponse = (
       organizationId: 1,
       organization: {
         id: 1,
-        name: 'Millenium Inc',
+        name: 'Millennium Inc',
         alias: 'M Inc',
         incorporationNumber: '1234',
         comment: '',
@@ -294,6 +294,7 @@ export const mockAcquisitionFileResponse = (
   ],
   acquisitionFileChecklist: [],
   totalAllowableCompensation: 0,
+  legacyStakeholders: [],
   appCreateTimestamp: '2022-05-28T00:57:37.42',
   appLastUpdateTimestamp: '2022-07-28T00:57:37.42',
   appLastUpdateUserid: 'admin',

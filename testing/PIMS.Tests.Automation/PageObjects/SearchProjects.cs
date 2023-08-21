@@ -1,5 +1,8 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.Extensions;
+using OpenQA.Selenium.Support.UI;
 using PIMS.Tests.Automation.Classes;
+using SeleniumExtras.WaitHelpers;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -10,7 +13,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By manageProjectButton = By.XPath("//a[contains(text(),'Manage Project')]");
 
         //Search Projects Filters Elements
-        private By searchProjectSubtitle = By.XPath("//h3[contains(text(),'Projects')]");
+        private By searchProjectSubtitle = By.XPath("//div[@data-testid='projectsTable']/preceding-sibling::h3[contains(text(),'Projects')]");
         private By searchProjectNumberInput = By.Id("input-projectNumber");
         private By searchProjectNameInput = By.Id("input-projectName");
         private By searchProjectRegionSelect = By.Id("input-projectRegionCode");
@@ -45,46 +48,85 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Search a Project
         public void NavigateToSearchProject()
         {
-            Wait();
-            webDriver.FindElement(projectMenuBttn).Click();
+            Wait(3000);
 
-            Wait();
-            webDriver.FindElement(manageProjectButton).Click();
+            WaitUntilClickable(projectMenuBttn);
+            FocusAndClick(projectMenuBttn);
+
+            WaitUntilClickable(manageProjectButton);
+            FocusAndClick(manageProjectButton);
         }
 
         public void SearchProjectByName(string projectName)
         {
-            Wait();
+            WaitUntilVisible(searchProjectResetButton);
+            webDriver.FindElement(searchProjectResetButton).Click();
+
+            WaitUntilVisible(searchProjectNameInput);
             webDriver.FindElement(searchProjectNameInput).SendKeys(projectName);
             ChooseSpecificSelectOption(searchProjectStatusSelect, "All Statuses");
+            
+            webDriver.FindElement(searchProjectButton).Click();
+        }
 
-            Wait(5000);
+        public void SearchProjectByNumber(string projectNumber)
+        {
+            WaitUntilVisible(searchProjectResetButton);
+            webDriver.FindElement(searchProjectResetButton).Click();
+
+            WaitUntilVisible(searchProjectNumberInput);
+            webDriver.FindElement(searchProjectNumberInput).SendKeys(projectNumber);
+            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Statuses");
+
+            webDriver.FindElement(searchProjectButton).Click();
+        }
+
+        public void SearchProjectByRegion(string projectRegion)
+        {
+            WaitUntilVisible(searchProjectResetButton);
+            webDriver.FindElement(searchProjectResetButton).Click();
+
+            WaitUntilVisible(searchProjectRegionSelect);
+            webDriver.FindElement(searchProjectRegionSelect).SendKeys(projectRegion);
+            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Statuses");
+
+            webDriver.FindElement(searchProjectButton).Click();
+        }
+
+        public void SearchProjectByStatus(string projectStatus)
+        {
+            WaitUntilVisible(searchProjectResetButton);
+            webDriver.FindElement(searchProjectResetButton).Click();
+
+            WaitUntilVisible(searchProjectStatusSelect);
+            ChooseSpecificSelectOption(searchProjectStatusSelect, projectStatus);
+
             webDriver.FindElement(searchProjectButton).Click();
         }
 
         public void SearchLastProject()
         {
-            Wait();
+            WaitUntilVisible(searchProjectResetButton);
             webDriver.FindElement(searchProjectResetButton).Click();
 
-            Wait();
+            WaitUntilVisible(searchProjectTotalCount);
             ChooseSpecificSelectOption(searchProjectStatusSelect, "All Statuses");
             FocusAndClick(searchProjectButton);
 
-            Wait();
+            WaitUntilVisible(searchProjectTotalCount);
             webDriver.FindElement(searchProjectUpdatedDateSortBttn).Click();
             webDriver.FindElement(searchProjectUpdatedDateSortBttn).Click();
         }
 
         public void SelectFirstResult()
         {
-            Wait();
+            WaitUntilVisible(searchProjectTotalCount);
             webDriver.FindElement(searchProject1stResultNbrLink).Click();
         }
 
         public void VerifySearchView()
         {
-            Wait();
+            WaitUntilVisible(searchProjectSubtitle);
 
             //Search Projects Filters Section
             Assert.True(webDriver.FindElement(searchProjectSubtitle).Displayed);
@@ -111,15 +153,20 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyViewSearchResult(Project project)
         {
             DateTime thisDay = DateTime.Today;
-            string today = thisDay.ToString("MMM dd, yyyy");
+            string today = thisDay.ToString("MMM d, yyyy");
 
-            Wait();
+            WaitUntilVisible(searchProject1stResultNbrLink);
             Assert.True(webDriver.FindElement(searchProject1stResultNbrLink).Text.Equals(project.Number));
             Assert.True(webDriver.FindElement(searchProject1stResultNameLink).Text.Equals(project.Name));
-            Assert.True(webDriver.FindElement(searchProject1stResultRegionContent).Text.Equals(project.MOTIRegion));
+            Assert.True(webDriver.FindElement(searchProject1stResultRegionContent).Text.Equals(project.ProjectMOTIRegion));
             Assert.True(webDriver.FindElement(searchProject1stResultStatusContent).Text.Equals(project.ProjectStatus));
             Assert.True(webDriver.FindElement(searchProject1stResultLastUpdatedByContent).Text.Equals(project.UpdatedBy));
             Assert.True(webDriver.FindElement(searchProject1stResultLastUpdatedDateContent).Text.Equals(today));
+        }
+
+        public int TotalSearchedProjects()
+        {
+            return webDriver.FindElements(searchProjectTotalCount).Count();
         }
     }
 }

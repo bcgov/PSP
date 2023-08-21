@@ -50,15 +50,12 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
     'receivedDate',
     'desc',
   );
-  const lastPaymentDate = allPayments.length ? prettyFormatDate(allPayments[0]?.receivedDate) : '';
+  const lastPaymentDate = allPayments.length ? allPayments[0]?.receivedDate : '';
 
   /** This is the payments subtable displayed for each term row. */
   const renderPayments = useDeepCompareMemo(
     () => (row: FormLeaseTerm) => {
       const matchingTerm = leaseForm.terms.find(t => t.id === row.id);
-      if (!matchingTerm) {
-        throw Error('Could not find matching term');
-      }
       return (
         <PaymentsForm
           onSave={onSavePayment}

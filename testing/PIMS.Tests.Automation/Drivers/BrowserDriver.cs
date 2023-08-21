@@ -37,9 +37,11 @@ namespace PIMS.Tests.Automation.Drivers
             {
                 options.AddArguments("start-maximized");
             }
-
+            //, TimeSpan.FromMinutes(2)
             var chromeDriver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), options);
-            chromeDriver.Url = Configuration.GetValue<string>("baseUrl");
+            //chromeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(120);
+            //chromeDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(120);
+            chromeDriver.Url = Configuration.GetValue<string>("Base_url");
 
             return chromeDriver;
         }
@@ -56,8 +58,10 @@ namespace PIMS.Tests.Automation.Drivers
                 options.AddArguments("start-maximized");
             }
 
-            var edgeDriver = new EdgeDriver(EdgeDriverService.CreateDefaultService(), options);
-            edgeDriver.Url = Configuration.GetValue<string>("baseUrl");
+            var edgeDriver = new EdgeDriver(EdgeDriverService.CreateDefaultService(), options, TimeSpan.FromMinutes(3));
+            edgeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(120);
+            edgeDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(120);
+            edgeDriver.Url = Configuration.GetValue<string>("Base_url");
 
             return edgeDriver;
         }

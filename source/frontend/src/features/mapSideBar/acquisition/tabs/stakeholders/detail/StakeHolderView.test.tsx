@@ -29,6 +29,7 @@ describe('StakeHolderView component', () => {
             .flatMap(i => i.interestHolderProperties)
             .map(i => InterestHolderViewForm.fromApi(i))
         }
+        legacyStakeHolders={renderOptions.props?.legacyStakeHolders ?? []}
         groupedNonInterestProperties={
           renderOptions.props?.groupedNonInterestProperties ??
           getMockApiInterestHolders()
@@ -136,5 +137,17 @@ describe('StakeHolderView component', () => {
     });
 
     expect(getByText('PID: 025-196-375')).toBeVisible();
+  });
+
+  it('it hides the legacy stakeholders', () => {
+    const { queryByTestId } = setup({});
+
+    expect(queryByTestId('acq-file-legacy-stakeholders')).not.toBeInTheDocument();
+  });
+
+  it('it displays the legacy stakeholders', () => {
+    const { queryByTestId } = setup({ props: { legacyStakeHolders: ['John,Doe'] } });
+    expect(queryByTestId('acq-file-legacy-stakeholders')).toBeInTheDocument();
+    expect(queryByTestId('acq-file-legacy-stakeholders')).toHaveTextContent('John,Doe');
   });
 });

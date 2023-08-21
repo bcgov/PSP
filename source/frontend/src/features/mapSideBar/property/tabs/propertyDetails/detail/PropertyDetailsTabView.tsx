@@ -15,7 +15,7 @@ import {
 import AreaContainer from '@/components/measurements/AreaContainer';
 import VolumeContainer from '@/components/measurements/VolumeContainer';
 import * as API from '@/constants/API';
-import { Claims, PropertyAdjacentLandTypes, PropertyTenureTypes } from '@/constants/index';
+import { Claims, PropertyTenureTypes } from '@/constants/index';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { booleanToYesNoUnknownString, stringToBoolean } from '@/utils/formUtils';
@@ -50,15 +50,11 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
   const anomalies = property?.anomalies;
   const tenureStatus = property?.tenures;
   const roadType = property?.roadTypes;
-  const adjacentLand = property?.adjacentLands;
   const address = property?.address;
 
   // show/hide conditionals
   const isHighwayRoad = tenureStatus?.some(obj => obj?.id === PropertyTenureTypes.HighwayRoad);
-  const isAdjacentLand = tenureStatus?.some(obj => obj?.id === PropertyTenureTypes.AdjacentLand);
-  const isIndianReserve =
-    isAdjacentLand &&
-    adjacentLand?.some(obj => obj?.id === PropertyAdjacentLandTypes.IndianReserve);
+  const isIndianReserve = tenureStatus?.some(obj => obj?.id === PropertyTenureTypes.IndianReserve);
 
   const isVolumetricParcel = stringToBoolean(property?.isVolumetricParcel || '');
 
@@ -68,7 +64,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
       <StyledEditWrapper className="mr-3 my-1">
         {setEditMode !== undefined && hasClaim(Claims.PROPERTY_EDIT) && (
           <EditButton
-            title="Edit research file"
+            title="Edit property details"
             onClick={() => {
               setEditMode(true);
             }}
@@ -150,26 +146,13 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
           {pphStatusTypeCodeDesc ?? 'Unknown'}
         </SectionField>
         {isHighwayRoad && (
-          <SectionField label="Highway / Road established by">
+          <SectionField label="Highway / Road Details">
             <Multiselect
               disable
               disablePreSelectedValues
               hidePlaceholder
               placeholder=""
               selectedValues={roadType}
-              displayValue="description"
-              style={readOnlyMultiSelectStyle}
-            />
-          </SectionField>
-        )}
-        {isAdjacentLand && (
-          <SectionField label="Adjacent Land type">
-            <Multiselect
-              disable
-              disablePreSelectedValues
-              hidePlaceholder
-              placeholder=""
-              selectedValues={adjacentLand}
               displayValue="description"
               style={readOnlyMultiSelectStyle}
             />

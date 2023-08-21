@@ -23,14 +23,28 @@ namespace Pims.Dal.Entities
         public long CompensationRequisitionId { get; set; }
         [Column("ACQUISITION_FILE_ID")]
         public long AcquisitionFileId { get; set; }
+        [Column("ACQUISITION_OWNER_ID")]
+        public long? AcquisitionOwnerId { get; set; }
+        [Column("INTEREST_HOLDER_ID")]
+        public long? InterestHolderId { get; set; }
+        [Column("ACQUISITION_FILE_PERSON_ID")]
+        public long? AcquisitionFilePersonId { get; set; }
         [Column("CHART_OF_ACCOUNTS_ID")]
         public long? ChartOfAccountsId { get; set; }
         [Column("RESPONSIBILITY_ID")]
         public long? ResponsibilityId { get; set; }
         [Column("YEARLY_FINANCIAL_ID")]
         public long? YearlyFinancialId { get; set; }
+        [Column("LEGACY_PAYEE")]
+        [StringLength(1000)]
+        public string LegacyPayee { get; set; }
         [Column("IS_DRAFT")]
         public bool? IsDraft { get; set; }
+        [Column("IS_PAYMENT_IN_TRUST")]
+        public bool? IsPaymentInTrust { get; set; }
+        [Column("GST_NUMBER")]
+        [StringLength(50)]
+        public string GstNumber { get; set; }
         [Column("FISCAL_YEAR")]
         [StringLength(9)]
         public string FiscalYear { get; set; }
@@ -42,6 +56,8 @@ namespace Pims.Dal.Entities
         public DateTime? ExpropVestingDt { get; set; }
         [Column("GENERATION_DT", TypeName = "date")]
         public DateTime? GenerationDt { get; set; }
+        [Column("FINALIZED_DATE", TypeName = "date")]
+        public DateTime? FinalizedDate { get; set; }
         [Column("SPECIAL_INSTRUCTION")]
         [StringLength(2000)]
         public string SpecialInstruction { get; set; }

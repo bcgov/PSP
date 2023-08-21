@@ -244,11 +244,6 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsPropertyRoadTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsPropertyAdjacentLandType> GetAllPropertyAdjacentLandTypes()
-        {
-            return this.Context.PimsPropertyAdjacentLandTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
-        }
-
         public IEnumerable<PimsVolumetricType> GetAllPropertyVolumetricTypes()
         {
             return this.Context.PimsVolumetricTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
@@ -358,6 +353,11 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsInterestHolderInterestType> GetAllInterestHolderInterestTypes()
         {
             return this.Context.PimsInterestHolderInterestTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsPaymentItemType> GetAllExpropriationPaymentItemTypes()
+        {
+            return Context.PimsPaymentItemTypes.AsNoTracking().ToArray();
         }
         #endregion
     }

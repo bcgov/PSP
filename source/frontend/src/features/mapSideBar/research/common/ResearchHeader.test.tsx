@@ -1,5 +1,5 @@
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import ResearchHeader, { IResearchHeaderProps } from './ResearchHeader';
@@ -73,7 +73,7 @@ describe('ResearchHeader component', () => {
     expect(getByText(testResearchFile.fileNumber as string)).toBeVisible();
     expect(getByText(testResearchFile.fileName as string)).toBeVisible();
 
-    expect(getByText(prettyFormatDate(testResearchFile.appCreateTimestamp))).toBeVisible();
-    expect(getByText(prettyFormatDate(testResearchFile.appLastUpdateTimestamp))).toBeVisible();
+    expect(getByText(prettyFormatUTCDate(testResearchFile.appCreateTimestamp))).toBeVisible();
+    expect(getByText(prettyFormatUTCDate(testResearchFile.appLastUpdateTimestamp))).toBeVisible();
   });
 });

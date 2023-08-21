@@ -10,7 +10,7 @@ import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Claims } from '@/constants/index';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_Note } from '@/models/api/Note';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 
 export interface INoteDetailsFormModalProps {
   /** Whether to show the notes modal. Default: false */
@@ -48,7 +48,7 @@ export const NoteDetailsFormModal: React.FC<
         </Col>
         <Col>
           <span>
-            <strong>{prettyFormatDate(note?.appCreateTimestamp)}</strong> by{' '}
+            <strong>{prettyFormatUTCDate(note?.appCreateTimestamp)}</strong> by{' '}
             <UserNameTooltip userName={note?.appCreateUserid} userGuid={note?.appCreateUserGuid} />
           </span>
         </Col>
@@ -60,7 +60,7 @@ export const NoteDetailsFormModal: React.FC<
           </Col>
           <Col>
             <span>
-              <strong>{prettyFormatDate(note?.appLastUpdateTimestamp)}</strong> by{' '}
+              <strong>{prettyFormatUTCDate(note?.appLastUpdateTimestamp)}</strong> by{' '}
               <UserNameTooltip
                 userName={note?.appLastUpdateUserid}
                 userGuid={note?.appLastUpdateUserGuid}

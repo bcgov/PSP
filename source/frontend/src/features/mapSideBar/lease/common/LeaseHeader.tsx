@@ -13,7 +13,7 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { LeaseHeaderAddresses } from '@/features/leases/detail/LeaseHeaderAddresses';
 import { Api_Lease } from '@/models/api/Lease';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatDate, prettyFormatUTCDate } from '@/utils';
 
 import { LeaseHeaderTenants } from './LeaseHeaderTenants';
 
@@ -67,7 +67,7 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease }) => {
           <Row className="no-gutters">
             <Col className="text-right">
               <StyledSmallText>
-                Created: <strong>{prettyFormatDate(lease?.appCreateTimestamp)}</strong> by{' '}
+                Created: <strong>{prettyFormatUTCDate(lease?.appCreateTimestamp)}</strong> by{' '}
                 <UserNameTooltip
                   userName={lease?.appCreateUserid}
                   userGuid={lease?.appCreateUserGuid}
@@ -78,7 +78,8 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease }) => {
           <Row className="no-gutters">
             <Col className="text-right">
               <StyledSmallText>
-                Last updated: <strong>{prettyFormatDate(lease?.appLastUpdateTimestamp)}</strong> by{' '}
+                Last updated: <strong>{prettyFormatUTCDate(lease?.appLastUpdateTimestamp)}</strong>{' '}
+                by{' '}
                 <UserNameTooltip
                   userName={lease?.appLastUpdateUserid}
                   userGuid={lease?.appLastUpdateUserGuid}

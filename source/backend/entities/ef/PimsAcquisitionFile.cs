@@ -31,7 +31,7 @@ namespace Pims.Dal.Entities
             PimsAcquisitionOwners = new HashSet<PimsAcquisitionOwner>();
             PimsAgreements = new HashSet<PimsAgreement>();
             PimsCompensationRequisitions = new HashSet<PimsCompensationRequisition>();
-            PimsForm8s = new HashSet<PimsForm8>();
+            PimsExpropriationPayments = new HashSet<PimsExpropriationPayment>();
             PimsInterestHolders = new HashSet<PimsInterestHolder>();
             PimsPropertyAcquisitionFiles = new HashSet<PimsPropertyAcquisitionFile>();
         }
@@ -72,6 +72,9 @@ namespace Pims.Dal.Entities
         [Column("LEGACY_FILE_NUMBER")]
         [StringLength(18)]
         public string LegacyFileNumber { get; set; }
+        [Column("LEGACY_STAKEHOLDER")]
+        [StringLength(4000)]
+        public string LegacyStakeholder { get; set; }
         [Column("FUNDING_OTHER")]
         [StringLength(200)]
         public string FundingOther { get; set; }
@@ -85,6 +88,8 @@ namespace Pims.Dal.Entities
         public int? PaimsAcquisitionFileId { get; set; }
         [Column("TOTAL_ALLOWABLE_COMPENSATION", TypeName = "money")]
         public decimal? TotalAllowableCompensation { get; set; }
+        [Column("ALTERNATE_PROJECT")]
+        public long? AlternateProject { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -163,8 +168,8 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsAgreement> PimsAgreements { get; set; }
         [InverseProperty(nameof(PimsCompensationRequisition.AcquisitionFile))]
         public virtual ICollection<PimsCompensationRequisition> PimsCompensationRequisitions { get; set; }
-        [InverseProperty(nameof(PimsForm8.AcquisitionFile))]
-        public virtual ICollection<PimsForm8> PimsForm8s { get; set; }
+        [InverseProperty(nameof(PimsExpropriationPayment.AcquisitionFile))]
+        public virtual ICollection<PimsExpropriationPayment> PimsExpropriationPayments { get; set; }
         [InverseProperty(nameof(PimsInterestHolder.AcquisitionFile))]
         public virtual ICollection<PimsInterestHolder> PimsInterestHolders { get; set; }
         [InverseProperty(nameof(PimsPropertyAcquisitionFile.AcquisitionFile))]
