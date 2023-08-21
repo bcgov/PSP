@@ -8,11 +8,14 @@ import { Api_CompensationFinancial } from './CompensationFinancial';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_FinancialCode } from './FinancialCode';
 import { Api_InterestHolder } from './InterestHolder';
+import { Api_Project } from './Project';
 
 export interface Api_CompensationRequisition extends Api_ConcurrentVersion, Api_AuditFields {
   id: number | null;
   acquisitionFileId: number;
   acquisitionFile: Api_AcquisitionFile | null;
+  alternateProject?: Api_Project;
+  alternateProjectId: number | null;
   isDraft: boolean | null;
   fiscalYear: string | null;
   yearlyFinancialId: number | null;

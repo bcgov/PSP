@@ -10,6 +10,7 @@ import {
   getMockApiDefaultCompensation,
 } from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mockProjectGetResponse } from '@/mocks/projects.mock';
 import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -75,6 +76,8 @@ describe('Compensation Requisition UpdateForm component', () => {
         acquisitionFile={renderOptions.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
         isLoading={renderOptions.props?.isLoading ?? false}
         missingFieldsError={undefined}
+        showAltProjectError={false}
+        setShowAltProjectError={() => {}}
       />,
       {
         ...renderOptions,
@@ -319,5 +322,31 @@ describe('Compensation Requisition UpdateForm component', () => {
     expect(getPayeePreTaxAmount()).toHaveValue('$30,000.00');
     expect(getPayeeTaxAmount()).toHaveValue('$1,500.00');
     expect(getPayeeTotalAmount()).toHaveValue('$31,500.00');
+  });
+
+  it('should display a error modal when selected alternate project same as file project', async () => {
+    const acquisitionFile = { ...mockAcquisitionFileResponse(), projectId: 1 };
+    const apiCompensation = getMockApiDefaultCompensation();
+    const mockCompensation = CompensationRequisitionFormModel.fromApi({
+      ...apiCompensation,
+      alternateProject: { ...mockProjectGetResponse(), id: 1 },
+    });
+
+    const { findByText, getByTitle } = await setup({
+      props: { initialValues: mockCompensation, acquisitionFile: acquisitionFile },
+    });
+
+    const saveButton = screen.getByText('Save');
+    await act(async () => userEvent.click(saveButton));
+
+    expect(onSave).not.toHaveBeenCalled();
+    expect(
+      await findByText(
+        / You have selected an alternate project that is the same as the file project, please select a different project./i,
+      ),
+    ).toBeVisible();
+
+    await act(async () => userEvent.click(getByTitle('ok-modal')));
+    expect(onSave).not.toHaveBeenCalled();
   });
 });

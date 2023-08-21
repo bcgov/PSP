@@ -63,6 +63,7 @@ export class PayeeOption {
       isPaymentInTrust: null,
       gstNumber: null,
       acquisitionOwnerId: null,
+      alternateProjectId: null,
       interestHolderId: null,
       acquisitionFilePerson: null,
       isDisabled: null,

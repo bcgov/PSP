@@ -9,6 +9,7 @@ import {
   FastCurrencyInput,
   FastDatePicker,
   Input,
+  ProjectSelector,
   Select,
   SelectOption,
   TextArea,
@@ -46,6 +47,8 @@ export interface CompensationRequisitionFormProps {
   onCancel: () => void;
   onFooterSave?: () => void;
   missingFieldsError: string | undefined;
+  showAltProjectError: boolean;
+  setShowAltProjectError: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormProps> = ({
@@ -62,6 +65,8 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   onCancel,
   onFooterSave,
   missingFieldsError,
+  showAltProjectError,
+  setShowAltProjectError,
 }) => {
   const fiscalYearOptions = generateFiscalYearOptions();
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -119,6 +124,11 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
     }
   };
 
+  const showError = () => {
+    setShowAltProjectError(true);
+    return showAltProjectError;
+  };
+
   return (
     <Formik<CompensationRequisitionFormModel>
       enableReinitialize
@@ -151,6 +161,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                       },
                     ]}
                   />
+                </SectionField>
+                <SectionField label="Alternate project" labelWidth="5" contentWidth="6">
+                  <ProjectSelector field="alternateProject"></ProjectSelector>
                 </SectionField>
                 <SectionField
                   label="Final date"
@@ -321,6 +334,24 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 setShowModal(false);
               }}
             />
+
+            {formikRef.current?.values.alternateProject?.id === acquisitionFile.projectId &&
+              showError() && (
+                <GenericModal
+                  display={showAltProjectError}
+                  className="projectError"
+                  title="Alternate Project Error"
+                  message={[
+                    <strong>Error: </strong>,
+                    `You have selected an alternate project that is the same as the file project, please select a different project`,
+                  ]}
+                  okButtonText="Ok"
+                  handleOk={() => {
+                    setShowAltProjectError(false);
+                    formikProps.setFieldValue('alternateProject', null);
+                  }}
+                />
+              )}
           </StyledFormWrapper>
         );
       }}
