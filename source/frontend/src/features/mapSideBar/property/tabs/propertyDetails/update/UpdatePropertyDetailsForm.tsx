@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import { LinkButton, RemoveButton } from '@/components/common/buttons';
 import { Input, Multiselect, Select, Text, TextArea } from '@/components/common/form';
 import { RadioGroup } from '@/components/common/form/RadioGroup';
-import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 import { YesNoSelect } from '@/components/common/form/YesNoSelect';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -112,7 +111,6 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
 
   return (
     <StyledSummarySection>
-      <UnsavedChangesPrompt />
       <Section header="Property Address">
         <StyledSubtleText>
           This is the address stored in PIMS application for this property and will be used wherever

@@ -40,6 +40,8 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
   interestHolders,
   loading,
 }) => {
+  const legacyStakeHolders: string[] = file.legacyStakeholders ?? [];
+
   return (
     <Formik<StakeHolderForm>
       enableReinitialize
@@ -67,7 +69,9 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                 name="interestHolders"
                 render={arrayHelpers => (
                   <>
-                    {values.interestHolders.length === 0 && <i>No Interest holders to display</i>}
+                    {values.interestHolders.length === 0 && legacyStakeHolders.length === 0 && (
+                      <i>No Interest holders to display</i>
+                    )}
                     {values.interestHolders.map((interestHolder, index) => (
                       <InterestHolderSubForm
                         index={index}
@@ -77,7 +81,28 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                         interestHolder={interestHolder}
                       ></InterestHolderSubForm>
                     ))}
+
+                    {legacyStakeHolders.length > 0 && (
+                      <React.Fragment>
+                        <hr />
+                        <SectionField
+                          label="Legacy interest holders"
+                          tooltip="This is read-only field to display legacy information"
+                          labelWidth="6"
+                          contentWidth="6"
+                          valueTestId="acq-file-legacy-stakeholders"
+                        >
+                          {legacyStakeHolders.map((stakeholder, index) => (
+                            <div key={index}>
+                              <label key={index}>{stakeholder}</label>
+                              {index < legacyStakeHolders.length - 1 && <br />}
+                            </div>
+                          ))}
+                        </SectionField>
+                      </React.Fragment>
+                    )}
                     <hr />
+
                     <Button
                       variant="link"
                       onClick={() =>

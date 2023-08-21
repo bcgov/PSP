@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FileTypes } from '@/constants/fileTypes';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -42,6 +43,7 @@ export const ResearchContainer: React.FunctionComponent<
     },
   } = useGetResearch();
 
+  const mapMachine = useMapStateMachine();
   const [researchFile, setResearchFile] = useState<Api_ResearchFile | undefined>(undefined);
   const { setFile, setFileLoading, staleFile, setStaleFile } = React.useContext(SideBarContext);
 
@@ -141,6 +143,7 @@ export const ResearchContainer: React.FunctionComponent<
 
   const onSuccess = () => {
     fetchResearchFile();
+    mapMachine.refreshMapProperties();
     setIsEditing(false);
     setEditKey(FormKeys.none);
   };
