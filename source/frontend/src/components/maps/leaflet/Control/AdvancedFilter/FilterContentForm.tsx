@@ -49,10 +49,28 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
   }, [initialFilter, onChange]);
 
   const { getByType } = useLookupCodeHelpers();
+
+  // Propery options
   const anomalyOptions = getByType(API.PROPERTY_ANOMALY_TYPES).map<CodeTypeSelectOption>(x => {
     return { codeType: x.id.toString(), codeTypeDescription: x.name };
   });
 
+  // Tenure options
+  const tenureStatusOptions = getByType(API.PROPERTY_TENURE_TYPES).map<CodeTypeSelectOption>(x => {
+    return { codeType: x.id.toString(), codeTypeDescription: x.name };
+  });
+
+  const tenureProvincePublicHigwayTypeOptions = getByType(API.PPH_STATUS_TYPES).map<SelectOption>(
+    x => {
+      return { value: x.id.toString(), label: x.name };
+    },
+  );
+
+  const tenureRoadTypeOptions = getByType(API.PROPERTY_ROAD_TYPES).map<CodeTypeSelectOption>(x => {
+    return { codeType: x.id.toString(), codeTypeDescription: x.name };
+  });
+
+  // Lease options
   const leaseStatusOptions = getByType(API.LEASE_STATUS_TYPES).map<SelectOption>(x => {
     return { value: x.id.toString(), label: x.name };
   });
@@ -73,6 +91,34 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
         <Section header="Project" isCollapsable initiallyExpanded>
           <SectionField label={null} contentWidth="12">
             <ProjectSelector field="projectPrediction" />
+          </SectionField>
+        </Section>
+        <Section header="Tenure" isCollapsable initiallyExpanded>
+          <SectionField label="Status" contentWidth="12">
+            <Multiselect
+              field="tenureStatuses"
+              displayValue="codeTypeDescription"
+              placeholder=""
+              hidePlaceholder
+              options={tenureStatusOptions}
+            />
+          </SectionField>
+          <SectionField label="Province Public Highway" labelWidth="12" contentWidth="12">
+            <Select
+              field="tenurePPH"
+              options={tenureProvincePublicHigwayTypeOptions}
+              placeholder="Select a highway"
+            />
+          </SectionField>
+
+          <SectionField label="Highway / Road Details" labelWidth="12" contentWidth="12">
+            <Multiselect
+              field="tenureRoadType"
+              displayValue="codeTypeDescription"
+              placeholder=""
+              hidePlaceholder
+              options={tenureRoadTypeOptions}
+            />
           </SectionField>
         </Section>
         <Section header="Lease / License" isCollapsable initiallyExpanded>
