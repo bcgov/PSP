@@ -6,7 +6,6 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Acquisition.Controllers;
-using Pims.Api.Areas.Activities.Controllers;
 using Pims.Api.Areas.Projects.Controllers;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
