@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import { InlineSelect } from '@/components/common/form/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { ClickableDownload } from '@/components/layout/SideNavBar/styles';
 import {
   FlexRowDiv,
   UnOrderedListNoStyle,
@@ -60,13 +61,5 @@ export const ExportLeasePaymentsContainer: React.FunctionComponent<
     </Formik>
   );
 };
-
-const ClickableDownload = styled(FaDownload)`
-  &:hover {
-    cursor: pointer;
-  }
-  align-self: center;
-  color: ${({ theme }) => theme.css.slideOutBlue};
-`;
 
 export default ExportLeasePaymentsContainer;
