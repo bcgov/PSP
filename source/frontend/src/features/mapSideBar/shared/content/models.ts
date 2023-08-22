@@ -31,9 +31,3 @@ export enum FormTemplateTypes {
   EXPROP_FORM_8 = 'FORM8',
   EXPROP_FORM_9 = 'FORM9',
 }
-
-export enum ActivityTemplateTypes {
-  GENERAL = 'GENERAL',
-  SITE_VISIT = 'SITEVIS',
-  SURVEY = 'SURVEY',
-}
