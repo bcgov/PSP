@@ -1,5 +1,4 @@
 import { Form, Formik } from 'formik';
-import { noop } from 'lodash';
 import * as React from 'react';
 
 import { Select, SelectOption } from '@/components/common/form';

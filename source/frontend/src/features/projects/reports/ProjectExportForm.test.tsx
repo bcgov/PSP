@@ -1,20 +1,10 @@
 import { createMemoryHistory } from 'history';
 
-import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getMockPerson } from '@/mocks/contacts.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockProjects } from '@/mocks/projects.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import {
-  act,
-  fakeText,
-  getByDisplayValue,
-  render,
-  RenderOptions,
-  screen,
-  userEvent,
-  waitFor,
-} from '@/utils/test-utils';
+import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { ProjectExportTypes } from './models';
 import ProjectExportForm, { IProjectExportFormProps } from './ProjectExportForm';

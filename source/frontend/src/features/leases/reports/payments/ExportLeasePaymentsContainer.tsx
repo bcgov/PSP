@@ -1,8 +1,6 @@
 import { Formik } from 'formik';
 import * as React from 'react';
-import { FaDownload } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import styled from 'styled-components';
 
 import { InlineSelect } from '@/components/common/form/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
