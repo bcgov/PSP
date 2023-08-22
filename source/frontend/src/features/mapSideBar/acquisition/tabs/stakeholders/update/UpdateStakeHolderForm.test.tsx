@@ -105,4 +105,10 @@ describe('UpdateStakeHolderForm component', () => {
     await act(async () => userEvent.click(getByTestId('selectrow-1')));
     expect(getByTestId('selectrow-1')).toBeChecked();
   });
+
+  it('it hides the legacy stakeholders', async () => {
+    const { queryByTestId } = setup({});
+
+    expect(queryByTestId('acq-file-legacy-stakeholders')).not.toBeInTheDocument();
+  });
 });

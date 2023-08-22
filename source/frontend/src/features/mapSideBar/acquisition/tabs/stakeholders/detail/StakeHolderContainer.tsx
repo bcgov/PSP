@@ -56,6 +56,7 @@ export const StakeHolderContainer: React.FunctionComponent<IStakeHolderContainer
         apiInterestHolders ?? [],
         acquisitionFile,
       )}
+      legacyStakeHolders={acquisitionFile.legacyStakeholders ?? []}
       onEdit={onEdit}
     />
   );

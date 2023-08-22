@@ -16,7 +16,7 @@ export const TestFileManagement: React.FunctionComponent<React.PropsWithChildren
         <Col>
           <DocumentListContainer
             parentId={'1'}
-            relationshipType={DocumentRelationshipType.ACTIVITIES}
+            relationshipType={DocumentRelationshipType.ACQUISITION_FILES}
           />
         </Col>
       </Row>

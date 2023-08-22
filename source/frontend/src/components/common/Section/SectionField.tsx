@@ -36,7 +36,7 @@ export const SectionField: React.FunctionComponent<
           required: props.required,
           'text-left': !props.valueClassName,
         })}
-        valueTestId={props.valueTestId}
+        data-testid={props.valueTestId}
       >
         {props.children}
       </StyledCol>

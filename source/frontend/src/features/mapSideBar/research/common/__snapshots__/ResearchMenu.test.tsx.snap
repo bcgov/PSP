@@ -105,6 +105,7 @@ exports[`ResearchMenu component renders as expected when provided no research fi
         </span>
         <button
           class="btn btn-link"
+          data-testid="edit-button"
           title="Change properties"
           type="button"
         >

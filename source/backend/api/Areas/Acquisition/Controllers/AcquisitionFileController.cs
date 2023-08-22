@@ -9,7 +9,6 @@ using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
-using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Dal.Entities;

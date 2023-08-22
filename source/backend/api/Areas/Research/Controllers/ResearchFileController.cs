@@ -26,7 +26,6 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
     {
         #region Variables
         private readonly IResearchFileService _researchFileService;
-        private readonly IActivityService _activityService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -39,10 +38,9 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         /// <param name="activityService"></param>
         /// <param name="mapper"></param>
         ///
-        public ResearchFileController(IResearchFileService researchFileService, IActivityService activityService, IMapper mapper)
+        public ResearchFileController(IResearchFileService researchFileService, IMapper mapper)
         {
             _researchFileService = researchFileService;
-            _activityService = activityService;
             _mapper = mapper;
         }
         #endregion
@@ -78,56 +76,6 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
             var researchFileProperties = _researchFileService.GetProperties(id);
 
             return new JsonResult(_mapper.Map<IEnumerable<ResearchFilePropertyModel>>(researchFileProperties));
-        }
-
-        /// <summary>
-        /// Gets the activities for specified research file.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("{researchFileId:long}/activities")]
-        [HasPermission(Permissions.ResearchFileView)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(List<ActivityInstanceModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "researchfile" })]
-        public IActionResult GetActivitiesForResearchFile(long researchFileId)
-        {
-            var activityInstances = _activityService.GetAllByResearchFileId(researchFileId);
-            List<ActivityInstanceModel> models = _mapper.Map<List<ActivityInstanceModel>>(activityInstances);
-
-            return new JsonResult(models);
-        }
-
-        /// <summary>
-        /// Get the activity template types.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("activity-templates")]
-        [HasPermission(Permissions.ActivityView)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(List<ActivityTemplateModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "activity-templates" })]
-        public IActionResult GetActivityTemplateTypes()
-        {
-            var activityTemplates = _activityService.GetAllActivityTemplates();
-            var mappedActivityTemplates = _mapper.Map<List<ActivityTemplateModel>>(activityTemplates);
-            return new JsonResult(mappedActivityTemplates);
-        }
-
-        /// <summary>
-        /// Add the specified research file activity.
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("activity")]
-        [HasPermission(Permissions.ActivityAdd)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(ActivityInstanceModel), 200)]
-        [SwaggerOperation(Tags = new[] { "activityInstance" })]
-        public IActionResult AddActivityInstance(ActivityInstanceModel activityInstanceModel)
-        {
-            var activityInstanceEntity = _mapper.Map<Dal.Entities.PimsActivityInstance>(activityInstanceModel);
-            var activityInstance = _activityService.Add(activityInstanceEntity);
-
-            return new JsonResult(_mapper.Map<ActivityInstanceModel>(activityInstance));
         }
 
         /// <summary>

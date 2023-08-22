@@ -457,7 +457,7 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-6"
           >
             <label
               class="c4"
@@ -490,7 +490,7 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c5 text-left col-6"
           >
             <div
               class="table"
@@ -795,7 +795,7 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-6"
           >
             <label
               class="c4"
@@ -828,7 +828,7 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c5 text-left col-6"
           >
             <div
               class="table"

@@ -32,7 +32,7 @@ namespace Pims.Api.Services
 
         public LeaseService(
             ClaimsPrincipal user,
-            ILogger<ActivityService> logger,
+            ILogger<LeaseService> logger,
             ILeaseRepository leaseRepository,
             ICoordinateTransformService coordinateTransformService,
             IPropertyRepository propertyRepository,

@@ -1,5 +1,5 @@
 import { Col, Row } from 'react-bootstrap';
-import { FaExternalLinkAlt, FaTrash } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaMoneyCheck, FaTrash } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -7,9 +7,11 @@ import { StyledRemoveLinkButton } from '@/components/common/buttons';
 import EditButton from '@/components/common/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { H3 } from '@/components/common/styles';
+import { H3, StyledSectionAddButton } from '@/components/common/styles';
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
+import { Claims } from '@/constants';
 import { DetailAcquisitionFileOwner } from '@/features/mapSideBar/acquisition/models/DetailAcquisitionFileOwner';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
@@ -21,14 +23,17 @@ import ExpropriationPaymentItemsTable from './ExpropriationPaymentItemsTable';
 export interface IExpropriationForm8DetailsProps {
   form8Index: number;
   form8: Api_ExpropriationPayment;
+  acquisitionFileNumber: string;
   onDelete: (form8Id: number) => void;
+  onGenerate: (form8Id: number, acquisitionFileNumber: string) => void;
 }
 
 export const ExpropriationForm8Details: React.FunctionComponent<
   IExpropriationForm8DetailsProps
-> = ({ form8, form8Index, onDelete }) => {
+> = ({ form8, form8Index, acquisitionFileNumber, onDelete, onGenerate }) => {
   const history = useHistory();
   const match = useRouteMatch();
+  const keycloak = useKeycloakWrapper();
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const expropriationPayeeOwner =
@@ -45,33 +50,49 @@ export const ExpropriationForm8Details: React.FunctionComponent<
     <StyledForm8Border>
       <Section isCollapsable initiallyExpanded>
         <StyledSubHeader>
-          <EditButton
-            title="Edit form 8"
-            onClick={() => history.push(`${match.url}/${form8.id}`)}
-          />
-          <StyledRemoveLinkButton
-            title="Delete Payment Item"
-            data-testid={`paymentItems[${form8Index}].delete-button`}
-            variant="light"
-            onClick={() => {
-              setModalContent({
-                ...getDeleteModalProps(),
-                handleOk: async () => {
-                  onDelete(form8.id!);
-                  setDisplayModal(false);
-                },
-                handleCancel: () => {
-                  setDisplayModal(false);
-                },
-              });
-              setDisplayModal(true);
-            }}
+          <StyledSectionAddButton
+            data-testid={`form8[${form8Index}].generate-form8`}
+            onClick={() => onGenerate(form8.id as number, acquisitionFileNumber)}
           >
-            <FaTrash size="2rem" />
-          </StyledRemoveLinkButton>
+            <FaMoneyCheck className="mr-2" />
+            Generate
+          </StyledSectionAddButton>
+
+          {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && (
+            <>
+              <EditButton
+                title="Edit form 8"
+                dataTestId={`form8[${form8Index}].edit-form8`}
+                onClick={() => history.push(`${match.url}/${form8.id}`)}
+              />
+              <StyledRemoveLinkButton
+                title="Delete Form 8"
+                data-testid={`form8[${form8Index}].delete-form8`}
+                variant="light"
+                onClick={() => {
+                  setModalContent({
+                    ...getDeleteModalProps(),
+                    title: 'Remove Form 8',
+                    message: 'Do you wish to remove this Form 8?',
+                    okButtonText: 'Remove',
+                    handleOk: async () => {
+                      onDelete(form8.id!);
+                      setDisplayModal(false);
+                    },
+                    handleCancel: () => {
+                      setDisplayModal(false);
+                    },
+                  });
+                  setDisplayModal(true);
+                }}
+              >
+                <FaTrash size="2rem" />
+              </StyledRemoveLinkButton>
+            </>
+          )}
         </StyledSubHeader>
 
-        <SectionField label="Payee" labelWidth="4">
+        <SectionField label="Payee" labelWidth="4" valueTestId={`form8[${form8Index}].payee-name`}>
           <StyledPayeeDisplayName>
             {form8?.acquisitionOwnerId && expropriationPayeeOwner && (
               <label>{expropriationPayeeOwner.ownerName ?? ''}</label>
@@ -123,7 +144,11 @@ export const ExpropriationForm8Details: React.FunctionComponent<
             <Col className="pr-0 text-right">
               <label>Total:</label>
             </Col>
-            <Col xs="3" className="pl-1 text-right">
+            <Col
+              xs="3"
+              className="pl-1 text-right"
+              data-testid={`form8[${form8Index}].total-amount`}
+            >
               <span>{formatMoney(paymentItemsTotal ?? 0)}</span>
             </Col>
           </Row>
