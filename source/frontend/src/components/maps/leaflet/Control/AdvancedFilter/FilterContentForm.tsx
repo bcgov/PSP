@@ -50,7 +50,7 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
 
   const { getByType } = useLookupCodeHelpers();
 
-  // Propery options
+  // Property options
   const anomalyOptions = getByType(API.PROPERTY_ANOMALY_TYPES).map<CodeTypeSelectOption>(x => {
     return { codeType: x.id.toString(), codeTypeDescription: x.name };
   });
@@ -113,7 +113,7 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
 
           <SectionField label="Highway / Road Details" labelWidth="12" contentWidth="12">
             <Multiselect
-              field="tenureRoadType"
+              field="tenureRoadTypes"
               displayValue="codeTypeDescription"
               placeholder=""
               hidePlaceholder
