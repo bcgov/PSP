@@ -686,8 +686,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.AcquisitionFileId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_ID_SEQ])");
 
-                entity.Property(e => e.AlternateProject).HasComment("Link a file to an \"Alternate Project\", so the user can make alternate payments that may be due after the original file's project closes.");
-
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
@@ -2088,6 +2086,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.AgreementDt).HasComment("Agreement date.");
 
+                entity.Property(e => e.AlternateProjectId).HasComment("Link a file to an \"Alternate Project\", so the user can make alternate payments that may be due after the original file's project closes.");
+
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
@@ -2155,6 +2155,11 @@ namespace Pims.Dal
                     .WithMany(p => p.PimsCompensationRequisitions)
                     .HasForeignKey(d => d.AcquisitionOwnerId)
                     .HasConstraintName("PIM_ACQOWN_PIM_CMPREQ_FK");
+
+                entity.HasOne(d => d.AlternateProject)
+                    .WithMany(p => p.PimsCompensationRequisitions)
+                    .HasForeignKey(d => d.AlternateProjectId)
+                    .HasConstraintName("PIM_PROJCT_PIM_CMPREQ_FK");
 
                 entity.HasOne(d => d.ChartOfAccounts)
                     .WithMany(p => p.PimsCompensationRequisitions)
@@ -8638,6 +8643,7 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_RESPONSIBILITY_CODE_SEQ")
+                .StartsAt(991)
                 .HasMin(1)
                 .HasMax(2147483647);
 
