@@ -164,9 +164,6 @@ const StyledFormBody = styled.form`
     .form-label {
       font-weight: bold;
     }
-    input {
-      width: 90%;
-    }
   }
 `;
 
