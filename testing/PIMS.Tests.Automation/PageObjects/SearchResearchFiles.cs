@@ -174,7 +174,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public Boolean SearchFoundResults()
         {
-            WaitUntilVisible(searchResearchFile1stResult);
+            Wait(2000);
             return webDriver.FindElements(searchResearchFile1stResult).Count > 0;
         }
     }
