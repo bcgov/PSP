@@ -50,8 +50,6 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IDocumentRepository, Repositories.DocumentRepository>();
             repositories.AddScoped<Repositories.IAcquisitionFileRepository, Repositories.AcquisitionFileRepository>();
             repositories.AddScoped<Repositories.IAcquisitionFilePropertyRepository, Repositories.AcquisitionFilePropertyRepository>();
-            repositories.AddScoped<Repositories.IActivityRepository, Repositories.ActivityRepository>();
-            repositories.AddScoped<Repositories.IActivityTemplateRepository, Repositories.ActivityTemplateRepository>();
             repositories.AddScoped<Repositories.ISequenceRepository, Repositories.SequenceRepository>();
             repositories.AddScoped<Repositories.IPropertyLeaseRepository, Repositories.PropertyLeaseRepository>();
             repositories.AddScoped<Repositories.IProjectRepository, Repositories.ProjectRepository>();

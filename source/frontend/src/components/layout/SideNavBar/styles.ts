@@ -1,4 +1,4 @@
-import { FaWindowClose } from 'react-icons/fa';
+import { FaDownload, FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
 export const TrayHeader = styled.h3`
@@ -90,4 +90,30 @@ export const SideTray = styled.div`
       transform: translateX(32rem);
     }
   }
+`;
+
+export const HalfHeightDiv = styled.div`
+  flex-direction: column;
+  display: flex;
+  height: 50%;
+`;
+
+export const ExportH3 = styled.h3`
+  font-family: 'BcSans-Bold';
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding: 1rem 0 0.5rem 0;
+  color: ${props => props.theme.css.textColor};
+  border-bottom: solid 0.3rem ${props => props.theme.css.primaryColor};
+  display: flex;
+  align-items: flex-end;
+`;
+
+export const ClickableDownload = styled(FaDownload)`
+  &:hover {
+    cursor: pointer;
+  }
+  align-self: center;
+  color: ${({ theme }) => theme.css.slideOutBlue};
 `;

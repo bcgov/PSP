@@ -12,6 +12,7 @@ import {
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
+import { Api_Person } from '@/models/api/Person';
 import { Api_Product, Api_Project } from '@/models/api/Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
@@ -38,6 +39,7 @@ export const useAcquisitionProvider = () => {
     getFileCompReqH120s,
     postFileForm8,
     getAcquisitionFileForm8s,
+    getAllAcquisitionFileTeamMembers,
   } = useApiAcquisitionFile();
 
   const addAcquisitionFileApi = useApiRequestWrapper<
@@ -122,6 +124,17 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'GetAcquisitionFileOwners',
     onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Owners'),
+  });
+
+  const getAllAcquisitionTeamMembersApi = useApiRequestWrapper<
+    () => Promise<AxiosResponse<Api_Person[], any>>
+  >({
+    requestFunction: useCallback(
+      async () => await getAllAcquisitionFileTeamMembers(),
+      [getAllAcquisitionFileTeamMembers],
+    ),
+    requestName: 'getAllAcquisitionFileTeamMembers',
+    onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Team Members'),
   });
 
   const getAcquisitionProjectApi = useApiRequestWrapper<
@@ -252,6 +265,7 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionProperties: updateAcquisitionPropertiesApi,
       getAcquisitionProperties: getAcquisitionPropertiesApi,
       getAcquisitionOwners: getAcquisitionOwnersApi,
+      getAllAcquisitionFileTeamMembers: getAllAcquisitionTeamMembersApi,
       getAcquisitionProject: getAcquisitionProjectApi,
       getAcquisitionProduct: getAcquisitionProductApi,
       getAcquisitionFileChecklist: getAcquisitionChecklistApi,
@@ -269,6 +283,7 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionPropertiesApi,
       getAcquisitionPropertiesApi,
       getAcquisitionOwnersApi,
+      getAllAcquisitionTeamMembersApi,
       getAcquisitionProjectApi,
       getAcquisitionProductApi,
       getAcquisitionChecklistApi,

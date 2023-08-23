@@ -109,11 +109,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Search for a property by Legal Description
-            //if (lease.SearchProperties.LegalDescription != "")
-            //{
-            //    sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
-            //    sharedSearchProperties.SelectFirstOption();
-            //}
+            if (lease.SearchProperties.LegalDescription != "")
+                {
+                    sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
+                    sharedSearchProperties.SelectFirstOption();
+                }
 
             //Search for a duplicate property
             if (lease.SearchProperties.PID != "")
@@ -386,6 +386,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseDetails.CancelLicense();
 
             //Start a new lease from pop-up
+            propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Lease/License - Create new");
 
             //Fill basic information on the form

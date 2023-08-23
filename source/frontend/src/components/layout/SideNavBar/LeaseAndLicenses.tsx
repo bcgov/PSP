@@ -1,15 +1,14 @@
-import { FaRegFileExcel } from 'react-icons/fa';
+import { FaFileExcel } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 
 import { Claims } from '@/constants/claims';
-import { LeaseH3 } from '@/features/leases/detail/styles';
 import ExportAggregatedLeasesContainer from '@/features/leases/reports/aggregated/ExportAggregatedLeasesContainer';
 import ExportLeasePaymentsContainer from '@/features/leases/reports/payments/ExportLeasePaymentsContainer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 import { ISideTrayPageProps } from './SideTray';
 import * as Styled from './styles';
+import { ExportH3, HalfHeightDiv } from './styles';
 
 /**
  * Lease And Licenses Tray page with links to lis functionality.
@@ -34,9 +33,9 @@ export const LeaseAndLicenses = ({ onLinkClick }: ISideTrayPageProps) => {
       </HalfHeightDiv>
       {hasClaim(Claims.LEASE_VIEW) && (
         <HalfHeightDiv>
-          <LeaseH3>
-            <FaRegFileExcel /> Exports
-          </LeaseH3>
+          <ExportH3>
+            <FaFileExcel /> Exports
+          </ExportH3>
           <p>Aggregated Lease & License Payments</p>
           <ExportAggregatedLeasesContainer />
           <p>Lease and License Payments by Fiscal Year</p>
@@ -46,9 +45,3 @@ export const LeaseAndLicenses = ({ onLinkClick }: ISideTrayPageProps) => {
     </>
   );
 };
-
-const HalfHeightDiv = styled.div`
-  flex-direction: column;
-  display: flex;
-  height: 50%;
-`;

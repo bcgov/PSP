@@ -33,6 +33,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchContactMenuItems = By.CssSelector("div[class='Menu-root']");
         private By searchContactPaginationList = By.CssSelector("ul[class='pagination']");
 
+        private By searchContactLoadingResultTable = By.CssSelector("div[data-testid='contactsTable'] div[class='table-loading'] div[title='table-loading']");
         private By searchContactFirstResultLink = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(3) a");
         private By searchContactFirstNameDiv = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(4)");
         private By searchContactFirstLastNameDiv = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(5)");
@@ -54,7 +55,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Search a Contact
         public void NavigateToSearchContact()
         {
-            Wait(3000);
+            //Wait(3000);
 
             WaitUntilClickable(menuContactsButton);
             FocusAndClick(menuContactsButton);
@@ -97,7 +98,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Click on Create new contact
         public void CreateNewContactFromSearch()
         {
-            ButtonElement("Add new contact");
+            webDriver.FindElement(searchContactAddNewBttn).Click();
         }
 
         //Verify Links functionality on Search Contacts
@@ -184,7 +185,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyContactTableContent(string summary, string firstName, string lastName, string organization, string email, string address, string city, string province, string country)
         {
-            Wait(5000);
+            WaitUntilDisappear(searchContactLoadingResultTable);
+            Wait(2000);
 
             Assert.True(webDriver.FindElement(searchContactFirstResultLink).Text.Equals(summary));
             Assert.True(webDriver.FindElement(searchContactFirstNameDiv).Text.Equals(firstName));

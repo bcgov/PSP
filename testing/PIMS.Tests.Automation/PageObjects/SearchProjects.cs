@@ -166,6 +166,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int TotalSearchedProjects()
         {
+            Wait(2000);
             return webDriver.FindElements(searchProjectTotalCount).Count();
         }
     }

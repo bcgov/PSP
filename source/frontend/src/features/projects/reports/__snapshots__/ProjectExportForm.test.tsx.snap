@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProjectExportForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<form
+    action="#"
+  >
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-4"
+      >
+        <label
+          class="c0"
+        >
+          Export Type:
+        </label>
+      </div>
+      <div
+        class="c1 text-left col"
+      >
+        <div
+          class="form-group"
+        >
+          <select
+            class="form-select form-control"
+            id="input-exportType"
+            name="exportType"
+          >
+            <option
+              value=""
+            >
+              Select Export Type...
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-COMPENSATION"
+              value="COMPENSATION"
+            >
+              Compensation Requisition Export
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-AGREEMENT"
+              value="AGREEMENT"
+            >
+              Agreement Export
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;

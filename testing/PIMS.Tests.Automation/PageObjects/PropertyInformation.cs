@@ -21,6 +21,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By propertyCloseWindowBttn = By.XPath("//div[@class='col']/h1[contains(text(),'Property Information')]/parent::div/following-sibling::div");
         private By propertyMoreOptionsMenu = By.CssSelector("div[class='list-group list-group-flush']");
+        private By propertyViewInfoBttn = By.XPath("//button/div[contains(text(),'View more property info')]");
+        private By propertyNewResearchFileBttn = By.XPath("//button/div[contains(text(),'Research File - Create new')]");
+        private By propertyNewAcquisitionFileBttn = By.XPath("//button/div[contains(text(),'Acquisition File - Create new')]");
+        private By propertyNewLeaseFileBttn = By.XPath("//button/div[contains(text(),'Lease/License - Create new')]");
 
         //Property Information Tabs Elements
         private By propertyInformationTabsTotal = By.CssSelector("nav[role='tablist'] a");
@@ -152,6 +156,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By propertyDetailsCancelContentModal1 = By.CssSelector("div[class='modal-body'] div");
         private By propertyDetailsCancelContentModal2 = By.CssSelector("div[class='modal-body'] strong");
 
+        private By propertyDetailsWaitSpinner = By.CssSelector("div[data-testid='filter-backdrop-loading']");
+
         //PIMS Files Elements
         private By propertyPimsFilesLinkTab = By.XPath("//a[contains(text(),'PIMS Files')]");
         private By propertyPimsFiles = By.XPath("//div[contains(text(),'This property is associated with the following files.')]");
@@ -202,8 +208,21 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ChooseCreationOptionFromPin(string option)
         {
-            Wait(5000);
-            ButtonElement(option);
+            switch(option)
+            {
+                case "View more property info":
+                    ButtonElement(propertyViewInfoBttn);
+                    break;
+                case "Research File - Create new":
+                    ButtonElement(propertyNewResearchFileBttn);
+                    break;
+                case "Acquisition File - Create new":
+                    ButtonElement(propertyNewAcquisitionFileBttn);
+                    break;
+                case "Lease/License - Create new":
+                    ButtonElement(propertyNewLeaseFileBttn);
+                    break;
+            }
         }
 
         public void NavigatePropertyDetailsTab()
@@ -330,6 +349,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (property.TenureStatus.First() != "")
             {
+                Wait();
                 ClearMultiSelectInput(propertyDetailsTenureStatusInput);
                 foreach (string status in property.TenureStatus)
                 {
@@ -363,15 +383,15 @@ namespace PIMS.Tests.Automation.PageObjects
                     webDriver.FindElements(propertyDetailsAdjacentLandDeleteBttns)[0].Click();
                 }
             }
-            if (property.AdjacentLandType.First() != "")
-            {
-                ClearMultiSelectInput(propertyDetailsAdjacentLandInput);
-                foreach (string type in property.AdjacentLandType)
-                {
-                    FocusAndClick(propertyDetailsAdjacentLandInput);
-                    ChooseMultiSelectSpecificOption(propertyDetailsAdjacentLandOptions, type);
-                }
-            }
+            //if (property.AdjacentLandType.First() != "")
+            //{
+            //    ClearMultiSelectInput(propertyDetailsAdjacentLandInput);
+            //    foreach (string type in property.AdjacentLandType)
+            //    {
+            //        FocusAndClick(propertyDetailsAdjacentLandInput);
+            //        ChooseMultiSelectSpecificOption(propertyDetailsAdjacentLandOptions, type);
+            //    }               
+            //}
             if (property.SqrMeters != "")
             {
                 ClearDigitsInput(propertyDetailsAreaSqMtsInput);
@@ -418,7 +438,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPropertyInformationHeader()
         {
-            WaitUntilVisibleText(propertyInformationHeaderAddressContent, webDriver.FindElement(propertyInformationHeaderAddressContent).Text);
+            Wait(2000);
+
             Assert.True(webDriver.FindElement(propertyInformationHeaderTitle).Displayed);
             Assert.True(webDriver.FindElement(propertyInformationHeaderAddressLabel).Displayed);
             Assert.True(webDriver.FindElement(propertyInformationHeaderAddressContent).Text != null);
@@ -433,7 +454,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPropertyDetailsView()
         {
-            WaitUntilVisible(propertyDetailsEditBttn);
+            WaitUntilDisappear(propertyDetailsWaitSpinner);
+            Wait(3000);
+
             Assert.True(webDriver.FindElement(propertyDetailsAddressTitle).Displayed);
 
             if (webDriver.FindElements(propertyDetailsAddressNotAvailable).Count() > 0)
@@ -514,7 +537,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.True(webDriver.FindElement(propertyDetailsAreaMtsCubeLabel).Displayed);
                 Assert.True(webDriver.FindElement(propertyDetailsAreaFeetCubeLabel).Displayed);
             }
-
             Assert.True(webDriver.FindElement(propertyDetailsViewNotesTitle).Displayed);
         }
 
@@ -752,12 +774,11 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(propertyInformationTitleTab);
             Assert.True(webDriver.FindElement(propertyInformationTitleTab).Displayed);
             Assert.True(webDriver.FindElement(propertyInformationValueTab).Displayed);
-
         }
 
         public int PropertyTabs()
         {
-            WaitUntilVisible(propertyInformationTabsTotal);
+            Wait();
             return webDriver.FindElements(propertyInformationTabsTotal).Count();
         }
     }
