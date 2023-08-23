@@ -116,7 +116,17 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
-            return _acquisitionFilePropertyRepository.GetOwnersByAcquisitionFileId(id);
+            return _acqFileRepository.GetOwnersByAcquisitionFileId(id);
+        }
+
+        public IEnumerable<PimsAcquisitionFilePerson> GetTeamMembers()
+        {
+            _logger.LogInformation("Getting acquisition team members");
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
+            return _acqFileRepository.GetTeamMembers(userRegions);
         }
 
         public IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id)

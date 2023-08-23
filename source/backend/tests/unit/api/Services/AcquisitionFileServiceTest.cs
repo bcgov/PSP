@@ -1929,6 +1929,50 @@ namespace Pims.Api.Test.Services
 
         #endregion
 
+        #region Team Members
+
+        [Fact]
+        public void GetTeamMembers_NoPermission()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions();
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetTeamMembers(It.IsAny<HashSet<short>>())).Returns(new List<PimsAcquisitionFilePerson>());
+
+            // Act
+            Action act = () => service.GetOwners(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetTeamMembers_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.AgreementView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            repository.Setup(x => x.GetTeamMembers(It.IsAny<HashSet<short>>())).Returns(new List<PimsAcquisitionFilePerson>());
+
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            var teamMembers = service.GetTeamMembers();
+
+            // Assert
+            repository.Verify(x => x.GetTeamMembers(It.IsAny<HashSet<short>>()), Times.Once);
+        }
+
+        #endregion
+
         #region Properties
 
         [Fact]

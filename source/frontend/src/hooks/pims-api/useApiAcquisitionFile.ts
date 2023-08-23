@@ -12,6 +12,7 @@ import {
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
+import { Api_Person } from '@/models/api/Person';
 import { Api_Product, Api_Project } from '@/models/api/Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
@@ -65,6 +66,8 @@ export const useApiAcquisitionFile = () => {
         api.get<Api_AcquisitionFileProperty[]>(`/acquisitionfiles/${acqFileId}/properties`),
       getAcquisitionFileOwners: (acqFileId: number) =>
         api.get<Api_AcquisitionFileOwner[]>(`/acquisitionfiles/${acqFileId}/owners`),
+      getAllAcquisitionFileTeamMembers: () =>
+        api.get<Api_Person[]>(`/acquisitionfiles/team-members`),
       getAcquisitionFileProject: (acqFileId: number) =>
         api.get<Api_Project>(`/acquisitionfiles/${acqFileId}/project`),
       getAcquisitionFileProduct: (acqFileId: number) =>
