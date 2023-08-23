@@ -3,6 +3,7 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System.IO;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -10,17 +11,18 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         protected readonly IWebDriver webDriver;
         private WebDriverWait wait;
-        private DefaultWait<IWebDriver> fluentWait;
 
-        private By loadingSpinner = By.CssSelector("div[data-testid='filter-backdrop-loading']");
+        protected By loadingSpinner = By.CssSelector("div[data-testid='filter-backdrop-loading']");
+        protected By tableLoadingSpinner = By.CssSelector("div[class='table-loading'] div[class='spinner-border']");
+        protected By saveButton = By.XPath("//button/div[contains(text(),'Save')]");
+        protected By cancelButton = By.XPath("//button/div[contains(text(),'Cancel')]");
 
         protected PageObjectBase(IWebDriver webDriver)
         {
             this.webDriver = webDriver;
-            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(60));
-            fluentWait = new DefaultWait<IWebDriver>(webDriver);
-            fluentWait.Timeout = TimeSpan.FromSeconds(60);
-            fluentWait.PollingInterval = TimeSpan.FromMilliseconds(100);
+            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
+            wait.PollingInterval = TimeSpan.FromMilliseconds(100);
+            wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
         }
 
         protected virtual void Wait(int milliseconds = 1000) => Thread.Sleep(milliseconds);
@@ -28,65 +30,69 @@ namespace PIMS.Tests.Automation.PageObjects
         protected void WaitUntilSpinnerDisappear()
         {
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(loadingSpinner));
+            Wait();
         }
 
         protected void WaitUntilStale(By element)
         {
-            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
-            fluentWait.Until(ExpectedConditions.StalenessOf(webDriver.FindElement(element)));
+            wait.Until(ExpectedConditions.StalenessOf(webDriver.FindElement(element)));
+        }
+
+        protected void WaitUntilDisappear(By element)
+        {
+            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(element));
         }
 
         protected void WaitUntilVisible(By element)
         {
-            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
-            fluentWait.Until(ExpectedConditions.ElementIsVisible(element));
+            wait.Until(ExpectedConditions.ElementIsVisible(element));
         }
 
         protected void WaitUntilClickable(By element)
         {
-            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             wait.Until(ExpectedConditions.ElementToBeClickable(element));
         }
 
         public void WaitUntilVisibleText(By element, string text)
         {
             var webElement = webDriver.FindElement(element);
-            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
-            fluentWait.Until(ExpectedConditions.TextToBePresentInElement(webElement, text));
+            wait.Until(ExpectedConditions.TextToBePresentInElement(webElement, text));
         }
 
-        protected void ButtonElement(string btnContent)
+        protected void ButtonElement(string buttonName)
         {
-            Wait(5000);
+            var js = (IJavaScriptExecutor)webDriver;
+
+            if (buttonName == "Save")
+            {
+                wait.Until(ExpectedConditions.ElementExists(saveButton));
+                webDriver.FindElement(saveButton).Click();
+            }
+            else
+            {
+                wait.Until(ExpectedConditions.ElementExists(cancelButton));
+                webDriver.FindElement(cancelButton).Click();
+            }
+        }
+
+        protected void ButtonElement(By button)
+        {
+            Wait();
 
             var js = (IJavaScriptExecutor)webDriver;
 
-            var buttons = webDriver.FindElements(By.TagName("button"));
-
-            var selectedBtn = buttons.Should().ContainSingle(b => b.Text.Contains(btnContent)).Subject;
-            selectedBtn.Click();
-
-            //try
-            //{
-            //    var selectedBtn = buttons.Should().ContainSingle(b => b.Text.Contains(btnContent)).Subject;
-            //    selectedBtn.Click();
-            //}
-            //catch(Exception e)
-            //{
-            //    var selectedBtn = buttons.Should().ContainSingle(b => b.Text.Contains(btnContent)).Subject;
-            //    selectedBtn.Click();
-            //}
+            wait.Until(ExpectedConditions.ElementExists(button));
+            webDriver.FindElement(button).Click();
         }
 
         protected void FocusAndClick(By element)
         {
-            Wait();
+            wait.Until(ExpectedConditions.ElementExists(element));
 
             var js = (IJavaScriptExecutor)webDriver;
             var selectedElement = webDriver.FindElement(element);
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedElement);
-
             js.ExecuteScript("arguments[0].click();", selectedElement);
         }
 

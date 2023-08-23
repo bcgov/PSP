@@ -37,10 +37,7 @@ namespace PIMS.Tests.Automation.Drivers
             {
                 options.AddArguments("start-maximized");
             }
-            //, TimeSpan.FromMinutes(2)
             var chromeDriver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), options);
-            //chromeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(120);
-            //chromeDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(120);
             chromeDriver.Url = Configuration.GetValue<string>("Base_url");
 
             return chromeDriver;

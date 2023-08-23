@@ -69,7 +69,6 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(userManagementRegionSelect, region);
             webDriver.FindElement(userManagementSearchButton).Click();
 
-            WaitUntilVisible(userManagerTableResults);
             Assert.True(webDriver.FindElements(userManagerTableResults).Count() == 0);
             webDriver.FindElement(userManagementResetButton).Click();
 
@@ -77,7 +76,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyManageUserListView()
         {
-            WaitUntilVisible(userManagementIdirInput);
+            WaitUntilVisible(userManagerTableResults);
 
             Assert.True(webDriver.FindElement(userManagementRoleSelect).Displayed);
             Assert.True(webDriver.FindElement(userManagementIdirInput).Displayed);

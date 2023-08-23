@@ -88,7 +88,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactOrgIncorpNbrLabel = By.XPath("//strong[contains(text(),'Incorporation Number')]");
         private By contactOrgIncorpNbrContent = By.CssSelector("span[data-testid='contact-organization-incorporationNumber']");
 
-
         private By contactInfoSubtitle = By.XPath("//h2[contains(text(),'Contact info')]");
         private By contactEmailLabel = By.XPath("//strong[contains(text(),'Email')]");
         private By contactEmail1Content = By.XPath("(//div[@data-testid='email-value'])[1]");
@@ -167,6 +166,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactDuplicateModal = By.CssSelector("div[class='modal-dialog']");
 
         private By contactsSearchTable = By.CssSelector("div[data-testid='contactsTable']");
+        private By contactModalContinueSaveBttn = By.XPath("//button/div[contains(text(),'Continue Save')]");
+        private By contactConfirmCancelBttn = By.XPath("//button/div[contains(text(),'Confirm')]");
 
         private SharedModals sharedModals;
 
@@ -501,7 +502,6 @@ namespace PIMS.Tests.Automation.PageObjects
             //Updating contact mail address
             if (contact.MailAddressLine1 != "")
             {
-                
                 while (webDriver.FindElements(contactAddressMailAddressRemoveBttn).Count > 0)
                 {
                     FocusAndClick(contactAddressMailAddressRemoveBttn);
@@ -572,6 +572,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
                 if(contact.PropertyProvince != "")
                     ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.PropertyProvince);
+
                 if (contact.PropertyCity != "")
                 {
                     ClearInput(contactPropertyCityInput);
@@ -617,11 +618,13 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
                 if (contact.BillingCity != "")
                 {
+                    Wait();
                     ClearInput(contactBillingCityInput);
                     webDriver.FindElement(contactBillingCityInput).SendKeys(contact.BillingCity);
                 }
                 if (contact.BillingPostalCode != "")
                 {
+                    Wait();
                     ClearInput(contactBillingPostalCodeInput);
                     webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.BillingPostalCode);
                 }
@@ -833,13 +836,11 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 Assert.True(sharedModals.ModalHeader().Equals("Duplicate Contact"));
                 Assert.True(sharedModals.ModalContent().Equals("A contact matching this information already exists in the system."));
-                ButtonElement("Continue Save");
+                webDriver.FindElement(contactModalContinueSaveBttn).Click();
             }
-            
-            var editButtonElement = webDriver.FindElement(contactEditButton);
 
             WaitUntilVisible(contactEditButton);
-            Assert.True(editButtonElement.Displayed);
+            Assert.True(webDriver.FindElement(contactEditButton).Displayed);
 
         }
 
@@ -849,7 +850,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             ButtonElement("Cancel");
 
-            ButtonElement("Confirm");
+            ButtonElement(contactConfirmCancelBttn);
 
             WaitUntilVisible(contactsSearchTable);
             var contactTableElement = webDriver.FindElement(contactsSearchTable);

@@ -1,10 +1,7 @@
-﻿using Newtonsoft.Json.Bson;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using PIMS.Tests.Automation.Classes;
 using SeleniumExtras.WaitHelpers;
-using System.Diagnostics;
-using System.Diagnostics.Tracing;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -172,7 +169,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToAddPropertiesReseachFile()
         {
-            WaitUntilVisible(researchFilePropertyCountProps);
+            Wait(2000);
             totalAssociatedProps = webDriver.FindElements(researchFilePropertyCountProps).Count() - 1;
 
             WaitUntilClickable(researchEditPropertiesBttn);
@@ -487,6 +484,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveResearchFileProperties()
         {
+            Wait();
             ButtonElement("Save");
 
             Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
@@ -526,9 +524,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     sharedModals.ModalClickOKBttn();
                 }
             }
-
-            //Wait();
-            //sharedModals.SiteMinderModal();
         }
 
         public void CancelResearchFileProps()
@@ -563,7 +558,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Verify Create Research Init Form
         public void VerifyResearchFileCreateInitForm()
         {
-            WaitUntilVisible(researchFileNameInput);
+            Wait(2000);
 
             //Title and Name
             Assert.True(webDriver.FindElement(researchFileCreateHeader).Displayed);
@@ -630,6 +625,8 @@ namespace PIMS.Tests.Automation.PageObjects
         //Verify UI/UX Elements - Research Main Form - View Form
         public void VerifyResearchFileMainFormView(ResearchFile researchFile, string user)
         {
+            Wait(2000);
+
             //Header
             VerifyResearchFileHeader(researchFile, user);
             Assert.True(webDriver.FindElement(researchFileHeaderStatusContent).Text.Equals(researchFile.Status));
@@ -697,7 +694,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Verify UI/UX Elements - Research Properties - Property Research - View Form
         public void VerifyPropResearchTabFormView(PropertyResearch propertyResearch)
         {
-            WaitUntilVisible(researchPropertyNameLabel);
+            Wait(2000);
 
             Assert.True(webDriver.FindElement(researchPropertyInterestLabel).Displayed);
             Assert.True(webDriver.FindElement(researchPropertyNameLabel).Displayed);
@@ -746,12 +743,12 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(researchFileHeaderDistrictLabel).Displayed);
 
             Assert.True(webDriver.FindElement(researchFileHeaderCreatedLabel).Displayed);
-            //Assert.True(webDriver.FindElement(researchFileHeaderCreatedDateContent).Text.Equals(GetTodayFormattedDate()));
+            Assert.True(webDriver.FindElement(researchFileHeaderCreatedDateContent).Text.Equals(GetTodayFormattedDate()));
 
             Assert.True(webDriver.FindElement(researchFileHeaderCreatedByContent).Text.Equals(user));
 
             Assert.True(webDriver.FindElement(researchFileHeaderLastUpdatedLabel).Displayed);
-            //Assert.True(webDriver.FindElement(researchFileHeaderLastUpdatedDateContent).Text.Equals(GetTodayFormattedDate()));
+            Assert.True(webDriver.FindElement(researchFileHeaderLastUpdatedDateContent).Text.Equals(GetTodayFormattedDate()));
             Assert.True(webDriver.FindElement(researchFileHeaderLastUpdatedByContent).Text.Equals(user));
 
             Assert.True(webDriver.FindElement(researchFileHeaderStatusLabel).Displayed);

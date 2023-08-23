@@ -71,23 +71,25 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SearchLicenseByLFile(string lFile)
         {
-            WaitUntilVisible(searchLicenseLFileInput);
+            Wait(2000);
             webDriver.FindElement(searchLicenseLFileInput).SendKeys(lFile);
             webDriver.FindElement(searchLicenseActiveStatusDeleteBttn).Click();
-            webDriver.FindElement(searchLicenseSearchButton).Click();
+            FocusAndClick(searchLicenseSearchButton);
         }
 
         public void SearchLastLease()
         {
-            WaitUntilClickable(searchLicenseResetButton);
+            Wait(2000);
             webDriver.FindElement(searchLicenseResetButton).Click();
 
-            WaitUntilClickable(searchLicenseActiveStatusDeleteBttn);
+            Wait(2000);
             webDriver.FindElement(searchLicenseActiveStatusDeleteBttn).Click();
             webDriver.FindElement(searchLicenseSearchButton).Click();
 
             WaitUntilClickable(searchLicenseOrderByLFileBttn);
             webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
+
+            Wait();
             webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
         }
 
@@ -117,12 +119,12 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseMultiSelectSpecificOption(searchLicenseStatusOptions, status);
 
             WaitUntilClickable(searchLicenseSearchButton);
-            webDriver.FindElement(searchLicenseSearchButton).Click();
+            FocusAndClick(searchLicenseSearchButton);
         }
 
         public Boolean SearchFoundResults()
         {
-            WaitUntilVisible(searchLicenseResultsTable1stResult);
+            Wait();
             return webDriver.FindElements(searchLicenseResultsTable1stResult).Count > 0;
         }
 
