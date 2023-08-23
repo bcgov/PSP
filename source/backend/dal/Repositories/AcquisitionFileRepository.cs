@@ -104,6 +104,33 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(x => x.AcquisitionFileId == id) ?? throw new KeyNotFoundException();
         }
 
+        public List<PimsAcquisitionOwner> GetOwnersByAcquisitionFileId(long acquisitionFileId)
+        {
+            return Context.PimsAcquisitionOwners
+                .Where(x => x.AcquisitionFileId == acquisitionFileId)
+                .Include(x => x.Address)
+                    .ThenInclude(x => x.RegionCodeNavigation)
+                .Include(x => x.Address)
+                    .ThenInclude(x => x.Country)
+                .Include(x => x.Address)
+                    .ThenInclude(x => x.ProvinceState)
+                .Include(x => x.Address)
+                    .ThenInclude(x => x.DistrictCodeNavigation)
+                .AsNoTracking()
+                .ToList();
+        }
+
+        public List<PimsAcquisitionFilePerson> GetTeamMembers(HashSet<short> regions)
+        {
+            return Context.PimsAcquisitionFilePeople
+                .Where(x => regions.Contains(x.AcquisitionFile.RegionCode))
+                .Include(x => x.AcquisitionFile)
+                .Include(x => x.Person)
+                .AsNoTracking()
+                .AsEnumerable()
+                .DistinctBy(x => x.PersonId).ToList();
+        }
+
         /// <summary>
         /// Adds the specified acquisition file to the datasource.
         /// </summary>
