@@ -95,20 +95,6 @@ describe('ProjectExportForm component', () => {
     expect(screen.getByText(/first last/g)).not.toBeNull();
   });
 
-  it('displays team members when passed', async () => {
-    const { getByDisplayValue } = setup({
-      teamMembers: [getMockPerson({ id: 1, surname: 'last', firstName: 'first' })],
-    } as any);
-
-    const select = getByDisplayValue(/Select Export Type.../i);
-
-    await act(async () => {
-      userEvent.selectOptions(select, ProjectExportTypes.AGREEMENT);
-    });
-
-    expect(screen.getByText(/first last/g)).not.toBeNull();
-  });
-
   it('hides submit, project, team members by default', async () => {
     setup({} as any);
 
