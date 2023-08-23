@@ -1005,7 +1005,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                     >
                       <span
                         class="chip  false false"
-                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
                       >
                         Access
                         <i
@@ -1029,7 +1029,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                       </span>
                       <span
                         class="chip  false false"
-                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
                       >
                         Disturbance
                         <i
@@ -1180,7 +1180,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                     >
                       <span
                         class="chip  false false"
-                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
                       >
                         Highway/Road established by
                         <i
@@ -1204,7 +1204,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                       </span>
                       <span
                         class="chip  false false"
-                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
                       >
                         Adjacent Land type
                         <i
@@ -1369,7 +1369,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                     >
                       <span
                         class="chip  false false"
-                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
                       >
                         Controlled Access
                         <i
@@ -1393,7 +1393,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                       </span>
                       <span
                         class="chip  false false"
-                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
                       >
                         Order in Council (OIC)
                         <i

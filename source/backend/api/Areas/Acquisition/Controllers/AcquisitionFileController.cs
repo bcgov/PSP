@@ -184,6 +184,23 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         }
 
         /// <summary>
+        /// Get all unique persons that belong to at least one acquisition file as a team member.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("team-members")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [HasPermission(Permissions.ContactView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<PersonModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetAcquisitionTeamMembers()
+        {
+            var team = _acquisitionService.GetTeamMembers();
+
+            return new JsonResult(_mapper.Map<IEnumerable<PersonModel>>(team.Select(t => t.Person)));
+        }
+
+        /// <summary>
         /// Get all the compensations corresponding to the passed file id.
         /// </summary>
         /// <param name="id">The file to retrieve compensations for.</param>
