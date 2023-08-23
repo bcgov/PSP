@@ -77,10 +77,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SearchLastAcquisitionFile()
         {
-            WaitUntilClickable(searchAcquisitionFileResetButton);
+            Wait(2000);
             webDriver.FindElement(searchAcquisitionFileResetButton).Click();
 
-            WaitUntilClickable(searchAcquisitionFileStatusSelect);
+            Wait(2000);
             ChooseSpecificSelectOption(searchAcquisitionFileStatusSelect, "All Status");
             webDriver.FindElement(searchAcquisitionFileNameInput).SendKeys("Automated");
             webDriver.FindElement(searchAcquisitionFileSearchButton).Click();
@@ -88,7 +88,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(searchAcquisitionFileSortByAFileBttn);
             webDriver.FindElement(searchAcquisitionFileSortByAFileBttn).Click();
 
-            WaitUntilClickable(searchAcquisitionFileSortByAFileBttn);
+            Wait();
             webDriver.FindElement(searchAcquisitionFileSortByAFileBttn).Click();
         }
 

@@ -77,7 +77,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectFoundPin()
         {
             WaitUntilVisible(searchPropertyFoundPin);
-            webDriver.FindElement(searchPropertyFoundPin).Click();
+            FocusAndClick(searchPropertyFoundPin);
 
             sharedModals.SiteMinderModal();
         }
@@ -117,7 +117,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int PropertiesFoundCount()
         {
-            WaitUntilVisible(searchPropertyFoundPin);
+            Wait(2000);
             return webDriver.FindElements(searchPropertyFoundPin).Count();
         }
     }

@@ -300,6 +300,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentTableStatusColumn = By.XPath("//div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Status')]");
         private By documentTableActionsColumn = By.XPath("//div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Actions')]");
         private By documentTableContentTotal = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div");
+        private By documentTableWaitSpinner = By.CssSelector("div[class='table-loading']");
 
         //Activities Documents List 1st Result Elements
         //private By documentTableResults1stDownloadBttn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/div/button[@data-testid='document-download-button']");
@@ -443,13 +444,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void FilterByType(string documentType)
         {
-            WaitUntilVisible(documentFilterTypeSelect);
+            Wait(2000);
+            FocusAndClick(documentFilterResetBttn);
+
+            WaitUntilClickable(documentFilterTypeSelect);
             ChooseSpecificSelectOption(documentFilterTypeSelect, documentType);
             FocusAndClick(documentFilterSearchBttn);
         }
 
         public void FilterByStatus(string documentStatus)
         {
+            WaitUntilClickable(documentFilterResetBttn);
+            FocusAndClick(documentFilterResetBttn);
+
             WaitUntilVisible(documentFilterStatusSelect);
             ChooseSpecificSelectOption(documentFilterStatusSelect, documentStatus);
             FocusAndClick(documentFilterSearchBttn);
@@ -457,6 +464,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void FilterByName(string documentName)
         {
+            WaitUntilClickable(documentFilterResetBttn);
+            FocusAndClick(documentFilterResetBttn);
+
             WaitUntilVisible(documentFilterNameInput);
             webDriver.FindElement(documentFilterNameInput).SendKeys(documentName);
             FocusAndClick(documentFilterSearchBttn);
@@ -487,7 +497,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(documentSaveEditBttn);
             webDriver.FindElement(documentSaveEditBttn).Click();
 
-            WaitUntilClickable(documentTableResults1stViewBttn);
+            WaitUntilSpinnerDisappear();
         }
 
         public void CancelDigitalDocument()
@@ -524,7 +534,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void View1stDocument()
         {
-            WaitUntilVisible(documentTableResults1stViewBttn);
+            Wait(2000);
             webDriver.FindElement(documentTableResults1stViewBttn).Click();
         }
 
@@ -553,6 +563,8 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(documentDeleteContent3).Text.Equals("Do you wish to continue deleting this document?"));
 
             webDriver.FindElement(documentDeleteOkBttn).Click();
+
+            WaitUntilDisappear(documentTableWaitSpinner);
         }
 
         public void EditDocument()
@@ -998,7 +1010,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyDocumentDetailsCreateViewForm(DigitalDocument document)
         {
-            WaitUntilClickable(documentEditBttn);
+            Wait(5000);
 
             //Header
             Assert.True(webDriver.FindElement(documentViewDocumentTypeLabel).Displayed);
@@ -1006,6 +1018,8 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(documentViewDocumentTypeContent).Text.Equals(document.DocumentType));
             Assert.True(webDriver.FindElement(documenyViewDocumentNameLabel).Displayed);
             Assert.True(webDriver.FindElement(documentViewFileNameContent).Text != "");
+
+            WaitUntilVisible(documentViewDownloadButton);
             Assert.True(webDriver.FindElement(documentViewDownloadButton).Displayed);
 
             //Document Information
