@@ -88,8 +88,6 @@ namespace Pims.Dal.Entities
         public int? PaimsAcquisitionFileId { get; set; }
         [Column("TOTAL_ALLOWABLE_COMPENSATION", TypeName = "money")]
         public decimal? TotalAllowableCompensation { get; set; }
-        [Column("ALTERNATE_PROJECT")]
-        public long? AlternateProject { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

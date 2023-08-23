@@ -35,6 +35,8 @@ namespace Pims.Dal.Entities
         public long? ResponsibilityId { get; set; }
         [Column("YEARLY_FINANCIAL_ID")]
         public long? YearlyFinancialId { get; set; }
+        [Column("ALTERNATE_PROJECT_ID")]
+        public long? AlternateProjectId { get; set; }
         [Column("LEGACY_PAYEE")]
         [StringLength(1000)]
         public string LegacyPayee { get; set; }
