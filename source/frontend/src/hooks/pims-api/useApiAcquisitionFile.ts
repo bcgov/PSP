@@ -9,7 +9,6 @@ import {
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
 } from '@/models/api/AcquisitionFile';
-import { Api_Agreement } from '@/models/api/Agreement';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
