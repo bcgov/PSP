@@ -29,6 +29,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         #region Variables
         private readonly IAcquisitionFileService _acquisitionFileService;
         private readonly ClaimsPrincipal _user;
+        private readonly ICompensationRequisitionService _compensationRequisitionService;
         #endregion
 
         #region Constructors
@@ -37,10 +38,12 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// Creates a new instance of a AcquisitionController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="acquisitionFileService"></param>
-        public AcquisitionController(IAcquisitionFileService acquisitionFileService, ClaimsPrincipal user)
+        /// <param name="user"></param>
+        public AcquisitionController(IAcquisitionFileService acquisitionFileService, ClaimsPrincipal user, ICompensationRequisitionService compensationRequisitionService)
         {
             _acquisitionFileService = acquisitionFileService;
             _user = user;
+            _compensationRequisitionService = compensationRequisitionService;
         }
         #endregion
 
@@ -73,6 +76,34 @@ namespace Pims.Api.Areas.Reports.Controllers
             var reportAgreements = agreements.Select(agreement => new AgreementReportModel(agreement, _user));
 
             return ReportHelper.GenerateExcel(reportAgreements, "Agreement Export");
+        }
+
+        /// <summary>
+        /// Exports compensation requisitions as Excel file.
+        /// Include 'Accept' header to request the appropriate export -
+        ///     ["text/csv", "application/application/vnd.ms-excel"].
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpPost("compensation-requisitions")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces(ContentTypes.CONTENTTYPEEXCELX)]
+        [ProducesResponseType(200)]
+        [SwaggerOperation(Tags = new[] { "acquisition", "report" })]
+        public IActionResult ExportCompensationRequisitions([FromBody] AcquisitionReportFilterModel filter)
+        {
+            filter.ThrowBadRequestIfNull($"The request must include a filter.");
+
+            var acceptHeader = (string)Request.Headers["Accept"];
+            if (acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
+            {
+                throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
+            }
+
+            var agreements = _acquisitionFileService.SearchAgreements(filter);
+            var reportAgreements = agreements.Select(agreement => new AgreementReportModel(agreement, _user));
+
+            return ReportHelper.GenerateExcel(reportAgreements, "H120 Transactions Export");
         }
         #endregion
     }
