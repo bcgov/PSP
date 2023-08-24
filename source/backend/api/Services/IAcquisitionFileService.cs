@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Pims.Api.Areas.Acquisition.Models.Search;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
@@ -42,5 +43,7 @@ namespace Pims.Api.Services
         PimsExpropriationPayment AddExpropriationPayment(long acquisitionFileId, PimsExpropriationPayment expPayment);
 
         IList<PimsExpropriationPayment> GetAcquisitionExpropriationPayments(long acquisitionFileId);
+
+        List<AcquisitionFileExportDto> GetAcquisitionFileExport(AcquisitionFilter filter);
     }
 }

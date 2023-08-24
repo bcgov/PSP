@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Areas.Acquisition.Models.Search;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Core.Exceptions;
@@ -85,6 +86,21 @@ namespace Pims.Api.Services
             long? personId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
             return _acqFileRepository.GetPage(filter, userRegions, personId);
+        }
+
+        public List<AcquisitionFileExportDto> GetAcquisitionFileExport(AcquisitionFilter filter)
+        {
+            _logger.LogInformation("Searching for acquisition files...");
+            _logger.LogDebug("Acquisition file search with filter", filter);
+
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            // Limit search results to user's assigned region(s)
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
+            long? personId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            return _acqFileRepository.GetAcquisitionFileExport(filter, userRegions, personId);
         }
 
         public PimsAcquisitionFile GetById(long id)

@@ -1,18 +1,24 @@
+import { isEmpty } from 'lodash';
 import React, { useEffect } from 'react';
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaPlus } from 'react-icons/fa';
+import { FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons/Button';
+import { StyledIconButton } from '@/components/common/buttons/IconButton';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import Claims from '@/constants/claims';
 import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useSearch } from '@/hooks/useSearch';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
+import { generateMultiSortCriteria } from '@/utils/utils';
 
+import { useAcquisitionFileExport } from '../hooks/useAcquisitionFileExport';
 import { AcquisitionFilter, defaultAcquisitionFilter } from './AcquisitionFilter/AcquisitionFilter';
 import { AcquisitionSearchResults } from './AcquisitionSearchResults/AcquisitionSearchResults';
 import { AcquisitionSearchResultModel } from './AcquisitionSearchResults/models';
@@ -48,6 +54,23 @@ export const AcquisitionListView: React.FunctionComponent<
     'No matching results can be found. Try widening your search criteria.',
   );
 
+  const { exportAcquisitionFiles } = useAcquisitionFileExport();
+
+  /**
+   * @param {'csv' | 'excel'} accept Whether the fetch is for type of CSV or EXCEL
+   */
+  const fetch = (accept: 'excel') => {
+    // Call API with appropriate search parameters
+    const query = toFilteredApiPaginateParams<IAcquisitionFilter>(
+      currentPage,
+      pageSize,
+      sort && !isEmpty(sort) ? generateMultiSortCriteria(sort) : undefined,
+      filter,
+    );
+
+    exportAcquisitionFiles(query, accept);
+  };
+
   // update internal state whenever the filter bar changes
   const changeFilter = useCallback(
     (filter: IAcquisitionFilter) => {
@@ -71,6 +94,13 @@ export const AcquisitionListView: React.FunctionComponent<
           <Row>
             <Col>
               <AcquisitionFilter filter={filter} setFilter={changeFilter} />
+            </Col>
+            <Col md="auto" className="px-0">
+              <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
+                <StyledIconButton onClick={() => fetch('excel')}>
+                  <FaFileExcel data-testid="excel-icon" size={36} />
+                </StyledIconButton>
+              </TooltipWrapper>
             </Col>
           </Row>
         </Styled.PageToolbar>

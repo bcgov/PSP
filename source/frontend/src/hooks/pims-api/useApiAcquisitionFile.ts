@@ -34,6 +34,21 @@ export const useApiAcquisitionFile = () => {
         ),
       getAcquisitionFile: (acqFileId: number) =>
         api.get<Api_AcquisitionFile>(`/acquisitionfiles/${acqFileId}`),
+      exportAcquisitionFiles: (
+        filter: IPaginateAcquisition,
+        outputFormat: 'csv' | 'excel' = 'excel',
+      ) =>
+        api.get<Blob>(
+          `/acquisitionfiles/export?${
+            filter ? queryString.stringify({ ...filter, all: true }) : ''
+          }`,
+          {
+            responseType: 'blob',
+            headers: {
+              Accept: outputFormat === 'csv' ? 'text/csv' : 'application/vnd.ms-excel',
+            },
+          },
+        ),
       postAcquisitionFile: (
         acqFile: Api_AcquisitionFile,
         userOverrideCodes: UserOverrideCode[] = [],
