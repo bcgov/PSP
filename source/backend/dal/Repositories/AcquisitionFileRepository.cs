@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -73,9 +75,52 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            // var test = PredicateBuilder.True<PimsAcquisitionFile>();
+            var predicate = PredicateBuilder.New<PimsAcquisitionFile>(acq => true);
 
-            var querySearch = from acqFile in Context.PimsAcquisitionFiles
+            if (!string.IsNullOrWhiteSpace(filter.Pid))
+            {
+                var pidValue = filter.Pid.Replace("-", string.Empty).Trim().TrimStart('0');
+                predicate = predicate.And(acq => acq.PimsPropertyAcquisitionFiles.Any(pa => pa != null && EF.Functions.Like(pa.Property.Pid.ToString(), $"%{pidValue}%")));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Pin))
+            {
+                var pinValue = filter.Pin.Replace("-", string.Empty).Trim().TrimStart('0');
+                predicate = predicate.And(acq => acq.PimsPropertyAcquisitionFiles.Any(pa => pa != null && EF.Functions.Like(pa.Property.Pin.ToString(), $"%{pinValue}%")));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Address))
+            {
+                predicate = predicate.And(acq => acq.PimsPropertyAcquisitionFiles.Any(pa => pa != null &&
+                    (EF.Functions.Like(pa.Property.Address.StreetAddress1, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pa.Property.Address.StreetAddress2, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pa.Property.Address.StreetAddress3, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pa.Property.Address.MunicipalityName, $"%{filter.Address}%"))));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileStatusTypeCode))
+            {
+                predicate = predicate.And(acq => acq.AcquisitionFileStatusTypeCode == filter.AcquisitionFileStatusTypeCode);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileNameOrNumber))
+            {
+                predicate = predicate.And(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.FileNumber, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.LegacyFileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))
+            {
+                predicate = predicate.And(acq => EF.Functions.Like(acq.Project.Code, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(acq.Project.Description, $"%{filter.ProjectNameOrNumber}%"));
+            }
+
+            predicate = predicate.And(acq => regions.Contains(acq.RegionCode));
+
+            if (filterPersonId is not null)
+            {
+                predicate = predicate.And(acq => acq.PimsAcquisitionFilePeople.Any(x => x.PersonId == filterPersonId));
+            }
+
+            var querySearch = from acqFile in Context.PimsAcquisitionFiles.Where(predicate)
                                 .Include(r => r.RegionCodeNavigation)
                                 .Include(p => p.Project)
                                 .Include(s => s.AcquisitionFileStatusTypeCodeNavigation)
@@ -117,95 +162,15 @@ namespace Pims.Dal.Repositories
                                   FileAcquisitionOwners = string.Join(", ", acqFile.PimsAcquisitionOwners.Select(x => x.FormatOwnerName())),
                               };
 
-            if (!string.IsNullOrWhiteSpace(filter.Pid))
-            {
-                var pidValue = filter.Pid.Replace("-", string.Empty).Trim().TrimStart('0');
-                querySearch = querySearch.Where(x => x.Pid.Any(pa => !string.IsNullOrEmpty(x.Pid)));
-            }
-
             var queryResult = querySearch.AsNoTracking().ToList();
 
             // Check for data in the result.
             if (queryResult.Count.Equals(0))
             {
-                throw new Exception();
+                throw new ExportHasNoDataException("Requested export has no data based in the criteria provided");
             }
 
             return queryResult;
-
-            //var query = Context.PimsAcquisitionFiles.AsNoTracking();
-
-
-            //if (!string.IsNullOrWhiteSpace(filter.Pin))
-            //{
-            //    var pinValue = filter.Pin.Replace("-", string.Empty).Trim().TrimStart('0');
-            //    query = query.Where(acq => acq.PimsPropertyAcquisitionFiles.Any(pa => pa != null && EF.Functions.Like(pa.Property.Pin.ToString(), $"%{pinValue}%")));
-            //}
-
-            //if (!string.IsNullOrWhiteSpace(filter.Address))
-            //{
-            //    query = query.Where(acq => acq.PimsPropertyAcquisitionFiles.Any(pa => pa != null &&
-            //        (EF.Functions.Like(pa.Property.Address.StreetAddress1, $"%{filter.Address}%") ||
-            //        EF.Functions.Like(pa.Property.Address.StreetAddress2, $"%{filter.Address}%") ||
-            //        EF.Functions.Like(pa.Property.Address.StreetAddress3, $"%{filter.Address}%") ||
-            //        EF.Functions.Like(pa.Property.Address.MunicipalityName, $"%{filter.Address}%"))));
-            //}
-
-            //if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileStatusTypeCode))
-            //{
-            //    query = query.Where(acq => acq.AcquisitionFileStatusTypeCode == filter.AcquisitionFileStatusTypeCode);
-            //}
-
-            //if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileNameOrNumber))
-            //{
-            //    query = query.Where(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.FileNumber, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.LegacyFileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
-            //}
-
-            //if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))
-            //{
-            //    query = query.Where(acq => EF.Functions.Like(acq.Project.Code, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(acq.Project.Description, $"%{filter.ProjectNameOrNumber}%"));
-            //}
-
-            //query = query.Where(acq => regions.Contains(acq.RegionCode));
-
-            //if (filterPersonId is not null)
-            //{
-            //    query = query.Where(acq => acq.PimsAcquisitionFilePeople.Any(x => x.PersonId == filterPersonId));
-            //}
-
-            //if (filter.Sort?.Any() == true)
-            //{
-            //    query = query.OrderByProperty(filter.Sort);
-            //}
-            //else
-            //{
-            //    query = query.OrderBy(acq => acq.AcquisitionFileId);
-            //}
-
-
-            //var joinQuery = from file in Context.PimsAcquisitionFiles
-            //                join fp in Context.PimsPropertyAcquisitionFiles on file.AcquisitionFileId equals fp.AcquisitionFileId into fileprop
-            //                from fp in fileprop.DefaultIfEmpty()
-            //                select new AcquisitionFileExportDto()
-            //                {
-            //                    FileNo = file.FileNo,
-            //                    LegacyFileNumber = file.LegacyFileNumber,
-            //                    CivicAddress = fp.Property.Address.ToString(),
-            //                };
-
-            //if (!string.IsNullOrWhiteSpace(filter.Pid))
-            //{
-            //    var pidValue = filter.Pid.Replace("-", string.Empty).Trim().TrimStart('0');
-            //    joinQuery = joinQuery.Where(acq => acq.PimsPropertyAcquisitionFiles.Any(pa => pa != null && EF.Functions.Like(pa.Property.Pid.ToString(), $"%{pidValue}%")));
-            //}
-
-
-
-            //var result = from a in Context.PimsAcquisitionFiles
-            //            join p in Context.PimsPropertyAcquisitionFiles
-            //                on a.AcquisitionFileId equals p.AcquisitionFileId into grouping
-            //            from g in grouping.DefaultIfEmpty()
-            //            select new { a, p };
         }
 
         /// <summary>
