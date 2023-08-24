@@ -29,6 +29,8 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsAgreement> GetAgreements(long id);
 
+        IEnumerable<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter);
+
         IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements);
 
         IEnumerable<PimsInterestHolder> GetInterestHolders(long id);
