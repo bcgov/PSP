@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -30,5 +31,10 @@ namespace Pims.Api.Services
             return _compReqFinancialRepository.GetAllByAcquisitionFileId(acquisitionFileId, finalOnly);
         }
 
+        public IEnumerable<PimsCompReqFinancial> SearchCompensationRequisitionTransactions(AcquisitionReportFilterModel filter)
+        {
+            // TODO:
+            throw new System.NotImplementedException();
+        }
     }
 }

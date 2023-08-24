@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
@@ -29,7 +30,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         #region Variables
         private readonly IAcquisitionFileService _acquisitionFileService;
         private readonly ClaimsPrincipal _user;
-        private readonly ICompensationRequisitionService _compensationRequisitionService;
+        private readonly ICompReqFinancialService _compReqFinancialService;
         #endregion
 
         #region Constructors
@@ -39,11 +40,12 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// </summary>
         /// <param name="acquisitionFileService"></param>
         /// <param name="user"></param>
-        public AcquisitionController(IAcquisitionFileService acquisitionFileService, ClaimsPrincipal user, ICompensationRequisitionService compensationRequisitionService)
+        /// <param name="compReqFinancialService"></param>
+        public AcquisitionController(IAcquisitionFileService acquisitionFileService, ClaimsPrincipal user, ICompReqFinancialService compReqFinancialService)
         {
             _acquisitionFileService = acquisitionFileService;
             _user = user;
-            _compensationRequisitionService = compensationRequisitionService;
+            _compReqFinancialService = compReqFinancialService;
         }
         #endregion
 
@@ -100,10 +102,11 @@ namespace Pims.Api.Areas.Reports.Controllers
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
             }
 
-            var agreements = _acquisitionFileService.SearchAgreements(filter);
-            var reportAgreements = agreements.Select(agreement => new AgreementReportModel(agreement, _user));
+            var financials = _compReqFinancialService.SearchCompensationRequisitionTransactions(filter);
+            // TODO: var reportFinancials = financials.Select(agreement => new AgreementReportModel(agreement, _user));
+            var reportFinancials = new List<string>();
 
-            return ReportHelper.GenerateExcel(reportAgreements, "H120 Transactions Export");
+            return ReportHelper.GenerateExcel(reportFinancials, "H120 Transactions Export");
         }
         #endregion
     }
