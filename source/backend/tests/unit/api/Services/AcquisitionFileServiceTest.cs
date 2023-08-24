@@ -15,6 +15,7 @@ using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -137,7 +138,7 @@ namespace Pims.Api.Test.Services
 
             var newGuid = Guid.NewGuid();
             var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true);
-            contractorUser.PersonId= 1;
+            contractorUser.PersonId = 1;
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
@@ -2146,6 +2147,45 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.Add(It.IsAny<PimsExpropriationPayment>()), Times.Once);
+        }
+
+        #endregion
+
+        #region Export
+
+        [Fact]
+        public void GetAcquisitionFileExport_NoPermissions()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions();
+            var filter = new AcquisitionFilter();
+
+            // Act
+            Action act = () => service.GetAcquisitionFileExport(filter);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetAcquisitionFileExport_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+            var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            var filter = new AcquisitionFilter();
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            var result = service.GetAcquisitionFileExport(filter);
+
+            // Assert
+            acqFilerepository.Verify(x => x.GetAcquisitionFileExport(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
         }
 
         #endregion

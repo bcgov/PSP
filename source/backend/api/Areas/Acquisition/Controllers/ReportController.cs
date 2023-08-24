@@ -1,4 +1,4 @@
-using MapsterMapper;
+using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,6 +10,7 @@ using Pims.Api.Helpers.Reporting;
 using Pims.Api.Models;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -25,13 +26,11 @@ namespace Pims.Api.Areas.Acquisition.Controllers
     public class ReportController : ControllerBase
     {
         private readonly IAcquisitionFileService _acquisitionService;
-        private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public ReportController(IAcquisitionFileService acquisitionService, IMapper mapper, ILogger<ReportController> logger)
+        public ReportController(IAcquisitionFileService acquisitionService, ILogger<ReportController> logger)
         {
             _acquisitionService = acquisitionService;
-            _mapper = mapper;
             _logger = logger;
         }
 
@@ -41,8 +40,17 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(ErrorResponseModel), 409)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile", "report" })]
-        public IActionResult ExportLeases([FromQuery]AcquisitionFilterModel filter)
+        public IActionResult ExportAcquisitionFiles([FromQuery]AcquisitionFilterModel filter)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(ReportController),
+                nameof(ExportAcquisitionFiles),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
+
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
             if (!filter.IsValid())
             {

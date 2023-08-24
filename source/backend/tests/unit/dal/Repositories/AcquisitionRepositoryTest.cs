@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using Moq;
+using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -331,6 +332,74 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             act.Should().Throw<KeyNotFoundException>();
         }
+        #endregion
+
+        #region Export
+
+        [Fact]
+        public void GetAcquisitionFileExport_Filter_NoDataException()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.FileName = "fileName";
+            var filter = new AcquisitionFilter() { AcquisitionFileNameOrNumber = "fileNameTest" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            Action act = () => repository.GetAcquisitionFileExport(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            act.Should().Throw<ExportHasNoDataException>();
+        }
+
+
+        [Fact]
+        public void GetAcquisitionFileExport_Filter_AcquisitionName()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.FileName = "fileName";
+            var filter = new AcquisitionFilter() { AcquisitionFileNameOrNumber = "fileName" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetAcquisitionFileExport(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetAcquisitionFileExport_Filter_AcquisitionNumber()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.FileNumber = "fileNumber";
+            var filter = new AcquisitionFilter() { AcquisitionFileNameOrNumber = "fileNumber" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetAcquisitionFileExport(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
         #endregion
 
         #endregion
