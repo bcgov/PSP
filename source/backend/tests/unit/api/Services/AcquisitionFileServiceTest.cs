@@ -1896,10 +1896,10 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
             // Act
-            Action act = () => service.SearchAgreements(filter);
+            var agreements = service.SearchAgreements(filter);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            agreements.Should().BeEmpty();
         }
 
         [Fact]
