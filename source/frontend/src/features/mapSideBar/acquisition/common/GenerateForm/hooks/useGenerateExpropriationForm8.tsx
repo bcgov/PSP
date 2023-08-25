@@ -6,7 +6,7 @@ import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
 import { ExternalResultStatus } from '@/models/api/ExternalResult';
 import { Api_GenerateExpropriationForm8 } from '@/models/generate/acquisition/GenerateExpropriationForm8';
-import { stringDate } from '@/models/layers/alcAgriculturalReserveLines';
+import { stringDate } from '@/models/layers/alcAgriculturalReserve';
 
 export const useGenerateExpropriationForm8 = () => {
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
