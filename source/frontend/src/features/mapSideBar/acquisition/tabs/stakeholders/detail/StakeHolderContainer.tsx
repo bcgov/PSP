@@ -36,12 +36,18 @@ export const StakeHolderContainer: React.FunctionComponent<IStakeHolderContainer
 
   const allInterestProperties =
     apiInterestHolders?.flatMap(interestHolder => interestHolder.interestHolderProperties) ?? [];
-  const interestProperties = allInterestProperties.filter(ip =>
-    ip.propertyInterestTypes.some(pit => pit?.id !== 'NIP'),
-  );
-  const nonInterestProperties = allInterestProperties.filter(ip =>
-    ip.propertyInterestTypes.some(pit => pit?.id === 'NIP'),
-  );
+  const interestProperties = allInterestProperties
+    .filter(ip => ip.propertyInterestTypes.some(pit => pit?.id !== 'NIP'))
+    .map(ip => {
+      const filteredTypes = ip.propertyInterestTypes.filter(pit => pit?.id !== 'NIP');
+      return { ...ip, propertyInterestTypes: filteredTypes };
+    });
+  const nonInterestProperties = allInterestProperties
+    .filter(ip => ip.propertyInterestTypes.some(pit => pit?.id === 'NIP'))
+    .map(ip => {
+      const filteredTypes = ip.propertyInterestTypes.filter(pit => pit?.id === 'NIP');
+      return { ...ip, propertyInterestTypes: filteredTypes };
+    });
 
   return (
     <View
