@@ -55,7 +55,15 @@ namespace Pims.Dal.Repositories
             }
 
             var predicate = GenerateAcquisitionPredicateFilter(filter, regions, filterPersonId);
-            var query = Context.PimsAcquisitionFiles.AsNoTracking().Where(predicate);
+            var query = Context.PimsAcquisitionFiles.AsNoTracking()
+                .Include(acq => acq.AcquisitionFileStatusTypeCodeNavigation)
+                .Include(acq => acq.RegionCodeNavigation)
+                .Include(acq => acq.Project)
+                .Include(acq => acq.PimsPropertyAcquisitionFiles)
+                    .ThenInclude(pa => pa.Property)
+                    .ThenInclude(p => p.Address)
+                .Where(predicate);
+
             query = (filter.Sort?.Any() == true) ? query.OrderByProperty(filter.Sort) : query.OrderBy(acq => acq.AcquisitionFileId);
 
             var queryResult = query.ToList();
