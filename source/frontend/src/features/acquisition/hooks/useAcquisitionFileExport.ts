@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
 
+import * as actionTypes from '@/constants/actionTypes';
+import { catchAxiosError } from '@/customAxios';
 import {
   IPaginateAcquisition,
   useApiAcquisitionFile,
@@ -19,8 +21,8 @@ export const useAcquisitionFileExport = () => {
   const exportAcquisitionFiles = useCallback(
     async (
       filter: IPaginateAcquisition,
-      outputFormat: 'csv' | 'excel' = 'excel',
-      fileName = `pims-acquisition-files.${outputFormat === 'csv' ? 'csv' : 'xlsx'}`,
+      outputFormat: 'excel',
+      fileName = `Acquisition_File_Export.'xlsx'`,
       requestId = 'properties-report',
     ) => {
       dispatch(logRequest(requestId));
@@ -34,12 +36,12 @@ export const useAcquisitionFileExport = () => {
       } catch (e) {
         if (axios.isAxiosError(e)) {
           const axiosError = e as AxiosError<IApiError>;
-          console.log(axiosError);
           if (axiosError?.response?.status === 409) {
             toast.error('Export contains no data');
+          } else {
+            catchAxiosError(e, dispatch, actionTypes.DELETE_PARCEL);
           }
           dispatch(hideLoading());
-          //catchAxiosError(e, dispatch, actionTypes.DELETE_PARCEL);
         }
       }
     },

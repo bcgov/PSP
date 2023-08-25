@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test

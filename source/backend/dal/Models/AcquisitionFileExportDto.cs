@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities.Models
     public class AcquisitionFileExportDto
     {
         [DisplayName("Acquisition File #")]
-        public long FileNo { get; set; }
+        public string FileNumber { get; set; }
 
         [DisplayName("Historical File #")]
         public string LegacyFileNumber { get; set; }
@@ -31,7 +31,7 @@ namespace Pims.Dal.Entities.Models
         [DisplayName("PIN")]
         public string Pin { get; set; }
 
-        [DisplayName("Status(File)")]
+        [DisplayName("Status (File)")]
         public string FileStatus { get; set; }
 
         [DisplayName("Funding (File)")]

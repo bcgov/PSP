@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Api.Areas.Reports.Models.Agreement
 {

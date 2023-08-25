@@ -54,14 +54,15 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            var skip = (filter.Page - 1) * filter.Quantity;
-            var query = this.Context.GenerateAcquisitionQuery(filter, regions, filterPersonId);
-            var items = query
-                .Skip(skip)
-                .Take(filter.Quantity)
-                .ToArray();
+            var predicate = GenerateAcquisitionPredicateFilter(filter, regions, filterPersonId);
+            var query = Context.PimsAcquisitionFiles.AsNoTracking().Where(predicate);
+            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(filter.Sort) : query.OrderBy(acq => acq.AcquisitionFileId);
 
-            return new Paged<PimsAcquisitionFile>(items, filter.Page, filter.Quantity, query.Count());
+            var queryResult = query.ToList();
+            var skip = (filter.Page - 1) * filter.Quantity;
+            var pageItems = queryResult.Skip(skip).Take(filter.Quantity).ToList();
+
+            return new Paged<PimsAcquisitionFile>(pageItems, filter.Page, filter.Quantity, queryResult.Count);
         }
 
         /// <summary>
@@ -82,50 +83,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            var predicate = PredicateBuilder.New<PimsAcquisitionFile>(acq => true);
-
-            if (!string.IsNullOrWhiteSpace(filter.Pid))
-            {
-                var pidValue = filter.Pid.Replace("-", string.Empty).Trim().TrimStart('0');
-                predicate = predicate.And(acq => acq.PimsPropertyAcquisitionFiles.Any(pa => pa != null && EF.Functions.Like(pa.Property.Pid.ToString(), $"%{pidValue}%")));
-            }
-
-            if (!string.IsNullOrWhiteSpace(filter.Pin))
-            {
-                var pinValue = filter.Pin.Replace("-", string.Empty).Trim().TrimStart('0');
-                predicate = predicate.And(acq => acq.PimsPropertyAcquisitionFiles.Any(pa => pa != null && EF.Functions.Like(pa.Property.Pin.ToString(), $"%{pinValue}%")));
-            }
-
-            if (!string.IsNullOrWhiteSpace(filter.Address))
-            {
-                predicate = predicate.And(acq => acq.PimsPropertyAcquisitionFiles.Any(pa => pa != null &&
-                    (EF.Functions.Like(pa.Property.Address.StreetAddress1, $"%{filter.Address}%") ||
-                    EF.Functions.Like(pa.Property.Address.StreetAddress2, $"%{filter.Address}%") ||
-                    EF.Functions.Like(pa.Property.Address.StreetAddress3, $"%{filter.Address}%") ||
-                    EF.Functions.Like(pa.Property.Address.MunicipalityName, $"%{filter.Address}%"))));
-            }
-
-            if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileStatusTypeCode))
-            {
-                predicate = predicate.And(acq => acq.AcquisitionFileStatusTypeCode == filter.AcquisitionFileStatusTypeCode);
-            }
-
-            if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileNameOrNumber))
-            {
-                predicate = predicate.And(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.FileNumber, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.LegacyFileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
-            }
-
-            if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))
-            {
-                predicate = predicate.And(acq => EF.Functions.Like(acq.Project.Code, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(acq.Project.Description, $"%{filter.ProjectNameOrNumber}%"));
-            }
-
-            predicate = predicate.And(acq => regions.Contains(acq.RegionCode));
-
-            if (filterPersonId is not null)
-            {
-                predicate = predicate.And(acq => acq.PimsAcquisitionFilePeople.Any(x => x.PersonId == filterPersonId));
-            }
+            var predicate = GenerateAcquisitionPredicateFilter(filter, regions, filterPersonId);
 
             var querySearch = from acqFile in Context.PimsAcquisitionFiles.Where(predicate)
                                 .Include(r => r.RegionCodeNavigation)
@@ -149,7 +107,7 @@ namespace Pims.Dal.Repositories
                               orderby acqFile.AcquisitionFileId, prop.PropertyId
                               select new AcquisitionFileExportDto()
                               {
-                                  FileNo = acqFile.FileNo,
+                                  FileNumber = acqFile.FileNumber,
                                   LegacyFileNumber = acqFile.LegacyFileNumber,
                                   FileName = acqFile.FileName,
                                   MotiRegion = acqFile.RegionCodeNavigation.Description,
@@ -165,11 +123,11 @@ namespace Pims.Dal.Repositories
                                   FileAcquisitionCompleted = acqFile.CompletionDate.HasValue ? acqFile.CompletionDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
                                   FilePhysicalStatus = acqFile.AcqPhysFileStatusTypeCodeNavigation != null ? acqFile.AcqPhysFileStatusTypeCodeNavigation.Description : string.Empty,
                                   FileAcquisitionType = acqFile.AcquisitionTypeCodeNavigation != null ? acqFile.AcquisitionTypeCodeNavigation.Description : string.Empty,
-                                  FileAcquisitionTeam = string.Join(", ", acqFile.PimsAcquisitionFilePeople.Select(x => x.Person.FormatName())),
+                                  FileAcquisitionTeam = string.Join(", ", acqFile.PimsAcquisitionFilePeople.Select(x => x.Person.GetFullName(true))),
                                   FileAcquisitionOwners = string.Join(", ", acqFile.PimsAcquisitionOwners.Select(x => x.FormatOwnerName())),
                               };
 
-            var queryResult = querySearch.AsNoTracking().ToList();
+            var queryResult = querySearch.ToList();
 
             // Check for data in the result.
             if (queryResult.Count.Equals(0))
@@ -344,6 +302,63 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsAcquisitionFiles.AsNoTracking()
                 .Where(a => a.ProductId == productId).ToList();
+        }
+
+        /// <summary>
+        /// Generate a PredicateBuilder to search for acquisition files.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="regions"></param>
+        /// <param name="filterPersonId"></param>
+        /// <returns></returns>
+        private static ExpressionStarter<PimsAcquisitionFile> GenerateAcquisitionPredicateFilter(AcquisitionFilter filter, HashSet<short> regions, long? filterPersonId)
+        {
+            var predicate = PredicateBuilder.New<PimsAcquisitionFile>(acq => true);
+
+            if (!string.IsNullOrWhiteSpace(filter.Pid))
+            {
+                var pidValue = filter.Pid.Replace("-", string.Empty).Trim().TrimStart('0');
+                predicate = predicate.And(acq => acq.PimsPropertyAcquisitionFiles.Any(pa => pa != null && EF.Functions.Like(pa.Property.Pid.ToString(), $"%{pidValue}%")));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Pin))
+            {
+                var pinValue = filter.Pin.Replace("-", string.Empty).Trim().TrimStart('0');
+                predicate = predicate.And(acq => acq.PimsPropertyAcquisitionFiles.Any(pa => pa != null && EF.Functions.Like(pa.Property.Pin.ToString(), $"%{pinValue}%")));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Address))
+            {
+                predicate = predicate.And(acq => acq.PimsPropertyAcquisitionFiles.Any(pa => pa != null &&
+                    (EF.Functions.Like(pa.Property.Address.StreetAddress1, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pa.Property.Address.StreetAddress2, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pa.Property.Address.StreetAddress3, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pa.Property.Address.MunicipalityName, $"%{filter.Address}%"))));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileStatusTypeCode))
+            {
+                predicate = predicate.And(acq => acq.AcquisitionFileStatusTypeCode == filter.AcquisitionFileStatusTypeCode);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileNameOrNumber))
+            {
+                predicate = predicate.And(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.FileNumber, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.LegacyFileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))
+            {
+                predicate = predicate.And(acq => EF.Functions.Like(acq.Project.Code, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(acq.Project.Description, $"%{filter.ProjectNameOrNumber}%"));
+            }
+
+            predicate = predicate.And(acq => regions.Contains(acq.RegionCode));
+
+            if (filterPersonId is not null)
+            {
+                predicate = predicate.And(acq => acq.PimsAcquisitionFilePeople.Any(x => x.PersonId == filterPersonId));
+            }
+
+            return predicate;
         }
 
         /// <summary>

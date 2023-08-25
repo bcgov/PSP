@@ -115,7 +115,7 @@ namespace Pims.Api.Areas.Reports.Controllers
 
             var acquisitionFileData = _acquisitionFileService.GetAcquisitionFileExport((AcquisitionFilter)filter);
 
-            return ReportHelper.GenerateExcel(acquisitionFileData, "PIMS_Acquisition_Files");
+            return ReportHelper.GenerateExcel(acquisitionFileData, "Acquisition File Export");
         }
         #endregion
     }

@@ -1,29 +1,55 @@
-using System.Text;
+using System.Linq;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Helpers.Extensions
 {
+    /// <summary>
+    /// PersonExtensions static class, provides an extensions methods for person entities.
+    /// </summary>
     public static class PersonExtensions
     {
-        public static string FormatName(this PimsPerson pimsPerson)
+        /// <summary>
+        /// Get the first email address for the person from their contact methods.
+        /// Note this will only return a value if Person.ContactMethods.ContactType is eager loaded into context.
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        public static string GetWorkEmail(this PimsPerson person)
         {
-            StringBuilder stringBuilder = new();
+            return person?.PimsContactMethods?.OrderByDescending(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeCode == ContactMethodTypes.WorkEmail)?.ContactMethodValue;
+        }
 
-            stringBuilder.Append(pimsPerson.FirstName);
+        /// <summary>
+        /// Get the first email address for the person from their contact methods, preferring work emails.
+        /// Note this will only return a value if Person.ContactMethods.ContactType is eager loaded into context.
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        public static string GetEmail(this PimsPerson person)
+        {
+            return person?.PimsContactMethods.OrderBy(cm => cm.ContactMethodTypeCode == "WORKEMAIL" ? 0 : 1).ThenByDescending(cm => cm.IsPreferredMethod)
+                .FirstOrDefault(cm => cm.ContactMethodTypeCode == ContactMethodTypes.WorkEmail || cm.ContactMethodTypeCode == ContactMethodTypes.PerseEmail)?.ContactMethodValue;
+        }
 
-            if (!string.IsNullOrEmpty(pimsPerson.MiddleNames))
+        /// <summary>
+        /// Get the concatenated full name of this person.
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        public static string GetFullName(this PimsPerson person, bool addSuffix = false)
+        {
+            if (person == null)
             {
-                stringBuilder.Append(pimsPerson.MiddleNames);
+                return null;
+            }
+            string[] names = { person.FirstName, person.MiddleNames, person.Surname };
+
+            if (addSuffix && !string.IsNullOrEmpty(person.NameSuffix))
+            {
+                names = names.Append(person.NameSuffix).ToArray();
             }
 
-            stringBuilder.Append(pimsPerson.Surname);
-
-            if (!string.IsNullOrEmpty(pimsPerson.NameSuffix))
-            {
-                stringBuilder.Append(pimsPerson.NameSuffix);
-            }
-
-            return stringBuilder.ToString();
+            return string.Join(" ", names.Where(n => n != null && n.Trim() != string.Empty));
         }
     }
 }

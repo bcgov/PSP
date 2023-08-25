@@ -1,4 +1,4 @@
-using System.Text;
+using System.Linq;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Helpers.Extensions
@@ -7,21 +7,14 @@ namespace Pims.Dal.Helpers.Extensions
     {
         public static string FormatOwnerName(this PimsAcquisitionOwner pimsOwner)
         {
-            StringBuilder stringBuilder = new();
-
-            stringBuilder.Append(pimsOwner.GivenName);
-
-            if (!string.IsNullOrEmpty(pimsOwner.OtherName))
+            if(pimsOwner is null)
             {
-                stringBuilder.Append(" " + pimsOwner.OtherName);
+                return string.Empty;
             }
 
-            if (!string.IsNullOrEmpty(pimsOwner.LastNameAndCorpName))
-            {
-                stringBuilder.Append(" " + pimsOwner.LastNameAndCorpName);
-            }
+            string[] names = { pimsOwner.GivenName, pimsOwner.OtherName, pimsOwner.LastNameAndCorpName };
 
-            return stringBuilder.ToString();
+            return string.Join(" ", names.Where(n => n != null && n.Trim() != string.Empty));
         }
     }
 }
