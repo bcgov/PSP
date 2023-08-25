@@ -63,7 +63,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         [Produces(ContentTypes.CONTENTTYPEEXCELX)]
         [ProducesResponseType(200)]
         [SwaggerOperation(Tags = new[] { "acquisition", "report" })]
-        public IActionResult ExportLeases([FromBody] AcquisitionReportFilterModel filter)
+        public IActionResult ExportAgreements([FromBody] AcquisitionReportFilterModel filter)
         {
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
 
