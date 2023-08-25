@@ -135,6 +135,8 @@ namespace Pims.Dal.Repositories
                                   FileAcquisitionOwners = string.Join(", ", acqFile.PimsAcquisitionOwners.Select(x => x.FormatOwnerName())),
                               };
 
+            querySearch = (filter.Sort?.Any() == true) ? querySearch.OrderByProperty(filter.Sort) : querySearch.OrderBy(acq => acq.FileNumber);
+
             var queryResult = querySearch.ToList();
 
             // Check for data in the result.
