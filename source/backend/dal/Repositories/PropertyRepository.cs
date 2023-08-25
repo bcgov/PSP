@@ -390,6 +390,24 @@ namespace Pims.Dal.Repositories
                     p.PimsPropertyAcquisitionFiles.Any(pa => pa.AcquisitionFile.ProjectId == filter.ProjectId));
             }
 
+            // Tenure Filters
+            if (filter.TenureStatuses != null && filter.TenureStatuses.Count > 0)
+            {
+                query = query.Where(p =>
+                    p.PimsPropPropTenureTypes.Any(pl => filter.TenureStatuses.Contains(pl.PropertyTenureTypeCode)));
+            }
+
+            if (!string.IsNullOrEmpty(filter.TenurePPH))
+            {
+                query = query.Where(p => p.PphStatusTypeCode == filter.TenurePPH);
+            }
+
+            if (filter.TenureRoadTypes != null && filter.TenureRoadTypes.Count > 0)
+            {
+                query = query.Where(p =>
+                    p.PimsPropPropRoadTypes.Any(pl => filter.TenureRoadTypes.Contains(pl.PropertyRoadTypeCode)));
+            }
+
             // Lease filters
             if (!string.IsNullOrEmpty(filter.LeaseStatus))
             {

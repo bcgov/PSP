@@ -25,7 +25,7 @@ export const useGenerateH0443 = () => {
   const generateLetter = async (acquisitionFileId: number) => {
     const file = await getAcquisitionFile(acquisitionFileId);
     if (file) {
-      // Retrieve Propery Coordinator
+      // Retrieve Property Coordinator
       const propertyCoordinator = file.acquisitionTeam?.find(
         team => team.personProfileTypeCode === 'PROPCOORD',
       );

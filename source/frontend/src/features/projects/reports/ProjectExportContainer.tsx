@@ -1,3 +1,4 @@
+import fileDownload from 'js-file-download';
 import * as React from 'react';
 import { useCallback } from 'react';
 
@@ -5,6 +6,7 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 
+import { ProjectExportTypes } from './models';
 import { IProjectExportFormProps } from './ProjectExportForm';
 
 export interface ISideProjectContainerProps {
@@ -23,6 +25,7 @@ export const SideProjectContainer: React.FunctionComponent<ISideProjectContainer
       loading: loadingTeam,
       execute: loadAcquisitionTeam,
     },
+    getAgreementsReport,
   } = useAcquisitionProvider();
 
   const onExportTypeSelected = useCallback(() => {
@@ -36,9 +39,13 @@ export const SideProjectContainer: React.FunctionComponent<ISideProjectContainer
       projects={projects ?? []}
       teamMembers={team ?? []}
       loading={loadingProjects || loadingTeam}
-      onExport={(values: Api_ExportProjectFilter) => {
-        //TODO: export stories will need to use this as a trigger.
-        console.log(values);
+      onExport={async (values: Api_ExportProjectFilter) => {
+        if (Object.keys(ProjectExportTypes).indexOf(ProjectExportTypes.AGREEMENT) !== 0) {
+          var data = await getAgreementsReport.execute(values);
+          if (data) {
+            fileDownload(data, `Agreement_Export.xlsx`);
+          }
+        }
       }}
     />
   );

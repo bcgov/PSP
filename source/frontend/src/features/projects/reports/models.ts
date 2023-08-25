@@ -8,6 +8,7 @@ export class ExportProjectModel {
 
   public toApi(): Api_ExportProjectFilter {
     return {
+      type: this.exportType === '' ? undefined : this.exportType,
       projects: this.projects.map(p => +p.codeType),
       acquisitionTeamPersons: this.acquisitionTeam.map(t => +t.codeType),
     };

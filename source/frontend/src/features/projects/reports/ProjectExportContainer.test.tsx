@@ -3,9 +3,11 @@ import { createMemoryHistory } from 'history';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions } from '@/utils/test-utils';
 
+import { ProjectExportTypes } from './models';
 import ProjectExportContainer, { ISideProjectContainerProps } from './ProjectExportContainer';
 import { IProjectExportFormProps } from './ProjectExportForm';
 
@@ -21,9 +23,16 @@ const ProjectExportContainerView = (props: IProjectExportFormProps) => {
 
 jest.mock('@/hooks/repositories/useAcquisitionProvider');
 const getAllAcquisitionFileTeamMembers = jest.fn();
+const getAgreementsReport = jest.fn();
 (useAcquisitionProvider as jest.MockedFunction<typeof useAcquisitionProvider>).mockReturnValue({
   getAllAcquisitionFileTeamMembers: {
     execute: getAllAcquisitionFileTeamMembers as any,
+    error: undefined,
+    loading: false,
+    response: undefined,
+  },
+  getAgreementsReport: {
+    execute: getAgreementsReport as any,
     error: undefined,
     loading: false,
     response: undefined,
@@ -75,5 +84,14 @@ describe('ProjectExportForm component', () => {
 
     expect(getAllAcquisitionFileTeamMembers).toHaveBeenCalled();
     expect(getAllProjects).toHaveBeenCalled();
+  });
+
+  it('requests project export form when export function called', () => {
+    setup({} as any);
+    act(() =>
+      viewProps.onExport({ type: ProjectExportTypes.AGREEMENT } as Api_ExportProjectFilter),
+    );
+
+    expect(getAgreementsReport).toHaveBeenCalled();
   });
 });
