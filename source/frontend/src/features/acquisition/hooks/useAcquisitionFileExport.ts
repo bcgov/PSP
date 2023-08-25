@@ -22,7 +22,7 @@ export const useAcquisitionFileExport = () => {
     async (
       filter: IPaginateAcquisition,
       outputFormat: 'excel',
-      fileName = `Acquisition_File_Export.'xlsx'`,
+      fileName = `Acquisition_File_Export.xlsx`,
       requestId = 'properties-report',
     ) => {
       dispatch(logRequest(requestId));
