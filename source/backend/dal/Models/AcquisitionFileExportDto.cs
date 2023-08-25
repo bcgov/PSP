@@ -32,7 +32,7 @@ namespace Pims.Dal.Entities.Models
         public string Pin { get; set; }
 
         [DisplayName("Status (File)")]
-        public string FileStatus { get; set; }
+        public string AcquisitionFileStatusTypeCode { get; set; }
 
         [DisplayName("Funding (File)")]
         public string FileFunding { get; set; }

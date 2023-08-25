@@ -124,7 +124,7 @@ namespace Pims.Dal.Repositories
                                   GeneralLocation = (prop != null) ? prop.GeneralLocation : string.Empty,
                                   Pid = prop.Pid.HasValue ? prop.Pid.ToString() : string.Empty,
                                   Pin = prop.Pin.HasValue ? prop.Pin.ToString() : string.Empty,
-                                  FileStatus = acqFile.AcquisitionFileStatusTypeCodeNavigation.Description,
+                                  AcquisitionFileStatusTypeCode = acqFile.AcquisitionFileStatusTypeCodeNavigation.Description,
                                   FileFunding = acqFile.AcquisitionFundingTypeCodeNavigation != null ? acqFile.AcquisitionFundingTypeCodeNavigation.Description : string.Empty,
                                   FileAssignedDate = acqFile.AssignedDate.HasValue ? acqFile.AssignedDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
                                   FileDeliveryDate = acqFile.DeliveryDate.HasValue ? acqFile.DeliveryDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
