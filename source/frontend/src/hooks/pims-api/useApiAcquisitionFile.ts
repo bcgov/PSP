@@ -47,9 +47,7 @@ export const useApiAcquisitionFile = () => {
         outputFormat: 'csv' | 'excel' = 'excel',
       ) =>
         api.get<Blob>(
-          `/acquisitionfiles/export?${
-            filter ? queryString.stringify({ ...filter, all: true }) : ''
-          }`,
+          `/reports/acquisition?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
           {
             responseType: 'blob',
             headers: {
