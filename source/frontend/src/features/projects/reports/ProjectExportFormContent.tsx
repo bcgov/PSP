@@ -52,6 +52,8 @@ export const ProjectExportFormContent: React.FunctionComponent<IProjectExportFor
             field="projects"
             displayValue="codeTypeDescription"
             options={projectOptions}
+            hidePlaceholder
+            placeholder=""
           ></Multiselect>
         </SectionField>
         <SectionField label="Team Member" contentWidth="8">
@@ -59,6 +61,8 @@ export const ProjectExportFormContent: React.FunctionComponent<IProjectExportFor
             field="acquisitionTeam"
             displayValue="codeTypeDescription"
             options={teamMembersOptions}
+            placeholder=""
+            hidePlaceholder
           ></Multiselect>
         </SectionField>
         <Button className="float-right" type="submit">

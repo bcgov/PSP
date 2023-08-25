@@ -15,6 +15,7 @@ using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -1874,6 +1875,106 @@ namespace Pims.Api.Test.Services
 
             // Act
             Action act = () => service.GetAgreements(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void SearchAgreementsByAcquisitionFileId_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.AgreementView);
+
+            var filter = new AcquisitionReportFilterModel();
+
+            var repository = _helper.GetService<Mock<IAgreementRepository>>();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            repository.Setup(x => x.SearchAgreements(It.IsAny<AcquisitionReportFilterModel>())).Returns(new List<PimsAgreement>());
+
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            var agreements = service.SearchAgreements(filter);
+
+            // Assert
+            agreements.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void SearchAgreementsByAcquisitionFileId_Region_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.AgreementView);
+
+            var filter = new AcquisitionReportFilterModel();
+
+            var repository = _helper.GetService<Mock<IAgreementRepository>>();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var matchingAgreement = new PimsAgreement() { AcquisitionFile = new PimsAcquisitionFile() { RegionCode = 1 } };
+            var nonMatchingAgreement = new PimsAgreement() { AcquisitionFile = new PimsAcquisitionFile() { RegionCode = 2 } };
+            repository.Setup(x => x.SearchAgreements(It.IsAny<AcquisitionReportFilterModel>())).Returns(new List<PimsAgreement>() { matchingAgreement, nonMatchingAgreement});
+
+            var user = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: false);
+            user.PimsRegionUsers = new List<PimsRegionUser>() { new PimsRegionUser() { RegionCode = 1 } };
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            // Act
+            var agreements = service.SearchAgreements(filter);
+
+            // Assert
+            agreements.Should().HaveCount(1);
+            agreements.FirstOrDefault().AcquisitionFile.RegionCode.Should().Be(1);
+        }
+
+        [Fact]
+        public void SearchAgreementsByAcquisitionFileId_Contractor_Filter()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.AgreementView);
+
+            var filter = new AcquisitionReportFilterModel();
+
+            var user = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+
+            var repository = _helper.GetService<Mock<IAgreementRepository>>();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var matchingPerson = new PimsAcquisitionFilePerson() { PersonId = user.PersonId };
+            var matchingAgreement = new PimsAgreement() { AcquisitionFile = new PimsAcquisitionFile() { RegionCode = 1, PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() { matchingPerson } } };
+            var nonMatchingAgreement = new PimsAgreement() { AcquisitionFile = new PimsAcquisitionFile() { } };
+            repository.Setup(x => x.SearchAgreements(It.IsAny<AcquisitionReportFilterModel>())).Returns(new List<PimsAgreement>() { matchingAgreement, nonMatchingAgreement });
+
+            
+            user.PimsRegionUsers = new List<PimsRegionUser>() { new PimsRegionUser() { RegionCode = 1 } };
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            // Act
+            var agreements = service.SearchAgreements(filter);
+
+            // Assert
+            agreements.Should().HaveCount(1);
+            agreements.FirstOrDefault().AcquisitionFile.RegionCode.Should().Be(1);
+            agreements.FirstOrDefault().AcquisitionFile.PimsAcquisitionFilePeople.FirstOrDefault().PersonId.Should().Be(user.PersonId);
+        }
+
+        [Fact]
+        public void SearchAgreementsByAcquisitionFileId_NoPermission()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+
+            var filter = new AcquisitionReportFilterModel();
+
+            var repository = _helper.GetService<Mock<IAgreementRepository>>();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            repository.Setup(x => x.SearchAgreements(It.IsAny<AcquisitionReportFilterModel>())).Returns(new List<PimsAgreement>());
+
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            Action act = () => service.SearchAgreements(filter);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
