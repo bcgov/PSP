@@ -87,8 +87,7 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
         [DisplayName("Total Expenditures shown in this report (Inc. Tax) - final")]
         public decimal AllExpendituresFinalTotalAmount { get; set; }
 
-
-        public CompensationFinancialReportModel(PimsCompReqFinancial financial, ClaimsPrincipal user)
+        public CompensationFinancialReportModel(PimsCompReqFinancial financial, CompensationFinancialReportTotalsModel reportTotals, ClaimsPrincipal user)
         {
             ExportBy = user.GetDisplayName();
             ExportDate = DateTime.Now.ToString("dd/MM/yyyy");
@@ -106,7 +105,44 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
             TaxAmount = financial.TaxAmt.HasValue ? financial.TaxAmt.Value : 0;
             TotalAmount = financial.TotalAmt.HasValue ? financial.TotalAmt.Value : 0;
 
-            // TODO: pass project totals and report totals in constructor
+            var project = GetProject(financial);
+
+            // Draft requisition totals per project
+            ProjectDraftPreTaxAmount = project is not null ? reportTotals.ProjectDraftPreTaxAmount[project.Id] : 0;
+            ProjectDraftTaxAmount = project is not null ? reportTotals.ProjectDraftTaxAmount[project.Id] : 0;
+            ProjectDraftTotalAmount = project is not null ? reportTotals.ProjectDraftTotalAmount[project.Id] : 0;
+
+            // Final requisition total per project
+            ProjectFinalPreTaxAmount = project is not null ? reportTotals.ProjectFinalPreTaxAmount[project.Id] : 0;
+            ProjectFinalTaxAmount = project is not null ? reportTotals.ProjectFinalTaxAmount[project.Id] : 0;
+            ProjectFinalTotalAmount = project is not null ? reportTotals.ProjectFinalTotalAmount[project.Id] : 0;
+
+            // Total expenditures - draft
+            AllExpendituresDraftPreTaxAmount = reportTotals.AllExpendituresDraftPreTaxAmount;
+            AllExpendituresDraftTaxAmount = reportTotals.AllExpendituresDraftTaxAmount;
+            AllExpendituresDraftTotalAmount = reportTotals.AllExpendituresDraftTotalAmount;
+
+            // Total expenditures - final
+            AllExpendituresFinalPreTaxAmount = reportTotals.AllExpendituresFinalPreTaxAmount;
+            AllExpendituresFinalTaxAmount = reportTotals.AllExpendituresFinalTaxAmount;
+            AllExpendituresFinalTotalAmount = reportTotals.AllExpendituresFinalTotalAmount;
+        }
+
+        private static PimsProject GetProject(PimsCompReqFinancial financial)
+        {
+            // If compensation requisition has alternate project selected, then all project information should be sourced from 'alternate project' rather than 'file project'.
+            if (financial?.CompensationRequisition?.AlternateProject is not null)
+            {
+                return financial.CompensationRequisition.AlternateProject;
+            }
+            else if (financial?.CompensationRequisition?.AcquisitionFile?.Project is not null)
+            {
+                return financial.CompensationRequisition.AcquisitionFile.Project;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private static string GetTeamMemberName(PimsAcquisitionFile file, string personProfileTypeCode)

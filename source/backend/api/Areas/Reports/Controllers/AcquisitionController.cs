@@ -103,7 +103,8 @@ namespace Pims.Api.Areas.Reports.Controllers
             }
 
             var financials = _compReqFinancialService.SearchCompensationRequisitionFinancials(filter);
-            var reportFinancials = financials.Select(financial => new CompensationFinancialReportModel(financial, _user));
+            var reportTotals = new CompensationFinancialReportTotalsModel(financials);
+            var reportFinancials = financials.Select(financial => new CompensationFinancialReportModel(financial, reportTotals, _user));
 
             return ReportHelper.GenerateExcel(reportFinancials, "Compensation Requisition Export");
         }
