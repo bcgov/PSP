@@ -7,6 +7,6 @@ namespace Pims.Api.Services
     public interface ICompReqFinancialService
     {
         IEnumerable<PimsCompReqFinancial> GetAllByAcquisitionFileId(long acquisitionFileId, bool? finalOnly);
-        IEnumerable<PimsCompReqFinancial> SearchCompensationRequisitionTransactions(AcquisitionReportFilterModel filter);
+        IEnumerable<PimsCompReqFinancial> SearchCompensationRequisitionFinancials(AcquisitionReportFilterModel filter);
     }
 }

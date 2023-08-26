@@ -1,8 +1,8 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Areas.Reports.Models.Acquisition;
 using Pims.Api.Areas.Reports.Models.Agreement;
 using Pims.Api.Helpers.Constants;
 using Pims.Api.Helpers.Exceptions;
@@ -67,7 +67,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         {
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
 
-            var acceptHeader = (string)this.Request.Headers["Accept"];
+            var acceptHeader = (string)Request.Headers["Accept"];
 
             if (acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
             {
@@ -102,11 +102,10 @@ namespace Pims.Api.Areas.Reports.Controllers
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
             }
 
-            var financials = _compReqFinancialService.SearchCompensationRequisitionTransactions(filter);
-            // TODO: var reportFinancials = financials.Select(agreement => new AgreementReportModel(agreement, _user));
-            var reportFinancials = new List<string>();
+            var financials = _compReqFinancialService.SearchCompensationRequisitionFinancials(filter);
+            var reportFinancials = financials.Select(financial => new CompensationFinancialReportModel(financial, _user));
 
-            return ReportHelper.GenerateExcel(reportFinancials, "H120 Transactions Export");
+            return ReportHelper.GenerateExcel(reportFinancials, "Compensation Requisition Export");
         }
         #endregion
     }
