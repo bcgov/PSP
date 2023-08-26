@@ -7,7 +7,6 @@ import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions } from '@/utils/test-utils';
 
-import { ProjectExportTypes } from './models';
 import ProjectExportContainer, { ISideProjectContainerProps } from './ProjectExportContainer';
 import { IProjectExportFormProps } from './ProjectExportForm';
 
@@ -88,9 +87,7 @@ describe('ProjectExportForm component', () => {
 
   it('requests project export form when export function called', () => {
     setup({} as any);
-    act(() =>
-      viewProps.onExport({ type: ProjectExportTypes.AGREEMENT } as Api_ExportProjectFilter),
-    );
+    act(() => viewProps.onExport({ type: 'AGREEMENT' } as Api_ExportProjectFilter));
 
     expect(getAgreementsReport).toHaveBeenCalled();
   });
