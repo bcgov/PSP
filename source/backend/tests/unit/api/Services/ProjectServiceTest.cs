@@ -145,6 +145,42 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void GetAll_Success()
+        {
+            // Arrange
+            var service = CreateProjectServiceWithPermissions(Permissions.ProjectView);
+            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView);
+
+            var project = EntityHelper.CreateProject(1, "7", "Test Project");
+            var projectList = new List<PimsProject>() { project };
+
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
+            repository.Setup(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<HashSet<short>>(), It.IsAny<int>())).Returns(projectList);
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            var result = service.GetAll();
+
+            // Assert
+            repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<HashSet<short>>(), It.IsAny<int>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetAll_NoPermission()
+        {
+            // Arrange
+            var service = CreateProjectServiceWithPermissions();
+
+            // Act
+            Action act = () => service.GetAll();
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
         public void Add_Project_ShouldFail_NotAuthorized()
         {
             // Arrange

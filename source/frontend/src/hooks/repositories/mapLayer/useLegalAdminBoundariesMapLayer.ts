@@ -3,7 +3,7 @@ import { LatLngLiteral } from 'leaflet';
 import { useCallback, useMemo } from 'react';
 
 import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
-import { WHSE_AgriculturalLandReserve_Feature_Properties } from '@/models/layers/alcAgriculturalReserveLines';
+import { WHSE_AgriculturalLandReservePoly_Feature_Properties } from '@/models/layers/alcAgriculturalReserve';
 import { WHSE_Municipalities_Feature_Properties } from '@/models/layers/municipalities';
 import { useTenant } from '@/tenants';
 
@@ -34,7 +34,7 @@ export const useLegalAdminBoundariesMapLayer = () => {
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
       const forceCasted = featureCollection as
-        | FeatureCollection<Geometry, WHSE_AgriculturalLandReserve_Feature_Properties>
+        | FeatureCollection<Geometry, WHSE_AgriculturalLandReservePoly_Feature_Properties>
         | undefined;
       return forceCasted !== undefined && forceCasted.features.length > 0
         ? forceCasted.features[0]

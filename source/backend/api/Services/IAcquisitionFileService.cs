@@ -21,11 +21,15 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsAcquisitionOwner> GetOwners(long id);
 
+        IEnumerable<PimsAcquisitionFilePerson> GetTeamMembers();
+
         IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id);
 
         PimsAcquisitionFile UpdateChecklistItems(PimsAcquisitionFile acquisitionFile);
 
         IEnumerable<PimsAgreement> GetAgreements(long id);
+
+        IEnumerable<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter);
 
         IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements);
 
