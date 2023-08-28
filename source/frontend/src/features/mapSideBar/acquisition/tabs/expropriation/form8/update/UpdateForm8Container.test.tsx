@@ -1,7 +1,7 @@
 import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants';
-import { mockGetForm8Api } from '@/mocks/form8.mock';
+import { mockGetExpropriationPaymentApi } from '@/mocks/ExpropriationPayment.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { systemConstantsSlice } from '@/store/slices/systemConstants/systemConstantsSlice';
@@ -11,7 +11,7 @@ import { IForm8FormProps } from '../UpdateForm8Form';
 import UpdateForm8Container, { IUpdateForm8ContainerProps } from './UpdateForm8Container';
 
 const history = createMemoryHistory();
-const mockForm8 = mockGetForm8Api(1, 1);
+const mockForm8 = mockGetExpropriationPaymentApi(1, 1);
 
 const mockGetApi = {
   error: undefined,

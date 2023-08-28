@@ -3,8 +3,6 @@ import { useCallback, useContext, useEffect } from 'react';
 
 import { FileTypes } from '@/constants';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
-import { formContent } from '@/features/mapSideBar/shared/content/formContent';
-import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentRepository';
 
 import { IFormViewProps } from './FormView';
@@ -37,18 +35,9 @@ export const FormContainer: React.FunctionComponent<
     throw new Error('Unable to determine id of current file.');
   }
 
-  const currentFormContent = response?.formDocumentType?.formTypeCode
-    ? formContent.get(response?.formDocumentType?.formTypeCode as FormTemplateTypes)
-    : undefined;
-
   return !!file?.id ? (
     <>
-      <View
-        loading={loading}
-        formFile={response}
-        onClose={onClose}
-        formContent={currentFormContent}
-      ></View>
+      <View loading={loading} formFile={response} onClose={onClose}></View>
     </>
   ) : null;
 };

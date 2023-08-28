@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants';
 import { mockAcquisitionFileOwnersResponse } from '@/mocks/acquisitionFiles.mock';
-import { mockGetForm8Api } from '@/mocks/form8.mock';
+import { mockGetExpropriationPaymentApi } from '@/mocks/ExpropriationPayment.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
@@ -104,7 +104,7 @@ describe('Add Form8 Container component', () => {
     await setup({ props: { acquisitionFileId: 1 } });
     mockGetInterestHoldersApi.execute.mockReturnValue(mockInteresHoldersResponse);
     mockGetFileOwnersApi.execute.mockReturnValue(mockFileOwnersResponse);
-    mockPostApi.execute.mockReturnValue(mockGetForm8Api());
+    mockPostApi.execute.mockReturnValue(mockGetExpropriationPaymentApi());
 
     let createdForm8: Api_ExpropriationPayment | undefined;
     await act(async () => {
@@ -112,7 +112,7 @@ describe('Add Form8 Container component', () => {
     });
 
     expect(mockPostApi.execute).toHaveBeenCalled();
-    expect(createdForm8).toStrictEqual({ ...mockGetForm8Api() });
+    expect(createdForm8).toStrictEqual({ ...mockGetExpropriationPaymentApi() });
 
     expect(history.location.pathname).toBe('/');
   });

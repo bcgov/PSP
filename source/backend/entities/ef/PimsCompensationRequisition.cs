@@ -12,6 +12,7 @@ namespace Pims.Dal.Entities
     [Index(nameof(AcquisitionFileId), Name = "CMPREQ_ACQUISITION_FILE_ID_IDX")]
     [Index(nameof(AcquisitionFilePersonId), Name = "CMPREQ_ACQUISITION_FILE_PERSON_ID_IDX")]
     [Index(nameof(AcquisitionOwnerId), Name = "CMPREQ_ACQUISITION_OWNER_ID_IDX")]
+    [Index(nameof(AlternateProjectId), Name = "CMPREQ_ALTERNATE_PROJECT_ID_IDX")]
     [Index(nameof(ChartOfAccountsId), Name = "CMPREQ_CHART_OF_ACCOUNTS_ID_IDX")]
     [Index(nameof(InterestHolderId), Name = "CMPREQ_INTEREST_HOLDER_ID_IDX")]
     [Index(nameof(ResponsibilityId), Name = "CMPREQ_RESPONSIBILITY_ID_IDX")]
@@ -40,6 +41,8 @@ namespace Pims.Dal.Entities
         public long? ResponsibilityId { get; set; }
         [Column("YEARLY_FINANCIAL_ID")]
         public long? YearlyFinancialId { get; set; }
+        [Column("ALTERNATE_PROJECT_ID")]
+        public long? AlternateProjectId { get; set; }
         [Column("LEGACY_PAYEE")]
         [StringLength(1000)]
         public string LegacyPayee { get; set; }
@@ -119,6 +122,9 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(AcquisitionOwnerId))]
         [InverseProperty(nameof(PimsAcquisitionOwner.PimsCompensationRequisitions))]
         public virtual PimsAcquisitionOwner AcquisitionOwner { get; set; }
+        [ForeignKey(nameof(AlternateProjectId))]
+        [InverseProperty(nameof(PimsProject.PimsCompensationRequisitions))]
+        public virtual PimsProject AlternateProject { get; set; }
         [ForeignKey(nameof(ChartOfAccountsId))]
         [InverseProperty(nameof(PimsChartOfAccountsCode.PimsCompensationRequisitions))]
         public virtual PimsChartOfAccountsCode ChartOfAccounts { get; set; }

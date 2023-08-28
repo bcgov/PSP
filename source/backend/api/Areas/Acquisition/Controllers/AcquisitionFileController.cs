@@ -9,7 +9,6 @@ using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
-using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Dal.Entities;
@@ -182,6 +181,23 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             var owners = _acquisitionService.GetOwners(id);
 
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerModel>>(owners));
+        }
+
+        /// <summary>
+        /// Get all unique persons that belong to at least one acquisition file as a team member.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("team-members")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [HasPermission(Permissions.ContactView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<PersonModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetAcquisitionTeamMembers()
+        {
+            var team = _acquisitionService.GetTeamMembers();
+
+            return new JsonResult(_mapper.Map<IEnumerable<PersonModel>>(team.Select(t => t.Person)));
         }
 
         /// <summary>

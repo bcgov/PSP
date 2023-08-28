@@ -10,6 +10,10 @@ namespace Pims.Dal.Repositories
 
         PimsAcquisitionFile GetById(long id);
 
+        List<PimsAcquisitionOwner> GetOwnersByAcquisitionFileId(long acquisitionFileId);
+
+        List<PimsAcquisitionFilePerson> GetTeamMembers(HashSet<short> regions);
+
         PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile);
 
         PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile);

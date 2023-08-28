@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts
@@ -32,6 +33,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.AcquisitionFileOwners, src => src.PimsAcquisitionOwners)
                 .Map(dest => dest.AcquisitionFileInterestHolders, src => src.PimsInterestHolders)
                 .Map(dest => dest.AcquisitionFileChecklist, src => src.PimsAcquisitionChecklistItems)
+                .Map(dest => dest.LegacyStakeholders, src => src.GetLegacyInterestHolders())
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<AcquisitionFileModel, Entity.PimsAcquisitionFile>()

@@ -8,22 +8,6 @@ namespace Pims.Api.Models.Concepts.Document
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsActivityInstanceDocument, DocumentRelationshipModel>()
-                .Map(dest => dest.Id, src => src.ActivityInstanceDocumentId)
-                .Map(dest => dest.ParentId, src => src.ActivityInstanceId)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.Document, src => src.Document)
-                .Map(dest => dest.RelationshipType, src => DocumentRelationType.Activities)
-                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
-
-            config.NewConfig<DocumentRelationshipModel, Entity.PimsActivityInstanceDocument>()
-                .Map(dest => dest.ActivityInstanceDocumentId, src => src.Id)
-                .Map(dest => dest.ActivityInstanceId, src => src.ParentId)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.DocumentId, src => src.Document.Id)
-                .Map(dest => dest.Document, src => src.Document)
-                .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
-
             config.NewConfig<Entity.PimsAcquisitionFileDocument, DocumentRelationshipModel>()
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ParentId, src => src.FileId)

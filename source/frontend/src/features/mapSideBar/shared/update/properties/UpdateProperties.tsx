@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { FieldArray, Formik, FormikProps } from 'formik';
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
@@ -11,6 +11,7 @@ import MapSelectorContainer from '@/components/propertySelector/MapSelectorConta
 import { IMapProperty } from '@/components/propertySelector/models';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
+import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { Api_File } from '@/models/api/File';
@@ -44,6 +45,8 @@ export const UpdateProperties: React.FunctionComponent<
   const [showAssociatedEntityWarning, setShowAssociatedEntityWarning] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
+  const { resetFilePropertyLocations } = useContext(SideBarContext);
+
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
 
   const handleSaveClick = async () => {
@@ -74,6 +77,7 @@ export const UpdateProperties: React.FunctionComponent<
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
     }
+    resetFilePropertyLocations();
     setShowCancelConfirmModal(false);
     props.setIsShowingPropertySelector(false);
   };
