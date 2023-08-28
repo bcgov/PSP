@@ -96,7 +96,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ValidatePropertyListView()
         {
-            WaitUntilVisible(searchPropertyListViewTitle);
+            WaitUntilVisible(searchPropertyListContent);
 
             Assert.True(webDriver.FindElement(searchPropertyListViewTitle).Displayed);
             Assert.True(webDriver.FindElement(searchPropertyListHeaderPid).Displayed);

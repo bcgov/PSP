@@ -172,7 +172,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
                 webDriver.FindElement(acquisitionFileProjectInput).SendKeys(acquisition.AcquisitionProject);
 
-                Wait();
+                Wait(2000);
                 webDriver.FindElement(acquisitionFileProject1stOption).Click(); 
             }
 
