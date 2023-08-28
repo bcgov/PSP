@@ -103,10 +103,18 @@ namespace Pims.Api.Areas.Reports.Controllers
             }
 
             var financials = _compReqFinancialService.SearchCompensationRequisitionFinancials(filter);
-            var reportTotals = new CompensationFinancialReportTotalsModel(financials);
-            var reportFinancials = financials.Select(financial => new CompensationFinancialReportModel(financial, reportTotals, _user));
+            if (financials is not null && financials.Count() > 0)
+            {
+                var reportTotals = new CompensationFinancialReportTotalsModel(financials);
+                var reportFinancials = financials.Select(financial => new CompensationFinancialReportModel(financial, reportTotals, _user));
 
-            return ReportHelper.GenerateExcel(reportFinancials, "Compensation Requisition Export");
+                return ReportHelper.GenerateExcel(reportFinancials, "Compensation Requisition Export");
+            }
+            else
+            {
+                // Return 204 "No Content" to signal the frontend that we did not find any matching records.
+                return NoContent();
+            }
         }
         #endregion
     }
