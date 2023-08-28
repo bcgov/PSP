@@ -44,8 +44,6 @@ export interface CompensationRequisitionFormProps {
     compensation: CompensationRequisitionFormModel,
   ) => Promise<Api_CompensationRequisition | undefined>;
   onCancel: () => void;
-  onFooterSave?: () => void;
-  missingFieldsError: string | undefined;
 }
 
 const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormProps> = ({
@@ -60,14 +58,13 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   yearlyFinancialOptions,
   onSave,
   onCancel,
-  onFooterSave,
-  missingFieldsError,
 }) => {
   const fiscalYearOptions = generateFiscalYearOptions();
   const { setModalContent, setDisplayModal } = useModalContext();
   const formikRef = useRef<FormikProps<CompensationRequisitionFormModel>>(null);
   const [activitiesUpdated, setActivitiesUpdated] = useState<boolean>(false);
   const [showModal, setShowModal] = useState(false);
+  const [isValid, setIsValid] = useState<boolean>(true);
 
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
     if (!dirty) {
@@ -291,13 +288,18 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
 
             <StyledFooter>
               <SidebarFooter
-                onSave={() => {
-                  onFooterSave?.();
+                onSave={async () => {
+                  await formikRef?.current?.validateForm();
+                  if (!formikRef?.current?.isValid) {
+                    setIsValid(false);
+                  } else {
+                    setIsValid(true);
+                  }
                   formikProps.submitForm();
                 }}
                 isOkDisabled={formikProps.isSubmitting || !formikProps.dirty}
                 onCancel={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
-                errorMessage={missingFieldsError}
+                isValid={isValid}
               />
             </StyledFooter>
 
