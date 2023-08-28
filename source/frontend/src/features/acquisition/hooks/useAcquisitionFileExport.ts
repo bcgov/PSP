@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import fileDownload from 'js-file-download';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
@@ -11,7 +11,6 @@ import {
   IPaginateAcquisition,
   useApiAcquisitionFile,
 } from '@/hooks/pims-api/useApiAcquisitionFile';
-import { IApiError } from '@/interfaces/IApiError';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
 export const useAcquisitionFileExport = () => {
@@ -29,19 +28,19 @@ export const useAcquisitionFileExport = () => {
       dispatch(showLoading());
       try {
         const { data, status } = await apiExportAcquisitionFiles(filter, outputFormat);
-        dispatch(logSuccess({ name: requestId, status }));
-        dispatch(hideLoading());
-        // trigger file download in client browser
-        fileDownload(data, fileName);
-      } catch (e) {
-        if (axios.isAxiosError(e)) {
-          const axiosError = e as AxiosError<IApiError>;
-          if (axiosError?.response?.status === 409) {
-            toast.error('Export contains no data');
-          } else {
-            catchAxiosError(e, dispatch, actionTypes.DELETE_PARCEL);
-          }
+        if (status === 204) {
+          toast.warn(
+            "We were unable to retrieve any data for your request. If you've applied any filters or search criteria, ensure they are set correctly. Broadening your criteria may yield results.",
+          );
+        } else {
+          dispatch(logSuccess({ name: requestId, status }));
+          fileDownload(data, fileName);
           dispatch(hideLoading());
+        }
+        // trigger file download in client browser
+      } catch (axiosError) {
+        if (axios.isAxiosError(axiosError)) {
+          catchAxiosError(axiosError, dispatch, actionTypes.DELETE_PARCEL);
         }
       }
     },

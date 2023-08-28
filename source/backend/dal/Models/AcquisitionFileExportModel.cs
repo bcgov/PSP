@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace Pims.Dal.Entities.Models
 {
-    public class AcquisitionFileExportDto
+    public class AcquisitionFileExportModel
     {
         [DisplayName("Acquisition File #")]
         public string FileNumber { get; set; }

@@ -337,28 +337,6 @@ namespace Pims.Dal.Test.Repositories
         #region Export
 
         [Fact]
-        public void GetAcquisitionFileExport_Filter_NoDataException()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
-            var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.FileName = "fileName";
-            var filter = new AcquisitionFilter() { AcquisitionFileNameOrNumber = "fileNameTest" };
-
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
-
-            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
-
-            // Act
-            Action act = () => repository.GetAcquisitionFileExport(filter, new HashSet<short>() { 1 });
-
-            // Assert
-            act.Should().Throw<ExportHasNoDataException>();
-        }
-
-
-        [Fact]
         public void GetAcquisitionFileExport_Filter_AcquisitionName()
         {
             // Arrange

@@ -178,15 +178,6 @@ namespace Pims.Api.Helpers.Middleware
 
                 _logger.LogError(ex, "Contractor User missing as a team member on the creation of Acquisition File");
             }
-            else if (ex is ExportHasNoDataException)
-            {
-                var exception = ex as ExportHasNoDataException;
-                code = HttpStatusCode.Conflict;
-                message = exception.Message;
-                errorCode = null;
-
-                _logger.LogError(ex, "Export contains no data based on the filter provided");
-            }
             else if (ex is ApiHttpRequestException)
             {
                 var exception = ex as ApiHttpRequestException;

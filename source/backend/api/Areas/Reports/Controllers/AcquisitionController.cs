@@ -88,7 +88,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         [HasPermission(Permissions.AcquisitionFileView)]
         [Produces(ContentTypes.CONTENTTYPEEXCELX)]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(ErrorResponseModel), 409)]
+        [ProducesResponseType(204)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile", "report" })]
         public IActionResult ExportAcquisitionFiles([FromQuery] AcquisitionFilterModel filter)
         {
@@ -114,6 +114,10 @@ namespace Pims.Api.Areas.Reports.Controllers
             }
 
             var acquisitionFileData = _acquisitionFileService.GetAcquisitionFileExport((AcquisitionFilter)filter);
+            if (acquisitionFileData.Count.Equals(0))
+            {
+                return NoContent();
+            }
 
             return ReportHelper.GenerateExcel(acquisitionFileData, "Acquisition File Export");
         }

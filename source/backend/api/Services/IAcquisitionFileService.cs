@@ -46,6 +46,6 @@ namespace Pims.Api.Services
 
         IList<PimsExpropriationPayment> GetAcquisitionExpropriationPayments(long acquisitionFileId);
 
-        List<AcquisitionFileExportDto> GetAcquisitionFileExport(AcquisitionFilter filter);
+        List<AcquisitionFileExportModel> GetAcquisitionFileExport(AcquisitionFilter filter);
     }
 }

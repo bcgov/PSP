@@ -32,8 +32,10 @@ namespace Pims.Dal.Helpers.Extensions
             {
                 throw new ArgumentNullException(nameof(address));
             }
-
-            stringBuilder.Append(address.StreetAddress1);
+            if (!string.IsNullOrEmpty(address.StreetAddress1))
+            {
+                stringBuilder.Append(address.StreetAddress1);
+            }
             if (!string.IsNullOrEmpty(address.StreetAddress2))
             {
                 stringBuilder.Append(" " + address.StreetAddress2);
@@ -42,19 +44,18 @@ namespace Pims.Dal.Helpers.Extensions
             {
                 stringBuilder.Append(" " + address.StreetAddress3);
             }
-
-            stringBuilder.Append(" " + address.MunicipalityName);
-
+            if (!string.IsNullOrEmpty(address.MunicipalityName))
+            {
+                stringBuilder.Append(" " + address.MunicipalityName);
+            }
             if (address.ProvinceState != null)
             {
                 stringBuilder.Append(" " + address.ProvinceState.Code);
             }
-
             if (address.Country != null)
             {
                 stringBuilder.Append(" " + address.Country.Description);
             }
-
             if (!string.IsNullOrEmpty(" " + address.PostalCode))
             {
                 stringBuilder.Append(" " + address.PostalCode);
