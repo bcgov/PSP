@@ -98,14 +98,14 @@ export const handleAxiosResponse = <ResponseType>(
   actionType: string,
   axiosPromise: Promise<AxiosResponse<ResponseType>>,
   skipErrorLogCodes?: number[],
-): Promise<ResponseType> => {
+): Promise<AxiosResponse<ResponseType>> => {
   dispatch(logRequest(actionType));
   dispatch(showLoading());
   return axiosPromise
     .then((response: AxiosResponse<ResponseType>) => {
       dispatch(logSuccess({ name: actionType, status: response.status }));
       dispatch(hideLoading());
-      return response?.data;
+      return response;
     })
     .catch((axiosError: AxiosError) => {
       if (
