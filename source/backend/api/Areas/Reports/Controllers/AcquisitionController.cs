@@ -106,7 +106,13 @@ namespace Pims.Api.Areas.Reports.Controllers
             if (financials is not null && financials.Any())
             {
                 var reportTotals = new CompensationFinancialReportTotalsModel(financials);
-                var reportFinancials = financials.Select(financial => new CompensationFinancialReportModel(financial, reportTotals, _user));
+                var reportFinancials = financials
+                        .Select(financial => new CompensationFinancialReportModel(financial, reportTotals, _user))
+                        .OrderByDescending(f => f.MinistryProject)
+                        .ThenByDescending(f => f.Product)
+                        .ThenByDescending(f => f.AcquisitionNumberAndName)
+                        .ThenByDescending(f => f.RequisitionNumber)
+                        .ThenByDescending(f => f.FinancialActivityName);
 
                 return ReportHelper.GenerateExcel(reportFinancials, "Compensation Requisition Export");
             }
