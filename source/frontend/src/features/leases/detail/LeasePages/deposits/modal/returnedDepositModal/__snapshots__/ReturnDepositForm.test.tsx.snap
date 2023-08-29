@@ -260,10 +260,6 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c0 .form-group input {
-  width: 90%;
-}
-
 .c5 {
   font-size: 1.3rem;
 }
@@ -871,10 +867,6 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
 
 .c0 .form-group .form-label {
   font-weight: bold;
-}
-
-.c0 .form-group input {
-  width: 90%;
 }
 
 .c5 {

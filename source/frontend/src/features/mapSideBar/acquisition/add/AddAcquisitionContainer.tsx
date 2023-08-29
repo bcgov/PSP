@@ -12,7 +12,7 @@ import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { PropertyForm } from '../../shared/models';
-import SidebarFooter, { missingFieldsError } from '../../shared/SidebarFooter';
+import SidebarFooter from '../../shared/SidebarFooter';
 import { useAddAcquisitionFormManagement } from '../hooks/useAddAcquisitionFormManagement';
 import { AddAcquisitionForm } from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
@@ -25,7 +25,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const { onClose } = props;
   const history = useHistory();
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>();
+  const [isValid, setIsValid] = useState<boolean>(true);
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
   const mapMachine = useMapStateMachine();
@@ -53,8 +53,15 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     }
   }, [initialForm, selectedFeatureDataset]);
 
-  const handleSave = () => {
-    missingFieldsError(setErrorMessage, formikRef?.current?.isValid);
+  const handleSave = async () => {
+    // Sets the formik field `isValid` to false at start
+    await formikRef?.current?.validateForm();
+    if (!formikRef?.current?.isValid) {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+    }
+
     formikRef.current?.setSubmitting(true);
     formikRef.current?.submitForm();
   };
@@ -99,7 +106,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
           isOkDisabled={helper.loading}
           onSave={handleSave}
           onCancel={close}
-          errorMessage={errorMessage}
+          isValid={isValid}
         />
       }
     >
