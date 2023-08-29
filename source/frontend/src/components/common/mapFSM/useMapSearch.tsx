@@ -13,7 +13,8 @@ import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocatio
 import {
   emptyFeatureData,
   emptyFullyFeaturedFeatureCollection,
-  emptyPimsFeatureCollection,
+  emptyPimsBoundaryFeatureCollection,
+  emptyPimsLocationFeatureCollection,
   MapFeatureData,
 } from './models';
 
@@ -57,7 +58,10 @@ export const useMapSearch = () => {
         //if found in inventory return or else non inventory
         if (pimsPropertyFeature !== undefined) {
           toast.info(`Property found`);
-          result.pimsFeatures = { type: 'FeatureCollection', features: [pimsPropertyFeature] };
+          result.pimsBoundaryFeatures = {
+            type: 'FeatureCollection',
+            features: [pimsPropertyFeature],
+          };
         } else if (parcelFeature !== undefined) {
           toast.info(`Property found`);
           result.fullyAttributedFeatures = {
@@ -132,11 +136,12 @@ export const useMapSearch = () => {
           );
 
           result = {
-            pimsFeatures: {
+            pimsLocationFeatures: {
               type: planNumberInventoryData.type,
               bbox: planNumberInventoryData.bbox,
               features: validFeatures,
             },
+            pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
             fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
           };
 
@@ -156,7 +161,8 @@ export const useMapSearch = () => {
           };
           const validFeatures = attributedFeatures.features.filter(feature => !!feature?.geometry);
           result = {
-            pimsFeatures: emptyPimsFeatureCollection,
+            pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+            pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
             fullyAttributedFeatures: {
               type: attributedFeatures.type,
               bbox: attributedFeatures.bbox,
@@ -247,11 +253,12 @@ export const useMapSearch = () => {
           const validFeatures = pidPinInventoryData.features.filter(feature => !!feature?.geometry);
 
           result = {
-            pimsFeatures: {
+            pimsLocationFeatures: {
               type: pidPinInventoryData.type,
               bbox: pidPinInventoryData.bbox,
               features: validFeatures,
             },
+            pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
             fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
           };
 
@@ -275,7 +282,8 @@ export const useMapSearch = () => {
 
           const validFeatures = attributedFeatures.features.filter(feature => !!feature?.geometry);
           result = {
-            pimsFeatures: emptyPimsFeatureCollection,
+            pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+            pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
             fullyAttributedFeatures: {
               type: attributedFeatures.type,
               bbox: attributedFeatures.bbox,
