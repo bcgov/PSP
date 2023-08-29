@@ -103,7 +103,7 @@ namespace Pims.Api.Areas.Reports.Controllers
             }
 
             var financials = _compReqFinancialService.SearchCompensationRequisitionFinancials(filter);
-            if (financials is not null && financials.Count() > 0)
+            if (financials is not null && financials.Any())
             {
                 var reportTotals = new CompensationFinancialReportTotalsModel(financials);
                 var reportFinancials = financials.Select(financial => new CompensationFinancialReportModel(financial, reportTotals, _user));
