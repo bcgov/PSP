@@ -2,17 +2,22 @@ import { FeatureCollection, Geometry } from 'geojson';
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import {
+  PIMS_Property_Boundary_View,
+  PIMS_Property_Location_View,
+} from '@/models/layers/pimsPropertyLocationView';
 
 export interface FeatureSelected {
   readonly clusterId: string;
-  readonly pimsFeature: PIMS_Property_Location_View | null;
+  readonly pimsLocationFeature: PIMS_Property_Location_View | null;
+  readonly pimsBoundaryFeature: PIMS_Property_Boundary_View | null;
   readonly fullyAttributedFeature: PMBC_FullyAttributed_Feature_Properties | null;
   readonly latlng: LatLngLiteral;
 }
 
 export interface MapFeatureData {
-  pimsFeatures: FeatureCollection<Geometry, PIMS_Property_Location_View>;
+  pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_View>;
+  pimsBoundaryFeatures: FeatureCollection<Geometry, PIMS_Property_Boundary_View>;
   fullyAttributedFeatures: FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>;
 }
 
@@ -21,11 +26,21 @@ export interface RequestedFlyTo {
   bounds: LatLngBounds | null;
 }
 
-export const emptyPimsFeatureCollection: FeatureCollection<Geometry, PIMS_Property_Location_View> =
-  {
-    type: 'FeatureCollection',
-    features: [],
-  };
+export const emptyPimsLocationFeatureCollection: FeatureCollection<
+  Geometry,
+  PIMS_Property_Location_View
+> = {
+  type: 'FeatureCollection',
+  features: [],
+};
+
+export const emptyPimsBoundaryFeatureCollection: FeatureCollection<
+  Geometry,
+  PIMS_Property_Boundary_View
+> = {
+  type: 'FeatureCollection',
+  features: [],
+};
 
 export const emptyFullyFeaturedFeatureCollection: FeatureCollection<
   Geometry,
@@ -36,6 +51,7 @@ export const emptyFullyFeaturedFeatureCollection: FeatureCollection<
 };
 
 export const emptyFeatureData: MapFeatureData = {
-  pimsFeatures: emptyPimsFeatureCollection,
+  pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+  pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
   fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
 };
