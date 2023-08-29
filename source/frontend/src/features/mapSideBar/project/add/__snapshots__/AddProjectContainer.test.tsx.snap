@@ -839,7 +839,9 @@ exports[`AddProjectContainer component renders as expected 1`] = `
       >
         <div
           class="c1"
-        />
+        >
+          Please check the required fields.
+        </div>
       </div>
       <div
         class="pr-4 col-auto"

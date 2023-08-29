@@ -136,7 +136,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   const { lease, setLease, refresh, loading } = useLeaseDetail(leaseId);
 
   const { setFullWidth, setStaleFile, staleFile } = useContext(SideBarContext);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>();
+  const [isValid, setIsValid] = useState<boolean>(true);
 
   const activeTab = containerState.activeTab;
   useEffect(() => {
@@ -169,16 +169,14 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     });
   };
 
-  const handleSaveClick = () => {
-    const isFormValid = formikRef?.current?.isValid;
-
-    if (!isFormValid) {
-      setErrorMessage('Please check the required fields.');
+  const handleSaveClick = async () => {
+    await formikRef?.current?.validateForm();
+    if (!formikRef?.current?.isValid) {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
     }
 
-    if (isFormValid) {
-      setErrorMessage(undefined);
-    }
     if (formikRef !== undefined) {
       formikRef.current?.setSubmitting(true);
       formikRef.current?.submitForm();
@@ -218,7 +216,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
             isOkDisabled={formikRef?.current?.isSubmitting}
             onSave={handleSaveClick}
             onCancel={handleCancelClick}
-            errorMessage={errorMessage}
+            isValid={isValid}
           />
         )
       }
