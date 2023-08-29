@@ -14,6 +14,7 @@ import { Api_CompensationRequisition } from '@/models/api/CompensationRequisitio
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
 import { Api_Person } from '@/models/api/Person';
 import { Api_Product, Api_Project } from '@/models/api/Project';
+import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
@@ -40,6 +41,7 @@ export const useAcquisitionProvider = () => {
     postFileForm8,
     getAcquisitionFileForm8s,
     getAllAcquisitionFileTeamMembers,
+    getAgreementReport,
   } = useApiAcquisitionFile();
 
   const addAcquisitionFileApi = useApiRequestWrapper<
@@ -68,6 +70,17 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'RetrieveAcquisitionFile',
     onError: useAxiosErrorHandler('Failed to load Acquisition File'),
+  });
+
+  const getAgreementsReportApi = useApiRequestWrapper<
+    (filter: Api_ExportProjectFilter) => Promise<AxiosResponse<Blob, any>>
+  >({
+    requestFunction: useCallback(
+      async (filter: Api_ExportProjectFilter) => await getAgreementReport(filter),
+      [getAgreementReport],
+    ),
+    requestName: 'GetAgreementsReport',
+    onError: useAxiosErrorHandler('Failed to load Agreements Report'),
   });
 
   const updateAcquisitionFileApi = useApiRequestWrapper<
@@ -275,6 +288,7 @@ export const useAcquisitionProvider = () => {
       getAcquisitionCompReqH120s: getAcquisitionCompReqH120sApi,
       postAcquisitionForm8: postFileForm8Api,
       getAcquisitionFileForm8s: getAcquisitionForm8sApi,
+      getAgreementsReport: getAgreementsReportApi,
     }),
     [
       addAcquisitionFileApi,
@@ -293,6 +307,7 @@ export const useAcquisitionProvider = () => {
       getAcquisitionCompReqH120sApi,
       postFileForm8Api,
       getAcquisitionForm8sApi,
+      getAgreementsReportApi,
     ],
   );
 };
