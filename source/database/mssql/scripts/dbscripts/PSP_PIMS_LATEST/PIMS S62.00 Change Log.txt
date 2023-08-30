@@ -1,3 +1,10 @@
+PSP_PIMS S62.00 Sprint 61 2023-Aug-29
+- Dropped tables:
+  - TMP_PIMS_PROP_PROP_ADJACENT_LAND_TYPE
+- Altered tables:
+  - PIMS_INTEREST_HOLDER_HIST
+- Requires additional metadata to meet standards
+
 PSP_PIMS S61.00 Sprint 60 2023-Aug-11
 - Added tables:
   - TMP_PIMS_PROP_PROP_ADJACENT_LAND_TYPE
