@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using Pims.Core.Extensions;
@@ -109,7 +110,7 @@ namespace Pims.Api.Areas.Reports.Models.Agreement
 
         private static string GetNullableDate(DateTime? dateTime)
         {
-            return dateTime.HasValue ? dateTime.Value.ToString("dd/MM/yyyy") : string.Empty;
+            return dateTime.HasValue ? dateTime.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : string.Empty;
         }
 
         private static string GetMinistryProjectName(PimsProject project)
