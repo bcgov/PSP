@@ -203,11 +203,6 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   z-index: 10;
 }
 
-.c12 {
-  padding-top: 0.7rem;
-  color: red;
-}
-
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1143,11 +1138,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
       >
         <div
           class="pr-3 col-auto"
-        >
-          <div
-            class="c12"
-          />
-        </div>
+        />
         <div
           class="pr-4 col-auto"
         >

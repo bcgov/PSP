@@ -156,4 +156,28 @@ describe('StakeHolderContainer component', () => {
       expect(viewProps.groupedInterestProperties[0].groupedPropertyInterests).toHaveLength(1);
     });
   });
+
+  it('it separates non-interest and interest payees even if they are for the same interest holder property', async () => {
+    mockGetApi.response = [
+      {
+        ...emptyApiInterestHolder,
+        personId: 1,
+        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        interestHolderProperties: [
+          {
+            ...emptyInterestHolderProperty,
+            acquisitionFilePropertyId: 1,
+            propertyInterestTypes: [{ id: 'test_interest_1' }, { id: 'NIP' }],
+          },
+        ],
+      },
+    ];
+    setup({});
+    await waitFor(async () => {
+      expect(viewProps.groupedInterestProperties).toHaveLength(1);
+      expect(viewProps.groupedInterestProperties[0].groupedPropertyInterests).toHaveLength(1);
+      expect(viewProps.groupedNonInterestProperties).toHaveLength(1);
+      expect(viewProps.groupedNonInterestProperties[0].groupedPropertyInterests).toHaveLength(1);
+    });
+  });
 });
