@@ -3,9 +3,6 @@ using Pims.Api.Areas.Reports.Models.Agreement;
 using Pims.Dal.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Pims.Api.Test

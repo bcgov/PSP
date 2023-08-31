@@ -94,8 +94,8 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
             ExportDate = DateTime.Now.ToString("dd/MM/yyyy");
             MinistryProject = GetMinistryProjectName(financial.CompensationRequisition?.AcquisitionFile?.Project);
             Product = GetMinistryProductName(financial.CompensationRequisition?.AcquisitionFile?.Product);
-            AcquisitionNumberAndName = $"{financial.CompensationRequisition?.AcquisitionFile?.FileNumber} - {financial.CompensationRequisition?.AcquisitionFile?.FileName}";
-            FiscalYear = financial.CompensationRequisition.FiscalYear ?? string.Empty;
+            AcquisitionNumberAndName = GetAcquisitionFileName(financial.CompensationRequisition?.AcquisitionFile);
+            FiscalYear = financial.CompensationRequisition?.FiscalYear ?? string.Empty;
             AlternateProject = GetMinistryProjectName(financial.CompensationRequisition?.AlternateProject);
             RequisitionNumber = financial.CompensationRequisition?.Internal_Id ?? 0;
             bool isDraftCompReq = financial.CompensationRequisition == null || !financial.CompensationRequisition.IsDraft.HasValue || financial.CompensationRequisition.IsDraft.Value;
@@ -109,14 +109,14 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
             var project = GetProject(financial);
 
             // Draft requisition totals per project
-            ProjectDraftPreTaxAmount = project is not null ? reportTotals.ProjectDraftPreTaxAmount[project.Id] : 0;
-            ProjectDraftTaxAmount = project is not null ? reportTotals.ProjectDraftTaxAmount[project.Id] : 0;
-            ProjectDraftTotalAmount = project is not null ? reportTotals.ProjectDraftTotalAmount[project.Id] : 0;
+            ProjectDraftPreTaxAmount = project is not null && reportTotals.ProjectDraftPreTaxAmount.ContainsKey(project.Id) ? reportTotals.ProjectDraftPreTaxAmount[project.Id] : 0;
+            ProjectDraftTaxAmount = project is not null && reportTotals.ProjectDraftTaxAmount.ContainsKey(project.Id) ? reportTotals.ProjectDraftTaxAmount[project.Id] : 0;
+            ProjectDraftTotalAmount = project is not null && reportTotals.ProjectDraftTotalAmount.ContainsKey(project.Id) ? reportTotals.ProjectDraftTotalAmount[project.Id] : 0;
 
             // Final requisition total per project
-            ProjectFinalPreTaxAmount = project is not null ? reportTotals.ProjectFinalPreTaxAmount[project.Id] : 0;
-            ProjectFinalTaxAmount = project is not null ? reportTotals.ProjectFinalTaxAmount[project.Id] : 0;
-            ProjectFinalTotalAmount = project is not null ? reportTotals.ProjectFinalTotalAmount[project.Id] : 0;
+            ProjectFinalPreTaxAmount = project is not null && reportTotals.ProjectFinalPreTaxAmount.ContainsKey(project.Id) ? reportTotals.ProjectFinalPreTaxAmount[project.Id] : 0;
+            ProjectFinalTaxAmount = project is not null && reportTotals.ProjectFinalTaxAmount.ContainsKey(project.Id) ? reportTotals.ProjectFinalTaxAmount[project.Id] : 0;
+            ProjectFinalTotalAmount = project is not null && reportTotals.ProjectFinalTotalAmount.ContainsKey(project.Id) ? reportTotals.ProjectFinalTotalAmount[project.Id] : 0;
 
             // Total expenditures - draft
             AllExpendituresDraftPreTaxAmount = reportTotals.AllExpendituresDraftPreTaxAmount;
@@ -144,12 +144,6 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
             {
                 return null;
             }
-        }
-
-        private static string GetTeamMemberName(PimsAcquisitionFile file, string personProfileTypeCode)
-        {
-            PimsPerson matchingPerson = file?.PimsAcquisitionFilePeople?.FirstOrDefault(x => x.AcqFlPersonProfileTypeCode == personProfileTypeCode)?.Person;
-            return matchingPerson?.GetFullName() ?? string.Empty;
         }
 
         private static string GetNullableDate(DateTime? dateTime)
@@ -190,6 +184,18 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
             else
             {
                 return $"{financialActivity.Code} - {financialActivity.Description}";
+            }
+        }
+
+        private static string GetAcquisitionFileName(PimsAcquisitionFile file)
+        {
+            if (file == null)
+            {
+                return string.Empty;
+            }
+            else
+            {
+                return $"{file.FileNumber} - {file.FileName}";
             }
         }
     }
