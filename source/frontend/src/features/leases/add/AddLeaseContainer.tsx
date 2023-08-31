@@ -8,7 +8,7 @@ import { ReactComponent as Fence } from '@/assets/images/fence.svg';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { IMapProperty } from '@/components/propertySelector/models';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
-import SidebarFooter, { missingFieldsError } from '@/features/mapSideBar/shared/SidebarFooter';
+import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -33,7 +33,7 @@ export const AddLeaseContainer: React.FunctionComponent<
 
   const withUserOverride = useApiUserOverride('Failed to save Lease File');
   const { addLease } = useAddLease();
-  const [errorMessage, setErrorMessage] = useState<string | undefined>();
+  const [isValid, setIsValid] = useState<boolean>(true);
 
   const initialProperty = useMemo<IMapProperty | null>(() => {
     if (selectedFeatureDataset) {
@@ -69,8 +69,13 @@ export const AddLeaseContainer: React.FunctionComponent<
     }
   };
 
-  const handleSave = () => {
-    missingFieldsError(setErrorMessage, formikRef?.current?.isValid);
+  const handleSave = async () => {
+    await formikRef?.current?.validateForm();
+    if (!formikRef?.current?.isValid) {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+    }
 
     if (formikRef !== undefined) {
       formikRef.current?.setSubmitting(true);
@@ -91,7 +96,7 @@ export const AddLeaseContainer: React.FunctionComponent<
           isOkDisabled={formikRef.current?.isSubmitting || bcaLoading}
           onSave={handleSave}
           onCancel={handleCancel}
-          errorMessage={errorMessage}
+          isValid={isValid}
         />
       }
       showCloseButton

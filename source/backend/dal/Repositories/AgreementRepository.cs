@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
@@ -40,6 +41,34 @@ namespace Pims.Dal.Repositories
                 .Include(ci => ci.AgreementTypeCodeNavigation)
                 .AsNoTracking()
                 .ToList();
+        }
+
+        public List<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter)
+        {
+            using var scope = Logger.QueryScope();
+
+            var query = Context.PimsAgreements
+                .Include(a => a.AgreementTypeCodeNavigation)
+                .Include(a => a.AcquisitionFile)
+                    .ThenInclude(a => a.PimsAcquisitionFilePeople)
+                    .ThenInclude(afp => afp.Person)
+                .Include(a => a.AcquisitionFile)
+                    .ThenInclude(a => a.Project)
+                .Include(a => a.AcquisitionFile)
+                    .ThenInclude(a => a.Product)
+                .Include(a => a.AcquisitionFile)
+                    .ThenInclude(a => a.AcquisitionFileStatusTypeCodeNavigation)
+                .AsNoTracking();
+
+            if (filter.Projects != null && filter.Projects.Any())
+            {
+                query = query.Where(a => a.AcquisitionFile.ProjectId.HasValue && filter.Projects.Contains(a.AcquisitionFile.ProjectId.Value));
+            }
+            if(filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
+            {
+                query = query.Where(a => a.AcquisitionFile.PimsAcquisitionFilePeople.Any(afp => filter.AcquisitionTeamPersons.Contains(afp.PersonId)));
+            }
+            return query.ToList();
         }
 
         public PimsAgreement Update(PimsAgreement agreement)

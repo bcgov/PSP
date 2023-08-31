@@ -1,10 +1,8 @@
-import { FormikProps } from 'formik';
 import moment from 'moment';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { SelectOption } from '@/components/common/form';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
-import { missingFieldsError } from '@/features/mapSideBar/shared/SidebarFooter';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
@@ -33,8 +31,6 @@ const UpdateCompensationRequisitionContainer: React.FC<
   const [responsibilityCentreOptions, setResponsibilityCentreOptions] = useState<SelectOption[]>(
     [],
   );
-  const [errorMessage, setErrorMessage] = useState<string | undefined>();
-  const formikRef = useRef<FormikProps<CompensationRequisitionFormModel>>(null);
   const [yearlyFinancialOptions, setyearlyFinancialOptions] = useState<SelectOption[]>([]);
   const { getSystemConstant } = useSystemConstants();
   const gstConstant = getSystemConstant(SystemConstants.GST);

@@ -310,6 +310,20 @@ namespace Pims.Api.Services
             return _agreementRepository.GetAgreementsByAquisitionFile(id);
         }
 
+        public IEnumerable<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter)
+        {
+            _logger.LogInformation("Searching all agreements matching the filter: ", filter);
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var allMatchingAgreements = _agreementRepository.SearchAgreements(filter);
+            if (pimsUser.IsContractor)
+            {
+                return allMatchingAgreements.Where(a => a.AcquisitionFile.PimsAcquisitionFilePeople.Any(afp => afp.PersonId == pimsUser.PersonId));
+            }
+
+            return allMatchingAgreements.Where(a => pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == a.AcquisitionFile.RegionCode));
+        }
+
         public IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements)
         {
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
