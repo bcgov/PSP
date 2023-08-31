@@ -72,7 +72,7 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
     defaultPropertyTab: InventoryTabNames.property,
   },
   formikRef: React.createRef(),
-  missingFieldsError: undefined,
+  isFormValid: true,
 };
 
 const history = createMemoryHistory();

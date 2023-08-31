@@ -18,7 +18,7 @@ import { Api_File } from '@/models/api/File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { AddressForm, FileForm, PropertyForm } from '../../models';
-import SidebarFooter, { missingFieldsError } from '../../SidebarFooter';
+import SidebarFooter from '../../SidebarFooter';
 import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 
 export interface IUpdatePropertiesProps {
@@ -43,14 +43,19 @@ export const UpdateProperties: React.FunctionComponent<
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
   const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
   const [showAssociatedEntityWarning, setShowAssociatedEntityWarning] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>();
+  const [isValid, setIsValid] = useState<boolean>(true);
 
   const { resetFilePropertyLocations } = useContext(SideBarContext);
 
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
 
   const handleSaveClick = async () => {
-    missingFieldsError(setErrorMessage, formikRef?.current?.isValid);
+    await formikRef?.current?.validateForm();
+    if (!formikRef?.current?.isValid) {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+    }
     setShowSaveConfirmModal(true);
   };
 
@@ -115,7 +120,7 @@ export const UpdateProperties: React.FunctionComponent<
             isOkDisabled={formikRef.current?.isSubmitting}
             onSave={handleSaveClick}
             onCancel={handleCancelClick}
-            errorMessage={errorMessage}
+            isValid={isValid}
           />
         }
       >
