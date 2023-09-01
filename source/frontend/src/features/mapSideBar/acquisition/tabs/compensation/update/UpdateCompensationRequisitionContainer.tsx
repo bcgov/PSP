@@ -39,7 +39,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
   const {
     updateCompensationRequisition: { execute: updateCompensationRequisition, loading: isUpdating },
   } = useCompensationRequisitionRepository();
-  const [showAltProjectError, setShowAltProjectError] = useState<boolean>(true);
+  const [showAltProjectError, setShowAltProjectError] = useState<boolean>(false);
 
   const {
     getAcquisitionOwners: { execute: retrieveAcquisitionOwners, loading: loadingAcquisitionOwners },
@@ -244,8 +244,6 @@ const UpdateCompensationRequisitionContainer: React.FC<
       onCancel={onCancel}
       showAltProjectError={showAltProjectError}
       setShowAltProjectError={setShowAltProjectError}
-      onFooterSave={() => missingFieldsError(setErrorMessage, formikRef?.current?.isValid)}
-      missingFieldsError={errorMessage}
     />
   );
 };

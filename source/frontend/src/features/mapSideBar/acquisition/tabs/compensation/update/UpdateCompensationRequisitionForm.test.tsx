@@ -1,6 +1,7 @@
 import { FormikProps } from 'formik';
 import { createRef } from 'react';
 
+import { useProjectTypeahead } from '@/hooks/useProjectTypeahead';
 import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
@@ -10,7 +11,6 @@ import {
   getMockApiDefaultCompensation,
 } from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { mockProjectGetResponse } from '@/mocks/projects.mock';
 import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -54,6 +54,14 @@ const getPayeeOptions = (owners: Api_AcquisitionFileOwner[]): PayeeOption[] => {
   return options;
 };
 
+jest.mock('@/hooks/useProjectTypeahead');
+const mockUseProjectTypeahead = useProjectTypeahead as jest.MockedFunction<
+  typeof useProjectTypeahead
+>;
+
+const handleTypeaheadSearch = jest.fn();
+const setShowAltProjectError = jest.fn();
+
 describe('Compensation Requisition UpdateForm component', () => {
   const payeeOptions = getPayeeOptions(mockAcquisitionFileOwnersResponse());
 
@@ -75,9 +83,8 @@ describe('Compensation Requisition UpdateForm component', () => {
         gstConstant={currentGstPercent ?? 0.05}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
         isLoading={renderOptions.props?.isLoading ?? false}
-        missingFieldsError={undefined}
         showAltProjectError={false}
-        setShowAltProjectError={() => {}}
+        setShowAltProjectError={setShowAltProjectError}
       />,
       {
         ...renderOptions,
@@ -90,6 +97,16 @@ describe('Compensation Requisition UpdateForm component', () => {
       formikRef,
       getStatusDropDown: () =>
         utils.container.querySelector(`select[name="status"]`) as HTMLInputElement,
+      getProjectSelector: () => {
+        return utils.container.querySelector(
+          `input[name="typeahead-alternateProject"]`,
+        ) as HTMLInputElement;
+      },
+      getProjectSelectorItem: (index: number) => {
+        return utils.container.querySelector(
+          `#typeahead-alternateProject-item-${index}`,
+        ) as HTMLElement;
+      },
       getPayeeOptionsDropDown: () =>
         utils.container.querySelector(`select[name="payee.payeeKey"]`) as HTMLInputElement,
       getPayeeGSTNumber: () =>
@@ -108,6 +125,23 @@ describe('Compensation Requisition UpdateForm component', () => {
         utils.container.querySelector(`textarea[name="detailedRemarks"]`) as HTMLInputElement,
     };
   };
+
+  beforeEach(() => {
+    mockUseProjectTypeahead.mockReturnValue({
+      handleTypeaheadSearch,
+      isTypeaheadLoading: false,
+      matchedProjects: [
+        {
+          id: 1,
+          text: 'MOCK TEST PROJECT',
+        },
+        {
+          id: 2,
+          text: 'ANOTHER MOCK',
+        },
+      ],
+    });
+  });
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -324,29 +358,24 @@ describe('Compensation Requisition UpdateForm component', () => {
     expect(getPayeeTotalAmount()).toHaveValue('$31,500.00');
   });
 
-  it('should display a error modal when selected alternate project same as file project', async () => {
+  it('should validate alternate project same as file project', async () => {
     const acquisitionFile = { ...mockAcquisitionFileResponse(), projectId: 1 };
-    const apiCompensation = getMockApiDefaultCompensation();
-    const mockCompensation = CompensationRequisitionFormModel.fromApi({
-      ...apiCompensation,
-      alternateProject: { ...mockProjectGetResponse(), id: 1 },
-    });
+    const apiCompensation = {
+      ...getMockApiDefaultCompensation(),
+      isDraft: false,
+      finalizedDate: '2024-06-12T18:00:00',
+    };
+    const mockCompensation = CompensationRequisitionFormModel.fromApi(apiCompensation);
 
-    const { findByText, getByTitle } = await setup({
+    const { getProjectSelector, getProjectSelectorItem } = await setup({
       props: { initialValues: mockCompensation, acquisitionFile: acquisitionFile },
     });
 
-    const saveButton = screen.getByText('Save');
-    await act(async () => userEvent.click(saveButton));
+    await act(async () => userEvent.type(getProjectSelector(), 'MOCK TEST'));
+    await act(async () => {
+      fireEvent.click(getProjectSelectorItem(0));
+    });
 
-    expect(onSave).not.toHaveBeenCalled();
-    expect(
-      await findByText(
-        / You have selected an alternate project that is the same as the file project, please select a different project./i,
-      ),
-    ).toBeVisible();
-
-    await act(async () => userEvent.click(getByTitle('ok-modal')));
-    expect(onSave).not.toHaveBeenCalled();
+    expect(setShowAltProjectError).toHaveBeenCalledWith(true);
   });
 });
