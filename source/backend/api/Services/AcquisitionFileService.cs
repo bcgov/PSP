@@ -89,9 +89,7 @@ namespace Pims.Api.Services
 
         public List<AcquisitionFileExportModel> GetAcquisitionFileExport(AcquisitionFilter filter)
         {
-            _logger.LogInformation("Searching for acquisition files...");
-            _logger.LogDebug("Acquisition file search with filter", filter);
-
+            _logger.LogInformation("Searching all Acquisition Files matching the filter: {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             // Limit search results to user's assigned region(s)
@@ -350,7 +348,7 @@ namespace Pims.Api.Services
 
         public IEnumerable<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter)
         {
-            _logger.LogInformation("Searching all agreements matching the filter: ", filter);
+            _logger.LogInformation("Searching all agreements matching the filter: {filter} ", filter);
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             var allMatchingAgreements = _agreementRepository.SearchAgreements(filter);

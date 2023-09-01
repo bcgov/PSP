@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Security.Claims;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -57,11 +55,10 @@ namespace Pims.Dal.Repositories
 
             IQueryable<PimsAcquisitionFile> query = GetCommonAquisitionFileQuery(filter, regions, filterPersonId);
 
-            var queryResult = query.ToList();
             var skip = (filter.Page - 1) * filter.Quantity;
-            var pageItems = queryResult.Skip(skip).Take(filter.Quantity).ToList();
+            var pageItems = query.Skip(skip).Take(filter.Quantity).ToList();
 
-            return new Paged<PimsAcquisitionFile>(pageItems, filter.Page, filter.Quantity, queryResult.Count);
+            return new Paged<PimsAcquisitionFile>(pageItems, filter.Page, filter.Quantity, query.Count());
         }
 
         /// <summary>
