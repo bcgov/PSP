@@ -57,7 +57,7 @@ export const AcquisitionListView: React.FunctionComponent<
   const { exportAcquisitionFiles } = useAcquisitionFileExport();
 
   /**
-   * @param {'csv' | 'excel'} accept Whether the fetch is for type of CSV or EXCEL
+   * @param {'excel'} accept fetch is for type of EXCEL
    */
   const fetch = (accept: 'excel') => {
     // Call API with appropriate search parameters

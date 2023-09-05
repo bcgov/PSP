@@ -40,8 +40,9 @@ namespace Pims.Dal.Helpers.Extensions
         {
             if (person == null)
             {
-                return null;
+                return string.Empty;
             }
+
             string[] names = { person.FirstName, person.MiddleNames, person.Surname };
 
             if (addSuffix && !string.IsNullOrEmpty(person.NameSuffix))

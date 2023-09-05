@@ -5,13 +5,11 @@ import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
 
-import * as actionTypes from '@/constants/actionTypes';
-import { catchAxiosError } from '@/customAxios';
 import {
   IPaginateAcquisition,
   useApiAcquisitionFile,
 } from '@/hooks/pims-api/useApiAcquisitionFile';
-import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
+import { logError, logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
 export const useAcquisitionFileExport = () => {
   const { exportAcquisitionFiles: apiExportAcquisitionFiles } = useApiAcquisitionFile();
@@ -40,7 +38,13 @@ export const useAcquisitionFileExport = () => {
         // trigger file download in client browser
       } catch (axiosError) {
         if (axios.isAxiosError(axiosError)) {
-          catchAxiosError(axiosError, dispatch, actionTypes.DELETE_PARCEL);
+          dispatch(
+            logError({
+              name: 'GetAquisitionListExport',
+              status: axiosError?.response?.status,
+              error: axiosError,
+            }),
+          );
         }
       }
     },

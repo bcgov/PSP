@@ -42,16 +42,13 @@ export const useApiAcquisitionFile = () => {
             Accept: 'application/vnd.ms-excel',
           },
         }),
-      exportAcquisitionFiles: (
-        filter: IPaginateAcquisition,
-        outputFormat: 'csv' | 'excel' = 'excel',
-      ) =>
+      exportAcquisitionFiles: (filter: IPaginateAcquisition, outputFormat: 'excel' = 'excel') =>
         api.get<Blob>(
           `/reports/acquisition?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
           {
             responseType: 'blob',
             headers: {
-              Accept: outputFormat === 'csv' ? 'text/csv' : 'application/vnd.ms-excel',
+              Accept: 'application/vnd.ms-excel',
             },
           },
         ),
