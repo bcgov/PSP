@@ -54,10 +54,10 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <summary>
         /// Exports acquisition as Excel file.
         /// Include 'Accept' header to request the appropriate export -
-        ///     ["text/csv", "application/application/vnd.ms-excel"].
+        ///     ["application/application/vnd.ms-excel"].
         /// </summary>
         /// <param name="filter"></param>
-        /// <returns></returns>
+        /// <returns>The generated Excel file.</returns>
         [HttpPost("agreements")]
         [HasPermission(Permissions.AcquisitionFileView)]
         [Produces(ContentTypes.CONTENTTYPEEXCELX)]
@@ -83,18 +83,19 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <summary>
         /// Exports compensation requisitions as Excel file.
         /// Include 'Accept' header to request the appropriate export -
-        ///     ["text/csv", "application/application/vnd.ms-excel"].
+        ///     ["application/application/vnd.ms-excel"]
         /// </summary>
         /// <param name="filter"></param>
-        /// <returns></returns>
+        /// <returns>The generated Excel file.</returns>
         [HttpPost("compensation-requisitions")]
         [HasPermission(Permissions.AcquisitionFileView)]
         [Produces(ContentTypes.CONTENTTYPEEXCELX)]
         [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         [SwaggerOperation(Tags = new[] { "acquisition", "report" })]
         public IActionResult ExportCompensationRequisitions([FromBody] AcquisitionReportFilterModel filter)
         {
-            filter.ThrowBadRequestIfNull($"The request must include a filter.");
+            filter.ThrowBadRequestIfNull("The request must include a filter.");
 
             var acceptHeader = (string)Request.Headers["Accept"];
             if (acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
@@ -103,24 +104,21 @@ namespace Pims.Api.Areas.Reports.Controllers
             }
 
             var financials = _compReqFinancialService.SearchCompensationRequisitionFinancials(filter);
-            if (financials is not null && financials.Any())
-            {
-                var reportTotals = new CompensationFinancialReportTotalsModel(financials);
-                var reportFinancials = financials
-                        .Select(financial => new CompensationFinancialReportModel(financial, reportTotals, _user))
-                        .OrderByDescending(f => f.MinistryProject)
-                        .ThenByDescending(f => f.Product)
-                        .ThenByDescending(f => f.AcquisitionNumberAndName)
-                        .ThenByDescending(f => f.RequisitionNumber)
-                        .ThenByDescending(f => f.FinancialActivityName);
-
-                return ReportHelper.GenerateExcel(reportFinancials, "Compensation Requisition Export");
-            }
-            else
+            if (financials is null || !financials.Any())
             {
                 // Return 204 "No Content" to signal the frontend that we did not find any matching records.
                 return NoContent();
             }
+
+            var totals = new CompensationFinancialReportTotalsModel(financials);
+            var reportFinancials = financials.Select(financial => new CompensationFinancialReportModel(financial, totals, _user))
+                    .OrderByDescending(f => f.MinistryProject)
+                    .ThenByDescending(f => f.Product)
+                    .ThenByDescending(f => f.AcquisitionNumberAndName)
+                    .ThenByDescending(f => f.RequisitionNumber)
+                    .ThenByDescending(f => f.FinancialActivityName);
+
+            return ReportHelper.GenerateExcel(reportFinancials, "Compensation Requisition Export");
         }
         #endregion
     }

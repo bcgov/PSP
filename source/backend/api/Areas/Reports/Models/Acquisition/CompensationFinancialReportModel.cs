@@ -91,7 +91,7 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
         public CompensationFinancialReportModel(PimsCompReqFinancial financial, CompensationFinancialReportTotalsModel reportTotals, ClaimsPrincipal user)
         {
             ExportBy = user.GetDisplayName();
-            ExportDate = DateTime.Now.ToString("dd/MM/yyyy");
+            ExportDate = DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
             MinistryProject = GetMinistryProjectName(financial.CompensationRequisition?.AcquisitionFile?.Project);
             Product = GetMinistryProductName(financial.CompensationRequisition?.AcquisitionFile?.Product);
             AcquisitionNumberAndName = GetAcquisitionFileName(financial.CompensationRequisition?.AcquisitionFile);
