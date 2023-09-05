@@ -1,4 +1,3 @@
-<<<<<<<< HEAD:source/database/mssql/scripts/dbscripts/PSP_PIMS_LATEST/PIMS S61.00 Change Log.txt
 PSP_PIMS S61.00 Sprint 60 2023-Aug-11
 - Added tables:
   - TMP_PIMS_PROP_PROP_ADJACENT_LAND_TYPE
@@ -7,12 +6,6 @@ PSP_PIMS S61.00 Sprint 60 2023-Aug-11
   - PIMS_ACQUISITION_FILE_HIST
   - PIMS_COMPENSATION_REQUISITION
   - PIMS_COMPENSATION_REQUISITION_HIST
-========
-PSP_PIMS S60.01 Sprint 61 2023-Aug-24
-- Added alter scripts:
-  - 079_DML_PIMS_PROPERTY_ROAD_TYPE_Alter_Down.sql
-  - 079_DML_PIMS_PROPERTY_ROAD_TYPE_Alter_Up.sql
->>>>>>>> upstream/test:source/database/mssql/scripts/dbscripts/PSP_PIMS_LATEST/PIMS S60.01 Change Log.txt
 - Requires additional metadata to meet standards
 
 PSP_PIMS S60.00 Sprint 60 2023-Aug-03
