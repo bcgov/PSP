@@ -17,33 +17,9 @@ export const TakesYupSchema = Yup.object().shape({
       isLandAct: Yup.bool().required('Section 16 flag required'),
       isStatutoryRightOfWay: Yup.bool().required('Statutory right of way flag required'),
       isLicenseToConstruct: Yup.bool().required('License to construct flag required'),
-      surplusArea: Yup.number().when('isSurplus', {
-        is: (isSurplus: boolean) => isSurplus,
-        then: Yup.number()
-          .required('Required when flag is true')
-          .moreThan(0, 'Must be greater than 0 when flag is true'),
-      }),
-      licenseToConstructArea: Yup.number().when('isLicenseToConstruct', {
-        is: (isLicenseToConstruct: boolean) => isLicenseToConstruct,
-        then: Yup.number()
-          .required('Required when flag is true')
-          .moreThan(0, 'Must be greater than 0 when flag is true'),
-      }),
       ltcEndDt: Yup.string().when('isLicenseToConstruct', {
         is: (isLicenseToConstruct: boolean) => isLicenseToConstruct,
         then: Yup.string().required('End Date is required'),
-      }),
-      newRightOfWayArea: Yup.number().when('isNewRightOfWay', {
-        is: (isNewRightOfWay: boolean) => isNewRightOfWay,
-        then: Yup.number()
-          .required('Rrequired when flag is true')
-          .moreThan(0, 'Must be greater than 0 when flag is true'),
-      }),
-      landActArea: Yup.number().when('isLandAct', {
-        is: (isLandAct: boolean) => isLandAct,
-        then: Yup.number()
-          .required('Required when flag is true')
-          .moreThan(0, 'Must be greater than 0 when flag is true'),
       }),
       landActEndDt: Yup.string().when('isLandAct', {
         is: (isLandAct: boolean) => isLandAct,
@@ -52,12 +28,6 @@ export const TakesYupSchema = Yup.object().shape({
       landActTypeCode: Yup.string().when('isLandAct', {
         is: (isLandAct: boolean) => isLandAct,
         then: Yup.string().required('Land Act is required'),
-      }),
-      statutoryRightOfWayArea: Yup.number().when('isStatutoryRightOfWay', {
-        is: (isStatutoryRightOfWay: boolean) => isStatutoryRightOfWay,
-        then: Yup.number()
-          .required('Required when flag is true')
-          .moreThan(0, 'Must be greater than 0 when flag is true'),
       }),
     }),
   ),

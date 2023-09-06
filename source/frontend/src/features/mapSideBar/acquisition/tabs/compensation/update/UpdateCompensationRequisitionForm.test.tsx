@@ -60,6 +60,7 @@ describe('Compensation Requisition UpdateForm component', () => {
     renderOptions: RenderOptions & { props?: Partial<CompensationRequisitionFormProps> },
   ) => {
     const formikRef = createRef<FormikProps<CompensationRequisitionFormModel>>();
+
     const utils = render(
       <UpdateCompensationRequisitionForm
         {...renderOptions.props}
@@ -74,7 +75,6 @@ describe('Compensation Requisition UpdateForm component', () => {
         gstConstant={currentGstPercent ?? 0.05}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
         isLoading={renderOptions.props?.isLoading ?? false}
-        missingFieldsError={undefined}
       />,
       {
         ...renderOptions,
