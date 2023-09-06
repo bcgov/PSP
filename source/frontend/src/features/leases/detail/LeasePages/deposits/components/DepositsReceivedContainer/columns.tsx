@@ -40,7 +40,7 @@ export class DepositListEntry {
 }
 
 function renderHolder({ row: { original } }: CellProps<DepositListEntry, Api_Contact | undefined>) {
-  if (original.contactHolder !== undefined) {
+  if (original.contactHolder !== undefined && original.contactHolder !== null) {
     const holder = original.contactHolder;
     if (holder.person !== undefined && holder.person !== null) {
       return (
