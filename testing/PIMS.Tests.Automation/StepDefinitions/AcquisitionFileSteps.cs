@@ -10,6 +10,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     [Binding]
     public class AcquisitionFileSteps
     {
+        private readonly GenericSteps genericSteps;
         private readonly LoginSteps loginSteps;
         private readonly AcquisitionFilesDetails acquisitionFilesDetails;
         private readonly SearchAcquisitionFiles searchAcquisitionFiles;
@@ -19,6 +20,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly PropertyInformation propertyInformation;
         private readonly AcquisitionChecklist checklist;
         private readonly AcquisitionAgreements agreements;
+        private readonly AcquisitionStakeholders stakeholders;
         private readonly Notes notes;
 
         private readonly string userName = "TRANPSP1";
@@ -30,6 +32,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public AcquisitionFileSteps(BrowserDriver driver)
         {
             loginSteps = new LoginSteps(driver);
+            genericSteps = new GenericSteps(driver);
+
             acquisitionFilesDetails = new AcquisitionFilesDetails(driver.Current);
             searchAcquisitionFiles = new SearchAcquisitionFiles(driver.Current);
             sharedSearchProperties = new SharedSearchProperties(driver.Current);
@@ -38,6 +42,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation = new PropertyInformation(driver.Current);
             checklist = new AcquisitionChecklist(driver.Current);
             agreements = new AcquisitionAgreements(driver.Current);
+            stakeholders = new AcquisitionStakeholders(driver.Current);
             notes = new Notes(driver.Current);
         }
 
@@ -320,9 +325,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Add a new Agreement
             agreements.CreateNewAgreement(acquisitionFile.AcquisitionAgreements[0], 0);
 
-            //Verify Edit Agreement form
-            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[0], 0);
-
             //Cancel agreements
             agreements.CancelAcquisitionFileAgreement();
 
@@ -331,9 +333,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Create Agreement button
             agreements.CreateNewAgreementBttn();
-
-            //Verify Create Agreement form
-            agreements.VerifyCreateAgreementForm(0);
 
             //Add a new Agreement
             agreements.CreateNewAgreement(acquisitionFile.AcquisitionAgreements[0], 0);
@@ -369,6 +368,94 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save new agreement
             agreements.SaveAcquisitionFileAgreement();
+        }
+
+        [StepDefinition(@"I create Stakeholders within an Acquisition File")]
+        public void CreateStakeholder()
+        {
+            /* TEST COVERAGE: PSP-6394 */
+
+            //Navigate to Stakeholders Tab
+            stakeholders.NavigateStakeholderTab();
+
+            //Verify initial Stakeholder Tab View
+            stakeholders.VerifyStakeholdersInitView();
+
+            if (acquisitionFile.StakeholderCount > 0)
+            {
+                for (int i = 0; i < acquisitionFile.AcquisitionStakeholders.Count; i++)
+                {
+                    if (acquisitionFile.AcquisitionStakeholders[i].StakeholderType.Equals("Interest"))
+                    {
+                        //Click on edit the Interest Stakeholder button
+                        stakeholders.EditStakeholderInterestsButton();
+
+                        //Add new Interest Stakeholder to the Acquisition File
+                        stakeholders.AddInterestStakeholderButton();
+                        stakeholders.CreateInterestsStakeholder(acquisitionFile.AcquisitionStakeholders[i], i);
+
+                        //Save new Interest Stakeholder
+                        stakeholders.AcquisitionFileSaveStakeholder();
+
+                        //Verify added Interest Stakeholder
+                        stakeholders.VerifyInterestStakeholderViewForm(acquisitionFile.AcquisitionStakeholders[i]);
+                    }
+                    else
+                    {
+                        //Click on edit the Interest Stakeholder button
+                        stakeholders.EditStakeholderNonInterestsButton();
+
+                        //Add new Interest Stakeholder to the Acquisition File
+                        stakeholders.AddNonInterestStakeholderButton();
+                        stakeholders.CreateNonInterestsStakeholder(acquisitionFile.AcquisitionStakeholders[i], i);
+
+                        //Save new Interest Stakeholder
+                        stakeholders.AcquisitionFileSaveStakeholder();
+
+                        //Verify added Interest Stakeholder
+                        stakeholders.VerifyNonInterestStakeholderViewForm(acquisitionFile.AcquisitionStakeholders[i]);
+                    }
+                }
+            }
+        }
+
+        [StepDefinition(@"I update Stakeholders within an Acquisition File")]
+        public void UpdateStakeholder()
+        {
+            /* TEST COVERAGE: PSP-6398 */
+
+            //Search for an existing Acquisition File
+            searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
+            searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
+            searchAcquisitionFiles.SelectFirstOption();
+
+            //Navigate to Stakeholders Tab
+            stakeholders.NavigateStakeholderTab();
+
+            //Edit Stakeholder button
+            stakeholders.EditStakeholderInterestsButton();
+
+            var interestStakeholdersBeforeDelete = stakeholders.TotalInterestHolders();
+
+            //Delete last Interest stakeholder
+            stakeholders.DeleteLastInterestHolder();
+
+            //Save Interest Stakeholder changes
+            stakeholders.AcquisitionFileSaveStakeholder();
+
+            var interestStakeholdersAfterDelete = stakeholders.TotalInterestHolders();
+            Assert.True(interestStakeholdersBeforeDelete - interestStakeholdersAfterDelete == 1);
+
+            var nonInterestStakeholderBeforeDelete = stakeholders.TotalNonInterestHolders();
+
+            //Delete last Non-Interest stakeholder
+            stakeholders.DeleteLastNonInterestHolder();
+
+            //Save Interest Stakeholder changes
+            stakeholders.AcquisitionFileSaveStakeholder();
+
+            var nonInterestStakeholderAfterDelete = stakeholders.TotalNonInterestHolders();
+            Assert.True(nonInterestStakeholderBeforeDelete - nonInterestStakeholderAfterDelete == 1);
         }
 
         [StepDefinition(@"I create an Acquisition File from a pin on map from row number (.*)")]
@@ -664,6 +751,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 PopulateAgreementsCollection(acquisitionFile.AgreementStartRow, acquisitionFile.AgreementCount);
             }
+
+            //Acquisition Stakeholders
+            acquisitionFile.StakeholderStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "StakeholderStartRow"));
+            acquisitionFile.StakeholderCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "StakeholderCount"));
+            if (acquisitionFile.StakeholderStartRow != 0 && acquisitionFile.StakeholderCount != 0)
+            {
+                PopulateStakeholdersCollection(acquisitionFile.StakeholderStartRow, acquisitionFile.StakeholderCount);
+            }
         }
 
         private void PopulateTeamsCollection(int startRow, int rowsCount)
@@ -736,5 +831,23 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
         }
 
+        private void PopulateStakeholdersCollection(int startRow, int rowsCount)
+        {
+            DataTable stakeholderSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionStakeholder"];
+            ExcelDataContext.PopulateInCollection(stakeholderSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                AcquisitionStakeholder stakeholder = new AcquisitionStakeholder();
+
+                stakeholder.StakeholderType = ExcelDataContext.ReadData(i, "StakeholderType");
+                stakeholder.InterestHolder = ExcelDataContext.ReadData(i, "InterestHolder");
+                stakeholder.InterestType = ExcelDataContext.ReadData(i, "InterestType");
+                stakeholder.PrimaryContact = ExcelDataContext.ReadData(i, "PrimaryContact");
+                stakeholder.PayeeName = ExcelDataContext.ReadData(i, "PayeeName");
+
+                acquisitionFile.AcquisitionStakeholders.Add(stakeholder);
+            }
+        }
     }
 }

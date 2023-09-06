@@ -32,6 +32,9 @@
         public int AgreementStartRow { get; set; } = 0;
         public int AgreementCount { get; set; } = 0;
         public List<AcquisitionAgreement>? AcquisitionAgreements { get; set; } = new List<AcquisitionAgreement>();
+        public int StakeholderStartRow { get; set; } = 0;
+        public int StakeholderCount { get; set; } = 0;
+        public List<AcquisitionStakeholder>? AcquisitionStakeholders { get; set; } = new List<AcquisitionStakeholder>();
     }
 
     public class AcquisitionTeamMember
@@ -133,9 +136,10 @@
 
     public class AcquisitionStakeholder
     {
+        public string StakeholderType { get; set; } = null!;
         public string? InterestHolder { get; set; } = String.Empty;
         public string? InterestType { get; set; } = String.Empty;
-        public Boolean ImpactedProperties { get; set; } = false;
+        public string? PrimaryContact { get; set; } = String.Empty;
         public string? PayeeName { get; set; } = String.Empty;
     }
 }

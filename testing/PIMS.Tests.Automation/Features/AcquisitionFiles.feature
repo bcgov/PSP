@@ -39,11 +39,14 @@ Scenario: 07. Acquisition Agreements Tab
 	Given I create a new Acquisition File from row number 8
 	When I create Agreements within an Acquisition File
 	And I update an Agreement within an Acquisition File from row number 9
-	Then Acquisition File's Checklist has been saved successfully
+	Then A new Acquisition file is created successfully
 
 Scenario: 08. Acquisition Stakeholders Tab
 	Given I create a new Acquisition File from row number 10
-	When 
+	When I create Stakeholders within an Acquisition File
+	And I update Stakeholders within an Acquisition File
+	Then A new Acquisition file is created successfully
+
 
 Scenario: 11. Create an Acquisition File from Pin
 	Given I create an Acquisition File from a pin on map from row number 16
