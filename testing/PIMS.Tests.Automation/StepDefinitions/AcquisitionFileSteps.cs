@@ -11,11 +11,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
     public class AcquisitionFileSteps
     {
         private readonly LoginSteps loginSteps;
-        private readonly AcquisitionFiles acquisitionFiles;
+        private readonly AcquisitionFilesDetails acquisitionFilesDetails;
         private readonly SearchAcquisitionFiles searchAcquisitionFiles;
         private readonly SharedSearchProperties sharedSearchProperties;
         private readonly SearchProperties searchProperties;
+        private readonly AcquisitionProperties acquisitionProperties;
         private readonly PropertyInformation propertyInformation;
+        private readonly AcquisitionChecklist checklist;
+        private readonly AcquisitionAgreements agreements;
         private readonly Notes notes;
 
         private readonly string userName = "TRANPSP1";
@@ -27,13 +30,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public AcquisitionFileSteps(BrowserDriver driver)
         {
             loginSteps = new LoginSteps(driver);
-            acquisitionFiles = new AcquisitionFiles(driver.Current);
+            acquisitionFilesDetails = new AcquisitionFilesDetails(driver.Current);
             searchAcquisitionFiles = new SearchAcquisitionFiles(driver.Current);
             sharedSearchProperties = new SharedSearchProperties(driver.Current);
             searchProperties = new SearchProperties(driver.Current);
+            acquisitionProperties = new AcquisitionProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
+            checklist = new AcquisitionChecklist(driver.Current);
+            agreements = new AcquisitionAgreements(driver.Current);
             notes = new Notes(driver.Current);
-            acquisitionFile = new AcquisitionFile();
         }
 
         [StepDefinition(@"I create a new Acquisition File from row number (.*)")]
@@ -46,38 +51,37 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Navigate to Acquisition File
             PopulateAcquisitionFile(rowNumber);
-            acquisitionFiles.NavigateToCreateNewAcquisitionFile();
+            acquisitionFilesDetails.NavigateToCreateNewAcquisitionFile();
 
             //Validate Acquisition File Details Create Form
-            acquisitionFiles.VerifyAcquisitionFileCreate();
+            acquisitionFilesDetails.VerifyAcquisitionFileCreate();
 
             //Create basic Acquisition File
-            acquisitionFiles.CreateMinimumAcquisitionFile(acquisitionFile);
+            acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
 
             //Save Acquisition File
-            acquisitionFiles.SaveAcquisitionFile();
+            acquisitionFilesDetails.SaveAcquisitionFileDetails();
 
             //Get Research File code
-            acquisitionFileCode = acquisitionFiles.GetAcquisitionFileCode();
+            acquisitionFileCode = acquisitionFilesDetails.GetAcquisitionFileCode();
         }
 
-        [StepDefinition(@"I add additional information to the Acquisition File")]
+        [StepDefinition(@"I add additional information to the Acquisition File Details")]
         public void AddAdditionalInfoAcquisitionFile()
         {
-            /* TEST COVERAGE: PSP-4163, PSP-4323, PSP-4325, PSP-4326, PSP-4327, PSP-4328, PSP-4329, PSP-4331, PSP-4334, PSP-4469, PSP-4471, PSP-4553, PSP-4593, PSP-5308, PSP-5589, 
-             * PSP-5590, PSP-5790, PSP-6041, PSP-6268 */
+            /* TEST COVERAGE:  PSP-4469, PSP-4471, PSP-4553, PSP-5308, PSP-5590, PSP-5634, PSP-5637, PSP-5790, PSP-6041 */
 
             //Enter to Edit mode of Acquisition File
-            acquisitionFiles.EditAcquisitionFileDetails();
+            acquisitionFilesDetails.EditAcquisitionFileBttn();
 
             //Add Additional Optional information to the acquisition file
-            acquisitionFiles.AddAdditionalInformation(acquisitionFile);
+            acquisitionFilesDetails.AddAdditionalInformation(acquisitionFile);
 
-            //Save Research File
-            acquisitionFiles.SaveAcquisitionFile();
+            //Save Acquisition File
+            acquisitionFilesDetails.SaveAcquisitionFileDetails();
 
             //Validate View File Details View Mode
-            acquisitionFiles.VerifyAcquisitionFileView(acquisitionFile);
+            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile);
 
             //Verify automatic note created when
             if (acquisitionFile.AcquisitionStatus != "Active")
@@ -85,9 +89,55 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 notes.NavigateNotesTab();
                 notes.VerifyAutomaticNotes("Acquisition File", "Active", acquisitionFile.AcquisitionStatus);
             }
+        }
 
-            //Navigate to Edit Acquisition File
-            acquisitionFiles.NavigateToAddPropertiesAcquisitionFile();
+        [StepDefinition(@"I update the File details from an existing Acquisition File from row number (.*)")]
+        public void UpdateFileDetails(int rowNumber)
+        {
+            /* TEST COVERAGE: PSP-4331, PSP-4544, PSP-4545, PSP-5638, PSP-5639 */
+
+            PopulateAcquisitionFile(rowNumber);
+
+            //Search for an existing Acquisition File
+            searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
+            searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
+            searchAcquisitionFiles.SelectFirstOption();
+
+            //Update existing Acquisition file
+            acquisitionFilesDetails.EditAcquisitionFileBttn();
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
+
+            //Cancel changes
+            acquisitionFilesDetails.CancelAcquisitionFile();
+
+            //Edit Acquisition File
+            acquisitionFilesDetails.EditAcquisitionFileBttn();
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
+
+            //Save Acquisition File
+            acquisitionFilesDetails.SaveAcquisitionFileDetails();
+
+            //Get Research File code
+            acquisitionFileCode = acquisitionFilesDetails.GetAcquisitionFileCode();
+
+            //Validate View File Details View Mode
+            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile);
+
+            //Verify automatic note created when
+            if (acquisitionFile.AcquisitionStatus != "Active")
+            {
+               notes.NavigateNotesTab();
+               notes.VerifyAutomaticNotes("Acquisition File", "Hold", acquisitionFile.AcquisitionStatus);
+            }
+        }
+
+        [StepDefinition(@"I add Properties to the Acquisition File")]
+        public void AddProperties()
+       {
+            /* TEST COVERAGE: PSP-4163, PSP-4325, PSP-4326, PSP-4327, PSP-4328, PSP-4329, PSP-4334, PSP-4593, PSP-6268 */
+
+            //Navigate to Properties for Acquisition File
+            acquisitionProperties.NavigateToAddPropertiesAcquisitionFile();
 
             //Navigate to Add Properties by search and verify Add Properties UI/UX
             sharedSearchProperties.NavigateToSearchTab();
@@ -122,11 +172,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Search for a property by Legal Description
-            //if (acquisitionFile.SearchProperties.LegalDescription != "")
-            //{
-            //    sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
-            //    sharedSearchProperties.SelectFirstOption();
-            //}
+            if (acquisitionFile.SearchProperties.LegalDescription != "")
+            {
+                sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
+                sharedSearchProperties.SelectFirstOption();
+            }
 
             //Search for a duplicate property
             if (acquisitionFile.SearchProperties.PID != "")
@@ -136,7 +186,189 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Save Research File
-            acquisitionFiles.SaveAcquisitionFileProperties();
+            acquisitionProperties.SaveAcquisitionFileProperties();
+        }
+
+        [StepDefinition(@"I update an Acquisition File's Properties from row number (.*)")]
+        public void UpdateProperties(int rowNumber)
+        {
+            /* TEST COVERAGE:  PSP-4590, PSP-4591, PSP-4600, PSP-4689, PSP-5003, PSP-5006, PSP-5007  */
+
+            PopulateAcquisitionFile(rowNumber);
+
+            //Search for an existing Acquisition File
+            searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
+            searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
+            searchAcquisitionFiles.SelectFirstOption();
+
+            //Navigate to Edit Acquisition File's Properties
+            acquisitionProperties.NavigateToAddPropertiesAcquisitionFile();
+
+            //Search for a property by Legal Description
+            sharedSearchProperties.NavigateToSearchTab();
+            sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
+            sharedSearchProperties.SelectFirstOption();
+
+            //Save changes
+            acquisitionProperties.SaveAcquisitionFileProperties();
+
+            //Select 1st Property
+            acquisitionProperties.ChooseFirstPropertyOption();
+
+            //Verify its Property Details
+            propertyInformation.NavigatePropertyDetailsTab();
+            propertyInformation.VerifyPropertyDetailsView();
+
+            //Navigate to  Acquisition File's Properties section
+            acquisitionProperties.NavigateToAddPropertiesAcquisitionFile();
+
+            //Delete Property
+            acquisitionProperties.DeleteLastProperty();
+
+            //Save Acquisition File changes
+            acquisitionProperties.SaveAcquisitionFileProperties();
+
+            //Select 1st Property
+            acquisitionProperties.ChooseFirstPropertyOption();
+        }
+
+        [StepDefinition(@"I insert Checklist information to an Acquisition File")]
+        public void CreateChecklist()
+        {
+            /* TEST COVERAGE: PSP-5899, PSP-5900, PSP-5904, PSP-5921 */
+
+            //Navigate to Checklist Tab
+            checklist.NavigateChecklistTab();
+
+            //Verify View Checklist form
+            checklist.VerifyChecklistInitViewForm();
+
+            //Edit Checklist button
+            checklist.EditChecklistButton();
+
+            //Verify Edit Checklist form
+            checklist.VerifyChecklistEditForm();
+
+            //Update Checklist Form
+
+            checklist.UpdateChecklist(acquisitionFile.AcquisitionFileChecklist);
+
+            //Save changes
+            checklist.SaveAcquisitionFileChecklist();
+        }
+
+        [StepDefinition(@"I create Agreements within an Acquisition File")]
+        public void CreateAgreement()
+        {
+            /* TEST COVERAGE: PSP-5965, PSP-5966, PSP-5991, PSP-5993, PSP-6000, PSP-6095 */
+
+            //Navigate to Agreements Tab
+            agreements.NavigateAgreementsTab();
+
+            //Verify initial Agreement Tab View
+            agreements.VerifyInitAgreementTab();
+
+            if (acquisitionFile.AgreementCount > 0)
+            {
+                for (int i = 0; i < acquisitionFile.AcquisitionAgreements.Count; i++)
+                {
+                    //Edit Agreement button
+                    agreements.EditAgreementButton();
+
+                    //Create Agreement button
+                    agreements.CreateNewAgreementBttn();
+
+                    //Verify Create Agreement form
+                    agreements.VerifyCreateAgreementForm(i);
+
+                    //Add a new Agreement
+                    agreements.CreateNewAgreement(acquisitionFile.AcquisitionAgreements[i], i);
+
+                    //Save new agreement
+                    agreements.SaveAcquisitionFileAgreement();
+
+                    //Verify Edit Agreement form
+                    agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[i], i);
+                }
+            }
+        }
+
+        [StepDefinition(@"I update an Agreement within an Acquisition File from row number (.*)")]
+        public void UpdateAgreement(int rowNumber)
+        {
+            /* TEST COVERAGE: PSP-5967, PSP-5997, PSP-5998 */
+
+            PopulateAcquisitionFile(rowNumber);
+
+            //Search for an existing Acquisition File
+            searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
+            searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
+            searchAcquisitionFiles.SelectFirstOption();
+
+            //Navigate to Agreements Tab
+            agreements.NavigateAgreementsTab();
+
+            //Edit Agreement button
+            agreements.EditAgreementButton();
+
+            //Create Agreement button
+            agreements.CreateNewAgreementBttn();
+
+            //Verify Create Agreement form
+            agreements.VerifyCreateAgreementForm(0);
+
+            //Add a new Agreement
+            agreements.CreateNewAgreement(acquisitionFile.AcquisitionAgreements[0], 0);
+
+            //Verify Edit Agreement form
+            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[0], 0);
+
+            //Cancel agreements
+            agreements.CancelAcquisitionFileAgreement();
+
+            //Edit Agreement button
+            agreements.EditAgreementButton();
+
+            //Create Agreement button
+            agreements.CreateNewAgreementBttn();
+
+            //Verify Create Agreement form
+            agreements.VerifyCreateAgreementForm(0);
+
+            //Add a new Agreement
+            agreements.CreateNewAgreement(acquisitionFile.AcquisitionAgreements[0], 0);
+
+            //Save new agreement
+            agreements.SaveAcquisitionFileAgreement();
+
+            //Verify Edit Agreement form
+            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[0], 0);
+
+            //Edit Agreement button
+            agreements.EditAgreementButton();
+
+            //Update created agreement
+            agreements.UpdateAgreement(acquisitionFile.AcquisitionAgreements[1], 0);
+
+            //Save new agreement
+            agreements.SaveAcquisitionFileAgreement();
+
+            //Verify Edit Agreement form
+            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[1], 0);
+
+            //Edit Agreement button
+            agreements.EditAgreementButton();
+
+            var agreementsBeforeDelete = agreements.TotalAgreementsCount();
+
+            //Delete last agreement
+            agreements.DeleteLastAgreement();
+
+            var agreementsAfterDelete = agreements.TotalAgreementsCount();
+            Assert.True(agreementsBeforeDelete - agreementsAfterDelete == 1);
+
+            //Save new agreement
+            agreements.SaveAcquisitionFileAgreement();
         }
 
         [StepDefinition(@"I create an Acquisition File from a pin on map from row number (.*)")]
@@ -162,32 +394,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
 
             //Validate Acquisition File Details Create Form
-            acquisitionFiles.VerifyAcquisitionFileCreate();
+            acquisitionFilesDetails.VerifyAcquisitionFileCreate();
 
             //Cancel empty acquisition file
-            acquisitionFiles.CancelAcquisitionFile();
+            acquisitionFilesDetails.CancelAcquisitionFile();
 
             //Verify Form is no longer visible
-            Assert.True(acquisitionFiles.IsCreateAcquisitionFileFormVisible() == 0);
-
-            //Search for a property
-            //searchProperties.SearchPropertyByPINPID(acquisitionFile.SearchProperties.PID);
-
-            ////Select Found Pin on map
-            //searchProperties.SelectFoundPin();
-
-            ////Close Property Information Modal
-            //propertyInformation.ClosePropertyInfoModal();
-
-            //Open elipsis option
-            propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
-
-            //Fill basic Acquisition File information
-            acquisitionFiles.CreateMinimumAcquisitionFile(acquisitionFile);
-
-            //Cancel Creation
-            acquisitionFiles.CancelAcquisitionFile();
+            Assert.True(acquisitionFilesDetails.IsCreateAcquisitionFileFormVisible() == 0);
 
             //Search for a property
             searchProperties.SearchPropertyByPINPID(acquisitionFile.SearchProperties.PID);
@@ -203,22 +416,41 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
 
             //Fill basic Acquisition File information
-            acquisitionFiles.CreateMinimumAcquisitionFile(acquisitionFile);
+            acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
+
+            //Cancel Creation
+            acquisitionFilesDetails.CancelAcquisitionFile();
+
+            //Search for a property
+            searchProperties.SearchPropertyByPINPID(acquisitionFile.SearchProperties.PID);
+
+            //Select Found Pin on map
+            searchProperties.SelectFoundPin();
+
+            //Close Property Information Modal
+            propertyInformation.ClosePropertyInfoModal();
+
+            //Open elipsis option
+            propertyInformation.OpenMoreOptionsPopUp();
+            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+
+            //Fill basic Acquisition File information
+            acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
 
             //Save Acquisition File
-            acquisitionFiles.SaveAcquisitionFile();
+            acquisitionFilesDetails.SaveAcquisitionFileDetails();
 
             //Get Research File code
-            acquisitionFileCode = acquisitionFiles.GetAcquisitionFileCode();
+            acquisitionFileCode = acquisitionFilesDetails.GetAcquisitionFileCode();
 
             //Edit Acquisition File
-            acquisitionFiles.EditAcquisitionFileBttn();
+            acquisitionFilesDetails.EditAcquisitionFileBttn();
 
             //Add additional information
-            acquisitionFiles.AddAdditionalInformation(acquisitionFile);
+            acquisitionFilesDetails.AddAdditionalInformation(acquisitionFile);
 
             //Save Acquisition File
-            acquisitionFiles.SaveAcquisitionFile();
+            acquisitionFilesDetails.SaveAcquisitionFileDetails();
         }
 
         [StepDefinition(@"I search for an existing acquisition file")]
@@ -237,87 +469,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchAcquisitionFiles.SelectFirstOption();
         }
 
-        [StepDefinition(@"I edit an existing Acquisition File from row number (.*)")]
-        public void EditAcquisitionFile(int rowNumber)
-        {
-            /* TEST COVERAGE: PSP-4544, PSP-4545, PSP-4590, PSP-4591, PSP-4600, PSP-4689, PSP-5003, PSP-5006, PSP-5007  */
-
-            //Login to PIMS
-            loginSteps.Idir(userName);
-
-            //Navigate to Acquisition File Search
-            PopulateAcquisitionFile(rowNumber);
-            searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
-
-            //Filter research Files
-            searchAcquisitionFiles.FilterAcquisitionFiles(acquisitionFile.SearchProperties.PID, acquisitionFile.AcquisitionFileName, acquisitionFile.AcquisitionStatus);
-
-            //Look for the last created research file
-            searchAcquisitionFiles.SearchLastAcquisitionFile();
-
-            //Choose first found option
-            searchAcquisitionFiles.SelectFirstOption();
-
-            //Edit Acquisition File
-            acquisitionFiles.EditAcquisitionFileBttn();
-
-            //Update Acquisition File main form
-            acquisitionFiles.UpdateAcquisitionFile(acquisitionFile);
-
-            //Cancel changes
-            acquisitionFiles.CancelAcquisitionFile();
-
-            //Edit Acquisition File
-            acquisitionFiles.EditAcquisitionFileBttn();
-
-            //Update Acquisition File main form
-            acquisitionFiles.UpdateAcquisitionFile(acquisitionFile);
-
-            //Save Staff changes
-            acquisitionFiles.SaveAcquisitionFile();
-
-            //Navigate to Edit Research File
-            acquisitionFiles.NavigateToAddPropertiesAcquisitionFile();
-
-            //Search for a property by Legal Description
-            sharedSearchProperties.NavigateToSearchTab();
-            sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
-            sharedSearchProperties.SelectFirstOption();
-
-            //Save changes
-            acquisitionFiles.SaveAcquisitionFileProperties();
-
-            //Select 1st Property
-            acquisitionFiles.ChooseFirstPropertyOption();
-
-            //Verify its Property Details
-            propertyInformation.NavigatePropertyDetailsTab();
-            propertyInformation.VerifyPropertyDetailsView();
-
-            //Edit Acquisition File
-            acquisitionFiles.NavigateToAddPropertiesAcquisitionFile();
-
-            //Delete Property
-            acquisitionFiles.DeleteLastProperty();
-
-            //Save Acquisition File changes
-            acquisitionFiles.SaveAcquisitionFileProperties();
-
-            //Select 1st Property
-            acquisitionFiles.ChooseFirstPropertyOption();
-        }
-
         [StepDefinition(@"I navigate back to the Acquisition File Summary")]
         public void NavigateMainResearchFileSection()
         {
             //Navigate back to File Summary
-            acquisitionFiles.NavigateToFileSummary();
+            acquisitionFilesDetails.NavigateToFileSummary();
         }
 
         [StepDefinition(@"I search for an existing Acquisition File from row number (.*)")]
         public void SearchExistingAcquisitionFile(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-4252  */
+            /* TEST COVERAGE: PSP-4252, PSP-5589  */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -350,8 +512,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"An existing Acquisition file has been edited successfully")]
         public void EditAcquisitionFileSuccess()
         {
-            acquisitionFiles.NavigateToFileDetailsTab();
-            acquisitionFiles.VerifyAcquisitionFileView(acquisitionFile);
+            acquisitionFilesDetails.NavigateToFileDetailsTab();
+            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile);
         }
 
         [StepDefinition(@"Expected Acquisition File Content is displayed on Acquisition File Table")]
@@ -365,10 +527,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         }
 
+        [StepDefinition(@"Acquisition File's Checklist has been saved successfully")]
+        public void VerifyChecklistChanges()
+        {
+            //Verify Checklist Content after update
+            checklist.VerifyChecklistViewForm(acquisitionFile.AcquisitionFileChecklist);
+        }
+
         private void PopulateAcquisitionFile(int rowNumber)
         {
             DataTable acquisitionSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionFiles"];
             ExcelDataContext.PopulateInCollection(acquisitionSheet);
+            acquisitionFile = new AcquisitionFile();
 
             //Acquisition Status
             acquisitionFile.AcquisitionStatus = ExcelDataContext.ReadData(rowNumber, "AcquisitionStatus");
@@ -410,6 +580,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             acquisitionFile.OwnerSolicitor = ExcelDataContext.ReadData(rowNumber, "OwnerSolicitor");
+            acquisitionFile.OwnerRepresentative = ExcelDataContext.ReadData(rowNumber, "OwnerRepresentative");
+            acquisitionFile.OwnerComment = ExcelDataContext.ReadData(rowNumber, "OwnerComment");
 
             //Properties Search
             acquisitionFile.SearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "SearchPropertiesIndex"));
@@ -423,6 +595,74 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 acquisitionFile.SearchProperties.Address = ExcelDataContext.ReadData(acquisitionFile.SearchPropertiesIndex, "Address");
                 acquisitionFile.SearchProperties.PlanNumber = ExcelDataContext.ReadData(acquisitionFile.SearchPropertiesIndex, "PlanNumber");
                 acquisitionFile.SearchProperties.LegalDescription = ExcelDataContext.ReadData(acquisitionFile.SearchPropertiesIndex, "LegalDescription");
+            }
+
+            //Acquisition File Checklist
+            acquisitionFile.AcquisitionFileChecklistIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionFileChecklistIndex"));
+            if (acquisitionFile.AcquisitionFileChecklistIndex > 0)
+            {
+                DataTable acquisitionFileChecklistSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionChecklist"];
+                ExcelDataContext.PopulateInCollection(acquisitionFileChecklistSheet);
+
+                acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "FileInitiationSelect1");
+                acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect2 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "FileInitiationSelect2");
+                acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect3 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "FileInitiationSelect3");
+                acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect4 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "FileInitiationSelect4");
+                acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect5 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "FileInitiationSelect5");
+
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect1");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect2 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect2");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect3 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect3");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect4 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect4");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect5 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect5");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect6 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect6");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect7 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect7");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect8 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect8");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect9 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect9");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect10 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect10");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect11 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect11");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect12 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect12");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect13 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect13");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect14 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect14");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect15 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect15");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect16 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect16");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect17 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect17");
+
+                acquisitionFile.AcquisitionFileChecklist.CrownLandSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "CrownLandSelect1");
+                acquisitionFile.AcquisitionFileChecklist.CrownLandSelect2 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "CrownLandSelect2");
+                acquisitionFile.AcquisitionFileChecklist.CrownLandSelect3 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "CrownLandSelect3");
+
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect1");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect2 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect2");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect3 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect3");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect4 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect4");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect5 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect5");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect6 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect6");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect7 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect7");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect8 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect8");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect9 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect9");
+
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect1");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect2 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect2");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect3 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect3");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect4 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect4");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect5 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect5");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect6 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect6");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect7 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect7");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect8 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect8");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect9 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect9");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect10 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect10");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect11 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect11");
+
+                acquisitionFile.AcquisitionFileChecklist.AcquisitionCompletionSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcquisitionCompletionSelect1");
+            }
+
+            //Acquisition Agreements
+            acquisitionFile.AgreementStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "AgreementStartRow"));
+            acquisitionFile.AgreementCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "AgreementCount"));
+            if (acquisitionFile.AgreementStartRow != 0 && acquisitionFile.AgreementCount != 0)
+            {
+                PopulateAgreementsCollection(acquisitionFile.AgreementStartRow, acquisitionFile.AgreementCount);
             }
         }
 
@@ -448,7 +688,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                Owner owner = new Owner();
+                AcquisitionOwner owner = new AcquisitionOwner();
                 owner.ContactType = ExcelDataContext.ReadData(i, "ContactType");
                 owner.isPrimary = bool.Parse(ExcelDataContext.ReadData(i, "isPrimary"));
                 owner.GivenNames = ExcelDataContext.ReadData(i, "GivenNames");
@@ -469,6 +709,30 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 owner.Phone = ExcelDataContext.ReadData(i, "Phone");
 
                 acquisitionFile.AcquisitionOwners.Add(owner);
+            }
+        }
+
+        private void PopulateAgreementsCollection(int startRow, int rowsCount)
+        {
+            DataTable agreementSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionAgreement"];
+            ExcelDataContext.PopulateInCollection(agreementSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                AcquisitionAgreement agreement = new AcquisitionAgreement();
+
+                agreement.AgreementStatus = ExcelDataContext.ReadData(i, "AgreementStatus");
+                agreement.AgreementLegalSurveyPlan = ExcelDataContext.ReadData(i, "AgreementLegalSurveyPlan");
+                agreement.AgreementType = ExcelDataContext.ReadData(i, "AgreementType");
+                agreement.AgreementDate = ExcelDataContext.ReadData(i, "AgreementDate");
+                agreement.AgreementCommencementDate = ExcelDataContext.ReadData(i, "AgreementCommencementDate");
+                agreement.AgreementCompletionDate = ExcelDataContext.ReadData(i, "AgreementCompletionDate");
+                agreement.AgreementTerminationDate = ExcelDataContext.ReadData(i, "AgreementTerminationDate");
+                agreement.AgreementPurchasePrice = ExcelDataContext.ReadData(i, "AgreementPurchasePrice");
+                agreement.AgreementDepositDue = ExcelDataContext.ReadData(i, "AgreementDepositDue");
+                agreement.AgreementDepositAmount = ExcelDataContext.ReadData(i, "AgreementDepositAmount");
+
+                acquisitionFile.AcquisitionAgreements.Add(agreement);
             }
         }
 

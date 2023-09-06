@@ -477,7 +477,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(contactEmailInput1).SendKeys(contact.Email1);
                 ChooseSpecificSelectOption(contactEmailSelect1, contact.EmailType1);
             }
-            if (contact.Email2 != "" && webDriver.FindElement(contactEmailInput2).Displayed)
+            if (contact.Email2 != "")
             {
                 WaitUntilClickable(contactEmailInput2);
                 ClearInput(contactEmailInput2);
@@ -491,7 +491,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(contactPhoneInput1).SendKeys(contact.Phone1);
                 ChooseSpecificSelectOption(contactPhoneSelect1, contact.PhoneType1);
             }
-            if (contact.Phone2 != "" && webDriver.FindElement(contactPhoneInput2).Displayed)
+            if (contact.Phone2 != "")
             {
                 WaitUntilClickable(contactPhoneInput2);
                 ClearInput(contactPhoneInput2);

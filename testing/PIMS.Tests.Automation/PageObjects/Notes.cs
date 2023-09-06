@@ -79,7 +79,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateNotesTabButton()
         {
-            WaitUntilClickable(notesTabAddBttn);
+            Wait();
             webDriver.FindElement(notesTabAddBttn).Click();
         }
 

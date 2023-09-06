@@ -182,6 +182,24 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(elementBy).Displayed);
         }
 
+        protected void AssertTrueContentEquals(By elementBy, string text)
+        {
+            WaitUntilVisible(elementBy);
+            Assert.True(webDriver.FindElement(elementBy).Text.Equals(text));
+        }
+
+        protected void AssertTrueContentNotEquals(By elementBy, string text)
+        {
+            WaitUntilVisible(elementBy);
+            Assert.True(webDriver.FindElement(elementBy).Text != text);
+        }
+
+        protected void AssertTrueElementContains(By elementBy, string text)
+        {
+            WaitUntilVisible(elementBy);
+            Assert.True(webDriver.FindElement(elementBy).Text.Contains(text));
+        }
+
         protected string TransformDateFormat(string date)
         {
             if (date == "")

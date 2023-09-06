@@ -1,11 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 using System.Runtime.InteropServices;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
     public class AcquisitionChecklist : PageObjectBase
     {
+        private By checklistLinkTab = By.XPath("//a[contains(text(),'Checklist')]");
+
         private By checklistEditBttn = By.CssSelector("button[title='Edit acquisition checklist']");
         private By checklistInfo = By.XPath("//div/em[contains(text(),'This checklist was last updated')]");
 
@@ -43,8 +46,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By checklistH120ProcessedCompensationContent = By.XPath("//label[contains(text(),'H120(s) processed for compensation')]/parent::div/following-sibling::div/div/div[2]/span");
         private By checklistInstructionsSentLawyerLabel = By.XPath("//label[contains(text(),'Instructions or documents sent to lawyer')]");
         private By checklistInstructionsSentLawyerContent = By.XPath("//label[contains(text(),'Instructions or documents sent to lawyer')]/parent::div/following-sibling::div/div/div[2]/span");
-        private By checklistCopyOwnersCompensationChequeLabel = By.XPath("//label[contains(text(),'Copy of owners' compensation cheque(s)')]");
-        private By checklistCopyOwnersCompensationChequeContent = By.XPath("//label[contains(text(),'Copy of owners' compensation cheque(s)')]/parent::div/following-sibling::div/div/div[2]/span");
+        private By checklistCopyOwnersCompensationChequeLabel = By.XPath("//label[contains(text(),'Copy of owners')]");
+        private By checklistCopyOwnersCompensationChequeContent = By.XPath("//label[contains(text(),'Copy of owners')]/parent::div/following-sibling::div/div/div[2]/span");
         private By checklistH0443Label = By.XPath("//label[contains(text(),'Conditions of Entry (H0443)')]");
         private By checklistH0443Content = By.XPath("//label[contains(text(),'Conditions of Entry (H0443)')]/parent::div/following-sibling::div/div/div[2]/span");
         private By checklistConveyanceClosingDocumentsLabel = By.XPath("//label[contains(text(),'Conveyance closing documents')]");
@@ -84,7 +87,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By checklistSec3CopyChequeToOwnerLabel = By.XPath("//div[contains(text(),'Section 3 - Agreement')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Copy of cheque to owner(s)')]");
         private By checklistSec3CopyChequeToOwnerContent = By.XPath("//div[contains(text(),'Section 3 - Agreement')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Copy of cheque to owner(s)')]/parent::div/following-sibling::div/div/div[2]/span");
         private By checklistSec3CopyAppraisalOwnerLabel = By.XPath("//div[contains(text(),'Section 3 - Agreement')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Copy of appraisial to owner(s)')]");
-        private By checklistSec3CopyAppraisalOwnerContent = By.XPath("//div[contains(text(),'Section 3 - Agreement')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Copy of appraisial to owner(s))')]/parent::div/following-sibling::div/div/div[2]/span");
+        private By checklistSec3CopyAppraisalOwnerContent = By.XPath("//div[contains(text(),'Section 3 - Agreement')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Copy of appraisial to owner(s)')]/parent::div/following-sibling::div/div/div[2]/span");
 
         private By checklistSection6ExpropriationTitle = By.XPath("//h2/div/div[contains(text(),'Section 6 - Expropriation')]");
         private By checklistCopyOfferExtendedOwnerLabel = By.XPath("//label[contains(text(),'Copy of offer(s) extended to owner(s)')]");
@@ -103,10 +106,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private By checklistCopiesAffidavitsServiceContent = By.XPath("//label[contains(text(),'Copies of Affidavits of Service')]/parent::div/following-sibling::div/div/div[2]/span");
         private By checklistSec6CopyChequeToOwnerLabel = By.XPath("//div[contains(text(),'Section 6 - Expropriation')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Copy of cheque to owner(s)')]");
         private By checklistSec6CopyChequeToOwnerContent = By.XPath("//div[contains(text(),'Section 6 - Expropriation')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Copy of cheque to owner(s)')]/parent::div/following-sibling::div/div/div[2]/span");
-        private By checklistNoticeAdvancedPaymentForm8Label = By.XPath("//label[contains(text(),'Notice of Advanced Payment (Form 8)')]");
-        private By checklistNoticeAdvancedPaymentForm8Content = By.XPath("//label[contains(text(),'Notice of Advanced Payment (Form 8)')]/parent::div/following-sibling::div/div/div[2]/span");
         private By checklistSec6CopyAppraisalOwnerLabel = By.XPath("//div[contains(text(),'Section 6 - Expropriation')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Copy of appraisial to owner(s)')]");
-        private By checklistSec6CopyAppraisalOwnerContent = By.XPath("//div[contains(text(),'Section 6 - Expropriation')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Copy of appraisial to owner(s))')]/parent::div/following-sibling::div/div/div[2]/span");
+        private By checklistSec6CopyAppraisalOwnerContent = By.XPath("//div[contains(text(),'Section 6 - Expropriation')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Copy of appraisial to owner(s)')]/parent::div/following-sibling::div/div/div[2]/span");
+        private By checklistSec6ReleaseClaimsLabel = By.XPath("//div[contains(text(),'Section 6 - Expropriation')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Release of Claims')]");
+        private By checklistSec6ReleaseClaimsContent = By.XPath("//div[contains(text(),'Section 6 - Expropriation')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Release of Claims')]/parent::div/following-sibling::div/div/div[2]/span");
         private By checklistCopyEasementLabel = By.XPath("//label[contains(text(),'Copy of Easement')]");
         private By checklistCopyEasementContent = By.XPath("//label[contains(text(),'Copy of Easement')]/parent::div/following-sibling::div/div/div[2]/span");
 
@@ -169,16 +172,22 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By checklistFileDataEnteredIntoPIMSSelect = By.Id("input-checklistSections[5].items[0].statusType");
 
-
         public AcquisitionChecklist(IWebDriver webDriver) : base(webDriver)
         {}
 
         public void NavigateChecklistTab()
         {
-
+            WaitUntilClickable(checklistLinkTab);
+            webDriver.FindElement(checklistLinkTab).Click();
         }
 
-        public void VerifyChecklistViewForm()
+        public void EditChecklistButton()
+        {
+            WaitUntilClickable(checklistEditBttn);
+            webDriver.FindElement(checklistEditBttn).Click();
+        }
+
+        public void VerifyChecklistInitViewForm()
         {
             AssertTrueIsDisplayed(checklistFileInitiationTitle);
             AssertTrueIsDisplayed(checklistPreAcquisitionTitleLabel);
@@ -273,10 +282,10 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(checklistCopiesAffidavitsServiceContent);
             AssertTrueIsDisplayed(checklistSec6CopyChequeToOwnerLabel);
             AssertTrueIsDisplayed(checklistSec6CopyChequeToOwnerContent);
-            AssertTrueIsDisplayed(checklistNoticeAdvancedPaymentForm8Label);
-            AssertTrueIsDisplayed(checklistNoticeAdvancedPaymentForm8Content);
             AssertTrueIsDisplayed(checklistSec6CopyAppraisalOwnerLabel);
             AssertTrueIsDisplayed(checklistSec6CopyAppraisalOwnerContent);
+            AssertTrueIsDisplayed(checklistSec6ReleaseClaimsLabel);
+            AssertTrueIsDisplayed(checklistSec6ReleaseClaimsContent);
             AssertTrueIsDisplayed(checklistCopyEasementLabel);
             AssertTrueIsDisplayed(checklistCopyEasementContent);
 
@@ -289,7 +298,327 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyChecklistEditForm()
         {
+            AssertTrueIsDisplayed(checklistFileInitiationTitle);
+            AssertTrueIsDisplayed(checklistPreAcquisitionTitleLabel);
+            AssertTrueIsDisplayed(checklistPreAcquisitionTitleSelect);
+            AssertTrueIsDisplayed(checklistBCAssessmentLabel);
+            AssertTrueIsDisplayed(checklistBCAssessmentSelect);
+            AssertTrueIsDisplayed(checklistCompanySearchLabel);
+            AssertTrueIsDisplayed(checklistCompanySearchSelect);
+            AssertTrueIsDisplayed(checklistLandTitleDocsLabel);
+            AssertTrueIsDisplayed(checklistLandTitleDocumentsSelect);
+            AssertTrueIsDisplayed(checklistPopertyAcquisitionPlanLabel);
+            AssertTrueIsDisplayed(checklistPropertyAcquisitionPlanSelect);
 
+            AssertTrueIsDisplayed(checklistActiveFileManagementTitle);
+            AssertTrueIsDisplayed(checklistPhotosLabel);
+            AssertTrueIsDisplayed(checklistPhotosSelect);
+            AssertTrueIsDisplayed(checklistAppraisalsReviewsLabel);
+            AssertTrueIsDisplayed(checklistAppraisalReviewsSelect);
+            AssertTrueIsDisplayed(checklistLegalSurveyLabel);
+            AssertTrueIsDisplayed(checklistLegalSurveySelect);
+            AssertTrueIsDisplayed(checklistOtherReportsLabel);
+            AssertTrueIsDisplayed(checklistOtherReportsSelect);
+            AssertTrueIsDisplayed(checklistRecordNegotiationLabel);
+            AssertTrueIsDisplayed(checklistRecordOfNegotiationSelect);
+            AssertTrueIsDisplayed(checklistCopiesCorrespondenceLabel);
+            AssertTrueIsDisplayed(checklistCopiesCorrespondenceSelect);
+            AssertTrueIsDisplayed(checklistSpendingAuthorityApprovalLabel);
+            AssertTrueIsDisplayed(checklistSpendingAuthorityApprovalSelect);
+            AssertTrueIsDisplayed(checklistFinalAgreementsOwnerLabel);
+            AssertTrueIsDisplayed(checklistFinalAgreementWithOwnerSelect);
+            AssertTrueIsDisplayed(checklistH120ProcessedCompensationLabel);
+            AssertTrueIsDisplayed(checklistH120ProcessedCompensationSelect);
+            AssertTrueIsDisplayed(checklistInstructionsSentLawyerLabel);
+            AssertTrueIsDisplayed(checklistInstructionsDocumentsSentToLawyerSelect);
+            AssertTrueIsDisplayed(checklistCopyOwnersCompensationChequeLabel);
+            AssertTrueIsDisplayed(checklistCopyOwnersCompensationChequeSelect);
+            AssertTrueIsDisplayed(checklistH0443Label);
+            AssertTrueIsDisplayed(checklistH0443Select);
+            AssertTrueIsDisplayed(checklistConveyanceClosingDocumentsLabel);
+            AssertTrueIsDisplayed(checklistConveyanceClosingDocumentsSelect);
+            AssertTrueIsDisplayed(checklistRegisteredPlanLabel);
+            AssertTrueIsDisplayed(checklistRegisteredPlanSelect);
+            AssertTrueIsDisplayed(checklistALCOrderLabel);
+            AssertTrueIsDisplayed(checklistALCOrderSelect);
+            AssertTrueIsDisplayed(checklistCopyNewTitleLabel);
+            AssertTrueIsDisplayed(checklistCopyNewTitleSelect);
+            AssertTrueIsDisplayed(checklistBCTFANotifiedLabel);
+            AssertTrueIsDisplayed(checklistBCTFANotifiedSelect);
+
+            AssertTrueIsDisplayed(checklistCrownLandTitle);
+            AssertTrueIsDisplayed(checklistCrownLandResearchLabel);
+            AssertTrueIsDisplayed(checklistCrownLandResearchSelect);
+            AssertTrueIsDisplayed(checklistSubmitCrownLandTenureApplicationLabel);
+            AssertTrueIsDisplayed(checklistSubmitCrownLandTenureApplicationSelect);
+            AssertTrueIsDisplayed(checklistCrownGrantPackageLabel);
+            AssertTrueIsDisplayed(checklistCrownGrantPackageSelect);
+
+            AssertTrueIsDisplayed(checklistSection3AgreementTitle);
+            AssertTrueIsDisplayed(checklistSec3NoticeAdvancedPaymentForm8Label);
+            AssertTrueIsDisplayed(checklistSec3NoticeAdvancedPaymentForm8Select);
+            AssertTrueIsDisplayed(checklistReleaseClaimsLabel);
+            AssertTrueIsDisplayed(checklistSec3ReleaseClaimsSelect);
+            AssertTrueIsDisplayed(checklistConveyanceLetterLabel);
+            AssertTrueIsDisplayed(checklistConveyanceLetterSelect);
+            AssertTrueIsDisplayed(checklistCopyExpropriationActLabel);
+            AssertTrueIsDisplayed(checklistCopyExpropriationActSelect);
+            AssertTrueIsDisplayed(checklistSignedSection3AgreementLabel);
+            AssertTrueIsDisplayed(checklistSignedSection3AgreementSelect);
+            AssertTrueIsDisplayed(checklistTitleChargesLabel);
+            AssertTrueIsDisplayed(checklistTitleChargesSelect);
+            AssertTrueIsDisplayed(checklistCurrentYearPropertyAssessmentLabel);
+            AssertTrueIsDisplayed(checklistCurrentYearPropertyAssessmentSelect);
+            AssertTrueIsDisplayed(checklistSec3CopyChequeToOwnerLabel);
+            AssertTrueIsDisplayed(checklistSec3CopyChequeToOwnerSelect);
+            AssertTrueIsDisplayed(checklistSec3CopyAppraisalOwnerLabel);
+            AssertTrueIsDisplayed(checklistCopyAppraisialOwnerSelect);
+
+            AssertTrueIsDisplayed(checklistSection6ExpropriationTitle);
+            AssertTrueIsDisplayed(checklistCopyOfferExtendedOwnerLabel);
+            AssertTrueIsDisplayed(checklistSec6CopyOfferExtendedOwnerSelect);
+            AssertTrueIsDisplayed(checklistCopyExpropriationApprovalPackagesLabel);
+            AssertTrueIsDisplayed(checklistCopyExpropriationApprovalPackagesSelect);
+            AssertTrueIsDisplayed(checklistNoticeExpropriationForm1Label);
+            AssertTrueIsDisplayed(checklistNoticeExpropriationForm1Select);
+            AssertTrueIsDisplayed(checklistApprovalExpropriationForm5Label);
+            AssertTrueIsDisplayed(checklistApprovalExpropriationForm5Select);
+            AssertTrueIsDisplayed(checklistSec6NoticeAdvancedPaymentForm8Label);
+            AssertTrueIsDisplayed(checklistNoticeAdvancedPaymentForm8Select);
+            AssertTrueIsDisplayed(checklistVestingNoticeForm9Label);
+            AssertTrueIsDisplayed(checklistVestingNoticeForm9Select);
+            AssertTrueIsDisplayed(checklistCopiesAffidavitsServiceLabel);
+            AssertTrueIsDisplayed(checklistCopiesAffidavitsServiceSelect);
+            AssertTrueIsDisplayed(checklistSec6CopyChequeToOwnerLabel);
+            AssertTrueIsDisplayed(checklistSec6CopyChequeToOwnerSelect);
+            AssertTrueIsDisplayed(checklistSec6CopyAppraisalToOwnerSelect);
+            AssertTrueIsDisplayed(checklistSec6CopyAppraisalOwnerLabel);
+            AssertTrueIsDisplayed(checklistSec6ReleaseClaimsLabel);
+            AssertTrueIsDisplayed(checklistSec6ReleaseClaimsSelect);
+            AssertTrueIsDisplayed(checklistCopyEasementLabel);
+            AssertTrueIsDisplayed(checklistCopyEasementSelect);
+
+            AssertTrueIsDisplayed(checklistAcquisitionCompletionTitle);
+            AssertTrueIsDisplayed(checklistFileDataEnteredIntoPIMSLabel);
+            AssertTrueIsDisplayed(checklistFileDataEnteredIntoPIMSSelect);
+        }
+
+        public void VerifyChecklistViewForm(AcquisitionFileChecklist checklist)
+        {
+            AssertTrueIsDisplayed(checklistFileInitiationTitle);
+            AssertTrueIsDisplayed(checklistPreAcquisitionTitleLabel);
+            AssertTrueContentEquals(checklistPreAcquisitionTitleContent, checklist.FileInitiationSelect1);
+            AssertTrueIsDisplayed(checklistBCAssessmentLabel);
+            AssertTrueContentEquals(checklistBCAssessmentContent, checklist.FileInitiationSelect2);
+            AssertTrueIsDisplayed(checklistCompanySearchLabel);
+            AssertTrueContentEquals(checklistCompanySearchContent, checklist.FileInitiationSelect3);
+            AssertTrueIsDisplayed(checklistLandTitleDocsLabel);
+            AssertTrueContentEquals(checklistLandTitleDocsContent, checklist.FileInitiationSelect4);
+            AssertTrueIsDisplayed(checklistPopertyAcquisitionPlanLabel);
+            AssertTrueContentEquals(checklistPropertyAcquisitionPlanContent, checklist.FileInitiationSelect5);
+
+            AssertTrueIsDisplayed(checklistActiveFileManagementTitle);
+            AssertTrueIsDisplayed(checklistPhotosLabel);
+            AssertTrueContentEquals(checklistPhotosContent, checklist.ActiveFileManagementSelect1);
+            AssertTrueIsDisplayed(checklistAppraisalsReviewsLabel);
+            AssertTrueContentEquals(checklistAppraisalsReviewsContent, checklist.ActiveFileManagementSelect2);
+            AssertTrueIsDisplayed(checklistLegalSurveyLabel);
+            AssertTrueContentEquals(checklistLegalSurveyContent, checklist.ActiveFileManagementSelect3);
+            AssertTrueIsDisplayed(checklistOtherReportsLabel);
+            AssertTrueContentEquals(checklistOtherReportsContent, checklist.ActiveFileManagementSelect4);
+            AssertTrueIsDisplayed(checklistRecordNegotiationLabel);
+            AssertTrueContentEquals(checklistRecordNegotiationContent, checklist.ActiveFileManagementSelect5);
+            AssertTrueIsDisplayed(checklistCopiesCorrespondenceLabel);
+            AssertTrueContentEquals(checklistCopiesCorrespondenceContent, checklist.ActiveFileManagementSelect6);
+            AssertTrueIsDisplayed(checklistSpendingAuthorityApprovalLabel);
+            AssertTrueContentEquals(checklistSpendingAuthorityApprovalContent, checklist.ActiveFileManagementSelect7);
+            AssertTrueIsDisplayed(checklistFinalAgreementsOwnerLabel);
+            AssertTrueContentEquals(checklistFinalAgreementsOwnerContent, checklist.ActiveFileManagementSelect8);
+            AssertTrueIsDisplayed(checklistH120ProcessedCompensationLabel);
+            AssertTrueContentEquals(checklistH120ProcessedCompensationContent, checklist.ActiveFileManagementSelect9);
+            AssertTrueIsDisplayed(checklistInstructionsSentLawyerLabel);
+            AssertTrueContentEquals(checklistInstructionsSentLawyerContent, checklist.ActiveFileManagementSelect10);
+            AssertTrueIsDisplayed(checklistCopyOwnersCompensationChequeLabel);
+            AssertTrueContentEquals(checklistCopyOwnersCompensationChequeContent, checklist.ActiveFileManagementSelect11);
+            AssertTrueIsDisplayed(checklistH0443Label);
+            AssertTrueContentEquals(checklistH0443Content, checklist.ActiveFileManagementSelect12);
+            AssertTrueIsDisplayed(checklistConveyanceClosingDocumentsLabel);
+            AssertTrueContentEquals(checklistConveyanceClosingDocumentsContent, checklist.ActiveFileManagementSelect13);
+            AssertTrueIsDisplayed(checklistRegisteredPlanLabel);
+            AssertTrueContentEquals(checklistRegisteredPlanContent, checklist.ActiveFileManagementSelect14);
+            AssertTrueIsDisplayed(checklistALCOrderLabel);
+            AssertTrueContentEquals(checklistALCOrderContent, checklist.ActiveFileManagementSelect15);
+            AssertTrueIsDisplayed(checklistCopyNewTitleLabel);
+            AssertTrueContentEquals(checklistCopyNewTitleContent, checklist.ActiveFileManagementSelect16);
+            AssertTrueIsDisplayed(checklistBCTFANotifiedLabel);
+            AssertTrueContentEquals(checklistBCTFANotifiedContent, checklist.ActiveFileManagementSelect17);
+
+            AssertTrueIsDisplayed(checklistCrownLandTitle);
+            AssertTrueIsDisplayed(checklistCrownLandResearchLabel);
+            AssertTrueContentEquals(checklistCrownLandResearchContent, checklist.CrownLandSelect1);
+            AssertTrueIsDisplayed(checklistSubmitCrownLandTenureApplicationLabel);
+            AssertTrueContentEquals(checklistSubmitCrownLandTenureApplicationContent, checklist.CrownLandSelect2);
+            AssertTrueIsDisplayed(checklistCrownGrantPackageLabel);
+            AssertTrueContentEquals(checklistCrownGrantPackageContent, checklist.CrownLandSelect3);
+
+            AssertTrueIsDisplayed(checklistSection3AgreementTitle);
+            AssertTrueIsDisplayed(checklistSec3NoticeAdvancedPaymentForm8Label);
+            AssertTrueContentEquals(checklistSec3NoticeAdvancedPaymentForm8Content, checklist.Section3AgreementSelect1);
+            AssertTrueIsDisplayed(checklistReleaseClaimsLabel);
+            AssertTrueContentEquals(checklistReleaseClaimsContent, checklist.Section3AgreementSelect2);
+            AssertTrueIsDisplayed(checklistConveyanceLetterLabel);
+            AssertTrueContentEquals(checklistConveyanceLetterContent, checklist.Section3AgreementSelect3);
+            AssertTrueIsDisplayed(checklistCopyExpropriationActLabel);
+            AssertTrueContentEquals(checklistCopyExpropriationActContent, checklist.Section3AgreementSelect4);
+            AssertTrueIsDisplayed(checklistSignedSection3AgreementLabel);
+            AssertTrueContentEquals(checklistSignedSection3AgreementContent, checklist.Section3AgreementSelect5);
+            AssertTrueIsDisplayed(checklistTitleChargesLabel);
+            AssertTrueContentEquals(checklistTitleChargesContent, checklist.Section3AgreementSelect6);
+            AssertTrueIsDisplayed(checklistCurrentYearPropertyAssessmentLabel);
+            AssertTrueContentEquals(checklistCurrentYearPropertyAssessmentContent, checklist.Section3AgreementSelect7);
+            AssertTrueIsDisplayed(checklistSec3CopyChequeToOwnerLabel);
+            AssertTrueContentEquals(checklistSec3CopyChequeToOwnerContent, checklist.Section3AgreementSelect8);
+            AssertTrueIsDisplayed(checklistSec3CopyAppraisalOwnerLabel);
+            AssertTrueContentEquals(checklistSec3CopyAppraisalOwnerContent, checklist.Section3AgreementSelect9);
+
+            AssertTrueIsDisplayed(checklistSection6ExpropriationTitle);
+            AssertTrueIsDisplayed(checklistCopyOfferExtendedOwnerLabel);
+            AssertTrueContentEquals(checklistCopyOfferExtendedOwnerContent, checklist.Section6ExpropriationSelect1);
+            AssertTrueIsDisplayed(checklistCopyExpropriationApprovalPackagesLabel);
+            AssertTrueContentEquals(checklistCopyExpropriationApprovalPackagesContent, checklist.Section6ExpropriationSelect2);
+            AssertTrueIsDisplayed(checklistNoticeExpropriationForm1Label);
+            AssertTrueContentEquals(checklistNoticeExpropriationForm1Content, checklist.Section6ExpropriationSelect3);
+            AssertTrueIsDisplayed(checklistApprovalExpropriationForm5Label);
+            AssertTrueContentEquals(checklistApprovalExpropriationForm5Content, checklist.Section6ExpropriationSelect4);
+            AssertTrueIsDisplayed(checklistSec6NoticeAdvancedPaymentForm8Label);
+            AssertTrueContentEquals(checklistSec6NoticeAdvancedPaymentForm8Content, checklist.Section6ExpropriationSelect5);
+            AssertTrueIsDisplayed(checklistVestingNoticeForm9Label);
+            AssertTrueContentEquals(checklistVestingNoticeForm9Content, checklist.Section6ExpropriationSelect6);
+            AssertTrueIsDisplayed(checklistCopiesAffidavitsServiceLabel);
+            AssertTrueContentEquals(checklistCopiesAffidavitsServiceContent, checklist.Section6ExpropriationSelect7);
+            AssertTrueIsDisplayed(checklistSec6CopyChequeToOwnerLabel);
+            AssertTrueContentEquals(checklistSec6CopyChequeToOwnerContent, checklist.Section6ExpropriationSelect8);
+            AssertTrueIsDisplayed(checklistSec6CopyAppraisalOwnerLabel);
+            AssertTrueContentEquals(checklistSec6CopyAppraisalOwnerContent, checklist.Section6ExpropriationSelect9);
+            AssertTrueIsDisplayed(checklistSec6ReleaseClaimsLabel);
+            AssertTrueContentEquals(checklistSec6ReleaseClaimsContent, checklist.Section6ExpropriationSelect10);
+            AssertTrueIsDisplayed(checklistCopyEasementLabel);
+            AssertTrueContentEquals(checklistCopyEasementContent, checklist.Section6ExpropriationSelect11);
+
+            AssertTrueIsDisplayed(checklistAcquisitionCompletionTitle);
+            AssertTrueIsDisplayed(checklistFileDataEnteredIntoPIMSLabel);
+            AssertTrueContentEquals(checklistFileDataEnteredIntoPIMSContent, checklist.AcquisitionCompletionSelect1);
+        }
+
+        public void UpdateChecklist(AcquisitionFileChecklist checklist)
+        {
+            Wait();
+
+            if(checklist.FileInitiationSelect1 != "")
+                ChooseSpecificSelectOption(checklistPreAcquisitionTitleSelect, checklist.FileInitiationSelect1);
+            if (checklist.FileInitiationSelect2 != "")
+                ChooseSpecificSelectOption(checklistBCAssessmentSelect, checklist.FileInitiationSelect2);
+            if (checklist.FileInitiationSelect3 != "")
+                ChooseSpecificSelectOption(checklistCompanySearchSelect, checklist.FileInitiationSelect3);
+            if (checklist.FileInitiationSelect4 != "")
+                ChooseSpecificSelectOption(checklistLandTitleDocumentsSelect, checklist.FileInitiationSelect4);
+            if (checklist.FileInitiationSelect5 != "")
+                ChooseSpecificSelectOption(checklistPropertyAcquisitionPlanSelect, checklist.FileInitiationSelect5);
+
+            if (checklist.ActiveFileManagementSelect1 != "")
+                ChooseSpecificSelectOption(checklistPhotosSelect, checklist.ActiveFileManagementSelect1);
+            if (checklist.ActiveFileManagementSelect2 != "")
+                ChooseSpecificSelectOption(checklistAppraisalReviewsSelect, checklist.ActiveFileManagementSelect2);
+            if (checklist.ActiveFileManagementSelect3 != "")
+                ChooseSpecificSelectOption(checklistLegalSurveySelect, checklist.ActiveFileManagementSelect3);
+            if (checklist.ActiveFileManagementSelect4 != "")
+                ChooseSpecificSelectOption(checklistOtherReportsSelect, checklist.ActiveFileManagementSelect4);
+            if (checklist.ActiveFileManagementSelect5 != "")
+                ChooseSpecificSelectOption(checklistRecordOfNegotiationSelect, checklist.ActiveFileManagementSelect5);
+            if (checklist.ActiveFileManagementSelect6 != "")
+                ChooseSpecificSelectOption(checklistCopiesCorrespondenceSelect, checklist.ActiveFileManagementSelect6);
+            if (checklist.ActiveFileManagementSelect7 != "")
+                ChooseSpecificSelectOption(checklistSpendingAuthorityApprovalSelect, checklist.ActiveFileManagementSelect7);
+            if (checklist.ActiveFileManagementSelect8 != "")
+                ChooseSpecificSelectOption(checklistFinalAgreementWithOwnerSelect, checklist.ActiveFileManagementSelect8);
+            if (checklist.ActiveFileManagementSelect9 != "")
+                ChooseSpecificSelectOption(checklistH120ProcessedCompensationSelect, checklist.ActiveFileManagementSelect9);
+            if (checklist.ActiveFileManagementSelect10 != "")
+                ChooseSpecificSelectOption(checklistInstructionsDocumentsSentToLawyerSelect, checklist.ActiveFileManagementSelect10);
+            if (checklist.ActiveFileManagementSelect11 != "")
+                ChooseSpecificSelectOption(checklistCopyOwnersCompensationChequeSelect, checklist.ActiveFileManagementSelect11);
+            if (checklist.ActiveFileManagementSelect12 != "")
+                ChooseSpecificSelectOption(checklistH0443Select, checklist.ActiveFileManagementSelect12);
+            if (checklist.ActiveFileManagementSelect13 != "")
+                ChooseSpecificSelectOption(checklistConveyanceClosingDocumentsSelect, checklist.ActiveFileManagementSelect13);
+            if (checklist.ActiveFileManagementSelect14 != "")
+                ChooseSpecificSelectOption(checklistRegisteredPlanSelect, checklist.ActiveFileManagementSelect14);
+            if (checklist.ActiveFileManagementSelect15 != "")
+                ChooseSpecificSelectOption(checklistALCOrderSelect, checklist.ActiveFileManagementSelect15);
+            if (checklist.ActiveFileManagementSelect16 != "")
+                ChooseSpecificSelectOption(checklistCopyNewTitleSelect, checklist.ActiveFileManagementSelect16);
+            if (checklist.ActiveFileManagementSelect17 != "")
+                ChooseSpecificSelectOption(checklistBCTFANotifiedSelect, checklist.ActiveFileManagementSelect17);
+
+            if (checklist.CrownLandSelect1 != "")
+                ChooseSpecificSelectOption(checklistCrownLandResearchSelect, checklist.CrownLandSelect1);
+            if (checklist.CrownLandSelect2 != "")
+                ChooseSpecificSelectOption(checklistSubmitCrownLandTenureApplicationSelect, checklist.CrownLandSelect2);
+            if (checklist.CrownLandSelect3 != "")
+                ChooseSpecificSelectOption(checklistCrownGrantPackageSelect, checklist.CrownLandSelect3);
+
+            if (checklist.Section3AgreementSelect1 != "")
+                ChooseSpecificSelectOption(checklistSec3NoticeAdvancedPaymentForm8Select, checklist.Section3AgreementSelect1);
+            if (checklist.Section3AgreementSelect2 != "")
+                ChooseSpecificSelectOption(checklistSec3ReleaseClaimsSelect, checklist.Section3AgreementSelect2);
+            if (checklist.Section3AgreementSelect3 != "")
+                ChooseSpecificSelectOption(checklistConveyanceLetterSelect, checklist.Section3AgreementSelect3);
+            if (checklist.Section3AgreementSelect4 != "")
+                ChooseSpecificSelectOption(checklistCopyExpropriationActSelect, checklist.Section3AgreementSelect4);
+            if (checklist.Section3AgreementSelect5 != "")
+                ChooseSpecificSelectOption(checklistSignedSection3AgreementSelect, checklist.Section3AgreementSelect5);
+            if (checklist.Section3AgreementSelect6 != "")
+                ChooseSpecificSelectOption(checklistTitleChargesSelect, checklist.Section3AgreementSelect6);
+            if (checklist.Section3AgreementSelect7 != "")
+                ChooseSpecificSelectOption(checklistCurrentYearPropertyAssessmentSelect, checklist.Section3AgreementSelect7);
+            if (checklist.Section3AgreementSelect8 != "")
+                ChooseSpecificSelectOption(checklistSec3CopyChequeToOwnerSelect, checklist.Section3AgreementSelect8);
+            if (checklist.Section3AgreementSelect9 != "")
+                ChooseSpecificSelectOption(checklistCopyAppraisialOwnerSelect, checklist.Section3AgreementSelect9);
+
+            if (checklist.Section6ExpropriationSelect1 != "")
+                ChooseSpecificSelectOption(checklistSec6CopyOfferExtendedOwnerSelect, checklist.Section6ExpropriationSelect1);
+            if (checklist.Section6ExpropriationSelect2 != "")
+                ChooseSpecificSelectOption(checklistCopyExpropriationApprovalPackagesSelect, checklist.Section6ExpropriationSelect2);
+            if (checklist.Section6ExpropriationSelect3 != "")
+                ChooseSpecificSelectOption(checklistNoticeExpropriationForm1Select, checklist.Section6ExpropriationSelect3);
+            if (checklist.Section6ExpropriationSelect4 != "")
+                ChooseSpecificSelectOption(checklistApprovalExpropriationForm5Select, checklist.Section6ExpropriationSelect4);
+            if (checklist.Section6ExpropriationSelect5 != "")
+                ChooseSpecificSelectOption(checklistNoticeAdvancedPaymentForm8Select, checklist.Section6ExpropriationSelect5);
+            if (checklist.Section6ExpropriationSelect6 != "")
+                ChooseSpecificSelectOption(checklistVestingNoticeForm9Select, checklist.Section6ExpropriationSelect6);
+            if (checklist.Section6ExpropriationSelect7 != "")
+                ChooseSpecificSelectOption(checklistCopiesAffidavitsServiceSelect, checklist.Section6ExpropriationSelect7);
+            if (checklist.Section6ExpropriationSelect8 != "")
+                ChooseSpecificSelectOption(checklistSec6CopyChequeToOwnerSelect, checklist.Section6ExpropriationSelect8);
+            if (checklist.Section6ExpropriationSelect9 != "")
+                ChooseSpecificSelectOption(checklistSec6CopyAppraisalToOwnerSelect, checklist.Section6ExpropriationSelect9);
+            if (checklist.Section6ExpropriationSelect10 != "")
+                ChooseSpecificSelectOption(checklistSec6ReleaseClaimsSelect, checklist.Section6ExpropriationSelect10);
+            if (checklist.Section6ExpropriationSelect11 != "")
+                ChooseSpecificSelectOption(checklistCopyEasementSelect, checklist.Section6ExpropriationSelect11);
+
+            if (checklist.AcquisitionCompletionSelect1 != "")
+                ChooseSpecificSelectOption(checklistFileDataEnteredIntoPIMSSelect, checklist.AcquisitionCompletionSelect1);
+        }
+
+        public void SaveAcquisitionFileChecklist()
+        {
+            Wait();
+            ButtonElement("Save");
+
+            AssertTrueIsDisplayed(checklistEditBttn);
         }
     }
 }
