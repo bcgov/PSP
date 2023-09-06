@@ -99,7 +99,7 @@ namespace Pims.Api.Areas.Reports.Models.Agreement
             MotiSolicitor = GetTeamMemberName(agreement.AcquisitionFile, "MOTILAWYER");
             NegotiationAgent = GetTeamMemberName(agreement.AcquisitionFile, "NEGOTAGENT");
             ExportBy = user.GetDisplayName();
-            ExportDate = DateTime.Now.ToString("dd/MM/yyyy");
+            ExportDate = DateTime.Now.ToString("yyyy-MM-dd");
         }
 
         private static string GetTeamMemberName(PimsAcquisitionFile file, string personProfileTypeCode)
@@ -110,7 +110,7 @@ namespace Pims.Api.Areas.Reports.Models.Agreement
 
         private static string GetNullableDate(DateTime? dateTime)
         {
-            return dateTime.HasValue ? dateTime.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : string.Empty;
+            return dateTime.HasValue ? dateTime.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) : string.Empty;
         }
 
         private static string GetMinistryProjectName(PimsProject project)

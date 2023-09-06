@@ -91,7 +91,7 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
         public CompensationFinancialReportModel(PimsCompReqFinancial financial, CompensationFinancialReportTotalsModel reportTotals, ClaimsPrincipal user)
         {
             ExportBy = user.GetDisplayName();
-            ExportDate = DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            ExportDate = DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
             MinistryProject = GetMinistryProjectName(financial.CompensationRequisition?.AcquisitionFile?.Project);
             Product = GetMinistryProductName(financial.CompensationRequisition?.AcquisitionFile?.Product);
             AcquisitionNumberAndName = GetAcquisitionFileName(financial.CompensationRequisition?.AcquisitionFile);
@@ -148,7 +148,7 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
 
         private static string GetNullableDate(DateTime? dateTime)
         {
-            return dateTime.HasValue ? dateTime.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : string.Empty;
+            return dateTime.HasValue ? dateTime.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) : string.Empty;
         }
 
         private static string GetMinistryProjectName(PimsProject project)
