@@ -36,7 +36,7 @@ export const useMapSearch = () => {
 
   const searchOneLocation = useCallback(
     async (latitude: number, longitude: number) => {
-      let result: MapFeatureData = emptyFeatureData;
+      let result: MapFeatureData = { ...emptyFeatureData };
       try {
         const findOneParcelTask = fullyAttributedServiceFindOne({
           lat: latitude,
@@ -58,15 +58,21 @@ export const useMapSearch = () => {
         //if found in inventory return or else non inventory
         if (pimsPropertyFeature !== undefined) {
           toast.info(`Property found`);
-          result.pimsBoundaryFeatures = {
-            type: 'FeatureCollection',
-            features: [pimsPropertyFeature],
+          result = {
+            ...emptyFeatureData,
+            pimsBoundaryFeatures: {
+              type: 'FeatureCollection',
+              features: [pimsPropertyFeature],
+            },
           };
         } else if (parcelFeature !== undefined) {
           toast.info(`Property found`);
-          result.fullyAttributedFeatures = {
-            type: 'FeatureCollection',
-            features: [parcelFeature],
+          result = {
+            ...emptyFeatureData,
+            fullyAttributedFeatures: {
+              type: 'FeatureCollection',
+              features: [parcelFeature],
+            },
           };
         } else {
           toast.info('No search results found');
