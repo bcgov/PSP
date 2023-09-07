@@ -168,7 +168,10 @@ const AcquisitionDetailSubForm: React.FC<{
       </Section>
 
       <Section header="Project">
-        <SectionField label="Ministry project">
+        <SectionField
+          label="Ministry project"
+          tooltip="Be sure to select a File project that is not the same as the Alternate Project on a Compensation Requisition."
+        >
           <ProjectSelector
             field="project"
             onChange={(vals: IAutocompletePrediction[]) => {
