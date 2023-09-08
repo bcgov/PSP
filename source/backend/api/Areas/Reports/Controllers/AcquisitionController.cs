@@ -2,6 +2,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Areas.Reports.Models.Acquisition;
 using Pims.Api.Areas.Reports.Models.Agreement;
 using Pims.Api.Helpers.Constants;
 using Pims.Api.Helpers.Exceptions;
@@ -29,6 +30,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         #region Variables
         private readonly IAcquisitionFileService _acquisitionFileService;
         private readonly ClaimsPrincipal _user;
+        private readonly ICompReqFinancialService _compReqFinancialService;
         #endregion
 
         #region Constructors
@@ -37,10 +39,13 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// Creates a new instance of a AcquisitionController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="acquisitionFileService"></param>
-        public AcquisitionController(IAcquisitionFileService acquisitionFileService, ClaimsPrincipal user)
+        /// <param name="user"></param>
+        /// <param name="compReqFinancialService"></param>
+        public AcquisitionController(IAcquisitionFileService acquisitionFileService, ClaimsPrincipal user, ICompReqFinancialService compReqFinancialService)
         {
             _acquisitionFileService = acquisitionFileService;
             _user = user;
+            _compReqFinancialService = compReqFinancialService;
         }
         #endregion
 
@@ -49,20 +54,20 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <summary>
         /// Exports acquisition as Excel file.
         /// Include 'Accept' header to request the appropriate export -
-        ///     ["text/csv", "application/application/vnd.ms-excel"].
+        ///     ["application/application/vnd.ms-excel"].
         /// </summary>
         /// <param name="filter"></param>
-        /// <returns></returns>
+        /// <returns>The generated Excel file.</returns>
         [HttpPost("agreements")]
         [HasPermission(Permissions.AcquisitionFileView)]
         [Produces(ContentTypes.CONTENTTYPEEXCELX)]
         [ProducesResponseType(200)]
         [SwaggerOperation(Tags = new[] { "acquisition", "report" })]
-        public IActionResult ExportLeases([FromBody] AcquisitionReportFilterModel filter)
+        public IActionResult ExportAgreements([FromBody] AcquisitionReportFilterModel filter)
         {
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
 
-            var acceptHeader = (string)this.Request.Headers["Accept"];
+            var acceptHeader = (string)Request.Headers["Accept"];
 
             if (acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
             {
@@ -73,6 +78,47 @@ namespace Pims.Api.Areas.Reports.Controllers
             var reportAgreements = agreements.Select(agreement => new AgreementReportModel(agreement, _user));
 
             return ReportHelper.GenerateExcel(reportAgreements, "Agreement Export");
+        }
+
+        /// <summary>
+        /// Exports compensation requisitions as Excel file.
+        /// Include 'Accept' header to request the appropriate export -
+        ///     ["application/application/vnd.ms-excel"]
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns>The generated Excel file.</returns>
+        [HttpPost("compensation-requisitions")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces(ContentTypes.CONTENTTYPEEXCELX)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
+        [SwaggerOperation(Tags = new[] { "acquisition", "report" })]
+        public IActionResult ExportCompensationRequisitions([FromBody] AcquisitionReportFilterModel filter)
+        {
+            filter.ThrowBadRequestIfNull("The request must include a filter.");
+
+            var acceptHeader = (string)Request.Headers["Accept"];
+            if (acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
+            {
+                throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
+            }
+
+            var financials = _compReqFinancialService.SearchCompensationRequisitionFinancials(filter);
+            if (financials is null || !financials.Any())
+            {
+                // Return 204 "No Content" to signal the frontend that we did not find any matching records.
+                return NoContent();
+            }
+
+            var totals = new CompensationFinancialReportTotalsModel(financials);
+            var reportFinancials = financials.Select(financial => new CompensationFinancialReportModel(financial, totals, _user))
+                    .OrderByDescending(f => f.MinistryProject)
+                    .ThenByDescending(f => f.Product)
+                    .ThenByDescending(f => f.AcquisitionNumberAndName)
+                    .ThenByDescending(f => f.RequisitionNumber)
+                    .ThenByDescending(f => f.FinancialActivityName);
+
+            return ReportHelper.GenerateExcel(reportFinancials, "Compensation Requisition Export");
         }
         #endregion
     }

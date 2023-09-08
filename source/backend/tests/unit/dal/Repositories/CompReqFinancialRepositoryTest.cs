@@ -6,6 +6,7 @@ using Moq;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -15,13 +16,18 @@ namespace Pims.Dal.Test.Repositories
 {
     [Trait("category", "unit")]
     [Trait("category", "dal")]
-    [Trait("group", "financialcode")]
+    [Trait("group", "acquisition")]
     [ExcludeFromCodeCoverage]
     public class CompReqFinancialRepositoryTest
     {
         // xUnit.net creates a new instance of the test class for every test that is run,
         // so any code which is placed into the constructor of the test class will be run for every single test.
-        private readonly TestHelper _helper = new();
+        private readonly TestHelper _helper;
+
+        public CompReqFinancialRepositoryTest()
+        {
+            _helper = new TestHelper();
+        }
 
         private CompReqFinancialRepository CreateWithPermissions(params Permissions[] permissions)
         {
@@ -81,7 +87,7 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public void Add_ThrowIfNotAuthorized()
+        public void GetAll_ThrowIfNotAuthorized()
         {
             // Arrange
             var repository = CreateWithPermissions(Permissions.SystemAdmin);
@@ -91,6 +97,92 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void SearchCompensationRequisitionFinancials_Project()
+        {
+            // Arrange
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.Project = new PimsProject() { Id = 1 };
+            acqFile.ProjectId = 1;
+            var financial = new PimsCompReqFinancial
+            {
+                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test" },
+                CompensationRequisitionId = 1,
+                CompensationRequisition = new PimsCompensationRequisition
+                {
+                    AcquisitionFileId = acqFile.Internal_Id,
+                    AcquisitionFile = acqFile
+                }
+            };
+
+            var repository = CreateWithPermissions(Permissions.AcquisitionFileAdd);
+            _helper.AddAndSaveChanges(financial);
+
+            // Act
+            var filter = new AcquisitionReportFilterModel() { Projects = new List<long> { 1 } };
+            var result = repository.SearchCompensationRequisitionFinancials(filter);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void SearchCompensationRequisitionFinancials_AlternateProject()
+        {
+            // Arrange
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            var financial = new PimsCompReqFinancial
+            {
+                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test" },
+                CompensationRequisitionId = 1,
+                CompensationRequisition = new PimsCompensationRequisition
+                {
+                    AcquisitionFileId = acqFile.Internal_Id,
+                    AcquisitionFile = acqFile,
+                    AlternateProject = new PimsProject() { Id = 1 },
+                    AlternateProjectId = 1
+                }
+            };
+
+            var repository = CreateWithPermissions(Permissions.AcquisitionFileAdd);
+            _helper.AddAndSaveChanges(financial);
+
+            // Act
+            var filter = new AcquisitionReportFilterModel() { Projects = new List<long> { 1 } };
+            var result = repository.SearchCompensationRequisitionFinancials(filter);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void SearchCompensationRequisitionFinancials_Team()
+        {
+            // Arrange
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() { new PimsAcquisitionFilePerson() { PersonId = 1 } };
+            var financial = new PimsCompReqFinancial
+            {
+                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test" },
+                CompensationRequisitionId = 1,
+                CompensationRequisition = new PimsCompensationRequisition
+                {
+                    AcquisitionFileId = acqFile.Internal_Id,
+                    AcquisitionFile = acqFile
+                }
+            };
+
+            var repository = CreateWithPermissions(Permissions.AcquisitionFileAdd);
+            _helper.AddAndSaveChanges(financial);
+
+            // Act
+            var filter = new AcquisitionReportFilterModel() { AcquisitionTeamPersons = new List<long> { 1 } };
+            var result = repository.SearchCompensationRequisitionFinancials(filter);
+
+            // Assert
+            result.Should().HaveCount(1);
         }
     }
 }

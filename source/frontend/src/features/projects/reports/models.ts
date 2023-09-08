@@ -2,7 +2,7 @@ import { CodeTypeSelectOption } from '@/components/maps/leaflet/Control/Advanced
 import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 
 export class ExportProjectModel {
-  public exportType: ProjectExportTypes | '' = '';
+  public exportType: keyof typeof ProjectExportTypes | '' = '';
   public projects: CodeTypeSelectOption[] = [];
   public acquisitionTeam: CodeTypeSelectOption[] = [];
 
