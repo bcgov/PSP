@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
+import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
@@ -44,7 +45,8 @@ export const UpdateForm8Container: React.FunctionComponent<
     },
   } = useInterestHolderRepository();
 
-  const backUrl = location.pathname.split(`/${form8Id}`)[0];
+  const aquisitionPath = location.pathname.split(`/${FileTabType.EXPROPRIATION}/${form8Id}`)[0];
+  const backUrl = `${aquisitionPath}/${FileTabType.EXPROPRIATION}`;
 
   const loadForm8Details = useCallback(async () => {
     const form8Api = await getForm8(form8Id);
