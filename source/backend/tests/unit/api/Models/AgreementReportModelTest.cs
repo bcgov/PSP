@@ -67,7 +67,7 @@ namespace Pims.Api.Test
             var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.AgreementDate.Should().Be("01/01/1990");
+            model.AgreementDate.Should().Be("1990-01-01");
         }
 
         [Fact]

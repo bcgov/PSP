@@ -22,7 +22,7 @@ namespace Pims.Api.Test
             var model = new CompensationFinancialReportModel(testFinancial, new CompensationFinancialReportTotalsModel(new List<PimsCompReqFinancial>()), new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.FinalDate.Should().Be("01/01/1990");
+            model.FinalDate.Should().Be("1990-01-01");
         }
 
         [Fact]
