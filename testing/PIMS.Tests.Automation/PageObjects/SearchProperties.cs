@@ -52,6 +52,8 @@ namespace PIMS.Tests.Automation.PageObjects
             ClearInput(searchPropertyByPIDPINInput);
             webDriver.FindElement(searchPropertyByPIDPINInput).SendKeys(PID);
             FocusAndClick(searchPropertySearchBttn);
+
+            WaitUntilSpinnerDisappear();
         }
 
         public void SearchPropertyByAddress(string Address)
@@ -76,10 +78,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFoundPin()
         {
-            WaitUntilVisible(searchPropertyFoundPin);
+            Wait(5000);
             FocusAndClick(searchPropertyFoundPin);
 
-            sharedModals.SiteMinderModal();
+            //sharedModals.SiteMinderModal();
         }
 
         public void NavigatePropertyListView()
@@ -96,7 +98,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ValidatePropertyListView()
         {
-            WaitUntilVisible(searchPropertyListViewTitle);
+            WaitUntilVisible(searchPropertyListContent);
 
             Assert.True(webDriver.FindElement(searchPropertyListViewTitle).Displayed);
             Assert.True(webDriver.FindElement(searchPropertyListHeaderPid).Displayed);
