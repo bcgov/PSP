@@ -7,7 +7,10 @@ import { ICluster, PointFeature } from '@/components/maps/types';
 import { DraftCircleNumber } from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { IProperty } from '@/interfaces';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import {
+  PIMS_Property_Boundary_View,
+  PIMS_Property_Location_View,
+} from '@/models/layers/pimsPropertyLocationView';
 
 // parcel icon (green)
 export const parcelIcon = L.icon({
@@ -122,16 +125,18 @@ export const createPoints = (properties: IProperty[], type: string = 'Point') =>
     } as PointFeature;
   });
 
+type MarkerFeature =
+  | PIMS_Property_Location_View
+  | PIMS_Property_Boundary_View
+  | PMBC_FullyAttributed_Feature_Properties;
+
 /**
  * This function defines how GeoJSON points spawn Leaflet layers on the map.
  * It is called internally by the `GeoJSON` leaflet component.
  * @param feature
  * @param latlng
  */
-export function pointToLayer<
-  P extends PIMS_Property_Location_View | PMBC_FullyAttributed_Feature_Properties,
-  C extends Supercluster.ClusterProperties,
->(
+export function pointToLayer<P extends MarkerFeature, C extends Supercluster.ClusterProperties>(
   point: Supercluster.ClusterFeature<C> | Supercluster.PointFeature<P>,
   latlng: LatLngExpression,
 ): Layer {
@@ -149,7 +154,7 @@ export function pointToLayer<
  * Get an icon type for the specified cluster property details.
  */
 export function getMarkerIcon(
-  feature: Supercluster.PointFeature<PIMS_Property_Location_View>,
+  feature: Supercluster.PointFeature<PIMS_Property_Location_View | PIMS_Property_Boundary_View>,
   selected: boolean,
 ): L.Icon<L.IconOptions> {
   if (feature.properties.IS_PAYABLE_LEASE) {
@@ -200,15 +205,14 @@ export const getDraftIcon = (text: string) => {
  * @param feature the geojson object
  * @param latlng the point position
  */
-export const createSingleMarker = <P,>(
+export const createSingleMarker = <P extends MarkerFeature>(
   feature: Supercluster.PointFeature<P>,
   latlng: LatLngExpression,
 ): Layer => {
   const isOwned = isPimsFeature(feature);
 
   if (isOwned) {
-    const ownedFeature = feature as Supercluster.PointFeature<PIMS_Property_Location_View>;
-    const icon = getMarkerIcon(ownedFeature, false);
+    const icon = getMarkerIcon(feature, false);
     return new Marker(latlng, { icon });
   } else {
     const icon = getNotOwnerMarkerIcon(false);
@@ -216,9 +220,30 @@ export const createSingleMarker = <P,>(
   }
 };
 
-export const isPimsFeature = <P,>(feature: Supercluster.PointFeature<P>): boolean => {
-  // TODO: There might be a cleaner way to know if a marker is from a different source.
+export const isPimsFeature = (
+  feature: Supercluster.PointFeature<MarkerFeature>,
+): feature is Supercluster.PointFeature<
+  PIMS_Property_Location_View | PIMS_Property_Boundary_View
+> => {
+  return isPimsLocation(feature) || isPimsBoundary(feature);
+};
+
+export const isPimsLocation = (
+  feature: Supercluster.PointFeature<MarkerFeature>,
+): feature is Supercluster.PointFeature<PIMS_Property_Location_View> => {
   return feature.id?.toString().startsWith('PIMS_PROPERTY_LOCATION_VW') ?? false;
+};
+
+export const isPimsBoundary = (
+  feature: Supercluster.PointFeature<MarkerFeature>,
+): feature is Supercluster.PointFeature<PIMS_Property_Boundary_View> => {
+  return feature.id?.toString().startsWith('PIMS_PROPERTY_BOUNDARY_VW') ?? false;
+};
+
+export const isFullyAttributed = (
+  feature: Supercluster.PointFeature<MarkerFeature>,
+): feature is Supercluster.PointFeature<PMBC_FullyAttributed_Feature_Properties> => {
+  return feature.id?.toString().startsWith('WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW') ?? false;
 };
 
 // Internal cache of cluster icons to avoid re-creating the same icon over and over again.
