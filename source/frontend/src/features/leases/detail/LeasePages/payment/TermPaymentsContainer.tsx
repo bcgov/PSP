@@ -139,7 +139,7 @@ export const TermPaymentsContainer: React.FunctionComponent<
           setEditPaymentModalValues(undefined);
         }}
         onSave={onSavePayment}
-        terms={lease?.terms ?? []}
+        terms={terms ?? []}
       />
       <TermModal
         displayModal={!!editModalValues}
