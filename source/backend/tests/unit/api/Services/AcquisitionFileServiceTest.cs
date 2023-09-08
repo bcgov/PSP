@@ -1914,7 +1914,7 @@ namespace Pims.Api.Test.Services
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
             var matchingAgreement = new PimsAgreement() { AcquisitionFile = new PimsAcquisitionFile() { RegionCode = 1 } };
             var nonMatchingAgreement = new PimsAgreement() { AcquisitionFile = new PimsAcquisitionFile() { RegionCode = 2 } };
-            repository.Setup(x => x.SearchAgreements(It.IsAny<AcquisitionReportFilterModel>())).Returns(new List<PimsAgreement>() { matchingAgreement, nonMatchingAgreement});
+            repository.Setup(x => x.SearchAgreements(It.IsAny<AcquisitionReportFilterModel>())).Returns(new List<PimsAgreement>() { matchingAgreement, nonMatchingAgreement });
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: false);
             user.PimsRegionUsers = new List<PimsRegionUser>() { new PimsRegionUser() { RegionCode = 1 } };
@@ -1945,7 +1945,7 @@ namespace Pims.Api.Test.Services
             var nonMatchingAgreement = new PimsAgreement() { AcquisitionFile = new PimsAcquisitionFile() { } };
             repository.Setup(x => x.SearchAgreements(It.IsAny<AcquisitionReportFilterModel>())).Returns(new List<PimsAgreement>() { matchingAgreement, nonMatchingAgreement });
 
-            
+
             user.PimsRegionUsers = new List<PimsRegionUser>() { new PimsRegionUser() { RegionCode = 1 } };
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 

@@ -64,7 +64,7 @@ namespace Pims.Dal.Repositories
             {
                 query = query.Where(a => a.AcquisitionFile.ProjectId.HasValue && filter.Projects.Contains(a.AcquisitionFile.ProjectId.Value));
             }
-            if(filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
+            if (filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
             {
                 query = query.Where(a => a.AcquisitionFile.PimsAcquisitionFilePeople.Any(afp => filter.AcquisitionTeamPersons.Contains(afp.PersonId)));
             }
