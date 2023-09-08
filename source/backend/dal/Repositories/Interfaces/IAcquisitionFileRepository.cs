@@ -23,5 +23,7 @@ namespace Pims.Dal.Repositories
         short GetRegion(long id);
 
         List<PimsAcquisitionFile> GetByProductId(long productId);
+
+        List<PimsAcquisitionFile> GetAcquisitionFileExport(AcquisitionFilter filter, HashSet<short> regions, long? filterPersonId = null);
     }
 }

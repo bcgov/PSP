@@ -2251,6 +2251,107 @@ namespace Pims.Api.Test.Services
 
         #endregion
 
+        #region Export
+
+        [Fact]
+        public void GetAcquisitionFileExport_NoPermissions()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions();
+            var filter = new AcquisitionFilter();
+
+            // Act
+            Action act = () => service.GetAcquisitionFileExport(filter);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetAcquisitionFileExport_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+            var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            var filter = new AcquisitionFilter();
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+            acqFilerepository.Setup(x => x.GetAcquisitionFileExport(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()))
+                        .Returns(new List<PimsAcquisitionFile>()
+                        {
+                            acquisitionFile
+                        });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            var result = service.GetAcquisitionFileExport(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(1, result.Count);
+            acqFilerepository.Verify(x => x.GetAcquisitionFileExport(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetAcquisitionFileExport_Success_FlatProperties()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+            var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            var filter = new AcquisitionFilter();
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+            acquisitionFile.FileNumber = "10-25-2023";
+            acquisitionFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>()
+            {
+                new PimsPropertyAcquisitionFile()
+                {
+                    AcquisitionFileId = 1,
+                    PropertyId = 100,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 100,
+                        Pid = 8000,
+                    }
+                },
+                new PimsPropertyAcquisitionFile()
+                {
+                    AcquisitionFileId = 1,
+                    PropertyId = 200,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 200,
+                        Pid = 9000,
+                    }
+                },
+            };
+
+            acqFilerepository.Setup(x => x.GetAcquisitionFileExport(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()))
+                        .Returns(new List<PimsAcquisitionFile>()
+                        {
+                            acquisitionFile
+                        });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            var result = service.GetAcquisitionFileExport(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Count);
+            Assert.Equal("10-25-2023", result[0].FileNumber);
+            Assert.Equal("10-25-2023", result[1].FileNumber);
+            Assert.Equal("8000", result[0].Pid);
+            Assert.Equal("9000", result[1].Pid);
+            acqFilerepository.Verify(x => x.GetAcquisitionFileExport(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
+        }
+
+        #endregion
+
         #endregion
     }
 }
