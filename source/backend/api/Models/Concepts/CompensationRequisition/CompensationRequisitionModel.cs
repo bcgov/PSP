@@ -62,5 +62,9 @@ namespace Pims.Api.Models.Concepts
         public string DetailedRemarks { get; set; }
 
         public bool? IsDisabled { get; set; }
+
+        public long? AlternateProjectId { get; set; }
+
+        public ProjectModel AlternateProject { get; set; }
     }
 }

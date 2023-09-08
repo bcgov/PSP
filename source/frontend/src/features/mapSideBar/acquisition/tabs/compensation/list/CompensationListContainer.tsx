@@ -72,6 +72,8 @@ export const CompensationListContainer: React.FunctionComponent<
     const defaultCompensationRequisition: Api_CompensationRequisition = {
       id: null,
       acquisitionFileId: fileId,
+      alternateProjectId: null,
+      alternateProject: null,
       isDraft: true,
       fiscalYear: null,
       yearlyFinancialId: null,
