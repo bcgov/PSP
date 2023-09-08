@@ -45,7 +45,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By licenseImproSaveButton = By.XPath("//button/div[contains(text(),'Save')]/ancestor::button");
 
-        private By licenseImproTotal = By.XPath("//div[@role='tabpanel'][3]/div/form/div/div");
+        private By licenseImproTotal = By.XPath("//div[@role='tabpanel']/div/form/div/div");
 
         public LeaseImprovements(IWebDriver webDriver) : base(webDriver)
         {}
@@ -214,6 +214,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int ImprovementTotal()
         {
+            Wait();
             return webDriver.FindElements(licenseImproTotal).Count;
         }
     }

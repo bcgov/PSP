@@ -101,7 +101,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Look for Projects by Status
             searchProjects.SearchProjectByStatus("Planning (PL)");
-            Assert.True(searchProjects.TotalSearchedProjects().Equals(5));
+            Assert.True(searchProjects.TotalSearchedProjects().Equals(6));
 
             //Look for existing Project by name
             PopulateProjectData(rowNumber);

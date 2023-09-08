@@ -4,12 +4,26 @@ import { PointFeature } from 'supercluster';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import {
+  PIMS_Property_Boundary_View,
+  PIMS_Property_Location_View,
+} from '@/models/layers/pimsPropertyLocationView';
 
-import { getMarkerIcon, getNotOwnerMarkerIcon, isPimsFeature } from '../Layers/util';
+import {
+  getMarkerIcon,
+  getNotOwnerMarkerIcon,
+  isFullyAttributed,
+  isPimsBoundary,
+  isPimsFeature,
+  isPimsLocation,
+} from '../Layers/util';
 
 interface SinglePropertyMarkerProps {
-  pointFeature: PointFeature<PIMS_Property_Location_View | PMBC_FullyAttributed_Feature_Properties>;
+  pointFeature: PointFeature<
+    | PIMS_Property_Location_View
+    | PIMS_Property_Boundary_View
+    | PMBC_FullyAttributed_Feature_Properties
+  >;
   markerPosition: LatLngLiteral;
   isSelected: boolean;
 }
@@ -25,8 +39,7 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
 
   const getIcon = () => {
     if (isOwned) {
-      const pimsFeature = pointFeature as PointFeature<PIMS_Property_Location_View>;
-      return getMarkerIcon(pimsFeature, isSelected);
+      return getMarkerIcon(pointFeature, isSelected);
     } else {
       return getNotOwnerMarkerIcon(isSelected);
     }
@@ -37,21 +50,29 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
     const [longitude, latitude] = pointFeature.geometry.coordinates;
 
     const latlng = { lat: latitude, lng: longitude };
-    if (isOwned) {
+    if (isPimsLocation(pointFeature)) {
       mapMachine.mapMarkerClick({
         clusterId: clusterId,
         latlng: latlng,
-        pimsFeature: null,
-        fullyAttributedFeature: (
-          pointFeature as PointFeature<PMBC_FullyAttributed_Feature_Properties>
-        ).properties,
-      });
-    } else {
-      mapMachine.mapMarkerClick({
-        clusterId: clusterId,
-        latlng: latlng,
-        pimsFeature: (pointFeature as PointFeature<PIMS_Property_Location_View>).properties,
+        pimsLocationFeature: pointFeature.properties,
+        pimsBoundaryFeature: null,
         fullyAttributedFeature: null,
+      });
+    } else if (isPimsBoundary(pointFeature)) {
+      mapMachine.mapMarkerClick({
+        clusterId: clusterId,
+        latlng: latlng,
+        pimsLocationFeature: null,
+        pimsBoundaryFeature: pointFeature.properties,
+        fullyAttributedFeature: null,
+      });
+    } else if (isFullyAttributed(pointFeature)) {
+      mapMachine.mapMarkerClick({
+        clusterId: clusterId,
+        latlng: latlng,
+        pimsLocationFeature: null,
+        pimsBoundaryFeature: null,
+        fullyAttributedFeature: pointFeature.properties,
       });
     }
   };

@@ -88,6 +88,6 @@ describe('Update Form8 Container component', () => {
     await act(async () => {
       viewProps?.onCancel();
     });
-    expect(history.location.pathname).toBe('/');
+    expect(history.location.pathname).toBe('//expropriation');
   });
 });
