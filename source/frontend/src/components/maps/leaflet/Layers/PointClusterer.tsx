@@ -13,7 +13,10 @@ import { useFilterContext } from '@/components/maps/providers/FIlterProvider';
 import { ICluster } from '@/components/maps/types';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import {
+  PIMS_Property_Boundary_View,
+  PIMS_Property_Location_View,
+} from '@/models/layers/pimsPropertyLocationView';
 
 import SinglePropertyMarker from '../Markers/SingleMarker';
 import { Spiderfier, SpiderSet } from './Spiderfier';
@@ -47,7 +50,13 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 }) => {
   // state and refs
   const spiderfierRef =
-    useRef<Spiderfier<PIMS_Property_Location_View | PMBC_FullyAttributed_Feature_Properties>>();
+    useRef<
+      Spiderfier<
+        | PIMS_Property_Location_View
+        | PIMS_Property_Boundary_View
+        | PMBC_FullyAttributed_Feature_Properties
+      >
+    >();
   const featureGroupRef = useRef<L.FeatureGroup>(null);
   const draftFeatureGroupRef = useRef<L.FeatureGroup>(null);
   const filterState = useFilterContext();
@@ -70,7 +79,11 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   const maxZoom = maxZoomProps ?? 18;
 
   const [spider, setSpider] = useState<
-    SpiderSet<PIMS_Property_Location_View | PMBC_FullyAttributed_Feature_Properties>
+    SpiderSet<
+      | PIMS_Property_Location_View
+      | PIMS_Property_Boundary_View
+      | PMBC_FullyAttributed_Feature_Properties
+    >
   >({});
 
   const draftPoints = useMemo(() => {
@@ -83,34 +96,44 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
     });
   }, [mapMachine.filePropertyLocations]);
 
-  const pimsFeatures: FeatureCollection<Geometry, PIMS_Property_Location_View> = useMemo(() => {
-    if (mapMachine.isFiltering && mapMachine.mapFeatureData.pimsFeatures !== null) {
-      const filteredFeatures = mapMachine.mapFeatureData.pimsFeatures.features.filter(x =>
-        mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
-      );
-      return { type: mapMachine.mapFeatureData.pimsFeatures.type, features: filteredFeatures };
-    } else {
-      return mapMachine.mapFeatureData.pimsFeatures;
-    }
-  }, [
-    mapMachine.activePimsPropertyIds,
-    mapMachine.isFiltering,
-    mapMachine.mapFeatureData.pimsFeatures,
-  ]);
+  const pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_View> =
+    useMemo(() => {
+      if (mapMachine.isFiltering && mapMachine.mapFeatureData.pimsLocationFeatures !== null) {
+        const filteredFeatures = mapMachine.mapFeatureData.pimsLocationFeatures.features.filter(x =>
+          mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
+        );
+        return {
+          type: mapMachine.mapFeatureData.pimsLocationFeatures.type,
+          features: filteredFeatures,
+        };
+      } else {
+        return mapMachine.mapFeatureData.pimsLocationFeatures;
+      }
+    }, [
+      mapMachine.activePimsPropertyIds,
+      mapMachine.isFiltering,
+      mapMachine.mapFeatureData.pimsLocationFeatures,
+    ]);
+
+  const pimsBoundaryFeatures = mapMachine.mapFeatureData.pimsBoundaryFeatures;
 
   const fullyAttributedFeatures = mapMachine.mapFeatureData.fullyAttributedFeatures;
 
   const featurePoints: Supercluster.PointFeature<
-    PIMS_Property_Location_View | PMBC_FullyAttributed_Feature_Properties
+    | PIMS_Property_Location_View
+    | PIMS_Property_Boundary_View
+    | PMBC_FullyAttributed_Feature_Properties
   >[] = useMemo(() => {
-    const pimsPoints =
-      featureCollectionResponseToPointFeature<PIMS_Property_Location_View>(pimsFeatures);
+    const pimsLocationPoints =
+      featureCollectionResponseToPointFeature<PIMS_Property_Location_View>(pimsLocationFeatures);
+    const pimsBoundaryPoints =
+      featureCollectionResponseToPointFeature<PIMS_Property_Boundary_View>(pimsBoundaryFeatures);
     const fullyAttributedPoints =
       featureCollectionResponseToPointFeature<PMBC_FullyAttributed_Feature_Properties>(
         fullyAttributedFeatures,
       );
-    return [...pimsPoints, ...fullyAttributedPoints];
-  }, [pimsFeatures, fullyAttributedFeatures]);
+    return [...pimsLocationPoints, ...pimsBoundaryPoints, ...fullyAttributedPoints];
+  }, [pimsLocationFeatures, pimsBoundaryFeatures, fullyAttributedFeatures]);
 
   // get clusters
   // clusters are an array of GeoJSON Feature objects, but some of them
@@ -126,7 +149,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   const componentDidMount = useCallback(() => {
     if (!spiderfierRef.current) {
       spiderfierRef.current = new Spiderfier(mapInstance, {
-        getClusterId: cluster => cluster?.properties?.cluster_id as number,
+        getClusterId: cluster => cluster?.properties?.cluster_id,
         getClusterPoints: clusterId => supercluster?.getLeaves(clusterId, Infinity) ?? [],
         pointToLayer: pointToLayer,
       });
@@ -256,7 +279,9 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
             );
           } else {
             const clusterFeature = cluster as PointFeature<
-              PIMS_Property_Location_View | PMBC_FullyAttributed_Feature_Properties
+              | PIMS_Property_Location_View
+              | PIMS_Property_Boundary_View
+              | PMBC_FullyAttributed_Feature_Properties
             >;
 
             const isSelected =
@@ -279,7 +304,9 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
          */}
         {spider.markers?.map((m, index: number) => {
           const clusterFeature = m as PointFeature<
-            PIMS_Property_Location_View | PMBC_FullyAttributed_Feature_Properties
+            | PIMS_Property_Location_View
+            | PIMS_Property_Boundary_View
+            | PMBC_FullyAttributed_Feature_Properties
           >;
 
           return (
