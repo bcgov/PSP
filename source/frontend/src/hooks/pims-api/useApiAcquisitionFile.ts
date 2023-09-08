@@ -12,7 +12,9 @@ import {
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
+import { Api_Person } from '@/models/api/Person';
 import { Api_Product, Api_Project } from '@/models/api/Project';
+import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
@@ -33,6 +35,13 @@ export const useApiAcquisitionFile = () => {
         ),
       getAcquisitionFile: (acqFileId: number) =>
         api.get<Api_AcquisitionFile>(`/acquisitionfiles/${acqFileId}`),
+      getAgreementReport: (filter: Api_ExportProjectFilter) =>
+        api.post<Blob>(`/reports/acquisition/agreements`, filter, {
+          responseType: 'blob',
+          headers: {
+            Accept: 'application/vnd.ms-excel',
+          },
+        }),
       postAcquisitionFile: (
         acqFile: Api_AcquisitionFile,
         userOverrideCodes: UserOverrideCode[] = [],
@@ -65,6 +74,8 @@ export const useApiAcquisitionFile = () => {
         api.get<Api_AcquisitionFileProperty[]>(`/acquisitionfiles/${acqFileId}/properties`),
       getAcquisitionFileOwners: (acqFileId: number) =>
         api.get<Api_AcquisitionFileOwner[]>(`/acquisitionfiles/${acqFileId}/owners`),
+      getAllAcquisitionFileTeamMembers: () =>
+        api.get<Api_Person[]>(`/acquisitionfiles/team-members`),
       getAcquisitionFileProject: (acqFileId: number) =>
         api.get<Api_Project>(`/acquisitionfiles/${acqFileId}/project`),
       getAcquisitionFileProduct: (acqFileId: number) =>

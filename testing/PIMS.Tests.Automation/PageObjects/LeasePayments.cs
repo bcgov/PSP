@@ -50,6 +50,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Payments Modal Element
         private By licensePaymentsModal = By.CssSelector("div[class='modal-content']");
+        private By licensePaymentAddTermBttn = By.XPath("//button/div[contains(text(),'Add a Term')]");
 
         //Create Term Elements
         private By licensePaymentTermStartDateLabel = By.XPath("//label[contains(text(),'Start date')]");
@@ -69,6 +70,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licencePyamentTermGSTFalseRadioBttn = By.Id("input-isGstEligible-2");
         private By licensePaymentTermLabel = By.XPath("//label[contains(text(),'Term Status')]");
         private By licensePaymentTermSelect = By.Id("input-statusTypeCode.id");
+        private By licenseSaveTermButton = By.XPath("//button/div[contains(text(),'Save term')]");
 
         //Create Payment Elements
         private By licensePaymentSendDateLabel = By.XPath("//label[contains(text(),'Sent date')]");
@@ -82,6 +84,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licensePaymentGSTLabel = By.XPath("//label[contains(text(),'GST ($)')]");
         private By licensePaymentExpPaymentTolltip = By.Id("actual-calculation-tooltip");
         private By licensePaymentGSTInput = By.Id("input-amountGst");
+        private By licensePaymentRecordBttn = By.XPath("//button/div[contains(text(),'Record a Payment')]");
+        private By licensePaymentSaveBttn = By.XPath("//button/div[contains(text(),'Save payment')]");
 
         //Last Term Table Elements
         private int totalTermsInLease;
@@ -114,7 +118,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddTermBttn()
         {
-            ButtonElement("Add a Term");
+            ButtonElement(licensePaymentAddTermBttn);
         }
 
         public void AddTerm(Term term)
@@ -149,14 +153,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
             ChooseSpecificSelectOption(licensePaymentTermSelect, term.TermStatus);
 
-            ButtonElement("Save term");
+            ButtonElement(licenseSaveTermButton);
 
-            WaitUntilVisible(licenseTermsTotal);
+            Wait();
             totalTermsInLease = webDriver.FindElements(licenseTermsTotal).Count;
         }
 
         public void OpenPaymentTab(int index)
         {
+            Wait();
             var selectedExpander = webDriver.FindElement(By.XPath("//div[@class='tr-wrapper']["+ index +"]/div/div[@class='td expander svg-btn']"));
 
             WaitUntilClickable(By.XPath("//div[@class='tr-wrapper']["+ index +"]/div/div[@class='td expander svg-btn']"));
@@ -165,7 +170,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddPaymentBttn()
         {
-            ButtonElement("Record a Payment");
+            ButtonElement(licensePaymentRecordBttn);
         }
 
         public void AddPayment(Payment payment)
@@ -184,7 +189,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(licensePaymentExpPaymentInput).Click();
             webDriver.FindElement(licensePaymentGSTInput).Click();
 
-            ButtonElement("Save payment");
+            ButtonElement(licensePaymentSaveBttn);
 
             WaitUntilClickable(licensePaymentsTableTotal);
             totalPaymentInTerm = webDriver.FindElements(licensePaymentsTableTotal).Count;
@@ -229,9 +234,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPaymentsInitForm()
         {
-            WaitUntilVisible(licencePaymentColumnStartEndDate);
-            Assert.True(webDriver.FindElement(licencePaymentsSubtitle).Displayed);
+            WaitUntilVisible(licensePaymentGSTTotalTooltip);
 
+            Assert.True(webDriver.FindElement(licencePaymentsSubtitle).Displayed);
             Assert.True(webDriver.FindElement(licencePaymentAddBttn).Displayed);
             Assert.True(webDriver.FindElement(licencePaymentColumnStartEndDate).Displayed);
             Assert.True(webDriver.FindElement(licensePaymentColumnPaymentFreq).Displayed);
@@ -278,14 +283,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInsertedTermTable(Term term)
         {
+            Wait();
             WaitUntilVisible(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[2]"));
 
-            //Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[1]")).Text == termType);
             Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[2]")).Text == ConcatenateDates(term.TermStartDate, term.TermEndDate));
             Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[3]")).Text == term.TermPaymentFrequency);
             Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[4]")).Text == term.TermPaymentsDue);
             Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[5]")).Text == TransformCurrencyFormat(term.TermAgreedPayment));
             Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[6]")).Text == TransformBooleanFormat(term.IsGSTEligible));
+
             if (term.IsGSTEligible)
             {
                 Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper'][" + totalTermsInLease + "]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[7]")).Text == CalculateGST(term.TermAgreedPayment, term.IsGSTEligible));
@@ -324,7 +330,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPaymentTableHeader()
         {
-            WaitUntilVisible(licensePaymentsPaymentMethodColumn);
+            WaitUntilVisible(licensePaymentsSendPaymentTooltip);
 
             if (leaseDetails.GetLeaseAccountType() == "Receivable")
             {

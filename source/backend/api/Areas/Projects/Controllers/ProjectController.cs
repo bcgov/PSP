@@ -86,6 +86,24 @@ namespace Pims.Api.Areas.Projects.Controllers
         }
 
         /// <summary>
+        /// Retrieves all projects within PIMS.
+        /// </summary>
+        /// <returns>An array of projects matching the filter.</returns>
+        [HttpGet("")]
+        [HasPermission(Permissions.ProjectView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<ProjectModel>), 200)]
+        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
+        [SwaggerOperation(Tags = new[] { "project" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetAll()
+        {
+            var projects = _projectService.GetAll();
+
+            return new JsonResult(_mapper.Map<IList<ProjectModel>>(projects));
+        }
+
+        /// <summary>
         /// Add the specified Project.
         /// </summary>
         /// <returns></returns>

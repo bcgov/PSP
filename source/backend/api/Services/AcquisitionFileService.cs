@@ -116,7 +116,17 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
-            return _acquisitionFilePropertyRepository.GetOwnersByAcquisitionFileId(id);
+            return _acqFileRepository.GetOwnersByAcquisitionFileId(id);
+        }
+
+        public IEnumerable<PimsAcquisitionFilePerson> GetTeamMembers()
+        {
+            _logger.LogInformation("Getting acquisition team members");
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
+            return _acqFileRepository.GetTeamMembers(userRegions);
         }
 
         public IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id)
@@ -298,6 +308,20 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
             return _agreementRepository.GetAgreementsByAquisitionFile(id);
+        }
+
+        public IEnumerable<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter)
+        {
+            _logger.LogInformation("Searching all agreements matching the filter: ", filter);
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var allMatchingAgreements = _agreementRepository.SearchAgreements(filter);
+            if (pimsUser.IsContractor)
+            {
+                return allMatchingAgreements.Where(a => a.AcquisitionFile.PimsAcquisitionFilePeople.Any(afp => afp.PersonId == pimsUser.PersonId));
+            }
+
+            return allMatchingAgreements.Where(a => pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == a.AcquisitionFile.RegionCode));
         }
 
         public IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements)

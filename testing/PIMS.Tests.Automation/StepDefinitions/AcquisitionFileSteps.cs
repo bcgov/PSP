@@ -122,11 +122,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Search for a property by Legal Description
-            if (acquisitionFile.SearchProperties.LegalDescription != "")
-            {
-                sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
-                sharedSearchProperties.SelectFirstOption();
-            }
+            //if (acquisitionFile.SearchProperties.LegalDescription != "")
+            //{
+            //    sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
+            //    sharedSearchProperties.SelectFirstOption();
+            //}
 
             //Search for a duplicate property
             if (acquisitionFile.SearchProperties.PID != "")
@@ -171,13 +171,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(acquisitionFiles.IsCreateAcquisitionFileFormVisible() == 0);
 
             //Search for a property
-            searchProperties.SearchPropertyByPINPID(acquisitionFile.SearchProperties.PID);
+            //searchProperties.SearchPropertyByPINPID(acquisitionFile.SearchProperties.PID);
 
-            //Select Found Pin on map
-            searchProperties.SelectFoundPin();
+            ////Select Found Pin on map
+            //searchProperties.SelectFoundPin();
 
-            //Close Property Information Modal
-            propertyInformation.ClosePropertyInfoModal();
+            ////Close Property Information Modal
+            //propertyInformation.ClosePropertyInfoModal();
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();

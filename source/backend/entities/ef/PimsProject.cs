@@ -21,6 +21,7 @@ namespace Pims.Dal.Entities
         public PimsProject()
         {
             PimsAcquisitionFiles = new HashSet<PimsAcquisitionFile>();
+            PimsCompensationRequisitions = new HashSet<PimsCompensationRequisition>();
             PimsLeases = new HashSet<PimsLease>();
             PimsProducts = new HashSet<PimsProduct>();
             PimsProjectDocuments = new HashSet<PimsProjectDocument>();
@@ -110,6 +111,8 @@ namespace Pims.Dal.Entities
         public virtual PimsWorkActivityCode WorkActivityCode { get; set; }
         [InverseProperty(nameof(PimsAcquisitionFile.Project))]
         public virtual ICollection<PimsAcquisitionFile> PimsAcquisitionFiles { get; set; }
+        [InverseProperty(nameof(PimsCompensationRequisition.AlternateProject))]
+        public virtual ICollection<PimsCompensationRequisition> PimsCompensationRequisitions { get; set; }
         [InverseProperty(nameof(PimsLease.Project))]
         public virtual ICollection<PimsLease> PimsLeases { get; set; }
         [InverseProperty(nameof(PimsProduct.ParentProject))]

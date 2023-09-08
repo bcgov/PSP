@@ -12,7 +12,9 @@ import {
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
+import { Api_Person } from '@/models/api/Person';
 import { Api_Product, Api_Project } from '@/models/api/Project';
+import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
@@ -38,6 +40,8 @@ export const useAcquisitionProvider = () => {
     getFileCompReqH120s,
     postFileForm8,
     getAcquisitionFileForm8s,
+    getAllAcquisitionFileTeamMembers,
+    getAgreementReport,
   } = useApiAcquisitionFile();
 
   const addAcquisitionFileApi = useApiRequestWrapper<
@@ -66,6 +70,17 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'RetrieveAcquisitionFile',
     onError: useAxiosErrorHandler('Failed to load Acquisition File'),
+  });
+
+  const getAgreementsReportApi = useApiRequestWrapper<
+    (filter: Api_ExportProjectFilter) => Promise<AxiosResponse<Blob, any>>
+  >({
+    requestFunction: useCallback(
+      async (filter: Api_ExportProjectFilter) => await getAgreementReport(filter),
+      [getAgreementReport],
+    ),
+    requestName: 'GetAgreementsReport',
+    onError: useAxiosErrorHandler('Failed to load Agreements Report'),
   });
 
   const updateAcquisitionFileApi = useApiRequestWrapper<
@@ -122,6 +137,17 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'GetAcquisitionFileOwners',
     onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Owners'),
+  });
+
+  const getAllAcquisitionTeamMembersApi = useApiRequestWrapper<
+    () => Promise<AxiosResponse<Api_Person[], any>>
+  >({
+    requestFunction: useCallback(
+      async () => await getAllAcquisitionFileTeamMembers(),
+      [getAllAcquisitionFileTeamMembers],
+    ),
+    requestName: 'getAllAcquisitionFileTeamMembers',
+    onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Team Members'),
   });
 
   const getAcquisitionProjectApi = useApiRequestWrapper<
@@ -252,6 +278,7 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionProperties: updateAcquisitionPropertiesApi,
       getAcquisitionProperties: getAcquisitionPropertiesApi,
       getAcquisitionOwners: getAcquisitionOwnersApi,
+      getAllAcquisitionFileTeamMembers: getAllAcquisitionTeamMembersApi,
       getAcquisitionProject: getAcquisitionProjectApi,
       getAcquisitionProduct: getAcquisitionProductApi,
       getAcquisitionFileChecklist: getAcquisitionChecklistApi,
@@ -261,6 +288,7 @@ export const useAcquisitionProvider = () => {
       getAcquisitionCompReqH120s: getAcquisitionCompReqH120sApi,
       postAcquisitionForm8: postFileForm8Api,
       getAcquisitionFileForm8s: getAcquisitionForm8sApi,
+      getAgreementsReport: getAgreementsReportApi,
     }),
     [
       addAcquisitionFileApi,
@@ -269,6 +297,7 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionPropertiesApi,
       getAcquisitionPropertiesApi,
       getAcquisitionOwnersApi,
+      getAllAcquisitionTeamMembersApi,
       getAcquisitionProjectApi,
       getAcquisitionProductApi,
       getAcquisitionChecklistApi,
@@ -278,6 +307,7 @@ export const useAcquisitionProvider = () => {
       getAcquisitionCompReqH120sApi,
       postFileForm8Api,
       getAcquisitionForm8sApi,
+      getAgreementsReportApi,
     ],
   );
 };

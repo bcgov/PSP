@@ -24,6 +24,7 @@ export const useApiProjects = () => {
         api.get<IPagedItems<Api_Project>>(
           `/projects/search?${params ? queryString.stringify(params) : ''}`,
         ),
+      getAllProjects: () => api.get<Api_Project[]>(`/projects`),
       getProject: (id: number) => api.get<Api_Project>(`/projects/${id}`),
       putProject: (project: Api_Project) =>
         api.put<Api_Project>(`/projects/${project.id}`, project),

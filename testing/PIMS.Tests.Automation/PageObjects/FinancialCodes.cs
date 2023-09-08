@@ -84,7 +84,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateAdminFinancialCodes()
         {
             WaitUntilClickable(financialCodeMainMenuLink);
-            webDriver.FindElement(financialCodeMainMenuLink).Click();
+            FocusAndClick(financialCodeMainMenuLink);
         }
 
         public void CreateNewFinancialCodeBttn()
@@ -144,7 +144,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int CountTotalFinancialCodeResults()
         {
-            WaitUntilVisible(financialCodeTableResultsTotal);
+            Wait();
             return webDriver.FindElements(financialCodeTableResultsTotal).Count();
         }
 
