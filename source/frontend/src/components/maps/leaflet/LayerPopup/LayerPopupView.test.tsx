@@ -6,7 +6,7 @@ import Claims from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { emptyFullyAttributed } from '@/models/layers/parcelMapBC';
-import { EmptyProperty } from '@/models/layers/pimsPropertyLocationView';
+import { EmptyPropertyLocation } from '@/models/layers/pimsPropertyLocationView';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { pidParser } from '@/utils/propertyUtils';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
@@ -89,7 +89,7 @@ describe('LayerPopupView component', () => {
         featureDataset: {
           pimsFeature: {
             type: 'Feature',
-            properties: { ...EmptyProperty, PROPERTY_ID: propertyId },
+            properties: { ...EmptyPropertyLocation, PROPERTY_ID: propertyId },
             geometry: { type: 'Point', coordinates: [] },
           },
           location: { lat: 0, lng: 0 },

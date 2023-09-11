@@ -68,7 +68,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SearchResearchFileByRFile(string RFile)
         {
-            WaitUntilClickable(searchResearchBySelect);
+            Wait(2000);
             ChooseSpecificSelectOption(searchResearchBySelect, "Research file #");
             webDriver.FindElement(searchResearchFileNbrInput).SendKeys(RFile);
             ChooseSpecificSelectOption(searchResearchStatusSelect, "All Status");
@@ -145,16 +145,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyResearchFileTableContent(ResearchFile researchFile, string user)
         {
-            WaitUntilVisible(searchResearchFile1stResultLink);
-
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultLink).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultFileName).Text.Equals(researchFile.ResearchFileName));
+            AssertTrueIsDisplayed(searchResearchFile1stResultLink);
+            AssertTrueContentEquals(searchResearchFile1stResultFileName, researchFile.ResearchFileName);
             Assert.True(webDriver.FindElement(searchResearchFile1stResultRegion).Text != "");
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultCreator).Text.Equals(user));
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultCreateDate).Text.Equals(GetTodayFormattedDate()));
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultUpdatedBy).Text.Equals(user));
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultUpdateDate).Text.Equals(GetTodayFormattedDate()));
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultStatus).Text.Equals(researchFile.Status));
+            AssertTrueContentEquals(searchResearchFile1stResultCreator, user);
+            AssertTrueContentEquals(searchResearchFile1stResultCreateDate, GetTodayFormattedDate());
+            AssertTrueContentEquals(searchResearchFile1stResultUpdatedBy, user);
+            AssertTrueContentEquals(searchResearchFile1stResultUpdateDate, GetTodayFormattedDate());
+            AssertTrueContentEquals(searchResearchFile1stResultStatus, researchFile.Status);
         }
 
         public void FilterResearchFiles(string name, string status, string roadName, string idir)

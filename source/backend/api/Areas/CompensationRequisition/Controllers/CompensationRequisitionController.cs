@@ -37,7 +37,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         }
 
         /// <summary>
-        /// Get The Compensation Requisition by CompensationRequisitionId
+        /// Get The Compensation Requisition by CompensationRequisitionId.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

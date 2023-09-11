@@ -12,7 +12,8 @@ import {
 } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
   emptyFullyFeaturedFeatureCollection,
-  emptyPimsFeatureCollection,
+  emptyPimsBoundaryFeatureCollection,
+  emptyPimsLocationFeatureCollection,
   FeatureSelected,
 } from '@/components/common/mapFSM/models';
 import {
@@ -25,7 +26,7 @@ import {
 } from '@/constants/index';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import {
-  EmptyProperty,
+  EmptyPropertyLocation,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 import leafletMouseSlice from '@/store/slices/leafletMouse/LeafletMouseSlice';
@@ -106,9 +107,13 @@ const createPimsFeatures = (
     features: parcelSeed.map<Feature<Point, PIMS_Property_Location_View>>(x => {
       return {
         type: 'Feature',
-        id: x.id,
+        id: `PIMS_PROPERTY_LOCATION_VW.fid--${x.id}`,
         geometry: { type: 'Point', coordinates: [x.longitude, x.latitude] },
-        properties: { ...EmptyProperty, PROPERTY_ID: x.propertyId ?? null, PID: x.pid ?? null },
+        properties: {
+          ...EmptyPropertyLocation,
+          PROPERTY_ID: x.propertyId ?? null,
+          PID: x.pid ?? null,
+        },
       };
     }),
   };
@@ -208,7 +213,8 @@ describe('MapContainer', () => {
     (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue({
       ...mapMachineBaseMock,
       mapFeatureData: {
-        pimsFeatures: createPimsFeatures(mockParcels),
+        pimsLocationFeatures: createPimsFeatures(mockParcels),
+        pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
       },
     });
@@ -277,7 +283,8 @@ describe('MapContainer', () => {
     (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue({
       ...mapMachineBaseMock,
       mapFeatureData: {
-        pimsFeatures: createPimsFeatures(smallMockParcels),
+        pimsLocationFeatures: createPimsFeatures(smallMockParcels),
+        pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
       },
     });
@@ -298,7 +305,8 @@ describe('MapContainer', () => {
     (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue({
       ...mapMachineBaseMock,
       mapFeatureData: {
-        pimsFeatures: emptyPimsFeatureCollection,
+        pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+        pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
       },
     });
@@ -355,7 +363,8 @@ describe('MapContainer', () => {
     (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue({
       ...mapMachineBaseMock,
       mapFeatureData: {
-        pimsFeatures: createPimsFeatures(largeMockParcels),
+        pimsLocationFeatures: createPimsFeatures(largeMockParcels),
+        pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
       },
     });
@@ -377,15 +386,17 @@ describe('MapContainer', () => {
     const [longitude, latitude] = feature.geometry.coordinates;
 
     const expectedFeature: FeatureSelected = {
-      clusterId: '1',
-      pimsFeature: feature.properties,
+      clusterId: feature.id?.toString() || '',
+      pimsLocationFeature: feature.properties,
+      pimsBoundaryFeature: null,
       fullyAttributedFeature: null,
       latlng: { lng: longitude, lat: latitude },
     };
-    const testMapMock = {
+    const testMapMock: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       mapFeatureData: {
-        pimsFeatures: pimsFeatures,
+        pimsLocationFeatures: pimsFeatures,
+        pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
       },
     };
@@ -413,15 +424,17 @@ describe('MapContainer', () => {
     const [longitude, latitude] = feature.geometry.coordinates;
 
     const expectedFeature: FeatureSelected = {
-      clusterId: '1',
-      pimsFeature: feature.properties,
+      clusterId: feature.id?.toString() || '',
+      pimsLocationFeature: feature.properties,
+      pimsBoundaryFeature: null,
       fullyAttributedFeature: null,
       latlng: { lng: longitude, lat: latitude },
     };
-    const testMapMock = {
+    const testMapMock: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       mapFeatureData: {
-        pimsFeatures: pimsFeatures,
+        pimsLocationFeatures: pimsFeatures,
+        pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
       },
     };
@@ -464,7 +477,8 @@ describe('MapContainer', () => {
     const testMapMock: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       mapFeatureData: {
-        pimsFeatures: pimsFeatures,
+        pimsLocationFeatures: pimsFeatures,
+        pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
       },
       isFiltering: false,
@@ -489,8 +503,9 @@ describe('MapContainer', () => {
     const [longitude, latitude] = feature.geometry.coordinates;
 
     const expectedFeature: FeatureSelected = {
-      clusterId: '1',
-      pimsFeature: feature.properties,
+      clusterId: feature.id?.toString() || '',
+      pimsLocationFeature: feature.properties,
+      pimsBoundaryFeature: null,
       fullyAttributedFeature: null,
       latlng: { lng: longitude, lat: latitude },
     };
@@ -499,7 +514,8 @@ describe('MapContainer', () => {
     const testMapMock: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       mapFeatureData: {
-        pimsFeatures: pimsFeatures,
+        pimsLocationFeatures: pimsFeatures,
+        pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
       },
       activePimsPropertyIds: activeIds,

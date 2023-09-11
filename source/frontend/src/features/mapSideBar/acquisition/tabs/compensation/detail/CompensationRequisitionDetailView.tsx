@@ -58,6 +58,11 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   const { hasClaim, hasRole } = useKeycloakWrapper();
   const [payeeDetails, setPayeeDetails] = useState<PayeeViewDetails | null>(null);
 
+  const projectName =
+    compensation?.alternateProject !== undefined
+      ? compensation?.alternateProject?.code + ' - ' + compensation?.alternateProject?.description
+      : '';
+
   useEffect(() => {
     if (!compensation) {
       setPayeeDetails(null);
@@ -203,6 +208,9 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       >
         <SectionField label="Status" labelWidth="4" data-testid="compensation-status">
           {compensation.isDraft ? 'Draft' : 'Final'}
+        </SectionField>
+        <SectionField label="Alternate project" labelWidth="4">
+          {projectName}
         </SectionField>
         <SectionField label="Final date" labelWidth="4" data-testid="compensation-finalized">
           {prettyFormatDate(compensation.finalizedDate)}

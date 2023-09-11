@@ -11,7 +11,7 @@ import {
 import { toCqlFilterValue } from '@/hooks/layer-api/layerUtils';
 import { IProperty } from '@/interfaces';
 import {
-  EmptyProperty,
+  EmptyPropertyLocation,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 
@@ -34,7 +34,7 @@ describe('mapUtils tests', () => {
           type: 'Point',
           coordinates: [1, 2],
         },
-        properties: { ...EmptyProperty, PROPERTY_ID: '1' },
+        properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1' },
       };
       const latlng: LatLngExpression = { lat: 1, lng: 2 };
 
@@ -99,7 +99,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { ...EmptyProperty, PROPERTY_ID: '1' },
+            properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1' },
           },
           true,
         ),

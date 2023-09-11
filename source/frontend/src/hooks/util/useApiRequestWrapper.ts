@@ -17,6 +17,7 @@ export interface IResponseWrapper<
   loading: boolean;
   requestedOn?: Date;
   requestEndOn?: Date;
+  status: Awaited<ReturnType<FunctionType>>['status'] | undefined;
 }
 
 export interface IApiRequestWrapper<
@@ -59,6 +60,7 @@ export const useApiRequestWrapper = <
   const [requestedOn, setRequestedOn] = useState<Date>();
   const [requestEndOn, setRequestEndOn] = useState<Date>();
   const [response, setResponse] = useState<Awaited<ReturnType<FunctionType>>['data'] | undefined>();
+  const [status, setStatus] = useState<number>();
   const dispatch = useDispatch();
   const isMounted = useIsMounted();
 
@@ -84,9 +86,10 @@ export const useApiRequestWrapper = <
         if (!isMounted()) {
           return;
         }
-        setResponse(response);
-        onSuccess && onSuccess(response);
-        return response;
+        setStatus(response?.status);
+        setResponse(response?.data);
+        onSuccess && onSuccess(response?.data);
+        return response?.data;
       } catch (e) {
         if (!axios.isAxiosError(e) && throwError) {
           throw e;
@@ -129,6 +132,7 @@ export const useApiRequestWrapper = <
 
   return {
     error: error,
+    status: status,
     response: response,
     loading: loading,
     execute: wrappedApiRequest,

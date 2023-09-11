@@ -12,7 +12,7 @@ import { ProjectExportFormContent } from './ProjectExportFormContent';
 
 export interface IProjectExportFormProps {
   onExportTypeSelected: () => void;
-  onExport: (filter: Api_ExportProjectFilter) => void;
+  onExport: (filter: Api_ExportProjectFilter) => Promise<void>;
   projects: Api_Project[];
   teamMembers: Api_Person[];
   loading: boolean;
@@ -35,8 +35,8 @@ export const ProjectExportForm: React.FunctionComponent<IProjectExportFormProps>
   return (
     <Formik<ExportProjectModel>
       initialValues={new ExportProjectModel()}
-      onSubmit={(values: ExportProjectModel) => {
-        onExport(values.toApi());
+      onSubmit={async (values: ExportProjectModel) => {
+        await onExport(values.toApi());
       }}
     >
       <Form>
