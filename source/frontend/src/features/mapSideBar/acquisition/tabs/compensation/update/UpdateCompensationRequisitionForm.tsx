@@ -9,6 +9,7 @@ import {
   FastCurrencyInput,
   FastDatePicker,
   Input,
+  ProjectSelector,
   Select,
   SelectOption,
   TextArea,
@@ -21,6 +22,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { prettyFormatDate } from '@/utils/dateUtils';
@@ -44,6 +46,8 @@ export interface CompensationRequisitionFormProps {
     compensation: CompensationRequisitionFormModel,
   ) => Promise<Api_CompensationRequisition | undefined>;
   onCancel: () => void;
+  showAltProjectError: boolean;
+  setShowAltProjectError: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormProps> = ({
@@ -58,6 +62,8 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   yearlyFinancialOptions,
   onSave,
   onCancel,
+  showAltProjectError,
+  setShowAltProjectError,
 }) => {
   const fiscalYearOptions = generateFiscalYearOptions();
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -116,6 +122,15 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
     }
   };
 
+  const onMinistryProjectSelected = async (param: IAutocompletePrediction[]) => {
+    debugger;
+    if (param.length > 0) {
+      if (param[0].id !== undefined && acquisitionFile.projectId === param[0].id) {
+        setShowAltProjectError(true);
+      }
+    }
+  };
+
   return (
     <Formik<CompensationRequisitionFormModel>
       enableReinitialize
@@ -148,6 +163,14 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                       },
                     ]}
                   />
+                </SectionField>
+                <SectionField label="Alternate project" labelWidth="5" contentWidth="6">
+                  <ProjectSelector
+                    field="alternateProject"
+                    onChange={(vals: IAutocompletePrediction[]) => {
+                      onMinistryProjectSelected(vals);
+                    }}
+                  ></ProjectSelector>
                 </SectionField>
                 <SectionField
                   label="Final date"
@@ -321,6 +344,21 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               }}
               handleCancel={() => {
                 setShowModal(false);
+              }}
+            />
+
+            <GenericModal
+              display={showAltProjectError}
+              className="projectError"
+              title="Alternate Project Error"
+              message={[
+                <strong>Error: </strong>,
+                `You have selected an alternate project that is the same as the file project, please select a different project`,
+              ]}
+              okButtonText="Ok"
+              handleOk={() => {
+                setShowAltProjectError(false);
+                formikRef.current?.setFieldValue('alternateProject', '');
               }}
             />
           </StyledFormWrapper>

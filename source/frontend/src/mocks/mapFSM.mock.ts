@@ -1,14 +1,16 @@
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
   emptyFullyFeaturedFeatureCollection,
-  emptyPimsFeatureCollection,
+  emptyPimsBoundaryFeatureCollection,
+  emptyPimsLocationFeatureCollection,
 } from '@/components/common/mapFSM/models';
 import { defaultBounds } from '@/components/maps/constants';
 
 export const mapMachineBaseMock: IMapStateMachineContext = {
   requestFlyToBounds: jest.fn(),
   mapFeatureData: {
-    pimsFeatures: emptyPimsFeatureCollection,
+    pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+    pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
     fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
   },
 

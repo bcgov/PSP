@@ -83,6 +83,8 @@ namespace PIMS.Tests.Automation.PageObjects
         //Search for an Organization Contact
         public void SearchOrganizationContact(string searchCriteria)
         {
+            Wait();
+
             FocusAndClick(searchContactOrgRadioBttn);
             webDriver.FindElement(searchContactNameInput).SendKeys(searchCriteria);
             webDriver.FindElement(searchContactResultsBttn).Click();
@@ -91,7 +93,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Pick the first Search Result
         public void SelectFirstResultLink()
         {
-            WaitUntilClickable(searchContactFirstResultLink);
+            Wait(2000);
             webDriver.FindElement(searchContactFirstResultLink).Click();
         }
 
@@ -185,26 +187,26 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyContactTableContent(string summary, string firstName, string lastName, string organization, string email, string address, string city, string province, string country)
         {
-            WaitUntilDisappear(searchContactLoadingResultTable);
+            //WaitUntilDisappear(searchContactLoadingResultTable);
             Wait(2000);
 
-            Assert.True(webDriver.FindElement(searchContactFirstResultLink).Text.Equals(summary));
-            Assert.True(webDriver.FindElement(searchContactFirstNameDiv).Text.Equals(firstName));
-            Assert.True(webDriver.FindElement(searchContactFirstLastNameDiv).Text.Equals(lastName));
-            Assert.True(webDriver.FindElement(searchContactFirstOrganizationDiv).Text.Equals(organization));
-            Assert.True(webDriver.FindElement(searchContactFirstEmailDiv).Text.Equals(email));
-            Assert.True(webDriver.FindElement(searchContactFirstMailAddressDiv).Text.Equals(address));
-            Assert.True(webDriver.FindElement(searchContactFirstCityDiv).Text.Equals(city));
+            AssertTrueContentEquals(searchContactFirstResultLink,summary);
+            AssertTrueContentEquals(searchContactFirstNameDiv, firstName);
+            AssertTrueContentEquals(searchContactFirstLastNameDiv, lastName);
+            AssertTrueContentEquals(searchContactFirstOrganizationDiv, organization);
+            AssertTrueContentEquals(searchContactFirstEmailDiv, email);
+            AssertTrueContentEquals(searchContactFirstMailAddressDiv, address);
+            AssertTrueContentEquals(searchContactFirstCityDiv, city);
             if (country == "Canada" || country == "United States of America")
             {
-                Assert.True(webDriver.FindElement(searchContactFirstProvinceDiv).Text.Equals(province));
+                AssertTrueContentEquals(searchContactFirstProvinceDiv, province);
             }
             else
             {
-                Assert.True(webDriver.FindElement(searchContactFirstProvinceDiv).Text.Equals(""));
+                AssertTrueContentEquals(searchContactFirstProvinceDiv, "");
             }
-            Assert.True(webDriver.FindElement(searchContactUpdateBttn).Displayed);
-            Assert.True(webDriver.FindElement(searchContactViewBttn).Displayed);
+            AssertTrueIsDisplayed(searchContactUpdateBttn);
+            AssertTrueIsDisplayed(searchContactViewBttn);
             
         }
 

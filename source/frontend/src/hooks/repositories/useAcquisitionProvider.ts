@@ -42,6 +42,7 @@ export const useAcquisitionProvider = () => {
     getAcquisitionFileForm8s,
     getAllAcquisitionFileTeamMembers,
     getAgreementReport,
+    getCompensationReport,
   } = useApiAcquisitionFile();
 
   const addAcquisitionFileApi = useApiRequestWrapper<
@@ -81,6 +82,17 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'GetAgreementsReport',
     onError: useAxiosErrorHandler('Failed to load Agreements Report'),
+  });
+
+  const getCompensationReportApi = useApiRequestWrapper<
+    (filter: Api_ExportProjectFilter) => Promise<AxiosResponse<Blob, any>>
+  >({
+    requestFunction: useCallback(
+      async (filter: Api_ExportProjectFilter) => await getCompensationReport(filter),
+      [getCompensationReport],
+    ),
+    requestName: 'GetCompensationRequisitionsReport',
+    onError: useAxiosErrorHandler('Failed to load Compensation Requisitions Report'),
   });
 
   const updateAcquisitionFileApi = useApiRequestWrapper<
@@ -289,6 +301,7 @@ export const useAcquisitionProvider = () => {
       postAcquisitionForm8: postFileForm8Api,
       getAcquisitionFileForm8s: getAcquisitionForm8sApi,
       getAgreementsReport: getAgreementsReportApi,
+      getCompensationReport: getCompensationReportApi,
     }),
     [
       addAcquisitionFileApi,
@@ -308,6 +321,7 @@ export const useAcquisitionProvider = () => {
       postFileForm8Api,
       getAcquisitionForm8sApi,
       getAgreementsReportApi,
+      getCompensationReportApi,
     ],
   );
 };

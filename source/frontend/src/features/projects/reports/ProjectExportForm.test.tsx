@@ -62,6 +62,22 @@ describe('ProjectExportForm component', () => {
     expect(onExportTypeSelected).toHaveBeenCalled();
   });
 
+  it('calls onExport when the user clicks the export button', async () => {
+    const { getByDisplayValue, getByText } = setup({} as any);
+
+    const select = getByDisplayValue(/Select Export Type.../i);
+    await act(async () => {
+      userEvent.selectOptions(select, ProjectExportTypes.AGREEMENT);
+    });
+
+    const exportButton = getByText('Export');
+    await act(async () => {
+      userEvent.click(exportButton);
+    });
+
+    expect(onExport).toHaveBeenCalled();
+  });
+
   it('displays loading spinner when prop set', async () => {
     const { getByTestId } = setup({ loading: true } as any);
 

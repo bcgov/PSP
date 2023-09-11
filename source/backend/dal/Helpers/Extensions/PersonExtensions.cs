@@ -1,6 +1,7 @@
 using System.Linq;
+using Pims.Dal.Entities;
 
-namespace Pims.Dal.Entities
+namespace Pims.Dal.Helpers.Extensions
 {
     /// <summary>
     /// PersonExtensions static class, provides an extensions methods for person entities.
@@ -35,13 +36,20 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
-        public static string GetFullName(this PimsPerson person)
+        public static string GetFullName(this PimsPerson person, bool addSuffix = false)
         {
             if (person == null)
             {
-                return null;
+                return string.Empty;
             }
+
             string[] names = { person.FirstName, person.MiddleNames, person.Surname };
+
+            if (addSuffix && !string.IsNullOrEmpty(person.NameSuffix))
+            {
+                names = names.Append(person.NameSuffix).ToArray();
+            }
+
             return string.Join(" ", names.Where(n => n != null && n.Trim() != string.Empty));
         }
     }

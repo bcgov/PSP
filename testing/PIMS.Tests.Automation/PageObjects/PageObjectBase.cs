@@ -41,6 +41,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected void WaitUntilDisappear(By element)
         {
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(element));
+            Wait();
         }
 
         protected void WaitUntilVisible(By element)
@@ -66,12 +67,12 @@ namespace PIMS.Tests.Automation.PageObjects
             if (buttonName == "Save")
             {
                 wait.Until(ExpectedConditions.ElementExists(saveButton));
-                webDriver.FindElement(saveButton).Click();
+                FocusAndClick(saveButton);
             }
             else
             {
                 wait.Until(ExpectedConditions.ElementExists(cancelButton));
-                webDriver.FindElement(cancelButton).Click();
+                FocusAndClick(cancelButton);
             }
         }
 
@@ -103,21 +104,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilClickable(element);
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedElement);
-        }
-
-        protected void ChooseRandomSelectOption(By parentElementBy, int fromOption)
-        {
-            Random random = new Random();
-            var js = (IJavaScriptExecutor)webDriver;
-
-            var parentElement = webDriver.FindElement(parentElementBy);
-            var childrenElements = parentElement.FindElements(By.TagName("option"));
-            int index = random.Next(fromOption, childrenElements.Count);
-
-            var selectedRadioBttn = childrenElements[index];
-
-            js.ExecuteScript("arguments[0].scrollIntoView();", selectedRadioBttn);
-            selectedRadioBttn.Click();
         }
 
         protected void ChooseSpecificSelectOption(By parentElement, string option)
@@ -159,24 +145,6 @@ namespace PIMS.Tests.Automation.PageObjects
             selectedOption.Click();
         }
 
-        protected void ChooseMultiSelectRandomOptions(By element, int options)
-        {
-            Random random = new Random();
-            var js = (IJavaScriptExecutor)webDriver;
-
-            for (int i = 0; i < options; i++)
-            {
-                var parentElement = webDriver.FindElement(element);
-                var childrenElements = parentElement.FindElements(By.TagName("li"));
-
-                int index = random.Next(0, childrenElements.Count);
-                var selectedOption = childrenElements[index];
-
-                js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
-                selectedOption.Click();
-            } 
-        }
-
         protected void ClearInput(By elementBy)
         {
             WaitUntilClickable(elementBy);
@@ -206,6 +174,30 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 element.FindElement(By.TagName("i")).Click();
             }
+        }
+
+        protected void AssertTrueIsDisplayed(By elementBy)
+        {
+            WaitUntilVisible(elementBy);
+            Assert.True(webDriver.FindElement(elementBy).Displayed);
+        }
+
+        protected void AssertTrueContentEquals(By elementBy, string text)
+        {
+            WaitUntilVisible(elementBy);
+            Assert.True(webDriver.FindElement(elementBy).Text.Equals(text));
+        }
+
+        protected void AssertTrueContentNotEquals(By elementBy, string text)
+        {
+            WaitUntilVisible(elementBy);
+            Assert.True(webDriver.FindElement(elementBy).Text != text);
+        }
+
+        protected void AssertTrueElementContains(By elementBy, string text)
+        {
+            WaitUntilVisible(elementBy);
+            Assert.True(webDriver.FindElement(elementBy).Text.Contains(text));
         }
 
         protected string TransformDateFormat(string date)

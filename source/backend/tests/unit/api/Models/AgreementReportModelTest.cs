@@ -3,9 +3,6 @@ using Pims.Api.Areas.Reports.Models.Agreement;
 using Pims.Dal.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Pims.Api.Test
@@ -70,7 +67,7 @@ namespace Pims.Api.Test
             var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.AgreementDate.Should().Be("01/01/1990");
+            model.AgreementDate.Should().Be("1990-01-01");
         }
 
         [Fact]
