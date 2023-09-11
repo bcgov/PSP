@@ -109,15 +109,6 @@ SELECT @documentEdit = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'document-edit';
 SELECT @documentDelete = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'document-delete';
 SELECT @documentAdmin = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'document-admin';
 
-DECLARE @activityView BIGINT;
-DECLARE @activityAdd BIGINT;
-DECLARE @activityEdit BIGINT;
-DECLARE @activityDelete BIGINT;
-SELECT @activityView = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'activity-view';
-SELECT @activityAdd = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'activity-add';
-SELECT @activityEdit = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'activity-edit';
-SELECT @activityDelete = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'activity-delete';
-
 DECLARE @projectView BIGINT;
 DECLARE @projectAdd BIGINT;
 DECLARE @projectEdit BIGINT;
@@ -185,10 +176,6 @@ VALUES
     (@sysadmn,    @documentAdd,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@sysadmn,    @documentDelete,      N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@sysadmn,    @documentAdmin,       N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @activityView,        N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @activityEdit,        N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @activityAdd,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @activityDelete,      N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@sysadmn,    @projectView,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@sysadmn,    @projectEdit,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@sysadmn,    @projectAdd,          N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
@@ -261,6 +248,7 @@ VALUES
     (@llfunc, @documentAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@llfunc, @documentEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@llfunc, @documentDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@llfunc, @projectView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@llfunc, @formView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@llfunc, @formAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@llfunc, @formEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
@@ -282,8 +270,10 @@ VALUES
     (@prjfunc, @projectAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@prjfunc, @projectEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@prjfunc, @projectDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@prjfunc, @propertyView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     -- Project Functional
     (@prjrdon, @projectView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@prjrdon, @propertyView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     -- Research Functional
     (@resfunc, @propertyView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@resfunc, @propertyAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
@@ -302,6 +292,7 @@ VALUES
     (@resfunc, @documentAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@resfunc, @documentEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@resfunc, @documentDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@resfunc, @projectView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@resfunc, @formView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@resfunc, @formAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@resfunc, @formEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
