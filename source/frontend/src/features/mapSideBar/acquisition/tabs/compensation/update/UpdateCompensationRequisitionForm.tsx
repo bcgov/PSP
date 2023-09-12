@@ -123,7 +123,6 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   };
 
   const onMinistryProjectSelected = async (param: IAutocompletePrediction[]) => {
-    debugger;
     if (param.length > 0) {
       if (param[0].id !== undefined && acquisitionFile.projectId === param[0].id) {
         setShowAltProjectError(true);

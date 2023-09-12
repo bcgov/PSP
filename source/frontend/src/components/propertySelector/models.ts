@@ -1,9 +1,12 @@
+import { Polygon } from 'geojson';
+
 export interface IMapProperty {
   propertyId?: number;
   pid?: string;
   pin?: string;
   latitude?: number;
   longitude?: number;
+  polygon?: Polygon;
   planNumber?: string;
   address?: string;
   legalDescription?: string;
