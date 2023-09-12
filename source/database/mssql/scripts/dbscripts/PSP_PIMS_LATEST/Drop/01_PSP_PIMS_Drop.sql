@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
 /* Script generated with: DeZign for Databases 13.0.4                     */
 /* Target DBMS:           MS SQL Server 2017                              */
-/* Project file:          PIMS S61.00.dez                                 */
-/* Project name:          PIMS S61.00                                     */
+/* Project file:          PIMS S62.00.dez                                 */
+/* Project name:          PIMS S62.00                                     */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2023-08-10 17:04                                */
+/* Created on:            2023-08-29 10:33                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -169,15 +169,15 @@ DROP TRIGGER [dbo].[PIMS_RFLDOC_I_S_U_TR]
 GO
 
 
-DROP TRIGGER [dbo].[PIMS_PRPRTY_I_S_U_TR]
-GO
-
-
 DROP TRIGGER [dbo].[PIMS_PRPRTY_I_S_I_TR]
 GO
 
 
 DROP TRIGGER [dbo].[PIMS_PRPRTY_A_S_IUD_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_PRPRTY_I_S_U_TR]
 GO
 
 
@@ -13826,14 +13826,6 @@ GO
 
 
 DROP TABLE [dbo].[PIMS_PROPERTY_TYPE]
-GO
-
-
-/* ---------------------------------------------------------------------- */
-/* Drop table "dbo.TMP_PIMS_PROP_PROP_ADJACENT_LAND_TYPE"                 */
-/* ---------------------------------------------------------------------- */
-
-DROP TABLE [dbo].[TMP_PIMS_PROP_PROP_ADJACENT_LAND_TYPE]
 GO
 
 
