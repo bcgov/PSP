@@ -81,6 +81,11 @@ namespace Pims.Api.Areas.Reports.Controllers
             }
 
             var agreements = _acquisitionFileService.SearchAgreements(filter);
+            if (agreements is null || !agreements.Any())
+            {
+                // Return 204 "No Content" to signal the frontend that we did not find any matching records.
+                return NoContent();
+            }
             var reportAgreements = agreements.Select(agreement => new AgreementReportModel(agreement, _user));
 
             return ReportHelper.GenerateExcel(reportAgreements, "Agreement Export");
