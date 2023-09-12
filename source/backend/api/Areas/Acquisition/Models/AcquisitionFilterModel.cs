@@ -39,6 +39,11 @@ namespace Pims.Api.Areas.Acquisition.Models.Search
         /// </summary>
         public string ProjectNameOrNumber { get; set; }
 
+        /// <summary>
+        /// get/set - The MOTI person id to search by for acquisition team members.
+        /// </summary>
+        public string AcquisitionTeamMemberPersonId { get; set; }
+
         #endregion
 
         #region Constructors
@@ -66,6 +71,7 @@ namespace Pims.Api.Areas.Acquisition.Models.Search
             this.AcquisitionFileStatusTypeCode = filter.GetStringValue(nameof(this.AcquisitionFileStatusTypeCode));
             this.AcquisitionFileNameOrNumber = filter.GetStringValue(nameof(this.AcquisitionFileNameOrNumber));
             this.ProjectNameOrNumber = filter.GetStringValue(nameof(this.ProjectNameOrNumber));
+            this.AcquisitionTeamMemberPersonId = filter.GetStringValue(nameof(this.AcquisitionTeamMemberPersonId));
 
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
         }
@@ -90,6 +96,7 @@ namespace Pims.Api.Areas.Acquisition.Models.Search
                 AcquisitionFileStatusTypeCode = model.AcquisitionFileStatusTypeCode,
                 AcquisitionFileNameOrNumber = model.AcquisitionFileNameOrNumber,
                 ProjectNameOrNumber = model.ProjectNameOrNumber,
+                AcquisitionTeamMemberPersonId = model.AcquisitionTeamMemberPersonId,
 
                 Sort = model.Sort,
             };

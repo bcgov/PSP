@@ -2041,7 +2041,7 @@ namespace Pims.Api.Test.Services
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
-            repository.Setup(x => x.GetTeamMembers(It.IsAny<HashSet<short>>())).Returns(new List<PimsAcquisitionFilePerson>());
+            repository.Setup(x => x.GetTeamMembers(It.IsAny<HashSet<short>>(), null)).Returns(new List<PimsAcquisitionFilePerson>());
 
             // Act
             Action act = () => service.GetOwners(1);
@@ -2060,7 +2060,7 @@ namespace Pims.Api.Test.Services
 
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
-            repository.Setup(x => x.GetTeamMembers(It.IsAny<HashSet<short>>())).Returns(new List<PimsAcquisitionFilePerson>());
+            repository.Setup(x => x.GetTeamMembers(It.IsAny<HashSet<short>>(), It.IsAny<long>())).Returns(new List<PimsAcquisitionFilePerson>());
 
             var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
@@ -2069,7 +2069,7 @@ namespace Pims.Api.Test.Services
             var teamMembers = service.GetTeamMembers();
 
             // Assert
-            repository.Verify(x => x.GetTeamMembers(It.IsAny<HashSet<short>>()), Times.Once);
+            repository.Verify(x => x.GetTeamMembers(It.IsAny<HashSet<short>>(), contractorUser.PersonId), Times.Once);
         }
 
         #endregion

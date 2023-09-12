@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
+import ExpandableTextList from '@/components/common/ExpandableTextList';
 import { ColumnWithProps, renderTypeCode } from '@/components/Table';
 import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { Api_AcquisitionFilePerson } from '@/models/api/AcquisitionFile';
 import { stringToFragment } from '@/utils';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 import AcquisitionProperties from './AcquisitionProperties';
 import { AcquisitionSearchResultModel } from './models';
@@ -59,7 +62,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
       stringToFragment(props.row.original.regionCode),
   },
   {
-    Header: 'Ministry project',
+    Header: 'Project',
     accessor: 'project',
     align: 'left',
     clickable: true,
@@ -69,6 +72,30 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
       const project = props.row.original.project;
       const formattedValue = [project?.code, project?.description].filter(Boolean).join(' ');
       return stringToFragment(formattedValue);
+    },
+  },
+  {
+    Header: 'Team member',
+    accessor: 'aquisitionTeam',
+    align: 'left',
+    clickable: true,
+    width: 40,
+    maxWidth: 40,
+    Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
+      const acquisitionTeam = props.row.original.aquisitionTeam;
+      return (
+        <ExpandableTextList<Api_AcquisitionFilePerson>
+          items={acquisitionTeam ?? []}
+          keyFunction={(item: Api_AcquisitionFilePerson, index: number) =>
+            `aquisition-team-${item.id}-person-${item.personId ?? index}`
+          }
+          renderFunction={(item: Api_AcquisitionFilePerson) => (
+            <>{`${formatApiPersonNames(item.person)} (${item.personProfileType?.description})`}</>
+          )}
+          delimiter={', '}
+          maxCollapsedLength={2}
+        />
+      );
     },
   },
   {

@@ -82,9 +82,9 @@ namespace Pims.Api.Services
             // Limit search results to user's assigned region(s)
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-            long? personId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            return _acqFileRepository.GetPage(filter, userRegions, personId);
+            return _acqFileRepository.GetPage(filter, userRegions, contractorPersonId);
         }
 
         public List<AcquisitionFileExportModel> GetAcquisitionFileExport(AcquisitionFilter filter)
@@ -95,9 +95,9 @@ namespace Pims.Api.Services
             // Limit search results to user's assigned region(s)
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-            long? personId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            var acqFiles = _acqFileRepository.GetAcquisitionFileExport(filter, userRegions, personId);
+            var acqFiles = _acqFileRepository.GetAcquisitionFileExport(filter, userRegions, contractorPersonId);
 
             return acqFiles.SelectMany(file => file.PimsPropertyAcquisitionFiles.Where(fp => fp.AcquisitionFileId.Equals(file.AcquisitionFileId)).DefaultIfEmpty(), (file, fp) => (file, fp))
                                 .Select(fileProperty => new AcquisitionFileExportModel
@@ -162,7 +162,9 @@ namespace Pims.Api.Services
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-            return _acqFileRepository.GetTeamMembers(userRegions);
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            return _acqFileRepository.GetTeamMembers(userRegions, contractorPersonId);
         }
 
         public IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id)
