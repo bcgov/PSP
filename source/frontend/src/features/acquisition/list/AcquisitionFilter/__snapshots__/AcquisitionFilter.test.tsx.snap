@@ -282,7 +282,7 @@ exports[`Acquisition Filter matches snapshot 1`] = `
                       class="searchBox "
                       id="multiselect-acquisitionTeamMembers_input"
                       name="search_name_input"
-                      placeholder="Select all"
+                      placeholder="Team member"
                       type="text"
                       value=""
                     />

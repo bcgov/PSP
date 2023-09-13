@@ -123,7 +123,7 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                   <Multiselect
                     field="acquisitionTeamMembers"
                     displayValue="text"
-                    placeholder="Select all"
+                    placeholder="Team member"
                     hidePlaceholder
                     options={acquisitionTeamOptions}
                     selectionLimit={1}
