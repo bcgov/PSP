@@ -13,6 +13,7 @@ import {
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
+import GenericModal from '@/components/common/GenericModal';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSectionParagraph } from '@/components/common/styles';
@@ -39,6 +40,8 @@ export interface IUpdateAcquisitionFormProps {
   /** A Yup Schema or a function that returns a Yup schema */
   validationSchema?: any | (() => any);
   /** Submission handler */
+  displayRemoveContractorModal: boolean;
+  onRemoveContractorModalOk: () => void;
   onSubmit: (
     values: UpdateAcquisitionSummaryFormModel,
     formikHelpers: FormikHelpers<UpdateAcquisitionSummaryFormModel>,
@@ -46,7 +49,14 @@ export interface IUpdateAcquisitionFormProps {
 }
 
 export const UpdateAcquisitionForm: React.FC<IUpdateAcquisitionFormProps> = props => {
-  const { formikRef, initialValues, validationSchema, onSubmit } = props;
+  const {
+    formikRef,
+    initialValues,
+    validationSchema,
+    displayRemoveContractorModal,
+    onRemoveContractorModalOk,
+    onSubmit,
+  } = props;
 
   return (
     <Formik<UpdateAcquisitionSummaryFormModel>
@@ -57,7 +67,25 @@ export const UpdateAcquisitionForm: React.FC<IUpdateAcquisitionFormProps> = prop
       onSubmit={onSubmit}
     >
       {formikProps => {
-        return <AcquisitionDetailSubForm formikProps={formikProps}></AcquisitionDetailSubForm>;
+        return (
+          <>
+            <AcquisitionDetailSubForm formikProps={formikProps}></AcquisitionDetailSubForm>
+            <GenericModal
+              display={displayRemoveContractorModal}
+              title={'Note'}
+              message={
+                <>
+                  <p>
+                    Contractors cannot remove themself from a file. Please contact the admin at{' '}
+                    <a href="mailto: pims@gov.bc.ca">pims@gov.bc.ca</a>
+                  </p>
+                </>
+              }
+              handleOk={() => onRemoveContractorModalOk()}
+              okButtonText="Close"
+            />
+          </>
+        );
       }}
     </Formik>
   );

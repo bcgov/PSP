@@ -18,7 +18,7 @@ import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
-const ignoreErrorCodes = [409];
+const ignoreErrorCodes = [400, 409];
 
 /**
  * hook that interacts with the Acquisition File API.

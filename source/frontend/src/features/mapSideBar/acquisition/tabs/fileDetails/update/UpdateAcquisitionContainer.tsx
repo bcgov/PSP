@@ -1,10 +1,12 @@
+import axios, { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { IApiError } from '@/interfaces/IApiError';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
@@ -23,6 +25,7 @@ export const UpdateAcquisitionContainer = React.forwardRef<
   IUpdateAcquisitionContainerProps
 >((props, formikRef) => {
   const { acquisitionFile, onSuccess, View } = props;
+  const [displayRemoveContractorModal, setDisplayRemoveContractorModal] = useState<boolean>(false);
 
   const {
     updateAcquisitionFile: { execute: updateAcquisitionFile },
@@ -39,7 +42,7 @@ export const UpdateAcquisitionContainer = React.forwardRef<
   ) => {
     try {
       const acquisitionFile = values.toApi();
-      const response = await updateAcquisitionFile(acquisitionFile, userOverrideCodes);
+      let response = await updateAcquisitionFile(acquisitionFile, userOverrideCodes);
 
       if (!!response?.id) {
         if (acquisitionFile.fileProperties?.find(ap => !ap.property?.address && !ap.property?.id)) {
@@ -53,15 +56,27 @@ export const UpdateAcquisitionContainer = React.forwardRef<
           onSuccess();
         }
       }
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        const axiosError = e as AxiosError<IApiError>;
+        if (axiosError.response?.status === 400) {
+          setDisplayRemoveContractorModal(true);
+        } else {
+          toast.error(axiosError.response?.data.error);
+        }
+      }
     } finally {
       formikHelpers?.setSubmitting(false);
     }
   };
+
   return (
     <StyledFormWrapper>
       <View
         formikRef={formikRef}
         initialValues={UpdateAcquisitionSummaryFormModel.fromApi(acquisitionFile)}
+        displayRemoveContractorModal={displayRemoveContractorModal}
+        onRemoveContractorModalOk={() => setDisplayRemoveContractorModal(false)}
         onSubmit={(
           values: UpdateAcquisitionSummaryFormModel,
           formikHelpers: FormikHelpers<UpdateAcquisitionSummaryFormModel>,

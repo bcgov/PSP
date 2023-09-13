@@ -899,87 +899,32 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<BadRequestException>();
         }
 
-        // TODO:Fix
-        /*[Fact]
-        public void Update_Success_NoPayee()
-        {
-            // Arrange
-            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
-
-            var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.ConcurrencyControlNumber = 1;
-
-            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
-            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
-
-            var compReqRepository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
-                .Returns(new List<PimsCompensationRequisition>() {
-                    new PimsCompensationRequisition() {
-                        CompensationRequisitionId = 1,
-                        AcquisitionFileId = acqFile.Internal_Id,
-                        PimsAcquisitionPayees = new List<PimsAcquisitionPayee>() { },
-                    },
-                });
-
-            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
-            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
-            var userRepository = _helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
-
-            // Act
-            var result = service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
-
-            // Assert
-            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
-        }
-
         [Fact]
-        public void Update_Success_NoPayeeAssiged()
+        public void Update_Contractor_Removed()
         {
-            // Arrange
             var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.ConcurrencyControlNumber = 1;
+            acqFile.PimsAcquisitionFilePeople.Add(new PimsAcquisitionFilePerson() { PersonId = 1, AcqFlPersonProfileTypeCode = EnumUserTypeCodes.CONTRACT.ToString() });
 
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
-            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
-
-            var compReqRepository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
-                .Returns(new List<PimsCompensationRequisition>() {
-                    new PimsCompensationRequisition() {
-                        CompensationRequisitionId = 1,
-                        AcquisitionFileId = acqFile.Internal_Id,
-                        PimsAcquisitionPayees = new List<PimsAcquisitionPayee>()
-                        {
-                            new PimsAcquisitionPayee()
-                            {
-                                Internal_Id = 1,
-                                CompensationRequisitionId = 1,
-                                AcquisitionOwnerId = null,
-                                InterestHolderId = null,
-                                AcquisitionFilePersonId = null
-                            },
-                        },
-                    },
-                });
-
-            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
-            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            contractorUser.PersonId = 1;
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(acqFile.RegionCode);
+
+            var updatedFile = EntityHelper.CreateAcquisitionFile();
+            updatedFile.ConcurrencyControlNumber = 1;
 
             // Act
-            var result = service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
+            Action act = () => service.Update(updatedFile, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory });
 
             // Assert
-            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
+            act.Should().Throw<BusinessRuleViolationException>();
         }
 
         [Fact]
@@ -1006,17 +951,7 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        PimsAcquisitionPayees = new List<PimsAcquisitionPayee>()
-                        {
-                            new PimsAcquisitionPayee()
-                            {
-                                Internal_Id = 1,
-                                CompensationRequisitionId = 1,
-                                AcquisitionOwnerId = 100,
-                                InterestHolderId = null,
-                                AcquisitionFilePersonId = null
-                            },
-                        },
+                        AcquisitionOwnerId = 100,
                     },
                 });
 
@@ -1059,17 +994,7 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        PimsAcquisitionPayees = new List<PimsAcquisitionPayee>()
-                        {
-                            new PimsAcquisitionPayee()
-                            {
-                                Internal_Id = 1,
-                                CompensationRequisitionId = 1,
-                                AcquisitionOwnerId = null,
-                                InterestHolderId = 100,
-                                AcquisitionFilePersonId = null
-                            },
-                        },
+                        InterestHolderId= 100,
                     },
                 });
 
@@ -1112,17 +1037,7 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        PimsAcquisitionPayees = new List<PimsAcquisitionPayee>()
-                        {
-                            new PimsAcquisitionPayee()
-                            {
-                                Internal_Id = 1,
-                                CompensationRequisitionId = 1,
-                                AcquisitionOwnerId = null,
-                                InterestHolderId = 100,
-                                AcquisitionFilePersonId = null
-                            },
-                        },
+                        InterestHolderId= 100,
                     },
                 });
 
@@ -1138,10 +1053,9 @@ namespace Pims.Api.Test.Services
             // Assert
             act.Should().Throw<ForeignKeyDependencyException>();
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
-        }*/
+        }
 
-        // TODO:Fix
-        /*[Fact]
+        [Fact]
         public void Update_FKExeption_Removed_PersonOfInterest()
         {
             // Arrange
@@ -1165,17 +1079,7 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        PimsAcquisitionPayees = new List<PimsAcquisitionPayee>()
-                        {
-                            new PimsAcquisitionPayee()
-                            {
-                                Internal_Id = 1,
-                                CompensationRequisitionId = 1,
-                                AcquisitionOwnerId = null,
-                                InterestHolderId = null,
-                                AcquisitionFilePersonId = 100
-                            },
-                        },
+                        AcquisitionFilePersonId= 100,
                     },
                 });
 
@@ -1191,7 +1095,7 @@ namespace Pims.Api.Test.Services
             // Assert
             act.Should().Throw<ForeignKeyDependencyException>();
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
-        }*/
+        }
 
         [Fact]
         public void Update_NewTotalAllowableCompensation_Success()
