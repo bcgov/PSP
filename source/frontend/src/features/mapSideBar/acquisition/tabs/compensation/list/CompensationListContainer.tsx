@@ -48,13 +48,19 @@ export const CompensationListContainer: React.FunctionComponent<
     totalAllowableCompensation: number | null,
   ): Promise<number | null> => {
     if (file) {
+      const updatedFile = {
+        ...file,
+        totalAllowableCompensation: totalAllowableCompensation ?? undefined,
+      };
       try {
-        const response = await putAcquisitionFile(
-          { ...file, totalAllowableCompensation: totalAllowableCompensation ?? undefined },
-          [],
-        );
+        const response = await putAcquisitionFile(updatedFile, []);
         if (response) {
-          setFile({ ...response, fileType: FileTypes.Acquisition });
+          setFile({
+            ...updatedFile,
+            rowVersion: response.rowVersion,
+            fileType: FileTypes.Acquisition,
+          });
+          setStaleFile(true);
           return response.totalAllowableCompensation ?? null;
         }
       } catch (e) {
