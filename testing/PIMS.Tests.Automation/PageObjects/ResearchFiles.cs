@@ -248,7 +248,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (researchFile.Requester != "")
             {
                 webDriver.FindElement(selectContactButton).Click();
-                sharedSelectContact.SelectContact(researchFile.Requester);
+                sharedSelectContact.SelectContact(researchFile.Requester, "");
             }
             if (researchFile.RequestDescription != "")
             {
@@ -397,7 +397,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (researchFile.Requester != "")
             {
                 webDriver.FindElement(selectContactButton).Click();
-                sharedSelectContact.SelectContact(researchFile.Requester);
+                sharedSelectContact.SelectContact(researchFile.Requester, "");
             }
             if (researchFile.RequestDescription != "")
             {

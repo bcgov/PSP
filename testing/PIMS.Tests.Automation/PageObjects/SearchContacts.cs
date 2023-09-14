@@ -77,6 +77,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             FocusAndClick(searchContactIndRadioBttn);
             webDriver.FindElement(searchContactNameInput).SendKeys(searchCriteria);
+
+            Wait();
             webDriver.FindElement(searchContactResultsBttn).Click();
         }
 
