@@ -5,6 +5,8 @@ export const emptyCompensationRequisition: Api_CompensationRequisition = {
   id: null,
   acquisitionFileId: 0,
   acquisitionFile: null,
+  alternateProjectId: null,
+  alternateProject: null,
   isDraft: null,
   fiscalYear: null,
   yearlyFinancialId: null,

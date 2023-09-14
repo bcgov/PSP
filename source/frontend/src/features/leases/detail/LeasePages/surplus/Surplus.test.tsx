@@ -38,6 +38,7 @@ describe('Lease Surplus Declaration', () => {
       getPropertyLeases: {
         execute: noop as any,
         error: undefined,
+        status: undefined,
         loading: false,
         response: [],
       },
@@ -57,6 +58,7 @@ describe('Lease Surplus Declaration', () => {
       getPropertyLeases: {
         execute: noop as any,
         error: undefined,
+        status: undefined,
         loading: false,
         response: [
           {
@@ -86,6 +88,7 @@ describe('Lease Surplus Declaration', () => {
       getPropertyLeases: {
         execute: noop as any,
         error: undefined,
+        status: undefined,
         loading: false,
         response: [
           { property: testProperty, lease: null, leaseId: 0, leaseArea: null, areaUnitType: null },
@@ -112,6 +115,7 @@ describe('Lease Surplus Declaration', () => {
       getPropertyLeases: {
         execute: noop as any,
         error: undefined,
+        status: undefined,
         loading: false,
         response: [
           { property: testProperty, lease: null, leaseId: 0, leaseArea: null, areaUnitType: null },

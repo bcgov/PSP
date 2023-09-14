@@ -1,5 +1,5 @@
 using Mapster;
-using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Contact.Models.Contact;
 
@@ -12,7 +12,7 @@ namespace Pims.Api.Areas.Contact.Mapping.Contact
             config.NewConfig<Entity.PimsPerson, Model.PersonModel>()
                 .Map(dest => dest.Id, src => src.PersonId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.FullName, src => src.GetFullName())
+                .Map(dest => dest.FullName, src => src.GetFullName(false))
                 .Map(dest => dest.PreferredName, src => src.PreferredName)
                 .Map(dest => dest.Addresses, src => src.PimsPersonAddresses)
                 .Map(dest => dest.ContactMethods, src => src.PimsContactMethods)
