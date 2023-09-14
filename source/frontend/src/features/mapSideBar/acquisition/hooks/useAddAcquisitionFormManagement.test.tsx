@@ -60,7 +60,7 @@ describe('useAddAcquisitionFormManagement hook', () => {
   });
 
   it('should provide form validation schema', async () => {
-    expect.assertions(3);
+    expect.assertions(4);
     const { validationSchema } = setup({ onSuccess, selectedFeature: null, formikRef: {} as any });
 
     const validForm = new AcquisitionForm();

@@ -66,7 +66,7 @@ describe('useAddNotesFormManagement hook', () => {
   });
 
   it('should provide form validation schema', async () => {
-    expect.assertions(3);
+    expect.assertions(4);
     const { validationSchema } = setup({ parentId: 1, type: NoteTypes.Activity });
 
     const validForm = new EntityNoteForm();
