@@ -18,6 +18,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.District, src => src.DistrictCodeNavigation)
                 .Map(dest => dest.Region, src => src.RegionCodeNavigation)
                 .Map(dest => dest.Location, src => src.Location)
+                .Map(dest => dest.Boundary, src => src.Boundary)
                 .Map(dest => dest.GeneralLocation, src => src.GeneralLocation)
 
                 .Map(dest => dest.DataSource, src => src.PropertyDataSourceTypeCodeNavigation)
@@ -75,6 +76,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.DistrictCode, src => src.District.Id)
                 .Map(dest => dest.RegionCode, src => src.Region.Id)
                 .Map(dest => dest.Location, src => src.Location)
+                .Map(dest => dest.Boundary, src => src.Boundary)
                 .Map(dest => dest.GeneralLocation, src => src.GeneralLocation)
 
                 .Map(dest => dest.Name, src => src.Name)

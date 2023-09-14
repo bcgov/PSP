@@ -12,6 +12,10 @@ export interface Api_Geometry {
   coordinate?: Api_Coordinate;
 }
 
+export interface Api_Boundary {
+  coordinates?: Api_Coordinate[];
+}
+
 export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
   propertyType?: Api_TypeCode<string>;
@@ -32,6 +36,7 @@ export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
   latitude?: number;
   longitude?: number;
   location?: Api_Geometry;
+  boundary?: Api_Boundary;
 
   name?: string;
   description?: string;
