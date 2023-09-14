@@ -21,6 +21,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly AcquisitionChecklist checklist;
         private readonly AcquisitionAgreements agreements;
         private readonly AcquisitionStakeholders stakeholders;
+        private readonly AcquisitionCompensations h120;
         private readonly Notes notes;
 
         private readonly string userName = "TRANPSP1";
@@ -28,6 +29,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private AcquisitionFile acquisitionFile;
         protected string acquisitionFileCode = "";
+        protected string compensationNumber = "";
 
         public AcquisitionFileSteps(BrowserDriver driver)
         {
@@ -43,6 +45,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             checklist = new AcquisitionChecklist(driver.Current);
             agreements = new AcquisitionAgreements(driver.Current);
             stakeholders = new AcquisitionStakeholders(driver.Current);
+            h120 = new AcquisitionCompensations(driver.Current);
             notes = new Notes(driver.Current);
         }
 
@@ -99,7 +102,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update the File details from an existing Acquisition File from row number (.*)")]
         public void UpdateFileDetails(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-4331, PSP-4544, PSP-4545, PSP-5638, PSP-5639 */
+            /* TEST COVERAGE: PSP-4331, PSP-4544, PSP-4545, PSP-5638, PSP-5639, PSP-5970 */
 
             PopulateAcquisitionFile(rowNumber);
 
@@ -323,7 +326,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             agreements.VerifyCreateAgreementForm(0);
 
             //Add a new Agreement
-            agreements.CreateNewAgreement(acquisitionFile.AcquisitionAgreements[0], 0);
+            agreements.CreateNewAgreement(acquisitionFile.AcquisitionAgreements[0], 4);
 
             //Cancel agreements
             agreements.CancelAcquisitionFileAgreement();
@@ -335,25 +338,25 @@ namespace PIMS.Tests.Automation.StepDefinitions
             agreements.CreateNewAgreementBttn();
 
             //Add a new Agreement
-            agreements.CreateNewAgreement(acquisitionFile.AcquisitionAgreements[0], 0);
+            agreements.CreateNewAgreement(acquisitionFile.AcquisitionAgreements[0], 4);
 
             //Save new agreement
             agreements.SaveAcquisitionFileAgreement();
 
             //Verify Edit Agreement form
-            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[0], 0);
+            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[0], 4);
 
             //Edit Agreement button
             agreements.EditAgreementButton();
 
             //Update created agreement
-            agreements.UpdateAgreement(acquisitionFile.AcquisitionAgreements[1], 0);
+            agreements.UpdateAgreement(acquisitionFile.AcquisitionAgreements[1], 4);
 
             //Save new agreement
             agreements.SaveAcquisitionFileAgreement();
 
             //Verify Edit Agreement form
-            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[1], 0);
+            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[1], 4);
 
             //Edit Agreement button
             agreements.EditAgreementButton();
@@ -392,10 +395,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
                         //Add new Interest Stakeholder to the Acquisition File
                         stakeholders.AddInterestStakeholderButton();
-                        stakeholders.CreateInterestsStakeholder(acquisitionFile.AcquisitionStakeholders[i], i);
+                        stakeholders.CreateInterestsStakeholder(acquisitionFile.AcquisitionStakeholders[i], acquisitionFile.AcquisitionStakeholders[i].StakeholderIndex);
 
                         //Save new Interest Stakeholder
-                        stakeholders.AcquisitionFileSaveStakeholder();
+                        stakeholders.SaveAcquisitionFileStakeholder();
 
                         //Verify added Interest Stakeholder
                         stakeholders.VerifyInterestStakeholderViewForm(acquisitionFile.AcquisitionStakeholders[i]);
@@ -407,10 +410,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
                         //Add new Interest Stakeholder to the Acquisition File
                         stakeholders.AddNonInterestStakeholderButton();
-                        stakeholders.CreateNonInterestsStakeholder(acquisitionFile.AcquisitionStakeholders[i], i);
+                        stakeholders.CreateNonInterestsStakeholder(acquisitionFile.AcquisitionStakeholders[i], acquisitionFile.AcquisitionStakeholders[i].StakeholderIndex);
 
                         //Save new Interest Stakeholder
-                        stakeholders.AcquisitionFileSaveStakeholder();
+                        stakeholders.SaveAcquisitionFileStakeholder();
 
                         //Verify added Interest Stakeholder
                         stakeholders.VerifyNonInterestStakeholderViewForm(acquisitionFile.AcquisitionStakeholders[i]);
@@ -432,30 +435,154 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to Stakeholders Tab
             stakeholders.NavigateStakeholderTab();
 
-            //Edit Stakeholder button
-            stakeholders.EditStakeholderInterestsButton();
-
-            var interestStakeholdersBeforeDelete = stakeholders.TotalInterestHolders();
-
             //Delete last Interest stakeholder
+            var interestStakeholdersBeforeDelete = stakeholders.TotalInterestHolders();
             stakeholders.DeleteLastInterestHolder();
 
             //Save Interest Stakeholder changes
-            stakeholders.AcquisitionFileSaveStakeholder();
+            stakeholders.SaveAcquisitionFileStakeholder();
 
             var interestStakeholdersAfterDelete = stakeholders.TotalInterestHolders();
             Assert.True(interestStakeholdersBeforeDelete - interestStakeholdersAfterDelete == 1);
 
-            var nonInterestStakeholderBeforeDelete = stakeholders.TotalNonInterestHolders();
-
             //Delete last Non-Interest stakeholder
+            var nonInterestStakeholderBeforeDelete = stakeholders.TotalNonInterestHolders();
             stakeholders.DeleteLastNonInterestHolder();
 
             //Save Interest Stakeholder changes
-            stakeholders.AcquisitionFileSaveStakeholder();
+            stakeholders.SaveAcquisitionFileStakeholder();
 
             var nonInterestStakeholderAfterDelete = stakeholders.TotalNonInterestHolders();
             Assert.True(nonInterestStakeholderBeforeDelete - nonInterestStakeholderAfterDelete == 1);
+        }
+
+        [StepDefinition(@"I create Compensation Requisition within an Acquisition File")]
+        public void CreateCompensationRequisition()
+        {
+            /* TEST COVERAGE: PSP-6066, PSP-6067, PSP-6274, PSP-6277, PSP-6355 */
+
+            //Navigate to Compensation Requisition Tab
+            h120.NavigateCompensationTab();
+
+            //Verify initial Compensation Tab List View
+            h120.VerifyCompensationInitTabView();
+
+            //Update Allowable Compensation Amount
+            //h120.UpdateTotalAllowableCompensation(acquisitionFile.CompensationTotalAllowableAmount);
+
+            //Create Compensation Requisition Forms
+            if (acquisitionFile.AcquisitionCompensations.Count > 0)
+            {
+                for (int i = 0; i < acquisitionFile.AcquisitionCompensations.Count; i++)
+                {
+                    //Click on Add new Compensation
+                    h120.AddCompensationBttn();
+
+                    //Open the created Compensation Requisition details
+                    h120.OpenCompensationDetails(i);
+
+                    //Verify Initial View Form
+                    h120.VerifyCompensationDetailsInitViewForm();
+
+                    //Add Details to the Compensation Requisition
+                    h120.EditCompensationDetails();
+                    //h120.VerifyCompensationDetailsInitCreateForm();
+                    h120.UpdateCompensationDetails(acquisitionFile.AcquisitionCompensations[i]);
+
+                    //Save new Compensation Requisition Details
+                    h120.SaveAcquisitionFileCompensation();
+
+                    //Verify added Compensation Requisition List View and Details
+                    h120.VerifyCompensationDetailsViewForm(acquisitionFile.AcquisitionCompensations[i]);
+                    h120.VerifyCompensationListView(acquisitionFile.AcquisitionCompensations[i]);
+                }
+            }
+        }
+
+        [StepDefinition(@"I update Compensation Requisition within an Acquisition File from row number (.*)")]
+        public void UpdateCompensationRequisition(int rowNumber)
+        {
+            /* TEST COVERAGE:  PSP-6275, PSP-6282, PSP-6356, PSP-6360, PSP-6483, PSP-6484 */
+
+            //Populate data
+            PopulateAcquisitionFile(rowNumber);
+
+            //Search for an existing Acquisition File
+            searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
+            searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
+            searchAcquisitionFiles.SelectFirstOption();
+
+            //Navigate to Compensation Tab
+            h120.NavigateCompensationTab();
+
+            //Select first created compensation requisition
+            h120.OpenCompensationDetails(0);
+
+            //Edit Compensation button
+            h120.EditCompensationDetails();
+
+            //Make changes on created Compensation Requisition Form
+            h120.UpdateCompensationDetails(acquisitionFile.AcquisitionCompensations[0]);
+
+            //Cancel changes
+            h120.CancelAcquisitionFileCompensation();
+
+            //Make changes on created Compensation Requisition Form
+            h120.EditCompensationDetails();
+            h120.UpdateCompensationDetails(acquisitionFile.AcquisitionCompensations[0]);
+
+            //Save changes
+            h120.SaveAcquisitionFileCompensation();
+
+            //Get updated compensation number
+            compensationNumber = h120.GetCompensationFileNumber(1);
+
+            //Verify automatic note
+            notes.NavigateNotesTab();
+            notes.VerifyAutomaticNotesCompensation(compensationNumber, "Draft", "Final");
+
+            //Navigate to Acquisition File Details
+            acquisitionFilesDetails.NavigateToFileDetailsTab();
+
+            //Edit the Acquisition File Details
+            acquisitionFilesDetails.EditAcquisitionFileBttn();
+
+            //Delete the MoTI Solicitor that is associated to a compensation requisition
+            acquisitionFilesDetails.DeleteFirstStaffMember();
+
+            //Save Acquisition File Details changes
+            acquisitionFilesDetails.SaveAcquisitionFileDetailsWithExpectedErrors();
+
+            //Cancel Acquisition File changes
+            acquisitionFilesDetails.CancelAcquisitionFile();
+
+            //Navigate back to Compensation Tab
+            h120.NavigateCompensationTab();
+
+            //Open Requisition File
+            h120.OpenCompensationDetails(0);
+
+            //Edit Compensation Button
+            h120.EditCompensationDetails();
+
+            //Delete Financial Activity
+            var activitiesBeforeDelete = h120.TotalActivitiesCount();
+            h120.DeleteFirstActivity();
+
+            var activitiesAfterDelete = h120.TotalActivitiesCount();
+            Assert.True(activitiesBeforeDelete - activitiesAfterDelete == 1);
+
+            //Save Compensation changes
+            h120.SaveAcquisitionFileCompensation();
+
+            //Create a new Compensation Requisition
+            h120.AddCompensationBttn();
+
+            var compensationsBeforeDelete = h120.TotalCompensationCount();
+            h120.DeleteCompensationRequisition(1);
+
+            var compensationsAfterDelete = h120.TotalCompensationCount();
+            Assert.True(compensationsBeforeDelete - compensationsAfterDelete == 1);
         }
 
         [StepDefinition(@"I create an Acquisition File from a pin on map from row number (.*)")]
@@ -633,6 +760,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Project
             acquisitionFile.AcquisitionProject = ExcelDataContext.ReadData(rowNumber, "AcquisitionProject");
             acquisitionFile.AcquisitionProjCode = ExcelDataContext.ReadData(rowNumber, "AcquisitionProjCode");
+            acquisitionFile.AcquisitionProjProductCode = ExcelDataContext.ReadData(rowNumber, "AcquisitionProjProductCode");
             acquisitionFile.AcquisitionProjProduct = ExcelDataContext.ReadData(rowNumber, "AcquisitionProjProduct");
             acquisitionFile.AcquisitionProjFunding = ExcelDataContext.ReadData(rowNumber, "AcquisitionProjFunding");
             acquisitionFile.AcquisitionFundingOther = ExcelDataContext.ReadData(rowNumber, "AcquisitionFundingOther");
@@ -759,6 +887,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 PopulateStakeholdersCollection(acquisitionFile.StakeholderStartRow, acquisitionFile.StakeholderCount);
             }
+
+            //Acquisition Compensation Requisition
+            acquisitionFile.CompensationStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "CompensationStartRow"));
+            acquisitionFile.CompensationCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "CompensationCount"));
+            acquisitionFile.CompensationTotalAllowableAmount = ExcelDataContext.ReadData(rowNumber, "CompensationTotalAllowableAmount");
+            if (acquisitionFile.CompensationStartRow != 0 && acquisitionFile.CompensationCount != 0)
+            {
+                PopulateCompensationsCollection(acquisitionFile.CompensationStartRow, acquisitionFile.CompensationCount);
+            }
         }
 
         private void PopulateTeamsCollection(int startRow, int rowsCount)
@@ -843,10 +980,70 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 stakeholder.StakeholderType = ExcelDataContext.ReadData(i, "StakeholderType");
                 stakeholder.InterestHolder = ExcelDataContext.ReadData(i, "InterestHolder");
                 stakeholder.InterestType = ExcelDataContext.ReadData(i, "InterestType");
+                stakeholder.StakeholderContactType = ExcelDataContext.ReadData(i, "StakeholderContactType");
                 stakeholder.PrimaryContact = ExcelDataContext.ReadData(i, "PrimaryContact");
                 stakeholder.PayeeName = ExcelDataContext.ReadData(i, "PayeeName");
+                stakeholder.StakeholderIndex = int.Parse(ExcelDataContext.ReadData(i, "StakeholderIndex"));
 
                 acquisitionFile.AcquisitionStakeholders.Add(stakeholder);
+            }
+        }
+
+        private void PopulateCompensationsCollection(int startRow, int rowsCount)
+        {
+            DataTable compensationSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionCompensation"];
+            ExcelDataContext.PopulateInCollection(compensationSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                AcquisitionCompensation compensation = new AcquisitionCompensation();
+
+                compensation.CompensationAmount = ExcelDataContext.ReadData(i, "CompensationAmount");
+                compensation.CompensationGSTAmount = ExcelDataContext.ReadData(i, "CompensationGSTAmount");
+                compensation.CompensationTotalAmount = ExcelDataContext.ReadData(i, "CompensationTotalAmount");
+                compensation.CompensationStatus = ExcelDataContext.ReadData(i, "CompensationStatus");
+                compensation.CompensationAlternateProject = ExcelDataContext.ReadData(i, "CompensationAlternateProject");
+                compensation.CompensationAgreementDate = ExcelDataContext.ReadData(i, "CompensationAgreementDate");
+                compensation.CompensationExpropriationNoticeDate = ExcelDataContext.ReadData(i, "CompensationExpropriationNoticeDate");
+                compensation.CompensationExpropriationVestingDate = ExcelDataContext.ReadData(i, "CompensationExpropriationVestingDate");
+                compensation.CompensationSpecialInstructions = ExcelDataContext.ReadData(i, "CompensationSpecialInstructions");
+                compensation.CompensationFiscalYear = ExcelDataContext.ReadData(i, "CompensationFiscalYear");
+                compensation.CompensationSTOB = ExcelDataContext.ReadData(i, "CompensationSTOB");
+                compensation.CompensationServiceLine = ExcelDataContext.ReadData(i, "CompensationServiceLine");
+                compensation.CompensationResponsibilityCentre = ExcelDataContext.ReadData(i, "CompensationResponsibilityCentre");
+                compensation.CompensationPayee = ExcelDataContext.ReadData(i, "CompensationPayee");
+                compensation.CompensationPayeeDisplay = ExcelDataContext.ReadData(i, "CompensationPayeeDisplay"); 
+                compensation.CompensationPaymentInTrust = Boolean.Parse(ExcelDataContext.ReadData(i, "CompensationPaymentInTrust"));
+                compensation.CompensationGSTNumber = ExcelDataContext.ReadData(i, "CompensationGSTNumber");
+                compensation.CompensationDetailedRemarks = ExcelDataContext.ReadData(i, "CompensationDetailedRemarks");
+                compensation.ActivitiesStartRow = int.Parse(ExcelDataContext.ReadData(i, "ActivitiesStartRow"));
+                compensation.ActivitiesCount = int.Parse(ExcelDataContext.ReadData(i, "ActivitiesCount"));
+
+                if (compensation.ActivitiesStartRow != 0 && compensation.ActivitiesCount != 0)
+                {
+                    PopulateActivitiesCollection(compensation.ActivitiesStartRow, compensation.ActivitiesCount, compensation.CompensationActivities);
+                }
+
+                acquisitionFile.AcquisitionCompensations.Add(compensation);
+            }
+        }
+
+        private void PopulateActivitiesCollection(int startRow, int rowsCount, List<CompensationActivity> activities)
+        {
+            DataTable activitiesSheet = ExcelDataContext.GetInstance().Sheets["CompensationActivities"];
+            ExcelDataContext.PopulateInCollection(activitiesSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                CompensationActivity activity = new CompensationActivity();
+
+                activity.ActCodeDescription = ExcelDataContext.ReadData(i, "ActCodeDescription");
+                activity.ActAmount = ExcelDataContext.ReadData(i, "ActAmount");
+                activity.ActGSTEligible = ExcelDataContext.ReadData(i, "ActGSTEligible");
+                activity.ActGSTAmount = ExcelDataContext.ReadData(i, "ActGSTAmount");
+                activity.ActTotalAmount = ExcelDataContext.ReadData(i, "ActTotalAmount");
+
+                activities.Add(activity);
             }
         }
     }
