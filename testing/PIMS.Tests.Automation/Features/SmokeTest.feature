@@ -24,7 +24,7 @@ Scenario: Create Minimum Research File
 	Then A new Research File is created successfully
 
 Scenario: Create Minimum Acquisition File
-	Given I create a new Acquisition File from row number 17
+	Given I create a new Acquisition File from row number 16
 	When I add additional information to the Acquisition File Details
 	Then A new Acquisition file is created successfully
 

@@ -132,7 +132,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(licenseDepositAddContactButton).Click();
 
-            sharedSelectContact.SelectContact(deposit.DepositHolder);
+            sharedSelectContact.SelectContact(deposit.DepositHolder, "");
 
             ButtonElement("Save");
         }
@@ -158,7 +158,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(licenseDepositAddContactButton).Click();
 
-            sharedSelectContact.SelectContact(deposit.ReturnPayeeName);
+            sharedSelectContact.SelectContact(deposit.ReturnPayeeName, "");
 
             ButtonElement("Save");
         }
@@ -209,7 +209,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(licenseDepositAddPaidDateInput).SendKeys(Keys.Enter);
 
             webDriver.FindElement(licenseDepositAddContactButton).Click();
-            sharedSelectContact.SelectContact(deposit.DepositHolder);
+            sharedSelectContact.SelectContact(deposit.DepositHolder, "");
 
             ButtonElement("Save");
         }

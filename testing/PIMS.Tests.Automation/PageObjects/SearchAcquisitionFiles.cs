@@ -66,12 +66,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SearchAcquisitionFileByAFile(string AFile)
         {
-            WaitUntilVisible(searchAcquisitionFileNameInput);
+            Wait();
             
             webDriver.FindElement(searchAcquisitionFileNameInput).SendKeys(AFile);
             ChooseSpecificSelectOption(searchAcquisitionFileStatusSelect, "All Status");
 
-            WaitUntilClickable(searchAcquisitionFileSearchButton);
+            Wait();
             webDriver.FindElement(searchAcquisitionFileSearchButton).Click();
         }
 

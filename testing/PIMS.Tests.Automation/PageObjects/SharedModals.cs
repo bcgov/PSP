@@ -86,6 +86,12 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(generalModalCancelBttn).Displayed);
         }
 
+        public void IsToastyPresent()
+        {
+            Wait();
+            Assert.True(webDriver.FindElement(generalToastBody).Displayed);
+        }
+
         public void SiteMinderModal()
         {
             Wait();

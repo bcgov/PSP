@@ -63,17 +63,17 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddInterestStakeholderButton()
         {
-            WaitUntilClickable(stakeholderInterestAddInterestHolderLink);
+            Wait();
             webDriver.FindElement(stakeholderInterestAddInterestHolderLink).Click();
         }
 
         public void AddNonInterestStakeholderButton()
         {
-            WaitUntilClickable(stakeholderInterestAddNonInterestHolderLink);
+            Wait();
             webDriver.FindElement(stakeholderInterestAddNonInterestHolderLink).Click();
         }
 
-        public void AcquisitionFileSaveStakeholder()
+        public void SaveAcquisitionFileStakeholder()
         {
             Wait();
             ButtonElement("Save");
@@ -99,14 +99,29 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateInterestsStakeholder(AcquisitionStakeholder interest, int index)
         {
+            //Interest holder label
             AssertTrueIsDisplayed(By.XPath("//input[@id='input-interestHolders."+ index +".contact.id']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Interest holder')]"));
-            AssertTrueIsDisplayed(By.Id("input[id='input-interestHolders."+ index +".contact.id']"));
-            webDriver.FindElement(By.XPath("//input[@id='input-interestHolders."+ index +".contact.id']/parent::div/parent::div/following-sibling::div/button[@title='Select Contact']")).Click();
-            sharedSelectContact.SelectContact(interest.InterestHolder);
 
+            //Selecting Interest Holder
+            if (interest.InterestHolder != "")
+            {
+                webDriver.FindElement(By.XPath("//input[@id='input-interestHolders."+ index +".contact.id']/parent::div/parent::div/following-sibling::div/button[@title='Select Contact']")).Click();
+                sharedSelectContact.SelectContact(interest.InterestHolder, interest.StakeholderContactType);
+            }
+
+            //If Primary Contact has to be selected, choose one from the select field
+            Wait();
+            if (webDriver.FindElements(By.CssSelector("select[id='input-interestHolders."+ index +".primaryContactId']")).Count > 0)
+                ChooseSpecificSelectOption(By.CssSelector("select[id='input-interestHolders."+ index +".primaryContactId']"), interest.PrimaryContact);
+
+            //Interest Type label
             AssertTrueIsDisplayed(By.XPath("//select[@id='input-interestHolders."+ index +".propertyInterestTypeCode']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Interest type')]"));
-            ChooseSpecificSelectOption(By.Id("input-interestHolders."+ index +".propertyInterestTypeCode"), interest.InterestType);
 
+            //Select Interest Type
+            if(interest.InterestType != "")
+                ChooseSpecificSelectOption(By.Id("input-interestHolders."+ index +".propertyInterestTypeCode"), interest.InterestType);
+
+            //Impacted Properties
             AssertTrueIsDisplayed(By.XPath("//select[@id='input-interestHolders."+ index +".propertyInterestTypeCode']/parent::div/parent::div/parent::div/following-sibling::div/div/label[contains(text(),'Impacted properties')]"));
             webDriver.FindElement(By.XPath("//select[@id='input-interestHolders."+ index +".propertyInterestTypeCode']/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div/div/input")).Click();
             
@@ -115,9 +130,8 @@ namespace PIMS.Tests.Automation.PageObjects
         public void CreateNonInterestsStakeholder(AcquisitionStakeholder noninterest, int index)
         {
             AssertTrueIsDisplayed(By.XPath("//input[@id='input-nonInterestPayees."+ index +".contact.id']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Payee name')]"));
-            AssertTrueIsDisplayed(By.Id("input[id='input-nonInterestPayees."+ index +".contact.id']"));
             webDriver.FindElement(By.XPath("//input[@id='input-nonInterestPayees."+ index +".contact.id']/parent::div/parent::div/following-sibling::div/button[@title='Select Contact']")).Click();
-            sharedSelectContact.SelectContact(noninterest.PayeeName);
+            sharedSelectContact.SelectContact(noninterest.PayeeName, noninterest.StakeholderContactType);
 
             AssertTrueIsDisplayed(By.XPath("//input[@id='input-nonInterestPayees."+ index +".contact.id']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div//div/label[contains(text(),'Impacted properties')]"));
             webDriver.FindElement(By.XPath("//input[@id='input-nonInterestPayees."+ index +".contact.id']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div//div/div/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div/div/input")).Click();
@@ -127,6 +141,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             var lastInterestHoldersIndex = webDriver.FindElements(stakeholderInterestTotalCount).Count -1;
+
+            EditStakeholderInterestsButton();
             FocusAndClick(By.XPath("//input[@id='input-interestHolders."+ lastInterestHoldersIndex +".contact.id']/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/button[@title='Remove Interest']"));
         }
 
@@ -134,6 +150,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             var lastNonInterestHoldersIndex = webDriver.FindElements(stakeholderNonInterestTotalCount).Count -1;
+
+            EditStakeholderNonInterestsButton();
             FocusAndClick(By.XPath("//input[@id='input-nonInterestPayees."+ lastNonInterestHoldersIndex +".contact.id']/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/button[@title='Remove Interest']"));
         }
 

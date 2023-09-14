@@ -74,10 +74,15 @@ const getFormattedAddress = (address?: Api_Address | null): string => {
   }
 
   if (address?.country?.description) {
-    let countryDisplay = address?.country?.description?.trim() || '';
-    addressDisplay = addressDisplay.concat(countryDisplay);
+    if (address?.country?.code === 'OTHER') {
+      let countryDisplay =
+        `${address?.country?.description?.trim()} - ${address?.countryOther?.trim()}` || '';
+      addressDisplay = addressDisplay.concat(countryDisplay);
+    } else {
+      let countryDisplay = address?.country?.description?.trim() || '';
+      addressDisplay = addressDisplay.concat(countryDisplay);
+    }
   }
-
   return addressDisplay;
 };
 

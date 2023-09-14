@@ -225,7 +225,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 27
- testRunner.Given("I create a new Acquisition File from row number 17", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I create a new Acquisition File from row number 16", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 28
  testRunner.When("I add additional information to the Acquisition File Details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
