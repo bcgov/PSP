@@ -53,6 +53,7 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.AcquisitionOwner)
                 .Include(x => x.AcquisitionFilePerson)
                 .Include(x => x.InterestHolder)
+                .Include(x => x.AlternateProject)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
 

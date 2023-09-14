@@ -1,5 +1,5 @@
 using Mapster;
-using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Keycloak.Models.AccessRequest;
 

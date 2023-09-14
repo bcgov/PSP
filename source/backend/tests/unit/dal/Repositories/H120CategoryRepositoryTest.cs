@@ -15,7 +15,7 @@ namespace Pims.Dal.Test.Repositories
 {
     [Trait("category", "unit")]
     [Trait("category", "dal")]
-    [Trait("group", "financialcode")]
+    [Trait("group", "acquisition")]
     [ExcludeFromCodeCoverage]
     public class H120CategoryRepositoryTest
     {
