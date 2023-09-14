@@ -61,6 +61,7 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
           addressResults={addressResults}
           onAddressChange={onAddressChange}
           onAddressSelect={onAddressSelect}
+          loading={loading}
         />
       </Section>
       <Section header={undefined}>

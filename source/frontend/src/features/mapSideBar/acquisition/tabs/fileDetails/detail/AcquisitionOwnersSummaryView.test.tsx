@@ -118,4 +118,19 @@ describe('Acquisition File Owners View component', () => {
       ),
     ).toBeVisible();
   });
+
+  it('renders owner address other country information', () => {
+    const ownerTest = {
+      ...ownerCorporate,
+      incorporationNumber: null,
+      address: {
+        country: { code: 'OTHER', description: 'Other' },
+        countryOther: 'test name',
+      },
+    } as Api_AcquisitionFileOwner;
+    const { getByText } = setup({
+      props: { ownersList: [ownerTest], isLoading: false },
+    });
+    expect(getByText('Other - test name')).toBeVisible();
+  });
 });
