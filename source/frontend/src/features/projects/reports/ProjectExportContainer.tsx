@@ -1,5 +1,5 @@
 import fileDownload from 'js-file-download';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
@@ -41,12 +41,27 @@ export const SideProjectContainer: React.FunctionComponent<ISideProjectContainer
     loadAcquisitionTeam();
   }, [loadProjects, loadAcquisitionTeam]);
 
-  const generateAgreementReport = async (values: Api_ExportProjectFilter) => {
-    var data = await getAgreementsReport.execute(values);
-    if (data) {
-      fileDownload(data, `Agreement_Export.xlsx`);
+  const generateAgreementReport = useCallback(
+    async (values: Api_ExportProjectFilter) => {
+      await getAgreementsReport.execute(values);
+    },
+    [getAgreementsReport],
+  );
+
+  useEffect(() => {
+    if (getAgreementsReport?.status === 204) {
+      setModalContent({
+        title: 'Warning',
+        message: 'There is no data for the input parameters you entered.',
+        okButtonText: 'Close',
+        closeButton: true,
+        handleOk: () => setDisplayModal(false),
+      });
+      setDisplayModal(true);
+    } else if (getAgreementsReport.response && getAgreementsReport?.status === 200) {
+      fileDownload(getAgreementsReport.response, `Agreement_Export.xlsx`);
     }
-  };
+  }, [getAgreementsReport, setDisplayModal, setModalContent]);
 
   const generateCompensationReport = async (values: Api_ExportProjectFilter) => {
     await getCompensationReport(values);
