@@ -44,7 +44,7 @@ VALUES
   (N'SCTN3AGR',  N'TTLCHRGS',    N'Title and charges',                        31,  NULL),
   (N'SCTN3AGR',  N'CURRYRASSMN', N'Current year property assessment',         32,  NULL),
   (N'SCTN3AGR',  N'S3CHEQCOPY',  N'Copy of cheque to owner(s)',               33,  NULL),
-  (N'SCTN3AGR',  N'S3APPRCOPY',  N'Copy of appraisial to owner(s)',           34,  NULL),
+  (N'SCTN3AGR',  N'S3APPRCOPY',  N'Copy of appraisal to owner(s)',            34,  NULL),
   (N'SCTN6XPRP', N'EXPROPCOPY',  N'Copy of offer(s) extended to owner(s)',    35,  NULL),
   (N'SCTN6XPRP', N'EXPROPAPPRV', N'Copy of expropriation approval packages',  36,  N'Executive and case summaries'),
   (N'SCTN6XPRP', N'EXPROPFORM1', N'Notice of Expropriation (Form 1)',         37,  N'The signed Form 1 is required'),
@@ -53,7 +53,7 @@ VALUES
   (N'SCTN6XPRP', N'VESTNOTICE',  N'Vesting Notice (Form 9)',                  40,  N'The signed Form 9 is required'),
   (N'SCTN6XPRP', N'SVCAFFADAV',  N'Copies of Affidavits of Service',          41,  NULL),
   (N'SCTN6XPRP', N'S6CHEQCOPY',  N'Copy of cheque to owner(s)',               42,  NULL),
-  (N'SCTN6XPRP', N'S6APPRCOPY',  N'Copy of appraisial to owner(s)',           43,  NULL),
+  (N'SCTN6XPRP', N'S6APPRCOPY',  N'Copy of appraisal to owner(s)',            43,  NULL),
   (N'SCTN6XPRP', N'CLAIMRELSS6', N'Release of Claims',                        44,  NULL),
   (N'SCTN6XPRP', N'EASEMENTCPY', N'Copy of Easement',                         45,  NULL),
   (N'ACQCOMPAC', N'PIMSUPDTFIL', N'File data entered into PIMS',              46,  N'Data is complete in this system');
