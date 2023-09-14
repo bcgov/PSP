@@ -1,7 +1,15 @@
-import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Polygon } from 'geojson';
+import {
+  Feature,
+  FeatureCollection,
+  GeoJsonProperties,
+  Geometry,
+  MultiPolygon,
+  Polygon,
+} from 'geojson';
 import { geoJSON, LatLngLiteral } from 'leaflet';
 import { compact, isNumber } from 'lodash';
 import polylabel from 'polylabel';
+import { toast } from 'react-toastify';
 
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IMapProperty } from '@/components/propertySelector/models';
@@ -115,10 +123,25 @@ export const featuresToIdentifiedMapProperty = (
   address?: string,
 ) =>
   values?.features
-    ?.filter(feature => feature?.geometry?.type === 'Polygon')
+    ?.filter(
+      feature =>
+        feature?.geometry?.type === 'Polygon' || feature?.geometry?.type === 'MultiPolygon',
+    )
     .map((feature): IMapProperty => {
-      const boundedCenter = polylabel((feature.geometry as Polygon).coordinates);
-      return toMapProperty(feature, address, boundedCenter[1], boundedCenter[0]);
+      if (feature?.geometry?.type === 'Polygon') {
+        const boundedCenter = polylabel((feature.geometry as Polygon).coordinates);
+        return toMapProperty(feature, address, boundedCenter[1], boundedCenter[0]);
+      } else if (feature?.geometry?.type === 'MultiPolygon') {
+        const boundedCenter = polylabel((feature.geometry as MultiPolygon).coordinates[0]);
+        return toMapProperty(feature, address, boundedCenter[1], boundedCenter[0]);
+      } else {
+        toast.error(
+          'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
+        );
+        throw Error(
+          'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
+        );
+      }
     });
 
 function toMapProperty(
