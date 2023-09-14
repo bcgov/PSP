@@ -2,7 +2,9 @@ import userEvent from '@testing-library/user-event';
 
 import { Claims } from '@/constants/index';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { ILeaseSearchResult } from '@/interfaces';
+import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -25,6 +27,13 @@ jest.mock('@/hooks/pims-api/useApiLeases');
 const getLeases = jest.fn();
 (useApiLeases as jest.Mock).mockReturnValue({
   getLeases,
+});
+
+jest.mock('@/hooks/repositories/useUserInfoRepository');
+(useUserInfoRepository as jest.Mock).mockReturnValue({
+  retrieveUserInfo: jest.fn(),
+  retrieveUserInfoLoading: true,
+  retrieveUserInfoResponse: getUserMock(),
 });
 
 // render component under test

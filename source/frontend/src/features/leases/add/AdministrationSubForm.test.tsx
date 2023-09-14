@@ -2,7 +2,9 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
 
@@ -16,6 +18,13 @@ const storeState = {
 
 // mock auth library
 jest.mock('@react-keycloak/web');
+
+jest.mock('@/hooks/repositories/useUserInfoRepository');
+(useUserInfoRepository as jest.Mock).mockReturnValue({
+  retrieveUserInfo: jest.fn(),
+  retrieveUserInfoLoading: true,
+  retrieveUserInfoResponse: getUserMock(),
+});
 
 describe('AdministrationSubForm component', () => {
   const setup = async (
