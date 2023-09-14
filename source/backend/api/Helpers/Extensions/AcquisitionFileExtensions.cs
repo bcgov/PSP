@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 
 namespace Pims.Api.Helpers.Extensions
@@ -46,7 +47,7 @@ namespace Pims.Api.Helpers.Extensions
 
             if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFilePeople.Any(x => x.PersonId == pimsUser.PersonId))
             {
-                throw new BusinessRuleViolationException("Contractors cannot remove themself from a file. Please contact the admin at pims@gov.bc.ca");
+                throw new UserOverrideException(UserOverrideCode.ContractorSelfRemoved, "Contractors cannot remove themself from a file. Please contact the admin at pims@gov.bc.ca");
             }
         }
     }

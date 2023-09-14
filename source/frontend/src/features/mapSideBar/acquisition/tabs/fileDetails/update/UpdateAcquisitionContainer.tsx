@@ -1,12 +1,10 @@
-import axios, { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
-import React, { useState } from 'react';
+import React from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { IApiError } from '@/interfaces/IApiError';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
@@ -20,12 +18,22 @@ export interface IUpdateAcquisitionContainerProps {
   View: React.FC<IUpdateAcquisitionFormProps>;
 }
 
+export const RemoveSelfContractorContent = (): React.ReactNode => {
+  return (
+    <>
+      <p>
+        Contractors cannot remove themself from a file. Please contact the admin at{' '}
+        <a href="mailto: pims@gov.bc.ca">pims@gov.bc.ca</a>
+      </p>
+    </>
+  );
+};
+
 export const UpdateAcquisitionContainer = React.forwardRef<
   FormikProps<UpdateAcquisitionSummaryFormModel>,
   IUpdateAcquisitionContainerProps
 >((props, formikRef) => {
   const { acquisitionFile, onSuccess, View } = props;
-  const [displayRemoveContractorModal, setDisplayRemoveContractorModal] = useState<boolean>(false);
 
   const {
     updateAcquisitionFile: { execute: updateAcquisitionFile },
@@ -42,7 +50,7 @@ export const UpdateAcquisitionContainer = React.forwardRef<
   ) => {
     try {
       const acquisitionFile = values.toApi();
-      let response = await updateAcquisitionFile(acquisitionFile, userOverrideCodes);
+      const response = await updateAcquisitionFile(acquisitionFile, userOverrideCodes);
 
       if (!!response?.id) {
         if (acquisitionFile.fileProperties?.find(ap => !ap.property?.address && !ap.property?.id)) {
@@ -56,15 +64,6 @@ export const UpdateAcquisitionContainer = React.forwardRef<
           onSuccess();
         }
       }
-    } catch (e) {
-      if (axios.isAxiosError(e)) {
-        const axiosError = e as AxiosError<IApiError>;
-        if (axiosError.response?.status === 400) {
-          setDisplayRemoveContractorModal(true);
-        } else {
-          toast.error(axiosError.response?.data.error);
-        }
-      }
     } finally {
       formikHelpers?.setSubmitting(false);
     }
@@ -75,8 +74,6 @@ export const UpdateAcquisitionContainer = React.forwardRef<
       <View
         formikRef={formikRef}
         initialValues={UpdateAcquisitionSummaryFormModel.fromApi(acquisitionFile)}
-        displayRemoveContractorModal={displayRemoveContractorModal}
-        onRemoveContractorModalOk={() => setDisplayRemoveContractorModal(false)}
         onSubmit={(
           values: UpdateAcquisitionSummaryFormModel,
           formikHelpers: FormikHelpers<UpdateAcquisitionSummaryFormModel>,

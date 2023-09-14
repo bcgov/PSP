@@ -924,7 +924,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Update(updatedFile, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory });
 
             // Assert
-            act.Should().Throw<BusinessRuleViolationException>();
+            act.Should().Throw<UserOverrideException>();
         }
 
         [Fact]

@@ -20,7 +20,6 @@ const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 
 const onSubmit = jest.fn();
-const onRemoveContractorModalOk = jest.fn();
 const validationSchema = jest.fn().mockReturnValue(UpdateAcquisitionFileYupSchema);
 type TestProps = Pick<IUpdateAcquisitionFormProps, 'initialValues'>;
 
@@ -43,8 +42,6 @@ describe('UpdateAcquisitionForm component', () => {
         formikRef={ref}
         initialValues={props.initialValues}
         validationSchema={validationSchema}
-        displayRemoveContractorModal={false}
-        onRemoveContractorModalOk={onRemoveContractorModalOk}
         onSubmit={onSubmit}
       />,
       {
