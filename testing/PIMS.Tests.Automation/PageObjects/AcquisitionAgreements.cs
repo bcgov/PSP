@@ -82,16 +82,29 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(By.Id("input-agreements."+ index +".agreementTypeCode"), agreement.AgreementType);
 
             if (agreement.AgreementDate != "")
+            {
                 webDriver.FindElement(By.Id("datepicker-agreements."+ index +".agreementDate")).SendKeys(agreement.AgreementDate);
+                webDriver.FindElement(By.Id("datepicker-agreements."+ index +".agreementDate")).SendKeys(Keys.Enter);
+            }
 
             if (agreement.AgreementCommencementDate != "")
+            {
                 webDriver.FindElement(By.Id("datepicker-agreements."+ index +".commencementDate")).SendKeys(agreement.AgreementCommencementDate);
+                webDriver.FindElement(By.Id("datepicker-agreements."+ index +".commencementDate")).SendKeys(Keys.Enter);
+            }
 
             if (agreement.AgreementCompletionDate != "")
+            {
                 webDriver.FindElement(By.Id("datepicker-agreements."+ index +".completionDate")).SendKeys(agreement.AgreementCompletionDate);
+                webDriver.FindElement(By.Id("datepicker-agreements."+ index +".completionDate")).SendKeys(Keys.Enter);
+            }
 
             if (agreement.AgreementTerminationDate != "")
+            {
                 webDriver.FindElement(By.Id("datepicker-agreements."+ index +".terminationDate")).SendKeys(agreement.AgreementTerminationDate);
+                webDriver.FindElement(By.Id("datepicker-agreements."+ index +".terminationDate")).SendKeys(Keys.Enter);
+            }
+                
 
             if (agreement.AgreementPurchasePrice != "")
                 webDriver.FindElement(By.Id("input-agreements."+ index +".purchasePrice")).SendKeys(agreement.AgreementPurchasePrice);
@@ -169,7 +182,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
                 Assert.True(sharedModals.ModalHeader().Equals("Confirm Delete"));
-                Assert.True(sharedModals.ConfirmationModalText1().Equals("Are you sure you want to delete this item?"));
+                Assert.True(sharedModals.ModalContent().Equals("Are you sure you want to delete this item?"));
                 sharedModals.ModalClickOKBttn();
             }
 
@@ -202,9 +215,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(By.XPath("//form/button/following-sibling::div["+ agreementNbr +"]/div[@class='collapse show']/div/div/label[contains(text(),'Agreement type')]"));
             AssertTrueIsDisplayed(By.Id("input-agreements."+ index +".agreementTypeCode"));
-
-            AssertTrueIsDisplayed(By.XPath("//form/button/following-sibling::div["+ agreementNbr +"]/div[@class='collapse show']/div/div/label[contains(text(),'Agreement date')]"));
-            AssertTrueIsDisplayed(By.Id("datepicker-agreements."+ index +".commencementDate"));
             
             AssertTrueIsDisplayed(By.XPath("//form/button/following-sibling::div["+ agreementNbr +"]/div[@class='collapse show']/div/div/label[contains(text(),'Completion date')]"));
             AssertTrueIsDisplayed(By.Id("datepicker-agreements."+ index +".completionDate"));
@@ -237,34 +247,36 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Legal survey plan')]/parent::div/following-sibling::div"), agreement.AgreementLegalSurveyPlan);
 
             AssertTrueIsDisplayed(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Agreement type')]"));
-            AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Agreement status')]/parent::div/following-sibling::div"), agreement.AgreementType);
+            AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Agreement type')]/parent::div/following-sibling::div"), agreement.AgreementType);
 
             AssertTrueIsDisplayed(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Agreement date')]"));
-            AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Agreement date')]/parent::div/following-sibling::div"), agreement.AgreementDate);
+            AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Agreement date')]/parent::div/following-sibling::div"), TransformDateFormat(agreement.AgreementDate));
 
             if (agreement.AgreementCommencementDate != "")
             {
+                System.Diagnostics.Debug.WriteLine(webDriver.FindElement(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Commencement date')]/parent::div/following-sibling::div")).Text);
+                System.Diagnostics.Debug.WriteLine("THIS OTHER ONE: " + TransformDateFormat(agreement.AgreementCommencementDate));
                 AssertTrueIsDisplayed(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Commencement date')]"));
-                AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Commencement date')]/parent::div/following-sibling::div"), agreement.AgreementCommencementDate);
+                AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Commencement date')]/parent::div/following-sibling::div"), TransformDateFormat(agreement.AgreementCommencementDate));
             }
 
             AssertTrueIsDisplayed(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Completion date')]"));
-            AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Legal survey plan')]/parent::div/following-sibling::div"), agreement.AgreementCompletionDate);
+            AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Completion date')]/parent::div/following-sibling::div"), TransformDateFormat(agreement.AgreementCompletionDate));
 
             AssertTrueIsDisplayed(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Termination date')]"));
-            AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Termination date')]/parent::div/following-sibling::div"), agreement.AgreementTerminationDate);
+            AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Termination date')]/parent::div/following-sibling::div"), TransformDateFormat(agreement.AgreementTerminationDate));
 
 
             AssertTrueIsDisplayed(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div[contains(text(),'Financial')]"));
 
             AssertTrueIsDisplayed(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Purchase price')]"));
-            AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Purchase price')]/parent::div/following-sibling::div"), agreement.AgreementPurchasePrice);
+            AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Purchase price')]/parent::div/following-sibling::div"), TransformCurrencyFormat(agreement.AgreementPurchasePrice));
 
             AssertTrueIsDisplayed(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Deposit due no later than')]"));
-            AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Deposit due no later than')]/parent::div/following-sibling::div"), agreement.AgreementDepositDue);
+            AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Deposit due no later than')]/parent::div/following-sibling::div"), agreement.AgreementDepositDue + " days");
 
             AssertTrueIsDisplayed(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Deposit amount')]"));
-            AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Deposit amount')]/parent::div/following-sibling::div"), agreement.AgreementDepositAmount);
+            AssertTrueContentEquals(By.XPath("//button[@title='Edit agreements file']/parent::div/following-sibling::div["+ agreementNbr +"]/div/div/div/label[contains(text(),'Deposit amount')]/parent::div/following-sibling::div"), TransformCurrencyFormat(agreement.AgreementDepositAmount));
         }
     }
 }

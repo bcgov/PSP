@@ -5,6 +5,7 @@
         public string? AcquisitionStatus { get; set; } = String.Empty;
         public string? AcquisitionProjCode { get; set; } = String.Empty;
         public string? AcquisitionProject { get; set; } = String.Empty;
+        public string? AcquisitionProjProductCode { get; set; } = String.Empty; 
         public string? AcquisitionProjProduct { get; set; } = String.Empty;
         public string? AcquisitionProjFunding { get; set; } = String.Empty;
         public string? AcquisitionFundingOther { get; set; } = String.Empty;
@@ -35,6 +36,10 @@
         public int StakeholderStartRow { get; set; } = 0;
         public int StakeholderCount { get; set; } = 0;
         public List<AcquisitionStakeholder>? AcquisitionStakeholders { get; set; } = new List<AcquisitionStakeholder>();
+        public int CompensationStartRow { get; set; } = 0;
+        public int CompensationCount { get; set; } = 0;
+        public string? CompensationTotalAllowableAmount { get; set; } = String.Empty;
+        public List<AcquisitionCompensation>? AcquisitionCompensations { get; set; } = new List<AcquisitionCompensation>();
     }
 
     public class AcquisitionTeamMember
@@ -139,7 +144,43 @@
         public string StakeholderType { get; set; } = null!;
         public string? InterestHolder { get; set; } = String.Empty;
         public string? InterestType { get; set; } = String.Empty;
+        public string? StakeholderContactType { get; set; } = String.Empty;
         public string? PrimaryContact { get; set; } = String.Empty;
         public string? PayeeName { get; set; } = String.Empty;
+        public int StakeholderIndex { get; set; } = 0;
+    }
+
+    public class AcquisitionCompensation
+    {
+        public string? CompensationAmount { get; set; } = String.Empty;
+        public string? CompensationGSTAmount { get; set; } = String.Empty;
+        public string? CompensationTotalAmount { get; set; } = String.Empty;
+        public string? CompensationStatus { get; set; } = String.Empty;
+        public string? CompensationAlternateProject { get; set; } = String.Empty;
+        public string? CompensationAgreementDate { get; set; } = String.Empty;
+        public string? CompensationExpropriationNoticeDate { get; set; } = String.Empty;
+        public string? CompensationExpropriationVestingDate { get; set; } = String.Empty;
+        public string? CompensationSpecialInstructions { get; set; } = String.Empty;
+        public string? CompensationFiscalYear { get; set; } = String.Empty;
+        public string? CompensationSTOB { get; set; } = String.Empty;
+        public string? CompensationServiceLine { get; set; } = String.Empty;
+        public string? CompensationResponsibilityCentre { get; set; } = String.Empty;
+        public string? CompensationPayee { get; set; } = String.Empty;
+        public string? CompensationPayeeDisplay { get; set; } = String.Empty;
+        public Boolean CompensationPaymentInTrust { get; set; } = false;
+        public string? CompensationGSTNumber { get; set; } = String.Empty;
+        public string? CompensationDetailedRemarks { get; set; } = String.Empty;
+        public int ActivitiesStartRow { get; set; } = 0;
+        public int ActivitiesCount { get; set; } = 0;
+        public List<CompensationActivity>? CompensationActivities { get; set; } = new List<CompensationActivity>();
+    }
+
+    public class CompensationActivity
+    {
+        public string? ActCodeDescription { get; set; } = String.Empty;
+        public string? ActAmount { get; set; } = String.Empty;
+        public string? ActGSTEligible { get; set; } = String.Empty;
+        public string? ActGSTAmount { get; set; } = String.Empty;
+        public string? ActTotalAmount { get; set; } = String.Empty;
     }
 }

@@ -9,13 +9,9 @@ namespace PIMS.Tests.Automation.PageObjects
         //Documents Tab Element
         private By documentsTab = By.CssSelector("a[data-rb-event-key='documents']");
 
-        //Activity Documents List Header
-        //private By documentsTitle = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/h2/div/div/div/div[contains(text(),'Documents')]");
-        //private By addDocumentBttn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/h2/div/div/div/div[contains(text(),'Documents')]/following-sibling::div/button");
-
         //Documents Tab List Header
+        private By documentsFileTitle = By.XPath("//div[contains(text(),'File Documents')]");
         private By documentsTitle = By.XPath("//div[contains(text(),'Documents')]");
-        private By documentsLeasesTitle = By.XPath("//div[contains(text(),'Documents')]");
         private By addFileDocumentBttn = By.XPath("//div[contains(text(),'File Documents')]/following-sibling::div/button");
         private By addDocumentBttn = By.XPath("//div[contains(text(),'Documents')]/following-sibling::div/button");
 
@@ -269,29 +265,13 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentDeleteContent3 = By.CssSelector("div[class='modal-body'] div strong");
         private By documentDeleteOkBttn = By.CssSelector("button[title='ok-modal']");
 
-        //Activities Documents List Filters
-        //private By documentFilterTypeSelect = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/form/div/div[2]/div/div[1]/div/select[@data-testid='document-type']");
-        //private By documentFilterStatusSelect = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/form/div/div[2]/div/div[2]/div/select[@data-testid='document-status']");
-        //private By documentFilterNameInput = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/form/div/div[2]/div/div[3]/div/input[@data-testid='document-filename']");
-        //private By documentFilterSearchBttn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/form/div/div[3]/div/div[1]/button[@data-testid='search']");
-        //private By documentFilterResetBttn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/form/div/div[3]/div/div[2]/button[@data-testid='reset-button']");
-
         //Documents Tab List Filters
         private By documentFilterTypeSelect = By.XPath("//select[@data-testid='document-type']");
         private By documentFilterStatusSelect = By.XPath("//select[@data-testid='document-status']");
         private By documentFilterNameInput = By.XPath("//input[@data-testid='document-filename']");
         private By documentFilterSearchBttn = By.XPath("//input[@id='input-filename']/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/button[@data-testid='search']");
         private By documentFilterResetBttn = By.XPath("//input[@id='input-filename']/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/button[@data-testid='reset-button']");
-
-        //Activities Documents List Results
-        //private By documentTableResults = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/div[@data-testid='documentsTable']");
-        //private By documentTableTypeColumn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Document type')]");
-        //private By documentTableNameColumn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'File name')]");
-        //private By documentTableDateColumn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Uploaded')]");
-        //private By documentTableStatusColumn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Status')]");
-        //private By documentTableActionsColumn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Actions')]");
-        //private By documentTableContentTotal = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/div[@data-testid='documentsTable']/div[@class='tbody']/div");
-
+        
         //Documents Tab List Results
         private By documentTableResults = By.XPath("//div[@data-testid='documentsTable']");
         private By documentTableTypeColumn = By.XPath("//div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Document type')]");
@@ -301,20 +281,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentTableActionsColumn = By.XPath("//div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Actions')]");
         private By documentTableContentTotal = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div");
         private By documentTableWaitSpinner = By.CssSelector("div[class='table-loading']");
-
-        //Activities Documents List 1st Result Elements
-        //private By documentTableResults1stDownloadBttn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/div/button[@data-testid='document-download-button']");
-        //private By documentTableResults1stViewBttn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/button[@data-testid='document-view-button']");
-        //private By documentTableResults1stDeleteBttn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/button[@data-testid='document-delete-button']");
-
+       
         //Activities Documents List 1st Result Elements
         private By documentTableResults1stDownloadBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/div/button[@data-testid='document-download-button']");
         private By documentTableResults1stViewBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/button[@data-testid='document-view-button']");
         private By documentTableResults1stDeleteBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/button[@data-testid='document-delete-button']");
-
-        //Activities Documents Pagination
-        //private By documentPagination = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/div[@class='row']/div[4]/ul[@class='pagination']");
-        //private By documentMenuPagination = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/div[@class='row']/div[3]/div[@class='Menu-root']");
 
         //Documents Tab Pagination
         private By documentPagination = By.XPath("//div[@class='row']/div[4]/ul[@class='pagination']");
@@ -346,7 +317,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyDocumentFields(string documentType)
         {
-            WaitUntilClickable(documentUploadDocTypeModalSelect);
+            Wait(2000);
             ChooseSpecificSelectOption(documentUploadDocTypeModalSelect, documentType);
 
             switch (documentType)
@@ -417,14 +388,14 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyDocumentsListView(string fileType)
         {
             WaitUntilVisible(documentFilterTypeSelect);
-            if (fileType.Equals("Lease") || fileType.Equals("CDOGS Templates") || fileType.Equals("Project"))
+            if (fileType.Equals("CDOGS Templates") || fileType.Equals("Project"))
             {
-                Assert.True(webDriver.FindElement(documentsLeasesTitle).Displayed);
+                Assert.True(webDriver.FindElement(documentsTitle).Displayed);
                 Assert.True(webDriver.FindElement(addDocumentBttn).Displayed);
             }
             else
             {
-                Assert.True(webDriver.FindElement(documentsTitle).Displayed);
+                Assert.True(webDriver.FindElement(documentsFileTitle).Displayed);
                 Assert.True(webDriver.FindElement(addFileDocumentBttn).Displayed);
             
             }
@@ -444,8 +415,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void FilterByType(string documentType)
         {
-            Wait(2000);
-            FocusAndClick(documentFilterResetBttn);
+            Wait();
+            webDriver.FindElement(documentFilterResetBttn).Click();
 
             WaitUntilClickable(documentFilterTypeSelect);
             ChooseSpecificSelectOption(documentFilterTypeSelect, documentType);
@@ -454,8 +425,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void FilterByStatus(string documentStatus)
         {
-            WaitUntilClickable(documentFilterResetBttn);
-            FocusAndClick(documentFilterResetBttn);
+            Wait();
+            webDriver.FindElement(documentFilterResetBttn).Click();
 
             WaitUntilVisible(documentFilterStatusSelect);
             ChooseSpecificSelectOption(documentFilterStatusSelect, documentStatus);
@@ -464,8 +435,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void FilterByName(string documentName)
         {
-            WaitUntilClickable(documentFilterResetBttn);
-            FocusAndClick(documentFilterResetBttn);
+            Wait();
+            webDriver.FindElement(documentFilterResetBttn).Click();
 
             WaitUntilVisible(documentFilterNameInput);
             webDriver.FindElement(documentFilterNameInput).SendKeys(documentName);
@@ -490,6 +461,14 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(documentSaveButton).Click();
 
             WaitUntilVisible(documentGeneralToastBody);
+        }
+
+        public void SaveCDOGTemplate()
+        {
+            WaitUntilClickable(documentSaveButton);
+            webDriver.FindElement(documentSaveButton).Click();
+
+            WaitUntilSpinnerDisappear();
         }
 
         public void SaveEditDigitalDocument()
