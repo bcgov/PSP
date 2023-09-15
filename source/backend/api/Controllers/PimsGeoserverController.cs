@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
@@ -6,8 +7,11 @@ using AspNetCore.Proxy;
 using AspNetCore.Proxy.Options;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Policies;
+using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
 using Pims.Dal.Security;
 
@@ -30,6 +34,7 @@ namespace Pims.Api.Controllers
         #region Variables
 
         private readonly IOptionsMonitor<GeoserverProxyOptions> _proxyOptions;
+        private readonly ILogger _logger;
         #endregion
 
         #region Constructors
@@ -37,9 +42,10 @@ namespace Pims.Api.Controllers
         /// <summary>
         /// Creates a new instance of a PimsGeoserverController class.
         /// </summary>
-        public PimsGeoserverController(IOptionsMonitor<GeoserverProxyOptions> options)
+        public PimsGeoserverController(IOptionsMonitor<GeoserverProxyOptions> options, ILogger<PimsGeoserverController> logger)
         {
             _proxyOptions = options;
+            _logger = logger;
         }
         #endregion
 
@@ -50,12 +56,29 @@ namespace Pims.Api.Controllers
         public Task ProxyCatchAll(string rest)
         {
             var queryString = this.Request.QueryString.Value;
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(PimsGeoserverController),
+                nameof(ProxyCatchAll),
+                User.GetUsername(),
+                DateTime.Now);
+
             HttpProxyOptions httpOptions = AspNetCore.Proxy.Options.HttpProxyOptionsBuilder.Instance.WithShouldAddForwardedHeaders(false).WithBeforeSend((c, hrm) =>
             {
                 // Set something that is needed for the downstream endpoint.
                 var basicAuth = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes($"{_proxyOptions.CurrentValue.ServiceUser}:{_proxyOptions.CurrentValue.ServicePassword}"));
                 hrm.Headers.Clear(); // remove all headers as pre-existing SITEMINDER headers may conflict with BASIC AUTH.
                 hrm.Headers.Authorization = new AuthenticationHeaderValue("Basic", basicAuth);
+
+                return Task.CompletedTask;
+            }).WithAfterReceive((c, hrm) =>
+            {
+                _logger.LogDebug("Response from geoserver proxy: {StatusCode}, {ReasonPhrase}, {Headers} ", hrm.StatusCode, hrm.ReasonPhrase, hrm.Headers);
+
+                return Task.CompletedTask;
+            }).WithHandleFailure((c, e) =>
+            {
+                _logger.LogDebug("Response from geoserver proxy: {Exception}, {StatusCode}, {Body}, {Headers} ", e.Message, c.Response?.StatusCode, c.Response?.Body, c.Response?.Headers);
 
                 return Task.CompletedTask;
             }).Build();
