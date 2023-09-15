@@ -181,6 +181,7 @@ export class OwnerAddressFormModel {
     model.postal = apiAddress.postal;
     model.provinceId = apiAddress.provinceStateId;
     model.countryId = apiAddress.countryId;
+    model.countryOther = apiAddress.countryOther;
 
     return model;
   }

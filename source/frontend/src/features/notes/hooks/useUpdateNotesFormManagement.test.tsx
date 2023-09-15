@@ -58,7 +58,7 @@ describe('useUpdateNotesFormManagement hook', () => {
   });
 
   it('should provide form validation schema', async () => {
-    expect.assertions(3);
+    expect.assertions(4);
     const { validationSchema } = setup();
 
     const validForm = new NoteForm();

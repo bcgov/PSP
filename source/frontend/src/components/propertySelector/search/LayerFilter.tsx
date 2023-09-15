@@ -27,6 +27,7 @@ export interface ILayerFilterProps {
   addressResults?: IGeocoderResponse[];
   onAddressChange: (searchText: string) => void;
   onAddressSelect: (selectedItem: IGeocoderResponse) => void;
+  loading: boolean;
 }
 
 /**
@@ -39,6 +40,7 @@ export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayer
   addressResults,
   onAddressChange,
   onAddressSelect,
+  loading,
 }) => {
   const formikRef = useRef<FormikProps<ILayerSearchCriteria>>(null);
 
@@ -141,15 +143,11 @@ export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayer
             <Col xl={2} className="pr-0">
               <Row>
                 <Col className="pr-0">
-                  <SearchButton
-                    disabled={formikProps.isSubmitting}
-                    onClick={formikProps.submitForm}
-                    type="button"
-                  />
+                  <SearchButton disabled={loading} onClick={formikProps.submitForm} type="button" />
                 </Col>
                 <Col className="pl-0">
                   <ResetButton
-                    disabled={formikProps.isSubmitting}
+                    disabled={loading}
                     onClick={() => {
                       formikProps.resetForm();
                       resetFilter();
