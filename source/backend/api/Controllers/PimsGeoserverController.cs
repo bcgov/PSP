@@ -73,12 +73,12 @@ namespace Pims.Api.Controllers
                 return Task.CompletedTask;
             }).WithAfterReceive((c, hrm) =>
             {
-                _logger.LogDebug("Response from geoserver proxy: {StatusCode}, {ReasonPhrase}, {Headers} ", hrm.StatusCode, hrm.ReasonPhrase, hrm.Headers);
+                _logger.LogInformation("Response from geoserver proxy: {StatusCode}, {ReasonPhrase}, {Headers} ", hrm.StatusCode, hrm.ReasonPhrase, hrm.Headers);
 
                 return Task.CompletedTask;
             }).WithHandleFailure((c, e) =>
             {
-                _logger.LogDebug("Response from geoserver proxy: {Exception}, {StatusCode}, {Body}, {Headers} ", e.Message, c.Response?.StatusCode, c.Response?.Body, c.Response?.Headers);
+                _logger.LogInformation("Response from geoserver proxy: {Exception}, {StatusCode}, {Body}, {Headers} ", e.Message, c.Response?.StatusCode, c.Response?.Body, c.Response?.Headers);
 
                 return Task.CompletedTask;
             }).Build();
