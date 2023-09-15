@@ -24,11 +24,6 @@ const DocumentListContainer: React.FunctionComponent<
 
   const [documentResults, setDocumentResults] = useState<DocumentRow[]>([]);
 
-  const [pageProps, setPageProps] = useState<{ pageIndex?: number; pageSize: number }>({
-    pageIndex: 0,
-    pageSize: 10,
-  });
-
   const {
     retrieveDocumentRelationship,
     retrieveDocumentRelationshipLoading,
@@ -78,14 +73,6 @@ const DocumentListContainer: React.FunctionComponent<
     retrieveDocuments();
   }, [retrieveDocuments]);
 
-  const currentPageIndex = pageProps.pageIndex;
-  const onPageChange = useCallback(
-    ({ pageIndex, pageSize }: { pageIndex?: number; pageSize: number }) => {
-      setPageProps({ pageIndex: pageIndex ?? currentPageIndex, pageSize });
-    },
-    [currentPageIndex],
-  );
-
   return (
     <DocumentListView
       parentId={props.parentId}
@@ -96,8 +83,6 @@ const DocumentListContainer: React.FunctionComponent<
       onDelete={onDelete}
       onSuccess={onSuccess}
       disableAdd={props.disableAdd}
-      onPageChange={onPageChange}
-      pageProps={pageProps}
       title={props.title}
     />
   );

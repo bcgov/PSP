@@ -212,7 +212,13 @@ namespace PIMS.Tests.Automation.PageObjects
                     webDriver.FindElement(projectInput).SendKeys(researchFile.Projects[i]);
 
                     Wait();
+                    webDriver.FindElement(projectInput).SendKeys(Keys.Space);
+
+                    Wait();
+                    webDriver.FindElement(projectInput).SendKeys(Keys.Backspace);
+
                     By projectOptions = By.Id("typeahead-researchFileProjects["+ i +"].project-item-0");
+                    WaitUntilVisible(projectOptions);
                     webDriver.FindElement(projectOptions).Click();
                 }
             }
@@ -248,7 +254,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (researchFile.Requester != "")
             {
                 webDriver.FindElement(selectContactButton).Click();
-                sharedSelectContact.SelectContact(researchFile.Requester);
+                sharedSelectContact.SelectContact(researchFile.Requester, "");
             }
             if (researchFile.RequestDescription != "")
             {
@@ -397,7 +403,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (researchFile.Requester != "")
             {
                 webDriver.FindElement(selectContactButton).Click();
-                sharedSelectContact.SelectContact(researchFile.Requester);
+                sharedSelectContact.SelectContact(researchFile.Requester, "");
             }
             if (researchFile.RequestDescription != "")
             {

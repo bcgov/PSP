@@ -20,7 +20,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected PageObjectBase(IWebDriver webDriver)
         {
             this.webDriver = webDriver;
-            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
+            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(60));
             wait.PollingInterval = TimeSpan.FromMilliseconds(100);
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
         }
@@ -186,6 +186,12 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(elementBy);
             Assert.True(webDriver.FindElement(elementBy).Text.Equals(text));
+        }
+
+        protected void AssertTrueElementValueEquals(By elementBy, string text)
+        {
+            WaitUntilVisible(elementBy);
+            Assert.True(webDriver.FindElement(elementBy).GetAttribute("Value").Equals(text));
         }
 
         protected void AssertTrueContentNotEquals(By elementBy, string text)

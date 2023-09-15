@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -47,6 +48,17 @@ namespace Pims.Dal.Repositories
         {
             using var scope = Logger.QueryScope();
 
+            var predicate = PredicateBuilder.New<PimsAgreement>(ag => true);
+
+            if (filter.Projects != null && filter.Projects.Any())
+            {
+                predicate.And(a => a.AcquisitionFile.ProjectId.HasValue && filter.Projects.Contains(a.AcquisitionFile.ProjectId.Value));
+            }
+            if (filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
+            {
+                predicate.And(a => a.AcquisitionFile.PimsAcquisitionFilePeople.Any(afp => filter.AcquisitionTeamPersons.Contains(afp.PersonId)));
+            }
+
             var query = Context.PimsAgreements
                 .Include(a => a.AgreementTypeCodeNavigation)
                 .Include(a => a.AcquisitionFile)
@@ -58,16 +70,9 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(a => a.Product)
                 .Include(a => a.AcquisitionFile)
                     .ThenInclude(a => a.AcquisitionFileStatusTypeCodeNavigation)
-                .AsNoTracking();
+                .AsNoTracking()
+                .Where(predicate);
 
-            if (filter.Projects != null && filter.Projects.Any())
-            {
-                query = query.Where(a => a.AcquisitionFile.ProjectId.HasValue && filter.Projects.Contains(a.AcquisitionFile.ProjectId.Value));
-            }
-            if (filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
-            {
-                query = query.Where(a => a.AcquisitionFile.PimsAcquisitionFilePeople.Any(afp => filter.AcquisitionTeamPersons.Contains(afp.PersonId)));
-            }
             return query.ToList();
         }
 

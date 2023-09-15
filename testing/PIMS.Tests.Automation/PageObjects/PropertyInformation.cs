@@ -258,7 +258,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ClosePropertyInfoModal()
         {
-            WaitUntilClickable(propertyCloseWindowBttn);
+            WaitUntilSpinnerDisappear();
+
+            WaitUntilVisible(propertyCloseWindowBttn);
             webDriver.FindElement(propertyCloseWindowBttn).Click();
         }
 
@@ -321,7 +323,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             ButtonElement("Save");
 
-            sharedModals.SiteMinderModal();
+            //sharedModals.SiteMinderModal();
         }
 
         public void CancelPropertyDetails()

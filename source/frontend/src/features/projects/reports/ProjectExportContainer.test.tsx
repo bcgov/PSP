@@ -96,6 +96,25 @@ describe('ProjectExportContainer component', () => {
     expect(getAgreementsReport.execute).toHaveBeenCalled();
   });
 
+  it('displays warning when there are no records to be returned by agreement export function', async () => {
+    (useAcquisitionProvider as jest.MockedFunction<typeof useAcquisitionProvider>).mockReturnValue({
+      ...useAcquisitionProvider(),
+      getAgreementsReport: {
+        ...defaultRepositoryResponse(),
+        status: 204, // API returns 204 No Content when no records were found
+      },
+    } as unknown as ReturnType<typeof useAcquisitionProvider>);
+
+    setup();
+    await act(() => viewProps.onExport({ type: 'AGREEMENT' } as Api_ExportProjectFilter));
+
+    const { getAgreementsReport } = useAcquisitionProvider();
+    expect(getAgreementsReport.execute).toHaveBeenCalled();
+    expect(
+      await screen.findByText(/There is no data for the input parameters you entered/i),
+    ).toBeVisible();
+  });
+
   it('requests compensation export when export function called', async () => {
     setup();
     await act(() => viewProps.onExport({ type: 'COMPENSATION' } as Api_ExportProjectFilter));

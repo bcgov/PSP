@@ -25,6 +25,7 @@ describe('LayerFilter component', () => {
         filter={{ ...defaultLayerFilter, searchBy }}
         onAddressChange={onAddressChange}
         onAddressSelect={onAddressSelect}
+        loading={false}
       />,
       {
         ...renderOptions,
