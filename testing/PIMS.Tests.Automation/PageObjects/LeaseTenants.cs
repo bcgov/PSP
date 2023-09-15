@@ -188,17 +188,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyTenantsInitForm()
         {
-            WaitUntilVisible(tenantsSelectedTableSummaryColumn);
-
-            Assert.True(webDriver.FindElement(tenantsSubtittle).Displayed);
-            Assert.True(webDriver.FindElement(tenantsInstructions).Displayed);
-            Assert.True(webDriver.FindElement(tenantAddTenantsBttn).Displayed);
-            Assert.True(webDriver.FindElement(tenantsCounter).Displayed);
-            Assert.True(webDriver.FindElement(tenantsSelectedTableSummaryColumn).Displayed);
-            Assert.True(webDriver.FindElement(tenantsSelectedTablePrimaryContactColumn).Displayed);
-            Assert.True(webDriver.FindElement(tenantsSelectedTableContactInfoColumn).Displayed);
-            Assert.True(webDriver.FindElement(tenantsSelectedTableTypeColumn).Displayed);
-            Assert.True(webDriver.FindElement(tenantsSelectedNoRows).Displayed);
+            AssertTrueIsDisplayed(tenantsSubtittle);
+            AssertTrueIsDisplayed(tenantsInstructions);
+            AssertTrueIsDisplayed(tenantAddTenantsBttn);
+            AssertTrueIsDisplayed(tenantsCounter);
+            AssertTrueIsDisplayed(tenantsSelectedTableSummaryColumn);
+            AssertTrueIsDisplayed(tenantsSelectedTablePrimaryContactColumn);
+            AssertTrueIsDisplayed(tenantsSelectedTableContactInfoColumn);
+            AssertTrueIsDisplayed(tenantsSelectedTableTypeColumn);
+            AssertTrueIsDisplayed(tenantsSelectedNoRows);
         }
     }
 }

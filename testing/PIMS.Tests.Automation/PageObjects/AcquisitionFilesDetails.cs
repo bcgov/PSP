@@ -158,7 +158,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditAcquisitionFileBttn()
         {
-            WaitUntilClickable(acquisitionFileEditButton);
+            Wait();
             webDriver.FindElement(acquisitionFileEditButton).Click();
         }
 
@@ -282,7 +282,7 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 WaitUntilClickable(acquisitionFileProjectProductSelect);
                 webDriver.FindElement(acquisitionFileProjectProductSelect).Click();
-                ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, acquisition.AcquisitionProjProduct);
+                ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, acquisition.AcquisitionProjProductCode + " " + acquisition.AcquisitionProjProduct);
             }
 
             if (acquisition.AcquisitionProjFunding != "")
