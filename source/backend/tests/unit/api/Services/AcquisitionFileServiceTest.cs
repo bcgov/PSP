@@ -994,7 +994,7 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        InterestHolderId= 100,
+                        InterestHolderId = 100,
                     },
                 });
 
@@ -1037,7 +1037,7 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        InterestHolderId= 100,
+                        InterestHolderId = 100,
                     },
                 });
 
@@ -1079,7 +1079,7 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        AcquisitionFilePersonId= 100,
+                        AcquisitionFilePersonId = 100,
                     },
                 });
 

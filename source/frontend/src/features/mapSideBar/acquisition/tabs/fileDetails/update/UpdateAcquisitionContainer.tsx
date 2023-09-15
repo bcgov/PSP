@@ -22,7 +22,7 @@ export const RemoveSelfContractorContent = (): React.ReactNode => {
   return (
     <>
       <p>
-        Contractors cannot remove themself from a file. Please contact the admin at{' '}
+        Contractors cannot remove themselves from a file. Please contact the admin at{' '}
         <a href="mailto: pims@gov.bc.ca">pims@gov.bc.ca</a>
       </p>
     </>

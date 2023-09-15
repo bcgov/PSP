@@ -145,7 +145,7 @@ describe('UpdateAcquisition container', () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
       createAxiosError(
         409,
-        'Contractors cannot remove themself from a file. Please contact the admin at pims@gov.bc.ca',
+        'Contractors cannot remove themselves from a file. Please contact the admin at pims@gov.bc.ca',
         {
           errorCode: UserOverrideCode.CONTRACTOR_SELFREMOVED,
         },
