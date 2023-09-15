@@ -1,6 +1,8 @@
 import userEvent from '@testing-library/user-event';
 
 import { ILeaseFilter } from '@/features/leases';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
@@ -13,6 +15,13 @@ const storeState = {
 const setFilter = jest.fn();
 
 jest.mock('@react-keycloak/web');
+
+jest.mock('@/hooks/repositories/useUserInfoRepository');
+(useUserInfoRepository as jest.Mock).mockReturnValue({
+  retrieveUserInfo: jest.fn(),
+  retrieveUserInfoLoading: true,
+  retrieveUserInfoResponse: getUserMock(),
+});
 
 // render component under test
 const setup = (

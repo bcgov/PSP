@@ -28,9 +28,7 @@ export interface IDocumentListViewProps {
   addButtonText?: string;
   onDelete: (relationship: Api_DocumentRelationship) => Promise<boolean | undefined>;
   onSuccess: () => void;
-  onPageChange: (props: { pageIndex?: number; pageSize: number }) => void;
   disableAdd?: boolean;
-  pageProps: { pageIndex?: number; pageSize: number };
   title?: string;
 }
 /**
@@ -39,15 +37,7 @@ export interface IDocumentListViewProps {
 export const DocumentListView: React.FunctionComponent<
   React.PropsWithChildren<IDocumentListViewProps>
 > = (props: IDocumentListViewProps) => {
-  const {
-    documentResults,
-    isLoading,
-    defaultFilters,
-    hideFilters,
-    onPageChange,
-    pageProps,
-    title,
-  } = props;
+  const { documentResults, isLoading, defaultFilters, hideFilters, title } = props;
 
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
 
@@ -197,8 +187,6 @@ export const DocumentListView: React.FunctionComponent<
           setSort={setSort}
           onViewDetails={handleViewDetails}
           onDelete={handleDeleteClick}
-          onPageChange={onPageChange}
-          pageProps={pageProps}
         />
       </Section>
       <DocumentDetailModal
