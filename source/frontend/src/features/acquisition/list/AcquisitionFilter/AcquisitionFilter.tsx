@@ -1,5 +1,5 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -7,21 +7,17 @@ import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, Multiselect, Select } from '@/components/common/form';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { ACQUISITION_FILE_STATUS_TYPES } from '@/constants/API';
-import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { Api_Person } from '@/models/api/Person';
 import { mapLookupCode } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { AcquisitionFilterModel, Api_AcquisitionFilter } from '../interfaces';
-
-interface MultiSelectOption {
-  id: string;
-  text: string;
-}
+import { AcquisitionFilterModel, Api_AcquisitionFilter, MultiSelectOption } from '../interfaces';
 
 export interface IAcquisitionFilterProps {
   filter?: Api_AcquisitionFilter;
   setFilter: (filter: Api_AcquisitionFilter) => void;
+  aquisitionTeam: Api_Person[];
 }
 
 /**
@@ -31,6 +27,7 @@ export interface IAcquisitionFilterProps {
 export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFilterProps>> = ({
   filter,
   setFilter,
+  aquisitionTeam,
 }) => {
   const onSearchSubmit = (
     values: AcquisitionFilterModel,
@@ -55,30 +52,24 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
     .getByType(ACQUISITION_FILE_STATUS_TYPES)
     .map(c => mapLookupCode(c));
 
-  const {
-    getAllAcquisitionFileTeamMembers: { response: team, execute: loadAcquisitionTeam },
-  } = useAcquisitionProvider();
-
-  useEffect(() => {
-    loadAcquisitionTeam();
-  }, [loadAcquisitionTeam]);
-
   const acquisitionTeamOptions = useMemo(() => {
-    if (team !== undefined) {
-      return team?.map<MultiSelectOption>(x => ({
+    if (aquisitionTeam !== undefined) {
+      return aquisitionTeam?.map<MultiSelectOption>(x => ({
         id: x?.id?.toString() || '',
         text: formatApiPersonNames(x),
       }));
     } else {
       return [];
     }
-  }, [team]);
+  }, [aquisitionTeam]);
 
   return (
     <Formik<AcquisitionFilterModel>
       enableReinitialize
       initialValues={
-        filter ? AcquisitionFilterModel.fromApi(filter, team || []) : new AcquisitionFilterModel()
+        filter
+          ? AcquisitionFilterModel.fromApi(filter, aquisitionTeam || [])
+          : new AcquisitionFilterModel()
       }
       onSubmit={onSearchSubmit}
     >

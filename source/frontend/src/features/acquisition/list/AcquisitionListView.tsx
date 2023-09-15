@@ -12,6 +12,7 @@ import { StyledIconButton } from '@/components/common/buttons/IconButton';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import Claims from '@/constants/claims';
 import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useSearch } from '@/hooks/useSearch';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
@@ -86,6 +87,14 @@ export const AcquisitionListView: React.FunctionComponent<
     }
   }, [error]);
 
+  const {
+    getAllAcquisitionFileTeamMembers: { response: team, execute: loadAcquisitionTeam },
+  } = useAcquisitionProvider();
+
+  useEffect(() => {
+    loadAcquisitionTeam();
+  }, [loadAcquisitionTeam]);
+
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
@@ -93,7 +102,11 @@ export const AcquisitionListView: React.FunctionComponent<
         <Styled.PageToolbar>
           <Row>
             <Col>
-              <AcquisitionFilter filter={filter} setFilter={changeFilter} />
+              <AcquisitionFilter
+                filter={filter}
+                setFilter={changeFilter}
+                aquisitionTeam={team || []}
+              />
             </Col>
             <Col md="auto" className="px-0">
               <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">

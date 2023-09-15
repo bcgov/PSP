@@ -14,7 +14,7 @@ const setFilter = jest.fn();
 
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {
-  const utils = render(<AcquisitionFilter setFilter={setFilter} />, {
+  const utils = render(<AcquisitionFilter setFilter={setFilter} aquisitionTeam={[]} />, {
     store: {
       [lookupCodesSlice.name]: { lookupCodes: mockLookups },
     },
