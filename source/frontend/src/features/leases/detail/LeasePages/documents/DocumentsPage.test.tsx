@@ -17,6 +17,26 @@ jest.mock('@react-keycloak/web');
   },
 });
 
+jest.mock('@/features/documents/hooks/useDocumentRelationshipProvider', () => ({
+  useDocumentRelationshipProvider: () => {
+    return {
+      retrieveDocumentRelationship: jest.fn(),
+      retrieveDocumentRelationshipLoading: false,
+    };
+  },
+}));
+
+jest.mock('@/features/documents/hooks/useDocumentProvider', () => ({
+  useDocumentProvider: () => {
+    return {
+      getDocumentRelationshipTypes: jest.fn(),
+      getDocumentRelationshipTypesLoading: false,
+      getDocumentTypes: jest.fn(),
+      getDocumentTypesLoading: false,
+    };
+  },
+}));
+
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
 };

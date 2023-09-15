@@ -27,6 +27,19 @@ jest.mock('@/hooks/repositories/useProjectProvider', () => ({
   },
 }));
 
+jest.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
+  useFinancialCodeRepository: () => {
+    return {
+      getFinancialCodesByType: {
+        error: undefined,
+        response: [],
+        execute: jest.fn(),
+        loading: false,
+      },
+    };
+  },
+}));
+
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 let viewProps: IAddProjectFormProps | undefined;

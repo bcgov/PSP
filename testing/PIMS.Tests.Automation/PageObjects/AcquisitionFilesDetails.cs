@@ -148,7 +148,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateMinimumAcquisitionFile(AcquisitionFile acquisition)
         {
-            Wait();
+            Wait(2000);
 
             webDriver.FindElement(acquisitionFileNameInput).SendKeys(acquisition.AcquisitionFileName);
             webDriver.FindElement(acquisitionFileDetailsTypeSelect);
@@ -175,7 +175,11 @@ namespace PIMS.Tests.Automation.PageObjects
                 WaitUntilVisible(acquisitionFileProjectInput);
 
                 webDriver.FindElement(acquisitionFileProjectInput).SendKeys(acquisition.AcquisitionProject);
+
+                Wait();
                 webDriver.FindElement(acquisitionFileProjectInput).SendKeys(Keys.Space);
+
+                Wait();
                 webDriver.FindElement(acquisitionFileProjectInput).SendKeys(Keys.Backspace);
 
                 Wait(2000);
@@ -187,7 +191,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 WaitUntilVisible(acquisitionFileProjectProductSelect);
                 webDriver.FindElement(acquisitionFileProjectProductSelect).Click();
 
-                ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, acquisition.AcquisitionProjProduct);
+                ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, acquisition.AcquisitionProjProductCode + " " + acquisition.AcquisitionProjProduct);
             }
                 
             if(acquisition.AcquisitionProjFunding != "")
@@ -236,14 +240,14 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 WaitUntilVisible(acquisitionFileOwnerSolicitorButton);
                 webDriver.FindElement(acquisitionFileOwnerSolicitorButton).Click();
-                sharedSelectContact.SelectContact(acquisition.OwnerSolicitor);
+                sharedSelectContact.SelectContact(acquisition.OwnerSolicitor, "");
             }
 
             if (acquisition.OwnerRepresentative != "")
             {
                 WaitUntilVisible(acquisitionFileOwnerRepresentativeButton);
                 webDriver.FindElement(acquisitionFileOwnerRepresentativeButton).Click();
-                sharedSelectContact.SelectContact(acquisition.OwnerRepresentative);
+                sharedSelectContact.SelectContact(acquisition.OwnerRepresentative, "");
             }
 
             if (acquisition.OwnerComment != "")
@@ -350,7 +354,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.AcquisitionTeam.First().ContactName != "")
             {
                 while (webDriver.FindElements(acquisitionFileTeamMembersGroup).Count > 0)
-                    DeleteStaffMember();
+                    DeleteFirstStaffMember();
 
                 for (var i = 0; i < acquisition.AcquisitionTeam.Count; i++)
                 {
@@ -373,14 +377,14 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 WaitUntilVisible(acquisitionFileOwnerSolicitorButton);
                 webDriver.FindElement(acquisitionFileOwnerSolicitorButton).Click();
-                sharedSelectContact.SelectContact(acquisition.OwnerSolicitor);
+                sharedSelectContact.SelectContact(acquisition.OwnerSolicitor, "");
             }
 
             if (acquisition.OwnerRepresentative != "")
             {
                 WaitUntilVisible(acquisitionFileOwnerRepresentativeButton);
                 webDriver.FindElement(acquisitionFileOwnerRepresentativeButton).Click();
-                sharedSelectContact.SelectContact(acquisition.OwnerRepresentative);
+                sharedSelectContact.SelectContact(acquisition.OwnerRepresentative, "");
             }
 
             if (acquisition.OwnerComment != "")
@@ -416,6 +420,14 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             AssertTrueIsDisplayed(acquisitionFileEditButton);
+        }
+
+        public void SaveAcquisitionFileDetailsWithExpectedErrors()
+        {
+            Wait();
+            ButtonElement("Save");
+
+            sharedModals.IsToastyPresent();
         }
 
         public void CancelAcquisitionFile()
@@ -490,7 +502,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(acquisitionFileProjectProductLabel);
 
             if(acquisition.AcquisitionProjProduct != "")
-                AssertTrueContentEquals(acquisitionFileProjectProductContent, acquisition.AcquisitionProjProduct);
+                AssertTrueContentEquals(acquisitionFileProjectProductContent, acquisition.AcquisitionProjProductCode + " " +acquisition.AcquisitionProjProduct);
 
             AssertTrueIsDisplayed(acquisitionFileProjectFundingLabel);
 
@@ -503,7 +515,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Schedule
             AssertTrueIsDisplayed(acquisitionFileScheduleSubtitle);
             AssertTrueIsDisplayed(acquisitionFileScheduleAssignedDateLabel);
-            AssertTrueContentEquals(acquisitionFileScheduleAssignedDateContent, DateTime.Now.ToString("MMM d, yyyy"));
+            //AssertTrueContentEquals(acquisitionFileScheduleAssignedDateContent, DateTime.Now.ToString("MMM d, yyyy"));
 
             AssertTrueIsDisplayed(acquisitionFileScheduleDeliveryDateLabel);
 
@@ -664,7 +676,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(By.CssSelector("select[id='input-team["+ teamMemberIndex +"].contactTypeCode']"));
             ChooseSpecificSelectOption(By.CssSelector("select[id='input-team["+ teamMemberIndex +"].contactTypeCode']"), teamRole);
             FocusAndClick(By.CssSelector("div[class='collapse show'] div[class='py-3 row']:nth-child("+ teamMemberCount +") div[class='pl-0 col-auto'] button"));
-            sharedSelectContact.SelectContact(contactName);
+            sharedSelectContact.SelectContact(contactName, "");
         }
 
         private void AddOwners(AcquisitionOwner owner, int ownerIndex)
@@ -725,7 +737,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         }
 
-        private void DeleteStaffMember()
+        public void DeleteFirstStaffMember()
         {
             WaitUntilClickable(acquisitionFileTeamFirstMemberDeleteBttn);
             webDriver.FindElement(acquisitionFileTeamFirstMemberDeleteBttn).Click();

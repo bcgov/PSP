@@ -213,6 +213,11 @@ namespace Pims.Api.Models.Concepts
         public GeometryModel Location { get; set; }
 
         /// <summary>
+        /// get/set - The boundary of the property.
+        /// </summary>
+        public PolygonModel Boundary { get; set; }
+
+        /// <summary>
         /// get/set - General location of the property.
         /// </summary>
         public string GeneralLocation { get; set; }

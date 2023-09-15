@@ -193,5 +193,11 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisibleText(note1stNoteContent, webDriver.FindElement(note1stNoteContent).Text);
             Assert.True(webDriver.FindElement(note1stNoteContent).Text == fileType + " status changed from "+ fromStatus +" to " + toStatus);
         }
+
+        public void VerifyAutomaticNotesCompensation(string CompensationNbr, string fromStatus, string toStatus)
+        {
+            WaitUntilVisibleText(note1stNoteContent, webDriver.FindElement(note1stNoteContent).Text);
+            Assert.True(webDriver.FindElement(note1stNoteContent).Text == "Compensation Requisition with # " + CompensationNbr + ", changed status from '"+ fromStatus +"' to '" + toStatus + "'");
+        }
     }
 }
