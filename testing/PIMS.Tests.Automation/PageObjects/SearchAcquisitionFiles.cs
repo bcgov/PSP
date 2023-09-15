@@ -71,7 +71,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchAcquisitionFileNameInput).SendKeys(AFile);
             ChooseSpecificSelectOption(searchAcquisitionFileStatusSelect, "All Status");
 
-            Wait();
+            Wait(2000);
             webDriver.FindElement(searchAcquisitionFileSearchButton).Click();
         }
 

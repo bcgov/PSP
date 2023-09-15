@@ -212,7 +212,13 @@ namespace PIMS.Tests.Automation.PageObjects
                     webDriver.FindElement(projectInput).SendKeys(researchFile.Projects[i]);
 
                     Wait();
+                    webDriver.FindElement(projectInput).SendKeys(Keys.Space);
+
+                    Wait();
+                    webDriver.FindElement(projectInput).SendKeys(Keys.Backspace);
+
                     By projectOptions = By.Id("typeahead-researchFileProjects["+ i +"].project-item-0");
+                    WaitUntilVisible(projectOptions);
                     webDriver.FindElement(projectOptions).Click();
                 }
             }
