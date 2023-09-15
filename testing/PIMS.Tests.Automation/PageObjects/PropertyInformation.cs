@@ -258,7 +258,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ClosePropertyInfoModal()
         {
-            Wait();
+            WaitUntilSpinnerDisappear();
+
+            WaitUntilVisible(propertyCloseWindowBttn);
             webDriver.FindElement(propertyCloseWindowBttn).Click();
         }
 

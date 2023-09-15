@@ -176,7 +176,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilSpinnerDisappear();
             webDriver.FindElement(searchPropertiesDelete1stPropBttn).Click();
 
-            Wait(3000);
+            Wait(2000);
             if (webDriver.FindElements(searchPropertiesModal).Count > 0)
             {
                 Assert.True(sharedModals.ModalHeader() == "Removing Property from form");
