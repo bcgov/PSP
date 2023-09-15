@@ -262,6 +262,49 @@ exports[`Acquisition Filter matches snapshot 1`] = `
           class="row"
         >
           <div
+            class="col-xl-7"
+          >
+            <div
+              class="form-group"
+            >
+              <div>
+                <div
+                  class="multiselect-container multiSelectContainer  "
+                  id="multiselect-acquisitionTeamMembers"
+                  style="width: auto; color: black;"
+                >
+                  <div
+                    class="search-wrapper searchWrapper "
+                    style="background: white; border: 1px solid #606060;"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="searchBox "
+                      id="multiselect-acquisitionTeamMembers_input"
+                      name="search_name_input"
+                      placeholder="Team member"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="optionListContainer displayNone"
+                  >
+                    <ul
+                      class="optionContainer"
+                    >
+                      <span
+                        class="notFound"
+                      >
+                        No Options Available
+                      </span>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
             class="col-xl-4"
           >
             <div
