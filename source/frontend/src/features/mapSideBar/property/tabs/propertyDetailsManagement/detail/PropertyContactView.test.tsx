@@ -3,7 +3,7 @@ import { noop } from 'lodash';
 
 import { Claims } from '@/constants/index';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_Property, Api_PropertyContact } from '@/models/api/Property';
+import { Api_PropertyContact } from '@/models/api/Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions } from '@/utils/test-utils';
 
