@@ -157,7 +157,7 @@ describe('UpdateAcquisition container', () => {
     await act(async () => formikRef.current?.submitForm());
 
     const popup = await findByText(
-      /Contractors cannot remove themself from a file. Please contact the admin/i,
+      /Contractors cannot remove themselves from a file. Please contact the admin/i,
     );
     expect(popup).toBeVisible();
   });
