@@ -21,5 +21,6 @@ VALUES
   (N'FORM1',  N'Notice of Expropriation (Form 1)'),
   (N'FORM5',  N'Certificate of Approval of Expropriation (Form 5)'),
   (N'FORM8',  N'Notice of Advance Payment (Form 8)'),
-  (N'FORM9',  N'Vesting Notice (Form 9)');
+  (N'FORM9',  N'Vesting Notice (Form 9)'),
+  (N'H1005A', N'Licence of Occupation (BCTFA as licensor) (H1005 A)');
 GO
