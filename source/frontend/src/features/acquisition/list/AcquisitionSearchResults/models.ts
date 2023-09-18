@@ -1,4 +1,8 @@
-import { Api_AcquisitionFile, Api_AcquisitionFileProperty } from '@/models/api/AcquisitionFile';
+import {
+  Api_AcquisitionFile,
+  Api_AcquisitionFilePerson,
+  Api_AcquisitionFileProperty,
+} from '@/models/api/AcquisitionFile';
 import { Api_Project } from '@/models/api/Project';
 import Api_TypeCode from '@/models/api/TypeCode';
 
@@ -15,6 +19,7 @@ export class AcquisitionSearchResultModel {
   acquisitionFileStatusTypeCode?: Api_TypeCode<string>;
   fileProperties?: Api_AcquisitionFileProperty[];
   project?: Api_Project;
+  aquisitionTeam?: Api_AcquisitionFilePerson[];
 
   static fromApi(base: Api_AcquisitionFile): AcquisitionSearchResultModel {
     var newModel = new AcquisitionSearchResultModel();
@@ -30,6 +35,7 @@ export class AcquisitionSearchResultModel {
     newModel.acquisitionFileStatusTypeCode = base.fileStatusTypeCode;
     newModel.fileProperties = base.fileProperties;
     newModel.project = base.project;
+    newModel.aquisitionTeam = base.acquisitionTeam;
     return newModel;
   }
 }
