@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using k8s.KubeConfigModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Exceptions;
@@ -227,6 +228,8 @@ namespace Pims.Api.Services
             }
 
             ValidateStaff(acquisitionFile);
+
+            acquisitionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
 
             ValidatePayeeDependency(acquisitionFile);
 
