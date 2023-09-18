@@ -12,6 +12,8 @@ import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/prop
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
 
+import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
+
 export interface IPropertyContainerProps {
   composedPropertyState: ComposedPropertyState;
   setEditMode: (isEditing: boolean) => void;
@@ -93,6 +95,24 @@ export const PropertyContainer: React.FunctionComponent<
       key: InventoryTabNames.pims,
       name: 'PIMS Files',
     });
+  }
+
+  if (composedPropertyState.apiWrapper?.response !== undefined && showPropertyInfoTab) {
+    // After API property object has been received, we query relevant map layers to find
+    // additional information which we store in a different model (IPropertyDetailsForm)
+
+    tabViews.push({
+      content: (
+        <PropertyManagementTabView
+          property={composedPropertyState.apiWrapper?.response}
+          loading={composedPropertyState.apiWrapper?.loading ?? false}
+          setEditMode={setEditMode}
+        />
+      ),
+      key: InventoryTabNames.management,
+      name: 'Management',
+    });
+    defaultTab = InventoryTabNames.management;
   }
 
   const [activeTab, setActiveTab] = useState<InventoryTabNames>(defaultTab);

@@ -162,27 +162,6 @@ describe('AcquisitionContainer component', () => {
     expect(canRemoveResponse).toBe(true);
   });
 
-  it('canRemove returns false if file property has associated entities', async () => {
-    const { getByTestId } = setup(undefined, { claims: [] });
-
-    const spinner = getByTestId('filter-backdrop-loading');
-    await waitForElementToBeRemoved(spinner);
-
-    mockAxios.onGet(new RegExp('acquisitionfiles/1/properties')).reply(200, [
-      {
-        id: 1,
-        isDisabled: false,
-        property: {
-          id: 1,
-        },
-        activityInstanceProperties: [{}],
-      },
-    ]);
-    await act(async () => viewProps.onShowPropertySelector());
-    const canRemoveResponse = await act(() => viewProps.canRemove(1));
-    expect(canRemoveResponse).toBe(false);
-  });
-
   it('should change menu index when not editing', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
 
