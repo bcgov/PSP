@@ -1,7 +1,7 @@
 import queryString from 'query-string';
 import React from 'react';
 
-import { IAcquisitionFilter } from '@/features/acquisition/list/interfaces';
+import { Api_AcquisitionFilter } from '@/features/acquisition/list/interfaces';
 import { IPagedItems } from '@/interfaces';
 import {
   Api_AcquisitionFile,
@@ -131,4 +131,4 @@ export const useApiAcquisitionFile = () => {
   );
 };
 
-export type IPaginateAcquisition = IPaginateRequest<IAcquisitionFilter>;
+export type IPaginateAcquisition = IPaginateRequest<Api_AcquisitionFilter>;

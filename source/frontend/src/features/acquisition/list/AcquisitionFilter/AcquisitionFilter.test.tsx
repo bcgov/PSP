@@ -5,8 +5,8 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
-import { IAcquisitionFilter } from '../interfaces';
-import { AcquisitionFilter, defaultAcquisitionFilter } from './AcquisitionFilter';
+import { AcquisitionFilterModel, Api_AcquisitionFilter } from '../interfaces';
+import { AcquisitionFilter } from './AcquisitionFilter';
 
 jest.mock('@react-keycloak/web');
 
@@ -14,7 +14,7 @@ const setFilter = jest.fn();
 
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {
-  const utils = render(<AcquisitionFilter setFilter={setFilter} />, {
+  const utils = render(<AcquisitionFilter setFilter={setFilter} aquisitionTeam={[]} />, {
     store: {
       [lookupCodesSlice.name]: { lookupCodes: mockLookups },
     },
@@ -42,7 +42,7 @@ describe('Acquisition Filter', () => {
     const { resetButton } = setup();
     await act(async () => userEvent.click(resetButton));
 
-    expect(setFilter).toHaveBeenCalledWith(defaultAcquisitionFilter);
+    expect(setFilter).toHaveBeenCalledWith(new AcquisitionFilterModel().toApi());
   });
 
   it('searches by acquisition file status', async () => {
@@ -97,7 +97,7 @@ describe('Acquisition Filter', () => {
     await act(async () => userEvent.click(resetButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining<IAcquisitionFilter>(defaultAcquisitionFilter),
+      expect.objectContaining<Api_AcquisitionFilter>(new AcquisitionFilterModel().toApi()),
     );
   });
 });

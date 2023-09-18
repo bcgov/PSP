@@ -141,6 +141,27 @@ describe('UpdateAcquisition container', () => {
     expect(popup).toBeVisible();
   });
 
+  it(`triggers the modal for contractor self-removal`, async () => {
+    mockUpdateAcquisitionFile.mockRejectedValue(
+      createAxiosError(
+        409,
+        'Contractors cannot remove themselves from a file. Please contact the admin at pims@gov.bc.ca',
+        {
+          errorCode: UserOverrideCode.CONTRACTOR_SELFREMOVED,
+        },
+      ),
+    );
+    const { formikRef, findByText } = setup();
+
+    expect(formikRef.current).not.toBeNull();
+    await act(async () => formikRef.current?.submitForm());
+
+    const popup = await findByText(
+      /Contractors cannot remove themselves from a file. Please contact the admin/i,
+    );
+    expect(popup).toBeVisible();
+  });
+
   it(`triggers popup when deleting a selected payee`, async () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
       createAxiosError(409, 'Acquisition File Owner Reperesentative can not be removed', {
