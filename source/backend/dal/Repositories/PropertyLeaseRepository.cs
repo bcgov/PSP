@@ -31,16 +31,19 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
-        /// Get the property lease for the specified property id.
+        /// Get the associated property leases for the specified property id.
         /// </summary>
         /// <param name="propertyId"></param>
         /// <returns></returns>
         public IEnumerable<PimsPropertyLease> GetAllByPropertyId(long propertyId)
         {
-            return this.Context.PimsPropertyLeases.AsNoTracking()
-                .Include(p => p.Property)
+            return Context.PimsPropertyLeases.AsNoTracking()
+                .Include(pl => pl.Property)
                     .ThenInclude(p => p.Address)
-                .Include(l => l.Lease)
+                .Include(pl => pl.Lease)
+                    .ThenInclude(l => l.LeaseStatusTypeCode)
+                .Include(pl => pl.Lease)
+                    .ThenInclude(l => l.PimsLeaseTerms)
                 .Where(p => p.PropertyId == propertyId);
         }
 

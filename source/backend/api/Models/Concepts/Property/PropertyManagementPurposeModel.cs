@@ -17,7 +17,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The property purpose type code.
         /// </summary>
-        public virtual TypeModel<string> PropertyPurposeTypeCode { get; set; }
+        public TypeModel<string> PropertyPurposeTypeCode { get; set; }
 
         #endregion
     }
