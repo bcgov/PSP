@@ -8,25 +8,32 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACT_INST_PROP_RSRCH_FILE_HIST")]
-    [Index(nameof(ActInstPropRsrchFileHistId), nameof(EndDateHist), Name = "PIMS_AIPRFL_H_UK", IsUnique = true)]
-    public partial class PimsActInstPropRsrchFileHist
+    [Table("PIMS_PROPERTY_CONTACT_HIST")]
+    [Index(nameof(PropertyContactHistId), nameof(EndDateHist), Name = "PIMS_PRPCNT_H_UK", IsUnique = true)]
+    public partial class PimsPropertyContactHist
     {
         [Key]
-        [Column("_ACT_INST_PROP_RSRCH_FILE_HIST_ID")]
-        public long ActInstPropRsrchFileHistId { get; set; }
+        [Column("_PROPERTY_CONTACT_HIST_ID")]
+        public long PropertyContactHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("ACT_INST_PROP_RSRCH_FILE_ID")]
-        public long ActInstPropRsrchFileId { get; set; }
-        [Column("ACTIVITY_INSTANCE_ID")]
-        public long ActivityInstanceId { get; set; }
-        [Column("PROPERTY_RESEARCH_FILE_ID")]
-        public long PropertyResearchFileId { get; set; }
+        [Column("PROPERTY_CONTACT_ID")]
+        public long PropertyContactId { get; set; }
+        [Column("PROPERTY_ID")]
+        public long PropertyId { get; set; }
+        [Column("PERSON_ID")]
+        public long? PersonId { get; set; }
+        [Column("ORGANIZATION_ID")]
+        public long? OrganizationId { get; set; }
+        [Column("PRIMARY_CONTACT_ID")]
+        public long? PrimaryContactId { get; set; }
+        [Column("PURPOSE")]
+        [StringLength(500)]
+        public string Purpose { get; set; }
         [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
+        public bool IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

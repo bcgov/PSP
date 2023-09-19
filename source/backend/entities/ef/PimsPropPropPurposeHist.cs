@@ -8,21 +8,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_RESEARCH_ACTIVITY_INSTANCE")]
-    [Index(nameof(ActivityInstanceId), Name = "RSCHAI_ACTIVITY_INSTANCE_ID_IDX")]
-    [Index(nameof(ResearchFileId), Name = "RSCHAI_RESEARCH_FILE_ID_IDX")]
-    [Index(nameof(ResearchFileId), nameof(ActivityInstanceId), Name = "RSCHAI_RSRCH_FILE_ACTIVITY_TUC", IsUnique = true)]
-    public partial class PimsResearchActivityInstance
+    [Table("PIMS_PROP_PROP_PURPOSE_HIST")]
+    [Index(nameof(PropPropPurposeHistId), nameof(EndDateHist), Name = "PIMS_PRPRPU_H_UK", IsUnique = true)]
+    public partial class PimsPropPropPurposeHist
     {
         [Key]
-        [Column("RESEARCH_ACTIVITY_INSTANCE_ID")]
-        public long ResearchActivityInstanceId { get; set; }
-        [Column("ACTIVITY_INSTANCE_ID")]
-        public long ActivityInstanceId { get; set; }
-        [Column("RESEARCH_FILE_ID")]
-        public long ResearchFileId { get; set; }
+        [Column("_PROP_PROP_PURPOSE_HIST_ID")]
+        public long PropPropPurposeHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Column("PROP_PROP_PURPOSE_ID")]
+        public long PropPropPurposeId { get; set; }
+        [Column("PROPERTY_ID")]
+        public long PropertyId { get; set; }
+        [Column("PROPERTY_PURPOSE_TYPE_CODE")]
+        [StringLength(20)]
+        public string PropertyPurposeTypeCode { get; set; }
         [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
+        public bool IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -61,12 +66,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [ForeignKey(nameof(ActivityInstanceId))]
-        [InverseProperty(nameof(PimsActivityInstance.PimsResearchActivityInstances))]
-        public virtual PimsActivityInstance ActivityInstance { get; set; }
-        [ForeignKey(nameof(ResearchFileId))]
-        [InverseProperty(nameof(PimsResearchFile.PimsResearchActivityInstances))]
-        public virtual PimsResearchFile ResearchFile { get; set; }
     }
 }

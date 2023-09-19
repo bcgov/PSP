@@ -23,6 +23,8 @@ namespace Pims.Dal.Entities
             PimsPersonOrganizations = new HashSet<PimsPersonOrganization>();
             PimsProjectPeople = new HashSet<PimsProjectPerson>();
             PimsProperties = new HashSet<PimsProperty>();
+            PimsPropertyContactPeople = new HashSet<PimsPropertyContact>();
+            PimsPropertyContactPrimaryContacts = new HashSet<PimsPropertyContact>();
             PimsResearchFiles = new HashSet<PimsResearchFile>();
             PimsSecurityDepositHolders = new HashSet<PimsSecurityDepositHolder>();
             PimsSecurityDepositReturnHolders = new HashSet<PimsSecurityDepositReturnHolder>();
@@ -121,6 +123,10 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsProjectPerson> PimsProjectPeople { get; set; }
         [InverseProperty(nameof(PimsProperty.PropertyManager))]
         public virtual ICollection<PimsProperty> PimsProperties { get; set; }
+        [InverseProperty(nameof(PimsPropertyContact.Person))]
+        public virtual ICollection<PimsPropertyContact> PimsPropertyContactPeople { get; set; }
+        [InverseProperty(nameof(PimsPropertyContact.PrimaryContact))]
+        public virtual ICollection<PimsPropertyContact> PimsPropertyContactPrimaryContacts { get; set; }
         [InverseProperty(nameof(PimsResearchFile.RequestorNameNavigation))]
         public virtual ICollection<PimsResearchFile> PimsResearchFiles { get; set; }
         [InverseProperty(nameof(PimsSecurityDepositHolder.Person))]
