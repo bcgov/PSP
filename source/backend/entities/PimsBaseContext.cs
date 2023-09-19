@@ -275,7 +275,6 @@ namespace Pims.Dal
         public virtual DbSet<PimsYearlyFinancialCode> PimsYearlyFinancialCodes { get; set; }
         public virtual DbSet<PimsYearlyFinancialCodeHist> PimsYearlyFinancialCodeHists { get; set; }
         public virtual DbSet<PimsxTableDefinition> PimsxTableDefinitions { get; set; }
-        public virtual DbSet<TmpPimsPropPropAdjacentLandType> TmpPimsPropPropAdjacentLandTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -3196,8 +3195,6 @@ namespace Pims.Dal
                 entity.Property(e => e.InterestHolderHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INTEREST_HOLDER_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.InterestHolderTypeCode).HasDefaultValueSql("(N'INTHLDR')");
             });
 
             modelBuilder.Entity<PimsInterestHolderInterestType>(entity =>
