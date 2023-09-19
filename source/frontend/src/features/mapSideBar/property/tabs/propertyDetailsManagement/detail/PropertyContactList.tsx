@@ -123,7 +123,7 @@ export function createContactTableColumns(
   return columns;
 }
 
-const FilePropertiesTable: React.FunctionComponent<IPropertyContactListProps> = ({
+const PropertyContactList: React.FunctionComponent<IPropertyContactListProps> = ({
   propertyContacts,
   handleEdit,
   handleDelete,
@@ -174,4 +174,4 @@ const FilePropertiesTable: React.FunctionComponent<IPropertyContactListProps> = 
   );
 };
 
-export default FilePropertiesTable;
+export default PropertyContactList;

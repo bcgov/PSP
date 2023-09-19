@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Pims.Api.Models.Concepts
 {
     /// <summary>
-    /// PropertyContactModel class, provides a model to represent the property whether Land or Building.
+    /// PropertyContactModel class, provides a model to represent the property contacts.
     /// </summary>
     public class PropertyContactModel : BaseModel
     {

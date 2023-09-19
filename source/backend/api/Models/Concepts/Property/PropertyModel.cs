@@ -225,7 +225,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - Property contacts.
         /// </summary>
-        public List<PropertyContactModel> PropertyContacts { get; set; }
+        public IList<PropertyContactModel> PropertyContacts { get; set; }
 
         /// <summary>
         /// get/set - The property notes.
