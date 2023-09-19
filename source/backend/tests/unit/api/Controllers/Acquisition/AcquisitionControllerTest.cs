@@ -33,10 +33,10 @@ namespace Pims.Api.Test.Controllers
         public AcquisitionControllerTest()
         {
             var helper = new TestHelper();
-            _controller = helper.CreateController<AcquisitionFileController>(Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
-            _mapper = helper.GetService<IMapper>();
-            _service = helper.GetService<Mock<IAcquisitionFileService>>();
-            _compReqFinancialservice = helper.GetService<Mock<ICompReqFinancialService>>();
+            this._controller = helper.CreateController<AcquisitionFileController>(Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
+            this._mapper = helper.GetService<IMapper>();
+            this._service = helper.GetService<Mock<IAcquisitionFileService>>();
+            this._compReqFinancialservice = helper.GetService<Mock<ICompReqFinancialService>>();
         }
 
         #region Tests
@@ -48,13 +48,13 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            _service.Setup(m => m.Add(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(acqFile);
+            this._service.Setup(m => m.Add(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(acqFile);
 
             // Act
-            var result = _controller.AddAcquisitionFile(_mapper.Map<AcquisitionFileModel>(acqFile), Array.Empty<string>());
+            var result = this._controller.AddAcquisitionFile(this._mapper.Map<AcquisitionFileModel>(acqFile), Array.Empty<string>());
 
             // Assert
-            _service.Verify(m => m.Add(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
+            this._service.Verify(m => m.Add(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
         }
 
         /// <summary>
@@ -66,13 +66,13 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
-            _service.Setup(m => m.GetById(It.IsAny<long>())).Returns(acqFile);
+            this._service.Setup(m => m.GetById(It.IsAny<long>())).Returns(acqFile);
 
             // Act
-            var result = _controller.GetAcquisitionFile(1);
+            var result = this._controller.GetAcquisitionFile(1);
 
             // Assert
-            _service.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
         }
 
         /// <summary>
@@ -83,13 +83,13 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            _service.Setup(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(acqFile);
+            this._service.Setup(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(acqFile);
 
             // Act
-            var result = _controller.UpdateAcquisitionFile(1, _mapper.Map<AcquisitionFileModel>(acqFile), Array.Empty<string>());
+            var result = this._controller.UpdateAcquisitionFile(1, this._mapper.Map<AcquisitionFileModel>(acqFile), Array.Empty<string>());
 
             // Assert
-            _service.Verify(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
+            this._service.Verify(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
         }
 
         /// <summary>
@@ -101,13 +101,13 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
-            _service.Setup(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(acqFile);
+            this._service.Setup(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(acqFile);
 
             // Act
-            var result = _controller.UpdateAcquisitionFileProperties(_mapper.Map<AcquisitionFileModel>(acqFile), Array.Empty<string>());
+            var result = this._controller.UpdateAcquisitionFileProperties(this._mapper.Map<AcquisitionFileModel>(acqFile), Array.Empty<string>());
 
             // Assert
-            _service.Verify(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
+            this._service.Verify(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
         }
 
         /// <summary>
@@ -117,13 +117,13 @@ namespace Pims.Api.Test.Controllers
         public void GetFileCompReqH120_Success()
         {
             // Arrange
-            _compReqFinancialservice.Setup(m => m.GetAllByAcquisitionFileId(It.IsAny<long>(), It.IsAny<bool>())).Returns(new List<PimsCompReqFinancial>());
+            this._compReqFinancialservice.Setup(m => m.GetAllByAcquisitionFileId(It.IsAny<long>(), It.IsAny<bool>())).Returns(new List<PimsCompReqFinancial>());
 
             // Act
-            var result = _controller.GetFileCompReqH120(1, false);
+            var result = this._controller.GetFileCompReqH120(1, false);
 
             // Assert
-            _compReqFinancialservice.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), false));
+            this._compReqFinancialservice.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), false));
         }
 
         /// <summary>
@@ -133,13 +133,13 @@ namespace Pims.Api.Test.Controllers
         public void GetFileCompReqH120_FinalOnly()
         {
             // Arrange
-            _compReqFinancialservice.Setup(m => m.GetAllByAcquisitionFileId(It.IsAny<long>(), It.IsAny<bool>())).Returns(new List<PimsCompReqFinancial>());
+            this._compReqFinancialservice.Setup(m => m.GetAllByAcquisitionFileId(It.IsAny<long>(), It.IsAny<bool>())).Returns(new List<PimsCompReqFinancial>());
 
             // Act
-            var result = _controller.GetFileCompReqH120(1, true);
+            var result = this._controller.GetFileCompReqH120(1, true);
 
             // Assert
-            _compReqFinancialservice.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true));
+            this._compReqFinancialservice.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true));
         }
 
         #endregion

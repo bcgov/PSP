@@ -28,13 +28,8 @@ namespace Pims.Api.Services
     /// </summary>
     public class DocumentService : BaseService, IDocumentService
     {
-        private readonly IDocumentRepository documentRepository;
-        private readonly IEdmsDocumentRepository documentStorageRepository;
-        private readonly IDocumentTypeRepository documentTypeRepository;
-        private readonly IAvService avService;
-        private readonly IMapper mapper;
-
-        private static readonly string[] validExtensions = {
+        private static readonly string[] validExtensions =
+        {
                 "txt",
                 "pdf",
                 "docx",
@@ -55,6 +50,12 @@ namespace Pims.Api.Services
                 "kml",
                 "kmz",
                 };
+
+        private readonly IDocumentRepository documentRepository;
+        private readonly IEdmsDocumentRepository documentStorageRepository;
+        private readonly IDocumentTypeRepository documentTypeRepository;
+        private readonly IAvService avService;
+        private readonly IMapper mapper;
 
         public DocumentService(
             ClaimsPrincipal user,
@@ -306,7 +307,7 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             ExternalResult<FileDownload> downloadResult = await documentStorageRepository.TryDownloadFileAsync(mayanDocumentId, mayanFileId);
-            if (isValidDocumentExtension(downloadResult.Payload.FileName))
+            if (IsValidDocumentExtension(downloadResult.Payload.FileName))
             {
                 return downloadResult;
             }
@@ -330,7 +331,7 @@ namespace Pims.Api.Services
             {
                 if (documentResult.Payload != null)
                 {
-                    if (isValidDocumentExtension(documentResult.Payload.FileLatest.FileName))
+                    if (IsValidDocumentExtension(documentResult.Payload.FileLatest.FileName))
                     {
                         ExternalResult<FileDownload> downloadResult = await documentStorageRepository.TryDownloadFileAsync(documentResult.Payload.Id, documentResult.Payload.FileLatest.Id);
                         return downloadResult;
@@ -364,13 +365,19 @@ namespace Pims.Api.Services
             }
         }
 
+        private static bool IsValidDocumentExtension(string fileName)
+        {
+            var fileNameExtension = Path.GetExtension(fileName).Replace(".", string.Empty).ToLower();
+            return validExtensions.Contains(fileNameExtension);
+        }
+
         private async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(long documentType, IFormFile fileRaw)
         {
             this.Logger.LogInformation("Uploading storage document");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
 
             await this.avService.ScanAsync(fileRaw);
-            if (isValidDocumentExtension(fileRaw.FileName))
+            if (IsValidDocumentExtension(fileRaw.FileName))
             {
                 ExternalResult<DocumentDetail> result = await documentStorageRepository.TryUploadDocumentAsync(documentType, fileRaw);
                 return result;
@@ -450,12 +457,6 @@ namespace Pims.Api.Services
             }
 
             return result;
-        }
-
-        private static bool isValidDocumentExtension(string fileName)
-        {
-            var fileNameExtension = Path.GetExtension(fileName).Replace(".", string.Empty).ToLower();
-            return validExtensions.Contains(fileNameExtension);
         }
     }
 }

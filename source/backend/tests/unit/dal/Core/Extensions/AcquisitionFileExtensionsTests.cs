@@ -1,10 +1,10 @@
-using Pims.Dal.Helpers.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pims.Dal.Helpers.Extensions;
 using Xunit;
 
 namespace Pims.Core.Test.Extensions
@@ -20,7 +20,7 @@ namespace Pims.Core.Test.Extensions
 
         public AcquisitionFileExtensionsTests()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace Pims.Core.Test.Extensions
         {
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.LegacyStakeholder = "";
+            acqFile.LegacyStakeholder = string.Empty;
 
             // Act
             var sut = acqFile.GetLegacyInterestHolders();

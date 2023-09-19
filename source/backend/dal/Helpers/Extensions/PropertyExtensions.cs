@@ -67,7 +67,7 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
             {
-                //note - 2 part search required. all matches found by removing leading 0's, then matches filtered in subsequent step. This is because EF core does not support an lpad method.
+                // note - 2 part search required. all matches found by removing leading 0's, then matches filtered in subsequent step. This is because EF core does not support an lpad method.
                 Regex nonInteger = new Regex("[^\\d]");
                 var formattedPidPin = Convert.ToInt32(nonInteger.Replace(filter.PinOrPid, string.Empty)).ToString();
                 query = query.

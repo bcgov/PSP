@@ -28,14 +28,14 @@ namespace Pims.Api.Test.Services
 
         public PropertyServiceTest()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         private PropertyService CreateProjectServiceWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
-            _helper.CreatePimsContext(user, true);
-            return _helper.Create<PropertyService>();
+            this._helper.CreatePimsContext(user, true);
+            return this._helper.Create<PropertyService>();
         }
 
         #region Tests
@@ -46,11 +46,11 @@ namespace Pims.Api.Test.Services
             // Arrange
             var property = EntityHelper.CreateProperty(1);
 
-            var service = CreateProjectServiceWithPermissions(Permissions.PropertyView);
-            var repository = _helper.GetService<Mock<IPropertyRepository>>();
+            var service = this.CreateProjectServiceWithPermissions(Permissions.PropertyView);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
 
-            var coordinateService = _helper.GetService<Mock<ICoordinateTransformService>>();
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
 
             // Act
@@ -67,7 +67,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var property = EntityHelper.CreateProperty(1);
 
-            var service = CreateProjectServiceWithPermissions();
+            var service = this.CreateProjectServiceWithPermissions();
 
             // Assert
             Assert.Throws<NotAuthorizedException>(() => service.GetById(1));
@@ -81,11 +81,11 @@ namespace Pims.Api.Test.Services
             // Arrange
             var property = EntityHelper.CreateProperty(1);
 
-            var service = CreateProjectServiceWithPermissions(Permissions.PropertyView);
-            var repository = _helper.GetService<Mock<IPropertyRepository>>();
+            var service = this.CreateProjectServiceWithPermissions(Permissions.PropertyView);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(property);
 
-            var coordinateService = _helper.GetService<Mock<ICoordinateTransformService>>();
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
 
             // Act
@@ -102,7 +102,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var property = EntityHelper.CreateProperty(1);
 
-            var service = CreateProjectServiceWithPermissions();
+            var service = this.CreateProjectServiceWithPermissions();
 
             // Assert
             Assert.Throws<NotAuthorizedException>(() => service.GetByPid(1.ToString()));
@@ -116,11 +116,11 @@ namespace Pims.Api.Test.Services
             // Arrange
             var property = EntityHelper.CreateProperty(1);
 
-            var service = CreateProjectServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
-            var repository = _helper.GetService<Mock<IPropertyRepository>>();
+            var service = this.CreateProjectServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>())).Returns(property);
 
-            var coordinateService = _helper.GetService<Mock<ICoordinateTransformService>>();
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
 
             var newValues = new PimsProperty();
@@ -143,12 +143,12 @@ namespace Pims.Api.Test.Services
             // Arrange
             var property = EntityHelper.CreateProperty(1);
 
-            var service = CreateProjectServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
-            var repository = _helper.GetService<Mock<IPropertyRepository>>();
+            var service = this.CreateProjectServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>())).Returns(property);
 
             var projected = new Coordinate(14000, 9200);
-            var coordinateService = _helper.GetService<Mock<ICoordinateTransformService>>();
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(projected);
 
             var newValues = new PimsProperty();
@@ -169,12 +169,12 @@ namespace Pims.Api.Test.Services
         public void Update_Property_KeyNotFound()
         {
             // Arrange
-            var service = CreateProjectServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var service = this.CreateProjectServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
 
             // Try to update a non-existent property
             var property = EntityHelper.CreateProperty(1);
 
-            var repository = _helper.GetService<Mock<IPropertyRepository>>();
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.Update(property, It.IsAny<bool>())).Throws<KeyNotFoundException>();
 
             // Assert
@@ -187,8 +187,8 @@ namespace Pims.Api.Test.Services
             // Arrange
             var property = EntityHelper.CreateProperty(1);
 
-            var service = CreateProjectServiceWithPermissions(Permissions.PropertyView);
-            var repository = _helper.GetService<Mock<IPropertyRepository>>();
+            var service = this.CreateProjectServiceWithPermissions(Permissions.PropertyView);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
 
             // Assert
             Assert.Throws<NotAuthorizedException>(() => service.Update(property));

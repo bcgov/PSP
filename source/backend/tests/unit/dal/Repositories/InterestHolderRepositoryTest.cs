@@ -59,7 +59,7 @@ namespace Pims.Dal.Test.Repositories
                 InterestHolderTypeCodeNavigation = new PimsInterestHolderType()
                 {
                     InterestHolderTypeCode = "test",
-                }
+                },
             };
             helper.AddAndSaveChanges(interestHolder);
 
@@ -126,7 +126,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var response = repository.UpdateAllForAcquisition(1, new List<PimsInterestHolder>() { new PimsInterestHolder() { AcquisitionFileId = 1, PersonId = 1, PimsInthldrPropInterests = new List<PimsInthldrPropInterest>() },
-            new PimsInterestHolder() { AcquisitionFileId = 1, PersonId = 2, PimsInthldrPropInterests = new List<PimsInthldrPropInterest>() }});
+            new PimsInterestHolder() { AcquisitionFileId = 1, PersonId = 2, PimsInthldrPropInterests = new List<PimsInthldrPropInterest>() },});
 
             // Assert
             context.PimsAcquisitionFiles.FirstOrDefault().PimsInterestHolders.Should().HaveCount(2);
@@ -147,7 +147,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var response = repository.UpdateAllForAcquisition(1, new List<PimsInterestHolder>() { new PimsInterestHolder() { AcquisitionFileId = 1, PersonId = 1,
-                PimsInthldrPropInterests = new List<PimsInthldrPropInterest>() { new PimsInthldrPropInterest() { PropertyAcquisitionFileId = 1 } } } });
+                PimsInthldrPropInterests = new List<PimsInthldrPropInterest>() { new PimsInthldrPropInterest() { PropertyAcquisitionFileId = 1 } }, }, });
 
             // Assert
             context.PimsAcquisitionFiles.FirstOrDefault().PimsInterestHolders.Should().HaveCount(1);
@@ -170,7 +170,7 @@ namespace Pims.Dal.Test.Repositories
                 PersonId = 1,
                 InterestHolderId = 1,
                 PimsInthldrPropInterests = new List<PimsInthldrPropInterest>() {
-                new PimsInthldrPropInterest() { PimsInthldrPropInterestId = 1, PropertyAcquisitionFileId = 1, PimsPropInthldrInterestTypes = new List<PimsPropInthldrInterestType>(){new PimsPropInthldrInterestType(){InterestHolderInterestTypeCode="TEST_PimsPropInthldrInterestType"}} } }
+                new PimsInthldrPropInterest() { PimsInthldrPropInterestId = 1, PropertyAcquisitionFileId = 1, PimsPropInthldrInterestTypes = new List<PimsPropInthldrInterestType>() {new PimsPropInthldrInterestType() {InterestHolderInterestTypeCode="TEST_PimsPropInthldrInterestType"}} }, },
             };
             interestHolder.AcquisitionFile = EntityHelper.CreateAcquisitionFile(1);
             helper.AddAndSaveChanges(interestHolder);
@@ -179,10 +179,10 @@ namespace Pims.Dal.Test.Repositories
             var response = repository.UpdateAllForAcquisition(1, new List<PimsInterestHolder>() { new PimsInterestHolder() { AcquisitionFileId = 1, PersonId = 1, InterestHolderId = 1,
                 PimsInthldrPropInterests = new List<PimsInthldrPropInterest>() { new PimsInthldrPropInterest() {
                     PimsInthldrPropInterestId = 1, PropertyAcquisitionFileId = 2,
-                    PimsPropInthldrInterestTypes = new List<PimsPropInthldrInterestType>(){
+                    PimsPropInthldrInterestTypes = new List<PimsPropInthldrInterestType>() {
                         new PimsPropInthldrInterestType() { InterestHolderInterestTypeCode="TEST_PimsPropInthldrInterestType"}
                     }
-                     } } } });
+                     } }, }, });
 
             // Assert
             context.PimsInterestHolders.Should().HaveCount(1);
@@ -242,7 +242,7 @@ namespace Pims.Dal.Test.Repositories
                 AcquisitionFileId = 1,
                 PersonId = 1,
                 InterestHolderId = 1,
-                PimsInthldrPropInterests = new List<PimsInthldrPropInterest>()
+                PimsInthldrPropInterests = new List<PimsInthldrPropInterest>(),
             };
             var interestHolderPropertyInterest = new PimsInthldrPropInterest()
             {
@@ -251,8 +251,8 @@ namespace Pims.Dal.Test.Repositories
                 InterestHolderId = 1,
                 InterestHolder = interestHolder,
                 PimsPropInthldrInterestTypes = new List<PimsPropInthldrInterestType>() {
-                    new PimsPropInthldrInterestType() { InterestHolderInterestTypeCode = "test" }
-                    }
+                    new PimsPropInthldrInterestType() { InterestHolderInterestTypeCode = "test" },
+                    },
             };
             interestHolder.PimsInthldrPropInterests.Add(interestHolderPropertyInterest);
             interestHolder.AcquisitionFile = EntityHelper.CreateAcquisitionFile(1);

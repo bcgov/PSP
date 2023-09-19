@@ -26,10 +26,10 @@ namespace Pims.Api.Test.Controllers.Property
 
         public PropertyControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<PropertyController>(Permissions.PropertyView);
-            _mapper = _helper.GetService<IMapper>();
-            _service = _helper.GetService<Mock<IPropertyService>>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<PropertyController>(Permissions.PropertyView);
+            this._mapper = this._helper.GetService<IMapper>();
+            this._service = this._helper.GetService<Mock<IPropertyService>>();
         }
 
         #region Get
@@ -43,13 +43,13 @@ namespace Pims.Api.Test.Controllers.Property
             var pid = 12345;
             var property = EntityHelper.CreateProperty(pid);
 
-            _service.Setup(m => m.GetById(It.IsAny<long>())).Returns(property);
+            this._service.Setup(m => m.GetById(It.IsAny<long>())).Returns(property);
 
             // Act
-            var result = _controller.GetConceptPropertyWithId(property.Internal_Id);
+            var result = this._controller.GetConceptPropertyWithId(property.Internal_Id);
 
             // Assert
-            _service.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
         }
         #endregion
         #region Update
@@ -62,13 +62,13 @@ namespace Pims.Api.Test.Controllers.Property
             // Arrange
             var property = EntityHelper.CreateProperty(12345);
 
-            _service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsProperty>())).Returns(property);
+            this._service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsProperty>())).Returns(property);
 
             // Act
-            var result = _controller.UpdateConceptProperty(_mapper.Map<Models.Concepts.PropertyModel>(property));
+            var result = this._controller.UpdateConceptProperty(this._mapper.Map<Models.Concepts.PropertyModel>(property));
 
             // Assert
-            _service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsProperty>()), Times.Once());
+            this._service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsProperty>()), Times.Once());
         }
         #endregion
     }

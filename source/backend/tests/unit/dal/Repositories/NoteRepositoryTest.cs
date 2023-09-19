@@ -30,21 +30,21 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteAdd);
 
-            var activity = EntityHelper.CreateActivity(1);
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
 
-            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(acquisitionFile);
             var repository = helper.CreateRepository<EntityNoteRepository>(user);
 
-            var activityNote = EntityHelper.CreateActivityNote(activity);
+            var activityNote = EntityHelper.CreateAcquisitionFileNote(acquisitionFile);
 
             // Act
             var result = repository.Add(activityNote);
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeAssignableTo<PimsActivityInstanceNote>();
+            result.Should().BeAssignableTo<PimsAcquisitionFileNote>();
             result.Note.NoteTxt.Should().Be("Test Note");
-            result.ActivityInstance.ActivityInstanceId.Should().Be(1);
+            result.AcquisitionFile.AcquisitionFileId.Should().Be(1);
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<EntityNoteRepository>(user);
 
             // Act
-            Action act = () => repository.Add<PimsActivityInstance>(null);
+            Action act = () => repository.Add<PimsProject>(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
@@ -106,7 +106,7 @@ namespace Pims.Dal.Test.Repositories
 
         #region Get All Notes for Entity
         [Fact]
-        public void GetActivityNotes_Success()
+        public void GetProjectNotes_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -114,14 +114,15 @@ namespace Pims.Dal.Test.Repositories
 
             var note1 = EntityHelper.CreateNote("Test Note 1", id: 1);
             var note2 = EntityHelper.CreateNote("Test Note 2", id: 2);
-            var activity = EntityHelper.CreateActivity(1, new[] { note1, note2 });
+            var project = EntityHelper.CreateProject(1, "PROJECT_CODE_TEST", "Some Description");
+            project.PimsProjectNotes = new List<PimsProjectNote>() { new PimsProjectNote() { Note = note1 }, new PimsProjectNote() { Note = note2 } };
 
-            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(project);
 
             var repository = helper.CreateRepository<EntityNoteRepository>(user);
 
             // Act
-            var result = repository.GetAllActivityNotesById(1);
+            var result = repository.GetAllProjectNotesById(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -154,7 +155,7 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public void GetActivityNotes_NotFound()
+        public void GetProjectNotes_NotFound()
         {
             // Arrange
             var helper = new TestHelper();
@@ -164,7 +165,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<EntityNoteRepository>(user);
 
             // Act
-            var result = repository.GetAllActivityNotesById(1);
+            var result = repository.GetAllProjectNotesById(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -234,19 +235,19 @@ namespace Pims.Dal.Test.Repositories
 
         #region Delete
         [Fact]
-        public void Delete_Activity_Success()
+        public void Delete_Project_Success()
         {
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
 
-            var activityNote = EntityHelper.CreateActivityNote();
-            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activityNote);
+            var projectNote = EntityHelper.CreateProjectNote();
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(projectNote);
 
             var repository = helper.CreateRepository<EntityNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteActivityNotes(1);
+            var deleted = repository.DeleteProjectNotes(1);
 
             // Assert
             deleted.Should().BeTrue();

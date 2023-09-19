@@ -32,24 +32,24 @@ namespace Pims.Api.Test.Controllers
 
         public H120CategoryControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<H120CategoryController>(Permissions.CompensationRequisitionView);
-            _service = _helper.GetService<Mock<IH120CategoryService>>();
-            _mapper = _helper.GetService<IMapper>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<H120CategoryController>(Permissions.CompensationRequisitionView);
+            this._service = this._helper.GetService<Mock<IH120CategoryService>>();
+            this._mapper = this._helper.GetService<IMapper>();
         }
 
         [Fact]
         public void GetTakesByPropertyId_Success()
         {
             // Arrange
-            _service.Setup(m => m.GetAll());
+            this._service.Setup(m => m.GetAll());
 
             // Act
-            var result = _controller.GetH120Categories();
+            var result = this._controller.GetH120Categories();
 
             // Assert
             result.Should().BeOfType<JsonResult>();
-            _service.Verify(m => m.GetAll(), Times.Once());
+            this._service.Verify(m => m.GetAll(), Times.Once());
         }
     }
 }

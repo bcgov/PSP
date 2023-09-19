@@ -26,8 +26,8 @@ namespace Pims.Dal.Test.Repositories
         private H120CategoryRepository CreateWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
-            _helper.CreatePimsContext(user, true);
-            return _helper.CreateRepository<H120CategoryRepository>(user);
+            this._helper.CreatePimsContext(user, true);
+            return this._helper.CreateRepository<H120CategoryRepository>(user);
         }
 
         [Fact]
@@ -39,8 +39,8 @@ namespace Pims.Dal.Test.Repositories
                 H120CategoryId = 1,
                 Description = "Bar",
             };
-            var repository = CreateWithPermissions(Permissions.CompensationRequisitionView);
-            _helper.AddAndSaveChanges(codeToAdd);
+            var repository = this.CreateWithPermissions(Permissions.CompensationRequisitionView);
+            this._helper.AddAndSaveChanges(codeToAdd);
 
             // Act
             var result = repository.GetAll();
@@ -55,7 +55,7 @@ namespace Pims.Dal.Test.Repositories
         public void Add_ThrowIfNotAuthorized()
         {
             // Arrange
-            var repository = CreateWithPermissions(Permissions.SystemAdmin);
+            var repository = this.CreateWithPermissions(Permissions.SystemAdmin);
 
             // Act
             Action act = () => repository.GetAll();
