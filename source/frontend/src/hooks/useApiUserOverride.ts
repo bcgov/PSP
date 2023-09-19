@@ -1,6 +1,7 @@
 import { uniq } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { RemoveSelfContractorContent } from '@/features/mapSideBar/acquisition/tabs/fileDetails/update/UpdateAcquisitionContainer';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandlerWithConfirmation } from '@/utils';
 
@@ -63,7 +64,10 @@ export const useApiUserOverride = <
   );
 
   useEffect(() => {
-    if (state?.userOverrideCode) {
+    if (
+      state?.userOverrideCode &&
+      state.userOverrideCode !== UserOverrideCode.CONTRACTOR_SELFREMOVED
+    ) {
       setModalContent({
         title: 'User Override Required',
         message: state?.message,
@@ -93,6 +97,23 @@ export const useApiUserOverride = <
         okButtonText: 'Acknowledge & Continue',
         okButtonVariant: 'warning',
         cancelButtonText: 'Cancel Update',
+      });
+    } else if (
+      state?.userOverrideCode &&
+      state.userOverrideCode === UserOverrideCode.CONTRACTOR_SELFREMOVED
+    ) {
+      setModalContent({
+        title: 'Note',
+        message: RemoveSelfContractorContent(),
+        handleOk: async () => {
+          setState({
+            previousUserOverrideCodes: [...state.previousUserOverrideCodes],
+            userOverrideCode: null,
+            message: null,
+          });
+          setDisplayModal(false);
+        },
+        okButtonText: 'Close',
       });
     }
   }, [
