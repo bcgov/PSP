@@ -82,6 +82,10 @@ export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
   surplusDeclarationType?: Api_TypeCode<string>;
   surplusDeclarationComment?: string;
   surplusDeclarationDate?: string;
+
+  managementPurposes?: Api_PropertyManagementPurpose[];
+  isUtilitiesPayable?: boolean;
+  isTaxesPayable?: boolean;
 }
 
 export interface Api_PropertyAnomaly extends Api_ConcurrentVersion, Api_AuditFields {
@@ -106,6 +110,12 @@ export interface Api_PropertyTenure extends Api_ConcurrentVersion, Api_AuditFiel
   id?: number;
   propertyId?: number;
   propertyTenureTypeCode?: Api_TypeCode<string>;
+}
+
+export interface Api_PropertyManagementPurpose extends Api_ConcurrentVersion, Api_AuditFields {
+  id?: number;
+  propertyId?: number;
+  propertyPurposeTypeCode?: Api_TypeCode<string>;
 }
 
 export interface Api_PropertyAssociations {

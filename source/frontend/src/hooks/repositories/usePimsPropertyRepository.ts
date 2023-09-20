@@ -13,8 +13,12 @@ import { useAxiosErrorHandler } from '@/utils';
  * hook that retrieves a property from the inventory.
  */
 export const usePimsPropertyRepository = () => {
-  const { getPropertyConceptWithIdApi, putPropertyConceptApi, getMatchingPropertiesApi } =
-    useApiProperties();
+  const {
+    getPropertyConceptWithIdApi,
+    putPropertyConceptApi,
+    getMatchingPropertiesApi,
+    getPropertyLeasesApi,
+  } = useApiProperties();
 
   const getPropertyWrapper = useApiRequestWrapper({
     requestFunction: useCallback(
@@ -53,8 +57,17 @@ export const usePimsPropertyRepository = () => {
     }, []),
   });
 
+  const getPropertyLeases = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (id: number) => await getPropertyLeasesApi(id),
+      [getPropertyLeasesApi],
+    ),
+    requestName: 'getPropertyLeases',
+    onError: useAxiosErrorHandler('Failed to retrieve property leases.'),
+  });
+
   return useMemo(
-    () => ({ getPropertyWrapper, updatePropertyWrapper, getMatchingProperties }),
-    [getPropertyWrapper, updatePropertyWrapper, getMatchingProperties],
+    () => ({ getPropertyWrapper, updatePropertyWrapper, getMatchingProperties, getPropertyLeases }),
+    [getPropertyWrapper, updatePropertyWrapper, getMatchingProperties, getPropertyLeases],
   );
 };
