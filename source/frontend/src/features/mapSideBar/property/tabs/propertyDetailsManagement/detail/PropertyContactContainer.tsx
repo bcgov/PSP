@@ -35,10 +35,13 @@ export const PropertyContactContainer: React.FunctionComponent<IPropertyContactC
   }, [fetchPropertyContacts]);
 
   const onDelete = useCallback(
-    (contactId: number) => {
-      deleteContact(propertyId, contactId);
+    async (contactId: number) => {
+      const result = await deleteContact(propertyId, contactId);
+      if (result === true) {
+        fetchPropertyContacts();
+      }
     },
-    [deleteContact, propertyId],
+    [deleteContact, fetchPropertyContacts, propertyId],
   );
 
   return (

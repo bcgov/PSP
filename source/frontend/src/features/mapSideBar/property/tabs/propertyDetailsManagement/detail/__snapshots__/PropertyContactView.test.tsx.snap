@@ -272,7 +272,9 @@ exports[`PropertyContactView component renders as expected when provided valid d
                 role="cell"
                 style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              />
+              >
+                Not applicable
+              </div>
               <div
                 class="td"
                 role="cell"

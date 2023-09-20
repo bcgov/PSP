@@ -1,3 +1,4 @@
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { Api_PropertyContact } from '@/models/api/Property';
 
@@ -18,6 +19,7 @@ export const PropertyContactView: React.FunctionComponent<IPropertyContactViewPr
 }) => {
   return (
     <Section header="Property Contact">
+      <LoadingBackdrop show={isLoading} />
       <PropertyContactList
         propertyContacts={propertyContacts}
         handleEdit={() => {

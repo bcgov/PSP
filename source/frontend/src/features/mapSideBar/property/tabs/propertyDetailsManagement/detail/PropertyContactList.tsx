@@ -61,6 +61,7 @@ export function createContactTableColumns(
       Cell: (
         cellProps: CellProps<Api_PropertyContact, Api_Organization | Api_Person | undefined>,
       ) => {
+        const isOrganization = cellProps.row.original.organization !== null;
         const primaryContact = cellProps.row.original.primaryContact;
         if (primaryContact !== null) {
           return (
@@ -73,7 +74,7 @@ export function createContactTableColumns(
             </StyledLink>
           );
         } else {
-          return <></>;
+          return <>{isOrganization ? 'No contacts available' : 'Not applicable'}</>;
         }
       },
     },

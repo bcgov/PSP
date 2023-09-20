@@ -129,8 +129,11 @@ export interface Api_PropertyAssociation {
 
 export interface Api_PropertyContact {
   id: number;
+  organizationId: number | null;
   organization: Api_Organization | null;
+  personId: number | null;
   person: Api_Person | null;
+  primaryContactId: number | null;
   primaryContact: Api_Person | null;
   purpose: string | null;
 }
