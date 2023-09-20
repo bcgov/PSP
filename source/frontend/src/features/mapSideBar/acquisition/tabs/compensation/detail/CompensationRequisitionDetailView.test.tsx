@@ -7,7 +7,7 @@ import {
   getMockApiDefaultCompensation,
 } from '@/mocks/compensations.mock';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
-import { act, getByTestId, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import CompensationRequisitionDetailView, {
   CompensationRequisitionDetailViewProps,
