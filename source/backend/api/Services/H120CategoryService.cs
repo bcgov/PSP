@@ -28,6 +28,5 @@ namespace Pims.Api.Services
 
             return _h120CategoryRepository.GetAll();
         }
-
     }
 }

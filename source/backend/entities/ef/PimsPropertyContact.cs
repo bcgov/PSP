@@ -8,25 +8,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACTIVITY_TEMPLATE_HIST")]
-    [Index(nameof(ActivityTemplateHistId), nameof(EndDateHist), Name = "PIMS_ACTTMP_H_UK", IsUnique = true)]
-    public partial class PimsActivityTemplateHist
+    [Table("PIMS_PROPERTY_CONTACT")]
+    [Index(nameof(OrganizationId), Name = "PRPCNT_ORGANIZATION_ID_IDX")]
+    [Index(nameof(PersonId), Name = "PRPCNT_PERSON_ID_IDX")]
+    [Index(nameof(PropertyId), Name = "PRPCNT_PROPERTY_ID_IDX")]
+    public partial class PimsPropertyContact
     {
         [Key]
-        [Column("_ACTIVITY_TEMPLATE_HIST_ID")]
-        public long ActivityTemplateHistId { get; set; }
-        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-        public DateTime EffectiveDateHist { get; set; }
-        [Column("END_DATE_HIST", TypeName = "datetime")]
-        public DateTime? EndDateHist { get; set; }
-        [Column("ACTIVITY_TEMPLATE_ID")]
-        public long ActivityTemplateId { get; set; }
+        [Column("PROPERTY_CONTACT_ID")]
+        public long PropertyContactId { get; set; }
+        [Column("PROPERTY_ID")]
+        public long PropertyId { get; set; }
+        [Column("PERSON_ID")]
+        public long? PersonId { get; set; }
+        [Column("ORGANIZATION_ID")]
+        public long? OrganizationId { get; set; }
+        [Column("PRIMARY_CONTACT_ID")]
+        public long? PrimaryContactId { get; set; }
+        [Column("PURPOSE")]
+        [StringLength(500)]
+        public string Purpose { get; set; }
         [Required]
-        [Column("ACTIVITY_TEMPLATE_TYPE_CODE")]
-        [StringLength(20)]
-        public string ActivityTemplateTypeCode { get; set; }
         [Column("IS_DISABLED")]
-        public bool IsDisabled { get; set; }
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -65,5 +69,18 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [ForeignKey(nameof(OrganizationId))]
+        [InverseProperty(nameof(PimsOrganization.PimsPropertyContacts))]
+        public virtual PimsOrganization Organization { get; set; }
+        [ForeignKey(nameof(PersonId))]
+        [InverseProperty(nameof(PimsPerson.PimsPropertyContactPeople))]
+        public virtual PimsPerson Person { get; set; }
+        [ForeignKey(nameof(PrimaryContactId))]
+        [InverseProperty(nameof(PimsPerson.PimsPropertyContactPrimaryContacts))]
+        public virtual PimsPerson PrimaryContact { get; set; }
+        [ForeignKey(nameof(PropertyId))]
+        [InverseProperty(nameof(PimsProperty.PimsPropertyContacts))]
+        public virtual PimsProperty Property { get; set; }
     }
 }

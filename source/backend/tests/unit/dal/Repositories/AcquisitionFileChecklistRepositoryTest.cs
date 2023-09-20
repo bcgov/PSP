@@ -25,10 +25,10 @@ namespace Pims.Dal.Test.Repositories
 
         public AcquisitionFileChecklistRepositoryTest()
         {
-            _helper = new TestHelper();
-            _user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView, Permissions.AcquisitionFileEdit);
-            _context = _helper.CreatePimsContext(_user, true);
-            _repository = _helper.CreateRepository<AcquisitionFileChecklistRepository>(_user);
+            this._helper = new TestHelper();
+            this._user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView, Permissions.AcquisitionFileEdit);
+            this._context = this._helper.CreatePimsContext(this._user, true);
+            this._repository = this._helper.CreateRepository<AcquisitionFileChecklistRepository>(this._user);
         }
 
         #region Get Acquisition Checklist Items By File Id
@@ -37,10 +37,10 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var checklistItem = EntityHelper.CreateAcquisitionChecklistItem();
-            _context.AddAndSaveChanges(checklistItem);
+            this._context.AddAndSaveChanges(checklistItem);
 
             // Act
-            var result = _repository.GetAllChecklistItemsByAcquisitionFileId(1);
+            var result = this._repository.GetAllChecklistItemsByAcquisitionFileId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -53,7 +53,7 @@ namespace Pims.Dal.Test.Repositories
         public void GetByAcquisitionFileId_NotFound()
         {
             // Act
-            var result = _repository.GetAllChecklistItemsByAcquisitionFileId(1);
+            var result = this._repository.GetAllChecklistItemsByAcquisitionFileId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -68,11 +68,11 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var checklistItem = EntityHelper.CreateAcquisitionChecklistItem();
-            _context.AddAndSaveChanges(checklistItem);
+            this._context.AddAndSaveChanges(checklistItem);
 
             // Act
             checklistItem.AcqChklstItemStatusTypeCode = "updated";
-            var result = _repository.Update(checklistItem);
+            var result = this._repository.Update(checklistItem);
 
             // Assert
             result.Should().NotBeNull();
@@ -84,7 +84,7 @@ namespace Pims.Dal.Test.Repositories
         public void Update_ThrowIfNull()
         {
             // Act
-            Action act = () => _repository.Update(null);
+            Action act = () => this._repository.Update(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();

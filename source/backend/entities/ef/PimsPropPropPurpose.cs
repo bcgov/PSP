@@ -8,19 +8,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_LEASE_ACTIVITY_INSTANCE")]
-    [Index(nameof(ActivityInstanceId), Name = "LSACIN_ACTIVITY_INSTANCE_ID_IDX")]
-    [Index(nameof(LeaseId), nameof(ActivityInstanceId), Name = "LSACIN_LEASE_ACTIVITY_INSTANCE_TUC", IsUnique = true)]
-    [Index(nameof(LeaseId), Name = "LSACIN_LEASE_ID_IDX")]
-    public partial class PimsLeaseActivityInstance
+    [Table("PIMS_PROP_PROP_PURPOSE")]
+    [Index(nameof(PropertyId), Name = "PRPRPU_PROPERTY_ID_IDX")]
+    [Index(nameof(PropertyPurposeTypeCode), Name = "PRPRPU_PROPERTY_PURPOSE_TYPE_CODE_IDX")]
+    public partial class PimsPropPropPurpose
     {
         [Key]
-        [Column("LEASE_ACTIVITY_INSTANCE_ID")]
-        public long LeaseActivityInstanceId { get; set; }
-        [Column("ACTIVITY_INSTANCE_ID")]
-        public long ActivityInstanceId { get; set; }
-        [Column("LEASE_ID")]
-        public long LeaseId { get; set; }
+        [Column("PROP_PROP_PURPOSE_ID")]
+        public long PropPropPurposeId { get; set; }
+        [Column("PROPERTY_ID")]
+        public long PropertyId { get; set; }
+        [Column("PROPERTY_PURPOSE_TYPE_CODE")]
+        [StringLength(20)]
+        public string PropertyPurposeTypeCode { get; set; }
+        [Required]
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -60,11 +63,11 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [ForeignKey(nameof(ActivityInstanceId))]
-        [InverseProperty(nameof(PimsActivityInstance.PimsLeaseActivityInstances))]
-        public virtual PimsActivityInstance ActivityInstance { get; set; }
-        [ForeignKey(nameof(LeaseId))]
-        [InverseProperty(nameof(PimsLease.PimsLeaseActivityInstances))]
-        public virtual PimsLease Lease { get; set; }
+        [ForeignKey(nameof(PropertyId))]
+        [InverseProperty(nameof(PimsProperty.PimsPropPropPurposes))]
+        public virtual PimsProperty Property { get; set; }
+        [ForeignKey(nameof(PropertyPurposeTypeCode))]
+        [InverseProperty(nameof(PimsPropertyPurposeType.PimsPropPropPurposes))]
+        public virtual PimsPropertyPurposeType PropertyPurposeTypeCodeNavigation { get; set; }
     }
 }

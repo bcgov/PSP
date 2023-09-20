@@ -67,7 +67,7 @@ namespace Pims.Api.Areas.ExpropriationPayment
         /// <param name="id"></param>
         /// <param name="expropriationPayment"></param>
         /// <returns></returns>
-        /// <exception cref="BadRequestException">Validate id matching</exception>
+        /// <exception cref="BadRequestException">Validate id matching.</exception>
         [HttpPut("{id:long}")]
         [HasPermission(Permissions.AcquisitionFileEdit)]
         [Produces("application/json")]

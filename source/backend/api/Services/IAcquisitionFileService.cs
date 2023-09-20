@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Pims.Api.Areas.Acquisition.Models.Search;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;

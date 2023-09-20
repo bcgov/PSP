@@ -220,8 +220,7 @@ namespace Pims.Dal.Test.Repositories
             // Act
             var acquisitionUpdated = EntityHelper.CreateAcquisitionFile(acqFileId: 1, region: context.PimsRegions.FirstOrDefault());
             acquisitionUpdated.PimsInterestHolders.Add(
-                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" }
-            );
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" });
 
             var result = repository.Update(acquisitionUpdated);
 
@@ -248,8 +247,7 @@ namespace Pims.Dal.Test.Repositories
 
             var acqFile = EntityHelper.CreateAcquisitionFile(region: context.PimsRegions.FirstOrDefault());
             acqFile.PimsInterestHolders.Add(
-                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" }
-            );
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" });
             context.AddAndSaveChanges(acqFile);
 
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
@@ -257,8 +255,7 @@ namespace Pims.Dal.Test.Repositories
             // Act
             var acquisitionUpdated = EntityHelper.CreateAcquisitionFile(acqFileId: 1, region: context.PimsRegions.FirstOrDefault());
             acquisitionUpdated.PimsInterestHolders.Add(
-                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = updatePerson.Internal_Id, Comment = "updated comment", InterestHolderTypeCode = "AOREP" }
-            );
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = updatePerson.Internal_Id, Comment = "updated comment", InterestHolderTypeCode = "AOREP" });
 
             var result = repository.Update(acquisitionUpdated);
 
@@ -283,8 +280,7 @@ namespace Pims.Dal.Test.Repositories
 
             var acqFile = EntityHelper.CreateAcquisitionFile(region: context.PimsRegions.FirstOrDefault());
             acqFile.PimsInterestHolders.Add(
-                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" }
-            );
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" });
             context.AddAndSaveChanges(acqFile);
 
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);

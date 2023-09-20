@@ -8,25 +8,60 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACTIVITY_INSTANCE_DOCUMENT_HIST")]
-    [Index(nameof(ActivityInstanceDocumentHistId), nameof(EndDateHist), Name = "PIMS_ACTDOC_H_UK", IsUnique = true)]
-    public partial class PimsActivityInstanceDocumentHist
+    [Table("PIMS_PROPERTY_ACTIVITY_HIST")]
+    [Index(nameof(PropertyActivityHistId), nameof(EndDateHist), Name = "PIMS_PRPACT_H_UK", IsUnique = true)]
+    public partial class PimsPropertyActivityHist
     {
         [Key]
-        [Column("_ACTIVITY_INSTANCE_DOCUMENT_HIST_ID")]
-        public long ActivityInstanceDocumentHistId { get; set; }
+        [Column("_PROPERTY_ACTIVITY_HIST_ID")]
+        public long PropertyActivityHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("ACTIVITY_INSTANCE_DOCUMENT_ID")]
-        public long ActivityInstanceDocumentId { get; set; }
-        [Column("ACTIVITY_INSTANCE_ID")]
-        public long ActivityInstanceId { get; set; }
-        [Column("DOCUMENT_ID")]
-        public long DocumentId { get; set; }
+        [Column("PIMS_PROPERTY_ACTIVITY_ID")]
+        public long PimsPropertyActivityId { get; set; }
+        [Column("PROPERTY_ID")]
+        public long PropertyId { get; set; }
+        [Required]
+        [Column("PROP_MGMT_ACTIVITY_TYPE_CODE")]
+        [StringLength(20)]
+        public string PropMgmtActivityTypeCode { get; set; }
+        [Required]
+        [Column("PROP_MGMT_ACTIVITY_SUBTYPE_CODE")]
+        [StringLength(20)]
+        public string PropMgmtActivitySubtypeCode { get; set; }
+        [Column("PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE")]
+        [StringLength(20)]
+        public string PropMgmtActivityStatusTypeCode { get; set; }
+        [Column("MINISTRY_CONTACT_ID")]
+        public long? MinistryContactId { get; set; }
+        [Column("VENDOR_ID")]
+        public long? VendorId { get; set; }
+        [Column("REQUEST_RECEIVED_DT", TypeName = "date")]
+        public DateTime? RequestReceivedDt { get; set; }
+        [Column("COMPLETION_DT", TypeName = "date")]
+        public DateTime? CompletionDt { get; set; }
+        [Required]
+        [Column("DESCRIPTION")]
+        [StringLength(2000)]
+        public string Description { get; set; }
+        [Column("REQUEST_SOURCE")]
+        [StringLength(2000)]
+        public string RequestSource { get; set; }
+        [Column("INVOLVED_PARTY")]
+        [StringLength(2000)]
+        public string InvolvedParty { get; set; }
+        [Column("PRETAX_AMT", TypeName = "money")]
+        public decimal? PretaxAmt { get; set; }
+        [Column("GST_AMT", TypeName = "money")]
+        public decimal? GstAmt { get; set; }
+        [Column("PST_AMT", TypeName = "money")]
+        public decimal? PstAmt { get; set; }
+        [Column("TOTAL_AMT", TypeName = "money")]
+        public decimal? TotalAmt { get; set; }
         [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
+        public bool IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

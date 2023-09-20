@@ -7,7 +7,7 @@ namespace Pims.Dal.Helpers.Extensions
     {
         public static string FormatOwnerName(this PimsAcquisitionOwner pimsOwner)
         {
-            if(pimsOwner is null)
+            if (pimsOwner is null)
             {
                 return string.Empty;
             }

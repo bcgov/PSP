@@ -22,8 +22,8 @@ namespace Pims.Api.Test.Services
 
         public CoordinateTransformServiceTest()
         {
-            _helper = new TestHelper();
-            _service = _helper.Create<CoordinateTransformService>();
+            this._helper = new TestHelper();
+            this._service = this._helper.Create<CoordinateTransformService>();
         }
 
         #region Tests
@@ -35,7 +35,7 @@ namespace Pims.Api.Test.Services
 
             // Act
             var location = new Coordinate(-127.18, 54.79);
-            var actual = _service.TransformCoordinates(4326, 3005, location);
+            var actual = this._service.TransformCoordinates(4326, 3005, location);
 
             // Assert
             actual.Should().Be(expected);
@@ -49,7 +49,7 @@ namespace Pims.Api.Test.Services
 
             // Act
             var location = new Coordinate(924033.50, 1088851.50);
-            var actual = _service.TransformCoordinates(3005, 4326, location);
+            var actual = this._service.TransformCoordinates(3005, 4326, location);
 
             // Assert
             actual.Should().Be(expected);
@@ -63,8 +63,8 @@ namespace Pims.Api.Test.Services
 
             // Act
             // Assert
-            _service.IsCoordinateSystemSupported(900913).Should().BeFalse();
-            Assert.Throws<InvalidOperationException>(() => _service.TransformCoordinates(900913, 4326, location));
+            this._service.IsCoordinateSystemSupported(900913).Should().BeFalse();
+            Assert.Throws<InvalidOperationException>(() => this._service.TransformCoordinates(900913, 4326, location));
         }
         #endregion
     }

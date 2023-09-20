@@ -66,6 +66,8 @@ namespace Pims.Dal.Entities
         public DateTime? GenerationDt { get; set; }
         [Column("FINALIZED_DATE", TypeName = "date")]
         public DateTime? FinalizedDate { get; set; }
+        [Column("ADV_PMT_SERVED_DT", TypeName = "date")]
+        public DateTime? AdvPmtServedDt { get; set; }
         [Column("SPECIAL_INSTRUCTION")]
         [StringLength(2000)]
         public string SpecialInstruction { get; set; }
