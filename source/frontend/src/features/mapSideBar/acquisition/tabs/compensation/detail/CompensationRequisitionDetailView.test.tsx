@@ -7,7 +7,7 @@ import {
   getMockApiDefaultCompensation,
 } from '@/mocks/compensations.mock';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
-import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, getByTestId, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import CompensationRequisitionDetailView, {
   CompensationRequisitionDetailViewProps,
@@ -170,11 +170,29 @@ describe('Compensation Detail View Component', () => {
       isDraft: false,
       finalizedDate: '2024-06-12T18:00:00',
     };
-    const { getByText } = await setup({
+    const { getByTestId } = await setup({
       roles: [Roles.SYSTEM_ADMINISTRATOR],
       props: { compensation: mockFinalCompensation },
     });
 
-    expect(getByText('Jun 12, 2024')).toBeVisible();
+    const compensationFinalizedDate = getByTestId('compensation-finalized-date');
+    expect(compensationFinalizedDate).toHaveTextContent('Jun 12, 2024');
+  });
+
+  it('Displays the Advanced Payment Served Date', async () => {
+    const mockCompensation = getMockApiDefaultCompensation();
+    const { queryByTestId } = await setup({
+      claims: [Claims.COMPENSATION_REQUISITION_VIEW],
+      props: {
+        compensation: {
+          ...mockCompensation,
+          isDraft: true,
+          advancedPaymentServedDate: '2023-09-18T00:00:00',
+        },
+      },
+    });
+
+    const advancedPaymntServedDate = queryByTestId('advanced-payment-served-date');
+    expect(advancedPaymntServedDate).toHaveTextContent('Sep 18, 2023');
   });
 });
