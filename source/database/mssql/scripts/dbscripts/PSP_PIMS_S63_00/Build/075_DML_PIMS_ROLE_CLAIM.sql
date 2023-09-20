@@ -9,6 +9,8 @@ DECLARE @acqfunc BIGINT;
 DECLARE @acgrdon BIGINT;
 DECLARE @llfunc  BIGINT;
 DECLARE @llrdon  BIGINT;
+DECLARE @mafunc  BIGINT;
+DECLARE @mardon  BIGINT;
 DECLARE @prjfunc BIGINT;
 DECLARE @prjrdon BIGINT;
 DECLARE @resfunc BIGINT;
@@ -19,6 +21,8 @@ SELECT @acqfunc = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Acquisition functional';
 SELECT @acgrdon = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Acquisition read-only';
 SELECT @llfunc  = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Lease/License functional';
 SELECT @llrdon  = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Lease/License read-only';
+SELECT @mafunc  = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Management functional';
+SELECT @mardon  = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Management read-only';
 SELECT @prjfunc = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Project functional';
 SELECT @prjrdon = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Project read-only';
 SELECT @resfunc = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Research functional';
@@ -139,6 +143,15 @@ SELECT @compensationAdd = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'compensation-re
 SELECT @compensationEdit = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'compensation-requisition-edit';
 SELECT @compensationDelete = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'compensation-requisition-delete';
 
+DECLARE @managementView BIGINT;
+DECLARE @managementAdd BIGINT;
+DECLARE @managementEdit BIGINT;
+DECLARE @managementDelete BIGINT;
+SELECT @managementView = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'management-view';
+SELECT @managementAdd = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'management-add';
+SELECT @managementEdit = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'management-edit';
+SELECT @managementDelete = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'management-delete';
+
 INSERT INTO [dbo].[PIMS_ROLE_CLAIM] ([ROLE_ID], [CLAIM_ID], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_USER_DIRECTORY])
 VALUES
     -- Administrator
@@ -189,6 +202,10 @@ VALUES
     (@sysadmn,    @compensationEdit,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@sysadmn,    @compensationAdd,          N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@sysadmn,    @compensationDelete,       N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@sysadmn,    @managementView,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@sysadmn,    @managementEdit,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@sysadmn,    @managementAdd,          N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@sysadmn,    @managementDelete,       N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     -- Acquisition Functional
     (@acqfunc, @propertyView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@acqfunc, @propertyAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
@@ -265,6 +282,35 @@ VALUES
     (@llrdon, @documentView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@llrdon, @projectView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@llrdon, @leaseView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    -- Management Functional
+    (@mafunc, @propertyView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @propertyAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @propertyEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @propertyDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @contactView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @contactAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @contactEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @contactDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @rolePimsR,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @noteView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @noteAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @noteEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @noteDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @documentView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @documentAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @documentEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @documentDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @managementView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @managementAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @managementEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mafunc, @managementDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    -- Management Read
+    (@mardon, @propertyView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mardon, @contactView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mardon, @rolePimsR,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mardon, @noteView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mardon, @documentView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@mardon, @managementView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     -- Project Functional
     (@prjfunc, @projectView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@prjfunc, @projectAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
