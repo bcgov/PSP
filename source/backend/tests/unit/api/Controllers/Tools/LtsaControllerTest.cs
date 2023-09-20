@@ -28,9 +28,9 @@ namespace Pims.Api.Test.Controllers.Tools
 
         public LtsaControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<LtsaController>(Permissions.PropertyView);
-            _service = _helper.GetService<Mock<ILtsaService>>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<LtsaController>(Permissions.PropertyView);
+            this._service = this._helper.GetService<Mock<ILtsaService>>();
         }
 
         #region Tests
@@ -45,15 +45,15 @@ namespace Pims.Api.Test.Controllers.Tools
                 TitleSummaries = new List<Model.TitleSummary>(),
             };
 
-            _service.Setup(m => m.GetTitleSummariesAsync(It.IsAny<int>())).ReturnsAsync(response);
+            this._service.Setup(m => m.GetTitleSummariesAsync(It.IsAny<int>())).ReturnsAsync(response);
 
             // Act
-            var result = await _controller.FindTitleSummariesAsync("123-456-789");
+            var result = await this._controller.FindTitleSummariesAsync("123-456-789");
 
             // Assert
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
             var results = Assert.IsAssignableFrom<ICollection<Model.TitleSummary>>(actionResult.Value);
-            _service.Verify(m => m.GetTitleSummariesAsync(It.IsAny<int>()), Times.Once());
+            this._service.Verify(m => m.GetTitleSummariesAsync(It.IsAny<int>()), Times.Once());
         }
         #endregion
 
@@ -87,15 +87,15 @@ namespace Pims.Api.Test.Controllers.Tools
             // Arrange
             var response = new Model.OrderWrapper<Model.OrderParent<Model.ParcelInfo>>(new Model.ParcelInfoOrder());
 
-            _service.Setup(m => m.PostParcelInfoOrder(It.IsAny<string>())).ReturnsAsync(response);
+            this._service.Setup(m => m.PostParcelInfoOrder(It.IsAny<string>())).ReturnsAsync(response);
 
             // Act
-            var result = await _controller.PostParcelInfoOrderAsync("titleNumber");
+            var result = await this._controller.PostParcelInfoOrderAsync("titleNumber");
 
             // Assert
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
             var results = Assert.IsAssignableFrom<Model.ParcelInfoOrder>(actionResult.Value);
-            _service.Verify(m => m.PostParcelInfoOrder(It.IsAny<string>()), Times.Once());
+            this._service.Verify(m => m.PostParcelInfoOrder(It.IsAny<string>()), Times.Once());
         }
 
         [Fact]
@@ -104,15 +104,15 @@ namespace Pims.Api.Test.Controllers.Tools
             // Arrange
             var response = new Model.OrderWrapper<Model.OrderParent<Model.ParcelInfo>>(new Model.ParcelInfoOrder());
 
-            _service.Setup(m => m.PostParcelInfoOrder(It.IsAny<string>())).ReturnsAsync(response);
+            this._service.Setup(m => m.PostParcelInfoOrder(It.IsAny<string>())).ReturnsAsync(response);
 
             // Act
-            var result = await _controller.PostParcelInfoOrderAsync("123456789");
+            var result = await this._controller.PostParcelInfoOrderAsync("123456789");
 
             // Assert
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
             var results = Assert.IsAssignableFrom<Model.ParcelInfoOrder>(actionResult.Value);
-            _service.Verify(m => m.PostParcelInfoOrder(It.Is<string>(s => s.Equals("123-456-789"))), Times.Once());
+            this._service.Verify(m => m.PostParcelInfoOrder(It.Is<string>(s => s.Equals("123-456-789"))), Times.Once());
         }
 
         [Fact]
@@ -121,10 +121,10 @@ namespace Pims.Api.Test.Controllers.Tools
             // Arrange
             var response = new Model.OrderWrapper<Model.OrderParent<Model.ParcelInfo>>(new Model.ParcelInfoOrder());
 
-            _service.Setup(m => m.PostParcelInfoOrder(It.IsAny<string>())).ReturnsAsync(response);
+            this._service.Setup(m => m.PostParcelInfoOrder(It.IsAny<string>())).ReturnsAsync(response);
 
             // Act
-            await Assert.ThrowsAsync<BadHttpRequestException>(() => _controller.PostParcelInfoOrderAsync(string.Empty));
+            await Assert.ThrowsAsync<BadHttpRequestException>(() => this._controller.PostParcelInfoOrderAsync(string.Empty));
         }
         #endregion
 
@@ -135,13 +135,13 @@ namespace Pims.Api.Test.Controllers.Tools
             // Arrange
             var response = new Model.OrderWrapper<Model.OrderParent<Model.StrataPlanCommonProperty>>(new Model.SpcpOrder());
 
-            _service.Setup(m => m.PostSpcpOrder(It.IsAny<string>())).ReturnsAsync(response);
+            this._service.Setup(m => m.PostSpcpOrder(It.IsAny<string>())).ReturnsAsync(response);
 
             // Act
-            var result = await _controller.PostSpcpOrderAsync("strataPlanNumber");
+            var result = await this._controller.PostSpcpOrderAsync("strataPlanNumber");
 
             // Assert
-            _service.Verify(m => m.PostSpcpOrder(It.IsAny<string>()), Times.Once());
+            this._service.Verify(m => m.PostSpcpOrder(It.IsAny<string>()), Times.Once());
         }
         #endregion
 
@@ -152,13 +152,13 @@ namespace Pims.Api.Test.Controllers.Tools
             // Arrange
             var response = new Model.LtsaOrders();
 
-            _service.Setup(m => m.PostLtsaFields(It.IsAny<string>())).ReturnsAsync(response);
+            this._service.Setup(m => m.PostLtsaFields(It.IsAny<string>())).ReturnsAsync(response);
 
             // Act
-            var result = await _controller.PostLtsaFields("pid");
+            var result = await this._controller.PostLtsaFields("pid");
 
             // Assert
-            _service.Verify(m => m.PostLtsaFields(It.IsAny<string>()), Times.Once());
+            this._service.Verify(m => m.PostLtsaFields(It.IsAny<string>()), Times.Once());
         }
         #endregion
         #endregion

@@ -8,29 +8,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACTIVITY_TEMPLATE")]
-    [Index(nameof(ActivityTemplateTypeCode), Name = "ACTTMP_ACTIVITY_TEMPLATE_TYPE_CODE_IDX")]
-    public partial class PimsActivityTemplate
+    [Table("PIMS_PROP_PROP_CLASSIFICATION_HIST")]
+    [Index(nameof(PropPropClassificationHistId), nameof(EndDateHist), Name = "PIMS_PRPRCL_H_UK", IsUnique = true)]
+    public partial class PimsPropPropClassificationHist
     {
-        public PimsActivityTemplate()
-        {
-            PimsActivityInstances = new HashSet<PimsActivityInstance>();
-            PimsActivityTemplateDocuments = new HashSet<PimsActivityTemplateDocument>();
-        }
-
         [Key]
-        [Column("ACTIVITY_TEMPLATE_ID")]
-        public long ActivityTemplateId { get; set; }
+        [Column("_PROP_PROP_CLASSIFICATION_HIST_ID")]
+        public long PropPropClassificationHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Column("PROP_PROP_CLASSIFICATION_ID")]
+        public long PropPropClassificationId { get; set; }
+        [Column("PROPERTY_ID")]
+        public long PropertyId { get; set; }
         [Required]
-        [Column("ACTIVITY_TEMPLATE_TYPE_CODE")]
+        [Column("PROPERTY_CLASSIFICATION_TYPE_CODE")]
         [StringLength(20)]
-        public string ActivityTemplateTypeCode { get; set; }
-        [Required]
-        [Column("ACTIVITY_TEMPLATE_JSON")]
-        public string ActivityTemplateJson { get; set; }
-        [Required]
+        public string PropertyClassificationTypeCode { get; set; }
         [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
+        public bool IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -69,13 +67,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [ForeignKey(nameof(ActivityTemplateTypeCode))]
-        [InverseProperty(nameof(PimsActivityTemplateType.PimsActivityTemplates))]
-        public virtual PimsActivityTemplateType ActivityTemplateTypeCodeNavigation { get; set; }
-        [InverseProperty(nameof(PimsActivityInstance.ActivityTemplate))]
-        public virtual ICollection<PimsActivityInstance> PimsActivityInstances { get; set; }
-        [InverseProperty(nameof(PimsActivityTemplateDocument.ActivityTemplate))]
-        public virtual ICollection<PimsActivityTemplateDocument> PimsActivityTemplateDocuments { get; set; }
     }
 }

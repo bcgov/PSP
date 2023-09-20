@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACTIVITY_INSTANCE_STATUS_TYPE")]
-    public partial class PimsActivityInstanceStatusType
+    [Table("PIMS_PROPERTY_PURPOSE_TYPE")]
+    public partial class PimsPropertyPurposeType
     {
-        public PimsActivityInstanceStatusType()
+        public PimsPropertyPurposeType()
         {
-            PimsActivityInstances = new HashSet<PimsActivityInstance>();
+            PimsPropPropPurposes = new HashSet<PimsPropPropPurpose>();
         }
 
         [Key]
-        [Column("ACTIVITY_INSTANCE_STATUS_TYPE_CODE")]
+        [Column("PROPERTY_PURPOSE_TYPE_CODE")]
         [StringLength(20)]
-        public string ActivityInstanceStatusTypeCode { get; set; }
+        public string PropertyPurposeTypeCode { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
@@ -44,7 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsActivityInstance.ActivityInstanceStatusTypeCodeNavigation))]
-        public virtual ICollection<PimsActivityInstance> PimsActivityInstances { get; set; }
+        [InverseProperty(nameof(PimsPropPropPurpose.PropertyPurposeTypeCodeNavigation))]
+        public virtual ICollection<PimsPropPropPurpose> PimsPropPropPurposes { get; set; }
     }
 }

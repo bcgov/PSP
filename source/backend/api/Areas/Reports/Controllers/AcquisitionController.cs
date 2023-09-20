@@ -94,7 +94,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <summary>
         /// Exports compensation requisitions as Excel file.
         /// Include 'Accept' header to request the appropriate export -
-        ///     ["application/application/vnd.ms-excel"]
+        ///     ["application/application/vnd.ms-excel"].
         /// </summary>
         /// <param name="filter"></param>
         /// <returns>The generated Excel file.</returns>

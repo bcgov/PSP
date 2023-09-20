@@ -40,7 +40,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                     Secret = "test",
                     Api = "api",
                     Environment = "test",
-                    Integration = "4379"
+                    Integration = "4379",
                 },
             };
             mockConfig.Setup(m => m.Value).Returns(options);
@@ -93,7 +93,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                     Secret = "test",
                     Api = "api",
                     Environment = "test",
-                    Integration = "4379"
+                    Integration = "4379",
                 },
             };
             mockConfig.Setup(m => m.Value).Returns(options);

@@ -13,7 +13,6 @@ namespace Pims.Dal.Entities
     {
         public PimsNote()
         {
-            PimsActivityInstanceNotes = new HashSet<PimsActivityInstanceNote>();
             PimsLeaseNotes = new HashSet<PimsLeaseNote>();
             PimsProjectNotes = new HashSet<PimsProjectNote>();
             PimsResearchFileNotes = new HashSet<PimsResearchFileNote>();
@@ -70,8 +69,6 @@ namespace Pims.Dal.Entities
 
         [InverseProperty("Note")]
         public virtual PimsAcquisitionFileNote PimsAcquisitionFileNote { get; set; }
-        [InverseProperty(nameof(PimsActivityInstanceNote.Note))]
-        public virtual ICollection<PimsActivityInstanceNote> PimsActivityInstanceNotes { get; set; }
         [InverseProperty(nameof(PimsLeaseNote.Note))]
         public virtual ICollection<PimsLeaseNote> PimsLeaseNotes { get; set; }
         [InverseProperty(nameof(PimsProjectNote.Note))]

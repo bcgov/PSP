@@ -35,13 +35,12 @@ namespace Pims.Dal.Repositories
             return Context.PimsPropertyResearchFiles.AsNoTracking()
                 .Where(x => x.ResearchFileId == researchFileId)
                 .Include(rp => rp.PimsPrfPropResearchPurposeTypes)
-                .Include(rp => rp.PimsActInstPropRsrchFiles)
                 .Include(rp => rp.Property)
-                .ThenInclude(rp => rp.RegionCodeNavigation)
+                    .ThenInclude(rp => rp.RegionCodeNavigation)
                 .Include(rp => rp.Property)
-                .ThenInclude(rp => rp.DistrictCodeNavigation)
+                    .ThenInclude(rp => rp.DistrictCodeNavigation)
                 .Include(rp => rp.Property)
-                .ThenInclude(rp => rp.Address)
+                    .ThenInclude(rp => rp.Address)
                 .ToList();
         }
 
@@ -71,12 +70,10 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.PropertyResearchFileId == propertyResearchFile.Internal_Id)
                 .Include(rp => rp.Property)
                 .Include(rp => rp.PimsPrfPropResearchPurposeTypes)
-                .Include(rp => rp.PimsActInstPropRsrchFiles)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
 
             // Delete any Property research purpose type associations
             existingPropertyResearchFile.PimsPrfPropResearchPurposeTypes.ForEach(purposeType => Context.PimsPrfPropResearchPurposeTypes.Remove(new PimsPrfPropResearchPurposeType() { Internal_Id = purposeType.Internal_Id }));
-            existingPropertyResearchFile.PimsActInstPropRsrchFiles.ForEach(s => Context.PimsActInstPropRsrchFiles.Remove(new PimsActInstPropRsrchFile() { Internal_Id = s.Internal_Id }));
 
             Context.Remove(new PimsPropertyResearchFile() { Internal_Id = propertyResearchFile.Internal_Id });
         }

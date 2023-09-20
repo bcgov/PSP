@@ -34,10 +34,10 @@ namespace Pims.Api.Test.Controllers.Lease
 
         public SearchControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<SearchController>(Permissions.LeaseView);
-            _mapper = _helper.GetService<IMapper>();
-            _service = _helper.GetService<Mock<ILeaseService>>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<SearchController>(Permissions.LeaseView);
+            this._mapper = this._helper.GetService<IMapper>();
+            this._service = this._helper.GetService<Mock<ILeaseService>>();
         }
 
         #region Variables
@@ -68,13 +68,13 @@ namespace Pims.Api.Test.Controllers.Lease
             // Arrange
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            _service.Setup(m => m.GetPage(It.IsAny<LeaseFilter>(), false)).Returns(new Paged<Entity.PimsLease>(leases));
+            this._service.Setup(m => m.GetPage(It.IsAny<LeaseFilter>(), false)).Returns(new Paged<Entity.PimsLease>(leases));
 
             // Act
-            var result = _controller.GetLeases(filter);
+            var result = this._controller.GetLeases(filter);
 
             // Assert
-            _service.Verify(m => m.GetPage(It.IsAny<LeaseFilter>(), false), Times.Once());
+            this._service.Verify(m => m.GetPage(It.IsAny<LeaseFilter>(), false), Times.Once());
         }
 
         /// <summary>
@@ -87,13 +87,13 @@ namespace Pims.Api.Test.Controllers.Lease
             // Arrange
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            _service.Setup(m => m.GetPage(It.IsAny<LeaseFilter>(), false)).Returns(new Paged<Entity.PimsLease>(leases));
+            this._service.Setup(m => m.GetPage(It.IsAny<LeaseFilter>(), false)).Returns(new Paged<Entity.PimsLease>(leases));
 
             // Act
-            var result = _controller.GetLeases();
+            var result = this._controller.GetLeases();
 
             // Assert
-            _service.Verify(m => m.GetPage(It.IsAny<LeaseFilter>(), false), Times.Once());
+            this._service.Verify(m => m.GetPage(It.IsAny<LeaseFilter>(), false), Times.Once());
         }
 
         /// <summary>
@@ -103,13 +103,13 @@ namespace Pims.Api.Test.Controllers.Lease
         public void GetProperties_Query_NoFilter_BadRequest()
         {
             // Arrange
-            var request = _helper.GetService<Mock<HttpRequest>>();
+            var request = this._helper.GetService<Mock<HttpRequest>>();
             request.Setup(m => m.QueryString).Returns(new QueryString("?page=0"));
 
             // Act
             // Assert
-            Assert.Throws<BadRequestException>(() => _controller.GetLeases());
-            _service.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Never());
+            Assert.Throws<BadRequestException>(() => this._controller.GetLeases());
+            this._service.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Never());
         }
 
         /// <summary>
@@ -121,8 +121,8 @@ namespace Pims.Api.Test.Controllers.Lease
 
             // Act
             // Assert
-            Assert.Throws<BadRequestException>(() => _controller.GetLeases(null));
-            _service.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Never());
+            Assert.Throws<BadRequestException>(() => this._controller.GetLeases(null));
+            this._service.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Never());
         }
         #endregion
         #endregion

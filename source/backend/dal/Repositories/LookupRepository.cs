@@ -279,16 +279,6 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsAcquisitionTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsActivityTemplateType> GetAllActivityTemplateTypes()
-        {
-            return this.Context.PimsActivityTemplateTypes.AsNoTracking().ToArray();
-        }
-
-        public IEnumerable<PimsActivityInstanceStatusType> GetAllActivityStatusTypes()
-        {
-            return this.Context.PimsActivityInstanceStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
-        }
-
         public IEnumerable<PimsAcqFlPersonProfileType> GetAllAcqFilePersonProfileTypes()
         {
             return this.Context.PimsAcqFlPersonProfileTypes.AsNoTracking().ToArray();

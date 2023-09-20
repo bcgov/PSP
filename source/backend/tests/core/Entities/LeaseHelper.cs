@@ -33,8 +33,15 @@ namespace Pims.Core.Test
             organization.PimsOrganizationAddresses.Add(new PimsOrganizationAddress() { Organization = organization, Address = address });
             if (addProperty)
             {
-                lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Property = new Entity.PimsProperty() { Pid = pid, Location = GeometryHelper.CreatePoint(0, 0, SpatialReference.BCALBERS),
-                }, Lease = lease, });
+                lease.PimsPropertyLeases.Add(new PimsPropertyLease()
+                {
+                    Property = new Entity.PimsProperty()
+                    {
+                        Pid = pid,
+                        Location = GeometryHelper.CreatePoint(0, 0, SpatialReference.BCALBERS),
+                    },
+                    Lease = lease,
+                });
             }
             lease.MotiContact = $"{motiFirstName} {motiLastName}";
             lease.LeaseProgramTypeCodeNavigation = pimsLeaseProgramType ?? new Entity.PimsLeaseProgramType() { Id = "testProgramType" };

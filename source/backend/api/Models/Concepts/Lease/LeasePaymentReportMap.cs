@@ -40,7 +40,7 @@ namespace Pims.Api.Models.Concepts
         private static string GetFallbackPropertyIdentifier(PimsPropertyLease propertyLease)
         {
             PimsProperty property = propertyLease.Property;
-            if(property?.Pid != null)
+            if (property?.Pid != null)
             {
                 return property.Pid.ToString().ConvertPIDToDash();
             }

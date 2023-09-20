@@ -90,10 +90,6 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsAcquisitionType> GetAllAcquisitionTypes();
 
-        IEnumerable<PimsActivityTemplateType> GetAllActivityTemplateTypes();
-
-        IEnumerable<PimsActivityInstanceStatusType> GetAllActivityStatusTypes();
-
         IEnumerable<PimsAcqFlPersonProfileType> GetAllAcqFilePersonProfileTypes();
 
         IEnumerable<PimsTenantType> GetAllTenantTypes();

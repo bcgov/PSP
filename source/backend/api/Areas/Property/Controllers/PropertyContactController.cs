@@ -60,14 +60,15 @@ namespace Pims.Api.Areas.Property.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetPropertyContacts(long propertyId)
         {
-            //var property = _propertyRepository.GetAllAssociationsById(propertyId);
-
-            var propertyContacts = new List<PropertyContactModel>() {
-                new PropertyContactModel() {
+            // var property = _propertyRepository.GetAllAssociationsById(propertyId);
+            var propertyContacts = new List<PropertyContactModel>()
+            {
+                new PropertyContactModel()
+                {
                     Id = 1,
                     Person = new PersonModel() { Id = 1, FirstName = "John", Surname = "Doe" },
                     Purpose="Test Purpouse",
-                    }
+                    },
                 };
 
             return new JsonResult(propertyContacts);

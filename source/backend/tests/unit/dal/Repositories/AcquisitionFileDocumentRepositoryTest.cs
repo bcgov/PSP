@@ -48,7 +48,6 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             result.Should().BeTrue();
-
         }
 
         [Fact]

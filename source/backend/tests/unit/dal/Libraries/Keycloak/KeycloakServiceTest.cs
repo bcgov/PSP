@@ -186,7 +186,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                     Secret = "[USE SECRETS]",
                     Api = "https://api.loginproxy.gov.bc.ca/api/v1",
                     Integration = "4379",
-                    Environment = "test"
+                    Environment = "test",
                 },
             });
 
@@ -225,7 +225,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                     Integration = "4379",
                     Environment = "test",
                     Audience = "pims-service-account",
-                    Authority = "https://loginproxy.gov.bc.ca/auth/realms/standard"
+                    Authority = "https://loginproxy.gov.bc.ca/auth/realms/standard",
                 },
             });
 

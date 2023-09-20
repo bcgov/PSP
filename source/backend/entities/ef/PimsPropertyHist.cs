@@ -29,10 +29,6 @@ namespace Pims.Dal.Entities
         [Column("PROPERTY_TYPE_CODE")]
         [StringLength(20)]
         public string PropertyTypeCode { get; set; }
-        [Required]
-        [Column("PROPERTY_CLASSIFICATION_TYPE_CODE")]
-        [StringLength(20)]
-        public string PropertyClassificationTypeCode { get; set; }
         [Column("ADDRESS_ID")]
         public long? AddressId { get; set; }
         [Column("REGION_CODE")]
@@ -63,6 +59,10 @@ namespace Pims.Dal.Entities
         [Column("PPH_STATUS_TYPE_CODE")]
         [StringLength(20)]
         public string PphStatusTypeCode { get; set; }
+        [Required]
+        [Column("PROPERTY_CLASSIFICATION_TYPE_CODE")]
+        [StringLength(20)]
+        public string PropertyClassificationTypeCode { get; set; }
         [Column("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE", TypeName = "date")]
         public DateTime PropertyDataSourceEffectiveDate { get; set; }
         [Column("NAME")]
@@ -128,6 +128,13 @@ namespace Pims.Dal.Entities
         [Column("ZONING_POTENTIAL")]
         [StringLength(50)]
         public string ZoningPotential { get; set; }
+        [Column("ADDITIONAL_DETAILS")]
+        [StringLength(4000)]
+        public string AdditionalDetails { get; set; }
+        [Column("IS_UTILITIES_PAYABLE")]
+        public bool? IsUtilitiesPayable { get; set; }
+        [Column("IS_TAXES_PAYABLE")]
+        public bool? IsTaxesPayable { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

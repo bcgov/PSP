@@ -30,13 +30,13 @@ namespace Pims.Api.Test.Services
 
         public DocumentSyncServiceTest()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         private DocumentSyncService CreateDocumentySyncServiceWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
-            return _helper.Create<DocumentSyncService>(user);
+            return this._helper.Create<DocumentSyncService>(user);
         }
 
         private SyncModel CreateSyncModel(IList<MetadataModel> metadataModels = null, IList<DocumentTypeModel> documentTypeModels = null)
@@ -66,13 +66,13 @@ namespace Pims.Api.Test.Services
         public void Update_MigrateMetadata_SingleLabelChange()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "test metadata", Name = "TEST" } });
+            SyncModel model = this.CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "test metadata", Name = "TEST" } });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[1] { new MetadataType() { Label = "test", Name = "TEST_METADATA" } })));
+                .Returns(Task.FromResult(this.CreateMetadataResult(new MetadataType[1] { new MetadataType() { Label = "test", Name = "TEST_METADATA" } })));
             MetadataType updatedMetadataType = null;
             mayanRepository.Setup(x => x.TryUpdateMetadataTypeAsync(It.Is<MetadataType>(x => x.Name == "TEST")))
                 .Callback<MetadataType>(x => updatedMetadataType = x).Returns(Task.FromResult(new ExternalResult<MetadataType>() { HttpStatusCode = System.Net.HttpStatusCode.OK, Payload = new MetadataType() { Label = "testUpdated", Name = "TEST" } }));
@@ -90,13 +90,13 @@ namespace Pims.Api.Test.Services
         public void Update_MigrateMetadata_MultipleLabelChange()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "test metadata", Name = "TEST" }, new MetadataModel() { Label = "test metadata two", Name = "TEST_METADATA_TWO" } });
+            SyncModel model = this.CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "test metadata", Name = "TEST" }, new MetadataModel() { Label = "test metadata two", Name = "TEST_METADATA_TWO" } });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[2] { new MetadataType() { Label = "test", Name = "TEST_METADATA" }, new MetadataType() { Label = "testTwo", Name = "test_metadata_two" } })));
+                .Returns(Task.FromResult(this.CreateMetadataResult(new MetadataType[2] { new MetadataType() { Label = "test", Name = "TEST_METADATA" }, new MetadataType() { Label = "testTwo", Name = "test_metadata_two" } })));
             MetadataType updatedMetadataTypeOne = null;
             MetadataType updatedMetadataTypeTwo = null;
             mayanRepository.Setup(x => x.TryUpdateMetadataTypeAsync(It.Is<MetadataType>(x => x.Name == "TEST")))
@@ -120,12 +120,12 @@ namespace Pims.Api.Test.Services
         public void Add_SyncMetadata_Single()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "test", Name = "TEST" } });
+            SyncModel model = this.CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "test", Name = "TEST" } });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
-            mayanRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(Task.FromResult(CreateMetadataResult()));
+            var mayanRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
+            mayanRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(Task.FromResult(this.CreateMetadataResult()));
             MetadataType createdMetadataType = null;
             mayanRepository.Setup(x => x.TryCreateMetadataTypeAsync(It.IsAny<MetadataType>())).Callback<MetadataType>(x => createdMetadataType = x).Returns(Task.FromResult(new ExternalResult<MetadataType>() { HttpStatusCode = System.Net.HttpStatusCode.Created, Payload = new MetadataType() { Label = "test", Name = "TEST" } }));
 
@@ -144,12 +144,12 @@ namespace Pims.Api.Test.Services
         public void Add_SyncMetadata_Multiple()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "test", Name = "TEST" }, new MetadataModel() { Label = "test2", Name = "TEST2" } });
+            SyncModel model = this.CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "test", Name = "TEST" }, new MetadataModel() { Label = "test2", Name = "TEST2" } });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
-            mayanRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(Task.FromResult(CreateMetadataResult()));
+            var mayanRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
+            mayanRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(Task.FromResult(this.CreateMetadataResult()));
             MetadataType createdMetadataTypeOne = null;
             MetadataType createdMetadataTypeTwo = null;
             mayanRepository.Setup(x => x.TryCreateMetadataTypeAsync(It.Is<MetadataType>(x => x.Name == "TEST")))
@@ -175,14 +175,14 @@ namespace Pims.Api.Test.Services
         public void RemoveLingeringMetadata_SyncMetadata_Single()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel();
+            SyncModel model = this.CreateSyncModel();
             model.RemoveLingeringMetadataTypes = true;
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[1] { new MetadataType() { Label = "test", Name = "TEST" } })));
+                .Returns(Task.FromResult(this.CreateMetadataResult(new MetadataType[1] { new MetadataType() { Label = "test", Name = "TEST" } })));
             mayanRepository.Setup(x => x.TryDeleteMetadataTypeAsync(It.IsAny<long>())).Returns(Task.FromResult(new ExternalResult<string>() { Payload = "deleted" }));
 
             // Act
@@ -199,14 +199,14 @@ namespace Pims.Api.Test.Services
         public void RemoveLingeringMetadata_SyncMetadata_Multiple()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel();
+            SyncModel model = this.CreateSyncModel();
             model.RemoveLingeringMetadataTypes = true;
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[2] { new MetadataType() { Label = "test", Name = "TEST" }, new MetadataType() { Label = "test2", Name = "TEST2" } })));
+                .Returns(Task.FromResult(this.CreateMetadataResult(new MetadataType[2] { new MetadataType() { Label = "test", Name = "TEST" }, new MetadataType() { Label = "test2", Name = "TEST2" } })));
             mayanRepository.Setup(x => x.TryDeleteMetadataTypeAsync(It.IsAny<long>())).Returns(Task.FromResult(new ExternalResult<string>() { Payload = "deleted" }));
 
             // Act
@@ -224,14 +224,14 @@ namespace Pims.Api.Test.Services
         public void RemoveLingeringMetadata_SyncMetadata_RemoveNoneIfFalse()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel();
+            SyncModel model = this.CreateSyncModel();
             model.RemoveLingeringMetadataTypes = false;
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[2] { new MetadataType() { Label = "test", Name = "TEST" }, new MetadataType() { Label = "test2", Name = "TEST2" } })));
+                .Returns(Task.FromResult(this.CreateMetadataResult(new MetadataType[2] { new MetadataType() { Label = "test", Name = "TEST" }, new MetadataType() { Label = "test2", Name = "TEST2" } })));
             mayanRepository.Setup(x => x.TryDeleteMetadataTypeAsync(It.IsAny<long>())).Returns(Task.FromResult(new ExternalResult<string>() { Payload = "deleted" }));
 
             // Act
@@ -248,13 +248,13 @@ namespace Pims.Api.Test.Services
         public void Update_SyncMetadata_SingleLabelChange()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "testUpdated", Name = "TEST" } });
+            SyncModel model = this.CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "testUpdated", Name = "TEST" } });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[1] { new MetadataType() { Label = "test", Name = "TEST" } })));
+                .Returns(Task.FromResult(this.CreateMetadataResult(new MetadataType[1] { new MetadataType() { Label = "test", Name = "TEST" } })));
             MetadataType updatedMetadataType = null;
             mayanRepository.Setup(x => x.TryUpdateMetadataTypeAsync(It.Is<MetadataType>(x => x.Name == "TEST")))
                 .Callback<MetadataType>(x => updatedMetadataType = x).Returns(Task.FromResult(new ExternalResult<MetadataType>() { HttpStatusCode = System.Net.HttpStatusCode.OK, Payload = new MetadataType() { Label = "testUpdated", Name = "TEST" } }));
@@ -275,13 +275,13 @@ namespace Pims.Api.Test.Services
         public void Update_SyncMetadata_MultipleLabelChange()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "testUpdated", Name = "TEST" }, new MetadataModel() { Label = "testTwoUpdated", Name = "TESTTWO" } });
+            SyncModel model = this.CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "testUpdated", Name = "TEST" }, new MetadataModel() { Label = "testTwoUpdated", Name = "TESTTWO" } });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[2] { new MetadataType() { Label = "test", Name = "TEST" }, new MetadataType() { Label = "testTwo", Name = "TESTTWO" } })));
+                .Returns(Task.FromResult(this.CreateMetadataResult(new MetadataType[2] { new MetadataType() { Label = "test", Name = "TEST" }, new MetadataType() { Label = "testTwo", Name = "TESTTWO" } })));
             MetadataType updatedMetadataTypeOne = null;
             MetadataType updatedMetadataTypeTwo = null;
             mayanRepository.Setup(x => x.TryUpdateMetadataTypeAsync(It.Is<MetadataType>(x => x.Name == "TEST")))
@@ -307,13 +307,13 @@ namespace Pims.Api.Test.Services
         public void Update_SyncMetadata_SingleNameChange()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "testUpdated", Name = "TESTUPDATED" } });
+            SyncModel model = this.CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "testUpdated", Name = "TESTUPDATED" } });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[1] { new MetadataType() { Label = "test", Name = "TEST" } })));
+                .Returns(Task.FromResult(this.CreateMetadataResult(new MetadataType[1] { new MetadataType() { Label = "test", Name = "TEST" } })));
             MetadataType createdMetadataType = null;
             mayanRepository.Setup(x => x.TryCreateMetadataTypeAsync(It.Is<MetadataType>(x => x.Name == "TESTUPDATED")))
                 .Callback<MetadataType>(x => createdMetadataType = x).Returns(Task.FromResult(new ExternalResult<MetadataType>() { HttpStatusCode = System.Net.HttpStatusCode.Created, Payload = new MetadataType() { Label = "test", Name = "TEST" } }));
@@ -333,13 +333,13 @@ namespace Pims.Api.Test.Services
         public void Update_SyncMetadata_NoLabelChange()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "test", Name = "TEST" } });
+            SyncModel model = this.CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "test", Name = "TEST" } });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[1] { new MetadataType() { Label = "test", Name = "TEST" } })));
+                .Returns(Task.FromResult(this.CreateMetadataResult(new MetadataType[1] { new MetadataType() { Label = "test", Name = "TEST" } })));
             mayanRepository.Setup(x => x.TryUpdateMetadataTypeAsync(It.Is<MetadataType>(x => x.Name == "TEST")))
                 .Returns(Task.FromResult(new ExternalResult<MetadataType>() { HttpStatusCode = System.Net.HttpStatusCode.OK, Payload = new MetadataType() { Label = "testUpdated", Name = "TEST" } }));
             mayanRepository.Setup(x => x.TryCreateMetadataTypeAsync(It.Is<MetadataType>(x => x.Name == "TEST")))
@@ -363,11 +363,11 @@ namespace Pims.Api.Test.Services
         public void Add_SyncPimsDocumentTypes_Single()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test", Categories = new List<string>() } });
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test", Categories = new List<string>() } });
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>());
             pimsDocumentRepository.Setup(x => x.Add(It.IsAny<PimsDocumentTyp>())).Returns(new PimsDocumentTyp());
 
@@ -385,14 +385,14 @@ namespace Pims.Api.Test.Services
         public void Add_SyncPimsDocumentTypes_Multiple()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
                 new DocumentTypeModel() { Name = "TEST", Label = "test", Categories = new List<string>() },
-                new DocumentTypeModel() { Name = "TESTTWO", Label = "testTwo" , Categories = new List<string>() }
+                new DocumentTypeModel() { Name = "TESTTWO", Label = "testTwo" , Categories = new List<string>() },
                 });
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>());
             pimsDocumentRepository.Setup(x => x.Add(It.IsAny<PimsDocumentTyp>())).Returns(new PimsDocumentTyp());
 
@@ -410,19 +410,19 @@ namespace Pims.Api.Test.Services
         public void RemoveLingering_SyncPimsDocumentTypes_Single()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel();
+            SyncModel model = this.CreateSyncModel();
             model.RemoveLingeringDocumentTypes = true;
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST" } });
 
             // Act
             var result = service.SyncPimsDocumentTypes(model);
 
             // Assert
-            //TODO: mock and assert that the document types are being disabled.
+            // TODO: mock and assert that the document types are being disabled.
             result.Deleted.Should().HaveCount(1);
             result.Added.Should().BeEmpty();
             result.Updated.Should().BeEmpty();
@@ -432,12 +432,12 @@ namespace Pims.Api.Test.Services
         public void RemoveLingering_SyncPimsDocumentTypes_Multiple()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel();
+            SyncModel model = this.CreateSyncModel();
             model.RemoveLingeringDocumentTypes = true;
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST" }, new PimsDocumentTyp() { DocumentType = "TESTTWO" } });
 
             // Act
@@ -453,19 +453,19 @@ namespace Pims.Api.Test.Services
         public void RemoveLingering_SyncPimsDocumentTypes_DisableNoneIfFalse()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel();
+            SyncModel model = this.CreateSyncModel();
             model.RemoveLingeringDocumentTypes = false;
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST" }, new PimsDocumentTyp() { DocumentType = "TESTTWO" } });
 
             // Act
             var result = service.SyncPimsDocumentTypes(model);
 
             // Assert
-            //TODO: mock and assert that the document types are being disabled.
+            // TODO: mock and assert that the document types are being disabled.
             result.Deleted.Should().BeEmpty();
             result.Added.Should().BeEmpty();
             result.Updated.Should().BeEmpty();
@@ -475,11 +475,11 @@ namespace Pims.Api.Test.Services
         public void Update_SyncPimsDocumentTypes_Single()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test updated", Categories = new List<string>() } });
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test updated", Categories = new List<string>() } });
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST" } });
             PimsDocumentTyp updatedDocumentTypeOne = null;
             pimsDocumentRepository.Setup(x => x.Update(It.IsAny<PimsDocumentTyp>())).Callback<PimsDocumentTyp>(x => updatedDocumentTypeOne = x).Returns(new PimsDocumentTyp());
@@ -499,14 +499,14 @@ namespace Pims.Api.Test.Services
         public void Update_SyncPimsDocumentTypes_Multiple()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
                 new DocumentTypeModel() { Name = "TEST", Label = "test updated", Categories = new List<string>() },
-                new DocumentTypeModel() { Name = "TESTTWO", Label = "test two updated", Categories = new List<string>() }
+                new DocumentTypeModel() { Name = "TESTTWO", Label = "test two updated", Categories = new List<string>() },
             });
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             PimsDocumentTyp updatedDocumentTypeOne = null;
             PimsDocumentTyp updatedDocumentTypeTwo = null;
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST" }, new PimsDocumentTyp() { DocumentType = "TESTTWO" } });
@@ -529,11 +529,11 @@ namespace Pims.Api.Test.Services
         public void Update_SyncPimsDocumentTypes_NoLabelChange()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test", Categories = new List<string>() { "TEST_CATEGORY" }, DisplayOrder = 1 } });
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test", Categories = new List<string>() { "TEST_CATEGORY" }, DisplayOrder = 1 } });
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() {
                 new PimsDocumentTyp() {
                     DocumentType = "TEST",
@@ -541,10 +541,10 @@ namespace Pims.Api.Test.Services
                     PimsDocumentCategorySubtypes = new List<PimsDocumentCategorySubtype>() {
                         new PimsDocumentCategorySubtype() {
                             DocumentCategoryTypeCode = "TEST_CATEGORY"
-                        }
+                        },
                     },
                     DisplayOrder = 1,
-                }
+                },
             });
             pimsDocumentRepository.Setup(x => x.Add(It.IsAny<PimsDocumentTyp>())).Returns(new PimsDocumentTyp());
             pimsDocumentRepository.Setup(x => x.Update(It.IsAny<PimsDocumentTyp>())).Returns(new PimsDocumentTyp());
@@ -564,11 +564,11 @@ namespace Pims.Api.Test.Services
         public void Update_SyncPimsDocumentTypes_CategoryChange()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test", Categories = new List<string>() { "TEST_CATEGORY_A" }, DisplayOrder = 1 } });
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test", Categories = new List<string>() { "TEST_CATEGORY_A" }, DisplayOrder = 1 } });
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() {
                 new PimsDocumentTyp() {
                     DocumentType = "TEST",
@@ -576,10 +576,10 @@ namespace Pims.Api.Test.Services
                     PimsDocumentCategorySubtypes = new List<PimsDocumentCategorySubtype>() {
                         new PimsDocumentCategorySubtype() {
                             DocumentCategoryTypeCode = "TEST_CATEGORY_B"
-                        }
+                        },
                     },
                     DisplayOrder = 1,
-                }
+                },
             });
             pimsDocumentRepository.Setup(x => x.Add(It.IsAny<PimsDocumentTyp>())).Returns(new PimsDocumentTyp());
             pimsDocumentRepository.Setup(x => x.Update(It.IsAny<PimsDocumentTyp>())).Returns(new PimsDocumentTyp());
@@ -599,13 +599,13 @@ namespace Pims.Api.Test.Services
         public void Update_SyncPimsDocumentTypes_SingleNameChange()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
-                new DocumentTypeModel() { Name = "TESTUPDATE", Label = "test", Categories = new List<string>() }
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
+                new DocumentTypeModel() { Name = "TESTUPDATE", Label = "test", Categories = new List<string>() },
                 });
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST", DocumentTypeDescription = "test" } });
             pimsDocumentRepository.Setup(x => x.Add(It.IsAny<PimsDocumentTyp>())).Returns(new PimsDocumentTyp());
             pimsDocumentRepository.Setup(x => x.Update(It.IsAny<PimsDocumentTyp>())).Returns(new PimsDocumentTyp());
@@ -627,23 +627,23 @@ namespace Pims.Api.Test.Services
         public void Add_SyncPimsToMayan_SingleType()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test" } });
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test" } });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var mayanRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
             mayanRepository.Setup(x => x.TryGetDocumentTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeResult()));
+                .Returns(Task.FromResult(this.CreateDocumentTypeResult()));
             mayanRepository.Setup(x => x.TryGetDocumentTypeMetadataTypesAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeMetadataTypeResult()));
+                .Returns(Task.FromResult(this.CreateDocumentTypeMetadataTypeResult()));
             mayanRepository.Setup(x => x.TryCreateDocumentTypeAsync(It.IsAny<DocumentType>()))
                 .Returns(Task.FromResult(new ExternalResult<DocumentType>() { HttpStatusCode = System.Net.HttpStatusCode.Created, Payload = new DocumentType() { Id = 1 } }));
 
-            var mayanMetadataRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanMetadataRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanMetadataRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult()));
+                .Returns(Task.FromResult(this.CreateMetadataResult()));
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST", DocumentTypeDescription = "test" } });
 
             // Act
@@ -663,30 +663,30 @@ namespace Pims.Api.Test.Services
         public void Add_SyncPimsToMayan_SingleTypeWithMetadata()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
             DocumentType documentType = new DocumentType() { Label = "test" };
             MetadataType metadataType = new MetadataType() { Name = "TESTMETADATA", Label = "test metadata" };
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
                 new DocumentTypeModel() { Name = "TEST", Label = "test", MetadataTypes = new List<DocumentMetadataTypeModel>() {
-                    new DocumentMetadataTypeModel() { Name = "TESTMETADATA", Label = "test metadata" } } } });
+                    new DocumentMetadataTypeModel() { Name = "TESTMETADATA", Label = "test metadata" } }, }, });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
-            //on the first call mayan would not have the new document type. On the second call it should have been added.
+            var mayanRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+            // on the first call mayan would not have the new document type. On the second call it should have been added.
             mayanRepository.SetupSequence(x => x.TryGetDocumentTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeResult()))
-                .Returns(Task.FromResult(CreateDocumentTypeResult(documentTypes: new DocumentType[1] { new DocumentType() { Label = "test", Id = 1 } })));
+                .Returns(Task.FromResult(this.CreateDocumentTypeResult()))
+                .Returns(Task.FromResult(this.CreateDocumentTypeResult(documentTypes: new DocumentType[1] { new DocumentType() { Label = "test", Id = 1 } })));
 
             mayanRepository.Setup(x => x.TryGetDocumentTypeMetadataTypesAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeMetadataTypeResult()));
+                .Returns(Task.FromResult(this.CreateDocumentTypeMetadataTypeResult()));
             mayanRepository.Setup(x => x.TryCreateDocumentTypeAsync(It.IsAny<DocumentType>()))
                 .Returns(Task.FromResult(new ExternalResult<DocumentType>() { HttpStatusCode = System.Net.HttpStatusCode.Created, Payload = new DocumentType() { Id = 1 } }));
 
-            var mayanMetadataRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanMetadataRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanMetadataRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[1] { metadataType })));
+                .Returns(Task.FromResult(this.CreateMetadataResult(new MetadataType[1] { metadataType })));
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST", DocumentTypeDescription = "test", MayanId = 1 } });
 
             // Act
@@ -706,28 +706,28 @@ namespace Pims.Api.Test.Services
         public void Add_SyncPimsToMayan_SingleTypeWithMetadata_MetadataDoesNotExist()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
                 new DocumentTypeModel() { Name = "TEST", Label = "test", MetadataTypes = new List<DocumentMetadataTypeModel>() {
-                    new DocumentMetadataTypeModel() { Name = "TESTMETADATA", Label = "test metadata" } } } });
+                    new DocumentMetadataTypeModel() { Name = "TESTMETADATA", Label = "test metadata" } }, }, });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
-            //on the first call mayan would not have the new document type. On the second call it should have been added.
+            var mayanRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+            // on the first call mayan would not have the new document type. On the second call it should have been added.
             mayanRepository.SetupSequence(x => x.TryGetDocumentTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeResult()))
-                .Returns(Task.FromResult(CreateDocumentTypeResult(documentTypes: new DocumentType[1] { new DocumentType() { Label = "test", Id = 1 } })));
+                .Returns(Task.FromResult(this.CreateDocumentTypeResult()))
+                .Returns(Task.FromResult(this.CreateDocumentTypeResult(documentTypes: new DocumentType[1] { new DocumentType() { Label = "test", Id = 1 } })));
 
             mayanRepository.Setup(x => x.TryGetDocumentTypeMetadataTypesAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeMetadataTypeResult()));
+                .Returns(Task.FromResult(this.CreateDocumentTypeMetadataTypeResult()));
             mayanRepository.Setup(x => x.TryCreateDocumentTypeAsync(It.IsAny<DocumentType>()))
                 .Returns(Task.FromResult(new ExternalResult<DocumentType>() { HttpStatusCode = System.Net.HttpStatusCode.Created, Payload = new DocumentType() { Id = 1 } }));
 
-            var mayanMetadataRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanMetadataRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanMetadataRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult()));
+                .Returns(Task.FromResult(this.CreateMetadataResult()));
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST", DocumentTypeDescription = "test", MayanId = 1 } });
 
             // Act
@@ -747,38 +747,38 @@ namespace Pims.Api.Test.Services
         public void Add_SyncPimsToMayan_MultipleTypesWithMetadata()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
             DocumentType documentTypeOne = new DocumentType() { Label = "test", Id = 1 };
             MetadataType metadataTypeOne = new MetadataType() { Name = "TESTMETADATA", Label = "test metadata" };
             DocumentType documentTypeTwo = new DocumentType() { Label = "test two", Id = 2 };
             MetadataType metadataTypeTwo = new MetadataType() { Name = "TESTTWOMETADATA", Label = "test two metadata" };
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
                 new DocumentTypeModel() { Name = "TEST", Label = "test", MetadataTypes = new List<DocumentMetadataTypeModel>() {
-                    new DocumentMetadataTypeModel() { Name = "TESTMETADATA", Label = "test metadata" } } },
+                    new DocumentMetadataTypeModel() { Name = "TESTMETADATA", Label = "test metadata" }, }, },
                 new DocumentTypeModel() { Name = "TESTTWO", Label = "test two", MetadataTypes = new List<DocumentMetadataTypeModel>() {
-                    new DocumentMetadataTypeModel() { Name = "TESTTWOMETADATA", Label = "test two metadata" } } } });
+                    new DocumentMetadataTypeModel() { Name = "TESTTWOMETADATA", Label = "test two metadata" } }, }, });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
-            //on the first call mayan would not have the new document type. On the second call it should have been added.
+            var mayanRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+            // on the first call mayan would not have the new document type. On the second call it should have been added.
             mayanRepository.SetupSequence(x => x.TryGetDocumentTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeResult()))
-                .Returns(Task.FromResult(CreateDocumentTypeResult(documentTypes: new DocumentType[2] { documentTypeOne, documentTypeTwo })));
+                .Returns(Task.FromResult(this.CreateDocumentTypeResult()))
+                .Returns(Task.FromResult(this.CreateDocumentTypeResult(documentTypes: new DocumentType[2] { documentTypeOne, documentTypeTwo })));
 
             mayanRepository.Setup(x => x.TryGetDocumentTypeMetadataTypesAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeMetadataTypeResult()));
+                .Returns(Task.FromResult(this.CreateDocumentTypeMetadataTypeResult()));
             mayanRepository.SetupSequence(x => x.TryCreateDocumentTypeAsync(It.IsAny<DocumentType>()))
                 .Returns(Task.FromResult(new ExternalResult<DocumentType>() { HttpStatusCode = System.Net.HttpStatusCode.Created, Payload = new DocumentType() { Id = 1 } }))
                 .Returns(Task.FromResult(new ExternalResult<DocumentType>() { HttpStatusCode = System.Net.HttpStatusCode.Created, Payload = new DocumentType() { Id = 2 } }));
 
-            var mayanMetadataRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanMetadataRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanMetadataRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[2] { metadataTypeOne, metadataTypeTwo })));
+                .Returns(Task.FromResult(this.CreateMetadataResult(new MetadataType[2] { metadataTypeOne, metadataTypeTwo })));
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() {
                 new PimsDocumentTyp() { DocumentType = "TEST", DocumentTypeDescription = "test", MayanId = 1 },
-                new PimsDocumentTyp() { DocumentType = "TESTTWO", DocumentTypeDescription = "test two", MayanId = 2 } });
+                new PimsDocumentTyp() { DocumentType = "TESTTWO", DocumentTypeDescription = "test two", MayanId = 2 }, });
 
             // Act
             var result = service.SyncPimsToMayan(model);
@@ -799,30 +799,30 @@ namespace Pims.Api.Test.Services
         public void Add_SyncPimsToMayan_SingleTypeWithMetadata_UpdateRequired()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
             DocumentType documentType = new DocumentType() { Label = "test" };
             MetadataType metadataType = new MetadataType() { Name = "TESTMETADATA", Label = "test metadata" };
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
                 new DocumentTypeModel() { Name = "TEST", Label = "test", MetadataTypes = new List<DocumentMetadataTypeModel>() {
-                    new DocumentMetadataTypeModel() { Name = "TESTMETADATA", Label = "test metadata", Required = true } } } });
+                    new DocumentMetadataTypeModel() { Name = "TESTMETADATA", Label = "test metadata", Required = true } }, }, });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
-            //on the first call mayan would not have the new document type. On the second call it should have been added.
+            var mayanRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+            // on the first call mayan would not have the new document type. On the second call it should have been added.
             mayanRepository.SetupSequence(x => x.TryGetDocumentTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeResult()))
-                .Returns(Task.FromResult(CreateDocumentTypeResult(documentTypes: new DocumentType[1] { new DocumentType() { Label = "test", Id = 1 } })));
+                .Returns(Task.FromResult(this.CreateDocumentTypeResult()))
+                .Returns(Task.FromResult(this.CreateDocumentTypeResult(documentTypes: new DocumentType[1] { new DocumentType() { Label = "test", Id = 1 } })));
 
             mayanRepository.Setup(x => x.TryGetDocumentTypeMetadataTypesAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeMetadataTypeResult(new DocumentTypeMetadataType() { DocumentType = documentType, MetadataType = metadataType, Required = false })));
+                .Returns(Task.FromResult(this.CreateDocumentTypeMetadataTypeResult(new DocumentTypeMetadataType() { DocumentType = documentType, MetadataType = metadataType, Required = false })));
             mayanRepository.Setup(x => x.TryCreateDocumentTypeAsync(It.IsAny<DocumentType>()))
                 .Returns(Task.FromResult(new ExternalResult<DocumentType>()));
 
-            var mayanMetadataRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanMetadataRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanMetadataRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[1] { metadataType })));
+                .Returns(Task.FromResult(this.CreateMetadataResult(new MetadataType[1] { metadataType })));
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST", DocumentTypeDescription = "test", MayanId = 1 } });
 
             // Act
@@ -841,29 +841,29 @@ namespace Pims.Api.Test.Services
         public void Add_SyncPimsToMayan_DeleteLinkedMetadata()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
             DocumentType documentType = new DocumentType() { Label = "test" };
             MetadataType metadataType = new MetadataType() { Name = "TESTMETADATA", Label = "test metadata" };
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
-                new DocumentTypeModel() { Name = "TEST", Label = "test", MetadataTypes = new List<DocumentMetadataTypeModel>() } });
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
+                new DocumentTypeModel() { Name = "TEST", Label = "test", MetadataTypes = new List<DocumentMetadataTypeModel>() }, });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
-            //on the first call mayan would not have the new document type. On the second call it should have been added.
+            var mayanRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+            // on the first call mayan would not have the new document type. On the second call it should have been added.
             mayanRepository.SetupSequence(x => x.TryGetDocumentTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeResult()))
-                .Returns(Task.FromResult(CreateDocumentTypeResult(documentTypes: new DocumentType[1] { new DocumentType() { Label = "test", Id = 1 } })));
+                .Returns(Task.FromResult(this.CreateDocumentTypeResult()))
+                .Returns(Task.FromResult(this.CreateDocumentTypeResult(documentTypes: new DocumentType[1] { new DocumentType() { Label = "test", Id = 1 } })));
 
             mayanRepository.Setup(x => x.TryGetDocumentTypeMetadataTypesAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeMetadataTypeResult(new DocumentTypeMetadataType() { DocumentType = documentType, MetadataType = metadataType, Required = false })));
+                .Returns(Task.FromResult(this.CreateDocumentTypeMetadataTypeResult(new DocumentTypeMetadataType() { DocumentType = documentType, MetadataType = metadataType, Required = false })));
             mayanRepository.Setup(x => x.TryCreateDocumentTypeAsync(It.IsAny<DocumentType>()))
                 .Returns(Task.FromResult(new ExternalResult<DocumentType>()));
 
-            var mayanMetadataRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanMetadataRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanMetadataRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[1] { metadataType })));
+                .Returns(Task.FromResult(this.CreateMetadataResult(new MetadataType[1] { metadataType })));
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST", DocumentTypeDescription = "test", MayanId = 1 } });
 
             // Act
@@ -882,23 +882,23 @@ namespace Pims.Api.Test.Services
         public void Update_SyncPimsToMayan_SingleType()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test updated", MetadataTypes = new List<DocumentMetadataTypeModel>() } });
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test updated", MetadataTypes = new List<DocumentMetadataTypeModel>() } });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var mayanRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
             mayanRepository.Setup(x => x.TryGetDocumentTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeResult(new DocumentType[1] { new DocumentType() { Id = 1 } })));
+                .Returns(Task.FromResult(this.CreateDocumentTypeResult(new DocumentType[1] { new DocumentType() { Id = 1 } })));
             mayanRepository.Setup(x => x.TryGetDocumentTypeMetadataTypesAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeMetadataTypeResult()));
+                .Returns(Task.FromResult(this.CreateDocumentTypeMetadataTypeResult()));
             mayanRepository.Setup(x => x.TryUpdateDocumentTypeAsync(It.IsAny<DocumentType>()))
                 .Returns(Task.FromResult(new ExternalResult<DocumentType>()));
 
-            var mayanMetadataRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanMetadataRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanMetadataRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult()));
+                .Returns(Task.FromResult(this.CreateMetadataResult()));
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST", DocumentTypeDescription = "test updated", MayanId = 1 } });
 
             // Act
@@ -917,26 +917,26 @@ namespace Pims.Api.Test.Services
         public void Update_SyncPimsToMayan_SingleTypeWithMetadata()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
             MetadataType metadataType = new MetadataType() { Name = "TESTMETADATA", Label = "test metadata" };
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test updated",
-                MetadataTypes = new List<DocumentMetadataTypeModel>() { new DocumentMetadataTypeModel() { Name = "TESTMETADATA", Label = "test metadata" } } } });
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test updated",
+                MetadataTypes = new List<DocumentMetadataTypeModel>() { new DocumentMetadataTypeModel() { Name = "TESTMETADATA", Label = "test metadata" } }, }, });
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var mayanRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
             mayanRepository.SetupSequence(x => x.TryGetDocumentTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeResult(new DocumentType[1] { new DocumentType() { Id = 1 } })))
-                .Returns(Task.FromResult(CreateDocumentTypeResult(documentTypes: new DocumentType[1] { new DocumentType() { Label = "test", Id = 1 } })));
+                .Returns(Task.FromResult(this.CreateDocumentTypeResult(new DocumentType[1] { new DocumentType() { Id = 1 } })))
+                .Returns(Task.FromResult(this.CreateDocumentTypeResult(documentTypes: new DocumentType[1] { new DocumentType() { Label = "test", Id = 1 } })));
             mayanRepository.Setup(x => x.TryGetDocumentTypeMetadataTypesAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeMetadataTypeResult()));
+                .Returns(Task.FromResult(this.CreateDocumentTypeMetadataTypeResult()));
             mayanRepository.Setup(x => x.TryUpdateDocumentTypeAsync(It.IsAny<DocumentType>()))
                 .Returns(Task.FromResult(new ExternalResult<DocumentType>()));
 
-            var mayanMetadataRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanMetadataRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanMetadataRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[1] { metadataType })));
+                .Returns(Task.FromResult(this.CreateMetadataResult(new MetadataType[1] { metadataType })));
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST", DocumentTypeDescription = "test updated", MayanId = 1 } });
 
             // Act
@@ -955,24 +955,24 @@ namespace Pims.Api.Test.Services
         public void RemoveLingering_SyncPimsToMayan_Success()
         {
             // Arrange
-            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test updated", MetadataTypes = new List<DocumentMetadataTypeModel>() } });
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test updated", MetadataTypes = new List<DocumentMetadataTypeModel>() } });
             model.RemoveLingeringDocumentTypes = true;
 
-            var mayanRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var mayanRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
             mayanRepository.Setup(x => x.TryGetDocumentTypeMetadataTypesAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeMetadataTypeResult()));
+                .Returns(Task.FromResult(this.CreateDocumentTypeMetadataTypeResult()));
             mayanRepository.Setup(x => x.TryGetDocumentTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateDocumentTypeResult(new DocumentType[1] { new DocumentType() { Id = 1 } })));
+                .Returns(Task.FromResult(this.CreateDocumentTypeResult(new DocumentType[1] { new DocumentType() { Id = 1 } })));
             mayanRepository.Setup(x => x.TryDeleteDocumentTypeAsync(It.IsAny<long>()))
                 .Returns(Task.FromResult(new ExternalResult<string>() { Payload = "deleted document type" }));
 
-            var mayanMetadataRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            var mayanMetadataRepository = this._helper.GetService<Mock<IEdmsMetadataRepository>>();
             mayanMetadataRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .Returns(Task.FromResult(CreateMetadataResult()));
+                .Returns(Task.FromResult(this.CreateMetadataResult()));
 
-            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { });
 
             // Act

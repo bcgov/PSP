@@ -16,7 +16,6 @@ namespace Pims.Dal.Entities
     {
         public PimsPropertyResearchFile()
         {
-            PimsActInstPropRsrchFiles = new HashSet<PimsActInstPropRsrchFile>();
             PimsPrfPropResearchPurposeTypes = new HashSet<PimsPrfPropResearchPurposeType>();
         }
 
@@ -88,8 +87,6 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(ResearchFileId))]
         [InverseProperty(nameof(PimsResearchFile.PimsPropertyResearchFiles))]
         public virtual PimsResearchFile ResearchFile { get; set; }
-        [InverseProperty(nameof(PimsActInstPropRsrchFile.PropertyResearchFile))]
-        public virtual ICollection<PimsActInstPropRsrchFile> PimsActInstPropRsrchFiles { get; set; }
         [InverseProperty(nameof(PimsPrfPropResearchPurposeType.PropertyResearchFile))]
         public virtual ICollection<PimsPrfPropResearchPurposeType> PimsPrfPropResearchPurposeTypes { get; set; }
     }
