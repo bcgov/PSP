@@ -255,12 +255,12 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - Whether utilities are payable for this property..
         /// </summary>
-        public bool IsUtilitiesPayable { get; set; }
+        public bool? IsUtilitiesPayable { get; set; }
 
         /// <summary>
         /// get/set - Whether taxes are payable for this property.
         /// </summary>
-        public bool IsTaxesPayable { get; set; }
+        public bool? IsTaxesPayable { get; set; }
         #endregion
 
         #endregion

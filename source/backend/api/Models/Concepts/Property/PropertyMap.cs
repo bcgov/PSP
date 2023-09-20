@@ -63,6 +63,11 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.SurplusDeclarationComment, src => src.SurplusDeclarationComment)
                 .Map(dest => dest.SurplusDeclarationDate, src => src.SurplusDeclarationDate)
                 .Map(dest => dest.SurplusDeclarationType, src => src.SurplusDeclarationTypeCodeNavigation)
+
+                .Map(dest => dest.ManagementPurposes, src => src.PimsPropPropPurposes)
+                .Map(dest => dest.AdditionalDetails, src => src.AdditionalDetails)
+                .Map(dest => dest.IsUtilitiesPayable, src => src.IsUtilitiesPayable)
+                .Map(dest => dest.IsTaxesPayable, src => src.IsTaxesPayable)
                 .Inherits<Entity.IBaseEntity, Api.Models.BaseModel>();
 
             config.NewConfig<PropertyModel, Entity.PimsProperty>()
@@ -108,6 +113,11 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription)
                 .Map(dest => dest.Zoning, src => src.Zoning)
                 .Map(dest => dest.ZoningPotential, src => src.ZoningPotential)
+
+                .Map(dest => dest.PimsPropPropPurposes, src => src.ManagementPurposes)
+                .Map(dest => dest.AdditionalDetails, src => src.AdditionalDetails)
+                .Map(dest => dest.IsUtilitiesPayable, src => src.IsUtilitiesPayable)
+                .Map(dest => dest.IsTaxesPayable, src => src.IsTaxesPayable)
 
                 .Inherits<BaseModel, Entity.IBaseEntity>();
         }
