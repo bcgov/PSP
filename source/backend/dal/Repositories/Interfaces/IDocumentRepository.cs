@@ -8,8 +8,6 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IDocumentRepository : IRepository<PimsDocument>
     {
-        int GetTotalRelationCount(long documentId);
-
         PimsDocument Add(PimsDocument document);
 
         PimsDocument TryGet(long documentId);

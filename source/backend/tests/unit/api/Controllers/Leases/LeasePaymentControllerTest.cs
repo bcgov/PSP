@@ -30,10 +30,10 @@ namespace Pims.Api.Test.Controllers.Lease
 
         public LeasePaymentControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<LeasePaymentController>(Permissions.LeaseView);
-            _mapper = _helper.GetService<IMapper>();
-            _service = _helper.GetService<Mock<ILeasePaymentService>>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<LeasePaymentController>(Permissions.LeaseView);
+            this._mapper = this._helper.GetService<IMapper>();
+            this._service = this._helper.GetService<Mock<ILeasePaymentService>>();
         }
 
         #region Tests
@@ -48,13 +48,13 @@ namespace Pims.Api.Test.Controllers.Lease
             var lease = EntityHelper.CreateLease(1);
             var leasePayment = new Dal.Entities.PimsLeasePayment() { LeasePaymentId = 1 };
 
-            _service.Setup(m => m.UpdatePayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>())).Returns(leasePayment);
+            this._service.Setup(m => m.UpdatePayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>())).Returns(leasePayment);
 
             // Act
-            var result = _controller.UpdatePayment(lease.LeaseId, leasePayment.LeasePaymentId, _mapper.Map<PaymentModel>(lease));
+            var result = this._controller.UpdatePayment(lease.LeaseId, leasePayment.LeasePaymentId, this._mapper.Map<PaymentModel>(lease));
 
             // Assert
-            _service.Verify(m => m.UpdatePayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>()), Times.Once());
+            this._service.Verify(m => m.UpdatePayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>()), Times.Once());
         }
 
         /// <summary>
@@ -67,13 +67,13 @@ namespace Pims.Api.Test.Controllers.Lease
             var lease = EntityHelper.CreateLease(1);
             var leasePayment = new Dal.Entities.PimsLeasePayment();
 
-            _service.Setup(m => m.DeletePayment(It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>())).Returns(true);
+            this._service.Setup(m => m.DeletePayment(It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>())).Returns(true);
 
             // Act
-            var result = _controller.DeletePayment(lease.LeaseId, _mapper.Map<PaymentModel>(lease));
+            var result = this._controller.DeletePayment(lease.LeaseId, this._mapper.Map<PaymentModel>(lease));
 
             // Assert
-            _service.Verify(m => m.DeletePayment(It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>()), Times.Once());
+            this._service.Verify(m => m.DeletePayment(It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>()), Times.Once());
         }
 
         /// <summary>
@@ -86,13 +86,13 @@ namespace Pims.Api.Test.Controllers.Lease
             var lease = EntityHelper.CreateLease(1);
             var leasePayment = new Dal.Entities.PimsLeasePayment();
 
-            _service.Setup(m => m.AddPayment(It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>())).Returns(leasePayment);
+            this._service.Setup(m => m.AddPayment(It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>())).Returns(leasePayment);
 
             // Act
-            var result = _controller.AddPayment(lease.LeaseId, _mapper.Map<PaymentModel>(lease));
+            var result = this._controller.AddPayment(lease.LeaseId, this._mapper.Map<PaymentModel>(lease));
 
             // Assert
-            _service.Verify(m => m.AddPayment(It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>()), Times.Once());
+            this._service.Verify(m => m.AddPayment(It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>()), Times.Once());
         }
         #endregion
     }

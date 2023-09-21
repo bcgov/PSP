@@ -14,7 +14,6 @@ using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
-using Serilog.Core;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Lease.Controllers

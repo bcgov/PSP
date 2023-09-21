@@ -122,6 +122,5 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
                 dict.Add(projectId, financialValue);
             }
         }
-
     }
 }

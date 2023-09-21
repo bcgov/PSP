@@ -120,7 +120,6 @@ namespace Pims.Api.Controllers
                 var propertyResearchPurposeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyResearchPurposeTypes());
                 var propertyAnomalyTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyAnomalyTypes());
                 var propertyRoadTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyRoadTypes());
-                //var propertyAdjacentLandTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyAdjacentLandTypes());
                 var volumeUnitTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyVolumeUnitTypes());
                 var propertyVolumetricTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyVolumetricTypes());
                 var pphStatusType = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPPHStatusType());
@@ -128,8 +127,6 @@ namespace Pims.Api.Controllers
                 var acquisitionFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileStatusTypes());
                 var acquisitionPhysFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionPhysFileStatusTypes());
                 var acquisitionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionTypes());
-                var activityTemplateTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllActivityTemplateTypes());
-                var activityStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllActivityStatusTypes());
                 var acqFilePersonProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcqFilePersonProfileTypes());
                 var tenantTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTenantTypes());
                 var acqFundingTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFundingTypes());
@@ -180,7 +177,6 @@ namespace Pims.Api.Controllers
                 codes.AddRange(propertyResearchPurposeTypes);
                 codes.AddRange(propertyAnomalyTypes);
                 codes.AddRange(propertyRoadTypes);
-                //codes.AddRange(propertyAdjacentLandTypes);
                 codes.AddRange(volumeUnitTypes);
                 codes.AddRange(propertyVolumetricTypes);
                 codes.AddRange(pphStatusType);
@@ -188,8 +184,6 @@ namespace Pims.Api.Controllers
                 codes.AddRange(acquisitionFileStatusTypes);
                 codes.AddRange(acquisitionPhysFileStatusTypes);
                 codes.AddRange(acquisitionTypes);
-                codes.AddRange(activityTemplateTypes);
-                codes.AddRange(activityStatusTypes);
                 codes.AddRange(acqFilePersonProfileTypes);
                 codes.AddRange(tenantTypes);
                 codes.AddRange(acqFundingTypes);

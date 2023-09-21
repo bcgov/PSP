@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using k8s.KubeConfigModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Exceptions;
@@ -287,7 +286,7 @@ namespace Pims.Api.Services
             foreach (var deletedProperty in differenceSet)
             {
                 var acqFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id).FirstOrDefault(ap => ap.PropertyId == deletedProperty.PropertyId);
-                if (acqFileProperties.PimsActInstPropAcqFiles.Any() || acqFileProperties.PimsTakes.Any())
+                if (acqFileProperties.PimsTakes.Any())
                 {
                     throw new BusinessRuleViolationException();
                 }

@@ -1,8 +1,8 @@
+using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Pims.Api.Areas.Reports.Models.Acquisition;
 using Pims.Dal.Entities;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Pims.Api.Test
@@ -15,7 +15,7 @@ namespace Pims.Api.Test
             // Arrange
             var testFinancial = new PimsCompReqFinancial
             {
-                CompensationRequisition = new PimsCompensationRequisition() { FinalizedDate = new DateTime(1990, 1, 1) }
+                CompensationRequisition = new PimsCompensationRequisition() { FinalizedDate = new DateTime(1990, 1, 1) },
             };
 
             // Act
@@ -31,14 +31,14 @@ namespace Pims.Api.Test
             // Arrange
             var testFinancial = new PimsCompReqFinancial
             {
-                CompensationRequisition = new PimsCompensationRequisition() { FinalizedDate = null }
+                CompensationRequisition = new PimsCompensationRequisition() { FinalizedDate = null },
             };
 
             // Act
             var model = new CompensationFinancialReportModel(testFinancial, new CompensationFinancialReportTotalsModel(new List<PimsCompReqFinancial>()), new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.FinalDate.Should().Be("");
+            model.FinalDate.Should().Be(string.Empty);
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace Pims.Api.Test
             // Arrange
             var testFinancial = new PimsCompReqFinancial
             {
-                CompensationRequisition = new PimsCompensationRequisition() { IsDraft = false }
+                CompensationRequisition = new PimsCompensationRequisition() { IsDraft = false },
             };
 
             // Act
@@ -63,7 +63,7 @@ namespace Pims.Api.Test
             // Arrange
             var testFinancial = new PimsCompReqFinancial
             {
-                CompensationRequisition = new PimsCompensationRequisition() { IsDraft = null }
+                CompensationRequisition = new PimsCompensationRequisition() { IsDraft = null },
             };
 
             // Act
@@ -81,8 +81,8 @@ namespace Pims.Api.Test
             {
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
-                    AcquisitionFile = new PimsAcquisitionFile() { FileNumber = "9999", FileName = "test" }
-                }
+                    AcquisitionFile = new PimsAcquisitionFile() { FileNumber = "9999", FileName = "test" },
+                },
             };
 
             // Act
@@ -100,15 +100,15 @@ namespace Pims.Api.Test
             {
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
-                    AcquisitionFile = null
-                }
+                    AcquisitionFile = null,
+                },
             };
 
             // Act
             var model = new CompensationFinancialReportModel(testFinancial, new CompensationFinancialReportTotalsModel(new List<PimsCompReqFinancial>()), new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.AcquisitionNumberAndName.Should().Be("");
+            model.AcquisitionNumberAndName.Should().Be(string.Empty);
         }
 
         [Fact]
@@ -119,8 +119,8 @@ namespace Pims.Api.Test
             {
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
-                    AcquisitionFile = new PimsAcquisitionFile() { Project = new PimsProject() { Code = "test", Description = "description" } }
-                }
+                    AcquisitionFile = new PimsAcquisitionFile() { Project = new PimsProject() { Code = "test", Description = "description" } },
+                },
             };
 
             // Act
@@ -138,15 +138,15 @@ namespace Pims.Api.Test
             {
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
-                    AcquisitionFile = new PimsAcquisitionFile() { Project = null }
-                }
+                    AcquisitionFile = new PimsAcquisitionFile() { Project = null },
+                },
             };
 
             // Act
             var model = new CompensationFinancialReportModel(testFinancial, new CompensationFinancialReportTotalsModel(new List<PimsCompReqFinancial>()), new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.MinistryProject.Should().Be("");
+            model.MinistryProject.Should().Be(string.Empty);
         }
 
         [Fact]
@@ -158,8 +158,8 @@ namespace Pims.Api.Test
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
                     AlternateProject = new PimsProject() { Code = "alternate", Description = "project" },
-                    AcquisitionFile = new PimsAcquisitionFile() { Project = new PimsProject() { Code = "test", Description = "description" } }
-                }
+                    AcquisitionFile = new PimsAcquisitionFile() { Project = new PimsProject() { Code = "test", Description = "description" } },
+                },
             };
 
             // Act
@@ -178,15 +178,15 @@ namespace Pims.Api.Test
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
                     AlternateProject = null,
-                    AcquisitionFile = new PimsAcquisitionFile() { Project = new PimsProject() { Code = "test", Description = "description" } }
-                }
+                    AcquisitionFile = new PimsAcquisitionFile() { Project = new PimsProject() { Code = "test", Description = "description" } },
+                },
             };
 
             // Act
             var model = new CompensationFinancialReportModel(testFinancial, new CompensationFinancialReportTotalsModel(new List<PimsCompReqFinancial>()), new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.AlternateProject.Should().Be("");
+            model.AlternateProject.Should().Be(string.Empty);
         }
 
         [Fact]
@@ -197,8 +197,8 @@ namespace Pims.Api.Test
             {
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
-                    AcquisitionFile = new PimsAcquisitionFile() { Product = new PimsProduct() { Code = "test", Description = "description" } }
-                }
+                    AcquisitionFile = new PimsAcquisitionFile() { Product = new PimsProduct() { Code = "test", Description = "description" } },
+                },
             };
 
             // Act
@@ -216,15 +216,15 @@ namespace Pims.Api.Test
             {
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
-                    AcquisitionFile = new PimsAcquisitionFile() { Product = null }
-                }
+                    AcquisitionFile = new PimsAcquisitionFile() { Product = null },
+                },
             };
 
             // Act
             var model = new CompensationFinancialReportModel(testFinancial, new CompensationFinancialReportTotalsModel(new List<PimsCompReqFinancial>()), new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.Product.Should().Be("");
+            model.Product.Should().Be(string.Empty);
         }
 
         [Fact]
@@ -233,7 +233,7 @@ namespace Pims.Api.Test
             // Arrange
             var testFinancial = new PimsCompReqFinancial
             {
-                FinancialActivityCode = new PimsFinancialActivityCode() { Code = "test", Description = "description" }
+                FinancialActivityCode = new PimsFinancialActivityCode() { Code = "test", Description = "description" },
             };
 
             // Act
@@ -248,14 +248,14 @@ namespace Pims.Api.Test
         {
             var testFinancial = new PimsCompReqFinancial
             {
-                FinancialActivityCode = null
+                FinancialActivityCode = null,
             };
 
             // Act
             var model = new CompensationFinancialReportModel(testFinancial, new CompensationFinancialReportTotalsModel(new List<PimsCompReqFinancial>()), new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.FinancialActivityName.Should().Be("");
+            model.FinancialActivityName.Should().Be(string.Empty);
         }
 
         [Fact]
@@ -270,8 +270,8 @@ namespace Pims.Api.Test
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
                     IsDraft = true,
-                    AcquisitionFile = new PimsAcquisitionFile() { Project = new PimsProject() { Id = 1, Code = "test", Description = "description" } }
-                }
+                    AcquisitionFile = new PimsAcquisitionFile() { Project = new PimsProject() { Id = 1, Code = "test", Description = "description" } },
+                },
             };
 
             var totals = new CompensationFinancialReportTotalsModel(new List<PimsCompReqFinancial> { testFinancial });
@@ -297,8 +297,8 @@ namespace Pims.Api.Test
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
                     IsDraft = true,
-                    AcquisitionFile = new PimsAcquisitionFile() { Project = null }
-                }
+                    AcquisitionFile = new PimsAcquisitionFile() { Project = null },
+                },
             };
 
             var totals = new CompensationFinancialReportTotalsModel(new List<PimsCompReqFinancial> { testFinancial });
@@ -324,8 +324,8 @@ namespace Pims.Api.Test
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
                     IsDraft = false,
-                    AcquisitionFile = new PimsAcquisitionFile() { Project = new PimsProject() { Id = 1, Code = "test", Description = "description" } }
-                }
+                    AcquisitionFile = new PimsAcquisitionFile() { Project = new PimsProject() { Id = 1, Code = "test", Description = "description" } },
+                },
             };
 
             var totals = new CompensationFinancialReportTotalsModel(new List<PimsCompReqFinancial> { testFinancial });
@@ -351,8 +351,8 @@ namespace Pims.Api.Test
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
                     IsDraft = false,
-                    AcquisitionFile = new PimsAcquisitionFile() { Project = null }
-                }
+                    AcquisitionFile = new PimsAcquisitionFile() { Project = null },
+                },
             };
 
             var totals = new CompensationFinancialReportTotalsModel(new List<PimsCompReqFinancial> { testFinancial });

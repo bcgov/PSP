@@ -29,10 +29,10 @@ namespace Pims.Api.Test.Controllers.Lease
 
         public LeaseTenantControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<LeaseTenantController>(Permissions.LeaseView);
-            _mapper = _helper.GetService<IMapper>();
-            _repository = _helper.GetService<Mock<ILeaseService>>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<LeaseTenantController>(Permissions.LeaseView);
+            this._mapper = this._helper.GetService<IMapper>();
+            this._repository = this._helper.GetService<Mock<ILeaseService>>();
         }
 
         #region Tests
@@ -46,13 +46,13 @@ namespace Pims.Api.Test.Controllers.Lease
             // Arrange
             var lease = EntityHelper.CreateLease(1);
 
-            _repository.Setup(m => m.UpdateTenantsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>())).Returns(lease.PimsLeaseTenants);
+            this._repository.Setup(m => m.UpdateTenantsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>())).Returns(lease.PimsLeaseTenants);
 
             // Act
-            var result = _controller.UpdateTenants(lease.LeaseId, _mapper.Map<IEnumerable<LeaseTenantModel>>(new List<LeaseTenantModel>()));
+            var result = this._controller.UpdateTenants(lease.LeaseId, this._mapper.Map<IEnumerable<LeaseTenantModel>>(new List<LeaseTenantModel>()));
 
             // Assert
-            _repository.Verify(m => m.UpdateTenantsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>()), Times.Once());
+            this._repository.Verify(m => m.UpdateTenantsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>()), Times.Once());
         }
         #endregion
         #endregion

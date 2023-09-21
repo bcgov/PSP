@@ -212,12 +212,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   };
 
   const canRemove = async (propertyId: number) => {
-    const fileProperties = await retrieveAcquisitionFileProperties(acquisitionFileId);
-    const fp = fileProperties?.find(fp => fp.property?.id === propertyId);
-    return (
-      fp?.activityInstanceProperties?.length === undefined ||
-      fp?.activityInstanceProperties?.length === 0
-    );
+    return true;
   };
 
   const onUpdateProperties = (file: Api_File): Promise<Api_File | undefined> => {

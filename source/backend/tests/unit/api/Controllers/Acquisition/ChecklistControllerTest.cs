@@ -27,9 +27,9 @@ namespace Pims.Api.Test.Controllers
         public ChecklistControllerTest()
         {
             var helper = new TestHelper();
-            _controller = helper.CreateController<ChecklistController>(Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
-            _mapper = helper.GetService<IMapper>();
-            _service = helper.GetService<Mock<IAcquisitionFileService>>();
+            this._controller = helper.CreateController<ChecklistController>(Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
+            this._mapper = helper.GetService<IMapper>();
+            this._service = helper.GetService<Mock<IAcquisitionFileService>>();
         }
 
         #region Tests
@@ -40,13 +40,13 @@ namespace Pims.Api.Test.Controllers
         public void GetAcquisitionFileChecklist_Success()
         {
             // Arrange
-            _service.Setup(m => m.GetChecklistItems(It.IsAny<long>())).Returns(new List<PimsAcquisitionChecklistItem>());
+            this._service.Setup(m => m.GetChecklistItems(It.IsAny<long>())).Returns(new List<PimsAcquisitionChecklistItem>());
 
             // Act
-            var result = _controller.GetAcquisitionFileChecklist(1);
+            var result = this._controller.GetAcquisitionFileChecklist(1);
 
             // Assert
-            _service.Verify(m => m.GetChecklistItems(It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.GetChecklistItems(It.IsAny<long>()), Times.Once());
         }
 
         /// <summary>
@@ -57,16 +57,14 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            _service.Setup(m => m.UpdateChecklistItems(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            this._service.Setup(m => m.UpdateChecklistItems(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
 
             // Act
-            var result = _controller.UpdateAcquisitionFileChecklist(_mapper.Map<AcquisitionFileModel>(acqFile));
+            var result = this._controller.UpdateAcquisitionFileChecklist(this._mapper.Map<AcquisitionFileModel>(acqFile));
 
             // Assert
-            _service.Verify(m => m.UpdateChecklistItems(It.IsAny<PimsAcquisitionFile>()), Times.Once());
+            this._service.Verify(m => m.UpdateChecklistItems(It.IsAny<PimsAcquisitionFile>()), Times.Once());
         }
-
-
 
         #endregion
     }

@@ -1,6 +1,8 @@
 import { Api_Address } from './Address';
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import { Api_Organization } from './Organization';
+import { Api_Person } from './Person';
 import Api_TypeCode from './TypeCode';
 
 export interface Api_Coordinate {
@@ -123,4 +125,12 @@ export interface Api_PropertyAssociation {
   createdBy?: string;
   createdByGuid?: string;
   status?: string;
+}
+
+export interface Api_PropertyContact {
+  id: number;
+  organization: Api_Organization | null;
+  person: Api_Person | null;
+  primaryContact: Api_Person | null;
+  purpose: string | null;
 }
