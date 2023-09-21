@@ -146,7 +146,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
             <UnsavedChangesPrompt />
 
             <StyledContent>
-              <Section header="Requisition details">
+              <Section header="Requisition Details">
                 <SectionField label="Status" labelWidth="5">
                   <Select
                     field="status"
@@ -200,7 +200,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 </SectionField>
               </Section>
 
-              <Section header="Financial coding">
+              <Section header="Financial Coding">
                 <SectionField label="Product" labelWidth="4">
                   {acquisitionFile.product?.code ?? ''}
                 </SectionField>

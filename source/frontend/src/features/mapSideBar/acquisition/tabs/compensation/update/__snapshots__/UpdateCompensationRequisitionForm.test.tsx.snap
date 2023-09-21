@@ -254,7 +254,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
             <div
               class="col"
             >
-              Requisition details
+              Requisition Details
             </div>
           </div>
         </h2>
@@ -577,7 +577,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
             <div
               class="col"
             >
-              Financial coding
+              Financial Coding
             </div>
           </div>
         </h2>
