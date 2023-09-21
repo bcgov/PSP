@@ -84,6 +84,7 @@ export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
   surplusDeclarationDate?: string;
 
   managementPurposes?: Api_PropertyManagementPurpose[];
+  additionalDetails?: string;
   isUtilitiesPayable?: boolean;
   isTaxesPayable?: boolean;
 }
