@@ -7,7 +7,7 @@ import { Api_PropertyContact } from '@/models/api/Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions } from '@/utils/test-utils';
 
-import { PropertyContactView } from './PropertyContactView';
+import { PropertyContactListView } from './PropertyContactListView';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -17,7 +17,7 @@ const storeState = {
 // mock keycloak auth library
 jest.mock('@react-keycloak/web');
 
-describe('PropertyContactView component', () => {
+describe('PropertyContactListView component', () => {
   // render component under test
   const setup = (
     renderOptions: RenderOptions & { propertyContacts: Api_PropertyContact[] } = {
@@ -26,7 +26,7 @@ describe('PropertyContactView component', () => {
   ) => {
     const { ...rest } = renderOptions;
     const component = render(
-      <PropertyContactView
+      <PropertyContactListView
         isLoading={false}
         propertyContacts={renderOptions.propertyContacts}
         setEditMode={noop}

@@ -3,19 +3,17 @@ import { useCallback, useEffect, useState } from 'react';
 import { usePropertyContactRepository } from '@/hooks/repositories/usePropertyContactRepository';
 import { Api_PropertyContact } from '@/models/api/Property';
 
-import { IPropertyContactViewProps } from './PropertyContactView';
+import { IPropertyContactListViewProps } from './PropertyContactListView';
 
-interface IPropertyContactContainerProps {
+interface IPropertyContactListContainerProps {
   propertyId: number;
   setEditMode: (isEditing: boolean) => void;
-  View: React.FC<IPropertyContactViewProps>;
+  View: React.FC<IPropertyContactListViewProps>;
 }
 
-export const PropertyContactContainer: React.FunctionComponent<IPropertyContactContainerProps> = ({
-  propertyId,
-  setEditMode,
-  View,
-}) => {
+export const PropertyContactListContainer: React.FunctionComponent<
+  IPropertyContactListContainerProps
+> = ({ propertyId, setEditMode, View }) => {
   const [propertyContacts, setPropertyContacts] = useState<Api_PropertyContact[]>([]);
 
   const {

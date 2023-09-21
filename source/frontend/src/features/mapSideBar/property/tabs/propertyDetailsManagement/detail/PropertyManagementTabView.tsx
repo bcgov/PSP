@@ -4,8 +4,8 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { Api_Property } from '@/models/api/Property';
 
-import { PropertyContactContainer } from './PropertyContactContainer';
-import { PropertyContactView } from './PropertyContactView';
+import { PropertyContactListContainer } from './PropertyContactListContainer';
+import { PropertyContactListView } from './PropertyContactListView';
 
 export interface IPropertyManagementTabView {
   property: Api_Property;
@@ -27,9 +27,9 @@ export const PropertyManagementTabView: React.FunctionComponent<IPropertyManagem
       <StyledSummarySection>
         <LoadingBackdrop show={loading} parentScreen={true} />
 
-        <PropertyContactContainer
+        <PropertyContactListContainer
           propertyId={property.id}
-          View={PropertyContactView}
+          View={PropertyContactListView}
           setEditMode={setEditMode}
         />
       </StyledSummarySection>

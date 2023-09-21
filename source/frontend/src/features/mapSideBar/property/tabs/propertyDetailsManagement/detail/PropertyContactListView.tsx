@@ -4,14 +4,14 @@ import { Api_PropertyContact } from '@/models/api/Property';
 
 import PropertyContactList from './PropertyContactList';
 
-export interface IPropertyContactViewProps {
+export interface IPropertyContactListViewProps {
   isLoading: boolean;
   propertyContacts: Api_PropertyContact[];
   setEditMode: (isEditing: boolean) => void;
   onDelete: (contactId: number) => void;
 }
 
-export const PropertyContactView: React.FunctionComponent<IPropertyContactViewProps> = ({
+export const PropertyContactListView: React.FunctionComponent<IPropertyContactListViewProps> = ({
   isLoading,
   propertyContacts,
   setEditMode,
