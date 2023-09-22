@@ -25,9 +25,9 @@ export const PropertyContactListView: React.FunctionComponent<IPropertyContactLi
       header={
         <SectionListHeader
           claims={[Claims.PROPERTY_EDIT]}
-          title={'Property Contact'}
-          addButtonText={'Add a Contact'}
-          addButtonIcon={'person'}
+          title="Property Contact"
+          addButtonText="Add a Contact"
+          addButtonIcon="person"
           onAdd={() =>
             setEditManagementState({
               form: PropertyEditForms.UpdateContactContainer,

@@ -7,12 +7,16 @@ exports[`PropertyContactEditForm component renders as expected when provided val
   />
   <div />
   .c1 {
+  padding-top: 1rem;
+}
+
+.c3 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c0 {
+.c2 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -20,18 +24,18 @@ exports[`PropertyContactEditForm component renders as expected when provided val
   border-radius: 0.5rem;
 }
 
-.c4.required::before {
+.c5.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
 }
 
-.c2 {
+.c0 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -51,82 +55,86 @@ exports[`PropertyContactEditForm component renders as expected when provided val
 }
 
 <div
-    class="c0 form-section"
+    class="c0"
   >
-    <h2
+    <div
       class="c1"
     >
       <div
-        class="no-gutters row"
+        class="c2 form-section"
       >
-        <div
-          class="col"
-        >
-          Contact Details
-        </div>
-      </div>
-    </h2>
-    <div
-      class="collapse show"
-    >
-      <div
-        class="c2"
-      >
-        <div
-          class="pb-2 row"
+        <h2
+          class="c3"
         >
           <div
-            class="pr-0 text-left col-4"
-          >
-            <label
-              class="c3"
-            >
-              Contact:
-            </label>
-          </div>
-          <div
-            class="c4 text-left col-7"
+            class="no-gutters row"
           >
             <div
-              class="input form-group"
+              class="col"
             >
-              <input
-                class="form-control"
-                disabled=""
-                id="input-contact"
-                name="contact"
-                title="John Doe"
-                value="John Doe"
-              />
+              Contact Details
             </div>
           </div>
-        </div>
+        </h2>
         <div
-          class="pb-2 row"
+          class="collapse show"
         >
           <div
-            class="pr-0 text-left col-12"
-          >
-            <label
-              class="c3"
-            >
-              Purpose description:
-            </label>
-          </div>
-          <div
-            class="c4 text-left col"
+            class="pb-2 row"
           >
             <div
-              class="textarea input form-group"
+              class="pr-0 text-left col-4"
             >
-              <textarea
-                class="form-control"
-                id="input-purposeDescription"
-                name="purposeDescription"
-                title="Test Purpouse"
+              <label
+                class="c4"
               >
-                Test Purpouse
-              </textarea>
+                Contact:
+              </label>
+            </div>
+            <div
+              class="c5 required text-left col-7"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-contact"
+                  name="contact"
+                  title="John Doe"
+                  value="John Doe"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-12"
+            >
+              <label
+                class="c4"
+              >
+                Purpose description:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="textarea input form-group"
+              >
+                <textarea
+                  class="form-control"
+                  id="input-purposeDescription"
+                  name="purposeDescription"
+                  title="Test Purpouse"
+                >
+                  Test Purpouse
+                </textarea>
+              </div>
             </div>
           </div>
         </div>

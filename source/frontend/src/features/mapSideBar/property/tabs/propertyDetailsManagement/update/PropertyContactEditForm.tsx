@@ -8,6 +8,7 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import { IContactSearchResult } from '@/interfaces';
 import { Api_OrganizationPerson } from '@/models/api/Organization';
@@ -15,6 +16,7 @@ import { Api_PropertyContact } from '@/models/api/Property';
 import { formatApiPersonNames, formatContactSearchResult } from '@/utils/personUtils';
 
 import { PropertyContactFormModel } from './models';
+import { PropertyContactEditFormYupSchema } from './validation';
 
 export interface IPropertyContactEditFormProps {
   isLoading: boolean;
@@ -68,61 +70,63 @@ export const PropertyContactEditForm = React.forwardRef<
   };
 
   return (
-    <Section header="Contact Details">
-      <LoadingBackdrop show={props.isLoading || getOrganizationLoading} />
-      {initialForm !== undefined && (
-        <Formik<PropertyContactFormModel>
-          enableReinitialize
-          innerRef={ref}
-          //validationSchema={UpdatePropertyDetailsYupSchema}
-          initialValues={initialForm}
-          onSubmit={saveContact}
-        >
-          {formikProps => (
-            <StyledFormWrapper>
-              <SectionField label="Contact" contentWidth="7">
-                {formikProps.values.id === 0 && (
-                  <ContactInputContainer
-                    field={`contact`}
-                    View={ContactInputView}
-                    onContactSelected={contact => {
-                      setContact(contact);
-                    }}
-                  />
-                )}
-                {formikProps.values.id !== 0 && (
-                  <Input
-                    field={`contact`}
-                    disabled
-                    value={
-                      formikProps.values.contact !== undefined
-                        ? formatContactSearchResult(formikProps.values.contact)
-                        : ''
-                    }
-                  />
-                )}
-              </SectionField>
-              {formikProps.values.contact?.organizationId !== undefined && (
-                <SectionField label="Primary contact" contentWidth="7">
-                  {primaryContactOptions.length > 0 ? (
-                    <Select
-                      options={primaryContactOptions}
-                      field={`primaryContactId`}
-                      placeholder="Select a primary contact"
+    <StyledFormWrapper>
+      <StyledSummarySection>
+        <LoadingBackdrop show={props.isLoading || getOrganizationLoading} />
+        {initialForm !== undefined && (
+          <Formik<PropertyContactFormModel>
+            enableReinitialize
+            innerRef={ref}
+            validationSchema={PropertyContactEditFormYupSchema}
+            initialValues={initialForm}
+            onSubmit={saveContact}
+          >
+            {formikProps => (
+              <Section header="Contact Details">
+                <SectionField label="Contact" contentWidth="7" required>
+                  {formikProps.values.id === 0 && (
+                    <ContactInputContainer
+                      field="contact"
+                      View={ContactInputView}
+                      onContactSelected={contact => {
+                        setContact(contact);
+                      }}
                     />
-                  ) : (
-                    'No contacts available'
+                  )}
+                  {formikProps.values.id !== 0 && (
+                    <Input
+                      field="contact"
+                      value={
+                        formikProps.values.contact !== undefined
+                          ? formatContactSearchResult(formikProps.values.contact)
+                          : ''
+                      }
+                      disabled
+                    />
                   )}
                 </SectionField>
-              )}
-              <SectionField label="Purpose description" labelWidth="12">
-                <TextArea field="purposeDescription" />
-              </SectionField>
-            </StyledFormWrapper>
-          )}
-        </Formik>
-      )}
-    </Section>
+                {formikProps.values.contact?.organizationId !== undefined && (
+                  <SectionField label="Primary contact" contentWidth="7">
+                    {primaryContactOptions.length > 0 ? (
+                      <Select
+                        options={primaryContactOptions}
+                        field={`primaryContactId`}
+                        placeholder="Select a primary contact"
+                      />
+                    ) : (
+                      'No contacts available'
+                    )}
+                  </SectionField>
+                )}
+                <SectionField label="Purpose description" labelWidth="12">
+                  <TextArea field="purposeDescription" />
+                </SectionField>
+              </Section>
+            )}
+          </Formik>
+        )}
+      </StyledSummarySection>
+    </StyledFormWrapper>
   );
 });
 

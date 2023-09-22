@@ -105,7 +105,7 @@ export function createContactTableColumns(
                 ></LinkButton>
               </Col>
             )}
-            {hasClaim(Claims.PROPERTY_DELETE) && (
+            {hasClaim(Claims.PROPERTY_EDIT) && (
               <StyledRemoveIconButton
                 id={`contact-delete-${cellProps.row.id}`}
                 data-testid={`contact-delete-${cellProps.row.id}`}
