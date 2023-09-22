@@ -12,7 +12,7 @@ import {
   IContactManagerModalProps,
 } from '@/components/contact/ContactManagerModal';
 import { IContactSearchResult } from '@/interfaces';
-import { formatNames } from '@/utils/personUtils';
+import { formatContactSearchResult } from '@/utils/personUtils';
 
 import { StyledRemoveLinkButton } from '../ContactInput';
 import { DisplayError } from '../DisplayError';
@@ -50,11 +50,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
   var text = 'Select from contacts';
 
   if (contactInfo !== undefined) {
-    if (contactInfo?.personId !== undefined) {
-      text = formatNames([contactInfo.firstName, contactInfo.middleNames, contactInfo.surname]);
-    } else if (contactInfo?.organizationId !== undefined) {
-      text = contactInfo.organizationName || '';
-    }
+    text = formatContactSearchResult(contactInfo, 'Select from contacts');
   }
 
   return (

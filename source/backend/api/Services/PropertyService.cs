@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers;
@@ -98,6 +99,43 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
 
             return _propertyContactRepository.GetContactsByProperty(propertyId);
+        }
+
+        public PimsPropertyContact GetContact(long propertyId, long contactId)
+        {
+            _logger.LogInformation("Retrieving single property contact...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var propertyContact = _propertyContactRepository.GetContact(contactId);
+
+            if (propertyContact.PropertyId != propertyId)
+            {
+                throw new BadRequestException("Contact with the given id does not match the property id");
+            }
+
+            return propertyContact;
+        }
+
+        public PimsPropertyContact CreateContact(PimsPropertyContact propertyContact)
+        {
+            _logger.LogInformation("Creating property contact...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var propertyContactResult = _propertyContactRepository.Create(propertyContact);
+            _propertyContactRepository.CommitTransaction();
+
+            return propertyContactResult;
+        }
+
+        public PimsPropertyContact UpdateContact(PimsPropertyContact propertyContact)
+        {
+            _logger.LogInformation("Updating property contact...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var propertyContactResult = _propertyContactRepository.Update(propertyContact);
+            _propertyContactRepository.CommitTransaction();
+
+            return propertyContactResult;
         }
 
         public bool DeleteContact(long propertyContactId)

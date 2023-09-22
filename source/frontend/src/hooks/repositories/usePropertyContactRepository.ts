@@ -7,7 +7,9 @@ import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import {
   deletePropertyContactsApi,
+  getPropertyContactApi,
   getPropertyContactsApi,
+  postPropertyContactsApi,
   putPropertyContactsApi,
 } from '../pims-api/useApiPropertyContacts';
 
@@ -27,7 +29,37 @@ export const usePropertyContactRepository = () => {
     onError: useAxiosErrorHandler('Failed to load property contacts.'),
   });
 
+  const getPropertyContact = useApiRequestWrapper<
+    (propertyId: number, contactId: number) => Promise<AxiosResponse<Api_PropertyContact, any>>
+  >({
+    requestFunction: useCallback(
+      async (propertyId: number, contactId: number) =>
+        await getPropertyContactApi(propertyId, contactId),
+      [],
+    ),
+    requestName: 'getPropertyContact',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to load property contacts.'),
+  });
+
   const updatePropertyContact = useApiRequestWrapper<
+    (
+      propertyId: number,
+      contactId: number,
+      contact: Api_PropertyContact,
+    ) => Promise<AxiosResponse<Api_PropertyContact, any>>
+  >({
+    requestFunction: useCallback(
+      async (propertyId: number, contactId: number, contact: Api_PropertyContact) =>
+        await putPropertyContactsApi(propertyId, contactId, contact),
+      [],
+    ),
+    requestName: 'updatePropertyContact',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to update property contact.'),
+  });
+
+  const createPropertyContact = useApiRequestWrapper<
     (
       propertyId: number,
       contact: Api_PropertyContact,
@@ -35,7 +67,7 @@ export const usePropertyContactRepository = () => {
   >({
     requestFunction: useCallback(
       async (propertyId: number, contact: Api_PropertyContact) =>
-        await putPropertyContactsApi(propertyId, contact),
+        await postPropertyContactsApi(propertyId, contact),
       [],
     ),
     requestName: 'updatePropertyContact',
@@ -61,9 +93,17 @@ export const usePropertyContactRepository = () => {
   return useMemo(
     () => ({
       getPropertyContacts: getPropertyContacts,
+      getPropertyContact: getPropertyContact,
       updatePropertyContact: updatePropertyContact,
+      createPropertyContact: createPropertyContact,
       deletePropertyContact: deletePropertyContact,
     }),
-    [getPropertyContacts, updatePropertyContact, deletePropertyContact],
+    [
+      getPropertyContacts,
+      getPropertyContact,
+      updatePropertyContact,
+      createPropertyContact,
+      deletePropertyContact,
+    ],
   );
 };

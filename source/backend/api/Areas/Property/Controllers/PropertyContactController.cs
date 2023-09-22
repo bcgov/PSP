@@ -2,10 +2,12 @@ using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Json;
+using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -45,7 +47,7 @@ namespace Pims.Api.Areas.Property.Controllers
         #region Endpoints
 
         /// <summary>
-        /// Get the contacts for the property with 'id'.
+        /// Get the contacts for the property with 'propertyId'.
         /// </summary>
         /// <returns></returns>
         [HttpGet("{propertyId}/contacts")]
@@ -62,6 +64,45 @@ namespace Pims.Api.Areas.Property.Controllers
         }
 
         /// <summary>
+        /// Get the contact for the property with 'propertyId' and contact with "contactId".
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{propertyId}/contacts/{contactId}")]
+        [HasPermission(Permissions.PropertyView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(PropertyContactModel), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetPropertyContacts(long propertyId, long contactId)
+        {
+            var propertyContact = _propertyService.GetContact(propertyId, contactId);
+
+            return new JsonResult(_mapper.Map<PropertyContactModel>(propertyContact));
+        }
+
+        /// <summary>
+        /// Create the specified property contact.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("{propertyId}/contacts")]
+        [HasPermission(Permissions.PropertyEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(PropertyContactModel), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult CreateContact(long propertyId, [FromBody] PropertyContactModel contactModel)
+        {
+            if (propertyId != contactModel.PropertyId)
+            {
+                throw new BadRequestException("Invalid property id.");
+            }
+            var contactEntity = _mapper.Map<PimsPropertyContact>(contactModel);
+            var updatedProperty = _propertyService.CreateContact(contactEntity);
+
+            return new JsonResult(_mapper.Map<PropertyContactModel>(updatedProperty));
+        }
+
+        /// <summary>
         /// Update the specified property contact.
         /// </summary>
         /// <returns></returns>
@@ -71,19 +112,22 @@ namespace Pims.Api.Areas.Property.Controllers
         [ProducesResponseType(typeof(PropertyContactModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateContact([FromBody] PropertyContactModel propertyModel)
+        public IActionResult UpdateContact(long propertyId, long contactId, [FromBody] PropertyContactModel contactModel)
         {
-            /*var propertyEntity = _mapper.Map<Pims.Dal.Entities.PimsProperty>(propertyModel);
-            var updatedProperty = _propertyService.Update(propertyEntity);
+            if (propertyId != contactModel.PropertyId || contactId != contactModel.Id)
+            {
+                throw new BadRequestException("Invalid compensationRequisitionId.");
+            }
+            var contactEntity = _mapper.Map<PimsPropertyContact>(contactModel);
+            var updatedProperty = _propertyService.UpdateContact(contactEntity);
 
-            return new JsonResult(_mapper.Map<PropertyModel>(updatedProperty));*/
-            return new JsonResult(string.Empty);
+            return new JsonResult(_mapper.Map<PropertyContactModel>(updatedProperty));
         }
 
         /// <summary>
         /// Deletes the property contact with the matching id.
         /// </summary>
-        /// <param name="id">Used to identify the entity to delete.</param>
+        /// <param name="contactId">Used to identify the entity to delete.</param>
         /// <returns></returns>
         [HttpDelete("{propertyId}/contacts/{contactId}")]
         [HasPermission(Permissions.PropertyEdit)]

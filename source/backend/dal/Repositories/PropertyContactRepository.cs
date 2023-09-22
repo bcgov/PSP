@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -50,6 +51,23 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Get the property contact for the specified contact with 'contactId' value.
+        /// </summary>
+        /// <param name="contactId"></param>
+        /// <returns></returns>
+        public PimsPropertyContact GetContact(long contactId)
+        {
+            this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
+
+            var contact = this.Context.PimsPropertyContacts
+                .Include(p => p.Person)
+                .Include(p => p.Organization)
+                .Include(p => p.PrimaryContact)
+                .FirstOrDefault(p => p.PropertyContactId == contactId) ?? throw new KeyNotFoundException();
+            return contact;
+        }
+
+        /// <summary>
         /// Creates the passed property contact in the database.
         /// </summary>
         /// <param name="propertyContact"></param>
@@ -75,6 +93,12 @@ namespace Pims.Dal.Repositories
 
             var existingPropertyContact = this.Context.PimsPropertyContacts
                 .FirstOrDefault(p => p.PropertyContactId == propertyContact.PropertyContactId) ?? throw new KeyNotFoundException();
+
+            // The contact cannot be updated by bussiness requirements.
+            if (existingPropertyContact.PersonId != propertyContact.PersonId || existingPropertyContact.OrganizationId != propertyContact.OrganizationId)
+            {
+                throw new InvalidOperationException("Property contact's contact cannot be updated");
+            }
 
             // update main entity - PimsPropertyContact
             Context.Entry(existingPropertyContact).CurrentValues.SetValues(propertyContact);

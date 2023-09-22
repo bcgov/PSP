@@ -18,6 +18,8 @@ import TakesDetailView from '@/features/mapSideBar/property/tabs/takes/detail/Ta
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
+import { PropertyEditForms } from '../../property/PropertyViewSelector';
+
 export interface IPropertyFileContainerProps {
   fileProperty: Api_PropertyFile;
   setEditFileProperty: () => void;
@@ -86,8 +88,10 @@ export const PropertyFileContainer: React.FunctionComponent<
         <PropertyDetailsTabView
           property={propertyViewForm}
           loading={composedProperties.composedLoading ?? false}
-          setEditMode={editable => {
-            props.setEditFileProperty();
+          setEditManagementState={state => {
+            if (state?.form === PropertyEditForms.UpdatePropertyDetailsContainer) {
+              props.setEditFileProperty();
+            }
           }}
         />
       ),

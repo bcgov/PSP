@@ -9,6 +9,8 @@ namespace Pims.Api.Models.Concepts
 
         public long Id { get; set; }
 
+        public long PropertyId { get; set; }
+
         public long? OrganizationId { get; set; }
 
         public OrganizationModel Organization { get; set; }
@@ -22,6 +24,8 @@ namespace Pims.Api.Models.Concepts
         public PersonModel PrimaryContact { get; set; }
 
         public string Purpose { get; set; }
+
+        public bool? IsDisabled { get; set; }
 
         #endregion
     }

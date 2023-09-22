@@ -10,6 +10,8 @@ namespace Pims.Dal.Repositories
     {
         IList<PimsPropertyContact> GetContactsByProperty(long propertyId);
 
+        PimsPropertyContact GetContact(long contactId);
+
         PimsPropertyContact Create(PimsPropertyContact propertyContact);
 
         PimsPropertyContact Update(PimsPropertyContact propertyContact);

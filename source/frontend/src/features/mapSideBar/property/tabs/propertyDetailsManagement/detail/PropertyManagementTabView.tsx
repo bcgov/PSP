@@ -4,13 +4,14 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { Api_Property } from '@/models/api/Property';
 
+import { EditManagementState } from '../../../PropertyViewSelector';
 import { PropertyContactListContainer } from './PropertyContactListContainer';
 import { PropertyContactListView } from './PropertyContactListView';
 
 export interface IPropertyManagementTabView {
   property: Api_Property;
   loading: boolean;
-  setEditMode: (isEditing: boolean) => void;
+  setEditManagementState: (state: EditManagementState | null) => void;
 }
 
 /**
@@ -20,7 +21,7 @@ export interface IPropertyManagementTabView {
 export const PropertyManagementTabView: React.FunctionComponent<IPropertyManagementTabView> = ({
   property,
   loading,
-  setEditMode,
+  setEditManagementState,
 }) => {
   if (property.id !== undefined) {
     return (
@@ -30,7 +31,7 @@ export const PropertyManagementTabView: React.FunctionComponent<IPropertyManagem
         <PropertyContactListContainer
           propertyId={property.id}
           View={PropertyContactListView}
-          setEditMode={setEditMode}
+          setEditManagementState={setEditManagementState}
         />
       </StyledSummarySection>
     );
