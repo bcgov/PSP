@@ -5,7 +5,9 @@ import styled from 'styled-components';
 import { ReactComponent as LotSvg } from '@/assets/images/icon-lot.svg';
 import GenericModal from '@/components/common/GenericModal';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import PropertyViewSelector from '@/features/mapSideBar/property/PropertyViewSelector';
+import PropertyViewSelector, {
+  EditForms,
+} from '@/features/mapSideBar/property/PropertyViewSelector';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { Api_Property } from '@/models/api/Property';
 
@@ -27,7 +29,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
 > = props => {
   const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
 
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editFormId, setEditFormId] = useState<EditForms | null>(null);
   const [isValid, setIsValid] = useState<boolean>(true);
 
   const mapMachine = useMapStateMachine();
@@ -47,12 +49,12 @@ export const MotiInventoryContainer: React.FunctionComponent<
   });
 
   useEffect(() => {
-    setIsEditing(false);
+    setEditFormId(null);
   }, [props.pid]);
 
   const onSuccess = () => {
     props.id && composedPropertyState.apiWrapper?.execute(props.id);
-    setIsEditing(false);
+    setEditFormId(null);
   };
 
   const handleSaveClick = async () => {
@@ -79,7 +81,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
     }
-    setIsEditing(false);
+    setEditFormId(null);
     setShowCancelConfirmModal(false);
   };
 
@@ -105,7 +107,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
         />
       }
       footer={
-        isEditing && (
+        editFormId !== null && (
           <SidebarFooter
             isOkDisabled={formikRef?.current?.isSubmitting}
             onSave={handleSaveClick}
@@ -121,8 +123,8 @@ export const MotiInventoryContainer: React.FunctionComponent<
       <>
         <PropertyViewSelector
           composedPropertyState={composedPropertyState}
-          isEditMode={isEditing}
-          setEditMode={setIsEditing}
+          editFormId={editFormId}
+          setEditFormId={setEditFormId}
           onSuccess={onSuccess}
           ref={formikRef}
         />
