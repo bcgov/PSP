@@ -6,35 +6,30 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_Property } from '@/models/api/Property';
 import { Api_PropertyLease } from '@/models/api/PropertyLease';
 
-import { EditManagementState, PropertyEditForms } from '../../../PropertyViewSelector';
+import { EditForms } from '../../../../PropertyViewSelector';
 
-export interface IManagementSummaryViewProps {
+export interface IUpdateManagementSummaryViewProps {
   isLoading: boolean;
   property: Api_Property;
   propertyLeases: Api_PropertyLease[];
-  setEditManagementState: (state: EditManagementState | null) => void;
+  setEditFormId: (formId: EditForms | null) => void;
 }
 
-export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryViewProps> = ({
+export const UpdateManagementSummaryView: React.FC<IUpdateManagementSummaryViewProps> = ({
   isLoading,
   property,
   propertyLeases,
-  setEditManagementState,
+  setEditFormId,
 }) => {
   const { hasClaim } = useKeycloakWrapper();
   return (
     <Section header="Summary">
       <StyledEditWrapper className="mr-3 my-1">
         {/** TODO: Use MANAGEMENT CLAIMS when available */}
-        {setEditManagementState !== undefined && hasClaim(Claims.PROPERTY_EDIT) && (
+        {setEditFormId !== undefined && hasClaim(Claims.PROPERTY_EDIT) && (
           <EditButton
             title="Edit property management information"
-            onClick={() =>
-              setEditManagementState({
-                form: PropertyEditForms.UpdateManagementSummaryContainer,
-                childId: null,
-              })
-            }
+            onClick={() => setEditFormId(EditForms.UpdateManagementSummaryContainer)}
           />
         )}
       </StyledEditWrapper>

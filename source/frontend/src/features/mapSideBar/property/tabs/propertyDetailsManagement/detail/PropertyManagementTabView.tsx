@@ -5,10 +5,10 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { Api_Property } from '@/models/api/Property';
 
 import { EditManagementState } from '../../../PropertyViewSelector';
-import { ManagementSummaryContainer } from './ManagementSummaryContainer';
-import { ManagementSummaryView } from './ManagementSummaryView';
 import { PropertyContactListContainer } from './PropertyContactListContainer';
 import { PropertyContactListView } from './PropertyContactListView';
+import { ManagementSummaryContainer } from './summary/ManagementSummaryContainer';
+import { ManagementSummaryView } from './summary/ManagementSummaryView';
 
 export interface IPropertyManagementTabView {
   property: Api_Property;

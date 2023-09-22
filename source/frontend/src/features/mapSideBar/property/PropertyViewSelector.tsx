@@ -7,6 +7,8 @@ import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
 import PropertyContainer from './PropertyContainer';
 import { PropertyContactEditContainer } from './tabs/propertyDetailsManagement/update/PropertyContactEditContainer';
 import { PropertyContactEditForm } from './tabs/propertyDetailsManagement/update/PropertyContactEditForm';
+import { UpdateManagementSummaryContainer } from './tabs/propertyDetailsManagement/update/summary/UpdateManagementSummaryContainer';
+import { UpdateManagementSummaryView } from './tabs/propertyDetailsManagement/update/summary/UpdateManagementSummaryView';
 
 export enum PropertyEditForms {
   UpdatePropertyDetailsContainer = 'UpdatePropertyDetailsContainer',
@@ -60,8 +62,12 @@ const PropertyViewSelector = React.forwardRef<FormikProps<any>, IPropertyViewSel
             />
           );
         case PropertyEditForms.UpdateManagementSummaryContainer:
-          // TODO:
-          return <></>;
+          return (
+            <UpdateManagementSummaryContainer
+              property={props.composedPropertyState?.apiWrapper?.response}
+              View={UpdateManagementSummaryView}
+            />
+          );
         case PropertyEditForms.UpdateContactContainer:
           return (
             <PropertyContactEditContainer
