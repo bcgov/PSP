@@ -9,13 +9,23 @@ import {
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_PropertyManagement } from '@/models/api/Property';
 
+<<<<<<<< HEAD:source/frontend/src/features/mapSideBar/property/tabs/propertyDetailsManagement/detail/summary/PropertyManagementDetailView.tsx
 export interface IPropertyManagementDetailViewProps {
+========
+import { EditForms } from '../../../../PropertyViewSelector';
+
+export interface IManagementSummaryViewProps {
+>>>>>>>> 016b273dd (WIP):source/frontend/src/features/mapSideBar/property/tabs/propertyDetailsManagement/detail/summary/ManagementSummaryView.tsx
   isLoading: boolean;
   propertyManagement: Api_PropertyManagement;
   setEditManagementState: (state: EditManagementState | null) => void;
 }
 
+<<<<<<<< HEAD:source/frontend/src/features/mapSideBar/property/tabs/propertyDetailsManagement/detail/summary/PropertyManagementDetailView.tsx
 export const PropertyManagementDetailView: React.FC<IPropertyManagementDetailViewProps> = ({
+========
+export const ManagementSummaryView: React.FC<IManagementSummaryViewProps> = ({
+>>>>>>>> 016b273dd (WIP):source/frontend/src/features/mapSideBar/property/tabs/propertyDetailsManagement/detail/summary/ManagementSummaryView.tsx
   isLoading,
   propertyManagement,
   setEditManagementState,
