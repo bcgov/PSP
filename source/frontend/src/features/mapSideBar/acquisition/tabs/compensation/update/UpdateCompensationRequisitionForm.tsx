@@ -175,7 +175,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   label="Final date"
                   labelWidth="5"
                   contentWidth="4"
-                  data-testid="compensation-finalized"
+                  valueTestId="compensation-finalized-date"
                 >
                   {prettyFormatDate(initialValues.finalizedDate)}
                 </SectionField>
@@ -194,6 +194,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 </SectionField>
                 <SectionField label="Expropriation vesting date" labelWidth="5" contentWidth="4">
                   <FastDatePicker field="expropriationVestingDateTime" formikProps={formikProps} />
+                </SectionField>
+                <SectionField label="Advanced payment served date" labelWidth="5" contentWidth="4">
+                  <FastDatePicker field="advancedPaymentServedDate" formikProps={formikProps} />
                 </SectionField>
                 <SectionField label="Special instructions" labelWidth="12">
                   <MediumTextArea field="specialInstruction" />

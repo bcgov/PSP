@@ -92,6 +92,7 @@ export const CompensationListContainer: React.FunctionComponent<
       agreementDate: null,
       expropriationNoticeServedDate: null,
       expropriationVestingDate: null,
+      advancedPaymentServedDate: null,
       generationDate: null,
       specialInstruction: null,
       detailedRemarks: null,
