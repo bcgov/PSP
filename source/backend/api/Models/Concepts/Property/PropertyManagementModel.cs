@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Pims.Api.Models.Concepts
@@ -45,6 +46,6 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The expiry date on the active lease for this property (if any).
         /// </summary>
-        public string LeaseExpiryDate { get; set; }
+        public DateTime? LeaseExpiryDate { get; set; }
     }
 }

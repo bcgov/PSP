@@ -352,6 +352,31 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Update the passed property management information in the database assuming the user has the required claims.
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public PimsProperty UpdatePropertyManagement(PimsProperty property)
+        {
+            property.ThrowIfNull(nameof(property));
+
+            var propertyId = property.Internal_Id;
+            var existingProperty = Context.PimsProperties
+                .FirstOrDefault(p => p.PropertyId == propertyId) ?? throw new KeyNotFoundException();
+
+            // update property management fields
+            existingProperty.AdditionalDetails = property.AdditionalDetails;
+            existingProperty.IsUtilitiesPayable = property.IsUtilitiesPayable;
+            existingProperty.IsTaxesPayable = property.IsTaxesPayable;
+            Context.Update(existingProperty);
+
+            // update direct relationships - Property Purposes
+            Context.UpdateChild<PimsProperty, long, PimsPropPropPurpose, long>(p => p.PimsPropPropPurposes, propertyId, property.PimsPropPropPurposes.ToArray());
+
+            return existingProperty;
+        }
+
+        /// <summary>
         /// Delete a property. Note that this method will fail unless all dependencies are removed first.
         /// </summary>
         /// <param name="property"></param>
