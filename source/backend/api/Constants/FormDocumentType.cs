@@ -49,5 +49,9 @@ namespace Pims.Api.Constants
         // Vesting Notice (Form 9)
         [EnumMember(Value = "FORM9")]
         FORM9,
+
+        // H1005A
+        [EnumMember(Value = "H1005A")]
+        H1005A,
     }
 }
