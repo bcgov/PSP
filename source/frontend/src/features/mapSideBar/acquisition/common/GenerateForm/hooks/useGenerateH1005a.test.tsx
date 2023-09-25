@@ -22,7 +22,7 @@ const generateFn = jest
   .mockResolvedValue({ status: ExternalResultStatus.Success, payload: {} });
 const getLeaseTenantsFn = jest.fn<Promise<Api_LeaseTenant[] | undefined>, any[]>();
 const getSecurityDepositsFn = jest.fn();
-const getInterestHoldersFn = jest.fn();
+const getInsurancesFn = jest.fn();
 const getApiLeaseFn = jest.fn();
 
 jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
@@ -42,7 +42,7 @@ jest.mock('@/hooks/repositories/useLeaseTenantRepository');
 
 jest.mock('@/hooks/repositories/useInsuranceRepository');
 (useInsurancesRepository as jest.Mock).mockImplementation(() => ({
-  getInsurances: { execute: getInterestHoldersFn },
+  getInsurances: { execute: getInsurancesFn },
 }));
 
 jest.mock('@/hooks/pims-api/useApiLeases');
@@ -80,7 +80,7 @@ describe('useGenerateH120 functions', () => {
     await act(async () => generate(getMockApiLease()));
     expect(generateFn).toHaveBeenCalled();
     expect(getLeaseTenantsFn).toHaveBeenCalled();
-    expect(getInterestHoldersFn).toHaveBeenCalled();
+    expect(getInsurancesFn).toHaveBeenCalled();
     expect(getSecurityDepositsFn).toHaveBeenCalled();
     expect(getApiLeaseFn).toHaveBeenCalled();
   });

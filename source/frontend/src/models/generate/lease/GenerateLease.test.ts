@@ -80,7 +80,7 @@ describe('GenerateLease tests', () => {
       {
         properties: [
           {
-            property: { pid: undefined, landLegalDescription: 'test' } as Api_Property,
+            property: { pid: 1, landLegalDescription: undefined } as Api_Property,
             leaseArea: 1,
             areaUnitType: { description: 'square feet' },
           },
@@ -90,7 +90,7 @@ describe('GenerateLease tests', () => {
       [],
       [],
     );
-    expect(lease.land_string).toBe(`Parcel Identifier: \ntest\n1 square feet`);
+    expect(lease.land_string).toBe(`Parcel Identifier: 000-000-001\n\n1 square feet`);
   });
 
   it('generates a lease with no lease area', () => {
