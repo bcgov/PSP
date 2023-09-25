@@ -39,7 +39,7 @@ export class Api_GenerateLease {
     const firstTerm = first(orderBy(lease.terms, (t: Api_LeaseTerm) => t.id));
     this.file_number = lease.lFileNo ?? '';
     this.commencement_date = firstTerm?.startDate
-      ? moment(firstTerm?.startDate).format('MMMM DD, YYYY')
+      ? moment.utc(firstTerm?.startDate).format('MMMM DD, YYYY')
       : '';
     this.land_string =
       lease.properties
@@ -53,7 +53,7 @@ export class Api_GenerateLease {
         .join('\n\n') ?? '';
     this.intended_use = lease.description ?? '';
     this.term_end_date = firstTerm?.expiryDate
-      ? moment(firstTerm?.expiryDate).format('MMMM DD, YYYY') ?? ''
+      ? moment.utc(firstTerm?.expiryDate).format('MMMM DD, YYYY') ?? ''
       : '';
     this.payment_amount = formatMoney(firstTerm?.paymentAmount ?? 0);
     this.payment_due_date = firstTerm?.paymentDueDate ?? '';
