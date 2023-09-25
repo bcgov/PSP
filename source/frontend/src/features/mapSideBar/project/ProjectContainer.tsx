@@ -21,6 +21,8 @@ export interface IProjectContainerViewProps {
   onClose: () => void;
   onSetProject: (project: Api_Project) => void;
   onSuccess: () => void;
+  setIsValid: (value: boolean) => void;
+  displayRequiredFieldsError: boolean;
 }
 
 export interface IProjectContainerProps {
@@ -74,6 +76,8 @@ const ProjectContainer: React.FunctionComponent<
     getProject: { execute: getProject, loading: loadingProject },
   } = useProjectProvider();
 
+  const [isValid, setIsValid] = useState<boolean>(false);
+
   const [containerState, setContainerState] = useReducer(
     (prevState: ProjectContainerState, newState: Partial<ProjectContainerState>) => ({
       ...prevState,
@@ -117,6 +121,8 @@ const ProjectContainer: React.FunctionComponent<
       onSetProject={setProject}
       onClose={onClose}
       onSuccess={onSuccess}
+      setIsValid={setIsValid}
+      displayRequiredFieldsError={containerState.isSubmitting && !isValid}
     />
   );
 };

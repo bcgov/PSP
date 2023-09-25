@@ -324,7 +324,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 }}
                 isOkDisabled={formikProps.isSubmitting || !formikProps.dirty}
                 onCancel={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
-                isValid={isValid}
+                displayRequiredFieldError={isValid === false}
               />
             </StyledFooter>
 

@@ -34,7 +34,7 @@ import { FilePropertyRouter } from './router/FilePropertyRouter';
 
 export interface IAcquisitionViewProps {
   onClose: (() => void) | undefined;
-  onSave: () => void;
+  onSave: () => Promise<void>;
   onCancel: () => void;
   onMenuChange: (selectedIndex: number) => void;
   onShowPropertySelector: () => void;
@@ -137,7 +137,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                 isOkDisabled={formikRef?.current?.isSubmitting}
                 onSave={onSave}
                 onCancel={onCancel}
-                isValid={isFormValid}
+                displayRequiredFieldError={isFormValid === false}
               />
             )
           }
