@@ -11,8 +11,8 @@ import {
   ContactManagerModal,
   IContactManagerModalProps,
 } from '@/components/contact/ContactManagerModal';
+import { formatContactSearchResult } from '@/features/contacts/contactUtils';
 import { IContactSearchResult } from '@/interfaces';
-import { formatContactSearchResult } from '@/utils/personUtils';
 
 import { StyledRemoveLinkButton } from '../ContactInput';
 import { DisplayError } from '../DisplayError';

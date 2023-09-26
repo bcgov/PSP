@@ -9,11 +9,12 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { formatContactSearchResult } from '@/features/contacts/contactUtils';
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import { IContactSearchResult } from '@/interfaces';
 import { Api_OrganizationPerson } from '@/models/api/Organization';
 import { Api_PropertyContact } from '@/models/api/Property';
-import { formatApiPersonNames, formatContactSearchResult } from '@/utils/personUtils';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { PropertyContactFormModel } from './models';
 import { PropertyContactEditFormYupSchema } from './validation';
@@ -45,9 +46,9 @@ export const PropertyContactEditForm = React.forwardRef<
   }, [contact, fetchOrganization]);
 
   const initialForm = useMemo(() => {
-    const initialmodel = PropertyContactFormModel.fromApi(props.propertyContact);
-    setContact(initialmodel.contact ?? null);
-    return initialmodel;
+    const initialModel = PropertyContactFormModel.fromApi(props.propertyContact);
+    setContact(initialModel.contact ?? null);
+    return initialModel;
   }, [props.propertyContact]);
 
   const primaryContactOptions: SelectOption[] = useMemo(() => {
@@ -105,20 +106,22 @@ export const PropertyContactEditForm = React.forwardRef<
                     />
                   )}
                 </SectionField>
-                {formikProps.values.contact?.organizationId !== undefined && (
-                  <SectionField label="Primary contact" contentWidth="7">
-                    {primaryContactOptions.length > 0 ? (
+                {formikProps.values.contact?.personId === undefined && (
+                  <SectionField label="Primary contact">
+                    {primaryContactOptions.length > 1 ? (
                       <Select
                         options={primaryContactOptions}
                         field={`primaryContactId`}
                         placeholder="Select a primary contact"
                       />
+                    ) : primaryContactOptions.length > 0 ? (
+                      primaryContactOptions[0].label
                     ) : (
                       'No contacts available'
                     )}
                   </SectionField>
                 )}
-                <SectionField label="Purpose description" labelWidth="12">
+                <SectionField label="Purpose description" contentWidth="12" required>
                   <TextArea field="purposeDescription" />
                 </SectionField>
               </Section>

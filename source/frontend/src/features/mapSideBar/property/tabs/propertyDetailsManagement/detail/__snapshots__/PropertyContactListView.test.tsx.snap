@@ -140,42 +140,42 @@ exports[`PropertyContactListView component renders as expected when provided val
   margin-right: 0;
 }
 
-.c6.c6.btn {
+.c7.c7.btn {
   background-color: unset;
   border: none;
 }
 
-.c6.c6.btn:hover,
-.c6.c6.btn:focus,
-.c6.c6.btn:active {
+.c7.c7.btn:hover,
+.c7.c7.btn:focus,
+.c7.c7.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c6.c6.btn svg {
+.c7.c7.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c6.c6.btn svg:hover {
+.c7.c7.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c7.c7.btn.btn-primary {
+.c8.c8.btn.btn-primary {
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c7.c7.btn.btn-primary .text {
+.c8.c8.btn.btn-primary .text {
   display: none;
 }
 
-.c7.c7.btn.btn-primary:hover,
-.c7.c7.btn.btn-primary:active,
-.c7.c7.btn.btn-primary:focus {
+.c8.c8.btn.btn-primary:hover,
+.c8.c8.btn.btn-primary:active,
+.c8.c8.btn.btn-primary:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -189,9 +189,9 @@ exports[`PropertyContactListView component renders as expected when provided val
   flex-direction: row;
 }
 
-.c7.c7.btn.btn-primary:hover .text,
-.c7.c7.btn.btn-primary:active .text,
-.c7.c7.btn.btn-primary:focus .text {
+.c8.c8.btn.btn-primary:hover .text,
+.c8.c8.btn.btn-primary:active .text,
+.c8.c8.btn.btn-primary:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -200,6 +200,11 @@ exports[`PropertyContactListView component renders as expected when provided val
   display: inline-block;
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
+}
+
+.c5 {
+  float: right;
+  cursor: pointer;
 }
 
 .c1 {
@@ -232,7 +237,7 @@ exports[`PropertyContactListView component renders as expected when provided val
   margin: 0;
 }
 
-.c5 {
+.c6 {
   padding: 0 0.4rem;
 }
 
@@ -284,6 +289,31 @@ exports[`PropertyContactListView component renders as expected when provided val
               </button>
             </div>
           </div>
+        </div>
+        <div
+          class="col-1"
+        >
+          <svg
+            class="c5"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>
+              collapse-section
+            </title>
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M7 14l5-5 5 5z"
+            />
+          </svg>
         </div>
       </div>
     </h2>
@@ -372,7 +402,7 @@ exports[`PropertyContactListView component renders as expected when provided val
                 title=""
               >
                 <a
-                  class="c5"
+                  class="c6"
                   href="/contact/P1"
                   rel="noopener noreferrer"
                   target="_blank"
@@ -432,7 +462,7 @@ exports[`PropertyContactListView component renders as expected when provided val
                     </button>
                   </div>
                   <button
-                    class="c3 Button c6 c7 btn btn-primary"
+                    class="c3 Button c7 c8 btn btn-primary"
                     data-testid="contact-delete-0"
                     id="contact-delete-0"
                     title="Delete contact"

@@ -22,6 +22,8 @@ export const PropertyContactListView: React.FunctionComponent<IPropertyContactLi
 }) => {
   return (
     <Section
+      isCollapsable
+      initiallyExpanded
       header={
         <SectionListHeader
           claims={[Claims.PROPERTY_EDIT]}
