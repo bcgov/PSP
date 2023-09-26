@@ -1,38 +1,36 @@
-import { EditButton } from '@/components/common/EditButton';
-import { Section } from '@/components/common/Section/Section';
-import { StyledEditWrapper } from '@/components/common/Section/SectionStyles';
-import { Claims } from '@/constants/index';
-import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_Property } from '@/models/api/Property';
-import { Api_PropertyLease } from '@/models/api/PropertyLease';
+import styled from 'styled-components';
 
-import { EditForms } from '../../../../PropertyViewSelector';
+import { Section } from '@/components/common/Section/Section';
+import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { Api_PropertyManagement } from '@/models/api/Property';
 
 export interface IUpdateManagementSummaryViewProps {
   isLoading: boolean;
-  property: Api_Property;
-  propertyLeases: Api_PropertyLease[];
-  setEditFormId: (formId: EditForms | null) => void;
+  propertyManagement: Api_PropertyManagement;
+  onSave: (apiModel: Api_PropertyManagement) => Promise<void>;
 }
 
 export const UpdateManagementSummaryView: React.FC<IUpdateManagementSummaryViewProps> = ({
   isLoading,
-  property,
-  propertyLeases,
-  setEditFormId,
+  propertyManagement,
+  onSave,
 }) => {
-  const { hasClaim } = useKeycloakWrapper();
   return (
-    <Section header="Summary">
-      <StyledEditWrapper className="mr-3 my-1">
-        {/** TODO: Use MANAGEMENT CLAIMS when available */}
-        {setEditFormId !== undefined && hasClaim(Claims.PROPERTY_EDIT) && (
-          <EditButton
-            title="Edit property management information"
-            onClick={() => setEditFormId(EditForms.UpdateManagementSummaryContainer)}
-          />
-        )}
-      </StyledEditWrapper>
-    </Section>
+    <StyledFormWrapper>
+      <StyledSummarySection>
+        <Section header="Summary"></Section>
+      </StyledSummarySection>
+    </StyledFormWrapper>
   );
 };
+
+const StyledFormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+`;

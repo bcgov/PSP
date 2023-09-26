@@ -1,56 +1,70 @@
-import { Api_Property, Api_PropertyManagementPurpose } from '@/models/api/Property';
+import { Api_PropertyManagement, Api_PropertyManagementPurpose } from '@/models/api/Property';
 import { ILookupCode } from '@/store/slices/lookupCodes';
-import { stringToUndefined } from '@/utils/formUtils';
+import { stringToNull } from '@/utils/formUtils';
 
-import { UpdatePropertyDetailsFormModel } from '../../../propertyDetails/update/models';
+export class PropertyManagementFormModel {
+  id: number = 0;
+  rowVersion: number = 0;
+  managementPurposes: ManagementPurposeModel[] = [];
+  additionalDetails: string = '';
+  isUtilitiesPayable: boolean | null = null;
+  isTaxesPayable: boolean | null = null;
+  isLeaseActive: boolean = false;
+  isLeaseExpired: boolean = false;
+  leaseExpiryDate: string | null = null;
 
-export class ManagementSummaryFormModel extends UpdatePropertyDetailsFormModel {
-  managementPurposes?: PropertyManagementPurposeModel[]; // TODO
-  additionalDetails?: string;
-  isUtilitiesPayable?: boolean;
-  isTaxesPayable?: boolean;
+  static fromApi(base: Api_PropertyManagement | null): PropertyManagementFormModel {
+    const newFormModel = new PropertyManagementFormModel();
+    newFormModel.id = base?.id || 0;
+    newFormModel.rowVersion = base?.rowVersion || 0;
+    newFormModel.managementPurposes =
+      base?.managementPurposes?.map(p => ManagementPurposeModel.fromApi(p)) || [];
+    newFormModel.additionalDetails = base?.additionalDetails || '';
+    newFormModel.isUtilitiesPayable = base?.isUtilitiesPayable ?? null;
+    newFormModel.isTaxesPayable = base?.isTaxesPayable ?? null;
+    newFormModel.isLeaseActive = base?.isLeaseActive || false;
+    newFormModel.isLeaseExpired = base?.isLeaseExpired || false;
+    newFormModel.leaseExpiryDate = base?.leaseExpiryDate || '';
 
-  static fromApi(base: Api_Property): ManagementSummaryFormModel {
-    const propertyModel = UpdatePropertyDetailsFormModel.fromApi(base);
-    const managementModel = Object.assign(new ManagementSummaryFormModel(), propertyModel);
-    managementModel.additionalDetails = base.additionalDetails ?? '';
-    managementModel.isUtilitiesPayable = base.isUtilitiesPayable;
-    managementModel.isTaxesPayable = base.isTaxesPayable;
-
-    return managementModel;
+    return newFormModel;
   }
 
-  toApi(): Api_Property {
-    const apiProperty = super.toApi();
-    apiProperty.managementPurposes = []; // TODO
-    apiProperty.additionalDetails = stringToUndefined(this.additionalDetails);
-    // apiProperty.isUtilitiesPayable = booleanToYesNoUnknownString;
-
-    return apiProperty;
+  toApi(): Api_PropertyManagement {
+    return {
+      id: this.id,
+      rowVersion: this.rowVersion,
+      managementPurposes: this.managementPurposes.map(p => p.toApi()),
+      additionalDetails: stringToNull(this.additionalDetails),
+      isUtilitiesPayable: this.isUtilitiesPayable,
+      isTaxesPayable: this.isTaxesPayable,
+      isLeaseActive: this.isLeaseActive,
+      isLeaseExpired: this.isLeaseExpired,
+      leaseExpiryDate: stringToNull(this.leaseExpiryDate),
+    };
   }
 }
 
-export class PropertyManagementPurposeModel {
-  id?: number;
-  rowVersion?: number;
-  propertyId?: number;
-  typeCode?: string;
-  typeDescription?: string;
+export class ManagementPurposeModel {
+  id: number = 0;
+  rowVersion: number = 0;
+  propertyId: number | null = null;
+  typeCode: string = '';
+  typeDescription: string = '';
 
-  static fromLookup(base: ILookupCode): PropertyManagementPurposeModel {
-    var newModel = new PropertyManagementPurposeModel();
+  static fromLookup(base: ILookupCode): ManagementPurposeModel {
+    var newModel = new ManagementPurposeModel();
     newModel.typeCode = base.id.toString();
     newModel.typeDescription = base.name;
     return newModel;
   }
 
-  static fromApi(base: Api_PropertyManagementPurpose): PropertyManagementPurposeModel {
-    var newModel = new PropertyManagementPurposeModel();
-    newModel.id = base.id;
-    newModel.rowVersion = base.rowVersion;
-    newModel.propertyId = base.propertyId;
-    newModel.typeCode = base.propertyPurposeTypeCode?.id;
-    newModel.typeDescription = base.propertyPurposeTypeCode?.description;
+  static fromApi(base: Api_PropertyManagementPurpose | null): ManagementPurposeModel {
+    var newModel = new ManagementPurposeModel();
+    newModel.id = base?.id || 0;
+    newModel.rowVersion = base?.rowVersion || 0;
+    newModel.propertyId = base?.propertyId ?? null;
+    newModel.typeCode = base?.propertyPurposeTypeCode?.id || '';
+    newModel.typeDescription = base?.propertyPurposeTypeCode?.description || '';
     return newModel;
   }
 

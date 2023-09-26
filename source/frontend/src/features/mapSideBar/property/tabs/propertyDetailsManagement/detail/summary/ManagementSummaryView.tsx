@@ -3,22 +3,19 @@ import { Section } from '@/components/common/Section/Section';
 import { StyledEditWrapper } from '@/components/common/Section/SectionStyles';
 import { Claims } from '@/constants/index';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_Property } from '@/models/api/Property';
-import { Api_PropertyLease } from '@/models/api/PropertyLease';
+import { Api_PropertyManagement } from '@/models/api/Property';
 
 import { EditForms } from '../../../../PropertyViewSelector';
 
 export interface IManagementSummaryViewProps {
   isLoading: boolean;
-  property: Api_Property;
-  propertyLeases: Api_PropertyLease[];
+  propertyManagement: Api_PropertyManagement;
   setEditManagementState: (state: EditManagementState | null) => void;
 }
 
 export const ManagementSummaryView: React.FC<IManagementSummaryViewProps> = ({
   isLoading,
-  property,
-  propertyLeases,
+  propertyManagement,
   setEditManagementState,
 }) => {
   const { hasClaim } = useKeycloakWrapper();

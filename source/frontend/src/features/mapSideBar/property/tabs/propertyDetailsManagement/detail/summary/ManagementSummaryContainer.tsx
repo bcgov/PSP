@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
-import { Api_Property } from '@/models/api/Property';
-import { Api_PropertyLease } from '@/models/api/PropertyLease';
+import { usePropertyManagementRepository } from '@/hooks/repositories/usePropertyManagementRepository';
+import { Api_Property, Api_PropertyManagement } from '@/models/api/Property';
 
 import { EditManagementState } from '../../../PropertyViewSelector';
 import { IManagementSummaryViewProps } from './ManagementSummaryView';
@@ -16,31 +15,40 @@ interface IManagementSummaryContainerProps {
 export const ManagementSummaryContainer: React.FunctionComponent<
   IManagementSummaryContainerProps
 > = ({ property, setEditManagementState, View }) => {
-  const [propertyLeases, setPropertyLeases] = useState<Api_PropertyLease[]>([]);
+  const [propertyManagement, setPropertyManagement] = useState<Api_PropertyManagement>({
+    id: property.id ?? 0,
+    rowVersion: null,
+    managementPurposes: [],
+    additionalDetails: null,
+    isUtilitiesPayable: null,
+    isTaxesPayable: null,
+    isLeaseActive: false,
+    isLeaseExpired: false,
+    leaseExpiryDate: null,
+  });
 
   const {
-    getPropertyLeases: { execute: getPropertyLeases, loading },
-  } = usePimsPropertyRepository();
+    getPropertyManagement: { execute: getPropertyManagement, loading },
+  } = usePropertyManagementRepository();
 
-  const fetchPropertyLeases = useCallback(async () => {
+  const fetchPropertyManagement = useCallback(async () => {
     if (!property.id) {
       return;
     }
-    const propertyLeasesResponse = await getPropertyLeases(property.id);
-    if (propertyLeasesResponse) {
-      setPropertyLeases(propertyLeasesResponse);
+    const response = await getPropertyManagement(property.id);
+    if (response) {
+      setPropertyManagement(response);
     }
-  }, [getPropertyLeases, property]);
+  }, [getPropertyManagement, property.id]);
 
   useEffect(() => {
-    fetchPropertyLeases();
-  }, [fetchPropertyLeases]);
+    fetchPropertyManagement();
+  }, [fetchPropertyManagement]);
 
   return (
     <View
       isLoading={loading}
-      property={property}
-      propertyLeases={propertyLeases}
+      propertyManagement={propertyManagement}
       setEditManagementState={setEditManagementState}
     />
   );
