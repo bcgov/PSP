@@ -5,8 +5,6 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { Api_Property } from '@/models/api/Property';
 
 import { EditManagementState } from '../../../PropertyViewSelector';
-import { PropertyContactListContainer } from './PropertyContactListContainer';
-import { PropertyContactListView } from './PropertyContactListView';
 
 export interface IPropertyManagementTabView {
   property: Api_Property;
@@ -28,6 +26,11 @@ export const PropertyManagementTabView: React.FunctionComponent<IPropertyManagem
       <StyledSummarySection>
         <LoadingBackdrop show={loading} parentScreen={true} />
 
+        <ManagementSummaryContainer
+          property={property}
+          View={ManagementSummaryView}
+          setEditMode={setEditMode}
+        />
         <PropertyContactListContainer
           propertyId={property.id}
           View={PropertyContactListView}

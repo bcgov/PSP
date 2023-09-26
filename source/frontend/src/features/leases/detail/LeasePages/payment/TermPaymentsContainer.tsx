@@ -6,6 +6,7 @@ import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
+import { useGenerateH1005a } from '@/features/mapSideBar/acquisition/common/GenerateForm/hooks/useGenerateH1005a';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentRepository';
 import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
@@ -27,6 +28,7 @@ export const TermPaymentsContainer: React.FunctionComponent<
   React.PropsWithChildren<LeasePageProps>
 > = ({ formikRef }) => {
   const { lease } = useContext(LeaseStateContext);
+  const generateH1005a = useGenerateH1005a(lease);
   const [editModalValues, setEditModalValues] = useState<FormLeaseTerm | undefined>(undefined);
   const [editPaymentModalValues, setEditPaymentModalValues] = useState<
     FormLeasePayment | undefined
@@ -119,6 +121,12 @@ export const TermPaymentsContainer: React.FunctionComponent<
     setEditPaymentModalValues(values);
   }, []);
 
+  const onGenerate = () => {
+    if (lease) {
+      generateH1005a(lease);
+    }
+  };
+
   return (
     <>
       <LoadingBackdrop show={getLeaseTerms.loading} parentScreen />
@@ -128,6 +136,7 @@ export const TermPaymentsContainer: React.FunctionComponent<
         onDelete={onDeleteTerm}
         onDeletePayment={onDeletePayment}
         onSavePayment={onSavePayment}
+        onGenerate={onGenerate}
         isReceivable={lease?.paymentReceivableType?.id === 'RCVBL'}
         lease={LeaseFormModel.fromApi({ ...defaultApiLease, terms: terms })}
         formikRef={formikRef as React.RefObject<FormikProps<LeaseFormModel>>}

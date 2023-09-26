@@ -240,6 +240,29 @@ namespace Pims.Api.Models.Concepts
 
         public DateTime SurplusDeclarationDate { get; set; }
         #endregion
+
+        #region Management
+        /// <summary>
+        /// get/set - The property management purposes.
+        /// </summary>
+        public IList<PropertyManagementPurposeModel> ManagementPurposes { get; set; }
+
+        /// <summary>
+        /// get/set - Additional details when property management purpose is OTHER.
+        /// </summary>
+        public string AdditionalDetails { get; set; }
+
+        /// <summary>
+        /// get/set - Whether utilities are payable for this property..
+        /// </summary>
+        public bool? IsUtilitiesPayable { get; set; }
+
+        /// <summary>
+        /// get/set - Whether taxes are payable for this property.
+        /// </summary>
+        public bool? IsTaxesPayable { get; set; }
+        #endregion
+
         #endregion
     }
 }
