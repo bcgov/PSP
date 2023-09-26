@@ -5,6 +5,7 @@ import Api_TypeCode from '@/models/api/TypeCode';
 
 import { Api_Address } from './Address';
 import { Api_AuditFields } from './AuditFields';
+import { Api_CompensationRequisition } from './CompensationRequisition';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_InterestHolder } from './InterestHolder';
 import { Api_Person } from './Person';
@@ -33,6 +34,7 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   acquisitionFileOwners?: Api_AcquisitionFileOwner[];
   acquisitionFileInterestHolders?: Api_InterestHolder[];
   acquisitionFileChecklist?: Api_AcquisitionFileChecklistItem[];
+  compensationRequisitions?: Api_CompensationRequisition[];
   project?: Api_Project;
   projectId: number | null;
   product?: Api_Product;
