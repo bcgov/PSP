@@ -1,51 +1,57 @@
 import { FormikProps } from 'formik';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
-import { Api_Property } from '@/models/api/Property';
-import { Api_PropertyLease } from '@/models/api/PropertyLease';
+import { usePropertyManagementRepository } from '@/hooks/repositories/usePropertyManagementRepository';
+import { Api_Property, Api_PropertyManagement } from '@/models/api/Property';
 
 import { EditForms } from '../../../../PropertyViewSelector';
+import { PropertyManagementFormModel } from './models';
 import { IUpdateManagementSummaryViewProps } from './UpdateManagementSummaryView';
 
 interface IUpdateManagementSummaryContainerProps {
   property: Api_Property;
   setEditFormId: (formId: EditForms | null) => void;
+  onSuccess: () => void;
   View: React.FC<IUpdateManagementSummaryViewProps>;
-  formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
 }
 
-export const UpdateManagementSummaryContainer: React.FC<IUpdateManagementSummaryContainerProps> = ({
-  property,
-  setEditFormId,
-  View,
-}) => {
-  const [propertyLeases, setPropertyLeases] = useState<Api_PropertyLease[]>([]);
+export const UpdateManagementSummaryContainer = React.forwardRef<
+  FormikProps<PropertyManagementFormModel>,
+  IUpdateManagementSummaryContainerProps
+>(({ property, setEditFormId, View, onSuccess }, ref) => {
+  const [propertyManagement, setPropertyManagement] = useState<Api_PropertyManagement>({
+    id: property.id ?? 0,
+    rowVersion: null,
+    managementPurposes: [],
+    additionalDetails: null,
+    isUtilitiesPayable: null,
+    isTaxesPayable: null,
+    isLeaseActive: false,
+    isLeaseExpired: false,
+    leaseExpiryDate: null,
+  });
 
   const {
-    getPropertyLeases: { execute: getPropertyLeases, loading: propertyLeasesLoading },
-  } = usePimsPropertyRepository();
+    getPropertyManagement: { execute: getPropertyManagement, loading },
+  } = usePropertyManagementRepository();
 
-  const fetchPropertyLeases = useCallback(async () => {
+  const fetchPropertyManagement = useCallback(async () => {
     if (!property.id) {
       return;
     }
-    const propertyLeasesResponse = await getPropertyLeases(property.id);
-    if (propertyLeasesResponse) {
-      setPropertyLeases(propertyLeasesResponse);
+    const response = await getPropertyManagement(property.id);
+    if (response) {
+      setPropertyManagement(response);
     }
-  }, [getPropertyLeases, property]);
+  }, [getPropertyManagement, property.id]);
 
   useEffect(() => {
-    fetchPropertyLeases();
-  }, [fetchPropertyLeases]);
+    fetchPropertyManagement();
+  }, [fetchPropertyManagement]);
 
-  return (
-    <View
-      isLoading={propertyLeasesLoading}
-      property={property}
-      propertyLeases={propertyLeases}
-      setEditFormId={setEditFormId}
-    />
-  );
-};
+  const onSave = async (apiModel: Api_PropertyManagement) => {
+    // TODO: Implement save
+  };
+
+  return <View isLoading={loading} propertyManagement={propertyManagement} onSave={onSave} />;
+});
