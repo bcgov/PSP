@@ -4,17 +4,18 @@ import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyR
 import { Api_Property } from '@/models/api/Property';
 import { Api_PropertyLease } from '@/models/api/PropertyLease';
 
+import { EditManagementState } from '../../../PropertyViewSelector';
 import { IManagementSummaryViewProps } from './ManagementSummaryView';
 
 interface IManagementSummaryContainerProps {
   property: Api_Property;
-  setEditMode: (isEditing: boolean) => void;
+  setEditManagementState: (state: EditManagementState | null) => void;
   View: React.FC<IManagementSummaryViewProps>;
 }
 
 export const ManagementSummaryContainer: React.FunctionComponent<
   IManagementSummaryContainerProps
-> = ({ property, setEditMode, View }) => {
+> = ({ property, setEditManagementState, View }) => {
   const [propertyLeases, setPropertyLeases] = useState<Api_PropertyLease[]>([]);
 
   const {
@@ -40,7 +41,7 @@ export const ManagementSummaryContainer: React.FunctionComponent<
       isLoading={loading}
       property={property}
       propertyLeases={propertyLeases}
-      setEditMode={setEditMode}
+      setEditManagementState={setEditManagementState}
     />
   );
 };
