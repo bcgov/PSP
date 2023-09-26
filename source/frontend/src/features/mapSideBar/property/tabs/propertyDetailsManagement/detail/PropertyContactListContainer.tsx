@@ -3,19 +3,18 @@ import { useCallback, useEffect, useState } from 'react';
 import { usePropertyContactRepository } from '@/hooks/repositories/usePropertyContactRepository';
 import { Api_PropertyContact } from '@/models/api/Property';
 
-import { IPropertyContactViewProps } from './PropertyContactView';
+import { EditManagementState } from '../../../PropertyViewSelector';
+import { IPropertyContactListViewProps } from './PropertyContactListView';
 
-interface IPropertyContactContainerProps {
+interface IPropertyContactListContainerProps {
   propertyId: number;
-  setEditMode: (isEditing: boolean) => void;
-  View: React.FC<IPropertyContactViewProps>;
+  setEditManagementState: (state: EditManagementState | null) => void;
+  View: React.FC<IPropertyContactListViewProps>;
 }
 
-export const PropertyContactContainer: React.FunctionComponent<IPropertyContactContainerProps> = ({
-  propertyId,
-  setEditMode,
-  View,
-}) => {
+export const PropertyContactListContainer: React.FunctionComponent<
+  IPropertyContactListContainerProps
+> = ({ propertyId, setEditManagementState, View }) => {
   const [propertyContacts, setPropertyContacts] = useState<Api_PropertyContact[]>([]);
 
   const {
@@ -35,17 +34,20 @@ export const PropertyContactContainer: React.FunctionComponent<IPropertyContactC
   }, [fetchPropertyContacts]);
 
   const onDelete = useCallback(
-    (contactId: number) => {
-      deleteContact(propertyId, contactId);
+    async (contactId: number) => {
+      const result = await deleteContact(propertyId, contactId);
+      if (result === true) {
+        fetchPropertyContacts();
+      }
     },
-    [deleteContact, propertyId],
+    [deleteContact, fetchPropertyContacts, propertyId],
   );
 
   return (
     <View
       isLoading={loading || loadingDelete}
       propertyContacts={propertyContacts}
-      setEditMode={setEditMode}
+      setEditManagementState={setEditManagementState}
       onDelete={onDelete}
     />
   );

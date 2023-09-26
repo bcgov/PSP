@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers;
@@ -16,13 +17,15 @@ namespace Pims.Api.Services
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly IPropertyRepository _propertyRepository;
+        private readonly IPropertyContactRepository _propertyContactRepository;
         private readonly ICoordinateTransformService _coordinateService;
 
-        public PropertyService(ClaimsPrincipal user, ILogger<PropertyService> logger, IPropertyRepository propertyRepository, ICoordinateTransformService coordinateService)
+        public PropertyService(ClaimsPrincipal user, ILogger<PropertyService> logger, IPropertyRepository propertyRepository, IPropertyContactRepository propertyContactRepository, ICoordinateTransformService coordinateService)
         {
             _user = user;
             _logger = logger;
             _propertyRepository = propertyRepository;
+            _propertyContactRepository = propertyContactRepository;
             _coordinateService = coordinateService;
         }
 
@@ -88,6 +91,63 @@ namespace Pims.Api.Services
             _propertyRepository.CommitTransaction();
 
             return GetById(newProperty.Internal_Id);
+        }
+
+        public IList<PimsPropertyContact> GetContacts(long propertyId)
+        {
+            _logger.LogInformation("Retrieving property contacts...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            return _propertyContactRepository.GetContactsByProperty(propertyId);
+        }
+
+        public PimsPropertyContact GetContact(long propertyId, long contactId)
+        {
+            _logger.LogInformation("Retrieving single property contact...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var propertyContact = _propertyContactRepository.GetContact(contactId);
+
+            if (propertyContact.PropertyId != propertyId)
+            {
+                throw new BadRequestException("Contact with the given id does not match the property id");
+            }
+
+            return propertyContact;
+        }
+
+        public PimsPropertyContact CreateContact(PimsPropertyContact propertyContact)
+        {
+            _logger.LogInformation("Creating property contact...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var propertyContactResult = _propertyContactRepository.Create(propertyContact);
+            _propertyContactRepository.CommitTransaction();
+
+            return propertyContactResult;
+        }
+
+        public PimsPropertyContact UpdateContact(PimsPropertyContact propertyContact)
+        {
+            _logger.LogInformation("Updating property contact...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var propertyContactResult = _propertyContactRepository.Update(propertyContact);
+            _propertyContactRepository.CommitTransaction();
+
+            return propertyContactResult;
+        }
+
+        public bool DeleteContact(long propertyContactId)
+        {
+            _logger.LogInformation("Deleting property contact...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            _propertyContactRepository.Delete(propertyContactId);
+
+            _propertyContactRepository.CommitTransaction();
+
+            return true;
         }
 
         private Point TransformCoordiates(Geometry location)

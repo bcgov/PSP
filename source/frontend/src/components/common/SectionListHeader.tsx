@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaUserPlus } from 'react-icons/fa';
 import { ImFileText2 } from 'react-icons/im';
 import styled from 'styled-components';
 
@@ -11,7 +11,7 @@ import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 export interface ISectionListHeaderProps {
   title: string;
   addButtonText?: string;
-  addButtonIcon?: 'add' | null;
+  addButtonIcon?: 'add' | 'person' | null;
   onAdd?: () => void;
   claims: Claims[];
 }
@@ -26,6 +26,10 @@ export const SectionListHeader: React.FunctionComponent<
   switch (props.addButtonIcon) {
     case 'add': {
       icon = <FaPlus size="2rem" />;
+      break;
+    }
+    case 'person': {
+      icon = <FaUserPlus size="2rem" />;
       break;
     }
     default: {

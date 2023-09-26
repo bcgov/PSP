@@ -21,12 +21,13 @@ import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { booleanToYesNoUnknownString, stringToBoolean } from '@/utils/formUtils';
 import { getPrettyLatLng } from '@/utils/mapPropertyUtils';
 
+import { EditManagementState, PropertyEditForms } from '../../../PropertyViewSelector';
 import { IPropertyDetailsForm, readOnlyMultiSelectStyle } from './PropertyDetailsTabView.helpers';
 
 export interface IPropertyDetailsTabView {
   property?: IPropertyDetailsForm;
   loading: boolean;
-  setEditMode?: (isEditing: boolean) => void;
+  setEditManagementState: (state: EditManagementState | null) => void;
 }
 
 /**
@@ -36,7 +37,7 @@ export interface IPropertyDetailsTabView {
 export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTabView> = ({
   property,
   loading,
-  setEditMode,
+  setEditManagementState,
 }) => {
   const { getOptionsByType } = useLookupCodeHelpers();
   const { hasClaim } = useKeycloakWrapper();
@@ -62,11 +63,14 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
       <StyledEditWrapper className="mr-3 my-1">
-        {setEditMode !== undefined && hasClaim(Claims.PROPERTY_EDIT) && (
+        {hasClaim(Claims.PROPERTY_EDIT) && (
           <EditButton
             title="Edit property details"
             onClick={() => {
-              setEditMode(true);
+              setEditManagementState({
+                form: PropertyEditForms.UpdatePropertyDetailsContainer,
+                childId: null,
+              });
             }}
           />
         )}

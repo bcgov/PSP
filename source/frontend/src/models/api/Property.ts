@@ -1,6 +1,6 @@
 import { Api_Address } from './Address';
 import { Api_AuditFields } from './AuditFields';
-import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import { Api_ConcurrentVersion, Api_ConcurrentVersion_Null } from './ConcurrentVersion';
 import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
 import Api_TypeCode from './TypeCode';
@@ -138,10 +138,15 @@ export interface Api_PropertyAssociation {
   status?: string;
 }
 
-export interface Api_PropertyContact {
+export interface Api_PropertyContact extends Api_ConcurrentVersion_Null {
   id: number;
+  propertyId: number;
+  organizationId: number | null;
   organization: Api_Organization | null;
+  personId: number | null;
   person: Api_Person | null;
+  primaryContactId: number | null;
   primaryContact: Api_Person | null;
   purpose: string | null;
+  isDisabled: boolean | null;
 }

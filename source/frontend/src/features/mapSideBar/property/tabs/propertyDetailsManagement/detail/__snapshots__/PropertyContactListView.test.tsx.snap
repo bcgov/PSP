@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PropertyContactView component renders as expected when provided valid data object 1`] = `
+exports[`PropertyContactListView component renders as expected when provided valid data object 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -140,6 +140,73 @@ exports[`PropertyContactView component renders as expected when provided valid d
   margin-right: 0;
 }
 
+.c7.c7.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c7.c7.btn:hover,
+.c7.c7.btn:focus,
+.c7.c7.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c7.c7.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c7.c7.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+.c8.c8.btn.btn-primary {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c8.c8.btn.btn-primary .text {
+  display: none;
+}
+
+.c8.c8.btn.btn-primary:hover,
+.c8.c8.btn.btn-primary:active,
+.c8.c8.btn.btn-primary:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c8.c8.btn.btn-primary:hover .text,
+.c8.c8.btn.btn-primary:active .text,
+.c8.c8.btn.btn-primary:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
+.c4.c4 {
+  display: inline-block;
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.c5 {
+  float: right;
+  cursor: pointer;
+}
+
 .c1 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -155,6 +222,22 @@ exports[`PropertyContactView component renders as expected when provided valid d
 }
 
 .c2 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c2 .btn {
+  margin: 0;
+}
+
+.c6 {
   padding: 0 0.4rem;
 }
 
@@ -170,7 +253,67 @@ exports[`PropertyContactView component renders as expected when provided valid d
         <div
           class="col"
         >
-          Property Contact
+          <div
+            class="c2 no-gutters row"
+          >
+            <div
+              class="px-2 my-1 col-auto"
+            >
+              Property Contact
+            </div>
+            <div
+              class="my-1 col-auto"
+            >
+              <button
+                class="c3 Button c4 btn btn-primary"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 640 512"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M624 208h-64v-64c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v64h-64c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h64v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-64h64c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm-400 48c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
+                    />
+                  </svg>
+                   Add a Contact
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-1"
+        >
+          <svg
+            class="c5"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>
+              collapse-section
+            </title>
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M7 14l5-5 5 5z"
+            />
+          </svg>
         </div>
       </div>
     </h2>
@@ -259,7 +402,7 @@ exports[`PropertyContactView component renders as expected when provided valid d
                 title=""
               >
                 <a
-                  class="c2"
+                  class="c6"
                   href="/contact/P1"
                   rel="noopener noreferrer"
                   target="_blank"
@@ -272,7 +415,9 @@ exports[`PropertyContactView component renders as expected when provided valid d
                 role="cell"
                 style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              />
+              >
+                Not applicable
+              </div>
               <div
                 class="td"
                 role="cell"
@@ -316,6 +461,31 @@ exports[`PropertyContactView component renders as expected when provided valid d
                       </div>
                     </button>
                   </div>
+                  <button
+                    class="c3 Button c7 c8 btn btn-primary"
+                    data-testid="contact-delete-0"
+                    id="contact-delete-0"
+                    title="Delete contact"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="2rem"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 448 512"
+                        width="2rem"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
                 </div>
               </div>
             </div>

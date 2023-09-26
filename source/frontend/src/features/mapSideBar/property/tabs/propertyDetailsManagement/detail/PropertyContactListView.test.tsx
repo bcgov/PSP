@@ -7,7 +7,7 @@ import { Api_PropertyContact } from '@/models/api/Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions } from '@/utils/test-utils';
 
-import { PropertyContactView } from './PropertyContactView';
+import { PropertyContactListView } from './PropertyContactListView';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -17,7 +17,7 @@ const storeState = {
 // mock keycloak auth library
 jest.mock('@react-keycloak/web');
 
-describe('PropertyContactView component', () => {
+describe('PropertyContactListView component', () => {
   // render component under test
   const setup = (
     renderOptions: RenderOptions & { propertyContacts: Api_PropertyContact[] } = {
@@ -26,10 +26,10 @@ describe('PropertyContactView component', () => {
   ) => {
     const { ...rest } = renderOptions;
     const component = render(
-      <PropertyContactView
+      <PropertyContactListView
         isLoading={false}
         propertyContacts={renderOptions.propertyContacts}
-        setEditMode={noop}
+        setEditManagementState={noop}
         onDelete={noop}
       />,
       {
@@ -49,12 +49,49 @@ describe('PropertyContactView component', () => {
     const { asFragment } = setup({ propertyContacts: mockPropertyContacts });
     expect(asFragment()).toMatchSnapshot();
   });
+
+  it('Shows primary contact message if contact is a person', () => {
+    const testContacts: Api_PropertyContact[] = [
+      { ...mockPropertyContacts[0], primaryContact: null },
+    ];
+    const { getByText } = setup({ propertyContacts: testContacts });
+
+    expect(getByText('Not applicable')).toBeVisible();
+  });
+
+  it('Shows primary contact message if contact is an organization', () => {
+    const testContacts: Api_PropertyContact[] = [
+      {
+        ...emptyPropertyContact,
+        person: null,
+        organization: { id: 1, name: 'Org name' },
+        primaryContact: null,
+      },
+    ];
+    const { getByText } = setup({ propertyContacts: testContacts });
+
+    expect(getByText('No contacts available')).toBeVisible();
+  });
 });
+
+const emptyPropertyContact: Api_PropertyContact = {
+  id: 0,
+  propertyId: 0,
+  organizationId: null,
+  organization: null,
+  personId: null,
+  person: null,
+  primaryContactId: null,
+  primaryContact: null,
+  purpose: null,
+  isDisabled: null,
+  rowVersion: 0,
+};
 
 const mockPropertyContacts: Api_PropertyContact[] = [
   {
+    ...emptyPropertyContact,
     id: 1,
-    organization: null,
     person: {
       id: 1,
       isDisabled: false,
@@ -68,7 +105,6 @@ const mockPropertyContacts: Api_PropertyContact[] = [
       comment: '',
       rowVersion: 0,
     },
-    primaryContact: null,
     purpose: 'Test Purpouse',
   },
 ];

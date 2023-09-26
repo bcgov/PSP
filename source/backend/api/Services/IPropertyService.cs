@@ -12,5 +12,15 @@ namespace Pims.Api.Services
         PimsProperty GetByPid(string pid);
 
         PimsProperty Update(PimsProperty property);
+
+        IList<PimsPropertyContact> GetContacts(long propertyId);
+
+        PimsPropertyContact GetContact(long propertyId, long contactId);
+
+        PimsPropertyContact CreateContact(PimsPropertyContact propertyContact);
+
+        PimsPropertyContact UpdateContact(PimsPropertyContact propertyContact);
+
+        bool DeleteContact(long propertyContactId);
     }
 }

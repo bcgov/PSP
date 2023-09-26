@@ -7,9 +7,24 @@ export const getPropertyContactsApi = (propertyId: number) =>
     `/properties/${propertyId}/contacts`,
   );
 
-export const putPropertyContactsApi = (propertyId: number, contact: Api_PropertyContact) =>
-  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<Api_PropertyContact>(
+export const getPropertyContactApi = (propertyId: number, contactId: number) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_PropertyContact>(
+    `/properties/${propertyId}/contacts/${contactId}`,
+  );
+
+export const postPropertyContactsApi = (propertyId: number, contact: Api_PropertyContact) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).post<Api_PropertyContact>(
     `/properties/${propertyId}/contacts`,
+    contact,
+  );
+
+export const putPropertyContactsApi = (
+  propertyId: number,
+  contactId: number,
+  contact: Api_PropertyContact,
+) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<Api_PropertyContact>(
+    `/properties/${propertyId}/contacts/${contactId}`,
     contact,
   );
 

@@ -12,11 +12,12 @@ import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/prop
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
 
+import { EditManagementState } from './PropertyViewSelector';
 import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 
 export interface IPropertyContainerProps {
   composedPropertyState: ComposedPropertyState;
-  setEditMode: (isEditing: boolean) => void;
+  setEditManagementState: (state: EditManagementState | null) => void;
 }
 
 /**
@@ -24,7 +25,7 @@ export interface IPropertyContainerProps {
  */
 export const PropertyContainer: React.FunctionComponent<
   React.PropsWithChildren<IPropertyContainerProps>
-> = ({ composedPropertyState, setEditMode }) => {
+> = ({ composedPropertyState, setEditManagementState }) => {
   const showPropertyInfoTab = composedPropertyState?.id !== undefined;
 
   const tabViews: TabInventoryView[] = [];
@@ -75,7 +76,7 @@ export const PropertyContainer: React.FunctionComponent<
         <PropertyDetailsTabView
           property={propertyViewForm}
           loading={composedPropertyState.apiWrapper?.loading ?? false}
-          setEditMode={setEditMode}
+          setEditManagementState={setEditManagementState}
         />
       ),
       key: InventoryTabNames.property,
@@ -106,7 +107,7 @@ export const PropertyContainer: React.FunctionComponent<
         <PropertyManagementTabView
           property={composedPropertyState.apiWrapper?.response}
           loading={composedPropertyState.apiWrapper?.loading ?? false}
-          setEditMode={setEditMode}
+          setEditManagementState={setEditManagementState}
         />
       ),
       key: InventoryTabNames.management,
