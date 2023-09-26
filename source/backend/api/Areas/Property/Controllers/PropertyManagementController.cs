@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Json;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -45,6 +46,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(PropertyManagementModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetPropertyManagement(long propertyId)
         {
             return new JsonResult(_propertyService.GetPropertyManagement(propertyId));
@@ -59,6 +61,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(PropertyManagementModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdatePropertyManagement([FromBody] PropertyManagementModel propertyManagementModel)
         {
             var propertyEntity = _mapper.Map<Pims.Dal.Entities.PimsProperty>(propertyManagementModel);
