@@ -6,7 +6,6 @@ import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { IPagedItems, IProperty } from '@/interfaces';
 import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
 import { Api_Property, Api_PropertyAssociations } from '@/models/api/Property';
-import { Api_PropertyLease } from '@/models/api/PropertyLease';
 
 import useAxiosApi from './useApi';
 
@@ -27,8 +26,6 @@ export const useApiProperties = () => {
         api.post<number[]>(`/properties/search/advanced-filter`, params),
       getPropertyAssociationsApi: (id: number) =>
         api.get<Api_PropertyAssociations>(`/properties/${id}/associations`),
-      getPropertyLeasesApi: (id: number) =>
-        api.get<Api_PropertyLease[]>(`/properties/${id}/leases`),
       exportPropertiesApi: (filter: IPaginateProperties, outputFormat: 'csv' | 'excel' = 'excel') =>
         api.get<Blob>(
           `/reports/properties?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
