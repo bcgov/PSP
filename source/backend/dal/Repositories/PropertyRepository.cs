@@ -99,6 +99,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTypes)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.PimsPropPropPurposes)
+                    .ThenInclude(t => t.PropertyPurposeTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(p => p.VolumetricTypeCodeNavigation)
                 .Include(p => p.VolumeUnitTypeCodeNavigation)
