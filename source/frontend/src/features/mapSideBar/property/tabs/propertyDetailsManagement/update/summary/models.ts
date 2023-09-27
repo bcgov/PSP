@@ -34,7 +34,10 @@ export class PropertyManagementFormModel {
     return {
       id: this.id,
       rowVersion: this.rowVersion,
-      managementPurposes: this.managementPurposes.map(p => p.toApi()),
+      managementPurposes: this.managementPurposes.map(p => ({
+        ...p.toApi(),
+        propertyId: this.id,
+      })),
       additionalDetails: stringToNull(this.additionalDetails),
       isUtilitiesPayable: this.isUtilitiesPayable,
       isTaxesPayable: this.isTaxesPayable,
@@ -83,6 +86,7 @@ export class ManagementPurposeModel {
       id: this.id,
       rowVersion: this.rowVersion,
       propertyId: this.propertyId,
+      isDisabled: false,
       propertyPurposeTypeCode: {
         id: this.typeCode,
         description: this.typeDescription,

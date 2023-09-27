@@ -2,15 +2,17 @@ import { Formik, FormikProps } from 'formik';
 import React from 'react';
 import styled from 'styled-components';
 
-import { TextArea } from '@/components/common/form';
+import { Multiselect, TextArea } from '@/components/common/form';
 import { YesNoSelect } from '@/components/common/form/YesNoSelect';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import * as API from '@/constants/API';
+import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { Api_PropertyManagement } from '@/models/api/Property';
 
-import { PropertyManagementFormModel } from './models';
+import { ManagementPurposeModel, PropertyManagementFormModel } from './models';
 import { PropertyManagementYupSchema } from './validation';
 
 export interface IUpdateManagementSummaryViewProps {
@@ -23,6 +25,12 @@ export const UpdateManagementSummaryView = React.forwardRef<
   FormikProps<PropertyManagementFormModel>,
   IUpdateManagementSummaryViewProps
 >(({ isLoading, propertyManagement, onSave }, formikRef) => {
+  // Lookup codes
+  const { getByType } = useLookupCodeHelpers();
+  const purposeTypeOptions = getByType(API.PROPERTY_MANAGEMENT_PURPOSE_TYPES)
+    .map(x => ManagementPurposeModel.fromLookup(x))
+    .sort((a, b) => a.typeDescription.localeCompare(b.typeDescription));
+
   const savePropertyManagement = async (values: PropertyManagementFormModel) => {
     await onSave(values.toApi());
   };
@@ -40,7 +48,15 @@ export const UpdateManagementSummaryView = React.forwardRef<
         >
           {formikProps => (
             <Section header="Summary">
-              <SectionField label="Property purpose"></SectionField>
+              <SectionField label="Property purpose">
+                <Multiselect
+                  field="managementPurposes"
+                  displayValue="typeDescription"
+                  placeholder=""
+                  hidePlaceholder
+                  options={purposeTypeOptions}
+                />
+              </SectionField>
               <SectionField label="Lease/Licensed">
                 {formikProps.values.formatLeaseInformation()}
               </SectionField>
