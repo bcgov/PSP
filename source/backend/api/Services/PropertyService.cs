@@ -186,6 +186,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ManagementEdit);
 
             var newProperty = _propertyRepository.UpdatePropertyManagement(property);
+            _propertyRepository.CommitTransaction();
 
             return GetPropertyManagement(newProperty.Internal_Id);
         }
