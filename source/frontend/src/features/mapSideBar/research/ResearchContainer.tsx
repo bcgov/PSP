@@ -50,6 +50,7 @@ export const ResearchContainer: React.FunctionComponent<
   const [selectedMenuIndex, setSelectedMenuIndex] = useState<number>(0);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editKey, setEditKey] = useState(FormKeys.none);
+  const [isValid, setIsValid] = useState<boolean>(true);
 
   const [isShowingPropertySelector, setIsShowingPropertySelector] = useState<boolean>(false);
 
@@ -117,6 +118,7 @@ export const ResearchContainer: React.FunctionComponent<
     if (formikRef !== undefined) {
       formikRef.current?.setSubmitting(true);
       formikRef.current?.submitForm();
+      setIsValid(formikRef.current?.isValid || false);
     }
   };
 
@@ -183,6 +185,7 @@ export const ResearchContainer: React.FunctionComponent<
               isOkDisabled={formikRef?.current?.isSubmitting}
               onSave={handleSaveClick}
               onCancel={handleCancelClick}
+              displayRequiredFieldError={!isValid}
             />
           )
         }
