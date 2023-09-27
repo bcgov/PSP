@@ -1,5 +1,6 @@
 import { Api_PropertyManagement, Api_PropertyManagementPurpose } from '@/models/api/Property';
 import { ILookupCode } from '@/store/slices/lookupCodes';
+import { prettyFormatDate } from '@/utils';
 import { stringToNull } from '@/utils/formUtils';
 
 export class PropertyManagementFormModel {
@@ -41,6 +42,15 @@ export class PropertyManagementFormModel {
       isLeaseExpired: this.isLeaseExpired,
       leaseExpiryDate: stringToNull(this.leaseExpiryDate),
     };
+  }
+
+  formatLeaseInformation(): string {
+    if (this.isLeaseActive) {
+      const expiryDate = this.leaseExpiryDate ? `(${prettyFormatDate(this.leaseExpiryDate)})` : '';
+      return this.isLeaseExpired ? `Expired ${expiryDate}` : `Yes ${expiryDate}`;
+    } else {
+      return 'No active Lease/License';
+    }
   }
 }
 

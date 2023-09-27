@@ -64,9 +64,12 @@ const PropertyViewSelector = React.forwardRef<FormikProps<any>, IPropertyViewSel
         case PropertyEditForms.UpdateManagementSummaryContainer:
           return (
             <UpdateManagementSummaryContainer
-              property={props.composedPropertyState?.apiWrapper?.response}
+              propertyId={props.composedPropertyState?.apiWrapper?.response?.id}
               View={UpdateManagementSummaryView}
-              onSuccess={props.onSuccess}
+              onSuccess={() => {
+                setEditManagementState(null);
+                props.onSuccess();
+              }}
               ref={formikRef}
             />
           );

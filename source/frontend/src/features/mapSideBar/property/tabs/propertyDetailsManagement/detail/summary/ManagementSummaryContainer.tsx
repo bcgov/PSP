@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { usePropertyManagementRepository } from '@/hooks/repositories/usePropertyManagementRepository';
 import { Api_Property, Api_PropertyManagement } from '@/models/api/Property';
 
-import { EditManagementState } from '../../../PropertyViewSelector';
+import { EditManagementState } from '../../../../PropertyViewSelector';
 import { IManagementSummaryViewProps } from './ManagementSummaryView';
 
 interface IManagementSummaryContainerProps {

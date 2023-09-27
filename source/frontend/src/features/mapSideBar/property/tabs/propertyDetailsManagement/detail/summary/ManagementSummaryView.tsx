@@ -2,10 +2,12 @@ import { EditButton } from '@/components/common/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { StyledEditWrapper } from '@/components/common/Section/SectionStyles';
 import { Claims } from '@/constants/index';
+import {
+  EditManagementState,
+  PropertyEditForms,
+} from '@/features/mapSideBar/property/PropertyViewSelector';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_PropertyManagement } from '@/models/api/Property';
-
-import { EditForms } from '../../../../PropertyViewSelector';
 
 export interface IManagementSummaryViewProps {
   isLoading: boolean;

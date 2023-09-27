@@ -2,25 +2,26 @@ import { FormikProps } from 'formik';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { usePropertyManagementRepository } from '@/hooks/repositories/usePropertyManagementRepository';
-import { Api_Property, Api_PropertyManagement } from '@/models/api/Property';
+import { Api_PropertyManagement } from '@/models/api/Property';
 
-import { EditForms } from '../../../../PropertyViewSelector';
 import { PropertyManagementFormModel } from './models';
 import { IUpdateManagementSummaryViewProps } from './UpdateManagementSummaryView';
 
 interface IUpdateManagementSummaryContainerProps {
-  property: Api_Property;
-  setEditFormId: (formId: EditForms | null) => void;
+  propertyId: number;
   onSuccess: () => void;
-  View: React.FC<IUpdateManagementSummaryViewProps>;
+  View: React.ForwardRefExoticComponent<
+    IUpdateManagementSummaryViewProps &
+      React.RefAttributes<FormikProps<PropertyManagementFormModel>>
+  >;
 }
 
 export const UpdateManagementSummaryContainer = React.forwardRef<
   FormikProps<PropertyManagementFormModel>,
   IUpdateManagementSummaryContainerProps
->(({ property, setEditFormId, View, onSuccess }, ref) => {
+>(({ propertyId, View, onSuccess }, formikRef) => {
   const [propertyManagement, setPropertyManagement] = useState<Api_PropertyManagement>({
-    id: property.id ?? 0,
+    id: propertyId,
     rowVersion: null,
     managementPurposes: [],
     additionalDetails: null,
@@ -32,26 +33,37 @@ export const UpdateManagementSummaryContainer = React.forwardRef<
   });
 
   const {
-    getPropertyManagement: { execute: getPropertyManagement, loading },
+    getPropertyManagement: { execute: getPropertyManagement, loading: loadingGet },
+    updatePropertyManagement: { execute: updatePropertyManagement, loading: loadingUpdate },
   } = usePropertyManagementRepository();
 
   const fetchPropertyManagement = useCallback(async () => {
-    if (!property.id) {
+    if (!propertyId) {
       return;
     }
-    const response = await getPropertyManagement(property.id);
+    const response = await getPropertyManagement(propertyId);
     if (response) {
       setPropertyManagement(response);
     }
-  }, [getPropertyManagement, property.id]);
+  }, [getPropertyManagement, propertyId]);
 
   useEffect(() => {
     fetchPropertyManagement();
   }, [fetchPropertyManagement]);
 
   const onSave = async (apiModel: Api_PropertyManagement) => {
-    // TODO: Implement save
+    const result = await updatePropertyManagement(propertyId, apiModel);
+    if (result?.id) {
+      onSuccess();
+    }
   };
 
-  return <View isLoading={loading} propertyManagement={propertyManagement} onSave={onSave} />;
+  return (
+    <View
+      isLoading={loadingGet || loadingUpdate}
+      propertyManagement={propertyManagement}
+      onSave={onSave}
+      ref={formikRef}
+    />
+  );
 });
