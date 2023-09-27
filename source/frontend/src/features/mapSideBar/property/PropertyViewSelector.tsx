@@ -71,7 +71,10 @@ const PropertyViewSelector = React.forwardRef<FormikProps<any>, IPropertyViewSel
                 props.onSuccess();
               }}
               ref={formikRef}
-              onSuccess={props.onSuccess}
+              onSuccess={() => {
+                setEditManagementState(null);
+                props.onSuccess();
+              }}
               ref={formikRef}
             />
           );
