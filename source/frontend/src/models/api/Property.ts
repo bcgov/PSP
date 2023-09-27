@@ -154,5 +154,6 @@ export interface Api_PropertyManagement extends Api_ConcurrentVersion_Null, Api_
 export interface Api_PropertyManagementPurpose extends Api_ConcurrentVersion_Null, Api_AuditFields {
   id: number | null;
   propertyId: number | null;
+  isDisabled: boolean | null;
   propertyPurposeTypeCode: Api_TypeCode<string> | null;
 }
