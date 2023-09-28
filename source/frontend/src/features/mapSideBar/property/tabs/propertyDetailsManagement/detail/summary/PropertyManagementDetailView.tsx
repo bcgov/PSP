@@ -22,7 +22,7 @@ export const PropertyManagementDetailView: React.FC<IPropertyManagementDetailVie
 }) => {
   const { hasClaim } = useKeycloakWrapper();
   return (
-    <Section header="Summary">
+    <Section header="Summary" isCollapsable initiallyExpanded>
       <StyledEditWrapper className="mr-3 my-1">
         {/** TODO: Use MANAGEMENT CLAIMS when available */}
         {setEditManagementState !== undefined && hasClaim(Claims.PROPERTY_EDIT) && (
