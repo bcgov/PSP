@@ -35,9 +35,12 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.IsPaymentInTrust, src => src.IsPaymentInTrust)
                 .Map(dest => dest.GstNumber, src => src.GstNumber)
                 .Map(dest => dest.FinalizedDate, src => src.FinalizedDate)
+                .Map(dest => dest.AdvancedPaymentServedDate, src => src.AdvPmtServedDt)
                 .Map(dest => dest.SpecialInstruction, src => src.SpecialInstruction)
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
+                .Map(dest => dest.AlternateProject, src => src.AlternateProject)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<CompensationRequisitionModel, Entity.PimsCompensationRequisition>()
@@ -52,6 +55,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.AgreementDt, src => src.AgreementDate)
                 .Map(dest => dest.ExpropNoticeServedDt, src => src.ExpropriationNoticeServedDate)
                 .Map(dest => dest.ExpropVestingDt, src => src.ExpropriationVestingDate)
+                .Map(dest => dest.AdvPmtServedDt, src => src.AdvancedPaymentServedDate)
                 .Map(dest => dest.GenerationDt, src => src.GenerationDate)
                 .Map(dest => dest.PimsCompReqFinancials, src => src.Financials)
                 .Map(dest => dest.AcquisitionOwnerId, src => src.AcquisitionOwnerId)
@@ -64,6 +68,8 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.SpecialInstruction, src => src.SpecialInstruction)
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
+                .Map(dest => dest.AlternateProject, src => src.AlternateProject)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }

@@ -1,6 +1,7 @@
 using System.Linq;
 using Mapster;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Concepts;
 
@@ -17,7 +18,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PsFileNumber, src => src.LeaseTerm.Lease.PsFileNo)
                 .Map(dest => dest.LeaseStatus, src => src.LeaseTerm.Lease.LeaseStatusTypeCodeNavigation.Description)
                 .Map(dest => dest.PropertyList, src => string.Join(",", src.LeaseTerm.Lease.PimsPropertyLeases.Select(x => GetFallbackPropertyIdentifier(x))))
-                .Map(dest => dest.TenantList, src => string.Join(",", src.LeaseTerm.Lease.PimsLeaseTenants.Where(t => t != null && t.TenantTypeCode == "TEN").Select(x => x != null && x.Person != null ? x.Person.GetFullName() : x != null && x.Organization != null ? x.Organization.OrganizationName : string.Empty)))
+                .Map(dest => dest.TenantList, src => string.Join(",", src.LeaseTerm.Lease.PimsLeaseTenants.Where(t => t != null && t.TenantTypeCode == "TEN").Select(x => x != null && x.Person != null ? x.Person.GetFullName(false) : x != null && x.Organization != null ? x.Organization.OrganizationName : string.Empty)))
                 .Map(dest => dest.PayableOrReceivable, src => src.LeaseTerm.Lease.LeasePayRvblTypeCodeNavigation.Description)
                 .Map(dest => dest.Program, src => src.LeaseTerm.Lease.LeaseProgramTypeCode.ToUpper() == "OTHER" && !string.IsNullOrEmpty(src.LeaseTerm.Lease.OtherLeaseProgramType) ? $"{src.LeaseTerm.Lease.LeaseProgramTypeCodeNavigation.Description} - {src.LeaseTerm.Lease.OtherLeaseProgramType}" : src.LeaseTerm.Lease.LeaseProgramTypeCodeNavigation.Description)
                 .Map(dest => dest.Purpose, src => src.LeaseTerm.Lease.LeasePurposeTypeCode.ToUpper() == "OTHER" && !string.IsNullOrEmpty(src.LeaseTerm.Lease.OtherLeasePurposeType) ? $"{src.LeaseTerm.Lease.LeasePurposeTypeCodeNavigation.Description} - {src.LeaseTerm.Lease.OtherLeasePurposeType}" : src.LeaseTerm.Lease.LeasePurposeTypeCodeNavigation.Description)
@@ -39,7 +40,7 @@ namespace Pims.Api.Models.Concepts
         private static string GetFallbackPropertyIdentifier(PimsPropertyLease propertyLease)
         {
             PimsProperty property = propertyLease.Property;
-            if(property?.Pid != null)
+            if (property?.Pid != null)
             {
                 return property.Pid.ToString().ConvertPIDToDash();
             }

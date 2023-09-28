@@ -6,6 +6,7 @@ import { Api_CompensationRequisition } from '@/models/api/CompensationRequisitio
 import { Api_H120Category } from '@/models/api/H120Category';
 import { formatMoney } from '@/utils';
 
+import { Api_GenerateProject } from '../GenerateProject';
 import { Api_GenerateAcquisitionFile } from './GenerateAcquisitionFile';
 import { Api_GenerateCompensationFinancial } from './GenerateCompensationFinancial';
 import { Api_GenerateCompensationFinancialSummary } from './GenerateCompensationFinancialSummary';
@@ -27,6 +28,7 @@ export class Api_GenerateCompensation {
   responsibility_center: string;
   client: string;
   payee: Api_GenerateCompensationPayee;
+  alternate_project: Api_GenerateProject | null;
 
   constructor(
     compensation: Api_CompensationRequisition | null,
@@ -68,5 +70,6 @@ export class Api_GenerateCompensation {
     this.responsibility_center = compensation?.responsibility?.code ?? '';
     this.client = client;
     this.payee = new Api_GenerateCompensationPayee(compensation, compensation?.financials ?? []);
+    this.alternate_project = new Api_GenerateProject(compensation?.alternateProject ?? null);
   }
 }

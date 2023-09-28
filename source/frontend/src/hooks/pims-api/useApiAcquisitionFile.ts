@@ -1,7 +1,7 @@
 import queryString from 'query-string';
 import React from 'react';
 
-import { IAcquisitionFilter } from '@/features/acquisition/list/interfaces';
+import { Api_AcquisitionFilter } from '@/features/acquisition/list/interfaces';
 import { IPagedItems } from '@/interfaces';
 import {
   Api_AcquisitionFile,
@@ -42,6 +42,23 @@ export const useApiAcquisitionFile = () => {
             Accept: 'application/vnd.ms-excel',
           },
         }),
+      getCompensationReport: (filter: Api_ExportProjectFilter) =>
+        api.post<Blob>(`/reports/acquisition/compensation-requisitions`, filter, {
+          responseType: 'blob',
+          headers: {
+            Accept: 'application/vnd.ms-excel',
+          },
+        }),
+      exportAcquisitionFiles: (filter: IPaginateAcquisition, outputFormat: 'excel' = 'excel') =>
+        api.get<Blob>(
+          `/reports/acquisition?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
+          {
+            responseType: 'blob',
+            headers: {
+              Accept: 'application/vnd.ms-excel',
+            },
+          },
+        ),
       postAcquisitionFile: (
         acqFile: Api_AcquisitionFile,
         userOverrideCodes: UserOverrideCode[] = [],
@@ -114,4 +131,4 @@ export const useApiAcquisitionFile = () => {
   );
 };
 
-export type IPaginateAcquisition = IPaginateRequest<IAcquisitionFilter>;
+export type IPaginateAcquisition = IPaginateRequest<Api_AcquisitionFilter>;

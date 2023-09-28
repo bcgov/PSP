@@ -30,27 +30,27 @@ namespace Pims.Api.Test.Services
 
         public FinancialCodeServiceTest()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         private FinancialCodeService CreateWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
-            return _helper.Create<FinancialCodeService>(user);
+            return this._helper.Create<FinancialCodeService>(user);
         }
 
         [Fact]
         public void GetAll_Success()
         {
             // Arrange
-            var service = CreateWithPermissions(Permissions.SystemAdmin);
-            var repo1 = _helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
-            var repo2 = _helper.GetService<Mock<IChartOfAccountsCodeRepository>>();
-            var repo3 = _helper.GetService<Mock<IYearlyFinancialCodeRepository>>();
-            var repo4 = _helper.GetService<Mock<ICostTypeCodeRepository>>();
-            var repo5 = _helper.GetService<Mock<IFinancialActivityCodeRepository>>();
-            var repo6 = _helper.GetService<Mock<IWorkActivityCodeRepository>>();
-            var repo7 = _helper.GetService<Mock<IResponsibilityCodeRepository>>();
+            var service = this.CreateWithPermissions(Permissions.SystemAdmin);
+            var repo1 = this._helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
+            var repo2 = this._helper.GetService<Mock<IChartOfAccountsCodeRepository>>();
+            var repo3 = this._helper.GetService<Mock<IYearlyFinancialCodeRepository>>();
+            var repo4 = this._helper.GetService<Mock<ICostTypeCodeRepository>>();
+            var repo5 = this._helper.GetService<Mock<IFinancialActivityCodeRepository>>();
+            var repo6 = this._helper.GetService<Mock<IWorkActivityCodeRepository>>();
+            var repo7 = this._helper.GetService<Mock<IResponsibilityCodeRepository>>();
 
             repo1.Setup(x => x.GetAllBusinessFunctionCodes()).Returns(new List<PimsBusinessFunctionCode>());
             repo2.Setup(x => x.GetAllChartOfAccountCodes()).Returns(new List<PimsChartOfAccountsCode>());
@@ -78,7 +78,7 @@ namespace Pims.Api.Test.Services
         public void GetAll_NoPermission()
         {
             // Arrange
-            var service = CreateWithPermissions();
+            var service = this.CreateWithPermissions();
 
             // Act
             Action act = () => service.GetAllFinancialCodes();
@@ -91,8 +91,8 @@ namespace Pims.Api.Test.Services
         public void GetFinancialCodesByType_Success()
         {
             // Arrange
-            var service = CreateWithPermissions(Permissions.ProjectView);
-            var repo = _helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
+            var service = this.CreateWithPermissions(Permissions.ProjectView);
+            var repo = this._helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
 
             repo.Setup(x => x.GetAllBusinessFunctionCodes()).Returns(new List<PimsBusinessFunctionCode>());
 
@@ -108,7 +108,7 @@ namespace Pims.Api.Test.Services
         public void GetFinancialCodesByType_NoPermission()
         {
             // Arrange
-            var service = CreateWithPermissions();
+            var service = this.CreateWithPermissions();
 
             // Act
             Action act = () => service.GetFinancialCodesByType(FinancialCodeTypes.BusinessFunction);
@@ -121,8 +121,8 @@ namespace Pims.Api.Test.Services
         public void GetById_Success()
         {
             // Arrange
-            var service = CreateWithPermissions(Permissions.SystemAdmin);
-            var repo = _helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
+            var service = this.CreateWithPermissions(Permissions.SystemAdmin);
+            var repo = this._helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
             repo.Setup(x => x.GetById(It.IsAny<long>()));
 
             // Act
@@ -136,7 +136,7 @@ namespace Pims.Api.Test.Services
         public void GetById_NoPermission()
         {
             // Arrange
-            var service = CreateWithPermissions();
+            var service = this.CreateWithPermissions();
 
             // Act
             Action act = () => service.GetById(FinancialCodeTypes.BusinessFunction, 1);
@@ -149,8 +149,8 @@ namespace Pims.Api.Test.Services
         public void Add_Success()
         {
             // Arrange
-            var service = CreateWithPermissions(Permissions.SystemAdmin);
-            var repository = _helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
+            var service = this.CreateWithPermissions(Permissions.SystemAdmin);
+            var repository = this._helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsBusinessFunctionCode>()));
 
             // Act
@@ -164,7 +164,7 @@ namespace Pims.Api.Test.Services
         public void Add_NoPermission()
         {
             // Arrange
-            var service = CreateWithPermissions();
+            var service = this.CreateWithPermissions();
 
             // Act
             Action act = () => service.Add(FinancialCodeTypes.BusinessFunction, new FinancialCodeModel());
@@ -177,8 +177,8 @@ namespace Pims.Api.Test.Services
         public void Add_ThrowIfNull()
         {
             // Arrange
-            var service = CreateWithPermissions(Permissions.SystemAdmin);
-            var repository = _helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
+            var service = this.CreateWithPermissions(Permissions.SystemAdmin);
+            var repository = this._helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsBusinessFunctionCode>()));
 
             // Act
@@ -192,8 +192,8 @@ namespace Pims.Api.Test.Services
         public void Add_ThrowIfDuplicateCodeFound()
         {
             // Arrange
-            var service = CreateWithPermissions(Permissions.SystemAdmin);
-            var repository = _helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
+            var service = this.CreateWithPermissions(Permissions.SystemAdmin);
+            var repository = this._helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsBusinessFunctionCode>())).Throws<DuplicateEntityException>();
 
             // Act
@@ -213,12 +213,12 @@ namespace Pims.Api.Test.Services
         public void Update_Success()
         {
             // Arrange
-            var service = CreateWithPermissions(Permissions.SystemAdmin);
+            var service = this.CreateWithPermissions(Permissions.SystemAdmin);
             var codeEntity = EntityHelper.CreateFinancialCode(FinancialCodeTypes.BusinessFunction, 1, "FOO", "Other description");
-            var repository = _helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
+            var repository = this._helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsBusinessFunctionCode>())).Returns(codeEntity as PimsBusinessFunctionCode);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            var _mapper = _helper.GetService<IMapper>();
+            var _mapper = this._helper.GetService<IMapper>();
 
             // Act
             var model = _mapper.Map<FinancialCodeModel>(codeEntity);
@@ -232,7 +232,7 @@ namespace Pims.Api.Test.Services
         public void Update_NoPermission()
         {
             // Arrange
-            var service = CreateWithPermissions();
+            var service = this.CreateWithPermissions();
 
             // Act
             Action act = () => service.Update(FinancialCodeTypes.BusinessFunction, new FinancialCodeModel());
@@ -245,8 +245,8 @@ namespace Pims.Api.Test.Services
         public void Update_ThrowIf_Null()
         {
             // Arrange
-            var service = CreateWithPermissions(Permissions.SystemAdmin);
-            var repository = _helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
+            var service = this.CreateWithPermissions(Permissions.SystemAdmin);
+            var repository = this._helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsBusinessFunctionCode>()));
 
             // Act
@@ -260,8 +260,8 @@ namespace Pims.Api.Test.Services
         public void Update_ThrowIf_DuplicateCodeFound()
         {
             // Arrange
-            var service = CreateWithPermissions(Permissions.SystemAdmin);
-            var repository = _helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
+            var service = this.CreateWithPermissions(Permissions.SystemAdmin);
+            var repository = this._helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsBusinessFunctionCode>())).Throws<DuplicateEntityException>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
 
@@ -284,8 +284,8 @@ namespace Pims.Api.Test.Services
         public void Update_ThrowIf_OlderVersion()
         {
             // Arrange
-            var service = CreateWithPermissions(Permissions.SystemAdmin);
-            var repository = _helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
+            var service = this.CreateWithPermissions(Permissions.SystemAdmin);
+            var repository = this._helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsBusinessFunctionCode>()));
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(2);
 

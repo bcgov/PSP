@@ -9,6 +9,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     public class AdminToolSteps
     {
         private readonly LoginSteps loginSteps;
+        private readonly DigitalDocumentSteps digitalDocumentSteps;
         private readonly HelpDesk helpDesk;
         private readonly ManageUsers manageUsers;
         private readonly DigitalDocuments digitalDocuments;
@@ -24,12 +25,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public AdminToolSteps(BrowserDriver driver)
         {
             loginSteps = new LoginSteps(driver);
+            digitalDocumentSteps = new DigitalDocumentSteps(driver);
             helpDesk = new HelpDesk(driver.Current);
             manageUsers = new ManageUsers(driver.Current);
             digitalDocuments = new DigitalDocuments(driver.Current);
             financialCodes = new FinancialCodes(driver.Current);
             cdogsTemplates = new CDOGSTemplates(driver.Current);
-            documentFiles = driver.Configuration.GetSection("UploadDocuments").Get<IEnumerable<DocumentFile>>();
+            documentFiles = digitalDocumentSteps.UploadFileDocuments();
             financialCode = new FinancialCode();
         }
 
@@ -114,7 +116,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocuments.UploadDocument(template.Url);
 
             //Save new template
-            digitalDocuments.SaveDigitalDocument();
+            digitalDocuments.SaveCDOGTemplate();
 
             //Verify Document List
             digitalDocuments.VerifyDocumentsListView("CDOGS Templates");

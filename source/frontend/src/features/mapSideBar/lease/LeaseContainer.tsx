@@ -216,7 +216,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
             isOkDisabled={formikRef?.current?.isSubmitting}
             onSave={handleSaveClick}
             onCancel={handleCancelClick}
-            isValid={isValid}
+            displayRequiredFieldError={isValid === false && !!formikRef.current?.submitCount}
           />
         )
       }

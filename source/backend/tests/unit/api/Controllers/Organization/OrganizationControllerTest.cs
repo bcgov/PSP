@@ -29,10 +29,10 @@ namespace Pims.Api.Test.Controllers
 
         public OrganizationControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<OrganizationController>(Permissions.LeaseView);
-            _mapper = _helper.GetService<IMapper>();
-            _service = _helper.GetService<Mock<IOrganizationService>>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<OrganizationController>(Permissions.LeaseView);
+            this._mapper = this._helper.GetService<IMapper>();
+            this._service = this._helper.GetService<Mock<IOrganizationService>>();
         }
         #region Get
         /// <summary>
@@ -44,13 +44,13 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var organization = EntityHelper.CreateOrganization(1, "Test Name");
 
-            _service.Setup(m => m.GetOrganization(It.IsAny<long>())).Returns(organization);
+            this._service.Setup(m => m.GetOrganization(It.IsAny<long>())).Returns(organization);
 
             // Act
-            var result = _controller.GetOrganization(1);
+            var result = this._controller.GetOrganization(1);
 
             // Assert
-            _service.Verify(m => m.GetOrganization(It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.GetOrganization(It.IsAny<long>()), Times.Once());
         }
         #endregion
         #region Update
@@ -64,13 +64,13 @@ namespace Pims.Api.Test.Controllers
 
             var organization = EntityHelper.CreateOrganization(1, "Test Name");
 
-            _service.Setup(m => m.UpdateOrganization(It.IsAny<Pims.Dal.Entities.PimsOrganization>(), It.IsAny<long>())).Returns(organization);
+            this._service.Setup(m => m.UpdateOrganization(It.IsAny<Pims.Dal.Entities.PimsOrganization>(), It.IsAny<long>())).Returns(organization);
 
             // Act
-            var result = _controller.UpdateOrganization(_mapper.Map<Model.OrganizationModel>(organization));
+            var result = this._controller.UpdateOrganization(this._mapper.Map<Model.OrganizationModel>(organization));
 
             // Assert
-            _service.Verify(m => m.UpdateOrganization(It.IsAny<Pims.Dal.Entities.PimsOrganization>(), It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.UpdateOrganization(It.IsAny<Pims.Dal.Entities.PimsOrganization>(), It.IsAny<long>()), Times.Once());
         }
         #endregion
     }

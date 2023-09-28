@@ -82,7 +82,6 @@ namespace Pims.Api.Test.Services
             this.MockCommonServices();
             this.leaseRepository.Setup(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), It.IsAny<HashSet<short>>(), true)).Returns(new List<PimsLease>() { lease });
             this.userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser() { PimsRegionUsers = new List<PimsRegionUser>() });
-            
 
             // Act
             var leases = this.leaseReportsService.GetAggregatedLeaseReport(2022);

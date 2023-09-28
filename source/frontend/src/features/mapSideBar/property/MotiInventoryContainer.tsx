@@ -28,6 +28,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
   const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isValid, setIsValid] = useState<boolean>(true);
 
   const mapMachine = useMapStateMachine();
 
@@ -57,7 +58,8 @@ export const MotiInventoryContainer: React.FunctionComponent<
   const handleSaveClick = async () => {
     if (formikRef !== undefined) {
       formikRef.current?.setSubmitting(true);
-      formikRef.current?.submitForm();
+      await formikRef.current?.submitForm();
+      setIsValid(formikRef.current?.isValid ?? false);
     }
   };
 
@@ -108,6 +110,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
             isOkDisabled={formikRef?.current?.isSubmitting}
             onSave={handleSaveClick}
             onCancel={handleCancelClick}
+            displayRequiredFieldError={!isValid}
           />
         )
       }

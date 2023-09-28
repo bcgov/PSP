@@ -81,9 +81,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyButtonsPresence()
         {
-            Wait();
-            Assert.True(webDriver.FindElement(generalModalOkBttn).Displayed);
-            Assert.True(webDriver.FindElement(generalModalCancelBttn).Displayed);
+            AssertTrueIsDisplayed(generalModalOkBttn);
+            AssertTrueIsDisplayed(generalModalCancelBttn);
+        }
+
+        public void IsToastyPresent()
+        {
+            AssertTrueIsDisplayed(generalToastBody);
         }
 
         public void SiteMinderModal()

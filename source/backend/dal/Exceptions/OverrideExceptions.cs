@@ -25,6 +25,11 @@ namespace Pims.Dal.Exceptions
             get { return new UserOverrideCode("PROPERTY_OF_INTEREST_TO_INVENTORY"); }
         }
 
+        public static UserOverrideCode ContractorSelfRemoved
+        {
+            get { return new UserOverrideCode("CONTRACTOR_SELFREMOVED"); }
+        }
+
         public string Code { get; private set; }
 
         private static List<UserOverrideCode> UserOverrideCodes

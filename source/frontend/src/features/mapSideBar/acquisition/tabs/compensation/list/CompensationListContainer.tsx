@@ -48,13 +48,19 @@ export const CompensationListContainer: React.FunctionComponent<
     totalAllowableCompensation: number | null,
   ): Promise<number | null> => {
     if (file) {
+      const updatedFile = {
+        ...file,
+        totalAllowableCompensation: totalAllowableCompensation ?? undefined,
+      };
       try {
-        const response = await putAcquisitionFile(
-          { ...file, totalAllowableCompensation: totalAllowableCompensation ?? undefined },
-          [],
-        );
+        const response = await putAcquisitionFile(updatedFile, []);
         if (response) {
-          setFile({ ...response, fileType: FileTypes.Acquisition });
+          setFile({
+            ...updatedFile,
+            rowVersion: response.rowVersion,
+            fileType: FileTypes.Acquisition,
+          });
+          setStaleFile(true);
           return response.totalAllowableCompensation ?? null;
         }
       } catch (e) {
@@ -72,6 +78,8 @@ export const CompensationListContainer: React.FunctionComponent<
     const defaultCompensationRequisition: Api_CompensationRequisition = {
       id: null,
       acquisitionFileId: fileId,
+      alternateProjectId: null,
+      alternateProject: null,
       isDraft: true,
       fiscalYear: null,
       yearlyFinancialId: null,
@@ -84,6 +92,7 @@ export const CompensationListContainer: React.FunctionComponent<
       agreementDate: null,
       expropriationNoticeServedDate: null,
       expropriationVestingDate: null,
+      advancedPaymentServedDate: null,
       generationDate: null,
       specialInstruction: null,
       detailedRemarks: null,

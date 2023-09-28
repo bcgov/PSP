@@ -43,10 +43,78 @@ namespace PIMS.Tests.Automation.PageObjects
         private By propertyInformationHeaderLandTypeContent = By.XPath("//div[@class='no-gutters row']/div[@class='col']/div/div//label[contains(text(),'Land parcel type')]/parent::div/following-sibling::div");
         private By propertyInformationHeaderZoomBttn = By.CssSelector("button[title='Zoom Map']");
 
+        //Title Tab Elements
+        private By propertyTitleInfo = By.XPath("//div[contains(text(),'This data was retrieved from LTSA')]");
+        private By propertyTitleDetailsTitle = By.XPath("//div[contains(text(),'Title Details')]");
+        private By propertyTitleNumberLabel = By.XPath("//label[contains(text(),'Title number')]");
+        private By propertyTitleLandTitleLabel = By.XPath("//label[contains(text(),'Land title district')]");
+        private By propertyTitleTaxationAuthoritiesLabel = By.XPath("//label[contains(text(),'Taxation authorities')]");
+
+        private By propertyTitleLandTitle = By.XPath("//h2/div/div[contains(text(),'Land')]");
+        private By propertyTitlePIDLabel = By.XPath("//div[contains(text(),'Land')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'PID')]");
+        private By propertyTitleLandDescriptionLabel = By.XPath("//label[contains(text(),'Legal description')]");
+
+        private By propertyOwnershipInformationTitle = By.XPath("//h2/div/div[contains(text(),'Ownership Information')]");
+        private By propertyFractionalOwnershipLabel = By.XPath("//label[contains(text(),'Fractional ownership')]");
+        private By propertyJointTenancyLabel = By.XPath("//label[contains(text(),'Joint tenancy')]");
+        private By propertyOwnershipRemarksLabel = By.XPath("//label[contains(text(),'Ownership remarks')]");
+        private By propertyOwnerNameLabel = By.XPath("//label[contains(text(),'Owner name')]");
+        private By propertyIncorporationNbrLabel = By.XPath("//label[contains(text(),'Incorporation number')]");
+        private By propertyOccupationLabel = By.XPath("//label[contains(text(),'Occupation')]");
+        private By propertyAddressLabel = By.XPath("//div[contains(text(),'Ownership Information')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/label[contains(text(),'Address')]");
+
+        private By propertyChargesLienInterestsTitle = By.XPath("//h2/div/div[contains(text(),'Charges, Liens and Interests')]");
+        private By propertyNatureLabel = By.XPath("//label[contains(text(),'Nature')]");
+        private By propertyRegistrationLabel = By.XPath("//label[contains(text(),'Registration #')]");
+        private By propertyRegisteredDateLabel = By.XPath("//label[contains(text(),'Registered date')]");
+        private By propertyRegisteredOwnerLabel = By.XPath("//label[contains(text(),'Registered owner')]");
+
+        private By propertyDuplicateIndefeasibleTitle = By.XPath("//h2/div/div[contains(text(),'Duplicate Indefeasible Title')]");
+        private By propertyDuplicateIndefeasibleNoneContent = By.XPath("//div[contains(text(),'Duplicate Indefeasible Title')]/parent::div/parent::h2/following-sibling::div[contains(text(),'None')]");
+
+        private By propertyTransfersTitle = By.XPath("//h2/div/div[contains(text(),'Transfers')]");
+        private By propertyTransfersNoneContent = By.XPath("//div[contains(text(),'Transfers')]/parent::div/parent::h2/following-sibling::div[contains(text(),'None')]");
+
+
+        private By propertyNotesTitle = By.XPath("//h2/div/div[contains(text(),'Transfers')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Notes')]");
+        private By propertyMiscellaneousNotesLabel = By.XPath("//label[contains(text(),'Miscellaneous notes')]");
+        private By propertyParcelStatusLabel = By.XPath("//label[contains(text(),'Parcel status')]");
+
+        //Property Value Elements
+        private By propertyValueInfo = By.XPath("//div[contains(text(),'This data was retrieved from BC Assessment on')]");
+
+        private By propertyAssessmentOverviewTitle = By.XPath("//h2/div/div[contains(text(),'Assessment Overview')]");
+        private By propertyAssessmentPIDLabel = By.XPath("//div[contains(text(),'Assessment Overview')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'PID')]");
+        private By propertyAssessmentJurisdictionLabel = By.XPath("//label[contains(text(),'Jurisdiction')]");
+        private By propertyAssessmentNeighbourhoodLabel = By.XPath("//label[contains(text(),'Neighbourhood')]");
+        private By propertyAssessmentOwnershipYearLabel = By.XPath("//label[contains(text(),'Ownership year')]");
+        private By propertyAssessmentRollNumberLabel = By.XPath("//label[contains(text(),'Roll number')]");
+        private By propertyAssessmentRollYearLabel = By.XPath("//label[contains(text(),'Roll year')]");
+        private By propertyAssessmentDocumentNumberLabel = By.XPath("//label[contains(text(),'Document number')]");
+
+        private By propertyAssessmentAddressTitle = By.XPath("//h2/div/div[contains(text(),'Assessment Overview')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Property Address')]");
+        private By propertyValueAddressInfo = By.XPath("//div/p[contains(text(),'This is the property address as per BC Assessment (for reference)')]");
+        private By propertyValueAddressLabel = By.XPath("//p[contains(text(),'This is the property address as per BC Assessment (for reference)')]/following-sibling::div/div/label[(contains(text(),'Address'))]");
+        private By propertyValueCityLabel = By.XPath("//p[contains(text(),'This is the property address as per BC Assessment (for reference)')]/following-sibling::div/div/label[(contains(text(),'City'))]");
+        private By propertyValueProvinceLabel = By.XPath("//p[contains(text(),'This is the property address as per BC Assessment (for reference)')]/following-sibling::div/div/label[(contains(text(),'Province'))]");
+        private By propertyValuePostalCodeLabel = By.XPath("//p[contains(text(),'This is the property address as per BC Assessment (for reference)')]/following-sibling::div/div/label[(contains(text(),'Postal code'))]");
+
+        private By propertyAssessedValueTitle = By.XPath("//h2/div/div[contains(text(),'Assessed Value')]");
+        private By propertyAssessedTable = By.CssSelector("div[data-testid='Assessed Values Sales']");
+
+        private By propertyAssessmentDetailsTitle = By.XPath("//h2/div/div[contains(text(),'Assessment Details')]");
+        private By propertyAssessmentManualClassLabel = By.XPath("//label[contains(text(),'Manual class')]");
+        private By propertyAssessmentActualUseLabel = By.XPath("//label[contains(text(),'Actual use')]");
+        private By propertyAssessmentALRLabel = By.XPath("//label[contains(text(),'ALR')]");
+        private By propertyAssessmentLandDimensionLabel = By.XPath("//label[contains(text(),'Land dimension')]");
+
+        private By propertyAssessmentSalesTitle = By.XPath("//h2/div/div[contains(text(),'Assessment Details')]");
+        private By propertySalesDescription = By.XPath("//div[contains(text(),'Description')]");
+
+
         //Property Details Elements
         private By propertyDetailsTab = By.XPath("//a[contains(text(),'Property Details')]");
-        //private By propertyDetailsEditBttn = By.CssSelector("div[role='tabpanel']:nth-child(3) div div button[title='Edit research file']");
-        private By propertyDetailsEditBttn = By.CssSelector("button[title='Edit research file']");
+        private By propertyDetailsEditBttn = By.CssSelector("button[title='Edit property details']");
 
         private By propertyDetailsAddressTitle = By.XPath("//div[contains(text(),'Property Attributes')]/parent::div/parent::h2/parent::div/preceding-sibling::div/h2/div/div[contains(text(),'Property Address')]");
         private By propertyDetailsEditAddressTitle = By.XPath("//div[contains(text(),'Property Address')]");
@@ -190,7 +258,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ClosePropertyInfoModal()
         {
-            WaitUntilClickable(propertyCloseWindowBttn);
+            WaitUntilSpinnerDisappear();
+
+            WaitUntilVisible(propertyCloseWindowBttn);
             webDriver.FindElement(propertyCloseWindowBttn).Click();
         }
 
@@ -208,6 +278,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ChooseCreationOptionFromPin(string option)
         {
+            Wait();
             switch(option)
             {
                 case "View more property info":
@@ -231,6 +302,18 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(propertyDetailsTab).Click();
         }
 
+        public void NavigatePropertyTitleTab()
+        {
+            WaitUntilClickable(propertyInformationTitleTab);
+            webDriver.FindElement(propertyInformationTitleTab).Click();
+        }
+
+        public void NavigatePropertyValueTab()
+        {
+            WaitUntilClickable(propertyInformationValueTab);
+            webDriver.FindElement(propertyInformationValueTab).Click();
+        }
+
         public void EditPropertyInfoBttn()
         {
             FocusAndClick(propertyDetailsEditBttn);
@@ -240,7 +323,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             ButtonElement("Save");
 
-            sharedModals.SiteMinderModal();
+            //sharedModals.SiteMinderModal();
         }
 
         public void CancelPropertyDetails()
@@ -436,6 +519,84 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(propertyLeafletEllipsisBttn).Displayed);
         }
 
+        public void VerifyTitleTab()
+        {
+            AssertTrueIsDisplayed(propertyTitleInfo);
+            AssertTrueIsDisplayed(propertyTitleDetailsTitle);
+            AssertTrueIsDisplayed(propertyTitleNumberLabel);
+            AssertTrueIsDisplayed(propertyTitleNumberLabel);
+            AssertTrueIsDisplayed(propertyTitleLandTitleLabel);
+            AssertTrueIsDisplayed(propertyTitleTaxationAuthoritiesLabel);
+
+            AssertTrueIsDisplayed(propertyTitleLandTitle);
+            AssertTrueIsDisplayed(propertyTitlePIDLabel);
+            AssertTrueIsDisplayed(propertyTitleLandDescriptionLabel);
+
+            AssertTrueIsDisplayed(propertyTitleDetailsTitle);
+            AssertTrueIsDisplayed(propertyFractionalOwnershipLabel);
+            AssertTrueIsDisplayed(propertyJointTenancyLabel);
+            AssertTrueIsDisplayed(propertyOwnershipRemarksLabel);
+            AssertTrueIsDisplayed(propertyOwnerNameLabel);
+            AssertTrueIsDisplayed(propertyIncorporationNbrLabel);
+            AssertTrueIsDisplayed(propertyOccupationLabel);
+            AssertTrueIsDisplayed(propertyAddressLabel);
+
+            AssertTrueIsDisplayed(propertyChargesLienInterestsTitle);
+            if (webDriver.FindElements(propertyNatureLabel).Count >= 1)
+            {
+                Assert.True(webDriver.FindElements(propertyNatureLabel).First().Displayed);
+                Assert.True(webDriver.FindElements(propertyRegistrationLabel).First().Displayed);
+                Assert.True(webDriver.FindElements(propertyRegisteredDateLabel).First().Displayed);
+                Assert.True(webDriver.FindElements(propertyRegisteredOwnerLabel).First().Displayed);
+            }
+
+            AssertTrueIsDisplayed(propertyDuplicateIndefeasibleTitle);
+            AssertTrueIsDisplayed(propertyDuplicateIndefeasibleNoneContent);
+
+            AssertTrueIsDisplayed(propertyTransfersTitle);
+            AssertTrueIsDisplayed(propertyTransfersNoneContent);
+
+            AssertTrueIsDisplayed(propertyNotesTitle);
+            AssertTrueIsDisplayed(propertyMiscellaneousNotesLabel);
+            AssertTrueIsDisplayed(propertyParcelStatusLabel);
+       
+        }
+
+        public void VerifyValueTab()
+        {
+            Wait(2000);
+
+            AssertTrueIsDisplayed(propertyValueInfo);
+
+            AssertTrueIsDisplayed(propertyAssessmentOverviewTitle);
+            AssertTrueIsDisplayed(propertyAssessmentPIDLabel);
+            AssertTrueIsDisplayed(propertyAssessmentJurisdictionLabel);
+            AssertTrueIsDisplayed(propertyAssessmentNeighbourhoodLabel);
+            AssertTrueIsDisplayed(propertyAssessmentOwnershipYearLabel);
+            AssertTrueIsDisplayed(propertyAssessmentRollNumberLabel);
+            AssertTrueIsDisplayed(propertyAssessmentRollYearLabel);
+            AssertTrueIsDisplayed(propertyAssessmentDocumentNumberLabel);
+
+            AssertTrueIsDisplayed(propertyAssessmentAddressTitle);
+            AssertTrueIsDisplayed(propertyValueAddressInfo);
+            AssertTrueIsDisplayed(propertyValueAddressLabel);
+            AssertTrueIsDisplayed(propertyValueCityLabel);
+            AssertTrueIsDisplayed(propertyValueProvinceLabel);
+            AssertTrueIsDisplayed(propertyValuePostalCodeLabel);
+
+            AssertTrueIsDisplayed(propertyAssessedValueTitle);
+            AssertTrueIsDisplayed(propertyAssessedTable);
+
+            AssertTrueIsDisplayed(propertyAssessmentDetailsTitle);
+            AssertTrueIsDisplayed(propertyAssessmentManualClassLabel);
+            AssertTrueIsDisplayed(propertyAssessmentActualUseLabel);
+            AssertTrueIsDisplayed(propertyAssessmentALRLabel);
+            AssertTrueIsDisplayed(propertyAssessmentLandDimensionLabel);
+
+            AssertTrueIsDisplayed(propertyAssessmentSalesTitle);
+            AssertTrueIsDisplayed(propertySalesDescription);
+        }
+
         public void VerifyPropertyInformationHeader()
         {
             Wait(2000);
@@ -454,63 +615,63 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPropertyDetailsView()
         {
-            WaitUntilDisappear(propertyDetailsWaitSpinner);
+            //WaitUntilDisappear(propertyDetailsWaitSpinner);
             Wait(3000);
 
-            Assert.True(webDriver.FindElement(propertyDetailsAddressTitle).Displayed);
+            AssertTrueIsDisplayed(propertyDetailsAddressTitle);
 
             if (webDriver.FindElements(propertyDetailsAddressNotAvailable).Count() > 0)
             {
-                Assert.True(webDriver.FindElement(propertyDetailsAddressNotAvailable).Displayed);
+                AssertTrueIsDisplayed(propertyDetailsAddressNotAvailable);
             }
             else
             {
-                Assert.True(webDriver.FindElement(propertyDetailsAddressLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsAddressContent).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsCityLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsCityContent).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsProvinceLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsProvinceContent).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsPostalCodeLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsPostalCodeContent).Displayed);
+                AssertTrueIsDisplayed(propertyDetailsAddressLabel);
+                AssertTrueIsDisplayed(propertyDetailsAddressContent);
+                AssertTrueIsDisplayed(propertyDetailsCityLabel);
+                AssertTrueIsDisplayed(propertyDetailsCityContent);
+                AssertTrueIsDisplayed(propertyDetailsProvinceLabel);
+                AssertTrueIsDisplayed(propertyDetailsProvinceContent);
+                AssertTrueIsDisplayed(propertyDetailsPostalCodeLabel);
+                AssertTrueIsDisplayed(propertyDetailsPostalCodeContent);
             }
 
-            Assert.True(webDriver.FindElement(propertyDetailsAttributesTitle).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrRegionLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrRegionDiv).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrHighwayLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrHighwayDiv).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrElectoralLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrElectoralDiv).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrAgriLandLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrAgriLandDiv).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrRailwayLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrRailwayDiv).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrLandParcelLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrLandParcelDiv).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrMunicipalLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrMunicipalDiv).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrAnomaliesLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrAnomaliesDiv).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrCoordinatesLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrCoordinatesDiv).Displayed);
+            AssertTrueIsDisplayed(propertyDetailsAttributesTitle);
+            AssertTrueIsDisplayed(propertyDetailsAttrRegionLabel);
+            AssertTrueIsDisplayed(propertyDetailsAttrRegionDiv);
+            AssertTrueIsDisplayed(propertyDetailsAttrHighwayLabel);
+            AssertTrueIsDisplayed(propertyDetailsAttrHighwayDiv);
+            AssertTrueIsDisplayed(propertyDetailsAttrElectoralLabel);
+            AssertTrueIsDisplayed(propertyDetailsAttrElectoralDiv);
+            AssertTrueIsDisplayed(propertyDetailsAttrAgriLandLabel);
+            AssertTrueIsDisplayed(propertyDetailsAttrAgriLandDiv);
+            AssertTrueIsDisplayed(propertyDetailsAttrRailwayLabel);
+            AssertTrueIsDisplayed(propertyDetailsAttrRailwayDiv);
+            AssertTrueIsDisplayed(propertyDetailsAttrLandParcelLabel);
+            AssertTrueIsDisplayed(propertyDetailsAttrLandParcelDiv);
+            AssertTrueIsDisplayed(propertyDetailsAttrMunicipalLabel);
+            AssertTrueIsDisplayed(propertyDetailsAttrMunicipalDiv);
+            AssertTrueIsDisplayed(propertyDetailsAttrAnomaliesLabel);
+            AssertTrueIsDisplayed(propertyDetailsAttrAnomaliesDiv);
+            AssertTrueIsDisplayed(propertyDetailsAttrCoordinatesLabel);
+            AssertTrueIsDisplayed(propertyDetailsAttrCoordinatesDiv);
 
-            Assert.True(webDriver.FindElement(propertyDetailsTenureTitle).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsTenureStatusLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsTenureStatusDiv).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsPublicHwyLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsPublicHwyDiv).Displayed);
+            AssertTrueIsDisplayed(propertyDetailsTenureTitle);
+            AssertTrueIsDisplayed(propertyDetailsTenureStatusLabel);
+            AssertTrueIsDisplayed(propertyDetailsTenureStatusDiv);
+            AssertTrueIsDisplayed(propertyDetailsPublicHwyLabel);
+            AssertTrueIsDisplayed(propertyDetailsPublicHwyDiv);
 
             if (webDriver.FindElements(propertyDetailsHighwayRoadEstablishLabel).Count() > 0)
             {
-                Assert.True(webDriver.FindElement(propertyDetailsHighwayRoadEstablishLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsHighwayRoadEstablisDiv).Displayed);
+                AssertTrueIsDisplayed(propertyDetailsHighwayRoadEstablishLabel);
+                AssertTrueIsDisplayed(propertyDetailsHighwayRoadEstablisDiv);
             }
 
             if (webDriver.FindElements(propertyDetailsAdjacentLandTypeLabel).Count() > 0)
             {
-                Assert.True(webDriver.FindElement(propertyDetailsAdjacentLandTypeLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsAdjacentLandTypeDiv).Displayed);
+                AssertTrueIsDisplayed(propertyDetailsAdjacentLandTypeLabel);
+                AssertTrueIsDisplayed(propertyDetailsAdjacentLandTypeDiv);
             }
 
             if (webDriver.FindElements(propertyDetailsFirstNationTitle).Count() > 0)

@@ -36,7 +36,6 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsPropertyAcquisitionFiles
                 .Where(x => x.AcquisitionFileId == acquisitionFileId)
-                .Include(rp => rp.PimsActInstPropAcqFiles)
                 .Include(rp => rp.PimsTakes)
                 .Include(rp => rp.Property)
                     .ThenInclude(rp => rp.RegionCodeNavigation)
@@ -80,10 +79,7 @@ namespace Pims.Dal.Repositories
 
             var propertyAcquisitionFileToDelete = Context.PimsPropertyAcquisitionFiles
                 .Where(x => x.PropertyAcquisitionFileId == propertyAcquisitionFile.Internal_Id)
-                .Include(rp => rp.PimsActInstPropAcqFiles)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
-
-            propertyAcquisitionFileToDelete.PimsActInstPropAcqFiles.ForEach(s => Context.PimsActInstPropAcqFiles.Remove(s));
 
             Context.PimsPropertyAcquisitionFiles.Remove(propertyAcquisitionFileToDelete);
         }

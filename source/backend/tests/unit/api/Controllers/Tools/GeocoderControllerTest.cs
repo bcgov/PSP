@@ -34,8 +34,8 @@ namespace Pims.Api.Test.Controllers.Tools
         public GeocoderControllerTest()
         {
             var helper = new TestHelper();
-            _controller = helper.CreateController<GeocoderController>(Permissions.SystemAdmin);
-            _service = helper.GetService<Mock<IGeocoderService>>();
+            this._controller = helper.CreateController<GeocoderController>(Permissions.SystemAdmin);
+            this._service = helper.GetService<Mock<IGeocoderService>>();
         }
         #endregion
 
@@ -67,13 +67,13 @@ namespace Pims.Api.Test.Controllers.Tools
                 },
             };
 
-            _service.Setup(m => m.GetSiteAddressesAsync(It.IsAny<AddressesParameters>(), It.IsAny<string>())).ReturnsAsync(addresses);
+            this._service.Setup(m => m.GetSiteAddressesAsync(It.IsAny<AddressesParameters>(), It.IsAny<string>())).ReturnsAsync(addresses);
 
             // Act
-            var result = await _controller.FindAddressesAsync("test");
+            var result = await this._controller.FindAddressesAsync("test");
 
             // Assert
-            _service.Verify(m => m.GetSiteAddressesAsync(It.IsAny<AddressesParameters>(), It.IsAny<string>()));
+            this._service.Verify(m => m.GetSiteAddressesAsync(It.IsAny<AddressesParameters>(), It.IsAny<string>()));
         }
         #endregion
 
@@ -98,13 +98,13 @@ namespace Pims.Api.Test.Controllers.Tools
                 Geometry = new GeometryModel() { Coordinates = new[] { 2d, 1d } },
             };
 
-            _service.Setup(m => m.GetNearestSiteAsync(It.IsAny<NearestParameters>(), It.IsAny<string>())).ReturnsAsync(address);
+            this._service.Setup(m => m.GetNearestSiteAsync(It.IsAny<NearestParameters>(), It.IsAny<string>())).ReturnsAsync(address);
 
             // Act
-            var result = await _controller.FindNearestAddressAsync("test");
+            var result = await this._controller.FindNearestAddressAsync("test");
 
             // Assert
-            _service.Verify(m => m.GetNearestSiteAsync(It.IsAny<NearestParameters>(), It.IsAny<string>()));
+            this._service.Verify(m => m.GetNearestSiteAsync(It.IsAny<NearestParameters>(), It.IsAny<string>()));
         }
         #endregion
 
@@ -135,13 +135,13 @@ namespace Pims.Api.Test.Controllers.Tools
                 },
             };
 
-            _service.Setup(m => m.GetNearSitesAsync(It.IsAny<NearParameters>(), It.IsAny<string>())).ReturnsAsync(addresses);
+            this._service.Setup(m => m.GetNearSitesAsync(It.IsAny<NearParameters>(), It.IsAny<string>())).ReturnsAsync(addresses);
 
             // Act
-            var result = await _controller.FindNearAddressesAsync("test");
+            var result = await this._controller.FindNearAddressesAsync("test");
 
             // Assert
-            _service.Verify(m => m.GetNearSitesAsync(It.IsAny<NearParameters>(), It.IsAny<string>()));
+            this._service.Verify(m => m.GetNearSitesAsync(It.IsAny<NearParameters>(), It.IsAny<string>()));
         }
         #endregion
 
@@ -157,13 +157,13 @@ namespace Pims.Api.Test.Controllers.Tools
                 Pids = "test1,test2",
             };
 
-            _service.Setup(m => m.GetPids(It.IsAny<Guid>(), It.IsAny<string>())).ReturnsAsync(response);
+            this._service.Setup(m => m.GetPids(It.IsAny<Guid>(), It.IsAny<string>())).ReturnsAsync(response);
 
             // Act
-            var result = await _controller.FindPidsAsync(testSiteId);
+            var result = await this._controller.FindPidsAsync(testSiteId);
 
             // Assert
-            _service.Verify(m => m.GetPids(testSiteId, It.IsAny<string>()));
+            this._service.Verify(m => m.GetPids(testSiteId, It.IsAny<string>()));
         }
         #endregion
         #endregion

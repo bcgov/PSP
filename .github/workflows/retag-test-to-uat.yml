@@ -21,7 +21,7 @@ env:
   TAG_DEV: "dev"
   TAG_TEST: "test"
   TAG_PROD: "prod"
-  INSTANCE: "-test"
+  INSTANCE: "-uat"
   NAMESPACE_OVERRIDE: "3cd915-test"
   RELEASE_TAG: "test"
 

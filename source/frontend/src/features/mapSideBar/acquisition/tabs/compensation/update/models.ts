@@ -1,4 +1,5 @@
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
+import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_FinancialCode } from '@/models/api/FinancialCode';
@@ -19,11 +20,13 @@ export class CompensationRequisitionFormModel {
   agreementDateTime: string = '';
   expropriationNoticeServedDateTime: string = '';
   expropriationVestingDateTime: string = '';
+  advancedPaymentServedDate: string = '';
   generationDatetTime: string = '';
   specialInstruction: string = '';
   detailedRemarks: string = '';
   financials: FinancialActivityFormModel[] = [];
   payee: AcquisitionPayeeFormModel;
+  alternateProject: IAutocompletePrediction | null = null;
   isDisabled: string = '';
   rowVersion: number | null = null;
 
@@ -41,6 +44,10 @@ export class CompensationRequisitionFormModel {
       ...modelWithPayeeInformation,
       id: this.id,
       acquisitionFileId: this.acquisitionFileId,
+      alternateProjectId:
+        this.alternateProject?.id !== undefined && this.alternateProject?.id !== 0
+          ? this.alternateProject?.id
+          : null,
       isDraft: this.status === 'draft' ? true : false,
       fiscalYear: stringToUndefined(this.fiscalYear),
       yearlyFinancialId: this.stob === '' ? null : Number(this.stob),
@@ -53,6 +60,7 @@ export class CompensationRequisitionFormModel {
       finalizedDate: stringToUndefined(this.finalizedDate),
       expropriationNoticeServedDate: stringToUndefined(this.expropriationNoticeServedDateTime),
       expropriationVestingDate: stringToUndefined(this.expropriationVestingDateTime),
+      advancedPaymentServedDate: stringToUndefined(this.advancedPaymentServedDate),
       generationDate: stringToUndefined(this.generationDatetTime),
       specialInstruction: stringToUndefined(this.specialInstruction),
       detailedRemarks: stringToUndefined(this.detailedRemarks),
@@ -79,10 +87,18 @@ export class CompensationRequisitionFormModel {
     compensation.serviceLine = apiModel.chartOfAccountsId?.toString() || '';
     compensation.chartOfAccounts = apiModel.chartOfAccounts;
     compensation.responsibilityCentre = apiModel.responsibilityId?.toString() || '';
+    compensation.alternateProject =
+      apiModel.alternateProject !== null
+        ? {
+            id: apiModel.alternateProject?.id || 0,
+            text: apiModel.alternateProject?.description || '',
+          }
+        : null;
     compensation.Responsibility = apiModel.responsibility;
     compensation.agreementDateTime = apiModel.agreementDate || '';
     compensation.expropriationNoticeServedDateTime = apiModel.expropriationNoticeServedDate || '';
     compensation.expropriationVestingDateTime = apiModel.expropriationVestingDate || '';
+    compensation.advancedPaymentServedDate = apiModel.advancedPaymentServedDate || '';
     compensation.generationDatetTime = apiModel.generationDate || '';
     compensation.specialInstruction = apiModel.specialInstruction || '';
     compensation.detailedRemarks = apiModel.detailedRemarks || '';

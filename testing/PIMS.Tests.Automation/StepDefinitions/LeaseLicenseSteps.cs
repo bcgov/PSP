@@ -46,32 +46,37 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease = new Lease();
         }
 
-        [StepDefinition(@"I create a new Lease from row number (.*)")]
-        public void CreateLeaseLicense(int rowNumber)
+        [StepDefinition(@"I create a new minimum Lease from row number (.*)")]
+        public void CreateMinimumLeaseLicense(int rowNumber)
         {
-            /* TEST COVERAGE: 
-             * Lease Details: PSP-1966, PSP-2550, PSP-2644, PSP-4558, PSP-5100, PSP-5245, PSP-5334, PSP-5335, PSP-5336, PSP-5337, PSP-5338, PSP-5340, PSP-5654, PSP-5668, PSP-5923, PSP-6266
-             * Tenants: PSP-3492, PSP-3494, PSP-3495, PSP-3496, PSP-3498, PSP-3499
-             * Improvements: PSP-2637, PSP-2640
-             * Insurance: PSP-2099,  PSP-2677
-             * Deposits: PSP-2094, PSP-2921, PSP-2922
-             * Payments: PSP-2755, PSP-2815, PSP-2915, PSP-2918, PSP-2927
-             * Surplus: PSP-2157
-             */
+            /* TEST COVERAGE: PSP-1966, PSP-2550, PSP-4558, PSP-5100 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
 
             //Navigate to Create a new Lease/License
+            PopulateLeaseLicense(rowNumber);
             leaseDetails.NavigateToCreateNewLicense();
 
-            //LEASE DETAILS
-            //Verify Create new Lease Form
+            //Create minimum Lease file
             leaseDetails.VerifyLicenseDetailsCreateForm();
+            leaseDetails.CreateMinimumLicenseDetails(lease);
 
-            //Create a new Lease/ License Details with maximum fields
-            PopulateLeaseLicense(rowNumber);
-            leaseDetails.CreateLicenseDetails(lease);
+            //Save minimum lease file
+            leaseDetails.SaveLicense();
+
+            //Get new lease's code
+            leaseCode = leaseDetails.GetLeaseCode();
+        }
+
+        [StepDefinition(@"I add additional Information to the Lease Details")]
+        public void AddAdditionalInfoLicenseDetails()
+        {
+            /* TEST COVERAGE:  PSP-1966, PSP-2550, PSP-2644, PSP-4558, PSP-5334, PSP-5335, PSP-5336, PSP-5337, PSP-5338, PSP-5340, PSP-5654, PSP-5668, PSP-5923, PSP-6266 */
+
+            //Add Additional information to the lease
+            leaseDetails.EditLeaseFileDetailsBttn();
+            leaseDetails.AddAdditionalLicenseDetailsInformation(lease);
 
             //Add Several Properties
             //Verify UI/UX from Search By Component
@@ -79,7 +84,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties.VerifySearchPropertiesFeature();
 
             //Search for a property by PID
-            System.Diagnostics.Debug.WriteLine(lease.SearchProperties.PID);
             if (lease.SearchProperties.PID != "")
             {
                 sharedSearchProperties.SelectPropertyByPID(lease.SearchProperties.PID);
@@ -100,7 +104,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 sharedSearchProperties.SelectFirstOption();
             }
 
-
             //Search for a property by Address
             if (lease.SearchProperties.Address != "")
             {
@@ -110,10 +113,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a property by Legal Description
             if (lease.SearchProperties.LegalDescription != "")
-                {
-                    sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
-                    sharedSearchProperties.SelectFirstOption();
-                }
+            {
+                sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
+                sharedSearchProperties.SelectFirstOption();
+            }
 
             //Search for a duplicate property
             if (lease.SearchProperties.PID != "")
@@ -125,6 +128,47 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Save the new license details
             leaseDetails.SaveLicense();
             leaseDetails.VerifyLicenseDetailsViewForm(lease);
+        }
+
+        [StepDefinition(@"I update a Lease's Details from row number (.*)")]
+        public void UpdateLeaseDetails(int rowNumber)
+        {
+            /* TEST COVERAGE: PSP-2096, PSP-2642, PSP-4558, PSP-5161, PSP-5245, PSP-5342, PSP-5667, PSP-5924 */
+
+            //Navigate to Search Leases
+            PopulateLeaseLicense(rowNumber);
+            searchLease.NavigateToSearchLicense();
+
+            //Look for the previously created lease
+            searchLease.SearchLicenseByLFile(leaseCode);
+            searchLease.SelectFirstOption();
+
+            //Edit File Details Section
+            leaseDetails.EditLeaseFileDetailsBttn();
+
+            //Verify the edit File details form
+            leaseDetails.VerifyLicenseDetailsUpdateForm();
+
+            //Make some changes on the Details Form
+            leaseDetails.UpdateLeaseFileDetails(lease);
+
+            //Verify Properties section
+            sharedSearchProperties.VerifyLocateOnMapFeature();
+
+            //Delete 1st property
+            sharedSearchProperties.DeleteProperty();
+
+            //Save the new license details
+            leaseDetails.SaveLicense();
+
+            //Verify File Details Form
+            leaseDetails.VerifyLicenseDetailsViewForm(lease);
+        }
+
+        [StepDefinition(@"I add Tenants to the Lease")]
+        public void CreateTenants()
+        {
+            /* TEST COVERAGE: PSP-3492, PSP-3494, PSP-3495, PSP-3496, PSP-3498, PSP-3499 */
 
             //TENANTS
             //Navigate to Tenants
@@ -159,12 +203,61 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Assert quantity of tenants
-            Assert.True(tenant.TotalTenants() == lease.TenantsNumber);
-            Assert.True(tenant.TotalRepresentatives() == lease.RepresentativeNumber);
-            Assert.True(tenant.TotalManagers() == lease.PropertyManagerNumber);
-            Assert.True(tenant.TotalUnknown() == lease.UnknownNumber);
+            Assert.True(tenant.TotalTenants().Equals(lease.TenantsNumber));
+            Assert.True(tenant.TotalRepresentatives().Equals(lease.RepresentativeNumber));
+            Assert.True(tenant.TotalManagers().Equals(lease.PropertyManagerNumber));
+            Assert.True(tenant.TotalUnknown().Equals(lease.UnknownNumber));
+        }
 
-            //IMPROVEMENTS
+        [StepDefinition(@"I update a Lease's Tenants from row number (.*)")]
+        public void UpdateTenants(int rowNumber)
+        {
+            /* TEST COVERAGE:  PSP-4558 */
+
+            //Navigate to Search Leases
+            PopulateLeaseLicense(rowNumber);
+            searchLease.NavigateToSearchLicense();
+
+            //Look for the previously created lease
+            searchLease.SearchLicenseByLFile(leaseCode);
+            searchLease.SelectFirstOption();
+
+            //Navigate to Tenants section
+            tenant.NavigateToTenantSection();
+
+            //Edit Tenants
+            if (lease.TenantsQuantity > 0)
+            {
+                //Delete last Tenant
+                tenant.EditTenant();
+                tenant.DeleteLastTenant();
+
+                //Save tenants changes
+                tenant.SaveTenant();
+
+                for (int i = 0; i < lease.LeaseTenants.Count; i++)
+                {
+                    //Edit last Tenant
+                    tenant.EditTenant();
+                    tenant.EditTenant(lease.LeaseTenants[i]);
+
+                    //Save tenants changes
+                    tenant.SaveTenant();
+                }
+
+                //Assert quantity of tenants
+                Assert.True(tenant.TotalTenants().Equals(lease.TenantsNumber));
+                Assert.True(tenant.TotalRepresentatives().Equals(lease.RepresentativeNumber));
+                Assert.True(tenant.TotalManagers().Equals(lease.PropertyManagerNumber));
+                Assert.True(tenant.TotalUnknown().Equals(lease.UnknownNumber));
+            }
+        }
+
+        [StepDefinition(@"I add Improvements to the Lease")]
+        public void CreateImprovements()
+        {
+            /* TEST COVERAGE: PSP-2637, PSP-2640 */
+
             //Navigate to Improvements
             improvements.NavigateToImprovementSection();
 
@@ -188,8 +281,51 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Improvements View
             improvements.VerifyImprovementView(lease);
+        }
 
-            //INSURANCE
+        [StepDefinition(@"I update a Lease's Improvements from row number (.*)")]
+        public void UpdateImprovements(int rowNumber)
+        {
+            /* TEST COVERAGE:  PSP-2638, PSP-2640 */
+
+            //Navigate to Search Leases
+            PopulateLeaseLicense(rowNumber);
+            searchLease.NavigateToSearchLicense();
+
+            //Look for the previously created lease
+            searchLease.SearchLicenseByLFile(leaseCode);
+            searchLease.SelectFirstOption();
+
+           
+            //Navigate to the improvements section
+            improvements.NavigateToImprovementSection();
+
+            //Edit Improvements
+            improvements.EditImprovements();
+            if (lease.CommercialImprovementUnit != "")
+                improvements.AddCommercialImprovement(lease);
+
+            if (lease.ResidentialImprovementUnit != "")
+                improvements.AddResidentialImprovement(lease);
+
+            if (lease.OtherImprovementUnit != "")
+                improvements.AddOtherImprovement(lease);
+
+            //Save Improvements
+            leaseDetails.SaveLicense();
+
+            //Verify Improvement Changes
+            improvements.VerifyImprovementView(lease);
+
+            //Verify improvements count
+            Assert.True(improvements.ImprovementTotal().Equals(lease.TotalImprovementCount));
+        }
+
+        [StepDefinition(@"I add Insurance to the Lease")]
+        public void CreateInsurance()
+        {
+            /* TEST COVERAGE:  PSP-2099, PSP-2677 */
+
             //Navigate to Improvements
             insurance.NavigateToInsuranceSection();
 
@@ -223,8 +359,45 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Insurance View Form
             insurance.VerifyInsuranceViewForm(lease);
+        }
 
-            //DEPOSITS
+        [StepDefinition(@"I update a Lease's Insurance from row number (.*)")]
+        public void UpdateInsurance(int rowNumber)
+        {
+            /* TEST COVERAGE: PSP-2099, PSP-4195 */
+
+            //Navigate to Search Leases
+            PopulateLeaseLicense(rowNumber);
+            searchLease.NavigateToSearchLicense();
+
+            //Look for the previously created lease
+            searchLease.SearchLicenseByLFile(leaseCode);
+            searchLease.SelectFirstOption();
+
+            //Navigate to Insurance
+            insurance.NavigateToInsuranceSection();
+
+            //Edit Insurance Section
+            insurance.EditInsuranceButton();
+
+            if (lease.TotalInsuranceCount > 0)
+                insurance.DeleteLastInsurance();
+
+            //Save Insurance
+            leaseDetails.SaveLicense();
+
+            //Verify Insurance changes
+            insurance.VerifyInsuranceViewForm(lease);
+
+            //Verify Insurance Total count
+            Assert.True(insurance.TotalInsuranceCount().Equals(lease.TotalInsuranceCount));
+        }
+
+        [StepDefinition(@"I add Deposits to the Lease")]
+        public void CreateDeposits()
+        {
+            /* TEST COVERAGE: PSP-2094, PSP-2921, PSP-2922 */
+
             //Navigate to Deposits
             deposits.NavigateToDepositSection();
 
@@ -265,8 +438,42 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 deposits.AddNotes(lease.DepositNotes);
                 leaseDetails.SaveLicense();
             }
+        }
 
-            //PAYMENTS
+        [StepDefinition(@"I update a Lease's Deposits from row number (.*)")]
+        public void UpdateDeposits(int rowNumber)
+        {
+            /* TEST COVERAGE: PSP-2923, PSP-4196 */
+
+            //Navigate to Search Leases
+            PopulateLeaseLicense(rowNumber);
+            searchLease.NavigateToSearchLicense();
+
+            //Look for the last created lease
+            searchLease.SearchLicenseByLFile(leaseCode);
+            searchLease.SelectFirstOption();
+
+            //Navigate to Deposits
+            deposits.NavigateToDepositSection();
+
+            //Delete first return
+            deposits.DeleteFirstReturn();
+
+            //Edit last deposit
+            deposits.EditLastDeposit(lease.LeaseDeposits[0]);
+
+            //Verify Deposit changes
+            deposits.VerifyCreatedDepositTable(lease.LeaseDeposits[0]);
+
+            //Delete first deposit
+            deposits.DeleteFirstDeposit();
+        }
+
+        [StepDefinition(@"I add Payments to the Lease")]
+        public void CreatePayments()
+        {
+            /* TEST COVERAGE: PSP-2755, PSP-2815, PSP-2915, PSP-2918, PSP-2927 */
+
             //Navigating to Payments section
             payments.NavigateToPaymentSection();
 
@@ -305,14 +512,42 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 //Close Payment Tab
                 payments.OpenPaymentTab(lease.TermPayments[i].ParentTerm);
             }
+        }
 
-            //SURPLUS
+        [StepDefinition(@"I update a Lease's Payments from row number (.*)")]
+        public void UpdatePayments(int rowNumber)
+        {
+            /* TEST COVERAGE: PSP-4558 */
+
+            //Navigate to Search Leases
+            PopulateLeaseLicense(rowNumber);
+            searchLease.NavigateToSearchLicense();
+
+            //Look for the last created lease
+            searchLease.SearchLastLease();
+            searchLease.SelectFirstOption();
+
+            //Navigate to Payments
+            payments.NavigateToPaymentSection();
+
+            //Delete last term
+            payments.DeleteLastTerm();
+
+            //Navigate to first term payments
+            payments.OpenPaymentTab(lease.TermPayments[0].ParentTerm);
+
+            //Delete last term last payment
+            payments.DeleteLastPayment();
+        }
+
+        [StepDefinition(@"I verify the Surplus section")]
+        public void VerifySurplus()
+        {
+            /* TEST COVERAGE: PSP-2157 */
+           
             //Navigate to Surplus Declaration Section
             surplus.NavigateToSurplusSection();
             surplus.VerifySurplusForm();
-
-            //Get new lease's code
-            leaseCode = leaseDetails.GetLeaseCode();
         }
 
         [StepDefinition(@"I create a new Lease through a Property Pin from row number (.*)")]
@@ -338,7 +573,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ChooseCreationOptionFromPin("Lease/License - Create new");
 
             //Fill basic information on the form
-            leaseDetails.CreateLicenseDetails(lease);
+            leaseDetails.CreateMinimumLicenseDetails(lease);
 
             //Save Lease Details
             leaseDetails.SaveLicense();
@@ -380,7 +615,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ChooseCreationOptionFromPin("Lease/License - Create new");
 
             //Fill basic information on the form
-            leaseDetails.CreateLicenseDetails(lease);
+            leaseDetails.CreateMinimumLicenseDetails(lease);
 
             //Save Lease Details
             leaseDetails.CancelLicense();
@@ -390,7 +625,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ChooseCreationOptionFromPin("Lease/License - Create new");
 
             //Fill basic information on the form
-            leaseDetails.CreateLicenseDetails(lease);
+            leaseDetails.CreateMinimumLicenseDetails(lease);
 
             //Save changes
             leaseDetails.SaveLicense();
@@ -422,155 +657,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ChooseCreationOptionFromPin("Lease/License - Create new");
 
             //Fill basic information on the form
-            leaseDetails.CreateLicenseDetails(lease);
+            leaseDetails.CreateMinimumLicenseDetails(lease);
 
             //Save Lease Details
             leaseDetails.SaveLicense();
 
             //Get new lease's code
             leaseCode = leaseDetails.GetLeaseCode();
-        }
-
-        [StepDefinition(@"I update an existing lease from row number (.*)")]
-        public void UpdateExistingLease(int rowNumber)
-        {
-            /* TEST COVERAGE: PSP-2096, PSP-2637, PSP-2638, PSP-2642, PSP-2923, PSP-4195, PSP-4196, PSP-4558, PSP-5161, PSP-5342, PSP-5667, PSP-5924 */
-
-            //Login to PIMS
-            loginSteps.Idir(userName);
-
-            //Navigate to Search Leases
-            searchLease.NavigateToSearchLicense();
-
-            //Look for the last created lease
-            searchLease.SearchLastLease();
-            searchLease.SelectFirstOption();
-
-            //FILE DETAILS
-            //Edit File Details Section
-            PopulateLeaseLicense(rowNumber);
-            leaseDetails.EditLeaseFileDetailsBttn();
-
-            //Verify the edit File details form
-            leaseDetails.VerifyLicenseDetailsUpdateForm();
-
-            //Make some changes on the Details Form
-            leaseDetails.UpdateLeaseFileDetails(lease);
-
-            //Verify Properties section
-            sharedSearchProperties.VerifyLocateOnMapFeature();
-
-            //Delete 1st property
-            sharedSearchProperties.DeleteProperty();
-
-            //Save the new license details
-            leaseDetails.SaveLicense();
-
-            //Verify File Details Form
-            leaseDetails.VerifyLicenseDetailsViewForm(lease);
-
-            //TENANTS
-            //Navigate to Tenants section
-            tenant.NavigateToTenantSection();
-
-            //Edit Tenants
-            if (lease.TenantsQuantity > 0)
-            {
-                //Delete last Tenant
-                tenant.EditTenant();
-                tenant.DeleteLastTenant();
-
-                //Save tenants changes
-                tenant.SaveTenant();
-
-                for (int i = 0; i < lease.LeaseTenants.Count; i++)
-                {
-                    //Edit last Tenant
-                    tenant.EditTenant();
-                    tenant.EditTenant(lease.LeaseTenants[i]);
-
-                    //Save tenants changes
-                    tenant.SaveTenant();
-                }
-
-                //Assert quantity of tenants
-                Assert.True(tenant.TotalTenants() == lease.TenantsNumber);
-                Assert.True(tenant.TotalRepresentatives() == lease.RepresentativeNumber);
-                Assert.True(tenant.TotalManagers() == lease.PropertyManagerNumber);
-                Assert.True(tenant.TotalUnknown() == lease.UnknownNumber);
-            }
-
-            //IMPROVEMENTS
-            //Navigate to the improvements section
-            improvements.NavigateToImprovementSection();
-
-            //Edit Improvements
-            improvements.EditImprovements();
-            if (lease.CommercialImprovementUnit != "")
-                improvements.AddCommercialImprovement(lease);
-
-            if (lease.ResidentialImprovementUnit != "")
-                improvements.AddResidentialImprovement(lease);
-
-            if (lease.OtherImprovementUnit != "")
-                improvements.AddOtherImprovement(lease);
-
-            //Save Improvements
-            leaseDetails.SaveLicense();
-
-            //Verify Improvement Changes
-            improvements.VerifyImprovementView(lease);
-
-            //Verify improvements count
-            Assert.True(improvements.ImprovementTotal() == lease.TotalImprovementCount);
-
-            //INSURANCE
-            //Navigate to Insurance
-            insurance.NavigateToInsuranceSection();
-
-            //Edit Insurance Section
-            insurance.EditInsuranceButton();
-
-            if (lease.TotalInsuranceCount > 0)
-                insurance.DeleteLastInsurance();
-
-            //Save Insurance
-            leaseDetails.SaveLicense();
-
-            //Verify Insurance changes
-            insurance.VerifyInsuranceViewForm(lease);
-
-            //Verify Insurance Total count
-            Assert.True(insurance.TotalInsuranceCount() == lease.TotalInsuranceCount);
-
-            //DEPOSITS
-            //Navigate to Deposits
-            deposits.NavigateToDepositSection();
-
-            //Delete first return
-            deposits.DeleteFirstReturn();
-
-            //Edit last deposit
-            deposits.EditLastDeposit(lease.LeaseDeposits[0]);
-
-            //Verify Deposit changes
-            deposits.VerifyCreatedDepositTable(lease.LeaseDeposits[0]);
-
-            //Delete first deposit
-            deposits.DeleteFirstDeposit();
-
-            //PAYMENTS
-            //Navigate to Payments
-            payments.NavigateToPaymentSection();
-
-            //Delete last term
-            payments.DeleteLastTerm();
-
-            //Navigate to first term payments
-            payments.OpenPaymentTab(lease.TermPayments[0].ParentTerm);
-
-            //Delete last term last payment
-            payments.DeleteLastPayment();
         }
 
         [StepDefinition(@"I search for an existing Lease or License from row number (.*)")]
@@ -605,12 +698,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLease.SearchLicenseByLFile(leaseCode);
 
             Assert.True(searchLease.SearchFoundResults());
-        }
-
-        [StepDefinition(@"An existing lease is updated successfully")]
-        public void LeaseEditedSuccessfully()
-        {
-            //Assert.True(deposits.LeaseDespositExist());
         }
 
         [StepDefinition(@"Expected Lease File Content is displayed on Leases Table")]

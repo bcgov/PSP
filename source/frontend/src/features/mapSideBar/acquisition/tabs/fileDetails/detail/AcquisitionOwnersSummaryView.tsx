@@ -12,7 +12,7 @@ const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps>
   isLoading,
   ownersList,
 }) => {
-  const onwerDetailList = ownersList?.map(o => DetailAcquisitionFileOwner.fromApi(o));
+  const ownerDetailList = ownersList?.map(o => DetailAcquisitionFileOwner.fromApi(o));
 
   if (isLoading) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
@@ -23,7 +23,7 @@ const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps>
       <StyledSectionParagraph>
         Each property in this file should be owned by the owner(s) in this section
       </StyledSectionParagraph>
-      {onwerDetailList?.map((owner, index) => {
+      {ownerDetailList?.map((owner, index) => {
         return (
           <span key={`owner-${index}-${owner.ownerName}`} data-testid={`owner[${index}]`}>
             <SectionField label={null}>
@@ -49,7 +49,7 @@ const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps>
             </SectionField>
             <SectionField label="Email">{owner.ownerContactEmail}</SectionField>
             <SectionField label="Phone">{owner.ownerContactPhone}</SectionField>
-            {index < onwerDetailList.length - 1 && <hr></hr>}
+            {index < ownerDetailList.length - 1 && <hr></hr>}
           </span>
         );
       })}

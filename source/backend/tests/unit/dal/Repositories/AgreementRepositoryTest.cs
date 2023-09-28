@@ -71,6 +71,28 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
+        public void SearchAgreement_TeamAndProject()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() { new PimsAcquisitionFilePerson() { PersonId = 1 } };
+            var agreement = new PimsAgreement() { AcquisitionFile = acqFile, AgreementTypeCodeNavigation = new PimsAgreementType() { AgreementTypeCode = "test" } };
+            var filter = new AcquisitionReportFilterModel() { AcquisitionTeamPersons = new List<long> { 1 }, Projects = new List<long> { 1 } };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(agreement);
+
+            var repository = helper.CreateRepository<AgreementRepository>(user);
+
+            // Act
+            var result = repository.SearchAgreements(filter);
+
+            // Assert
+            result.Should().HaveCount(0);
+        }
+
+        [Fact]
         public void SearchAgreement()
         {
             // Arrange
@@ -92,7 +114,6 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
-        
         #endregion
     }
 }

@@ -1,6 +1,7 @@
 import { FormikProps } from 'formik';
 import { createRef } from 'react';
 
+import { useProjectTypeahead } from '@/hooks/useProjectTypeahead';
 import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
@@ -53,6 +54,14 @@ const getPayeeOptions = (owners: Api_AcquisitionFileOwner[]): PayeeOption[] => {
   return options;
 };
 
+jest.mock('@/hooks/useProjectTypeahead');
+const mockUseProjectTypeahead = useProjectTypeahead as jest.MockedFunction<
+  typeof useProjectTypeahead
+>;
+
+const handleTypeaheadSearch = jest.fn();
+const setShowAltProjectError = jest.fn();
+
 describe('Compensation Requisition UpdateForm component', () => {
   const payeeOptions = getPayeeOptions(mockAcquisitionFileOwnersResponse());
 
@@ -60,7 +69,6 @@ describe('Compensation Requisition UpdateForm component', () => {
     renderOptions: RenderOptions & { props?: Partial<CompensationRequisitionFormProps> },
   ) => {
     const formikRef = createRef<FormikProps<CompensationRequisitionFormModel>>();
-
     const utils = render(
       <UpdateCompensationRequisitionForm
         {...renderOptions.props}
@@ -75,6 +83,8 @@ describe('Compensation Requisition UpdateForm component', () => {
         gstConstant={currentGstPercent ?? 0.05}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
         isLoading={renderOptions.props?.isLoading ?? false}
+        showAltProjectError={false}
+        setShowAltProjectError={setShowAltProjectError}
       />,
       {
         ...renderOptions,
@@ -87,6 +97,21 @@ describe('Compensation Requisition UpdateForm component', () => {
       formikRef,
       getStatusDropDown: () =>
         utils.container.querySelector(`select[name="status"]`) as HTMLInputElement,
+      getProjectSelector: () => {
+        return utils.container.querySelector(
+          `input[name="typeahead-alternateProject"]`,
+        ) as HTMLInputElement;
+      },
+      getProjectSelectorItem: (index: number) => {
+        return utils.container.querySelector(
+          `#typeahead-alternateProject-item-${index}`,
+        ) as HTMLElement;
+      },
+      getAdvancedPaymentServedDate: () => {
+        return utils.container.querySelector(
+          `input[name="advancedPaymentServedDate"]`,
+        ) as HTMLInputElement;
+      },
       getPayeeOptionsDropDown: () =>
         utils.container.querySelector(`select[name="payee.payeeKey"]`) as HTMLInputElement,
       getPayeeGSTNumber: () =>
@@ -105,6 +130,23 @@ describe('Compensation Requisition UpdateForm component', () => {
         utils.container.querySelector(`textarea[name="detailedRemarks"]`) as HTMLInputElement,
     };
   };
+
+  beforeEach(() => {
+    mockUseProjectTypeahead.mockReturnValue({
+      handleTypeaheadSearch,
+      isTypeaheadLoading: false,
+      matchedProjects: [
+        {
+          id: 1,
+          text: 'MOCK TEST PROJECT',
+        },
+        {
+          id: 2,
+          text: 'ANOTHER MOCK',
+        },
+      ],
+    });
+  });
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -261,13 +303,14 @@ describe('Compensation Requisition UpdateForm component', () => {
     const mockCompensation = CompensationRequisitionFormModel.fromApi({
       ...getMockApiDefaultCompensation(),
       isDraft: false,
-      finalizedDate: '2024-06-12T18:00:00',
+      finalizedDate: '2024-06-12T00:00:00',
     });
-    const { getByText } = await setup({
+    const { getByTestId } = await setup({
       props: { initialValues: mockCompensation },
     });
 
-    expect(getByText('Jun 12, 2024')).toBeVisible();
+    const compensationFinalizedDate = getByTestId('compensation-finalized-date');
+    expect(compensationFinalizedDate).toHaveTextContent('Jun 12, 2024');
   });
 
   it('should display the LEGACY payee information', async () => {
@@ -319,5 +362,40 @@ describe('Compensation Requisition UpdateForm component', () => {
     expect(getPayeePreTaxAmount()).toHaveValue('$30,000.00');
     expect(getPayeeTaxAmount()).toHaveValue('$1,500.00');
     expect(getPayeeTotalAmount()).toHaveValue('$31,500.00');
+  });
+
+  it('should validate alternate project same as file project', async () => {
+    const acquisitionFile = { ...mockAcquisitionFileResponse(), projectId: 1 };
+    const apiCompensation = {
+      ...getMockApiDefaultCompensation(),
+      isDraft: false,
+      finalizedDate: '2024-06-12T18:00:00',
+    };
+    const mockCompensation = CompensationRequisitionFormModel.fromApi(apiCompensation);
+
+    const { getProjectSelector, getProjectSelectorItem } = await setup({
+      props: { initialValues: mockCompensation, acquisitionFile: acquisitionFile },
+    });
+
+    await act(async () => userEvent.type(getProjectSelector(), 'MOCK TEST'));
+    await act(async () => {
+      fireEvent.click(getProjectSelectorItem(0));
+    });
+
+    expect(setShowAltProjectError).toHaveBeenCalledWith(true);
+  });
+
+  it('displays the compensation advanced payment served date', async () => {
+    const mockCompensation = CompensationRequisitionFormModel.fromApi({
+      ...getMockApiDefaultCompensation(),
+      isDraft: false,
+      advancedPaymentServedDate: '2024-09-16T00:00:00',
+    });
+    const { getAdvancedPaymentServedDate } = await setup({
+      props: { initialValues: mockCompensation },
+    });
+
+    const inputServedDate = getAdvancedPaymentServedDate();
+    expect(inputServedDate).toHaveValue('Sep 16, 2024');
   });
 });

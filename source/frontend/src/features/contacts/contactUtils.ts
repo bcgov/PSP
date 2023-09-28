@@ -2,6 +2,7 @@ import { isEmpty } from 'lodash';
 
 import { EmailContactMethods, PhoneContactMethods } from '@/constants/contactMethodType';
 import { AddressTypes } from '@/constants/index';
+import { IContactSearchResult } from '@/interfaces';
 import {
   getDefaultAddress,
   getDefaultContactMethod,
@@ -20,7 +21,7 @@ import {
 import { IContactPerson } from '@/interfaces/IContact';
 import { Api_Organization, Api_OrganizationPerson } from '@/models/api/Organization';
 import { fromTypeCode, stringToBoolean, stringToUndefined, toTypeCode } from '@/utils/formUtils';
-import { formatFullName } from '@/utils/personUtils';
+import { formatFullName, formatNames } from '@/utils/personUtils';
 
 import { Api_Address } from './../../models/api/Address';
 import { Api_Person } from './../../models/api/Person';
@@ -273,3 +274,16 @@ export const getPrimaryContact = (
 ): Api_Person | undefined => {
   return organization?.organizationPersons?.find(op => op.personId === primaryContactId)?.person;
 };
+
+export function formatContactSearchResult(
+  contact: IContactSearchResult,
+  defaultText: string = '',
+): string {
+  let text = defaultText;
+  if (contact?.personId !== undefined) {
+    text = formatNames([contact.firstName, contact.middleNames, contact.surname]);
+  } else if (contact?.organizationId !== undefined) {
+    text = contact.organizationName || '';
+  }
+  return text;
+}

@@ -82,9 +82,45 @@ namespace Pims.Api.Services
             // Limit search results to user's assigned region(s)
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-            long? personId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            return _acqFileRepository.GetPage(filter, userRegions, personId);
+            return _acqFileRepository.GetPage(filter, userRegions, contractorPersonId);
+        }
+
+        public List<AcquisitionFileExportModel> GetAcquisitionFileExport(AcquisitionFilter filter)
+        {
+            _logger.LogInformation("Searching all Acquisition Files matching the filter: {filter}", filter);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            // Limit search results to user's assigned region(s)
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            var acqFiles = _acqFileRepository.GetAcquisitionFileExport(filter, userRegions, contractorPersonId);
+
+            return acqFiles.SelectMany(file => file.PimsPropertyAcquisitionFiles.Where(fp => fp.AcquisitionFileId.Equals(file.AcquisitionFileId)).DefaultIfEmpty(), (file, fp) => (file, fp))
+                                .Select(fileProperty => new AcquisitionFileExportModel
+                                {
+                                    FileNumber = fileProperty.file.FileNumber ?? string.Empty,
+                                    LegacyFileNumber = fileProperty.file.LegacyFileNumber ?? string.Empty,
+                                    FileName = fileProperty.file.FileName ?? string.Empty,
+                                    MotiRegion = fileProperty.file.RegionCodeNavigation?.Description ?? string.Empty,
+                                    MinistryProject = fileProperty.file.Project is not null ? $"{fileProperty.file.Project.Code} {fileProperty.file.Project.Description}" : string.Empty,
+                                    CivicAddress = (fileProperty.fp?.Property is not null && fileProperty.fp.Property.Address is not null) ? fileProperty.fp.Property.Address.FormatFullAddressString() : string.Empty,
+                                    GeneralLocation = (fileProperty.fp?.Property is not null) ? fileProperty.fp.Property.GeneralLocation : string.Empty,
+                                    Pid = fileProperty.fp is not null && fileProperty.fp.Property.Pid.HasValue ? fileProperty.fp.Property.Pid.ToString() : string.Empty,
+                                    Pin = fileProperty.fp is not null && fileProperty.fp.Property.Pin.HasValue ? fileProperty.fp.Property.Pin.ToString() : string.Empty,
+                                    AcquisitionFileStatusTypeCode = fileProperty.file.AcquisitionFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFileStatusTypeCodeNavigation.Description : string.Empty,
+                                    FileFunding = fileProperty.file.AcquisitionFundingTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFundingTypeCodeNavigation.Description : string.Empty,
+                                    FileAssignedDate = fileProperty.file.AssignedDate.HasValue ? fileProperty.file.AssignedDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                                    FileDeliveryDate = fileProperty.file.DeliveryDate.HasValue ? fileProperty.file.DeliveryDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                                    FileAcquisitionCompleted = fileProperty.file.CompletionDate.HasValue ? fileProperty.file.CompletionDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                                    FilePhysicalStatus = fileProperty.file.AcqPhysFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcqPhysFileStatusTypeCodeNavigation.Description : string.Empty,
+                                    FileAcquisitionType = fileProperty.file.AcquisitionTypeCodeNavigation is not null ? fileProperty.file.AcquisitionTypeCodeNavigation.Description : string.Empty,
+                                    FileAcquisitionTeam = string.Join(", ", fileProperty.file.PimsAcquisitionFilePeople.Select(x => x.Person.GetFullName(true))),
+                                    FileAcquisitionOwners = string.Join(", ", fileProperty.file.PimsAcquisitionOwners.Select(x => x.FormatOwnerName())),
+                                }).ToList();
         }
 
         public PimsAcquisitionFile GetById(long id)
@@ -126,7 +162,9 @@ namespace Pims.Api.Services
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-            return _acqFileRepository.GetTeamMembers(userRegions);
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            return _acqFileRepository.GetTeamMembers(userRegions, contractorPersonId);
         }
 
         public IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id)
@@ -190,6 +228,8 @@ namespace Pims.Api.Services
 
             ValidateStaff(acquisitionFile);
 
+            acquisitionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
+
             ValidatePayeeDependency(acquisitionFile);
 
             ValidateNewTotalAllowableCompensation(acquisitionFile.Internal_Id, acquisitionFile.TotalAllowableCompensation);
@@ -246,7 +286,7 @@ namespace Pims.Api.Services
             foreach (var deletedProperty in differenceSet)
             {
                 var acqFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id).FirstOrDefault(ap => ap.PropertyId == deletedProperty.PropertyId);
-                if (acqFileProperties.PimsActInstPropAcqFiles.Any() || acqFileProperties.PimsTakes.Any())
+                if (acqFileProperties.PimsTakes.Any())
                 {
                     throw new BusinessRuleViolationException();
                 }
@@ -312,7 +352,7 @@ namespace Pims.Api.Services
 
         public IEnumerable<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter)
         {
-            _logger.LogInformation("Searching all agreements matching the filter: ", filter);
+            _logger.LogInformation("Searching all agreements matching the filter: {filter} ", filter);
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             var allMatchingAgreements = _agreementRepository.SearchAgreements(filter);
@@ -452,19 +492,28 @@ namespace Pims.Api.Services
             }
         }
 
-        private void UpdateLocation(PimsProperty researchProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes)
+        private void UpdateLocation(PimsProperty acquisitionProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes)
         {
             if (propertyToUpdate.Location == null)
             {
                 if (overrideCodes.Contains(UserOverrideCode.AddLocationToProperty))
                 {
                     // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-                    var geom = researchProperty.Location;
+                    var geom = acquisitionProperty.Location;
                     if (geom.SRID != SpatialReference.BCALBERS)
                     {
                         var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
                         propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
                         _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
+                    }
+
+                    // apply similar logic to the boundary
+                    var boundaryGeom = acquisitionProperty.Boundary;
+                    if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
+                    {
+                        var newCoords = boundaryGeom.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
+                        var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
+                        acquisitionProperty.Boundary = gf.CreatePolygon(newCoords.ToArray());
                     }
                 }
                 else
@@ -547,6 +596,15 @@ namespace Pims.Api.Services
             {
                 var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
                 property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
+            }
+
+            // apply similar logic to the boundary
+            var boundaryGeom = property.Boundary;
+            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
+            {
+                var newCoords = property.Boundary.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
+                var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
+                property.Boundary = gf.CreatePolygon(newCoords.ToArray());
             }
         }
 

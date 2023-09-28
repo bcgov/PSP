@@ -1,6 +1,5 @@
 using System.Linq;
 using Mapster;
-using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts

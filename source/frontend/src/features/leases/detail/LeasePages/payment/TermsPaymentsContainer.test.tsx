@@ -32,6 +32,7 @@ const defaultRepositoryResponse = {
   execute: jest.fn(),
   response: {} as any,
   error: undefined,
+  status: undefined,
   loading: false,
 };
 
@@ -39,6 +40,7 @@ const mockGetLeaseTerms = {
   execute: jest.fn(),
   response: [FormLeaseTerm.toApi({ ...defaultFormLeaseTerm, payments: [] })],
   error: undefined,
+  status: undefined,
   loading: false,
 };
 

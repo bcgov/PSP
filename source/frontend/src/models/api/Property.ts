@@ -1,6 +1,8 @@
 import { Api_Address } from './Address';
 import { Api_AuditFields } from './AuditFields';
-import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import { Api_ConcurrentVersion, Api_ConcurrentVersion_Null } from './ConcurrentVersion';
+import { Api_Organization } from './Organization';
+import { Api_Person } from './Person';
 import Api_TypeCode from './TypeCode';
 
 export interface Api_Coordinate {
@@ -10,6 +12,10 @@ export interface Api_Coordinate {
 
 export interface Api_Geometry {
   coordinate?: Api_Coordinate;
+}
+
+export interface Api_Boundary {
+  coordinates?: Api_Coordinate[];
 }
 
 export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
@@ -32,6 +38,7 @@ export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
   latitude?: number;
   longitude?: number;
   location?: Api_Geometry;
+  boundary?: Api_Boundary;
 
   name?: string;
   description?: string;
@@ -75,6 +82,11 @@ export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
   surplusDeclarationType?: Api_TypeCode<string>;
   surplusDeclarationComment?: string;
   surplusDeclarationDate?: string;
+
+  managementPurposes?: Api_PropertyManagementPurpose[];
+  additionalDetails?: string;
+  isUtilitiesPayable?: boolean;
+  isTaxesPayable?: boolean;
 }
 
 export interface Api_PropertyAnomaly extends Api_ConcurrentVersion, Api_AuditFields {
@@ -101,6 +113,12 @@ export interface Api_PropertyTenure extends Api_ConcurrentVersion, Api_AuditFiel
   propertyTenureTypeCode?: Api_TypeCode<string>;
 }
 
+export interface Api_PropertyManagementPurpose extends Api_ConcurrentVersion, Api_AuditFields {
+  id?: number;
+  propertyId?: number;
+  propertyPurposeTypeCode?: Api_TypeCode<string>;
+}
+
 export interface Api_PropertyAssociations {
   id?: string;
   pid?: string;
@@ -118,4 +136,17 @@ export interface Api_PropertyAssociation {
   createdBy?: string;
   createdByGuid?: string;
   status?: string;
+}
+
+export interface Api_PropertyContact extends Api_ConcurrentVersion_Null {
+  id: number;
+  propertyId: number;
+  organizationId: number | null;
+  organization: Api_Organization | null;
+  personId: number | null;
+  person: Api_Person | null;
+  primaryContactId: number | null;
+  primaryContact: Api_Person | null;
+  purpose: string | null;
+  isDisabled: boolean | null;
 }
