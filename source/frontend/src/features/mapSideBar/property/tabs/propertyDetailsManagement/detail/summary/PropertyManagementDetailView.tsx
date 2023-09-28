@@ -24,8 +24,7 @@ export const PropertyManagementDetailView: React.FC<IPropertyManagementDetailVie
   return (
     <Section header="Summary" isCollapsable initiallyExpanded>
       <StyledEditWrapper className="mr-3 my-1">
-        {/** TODO: Use MANAGEMENT CLAIMS when available */}
-        {setEditManagementState !== undefined && hasClaim(Claims.PROPERTY_EDIT) && (
+        {setEditManagementState !== undefined && hasClaim(Claims.MANAGEMENT_EDIT) && (
           <EditButton
             title="Edit property management information"
             onClick={() =>
