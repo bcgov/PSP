@@ -4,16 +4,16 @@ import { usePropertyManagementRepository } from '@/hooks/repositories/usePropert
 import { Api_Property, Api_PropertyManagement } from '@/models/api/Property';
 
 import { EditManagementState } from '../../../../PropertyViewSelector';
-import { IManagementSummaryViewProps } from './ManagementSummaryView';
+import { IPropertyManagementDetailViewProps } from './PropertyManagementDetailView';
 
-interface IManagementSummaryContainerProps {
+interface IPropertyManagementDetailContainerProps {
   property: Api_Property;
   setEditManagementState: (state: EditManagementState | null) => void;
-  View: React.FC<IManagementSummaryViewProps>;
+  View: React.FC<IPropertyManagementDetailViewProps>;
 }
 
-export const ManagementSummaryContainer: React.FunctionComponent<
-  IManagementSummaryContainerProps
+export const PropertyManagementDetailContainer: React.FunctionComponent<
+  IPropertyManagementDetailContainerProps
 > = ({ property, setEditManagementState, View }) => {
   const [propertyManagement, setPropertyManagement] = useState<Api_PropertyManagement>({
     id: property.id ?? 0,

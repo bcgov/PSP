@@ -15,15 +15,15 @@ import { Api_PropertyManagement } from '@/models/api/Property';
 import { ManagementPurposeModel, PropertyManagementFormModel } from './models';
 import { PropertyManagementYupSchema } from './validation';
 
-export interface IUpdateManagementSummaryViewProps {
+export interface IPropertyManagementUpdateFormProps {
   isLoading: boolean;
   propertyManagement: Api_PropertyManagement;
   onSave: (apiModel: Api_PropertyManagement) => Promise<void>;
 }
 
-export const UpdateManagementSummaryView = React.forwardRef<
+export const PropertyManagementUpdateForm = React.forwardRef<
   FormikProps<PropertyManagementFormModel>,
-  IUpdateManagementSummaryViewProps
+  IPropertyManagementUpdateFormProps
 >(({ isLoading, propertyManagement, onSave }, formikRef) => {
   // Lookup codes
   const { getByType } = useLookupCodeHelpers();

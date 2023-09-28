@@ -9,13 +9,13 @@ import {
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_PropertyManagement } from '@/models/api/Property';
 
-export interface IManagementSummaryViewProps {
+export interface IPropertyManagementDetailViewProps {
   isLoading: boolean;
   propertyManagement: Api_PropertyManagement;
   setEditManagementState: (state: EditManagementState | null) => void;
 }
 
-export const ManagementSummaryView: React.FC<IManagementSummaryViewProps> = ({
+export const PropertyManagementDetailView: React.FC<IPropertyManagementDetailViewProps> = ({
   isLoading,
   propertyManagement,
   setEditManagementState,

@@ -5,20 +5,20 @@ import { usePropertyManagementRepository } from '@/hooks/repositories/usePropert
 import { Api_PropertyManagement } from '@/models/api/Property';
 
 import { PropertyManagementFormModel } from './models';
-import { IUpdateManagementSummaryViewProps } from './UpdateManagementSummaryView';
+import { IPropertyManagementUpdateFormProps } from './PropertyManagementUpdateForm';
 
-interface IUpdateManagementSummaryContainerProps {
+interface IPropertyManagementUpdateContainerProps {
   propertyId: number;
   onSuccess: () => void;
   View: React.ForwardRefExoticComponent<
-    IUpdateManagementSummaryViewProps &
+    IPropertyManagementUpdateFormProps &
       React.RefAttributes<FormikProps<PropertyManagementFormModel>>
   >;
 }
 
-export const UpdateManagementSummaryContainer = React.forwardRef<
+export const PropertyManagementUpdateContainer = React.forwardRef<
   FormikProps<PropertyManagementFormModel>,
-  IUpdateManagementSummaryContainerProps
+  IPropertyManagementUpdateContainerProps
 >(({ propertyId, View, onSuccess }, formikRef) => {
   const [propertyManagement, setPropertyManagement] = useState<Api_PropertyManagement>({
     id: propertyId,

@@ -7,8 +7,8 @@ import { Api_Property } from '@/models/api/Property';
 import { EditManagementState } from '../../../PropertyViewSelector';
 import { PropertyContactListContainer } from './PropertyContactListContainer';
 import { PropertyContactListView } from './PropertyContactListView';
-import { ManagementSummaryContainer } from './summary/ManagementSummaryContainer';
-import { ManagementSummaryView } from './summary/ManagementSummaryView';
+import { PropertyManagementDetailContainer } from './summary/PropertyManagementDetailContainer';
+import { PropertyManagementDetailView } from './summary/PropertyManagementDetailView';
 
 export interface IPropertyManagementTabView {
   property: Api_Property;
@@ -30,9 +30,9 @@ export const PropertyManagementTabView: React.FunctionComponent<IPropertyManagem
       <StyledSummarySection>
         <LoadingBackdrop show={loading} parentScreen={true} />
 
-        <ManagementSummaryContainer
+        <PropertyManagementDetailContainer
           property={property}
-          View={ManagementSummaryView}
+          View={PropertyManagementDetailView}
           setEditManagementState={setEditManagementState}
         />
         <PropertyContactListContainer
