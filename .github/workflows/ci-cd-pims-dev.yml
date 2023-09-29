@@ -102,9 +102,32 @@ jobs:
           ./openshift/4.0/player.sh deploy api $DESTINATION -apply
           ./openshift/4.0/player.sh deploy app $DESTINATION -apply
 
+  # the command:
+  # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
+  # 2) greps the generated name from the previous step.
+  # 3) waits for the job to complete using the generated name.
+  database-upgrade:
+    name: Upgrade database
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: 3cd915-dev
+      - name: call scripts to upgrade database
+        shell: bash
+        run: |
+          oc process -f ./openshift/4.0/templates/jobs/db-deploy.yaml -p SERVER_NAME=sqldevtst.th.gov.bc.ca -p DB_NAME=PIMS_DEV -p NAMESPACE=3cd915-dev | oc create -f - | grep -oP "(?<=job\.batch/)[^\s]*" | (read JOB_NAME; oc wait --for=condition=complete job/$JOB_NAME --timeout=120s)
+
   sync-keycloak:
     name: Sync Keycloak
-    needs: deploy
+    needs: database-upgrade
     runs-on: ubuntu-latest
     steps:
       - name: Setup .NET 6
@@ -127,7 +150,7 @@ jobs:
   ci-cd-end-notification:
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-latest
-    needs: deploy
+    needs: sync-keycloak
     if: ${{ always() && github.event.pull_request.merged == true }}
     steps:
       - name: check workflow status
