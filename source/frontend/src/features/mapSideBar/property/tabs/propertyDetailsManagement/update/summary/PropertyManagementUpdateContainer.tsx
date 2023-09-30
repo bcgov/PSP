@@ -7,7 +7,7 @@ import { Api_PropertyManagement } from '@/models/api/Property';
 import { PropertyManagementFormModel } from './models';
 import { IPropertyManagementUpdateFormProps } from './PropertyManagementUpdateForm';
 
-interface IPropertyManagementUpdateContainerProps {
+export interface IPropertyManagementUpdateContainerProps {
   propertyId: number;
   onSuccess: () => void;
   View: React.ForwardRefExoticComponent<

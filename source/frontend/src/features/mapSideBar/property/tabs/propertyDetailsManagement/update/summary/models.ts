@@ -50,7 +50,7 @@ export class PropertyManagementFormModel {
   formatLeaseInformation(): string {
     if (this.isLeaseActive) {
       const expiryDate = this.leaseExpiryDate ? `(${prettyFormatDate(this.leaseExpiryDate)})` : '';
-      return this.isLeaseExpired ? `Expired ${expiryDate}` : `Yes ${expiryDate}`;
+      return this.isLeaseExpired ? `Expired ${expiryDate}`.trim() : `Yes ${expiryDate}`.trim();
     } else {
       return 'No active Lease/License';
     }
