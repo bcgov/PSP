@@ -1,4 +1,4 @@
-import { chain, uniq, uniqBy } from 'lodash';
+import { chain, uniqBy } from 'lodash';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
