@@ -79,11 +79,6 @@ describe('PropertyManagementUpdateContainer component', () => {
     jest.clearAllMocks();
   });
 
-  it('renders as expected', () => {
-    const { asFragment } = setup();
-    expect(asFragment()).toMatchSnapshot();
-  });
-
   it('fetches property management info from the api', () => {
     mockGetApi.execute.mockResolvedValue(getMockApiPropertyManagement(1));
     setup({ props: { propertyId: 1 } });

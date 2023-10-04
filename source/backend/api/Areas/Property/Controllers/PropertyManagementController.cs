@@ -42,7 +42,7 @@ namespace Pims.Api.Areas.Property.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("{propertyId}/management")]
-        [HasPermission(Permissions.PropertyView)]
+        [HasPermission(Permissions.ManagementView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(PropertyManagementModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
@@ -57,7 +57,7 @@ namespace Pims.Api.Areas.Property.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut("{propertyId}/management")]
-        [HasPermission(Permissions.PropertyEdit)]
+        [HasPermission(Permissions.ManagementEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(PropertyManagementModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
