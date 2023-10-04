@@ -3,6 +3,7 @@ import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { FaBomb } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 import { BCGovLogo } from '@/components/common/BCGovLogo';
 import { VerticalBar } from '@/components/common/VerticalBar';
@@ -47,7 +48,9 @@ export const Header = () => {
           <BCGovLogo />
         </a>
         <VerticalBar />
-        <Logo height={50} />
+        <Link to="/mapview">
+          <Logo height={50} />
+        </Link>
       </Navbar.Brand>
       <Nav className="title mr-auto">
         <Nav.Item>
