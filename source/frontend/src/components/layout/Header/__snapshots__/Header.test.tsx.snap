@@ -128,12 +128,16 @@ exports[`App Header renders correctly 1`] = `
       <span
         class="c1"
       />
-      <img
-        alt="PIMS logo"
-        class="pims-logo"
-        height="50"
-        src="/tenants/MOTI/PIMS-logo.png"
-      />
+      <a
+        href="/mapview"
+      >
+        <img
+          alt="PIMS logo"
+          class="pims-logo"
+          height="50"
+          src="/tenants/MOTI/PIMS-logo.png"
+        />
+      </a>
     </span>
     <div
       class="title mr-auto navbar-nav"
