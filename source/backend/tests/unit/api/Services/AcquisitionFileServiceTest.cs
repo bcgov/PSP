@@ -2145,7 +2145,7 @@ namespace Pims.Api.Test.Services
 
             var filter = new AcquisitionFilter();
             var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
-            acqFilerepository.Setup(x => x.GetAcquisitionFileExport(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()))
+            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()))
                         .Returns(new List<PimsAcquisitionFile>()
                         {
                             acquisitionFile,
@@ -2160,7 +2160,7 @@ namespace Pims.Api.Test.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(1, result.Count);
-            acqFilerepository.Verify(x => x.GetAcquisitionFileExport(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
+            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
         }
 
         [Fact]
@@ -2197,7 +2197,7 @@ namespace Pims.Api.Test.Services
                 },
             };
 
-            acqFilerepository.Setup(x => x.GetAcquisitionFileExport(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()))
+            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()))
                         .Returns(new List<PimsAcquisitionFile>()
                         {
                             acquisitionFile,
@@ -2216,7 +2216,7 @@ namespace Pims.Api.Test.Services
             Assert.Equal("10-25-2023", result[1].FileNumber);
             Assert.Equal("8000", result[0].Pid);
             Assert.Equal("9000", result[1].Pid);
-            acqFilerepository.Verify(x => x.GetAcquisitionFileExport(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
+            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
         }
 
         #endregion

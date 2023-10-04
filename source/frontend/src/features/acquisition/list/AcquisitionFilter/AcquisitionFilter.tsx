@@ -142,7 +142,7 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                 <Col xl="12">
                   <Input
                     field="projectNameOrNumber"
-                    placeholder="Ministry project name or number"
+                    placeholder="Ministry or alternate project name or number"
                   />
                 </Col>
               </Row>
