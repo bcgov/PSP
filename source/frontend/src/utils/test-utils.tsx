@@ -1,5 +1,6 @@
 import { useKeycloak } from '@react-keycloak/web';
 import {
+  act,
   fireEvent,
   render as rtlRender,
   RenderOptions as RtlRenderOptions,
@@ -56,6 +57,20 @@ export function fakeText(length = 50): string {
   return 'x'.repeat(length);
 }
 
+/**
+ * Utility method to wait for async effects to finish - e.g useEffect()
+ * @returns a Promise
+ */
+export const waitForEffects = async () => {
+  return act(() => {});
+};
+
+/**
+ * Select/deselect the given options in an HTMLSelectElement
+ * @param elementName The select name
+ * @param values the value to select
+ * @returns A promise
+ */
 export const selectOptions = async (elementName: string, values: string[] | string) => {
   const element: HTMLSelectElement | null = document.querySelector(`select[name="${elementName}"]`);
   if (!element) {

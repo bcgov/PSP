@@ -1,22 +1,22 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { usePropertyManagementRepository } from '@/hooks/repositories/usePropertyManagementRepository';
-import { Api_Property, Api_PropertyManagement } from '@/models/api/Property';
+import { Api_PropertyManagement } from '@/models/api/Property';
 
 import { EditManagementState } from '../../../../PropertyViewSelector';
 import { IPropertyManagementDetailViewProps } from './PropertyManagementDetailView';
 
-interface IPropertyManagementDetailContainerProps {
-  property: Api_Property;
+export interface IPropertyManagementDetailContainerProps {
+  propertyId: number;
   setEditManagementState: (state: EditManagementState | null) => void;
   View: React.FC<IPropertyManagementDetailViewProps>;
 }
 
 export const PropertyManagementDetailContainer: React.FunctionComponent<
   IPropertyManagementDetailContainerProps
-> = ({ property, setEditManagementState, View }) => {
+> = ({ propertyId, setEditManagementState, View }) => {
   const [propertyManagement, setPropertyManagement] = useState<Api_PropertyManagement>({
-    id: property.id ?? 0,
+    id: propertyId ?? 0,
     rowVersion: null,
     managementPurposes: [],
     additionalDetails: null,
@@ -32,14 +32,14 @@ export const PropertyManagementDetailContainer: React.FunctionComponent<
   } = usePropertyManagementRepository();
 
   const fetchPropertyManagement = useCallback(async () => {
-    if (!property.id) {
+    if (!propertyId) {
       return;
     }
-    const response = await getPropertyManagement(property.id);
+    const response = await getPropertyManagement(propertyId);
     if (response) {
       setPropertyManagement(response);
     }
-  }, [getPropertyManagement, property.id]);
+  }, [getPropertyManagement, propertyId]);
 
   useEffect(() => {
     fetchPropertyManagement();
