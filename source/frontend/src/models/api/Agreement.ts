@@ -11,6 +11,7 @@ export interface Api_Agreement extends Api_ConcurrentVersion, Api_AuditFields {
   completionDate: string | null;
   terminationDate: string | null;
   commencementDate: string | null;
+  possessionDate: string | null;
   depositAmount: number | null;
   noLaterThanDays: number | null;
   purchasePrice: number | null;
