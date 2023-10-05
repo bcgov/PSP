@@ -41,7 +41,9 @@ export const PropertyManagementDetailView: React.FC<IPropertyManagementDetailVie
           />
         )}
       </StyledEditWrapper>
+
       <LoadingBackdrop show={isLoading} />
+
       <SectionField label="Property purpose">
         <MultiselectTextList
           values={
