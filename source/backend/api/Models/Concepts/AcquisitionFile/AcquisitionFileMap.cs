@@ -34,6 +34,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.AcquisitionFileInterestHolders, src => src.PimsInterestHolders)
                 .Map(dest => dest.AcquisitionFileChecklist, src => src.PimsAcquisitionChecklistItems)
                 .Map(dest => dest.LegacyStakeholders, src => src.GetLegacyInterestHolders())
+                .Map(dest => dest.CompensationRequisitions, src => src.PimsCompensationRequisitions)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<AcquisitionFileModel, Entity.PimsAcquisitionFile>()

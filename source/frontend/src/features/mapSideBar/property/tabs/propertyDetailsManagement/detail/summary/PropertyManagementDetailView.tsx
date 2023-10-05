@@ -2,31 +2,29 @@ import { EditButton } from '@/components/common/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { StyledEditWrapper } from '@/components/common/Section/SectionStyles';
 import { Claims } from '@/constants/index';
+import {
+  EditManagementState,
+  PropertyEditForms,
+} from '@/features/mapSideBar/property/PropertyViewSelector';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_Property } from '@/models/api/Property';
-import { Api_PropertyLease } from '@/models/api/PropertyLease';
+import { Api_PropertyManagement } from '@/models/api/Property';
 
-import { EditManagementState, PropertyEditForms } from '../../../PropertyViewSelector';
-
-export interface IManagementSummaryViewProps {
+export interface IPropertyManagementDetailViewProps {
   isLoading: boolean;
-  property: Api_Property;
-  propertyLeases: Api_PropertyLease[];
+  propertyManagement: Api_PropertyManagement;
   setEditManagementState: (state: EditManagementState | null) => void;
 }
 
-export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryViewProps> = ({
+export const PropertyManagementDetailView: React.FC<IPropertyManagementDetailViewProps> = ({
   isLoading,
-  property,
-  propertyLeases,
+  propertyManagement,
   setEditManagementState,
 }) => {
   const { hasClaim } = useKeycloakWrapper();
   return (
-    <Section header="Summary">
+    <Section header="Summary" isCollapsable initiallyExpanded>
       <StyledEditWrapper className="mr-3 my-1">
-        {/** TODO: Use MANAGEMENT CLAIMS when available */}
-        {setEditManagementState !== undefined && hasClaim(Claims.PROPERTY_EDIT) && (
+        {setEditManagementState !== undefined && hasClaim(Claims.MANAGEMENT_EDIT) && (
           <EditButton
             title="Edit property management information"
             onClick={() =>

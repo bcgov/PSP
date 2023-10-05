@@ -122,6 +122,7 @@ namespace Pims.Api.Controllers
                 var propertyRoadTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyRoadTypes());
                 var volumeUnitTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyVolumeUnitTypes());
                 var propertyVolumetricTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyVolumetricTypes());
+                var propertyManagementPurposeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyManagementPurposeTypes());
                 var pphStatusType = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPPHStatusType());
                 var documentStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDocumentStatusTypes());
                 var acquisitionFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileStatusTypes());
@@ -179,6 +180,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(propertyRoadTypes);
                 codes.AddRange(volumeUnitTypes);
                 codes.AddRange(propertyVolumetricTypes);
+                codes.AddRange(propertyManagementPurposeTypes);
                 codes.AddRange(pphStatusType);
                 codes.AddRange(documentStatusTypes);
                 codes.AddRange(acquisitionFileStatusTypes);

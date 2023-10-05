@@ -30,6 +30,8 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsPropertyTenureType> GetAllPropertyTenureTypes();
 
+        IEnumerable<PimsPropertyPurposeType> GetAllPropertyManagementPurposeTypes();
+
         IEnumerable<PimsRole> GetAllRoles();
 
         IEnumerable<PimsLeasePayRvblType> GetAllPaymentReceivableTypes();

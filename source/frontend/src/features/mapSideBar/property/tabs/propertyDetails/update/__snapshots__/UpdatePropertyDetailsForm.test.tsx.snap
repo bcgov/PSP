@@ -1223,17 +1223,82 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                       <li
                         class="option  highlightOption highlight  "
                       >
-                        Adjacent Land
-                      </li>
-                      <li
-                        class="option    "
-                      >
                         Closed Road
                       </li>
                       <li
                         class="option    "
                       >
+                        Fee Simple - BCTFA
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Fee Simple - Crown (Non-MoTI)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Fee Simple - MoTI
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Fee Simple - Private
+                      </li>
+                      <li
+                        class="option    "
+                      >
                         Highway/Road
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Indian Reserve (IR)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Leased/Licensed
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Land Act Reserve (Section 16/17/12/14
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Non-SRW Interests - BCTFA
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Non-SRW Interests - MoTI
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Special Use Permit (SUP)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Statutory Right of Way (SRW) - BCTFA
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Statutory Right of Way (SRW) - MoTI
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Statutory Right of Way (SRW) - Other
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Unsurveyed Crown Land
                       </li>
                       <li
                         class="option    "
@@ -1270,6 +1335,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                 id="input-pphStatusTypeCode"
                 name="pphStatusTypeCode"
               >
+                <option
+                  class="option"
+                  data-testid="select-option-ARTERY"
+                  value="ARTERY"
+                >
+                  Arterial Hwy
+                </option>
                 <option
                   class="option"
                   data-testid="select-option-COMBO"
@@ -1412,17 +1484,17 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                       <li
                         class="option  highlightOption highlight  "
                       >
-                        107 Explanatory Plan
-                      </li>
-                      <li
-                        class="option    "
-                      >
-                        107 Reference Plan
-                      </li>
-                      <li
-                        class="option    "
-                      >
                         Arterial
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Bylaw
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Common law dedication
                       </li>
                       <li
                         class="option    "
@@ -1442,17 +1514,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                       <li
                         class="option    "
                       >
-                        Gazetted (MoTI Plan)
-                      </li>
-                      <li
-                        class="option    "
-                      >
-                        Gazetted (Surveyed)
-                      </li>
-                      <li
-                        class="option    "
-                      >
-                        Gazetted (Unsurveyed)
+                        Gazetted
                       </li>
                       <li
                         class="option    "
@@ -1468,6 +1530,11 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                         class="option    "
                       >
                         Public Road (FLNRORD Juridiction)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Section 107 Plan
                       </li>
                       <li
                         class="option    "

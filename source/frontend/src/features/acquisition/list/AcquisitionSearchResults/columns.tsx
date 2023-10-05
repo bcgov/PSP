@@ -1,4 +1,4 @@
-import { chain } from 'lodash';
+import { chain, uniqBy } from 'lodash';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
@@ -8,6 +8,7 @@ import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { Api_AcquisitionFilePerson } from '@/models/api/AcquisitionFile';
 import { Api_Person } from '@/models/api/Person';
+import { Api_Project } from '@/models/api/Project';
 import Api_TypeCode from '@/models/api/TypeCode';
 import { stringToFragment } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
@@ -71,7 +72,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
       stringToFragment(props.row.original.regionCode),
   },
   {
-    Header: 'Project',
+    Header: 'Projects',
     accessor: 'project',
     align: 'left',
     clickable: true,
@@ -79,8 +80,24 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     maxWidth: 30,
     Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
       const project = props.row.original.project;
-      const formattedValue = [project?.code, project?.description].filter(Boolean).join(' ');
-      return stringToFragment(formattedValue);
+      const altProjects = (props.row.original.compensationRequisitions ?? [])
+        .filter(cr => !!cr?.alternateProject)
+        .map(cr => cr.alternateProject) as Api_Project[];
+
+      return (
+        <>
+          {[project?.code, project?.description].filter(Boolean).join(' ')}
+          <ExpandableTextList<Api_Project | undefined>
+            keyFunction={p => p?.id?.toString() ?? '0'}
+            renderFunction={(p, index) => (
+              <>{['Alt Project:', p?.code, p?.description].filter(Boolean).join(' ')}</>
+            )}
+            items={uniqBy(altProjects, project => project?.code)}
+            delimiter={'; '}
+            maxCollapsedLength={project === undefined ? 1 : 0}
+          />
+        </>
+      );
     },
   },
   {

@@ -207,7 +207,7 @@ exports[`Acquisition Search Results Table matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Project
+            Projects
           </div>
         </div>
         <div

@@ -30,6 +30,8 @@ namespace Pims.Dal.Repositories
 
         PimsProperty Update(PimsProperty property, bool overrideLocation = false);
 
+        PimsProperty UpdatePropertyManagement(PimsProperty property);
+
         void Delete(PimsProperty property);
 
         PimsProperty TransferToCoreInventory(PimsProperty property);

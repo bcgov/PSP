@@ -1608,13 +1608,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                         </option>
                         <option
                           class="option"
-                          data-testid="select-option-LICONSTRC"
-                          value="LICONSTRC"
-                        >
-                          License to Construct
-                        </option>
-                        <option
-                          class="option"
                           data-testid="select-option-LIMOTIPRJ"
                           value="LIMOTIPRJ"
                         >
