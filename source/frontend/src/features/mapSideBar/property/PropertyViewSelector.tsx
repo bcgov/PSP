@@ -71,11 +71,6 @@ const PropertyViewSelector = React.forwardRef<FormikProps<any>, IPropertyViewSel
                 props.onSuccess();
               }}
               ref={formikRef}
-              onSuccess={() => {
-                setEditManagementState(null);
-                props.onSuccess();
-              }}
-              ref={formikRef}
             />
           );
         case PropertyEditForms.UpdateContactContainer:
