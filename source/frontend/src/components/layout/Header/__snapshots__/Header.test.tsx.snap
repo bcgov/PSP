@@ -157,6 +157,11 @@ exports[`App Header renders correctly 1`] = `
         </h1>
       </div>
     </div>
+    <div>
+      <span
+        class="c1"
+      />
+    </div>
     <div
       class="other navbar-nav"
     />
