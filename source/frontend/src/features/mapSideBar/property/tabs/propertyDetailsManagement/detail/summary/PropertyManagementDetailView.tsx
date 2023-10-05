@@ -11,7 +11,7 @@ import { Api_PropertyManagement } from '@/models/api/Property';
 
 export interface IPropertyManagementDetailViewProps {
   isLoading: boolean;
-  propertyManagement: Api_PropertyManagement;
+  propertyManagement: Api_PropertyManagement | null;
   setEditManagementState: (state: EditManagementState | null) => void;
 }
 

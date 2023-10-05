@@ -4,8 +4,9 @@ import { forwardRef } from 'react';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyManagement } from '@/mocks/propertyManagement.mock';
+import { Api_PropertyManagement } from '@/models/api/Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import {
   IPropertyManagementDetailContainerProps,
@@ -20,7 +21,7 @@ const storeState = {
 
 const mockGetApi = {
   error: undefined,
-  response: undefined,
+  response: undefined as Api_PropertyManagement | undefined,
   execute: jest.fn(),
   loading: false,
 };
@@ -78,10 +79,8 @@ describe('PropertyManagementDetailContainer component', () => {
 
   it('passes property management info to child view as prop', async () => {
     const apiManagement = getMockApiPropertyManagement(1);
-    mockGetApi.execute.mockResolvedValue(apiManagement);
+    mockGetApi.response = apiManagement;
     setup({ props: { propertyId: 1 } });
-    // Wait for async useEffects to settle
-    await waitForEffects();
     expect(viewProps.isLoading).toBe(false);
     expect(viewProps.propertyManagement).toBe(apiManagement);
   });
