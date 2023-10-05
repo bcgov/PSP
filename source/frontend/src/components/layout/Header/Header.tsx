@@ -59,6 +59,9 @@ export const Header = () => {
         </Nav.Item>
       </Nav>
       <HelpContainer />
+      <div>
+        <VerticalBar />
+      </div>
       {keycloak.obj.authenticated && <UserProfile />}
       <Nav className="other">
         {errors && errors.length ? (

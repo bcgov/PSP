@@ -22,6 +22,8 @@ interface IModalProps {
   handleSubmit: () => void;
   /** External state var to track whether or not this modal is being shown. */
   show: boolean;
+  /** Link to PIMS training material shared folder. */
+  pimsTrainingUrl: string;
 }
 
 /**
@@ -38,6 +40,7 @@ const HelpModal: FunctionComponent<React.PropsWithChildren<IModalProps>> = ({
   handleCancel,
   handleSubmit,
   show,
+  pimsTrainingUrl,
 }) => {
   const tenantsState = useAppSelector(state => state.tenants);
   const { getSettings } = useTenants();
@@ -63,20 +66,19 @@ const HelpModal: FunctionComponent<React.PropsWithChildren<IModalProps>> = ({
           </DraggableTitle>
         </ModalHeader>
         <Modal.Body>
-          <H3Styled>Get started at PIMS</H3Styled>
+          <H3Styled>Get started with PIMS</H3Styled>
           <p>
             This overview has useful tools that will support you to start using the application. You
             can also watch the video demos.
           </p>
-          <LinkStyled
-            target="_blank"
-            href="https://sp.th.gov.bc.ca/sites/PropertiesServices/Project%20Management/03.%20Execution%20and%20Control/PIMS%20Training"
-          >
-            PIMS resources
+          <LinkStyled target="_blank" href={pimsTrainingUrl} download>
+            PIMS Overview (Help file)
           </LinkStyled>
           <hr />
           <HelpModalContentContainer setMailto={setMailto} />
-          <StyledConfirmationText>Do you want to proceed?</StyledConfirmationText>
+          <StyledConfirmationText>
+            Do you want to proceed and send the email?
+          </StyledConfirmationText>
           <hr />
         </Modal.Body>
 
