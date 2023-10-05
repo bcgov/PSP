@@ -86,6 +86,12 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
           formikProps={formikProps}
         />
       </SectionField>
+      <SectionField labelWidth="5" label="Possession date">
+        <FastDatePicker
+          field={withNameSpace(nameSpace, 'possessionDate')}
+          formikProps={formikProps}
+        />
+      </SectionField>
 
       <StyledSectionSubheader>Financial</StyledSectionSubheader>
       <SectionField labelWidth="5" label="Purchase price">
