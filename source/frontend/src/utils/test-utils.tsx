@@ -5,6 +5,7 @@ import {
   RenderOptions as RtlRenderOptions,
   RenderResult,
 } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { AxiosError, AxiosResponse } from 'axios';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import noop from 'lodash/noop';
@@ -54,6 +55,14 @@ export const mockKeycloak = (
 export function fakeText(length = 50): string {
   return 'x'.repeat(length);
 }
+
+export const selectOptions = async (elementName: string, values: string[] | string) => {
+  const element: HTMLSelectElement | null = document.querySelector(`select[name="${elementName}"]`);
+  if (!element) {
+    throw new Error(`Could not find element with name: ${elementName}`);
+  }
+  return userEvent.selectOptions(element, values);
+};
 
 export const fillInput = async (
   container: HTMLElement,

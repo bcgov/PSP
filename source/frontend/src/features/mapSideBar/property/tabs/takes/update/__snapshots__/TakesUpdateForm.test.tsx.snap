@@ -1120,6 +1120,41 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         >
                           Select Land Act
                         </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-Section 15"
+                          value="Section 15"
+                        >
+                          Section 15 Order in Council Reserve
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-Section 16"
+                          value="Section 16"
+                        >
+                          Section 16 Map Reserve / Withdrawal
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-Section 17"
+                          value="Section 17"
+                        >
+                          Section 17 Conditional Withdrawal / Designated Use Area
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NOI"
+                          value="NOI"
+                        >
+                          NOI Notation of Interest
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-Section 66"
+                          value="Section 66"
+                        >
+                          Section 66 Prohibited Use Area
+                        </option>
                       </select>
                     </div>
                   </div>

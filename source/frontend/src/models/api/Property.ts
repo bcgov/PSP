@@ -82,11 +82,6 @@ export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
   surplusDeclarationType?: Api_TypeCode<string>;
   surplusDeclarationComment?: string;
   surplusDeclarationDate?: string;
-
-  managementPurposes?: Api_PropertyManagementPurpose[];
-  additionalDetails?: string;
-  isUtilitiesPayable?: boolean;
-  isTaxesPayable?: boolean;
 }
 
 export interface Api_PropertyAnomaly extends Api_ConcurrentVersion, Api_AuditFields {
@@ -111,12 +106,6 @@ export interface Api_PropertyTenure extends Api_ConcurrentVersion, Api_AuditFiel
   id?: number;
   propertyId?: number;
   propertyTenureTypeCode?: Api_TypeCode<string>;
-}
-
-export interface Api_PropertyManagementPurpose extends Api_ConcurrentVersion, Api_AuditFields {
-  id?: number;
-  propertyId?: number;
-  propertyPurposeTypeCode?: Api_TypeCode<string>;
 }
 
 export interface Api_PropertyAssociations {
@@ -149,4 +138,22 @@ export interface Api_PropertyContact extends Api_ConcurrentVersion_Null {
   primaryContact: Api_Person | null;
   purpose: string | null;
   isDisabled: boolean | null;
+}
+
+export interface Api_PropertyManagement extends Api_ConcurrentVersion_Null, Api_AuditFields {
+  id: number;
+  managementPurposes: Api_PropertyManagementPurpose[];
+  additionalDetails: string | null;
+  isUtilitiesPayable: boolean | null;
+  isTaxesPayable: boolean | null;
+  isLeaseActive: boolean;
+  isLeaseExpired: boolean;
+  leaseExpiryDate: string | null;
+}
+
+export interface Api_PropertyManagementPurpose extends Api_ConcurrentVersion_Null, Api_AuditFields {
+  id: number | null;
+  propertyId: number | null;
+  isDisabled: boolean | null;
+  propertyPurposeTypeCode: Api_TypeCode<string> | null;
 }
