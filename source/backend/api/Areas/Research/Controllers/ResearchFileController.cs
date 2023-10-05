@@ -63,6 +63,21 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         }
 
         /// <summary>
+        /// Gets the specified research file last updated-by information.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/updateInfo")]
+        [HasPermission(Permissions.ResearchFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Dal.Entities.Models.LastUpdatedByModel), 200)]
+        [SwaggerOperation(Tags = new[] { "researchfile" })]
+        public IActionResult GetLastUpdatedBy(long id)
+        {
+            var lastUpdated = _researchFileService.GetLastUpdateInformation(id);
+            return new JsonResult(lastUpdated);
+        }
+
+        /// <summary>
         /// Get the research file properties.
         /// </summary>
         /// <returns></returns>

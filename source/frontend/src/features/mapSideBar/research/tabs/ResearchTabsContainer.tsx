@@ -7,6 +7,7 @@ import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 
+import { SideBarContext } from '../../context/sidebarContext';
 import { FileTabs, FileTabType, TabFileView } from '../../shared/detail/FileTabs';
 import DocumentsTab from '../../shared/tabs/DocumentsTab';
 import { FormKeys } from '../FormKeys';
@@ -32,6 +33,11 @@ export const ResearchTabsContainer: React.FunctionComponent<
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
 
+  const { setStaleLastUpdatedBy } = React.useContext(SideBarContext);
+
+  const onChildEntityUpdate = () => {
+    setStaleLastUpdatedBy(true);
+  };
   tabViews.push({
     content: (
       <ResearchSummaryView
@@ -52,6 +58,7 @@ export const ResearchTabsContainer: React.FunctionComponent<
         <DocumentsTab
           fileId={researchFile.id}
           relationshipType={DocumentRelationshipType.RESEARCH_FILES}
+          onSuccess={onChildEntityUpdate}
         />
       ),
       key: FileTabType.DOCUMENTS,
@@ -61,7 +68,13 @@ export const ResearchTabsContainer: React.FunctionComponent<
 
   if (researchFile?.id && hasClaim(Claims.NOTE_VIEW)) {
     tabViews.push({
-      content: <NoteListView type={NoteTypes.Research_File} entityId={researchFile?.id} />,
+      content: (
+        <NoteListView
+          type={NoteTypes.Research_File}
+          entityId={researchFile?.id}
+          onSuccess={onChildEntityUpdate}
+        />
+      ),
       key: FileTabType.NOTES,
       name: 'Notes',
     });

@@ -4,6 +4,7 @@ import React from 'react';
 import { IResearchFilter } from '@/features/research/interfaces';
 import { IPagedItems } from '@/interfaces';
 import { IResearchSearchResult } from '@/interfaces/IResearchSearchResult';
+import { Api_LastUpdatedBy } from '@/models/api/File';
 import { Api_ResearchFile, Api_ResearchFileProperty } from '@/models/api/ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
@@ -35,6 +36,8 @@ export const useApiResearchFile = () => {
         ),
       putResearchFile: (researchFile: Api_ResearchFile) =>
         api.put<Api_ResearchFile>(`/researchFiles/${researchFile.id}`, researchFile),
+      getLastUpdatedByApi: (researchFileId: number) =>
+        api.get<Api_LastUpdatedBy>(`/researchFiles/${researchFileId}/updateInfo`),
       putResearchFileProperties: (
         researchFile: Api_ResearchFile,
         userOverrideCodes: UserOverrideCode[] = [],

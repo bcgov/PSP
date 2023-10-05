@@ -21,6 +21,7 @@ import * as Styled from './styles';
 export interface INoteListViewProps {
   type: NoteTypes;
   entityId: number;
+  onSuccess?: () => void;
 }
 /**
  * Page that displays notes information.
@@ -43,6 +44,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   const [isViewNotesOpened, openViewNotes, closeViewNotes] = useModalManagement();
 
   const fetchNotes = useCallback(async () => {
+    props.onSuccess?.();
     setIsLoading(true);
     try {
       const { data } = await getNotes(type, entityId);

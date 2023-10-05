@@ -15,6 +15,7 @@ interface IDocumentListContainerProps {
   disableAdd?: boolean;
   addButtonText?: string;
   title?: string;
+  onSuccess?: () => void;
 }
 
 const DocumentListContainer: React.FunctionComponent<
@@ -48,6 +49,7 @@ const DocumentListContainer: React.FunctionComponent<
   const onDelete = async (
     documentRelationship: Api_DocumentRelationship,
   ): Promise<boolean | undefined> => {
+    props.onSuccess?.();
     if (documentRelationship.relationshipType !== null) {
       let result = await deleteDocumentRelationship(
         documentRelationship.relationshipType,
@@ -66,6 +68,7 @@ const DocumentListContainer: React.FunctionComponent<
   };
 
   const onSuccess = async () => {
+    props.onSuccess?.();
     updateCallback();
   };
 
