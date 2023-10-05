@@ -102,7 +102,15 @@ export const ResearchContainer: React.FunctionComponent<
     } else {
       setLastUpdatedBy(null);
     }
-  }, [getLastUpdatedBy, props.researchFileId, setLastUpdatedBy]);
+  }, [props.researchFileId, getLastUpdatedBy, setLastUpdatedBy]);
+
+  const onSuccess = React.useCallback(() => {
+    setStaleFile(true);
+    setStaleLastUpdatedBy(true);
+    mapMachine.refreshMapProperties();
+    setIsEditing(false);
+    setEditKey(FormKeys.none);
+  }, [mapMachine, setStaleFile, setStaleLastUpdatedBy]);
 
   React.useEffect(() => {
     if (researchFile === undefined || researchFileId !== researchFile?.id || staleFile) {
@@ -171,14 +179,6 @@ export const ResearchContainer: React.FunctionComponent<
       formikRef.current?.resetForm();
     }
     setShowConfirmModal(false);
-    setIsEditing(false);
-    setEditKey(FormKeys.none);
-  };
-
-  const onSuccess = () => {
-    setStaleFile(true);
-    setStaleLastUpdatedBy(true);
-    mapMachine.refreshMapProperties();
     setIsEditing(false);
     setEditKey(FormKeys.none);
   };

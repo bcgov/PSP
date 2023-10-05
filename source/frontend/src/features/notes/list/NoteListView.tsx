@@ -29,7 +29,7 @@ export interface INoteListViewProps {
 export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INoteListViewProps>> = (
   props: INoteListViewProps,
 ) => {
-  const { type, entityId } = props;
+  const { type, entityId, onSuccess } = props;
   const isMounted = useIsMounted();
   const { getNotes, deleteNote } = useApiNotes();
 
@@ -44,7 +44,6 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   const [isViewNotesOpened, openViewNotes, closeViewNotes] = useModalManagement();
 
   const fetchNotes = useCallback(async () => {
-    props.onSuccess?.();
     setIsLoading(true);
     try {
       const { data } = await getNotes(type, entityId);
@@ -80,9 +79,15 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
       setShowDeleteConfirm(false);
       toast.success('Deleted successfully.');
       fetchNotes();
+      onSuccess?.();
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const onChildSuccess = () => {
+    fetchNotes();
+    onSuccess?.();
   };
 
   return (
@@ -122,7 +127,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
             isOpened={isAddNotesOpened}
             openModal={openAddNotes}
             closeModal={closeAddNotes}
-            onSuccess={fetchNotes}
+            onSuccess={onChildSuccess}
           />
 
           {currentNote && (
@@ -132,7 +137,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
               isOpened={isViewNotesOpened}
               openModal={openViewNotes}
               closeModal={closeViewNotes}
-              onSuccess={fetchNotes}
+              onSuccess={onChildSuccess}
             ></NoteContainer>
           )}
 

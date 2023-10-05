@@ -99,10 +99,13 @@ export const SideBarContextProvider = (props: {
     [setFile, setStaleFile],
   );
 
-  const setLastUpdatedByAndStale = useCallback((lastUpdatedBy: Api_LastUpdatedBy | null) => {
-    setLastUpdatedBy(lastUpdatedBy);
-    setStaleLastUpdatedBy(false);
-  }, []);
+  const setLastUpdatedByAndStale = useCallback(
+    (lastUpdatedBy: Api_LastUpdatedBy | null) => {
+      setLastUpdatedBy(lastUpdatedBy);
+      setStaleLastUpdatedBy(false);
+    },
+    [setLastUpdatedBy, setStaleLastUpdatedBy],
+  );
 
   const setProjectInstance = useCallback(
     (project?: Api_Project) => {
