@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Data\PIMS_Testing_Data.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DotNetEnv" Version="2.5.0" />
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
@@ -17,7 +23,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3" />
     <PackageReference Include="Selenium.Support" Version="4.10.0" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="115.0.5790.9800" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="117.0.5938.9200" />
     <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
     <PackageReference Include="FluentAssertions" Version="6.11.0" />
     <PackageReference Include="SpecFlow.xUnit" Version="3.9.74" />
@@ -30,13 +36,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Data\PIMS_Testing_Data.xlsx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Folder Include="TestDocuments\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="TestDocuments\" />
+    <Compile Update="Data\ExcelDataContext.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
 
 </Project>
