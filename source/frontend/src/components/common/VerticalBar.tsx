@@ -6,7 +6,7 @@ import styled from 'styled-components';
 export const VerticalBar = styled.span`
   border-left: 1px solid white;
   font-size: 3.4rem;
-  margin: 0 1.5rem 0 2.5rem;
+  margin: 0 36px 0 36px;
   vertical-align: top;
 `;
 
