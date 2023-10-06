@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.Concepts;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
@@ -170,6 +171,14 @@ namespace Pims.Api.Services
             _researchFilePropertyRepository.Update(propertyResearchFile);
             _researchFilePropertyRepository.CommitTransaction();
             return _researchFileRepository.GetById(researchFileId);
+        }
+
+        public LastUpdatedByModel GetLastUpdateInformation(long researchFileId)
+        {
+            _logger.LogInformation("Retrieving last updated-by information...");
+            _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
+
+            return _researchFileRepository.GetLastUpdateBy(researchFileId);
         }
 
         private void UpdateLocation(PimsProperty researchProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> userOverrideCodes)
