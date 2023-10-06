@@ -3,7 +3,7 @@
 
 name: smoke test (.NET)
 env:
-  baseUrl: ${{ vars.BASE_URL }}
+  Base_url: ${{ vars.BASE_URL }}
   CloseBrowserAfterEachTest: false
   RunHeadless: true
   Users__0__User: ${{ secrets.USER_1_USERNAME }}
