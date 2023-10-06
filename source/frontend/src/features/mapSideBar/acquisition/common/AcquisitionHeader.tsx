@@ -6,7 +6,7 @@ import { HeaderField } from '@/components/common/HeaderField/HeaderField';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_LastUpdatedBy } from '@/models/api/File';
-import { prettyFormatDateTime, prettyFormatUTCDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 
 export interface IAcquisitionHeaderProps {
   acquisitionFile?: Api_AcquisitionFile;
