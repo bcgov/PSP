@@ -71,8 +71,8 @@ const HelpModal: FunctionComponent<React.PropsWithChildren<IModalProps>> = ({
             This overview has useful tools that will support you to start using the application. You
             can also watch the video demos.
           </p>
-          <LinkStyled target="_blank" href={pimsTrainingUrl} download>
-            PIMS Overview (Help file)
+          <LinkStyled target="_blank" href={pimsTrainingUrl}>
+            PIMS Resources
           </LinkStyled>
           <hr />
           <HelpModalContentContainer setMailto={setMailto} />
