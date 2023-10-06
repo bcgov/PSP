@@ -53,6 +53,7 @@ export interface ITenantConfig2 {
   idlePromptTimeout: number;
   // the amount of time it takes to display the idle prompt (in minutes)
   idleTimeout: number;
+  pimsTrainingResourceUrl: string;
 }
 
 export interface ITenantLoginConfig {
