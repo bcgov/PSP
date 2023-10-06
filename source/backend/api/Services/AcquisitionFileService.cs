@@ -134,6 +134,14 @@ namespace Pims.Api.Services
             return acqFile;
         }
 
+        public LastUpdatedByModel GetLastUpdateInformation(long acquisitionFileId)
+        {
+            _logger.LogInformation("Retrieving last updated-by information...");
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            return _acqFileRepository.GetLastUpdateBy(acquisitionFileId);
+        }
+
         public IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id)
         {
             _logger.LogInformation("Getting acquisition file with id {id}", id);

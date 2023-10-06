@@ -81,11 +81,14 @@ export const SideBarContextProvider = (props: {
   children: React.ReactChild | React.ReactChild[] | React.ReactNode;
   file?: TypedFile;
   project?: Api_Project;
+  lastUpdatedBy?: Api_LastUpdatedBy;
 }) => {
   const [file, setFile] = useState<TypedFile | undefined>(props.file);
   const [project, setProject] = useState<Api_Project | undefined>(props.project);
   const [staleFile, setStaleFile] = useState<boolean>(false);
-  const [lastUpdatedBy, setLastUpdatedBy] = useState<Api_LastUpdatedBy | null>(null);
+  const [lastUpdatedBy, setLastUpdatedBy] = useState<Api_LastUpdatedBy | null>(
+    props.lastUpdatedBy ?? null,
+  );
   const [staleLastUpdatedBy, setStaleLastUpdatedBy] = useState<boolean>(false);
   const [fileLoading, setFileLoading] = useState<boolean>(false);
   const [projectLoading, setProjectLoading] = useState<boolean>(false);

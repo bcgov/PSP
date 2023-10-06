@@ -64,7 +64,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             acquisitionFileId={props.acquisitionFile.id || -1}
             View={UpdateAgreementsForm}
             formikRef={props.formikRef}
-            onSuccess={() => props.setIsEditing(false)}
+            onSuccess={props.onSuccess}
           />
         </Route>
         <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.STAKEHOLDERS}`}>
@@ -72,7 +72,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             View={UpdateStakeHolderForm}
             formikRef={props.formikRef}
             acquisitionFile={props.acquisitionFile}
-            onSuccess={() => props.setIsEditing(false)}
+            onSuccess={props.onSuccess}
           />
         </Route>
         {/* Ignore property-related routes (which are handled in separate FilePropertyRouter) */}
