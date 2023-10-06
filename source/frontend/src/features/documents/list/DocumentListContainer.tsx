@@ -49,13 +49,13 @@ const DocumentListContainer: React.FunctionComponent<
   const onDelete = async (
     documentRelationship: Api_DocumentRelationship,
   ): Promise<boolean | undefined> => {
-    props.onSuccess?.();
     if (documentRelationship.relationshipType !== null) {
       let result = await deleteDocumentRelationship(
         documentRelationship.relationshipType,
         documentRelationship,
       );
       if (result && isMounted()) {
+        props.onSuccess?.();
         updateCallback();
       }
 
