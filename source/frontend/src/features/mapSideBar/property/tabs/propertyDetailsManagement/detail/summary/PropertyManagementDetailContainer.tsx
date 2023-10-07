@@ -1,45 +1,33 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { usePropertyManagementRepository } from '@/hooks/repositories/usePropertyManagementRepository';
-import { Api_Property, Api_PropertyManagement } from '@/models/api/Property';
 
 import { EditManagementState } from '../../../../PropertyViewSelector';
 import { IPropertyManagementDetailViewProps } from './PropertyManagementDetailView';
 
-interface IPropertyManagementDetailContainerProps {
-  property: Api_Property;
+export interface IPropertyManagementDetailContainerProps {
+  propertyId: number;
   setEditManagementState: (state: EditManagementState | null) => void;
   View: React.FC<IPropertyManagementDetailViewProps>;
 }
 
 export const PropertyManagementDetailContainer: React.FunctionComponent<
   IPropertyManagementDetailContainerProps
-> = ({ property, setEditManagementState, View }) => {
-  const [propertyManagement, setPropertyManagement] = useState<Api_PropertyManagement>({
-    id: property.id ?? 0,
-    rowVersion: null,
-    managementPurposes: [],
-    additionalDetails: null,
-    isUtilitiesPayable: null,
-    isTaxesPayable: null,
-    isLeaseActive: false,
-    isLeaseExpired: false,
-    leaseExpiryDate: null,
-  });
-
+> = ({ propertyId, setEditManagementState, View }) => {
   const {
-    getPropertyManagement: { execute: getPropertyManagement, loading },
+    getPropertyManagement: {
+      execute: getPropertyManagement,
+      response: propertyManagement,
+      loading,
+    },
   } = usePropertyManagementRepository();
 
   const fetchPropertyManagement = useCallback(async () => {
-    if (!property.id) {
+    if (!propertyId) {
       return;
     }
-    const response = await getPropertyManagement(property.id);
-    if (response) {
-      setPropertyManagement(response);
-    }
-  }, [getPropertyManagement, property.id]);
+    await getPropertyManagement(propertyId);
+  }, [getPropertyManagement, propertyId]);
 
   useEffect(() => {
     fetchPropertyManagement();
@@ -48,7 +36,7 @@ export const PropertyManagementDetailContainer: React.FunctionComponent<
   return (
     <View
       isLoading={loading}
-      propertyManagement={propertyManagement}
+      propertyManagement={propertyManagement ?? null}
       setEditManagementState={setEditManagementState}
     />
   );
