@@ -221,7 +221,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
             >
               Last updated: 
               <strong>
-                Jul 27, 2022
+                Oct 6, 2023
               </strong>
                by 
               <span
@@ -230,7 +230,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                 id="userNameTooltip"
               >
                 <strong>
-                  admin
+                  MARODRIG
                 </strong>
               </span>
             </span>

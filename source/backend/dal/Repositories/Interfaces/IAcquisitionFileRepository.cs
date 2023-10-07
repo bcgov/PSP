@@ -10,6 +10,8 @@ namespace Pims.Dal.Repositories
 
         PimsAcquisitionFile GetById(long id);
 
+        LastUpdatedByModel GetLastUpdateBy(long id);
+
         List<PimsAcquisitionOwner> GetOwnersByAcquisitionFileId(long acquisitionFileId);
 
         List<PimsAcquisitionFilePerson> GetTeamMembers(HashSet<short> regions, long? contractorPersonId = null);
