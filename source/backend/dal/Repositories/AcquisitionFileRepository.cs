@@ -485,7 +485,7 @@ namespace Pims.Dal.Repositories
             .ToList();
             lastUpdatedByAggregate.AddRange(expPaymentsHistoryLastUpdatedBy);
 
-            // Acquisition Compensation Requsition Financials
+            // Acquisition Expropiation payments
             var expPaymentsItemsLastUpdatedBy = this.Context.PimsExpropPmtPmtItems.AsNoTracking()
                 .Include(aepi => aepi.ExpropriationPayment)
                 .Where(aepi => aepi.ExpropriationPayment.AcquisitionFileId == id)
@@ -501,7 +501,7 @@ namespace Pims.Dal.Repositories
                 .ToList();
             lastUpdatedByAggregate.AddRange(expPaymentsItemsLastUpdatedBy);
 
-            // Acquisition Deleted Compensation Requsition Financials
+            // Acquisition Deleted Expropiation payments
             // This is needed to get the notes last-updated-by from the notes that where deleted
             var expItemHists = this.Context.PimsExpropPmtPmtItemHists.AsNoTracking();
             var expHistoryLastUpdatedBy = this.Context.PimsExpropriationPaymentHists.AsNoTracking()

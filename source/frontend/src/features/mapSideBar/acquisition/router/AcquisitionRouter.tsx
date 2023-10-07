@@ -100,7 +100,8 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             <AddForm8Container
               acquisitionFileId={props.acquisitionFile?.id!}
               View={UpdateForm8Form}
-            ></AddForm8Container>
+              onSuccess={props.onSuccess}
+            />
           )}
           claim={Claims.ACQUISITION_EDIT}
           key={'expropriation'}
@@ -112,7 +113,8 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             <UpdateForm8Container
               form8Id={+match.params.form8Id}
               View={UpdateForm8Form}
-            ></UpdateForm8Container>
+              onSuccess={props.onSuccess}
+            />
           )}
           claim={Claims.ACQUISITION_EDIT}
           key={'expropriation'}
