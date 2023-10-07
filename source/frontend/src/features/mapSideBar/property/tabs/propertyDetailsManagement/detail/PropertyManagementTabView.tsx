@@ -31,7 +31,7 @@ export const PropertyManagementTabView: React.FunctionComponent<IPropertyManagem
         <LoadingBackdrop show={loading} parentScreen={true} />
 
         <PropertyManagementDetailContainer
-          property={property}
+          propertyId={property.id}
           View={PropertyManagementDetailView}
           setEditManagementState={setEditManagementState}
         />
