@@ -31,10 +31,10 @@ namespace Pims.Api.Test.Controllers.Lease
 
         public LeaseImprovementControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<PropertyImprovementController>(Permissions.LeaseView);
-            _mapper = _helper.GetService<IMapper>();
-            _repository = _helper.GetService<Mock<ILeaseService>>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<PropertyImprovementController>(Permissions.LeaseView);
+            this._mapper = this._helper.GetService<IMapper>();
+            this._repository = this._helper.GetService<Mock<ILeaseService>>();
         }
 
         #region Tests
@@ -49,13 +49,13 @@ namespace Pims.Api.Test.Controllers.Lease
             var lease = EntityHelper.CreateLease(1);
             lease.PimsPropertyImprovements = new List<Pims.Dal.Entities.PimsPropertyImprovement>() { new Dal.Entities.PimsPropertyImprovement() { Internal_Id = 1 } };
 
-            _repository.Setup(m => m.UpdateImprovementsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>())).Returns(lease.PimsPropertyImprovements);
+            this._repository.Setup(m => m.UpdateImprovementsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>())).Returns(lease.PimsPropertyImprovements);
 
             // Act
-            var result = _controller.UpdateImprovements(lease.Internal_Id, _mapper.Map<IEnumerable<Models.Concepts.PropertyImprovementModel>>(lease.PimsPropertyImprovements));
+            var result = this._controller.UpdateImprovements(lease.Internal_Id, this._mapper.Map<IEnumerable<Models.Concepts.PropertyImprovementModel>>(lease.PimsPropertyImprovements));
 
             // Assert
-            _repository.Verify(m => m.UpdateImprovementsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>()), Times.Once());
+            this._repository.Verify(m => m.UpdateImprovementsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>()), Times.Once());
         }
         #endregion
         #endregion

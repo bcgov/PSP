@@ -49,6 +49,10 @@ export enum Claims {
   COMPENSATION_REQUISITION_ADD = 'compensation-requisition-add',
   COMPENSATION_REQUISITION_EDIT = 'compensation-requisition-edit',
   COMPENSATION_REQUISITION_DELETE = 'compensation-requisition-delete',
+  MANAGEMENT_VIEW = 'management-view',
+  MANAGEMENT_ADD = 'management-add',
+  MANAGEMENT_EDIT = 'management-edit',
+  MANAGEMENT_DELETE = 'management-delete',
 }
 
 export default Claims;

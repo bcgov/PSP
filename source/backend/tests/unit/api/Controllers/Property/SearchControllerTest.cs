@@ -45,11 +45,9 @@ namespace Pims.Api.Test.Controllers.Property
         private TestHelper _helper;
         #endregion
 
-
-
         public SearchControllerTest()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         #region Tests
@@ -62,12 +60,12 @@ namespace Pims.Api.Test.Controllers.Property
         public void GetProperties_All_Success(SModel.PropertyFilterModel filter)
         {
             // Arrange
-            var controller = _helper.CreateController<SearchController>(Permissions.PropertyView);
+            var controller = this._helper.CreateController<SearchController>(Permissions.PropertyView);
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var repository = _helper.GetService<Mock<IPropertyRepository>>();
-            var mapper = _helper.GetService<IMapper>();
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            var mapper = this._helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
 
             repository.Setup(m => m.GetPage(It.IsAny<PropertyFilter>())).Returns(page);
@@ -91,12 +89,12 @@ namespace Pims.Api.Test.Controllers.Property
         public void GetProperties_Query_Success(Uri uri)
         {
             // Arrange
-            var controller = _helper.CreateController<SearchController>(Permissions.PropertyView, uri);
+            var controller = this._helper.CreateController<SearchController>(Permissions.PropertyView, uri);
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var repository = _helper.GetService<Mock<IPropertyRepository>>();
-            var mapper = _helper.GetService<IMapper>();
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            var mapper = this._helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties);
 
             repository.Setup(m => m.GetPage(It.IsAny<PropertyFilter>())).Returns(page);

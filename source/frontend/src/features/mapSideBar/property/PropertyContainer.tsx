@@ -12,9 +12,12 @@ import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/prop
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
 
+import { EditManagementState } from './PropertyViewSelector';
+import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
+
 export interface IPropertyContainerProps {
   composedPropertyState: ComposedPropertyState;
-  setEditMode: (isEditing: boolean) => void;
+  setEditManagementState: (state: EditManagementState | null) => void;
 }
 
 /**
@@ -22,7 +25,7 @@ export interface IPropertyContainerProps {
  */
 export const PropertyContainer: React.FunctionComponent<
   React.PropsWithChildren<IPropertyContainerProps>
-> = ({ composedPropertyState, setEditMode }) => {
+> = ({ composedPropertyState, setEditManagementState }) => {
   const showPropertyInfoTab = composedPropertyState?.id !== undefined;
 
   const tabViews: TabInventoryView[] = [];
@@ -73,7 +76,7 @@ export const PropertyContainer: React.FunctionComponent<
         <PropertyDetailsTabView
           property={propertyViewForm}
           loading={composedPropertyState.apiWrapper?.loading ?? false}
-          setEditMode={setEditMode}
+          setEditManagementState={setEditManagementState}
         />
       ),
       key: InventoryTabNames.property,
@@ -93,6 +96,24 @@ export const PropertyContainer: React.FunctionComponent<
       key: InventoryTabNames.pims,
       name: 'PIMS Files',
     });
+  }
+
+  if (composedPropertyState.apiWrapper?.response !== undefined && showPropertyInfoTab) {
+    // After API property object has been received, we query relevant map layers to find
+    // additional information which we store in a different model (IPropertyDetailsForm)
+
+    tabViews.push({
+      content: (
+        <PropertyManagementTabView
+          property={composedPropertyState.apiWrapper?.response}
+          loading={composedPropertyState.apiWrapper?.loading ?? false}
+          setEditManagementState={setEditManagementState}
+        />
+      ),
+      key: InventoryTabNames.management,
+      name: 'Management',
+    });
+    defaultTab = InventoryTabNames.management;
   }
 
   const [activeTab, setActiveTab] = useState<InventoryTabNames>(defaultTab);

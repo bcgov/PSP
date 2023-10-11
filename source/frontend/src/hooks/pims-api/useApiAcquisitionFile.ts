@@ -1,7 +1,7 @@
 import queryString from 'query-string';
 import React from 'react';
 
-import { IAcquisitionFilter } from '@/features/acquisition/list/interfaces';
+import { Api_AcquisitionFilter } from '@/features/acquisition/list/interfaces';
 import { IPagedItems } from '@/interfaces';
 import {
   Api_AcquisitionFile,
@@ -12,6 +12,7 @@ import {
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
+import { Api_LastUpdatedBy } from '@/models/api/File';
 import { Api_Person } from '@/models/api/Person';
 import { Api_Product, Api_Project } from '@/models/api/Project';
 import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
@@ -35,6 +36,8 @@ export const useApiAcquisitionFile = () => {
         ),
       getAcquisitionFile: (acqFileId: number) =>
         api.get<Api_AcquisitionFile>(`/acquisitionfiles/${acqFileId}`),
+      getLastUpdatedByApi: (acqFileId: number) =>
+        api.get<Api_LastUpdatedBy>(`/acquisitionfiles/${acqFileId}/updateInfo`),
       getAgreementReport: (filter: Api_ExportProjectFilter) =>
         api.post<Blob>(`/reports/acquisition/agreements`, filter, {
           responseType: 'blob',
@@ -131,4 +134,4 @@ export const useApiAcquisitionFile = () => {
   );
 };
 
-export type IPaginateAcquisition = IPaginateRequest<IAcquisitionFilter>;
+export type IPaginateAcquisition = IPaginateRequest<Api_AcquisitionFilter>;

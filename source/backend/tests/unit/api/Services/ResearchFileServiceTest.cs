@@ -27,15 +27,15 @@ namespace Pims.Api.Test.Services
 
         public ResearchFileServiceTest()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         private ResearchFileService CreateResearchFileServiceWithPermissions(params Permissions[] permissions)
         {
             ClaimsPrincipal user = PrincipalHelper.CreateForPermission(permissions);
             user.AddClaim("idir_username", "TestIdirUsername@domain");
-            _helper.CreatePimsContext(user, true);
-            return _helper.Create<ResearchFileService>();
+            this._helper.CreatePimsContext(user, true);
+            return this._helper.Create<ResearchFileService>();
         }
 
         #region Tests
@@ -46,8 +46,8 @@ namespace Pims.Api.Test.Services
             // Arrange
             var researchFile = EntityHelper.CreateResearchFile(1);
 
-            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileView);
-            var researchRepository = _helper.GetService<Mock<IResearchFileRepository>>();
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileView);
+            var researchRepository = this._helper.GetService<Mock<IResearchFileRepository>>();
             researchRepository.Setup(x => x.GetPage(It.IsAny<ResearchFilter>()));
 
             // Act
@@ -61,7 +61,7 @@ namespace Pims.Api.Test.Services
         public void GetPage_NoPermission()
         {
             // Arrange
-            var service = CreateResearchFileServiceWithPermissions();
+            var service = this.CreateResearchFileServiceWithPermissions();
 
             // Assert
             Assert.Throws<NotAuthorizedException>(() => service.GetPage(new ResearchFilter()));
@@ -79,11 +79,11 @@ namespace Pims.Api.Test.Services
             pimsPropertyResearchFile.PimsPrfPropResearchPurposeTypes = new List<PimsPrfPropResearchPurposeType>() { new PimsPrfPropResearchPurposeType() { } };
             researchFile.PimsPropertyResearchFiles.Add(pimsPropertyResearchFile);
 
-            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
-            var researchRepository = _helper.GetService<Mock<IResearchFileRepository>>();
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+            var researchRepository = this._helper.GetService<Mock<IResearchFileRepository>>();
             researchRepository.Setup(x => x.GetPage(It.IsAny<ResearchFilter>()));
             researchRepository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(2);
-            var researchFilePropertyRepository = _helper.GetService<Mock<IResearchFilePropertyRepository>>();
+            var researchFilePropertyRepository = this._helper.GetService<Mock<IResearchFilePropertyRepository>>();
             researchFilePropertyRepository.Setup(x => x.Delete(It.IsAny<PimsPropertyResearchFile>()));
             researchFilePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
 
@@ -101,7 +101,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_MatchProperties_PID_Success()
         {
             // Arrange
-            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
 
             var researchFile = EntityHelper.CreateResearchFile();
             researchFile.ConcurrencyControlNumber = 1;
@@ -109,14 +109,14 @@ namespace Pims.Api.Test.Services
             var property = EntityHelper.CreateProperty(12345);
             researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = property } };
 
-            var repository = _helper.GetService<Mock<IResearchFileRepository>>();
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
 
-            var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(property);
 
-            var filePropertyRepository = _helper.GetService<Mock<IResearchFilePropertyRepository>>();
+            var filePropertyRepository = this._helper.GetService<Mock<IResearchFilePropertyRepository>>();
             filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
 
             // Act
@@ -130,7 +130,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_MatchProperties_PIN_Success()
         {
             // Arrange
-            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
 
             var researchFile = EntityHelper.CreateResearchFile();
             researchFile.ConcurrencyControlNumber = 1;
@@ -139,14 +139,14 @@ namespace Pims.Api.Test.Services
             property.Pid = null;
             researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = property } };
 
-            var repository = _helper.GetService<Mock<IResearchFileRepository>>();
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
 
-            var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPin(It.IsAny<int>())).Returns(property);
 
-            var filePropertyRepository = _helper.GetService<Mock<IResearchFilePropertyRepository>>();
+            var filePropertyRepository = this._helper.GetService<Mock<IResearchFilePropertyRepository>>();
             filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
 
             // Act
@@ -160,7 +160,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_MatchProperties_PID_NewProperty_Success()
         {
             // Arrange
-            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
 
             var researchFile = EntityHelper.CreateResearchFile();
             researchFile.ConcurrencyControlNumber = 1;
@@ -168,19 +168,19 @@ namespace Pims.Api.Test.Services
             var property = EntityHelper.CreateProperty(12345);
             researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = property } };
 
-            var repository = _helper.GetService<Mock<IResearchFileRepository>>();
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
             PimsPropertyResearchFile updatedResearchFileProperty = null;
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
 
-            var filePropertyRepository = _helper.GetService<Mock<IResearchFilePropertyRepository>>();
+            var filePropertyRepository = this._helper.GetService<Mock<IResearchFilePropertyRepository>>();
             filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
             filePropertyRepository.Setup(x => x.Add(It.IsAny<PimsPropertyResearchFile>())).Callback<PimsPropertyResearchFile>(x => updatedResearchFileProperty = x).Returns(researchFile.PimsPropertyResearchFiles.FirstOrDefault());
 
-            var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Throws<KeyNotFoundException>();
 
-            var coordinateService = _helper.GetService<Mock<ICoordinateTransformService>>();
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(924046.3314288399, 1088892.9140135897));
 
             // Act
@@ -204,7 +204,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_MatchProperties_PIN_NewProperty_Success()
         {
             // Arrange
-            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
 
             var researchFile = EntityHelper.CreateResearchFile();
             researchFile.ConcurrencyControlNumber = 1;
@@ -213,19 +213,19 @@ namespace Pims.Api.Test.Services
             property.Pid = null;
             researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = property } };
 
-            var repository = _helper.GetService<Mock<IResearchFileRepository>>();
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
             PimsPropertyResearchFile updatedResearchFileProperty = null;
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
 
-            var filePropertyRepository = _helper.GetService<Mock<IResearchFilePropertyRepository>>();
+            var filePropertyRepository = this._helper.GetService<Mock<IResearchFilePropertyRepository>>();
             filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
             filePropertyRepository.Setup(x => x.Add(It.IsAny<PimsPropertyResearchFile>())).Callback<PimsPropertyResearchFile>(x => updatedResearchFileProperty = x).Returns(researchFile.PimsPropertyResearchFiles.FirstOrDefault());
 
-            var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPin(It.IsAny<int>())).Throws<KeyNotFoundException>();
 
-            var coordinateService = _helper.GetService<Mock<ICoordinateTransformService>>();
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(924046.3314288399, 1088892.9140135897));
 
             // Act
@@ -251,11 +251,11 @@ namespace Pims.Api.Test.Services
         public void GetById_Success()
         {
             // Arrange
-            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileView);
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileView);
 
             var researchFile = EntityHelper.CreateResearchFile(1);
 
-            var repository = _helper.GetService<Mock<IResearchFileRepository>>();
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
 
             // Act
@@ -269,7 +269,7 @@ namespace Pims.Api.Test.Services
         public void GetById_NoPermission()
         {
             // Arrange
-            var service = CreateResearchFileServiceWithPermissions();
+            var service = this.CreateResearchFileServiceWithPermissions();
 
             // Act
             Action act = () => service.GetById(1);
@@ -285,10 +285,10 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
 
-            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
             var researchFile = EntityHelper.CreateResearchFile(1);
 
-            var repository = _helper.GetService<Mock<IResearchFileRepository>>();
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsResearchFile>())).Returns(researchFile);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
@@ -304,7 +304,7 @@ namespace Pims.Api.Test.Services
         public void Update_NoPermission()
         {
             // Arrange
-            var service = CreateResearchFileServiceWithPermissions();
+            var service = this.CreateResearchFileServiceWithPermissions();
 
             var researchFile = EntityHelper.CreateResearchFile(1);
 
@@ -319,7 +319,7 @@ namespace Pims.Api.Test.Services
         public void Update_ThrowIf_Null()
         {
             // Arrange
-            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
 
             // Act
             Action act = () => service.Update(null);
@@ -348,14 +348,14 @@ namespace Pims.Api.Test.Services
                 ResearchFileStatusTypeCodeNavigation = oldStatusType,
             };
 
-            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
-            var researchRepositoryMock = _helper.GetService<Mock<IResearchFileRepository>>();
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+            var researchRepositoryMock = this._helper.GetService<Mock<IResearchFileRepository>>();
             researchRepositoryMock.Setup(x => x.GetById(researchFileId)).Returns(existingResearchFile);
             researchRepositoryMock.Setup(x => x.Update(updatedResearchFileRequest)).Returns(updatedResearchFileRequest);
 
-            var lookupRepositoryMock = _helper.GetService<Mock<ILookupRepository>>();
+            var lookupRepositoryMock = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepositoryMock.Setup(x => x.GetAllResearchFileStatusTypes()).Returns(new List<PimsResearchFileStatusType>() { newStatusType, oldStatusType });
-            var noteEntityRepositoryMock = _helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteEntityRepositoryMock = this._helper.GetService<Mock<IEntityNoteRepository>>();
 
             // Act
             var updatedResearchFile = service.Update(updatedResearchFileRequest);
@@ -383,14 +383,14 @@ namespace Pims.Api.Test.Services
                 ResearchFileStatusTypeCodeNavigation = sameStatusType,
             };
 
-            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
-            var researchRepositoryMock = _helper.GetService<Mock<IResearchFileRepository>>();
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+            var researchRepositoryMock = this._helper.GetService<Mock<IResearchFileRepository>>();
             researchRepositoryMock.Setup(x => x.GetById(researchFileId)).Returns(existingResearchFile);
             researchRepositoryMock.Setup(x => x.Update(updatedResearchFileRequest)).Returns(updatedResearchFileRequest);
 
-            var lookupRepositoryMock = _helper.GetService<Mock<ILookupRepository>>();
+            var lookupRepositoryMock = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepositoryMock.Setup(x => x.GetAllResearchFileStatusTypes()).Returns(new List<PimsResearchFileStatusType>() { sameStatusType });
-            var noteEntityRepositoryMock = _helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteEntityRepositoryMock = this._helper.GetService<Mock<IEntityNoteRepository>>();
 
             // Act
             var updatedResearchFile = service.Update(updatedResearchFileRequest);

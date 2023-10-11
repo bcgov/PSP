@@ -6,11 +6,13 @@ import DocumentListContainer from '@/features/documents/list/DocumentListContain
 interface IDocumentsTabProps {
   fileId: number;
   relationshipType: DocumentRelationshipType;
+  onSuccess?: () => void;
 }
 
 const DocumentsTab: React.FunctionComponent<IDocumentsTabProps> = ({
   fileId,
   relationshipType,
+  onSuccess,
 }) => {
   return (
     <>
@@ -18,6 +20,7 @@ const DocumentsTab: React.FunctionComponent<IDocumentsTabProps> = ({
         title="File Documents"
         parentId={fileId.toString()}
         relationshipType={relationshipType}
+        onSuccess={onSuccess}
       />
     </>
   );

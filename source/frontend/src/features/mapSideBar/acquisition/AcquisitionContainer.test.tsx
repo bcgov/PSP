@@ -10,6 +10,7 @@ import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
 } from '@/mocks/acquisitionFiles.mock';
+import { mockLastUpdatedBy } from '@/mocks/lastUpdatedBy.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';
@@ -39,7 +40,6 @@ jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
 }));
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 const onClose = jest.fn();
 
@@ -96,10 +96,13 @@ describe('AcquisitionContainer component', () => {
   };
 
   beforeEach(() => {
+    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
     mockAxios
       .onGet(new RegExp('acquisitionfiles/1/properties'))
       .reply(200, mockAcquisitionFileResponse().fileProperties);
+    mockAxios.onGet(new RegExp('acquisitionfiles/1/updateInfo')).reply(200, mockLastUpdatedBy(1));
     mockAxios
       .onGet(new RegExp('acquisitionfiles/1/owners'))
       .reply(200, mockAcquisitionFileOwnersResponse());
@@ -160,27 +163,6 @@ describe('AcquisitionContainer component', () => {
     await act(async () => viewProps.onShowPropertySelector());
     const canRemoveResponse = await act(() => viewProps.canRemove(1));
     expect(canRemoveResponse).toBe(true);
-  });
-
-  it('canRemove returns false if file property has associated entities', async () => {
-    const { getByTestId } = setup(undefined, { claims: [] });
-
-    const spinner = getByTestId('filter-backdrop-loading');
-    await waitForElementToBeRemoved(spinner);
-
-    mockAxios.onGet(new RegExp('acquisitionfiles/1/properties')).reply(200, [
-      {
-        id: 1,
-        isDisabled: false,
-        property: {
-          id: 1,
-        },
-        activityInstanceProperties: [{}],
-      },
-    ]);
-    await act(async () => viewProps.onShowPropertySelector());
-    const canRemoveResponse = await act(() => viewProps.canRemove(1));
-    expect(canRemoveResponse).toBe(false);
   });
 
   it('should change menu index when not editing', async () => {

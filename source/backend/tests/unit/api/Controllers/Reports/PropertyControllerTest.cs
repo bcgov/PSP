@@ -65,13 +65,13 @@ namespace Pims.Api.Test.Controllers.Reports
 
         public PropertyControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<PropertyController>(Permissions.PropertyView);
-            _mapper = _helper.GetService<IMapper>();
-            _lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
-            _webHost = _helper.GetService<Mock<IWebHostEnvironment>>();
-            _headers = _helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            _repository = _helper.GetService<Mock<IPropertyRepository>>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<PropertyController>(Permissions.PropertyView);
+            this._mapper = this._helper.GetService<IMapper>();
+            this._lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            this._webHost = this._helper.GetService<Mock<IWebHostEnvironment>>();
+            this._headers = this._helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
+            this._repository = this._helper.GetService<Mock<IPropertyRepository>>();
         }
 
         #region Tests
@@ -84,21 +84,21 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportProperties_Csv_Success(PropertyFilterModel filter)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
+            this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
             var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
-            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
-            var result = _controller.ExportProperties(filter);
+            var result = this._controller.ExportProperties(filter);
 
             // Assert
             var actionResult = Assert.IsType<ContentResult>(result);
             var actualResult = Assert.IsType<string>(actionResult.Content);
             Assert.Equal(ContentTypes.CONTENTTYPECSV, actionResult.ContentType);
-            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
+            this._repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -109,21 +109,21 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportProperties_Csv_Query_Success(Uri uri)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
+            this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
             var page = new Paged<Entity.PimsProperty>(properties);
-            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
-            var result = _controller.ExportProperties();
+            var result = this._controller.ExportProperties();
 
             // Assert
             var actionResult = Assert.IsType<ContentResult>(result);
             var actualResult = Assert.IsType<string>(actionResult.Content);
             Assert.Equal(ContentTypes.CONTENTTYPECSV, actionResult.ContentType);
-            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
+            this._repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -134,22 +134,22 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportProperties_Excel_Success(PropertyFilterModel filter)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCEL);
+            this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCEL);
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
             var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
-            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
-            var result = _controller.ExportProperties(filter);
+            var result = this._controller.ExportProperties(filter);
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
             Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
+            this._repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -160,22 +160,22 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportProperties_Excel_Query_Success(Uri uri)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCEL);
+            this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCEL);
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
             var page = new Paged<Entity.PimsProperty>(properties);
-            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
-            var result = _controller.ExportProperties();
+            var result = this._controller.ExportProperties();
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
             Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
+            this._repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -186,22 +186,22 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportProperties_ExcelX_Success(PropertyFilterModel filter)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
+            this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
             var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
-            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
-            var result = _controller.ExportProperties(filter);
+            var result = this._controller.ExportProperties(filter);
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
             Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
+            this._repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -212,22 +212,22 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportProperties_ExcelX_Query_Success(Uri uri)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
+            this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
             var page = new Paged<Entity.PimsProperty>(properties);
-            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
-            var result = _controller.ExportProperties();
+            var result = this._controller.ExportProperties();
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
             Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
+            this._repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
         }
 
         /// <summary>

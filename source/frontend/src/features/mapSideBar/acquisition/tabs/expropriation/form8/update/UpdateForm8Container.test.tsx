@@ -1,4 +1,5 @@
 import { createMemoryHistory } from 'history';
+import { noop } from 'lodash';
 
 import { Claims } from '@/constants';
 import { mockGetExpropriationPaymentApi } from '@/mocks/ExpropriationPayment.mock';
@@ -52,6 +53,7 @@ describe('Update Form8 Container component', () => {
       <UpdateForm8Container
         form8Id={renderOptions?.props?.form8Id ?? mockForm8.id!}
         View={TestView}
+        onSuccess={renderOptions.props?.onSuccess ?? noop}
       />,
       {
         history,

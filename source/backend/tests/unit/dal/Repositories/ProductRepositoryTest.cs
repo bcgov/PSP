@@ -80,7 +80,7 @@ namespace Pims.Dal.Test.Repositories
             var result = repository.GetByProductBatch(new List<PimsProduct>()
             {
                 new PimsProduct() { Code = "code1", Description = "desc2" },
-                new PimsProduct() { Code = "code2", Description = "desc1" }
+                new PimsProduct() { Code = "code2", Description = "desc1" },
             }, project.Id);
 
             // Assert

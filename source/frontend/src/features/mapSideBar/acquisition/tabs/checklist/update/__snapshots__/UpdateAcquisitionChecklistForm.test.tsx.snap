@@ -1221,6 +1221,26 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
           <div
             class="col"
           >
+            Crown Land
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      />
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
             Section 3 - Agreement
           </div>
         </div>
@@ -1272,8 +1292,8 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
             >
               <select
                 class="form-select form-control"
-                id="input-checklistSections[2].items[0].statusType"
-                name="checklistSections[2].items[0].statusType"
+                id="input-checklistSections[3].items[0].statusType"
+                name="checklistSections[3].items[0].statusType"
               >
                 <option
                   class="option"
@@ -1320,8 +1340,8 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
             >
               <select
                 class="form-select form-control"
-                id="input-checklistSections[2].items[1].statusType"
-                name="checklistSections[2].items[1].statusType"
+                id="input-checklistSections[3].items[1].statusType"
+                name="checklistSections[3].items[1].statusType"
               >
                 <option
                   class="option"
@@ -1368,8 +1388,8 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
             >
               <select
                 class="form-select form-control"
-                id="input-checklistSections[2].items[2].statusType"
-                name="checklistSections[2].items[2].statusType"
+                id="input-checklistSections[3].items[2].statusType"
+                name="checklistSections[3].items[2].statusType"
               >
                 <option
                   class="option"
@@ -1416,8 +1436,8 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
             >
               <select
                 class="form-select form-control"
-                id="input-checklistSections[2].items[3].statusType"
-                name="checklistSections[2].items[3].statusType"
+                id="input-checklistSections[3].items[3].statusType"
+                name="checklistSections[3].items[3].statusType"
               >
                 <option
                   class="option"
@@ -1464,8 +1484,8 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
             >
               <select
                 class="form-select form-control"
-                id="input-checklistSections[2].items[4].statusType"
-                name="checklistSections[2].items[4].statusType"
+                id="input-checklistSections[3].items[4].statusType"
+                name="checklistSections[3].items[4].statusType"
               >
                 <option
                   class="option"
@@ -1512,8 +1532,8 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
             >
               <select
                 class="form-select form-control"
-                id="input-checklistSections[2].items[5].statusType"
-                name="checklistSections[2].items[5].statusType"
+                id="input-checklistSections[3].items[5].statusType"
+                name="checklistSections[3].items[5].statusType"
               >
                 <option
                   class="option"
@@ -1584,8 +1604,8 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
             >
               <select
                 class="form-select form-control"
-                id="input-checklistSections[2].items[6].statusType"
-                name="checklistSections[2].items[6].statusType"
+                id="input-checklistSections[3].items[6].statusType"
+                name="checklistSections[3].items[6].statusType"
               >
                 <option
                   class="option"
@@ -1677,8 +1697,8 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
             >
               <select
                 class="form-select form-control"
-                id="input-checklistSections[3].items[0].statusType"
-                name="checklistSections[3].items[0].statusType"
+                id="input-checklistSections[4].items[0].statusType"
+                name="checklistSections[4].items[0].statusType"
               >
                 <option
                   class="option"
@@ -1749,8 +1769,8 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
             >
               <select
                 class="form-select form-control"
-                id="input-checklistSections[3].items[1].statusType"
-                name="checklistSections[3].items[1].statusType"
+                id="input-checklistSections[4].items[1].statusType"
+                name="checklistSections[4].items[1].statusType"
               >
                 <option
                   class="option"
@@ -1821,8 +1841,8 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
             >
               <select
                 class="form-select form-control"
-                id="input-checklistSections[3].items[2].statusType"
-                name="checklistSections[3].items[2].statusType"
+                id="input-checklistSections[4].items[2].statusType"
+                name="checklistSections[4].items[2].statusType"
               >
                 <option
                   class="option"
@@ -1893,8 +1913,8 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
             >
               <select
                 class="form-select form-control"
-                id="input-checklistSections[3].items[3].statusType"
-                name="checklistSections[3].items[3].statusType"
+                id="input-checklistSections[4].items[3].statusType"
+                name="checklistSections[4].items[3].statusType"
               >
                 <option
                   class="option"
@@ -1941,8 +1961,8 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
             >
               <select
                 class="form-select form-control"
-                id="input-checklistSections[3].items[4].statusType"
-                name="checklistSections[3].items[4].statusType"
+                id="input-checklistSections[4].items[4].statusType"
+                name="checklistSections[4].items[4].statusType"
               >
                 <option
                   class="option"
@@ -1989,8 +2009,8 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
             >
               <select
                 class="form-select form-control"
-                id="input-checklistSections[3].items[5].statusType"
-                name="checklistSections[3].items[5].statusType"
+                id="input-checklistSections[4].items[5].statusType"
+                name="checklistSections[4].items[5].statusType"
               >
                 <option
                   class="option"
@@ -2082,8 +2102,8 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
             >
               <select
                 class="form-select form-control"
-                id="input-checklistSections[4].items[0].statusType"
-                name="checklistSections[4].items[0].statusType"
+                id="input-checklistSections[5].items[0].statusType"
+                name="checklistSections[5].items[0].statusType"
               >
                 <option
                   class="option"

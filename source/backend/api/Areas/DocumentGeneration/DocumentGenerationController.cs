@@ -1,3 +1,4 @@
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -78,6 +79,10 @@ namespace Pims.Api.Controllers
         public async Task<IActionResult> UploadTemplateAndDownloadWrapped([FromBody] DocumentGenerationRequest request)
         {
             var result = await _documentGenerationService.GenerateDocument(request.TemplateType, request.TemplateData, request.ConvertToType);
+            if(result.HttpStatusCode != HttpStatusCode.OK)
+            {
+                return StatusCode(500, result.Message);
+            }
             return new JsonResult(result);
         }
 

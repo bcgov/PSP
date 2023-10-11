@@ -25,27 +25,27 @@ namespace Pims.Api.Test.Services
 
         public FormDocumentServiceTest()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         private FormDocumentService CreateFormDocumentServiceWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
-            var service = _helper.Create<FormDocumentService>(user);
+            var service = this._helper.Create<FormDocumentService>(user);
             return service;
         }
 
         #region Tests
 
         #region Get
-        //GetAllFormDocumentTypes
+        // GetAllFormDocumentTypes
         [Fact]
         public void GetAllFormDocumentTypes_Success()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions(Permissions.FormView);
+            var service = this.CreateFormDocumentServiceWithPermissions(Permissions.FormView);
 
-            var repository = _helper.GetService<Mock<IFormTypeRepository>>();
+            var repository = this._helper.GetService<Mock<IFormTypeRepository>>();
             repository.Setup(x => x.GetAllFormTypes());
 
             // Act
@@ -59,9 +59,9 @@ namespace Pims.Api.Test.Services
         public void GetAllFormDocumentTypes_NoPermission()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions();
+            var service = this.CreateFormDocumentServiceWithPermissions();
 
-            var repository = _helper.GetService<Mock<IFormTypeRepository>>();
+            var repository = this._helper.GetService<Mock<IFormTypeRepository>>();
 
             // Act
             Action act = () => service.GetAllFormDocumentTypes();
@@ -71,15 +71,15 @@ namespace Pims.Api.Test.Services
             repository.Verify(x => x.GetAllFormTypes(), Times.Never);
         }
 
-        //GetFormDocumentTypes
+        // GetFormDocumentTypes
         [Fact]
         public void GetFormDocumentTypes_Success()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions(Permissions.FormView);
+            var service = this.CreateFormDocumentServiceWithPermissions(Permissions.FormView);
             string testTypeCode = "TEST_CODE";
 
-            var repository = _helper.GetService<Mock<IFormTypeRepository>>();
+            var repository = this._helper.GetService<Mock<IFormTypeRepository>>();
             repository.Setup(x => x.GetByFormTypeCode(testTypeCode));
 
             // Act
@@ -93,10 +93,10 @@ namespace Pims.Api.Test.Services
         public void GetFormDocumentTypes_NoPermission()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions();
+            var service = this.CreateFormDocumentServiceWithPermissions();
             string testTypeCode = "TEST_CODE";
 
-            var repository = _helper.GetService<Mock<IFormTypeRepository>>();
+            var repository = this._helper.GetService<Mock<IFormTypeRepository>>();
 
             // Act
             Action act = () => service.GetFormDocumentTypes(testTypeCode);
@@ -109,19 +109,19 @@ namespace Pims.Api.Test.Services
 
         #region UploadTemplateDocument
 
-        //UploadFormDocumentTemplateAsync
+        // UploadFormDocumentTemplateAsync
         [Fact]
         public void UploadFormDocumentTemplateAsync_Success()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateFormDocumentServiceWithPermissions(Permissions.DocumentAdmin);
             string testTypeCode = "TEST_CODE";
             DocumentUploadRequest testUploadRequest = new DocumentUploadRequest();
 
-            var repository = _helper.GetService<Mock<IFormTypeRepository>>();
+            var repository = this._helper.GetService<Mock<IFormTypeRepository>>();
             repository.Setup(x => x.GetByFormTypeCode(testTypeCode)).Returns(new PimsFormType());
 
-            var documentService = _helper.GetService<Mock<IDocumentService>>();
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
             documentService.Setup(x => x.UploadDocumentAsync(testUploadRequest));
 
             // Act
@@ -135,11 +135,11 @@ namespace Pims.Api.Test.Services
         public void UploadFormDocumentTemplateAsync_NoPermission()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions();
+            var service = this.CreateFormDocumentServiceWithPermissions();
             string testTypeCode = "TEST_CODE";
             DocumentUploadRequest testUploadRequest = new DocumentUploadRequest();
 
-            var documentService = _helper.GetService<Mock<IDocumentService>>();
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
             documentService.Setup(x => x.UploadDocumentAsync(testUploadRequest));
 
             // Act
@@ -154,19 +154,19 @@ namespace Pims.Api.Test.Services
         public void UploadFormDocumentTemplateAsync_DeleteIfPrevious()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateFormDocumentServiceWithPermissions(Permissions.DocumentAdmin);
             string testTypeCode = "TEST_CODE";
             long testDocumentId = 1;
             PimsDocument testExistingDocument = new();
             DocumentUploadRequest testUploadRequest = new DocumentUploadRequest();
 
-            var formTypeRepositoryMock = _helper.GetService<Mock<IFormTypeRepository>>();
+            var formTypeRepositoryMock = this._helper.GetService<Mock<IFormTypeRepository>>();
             formTypeRepositoryMock.Setup(x => x.GetByFormTypeCode(testTypeCode)).Returns(new PimsFormType() { DocumentId = testDocumentId, Document = testExistingDocument });
 
-            var documentServiceMock = _helper.GetService<Mock<IDocumentService>>();
+            var documentServiceMock = this._helper.GetService<Mock<IDocumentService>>();
             documentServiceMock.Setup(x => x.UploadDocumentAsync(testUploadRequest));
 
-            var documentRepositoryMock = _helper.GetService<Mock<IDocumentRepository>>();
+            var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
             documentRepositoryMock.Setup(x => x.DocumentRelationshipCount(testDocumentId)).Returns(1);
             documentServiceMock.Setup(x => x.DeleteDocumentAsync(testExistingDocument)).ReturnsAsync(new ExternalResult<string>() { Status = ExternalResultStatus.Success });
 
@@ -183,19 +183,19 @@ namespace Pims.Api.Test.Services
         public void UploadFormDocumentTemplateAsync_DeleteIfPrevious_Error()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateFormDocumentServiceWithPermissions(Permissions.DocumentAdmin);
             string testTypeCode = "TEST_CODE";
             long testDocumentId = 1;
             PimsDocument testExistingDocument = new();
             DocumentUploadRequest testUploadRequest = new DocumentUploadRequest();
 
-            var formTypeRepositoryMock = _helper.GetService<Mock<IFormTypeRepository>>();
+            var formTypeRepositoryMock = this._helper.GetService<Mock<IFormTypeRepository>>();
             formTypeRepositoryMock.Setup(x => x.GetByFormTypeCode(testTypeCode)).Returns(new PimsFormType() { DocumentId = testDocumentId, Document = testExistingDocument });
 
-            var documentServiceMock = _helper.GetService<Mock<IDocumentService>>();
+            var documentServiceMock = this._helper.GetService<Mock<IDocumentService>>();
             documentServiceMock.Setup(x => x.UploadDocumentAsync(testUploadRequest));
 
-            var documentRepositoryMock = _helper.GetService<Mock<IDocumentRepository>>();
+            var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
             documentRepositoryMock.Setup(x => x.DocumentRelationshipCount(testDocumentId)).Returns(1);
             documentServiceMock.Setup(x => x.DeleteDocumentAsync(testExistingDocument)).ReturnsAsync(new ExternalResult<string>() { Status = ExternalResultStatus.Error });
 
@@ -216,17 +216,17 @@ namespace Pims.Api.Test.Services
         public void DeleteFormDocumentTemplateAsync_Success()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateFormDocumentServiceWithPermissions(Permissions.DocumentAdmin);
             string testTypeCode = "TEST_CODE";
             long testDocumentId = 1;
             PimsDocument testDocument = new PimsDocument();
             PimsFormType testFormType = new PimsFormType() { DocumentId = testDocumentId, Document = testDocument, FormTypeCode = testTypeCode };
             DocumentUploadRequest testUploadRequest = new DocumentUploadRequest();
 
-            var documentServiceMock = _helper.GetService<Mock<IDocumentService>>();
+            var documentServiceMock = this._helper.GetService<Mock<IDocumentService>>();
             documentServiceMock.Setup(x => x.UploadDocumentAsync(testUploadRequest));
 
-            var documentRepositoryMock = _helper.GetService<Mock<IDocumentRepository>>();
+            var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
             documentRepositoryMock.Setup(x => x.DocumentRelationshipCount(testDocumentId)).Returns(1);
 
             // Act
@@ -240,17 +240,17 @@ namespace Pims.Api.Test.Services
         public void DeleteFormDocumentTemplateAsync_NoDocumentRemoval_Success()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions(Permissions.DocumentAdmin);
+            var service = this.CreateFormDocumentServiceWithPermissions(Permissions.DocumentAdmin);
             string testTypeCode = "TEST_CODE";
             long testDocumentId = 1;
             PimsDocument testDocument = new PimsDocument();
             PimsFormType testFormType = new PimsFormType() { DocumentId = testDocumentId, FormTypeCode = testTypeCode, Document = testDocument };
 
-            var formTypeRepositoryMock = _helper.GetService<Mock<IFormTypeRepository>>();
+            var formTypeRepositoryMock = this._helper.GetService<Mock<IFormTypeRepository>>();
             formTypeRepositoryMock.Setup(x => x.SetFormTypeDocument(testFormType)).Returns(testFormType);
             formTypeRepositoryMock.Setup(x => x.CommitTransaction());
 
-            var documentRepositoryMock = _helper.GetService<Mock<IDocumentRepository>>();
+            var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
             documentRepositoryMock.Setup(x => x.DocumentRelationshipCount(testDocumentId)).Returns(5);
 
             // Act
@@ -265,11 +265,11 @@ namespace Pims.Api.Test.Services
         public void DeleteFormDocumentTemplateAsync_NoPermission()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions();
+            var service = this.CreateFormDocumentServiceWithPermissions();
             long testDocumentId = 1;
             PimsFormType testFormType = new PimsFormType() { DocumentId = testDocumentId };
 
-            var documentRepositoryMock = _helper.GetService<Mock<IDocumentRepository>>();
+            var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
 
             // Act
             Func<Task> act = () => service.DeleteFormDocumentTemplateAsync(testFormType);
@@ -286,9 +286,9 @@ namespace Pims.Api.Test.Services
         public void AddFormFile_Success()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions(Permissions.FormAdd);
+            var service = this.CreateFormDocumentServiceWithPermissions(Permissions.FormAdd);
 
-            var repository = _helper.GetService<Mock<IAcquisitionFileFormRepository>>();
+            var repository = this._helper.GetService<Mock<IAcquisitionFileFormRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFileForm>()));
 
             // Act
@@ -302,9 +302,9 @@ namespace Pims.Api.Test.Services
         public void AddFormFile_NoPermission()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions();
+            var service = this.CreateFormDocumentServiceWithPermissions();
 
-            var repository = _helper.GetService<Mock<IAcquisitionFileFormRepository>>();
+            var repository = this._helper.GetService<Mock<IAcquisitionFileFormRepository>>();
 
             // Act
             Action act = () => service.AddAcquisitionForm(new PimsFormType() { Id = "H120" }, 1);
@@ -321,9 +321,9 @@ namespace Pims.Api.Test.Services
         public void GetFormFile_Success()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions(Permissions.FormView);
+            var service = this.CreateFormDocumentServiceWithPermissions(Permissions.FormView);
 
-            var repository = _helper.GetService<Mock<IAcquisitionFileFormRepository>>();
+            var repository = this._helper.GetService<Mock<IAcquisitionFileFormRepository>>();
             repository.Setup(x => x.GetByAcquisitionFileFormId(It.IsAny<long>()));
 
             // Act
@@ -337,9 +337,9 @@ namespace Pims.Api.Test.Services
         public void GetFormFile_NoPermission()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions();
+            var service = this.CreateFormDocumentServiceWithPermissions();
 
-            var repository = _helper.GetService<Mock<IAcquisitionFileFormRepository>>();
+            var repository = this._helper.GetService<Mock<IAcquisitionFileFormRepository>>();
 
             // Act
             Action act = () => service.GetAcquisitionForm(1);
@@ -355,9 +355,9 @@ namespace Pims.Api.Test.Services
         public void GetFormFiles_Success()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions(Permissions.FormView);
+            var service = this.CreateFormDocumentServiceWithPermissions(Permissions.FormView);
 
-            var repository = _helper.GetService<Mock<IAcquisitionFileFormRepository>>();
+            var repository = this._helper.GetService<Mock<IAcquisitionFileFormRepository>>();
             repository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()));
 
             // Act
@@ -371,9 +371,9 @@ namespace Pims.Api.Test.Services
         public void GetFormFiles_NoPermission()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions();
+            var service = this.CreateFormDocumentServiceWithPermissions();
 
-            var repository = _helper.GetService<Mock<IAcquisitionFileFormRepository>>();
+            var repository = this._helper.GetService<Mock<IAcquisitionFileFormRepository>>();
 
             // Act
             Action act = () => service.GetAcquisitionForms(1);
@@ -389,9 +389,9 @@ namespace Pims.Api.Test.Services
         public void DeleteFormFile_Success()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions(Permissions.FormDelete);
+            var service = this.CreateFormDocumentServiceWithPermissions(Permissions.FormDelete);
 
-            var repository = _helper.GetService<Mock<IAcquisitionFileFormRepository>>();
+            var repository = this._helper.GetService<Mock<IAcquisitionFileFormRepository>>();
             repository.Setup(x => x.TryDelete(It.IsAny<long>()));
 
             // Act
@@ -405,9 +405,9 @@ namespace Pims.Api.Test.Services
         public void DeleteFormFile_NoPermission()
         {
             // Arrange
-            var service = CreateFormDocumentServiceWithPermissions();
+            var service = this.CreateFormDocumentServiceWithPermissions();
 
-            var repository = _helper.GetService<Mock<IAcquisitionFileFormRepository>>();
+            var repository = this._helper.GetService<Mock<IAcquisitionFileFormRepository>>();
 
             // Act
             Action act = () => service.DeleteAcquisitionFileForm(1);

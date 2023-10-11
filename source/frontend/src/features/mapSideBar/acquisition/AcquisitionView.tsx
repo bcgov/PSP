@@ -34,7 +34,7 @@ import { FilePropertyRouter } from './router/FilePropertyRouter';
 
 export interface IAcquisitionViewProps {
   onClose: (() => void) | undefined;
-  onSave: () => void;
+  onSave: () => Promise<void>;
   onCancel: () => void;
   onMenuChange: (selectedIndex: number) => void;
   onShowPropertySelector: () => void;
@@ -71,7 +71,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
-  const { file } = useContext(SideBarContext);
+  const { file, lastUpdatedBy } = useContext(SideBarContext);
   if (!!file && file?.fileType !== FileTypes.Acquisition) {
     throw Error('Context file is not an acquisition file');
   }
@@ -130,14 +130,16 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
               className="mr-2"
             />
           }
-          header={<AcquisitionHeader acquisitionFile={acquisitionFile} />}
+          header={
+            <AcquisitionHeader acquisitionFile={acquisitionFile} lastUpdatedBy={lastUpdatedBy} />
+          }
           footer={
             isEditing && (
               <SidebarFooter
                 isOkDisabled={formikRef?.current?.isSubmitting}
                 onSave={onSave}
                 onCancel={onCancel}
-                isValid={isFormValid}
+                displayRequiredFieldError={isFormValid === false}
               />
             )
           }

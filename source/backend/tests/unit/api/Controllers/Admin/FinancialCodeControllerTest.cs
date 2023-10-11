@@ -29,67 +29,67 @@ namespace Pims.Api.Test.Admin.Controllers
 
         public FinancialCodeControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<FinancialCodeController>(Permissions.SystemAdmin);
-            _service = _helper.GetService<Mock<IFinancialCodeService>>();
-            _mapper = _helper.GetService<IMapper>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<FinancialCodeController>(Permissions.SystemAdmin);
+            this._service = this._helper.GetService<Mock<IFinancialCodeService>>();
+            this._mapper = this._helper.GetService<IMapper>();
         }
 
         [Fact]
         public void GetFinancialCodes_Success()
         {
             // Arrange
-            _service.Setup(m => m.GetAllFinancialCodes());
+            this._service.Setup(m => m.GetAllFinancialCodes());
 
             // Act
-            var result = _controller.GetFinancialCodes();
+            var result = this._controller.GetFinancialCodes();
 
             // Assert
             result.Should().BeOfType<JsonResult>();
-            _service.Verify(m => m.GetAllFinancialCodes(), Times.Once());
+            this._service.Verify(m => m.GetAllFinancialCodes(), Times.Once());
         }
 
         [Fact]
         public void GetFinancialCodeById_Success()
         {
             // Arrange
-            _service.Setup(m => m.GetById(It.IsAny<FinancialCodeTypes>(), It.IsAny<long>()));
+            this._service.Setup(m => m.GetById(It.IsAny<FinancialCodeTypes>(), It.IsAny<long>()));
 
             // Act
-            var result = _controller.GetFinancialCode(FinancialCodeTypes.BusinessFunction, 1);
+            var result = this._controller.GetFinancialCode(FinancialCodeTypes.BusinessFunction, 1);
 
             // Assert
             result.Should().BeOfType<JsonResult>();
-            _service.Verify(m => m.GetById(It.IsAny<FinancialCodeTypes>(), It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.GetById(It.IsAny<FinancialCodeTypes>(), It.IsAny<long>()), Times.Once());
         }
 
         [Fact]
         public void AddFinancialCode_Success()
         {
             // Arrange
-            _service.Setup(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()));
+            this._service.Setup(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()));
 
             // Act
-            var result = _controller.AddFinancialCode(FinancialCodeTypes.BusinessFunction, new FinancialCodeModel());
+            var result = this._controller.AddFinancialCode(FinancialCodeTypes.BusinessFunction, new FinancialCodeModel());
 
             // Assert
             result.Should().BeOfType<JsonResult>();
-            _service.Verify(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()), Times.Once());
+            this._service.Verify(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()), Times.Once());
         }
 
         [Fact]
         public void AddFinancialCode_DuplicateCode_ShouldThrow()
         {
             // Arrange
-            _service.Setup(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()))
+            this._service.Setup(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()))
                 .Throws<DuplicateEntityException>();
 
             // Act
-            var result = _controller.AddFinancialCode(FinancialCodeTypes.BusinessFunction, new FinancialCodeModel());
+            var result = this._controller.AddFinancialCode(FinancialCodeTypes.BusinessFunction, new FinancialCodeModel());
 
             // Assert
             result.Should().BeOfType<ConflictObjectResult>();
-            _service.Verify(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()), Times.Once());
+            this._service.Verify(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()), Times.Once());
         }
 
         [Fact]
@@ -97,15 +97,15 @@ namespace Pims.Api.Test.Admin.Controllers
         {
             // Arrange
             var code = EntityHelper.CreateFinancialCode(FinancialCodeTypes.BusinessFunction, 1, "CODE", "description");
-            var model = _mapper.Map<FinancialCodeModel>(code);
-            _service.Setup(m => m.Update(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>())).Returns(model);
+            var model = this._mapper.Map<FinancialCodeModel>(code);
+            this._service.Setup(m => m.Update(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>())).Returns(model);
 
             // Act
-            var result = _controller.UpdateFinancialCode(FinancialCodeTypes.BusinessFunction, model.Id, model);
+            var result = this._controller.UpdateFinancialCode(FinancialCodeTypes.BusinessFunction, model.Id, model);
 
             // Assert
             result.Should().BeOfType<JsonResult>();
-            _service.Verify(m => m.Update(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()), Times.Once());
+            this._service.Verify(m => m.Update(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()), Times.Once());
         }
 
         [Fact]
@@ -113,16 +113,16 @@ namespace Pims.Api.Test.Admin.Controllers
         {
             // Arrange
             var code = EntityHelper.CreateFinancialCode(FinancialCodeTypes.BusinessFunction, 1, "CODE", "description");
-            var model = _mapper.Map<FinancialCodeModel>(code);
-            _service.Setup(m => m.Update(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()))
+            var model = this._mapper.Map<FinancialCodeModel>(code);
+            this._service.Setup(m => m.Update(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()))
                 .Throws<DuplicateEntityException>();
 
             // Act
-            var result = _controller.UpdateFinancialCode(FinancialCodeTypes.BusinessFunction, model.Id, model);
+            var result = this._controller.UpdateFinancialCode(FinancialCodeTypes.BusinessFunction, model.Id, model);
 
             // Assert
             result.Should().BeOfType<ConflictObjectResult>();
-            _service.Verify(m => m.Update(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()), Times.Once());
+            this._service.Verify(m => m.Update(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()), Times.Once());
         }
     }
 }

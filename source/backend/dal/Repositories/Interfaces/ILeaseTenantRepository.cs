@@ -12,6 +12,5 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsPropertyImprovement> GetByLeaseId(long leaseId);
 
         IEnumerable<PimsPropertyImprovement> Update(long leaseId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements);
-
     }
 }

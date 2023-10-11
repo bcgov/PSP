@@ -1,8 +1,8 @@
+using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Pims.Api.Areas.Reports.Models.Agreement;
 using Pims.Dal.Entities;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Pims.Api.Test
@@ -16,7 +16,6 @@ namespace Pims.Api.Test
             var testAgreement = new Dal.Entities.PimsAgreement();
             var propCoord = new PimsAcquisitionFilePerson() { AcqFlPersonProfileTypeCode = "PROPCOORD", Person = new PimsPerson() { Surname = "test" } };
             testAgreement.AcquisitionFile = new Dal.Entities.PimsAcquisitionFile() { PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() { propCoord } };
-
 
             // Act
             var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());
@@ -32,12 +31,11 @@ namespace Pims.Api.Test
             var testAgreement = new Dal.Entities.PimsAgreement();
             testAgreement.AcquisitionFile = new Dal.Entities.PimsAcquisitionFile() { PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() { } };
 
-
             // Act
             var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.PropertyCoordinator.Should().Be("");
+            model.PropertyCoordinator.Should().Be(string.Empty);
         }
 
         [Fact]
@@ -47,12 +45,11 @@ namespace Pims.Api.Test
             var testAgreement = new Dal.Entities.PimsAgreement();
             testAgreement.AgreementDate = null;
 
-
             // Act
             var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.AgreementDate.Should().Be("");
+            model.AgreementDate.Should().Be(string.Empty);
         }
 
         [Fact]
@@ -61,7 +58,6 @@ namespace Pims.Api.Test
             // Arrange
             var testAgreement = new Dal.Entities.PimsAgreement();
             testAgreement.AgreementDate = new DateTime(1990, 1, 1);
-
 
             // Act
             var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());
@@ -77,7 +73,6 @@ namespace Pims.Api.Test
             var testAgreement = new Dal.Entities.PimsAgreement();
             testAgreement.AcquisitionFile = new Dal.Entities.PimsAcquisitionFile() { Project = new PimsProject() { Code = "test", Description = "description" } };
 
-
             // Act
             var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());
 
@@ -92,12 +87,11 @@ namespace Pims.Api.Test
             var testAgreement = new Dal.Entities.PimsAgreement();
             testAgreement.AcquisitionFile = new Dal.Entities.PimsAcquisitionFile() { Project = null };
 
-
             // Act
             var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.MinistryProject.Should().Be("");
+            model.MinistryProject.Should().Be(string.Empty);
         }
 
         [Fact]
@@ -106,7 +100,6 @@ namespace Pims.Api.Test
             // Arrange
             var testAgreement = new Dal.Entities.PimsAgreement();
             testAgreement.AcquisitionFile = new Dal.Entities.PimsAcquisitionFile() { Product = new PimsProduct() { Code = "test", Description = "description" } };
-
 
             // Act
             var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());
@@ -122,12 +115,11 @@ namespace Pims.Api.Test
             var testAgreement = new Dal.Entities.PimsAgreement();
             testAgreement.AcquisitionFile = new Dal.Entities.PimsAcquisitionFile() { Product = null };
 
-
             // Act
             var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.Product.Should().Be("");
+            model.Product.Should().Be(string.Empty);
         }
     }
 }

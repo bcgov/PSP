@@ -15,9 +15,9 @@ exports[`App Header renders correctly 1`] = `
 
 <div />
   .c1 {
-  border-left: 0.2rem solid white;
+  border-left: 1px solid white;
   font-size: 3.4rem;
-  margin: 0 1.5rem 0 2.5rem;
+  margin: 0 36px 0 36px;
   vertical-align: top;
 }
 
@@ -128,12 +128,16 @@ exports[`App Header renders correctly 1`] = `
       <span
         class="c1"
       />
-      <img
-        alt="PIMS logo"
-        class="pims-logo"
-        height="50"
-        src="/tenants/MOTI/PIMS-logo.png"
-      />
+      <a
+        href="/mapview"
+      >
+        <img
+          alt="PIMS logo"
+          class="pims-logo"
+          height="50"
+          src="/tenants/MOTI/PIMS-logo.png"
+        />
+      </a>
     </span>
     <div
       class="title mr-auto navbar-nav"
@@ -152,6 +156,11 @@ exports[`App Header renders correctly 1`] = `
           PIMS
         </h1>
       </div>
+    </div>
+    <div>
+      <span
+        class="c1"
+      />
     </div>
     <div
       class="other navbar-nav"

@@ -16,7 +16,7 @@ export interface IExpropriationTabContainerProps {
 export const ExpropriationTabContainer: React.FunctionComponent<
   React.PropsWithChildren<IExpropriationTabContainerProps>
 > = ({ View, acquisitionFile }) => {
-  const { fileLoading } = useContext(SideBarContext);
+  const { fileLoading, setStaleLastUpdatedBy } = useContext(SideBarContext);
   const [form8s, setForm8s] = useState<Api_ExpropriationPayment[]>([]);
 
   const {
@@ -42,6 +42,7 @@ export const ExpropriationTabContainer: React.FunctionComponent<
 
   const handleForm8Deleted = async (form8Id: number) => {
     await deleteForm8(form8Id);
+    setStaleLastUpdatedBy(true);
     var updatedForms = await getAcquisitionFileForm8s(acquisitionFile.id!);
     if (updatedForms) {
       setForm8s(updatedForms);

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Pims.Api.Areas.Acquisition.Models.Search;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
@@ -11,6 +10,8 @@ namespace Pims.Api.Services
         Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter);
 
         PimsAcquisitionFile GetById(long id);
+
+        LastUpdatedByModel GetLastUpdateInformation(long acquisitionFileId);
 
         PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides);
 

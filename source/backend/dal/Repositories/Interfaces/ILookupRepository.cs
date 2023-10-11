@@ -30,6 +30,8 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsPropertyTenureType> GetAllPropertyTenureTypes();
 
+        IEnumerable<PimsPropertyPurposeType> GetAllPropertyManagementPurposeTypes();
+
         IEnumerable<PimsRole> GetAllRoles();
 
         IEnumerable<PimsLeasePayRvblType> GetAllPaymentReceivableTypes();
@@ -89,10 +91,6 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsAcqPhysFileStatusType> GetAllAcquisitionPhysFileStatusTypes();
 
         IEnumerable<PimsAcquisitionType> GetAllAcquisitionTypes();
-
-        IEnumerable<PimsActivityTemplateType> GetAllActivityTemplateTypes();
-
-        IEnumerable<PimsActivityInstanceStatusType> GetAllActivityStatusTypes();
 
         IEnumerable<PimsAcqFlPersonProfileType> GetAllAcqFilePersonProfileTypes();
 

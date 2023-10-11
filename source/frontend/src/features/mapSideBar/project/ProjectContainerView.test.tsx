@@ -20,6 +20,8 @@ const mockProps: IProjectContainerViewProps = {
   onSetProject: jest.fn(),
   onSetContainerState: jest.fn(),
   onSuccess: jest.fn(),
+  setIsValid: jest.fn(),
+  displayRequiredFieldsError: false,
 };
 
 describe('ProjectSummaryView component', () => {

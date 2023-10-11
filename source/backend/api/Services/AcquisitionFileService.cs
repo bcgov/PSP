@@ -82,9 +82,9 @@ namespace Pims.Api.Services
             // Limit search results to user's assigned region(s)
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-            long? personId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            return _acqFileRepository.GetPage(filter, userRegions, personId);
+            return _acqFileRepository.GetPageDeep(filter, userRegions, contractorPersonId);
         }
 
         public List<AcquisitionFileExportModel> GetAcquisitionFileExport(AcquisitionFilter filter)
@@ -95,9 +95,9 @@ namespace Pims.Api.Services
             // Limit search results to user's assigned region(s)
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-            long? personId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            var acqFiles = _acqFileRepository.GetAcquisitionFileExport(filter, userRegions, personId);
+            var acqFiles = _acqFileRepository.GetAcquisitionFileExportDeep(filter, userRegions, contractorPersonId);
 
             return acqFiles.SelectMany(file => file.PimsPropertyAcquisitionFiles.Where(fp => fp.AcquisitionFileId.Equals(file.AcquisitionFileId)).DefaultIfEmpty(), (file, fp) => (file, fp))
                                 .Select(fileProperty => new AcquisitionFileExportModel
@@ -134,6 +134,14 @@ namespace Pims.Api.Services
             return acqFile;
         }
 
+        public LastUpdatedByModel GetLastUpdateInformation(long acquisitionFileId)
+        {
+            _logger.LogInformation("Retrieving last updated-by information...");
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            return _acqFileRepository.GetLastUpdateBy(acquisitionFileId);
+        }
+
         public IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id)
         {
             _logger.LogInformation("Getting acquisition file with id {id}", id);
@@ -162,7 +170,9 @@ namespace Pims.Api.Services
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-            return _acqFileRepository.GetTeamMembers(userRegions);
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            return _acqFileRepository.GetTeamMembers(userRegions, contractorPersonId);
         }
 
         public IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id)
@@ -226,6 +236,8 @@ namespace Pims.Api.Services
 
             ValidateStaff(acquisitionFile);
 
+            acquisitionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
+
             ValidatePayeeDependency(acquisitionFile);
 
             ValidateNewTotalAllowableCompensation(acquisitionFile.Internal_Id, acquisitionFile.TotalAllowableCompensation);
@@ -282,7 +294,7 @@ namespace Pims.Api.Services
             foreach (var deletedProperty in differenceSet)
             {
                 var acqFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id).FirstOrDefault(ap => ap.PropertyId == deletedProperty.PropertyId);
-                if (acqFileProperties.PimsActInstPropAcqFiles.Any() || acqFileProperties.PimsTakes.Any())
+                if (acqFileProperties.PimsTakes.Any())
                 {
                     throw new BusinessRuleViolationException();
                 }

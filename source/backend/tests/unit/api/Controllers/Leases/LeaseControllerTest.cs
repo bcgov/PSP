@@ -34,11 +34,11 @@ namespace Pims.Api.Test.Controllers.Lease
 
         public LeaseControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<LeaseController>(Permissions.LeaseView);
-            _mapper = _helper.GetService<IMapper>();
-            _service = _helper.GetService<Mock<ILeaseService>>();
-            _repository = _helper.GetService<Mock<ILeaseRepository>>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<LeaseController>(Permissions.LeaseView);
+            this._mapper = this._helper.GetService<IMapper>();
+            this._service = this._helper.GetService<Mock<ILeaseService>>();
+            this._repository = this._helper.GetService<Mock<ILeaseRepository>>();
         }
 
         #region Tests
@@ -53,13 +53,13 @@ namespace Pims.Api.Test.Controllers.Lease
 
             var lease = EntityHelper.CreateLease(1);
 
-            _service.Setup(m => m.GetById(It.IsAny<long>())).Returns(lease);
+            this._service.Setup(m => m.GetById(It.IsAny<long>())).Returns(lease);
 
             // Act
-            var result = _controller.GetLease(1);
+            var result = this._controller.GetLease(1);
 
             // Assert
-            _service.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
         }
         #endregion
         #region UpdateLeases
@@ -72,13 +72,13 @@ namespace Pims.Api.Test.Controllers.Lease
             // Arrange
             var lease = EntityHelper.CreateLease(1);
 
-            _service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>())).Returns(lease);
+            this._service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>())).Returns(lease);
 
             // Act
-            var result = _controller.UpdateLease(_mapper.Map<Api.Models.Concepts.LeaseModel>(lease), Array.Empty<string>());
+            var result = this._controller.UpdateLease(this._mapper.Map<Api.Models.Concepts.LeaseModel>(lease), Array.Empty<string>());
 
             // Assert
-            _service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>()), Times.Once());
+            this._service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>()), Times.Once());
         }
 
         [Fact]
@@ -87,13 +87,13 @@ namespace Pims.Api.Test.Controllers.Lease
             // Arrange
             var lease = EntityHelper.CreateLease(1);
 
-            _service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>())).Returns(lease);
+            this._service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>())).Returns(lease);
 
             // Act
-            var result = _controller.UpdateLease(_mapper.Map<Api.Models.Concepts.LeaseModel>(lease), Array.Empty<string>());
+            var result = this._controller.UpdateLease(this._mapper.Map<Api.Models.Concepts.LeaseModel>(lease), Array.Empty<string>());
 
             // Assert
-            _service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>()), Times.Once());
+            this._service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>()), Times.Once());
         }
         #endregion
         #endregion

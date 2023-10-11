@@ -19,20 +19,23 @@ const ProjectContainerView: React.FC<IProjectContainerViewProps> = ({
   activeTab,
   isEditing,
   showConfirmModal,
-  isSubmitting,
+  displayRequiredFieldsError,
   onClose,
   onSetProject,
   onSetContainerState,
   onSuccess,
+  setIsValid,
 }) => {
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
   const handleSaveClick = () => {
     if (formikRef !== undefined) {
+      setIsValid(formikRef.current?.isValid ?? false);
       onSetContainerState({ isSubmitting: true });
       formikRef.current?.setSubmitting(true);
-      formikRef.current?.submitForm();
+      return formikRef.current?.submitForm() ?? Promise.resolve();
     }
+    return Promise.resolve();
   };
 
   const formikRef = useRef<FormikProps<any>>(null);
@@ -77,6 +80,7 @@ const ProjectContainerView: React.FC<IProjectContainerViewProps> = ({
             isOkDisabled={false}
             onSave={handleSaveClick}
             onCancel={handleCancelClick}
+            displayRequiredFieldError={displayRequiredFieldsError}
           />
         )
       }

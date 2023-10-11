@@ -26,14 +26,14 @@ namespace Pims.Dal.Test.Repositories
 
         public CompReqFinancialRepositoryTest()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         private CompReqFinancialRepository CreateWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
-            _helper.CreatePimsContext(user, true);
-            return _helper.CreateRepository<CompReqFinancialRepository>(user);
+            this._helper.CreatePimsContext(user, true);
+            return this._helper.CreateRepository<CompReqFinancialRepository>(user);
         }
 
         [Fact]
@@ -46,11 +46,11 @@ namespace Pims.Dal.Test.Repositories
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
                     IsDraft = true,
-                    AcquisitionFileId = 1
-                }
+                    AcquisitionFileId = 1,
+                },
             };
-            var repository = CreateWithPermissions(Permissions.CompensationRequisitionView);
-            _helper.AddAndSaveChanges(codeToAdd);
+            var repository = this.CreateWithPermissions(Permissions.CompensationRequisitionView);
+            this._helper.AddAndSaveChanges(codeToAdd);
 
             // Act
             var result = repository.GetAllByAcquisitionFileId(1, false);
@@ -71,11 +71,11 @@ namespace Pims.Dal.Test.Repositories
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
                     IsDraft = true,
-                    AcquisitionFileId = 1
-                }
+                    AcquisitionFileId = 1,
+                },
             };
-            var repository = CreateWithPermissions(Permissions.CompensationRequisitionView);
-            _helper.AddAndSaveChanges(codeToAdd);
+            var repository = this.CreateWithPermissions(Permissions.CompensationRequisitionView);
+            this._helper.AddAndSaveChanges(codeToAdd);
 
             // Act
             var result = repository.GetAllByAcquisitionFileId(1, true);
@@ -90,7 +90,7 @@ namespace Pims.Dal.Test.Repositories
         public void GetAll_ThrowIfNotAuthorized()
         {
             // Arrange
-            var repository = CreateWithPermissions(Permissions.SystemAdmin);
+            var repository = this.CreateWithPermissions(Permissions.SystemAdmin);
 
             // Act
             Action act = () => repository.GetAllByAcquisitionFileId(1, true);
@@ -113,12 +113,12 @@ namespace Pims.Dal.Test.Repositories
                 CompensationRequisition = new PimsCompensationRequisition
                 {
                     AcquisitionFileId = acqFile.Internal_Id,
-                    AcquisitionFile = acqFile
-                }
+                    AcquisitionFile = acqFile,
+                },
             };
 
-            var repository = CreateWithPermissions(Permissions.AcquisitionFileAdd);
-            _helper.AddAndSaveChanges(financial);
+            var repository = this.CreateWithPermissions(Permissions.AcquisitionFileAdd);
+            this._helper.AddAndSaveChanges(financial);
 
             // Act
             var filter = new AcquisitionReportFilterModel() { Projects = new List<long> { 1 } };
@@ -142,12 +142,12 @@ namespace Pims.Dal.Test.Repositories
                     AcquisitionFileId = acqFile.Internal_Id,
                     AcquisitionFile = acqFile,
                     AlternateProject = new PimsProject() { Id = 1 },
-                    AlternateProjectId = 1
-                }
+                    AlternateProjectId = 1,
+                },
             };
 
-            var repository = CreateWithPermissions(Permissions.AcquisitionFileAdd);
-            _helper.AddAndSaveChanges(financial);
+            var repository = this.CreateWithPermissions(Permissions.AcquisitionFileAdd);
+            this._helper.AddAndSaveChanges(financial);
 
             // Act
             var filter = new AcquisitionReportFilterModel() { Projects = new List<long> { 1 } };
@@ -170,12 +170,12 @@ namespace Pims.Dal.Test.Repositories
                 CompensationRequisition = new PimsCompensationRequisition
                 {
                     AcquisitionFileId = acqFile.Internal_Id,
-                    AcquisitionFile = acqFile
-                }
+                    AcquisitionFile = acqFile,
+                },
             };
 
-            var repository = CreateWithPermissions(Permissions.AcquisitionFileAdd);
-            _helper.AddAndSaveChanges(financial);
+            var repository = this.CreateWithPermissions(Permissions.AcquisitionFileAdd);
+            this._helper.AddAndSaveChanges(financial);
 
             // Act
             var filter = new AcquisitionReportFilterModel() { AcquisitionTeamPersons = new List<long> { 1 } };

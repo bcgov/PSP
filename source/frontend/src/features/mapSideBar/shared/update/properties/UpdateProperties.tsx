@@ -120,7 +120,7 @@ export const UpdateProperties: React.FunctionComponent<
             isOkDisabled={formikRef.current?.isSubmitting}
             onSave={handleSaveClick}
             onCancel={handleCancelClick}
-            isValid={isValid}
+            displayRequiredFieldError={isValid === false}
           />
         }
       >

@@ -6,8 +6,8 @@ import useIsMounted from '@/hooks/util/useIsMounted';
 import TooltipIcon from './TooltipIcon';
 
 export interface IUserNameTooltipProps {
-  userGuid?: string;
-  userName?: string;
+  userGuid?: string | null;
+  userName?: string | null;
 }
 
 /** Generic user info tooltip component that displays user name on hover */

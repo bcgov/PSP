@@ -11,6 +11,7 @@ namespace Pims.Dal.Repositories
     public interface IPropertyRepository : IRepository<PimsProperty>
     {
         int Count();
+
         Paged<PimsProperty> GetPage(PropertyFilter filter);
 
         PimsProperty GetById(long id);
@@ -28,6 +29,8 @@ namespace Pims.Dal.Repositories
         PimsProperty GetAllAssociationsById(long id);
 
         PimsProperty Update(PimsProperty property, bool overrideLocation = false);
+
+        PimsProperty UpdatePropertyManagement(PimsProperty property);
 
         void Delete(PimsProperty property);
 

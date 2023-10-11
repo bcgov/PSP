@@ -10,6 +10,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { FileTypes } from '@/constants/fileTypes';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { useResearchRepository } from '@/hooks/repositories/useResearchRepository';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { Api_File } from '@/models/api/File';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
@@ -43,13 +44,27 @@ export const ResearchContainer: React.FunctionComponent<
     },
   } = useGetResearch();
 
+  const {
+    getLastUpdatedBy: { execute: getLastUpdatedBy, loading: loadingLastUpdatedBy },
+  } = useResearchRepository();
+
   const mapMachine = useMapStateMachine();
-  const [researchFile, setResearchFile] = useState<Api_ResearchFile | undefined>(undefined);
-  const { setFile, setFileLoading, staleFile, setStaleFile } = React.useContext(SideBarContext);
+  const {
+    setFile,
+    file: researchFile,
+    setFileLoading,
+    staleFile,
+    setStaleFile,
+    lastUpdatedBy,
+    setLastUpdatedBy,
+    staleLastUpdatedBy,
+    setStaleLastUpdatedBy,
+  } = React.useContext(SideBarContext);
 
   const [selectedMenuIndex, setSelectedMenuIndex] = useState<number>(0);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editKey, setEditKey] = useState(FormKeys.none);
+  const [isValid, setIsValid] = useState<boolean>(true);
 
   const [isShowingPropertySelector, setIsShowingPropertySelector] = useState<boolean>(false);
 
@@ -66,8 +81,9 @@ export const ResearchContainer: React.FunctionComponent<
   >('Failed to update Research File');
 
   useEffect(
-    () => setFileLoading(loadingResearchFile || loadingResearchFileProperties),
-    [loadingResearchFile, loadingResearchFileProperties, setFileLoading],
+    () =>
+      setFileLoading(loadingResearchFile || loadingResearchFileProperties || loadingLastUpdatedBy),
+    [loadingLastUpdatedBy, loadingResearchFile, loadingResearchFileProperties, setFileLoading],
   );
 
   const fetchResearchFile = React.useCallback(async () => {
@@ -76,16 +92,41 @@ export const ResearchContainer: React.FunctionComponent<
     retrieved?.fileProperties?.forEach(async fp => {
       fp.property = researchProperties?.find(ap => fp.id === ap.id)?.property;
     });
-    setResearchFile(retrieved);
     setFile({ ...retrieved, fileType: FileTypes.Research });
-    setStaleFile(false);
-  }, [getResearchFile, getResearchFileProperties, props.researchFileId, setFile, setStaleFile]);
+  }, [getResearchFile, getResearchFileProperties, props.researchFileId, setFile]);
+
+  const fetchLastUpdatedBy = React.useCallback(async () => {
+    var retrieved = await getLastUpdatedBy(props.researchFileId);
+    if (retrieved !== undefined) {
+      setLastUpdatedBy(retrieved);
+    } else {
+      setLastUpdatedBy(null);
+    }
+  }, [props.researchFileId, getLastUpdatedBy, setLastUpdatedBy]);
+
+  const onSuccess = React.useCallback(() => {
+    setStaleFile(true);
+    setStaleLastUpdatedBy(true);
+    mapMachine.refreshMapProperties();
+    setIsEditing(false);
+    setEditKey(FormKeys.none);
+  }, [mapMachine, setStaleFile, setStaleLastUpdatedBy]);
 
   React.useEffect(() => {
     if (researchFile === undefined || researchFileId !== researchFile?.id || staleFile) {
       fetchResearchFile();
     }
   }, [fetchResearchFile, researchFile, researchFileId, staleFile]);
+
+  React.useEffect(() => {
+    if (
+      lastUpdatedBy === undefined ||
+      researchFileId !== lastUpdatedBy?.parentId ||
+      staleLastUpdatedBy
+    ) {
+      fetchLastUpdatedBy();
+    }
+  }, [fetchLastUpdatedBy, lastUpdatedBy, researchFileId, staleLastUpdatedBy]);
 
   if (researchFile === undefined && (loadingResearchFile || loadingResearchFileProperties)) {
     return (
@@ -117,6 +158,7 @@ export const ResearchContainer: React.FunctionComponent<
     if (formikRef !== undefined) {
       formikRef.current?.setSubmitting(true);
       formikRef.current?.submitForm();
+      setIsValid(formikRef.current?.isValid || false);
     }
   };
 
@@ -137,13 +179,6 @@ export const ResearchContainer: React.FunctionComponent<
       formikRef.current?.resetForm();
     }
     setShowConfirmModal(false);
-    setIsEditing(false);
-    setEditKey(FormKeys.none);
-  };
-
-  const onSuccess = () => {
-    fetchResearchFile();
-    mapMachine.refreshMapProperties();
     setIsEditing(false);
     setEditKey(FormKeys.none);
   };
@@ -176,13 +211,14 @@ export const ResearchContainer: React.FunctionComponent<
       <MapSideBarLayout
         title={isEditing ? 'Update Research File' : 'Research File'}
         icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
-        header={<ResearchHeader researchFile={researchFile} />}
+        header={<ResearchHeader researchFile={researchFile} lastUpdatedBy={lastUpdatedBy} />}
         footer={
           isEditing && (
             <SidebarFooter
               isOkDisabled={formikRef?.current?.isSubmitting}
               onSave={handleSaveClick}
               onCancel={handleCancelClick}
+              displayRequiredFieldError={!isValid}
             />
           )
         }
