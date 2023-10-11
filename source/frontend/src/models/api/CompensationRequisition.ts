@@ -28,6 +28,7 @@ export interface Api_CompensationRequisition extends Api_ConcurrentVersion, Api_
   agreementDate: string | null;
   expropriationNoticeServedDate: string | null;
   expropriationVestingDate: string | null;
+  advancedPaymentServedDate: string | null;
   generationDate: string | null;
   financials: Api_CompensationFinancial[];
   acquisitionOwnerId: number | null;

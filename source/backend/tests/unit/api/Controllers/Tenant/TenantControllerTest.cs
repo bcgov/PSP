@@ -31,8 +31,8 @@ namespace Pims.Api.Test.Controllers
 
         public TenantControllerTest()
         {
-            _helper = new TestHelper();
-            _user = PrincipalHelper.CreateForPermission();
+            this._helper = new TestHelper();
+            this._user = PrincipalHelper.CreateForPermission();
         }
 
         #region Tests
@@ -47,10 +47,10 @@ namespace Pims.Api.Test.Controllers
                 Tenant = "TEST",
             };
             mockOptions.Setup(m => m.CurrentValue).Returns(options);
-            var controller = _helper.CreateController<TenantController>(_user, mockOptions.Object);
+            var controller = this._helper.CreateController<TenantController>(this._user, mockOptions.Object);
 
-            var mapper = _helper.GetService<IMapper>();
-            var repository = _helper.GetService<Mock<ITenantRepository>>();
+            var mapper = this._helper.GetService<IMapper>();
+            var repository = this._helper.GetService<Mock<ITenantRepository>>();
 
             var tenant = EntityHelper.CreateTenant(1, "TEST");
             repository.Setup(m => m.TryGetTenantByCode(tenant.Code)).Returns(tenant);
@@ -73,10 +73,10 @@ namespace Pims.Api.Test.Controllers
                 Tenant = "TEST",
             };
             mockOptions.Setup(m => m.CurrentValue).Returns(options);
-            var controller = _helper.CreateController<TenantController>(_user, mockOptions.Object);
+            var controller = this._helper.CreateController<TenantController>(this._user, mockOptions.Object);
 
-            var mapper = _helper.GetService<IMapper>();
-            var repository = _helper.GetService<Mock<ITenantRepository>>();
+            var mapper = this._helper.GetService<IMapper>();
+            var repository = this._helper.GetService<Mock<ITenantRepository>>();
 
             var tenant = EntityHelper.CreateTenant(1, "TEST");
             repository.Setup(m => m.TryGetTenantByCode(tenant.Code)).Returns<Entity.PimsTenant>(null);
@@ -97,10 +97,10 @@ namespace Pims.Api.Test.Controllers
             var mockOptions = new Mock<IOptionsMonitor<PimsOptions>>();
             var options = new PimsOptions();
             mockOptions.Setup(m => m.CurrentValue).Returns(options);
-            var controller = _helper.CreateController<TenantController>(_user, mockOptions.Object);
+            var controller = this._helper.CreateController<TenantController>(this._user, mockOptions.Object);
 
-            var mapper = _helper.GetService<IMapper>();
-            var repository = _helper.GetService<Mock<ITenantRepository>>();
+            var mapper = this._helper.GetService<IMapper>();
+            var repository = this._helper.GetService<Mock<ITenantRepository>>();
 
             repository.Setup(m => m.TryGetTenantByCode(null)).Returns<Entity.PimsTenant>(null);
 
@@ -119,13 +119,13 @@ namespace Pims.Api.Test.Controllers
         public void UpdateTenant_200Response()
         {
             // Arrange
-            var controller = _helper.CreateController<TenantController>(Permissions.SystemAdmin);
-            var repository = _helper.GetService<Mock<ITenantRepository>>();
+            var controller = this._helper.CreateController<TenantController>(Permissions.SystemAdmin);
+            var repository = this._helper.GetService<Mock<ITenantRepository>>();
 
             var tenant = EntityHelper.CreateTenant(1, "TEST");
             repository.Setup(m => m.UpdateTenant(It.IsAny<Entity.PimsTenant>())).Returns(tenant);
 
-            var mapper = _helper.GetService<IMapper>();
+            var mapper = this._helper.GetService<IMapper>();
 
             var model = mapper.Map<Model.TenantModel>(tenant);
 

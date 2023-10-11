@@ -32,6 +32,7 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
   const [businessFunctions, setBusinessFunctions] = useState<Api_FinancialCode[]>([]);
   const [costTypes, setCostTypes] = useState<Api_FinancialCode[]>([]);
   const [workActivities, setWorkActivities] = useState<Api_FinancialCode[]>([]);
+  const [isValid, setIsValid] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchBusinessFunctions() {
@@ -76,8 +77,10 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
-  const handleSave = () => {
-    formikRef.current?.submitForm();
+  const handleSave = async () => {
+    var result = await (formikRef.current?.submitForm() ?? Promise.resolve());
+    setIsValid(formikRef.current?.isValid ?? false);
+    return result;
   };
 
   const onSuccess = async (proj: Api_Project) => {
@@ -93,7 +96,9 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
       title="Create Project"
       icon={<FaBriefcase className="mr-2 mb-2" size={32} />}
       onClose={close}
-      footer={<SidebarFooter onSave={handleSave} onCancel={close} />}
+      footer={
+        <SidebarFooter onSave={handleSave} onCancel={close} displayRequiredFieldError={!isValid} />
+      }
     >
       <AddProjectForm
         ref={formikRef}

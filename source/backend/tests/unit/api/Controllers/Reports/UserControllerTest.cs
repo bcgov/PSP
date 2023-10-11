@@ -51,13 +51,13 @@ namespace Pims.Api.Test.Controllers.Reports
 
         public UserControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<UserController>(Permissions.PropertyView);
-            _mapper = _helper.GetService<IMapper>();
-            _lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
-            _webHost = _helper.GetService<Mock<IWebHostEnvironment>>();
-            _headers = _helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            _repository = _helper.GetService<Mock<IUserRepository>>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<UserController>(Permissions.PropertyView);
+            this._mapper = this._helper.GetService<IMapper>();
+            this._lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            this._webHost = this._helper.GetService<Mock<IWebHostEnvironment>>();
+            this._headers = this._helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
+            this._repository = this._helper.GetService<Mock<IUserRepository>>();
         }
 
         #region Tests
@@ -70,22 +70,22 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_Csv_Success(UserFilter filter)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
+            this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
             var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
-            _repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            this._repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
-            var result = _controller.ExportUsers(filter);
+            var result = this._controller.ExportUsers(filter);
 
             // Assert
             var actionResult = Assert.IsType<ContentResult>(result);
             var actualResult = Assert.IsType<string>(actionResult.Content);
             Assert.Equal(ContentTypes.CONTENTTYPECSV, actionResult.ContentType);
-            _repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            this._repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -95,22 +95,22 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_Csv_Query_Success()
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
+            this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
             var page = new Paged<Entity.PimsUser>(users);
-            _repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            this._repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
-            var result = _controller.ExportUsers();
+            var result = this._controller.ExportUsers();
 
             // Assert
             var actionResult = Assert.IsType<ContentResult>(result);
             var actualResult = Assert.IsType<string>(actionResult.Content);
             Assert.Equal(ContentTypes.CONTENTTYPECSV, actionResult.ContentType);
-            _repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            this._repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -121,23 +121,23 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_Excel_Success(UserFilter filter)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCEL);
+            this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCEL);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
             var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
-            _repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            this._repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
-            var result = _controller.ExportUsers(filter);
+            var result = this._controller.ExportUsers(filter);
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
             Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            _repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            this._repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -148,23 +148,23 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_Excel_Query_Success(Uri uri)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCEL);
+            this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCEL);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
             var page = new Paged<Entity.PimsUser>(users);
-            _repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            this._repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
-            var result = _controller.ExportUsers();
+            var result = this._controller.ExportUsers();
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
             Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            _repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            this._repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -175,23 +175,23 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_ExcelX_Success(UserFilter filter)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
+            this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
             var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
-            _repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            this._repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
-            var result = _controller.ExportUsers(filter);
+            var result = this._controller.ExportUsers(filter);
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
             Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            _repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            this._repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -202,23 +202,23 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_ExcelX_Query_Success(Uri uri)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
+            this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
             var page = new Paged<Entity.PimsUser>(users);
-            _repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            this._repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
-            var result = _controller.ExportUsers();
+            var result = this._controller.ExportUsers();
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
             Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            _repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            this._repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>

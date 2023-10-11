@@ -30,14 +30,14 @@ namespace Pims.Api.Test.Services
 
         public CompensationRequisitionServiceTest()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         [Fact]
         public void GetById_NoPermission()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions();
+            var service = this.CreateCompRequisitionServiceWithPermissions();
 
             // Act
             Action act = () => service.GetById(1);
@@ -50,8 +50,8 @@ namespace Pims.Api.Test.Services
         public void GetById_Success()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionView);
-            var repo = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionView);
+            var repo = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             repo.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsCompensationRequisition { Internal_Id = 1 });
 
             // Act
@@ -65,7 +65,7 @@ namespace Pims.Api.Test.Services
         public void Update_NoPermission()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions();
+            var service = this.CreateCompRequisitionServiceWithPermissions();
 
             // Act
             Action act = () => service.Update(new PimsCompensationRequisition());
@@ -78,7 +78,7 @@ namespace Pims.Api.Test.Services
         public void Update_BadRequest_EntityIsNull()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
 
             // Act
             Action act = () => service.Update(null);
@@ -91,10 +91,10 @@ namespace Pims.Api.Test.Services
         public void Update_Success_Inserts_StatusChanged_Note()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
-            var compensationRepository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var compensationRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
 
@@ -139,10 +139,10 @@ namespace Pims.Api.Test.Services
         public void Update_Success_Skips_StatusChanged_Note()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
 
@@ -157,9 +157,8 @@ namespace Pims.Api.Test.Services
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
                 ConcurrencyControlNumber = 2,
-                IsDraft = true
-            }
-            );
+                IsDraft = true,
+            });
 
             // Assert
             result.Should().NotBeNull();
@@ -173,9 +172,9 @@ namespace Pims.Api.Test.Services
         public void Update_Status_BackToDraft_NoPermission()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
 
             repository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = false });
@@ -186,7 +185,7 @@ namespace Pims.Api.Test.Services
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
                 ConcurrencyControlNumber = 2,
-                IsDraft = true
+                IsDraft = true,
             });
 
             // Assert
@@ -197,9 +196,9 @@ namespace Pims.Api.Test.Services
         public void Update_Status_BackToNull_NoPermission()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
 
             repository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = false });
@@ -210,7 +209,7 @@ namespace Pims.Api.Test.Services
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
                 ConcurrencyControlNumber = 2,
-                IsDraft = null
+                IsDraft = null,
             });
 
             // Assert
@@ -221,10 +220,10 @@ namespace Pims.Api.Test.Services
         public void Update_Status_BackToDraft_AuthorizedAdmin()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit, Permissions.SystemAdmin);
-            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit, Permissions.SystemAdmin);
+            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
 
@@ -240,7 +239,7 @@ namespace Pims.Api.Test.Services
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
                 ConcurrencyControlNumber = 2,
-                IsDraft = true
+                IsDraft = true,
             });
 
             // Assert
@@ -255,10 +254,10 @@ namespace Pims.Api.Test.Services
         public void Update_Status_BackToNull_AuthorizedAdmin()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit, Permissions.SystemAdmin);
-            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit, Permissions.SystemAdmin);
+            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
 
@@ -274,7 +273,7 @@ namespace Pims.Api.Test.Services
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
                 ConcurrencyControlNumber = 2,
-                IsDraft = null
+                IsDraft = null,
             });
 
             // Assert
@@ -289,10 +288,10 @@ namespace Pims.Api.Test.Services
         public void Update_Success_Skips_StatusChanged_Note_FromNoStatus()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
 
@@ -307,9 +306,8 @@ namespace Pims.Api.Test.Services
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
                 ConcurrencyControlNumber = 2,
-                IsDraft = true
-            }
-            );
+                IsDraft = true,
+            });
 
             // Assert
             result.Should().NotBeNull();
@@ -323,11 +321,11 @@ namespace Pims.Api.Test.Services
         public void Update_Success_ValidTotalAllowableCompensation()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-            var compReqH120Service = _helper.GetService<Mock<ICompReqFinancialService>>();
-            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var compReqH120Service = this._helper.GetService<Mock<ICompReqFinancialService>>();
+            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
@@ -346,9 +344,8 @@ namespace Pims.Api.Test.Services
                 AcquisitionFileId = 1,
                 ConcurrencyControlNumber = 2,
                 IsDraft = true,
-                PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 1000 } }
-            }
-            );
+                PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 1000 } },
+            });
 
             // Assert
             result.Should().NotBeNull();
@@ -359,11 +356,11 @@ namespace Pims.Api.Test.Services
         public void Update_Success_ValidMultipleTotalAllowableCompensation()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-            var compReqH120Service = _helper.GetService<Mock<ICompReqFinancialService>>();
-            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var compReqH120Service = this._helper.GetService<Mock<ICompReqFinancialService>>();
+            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
@@ -377,7 +374,7 @@ namespace Pims.Api.Test.Services
             {
                 TotalAllowableCompensation = 300,
                 PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { Internal_Id = 1,
-                    PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } } }
+                    PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
             });
 
             // Act
@@ -387,9 +384,8 @@ namespace Pims.Api.Test.Services
                 AcquisitionFileId = 1,
                 ConcurrencyControlNumber = 2,
                 IsDraft = false,
-                PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 200 } }
-            }
-            );
+                PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 200 } },
+            });
 
             // Assert
             result.Should().NotBeNull();
@@ -400,11 +396,11 @@ namespace Pims.Api.Test.Services
         public void Update_Success_TotalAllowableExceededDraft()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-            var compReqH120Service = _helper.GetService<Mock<ICompReqFinancialService>>();
-            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var compReqH120Service = this._helper.GetService<Mock<ICompReqFinancialService>>();
+            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
@@ -423,9 +419,8 @@ namespace Pims.Api.Test.Services
                 AcquisitionFileId = 1,
                 ConcurrencyControlNumber = 2,
                 IsDraft = true,
-                PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 1000 } }
-            }
-            );
+                PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 1000 } },
+            });
 
             // Assert
             result.Should().NotBeNull();
@@ -436,11 +431,11 @@ namespace Pims.Api.Test.Services
         public void Update_Fail_TotalAllowableExceeded()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-            var compReqH120Service = _helper.GetService<Mock<ICompReqFinancialService>>();
-            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var compReqH120Service = this._helper.GetService<Mock<ICompReqFinancialService>>();
+            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
@@ -453,7 +448,7 @@ namespace Pims.Api.Test.Services
             {
                 TotalAllowableCompensation = 99,
                 PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { Internal_Id = 1,
-                    PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } } }
+                    PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
             });
 
             // Act
@@ -464,9 +459,8 @@ namespace Pims.Api.Test.Services
                 AcquisitionFileId = 1,
                 ConcurrencyControlNumber = 2,
                 IsDraft = false,
-                PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 200 } }
-            }
-            );
+                PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 200 } },
+            });
             act.Should().Throw<BusinessRuleViolationException>();
         }
 
@@ -474,11 +468,11 @@ namespace Pims.Api.Test.Services
         public void Update_Fail_ValidMultipleTotalAllowableCompensation()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-            var compReqH120Service = _helper.GetService<Mock<ICompReqFinancialService>>();
-            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var compReqH120Service = this._helper.GetService<Mock<ICompReqFinancialService>>();
+            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
@@ -487,13 +481,13 @@ namespace Pims.Api.Test.Services
 
             compReqH120Service.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true)).Returns(
                 new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { CompensationRequisitionId = 1, TotalAmt = 1000 },
-                new PimsCompReqFinancial() { CompensationRequisitionId = 2, TotalAmt = 100 } });
+                new PimsCompReqFinancial() { CompensationRequisitionId = 2, TotalAmt = 100 }, });
 
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
             {
                 TotalAllowableCompensation = 299,
                 PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { Internal_Id = 1,
-                    PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } } }
+                    PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
             });
 
             // Act
@@ -504,9 +498,8 @@ namespace Pims.Api.Test.Services
                 AcquisitionFileId = 1,
                 ConcurrencyControlNumber = 2,
                 IsDraft = false,
-                PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 200 } }
-            }
-            );
+                PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 200 } },
+            });
             act.Should().Throw<BusinessRuleViolationException>();
         }
 
@@ -514,7 +507,7 @@ namespace Pims.Api.Test.Services
         public void Delete_NoPermission()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions();
+            var service = this.CreateCompRequisitionServiceWithPermissions();
 
             // Act
             Action act = () => service.DeleteCompensation(1);
@@ -527,8 +520,8 @@ namespace Pims.Api.Test.Services
         public void Delete_Success()
         {
             // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionDelete);
-            var repo = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionDelete);
+            var repo = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             repo.Setup(x => x.TryDelete(It.IsAny<long>()));
 
             // Act
@@ -541,8 +534,8 @@ namespace Pims.Api.Test.Services
         private CompensationRequisitionService CreateCompRequisitionServiceWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
-            _helper.CreatePimsContext(user, true);
-            return _helper.Create<CompensationRequisitionService>(user);
+            this._helper.CreatePimsContext(user, true);
+            return this._helper.Create<CompensationRequisitionService>(user);
         }
     }
 }

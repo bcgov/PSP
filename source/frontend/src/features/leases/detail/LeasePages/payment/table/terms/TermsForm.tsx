@@ -22,6 +22,7 @@ export interface ITermsFormProps {
   onDelete: (values: FormLeaseTerm) => void;
   onDeletePayment: (values: FormLeasePayment) => void;
   onSavePayment: (values: FormLeasePayment) => void;
+  onGenerate: () => void;
   isReceivable?: boolean;
   lease?: LeaseFormModel;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
@@ -33,13 +34,14 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
   onDelete,
   onDeletePayment,
   onSavePayment,
+  onGenerate,
   isReceivable,
   lease,
   formikRef,
 }) => {
   const columns = useMemo(
-    () => getLeaseTermColumns({ onEdit, onDelete: onDelete }),
-    [onEdit, onDelete],
+    () => getLeaseTermColumns({ onEdit, onDelete: onDelete, onGenerate }),
+    [onEdit, onDelete, onGenerate],
   );
   const { hasClaim } = useKeycloakWrapper();
   const leaseForm = { ...new LeaseFormModel(), ...lease };

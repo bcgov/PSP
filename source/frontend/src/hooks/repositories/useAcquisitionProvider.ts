@@ -12,6 +12,7 @@ import {
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
+import { Api_LastUpdatedBy } from '@/models/api/File';
 import { Api_Person } from '@/models/api/Person';
 import { Api_Product, Api_Project } from '@/models/api/Project';
 import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
@@ -43,6 +44,7 @@ export const useAcquisitionProvider = () => {
     getAllAcquisitionFileTeamMembers,
     getAgreementReport,
     getCompensationReport,
+    getLastUpdatedByApi,
   } = useApiAcquisitionFile();
 
   const addAcquisitionFileApi = useApiRequestWrapper<
@@ -71,6 +73,17 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'RetrieveAcquisitionFile',
     onError: useAxiosErrorHandler('Failed to load Acquisition File'),
+  });
+
+  const getLastUpdatedBy = useApiRequestWrapper<
+    (acqFileId: number) => Promise<AxiosResponse<Api_LastUpdatedBy, any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number) => await getLastUpdatedByApi(acqFileId),
+      [getLastUpdatedByApi],
+    ),
+    requestName: 'getLastUpdatedBy',
+    onError: useAxiosErrorHandler('Failed to load Acquisition File last-updated-by'),
   });
 
   const getAgreementsReportApi = useApiRequestWrapper<
@@ -286,6 +299,7 @@ export const useAcquisitionProvider = () => {
     () => ({
       addAcquisitionFile: addAcquisitionFileApi,
       getAcquisitionFile: getAcquisitionFileApi,
+      getLastUpdatedBy,
       updateAcquisitionFile: updateAcquisitionFileApi,
       updateAcquisitionProperties: updateAcquisitionPropertiesApi,
       getAcquisitionProperties: getAcquisitionPropertiesApi,
@@ -305,6 +319,7 @@ export const useAcquisitionProvider = () => {
     }),
     [
       addAcquisitionFileApi,
+      getLastUpdatedBy,
       getAcquisitionFileApi,
       updateAcquisitionFileApi,
       updateAcquisitionPropertiesApi,

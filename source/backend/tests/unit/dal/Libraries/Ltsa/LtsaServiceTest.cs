@@ -336,7 +336,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(accessTokenResponse)
+                    Content = new StringContent(accessTokenResponse),
                 });
 
             var httpClient = new HttpClient(mockMessageHandler.Object);

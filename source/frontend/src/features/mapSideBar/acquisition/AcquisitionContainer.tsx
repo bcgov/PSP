@@ -51,11 +51,21 @@ const initialState: AcquisitionContainerState = {
 export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainerProps> = props => {
   // Load state from props and side-bar context
   const { acquisitionFileId, onClose, View } = props;
-  const { setFile, setFileLoading, staleFile, setStaleFile, file } = useContext(SideBarContext);
+  const {
+    setFile,
+    setFileLoading,
+    staleFile,
+    setStaleFile,
+    file,
+    setLastUpdatedBy,
+    lastUpdatedBy,
+    staleLastUpdatedBy,
+  } = useContext(SideBarContext);
   const [isValid, setIsValid] = useState<boolean>(true);
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
   >('Failed to update Acquisition File');
+
   const {
     getAcquisitionFile: { execute: retrieveAcquisitionFile, loading: loadingAcquisitionFile },
     updateAcquisitionProperties,
@@ -64,6 +74,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       loading: loadingAcquisitionFileProperties,
     },
     getAcquisitionFileChecklist: { execute: retrieveAcquisitionFileChecklist },
+    getLastUpdatedBy: { execute: getLastUpdatedBy, loading: loadingGetLastUpdatedBy },
   } = useAcquisitionProvider();
 
   const mapMachine = useMapStateMachine();
@@ -131,6 +142,25 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     setStaleFile,
   ]);
 
+  const fetchLastUpdatedBy = React.useCallback(async () => {
+    var retrieved = await getLastUpdatedBy(acquisitionFileId);
+    if (retrieved !== undefined) {
+      setLastUpdatedBy(retrieved);
+    } else {
+      setLastUpdatedBy(null);
+    }
+  }, [acquisitionFileId, getLastUpdatedBy, setLastUpdatedBy]);
+
+  React.useEffect(() => {
+    if (
+      lastUpdatedBy === undefined ||
+      acquisitionFileId !== lastUpdatedBy?.parentId ||
+      staleLastUpdatedBy
+    ) {
+      fetchLastUpdatedBy();
+    }
+  }, [fetchLastUpdatedBy, lastUpdatedBy, acquisitionFileId, staleLastUpdatedBy]);
+
   useEffect(() => {
     if (acquisitionFile === undefined || acquisitionFileId !== acquisitionFile.id || staleFile) {
       fetchAcquisitionFile();
@@ -138,8 +168,16 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   }, [acquisitionFile, fetchAcquisitionFile, acquisitionFileId, staleFile]);
 
   useEffect(
-    () => setFileLoading(loadingAcquisitionFile || loadingAcquisitionFileProperties),
-    [loadingAcquisitionFile, setFileLoading, loadingAcquisitionFileProperties],
+    () =>
+      setFileLoading(
+        loadingAcquisitionFile || loadingAcquisitionFileProperties || loadingGetLastUpdatedBy,
+      ),
+    [
+      loadingAcquisitionFile,
+      setFileLoading,
+      loadingAcquisitionFileProperties,
+      loadingGetLastUpdatedBy,
+    ],
   );
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
@@ -207,17 +245,13 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const onSuccess = () => {
     fetchAcquisitionFile();
+    fetchLastUpdatedBy();
     mapMachine.refreshMapProperties();
     setIsEditing(false);
   };
 
   const canRemove = async (propertyId: number) => {
-    const fileProperties = await retrieveAcquisitionFileProperties(acquisitionFileId);
-    const fp = fileProperties?.find(fp => fp.property?.id === propertyId);
-    return (
-      fp?.activityInstanceProperties?.length === undefined ||
-      fp?.activityInstanceProperties?.length === 0
-    );
+    return true;
   };
 
   const onUpdateProperties = (file: Api_File): Promise<Api_File | undefined> => {

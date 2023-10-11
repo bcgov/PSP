@@ -27,14 +27,14 @@ namespace Pims.Api.Test.Services
 
         public LeaseServiceTermTest()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         private LeaseTermService CreateLeaseServiceTermWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
-            _helper.CreatePimsContext(user, true);
-            return _helper.Create<LeaseTermService>();
+            this._helper.CreatePimsContext(user, true);
+            return this._helper.Create<LeaseTermService>();
         }
 
         #region Tests
@@ -45,8 +45,8 @@ namespace Pims.Api.Test.Services
             // Arrange
             var lease = EntityHelper.CreateLease(1);
 
-            var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit, Permissions.LeaseView);
-            var leaseTermRepository = _helper.GetService<Mock<ILeaseTermRepository>>();
+            var service = this.CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit, Permissions.LeaseView);
+            var leaseTermRepository = this._helper.GetService<Mock<ILeaseTermRepository>>();
 
             // Act
             var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
@@ -65,8 +65,8 @@ namespace Pims.Api.Test.Services
             var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease, Internal_Id = 1 };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { originalTerm };
 
-            var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
-            var leaseTermRepository = _helper.GetService<Mock<ILeaseTermRepository>>();
+            var service = this.CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
+            var leaseTermRepository = this._helper.GetService<Mock<ILeaseTermRepository>>();
             leaseTermRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsLeaseTerms);
 
             // Act
@@ -85,8 +85,8 @@ namespace Pims.Api.Test.Services
             var originalTerm = new PimsLeaseTerm() { TermStartDate = date, TermExpiryDate = date.AddDays(1), LeaseId = lease.Internal_Id, Lease = lease, Internal_Id = 1 };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { originalTerm };
 
-            var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
-            var leaseTermRepository = _helper.GetService<Mock<ILeaseTermRepository>>();
+            var service = this.CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
+            var leaseTermRepository = this._helper.GetService<Mock<ILeaseTermRepository>>();
             leaseTermRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsLeaseTerms);
 
             // Act
@@ -104,8 +104,8 @@ namespace Pims.Api.Test.Services
             var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10), LeaseId = lease.Internal_Id, Lease = lease, Internal_Id = 1 };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { originalTerm };
 
-            var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
-            var leaseTermRepository = _helper.GetService<Mock<ILeaseTermRepository>>();
+            var service = this.CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
+            var leaseTermRepository = this._helper.GetService<Mock<ILeaseTermRepository>>();
             leaseTermRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsLeaseTerms);
 
             // Act
@@ -122,8 +122,8 @@ namespace Pims.Api.Test.Services
             var lease = EntityHelper.CreateLease(1);
             var payment = new PimsLeasePayment();
 
-            var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
-            var leaseTermRepository = _helper.GetService<Mock<ILeaseTermRepository>>();
+            var service = this.CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
+            var leaseTermRepository = this._helper.GetService<Mock<ILeaseTermRepository>>();
             leaseTermRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsLeaseTerms);
 
             // Act
@@ -143,8 +143,8 @@ namespace Pims.Api.Test.Services
             var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { originalTerm };
 
-            var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit, Permissions.LeaseView);
-            var leaseTermRepository = _helper.GetService<Mock<ILeaseTermRepository>>();
+            var service = this.CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit, Permissions.LeaseView);
+            var leaseTermRepository = this._helper.GetService<Mock<ILeaseTermRepository>>();
             leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(originalTerm);
 
             // Act
@@ -165,8 +165,8 @@ namespace Pims.Api.Test.Services
             var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease, Internal_Id = 1 };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { originalTerm };
 
-            var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
-            var leaseTermRepository = _helper.GetService<Mock<ILeaseTermRepository>>();
+            var service = this.CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
+            var leaseTermRepository = this._helper.GetService<Mock<ILeaseTermRepository>>();
             leaseTermRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsLeaseTerms);
 
             // Act
@@ -185,8 +185,8 @@ namespace Pims.Api.Test.Services
             var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() { payment } };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { originalTerm };
 
-            var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
-            var leaseTermRepository = _helper.GetService<Mock<ILeaseTermRepository>>();
+            var service = this.CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
+            var leaseTermRepository = this._helper.GetService<Mock<ILeaseTermRepository>>();
             leaseTermRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsLeaseTerms);
             leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(originalTerm);
 
@@ -207,8 +207,8 @@ namespace Pims.Api.Test.Services
             var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { originalTerm };
 
-            var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
-            var leaseTermRepository = _helper.GetService<Mock<ILeaseTermRepository>>();
+            var service = this.CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
+            var leaseTermRepository = this._helper.GetService<Mock<ILeaseTermRepository>>();
             leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(originalTerm);
 
             // Act
@@ -229,8 +229,8 @@ namespace Pims.Api.Test.Services
             var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() { payment } };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { term };
 
-            var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
-            var leaseTermRepository = _helper.GetService<Mock<ILeaseTermRepository>>();
+            var service = this.CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
+            var leaseTermRepository = this._helper.GetService<Mock<ILeaseTermRepository>>();
             leaseTermRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsLeaseTerms);
             leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(term);
 
@@ -248,8 +248,8 @@ namespace Pims.Api.Test.Services
             var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease, LeaseTermStatusTypeCode = "EXER" };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { term };
 
-            var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
-            var leaseTermRepository = _helper.GetService<Mock<ILeaseTermRepository>>();
+            var service = this.CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
+            var leaseTermRepository = this._helper.GetService<Mock<ILeaseTermRepository>>();
             leaseTermRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsLeaseTerms);
             leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(term);
 
@@ -268,8 +268,8 @@ namespace Pims.Api.Test.Services
             var term2 = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { term, term2 };
 
-            var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
-            var leaseTermRepository = _helper.GetService<Mock<ILeaseTermRepository>>();
+            var service = this.CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
+            var leaseTermRepository = this._helper.GetService<Mock<ILeaseTermRepository>>();
             leaseTermRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsLeaseTerms);
             leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(term);
 

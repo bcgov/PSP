@@ -63,6 +63,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.SurplusDeclarationComment, src => src.SurplusDeclarationComment)
                 .Map(dest => dest.SurplusDeclarationDate, src => src.SurplusDeclarationDate)
                 .Map(dest => dest.SurplusDeclarationType, src => src.SurplusDeclarationTypeCodeNavigation)
+
                 .Inherits<Entity.IBaseEntity, Api.Models.BaseModel>();
 
             config.NewConfig<PropertyModel, Entity.PimsProperty>()

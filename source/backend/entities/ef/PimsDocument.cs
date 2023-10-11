@@ -16,8 +16,6 @@ namespace Pims.Dal.Entities
         public PimsDocument()
         {
             PimsAcquisitionFileDocuments = new HashSet<PimsAcquisitionFileDocument>();
-            PimsActivityInstanceDocuments = new HashSet<PimsActivityInstanceDocument>();
-            PimsActivityTemplateDocuments = new HashSet<PimsActivityTemplateDocument>();
             PimsFormTypes = new HashSet<PimsFormType>();
             PimsLeaseDocuments = new HashSet<PimsLeaseDocument>();
             PimsProjectDocuments = new HashSet<PimsProjectDocument>();
@@ -86,10 +84,6 @@ namespace Pims.Dal.Entities
         public virtual PimsDocumentTyp DocumentType { get; set; }
         [InverseProperty(nameof(PimsAcquisitionFileDocument.Document))]
         public virtual ICollection<PimsAcquisitionFileDocument> PimsAcquisitionFileDocuments { get; set; }
-        [InverseProperty(nameof(PimsActivityInstanceDocument.Document))]
-        public virtual ICollection<PimsActivityInstanceDocument> PimsActivityInstanceDocuments { get; set; }
-        [InverseProperty(nameof(PimsActivityTemplateDocument.Document))]
-        public virtual ICollection<PimsActivityTemplateDocument> PimsActivityTemplateDocuments { get; set; }
         [InverseProperty(nameof(PimsFormType.Document))]
         public virtual ICollection<PimsFormType> PimsFormTypes { get; set; }
         [InverseProperty(nameof(PimsLeaseDocument.Document))]

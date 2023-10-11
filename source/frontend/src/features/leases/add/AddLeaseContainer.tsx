@@ -96,7 +96,7 @@ export const AddLeaseContainer: React.FunctionComponent<
           isOkDisabled={formikRef.current?.isSubmitting || bcaLoading}
           onSave={handleSave}
           onCancel={handleCancel}
-          isValid={isValid}
+          displayRequiredFieldError={isValid === false}
         />
       }
       showCloseButton

@@ -12,8 +12,6 @@ namespace Pims.Dal.Repositories
         IEnumerable<T> GetAll<T>(Func<T, bool> predicate)
             where T : class;
 
-        IEnumerable<PimsNote> GetAllActivityNotesById(long entityId);
-
         IEnumerable<PimsNote> GetAllAcquisitionNotesById(long acquisitionId);
 
         IEnumerable<PimsNote> GetAllLeaseNotesById(long leaseId);
@@ -21,8 +19,6 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsNote> GetAllProjectNotesById(long entityId);
 
         IEnumerable<PimsNote> GetAllResearchNotesById(long entityId);
-
-        bool DeleteActivityNotes(long entityId);
 
         bool DeleteAcquisitionFileNotes(long noteId);
 

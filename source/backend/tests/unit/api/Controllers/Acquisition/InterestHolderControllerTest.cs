@@ -32,38 +32,38 @@ namespace Pims.Api.Test.Controllers
 
         public InterestHolderControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<InterestHolderController>(Permissions.AcquisitionFileView);
-            _service = _helper.GetService<Mock<IAcquisitionFileService>>();
-            _mapper = _helper.GetService<IMapper>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<InterestHolderController>(Permissions.AcquisitionFileView);
+            this._service = this._helper.GetService<Mock<IAcquisitionFileService>>();
+            this._mapper = this._helper.GetService<IMapper>();
         }
 
         [Fact]
         public void GetInterestHolderByAcquisitionFileId_Success()
         {
             // Arrange
-            _service.Setup(m => m.GetInterestHolders(It.IsAny<long>()));
+            this._service.Setup(m => m.GetInterestHolders(It.IsAny<long>()));
 
             // Act
-            var result = _controller.GetAcquisitionFileInterestHolders(1);
+            var result = this._controller.GetAcquisitionFileInterestHolders(1);
 
             // Assert
             result.Should().BeOfType<JsonResult>();
-            _service.Verify(m => m.GetInterestHolders(It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.GetInterestHolders(It.IsAny<long>()), Times.Once());
         }
 
         [Fact]
         public void UpdateAcquisitionPropertyTakes_Success()
         {
             // Arrange
-            _service.Setup(m => m.UpdateInterestHolders(It.IsAny<long>(), It.IsAny<List<PimsInterestHolder>>()));
+            this._service.Setup(m => m.UpdateInterestHolders(It.IsAny<long>(), It.IsAny<List<PimsInterestHolder>>()));
 
             // Act
-            var result = _controller.UpdateInterestHolderFile(1, new List<InterestHolderModel>());
+            var result = this._controller.UpdateInterestHolderFile(1, new List<InterestHolderModel>());
 
             // Assert
             result.Should().BeOfType<JsonResult>();
-            _service.Verify(m => m.UpdateInterestHolders(It.IsAny<long>(), It.IsAny<List<PimsInterestHolder>>()));
+            this._service.Verify(m => m.UpdateInterestHolders(It.IsAny<long>(), It.IsAny<List<PimsInterestHolder>>()));
         }
     }
 }

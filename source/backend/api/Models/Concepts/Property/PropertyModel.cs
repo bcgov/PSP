@@ -223,6 +223,11 @@ namespace Pims.Api.Models.Concepts
         public string GeneralLocation { get; set; }
 
         /// <summary>
+        /// get/set - Property contacts.
+        /// </summary>
+        public IList<PropertyContactModel> PropertyContacts { get; set; }
+
+        /// <summary>
         /// get/set - The property notes.
         /// </summary>
         public string Notes { get; set; }
@@ -235,6 +240,7 @@ namespace Pims.Api.Models.Concepts
 
         public DateTime SurplusDeclarationDate { get; set; }
         #endregion
+
         #endregion
     }
 }

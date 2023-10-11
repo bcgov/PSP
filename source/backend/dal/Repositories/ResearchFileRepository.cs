@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Security.Claims;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -136,6 +137,120 @@ namespace Pims.Dal.Repositories
             Context.UpdateChild<PimsResearchFile, long, PimsResearchFileProject, long>(p => p.PimsResearchFileProjects, researchFile.Internal_Id, researchFile.PimsResearchFileProjects.ToArray());
 
             return researchFile;
+        }
+
+        /// <summary>
+        /// Retrieves the research file with the specified id last update information.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public LastUpdatedByModel GetLastUpdateBy(long id)
+        {
+            var lastUpdatedByAggregate = new List<LastUpdatedByModel>();
+            var fileLastUpdatedBy = this.Context.PimsResearchFiles.AsNoTracking()
+                .Where(r => r.ResearchFileId == id)
+                .Select(r => new LastUpdatedByModel()
+                {
+                    ParentId = id,
+                    AppLastUpdateUserid = r.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = r.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = r.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(fileLastUpdatedBy);
+
+            var documentsLastUpdatedBy = this.Context.PimsResearchFileDocuments.AsNoTracking()
+                .Where(rd => rd.ResearchFileId == id)
+                .Include(rd => rd.Document)
+                .Select(rd => new LastUpdatedByModel()
+                {
+                    ParentId = id,
+                    AppLastUpdateUserid = rd.Document.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = rd.Document.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = rd.Document.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(documentsLastUpdatedBy);
+
+            // This is needed to get the document last-updated-by from the document that where deleted
+            var documentsHistoryLastUpdatedBy = this.Context.PimsResearchFileDocumentHists.AsNoTracking()
+                .Where(rdh => rdh.ResearchFileId == id)
+                .Select(rdh => new LastUpdatedByModel()
+                {
+                    ParentId = id,
+                    AppLastUpdateUserid = rdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                    AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                    AppLastUpdateTimestamp = rdh.EndDateHist ?? DateTime.UnixEpoch,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(documentsHistoryLastUpdatedBy);
+
+            var notesLastUpdatedBy = this.Context.PimsResearchFileNotes.AsNoTracking()
+                .Where(rn => rn.ResearchFileId == id)
+                .Include(rn => rn.Note)
+                .Select(rn => new LastUpdatedByModel()
+                {
+                    ParentId = id,
+                    AppLastUpdateUserid = rn.Note.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = rn.Note.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = rn.Note.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(notesLastUpdatedBy);
+
+            // This is needed to get the notes last-updated-by from the notes that where deleted
+            var notesHistoryLastUpdatedBy = this.Context.PimsResearchFileNoteHists.AsNoTracking()
+                .Where(rnh => rnh.ResearchFileId == id)
+                .Select(rnh => new LastUpdatedByModel()
+                {
+                    ParentId = id,
+                    AppLastUpdateUserid = rnh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                    AppLastUpdateUserGuid = rnh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                    AppLastUpdateTimestamp = rnh.EndDateHist ?? DateTime.UnixEpoch,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(notesHistoryLastUpdatedBy);
+
+            var propertiesLastUpdatedBy = this.Context.PimsPropertyResearchFiles.AsNoTracking()
+                .Where(rp => rp.ResearchFileId == id)
+                .Select(rp => new LastUpdatedByModel()
+                {
+                    ParentId = id,
+                    AppLastUpdateUserid = rp.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = rp.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = rp.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(propertiesLastUpdatedBy);
+
+            // This is needed to get the notes last-updated-by from the notes that where deleted
+            var propertiesHistoryLastUpdatedBy = this.Context.PimsPropertyResearchFileHists.AsNoTracking()
+            .Where(rph => rph.ResearchFileId == id)
+            .Select(rph => new LastUpdatedByModel()
+            {
+                ParentId = id,
+                AppLastUpdateUserid = rph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = rph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = rph.EndDateHist ?? DateTime.UnixEpoch,
+            })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(propertiesHistoryLastUpdatedBy);
+
+            return lastUpdatedByAggregate.OrderByDescending(x => x.AppLastUpdateTimestamp).FirstOrDefault();
         }
 
         /// <summary>

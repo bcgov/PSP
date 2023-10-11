@@ -106,7 +106,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
           isOkDisabled={helper.loading}
           onSave={handleSave}
           onCancel={close}
-          isValid={isValid}
+          displayRequiredFieldError={isValid === false}
         />
       }
     >

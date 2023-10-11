@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using Pims.Api.Helpers.Exceptions;
@@ -7,12 +13,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Pims.Api.Test.Helpers
@@ -28,7 +28,7 @@ namespace Pims.Api.Test.Helpers
 
         public PrincipalExtensionsTest()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         #region Tests

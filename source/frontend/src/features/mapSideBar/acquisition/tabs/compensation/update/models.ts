@@ -20,6 +20,7 @@ export class CompensationRequisitionFormModel {
   agreementDateTime: string = '';
   expropriationNoticeServedDateTime: string = '';
   expropriationVestingDateTime: string = '';
+  advancedPaymentServedDate: string = '';
   generationDatetTime: string = '';
   specialInstruction: string = '';
   detailedRemarks: string = '';
@@ -59,6 +60,7 @@ export class CompensationRequisitionFormModel {
       finalizedDate: stringToUndefined(this.finalizedDate),
       expropriationNoticeServedDate: stringToUndefined(this.expropriationNoticeServedDateTime),
       expropriationVestingDate: stringToUndefined(this.expropriationVestingDateTime),
+      advancedPaymentServedDate: stringToUndefined(this.advancedPaymentServedDate),
       generationDate: stringToUndefined(this.generationDatetTime),
       specialInstruction: stringToUndefined(this.specialInstruction),
       detailedRemarks: stringToUndefined(this.detailedRemarks),
@@ -96,6 +98,7 @@ export class CompensationRequisitionFormModel {
     compensation.agreementDateTime = apiModel.agreementDate || '';
     compensation.expropriationNoticeServedDateTime = apiModel.expropriationNoticeServedDate || '';
     compensation.expropriationVestingDateTime = apiModel.expropriationVestingDate || '';
+    compensation.advancedPaymentServedDate = apiModel.advancedPaymentServedDate || '';
     compensation.generationDatetTime = apiModel.generationDate || '';
     compensation.specialInstruction = apiModel.specialInstruction || '';
     compensation.detailedRemarks = apiModel.detailedRemarks || '';

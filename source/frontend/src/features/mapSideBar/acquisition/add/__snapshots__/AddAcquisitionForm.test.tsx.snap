@@ -319,7 +319,7 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
 
 .c8 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.4rem);
+  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
@@ -1478,6 +1478,13 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
                   value="SECTN6"
                 >
                   Section 6 Expropriation
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-XFR"
+                  value="XFR"
+                >
+                  Transferred
                 </option>
               </select>
             </div>

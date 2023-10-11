@@ -14,5 +14,7 @@ namespace Pims.Dal.Repositories
         Paged<PimsResearchFile> GetPage(ResearchFilter filter);
 
         long GetRowVersion(long id);
+
+        LastUpdatedByModel GetLastUpdateBy(long id);
     }
 }

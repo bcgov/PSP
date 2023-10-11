@@ -14,11 +14,12 @@ import { IForm8FormProps } from '../UpdateForm8Form';
 export interface IAddForm8ContainerProps {
   acquisitionFileId: number;
   View: React.FC<IForm8FormProps>;
+  onSuccess: () => void;
 }
 
 export const AddForm8Container: React.FunctionComponent<
   React.PropsWithChildren<IAddForm8ContainerProps>
-> = ({ acquisitionFileId, View }) => {
+> = ({ acquisitionFileId, View, onSuccess }) => {
   const initialValues = new Form8FormModel(null, acquisitionFileId);
 
   const history = useHistory();
@@ -74,6 +75,7 @@ export const AddForm8Container: React.FunctionComponent<
 
   const onAddSuccess = async () => {
     history.push(backUrl);
+    onSuccess();
   };
 
   useEffect(() => {

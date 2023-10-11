@@ -95,6 +95,9 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
           <SectionField labelWidth="5" label="Termination date">
             {prettyFormatDate(agreement.terminationDate)}
           </SectionField>
+          <SectionField labelWidth="5" label="Possession date">
+            {prettyFormatDate(agreement.possessionDate)}
+          </SectionField>
 
           <StyledSectionSubheader>Financial</StyledSectionSubheader>
           <SectionField labelWidth="5" label="Purchase price">

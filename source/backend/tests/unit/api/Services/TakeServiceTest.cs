@@ -25,21 +25,21 @@ namespace Pims.Api.Test.Services
 
         public TakeServiceTest()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         private TakeService CreateWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
-            return _helper.Create<TakeService>(user);
+            return this._helper.Create<TakeService>(user);
         }
 
         [Fact]
         public void GetByFileId_Success()
         {
             // Arrange
-            var service = CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
-            var repo = _helper.GetService<Mock<ITakeRepository>>();
+            var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
+            var repo = this._helper.GetService<Mock<ITakeRepository>>();
             repo.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()));
 
             // Act
@@ -53,7 +53,7 @@ namespace Pims.Api.Test.Services
         public void GetByFileId_NoPermission()
         {
             // Arrange
-            var service = CreateWithPermissions();
+            var service = this.CreateWithPermissions();
 
             // Act
             Action act = () => service.GetByFileId(1);
@@ -66,8 +66,8 @@ namespace Pims.Api.Test.Services
         public void GetByPropertyId_Success()
         {
             // Arrange
-            var service = CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
-            var repo = _helper.GetService<Mock<ITakeRepository>>();
+            var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
+            var repo = this._helper.GetService<Mock<ITakeRepository>>();
             repo.Setup(x => x.GetAllByPropertyId(It.IsAny<long>(), It.IsAny<long>()));
 
             // Act
@@ -81,7 +81,7 @@ namespace Pims.Api.Test.Services
         public void GetByPropertyId_NoPermission()
         {
             // Arrange
-            var service = CreateWithPermissions();
+            var service = this.CreateWithPermissions();
 
             // Act
             Action act = () => service.GetByPropertyId(1, 2);
@@ -94,8 +94,8 @@ namespace Pims.Api.Test.Services
         public void GetCountByPropertyId_Success()
         {
             // Arrange
-            var service = CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
-            var repo = _helper.GetService<Mock<ITakeRepository>>();
+            var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
+            var repo = this._helper.GetService<Mock<ITakeRepository>>();
             repo.Setup(x => x.GetCountByPropertyId(It.IsAny<long>()));
 
             // Act
@@ -109,7 +109,7 @@ namespace Pims.Api.Test.Services
         public void GetCountByPropertyId_NoPermission()
         {
             // Arrange
-            var service = CreateWithPermissions();
+            var service = this.CreateWithPermissions();
 
             // Act
             Action act = () => service.GetCountByPropertyId(1);
@@ -122,8 +122,8 @@ namespace Pims.Api.Test.Services
         public void Update_Success()
         {
             // Arrange
-            var service = CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
-            var repository = _helper.GetService<Mock<ITakeRepository>>();
+            var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
+            var repository = this._helper.GetService<Mock<ITakeRepository>>();
             repository.Setup(x =>
                 x.UpdateAcquisitionPropertyTakes(It.IsAny<long>(), It.IsAny<IEnumerable<PimsTake>>()));
 
@@ -138,7 +138,7 @@ namespace Pims.Api.Test.Services
         public void Update_NoPermission()
         {
             // Arrange
-            var service = CreateWithPermissions();
+            var service = this.CreateWithPermissions();
 
             // Act
             Action act = () => service.UpdateAcquisitionPropertyTakes(1, new List<PimsTake>());

@@ -397,7 +397,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
 
 .c10 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.4rem);
+  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
@@ -1605,13 +1605,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                           value=""
                         >
                           Select type
-                        </option>
-                        <option
-                          class="option"
-                          data-testid="select-option-LICONSTRC"
-                          value="LICONSTRC"
-                        >
-                          License to Construct
                         </option>
                         <option
                           class="option"

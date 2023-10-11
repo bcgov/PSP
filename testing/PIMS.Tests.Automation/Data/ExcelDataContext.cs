@@ -14,7 +14,7 @@ namespace PIMS.Tests.Automation.Data
 
         private ExcelDataContext()
         {
-            FileStream stream = File.Open(".\\Data\\PIMS_Testing_Data.xlsx", FileMode.Open, FileAccess.Read);
+            FileStream stream = File.Open(Path.Combine("Data", "PIMS_Testing_Data.xlsx"), FileMode.Open, FileAccess.Read);
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
 

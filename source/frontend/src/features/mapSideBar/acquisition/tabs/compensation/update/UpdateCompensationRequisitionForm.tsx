@@ -146,7 +146,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
             <UnsavedChangesPrompt />
 
             <StyledContent>
-              <Section header="Requisition details">
+              <Section header="Requisition Details">
                 <SectionField label="Status" labelWidth="5">
                   <Select
                     field="status"
@@ -175,7 +175,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   label="Final date"
                   labelWidth="5"
                   contentWidth="4"
-                  data-testid="compensation-finalized"
+                  valueTestId="compensation-finalized-date"
                 >
                   {prettyFormatDate(initialValues.finalizedDate)}
                 </SectionField>
@@ -195,12 +195,15 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 <SectionField label="Expropriation vesting date" labelWidth="5" contentWidth="4">
                   <FastDatePicker field="expropriationVestingDateTime" formikProps={formikProps} />
                 </SectionField>
+                <SectionField label="Advanced payment served date" labelWidth="5" contentWidth="4">
+                  <FastDatePicker field="advancedPaymentServedDate" formikProps={formikProps} />
+                </SectionField>
                 <SectionField label="Special instructions" labelWidth="12">
                   <MediumTextArea field="specialInstruction" />
                 </SectionField>
               </Section>
 
-              <Section header="Financial coding">
+              <Section header="Financial Coding">
                 <SectionField label="Product" labelWidth="4">
                   {acquisitionFile.product?.code ?? ''}
                 </SectionField>
@@ -321,7 +324,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 }}
                 isOkDisabled={formikProps.isSubmitting || !formikProps.dirty}
                 onCancel={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
-                isValid={isValid}
+                displayRequiredFieldError={isValid === false}
               />
             </StyledFooter>
 

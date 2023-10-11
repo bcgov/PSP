@@ -1,6 +1,5 @@
 import { Api_File } from '@/models/api/File';
 
-import { Api_PropertyActivity } from './Activity';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_Property } from './Property';
 
@@ -17,5 +16,4 @@ export interface Api_PropertyFile extends Api_ConcurrentVersion {
   researchSummary?: string;
   property?: Api_Property;
   propertyId?: number;
-  activityInstanceProperties?: Api_PropertyActivity[];
 }

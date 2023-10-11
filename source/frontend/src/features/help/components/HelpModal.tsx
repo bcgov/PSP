@@ -3,11 +3,12 @@ import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import ModalDialog from 'react-bootstrap/ModalDialog';
 import Draggable from 'react-draggable';
+import { FaQuestionCircle } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import variables from '@/assets/scss/_variables.module.scss';
 import { Button } from '@/components/common/buttons/Button';
-import TooltipIcon from '@/components/common/TooltipIcon';
+import { H3 } from '@/components/common/styles';
 import { useAppSelector } from '@/store/hooks';
 import { useTenants } from '@/store/slices/tenants';
 
@@ -21,6 +22,8 @@ interface IModalProps {
   handleSubmit: () => void;
   /** External state var to track whether or not this modal is being shown. */
   show: boolean;
+  /** Link to PIMS training material shared folder. */
+  pimsTrainingUrl: string;
 }
 
 /**
@@ -37,6 +40,7 @@ const HelpModal: FunctionComponent<React.PropsWithChildren<IModalProps>> = ({
   handleCancel,
   handleSubmit,
   show,
+  pimsTrainingUrl,
 }) => {
   const tenantsState = useAppSelector(state => state.tenants);
   const { getSettings } = useTenants();
@@ -57,31 +61,43 @@ const HelpModal: FunctionComponent<React.PropsWithChildren<IModalProps>> = ({
       <ModalStyled dialogAs={DraggableModalDialog} show={show} onHide={handleCancel}>
         <ModalHeader closeButton>
           <DraggableTitle>
-            Help Desk&nbsp;
-            <StyledTooltip toolTipId="help-toolTip" toolTip="Click and drag to move this popup" />
+            <FaQuestionCircle size={24} />
+            <DraggableTitleText>Help Desk</DraggableTitleText>
           </DraggableTitle>
         </ModalHeader>
-
         <Modal.Body>
+          <H3Styled>Get started with PIMS</H3Styled>
+          <p>
+            This overview has useful tools that will support you to start using the application. You
+            can also watch the video demos.
+          </p>
+          <LinkStyled target="_blank" href={pimsTrainingUrl}>
+            PIMS Resources
+          </LinkStyled>
+          <hr />
           <HelpModalContentContainer setMailto={setMailto} />
+          <StyledConfirmationText>
+            Do you want to proceed and send the email?
+          </StyledConfirmationText>
+          <hr />
         </Modal.Body>
 
         <Modal.Footer>
+          <StyledButton variant="secondary" onClick={handleCancel}>
+            No
+          </StyledButton>
           {config?.settings?.helpDeskEmail ? (
-            <Button
+            <StyledButton
               href={`mailto:${config?.settings?.helpDeskEmail}?subject=${mailto?.subject}&body=${mailto?.body}`}
               onClick={() => {
                 handleSubmit();
               }}
             >
-              Submit
-            </Button>
+              Yes
+            </StyledButton>
           ) : (
-            <Button disabled>Submit</Button>
+            <StyledButton disabled>Yes</StyledButton>
           )}
-          <Button variant="secondary" onClick={handleCancel}>
-            Cancel
-          </Button>
         </Modal.Footer>
       </ModalStyled>
     </Container>
@@ -111,23 +127,48 @@ const ModalStyled = styled(Modal)`
   .modal-body {
     max-height: calc(100vh - 20rem);
     overflow-y: auto;
+    padding: 0px 16px;
+  }
+  .modal-footer {
+    border: none;
+    padding-right: 16px;
   }
 `;
 
 const DraggableTitle = styled(Modal.Title)`
+  margin-left: 10px;
   width: 100%;
   cursor: pointer;
   color: white;
 `;
 
+const DraggableTitleText = styled.div`
+  display: inline-block;
+  margin-left: 10px;
+`;
+
+const StyledConfirmationText = styled.p`
+  margin-top: 24px;
+`;
+
+const StyledButton = styled(Button)`
+  width: 95px;
+  margin-right: 24px;
+`;
+
+const LinkStyled = styled.a`
+  margin-bottom: 16px;
+`;
+
+const H3Styled = styled(H3)`
+  border: none;
+  margin-bottom: 16px;
+  margin-top: 24px;
+`;
+
 const ModalHeader = styled(Modal.Header)`
   background-color: ${variables.primaryColor};
   padding: 0.5rem;
-`;
-
-const StyledTooltip = styled(TooltipIcon)`
-  margin-left: 0.5rem;
-  margin-bottom: 0.5rem;
 `;
 
 export default HelpModal;

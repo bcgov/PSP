@@ -5,6 +5,10 @@ env:
   OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
   OPENSHIFT_TOOLS_NAMESPACE: "3cd915-tools"
   MS_TEAMS_WEBHOOK_BUILD_CHANNEL: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
+  AUTH__KEYCLOAK__SECRET: ${{ secrets.KEYCLOAK_SECRET }}
+  AUTH__KEYCLOAK__SERVICEACCOUNT__SECRET: ${{ secrets.KEYCLOAK_SERVICEACCOUNT_SECRET }}
+  sync-directory: ./tools/keycloak/sync
+  ASPNETCORE_ENVIRONMENT: "Test"
 
   ## variables for scripts under git\openshift\4.0\scripts\oc-*.sh
   APP_PORT: 8080
@@ -59,6 +63,28 @@ jobs:
         run: |
           ./openshift/4.0/player.sh deploy api $DESTINATION -apply
           ./openshift/4.0/player.sh deploy app $DESTINATION -apply
+
+  sync-keycloak:
+    name: Sync Keycloak
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "6.0.x"
+
+      - name: Install dependencies for keycloak sync
+        run: dotnet restore
+        working-directory: ${{env.sync-directory}}
+
+      - name: Build keycloak sync
+        run: dotnet build
+        working-directory: ${{env.sync-directory}}
+
+      - name: Start keycloak sync
+        run: dotnet run
+        working-directory: ${{env.sync-directory}}
 
   ci-cd-end-notification:
     name: CI-CD End Notification to Teams Channel

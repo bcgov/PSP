@@ -20,5 +20,7 @@ namespace Pims.Api.Services
         Paged<PimsResearchFile> GetPage(ResearchFilter filter);
 
         PimsResearchFile UpdateProperty(long researchFileId, long? researchFileVersion, PimsPropertyResearchFile propertyResearchFile);
+
+        LastUpdatedByModel GetLastUpdateInformation(long researchFileId);
     }
 }

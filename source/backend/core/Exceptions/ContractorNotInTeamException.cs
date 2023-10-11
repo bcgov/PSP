@@ -11,12 +11,11 @@ namespace Pims.Core.Exceptions
     {
         public ContractorNotInTeamException()
         {
-
         }
 
-        public ContractorNotInTeamException(string message) : base(message)
+        public ContractorNotInTeamException(string message)
+            : base(message)
         {
-
         }
 
         public ContractorNotInTeamException(string message, Exception innerException)

@@ -19,6 +19,7 @@ export const emptyCompensationRequisition: Api_CompensationRequisition = {
   agreementDate: null,
   expropriationNoticeServedDate: null,
   expropriationVestingDate: null,
+  advancedPaymentServedDate: null,
   generationDate: null,
   financials: [],
   acquisitionOwnerId: null,

@@ -28,24 +28,24 @@ namespace Pims.Api.Test.Controllers
 
         public FinancialCodeControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<FinancialCodeController>(Permissions.ProjectView);
-            _service = _helper.GetService<Mock<IFinancialCodeService>>();
-            _mapper = _helper.GetService<IMapper>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<FinancialCodeController>(Permissions.ProjectView);
+            this._service = this._helper.GetService<Mock<IFinancialCodeService>>();
+            this._mapper = this._helper.GetService<IMapper>();
         }
 
         [Fact]
         public void GetFinancialCodesByType_Success()
         {
             // Arrange
-            _service.Setup(m => m.GetFinancialCodesByType(It.IsAny<FinancialCodeTypes>()));
+            this._service.Setup(m => m.GetFinancialCodesByType(It.IsAny<FinancialCodeTypes>()));
 
             // Act
-            var result = _controller.GetFinancialCodesByType(FinancialCodeTypes.BusinessFunction);
+            var result = this._controller.GetFinancialCodesByType(FinancialCodeTypes.BusinessFunction);
 
             // Assert
             result.Should().BeOfType<JsonResult>();
-            _service.Verify(m => m.GetFinancialCodesByType(It.IsAny<FinancialCodeTypes>()), Times.Once());
+            this._service.Verify(m => m.GetFinancialCodesByType(It.IsAny<FinancialCodeTypes>()), Times.Once());
         }
     }
 }

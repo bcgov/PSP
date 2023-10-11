@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { FaTrash } from 'react-icons/fa';
+import { FaFileContract, FaTrash } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
@@ -113,11 +113,19 @@ function calculateExpectedTermAmount(
 const termActions = (
   onEdit: (values: FormLeaseTerm) => void,
   onDelete: (values: FormLeaseTerm) => void,
+  onGenerate: () => void,
 ) => {
   return function ({ row: { original, index } }: CellProps<FormLeaseTerm, string>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIcons>
+        {hasClaim(Claims.LEASE_VIEW) && index === 0 && (
+          <Button
+            title="Generate H1005(a)"
+            icon={<GenerateIcon size={24} id={`generate-h1005-a`} title="Generate H1005(a)" />}
+            onClick={() => onGenerate()}
+          ></Button>
+        )}
         {hasClaim(Claims.LEASE_EDIT) && (
           <Button
             title="edit term"
@@ -150,12 +158,14 @@ const termActions = (
 export interface IPaymentColumnProps {
   onEdit: (values: FormLeaseTerm) => void;
   onDelete: (values: FormLeaseTerm) => void;
+  onGenerate: () => void;
   gstConstant?: ISystemConstant;
 }
 
 export const getLeaseTermColumns = ({
   onEdit,
   onDelete,
+  onGenerate,
 }: IPaymentColumnProps): ColumnWithProps<FormLeaseTerm>[] => {
   return [
     {
@@ -274,7 +284,7 @@ export const getLeaseTermColumns = ({
       Header: 'Actions',
       align: 'right',
       maxWidth: 30,
-      Cell: termActions(onEdit, onDelete),
+      Cell: termActions(onEdit, onDelete, onGenerate),
     },
   ];
 };
@@ -294,4 +304,8 @@ const StyledIcons = styled(InlineFlexDiv)`
     background-color: transparent;
     padding: 0;
   }
+`;
+
+const GenerateIcon = styled(FaFileContract)`
+  color: ${props => props.theme.css.slideOutBlue};
 `;

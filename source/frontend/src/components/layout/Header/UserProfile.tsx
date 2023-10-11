@@ -43,6 +43,7 @@ const LogoutText = styled.p`
 const ProfileAvatar = styled(Image)`
   height: 3rem;
   width: 3rem;
+  margin-right: 10px;
 `;
 
 /** the styling for the logout icon in the logout footer */

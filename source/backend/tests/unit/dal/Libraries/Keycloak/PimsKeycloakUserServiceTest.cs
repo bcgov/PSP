@@ -45,8 +45,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
                 Username = euser.BusinessIdentifierValue,
-                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { euser.BusinessIdentifierValue } } }
-
+                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { euser.BusinessIdentifierValue } } },
             };
             var groups = new string[] { removeRole.Name.ToString() };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
@@ -118,7 +117,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
                 Username = euser.BusinessIdentifierValue,
-                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { euser.BusinessIdentifierValue } } }
+                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { euser.BusinessIdentifierValue } } },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
             keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.GuidIdentifierValue.Value))
@@ -210,7 +209,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
                 Username = "keycloak username",
-                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { "serviceaccount" } } }
+                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { "serviceaccount" } } },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
             keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.GuidIdentifierValue.Value))
@@ -352,7 +351,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
                 Username = euser.BusinessIdentifierValue,
-                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { "serviceaccount" } } }
+                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { "serviceaccount" } } },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
             keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.GuidIdentifierValue.Value))
@@ -412,7 +411,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
                 Username = euser.BusinessIdentifierValue,
-                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { "serviceaccount" } } }
+                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { "serviceaccount" } } },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
             keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.GuidIdentifierValue.Value))
@@ -581,7 +580,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
                 Username = eAccessRequest.User.BusinessIdentifierValue,
-                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { "serviceaccount" } } }
+                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { "serviceaccount" } } },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
 
@@ -634,7 +633,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
                 Username = eAccessRequest.User.BusinessIdentifierValue,
-                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { "serviceaccount" } } }
+                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { "serviceaccount" } } },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
 

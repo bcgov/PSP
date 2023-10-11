@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using System.Security.Claims;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
