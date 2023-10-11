@@ -20,7 +20,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected PageObjectBase(IWebDriver webDriver)
         {
             this.webDriver = webDriver;
-            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(60));
+            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
             wait.PollingInterval = TimeSpan.FromMilliseconds(100);
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
         }

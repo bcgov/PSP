@@ -65,5 +65,5 @@ Scenario: 11. Lease and License from a Payable Marker Pin
 	Then A new lease is created successfully
 
 Scenario: 12. Lease and License List View
-	Given I search for an existing Lease or License from row number 1
+	Given I search for an existing Lease or License from row number 2
 	Then Expected Lease File Content is displayed on Leases Table

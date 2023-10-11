@@ -122,7 +122,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentsTab.FilterByName("PSP");
             //Assert.True(digitalDocumentsTab.TotalSearchDocuments() > 0);
 
-            //Filter Fouments by Status
+            //Filter Documents by Status
             digitalDocumentsTab.FilterByStatus(digitalDocumentList[0].DocumentStatus);
             Assert.True(digitalDocumentsTab.TotalSearchDocuments() > 0);
         }
