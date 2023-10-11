@@ -1,10 +1,12 @@
 import { useKeycloak } from '@react-keycloak/web';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import * as API from '@/constants/API';
+import { useApiGeocoder } from '@/hooks/pims-api/useApiGeocoder';
+import { IPagedItems, IProperty } from '@/interfaces';
 import filterSlice from '@/store/slices/filter/filterSlice';
 import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, cleanup, fireEvent, render, waitFor } from '@/utils/test-utils';
@@ -18,6 +20,12 @@ const onFilterChange = jest.fn<void, [IPropertyFilter]>();
 //prevent web calls from being made during tests.
 jest.mock('axios');
 jest.mock('@react-keycloak/web');
+jest.mock('@/hooks/pims-api/useApiGeocoder');
+
+const mockApiGetSitePidsApi = jest.fn<Promise<AxiosResponse<IPagedItems<IProperty>>>, any>();
+(useApiGeocoder as unknown as jest.Mock<Partial<typeof useApiGeocoder>>).mockReturnValue({
+  getSitePidsApi: mockApiGetSitePidsApi,
+});
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 const mockKeycloak = (claims: string[]) => {
