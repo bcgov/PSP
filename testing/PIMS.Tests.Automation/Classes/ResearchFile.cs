@@ -5,6 +5,7 @@ namespace PIMS.Tests.Automation.Classes
     {
         public string? ResearchFileName { get; set; } = String.Empty;
         public string? Status { get; set; } = String.Empty;
+        public string? ResearchFileMOTIRegion { get; set; } = String.Empty;
         public List<string>? Projects { get; set; } = new List<string>();
         public string? RoadName { get; set; } = String.Empty;
         public string? RoadAlias { get; set; } = String.Empty;
@@ -20,7 +21,7 @@ namespace PIMS.Tests.Automation.Classes
         public int SearchPropertiesIndex { get; set; } = 0;
         public SearchProperty? SearchProperties { get; set; } = new SearchProperty();
         public int PropertyResearchRowStart { get; set; } = 0;
-        public int PropertyResearchRowEnd { get; set; } = 0;
+        public int PropertyResearchRowCount { get; set; } = 0;
         public List<PropertyResearch>? PropertyResearch { get; set; } = new List<PropertyResearch>();
     }
 
