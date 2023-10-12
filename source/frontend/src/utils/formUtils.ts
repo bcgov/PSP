@@ -110,7 +110,7 @@ export function yesNoUnknownToBoolean(value?: string): boolean | null {
   return null;
 }
 
-export function booleanToYesNoUnknownString(value?: boolean): string {
+export function booleanToYesNoUnknownString(value?: boolean | null): string {
   if (value === true) return 'Yes';
   else if (value === false) return 'No';
   return 'Unknown';

@@ -112,6 +112,11 @@ namespace Pims.Api.Models.Concepts
         /// </summary>
         public IList<AcquisitionFileChecklistItemModel> AcquisitionFileChecklist { get; set; }
 
+        /// <summary>
+        /// get/set - A list of compensation requisitions related to the acquisition file.
+        /// </summary>
+        public IList<CompensationRequisitionModel> CompensationRequisitions { get; set; }
+
         #endregion
     }
 }

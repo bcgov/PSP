@@ -20,6 +20,8 @@ namespace Pims.Dal.Test.Repositories
     [ExcludeFromCodeCoverage]
     public class PropertyRepositoryTest
     {
+        private TestHelper _helper;
+
         #region Data
         public static IEnumerable<object[]> AllPropertyFilters =>
             new List<object[]>
@@ -32,9 +34,17 @@ namespace Pims.Dal.Test.Repositories
             };
         #endregion
 
-        #region Constructors
-        public PropertyRepositoryTest() { }
-        #endregion
+        public PropertyRepositoryTest()
+        {
+            _helper = new TestHelper();
+        }
+
+        private PropertyRepository CreateRepositoryWithPermissions(params Permissions[] permissions)
+        {
+            var user = PrincipalHelper.CreateForPermission(permissions);
+            _helper.CreatePimsContext(user, true);
+            return _helper.CreateRepository<PropertyRepository>();
+        }
 
         #region Tests
         #region Get Paged Properties
@@ -45,13 +55,13 @@ namespace Pims.Dal.Test.Repositories
         public void GetPage_Properties_ArgumentNullException()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView);
-            var repository = helper.CreateRepository<PropertyRepository>(user);
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
 
             // Act
+            Action act = () => repository.GetPage((PropertyFilter)null);
+
             // Assert
-            Assert.Throws<ArgumentNullException>(() => repository.GetPage((PropertyFilter)null));
+            act.Should().Throw<ArgumentNullException>();
         }
 
         /// <summary>
@@ -61,15 +71,14 @@ namespace Pims.Dal.Test.Repositories
         public void GetPage_Properties_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
+            var repository = CreateRepositoryWithPermissions();
             var filter = new PropertyFilter();
 
-            var service = helper.CreateRepository<PropertyRepository>(user);
-
             // Act
+            Action act = () => repository.GetPage(filter);
+
             // Assert
-            Assert.Throws<NotAuthorizedException>(() => service.GetPage(filter));
+            act.Should().Throw<NotAuthorizedException>();
         }
 
         [Theory]
@@ -108,20 +117,17 @@ namespace Pims.Dal.Test.Repositories
         public void GetById_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView);
-
-            var property = EntityHelper.CreateProperty(1);
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(property);
-
-            var repository = helper.CreateRepository<PropertyRepository>(user);
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            property.Internal_Id = 1;
+            _helper.AddAndSaveChanges(property);
 
             // Act
             var result = repository.GetById(1);
 
             // Assert
             result.Should().NotBeNull();
-            result.Pid.Should().Be(1);
+            result.Pid.Should().Be(100);
         }
         #endregion
 
@@ -130,13 +136,10 @@ namespace Pims.Dal.Test.Repositories
         public void GetByPid_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView);
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var pid = 1111;
             var property = EntityHelper.CreateProperty(pid);
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(property);
-
-            var repository = helper.CreateRepository<PropertyRepository>(user);
+            _helper.AddAndSaveChanges(property);
 
             // Act
             var result = repository.GetByPid(pid.ToString());
@@ -152,13 +155,10 @@ namespace Pims.Dal.Test.Repositories
         public void GetByPin_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView);
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var pin = 1111;
             var property = EntityHelper.CreateProperty(1, pin);
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(property);
-
-            var repository = helper.CreateRepository<PropertyRepository>(user);
+            _helper.AddAndSaveChanges(property);
 
             // Act
             var result = repository.GetByPin(pin);
@@ -174,12 +174,9 @@ namespace Pims.Dal.Test.Repositories
         public void Update_Property_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView, Permissions.PropertyEdit);
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
             var property = EntityHelper.CreateProperty(1);
-            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(property);
-
-            var repository = helper.CreateRepository<PropertyRepository>(user);
+            _helper.AddAndSaveChanges(property);
 
             var newValues = new Entity.PimsProperty();
             property.CopyValues(newValues);
@@ -198,31 +195,109 @@ namespace Pims.Dal.Test.Repositories
         public void Update_Property_KeyNotFound()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView, Permissions.PropertyEdit);
-            helper.CreatePimsContext(user, true);
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
             // Try to update a non-existent property
             var property = EntityHelper.CreateProperty(1);
 
-            var repository = helper.CreateRepository<PropertyRepository>(user);
+            // Act
+            Action act = () => repository.Update(property);
 
             // Assert
-            Assert.Throws<KeyNotFoundException>(() => repository.Update(property));
+            act.Should().Throw<KeyNotFoundException>();
         }
 
         [Fact]
         public void Update_Property_ThrowIfNull()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView);
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
             var property = EntityHelper.CreateProperty(1);
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(property);
+            _helper.AddAndSaveChanges(property);
 
-            var repository = helper.CreateRepository<PropertyRepository>(user);
+            // Act
+            Action act = () => repository.Update(null);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(() => repository.Update(null));
+            act.Should().Throw<ArgumentNullException>();
+        }
+        #endregion
+
+        #region Property Management
+        [Fact]
+        public void Update_PropertyManagement_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var property = EntityHelper.CreateProperty(1);
+            _helper.AddAndSaveChanges(property);
+
+            var newValues = new Entity.PimsProperty();
+            property.CopyValues(newValues);
+            newValues.AdditionalDetails = "test";
+            newValues.IsTaxesPayable = true;
+            newValues.IsUtilitiesPayable = false;
+
+            // Act
+            var updatedProperty = repository.UpdatePropertyManagement(newValues);
+
+            // Assert
+            updatedProperty.AdditionalDetails.Should().Be("test");
+            updatedProperty.IsTaxesPayable.Should().Be(true);
+            updatedProperty.IsUtilitiesPayable.Should().Be(false);
+        }
+
+        [Fact]
+        public void Update_PropertyManagement_ShouldUpdateManagementFieldsOnly()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var property = EntityHelper.CreateProperty(1);
+            _helper.AddAndSaveChanges(property);
+
+            var newValues = new Entity.PimsProperty();
+            property.CopyValues(newValues);
+            newValues.AdditionalDetails = "test";
+            newValues.IsTaxesPayable = true;
+            newValues.IsUtilitiesPayable = false;
+            // non-management field
+            newValues.Pid = 200;
+
+            // Act
+            var updatedProperty = repository.UpdatePropertyManagement(newValues);
+
+            // Assert
+            updatedProperty.AdditionalDetails.Should().Be("test");
+            updatedProperty.IsTaxesPayable.Should().Be(true);
+            updatedProperty.IsUtilitiesPayable.Should().Be(false);
+            updatedProperty.Pid.Should().Be(1); // change ignored for non-management fields
+        }
+
+        [Fact]
+        public void Update_PropertyManagement_KeyNotFound()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            // Try to update a non-existent property
+            var property = EntityHelper.CreateProperty(1);
+
+            // Act
+            Action act = () => repository.UpdatePropertyManagement(property);
+
+            // Assert
+            act.Should().Throw<KeyNotFoundException>();
+        }
+
+        [Fact]
+        public void Update_PropertyManagement_ThrowIfNull()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+
+            // Act
+            Action act = () => repository.UpdatePropertyManagement(null);
+
+            // Assert
+            act.Should().Throw<ArgumentNullException>();
         }
         #endregion
 

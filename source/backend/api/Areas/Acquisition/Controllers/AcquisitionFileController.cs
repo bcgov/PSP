@@ -84,6 +84,21 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         }
 
         /// <summary>
+        /// Gets the specified acquisition file last updated-by information.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/updateInfo")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Dal.Entities.Models.LastUpdatedByModel), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetLastUpdatedBy(long id)
+        {
+            var lastUpdated = _acquisitionService.GetLastUpdateInformation(id);
+            return new JsonResult(lastUpdated);
+        }
+
+        /// <summary>
         /// Adds the specified acquisition file.
         /// </summary>
         /// <returns></returns>

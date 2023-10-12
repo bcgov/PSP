@@ -5,15 +5,17 @@ import styled from 'styled-components';
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_LastUpdatedBy } from '@/models/api/File';
 import { prettyFormatUTCDate } from '@/utils';
 
 export interface IAcquisitionHeaderProps {
   acquisitionFile?: Api_AcquisitionFile;
+  lastUpdatedBy: Api_LastUpdatedBy | null;
 }
 
 export const AcquisitionHeader: React.FunctionComponent<
   React.PropsWithChildren<IAcquisitionHeaderProps>
-> = ({ acquisitionFile }) => {
+> = ({ acquisitionFile, lastUpdatedBy }) => {
   const leftColumnWidth = '7';
   const leftColumnLabel = '3';
 
@@ -71,10 +73,10 @@ export const AcquisitionHeader: React.FunctionComponent<
           <Col className="text-right">
             <StyleSmallText>
               Last updated:{' '}
-              <strong>{prettyFormatUTCDate(acquisitionFile?.appLastUpdateTimestamp)}</strong> by{' '}
+              <strong>{prettyFormatUTCDate(lastUpdatedBy?.appLastUpdateTimestamp)}</strong> by{' '}
               <UserNameTooltip
-                userName={acquisitionFile?.appLastUpdateUserid}
-                userGuid={acquisitionFile?.appLastUpdateUserGuid}
+                userName={lastUpdatedBy?.appLastUpdateUserid}
+                userGuid={lastUpdatedBy?.appLastUpdateUserGuid}
               />
             </StyleSmallText>
           </Col>

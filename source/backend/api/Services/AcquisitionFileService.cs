@@ -84,7 +84,7 @@ namespace Pims.Api.Services
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            return _acqFileRepository.GetPage(filter, userRegions, contractorPersonId);
+            return _acqFileRepository.GetPageDeep(filter, userRegions, contractorPersonId);
         }
 
         public List<AcquisitionFileExportModel> GetAcquisitionFileExport(AcquisitionFilter filter)
@@ -97,7 +97,7 @@ namespace Pims.Api.Services
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            var acqFiles = _acqFileRepository.GetAcquisitionFileExport(filter, userRegions, contractorPersonId);
+            var acqFiles = _acqFileRepository.GetAcquisitionFileExportDeep(filter, userRegions, contractorPersonId);
 
             return acqFiles.SelectMany(file => file.PimsPropertyAcquisitionFiles.Where(fp => fp.AcquisitionFileId.Equals(file.AcquisitionFileId)).DefaultIfEmpty(), (file, fp) => (file, fp))
                                 .Select(fileProperty => new AcquisitionFileExportModel
@@ -132,6 +132,14 @@ namespace Pims.Api.Services
             var acqFile = _acqFileRepository.GetById(id);
 
             return acqFile;
+        }
+
+        public LastUpdatedByModel GetLastUpdateInformation(long acquisitionFileId)
+        {
+            _logger.LogInformation("Retrieving last updated-by information...");
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            return _acqFileRepository.GetLastUpdateBy(acquisitionFileId);
         }
 
         public IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id)

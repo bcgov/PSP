@@ -16,3 +16,10 @@ export interface Api_File extends Api_ConcurrentVersion {
   appLastUpdateUserGuid?: string;
   fileProperties?: Api_PropertyFile[];
 }
+
+export interface Api_LastUpdatedBy {
+  parentId: number;
+  appLastUpdateTimestamp: string | null;
+  appLastUpdateUserid: string | null;
+  appLastUpdateUserGuid: string | null;
+}

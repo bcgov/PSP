@@ -15,6 +15,7 @@ interface IDocumentListContainerProps {
   disableAdd?: boolean;
   addButtonText?: string;
   title?: string;
+  onSuccess?: () => void;
 }
 
 const DocumentListContainer: React.FunctionComponent<
@@ -54,6 +55,7 @@ const DocumentListContainer: React.FunctionComponent<
         documentRelationship,
       );
       if (result && isMounted()) {
+        props.onSuccess?.();
         updateCallback();
       }
 
@@ -66,6 +68,7 @@ const DocumentListContainer: React.FunctionComponent<
   };
 
   const onSuccess = async () => {
+    props.onSuccess?.();
     updateCallback();
   };
 

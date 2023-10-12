@@ -78,6 +78,7 @@ export const PROPERTY_TENURE_TYPES = 'PimsPropertyTenureType';
 export const PROPERTY_ROAD_TYPES = 'PimsPropertyRoadType';
 export const PROPERTY_ADJACENT_LAND_TYPES = 'PimsPropertyAdjacentLandType';
 export const PROPERTY_VOLUMETRIC_TYPES = 'PimsVolumetricType';
+export const PROPERTY_MANAGEMENT_PURPOSE_TYPES = 'PimsPropertyPurposeType';
 export const PROVINCE_TYPES = 'PimsProvinceState';
 export const REGION_TYPES = 'PimsRegion';
 export const DISTRICT_TYPES = 'PimsDistrict';

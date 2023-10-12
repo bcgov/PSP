@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Pims.Api.Models.Concepts;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
@@ -22,5 +23,9 @@ namespace Pims.Api.Services
         PimsPropertyContact UpdateContact(PimsPropertyContact propertyContact);
 
         bool DeleteContact(long propertyContactId);
+
+        PropertyManagementModel GetPropertyManagement(long propertyId);
+
+        PropertyManagementModel UpdatePropertyManagement(PimsProperty property);
     }
 }

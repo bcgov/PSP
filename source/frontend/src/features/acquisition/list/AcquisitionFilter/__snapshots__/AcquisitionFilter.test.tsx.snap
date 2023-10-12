@@ -403,7 +403,7 @@ exports[`Acquisition Filter matches snapshot 1`] = `
                 class="form-control"
                 id="input-projectNameOrNumber"
                 name="projectNameOrNumber"
-                placeholder="Ministry project name or number"
+                placeholder="Ministry or alternate project name or number"
                 title=""
                 value=""
               />

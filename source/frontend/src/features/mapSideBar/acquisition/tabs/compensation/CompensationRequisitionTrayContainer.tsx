@@ -19,7 +19,8 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
   React.PropsWithChildren<ICompensationRequisitionTrayContainerProps>
 > = ({ compensationRequisitionId, onClose, View }) => {
   const { getSystemConstant } = useSystemConstants();
-  const { file, project, setProject, setProjectLoading, setStaleFile } = useContext(SideBarContext);
+  const { file, project, setProject, setProjectLoading, setStaleFile, setStaleLastUpdatedBy } =
+    useContext(SideBarContext);
 
   const [editMode, setEditMode] = useState(false);
   const [show, setShow] = useState(true);
@@ -85,6 +86,7 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
       setShow={setShow}
       onUpdate={() => {
         fetchCompensationReq();
+        setStaleLastUpdatedBy(true);
         setStaleFile(true);
       }}
     ></View>

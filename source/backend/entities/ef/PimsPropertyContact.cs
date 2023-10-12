@@ -25,6 +25,7 @@ namespace Pims.Dal.Entities
         public long? OrganizationId { get; set; }
         [Column("PRIMARY_CONTACT_ID")]
         public long? PrimaryContactId { get; set; }
+        [Required]
         [Column("PURPOSE")]
         [StringLength(500)]
         public string Purpose { get; set; }

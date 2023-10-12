@@ -1144,6 +1144,13 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 >
                   Section 6 Expropriation
                 </option>
+                <option
+                  class="option"
+                  data-testid="select-option-XFR"
+                  value="XFR"
+                >
+                  Transferred
+                </option>
               </select>
             </div>
           </div>
