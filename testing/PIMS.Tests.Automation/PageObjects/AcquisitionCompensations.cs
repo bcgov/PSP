@@ -53,7 +53,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By requisitionEditBttn = By.XPath("//div[contains(text(),'Requisition Details')]/div/button[@title='Edit compensation requisition']");
         private By requisitionStatusLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
         private By requisitionStatusContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]/parent::div/following-sibling::div");
-        private By requisitionStatusSelect = By.XPath("//div[contains(text(),'Requisition details')]/parent::div/parent::h2/following-sibling::div/div/div/div/select[@id='input-status']");
+        private By requisitionStatusSelect = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::h2/following-sibling::div/div/div/div/select[@id='input-status']");
         private By requisitionFinalDateLabel = By.XPath("//label[contains(text(),'Final date')]");
         private By requisitionAgreementLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]");
         private By requisitionAgreementContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]/parent::div/following-sibling::div");
@@ -177,7 +177,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteCompensationRequisition(int index)
         {
-            WaitUntilVisible(compensationH120Table);
+            Wait(2000);
+            //WaitUntilVisible(compensationH120Table);
             FocusAndClick(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button[data-testid='compensation-delete-"+ index +"']"));
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
@@ -223,6 +224,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string GetCompensationFileNumber(int compFileNbr)
         {
+            Wait(2000);
             WaitUntilVisible(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tr-wrapper']:nth-child("+ compFileNbr +") div:nth-child(2) div"));
 
             return webDriver.FindElement(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tr-wrapper']:nth-child("+ compFileNbr +") div:nth-child(2) div")).Text;
@@ -248,7 +250,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateCompensationDetails(AcquisitionCompensation compensation)
         {
-
             //Requisition Details
             if(compensation.CompensationStatus != "")
                 ChooseSpecificSelectOption(requisitionStatusSelect, compensation.CompensationStatus);
@@ -650,23 +651,23 @@ namespace PIMS.Tests.Automation.PageObjects
         private void VerifyFinancialActivity(CompensationActivity activity, int index)
         {
             var elementNbr = index + 1;
-            AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div[@class='sc-VFtFE curSqT']["+ elementNbr +"]/following-sibling::div[1]/div/label[contains(text(),'Code & Description')]"));
-            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div[@class='sc-VFtFE curSqT']["+ elementNbr +"]/following-sibling::div[1]/div[2]"), activity.ActCodeDescription);
+            AssertTrueIsDisplayed(By.XPath("(//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div/label[contains(text(),'Activity')]/parent::div/following-sibling::div/div/label[contains(text(),'Code & Description')])["+ elementNbr +"]"));
+            AssertTrueContentEquals(By.XPath("(//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div/label[contains(text(),'Activity')]/parent::div/following-sibling::div/div/label[contains(text(),'Code & Description')])["+ elementNbr +"]/parent::div/following-sibling::div"), activity.ActCodeDescription);
 
-            AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div[@class='sc-VFtFE curSqT']["+ elementNbr +"]/following-sibling::div[2]/div/label[contains(text(),'Amount (before tax)')]"));
-            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div[@class='sc-VFtFE curSqT']["+ elementNbr +"]/following-sibling::div[2]/div[2]"),TransformCurrencyFormat(activity.ActAmount));
+            AssertTrueIsDisplayed(By.XPath("(//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div/label[contains(text(),'Activity')]/parent::div/following-sibling::div/div/label[contains(text(),'Amount (before tax)')])["+ elementNbr +"]"));
+            AssertTrueContentEquals(By.XPath("(//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div/label[contains(text(),'Activity')]/parent::div/following-sibling::div/div/label[contains(text(),'Amount (before tax)')])["+ elementNbr +"]/parent::div/following-sibling::div"),TransformCurrencyFormat(activity.ActAmount));
 
-            AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div[@class='sc-VFtFE curSqT']["+ elementNbr +"]/following-sibling::div[3]/div/label[contains(text(),'GST applicable?')]"));
-            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div[@class='sc-VFtFE curSqT']["+ elementNbr +"]/following-sibling::div[3]/div[2]"), activity.ActGSTEligible);
+            AssertTrueIsDisplayed(By.XPath("(//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div/label[contains(text(),'Activity')]/parent::div/following-sibling::div/div/label[contains(text(),'GST applicable')])["+ elementNbr +"]"));
+            AssertTrueContentEquals(By.XPath("(//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div/label[contains(text(),'Activity')]/parent::div/following-sibling::div/div/label[contains(text(),'GST applicable')])["+ elementNbr +"]/parent::div/following-sibling::div"), activity.ActGSTEligible);
 
             if (activity.ActGSTAmount != "")
             {
-                AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div[@class='sc-VFtFE curSqT']["+ elementNbr +"]/following-sibling::div[4]/div/label[contains(text(),'GST amount')]"));
-                AssertTrueContentEquals(By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div[@class='sc-VFtFE curSqT']["+ elementNbr +"]/following-sibling::div[4]/div[2]"), TransformCurrencyFormat(activity.ActGSTAmount));
+                AssertTrueIsDisplayed(By.XPath("(//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div/label[contains(text(),'Activity')]/parent::div/following-sibling::div/div/label[contains(text(),'GST amount')])["+ elementNbr +"]"));
+                AssertTrueContentEquals(By.XPath("(//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div/label[contains(text(),'Activity')]/parent::div/following-sibling::div/div/label[contains(text(),'GST amount')])["+ elementNbr +"]/parent::div/following-sibling::div"), TransformCurrencyFormat(activity.ActGSTAmount));
             }
             
-            AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div[@class='sc-VFtFE curSqT']["+ elementNbr +"]/following-sibling::div[5]/div/label[contains(text(),'Total amount')]"));
-            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div[@class='sc-VFtFE curSqT']["+ elementNbr +"]/following-sibling::div[5]/div[2]"), TransformCurrencyFormat(activity.ActTotalAmount));
+            AssertTrueIsDisplayed(By.XPath("(//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div/label[contains(text(),'Activity')]/parent::div/following-sibling::div/div/label[contains(text(),'Total amount')])["+ elementNbr +"]"));
+            AssertTrueContentEquals(By.XPath("(//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/following-sibling::div/div/label[contains(text(),'Activity')]/parent::div/following-sibling::div/div/label[contains(text(),'Total amount')])["+ elementNbr +"]/parent::div/following-sibling::div"), TransformCurrencyFormat(activity.ActTotalAmount));
         }
     }
 }
