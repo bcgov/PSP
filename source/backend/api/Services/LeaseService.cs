@@ -85,6 +85,14 @@ namespace Pims.Api.Services
             return lease;
         }
 
+        public LastUpdatedByModel GetLastUpdateInformation(long leaseId)
+        {
+            _logger.LogInformation("Retrieving last updated-by information...");
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            return _leaseRepository.GetLastUpdateBy(leaseId);
+        }
+
         public Paged<PimsLease> GetPage(LeaseFilter filter, bool? all = false)
         {
             _logger.LogInformation("Getting lease page {filter}", filter);

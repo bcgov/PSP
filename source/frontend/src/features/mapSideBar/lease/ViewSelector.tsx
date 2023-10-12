@@ -17,6 +17,7 @@ export interface IViewSelectorProps {
   activeEditForm?: LeasePageNames;
   activeTab?: LeaseFileTabNames;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
+  onSuccess: () => void;
 }
 
 export const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
@@ -44,6 +45,7 @@ export const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props =
         activeTab={props.activeTab}
         isEditing={props.isEditing}
         formikRef={props.formikRef}
+        onSuccess={props.onSuccess}
       />
     );
   }

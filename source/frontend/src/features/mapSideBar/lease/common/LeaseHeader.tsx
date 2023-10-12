@@ -12,6 +12,7 @@ import {
 import { InlineFlexDiv } from '@/components/common/styles';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { LeaseHeaderAddresses } from '@/features/leases/detail/LeaseHeaderAddresses';
+import { Api_LastUpdatedBy } from '@/models/api/File';
 import { Api_Lease } from '@/models/api/Lease';
 import { prettyFormatDate, prettyFormatUTCDate } from '@/utils';
 
@@ -19,9 +20,10 @@ import { LeaseHeaderTenants } from './LeaseHeaderTenants';
 
 export interface ILeaseHeaderProps {
   lease?: Api_Lease;
+  lastUpdatedBy: Api_LastUpdatedBy | null;
 }
 
-export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease }) => {
+export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy }) => {
   const isExpired = moment().isAfter(moment(lease?.expiryDate, 'YYYY-MM-DD'), 'day');
 
   return (
@@ -78,11 +80,11 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease }) => {
           <Row className="no-gutters">
             <Col className="text-right">
               <StyledSmallText>
-                Last updated: <strong>{prettyFormatUTCDate(lease?.appLastUpdateTimestamp)}</strong>{' '}
-                by{' '}
+                Last updated:{' '}
+                <strong>{prettyFormatDate(lastUpdatedBy?.appLastUpdateTimestamp)}</strong> by{' '}
                 <UserNameTooltip
-                  userName={lease?.appLastUpdateUserid}
-                  userGuid={lease?.appLastUpdateUserGuid}
+                  userName={lastUpdatedBy?.appLastUpdateUserid}
+                  userGuid={lastUpdatedBy?.appLastUpdateUserGuid}
                 />
               </StyledSmallText>
             </Col>
