@@ -19,7 +19,6 @@ import { TermPaymentsYupSchema } from '@/features/leases/detail/LeasePages/payme
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import TenantContainer from '@/features/leases/detail/LeasePages/tenant/TenantContainer';
 import { LeaseFormModel } from '@/features/leases/models';
-import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 
 import { SideBarContext } from '../context/sidebarContext';
 import MapSideBarLayout from '../layout/MapSideBarLayout';
