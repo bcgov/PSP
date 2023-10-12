@@ -1,190 +1,177 @@
-// import { waitFor } from '@testing-library/react';
-// import AppRouter from '@/AppRouter';
-// import axios from 'axios';
-// import MockAdapter from 'axios-mock-adapter';
-// import { Footer, Header } from '@/components/layout';
-// import Map from '@/components/maps/leaflet/Map';
-// import { Claims } from '@/constants/index';
-// import { AuthStateContextProvider } from '@/contexts/authStateContext';
-// import { IENotSupportedPage } from '@/features/account/IENotSupportedPage';
-// import Login from '@/features/account/Login';
-// import ManageAccessRequestsPage from '@/features/admin/access/ManageAccessRequestsPage';
-// import AccessRequestPage from '@/features/admin/access-request/AccessRequestPage';
-// import EditUserPage from '@/features/admin/edit-user/EditUserPage';
-// import ManageUsers from '@/features/admin/users/ManageUsersPage';
-// import { PropertyListView } from '@/features/properties/list';
-// import { Formik } from 'formik';
-// import { createMemoryHistory } from 'history';
-// import { enableFetchMocks } from 'jest-fetch-mock';
-// import { noop } from 'lodash';
-// import AccessDenied from '@/pages/401/AccessDenied';
-// import { NotFoundPage } from '@/pages/404/NotFoundPage';
-// import Test from '@/pages/Test.ignore';
-// import { act } from 'react-dom/test-utils';
-// import { flushPromises, mockKeycloak } from '@/utils/test-utils';
-// import TestCommonWrapper from '@/utils/TestCommonWrapper';
+import { createMemoryHistory } from 'history';
 
-// const mockAxios = new MockAdapter(axios);
+import AppRouter from './AppRouter';
+import { Claims } from './constants';
+import { ADD_ACTIVATE_USER, GET_REQUEST_ACCESS } from './constants/actionTypes';
+import { AuthStateContext } from './contexts/authStateContext';
+import { useApiUsers } from './hooks/pims-api/useApiUsers';
+import { mockLookups } from './mocks/lookups.mock';
+import { getUserMock } from './mocks/user.mock';
+import { lookupCodesSlice } from './store/slices/lookupCodes';
+import { networkSlice } from './store/slices/network/networkSlice';
+import { tenantsSlice } from './store/slices/tenants';
+import { defaultTenant } from './tenants/config/defaultTenant';
+import { mockKeycloak, render, RenderOptions, screen } from './utils/test-utils';
 
-// enableFetchMocks();
-// jest.mock('@react-keycloak/web');
-// const history = createMemoryHistory();
+const history = createMemoryHistory();
+const storeState = {
+  [tenantsSlice.name]: { defaultTenant },
+  [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+  [networkSlice.name]: {
+    [ADD_ACTIVATE_USER]: {},
+    [GET_REQUEST_ACCESS]: {
+      isFetching: false,
+    },
+  },
+  loadingBar: {},
+  keycloakReady: true,
+};
 
-describe('PSP routing - Enzyme Tests - NEEDS REFACTORING', () => {
-  it('should be implemented', async () => {});
+jest.mock('@react-keycloak/web');
 
-  // beforeEach(() => {
-  //   fetchMock.mockResponse(JSON.stringify({ status: 200, body: {} }));
-  // });
-  // const getRouter = (url: string) => {
-  //   history.push(url);
-  //   return (
-  //     <TestCommonWrapper
-  //       history={history}
-  //       store={{
-  //         network: {},
-  //         keycloakReady: true,
-  //         loadingBar: {},
-  //         lookupCode: { lookupCodes: [] },
-  //         tenants: { config: { settings: {} } },
-  //         users: { pagedUsers: { items: [] }, userDetail: {} },
-  //         organizations: { pagedOrganizations: { items: [] }, organizationDetail: {} },
-  //         accessRequests: { pagedAccessRequests: { items: [] } },
-  //       }}
-  //     >
-  //       <AuthStateContextProvider>
-  //         <Formik initialValues={{}} onSubmit={noop}>
-  //           <AppRouter />
-  //         </Formik>
-  //       </AuthStateContextProvider>
-  //     </TestCommonWrapper>
-  //   );
-  // };
-  // describe('unauth routes', () => {
-  //   let wrapper: any;
-  //   beforeEach(() => {
-  //     mockKeycloak({ authenticated: false });
-  //     mockAxios.onAny().reply(200, {});
-  //   });
-  //   afterEach(() => {
-  //     wrapper.unmount();
-  //   });
-  //   it('valid path should redirect unauthenticated user to the login page', async () => {
-  //     wrapper = mount(getRouter('/'));
-  //     await act(async () => {
-  //       await flushPromises();
-  //     });
-  //     expect(wrapper.find(Login)).toHaveLength(1);
-  //   });
-  //   it('unauthenticated users should see the Header', async () => {
-  //     wrapper = mount(getRouter('/'));
-  //     await act(async () => {
-  //       await flushPromises();
-  //     });
-  //     expect(wrapper.find(Header)).toHaveLength(1);
-  //   });
-  //   it('unauthenticated users should see the footer', async () => {
-  //     wrapper = mount(getRouter('/'));
-  //     await act(async () => {
-  //       await flushPromises();
-  //     });
-  //     expect(wrapper.find(Footer)).toHaveLength(1);
-  //   });
-  //   it('displays the ie warning page at the expected route', async () => {
-  //     wrapper = mount(getRouter('/ienotsupported'));
-  //     await act(async () => {
-  //       await flushPromises();
-  //     });
-  //     expect(wrapper.find(IENotSupportedPage)).toHaveLength(1);
-  //   });
-  //   it('displays the forbidden page at the expected route', async () => {
-  //     wrapper = mount(getRouter('/forbidden'));
-  //     await act(async () => {
-  //       await flushPromises();
-  //     });
-  //     expect(wrapper.find(AccessDenied)).toHaveLength(1);
-  //   });
-  //   it('displays not found page at the expected route', async () => {
-  //     wrapper = mount(getRouter('/page-not-found'));
-  //     await act(async () => {
-  //       await flushPromises();
-  //     });
-  //     expect(wrapper.find(NotFoundPage)).toHaveLength(1);
-  //   });
-  //   it('displays not found page at an unknown route', async () => {
-  //     wrapper = mount(getRouter('/fake'));
-  //     await act(async () => {
-  //       await flushPromises();
-  //     });
-  //     expect(wrapper.find(NotFoundPage)).toHaveLength(1);
-  //   });
-  //   it('displays the test page at the expected route', async () => {
-  //     wrapper = mount(getRouter('/test'));
-  //     await act(async () => {
-  //       await flushPromises();
-  //     });
-  //     expect(wrapper.find(Test)).toHaveLength(1);
-  //   });
-  // });
-  // describe('auth routes', () => {
-  //   beforeEach(() => {
-  //     mockKeycloak({
-  //       claims: [Claims.PROPERTY_VIEW, Claims.ADMIN_USERS],
-  //       roles: [Claims.PROPERTY_VIEW],
-  //       authenticated: true,
-  //     });
-  //     mockAxios.onAny().reply(200, {});
-  //     delete (window as any).ResizeObserver;
-  //     window.ResizeObserver = jest.fn().mockImplementation(() => ({
-  //       observe: jest.fn(),
-  //       unobserve: jest.fn(),
-  //       disconnect: jest.fn(),
-  //     }));
-  //   });
-  //   it('displays the mapview on the home page', async () => {
-  //     const wrapper = mount(getRouter('/mapView'));
-  //     await waitFor(async () => {
-  //       wrapper.update();
-  //       expect(wrapper.find(Map)).toHaveLength(1);
-  //     });
-  //   });
-  //   it('displays the admin users page at the expected route', async () => {
-  //     const wrapper = mount(getRouter('/admin/users'));
-  //     await waitFor(async () => {
-  //       wrapper.update();
-  //       expect(wrapper.find(ManageUsers)).toHaveLength(1);
-  //     });
-  //   });
-  //   it('displays the admin access requests page at the expected route', async () => {
-  //     const wrapper = mount(getRouter('/admin/access/requests'));
-  //     await waitFor(async () => {
-  //       wrapper.update();
-  //       expect(wrapper.find(ManageAccessRequestsPage)).toHaveLength(1);
-  //     });
-  //   });
-  //   it('displays the access request page at the expected route', async () => {
-  //     const wrapper = mount(getRouter('/access/request'));
-  //     await waitFor(async () => {
-  //       wrapper.update();
-  //       expect(wrapper.find(AccessRequestPage)).toHaveLength(1);
-  //     });
-  //   });
-  //   it('displays the property list view at the expected route', async () => {
-  //     const wrapper = mount(getRouter('/properties/list'));
-  //     await waitFor(async () => {
-  //       wrapper.update();
-  //       expect(wrapper.find(PropertyListView)).toHaveLength(1);
-  //     });
-  //   });
-  //   it('displays the edit user page at the expected route', async () => {
-  //     const wrapper = mount(getRouter('/admin/user/1'));
-  //     await waitFor(async () => {
-  //       wrapper.update();
-  //       expect(wrapper.find(EditUserPage)).toHaveLength(1);
-  //     });
-  //   });
-  // });
+// Mock React.Suspense in tests
+jest.mock('react', () => {
+  const React = jest.requireActual('react');
+  React.Suspense = ({ children }: any) => children;
+  return React;
 });
 
-// TODO: Remove this line when unit tests above are fixed
-export {};
+// Need to mock this library for unit tests
+jest.mock('react-visibility-sensor', () => {
+  return jest.fn().mockImplementation(({ children }) => {
+    if (children instanceof Function) {
+      return children({ isVisible: true });
+    }
+    return children;
+  });
+});
+
+jest.mock('@/hooks/usePimsIdleTimer');
+
+jest.mock('@/hooks/pims-api/useApiHealth', () => ({
+  useApiHealth: () => ({
+    getVersion: jest.fn().mockResolvedValue({ data: { environment: 'test', version: '1.0.0.0' } }),
+  }),
+}));
+
+jest.mock('@/store/slices/tenants/useTenants', () => ({
+  useTenants: () => ({ getSettings: jest.fn() }),
+}));
+
+jest.mock('./hooks/pims-api/useApiUsers');
+(useApiUsers as jest.MockedFunction<typeof useApiUsers>).mockReturnValue({
+  activateUser: jest.fn(),
+  exportUsers: jest.fn(),
+  getUser: jest.fn().mockResolvedValue(getUserMock()),
+  getUserInfo: jest.fn().mockResolvedValue(getUserMock()),
+  getUsersPaged: jest.fn(),
+  putUser: jest.fn(),
+});
+
+describe('PSP routing', () => {
+  const setup = (url: string = '/', renderOptions: RenderOptions = {}) => {
+    history.replace(url);
+    const utils = render(
+      <AuthStateContext.Provider value={{ ready: true }}>
+        <AppRouter />
+      </AuthStateContext.Provider>,
+      {
+        ...renderOptions,
+        store: storeState,
+        history,
+      },
+    );
+
+    return { ...utils };
+  };
+
+  afterEach(() => {
+    // cleanup();
+    jest.clearAllMocks();
+  });
+
+  describe('public routes', () => {
+    beforeEach(() => {
+      mockKeycloak({ authenticated: false });
+    });
+
+    it('should redirect unauthenticated user to the login page', async () => {
+      const { getByText } = setup('/');
+      expect(getByText('Sign into PIMS with your government issued IDIR')).toBeVisible();
+    });
+
+    it('should show header and footer links', async () => {
+      const { getByRole } = setup('/');
+      expect(getByRole('link', { name: 'Disclaimer' })).toHaveAttribute(
+        'href',
+        'http://www.gov.bc.ca/gov/content/home/disclaimer',
+      );
+    });
+
+    it('should show a page for non-supported browsers', async () => {
+      const { getByText } = setup('/ienotsupported');
+      expect(
+        getByText('Please use a supported internet browser such as Chrome, Firefox or Edge.'),
+      ).toBeVisible();
+    });
+
+    it('should show the access denied page', async () => {
+      const { getByText, getByRole } = setup('/forbidden');
+      expect(getByText('You do not have permission to view this page')).toBeVisible();
+      expect(getByRole('link', { name: 'Go back to the map' })).toBeVisible();
+    });
+
+    it.each(['/page-not-found', '/fake-url'])(
+      'should show the not found page when route is %s',
+      async url => {
+        const { getByText, getByRole } = setup(url);
+        expect(getByText('Page not found')).toBeVisible();
+        expect(getByRole('link', { name: 'Go back to the map' })).toBeVisible();
+      },
+    );
+  });
+
+  describe('authenticated routes', () => {
+    it('should display the property list view', async () => {
+      setup('/properties/list', { claims: [Claims.PROPERTY_VIEW] });
+      const lazyElement = await screen.findByText('Civic Address');
+      expect(lazyElement).toBeInTheDocument();
+      expect(document.title).toMatch(/View Inventory/i);
+    });
+
+    it('should display the lease list view', async () => {
+      setup('/lease/list', { claims: [Claims.LEASE_VIEW] });
+      const lazyElement = await screen.findByText('L-File Number');
+      expect(lazyElement).toBeInTheDocument();
+      expect(document.title).toMatch(/View Lease & Licenses/i);
+    });
+
+    it('should display the acquisition list view', async () => {
+      setup('/acquisition/list', { claims: [Claims.ACQUISITION_VIEW] });
+      const lazyElement = await screen.findByText('Acquisition file name');
+      expect(lazyElement).toBeInTheDocument();
+      expect(document.title).toMatch(/View Acquisition Files/i);
+    });
+
+    it('should display the research list view', async () => {
+      setup('/research/list', { claims: [Claims.RESEARCH_VIEW] });
+      const lazyElement = await screen.findByText('File #');
+      expect(lazyElement).toBeInTheDocument();
+      expect(document.title).toMatch(/View Research Files/i);
+    });
+
+    it('should display the admin users page at the expected route', async () => {
+      setup('/admin/users', { claims: [Claims.ADMIN_USERS] });
+      const lazyElement = await screen.findByText('User Management');
+      expect(lazyElement).toBeInTheDocument();
+      expect(document.title).toMatch(/Users Management/i);
+    });
+
+    it('should display the edit user page at the expected route', async () => {
+      setup('/admin/user/1', { claims: [Claims.ADMIN_USERS] });
+      const lazyElement = await screen.findByText('User Information');
+      expect(lazyElement).toBeInTheDocument();
+      expect(document.title).toMatch(/Edit User/i);
+    });
+  });
+});
