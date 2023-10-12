@@ -1,29 +1,35 @@
 ﻿@Reseach-Files
 Feature: ResearchFiles
 
-A short summary of the feature
+Research files regression tests
 
-Scenario: Create a new complete Research File
-	Given I create a new complete Research File from row number <RowNumber>
-	When I create Digital Documents for a "Research File" row number 3 
-	And I create a new Note on the Notes Tab from row number 1
+Scenario: 01. Research File Details
+	Given I create a basic Research File from row number 1
+	When I add additional details to Research File
+	And I update a Research File Details from row number 3
 	Then A new Research File is created successfully
-	Examples:
-	| RowNumber |
-	| 1         |
 
-Scenario: Update a Research File
-	Given I update an Existing Research File from row number 2
-	When I update a Property details from row number 2
-	And I navigate back to the Research File Summary
-	And I edit a Digital Document for a "Research File" from row number 6
+Scenario: 02. Research File Properties
+	Given I create a basic Research File from row number 2
+	When I add Properties to a Research File
+	And I update a Research File Properties from row number 4
+	Then A new Research File is created successfully
+
+Scenario: 03. Research File Documents
+	Given I create a basic Research File from row number 1
+	When I create Digital Documents for a "Research File" row number 3 
+	Then A new Research File is created successfully
+
+Scenario: 04. Research File Notes
+	Given I create a basic Research File from row number 1
+	When I create a new Note on the Notes Tab from row number 1
 	And I edit a Note on the Notes Tab from row number 2
 	Then Notes update have been done successfully
 
-Scenario: Create a new research file from Property pop-up
+Scenario: 05. Research File from pin
 	Given I create a Research File from a pin on map and from row number 3
 	Then A new Research File is created successfully
 
-Scenario: Cancel changes on Research File and Search Filters
-	Given I cancel changes done on Research Files from row number 5
+Scenario: 06. Research File List View
+	Given I search for Research Files from row number 5
 	Then Research File Properties remain unchanged

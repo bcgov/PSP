@@ -3,8 +3,6 @@ using SeleniumExtras.WaitHelpers;
 using OpenQA.Selenium.Support.UI;
 using System.Text.RegularExpressions;
 using PIMS.Tests.Automation.Classes;
-using Sprache;
-using OpenQA.Selenium.DevTools.V112.Debugger;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
