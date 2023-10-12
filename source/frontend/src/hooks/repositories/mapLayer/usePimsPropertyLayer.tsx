@@ -33,6 +33,7 @@ export const usePimsPropertyLayer = () => {
         const geoserver_params = {
           STREET_ADDRESS_1: params?.STREET_ADDRESS_1,
           PID: params?.PID,
+          PID_PADDED: params?.PID_PADDED,
           PIN: params?.PIN,
           SURVEY_PLAN_NUMBER: params?.SURVEY_PLAN_NUMBER,
         };
