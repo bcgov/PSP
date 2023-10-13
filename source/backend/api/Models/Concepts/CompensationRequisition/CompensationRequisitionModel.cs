@@ -51,7 +51,7 @@ namespace Pims.Api.Models.Concepts
 
         public long? AcquisitionFileTeamId { get; set; }
 
-        public AcquisitionFileModel AcquisitionFileTeam { get; set; }
+        public AcquisitionFileTeamModel AcquisitionFileTeam { get; set; }
 
         public string LegacyPayee { get; set; }
 
