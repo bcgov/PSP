@@ -49,9 +49,9 @@ namespace Pims.Api.Models.Concepts
 
         public InterestHolderModel InterestHolder { get; set; }
 
-        public long? AcquisitionFilePersonId { get; set; }
+        public long? AcquisitionFileTeamId { get; set; }
 
-        public AcquisitionFilePersonModel AcquisitionFilePerson { get; set; }
+        public AcquisitionFileModel AcquisitionFileTeam { get; set; }
 
         public string LegacyPayee { get; set; }
 
@@ -62,8 +62,6 @@ namespace Pims.Api.Models.Concepts
         public string SpecialInstruction { get; set; }
 
         public string DetailedRemarks { get; set; }
-
-        public bool? IsDisabled { get; set; }
 
         public long? AlternateProjectId { get; set; }
 

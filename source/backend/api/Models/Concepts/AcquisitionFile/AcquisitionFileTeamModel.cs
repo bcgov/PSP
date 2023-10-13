@@ -1,6 +1,6 @@
 namespace Pims.Api.Models.Concepts
 {
-    public class AcquisitionFilePersonModel : BaseModel
+    public class AcquisitionFileTeamModel : BaseModel
     {
         #region Properties
 
@@ -20,24 +20,19 @@ namespace Pims.Api.Models.Concepts
         public long PersonId { get; set; }
 
         /// <summary>
-        /// get/set - The person associated with an acquisition file as part of the acquisition team.
+        /// get/set - The team associated with an acquisition file as part of the acquisition team.
         /// </summary>
         public PersonModel Person { get; set; }
 
         /// <summary>
-        /// get/set - The Person's profile type code.
+        /// get/set - The Team's profile type code.
         /// </summary>
-        public string PersonProfileTypeCode { get; set; }
+        public string TeamProfileTypeCode { get; set; }
 
         /// <summary>
-        /// get/set - The Person's profile type code.
+        /// get/set - The Team's profile type code.
         /// </summary>
-        public TypeModel<string> PersonProfileType { get; set; }
-
-        /// <summary>
-        /// get/set - The relationship's disabled status flag.
-        /// </summary>
-        public bool IsDisabled { get; set; }
+        public TypeModel<string> TeamProfileType { get; set; }
 
         #endregion
     }

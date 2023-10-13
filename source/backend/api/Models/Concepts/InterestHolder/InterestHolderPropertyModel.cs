@@ -13,7 +13,5 @@ namespace Pims.Api.Models.Concepts
         public AcquisitionFilePropertyModel AcquisitionFileProperty { get; set; }
 
         public List<TypeModel<string>> PropertyInterestTypes { get; set; }
-
-        public bool IsDisabled { get; set; }
     }
 }

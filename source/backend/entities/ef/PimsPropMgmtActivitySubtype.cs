@@ -8,18 +8,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACQ_FL_PERSON_PROFILE_TYPE")]
-    public partial class PimsAcqFlPersonProfileType
+    [Table("PIMS_PROP_MGMT_ACTIVITY_SUBTYPE")]
+    [Index(nameof(PropMgmtActivityTypeCode), Name = "PRACST_PROP_MGMT_ACTIVITY_TYPE_CODE_IDX")]
+    public partial class PimsPropMgmtActivitySubtype
     {
-        public PimsAcqFlPersonProfileType()
+        public PimsPropMgmtActivitySubtype()
         {
-            PimsAcquisitionFilePeople = new HashSet<PimsAcquisitionFilePerson>();
+            PimsPropertyActivities = new HashSet<PimsPropertyActivity>();
         }
 
         [Key]
-        [Column("ACQ_FL_PERSON_PROFILE_TYPE_CODE")]
+        [Column("PROP_MGMT_ACTIVITY_SUBTYPE_CODE")]
         [StringLength(20)]
-        public string AcqFlPersonProfileTypeCode { get; set; }
+        public string PropMgmtActivitySubtypeCode { get; set; }
+        [Required]
+        [Column("PROP_MGMT_ACTIVITY_TYPE_CODE")]
+        [StringLength(20)]
+        public string PropMgmtActivityTypeCode { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
@@ -44,7 +49,10 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsAcquisitionFilePerson.AcqFlPersonProfileTypeCodeNavigation))]
-        public virtual ICollection<PimsAcquisitionFilePerson> PimsAcquisitionFilePeople { get; set; }
+        [ForeignKey(nameof(PropMgmtActivityTypeCode))]
+        [InverseProperty(nameof(PimsPropMgmtActivityType.PimsPropMgmtActivitySubtypes))]
+        public virtual PimsPropMgmtActivityType PropMgmtActivityTypeCodeNavigation { get; set; }
+        [InverseProperty(nameof(PimsPropertyActivity.PropMgmtActivitySubtypeCodeNavigation))]
+        public virtual ICollection<PimsPropertyActivity> PimsPropertyActivities { get; set; }
     }
 }

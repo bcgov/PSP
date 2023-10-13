@@ -8,7 +8,6 @@ import {
 export const mockDocumentResponse = (id = 1): Api_DocumentRelationship => ({
   id,
   parentId: 1,
-  isDisabled: false,
   document: {
     id: 21,
     mayanDocumentId: 33,
@@ -54,7 +53,6 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
   {
     id: 1,
     parentId: 1,
-    isDisabled: false,
     document: {
       id: 20,
       mayanDocumentId: 13,
@@ -92,7 +90,6 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
   {
     id: 2,
     parentId: 1,
-    isDisabled: false,
     document: {
       id: 21,
       mayanDocumentId: 33,

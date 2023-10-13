@@ -8,37 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_PROPERTY_TAX_HIST")]
-    [Index(nameof(PropertyTaxHistId), nameof(EndDateHist), Name = "PIMS_PRPTAX_H_UK", IsUnique = true)]
-    public partial class PimsPropertyTaxHist
+    [Table("PIMS_PROP_ACT_MIN_CONTACT")]
+    [Index(nameof(PersonId), Name = "PRACMC_PERSON_ID_IDX")]
+    [Index(nameof(PimsPropertyActivityId), Name = "PRACMC_PIMS_PROPERTY_ACTIVITY_ID_IDX")]
+    public partial class PimsPropActMinContact
     {
         [Key]
-        [Column("_PROPERTY_TAX_HIST_ID")]
-        public long PropertyTaxHistId { get; set; }
-        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-        public DateTime EffectiveDateHist { get; set; }
-        [Column("END_DATE_HIST", TypeName = "datetime")]
-        public DateTime? EndDateHist { get; set; }
-        [Column("PROPERTY_TAX_ID")]
-        public long PropertyTaxId { get; set; }
-        [Column("PROPERTY_ID")]
-        public long PropertyId { get; set; }
-        [Required]
-        [Column("PROPERTY_TAX_REMIT_TYPE_CODE")]
-        [StringLength(20)]
-        public string PropertyTaxRemitTypeCode { get; set; }
-        [Required]
-        [Column("TAX_FOLIO_NO")]
-        [StringLength(50)]
-        public string TaxFolioNo { get; set; }
-        [Column("PAYMENT_AMOUNT", TypeName = "money")]
-        public decimal PaymentAmount { get; set; }
-        [Column("LAST_PAYMENT_DATE", TypeName = "datetime")]
-        public DateTime? LastPaymentDate { get; set; }
-        [Column("PAYMENT_NOTES", TypeName = "money")]
-        public decimal? PaymentNotes { get; set; }
-        [Column("BCTFA_NOTIFICATION_DATE", TypeName = "datetime")]
-        public DateTime? BctfaNotificationDate { get; set; }
+        [Column("PROP_ACT_MIN_CONTACT_ID")]
+        public long PropActMinContactId { get; set; }
+        [Column("PIMS_PROPERTY_ACTIVITY_ID")]
+        public long PimsPropertyActivityId { get; set; }
+        [Column("PERSON_ID")]
+        public long PersonId { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -77,5 +58,12 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [ForeignKey(nameof(PersonId))]
+        [InverseProperty(nameof(PimsPerson.PimsPropActMinContacts))]
+        public virtual PimsPerson Person { get; set; }
+        [ForeignKey(nameof(PimsPropertyActivityId))]
+        [InverseProperty("PimsPropActMinContacts")]
+        public virtual PimsPropertyActivity PimsPropertyActivity { get; set; }
     }
 }

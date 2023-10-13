@@ -25,8 +25,6 @@ namespace Pims.Api.Models.Concepts
 
         public string Purpose { get; set; }
 
-        public bool? IsDisabled { get; set; }
-
         #endregion
     }
 }

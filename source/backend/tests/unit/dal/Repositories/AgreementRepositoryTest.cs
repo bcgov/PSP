@@ -55,7 +55,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() { new PimsAcquisitionFilePerson() { PersonId = 1 } };
+            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { PersonId = 1 } };
             var agreement = new PimsAgreement() { AcquisitionFile = acqFile, AgreementTypeCodeNavigation = new PimsAgreementType() { AgreementTypeCode = "test" } };
             var filter = new AcquisitionReportFilterModel() { AcquisitionTeamPersons = new List<long> { 1 } };
 
@@ -77,7 +77,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() { new PimsAcquisitionFilePerson() { PersonId = 1 } };
+            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { PersonId = 1 } };
             var agreement = new PimsAgreement() { AcquisitionFile = acqFile, AgreementTypeCodeNavigation = new PimsAgreementType() { AgreementTypeCode = "test" } };
             var filter = new AcquisitionReportFilterModel() { AcquisitionTeamPersons = new List<long> { 1 }, Projects = new List<long> { 1 } };
 

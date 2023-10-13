@@ -162,7 +162,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() { new PimsAcquisitionFilePerson() { PersonId = 1 } };
+            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { PersonId = 1 } };
             var financial = new PimsCompReqFinancial
             {
                 FinancialActivityCode = new PimsFinancialActivityCode { Code = "test" },

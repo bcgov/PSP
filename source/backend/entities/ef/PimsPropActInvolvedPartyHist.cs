@@ -8,22 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_PROPERTY_SERVICE_FILE")]
-    [Index(nameof(PropertyServiceFileTypeCode), Name = "PRPSVC_PROPERTY_SERVICE_FILE_TYPE_CODE_IDX")]
-    public partial class PimsPropertyServiceFile
+    [Table("PIMS_PROP_ACT_INVOLVED_PARTY_HIST")]
+    [Index(nameof(PropActInvolvedPartyHistId), nameof(EndDateHist), Name = "PIMS_PAINVP_H_UK", IsUnique = true)]
+    public partial class PimsPropActInvolvedPartyHist
     {
-        public PimsPropertyServiceFile()
-        {
-            PimsPropertyPropertyServiceFiles = new HashSet<PimsPropertyPropertyServiceFile>();
-        }
-
         [Key]
-        [Column("PROPERTY_SERVICE_FILE_ID")]
-        public long PropertyServiceFileId { get; set; }
-        [Required]
-        [Column("PROPERTY_SERVICE_FILE_TYPE_CODE")]
-        [StringLength(20)]
-        public string PropertyServiceFileTypeCode { get; set; }
+        [Column("_PROP_ACT_INVOLVED_PARTY_HIST_ID")]
+        public long PropActInvolvedPartyHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Column("PROP_ACT_INVOLVED_PARTY_ID")]
+        public long PropActInvolvedPartyId { get; set; }
+        [Column("PIMS_PROPERTY_ACTIVITY_ID")]
+        public long PimsPropertyActivityId { get; set; }
+        [Column("PERSON_ID")]
+        public long? PersonId { get; set; }
+        [Column("ORGANIZATION_ID")]
+        public long? OrganizationId { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -62,11 +65,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [ForeignKey(nameof(PropertyServiceFileTypeCode))]
-        [InverseProperty(nameof(PimsPropertyServiceFileType.PimsPropertyServiceFiles))]
-        public virtual PimsPropertyServiceFileType PropertyServiceFileTypeCodeNavigation { get; set; }
-        [InverseProperty(nameof(PimsPropertyPropertyServiceFile.PropertyServiceFile))]
-        public virtual ICollection<PimsPropertyPropertyServiceFile> PimsPropertyPropertyServiceFiles { get; set; }
     }
 }

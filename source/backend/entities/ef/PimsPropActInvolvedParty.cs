@@ -8,25 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_PROPERTY_PROPERTY_SERVICE_FILE_HIST")]
-    [Index(nameof(PropertyPropertyServiceFileHistId), nameof(EndDateHist), Name = "PIMS_PRPRSF_H_UK", IsUnique = true)]
-    public partial class PimsPropertyPropertyServiceFileHist
+    [Table("PIMS_PROP_ACT_INVOLVED_PARTY")]
+    [Index(nameof(OrganizationId), Name = "PAINVP_ORGANIZATION_ID_IDX")]
+    [Index(nameof(PersonId), Name = "PAINVP_PERSON_ID_IDX")]
+    [Index(nameof(PimsPropertyActivityId), Name = "PAINVP_PIMS_PROPERTY_ACTIVITY_ID_IDX")]
+    public partial class PimsPropActInvolvedParty
     {
         [Key]
-        [Column("_PROPERTY_PROPERTY_SERVICE_FILE_HIST_ID")]
-        public long PropertyPropertyServiceFileHistId { get; set; }
-        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-        public DateTime EffectiveDateHist { get; set; }
-        [Column("END_DATE_HIST", TypeName = "datetime")]
-        public DateTime? EndDateHist { get; set; }
-        [Column("PROPERTY_PROPERTY_SERVICE_FILE_ID")]
-        public long PropertyPropertyServiceFileId { get; set; }
-        [Column("PROPERTY_ID")]
-        public long PropertyId { get; set; }
-        [Column("PROPERTY_SERVICE_FILE_ID")]
-        public long PropertyServiceFileId { get; set; }
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
+        [Column("PROP_ACT_INVOLVED_PARTY_ID")]
+        public long PropActInvolvedPartyId { get; set; }
+        [Column("PIMS_PROPERTY_ACTIVITY_ID")]
+        public long PimsPropertyActivityId { get; set; }
+        [Column("PERSON_ID")]
+        public long? PersonId { get; set; }
+        [Column("ORGANIZATION_ID")]
+        public long? OrganizationId { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -65,5 +61,15 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [ForeignKey(nameof(OrganizationId))]
+        [InverseProperty(nameof(PimsOrganization.PimsPropActInvolvedParties))]
+        public virtual PimsOrganization Organization { get; set; }
+        [ForeignKey(nameof(PersonId))]
+        [InverseProperty(nameof(PimsPerson.PimsPropActInvolvedParties))]
+        public virtual PimsPerson Person { get; set; }
+        [ForeignKey(nameof(PimsPropertyActivityId))]
+        [InverseProperty("PimsPropActInvolvedParties")]
+        public virtual PimsPropertyActivity PimsPropertyActivity { get; set; }
     }
 }

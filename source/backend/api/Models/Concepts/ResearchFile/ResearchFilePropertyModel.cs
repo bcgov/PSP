@@ -17,11 +17,6 @@ namespace Pims.Api.Models.Concepts
         public string PropertyName { get; set; }
 
         /// <summary>
-        /// get/set - The relationship's disabled status flag.
-        /// </summary>
-        public bool IsDisabled { get; set; }
-
-        /// <summary>
         /// get/set - The order to display the relationship.
         /// </summary>
         public int? DisplayOrder { get; set; }

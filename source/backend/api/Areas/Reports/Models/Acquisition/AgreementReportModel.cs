@@ -103,9 +103,9 @@ namespace Pims.Api.Areas.Reports.Models.Agreement
             ExportDate = DateTime.Now.ToString("yyyy-MM-dd");
         }
 
-        private static string GetTeamMemberName(PimsAcquisitionFile file, string personProfileTypeCode)
+        private static string GetTeamMemberName(PimsAcquisitionFile file, string teamProfileTypeCode)
         {
-            PimsPerson matchingPerson = file?.PimsAcquisitionFilePeople?.FirstOrDefault(x => x.AcqFlPersonProfileTypeCode == personProfileTypeCode)?.Person;
+            PimsPerson matchingPerson = file?.PimsAcquisitionFileTeams?.FirstOrDefault(x => x.AcqFlTeamProfileTypeCode == teamProfileTypeCode)?.Person;
             return matchingPerson?.GetFullName() ?? string.Empty;
         }
 

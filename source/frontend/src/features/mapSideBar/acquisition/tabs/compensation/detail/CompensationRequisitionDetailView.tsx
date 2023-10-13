@@ -90,7 +90,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         payeeDetail.contactString = 'O' + compensationContactOrganization.id;
         payeeDetail.contactEnabled = true;
       }
-    } else if (compensation.acquisitionFilePersonId) {
+    } else if (compensation.acquisitionFileTeamId) {
       payeeDetail.displayName = formatApiPersonNames(compensationContactPerson);
       payeeDetail.contactString = 'P' + compensationContactPerson?.id;
       payeeDetail.contactEnabled = true;

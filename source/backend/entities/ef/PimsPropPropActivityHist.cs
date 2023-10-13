@@ -8,32 +8,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_PROPERTY_TAX")]
-    [Index(nameof(PropertyId), Name = "PRPTAX_PROPERTY_ID_IDX")]
-    [Index(nameof(PropertyTaxRemitTypeCode), Name = "PRPTAX_PROPERTY_TAX_REMIT_TYPE_CODE_IDX")]
-    public partial class PimsPropertyTax
+    [Table("PIMS_PROP_PROP_ACTIVITY_HIST")]
+    [Index(nameof(PropPropActivityHistId), nameof(EndDateHist), Name = "PIMS_PRPRAC_H_UK", IsUnique = true)]
+    public partial class PimsPropPropActivityHist
     {
         [Key]
-        [Column("PROPERTY_TAX_ID")]
-        public long PropertyTaxId { get; set; }
+        [Column("_PROP_PROP_ACTIVITY_HIST_ID")]
+        public long PropPropActivityHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Column("PROP_PROP_ACTIVITY_ID")]
+        public long PropPropActivityId { get; set; }
         [Column("PROPERTY_ID")]
         public long PropertyId { get; set; }
-        [Required]
-        [Column("PROPERTY_TAX_REMIT_TYPE_CODE")]
-        [StringLength(20)]
-        public string PropertyTaxRemitTypeCode { get; set; }
-        [Required]
-        [Column("TAX_FOLIO_NO")]
-        [StringLength(50)]
-        public string TaxFolioNo { get; set; }
-        [Column("PAYMENT_AMOUNT", TypeName = "money")]
-        public decimal PaymentAmount { get; set; }
-        [Column("LAST_PAYMENT_DATE", TypeName = "datetime")]
-        public DateTime? LastPaymentDate { get; set; }
-        [Column("PAYMENT_NOTES", TypeName = "money")]
-        public decimal? PaymentNotes { get; set; }
-        [Column("BCTFA_NOTIFICATION_DATE", TypeName = "datetime")]
-        public DateTime? BctfaNotificationDate { get; set; }
+        [Column("PIMS_PROPERTY_ACTIVITY_ID")]
+        public long PimsPropertyActivityId { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -72,12 +63,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [ForeignKey(nameof(PropertyId))]
-        [InverseProperty(nameof(PimsProperty.PimsPropertyTaxes))]
-        public virtual PimsProperty Property { get; set; }
-        [ForeignKey(nameof(PropertyTaxRemitTypeCode))]
-        [InverseProperty(nameof(PimsPropertyTaxRemitType.PimsPropertyTaxes))]
-        public virtual PimsPropertyTaxRemitType PropertyTaxRemitTypeCodeNavigation { get; set; }
     }
 }

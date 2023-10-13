@@ -69,7 +69,6 @@ export class PropertyForm {
   public legalDescription?: string;
   public formattedAddress?: string;
   public address?: AddressForm;
-  public isDisabled?: boolean;
   public displayOrder?: number;
   public isOwned?: boolean;
 
@@ -125,7 +124,6 @@ export class PropertyForm {
     newForm.district = model.property?.district?.id;
     newForm.rowVersion = model.rowVersion;
     newForm.propertyRowVersion = model.property?.rowVersion;
-    newForm.isDisabled = model.isDisabled;
     newForm.displayOrder = model.displayOrder;
     newForm.isOwned = model.property?.isOwned;
     newForm.formattedAddress = formatApiAddress(model.property?.address);

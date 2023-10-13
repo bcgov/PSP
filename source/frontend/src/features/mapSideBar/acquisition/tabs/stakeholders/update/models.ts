@@ -197,7 +197,6 @@ export class InterestHolderPropertyForm {
   interestHolderPropertyId: number | null = null;
   interestHolderId: number | null = null;
   acquisitionFilePropertyId: number | null = null;
-  isDisabled: boolean = false;
   rowVersion: number | null = null;
 
   static fromApi(apiModel: Api_InterestHolderProperty): InterestHolderPropertyForm {
@@ -205,7 +204,6 @@ export class InterestHolderPropertyForm {
     interestHolderPropertyForm.interestHolderPropertyId = apiModel.interestHolderPropertyId;
     interestHolderPropertyForm.interestHolderId = apiModel.interestHolderId;
     interestHolderPropertyForm.acquisitionFilePropertyId = apiModel.acquisitionFilePropertyId;
-    interestHolderPropertyForm.isDisabled = apiModel.isDisabled;
     interestHolderPropertyForm.rowVersion = apiModel.rowVersion;
 
     return interestHolderPropertyForm;
@@ -220,7 +218,6 @@ export class InterestHolderPropertyForm {
       interestHolderPropertyId: model.interestHolderPropertyId ?? null,
       acquisitionFilePropertyId: model.acquisitionFilePropertyId,
       acquisitionFileProperty: null,
-      isDisabled: model.isDisabled,
       rowVersion: model.rowVersion,
       propertyInterestTypes: interestTypeCodes.map(itc => ({ id: itc })),
     };
