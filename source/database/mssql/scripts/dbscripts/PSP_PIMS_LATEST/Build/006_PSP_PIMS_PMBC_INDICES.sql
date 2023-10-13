@@ -21,7 +21,7 @@ IF NOT EXISTS (SELECT 1
                FROM   SYS.INDEXES si                                JOIN
                       SYS.OBJECTS so ON si.OBJECT_ID = so.OBJECT_ID JOIN
                       SYS.SCHEMAS sc ON so.SCHEMA_ID = sc.SCHEMA_ID
-               WHERE  sc.NAME = 'dbo'
+               WHERE  sc.NAME = 'pmbc'
                   AND so.NAME = 'PMBC_PARCEL_POLYGON_FABRIC'
                   AND si.NAME = 'PLYFAB_PID_NUMBER_IDX')
   BEGIN
@@ -37,7 +37,7 @@ IF NOT EXISTS (SELECT 1
                FROM   SYS.INDEXES si                                JOIN
                       SYS.OBJECTS so ON si.OBJECT_ID = so.OBJECT_ID JOIN
                       SYS.SCHEMAS sc ON so.SCHEMA_ID = sc.SCHEMA_ID
-               WHERE  sc.NAME = 'dbo'
+               WHERE  sc.NAME = 'pmbc'
                   AND so.NAME = 'PMBC_PARCEL_POLYGON_FABRIC'
                   AND si.NAME = 'PLYFAB_PLAN_NUMBER_IDX')
   BEGIN
@@ -53,11 +53,12 @@ IF NOT EXISTS (SELECT 1
                FROM   SYS.INDEXES si                                JOIN
                       SYS.OBJECTS so ON si.OBJECT_ID = so.OBJECT_ID JOIN
                       SYS.SCHEMAS sc ON so.SCHEMA_ID = sc.SCHEMA_ID
-               WHERE  sc.NAME = 'dbo'
+               WHERE  sc.NAME = 'pmbc'
                   AND so.NAME = 'PMBC_PARCEL_POLYGON_FABRIC'
                   AND si.NAME = 'PLYFAB_SHAPE_IDX')
   BEGIN
-  CREATE SPATIAL INDEX [PLYFAB_SHAPE_IDX] ON [pmbc].[PMBC_PARCEL_POLYGON_FABRIC] (SHAPE) 
+  CREATE SPATIAL INDEX [PLYFAB_SHAPE_IDX] 
+    ON [pmbc].[PMBC_PARCEL_POLYGON_FABRIC] (SHAPE) 
     USING GEOMETRY_AUTO_GRID
     WITH (BOUNDING_BOX =( XMIN =200000, YMIN =300000, XMAX =1900000, YMAX =1800000 ));
   END;
