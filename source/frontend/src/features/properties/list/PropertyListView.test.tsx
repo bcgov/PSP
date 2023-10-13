@@ -4,6 +4,7 @@ import { createMemoryHistory } from 'history';
 
 import * as API from '@/constants/API';
 import Claims from '@/constants/claims';
+import { useApiGeocoder } from '@/hooks/pims-api/useApiGeocoder';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { IPagedItems, IProperty } from '@/interfaces';
 import { mockParcel } from '@/mocks/filterData.mock';
@@ -21,6 +22,11 @@ jest.mock('@/hooks/pims-api/useApiProperties');
 const mockApiGetPropertiesPagedApi = jest.fn<Promise<AxiosResponse<IPagedItems<IProperty>>>, any>();
 (useApiProperties as unknown as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
   getPropertiesPagedApi: mockApiGetPropertiesPagedApi,
+});
+
+const mockApiGetSitePidsApi = jest.fn<Promise<AxiosResponse<IPagedItems<IProperty>>>, any>();
+(useApiGeocoder as unknown as jest.Mock<Partial<typeof useApiGeocoder>>).mockReturnValue({
+  getSitePidsApi: mockApiGetSitePidsApi,
 });
 
 const mockAxios = new MockAdapter(axios);
