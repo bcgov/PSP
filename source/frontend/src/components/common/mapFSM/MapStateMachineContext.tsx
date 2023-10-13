@@ -115,7 +115,9 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
         const geoFilter = getQueryParams(searchCriteria);
 
-        if (geoFilter?.latitude && geoFilter?.longitude) {
+        if (geoFilter?.PID || geoFilter?.PID_PADDED || geoFilter?.PIN) {
+          return mapSearch.searchMany(geoFilter);
+        } else if (geoFilter?.latitude && geoFilter?.longitude) {
           const geoLat = Number(geoFilter.latitude);
           const geoLng = Number(geoFilter.longitude);
           return mapSearch.searchOneLocation(geoLat, geoLng);
@@ -319,6 +321,7 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
   // The map will search for either identifier.
   const pinOrPidValue = filter.pinOrPid ? filter.pinOrPid?.replace(/-/g, '') : undefined;
   return {
+    PID_PADDED: pinOrPidValue,
     PID: pinOrPidValue,
     PIN: pinOrPidValue,
     STREET_ADDRESS_1: filter.address,
