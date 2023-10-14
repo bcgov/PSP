@@ -86,7 +86,6 @@ export class ManagementPurposeModel {
       id: this.id,
       rowVersion: this.rowVersion,
       propertyId: this.propertyId,
-      isDisabled: false,
       propertyPurposeTypeCode: {
         id: this.typeCode,
         description: this.typeDescription,

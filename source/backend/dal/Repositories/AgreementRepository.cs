@@ -56,13 +56,13 @@ namespace Pims.Dal.Repositories
             }
             if (filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
             {
-                predicate.And(a => a.AcquisitionFile.PimsAcquisitionFilePeople.Any(afp => filter.AcquisitionTeamPersons.Contains(afp.PersonId)));
+                predicate.And(a => a.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId.HasValue && filter.AcquisitionTeamPersons.Contains((long)afp.PersonId)));
             }
 
             var query = Context.PimsAgreements
                 .Include(a => a.AgreementTypeCodeNavigation)
                 .Include(a => a.AcquisitionFile)
-                    .ThenInclude(a => a.PimsAcquisitionFilePeople)
+                    .ThenInclude(a => a.PimsAcquisitionFileTeams)
                     .ThenInclude(afp => afp.Person)
                 .Include(a => a.AcquisitionFile)
                     .ThenInclude(a => a.Project)

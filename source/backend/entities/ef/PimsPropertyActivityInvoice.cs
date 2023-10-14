@@ -8,26 +8,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACQUISITION_FILE_PERSON_HIST")]
-    [Index(nameof(AcquisitionFilePersonHistId), nameof(EndDateHist), Name = "PIMS_ACQPER_H_UK", IsUnique = true)]
-    public partial class PimsAcquisitionFilePersonHist
+    [Table("PIMS_PROPERTY_ACTIVITY_INVOICE")]
+    [Index(nameof(PimsPropertyActivityId), Name = "PRACIN_PIMS_PROPERTY_ACTIVITY_ID_IDX")]
+    public partial class PimsPropertyActivityInvoice
     {
         [Key]
-        [Column("_ACQUISITION_FILE_PERSON_HIST_ID")]
-        public long AcquisitionFilePersonHistId { get; set; }
-        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-        public DateTime EffectiveDateHist { get; set; }
-        [Column("END_DATE_HIST", TypeName = "datetime")]
-        public DateTime? EndDateHist { get; set; }
-        [Column("ACQUISITION_FILE_PERSON_ID")]
-        public long AcquisitionFilePersonId { get; set; }
-        [Column("ACQUISITION_FILE_ID")]
-        public long AcquisitionFileId { get; set; }
-        [Column("PERSON_ID")]
-        public long PersonId { get; set; }
-        [Column("ACQ_FL_PERSON_PROFILE_TYPE_CODE")]
-        [StringLength(20)]
-        public string AcqFlPersonProfileTypeCode { get; set; }
+        [Column("PROPERTY_ACTIVITY_INVOICE_ID")]
+        public long PropertyActivityInvoiceId { get; set; }
+        [Column("PIMS_PROPERTY_ACTIVITY_ID")]
+        public long PimsPropertyActivityId { get; set; }
+        [Column("INVOICE_DT", TypeName = "date")]
+        public DateTime InvoiceDt { get; set; }
+        [Column("INVOICE_NUM")]
+        [StringLength(50)]
+        public string InvoiceNum { get; set; }
+        [Column("DESCRIPTION")]
+        [StringLength(1000)]
+        public string Description { get; set; }
+        [Column("PRETAX_AMT", TypeName = "money")]
+        public decimal PretaxAmt { get; set; }
+        [Column("GST_AMT", TypeName = "money")]
+        public decimal? GstAmt { get; set; }
+        [Column("PST_AMT", TypeName = "money")]
+        public decimal? PstAmt { get; set; }
+        [Column("TOTAL_AMT", TypeName = "money")]
+        public decimal? TotalAmt { get; set; }
+        [Required]
+        [Column("IS_PST_REQUIRED")]
+        public bool? IsPstRequired { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -68,5 +76,9 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [ForeignKey(nameof(PimsPropertyActivityId))]
+        [InverseProperty("PimsPropertyActivityInvoices")]
+        public virtual PimsPropertyActivity PimsPropertyActivity { get; set; }
     }
 }

@@ -41,8 +41,8 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
   const fetchCompensationPayee = useCallback(async () => {
     if (compensation.id !== null) {
       try {
-        if (!!compensation.acquisitionFilePerson && !!compensation.acquisitionFilePerson.personId) {
-          const person = await getPerson(compensation.acquisitionFilePerson.personId);
+        if (!!compensation.acquisitionFileTeam && !!compensation.acquisitionFileTeam.personId) {
+          const person = await getPerson(compensation.acquisitionFileTeam.personId);
           setCompensationPayee(person);
         } else if (!!compensation.interestHolder) {
           if (
@@ -69,7 +69,7 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
       }
     }
   }, [
-    compensation.acquisitionFilePerson,
+    compensation.acquisitionFileTeam,
     compensation.id,
     compensation.interestHolder,
     getOrganization,

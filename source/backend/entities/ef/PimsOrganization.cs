@@ -20,13 +20,16 @@ namespace Pims.Dal.Entities
         {
             InversePrntOrganization = new HashSet<PimsOrganization>();
             PimsAccessRequestOrganizations = new HashSet<PimsAccessRequestOrganization>();
+            PimsAcquisitionFileTeams = new HashSet<PimsAcquisitionFileTeam>();
             PimsContactMethods = new HashSet<PimsContactMethod>();
             PimsExpropriationPayments = new HashSet<PimsExpropriationPayment>();
             PimsInterestHolders = new HashSet<PimsInterestHolder>();
             PimsLeaseTenants = new HashSet<PimsLeaseTenant>();
             PimsOrganizationAddresses = new HashSet<PimsOrganizationAddress>();
             PimsPersonOrganizations = new HashSet<PimsPersonOrganization>();
+            PimsPropActInvolvedParties = new HashSet<PimsPropActInvolvedParty>();
             PimsProperties = new HashSet<PimsProperty>();
+            PimsPropertyActivities = new HashSet<PimsPropertyActivity>();
             PimsPropertyContacts = new HashSet<PimsPropertyContact>();
             PimsPropertyOrganizations = new HashSet<PimsPropertyOrganization>();
             PimsResearchFiles = new HashSet<PimsResearchFile>();
@@ -130,6 +133,8 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsOrganization> InversePrntOrganization { get; set; }
         [InverseProperty(nameof(PimsAccessRequestOrganization.Organization))]
         public virtual ICollection<PimsAccessRequestOrganization> PimsAccessRequestOrganizations { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionFileTeam.Organization))]
+        public virtual ICollection<PimsAcquisitionFileTeam> PimsAcquisitionFileTeams { get; set; }
         [InverseProperty(nameof(PimsContactMethod.Organization))]
         public virtual ICollection<PimsContactMethod> PimsContactMethods { get; set; }
         [InverseProperty(nameof(PimsExpropriationPayment.ExpropriatingAuthorityNavigation))]
@@ -142,8 +147,12 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsOrganizationAddress> PimsOrganizationAddresses { get; set; }
         [InverseProperty(nameof(PimsPersonOrganization.Organization))]
         public virtual ICollection<PimsPersonOrganization> PimsPersonOrganizations { get; set; }
+        [InverseProperty(nameof(PimsPropActInvolvedParty.Organization))]
+        public virtual ICollection<PimsPropActInvolvedParty> PimsPropActInvolvedParties { get; set; }
         [InverseProperty(nameof(PimsProperty.PropMgmtOrg))]
         public virtual ICollection<PimsProperty> PimsProperties { get; set; }
+        [InverseProperty(nameof(PimsPropertyActivity.ServiceProviderOrg))]
+        public virtual ICollection<PimsPropertyActivity> PimsPropertyActivities { get; set; }
         [InverseProperty(nameof(PimsPropertyContact.Organization))]
         public virtual ICollection<PimsPropertyContact> PimsPropertyContacts { get; set; }
         [InverseProperty(nameof(PimsPropertyOrganization.Organization))]

@@ -49,7 +49,6 @@ export const mockGetExpropriationPaymentApi = (
     organizationAddresses: [
       {
         id: 7,
-        isDisabled: false,
         address: {
           id: 57,
           streetAddress1: '99999 Sooke road',

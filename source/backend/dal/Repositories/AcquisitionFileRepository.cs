@@ -105,10 +105,10 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(x => x.BusinessFunctionCode)
                 .Include(r => r.Product)
                 .Include(r => r.PimsPropertyAcquisitionFiles)
-                .Include(r => r.PimsAcquisitionFilePeople)
+                .Include(r => r.PimsAcquisitionFileTeams)
                     .ThenInclude(rp => rp.Person)
-                .Include(r => r.PimsAcquisitionFilePeople)
-                    .ThenInclude(rp => rp.AcqFlPersonProfileTypeCodeNavigation)
+                .Include(r => r.PimsAcquisitionFileTeams)
+                    .ThenInclude(rp => rp.AcqFlTeamProfileTypeCodeNavigation)
                 .Include(r => r.PimsAcquisitionOwners)
                     .ThenInclude(x => x.Address)
                         .ThenInclude(x => x.ProvinceState)
@@ -193,7 +193,7 @@ namespace Pims.Dal.Repositories
             lastUpdatedByAggregate.AddRange(checklistLastUpdatedBy);
 
             // Acquisition Team
-            var teamLastUpdatedBy = this.Context.PimsAcquisitionFilePeople.AsNoTracking()
+            var teamLastUpdatedBy = this.Context.PimsAcquisitionFileTeams.AsNoTracking()
               .Where(ap => ap.AcquisitionFileId == id)
               .Select(ap => new LastUpdatedByModel()
               {
@@ -209,7 +209,7 @@ namespace Pims.Dal.Repositories
 
             // Acquisition Deleted Team
             // This is needed to get the acquisition team last-updated-by when deleted
-            var teamHistLastUpdatedBy = this.Context.PimsAcquisitionFilePersonHists.AsNoTracking()
+            var teamHistLastUpdatedBy = this.Context.PimsAcquisitionFileTeamHists.AsNoTracking()
               .Where(aph => aph.AcquisitionFileId == id)
               .Select(aph => new LastUpdatedByModel()
               {
@@ -572,18 +572,18 @@ namespace Pims.Dal.Repositories
                 .ToList();
         }
 
-        public List<PimsAcquisitionFilePerson> GetTeamMembers(HashSet<short> regions, long? contractorPersonId = null)
+        public List<PimsAcquisitionFileTeam> GetTeamMembers(HashSet<short> regions, long? contractorPersonId = null)
         {
-            var predicate = PredicateBuilder.New<PimsAcquisitionFilePerson>(acq => true);
+            var predicate = PredicateBuilder.New<PimsAcquisitionFileTeam>(acq => true);
 
             predicate.And(x => regions.Contains(x.AcquisitionFile.RegionCode));
 
             if (contractorPersonId != null)
             {
-                predicate.And(x => x.AcquisitionFile.PimsAcquisitionFilePeople.Any(p => p.PersonId == contractorPersonId));
+                predicate.And(x => x.AcquisitionFile.PimsAcquisitionFileTeams.Any(p => p.PersonId == contractorPersonId));
             }
 
-            return Context.PimsAcquisitionFilePeople.Include(x => x.AcquisitionFile)
+            return Context.PimsAcquisitionFileTeams.Include(x => x.AcquisitionFile)
                 .Include(x => x.Person)
                 .AsNoTracking()
                 .Where(predicate)
@@ -645,7 +645,7 @@ namespace Pims.Dal.Repositories
             }
 
             Context.Entry(existingAcqFile).CurrentValues.SetValues(acquisitionFile);
-            Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFilePerson, long>(p => p.PimsAcquisitionFilePeople, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionFilePeople.ToArray());
+            Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFileTeam, long>(p => p.PimsAcquisitionFileTeams, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionFileTeams.ToArray());
             Context.UpdateChild<PimsAcquisitionFile, long, PimsInterestHolder, long>(p => p.PimsInterestHolders, acquisitionFile.Internal_Id, acquisitionFile.PimsInterestHolders.ToArray());
             Context.UpdateGrandchild<PimsAcquisitionFile, long, PimsAcquisitionOwner>(o => o.PimsAcquisitionOwners, oa => oa.Address, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwners.ToArray());
 
@@ -775,12 +775,12 @@ namespace Pims.Dal.Repositories
 
             if (contractorPersonId is not null)
             {
-                predicate = predicate.And(acq => acq.PimsAcquisitionFilePeople.Any(x => x.PersonId == contractorPersonId));
+                predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.PersonId == contractorPersonId));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.AcquisitionTeamMemberPersonId))
             {
-                predicate = predicate.And(acq => acq.PimsAcquisitionFilePeople.Any(x => x.PersonId == long.Parse(filter.AcquisitionTeamMemberPersonId)));
+                predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.PersonId == long.Parse(filter.AcquisitionTeamMemberPersonId)));
             }
 
             var query = Context.PimsAcquisitionFiles.AsNoTracking()
@@ -790,10 +790,10 @@ namespace Pims.Dal.Repositories
                 .Include(f => f.AcquisitionFundingTypeCodeNavigation)
                 .Include(ph => ph.AcqPhysFileStatusTypeCodeNavigation)
                 .Include(t => t.AcquisitionTypeCodeNavigation)
-                .Include(tm => tm.PimsAcquisitionFilePeople)
+                .Include(tm => tm.PimsAcquisitionFileTeams)
                     .ThenInclude(c => c.Person)
-                .Include(tm => tm.PimsAcquisitionFilePeople)
-                    .ThenInclude(c => c.AcqFlPersonProfileTypeCodeNavigation)
+                .Include(tm => tm.PimsAcquisitionFileTeams)
+                    .ThenInclude(c => c.AcqFlTeamProfileTypeCodeNavigation)
                 .Include(ow => ow.PimsAcquisitionOwners)
                 .Include(fp => fp.PimsPropertyAcquisitionFiles)
                     .ThenInclude(prop => prop.Property)

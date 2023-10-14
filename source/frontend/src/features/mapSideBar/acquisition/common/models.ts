@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash';
 
 import { fromApiPerson, IContactSearchResult } from '@/interfaces';
-import { Api_AcquisitionFileOwner, Api_AcquisitionFilePerson } from '@/models/api/AcquisitionFile';
+import { Api_AcquisitionFileOwner, Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
 import { Api_Address } from '@/models/api/Address';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { fromTypeCode, stringToBoolean, stringToUndefined, toTypeCode } from '@/utils/formUtils';
@@ -26,21 +26,21 @@ export class AcquisitionTeamFormModel {
     this.contact = contact;
   }
 
-  toApi(acquisitionFileId: number): Api_AcquisitionFilePerson {
+  toApi(acquisitionFileId: number): Api_AcquisitionFileTeam {
     return {
       id: this.id,
       rowVersion: this.rowVersion,
       acquisitionFileId: acquisitionFileId,
       personId: this.contact?.personId || 0,
       person: { id: this.contact?.personId || 0 },
-      personProfileType: toTypeCode(this.contactTypeCode),
-      personProfileTypeCode: this.contactTypeCode,
+      teamProfileType: toTypeCode(this.contactTypeCode),
+      teamProfileTypeCode: this.contactTypeCode,
     };
   }
 
-  static fromApi(model: Api_AcquisitionFilePerson): AcquisitionTeamFormModel {
+  static fromApi(model: Api_AcquisitionFileTeam): AcquisitionTeamFormModel {
     const newForm = new AcquisitionTeamFormModel(
-      fromTypeCode(model.personProfileType) || '',
+      fromTypeCode(model.teamProfileType) || '',
       model.id ?? 0,
       model.person !== undefined ? fromApiPerson(model.person) : undefined,
     );

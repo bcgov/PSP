@@ -1,4 +1,4 @@
-import { Api_AcquisitionFile, Api_AcquisitionFilePerson } from '@/models/api/AcquisitionFile';
+import { Api_AcquisitionFile, Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 export class DetailAcquisitionFile {
@@ -35,11 +35,11 @@ export class DetailAcquisitionFilePerson {
   personName?: string;
   personProfileTypeCodeDescription?: string;
 
-  static fromApi(model: Api_AcquisitionFilePerson): DetailAcquisitionFilePerson {
+  static fromApi(model: Api_AcquisitionFileTeam): DetailAcquisitionFilePerson {
     const personDetail = new DetailAcquisitionFilePerson();
     personDetail.personId = model?.person?.id;
     personDetail.personName = formatApiPersonNames(model?.person);
-    personDetail.personProfileTypeCodeDescription = model?.personProfileType?.description;
+    personDetail.personProfileTypeCodeDescription = model?.teamProfileType?.description;
 
     return personDetail;
   }

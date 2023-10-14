@@ -8,24 +8,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_PROPERTY_EVALUATION")]
-    [Index(nameof(PropertyId), Name = "PRPEVL_PROPERTY_ID_IDX")]
-    public partial class PimsPropertyEvaluation
+    [Table("PIMS_ACQUISITION_FILE_TEAM_HIST")]
+    [Index(nameof(AcquisitionFileTeamHistId), nameof(EndDateHist), Name = "PIMS_ACQNTM_H_UK", IsUnique = true)]
+    public partial class PimsAcquisitionFileTeamHist
     {
         [Key]
-        [Column("PROPERTY_EVALUATION_ID")]
-        public long PropertyEvaluationId { get; set; }
-        [Column("PROPERTY_ID")]
-        public long PropertyId { get; set; }
-        [Column("EVALUATION_DATE", TypeName = "date")]
-        public DateTime EvaluationDate { get; set; }
-        [Column("KEY")]
-        public int Key { get; set; }
-        [Column("VALUE", TypeName = "money")]
-        public decimal Value { get; set; }
-        [Column("NOTE")]
-        [StringLength(1000)]
-        public string Note { get; set; }
+        [Column("_ACQUISITION_FILE_TEAM_HIST_ID")]
+        public long AcquisitionFileTeamHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Column("ACQUISITION_FILE_TEAM_ID")]
+        public long AcquisitionFileTeamId { get; set; }
+        [Column("ACQUISITION_FILE_ID")]
+        public long AcquisitionFileId { get; set; }
+        [Column("PERSON_ID")]
+        public long? PersonId { get; set; }
+        [Column("ORGANIZATION_ID")]
+        public long? OrganizationId { get; set; }
+        [Column("PRIMARY_CONTACT_ID")]
+        public long? PrimaryContactId { get; set; }
+        [Column("ACQ_FL_TEAM_PROFILE_TYPE_CODE")]
+        [StringLength(20)]
+        public string AcqFlTeamProfileTypeCode { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -64,9 +70,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [ForeignKey(nameof(PropertyId))]
-        [InverseProperty(nameof(PimsProperty.PimsPropertyEvaluations))]
-        public virtual PimsProperty Property { get; set; }
     }
 }

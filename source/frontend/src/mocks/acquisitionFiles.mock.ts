@@ -65,7 +65,6 @@ export const mockAcquisitionFileResponse = (
   fileProperties: [
     {
       id: 1,
-      isDisabled: false,
       propertyId: 442,
       property: {
         id: 442,
@@ -103,7 +102,6 @@ export const mockAcquisitionFileResponse = (
     },
     {
       id: 2,
-      isDisabled: false,
       propertyId: 443,
       property: {
         id: 443,
@@ -157,12 +155,11 @@ export const mockAcquisitionFileResponse = (
         comment: 'This is a test comment.',
         rowVersion: 2,
       },
-      personProfileType: {
+      teamProfileType: {
         id: 'NEGOTAGENT',
         description: 'Negotiation agent',
         isDisabled: false,
       },
-      isDisabled: false,
       rowVersion: 2,
     },
     {
@@ -179,12 +176,11 @@ export const mockAcquisitionFileResponse = (
         contactMethods: [],
         rowVersion: 1,
       },
-      personProfileType: {
+      teamProfileType: {
         id: 'MOTILAWYER',
         description: 'Negotiation agent',
         isDisabled: false,
       },
-      isDisabled: false,
       rowVersion: 2,
     },
   ],

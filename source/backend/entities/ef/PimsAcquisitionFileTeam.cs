@@ -8,30 +8,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACQUISITION_FILE_PERSON")]
+    [Table("PIMS_ACQUISITION_FILE_TEAM")]
+    [Index(nameof(AcquisitionFileId), nameof(AcqFlTeamProfileTypeCode), Name = "ACQNTM_FILE_PROFILE_TUC", IsUnique = true)]
+    [Index(nameof(OrganizationId), Name = "ACQNTM_ORGANIZATION_ID_IDX")]
+    [Index(nameof(PrimaryContactId), Name = "ACQNTM_PRIMARY_CONTACT_ID_IDX")]
     [Index(nameof(AcquisitionFileId), Name = "ACQPER_ACQUISITION_FILE_ID_IDX")]
-    [Index(nameof(AcqFlPersonProfileTypeCode), Name = "ACQPER_ACQ_FL_PERSON_PROFILE_TYPE_CODE_IDX")]
-    [Index(nameof(AcquisitionFileId), nameof(AcqFlPersonProfileTypeCode), Name = "ACQPER_FILE_PROFILE_TUC", IsUnique = true)]
+    [Index(nameof(AcqFlTeamProfileTypeCode), Name = "ACQPER_ACQ_FL_PERSON_PROFILE_TYPE_CODE_IDX")]
     [Index(nameof(PersonId), Name = "ACQPER_PERSON_ID_IDX")]
-    public partial class PimsAcquisitionFilePerson
+    public partial class PimsAcquisitionFileTeam
     {
-        public PimsAcquisitionFilePerson()
+        public PimsAcquisitionFileTeam()
         {
             PimsCompensationRequisitions = new HashSet<PimsCompensationRequisition>();
         }
 
         [Key]
-        [Column("ACQUISITION_FILE_PERSON_ID")]
-        public long AcquisitionFilePersonId { get; set; }
+        [Column("ACQUISITION_FILE_TEAM_ID")]
+        public long AcquisitionFileTeamId { get; set; }
         [Column("ACQUISITION_FILE_ID")]
         public long AcquisitionFileId { get; set; }
         [Column("PERSON_ID")]
-        public long PersonId { get; set; }
-        [Column("ACQ_FL_PERSON_PROFILE_TYPE_CODE")]
+        public long? PersonId { get; set; }
+        [Column("ORGANIZATION_ID")]
+        public long? OrganizationId { get; set; }
+        [Column("PRIMARY_CONTACT_ID")]
+        public long? PrimaryContactId { get; set; }
+        [Column("ACQ_FL_TEAM_PROFILE_TYPE_CODE")]
         [StringLength(20)]
-        public string AcqFlPersonProfileTypeCode { get; set; }
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
+        public string AcqFlTeamProfileTypeCode { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -71,16 +75,22 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [ForeignKey(nameof(AcqFlPersonProfileTypeCode))]
-        [InverseProperty(nameof(PimsAcqFlPersonProfileType.PimsAcquisitionFilePeople))]
-        public virtual PimsAcqFlPersonProfileType AcqFlPersonProfileTypeCodeNavigation { get; set; }
+        [ForeignKey(nameof(AcqFlTeamProfileTypeCode))]
+        [InverseProperty(nameof(PimsAcqFlTeamProfileType.PimsAcquisitionFileTeams))]
+        public virtual PimsAcqFlTeamProfileType AcqFlTeamProfileTypeCodeNavigation { get; set; }
         [ForeignKey(nameof(AcquisitionFileId))]
-        [InverseProperty(nameof(PimsAcquisitionFile.PimsAcquisitionFilePeople))]
+        [InverseProperty(nameof(PimsAcquisitionFile.PimsAcquisitionFileTeams))]
         public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
+        [ForeignKey(nameof(OrganizationId))]
+        [InverseProperty(nameof(PimsOrganization.PimsAcquisitionFileTeams))]
+        public virtual PimsOrganization Organization { get; set; }
         [ForeignKey(nameof(PersonId))]
-        [InverseProperty(nameof(PimsPerson.PimsAcquisitionFilePeople))]
+        [InverseProperty(nameof(PimsPerson.PimsAcquisitionFileTeamPeople))]
         public virtual PimsPerson Person { get; set; }
-        [InverseProperty(nameof(PimsCompensationRequisition.AcquisitionFilePerson))]
+        [ForeignKey(nameof(PrimaryContactId))]
+        [InverseProperty(nameof(PimsPerson.PimsAcquisitionFileTeamPrimaryContacts))]
+        public virtual PimsPerson PrimaryContact { get; set; }
+        [InverseProperty(nameof(PimsCompensationRequisition.AcquisitionFileTeam))]
         public virtual ICollection<PimsCompensationRequisition> PimsCompensationRequisitions { get; set; }
     }
 }

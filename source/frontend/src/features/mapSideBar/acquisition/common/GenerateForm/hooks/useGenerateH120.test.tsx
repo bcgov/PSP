@@ -106,12 +106,11 @@ describe('useGenerateH120 functions', () => {
   it('makes request to get person concept for compensation payee', async () => {
     const apiCompensation: Api_CompensationRequisition = {
       ...getMockApiDefaultCompensation(),
-      acquisitionFilePerson: {
+      acquisitionFileTeam: {
         id: 101,
         acquisitionFileId: 2,
         personId: 8,
-        personProfileTypeCode: 'MOTILAWYER',
-        isDisabled: false,
+        teamProfileTypeCode: 'MOTILAWYER',
         rowVersion: 1,
       },
     };

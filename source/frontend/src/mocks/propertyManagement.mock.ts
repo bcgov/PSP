@@ -16,7 +16,6 @@ export const getMockApiPropertyManagementPurpose = (id = 1): Api_PropertyManagem
   id,
   rowVersion: 1,
   propertyId: 123459,
-  isDisabled: false,
   propertyPurposeTypeCode: {
     id: 'BCFERRIES',
     description: 'BC Ferries',

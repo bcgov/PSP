@@ -52,7 +52,7 @@ namespace Pims.Api.Services
             // When a contractor exports data, they should only see data for files they have been assigned to.
             if (pimsUser.IsContractor)
             {
-                return allMatchingFinancials.Where(f => f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFilePeople.Any(afp => afp.PersonId == pimsUser.PersonId));
+                return allMatchingFinancials.Where(f => f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId == pimsUser.PersonId));
             }
 
             // The system will only provide data that adheres to the user's "region limited data".

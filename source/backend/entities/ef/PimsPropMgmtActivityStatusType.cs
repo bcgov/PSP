@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_PROPERTY_SERVICE_FILE_TYPE")]
-    public partial class PimsPropertyServiceFileType
+    [Table("PIMS_PROP_MGMT_ACTIVITY_STATUS_TYPE")]
+    public partial class PimsPropMgmtActivityStatusType
     {
-        public PimsPropertyServiceFileType()
+        public PimsPropMgmtActivityStatusType()
         {
-            PimsPropertyServiceFiles = new HashSet<PimsPropertyServiceFile>();
+            PimsPropertyActivities = new HashSet<PimsPropertyActivity>();
         }
 
         [Key]
-        [Column("PROPERTY_SERVICE_FILE_TYPE_CODE")]
+        [Column("PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE")]
         [StringLength(20)]
-        public string PropertyServiceFileTypeCode { get; set; }
+        public string PropMgmtActivityStatusTypeCode { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
@@ -44,7 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsPropertyServiceFile.PropertyServiceFileTypeCodeNavigation))]
-        public virtual ICollection<PimsPropertyServiceFile> PimsPropertyServiceFiles { get; set; }
+        [InverseProperty(nameof(PimsPropertyActivity.PropMgmtActivityStatusTypeCodeNavigation))]
+        public virtual ICollection<PimsPropertyActivity> PimsPropertyActivities { get; set; }
     }
 }
