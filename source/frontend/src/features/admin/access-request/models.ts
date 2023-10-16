@@ -1,6 +1,7 @@
 import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { UserTypes } from '@/constants/index';
 import { Api_AccessRequest } from '@/models/api/AccessRequest';
+import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { getPreferredContactMethodValue } from '@/utils/contactMethodUtil';
 import { fromTypeCode, stringToUndefined, toTypeCode } from '@/utils/formUtils';
@@ -15,7 +16,7 @@ export class FormAccessRequest {
   public accessRequestStatusTypeCodeName: string;
   public regionCodeId: NumberFieldValue;
   public regionName: string;
-  public appCreateTimestamp?: string;
+  public appCreateTimestamp?: UtcIsoDateTime;
   public email: string;
   public firstName: string;
   public surname: string;

@@ -31,11 +31,11 @@ namespace Pims.Api.Models.Concepts
 
         public float? LicenseToConstructArea { get; set; }
 
-        public DateTime? LtcEndDt { get; set; }
+        public DateOnly? LtcEndDt { get; set; }
 
         public float? LandActArea { get; set; }
 
-        public DateTime? LandActEndDt { get; set; }
+        public DateOnly? LandActEndDt { get; set; }
 
         public AcquisitionFileModel PropertyAcquisitionFile { get; set; }
 

@@ -1,6 +1,8 @@
+import { UtcIsoDateTime } from './UtcIsoDateTime';
+
 export interface Api_AuditFields {
-  appCreateTimestamp?: string;
-  appLastUpdateTimestamp?: string;
+  appCreateTimestamp?: UtcIsoDateTime;
+  appLastUpdateTimestamp?: UtcIsoDateTime;
   appLastUpdateUserid?: string;
   appCreateUserid?: string;
   appLastUpdateUserGuid?: string;

@@ -1,3 +1,4 @@
+using System;
 using Mapster;
 using Entity = Pims.Dal.Entities;
 
@@ -16,7 +17,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.AmountPreTax, src => src.PaymentAmountPreTax)
                 .Map(dest => dest.AmountPst, src => src.PaymentAmountPst)
                 .Map(dest => dest.AmountTotal, src => src.PaymentAmountTotal)
-                .Map(dest => dest.ReceivedDate, src => src.PaymentReceivedDate)
+                .Map(dest => dest.ReceivedDate, src => DateOnly.FromDateTime(src.PaymentReceivedDate))
                 .Map(dest => dest.Note, src => src.Note)
                 .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
 
@@ -29,7 +30,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PaymentAmountPreTax, src => src.AmountPreTax)
                 .Map(dest => dest.PaymentAmountPst, src => src.AmountPst)
                 .Map(dest => dest.PaymentAmountTotal, src => src.AmountTotal)
-                .Map(dest => dest.PaymentReceivedDate, src => src.ReceivedDate)
+                .Map(dest => dest.PaymentReceivedDate, src => src.ReceivedDate.ToDateTime(TimeOnly.MinValue))
                 .Map(dest => dest.Note, src => src.Note)
                 .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>();
         }

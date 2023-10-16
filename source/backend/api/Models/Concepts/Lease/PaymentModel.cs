@@ -37,7 +37,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The date the payment was or will be received.
         /// </summary>
-        public DateTime ReceivedDate { get; set; }
+        public DateOnly ReceivedDate { get; set; }
 
         /// <summary>
         /// get/set - The Expected Payment per interval before tax.

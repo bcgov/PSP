@@ -39,7 +39,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The product start date.
         /// </summary>
-        public DateTime? StartDate { get; set; }
+        public DateOnly? StartDate { get; set; }
 
         /// <summary>
         /// get/set - The product cost estimate.
@@ -49,7 +49,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The product cost estimate date.
         /// </summary>
-        public DateTime? CostEstimateDate { get; set; }
+        public DateOnly? CostEstimateDate { get; set; }
 
         /// <summary>
         /// get/set - The product objective.

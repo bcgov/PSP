@@ -10,17 +10,17 @@ namespace Pims.Api.Models.Concepts
 
         public TypeModel<string> AgreementType { get; set; }
 
-        public DateTime? AgreementDate { get; set; }
+        public DateOnly? AgreementDate { get; set; }
 
         public bool? IsDraft { get; set; }
 
-        public DateTime? CompletionDate { get; set; }
+        public DateOnly? CompletionDate { get; set; }
 
-        public DateTime? TerminationDate { get; set; }
+        public DateOnly? TerminationDate { get; set; }
 
-        public DateTime? CommencementDate { get; set; }
+        public DateOnly? CommencementDate { get; set; }
 
-        public DateTime? PossessionDate { get; set; }
+        public DateOnly? PossessionDate { get; set; }
 
         public decimal? DepositAmount { get; set; }
 
@@ -30,12 +30,12 @@ namespace Pims.Api.Models.Concepts
 
         public string LegalSurveyPlanNum { get; set; }
 
-        public DateTime? OfferDate { get; set; }
+        public DateOnly? OfferDate { get; set; }
 
         public DateTime? ExpiryDateTime { get; set; }
 
-        public DateTime? SignedDate { get; set; }
+        public DateOnly? SignedDate { get; set; }
 
-        public DateTime? InspectionDate { get; set; }
+        public DateOnly? InspectionDate { get; set; }
     }
 }

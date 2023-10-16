@@ -7,7 +7,7 @@ export const getMockDeposits = (): Api_SecurityDeposit[] => [
     depositType: { id: 'PET' },
     description: 'Pet deposit collected for one cat and one medium size dog.',
     amountPaid: 500.0,
-    depositDate: '2021-09-15T00:00:00',
+    depositDateOnly: '2021-09-15T00:00:00',
     rowVersion: 0,
     depositReturns: getMockDepositReturns(),
     contactHolder: { id: 'P1', person: { firstName: 'test person' } },
@@ -20,7 +20,7 @@ export const getMockDeposits = (): Api_SecurityDeposit[] => [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. \r\n\r\nInteger nec odio.',
     amountPaid: 2000.0,
-    depositDate: '2019-03-01T00:00:00',
+    depositDateOnly: '2019-03-01T00:00:00',
     rowVersion: 0,
     depositReturns: [],
     contactHolder: { id: 'O1', organization: { name: 'test organization' } },

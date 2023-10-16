@@ -291,13 +291,13 @@ exports[`TermForm component renders as expected 1`] = `
     >
       <label
         class="form-label"
-        for="input-paymentDueDate"
+        for="input-paymentDueDateStr"
       >
         Payments due 
         <span
           class="tooltip-icon"
-          data-testid="tooltip-icon-paymentDueDate-tooltip"
-          id="paymentDueDate-tooltip"
+          data-testid="tooltip-icon-paymentDueDateStr-tooltip"
+          id="paymentDueDateStr-tooltip"
         >
           <svg
             class="tooltip-icon"
@@ -317,8 +317,8 @@ exports[`TermForm component renders as expected 1`] = `
       </label>
       <input
         class="form-control"
-        id="input-paymentDueDate"
-        name="paymentDueDate"
+        id="input-paymentDueDateStr"
+        name="paymentDueDateStr"
         title=""
         value=""
       />
@@ -699,13 +699,13 @@ exports[`TermForm component renders with data as expected 1`] = `
     >
       <label
         class="form-label"
-        for="input-paymentDueDate"
+        for="input-paymentDueDateStr"
       >
         Payments due 
         <span
           class="tooltip-icon"
-          data-testid="tooltip-icon-paymentDueDate-tooltip"
-          id="paymentDueDate-tooltip"
+          data-testid="tooltip-icon-paymentDueDateStr-tooltip"
+          id="paymentDueDateStr-tooltip"
         >
           <svg
             class="tooltip-icon"
@@ -725,8 +725,8 @@ exports[`TermForm component renders with data as expected 1`] = `
       </label>
       <input
         class="form-control"
-        id="input-paymentDueDate"
-        name="paymentDueDate"
+        id="input-paymentDueDateStr"
+        name="paymentDueDateStr"
         title=""
         value=""
       />

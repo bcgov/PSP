@@ -22,7 +22,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The termination date of the deposit.
         /// </summary>
-        public DateTime TerminationDate { get; set; }
+        public DateOnly TerminationDate { get; set; }
 
         /// <summary>
         /// get/set - any claims made against the deposit total, reducing the returned amount.
@@ -42,7 +42,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The date when the deposit was returned.
         /// </summary>
-        public DateTime ReturnDate { get; set; }
+        public DateOnly ReturnDate { get; set; }
 
         /// <summary>
         /// get/set - Contact Holder.

@@ -6,6 +6,7 @@ import {
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_Project } from '@/models/api/Project';
 import Api_TypeCode from '@/models/api/TypeCode';
+import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 
 export class AcquisitionSearchResultModel {
   id?: number;
@@ -14,9 +15,9 @@ export class AcquisitionSearchResultModel {
   fileName?: string;
   regionCode?: string;
   appLastUpdateUserid?: string;
-  appCreateTimestamp?: string;
+  appCreateTimestamp?: UtcIsoDateTime;
   appCreateUserid?: string;
-  appLastUpdateTimestamp?: string;
+  appLastUpdateTimestamp?: UtcIsoDateTime;
   acquisitionFileStatusTypeCode?: Api_TypeCode<string>;
   fileProperties?: Api_AcquisitionFileProperty[];
   project?: Api_Project;

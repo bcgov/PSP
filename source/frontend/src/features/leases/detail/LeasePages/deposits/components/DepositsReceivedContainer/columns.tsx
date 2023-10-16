@@ -33,7 +33,7 @@ export class DepositListEntry {
     }
     this.depositDescription = baseDeposit.description;
     this.amountPaid = baseDeposit.amountPaid;
-    this.paidDate = baseDeposit.depositDate || '';
+    this.paidDate = baseDeposit.depositDateOnly || '';
     this.contactHolder = baseDeposit.contactHolder || undefined;
     this.depositReturnCount = baseDeposit.depositReturns.length;
   }

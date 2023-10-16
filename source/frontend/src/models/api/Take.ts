@@ -1,6 +1,7 @@
 import { Api_AcquisitionFile } from './AcquisitionFile';
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import { DateOnly } from './DateOnly';
 import Api_TypeCode from './TypeCode';
 
 // LINK @backend/api/Models/Concepts/Take/TakeModel.cs
@@ -16,9 +17,9 @@ export interface Api_Take extends Api_ConcurrentVersion, Api_AuditFields {
   isNewLandAct: boolean | null;
   isNewInterestInSrw: boolean | null;
   licenseToConstructArea: number | null;
-  ltcEndDt: string | null;
+  ltcEndDt: DateOnly | null;
   landActArea: number | null;
-  landActEndDt: string | null;
+  landActEndDt: DateOnly | null;
   propertyAcquisitionFile: Api_AcquisitionFile | null;
   propertyAcquisitionFileId: number;
   statutoryRightOfWayArea: number | null;
