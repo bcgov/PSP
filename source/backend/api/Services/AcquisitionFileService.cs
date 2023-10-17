@@ -37,6 +37,7 @@ namespace Pims.Api.Services
         private readonly IInterestHolderRepository _interestHolderRepository;
         private readonly ICompReqFinancialService _compReqFinancialService;
         private readonly IExpropriationPaymentRepository _expropriationPaymentRepository;
+        private readonly ITakeRepository _takeRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -53,7 +54,8 @@ namespace Pims.Api.Services
             ICompensationRequisitionRepository compensationRequisitionRepository,
             IInterestHolderRepository interestHolderRepository,
             ICompReqFinancialService compReqFinancialService,
-            IExpropriationPaymentRepository expropriationPaymentRepository)
+            IExpropriationPaymentRepository expropriationPaymentRepository,
+            ITakeRepository takeRepository)
         {
             _user = user;
             _logger = logger;
@@ -70,6 +72,7 @@ namespace Pims.Api.Services
             _interestHolderRepository = interestHolderRepository;
             _compReqFinancialService = compReqFinancialService;
             _expropriationPaymentRepository = expropriationPaymentRepository;
+            _takeRepository = takeRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -100,27 +103,27 @@ namespace Pims.Api.Services
             var acqFiles = _acqFileRepository.GetAcquisitionFileExportDeep(filter, userRegions, contractorPersonId);
 
             return acqFiles.SelectMany(file => file.PimsPropertyAcquisitionFiles.Where(fp => fp.AcquisitionFileId.Equals(file.AcquisitionFileId)).DefaultIfEmpty(), (file, fp) => (file, fp))
-                .Select(fileProperty => new AcquisitionFileExportModel
-                {
-                    FileNumber = fileProperty.file.FileNumber ?? string.Empty,
-                    LegacyFileNumber = fileProperty.file.LegacyFileNumber ?? string.Empty,
-                    FileName = fileProperty.file.FileName ?? string.Empty,
-                    MotiRegion = fileProperty.file.RegionCodeNavigation?.Description ?? string.Empty,
-                    MinistryProject = fileProperty.file.Project is not null ? $"{fileProperty.file.Project.Code} {fileProperty.file.Project.Description}" : string.Empty,
-                    CivicAddress = (fileProperty.fp?.Property is not null && fileProperty.fp.Property.Address is not null) ? fileProperty.fp.Property.Address.FormatFullAddressString() : string.Empty,
-                    GeneralLocation = (fileProperty.fp?.Property is not null) ? fileProperty.fp.Property.GeneralLocation : string.Empty,
-                    Pid = fileProperty.fp is not null && fileProperty.fp.Property.Pid.HasValue ? fileProperty.fp.Property.Pid.ToString() : string.Empty,
-                    Pin = fileProperty.fp is not null && fileProperty.fp.Property.Pin.HasValue ? fileProperty.fp.Property.Pin.ToString() : string.Empty,
-                    AcquisitionFileStatusTypeCode = fileProperty.file.AcquisitionFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFileStatusTypeCodeNavigation.Description : string.Empty,
-                    FileFunding = fileProperty.file.AcquisitionFundingTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFundingTypeCodeNavigation.Description : string.Empty,
-                    FileAssignedDate = fileProperty.file.AssignedDate.HasValue ? fileProperty.file.AssignedDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
-                    FileDeliveryDate = fileProperty.file.DeliveryDate.HasValue ? fileProperty.file.DeliveryDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
-                    FileAcquisitionCompleted = fileProperty.file.CompletionDate.HasValue ? fileProperty.file.CompletionDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
-                    FilePhysicalStatus = fileProperty.file.AcqPhysFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcqPhysFileStatusTypeCodeNavigation.Description : string.Empty,
-                    FileAcquisitionType = fileProperty.file.AcquisitionTypeCodeNavigation is not null ? fileProperty.file.AcquisitionTypeCodeNavigation.Description : string.Empty,
-                    FileAcquisitionTeam = string.Join(", ", fileProperty.file.PimsAcquisitionFileTeams.Select(x => x.Person.GetFullName(true))),
-                    FileAcquisitionOwners = string.Join(", ", fileProperty.file.PimsAcquisitionOwners.Select(x => x.FormatOwnerName())),
-                }).ToList();
+                                .Select(fileProperty => new AcquisitionFileExportModel
+                                {
+                                    FileNumber = fileProperty.file.FileNumber ?? string.Empty,
+                                    LegacyFileNumber = fileProperty.file.LegacyFileNumber ?? string.Empty,
+                                    FileName = fileProperty.file.FileName ?? string.Empty,
+                                    MotiRegion = fileProperty.file.RegionCodeNavigation?.Description ?? string.Empty,
+                                    MinistryProject = fileProperty.file.Project is not null ? $"{fileProperty.file.Project.Code} {fileProperty.file.Project.Description}" : string.Empty,
+                                    CivicAddress = (fileProperty.fp?.Property is not null && fileProperty.fp.Property.Address is not null) ? fileProperty.fp.Property.Address.FormatFullAddressString() : string.Empty,
+                                    GeneralLocation = (fileProperty.fp?.Property is not null) ? fileProperty.fp.Property.GeneralLocation : string.Empty,
+                                    Pid = fileProperty.fp is not null && fileProperty.fp.Property.Pid.HasValue ? fileProperty.fp.Property.Pid.ToString() : string.Empty,
+                                    Pin = fileProperty.fp is not null && fileProperty.fp.Property.Pin.HasValue ? fileProperty.fp.Property.Pin.ToString() : string.Empty,
+                                    AcquisitionFileStatusTypeCode = fileProperty.file.AcquisitionFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFileStatusTypeCodeNavigation.Description : string.Empty,
+                                    FileFunding = fileProperty.file.AcquisitionFundingTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFundingTypeCodeNavigation.Description : string.Empty,
+                                    FileAssignedDate = fileProperty.file.AssignedDate.HasValue ? fileProperty.file.AssignedDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                                    FileDeliveryDate = fileProperty.file.DeliveryDate.HasValue ? fileProperty.file.DeliveryDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                                    FileAcquisitionCompleted = fileProperty.file.CompletionDate.HasValue ? fileProperty.file.CompletionDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                                    FilePhysicalStatus = fileProperty.file.AcqPhysFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcqPhysFileStatusTypeCodeNavigation.Description : string.Empty,
+                                    FileAcquisitionType = fileProperty.file.AcquisitionTypeCodeNavigation is not null ? fileProperty.file.AcquisitionTypeCodeNavigation.Description : string.Empty,
+                                    FileAcquisitionTeam = string.Join(", ", fileProperty.file.PimsAcquisitionFileTeams.Select(x => x.Person.GetFullName(true))),
+                                    FileAcquisitionOwners = string.Join(", ", fileProperty.file.PimsAcquisitionOwners.Select(x => x.FormatOwnerName())),
+                                }).ToList();
         }
 
         public PimsAcquisitionFile GetById(long id)
@@ -232,7 +235,7 @@ namespace Pims.Api.Services
 
             if (acquisitionFile.AcquisitionFileStatusTypeCode == "COMPLT")
             {
-                TransferPropertiesOfInterestToInventory(acquisitionFile, userOverrides.Contains(UserOverrideCode.PoiToInventory));
+                TransferPropertiesOfInterest(acquisitionFile, userOverrides.Contains(UserOverrideCode.PoiToInventory));
             }
 
             ValidateStaff(acquisitionFile);
@@ -680,7 +683,7 @@ namespace Pims.Api.Services
         /// </summary>
         /// <param name="acquisitionFile"></param>
         /// <param name="userOverride"></param>
-        private void TransferPropertiesOfInterestToInventory(PimsAcquisitionFile acquisitionFile, bool userOverride = false)
+        private void TransferPropertiesOfInterest(PimsAcquisitionFile acquisitionFile, bool userOverride = false)
         {
             // Get the current properties in the research file
             var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
@@ -694,7 +697,15 @@ namespace Pims.Api.Services
                 {
                     throw new UserOverrideException(UserOverrideCode.PoiToInventory, "The properties of interest will be added to the inventory as acquired properties.");
                 }
-                _propertyRepository.TransferToCoreInventory(property);
+                var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionProperty.Internal_Id);
+                var coreInventoryInterestCodes = new string[] { "Section 15", "Section 17", "NOI", "Section 66" };
+                var activeTakes = takes.Where(t => !(t.IsLandAct.HasValue && t.IsLandAct.Value && t.LandActEndDt.HasValue && t.LandActEndDt.Value.Date < DateTime.UtcNow.Date)
+                && !(t.IsLicenseToConstruct.HasValue && t.IsLicenseToConstruct.Value && t.LtcEndDt.HasValue && t.LtcEndDt.Value.Date < DateTime.UtcNow.Date));
+                //see psp-6589 for business rules.
+                var isOwned = !(activeTakes.All(t => (t.IsLandAct.HasValue && t.IsLandAct.Value && coreInventoryInterestCodes.Contains(t.LandActTypeCode))
+                    || (t.IsStatutoryRightOfWay.HasValue && t.IsStatutoryRightOfWay.Value)
+                    || (t.IsLicenseToConstruct.HasValue && t.IsLicenseToConstruct.Value)) && activeTakes.Any());
+                _propertyRepository.TransferFileProperty(property, isOwned);
             }
         }
 
