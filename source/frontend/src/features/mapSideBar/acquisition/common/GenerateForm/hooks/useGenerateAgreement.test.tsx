@@ -18,6 +18,7 @@ const generateFn = jest.fn();
 const getAcquisitionFileFn = jest.fn<Api_AcquisitionFile | undefined, any[]>();
 const getAcquisitionFileProperties = jest.fn<Api_Property[] | undefined, any[]>();
 const getPersonConceptFn = jest.fn();
+const getOrganizationConceptFn = jest.fn();
 
 jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
 (useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
@@ -33,6 +34,7 @@ jest.mock('@/hooks/repositories/useAcquisitionProvider');
 jest.mock('@/hooks/pims-api/useApiContacts');
 (useApiContacts as jest.Mock).mockImplementation(() => ({
   getPersonConcept: getPersonConceptFn,
+  getOrganizationConcept: getOrganizationConceptFn,
 }));
 
 let currentStore: MockStoreEnhanced<any, {}>;

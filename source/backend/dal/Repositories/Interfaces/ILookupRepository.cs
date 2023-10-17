@@ -76,8 +76,6 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsPropertyRoadType> GetAllPropertyRoadTypes();
 
-        IEnumerable<PimsPropertyAdjacentLandType> GetAllPropertyAdjacentLandTypes();
-
         IEnumerable<PimsVolumetricType> GetAllPropertyVolumetricTypes();
 
         IEnumerable<PimsPphStatusType> GetAllPPHStatusType();
@@ -124,6 +122,8 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsAgreementType> GetAllAgreementTypes();
 
-        IEnumerable<PimsInterestHolderInterestType> GetAllInterestHolderTypes();
+        IEnumerable<PimsInterestHolderInterestType> GetAllInterestHolderInterestTypes();
+
+        IEnumerable<PimsPaymentItemType> GetAllExpropriationPaymentItemTypes();
     }
 }

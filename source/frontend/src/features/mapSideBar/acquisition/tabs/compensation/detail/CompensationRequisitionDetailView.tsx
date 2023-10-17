@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaExternalLinkAlt, FaMoneyCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -12,17 +13,19 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { StyledAddButton } from '@/components/common/styles';
 import { Claims, Roles } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { Api_Organization } from '@/models/api/Organization';
+import { Api_Person } from '@/models/api/Person';
 import { Api_Product, Api_Project } from '@/models/api/Project';
 import { formatMoney, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { DetailAcquisitionFileOwner } from '../../fileDetails/detail/models';
+import { DetailAcquisitionFileOwner } from '../../../models/DetailAcquisitionFileOwner';
 
 export interface CompensationRequisitionDetailViewProps {
   compensation: Api_CompensationRequisition;
-  compensationPayee?: Api_CompensationPayee;
+  compensationContactPerson: Api_Person | undefined;
+  compensationContactOrganization: Api_Organization | undefined;
   acqFileProject?: Api_Project;
   acqFileProduct?: Api_Product | undefined;
   clientConstant: string;
@@ -34,17 +37,17 @@ export interface CompensationRequisitionDetailViewProps {
 interface PayeeViewDetails {
   displayName: string;
   isGstApplicable: boolean;
-  gstNumber: string;
-  goodTrust: boolean;
+  isPaymentInTrust: boolean;
   contactEnabled: boolean;
-  personId: number | null;
+  contactString: string | null;
 }
 
 export const CompensationRequisitionDetailView: React.FunctionComponent<
   React.PropsWithChildren<CompensationRequisitionDetailViewProps>
 > = ({
   compensation,
-  compensationPayee,
+  compensationContactPerson,
+  compensationContactOrganization,
   acqFileProject,
   acqFileProduct,
   clientConstant,
@@ -53,39 +56,41 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   onGenerate,
 }) => {
   const { hasClaim, hasRole } = useKeycloakWrapper();
-  const getPayeeDetails = (
-    compensationPayee: Api_CompensationPayee | null | undefined,
-  ): PayeeViewDetails | null => {
-    if (!compensationPayee) {
-      return null;
+  const [payeeDetails, setPayeeDetails] = useState<PayeeViewDetails | null>(null);
+
+  useEffect(() => {
+    if (!compensation) {
+      setPayeeDetails(null);
+      return;
     }
 
-    let payeeDetail = {
-      contactEnabled: true,
-      goodTrust: compensationPayee?.isPaymentInTrust,
-      personId: null,
-    } as PayeeViewDetails;
+    let payeeDetail: PayeeViewDetails = {
+      contactEnabled: false,
+      isPaymentInTrust: compensation?.isPaymentInTrust || false,
+      isGstApplicable: false,
+      contactString: null,
+      displayName: '',
+    };
 
-    if (compensationPayee.acquisitionOwnerId) {
-      const ownerDetail = DetailAcquisitionFileOwner.fromApi(compensationPayee.acquisitionOwner!);
+    if (!!compensation.acquisitionOwner) {
+      const ownerDetail = DetailAcquisitionFileOwner.fromApi(compensation.acquisitionOwner);
       payeeDetail.displayName = ownerDetail.ownerName ?? '';
-      payeeDetail.contactEnabled = false;
-    } else if (compensationPayee.interestHolderId) {
-      payeeDetail.displayName = compensationPayee.interestHolder?.person
-        ? formatApiPersonNames(compensationPayee.interestHolder?.person)
-        : compensationPayee.interestHolder?.organization?.name ?? '';
-      payeeDetail.personId = compensationPayee.interestHolder?.person?.id!;
-    } else if (compensationPayee.ownerRepresentativeId) {
-      payeeDetail.displayName = formatApiPersonNames(compensationPayee.ownerRepresentative?.person);
-      payeeDetail.personId = compensationPayee.ownerRepresentative?.person?.id!;
-    } else if (compensationPayee.ownerSolicitorId) {
-      payeeDetail.displayName = compensationPayee.ownerSolicitor?.person
-        ? formatApiPersonNames(compensationPayee.ownerSolicitor?.person)
-        : compensationPayee.ownerSolicitor?.organization?.name ?? '';
-      payeeDetail.personId = compensationPayee.ownerSolicitor?.person?.id!;
-    } else if (compensationPayee.motiSolicitorId) {
-      payeeDetail.displayName = formatApiPersonNames(compensationPayee.motiSolicitor);
-      payeeDetail.personId = compensationPayee.motiSolicitor?.id!;
+    } else if (compensation.interestHolderId) {
+      if (compensationContactPerson) {
+        payeeDetail.displayName = formatApiPersonNames(compensationContactPerson);
+        payeeDetail.contactString = 'P' + compensationContactPerson?.id;
+        payeeDetail.contactEnabled = true;
+      } else if (compensationContactOrganization) {
+        payeeDetail.displayName = compensationContactOrganization?.name ?? '';
+        payeeDetail.contactString = 'O' + compensationContactOrganization.id;
+        payeeDetail.contactEnabled = true;
+      }
+    } else if (compensation.acquisitionFilePersonId) {
+      payeeDetail.displayName = formatApiPersonNames(compensationContactPerson);
+      payeeDetail.contactString = 'P' + compensationContactPerson?.id;
+      payeeDetail.contactEnabled = true;
+    } else if (!!compensation.legacyPayee) {
+      payeeDetail.displayName = `${compensation.legacyPayee}`;
     }
 
     var results =
@@ -95,10 +100,8 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
     payeeDetail.isGstApplicable = results.length > 0;
 
-    return payeeDetail;
-  };
-
-  const payeeDetails = getPayeeDetails(compensationPayee);
+    setPayeeDetails(payeeDetail);
+  }, [compensation, compensationContactOrganization, compensationContactPerson]);
 
   const compPretaxAmount = compensation?.financials
     .map(f => f.pretaxAmount ?? 0)
@@ -201,6 +204,9 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         <SectionField label="Status" labelWidth="4" data-testid="compensation-status">
           {compensation.isDraft ? 'Draft' : 'Final'}
         </SectionField>
+        <SectionField label="Final date" labelWidth="4" data-testid="compensation-finalized">
+          {prettyFormatDate(compensation.finalizedDate)}
+        </SectionField>
         <SectionField label="Agreement date" labelWidth="4">
           {prettyFormatDate(compensation.agreementDate)}
         </SectionField>
@@ -253,18 +259,19 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       <Section header="Payment" isCollapsable initiallyExpanded>
         <SectionField label="Payee" labelWidth="4">
           <StyledPayeeDisplayName>
-            {payeeDetails?.contactEnabled && payeeDetails?.personId && (
+            {payeeDetails?.contactEnabled && payeeDetails?.contactString && (
               <StyledLink
                 target="_blank"
                 rel="noopener noreferrer"
-                to={`/contact/P${payeeDetails.personId}`}
+                to={`/contact/${payeeDetails.contactString}`}
               >
                 <span>{payeeDetails.displayName}</span>
                 <FaExternalLinkAlt className="ml-2" size="1rem" />
               </StyledLink>
             )}
+
             {!payeeDetails?.contactEnabled && <label>{payeeDetails?.displayName ?? ''}</label>}
-            {payeeDetails?.goodTrust && <label>, in trust</label>}
+            {payeeDetails?.isPaymentInTrust && <label>, in trust</label>}
           </StyledPayeeDisplayName>
         </SectionField>
         <SectionField label="Amount (before tax)">

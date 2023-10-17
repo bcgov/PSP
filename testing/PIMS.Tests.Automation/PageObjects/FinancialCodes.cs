@@ -6,7 +6,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class FinancialCodes : PageObjectBase
     {
         //Main Menu Element
-        private By financialCodeMainMenuLink = By.XPath("//a[contains(text(),'Manage Financial Codes')]");
+        private By financialCodeMainMenuLink = By.XPath("//a[contains(text(),'Manage Project and Financial Codes')]");
 
         //Financial Codes List View Elements
         //Financial Codes Filters Elements
@@ -74,7 +74,6 @@ namespace PIMS.Tests.Automation.PageObjects
         //Financial Code Error Message
         private By financialCodeDuplicateErrorMessage = By.XPath("//div[contains(text(),'Cannot create duplicate financial code')]");
 
-
         private SharedModals sharedModals;
 
         public FinancialCodes(IWebDriver webDriver) : base(webDriver)
@@ -84,19 +83,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateAdminFinancialCodes()
         {
-            Wait();
+            WaitUntilClickable(financialCodeMainMenuLink);
             webDriver.FindElement(financialCodeMainMenuLink).Click();
         }
 
         public void CreateNewFinancialCodeBttn()
         {
-            Wait();
+            WaitUntilClickable(financialCodeCreateNewBttn);
             webDriver.FindElement(financialCodeCreateNewBttn).Click();
         }
 
         public void CreateNewFinancialCode(FinancialCode financialCode)
         {
-            Wait();
+            WaitUntilClickable(financialCodeFormTypeSelect);
             ChooseSpecificSelectOption(financialCodeFormTypeSelect, financialCode.CodeType);
             webDriver.FindElement(financialCodeFormValueInput).SendKeys(financialCode.CodeValue);
             webDriver.FindElement(financialCodeFormDescriptionInput).SendKeys(financialCode.CodeDescription);
@@ -105,7 +104,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateFinancialCode(FinancialCode financialCode)
         {
-            Wait();
+            WaitUntilClickable(financialCodeFormDescriptionInput);
             ClearInput(financialCodeFormDescriptionInput);
             webDriver.FindElement(financialCodeFormDescriptionInput).SendKeys(financialCode.CodeDescription);
             webDriver.FindElement(financialCodeFormExpiryDateInput).SendKeys(financialCode.ExpiryDate);
@@ -114,13 +113,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveFinancialCode()
         {
-            Wait();
+            WaitUntilClickable(financialCodeFormSaveBttn);
             webDriver.FindElement(financialCodeFormSaveBttn).Click();
         }
 
         public void CancelFinancialCode()
         {
-            Wait();
+            WaitUntilClickable(financialCodeFormCancelBttn);
             webDriver.FindElement(financialCodeFormCancelBttn).Click();
 
             Wait();
@@ -135,32 +134,35 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void FilterFinancialCode(string value)
         {
-            Wait();
+            WaitUntilClickable(financialCodeResetBttn);
+            webDriver.FindElement(financialCodeResetBttn).Click();
+
+            WaitUntilVisible(financialCodeDescriptionInput);
             webDriver.FindElement(financialCodeDescriptionInput).SendKeys(value);
             webDriver.FindElement(financialCodeSearchBttn).Click();
         }
 
         public int CountTotalFinancialCodeResults()
         {
-            Wait();
+            WaitUntilVisible(financialCodeTableResultsTotal);
             return webDriver.FindElements(financialCodeTableResultsTotal).Count();
         }
 
         public Boolean DuplicateErrorMessageDisplayed()
         {
-            Wait();
+            WaitUntilVisible(financialCodeDuplicateErrorMessage);
             return webDriver.FindElement(financialCodeDuplicateErrorMessage).Displayed;
         }
 
         public void ChooseFirstSearchCodeValue()
         {
-            Wait();
+            WaitUntilClickable(financialResults1stResultCodeValue);
             webDriver.FindElement(financialResults1stResultCodeValue).Click();
         }
 
         public void VerifyFinancialCodeListView()
         {
-            Wait();
+            WaitUntilVisible(financialCodeTitle);
             Assert.True(webDriver.FindElement(financialCodeTitle).Displayed);
             Assert.True(webDriver.FindElement(financialCodeTypeSelect).Displayed);
             Assert.True(webDriver.FindElement(financialCodeDescriptionInput).Displayed);
@@ -183,7 +185,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreateNewFinancialCodeForm()
         {
-            Wait();
+            WaitUntilVisible(financialCodeCreateTitle);
             Assert.True(webDriver.FindElement(financialCodeCreateTitle).Displayed);
 
             Assert.True(webDriver.FindElement(financialCodeFormTypeLabel).Displayed);
@@ -224,7 +226,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyUpdateFinancialCodeForm()
         {
-            Wait();
+            WaitUntilVisible(financialCodeUpdateTitle);
             Assert.True(webDriver.FindElement(financialCodeUpdateTitle).Displayed);
 
             Assert.True(webDriver.FindElement(financialCodeFormTypeLabel).Displayed);

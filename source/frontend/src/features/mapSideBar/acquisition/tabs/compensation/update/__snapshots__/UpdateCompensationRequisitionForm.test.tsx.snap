@@ -6,7 +6,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
     class="Toastify"
   />
   <div />
-  .c8.btn {
+  .c9.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   cursor: pointer;
 }
 
-.c8.btn:hover {
+.c9.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c8.btn:focus {
+.c9.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c8.btn.btn-primary {
+.c9.btn.btn-primary {
   border: none;
 }
 
-.c8.btn.btn-secondary {
+.c9.btn.btn-secondary {
   background: none;
 }
 
-.c8.btn.btn-info {
+.c9.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c8.btn.btn-info:hover,
-.c8.btn.btn-info:active,
-.c8.btn.btn-info:focus {
+.c9.btn.btn-info:hover,
+.c9.btn.btn-info:active,
+.c9.btn.btn-info:focus {
   background: none;
 }
 
-.c8.btn.btn-light {
+.c9.btn.btn-light {
   border: none;
 }
 
-.c8.btn.btn-dark {
+.c9.btn.btn-dark {
   border: none;
 }
 
-.c8.btn.btn-link {
+.c9.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   padding: 0;
 }
 
-.c8.btn.btn-link:hover,
-.c8.btn.btn-link:active,
-.c8.btn.btn-link:focus {
+.c9.btn.btn-link:hover,
+.c9.btn.btn-link:active,
+.c9.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   outline: none;
 }
 
-.c8.btn.btn-link:disabled,
-.c8.btn.btn-link.disabled {
+.c9.btn.btn-link:disabled,
+.c9.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c8.btn:disabled,
-.c8.btn:disabled:hover {
+.c9.btn:disabled,
+.c9.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,27 +128,43 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   opacity: 0.65;
 }
 
-.c8.Button .Button__icon {
+.c9.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c8.Button--icon-only:focus {
+.c9.Button--icon-only:focus {
   outline: none;
 }
 
-.c8.Button--icon-only .Button__icon {
+.c9.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c5.c5.form-control.is-valid {
+.c5 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c5 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c5 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c6.c6.form-control.is-valid {
   background-image: none;
 }
 
-.c5.c5.form-control.is-invalid {
+.c6.c6.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c7 {
+.c8 {
   float: right;
   cursor: pointer;
 }
@@ -178,18 +194,13 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   font-weight: bold;
 }
 
-.c10 {
+.c11 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
   bottom: 0;
   background: white;
   z-index: 10;
-}
-
-.c11 {
-  padding-top: 0.7rem;
-  color: red;
 }
 
 .c0 {
@@ -210,12 +221,12 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   padding-bottom: 1rem;
 }
 
-.c9 {
+.c10 {
   margin-right: 1rem;
   padding-bottom: 1rem;
 }
 
-.c6 textarea.form-control {
+.c7 textarea.form-control {
   min-width: 100%;
   height: 7rem;
   resize: none;
@@ -301,6 +312,22 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               <label
                 class="c3"
               >
+                Final date:
+              </label>
+            </div>
+            <div
+              class="c4 text-left col-4"
+            />
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c3"
+              >
                 Agreement date:
               </label>
             </div>
@@ -308,20 +335,29 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               class="c4 text-left col-4"
             >
               <div
-                class="form-group"
+                class="c5 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
                 >
                   <div
-                    class="react-datepicker__input-container"
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                   >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
                     <input
                       autocomplete="off"
-                      class="c5 form-control date-picker"
+                      class="c6 form-control date-picker"
                       id="datepicker-agreementDateTime"
                       name="agreementDateTime"
-                      placeholder="--/--/----"
+                      placeholder="MTH DD, YYYY"
                       type="text"
                       value=""
                     />
@@ -346,20 +382,29 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               class="c4 text-left col-4"
             >
               <div
-                class="form-group"
+                class="c5 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
                 >
                   <div
-                    class="react-datepicker__input-container"
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                   >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
                     <input
                       autocomplete="off"
-                      class="c5 form-control date-picker"
+                      class="c6 form-control date-picker"
                       id="datepicker-expropriationNoticeServedDateTime"
                       name="expropriationNoticeServedDateTime"
-                      placeholder="--/--/----"
+                      placeholder="MTH DD, YYYY"
                       type="text"
                       value=""
                     />
@@ -384,20 +429,29 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               class="c4 text-left col-4"
             >
               <div
-                class="form-group"
+                class="c5 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
                 >
                   <div
-                    class="react-datepicker__input-container"
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                   >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
                     <input
                       autocomplete="off"
-                      class="c5 form-control date-picker"
+                      class="c6 form-control date-picker"
                       id="datepicker-expropriationVestingDateTime"
                       name="expropriationVestingDateTime"
-                      placeholder="--/--/----"
+                      placeholder="MTH DD, YYYY"
                       type="text"
                       value=""
                     />
@@ -422,7 +476,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               class="c4 text-left col"
             >
               <div
-                class="c6 textarea input form-group"
+                class="c7 textarea input form-group"
               >
                 <textarea
                   class="form-control"
@@ -689,7 +743,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               class="col-1"
             >
               <svg
-                class="c7"
+                class="c8"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -735,13 +789,29 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               >
                 <select
                   class="form-select form-control"
-                  id="input-payeeKey"
-                  name="payeeKey"
+                  id="input-payee.payeeKey"
+                  name="payee.payeeKey"
                 >
                   <option
                     value=""
                   >
                     Select...
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-OWNER-1"
+                    title="JOHH DOE Sr.(Owner)"
+                    value="OWNER-1"
+                  >
+                    JOHH DOE Sr.(Owner)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-OWNER-3"
+                    title="FORTIS BC, Inc. No. 9999 (OR Reg. No. 12345)(Owner)"
+                    value="OWNER-3"
+                  >
+                    FORTIS BC, Inc. No. 9999 (OR Reg. No. 12345)(Owner)
                   </option>
                 </select>
               </div>
@@ -773,8 +843,8 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                   >
                     <input
                       class="form-check-input position-static"
-                      id="input-payees.0.isPaymentInTrust"
-                      name="payees.0.isPaymentInTrust"
+                      id="input-payee.isPaymentInTrust"
+                      name="payee.isPaymentInTrust"
                       type="checkbox"
                       value="false"
                     />
@@ -827,8 +897,9 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               >
                 <input
                   class="form-control"
-                  id="input-payees.0.gstNumber"
-                  name="payees.0.gstNumber"
+                  id="input-payee.gstNumber"
+                  name="payee.gstNumber"
+                  title=""
                   value=""
                 />
               </div>
@@ -858,12 +929,12 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                   <input
                     class="form-control input-number"
                     disabled=""
-                    id="input-payees.0.pretaxAmount"
+                    id="input-payee.pretaxAmount"
                     inputmode="numeric"
-                    name="payees.0.pretaxAmount"
+                    name="payee.pretaxAmount"
                     placeholder=""
                     type="text"
-                    value=""
+                    value="$0.00"
                   />
                 </div>
               </div>
@@ -893,12 +964,12 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                   <input
                     class="form-control input-number"
                     disabled=""
-                    id="input-payees.0.taxAmount"
+                    id="input-payee.taxAmount"
                     inputmode="numeric"
-                    name="payees.0.taxAmount"
+                    name="payee.taxAmount"
                     placeholder=""
                     type="text"
-                    value=""
+                    value="$0.00"
                   />
                 </div>
               </div>
@@ -952,12 +1023,12 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                   <input
                     class="form-control input-number"
                     disabled=""
-                    id="input-payees.0.totalAmount"
+                    id="input-payee.totalAmount"
                     inputmode="numeric"
-                    name="payees.0.totalAmount"
+                    name="payee.totalAmount"
                     placeholder=""
                     type="text"
-                    value=""
+                    value="$0.00"
                   />
                 </div>
               </div>
@@ -983,7 +1054,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               class="col-1"
             >
               <svg
-                class="c7"
+                class="c8"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -1010,7 +1081,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
           class="collapse show"
         >
           <button
-            class="c8 Button btn btn-link"
+            class="c9 Button btn btn-link"
             data-testid="add-financial-activity"
             type="button"
           >
@@ -1045,7 +1116,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               class="c4 text-left col"
             >
               <div
-                class="c6 textarea input form-group"
+                class="c7 textarea input form-group"
               >
                 <textarea
                   class="form-control"
@@ -1060,23 +1131,19 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
       </div>
     </div>
     <div
-      class="c9"
+      class="c10"
     >
       <div
-        class="c10 justify-content-end mt-auto no-gutters row"
+        class="c11 justify-content-end mt-auto no-gutters row"
       >
         <div
           class="pr-3 col-auto"
-        >
-          <div
-            class="c11"
-          />
-        </div>
+        />
         <div
           class="pr-4 col-auto"
         >
           <button
-            class="c8 Button btn btn-secondary"
+            class="c9 Button btn btn-secondary"
             type="button"
           >
             <div
@@ -1090,7 +1157,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
           class="col-auto"
         >
           <button
-            class="c8 Button Button--disabled btn btn-primary"
+            class="c9 Button Button--disabled btn btn-primary"
             disabled=""
             type="button"
           >

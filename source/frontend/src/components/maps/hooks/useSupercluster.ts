@@ -7,6 +7,7 @@ import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 
 import { ICluster } from '../types';
 
+// P => Properties | C => Cluster
 interface SuperclusterOptions<P, C> extends Supercluster.Options<P, C> {
   /** Optionally enable clusters recalculation */
   enableClustering?: boolean;
@@ -34,6 +35,7 @@ const useSupercluster = <
 
   // use deep-equals to avoid infinite re-rendering when objects have same data but are different JS instances
   useDeepCompareEffect(() => {
+    // Create and initialize the supercluster instance if not existing already.
     if (!superclusterRef.current || !dequal(pointsRef.current, points)) {
       superclusterRef.current = new Supercluster(options);
       superclusterRef.current.load(points);

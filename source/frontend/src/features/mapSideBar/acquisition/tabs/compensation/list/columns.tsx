@@ -19,13 +19,13 @@ export function createCompensationTableColumns(
 ) {
   const columns: ColumnWithProps<Api_CompensationRequisition>[] = [
     {
-      Header: 'Date',
+      Header: 'Final Date',
       align: 'left',
       sortable: false,
       minWidth: 40,
       maxWidth: 40,
       Cell: (cellProps: CellProps<Api_CompensationRequisition>) => {
-        return stringToFragment(prettyFormatDate(cellProps.row.original.agreementDate));
+        return stringToFragment(prettyFormatDate(cellProps.row.original.finalizedDate));
       },
     },
     {
@@ -61,7 +61,9 @@ export function createCompensationTableColumns(
           },
           0,
         );
-        return stringToFragment(formatMoney(totalAmount));
+        const isFinal = cellProps.row.original.isDraft === false;
+        const amount = formatMoney(totalAmount);
+        return isFinal ? <b>{amount}</b> : stringToFragment(amount);
       },
     },
     {
@@ -71,7 +73,7 @@ export function createCompensationTableColumns(
       minWidth: 20,
       maxWidth: 20,
       Cell: (cellProps: CellProps<Api_CompensationRequisition>) => {
-        return stringToFragment(cellProps.row.original.isDraft ? 'Draft' : 'Final');
+        return cellProps.row.original.isDraft ? stringToFragment('Draft') : <b>Final</b>;
       },
     },
     {

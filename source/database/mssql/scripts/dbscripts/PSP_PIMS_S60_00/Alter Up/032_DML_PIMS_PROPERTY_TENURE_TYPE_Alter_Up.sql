@@ -1,0 +1,87 @@
+/* -----------------------------------------------------------------------------
+Alter the data in the PIMS_PROPERTY_TENURE_TYPE table.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+Author        Date         Comment
+------------  -----------  -----------------------------------------------------
+Doug Filteau  2023-Jun-30  Initial version
+----------------------------------------------------------------------------- */
+
+SET XACT_ABORT ON
+GO
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+GO
+BEGIN TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Update the "SRWMOTI" type
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'SRWMOTI'
+
+SELECT PROPERTY_TENURE_TYPE_CODE
+FROM   PIMS_PROPERTY_TENURE_TYPE
+WHERE  PROPERTY_TENURE_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+  BEGIN
+  UPDATE PIMS_PROPERTY_TENURE_TYPE
+  SET    DESCRIPTION = N'Statutory Right of Way (SRW) - MoTI'
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+  WHERE  PROPERTY_TENURE_TYPE_CODE = N'SRWMOTI';
+  END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Update the "SRWBCTFA" type
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'SRWBCTFA'
+
+SELECT PROPERTY_TENURE_TYPE_CODE
+FROM   PIMS_PROPERTY_TENURE_TYPE
+WHERE  PROPERTY_TENURE_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+  BEGIN
+  UPDATE PIMS_PROPERTY_TENURE_TYPE
+  SET    DESCRIPTION = N'Statutory Right of Way (SRW) - BCTFA'
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+  WHERE  PROPERTY_TENURE_TYPE_CODE = N'SRWBCTFA';
+  END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Update the "SRWOTHER" type
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'SRWOTHER'
+
+SELECT PROPERTY_TENURE_TYPE_CODE
+FROM   PIMS_PROPERTY_TENURE_TYPE
+WHERE  PROPERTY_TENURE_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+  BEGIN
+  UPDATE PIMS_PROPERTY_TENURE_TYPE
+  SET    DESCRIPTION = N'Statutory Right of Way (SRW) - Other'
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+  WHERE  PROPERTY_TENURE_TYPE_CODE = N'SRWOTHER';
+  END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+COMMIT TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+DECLARE @Success AS BIT
+SET @Success = 1
+SET NOEXEC OFF
+IF (@Success = 1) PRINT 'The database update succeeded'
+ELSE BEGIN
+   IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
+   PRINT 'The database update failed'
+END
+GO

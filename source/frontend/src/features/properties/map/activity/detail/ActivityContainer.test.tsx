@@ -4,11 +4,13 @@ import MockAdapter from 'axios-mock-adapter';
 import { act } from 'react-dom/test-utils';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FileTypes } from '@/constants/fileTypes';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getMockActivityResponse } from '@/mocks/activities.mock';
 import { mockLookups } from '@/mocks/index.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
@@ -28,6 +30,9 @@ jest.mock('@react-keycloak/web');
 const onClose = jest.fn();
 const mockAxios = new MockAdapter(axios);
 let viewProps: IActivityTrayProps | undefined;
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 const ActivityView = (props: IActivityTrayProps) => {
   viewProps = props;

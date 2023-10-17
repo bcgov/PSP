@@ -1,6 +1,7 @@
 ﻿
 
 using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -63,7 +64,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropertiesDelete1stPropBttn = By.XPath("(//span[contains(text(),'Remove')]/parent::div/parent::button)[1]");
 
         //Toast Element
-        private By generalToastBody = By.CssSelector("div[class='Toastify__toast-body']");
+        private By duplicatePropToast = By.CssSelector("div[id='duplicate-property'] div[class='Toastify__toast-body']");
 
         //Warning Message Modal
         private By searchPropertiesModal = By.CssSelector("div[class='modal-content']");
@@ -78,38 +79,38 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToSearchTab()
         {
-            Wait();
+            WaitUntilClickable(searchByTab);
             webDriver.FindElement(searchByTab).Click();
         }
 
         public void SelectPropertyByPID(string PID)
         {
-            Wait();
+            WaitUntilClickable(searchBySelect);
             ChooseSpecificSelectOption(searchBySelect, "PID");
 
-            WaitUntil(searchByPIDInput);
+            WaitUntilVisible(searchByPIDInput);
             if (webDriver.FindElement(searchByPIDInput).GetAttribute("value") != "")
             {
                 ClearInput(searchByPIDInput);
             }
             webDriver.FindElement(searchByPIDInput).SendKeys(PID);
 
-            webDriver.FindElement(searchByButton).Click();
+            FocusAndClick(searchByButton);
         }
 
         public void SelectPropertyByPIN(string PIN)
         {
-            Wait();
+            WaitUntilClickable(searchBySelect);
             ChooseSpecificSelectOption(searchBySelect, "PIN");
 
-            WaitUntil(searchByPINInput);
+            WaitUntilVisible(searchByPINInput);
             if (webDriver.FindElement(searchByPINInput).GetAttribute("value") != "")
             {
                 ClearInput(searchByPINInput);
             }
             webDriver.FindElement(searchByPINInput).SendKeys(PIN);
 
-            webDriver.FindElement(searchByButton).Click();
+            FocusAndClick(searchByButton);
         }
 
         public void SelectPropertyByAddress(string address)
@@ -117,14 +118,14 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ChooseSpecificSelectOption(searchBySelect, "Address");
 
-            WaitUntil(searchByAddressInput);
+            WaitUntilVisible(searchByAddressInput);
             if (webDriver.FindElement(searchByAddressInput).GetAttribute("value") != "")
             {
                 ClearInput(searchByAddressInput);
             }
             webDriver.FindElement(searchByAddressInput).SendKeys(address);
 
-            WaitUntil(searchByAddressInputSuggestionList);
+            WaitUntilVisible(searchByAddressInputSuggestionList);
             FocusAndClick(searchByAddressSuggestion1stOption);
 
         }
@@ -134,14 +135,14 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ChooseSpecificSelectOption(searchBySelect, "Plan #");
 
-            WaitUntil(searchByPlanInput);
+            WaitUntilVisible(searchByPlanInput);
             if (webDriver.FindElement(searchByPlanInput).GetAttribute("value") != "")
             {
                 ClearInput(searchByPlanInput);
             }
             webDriver.FindElement(searchByPlanInput).SendKeys(plan);
 
-            webDriver.FindElement(searchByButton).Click();
+            FocusAndClick(searchByButton);
         }
 
         public void SelectPropertyByLegalDescription(string legalDescription)
@@ -149,19 +150,19 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ChooseSpecificSelectOption(searchBySelect, "Legal Description");
 
-            WaitUntil(searchByLegalDescriptionInput);
+            WaitUntilVisible(searchByLegalDescriptionInput);
             if (webDriver.FindElement(searchByLegalDescriptionInput).GetAttribute("value") != "")
             {
                 ClearInput(searchByLegalDescriptionInput);
             }
             webDriver.FindElement(searchByLegalDescriptionInput).SendKeys(legalDescription);
 
-            webDriver.FindElement(searchByButton).Click();
+            FocusAndClick(searchByButton);
         }
 
         public void AddNameSelectedProperty(string name)
         {
-            Wait();
+            WaitUntilVisible(searchPropertiesName1stPropInput);
             webDriver.FindElement(searchPropertiesName1stPropInput).SendKeys(name);
         }
 
@@ -171,7 +172,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(searchPropertiesDelete1stPropBttn).Click();
 
-            Wait(5000);
+            Wait(3000);
             if (webDriver.FindElements(searchPropertiesModal).Count > 0)
             {
                 Assert.True(sharedModals.ModalHeader() == "Removing Property from form");
@@ -186,20 +187,21 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(PropertiesTotal - PropertiesLeft == 1);
         }
 
-        public void SelectFirstOption(Boolean isDuplicateTest)
+        public void SelectFirstOption()
         {
-            WaitUntil(searchProperties1stResultPropDiv);
+            WaitUntilVisible(searchProperties1stResultPropDiv);
             FocusAndClick(searchProperties1stResultPropCheckbox);
 
-            Wait(5000);
             ButtonElement("Add to selection");
 
-            if (webDriver.FindElements(generalToastBody).Count() > 0 && isDuplicateTest)
+            
+            if (webDriver.FindElements(duplicatePropToast).Count() == 1)
             {
-                Assert.True(sharedModals.ToastifyText().Equals("A property that the user is trying to select has already been added to the selected properties list"));
+                WaitUntilVisible(duplicatePropToast);
+                System.Diagnostics.Debug.WriteLine("HELLO: "+ webDriver.FindElement(duplicatePropToast).Text);
+                Assert.True(webDriver.FindElement(duplicatePropToast).Text == "A property that the user is trying to select has already been added to the selected properties list");
             }
 
-            Wait(5000);
             if (webDriver.FindElements(searchPropertiesModal).Count > 0)
             {
                 Assert.True(sharedModals.ModalHeader() == "Not inventory property");
@@ -211,13 +213,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string noRowsResultsMessage()
         {
-            WaitUntil(searchPropertiesNoRowsResult);
+            WaitUntilVisible(searchPropertiesNoRowsResult);
             return webDriver.FindElement(searchPropertiesNoRowsResult).Text;
         }
 
         public void VerifyLocateOnMapFeature()
         {
-            Wait();
+            WaitUntilVisible(searchSectionTitle);
 
             Assert.True(webDriver.FindElement(searchSectionTitle).Displayed);
             Assert.True(webDriver.FindElement(searchSectionInstructions).Displayed);
@@ -246,16 +248,11 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 Assert.True(webDriver.FindElement(searchPropertiesSelectedDefault).Displayed);
             }
-            else
-            {
-
-            }
-            
         }
 
         public void VerifySearchPropertiesFeature()
         {
-            Wait();
+            WaitUntilVisible(searchByTab);
 
             Assert.True(webDriver.FindElement(searchByTab).Displayed);
             Assert.True(webDriver.FindElement(searchBySubtitle).Displayed);

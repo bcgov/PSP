@@ -13,7 +13,7 @@ import { logError } from '@/store/slices/network/networkSlice';
  * hook that fetches the person given the person's id.
  * @param personId
  */
-export const usePersonDetail = (personId?: number) => {
+export const usePersonDetail = (personId?: number | null) => {
   const [person, setPerson] = useState<IEditablePerson>();
   const { getPerson } = useApiContacts();
   const dispatch = useDispatch();

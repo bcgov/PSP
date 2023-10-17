@@ -1,9 +1,8 @@
 import clsx from 'classnames';
-import { ReactElement, useContext, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import { AdminTools, LeaseAndLicenses, ResearchTray } from '@/components/layout';
-import { MapStateActionTypes, MapStateContext } from '@/components/maps/providers/MapStateContext';
 
 import { AcquisitionTray } from './AcquisitionTray';
 import { ContactTray } from './ContactTray';
@@ -30,14 +29,9 @@ export interface ISideTrayPageProps {
 
 export const SideTray = ({ context, setContext }: ISideTrayProps) => {
   const [show, setShow] = useState(false);
-  const { setState } = useContext(MapStateContext);
 
   const handleFileSet = () => {
     setShow(false);
-    setState({
-      type: MapStateActionTypes.SELECTED_FILE_FEATURE,
-      selectedFileFeature: null,
-    });
   };
 
   const sideTrayPages: Map<SidebarContextType, ReactElement> = new Map<

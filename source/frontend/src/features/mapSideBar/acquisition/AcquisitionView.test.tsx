@@ -2,6 +2,7 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Route } from 'react-router-dom';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims } from '@/constants/claims';
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
@@ -11,11 +12,12 @@ import {
 } from '@/mocks/acquisitionFiles.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { rest, server } from '@/mocks/msw/server';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { prettyFormatDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { SideBarContextProvider } from '../context/sidebarContext';
@@ -24,6 +26,8 @@ import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 const onClose = jest.fn();
 const onSave = jest.fn();
@@ -61,7 +65,6 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
   onShowPropertySelector: onEditFileProperties,
   setContainerState,
   containerState: {
-    acquisitionFile: mockAcquisitionFileResponse(),
     isEditing: false,
     selectedMenuIndex: 0,
     showConfirmModal: false,
@@ -69,6 +72,7 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
     defaultPropertyTab: InventoryTabNames.property,
   },
   formikRef: React.createRef(),
+  isFormValid: true,
 };
 
 const history = createMemoryHistory();
@@ -108,6 +112,8 @@ describe('AcquisitionView component', () => {
   };
 
   beforeEach(() => {
+    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+
     history.replace(`/mapview/sidebar/acquisition/1`);
     server.use(
       rest.get('/api/users/info/*', (req, res, ctx) =>
@@ -141,8 +147,10 @@ describe('AcquisitionView component', () => {
     expect(getByText('Acquisition File')).toBeVisible();
 
     expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
-    expect(getByText(prettyFormatDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
-    expect(getByText(prettyFormatDate(testAcquisitionFile.appLastUpdateTimestamp))).toBeVisible();
+    expect(getByText(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
+    expect(
+      getByText(prettyFormatUTCDate(testAcquisitionFile.appLastUpdateTimestamp)),
+    ).toBeVisible();
   });
 
   it('should close the form when Close button is clicked', async () => {

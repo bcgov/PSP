@@ -75,7 +75,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
       class="c2"
     />
   </div>
-  .c20.btn {
+  .c21.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -105,49 +105,49 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c20.btn:hover {
+.c21.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c20.btn:focus {
+.c21.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c20.btn.btn-primary {
+.c21.btn.btn-primary {
   border: none;
 }
 
-.c20.btn.btn-secondary {
+.c21.btn.btn-secondary {
   background: none;
 }
 
-.c20.btn.btn-info {
+.c21.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c20.btn.btn-info:hover,
-.c20.btn.btn-info:active,
-.c20.btn.btn-info:focus {
+.c21.btn.btn-info:hover,
+.c21.btn.btn-info:active,
+.c21.btn.btn-info:focus {
   background: none;
 }
 
-.c20.btn.btn-light {
+.c21.btn.btn-light {
   border: none;
 }
 
-.c20.btn.btn-dark {
+.c21.btn.btn-dark {
   border: none;
 }
 
-.c20.btn.btn-link {
+.c21.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -168,9 +168,9 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c20.btn.btn-link:hover,
-.c20.btn.btn-link:active,
-.c20.btn.btn-link:focus {
+.c21.btn.btn-link:hover,
+.c21.btn.btn-link:active,
+.c21.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -179,14 +179,14 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c20.btn.btn-link:disabled,
-.c20.btn.btn-link.disabled {
+.c21.btn.btn-link:disabled,
+.c21.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c20.btn:disabled,
-.c20.btn:disabled:hover {
+.c21.btn:disabled,
+.c21.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -197,15 +197,15 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c20.Button .Button__icon {
+.c21.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c20.Button--icon-only:focus {
+.c21.Button--icon-only:focus {
   outline: none;
 }
 
-.c20.Button--icon-only .Button__icon {
+.c21.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -213,61 +213,77 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   font-size: 2.4rem;
 }
 
-.c9.c9.form-control.is-valid {
+.c9 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c9 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c9 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c10.c10.form-control.is-valid {
   background-image: none;
 }
 
-.c9.c9.form-control.is-invalid {
+.c10.c10.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c18 {
+.c19 {
   padding-right: 0;
 }
 
-.c18 .form-control {
+.c19 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c19:not(:first-child) {
+.c20:not(:first-child) {
   padding-left: 0;
 }
 
-.c19:not(:first-child) .form-control {
+.c20:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c21 {
+.c22 {
   font-size: 1.4rem;
 }
 
-.c12 {
+.c13 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c12 .nav-tabs {
+.c13 .nav-tabs {
   height: auto;
 }
 
-.c12 .nav-item {
+.c13 .nav-item {
   min-width: 5rem;
   padding: 0.1rem 0.6rem;
 }
 
-.c12 .nav-item:hover {
+.c13 .nav-item:hover {
   border-color: transparent;
 }
 
-.c12 .nav-item.active {
+.c13 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
 }
 
-.c13 {
+.c14 {
   font-family: 'BCSans-Bold';
   font-size: 2rem;
   border-bottom: solid 0.2rem;
@@ -276,7 +292,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   margin-bottom: 2rem;
 }
 
-.c24 {
+.c25 {
   font-size: 1.6rem;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -296,7 +312,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   width: 100%;
 }
 
-.c26.c26.btn {
+.c27.c27.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
   right: 0.4rem;
@@ -305,19 +321,19 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   line-height: unset;
 }
 
-.c26.c26.btn .text {
+.c27.c27.btn .text {
   display: none;
 }
 
-.c26.c26.btn:hover,
-.c26.c26.btn:active,
-.c26.c26.btn:focus {
+.c27.c27.btn:hover,
+.c27.c27.btn:active,
+.c27.c27.btn:focus {
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
 }
 
-.c25 {
+.c26 {
   background: none;
   position: relative;
   border-radius: 0.3rem;
@@ -326,7 +342,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   border: solid 0.1rem;
 }
 
-.c25.is-invalid {
+.c26.is-invalid {
   border: solid 0.1rem;
 }
 
@@ -355,13 +371,13 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c15:hover {
+.c16:hover {
   cursor: pointer;
 }
 
-.c14.c14.c14 input,
-.c14.c14.c14 select,
-.c14.c14.c14 textarea {
+.c15.c15.c15 input,
+.c15.c15.c15 select,
+.c15.c15.c15 textarea {
   background: none;
   border: none;
   resize: none;
@@ -371,51 +387,51 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c14.c14.c14 .form-label {
+.c15.c15.c15 .form-label {
   font-weight: bold;
 }
 
-.c16 {
+.c17 {
   font-family: 'BcSans-Bold';
   margin-bottom: 1rem;
 }
 
-.c10 {
+.c11 {
   height: 100%;
 }
 
-.c10 .tab-content {
+.c11 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   height: calc(100% - 2.4rem);
   overflow-y: auto;
 }
 
-.c10 .tab-content .tab-pane {
+.c11 .tab-content .tab-pane {
   position: relative;
 }
 
-.c11 {
+.c12 {
   height: auto;
 }
 
-.c11.tab-content {
+.c12.tab-content {
   height: auto;
 }
 
-.c17 {
+.c18 {
   border-radius: 0.5rem;
 }
 
-.c17 .idir-input-group .input-group-prepend select {
+.c18 .idir-input-group .input-group-prepend select {
   width: 16rem;
 }
 
-.c17 .idir-input-group input {
+.c18 .idir-input-group input {
   width: 18rem;
   max-width: 100%;
 }
 
-.c22 {
+.c23 {
   font-size: 1.6rem;
   border-bottom: 0.2rem solid;
   margin-bottom: 0.9rem;
@@ -423,7 +439,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c23 input.form-control {
+.c24 input.form-control {
   min-width: 50rem;
   max-width: 100%;
 }
@@ -436,10 +452,6 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
 .c3 .tab-pane .form-section {
   margin: 1.5rem;
   padding-left: 1.5rem;
-}
-
-.c3 .react-datepicker-wrapper {
-  max-width: 14rem;
 }
 
 .c3 [name='region'] {
@@ -531,6 +543,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                           class="rbt-input-main form-control rbt-input"
                           id="typeahead-project"
                           name="typeahead-project"
+                          placeholder="Type to search for a Project"
                           role="combobox"
                           type="text"
                           value=""
@@ -713,20 +726,29 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                   class="c7 text-left col"
                 >
                   <div
-                    class="form-group"
+                    class="c9 form-group"
                   >
                     <div
                       class="react-datepicker-wrapper d-block"
                     >
                       <div
-                        class="react-datepicker__input-container"
+                        class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                       >
+                        <svg
+                          class="react-datepicker__calendar-icon"
+                          viewBox="0 0 448 512"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                          />
+                        </svg>
                         <input
                           autocomplete="off"
-                          class="c9 form-control date-picker"
+                          class="c10 form-control date-picker"
                           id="datepicker-assignedDate"
                           name="assignedDate"
-                          placeholder="--/--/----"
+                          placeholder="MTH DD, YYYY"
                           type="text"
                           value=""
                         />
@@ -751,20 +773,29 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                   class="c7 text-left col"
                 >
                   <div
-                    class="form-group"
+                    class="c9 form-group"
                   >
                     <div
                       class="react-datepicker-wrapper d-block"
                     >
                       <div
-                        class="react-datepicker__input-container"
+                        class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                       >
+                        <svg
+                          class="react-datepicker__calendar-icon"
+                          viewBox="0 0 448 512"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                          />
+                        </svg>
                         <input
                           autocomplete="off"
-                          class="c9 form-control date-picker"
+                          class="c10 form-control date-picker"
                           id="datepicker-deliveryDate"
                           name="deliveryDate"
-                          placeholder="--/--/----"
+                          placeholder="MTH DD, YYYY"
                           type="text"
                           value=""
                         />
@@ -806,10 +837,10 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c10 c11"
+                    class="c11 c12"
                   >
                     <nav
-                      class="c12 nav nav-tabs"
+                      class="c13 nav nav-tabs"
                       role="tablist"
                     >
                       <a
@@ -846,12 +877,12 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                             class="collapse show"
                           >
                             <h3
-                              class="c13"
+                              class="c14"
                             >
                               Select a property
                             </h3>
                             <div
-                              class="c14 row"
+                              class="c15 row"
                             >
                               <div
                                 class="col-md-4"
@@ -860,7 +891,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                   class="d-flex flex-column align-items-center"
                                 >
                                   <svg
-                                    class="c15"
+                                    class="c16"
                                     height="97"
                                     title="Click once to enter property selection mode."
                                     width="97"
@@ -887,7 +918,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                   class="row"
                                 >
                                   <div
-                                    class="c16 col"
+                                    class="c17 col"
                                   >
                                     Selected property attributes
                                   </div>
@@ -1005,12 +1036,12 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                             class="collapse show"
                           >
                             <h3
-                              class="c13"
+                              class="c14"
                             >
                               Search for a property
                             </h3>
                             <form
-                              class="c17 p-3"
+                              class="c18 p-3"
                               novalidate=""
                             >
                               <div
@@ -1023,7 +1054,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                     class="flex-nowrap input-group row"
                                   >
                                     <div
-                                      class="c18 col-auto"
+                                      class="c19 col-auto"
                                     >
                                       <div
                                         class="input-group-prepend"
@@ -1076,7 +1107,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                       </div>
                                     </div>
                                     <div
-                                      class="c19 col"
+                                      class="c20 col"
                                     >
                                       <div
                                         class="input form-group"
@@ -1104,7 +1135,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                       class="pr-0 col"
                                     >
                                       <button
-                                        class="c20 Button Button--icon-only primary btn btn-primary"
+                                        class="c21 Button Button--icon-only primary btn btn-primary"
                                         data-testid="search"
                                         id="search-button"
                                         title="search"
@@ -1133,7 +1164,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                       class="pl-0 col"
                                     >
                                       <button
-                                        class="c20 Button Button--icon-only btn btn-info"
+                                        class="c21 Button Button--icon-only btn btn-info"
                                         data-testid="reset-button"
                                         id="reset-button"
                                         title="reset-button"
@@ -1281,7 +1312,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                 class="ml-auto align-self-center col-auto"
                               >
                                 <p
-                                  class="c21"
+                                  class="c22"
                                 >
                                   0 selected
                                 </p>
@@ -1317,7 +1348,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                   class="collapse show"
                 >
                   <div
-                    class="c22 no-gutters row"
+                    class="c23 no-gutters row"
                   >
                     <div
                       class="col-md-3"
@@ -1392,7 +1423,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                   class="c7 required text-left col"
                 >
                   <div
-                    class="c23 input form-group"
+                    class="c24 input form-group"
                   >
                     <input
                       class="form-control"
@@ -1444,7 +1475,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                   class="c7 text-left col"
                 >
                   <div
-                    class="c23 input form-group"
+                    class="c24 input form-group"
                   >
                     <input
                       class="form-control"
@@ -1632,7 +1663,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
               class="collapse show"
             >
               <button
-                class="c20 Button btn btn-link"
+                class="c21 Button btn btn-link"
                 data-testid="add-team-member"
                 type="button"
               >
@@ -1666,12 +1697,12 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
               class="collapse show"
             >
               <p
-                class="c24"
+                class="c25"
               >
                 Each property in this file should be owned by the owner(s) in this section
               </p>
               <button
-                class="c20 Button btn btn-link"
+                class="c21 Button btn btn-link"
                 data-testid="add-file-owner"
                 type="button"
               >
@@ -1707,11 +1738,11 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c25"
+                          class="c26"
                         >
                           Select from contacts
                           <button
-                            class="c20 Button c26 btn btn-link"
+                            class="c21 Button c27 btn btn-link"
                             title="remove"
                             type="button"
                           >
@@ -1754,7 +1785,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                         class="pl-0 col-auto"
                       >
                         <button
-                          class="c20 Button Button--icon-only px-2 btn btn-primary"
+                          class="c21 Button Button--icon-only px-2 btn btn-primary"
                           title="Select Contact"
                           type="button"
                         >
@@ -1807,11 +1838,11 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c25"
+                          class="c26"
                         >
                           Select from contacts
                           <button
-                            class="c20 Button c26 btn btn-link"
+                            class="c21 Button c27 btn btn-link"
                             title="remove"
                             type="button"
                           >
@@ -1854,7 +1885,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                         class="pl-0 col-auto"
                       >
                         <button
-                          class="c20 Button Button--icon-only px-2 btn btn-primary"
+                          class="c21 Button Button--icon-only px-2 btn btn-primary"
                           title="Select Contact"
                           type="button"
                         >
@@ -1905,7 +1936,6 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                       id="input-ownerRepresentative.comment"
                       name="ownerRepresentative.comment"
                       placeholder="Remarks or additional representative(s)"
-                      title=""
                     />
                   </div>
                 </div>
@@ -1917,7 +1947,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c2.btn {
+  .c1.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1947,49 +1977,49 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c2.btn:hover {
+.c1.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c2.btn:focus {
+.c1.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c2.btn.btn-primary {
+.c1.btn.btn-primary {
   border: none;
 }
 
-.c2.btn.btn-secondary {
+.c1.btn.btn-secondary {
   background: none;
 }
 
-.c2.btn.btn-info {
+.c1.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c2.btn.btn-info:hover,
-.c2.btn.btn-info:active,
-.c2.btn.btn-info:focus {
+.c1.btn.btn-info:hover,
+.c1.btn.btn-info:active,
+.c1.btn.btn-info:focus {
   background: none;
 }
 
-.c2.btn.btn-light {
+.c1.btn.btn-light {
   border: none;
 }
 
-.c2.btn.btn-dark {
+.c1.btn.btn-dark {
   border: none;
 }
 
-.c2.btn.btn-link {
+.c1.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -2010,9 +2040,9 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c2.btn.btn-link:hover,
-.c2.btn.btn-link:active,
-.c2.btn.btn-link:focus {
+.c1.btn.btn-link:hover,
+.c1.btn.btn-link:active,
+.c1.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -2021,14 +2051,14 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c2.btn.btn-link:disabled,
-.c2.btn.btn-link.disabled {
+.c1.btn.btn-link:disabled,
+.c1.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c2.btn:disabled,
-.c2.btn:disabled:hover {
+.c1.btn:disabled,
+.c1.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -2039,15 +2069,15 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c2.Button .Button__icon {
+.c1.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c2.Button--icon-only:focus {
+.c1.Button--icon-only:focus {
   outline: none;
 }
 
-.c2.Button--icon-only .Button__icon {
+.c1.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -2060,11 +2090,6 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   z-index: 10;
 }
 
-.c1 {
-  padding-top: 0.7rem;
-  color: red;
-}
-
 <div
     class=""
   >
@@ -2073,16 +2098,12 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
     >
       <div
         class="pr-3 col-auto"
-      >
-        <div
-          class="c1"
-        />
-      </div>
+      />
       <div
         class="pr-4 col-auto"
       >
         <button
-          class="c2 Button btn btn-secondary"
+          class="c1 Button btn btn-secondary"
           type="button"
         >
           <div
@@ -2096,7 +2117,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
         class="col-auto"
       >
         <button
-          class="c2 Button btn btn-primary"
+          class="c1 Button btn btn-primary"
           type="button"
         >
           <div

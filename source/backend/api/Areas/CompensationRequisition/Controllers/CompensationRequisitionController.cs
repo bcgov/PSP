@@ -103,30 +103,5 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
             var result = _compensationRequisitionService.DeleteCompensation(id);
             return new JsonResult(result);
         }
-
-        /// <summary>
-        /// Get the payee for a compensation requisition.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id:long}/payee")]
-        [HasPermission(Permissions.CompensationRequisitionView)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(CompensationPayeeModel), 200)]
-        [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
-        public IActionResult GetCompensationRequisitionPayee([FromRoute] long id)
-        {
-            _logger.LogInformation(
-                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(CompensationRequisitionController),
-                nameof(GetCompensationRequisitionPayee),
-                User.GetUsername(),
-                DateTime.Now);
-            _logger.LogInformation("Dispatching to service: {Service}", _compensationRequisitionService.GetType());
-
-            var compensationPayee = _compensationRequisitionService.GetPayeeByCompensationId(id);
-
-            return new JsonResult(_mapper.Map<CompensationPayeeModel>(compensationPayee));
-        }
     }
 }

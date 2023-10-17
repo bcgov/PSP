@@ -42,6 +42,7 @@ export interface IGeoSearchParams {
   STREET_ADDRESS_1?: string;
   PID?: string;
   PIN?: string;
+  SURVEY_PLAN_NUMBER?: string;
   BBOX?: string;
   latitude?: number | string;
   longitude?: number | string;
@@ -108,6 +109,7 @@ export const ACQUISITION_CHECKLIST_ITEM_TYPES = 'PimsAcqChklstItemType';
 export const ACQUISITION_CHECKLIST_ITEM_STATUS_TYPES = 'PimsAcqChklstItemStatusType';
 export const AGREEMENT_TYPES = 'PimsAgreementType';
 export const INTEREST_HOLDER_TYPES = 'PimsInterestHolderInterestType';
+export const PAYMENT_ITEM_TYPES = 'PimsPaymentItemType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

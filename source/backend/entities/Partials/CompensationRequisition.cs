@@ -12,12 +12,12 @@ namespace Pims.Dal.Entities
         public override long Internal_Id { get => this.CompensationRequisitionId; set => this.CompensationRequisitionId = value; }
 
         [NotMapped]
-        public decimal PayeeChequesPreTaxTotalAmount => (decimal)PimsCompReqH120s.Sum(x => x.PretaxAmt);
+        public decimal PayeeChequesPreTaxTotalAmount => (decimal)PimsCompReqFinancials.Sum(x => x.PretaxAmt);
 
         [NotMapped]
-        public decimal PayeeChequesTaxTotalAmount => (decimal)PimsCompReqH120s.Sum(x => x.TaxAmt);
+        public decimal PayeeChequesTaxTotalAmount => (decimal)PimsCompReqFinancials.Sum(x => x.TaxAmt);
 
         [NotMapped]
-        public decimal PayeeChequesTotalAmount => (decimal)PimsCompReqH120s.Sum(x => x.TotalAmt);
+        public decimal PayeeChequesTotalAmount => (decimal)PimsCompReqFinancials.Sum(x => x.TotalAmt);
     }
 }

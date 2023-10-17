@@ -40,7 +40,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c7.btn {
+  .c8.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -70,49 +70,49 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c7.btn:hover {
+.c8.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c7.btn:focus {
+.c8.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
+.c8.btn.btn-primary {
   border: none;
 }
 
-.c7.btn.btn-secondary {
+.c8.btn.btn-secondary {
   background: none;
 }
 
-.c7.btn.btn-info {
+.c8.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c7.btn.btn-info:hover,
-.c7.btn.btn-info:active,
-.c7.btn.btn-info:focus {
+.c8.btn.btn-info:hover,
+.c8.btn.btn-info:active,
+.c8.btn.btn-info:focus {
   background: none;
 }
 
-.c7.btn.btn-light {
+.c8.btn.btn-light {
   border: none;
 }
 
-.c7.btn.btn-dark {
+.c8.btn.btn-dark {
   border: none;
 }
 
-.c7.btn.btn-link {
+.c8.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -133,9 +133,9 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   padding: 0;
 }
 
-.c7.btn.btn-link:hover,
-.c7.btn.btn-link:active,
-.c7.btn.btn-link:focus {
+.c8.btn.btn-link:hover,
+.c8.btn.btn-link:active,
+.c8.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -144,14 +144,14 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   outline: none;
 }
 
-.c7.btn.btn-link:disabled,
-.c7.btn.btn-link.disabled {
+.c8.btn.btn-link:disabled,
+.c8.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c7.btn:disabled,
-.c7.btn:disabled:hover {
+.c8.btn:disabled,
+.c8.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -162,27 +162,43 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c7.Button .Button__icon {
+.c8.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c7.Button--icon-only:focus {
+.c8.Button--icon-only:focus {
   outline: none;
 }
 
-.c7.Button--icon-only .Button__icon {
+.c8.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c2.c2.form-control.is-valid {
+.c1 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c1 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c1 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c3.c3.form-control.is-valid {
   background-image: none;
 }
 
-.c2.c2.form-control.is-invalid {
+.c3.c3.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c1 {
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -193,13 +209,13 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   align-items: baseline;
 }
 
-.c1 .form-label {
+.c2 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c6 {
+.c7 {
   position: relative;
   border-radius: 0.3rem;
   padding: 0.6rem;
@@ -209,11 +225,11 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   border: solid 0.1rem;
 }
 
-.c6.is-invalid {
+.c7.is-invalid {
   border: solid 0.1rem;
 }
 
-.c8.c8.btn {
+.c9.c9.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
   right: 0.4rem;
@@ -222,13 +238,13 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   line-height: unset;
 }
 
-.c8.c8.btn .text {
+.c9.c9.btn .text {
   display: none;
 }
 
-.c8.c8.btn:hover,
-.c8.c8.btn:active,
-.c8.c8.btn:focus {
+.c9.c9.btn:hover,
+.c9.c9.btn:active,
+.c9.c9.btn:focus {
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
@@ -244,19 +260,15 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c0 .form-group input {
-  width: 90%;
-}
-
-.c4 {
+.c5 {
   font-size: 1.3rem;
 }
 
-.c3 {
+.c4 {
   margin-top: 3.5rem;
 }
 
-.c5 {
+.c6 {
   height: 0.7em;
   margin-left: 1rem;
 }
@@ -271,7 +283,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
         class="col"
       >
         <div
-          class="required c1 form-group"
+          class="c1 required c2 form-group"
         >
           <label
             class="form-label"
@@ -283,14 +295,23 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
             class="react-datepicker-wrapper d-block"
           >
             <div
-              class="react-datepicker__input-container"
+              class="react-datepicker__input-container react-datepicker__view-calendar-icon"
             >
+              <svg
+                class="react-datepicker__calendar-icon"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                />
+              </svg>
               <input
                 autocomplete="off"
-                class="c2 form-control date-picker"
+                class="c3 form-control date-picker"
                 id="datepicker-terminationDate"
                 name="terminationDate"
-                placeholder="--/--/----"
+                placeholder="MTH DD, YYYY"
                 required=""
                 type="text"
                 value=""
@@ -413,10 +434,10 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
         class="col"
       >
         <p
-          class="c3"
+          class="c4"
         >
           <a
-            class="c4"
+            class="c5"
             href="https://www2.gov.bc.ca/gov/content/housing-tenancy/residential-tenancies/ending-a-tenancy/returning-deposits"
             rel="noopener noreferrer"
             target="_blank"
@@ -424,7 +445,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
             Returning deposits in BC
           </a>
           <svg
-            class="c5"
+            class="c6"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -447,7 +468,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
         class="col"
       >
         <div
-          class="required c1 form-group"
+          class="c1 required c2 form-group"
         >
           <label
             class="form-label"
@@ -459,14 +480,23 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
             class="react-datepicker-wrapper d-block"
           >
             <div
-              class="react-datepicker__input-container"
+              class="react-datepicker__input-container react-datepicker__view-calendar-icon"
             >
+              <svg
+                class="react-datepicker__calendar-icon"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                />
+              </svg>
               <input
                 autocomplete="off"
-                class="c2 form-control date-picker"
+                class="c3 form-control date-picker"
                 id="datepicker-returnDate"
                 name="returnDate"
-                placeholder="--/--/----"
+                placeholder="MTH DD, YYYY"
                 required=""
                 type="text"
                 value=""
@@ -498,11 +528,11 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
               class="col"
             >
               <div
-                class="c6"
+                class="c7"
               >
                 Select from contacts
                 <button
-                  class="c7 Button Button--disabled c8 btn btn-link"
+                  class="c8 Button Button--disabled c9 btn btn-link"
                   disabled=""
                   type="button"
                 >
@@ -548,7 +578,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
               class="pl-0 col-auto"
             >
               <button
-                class="c7 Button Button--icon-only px-2 btn btn-primary"
+                class="c8 Button Button--icon-only px-2 btn btn-primary"
                 type="button"
               >
                 <div
@@ -619,7 +649,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
       </div>
     </div>
   </div>
-  .c7.btn {
+  .c8.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -649,49 +679,49 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   cursor: pointer;
 }
 
-.c7.btn:hover {
+.c8.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c7.btn:focus {
+.c8.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
+.c8.btn.btn-primary {
   border: none;
 }
 
-.c7.btn.btn-secondary {
+.c8.btn.btn-secondary {
   background: none;
 }
 
-.c7.btn.btn-info {
+.c8.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c7.btn.btn-info:hover,
-.c7.btn.btn-info:active,
-.c7.btn.btn-info:focus {
+.c8.btn.btn-info:hover,
+.c8.btn.btn-info:active,
+.c8.btn.btn-info:focus {
   background: none;
 }
 
-.c7.btn.btn-light {
+.c8.btn.btn-light {
   border: none;
 }
 
-.c7.btn.btn-dark {
+.c8.btn.btn-dark {
   border: none;
 }
 
-.c7.btn.btn-link {
+.c8.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -712,9 +742,9 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   padding: 0;
 }
 
-.c7.btn.btn-link:hover,
-.c7.btn.btn-link:active,
-.c7.btn.btn-link:focus {
+.c8.btn.btn-link:hover,
+.c8.btn.btn-link:active,
+.c8.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -723,14 +753,14 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   outline: none;
 }
 
-.c7.btn.btn-link:disabled,
-.c7.btn.btn-link.disabled {
+.c8.btn.btn-link:disabled,
+.c8.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c7.btn:disabled,
-.c7.btn:disabled:hover {
+.c8.btn:disabled,
+.c8.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -741,27 +771,43 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   opacity: 0.65;
 }
 
-.c7.Button .Button__icon {
+.c8.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c7.Button--icon-only:focus {
+.c8.Button--icon-only:focus {
   outline: none;
 }
 
-.c7.Button--icon-only .Button__icon {
+.c8.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c2.c2.form-control.is-valid {
+.c1 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c1 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c1 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c3.c3.form-control.is-valid {
   background-image: none;
 }
 
-.c2.c2.form-control.is-invalid {
+.c3.c3.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c1 {
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -772,13 +818,13 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   align-items: baseline;
 }
 
-.c1 .form-label {
+.c2 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c6 {
+.c7 {
   position: relative;
   border-radius: 0.3rem;
   padding: 0.6rem;
@@ -788,11 +834,11 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   border: solid 0.1rem;
 }
 
-.c6.is-invalid {
+.c7.is-invalid {
   border: solid 0.1rem;
 }
 
-.c8.c8.btn {
+.c9.c9.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
   right: 0.4rem;
@@ -801,13 +847,13 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   line-height: unset;
 }
 
-.c8.c8.btn .text {
+.c9.c9.btn .text {
   display: none;
 }
 
-.c8.c8.btn:hover,
-.c8.c8.btn:active,
-.c8.c8.btn:focus {
+.c9.c9.btn:hover,
+.c9.c9.btn:active,
+.c9.c9.btn:focus {
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
@@ -823,19 +869,15 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   font-weight: bold;
 }
 
-.c0 .form-group input {
-  width: 90%;
-}
-
-.c4 {
+.c5 {
   font-size: 1.3rem;
 }
 
-.c3 {
+.c4 {
   margin-top: 3.5rem;
 }
 
-.c5 {
+.c6 {
   height: 0.7em;
   margin-left: 1rem;
 }
@@ -850,7 +892,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
         class="col"
       >
         <div
-          class="required c1 form-group"
+          class="c1 required c2 form-group"
         >
           <label
             class="form-label"
@@ -862,14 +904,23 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
             class="react-datepicker-wrapper d-block"
           >
             <div
-              class="react-datepicker__input-container"
+              class="react-datepicker__input-container react-datepicker__view-calendar-icon"
             >
+              <svg
+                class="react-datepicker__calendar-icon"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                />
+              </svg>
               <input
                 autocomplete="off"
-                class="c2 form-control date-picker"
+                class="c3 form-control date-picker"
                 id="datepicker-terminationDate"
                 name="terminationDate"
-                placeholder="--/--/----"
+                placeholder="MTH DD, YYYY"
                 required=""
                 type="text"
                 value=""
@@ -992,10 +1043,10 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
         class="col"
       >
         <p
-          class="c3"
+          class="c4"
         >
           <a
-            class="c4"
+            class="c5"
             href="https://www2.gov.bc.ca/gov/content/housing-tenancy/residential-tenancies/ending-a-tenancy/returning-deposits"
             rel="noopener noreferrer"
             target="_blank"
@@ -1003,7 +1054,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
             Returning deposits in BC
           </a>
           <svg
-            class="c5"
+            class="c6"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -1026,7 +1077,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
         class="col"
       >
         <div
-          class="required c1 form-group"
+          class="c1 required c2 form-group"
         >
           <label
             class="form-label"
@@ -1038,14 +1089,23 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
             class="react-datepicker-wrapper d-block"
           >
             <div
-              class="react-datepicker__input-container"
+              class="react-datepicker__input-container react-datepicker__view-calendar-icon"
             >
+              <svg
+                class="react-datepicker__calendar-icon"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                />
+              </svg>
               <input
                 autocomplete="off"
-                class="c2 form-control date-picker"
+                class="c3 form-control date-picker"
                 id="datepicker-returnDate"
                 name="returnDate"
-                placeholder="--/--/----"
+                placeholder="MTH DD, YYYY"
                 required=""
                 type="text"
                 value=""
@@ -1077,11 +1137,11 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
               class="col"
             >
               <div
-                class="c6"
+                class="c7"
               >
                 Select from contacts
                 <button
-                  class="c7 Button Button--disabled c8 btn btn-link"
+                  class="c8 Button Button--disabled c9 btn btn-link"
                   disabled=""
                   type="button"
                 >
@@ -1127,7 +1187,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
               class="pl-0 col-auto"
             >
               <button
-                class="c7 Button Button--icon-only px-2 btn btn-primary"
+                class="c8 Button Button--icon-only px-2 btn btn-primary"
                 type="button"
               >
                 <div

@@ -8,11 +8,10 @@ import {
   Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
-  Api_AcquisitionFileRepresentative,
-  Api_AcquisitionFileSolicitor,
 } from '@/models/api/AcquisitionFile';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
 import { Api_Product, Api_Project } from '@/models/api/Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
@@ -30,8 +29,6 @@ export const useAcquisitionProvider = () => {
     putAcquisitionFileProperties,
     getAcquisitionFileProperties,
     getAcquisitionFileOwners,
-    getAcquisitionFileSolicitors,
-    getAcquisitionFileRepresentatives,
     getAcquisitionFileProject,
     getAcquisitionFileProduct,
     getAcquisitionFileChecklist,
@@ -39,6 +36,8 @@ export const useAcquisitionProvider = () => {
     getFileCompensationRequisitions,
     postFileCompensationRequisition,
     getFileCompReqH120s,
+    postFileForm8,
+    getAcquisitionFileForm8s,
   } = useApiAcquisitionFile();
 
   const addAcquisitionFileApi = useApiRequestWrapper<
@@ -123,28 +122,6 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'GetAcquisitionFileOwners',
     onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Owners'),
-  });
-
-  const getAcquisitionFileSolicitorsApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_AcquisitionFileSolicitor[], any>>
-  >({
-    requestFunction: useCallback(
-      async (acqFileId: number) => await getAcquisitionFileSolicitors(acqFileId),
-      [getAcquisitionFileSolicitors],
-    ),
-    requestName: 'getAcquisitionFileSolicitorsApi',
-    onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Owner solicitors'),
-  });
-
-  const getAcquisitionFileRepresentativesApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_AcquisitionFileRepresentative[], any>>
-  >({
-    requestFunction: useCallback(
-      async (acqFileId: number) => await getAcquisitionFileRepresentatives(acqFileId),
-      [getAcquisitionFileRepresentatives],
-    ),
-    requestName: 'getAcquisitionFileRepresentativesApi',
-    onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Owner representatives'),
   });
 
   const getAcquisitionProjectApi = useApiRequestWrapper<
@@ -238,6 +215,35 @@ export const useAcquisitionProvider = () => {
     onError: useAxiosErrorHandler('Failed to save Compensation requisition'),
   });
 
+  const postFileForm8Api = useApiRequestWrapper<
+    (
+      acqFileId: number,
+      form8: Api_ExpropriationPayment,
+    ) => Promise<AxiosResponse<Api_ExpropriationPayment, any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number, form8: Api_ExpropriationPayment) =>
+        await postFileForm8(acqFileId, form8),
+      [postFileForm8],
+    ),
+    requestName: 'postFileForm8',
+    onSuccess: useAxiosSuccessHandler('Form 8 saved'),
+    onError: useAxiosErrorHandler('Failed to save Form 8'),
+  });
+
+  const getAcquisitionForm8sApi = useApiRequestWrapper<
+    (acqFileId: number) => Promise<AxiosResponse<Api_ExpropriationPayment[], any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number) => await getAcquisitionFileForm8s(acqFileId),
+      [getAcquisitionFileForm8s],
+    ),
+    requestName: 'getAcquisitionFileForm8s',
+    onError: useAxiosErrorHandler(
+      'Failed to load acquisition file form 8s. Refresh the page to try again.',
+    ),
+  });
+
   return useMemo(
     () => ({
       addAcquisitionFile: addAcquisitionFileApi,
@@ -246,8 +252,6 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionProperties: updateAcquisitionPropertiesApi,
       getAcquisitionProperties: getAcquisitionPropertiesApi,
       getAcquisitionOwners: getAcquisitionOwnersApi,
-      getAcquisitionFileSolicitors: getAcquisitionFileSolicitorsApi,
-      getAcquisitionFileRepresentatives: getAcquisitionFileRepresentativesApi,
       getAcquisitionProject: getAcquisitionProjectApi,
       getAcquisitionProduct: getAcquisitionProductApi,
       getAcquisitionFileChecklist: getAcquisitionChecklistApi,
@@ -255,6 +259,8 @@ export const useAcquisitionProvider = () => {
       getAcquisitionCompensationRequisitions: getAcquisitionCompensationRequisitionsApi,
       postAcquisitionCompensationRequisition: postFileCompensationRequisitionApi,
       getAcquisitionCompReqH120s: getAcquisitionCompReqH120sApi,
+      postAcquisitionForm8: postFileForm8Api,
+      getAcquisitionFileForm8s: getAcquisitionForm8sApi,
     }),
     [
       addAcquisitionFileApi,
@@ -263,8 +269,6 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionPropertiesApi,
       getAcquisitionPropertiesApi,
       getAcquisitionOwnersApi,
-      getAcquisitionFileSolicitorsApi,
-      getAcquisitionFileRepresentativesApi,
       getAcquisitionProjectApi,
       getAcquisitionProductApi,
       getAcquisitionChecklistApi,
@@ -272,6 +276,8 @@ export const useAcquisitionProvider = () => {
       getAcquisitionCompensationRequisitionsApi,
       postFileCompensationRequisitionApi,
       getAcquisitionCompReqH120sApi,
+      postFileForm8Api,
+      getAcquisitionForm8sApi,
     ],
   );
 };

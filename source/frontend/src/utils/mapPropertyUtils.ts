@@ -1,9 +1,20 @@
-import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Polygon } from 'geojson';
-import { geoJSON, LatLng } from 'leaflet';
-import { compact } from 'lodash';
+import {
+  Feature,
+  FeatureCollection,
+  GeoJsonProperties,
+  Geometry,
+  MultiPolygon,
+  Polygon,
+} from 'geojson';
+import { geoJSON, LatLngLiteral } from 'leaflet';
+import { compact, isNumber } from 'lodash';
 import polylabel from 'polylabel';
+import { toast } from 'react-toastify';
 
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IMapProperty } from '@/components/propertySelector/models';
+import { DistrictCodes } from '@/constants/districtCodes';
+import { RegionCodes } from '@/constants/regionCodes';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 import { formatApiAddress, pidFormatter } from '@/utils';
 
@@ -25,22 +36,18 @@ interface PropertyName {
 }
 
 export const getPropertyName = (property: IMapProperty): PropertyName => {
-  if (property.pid !== undefined && property.pid?.toString().length > 0 && property.pid !== '0') {
+  if (!!property.pid && property.pid?.toString().length > 0 && property.pid !== '0') {
     return { label: NameSourceType.PID, value: pidFormatter(property.pid.toString()) };
-  } else if (
-    property.pin !== undefined &&
-    property.pin?.toString()?.length > 0 &&
-    property.pin !== '0'
-  ) {
+  } else if (!!property.pin && property.pin?.toString()?.length > 0 && property.pin !== '0') {
     return { label: NameSourceType.PIN, value: property.pin.toString() };
-  } else if (property.planNumber !== undefined) {
+  } else if (!!property.planNumber && property.planNumber?.length > 0) {
     return { label: NameSourceType.PLAN, value: property.planNumber };
-  } else if (property.latitude !== undefined && property.longitude !== undefined) {
+  } else if (!!property.latitude && !!property.longitude) {
     return {
       label: NameSourceType.LOCATION,
       value: compact([property.longitude?.toFixed(6), property.latitude?.toFixed(6)]).join(', '),
     };
-  } else if (property.address !== undefined) {
+  } else if (!!property.address) {
     return {
       label: NameSourceType.ADDRESS,
       value: property.address,
@@ -55,10 +62,10 @@ export const getPrettyLatLng = (location?: Api_Geometry) =>
     location?.coordinate?.y?.toFixed(6) ?? 0,
   ]).join(', ');
 
-export const getLatLng = (location?: Api_Geometry | null) => {
+export const getLatLng = (location?: Api_Geometry | null): LatLngLiteral | null => {
   const coordinate = location?.coordinate;
   if (coordinate !== null && coordinate !== undefined) {
-    return new LatLng(coordinate.y!, coordinate.x!);
+    return { lat: coordinate.y!, lng: coordinate.x! };
   }
   return null;
 };
@@ -116,10 +123,25 @@ export const featuresToIdentifiedMapProperty = (
   address?: string,
 ) =>
   values?.features
-    ?.filter(feature => feature?.geometry?.type === 'Polygon')
+    ?.filter(
+      feature =>
+        feature?.geometry?.type === 'Polygon' || feature?.geometry?.type === 'MultiPolygon',
+    )
     .map((feature): IMapProperty => {
-      const boundedCenter = polylabel((feature.geometry as Polygon).coordinates);
-      return toMapProperty(feature, address, boundedCenter[1], boundedCenter[0]);
+      if (feature?.geometry?.type === 'Polygon') {
+        const boundedCenter = polylabel((feature.geometry as Polygon).coordinates);
+        return toMapProperty(feature, address, boundedCenter[1], boundedCenter[0]);
+      } else if (feature?.geometry?.type === 'MultiPolygon') {
+        const boundedCenter = polylabel((feature.geometry as MultiPolygon).coordinates[0]);
+        return toMapProperty(feature, address, boundedCenter[1], boundedCenter[0]);
+      } else {
+        toast.error(
+          'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
+        );
+        throw Error(
+          'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
+        );
+      }
     });
 
 function toMapProperty(
@@ -143,4 +165,60 @@ function toMapProperty(
     districtName: feature?.properties?.DISTRICT_NAME,
     name: feature?.properties?.NAME,
   };
+}
+
+export function featuresetToMapProperty(
+  featureSet: LocationFeatureDataset,
+  address: string = 'unknown',
+): IMapProperty {
+  const pimsFeature = featureSet.pimsFeature;
+  const parcelFeature = featureSet.parcelFeature;
+  const regionFeature = featureSet.regionFeature;
+  const districtFeature = featureSet.districtFeature;
+
+  const propertyId = pimsFeature?.properties.PROPERTY_ID;
+  const pid = pidFromFeatureSet(featureSet);
+  const pin = pinFromFeatureSet(featureSet);
+  return {
+    propertyId: propertyId ? Number.parseInt(propertyId?.toString()) : undefined,
+    pid: pid ?? undefined,
+    pin: pin ?? undefined,
+    latitude: featureSet.location.lat,
+    longitude: featureSet.location.lng,
+    planNumber: parcelFeature?.properties.PLAN_NUMBER?.toString() ?? undefined,
+    address: address,
+    legalDescription: parcelFeature?.properties.LEGAL_DESCRIPTION ?? undefined,
+    region: isNumber(regionFeature?.properties.REGION_NUMBER)
+      ? regionFeature?.properties.REGION_NUMBER
+      : RegionCodes.Unknown,
+    regionName: regionFeature?.properties.REGION_NAME ?? 'Cannot determine',
+    district: isNumber(districtFeature?.properties.DISTRICT_NUMBER)
+      ? districtFeature?.properties.DISTRICT_NUMBER
+      : DistrictCodes.Unknown,
+    districtName: districtFeature?.properties.DISTRICT_NAME ?? 'Cannot determine',
+    name: pimsFeature?.properties.NAME ?? undefined,
+  };
+}
+
+export function pidFromFeatureSet(featureset: LocationFeatureDataset): string | null {
+  if (featureset.pimsFeature !== null) {
+    return featureset.pimsFeature.properties.PID;
+  } else if (featureset.parcelFeature !== null) {
+    return featureset.parcelFeature.properties.PID;
+  } else {
+    return null;
+  }
+}
+
+export function pinFromFeatureSet(featureset: LocationFeatureDataset): string | null {
+  if (featureset.pimsFeature !== null) {
+    return featureset.pimsFeature.properties.PIN;
+  } else if (
+    featureset.parcelFeature !== null &&
+    featureset.parcelFeature.properties.PIN !== null
+  ) {
+    return featureset.parcelFeature.properties.PIN.toString();
+  } else {
+    return null;
+  }
 }

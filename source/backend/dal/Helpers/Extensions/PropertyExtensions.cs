@@ -1,5 +1,7 @@
+using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Pims.Core.Extensions;
 using Pims.Dal.Security;
@@ -65,12 +67,19 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
             {
-                var pinOrPidValue = filter.PinOrPid.Replace("-", string.Empty).Trim();
-                query = query.Where(p => p != null && (EF.Functions.Like(p.Pid.ToString(), $"%{pinOrPidValue}%") || EF.Functions.Like(p.Pin.ToString(), $"%{pinOrPidValue}%")));
+                //note - 2 part search required. all matches found by removing leading 0's, then matches filtered in subsequent step. This is because EF core does not support an lpad method.
+                Regex nonInteger = new Regex("[^\\d]");
+                var formattedPidPin = Convert.ToInt32(nonInteger.Replace(filter.PinOrPid, string.Empty)).ToString();
+                query = query.
+                    Where(p => p != null && (EF.Functions.Like(p.Pid.ToString(), $"%{formattedPidPin}%") || EF.Functions.Like(p.Pin.ToString(), $"%{formattedPidPin}%")));
             }
             if (!string.IsNullOrWhiteSpace(filter.Address))
             {
                 query = query.Where(p => EF.Functions.Like(p.Address.StreetAddress1, $"%{filter.Address}%") || EF.Functions.Like(p.Address.MunicipalityName, $"%{filter.Address}%"));
+            }
+            if (!string.IsNullOrWhiteSpace(filter.PlanNumber))
+            {
+                query = query.Where(p => p != null && p.SurveyPlanNumber.Equals(filter.PlanNumber));
             }
 
             if (filter.Sort?.Any() == true)

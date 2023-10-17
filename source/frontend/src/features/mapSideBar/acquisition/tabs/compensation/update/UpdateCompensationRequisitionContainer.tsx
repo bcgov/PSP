@@ -2,6 +2,7 @@ import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
 
 import { SelectOption } from '@/components/common/form';
+import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
@@ -10,7 +11,7 @@ import { Api_AcquisitionFile, Api_AcquisitionFilePerson } from '@/models/api/Acq
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
-import { CompensationRequisitionFormModel, PayeeOption } from './models';
+import { CompensationRequisitionFormModel } from './models';
 import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitionForm';
 
 export interface UpdateCompensationRequisitionContainerProps {
@@ -41,14 +42,6 @@ const UpdateCompensationRequisitionContainer: React.FC<
 
   const {
     getAcquisitionOwners: { execute: retrieveAcquisitionOwners, loading: loadingAcquisitionOwners },
-    getAcquisitionFileSolicitors: {
-      execute: retrieveAcquisitionFileSolicitors,
-      loading: loadingAcquisitionFileSolicitors,
-    },
-    getAcquisitionFileRepresentatives: {
-      execute: retrieveAcquisitionFileRepresentatives,
-      loading: loadingAcquisitionFileRepresentatives,
-    },
   } = useAcquisitionProvider();
 
   const {
@@ -87,24 +80,15 @@ const UpdateCompensationRequisitionContainer: React.FC<
   const fetchContacts = useCallback(async () => {
     if (acquisitionFile.id) {
       const acquisitionOwnersCall = retrieveAcquisitionOwners(acquisitionFile.id);
-      const acquisitionSolicitorsCall = retrieveAcquisitionFileSolicitors(acquisitionFile.id);
-      const acquisitionRepresentativesCall = retrieveAcquisitionFileRepresentatives(
-        acquisitionFile.id,
-      );
       const interestHoldersCall = fetchInterestHolders(acquisitionFile.id);
 
-      await Promise.all([
-        acquisitionOwnersCall,
-        acquisitionSolicitorsCall,
-        acquisitionRepresentativesCall,
-        interestHoldersCall,
-      ]).then(
-        ([
-          acquisitionOwners,
-          acquisitionSolicitors,
-          acquisitionRepresentatives,
-          interestHolders,
-        ]) => {
+      await Promise.all([acquisitionOwnersCall, interestHoldersCall]).then(
+        ([acquisitionOwners, interestHolders]) => {
+          const matchedInterestHolder =
+            interestHolders?.find(ih => ih.interestHolderId === compensation.interestHolderId) ??
+            null;
+          compensation.interestHolder = matchedInterestHolder;
+
           const options = payeeOptions;
 
           if (acquisitionOwners !== undefined) {
@@ -112,20 +96,6 @@ const UpdateCompensationRequisitionContainer: React.FC<
               PayeeOption.createOwner(x),
             );
             options.push(...ownersOptions);
-          }
-
-          if (acquisitionSolicitors !== undefined) {
-            const acquisitionSolicitorOptions: PayeeOption[] = acquisitionSolicitors.map(x =>
-              PayeeOption.createOwnerSolicitor(x),
-            );
-            options.push(...acquisitionSolicitorOptions);
-          }
-
-          if (acquisitionRepresentatives !== undefined) {
-            const acquisitionSolicitorOptions: PayeeOption[] = acquisitionRepresentatives.map(x =>
-              PayeeOption.createOwnerRepresentative(x),
-            );
-            options.push(...acquisitionSolicitorOptions);
           }
 
           if (interestHolders !== undefined) {
@@ -137,22 +107,27 @@ const UpdateCompensationRequisitionContainer: React.FC<
 
           const teamMemberOptions: PayeeOption[] =
             acquisitionFile.acquisitionTeam
-              ?.filter((x): x is Api_AcquisitionFilePerson => !!x)
-              .filter(x => x.personProfileTypeCode === 'MOTILAWYER')
+              ?.filter(
+                (x): x is Api_AcquisitionFilePerson =>
+                  !!x && x.personProfileTypeCode === 'MOTILAWYER',
+              )
               .map(x => PayeeOption.createTeamMember(x)) || [];
           options.push(...teamMemberOptions);
+
+          if (!!compensation.legacyPayee) {
+            options.push(PayeeOption.createLegacyPayee(compensation));
+          }
 
           setPayeeOptions(options);
         },
       );
     }
   }, [
+    compensation,
     payeeOptions,
     acquisitionFile.acquisitionTeam,
     acquisitionFile.id,
     retrieveAcquisitionOwners,
-    retrieveAcquisitionFileSolicitors,
-    retrieveAcquisitionFileRepresentatives,
     fetchInterestHolders,
   ]);
 
@@ -250,8 +225,6 @@ const UpdateCompensationRequisitionContainer: React.FC<
       isLoading={
         isUpdating ||
         loadingAcquisitionOwners ||
-        loadingAcquisitionFileSolicitors ||
-        loadingAcquisitionFileRepresentatives ||
         loadingFinancialActivities ||
         loadingChartOfAccounts ||
         loadingResponsibilityCodes ||

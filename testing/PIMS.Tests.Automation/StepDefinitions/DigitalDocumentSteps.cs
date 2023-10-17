@@ -58,7 +58,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 digitalDocumentsTab.SaveDigitalDocument();
 
                 //Verify Details View Form
-                digitalDocumentsTab.ViewIthDocument(i);
+                digitalDocumentsTab.ViewLastDocument(i);
                 digitalDocumentsTab.VerifyDocumentDetailsCreateViewForm(digitalDocumentList[i]);
                 digitalDocumentsTab.CloseDigitalDocumentViewDetails();
             }
@@ -113,6 +113,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Delete digital document
             digitalDocumentsTab.Delete1stDocument();
+
+            //Filter Documents by Type
+            digitalDocumentsTab.FilterByType(digitalDocumentList[0].DocumentType);
+            Assert.True(digitalDocumentsTab.TotalSearchDocuments() > 0);
+
+            //Filter Documents by Name
+            digitalDocumentsTab.FilterByName("PSP");
+            Assert.True(digitalDocumentsTab.TotalSearchDocuments() > 0);
+
+            //Filter Fouments by Status
+            digitalDocumentsTab.FilterByStatus(digitalDocumentList[0].DocumentStatus);
+            Assert.True(digitalDocumentsTab.TotalSearchDocuments() > 0);
         }
 
         private void PopulateDigitalDocumentIndex(int rowNumber)

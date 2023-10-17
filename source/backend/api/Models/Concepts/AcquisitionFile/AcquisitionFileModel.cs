@@ -48,6 +48,11 @@ namespace Pims.Api.Models.Concepts
         public long? ProductId { get; set; }
 
         /// <summary>
+        /// get/set - The acquisition file's maximum allowable compensation across all compensation requisitions.
+        /// </summary>
+        public decimal? TotalAllowableCompensation { get; set; }
+
+        /// <summary>
         /// get/set - The acquisition product.
         /// </summary>
         public ProductModel Product { get; set; }
@@ -78,6 +83,11 @@ namespace Pims.Api.Models.Concepts
         public TypeModel<short> RegionCode { get; set; }
 
         /// <summary>
+        /// get/set - List of Legacy Stakeholders.
+        /// </summary>
+        public IList<string> LegacyStakeholders { get; set; }
+
+        /// <summary>
         /// get/set - A list of research property relationships.
         /// </summary>
         public IList<AcquisitionFilePropertyModel> FileProperties { get; set; }
@@ -93,19 +103,15 @@ namespace Pims.Api.Models.Concepts
         public IList<AcquisitionFileOwnerModel> AcquisitionFileOwners { get; set; }
 
         /// <summary>
+        /// get/set - A list of acquisition file interest holder relationships.
+        /// </summary>
+        public IList<InterestHolderModel> AcquisitionFileInterestHolders { get; set; }
+
+        /// <summary>
         /// get/set - A list of acquisition file checklist items.
         /// </summary>
         public IList<AcquisitionFileChecklistItemModel> AcquisitionFileChecklist { get; set; }
 
-        /// <summary>
-        /// get/set - A list of acquisition file owner solicitors.
-        /// </summary>
-        public IList<AcquisitionFileOwnerSolicitorModel> AcquisitionFileOwnerSolicitors { get; set; }
-
-        /// <summary>
-        /// get/set - A list of acquisition file owner representatives.
-        /// </summary>
-        public IList<AcquisitionFileOwnerRepresentativeModel> AcquisitionFileOwnerRepresentatives { get; set; }
         #endregion
     }
 }

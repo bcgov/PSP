@@ -57,53 +57,53 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Search an Acquisition File
         public void NavigateToSearchAcquisitionFile()
         {
-            Wait();
-            webDriver.FindElement(menuAcquisitionButton).Click();
+            Wait(3000);
+            FocusAndClick(menuAcquisitionButton);
 
-            Wait();
-            webDriver.FindElement(searchAcquisitionButton).Click();
+            Wait(3000);
+            FocusAndClick(searchAcquisitionButton);
         }
 
         public void SearchAcquisitionFileByAFile(string AFile)
         {
-            Wait();
+            WaitUntilVisible(searchAcquisitionFileNameInput);
             
             webDriver.FindElement(searchAcquisitionFileNameInput).SendKeys(AFile);
             ChooseSpecificSelectOption(searchAcquisitionFileStatusSelect, "All Status");
 
-            Wait(15000);
+            WaitUntilClickable(searchAcquisitionFileSearchButton);
             webDriver.FindElement(searchAcquisitionFileSearchButton).Click();
         }
 
         public void SearchLastAcquisitionFile()
         {
-            Wait(4000);
+            WaitUntilClickable(searchAcquisitionFileResetButton);
             webDriver.FindElement(searchAcquisitionFileResetButton).Click();
 
-            Wait();
+            WaitUntilClickable(searchAcquisitionFileStatusSelect);
             ChooseSpecificSelectOption(searchAcquisitionFileStatusSelect, "All Status");
             webDriver.FindElement(searchAcquisitionFileNameInput).SendKeys("Automated");
             webDriver.FindElement(searchAcquisitionFileSearchButton).Click();
 
-            Wait(1000);
+            WaitUntilClickable(searchAcquisitionFileSortByAFileBttn);
             webDriver.FindElement(searchAcquisitionFileSortByAFileBttn).Click();
 
-            Wait();
+            WaitUntilClickable(searchAcquisitionFileSortByAFileBttn);
             webDriver.FindElement(searchAcquisitionFileSortByAFileBttn).Click();
         }
 
         public void SelectFirstOption()
         {
-            Wait();
+            WaitUntilClickable(searchAcquisitionFile1stResultLink);
             webDriver.FindElement(searchAcquisitionFile1stResultLink).Click();
 
-            Wait();
+            WaitUntilClickable(searchAcquisitionFileHeaderCode);
             Assert.True(webDriver.FindElement(searchAcquisitionFileHeaderCode).Displayed);
         }
 
         public void FilterAcquisitionFiles(string pid, string name, string status)
         {
-            Wait();
+            Wait(10000);
             webDriver.FindElement(searchAcquisitionFileResetButton).Click();
 
             Wait();

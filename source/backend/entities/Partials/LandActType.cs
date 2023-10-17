@@ -18,8 +18,6 @@ namespace Pims.Dal.Entities
         [NotMapped]
         public string Id { get => this.LandActTypeCode; set => this.LandActTypeCode = value; }
 
-        [NotMapped]
-        public bool? IsDisabled { get; set; }
         #endregion
 
         #region Constructors

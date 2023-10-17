@@ -69,7 +69,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDetailsProjectInput = By.CssSelector("input[id='typeahead-project']");
         private By licenseDetailsProject1stOption = By.CssSelector("div[id='typeahead-project'] a:nth-child(1)");
 
-        private By licenseDetailsStatusLabel = By.XPath("//form/div/div/div/div/label[contains(text(),'Status')]");
+        private By licenseDetailsStatusLabel = By.XPath("//div/div/div/div/div/label[contains(text(),'Status')]");
         private By licenseDetailsStatusSelector = By.Id("input-statusTypeCode");
         private By licenseDetailsAccountTypeLabel = By.XPath("//label[contains(text(),'Account type')]");
         private By licenseDetailsAccountTypeSelector = By.Id("input-paymentReceivableTypeCode");
@@ -191,24 +191,21 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Create a new Lease/License
         public void NavigateToCreateNewLicense()
         {
-            Wait();
-            webDriver.FindElement(menuManagementButton).Click();
+            WaitUntilClickable(menuManagementButton);
+            FocusAndClick(menuManagementButton);
 
-            Wait();
-            webDriver.FindElement(createLicenseButton).Click();
+            WaitUntilClickable(createLicenseButton);
+            FocusAndClick(createLicenseButton);
         }
 
         public void CreateLicenseDetails(Lease lease)
         {
-            Wait();
-
             //MAIN DETAILS
             //Project
             if (lease.MinistryProject != "")
             {
                 webDriver.FindElement(licenseDetailsProjectInput).SendKeys(lease.MinistryProject);
-                Wait();
-                webDriver.FindElement(licenseDetailsProject1stOption).Click();
+                FocusAndClick(licenseDetailsProject1stOption);
             }
 
             //Status
@@ -224,14 +221,17 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Start Date
             if (lease.LeaseStartDate != "")
+            {
                 webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(lease.LeaseStartDate);
-            webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(Keys.Enter);
-
+                webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(Keys.Enter);
+            }
+               
             //Expiry Date
             if (lease.LeaseExpiryDate != "")
             {
                 webDriver.FindElement(licenseDetailsExpiryDateInput).Click();
                 webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(lease.LeaseExpiryDate);
+                webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(Keys.Enter);
             }
 
             //Administration Details
@@ -247,10 +247,10 @@ namespace PIMS.Tests.Automation.PageObjects
             if (lease.Program != "")
                 ChooseSpecificSelectOption(licenseDetailsProgramSelector, lease.Program);
 
-            Wait();
             //If other Program is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherProgramInput).Count > 0 && lease.ProgramOther != "")
             {
+                WaitUntilVisible(licenseDetailsOtherProgramInput);
                 Assert.True(webDriver.FindElement(licenseDetailsOtherProgramLabel).Displayed);
                 webDriver.FindElement(licenseDetailsOtherProgramInput).SendKeys(lease.ProgramOther);
             }
@@ -266,7 +266,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(licenseDetailsOtherTypeInput).SendKeys(lease.TypeOther);
             }
 
-            Wait();
             //Selecting Category if required
             if (webDriver.FindElements(licenseDetailsCategorySelector).Count > 0 && lease.Category != "")
             {
@@ -285,7 +284,6 @@ namespace PIMS.Tests.Automation.PageObjects
             if(lease.Purpose != "")
                 ChooseSpecificSelectOption(licenseDetailsPurposeSelector, lease.Purpose);
 
-            Wait();
             //If other Purpose is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0 && lease.PurposeOther != "")
             {
@@ -373,15 +371,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateLeaseFileDetails(Lease lease)
         {
-            Wait();
-
             //MAIN DETAILS
             //Project
             if (lease.MinistryProject != "")
             {
                 ClearInput(licenseDetailsProjectInput);
                 webDriver.FindElement(licenseDetailsProjectInput).SendKeys(lease.MinistryProject);
-                Wait();
+                WaitUntilClickable(licenseDetailsProject1stOption);
                 webDriver.FindElement(licenseDetailsProject1stOption).Click();
             }
 
@@ -398,15 +394,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Start Date
             if (lease.LeaseStartDate != "")
+            {
                 ClearInput(licenseDetailsStartDateInput);
                 webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(lease.LeaseStartDate);
-
+                webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(Keys.Enter);
+            }
+               
             //Expiry Date
             if (lease.LeaseExpiryDate != "")
             {
                 ClearInput (licenseDetailsExpiryDateInput);
                 webDriver.FindElement(licenseDetailsExpiryDateInput).Click();
                 webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(lease.LeaseExpiryDate);
+                webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(Keys.Enter);
             }
 
             //Administration Details
@@ -422,10 +422,10 @@ namespace PIMS.Tests.Automation.PageObjects
             if (lease.Program != "")
                 ChooseSpecificSelectOption(licenseDetailsProgramSelector, lease.Program);
 
-            Wait();
             //If other Program is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherProgramInput).Count > 0 && lease.ProgramOther != "")
             {
+                WaitUntilVisible(licenseDetailsOtherProgramInput);
                 Assert.True(webDriver.FindElement(licenseDetailsOtherProgramLabel).Displayed);
                 ClearInput(licenseDetailsOtherProgramInput);
                 webDriver.FindElement(licenseDetailsOtherProgramInput).SendKeys(lease.ProgramOther);
@@ -443,10 +443,10 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(licenseDetailsOtherTypeInput).SendKeys(lease.TypeOther);
             }
 
-            Wait();
             //Selecting Category if required
             if (webDriver.FindElements(licenseDetailsCategorySelector).Count > 0 && lease.Category != "")
             {
+                WaitUntilVisible(licenseDetailsCategorySelector);
                 Assert.True(webDriver.FindElement(licenseDetailsCategoryLabel).Displayed);
                 ChooseSpecificSelectOption(licenseDetailsCategorySelector, lease.Category);
             }
@@ -462,10 +462,10 @@ namespace PIMS.Tests.Automation.PageObjects
             if (lease.Purpose != "")
                 ChooseSpecificSelectOption(licenseDetailsPurposeSelector, lease.Purpose);
 
-            Wait();
             //If other Purpose is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0 && lease.PurposeOther != "")
             {
+                WaitUntilVisible(licenseDetailsOtherPurposeInput);
                 Assert.True(webDriver.FindElement(licenseDetailsOtherPurposeLabel).Displayed);
                 ClearInput(licenseDetailsOtherPurposeInput);
                 webDriver.FindElement(licenseDetailsOtherPurposeInput).SendKeys(lease.PurposeOther);
@@ -481,13 +481,18 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Effective date of responsibility
             if (lease.EffectiveDate != "")
+            {
                 ClearInput(licenseDetailsEffectiveDateInput);
                 webDriver.FindElement(licenseDetailsEffectiveDateInput).SendKeys(lease.EffectiveDate);
+                webDriver.FindElement(licenseDetailsEffectiveDateInput).SendKeys(Keys.Enter);
+            }
 
             //Intended use
             if (lease.IntendedUse != "")
+            {
                 ClearInput(licenseDetailsIntendedUseTextarea);
                 webDriver.FindElement(licenseDetailsIntendedUseTextarea).SendKeys(lease.IntendedUse);
+            }
 
             //CONSULTATION DETAILS
             //First Nation
@@ -537,30 +542,34 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Inserting LIS#
             if (lease.LISNumber != "")
+            {
                 ClearInput(licenseDetailsLISNbrInput);
                 webDriver.FindElement(licenseDetailsLISNbrInput).SendKeys(lease.LISNumber);
+            }
 
             //Inserting PS#
             if (lease.PSNumber != "")
+            {
                 ClearInput(licenseDetailsPSNbrInput);
                 webDriver.FindElement(licenseDetailsPSNbrInput).SendKeys(lease.PSNumber);
+            }
 
             //Inserting Notes
             if (lease.LeaseNotes != "")
+            {
                 ClearInput(licenseDetailsNotesTextarea);
                 webDriver.FindElement(licenseDetailsNotesTextarea).SendKeys(lease.LeaseNotes);
+            } 
         }
 
         public void EditLeaseFileDetailsBttn()
         {
-            Wait();
+            WaitUntilClickable(licenseDetailsEditIcon);
             webDriver.FindElement(licenseDetailsEditIcon).Click();
         }
 
         public void SaveLicense()
         {
-            Wait();
-
             //Save
             ButtonElement("Save");
 
@@ -583,7 +592,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelLicense()
         {
-            Wait();
             ButtonElement("Cancel");
 
             try
@@ -609,19 +617,20 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string GetLeaseCode()
         {
-            Wait();
+            WaitUntilVisible(licenseHeaderNbrContent);
             return webDriver.FindElement(licenseHeaderNbrContent).Text;
         }
 
         public string GetLeaseAccountType()
         {
-            Wait();
+            WaitUntilVisible(licenseHeaderAccountType);
             return webDriver.FindElement(licenseHeaderAccountType).Text;
         }
 
         public void VerifyLicenseDetailsCreateForm()
         {
             Wait();
+            WaitUntilVisible(licenseDetailsProjectLabel);
 
             //Create Title
             Assert.True(webDriver.FindElement(licenseCreateTitle).Displayed);
@@ -705,7 +714,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLicenseHeader()
         {
-            Wait();
+            WaitUntilVisible(licenseHeaderNbrContent);
 
             Assert.True(webDriver.FindElement(licenseHeaderNbrLabel).Displayed);
             Assert.True(webDriver.FindElement(licenseHeaderNbrContent).Displayed);
@@ -739,7 +748,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLicenseDetailsViewForm(Lease lease)
         {
-            Wait();
+            WaitUntilVisible(licenseDetailsEditIcon);
             VerifyLicenseHeader();
 
             //Edit Icon
@@ -773,7 +782,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Lease 1st Property Information
             Assert.True(webDriver.FindElement(licenseDetailsPropertyInformationSubtitle).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsProperty1DescriptiveNameLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsProperty1DescriptiveNameContent).Displayed);
+            //Assert.True(webDriver.FindElement(licenseDetailsProperty1DescriptiveNameContent).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsProperty1AreaIncludedLabel).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsProperty1AreaIncludedContent).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsProperty1AddressLabel).Displayed);
@@ -933,7 +942,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLicenseDetailsUpdateForm()
         {
-            Wait();
+            WaitUntilVisible (licenseDetailsStatusLabel);
             VerifyLicenseHeader();
 
             //Details

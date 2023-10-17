@@ -384,6 +384,7 @@ exports[`UpdateProjectsSubForm renders as expected with pre-existing form data 1
                   class="rbt-input-main form-control rbt-input"
                   id="typeahead-researchFileProjects[0].project"
                   name="typeahead-researchFileProjects[0].project"
+                  placeholder="Type to search for a Project"
                   role="combobox"
                   type="text"
                   value="CLAIMS"

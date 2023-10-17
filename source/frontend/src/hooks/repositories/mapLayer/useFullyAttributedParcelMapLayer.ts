@@ -1,6 +1,6 @@
 import { FeatureCollection, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 
 import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useWfsLayer } from '@/hooks/layer-api/useWfsLayer';
@@ -20,9 +20,7 @@ export const useFullyAttributedParcelMapLayer = () => {
     name: parcelMapFullyAttributed.name,
   });
 
-  const { findOneWhereContainsWrapped } = useLayerQuery(parcelsLayerUrl);
-  const findOneWhereContainsWrappedExecute = findOneWhereContainsWrapped.execute;
-  const findOneWhereContainsWrappedLoading = findOneWhereContainsWrapped.loading;
+  const { findOneWhereContains } = useLayerQuery(parcelsLayerUrl);
 
   const { execute: getAllFeatures, loading: getAllFeaturesLoading } = getAllFeaturesWrapper;
 
@@ -69,8 +67,11 @@ export const useFullyAttributedParcelMapLayer = () => {
   );
 
   const findByPlanNumber = useCallback(
-    async (planNumber: string) => {
-      const data = await getAllFeatures({ PLAN_NUMBER: planNumber }, { timeout: 30000 });
+    async (planNumber: string, forceExactMatch = false) => {
+      const data = await getAllFeatures(
+        { PLAN_NUMBER: planNumber },
+        { forceExactMatch: forceExactMatch, timeout: 30000 },
+      );
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
       return data as
         | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
@@ -81,7 +82,7 @@ export const useFullyAttributedParcelMapLayer = () => {
 
   const findOne = useCallback(
     async (latlng: LatLngLiteral, geometryName?: string, spatialReferenceId?: number) => {
-      const featureCollection = await findOneWhereContainsWrappedExecute(
+      const featureCollection = await findOneWhereContains(
         latlng,
         geometryName,
         spatialReferenceId,
@@ -95,29 +96,16 @@ export const useFullyAttributedParcelMapLayer = () => {
         ? forceCasted.features[0]
         : undefined;
     },
-    [findOneWhereContainsWrappedExecute],
+    [findOneWhereContains],
   );
 
-  return useMemo(
-    () => ({
-      findByLegalDescription,
-      findByPid,
-      findByPin,
-      findByPlanNumber,
-      findByLoading: getAllFeaturesLoading,
-      findByWrapper: getAllFeaturesWrapper,
-      findOne,
-      findOneLoading: findOneWhereContainsWrappedLoading,
-    }),
-    [
-      findByLegalDescription,
-      findByPid,
-      findByPin,
-      findByPlanNumber,
-      getAllFeaturesLoading,
-      getAllFeaturesWrapper,
-      findOne,
-      findOneWhereContainsWrappedLoading,
-    ],
-  );
+  return {
+    findByLegalDescription,
+    findByPid,
+    findByPin,
+    findByPlanNumber,
+    findByLoading: getAllFeaturesLoading,
+    findByWrapper: getAllFeaturesWrapper,
+    findOne,
+  };
 };

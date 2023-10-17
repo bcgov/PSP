@@ -1,3 +1,4 @@
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFileChecklistItem,
@@ -247,30 +248,34 @@ export const mockAcquisitionFileResponse = (
       appCreateUserid: 'dbo',
     },
   ],
-  acquisitionFileOwnerSolicitors: [
+  acquisitionFileInterestHolders: [
     {
-      id: 1,
+      interestHolderId: 1,
+      interestHolderType: { id: InterestHolderType.OWNER_SOLICITOR },
       acquisitionFileId: 1,
-      personId: 1,
-      person: {
-        id: 1,
-        firstName: 'Luke',
-        surname: 'Skywalker',
-      },
+      personId: null,
+      person: null,
       organizationId: 1,
       organization: {
         id: 1,
-        name: 'Millenium Inc',
+        name: 'Millennium Inc',
         alias: 'M Inc',
         incorporationNumber: '1234',
         comment: '',
       },
+      interestHolderProperties: [],
+      primaryContactId: 1,
+      primaryContact: {
+        id: 1,
+        firstName: 'Luke',
+        surname: 'Skywalker',
+      },
+      comment: null,
       isDisabled: false,
     },
-  ],
-  acquisitionFileOwnerRepresentatives: [
     {
-      id: 1,
+      interestHolderId: 1,
+      interestHolderType: { id: InterestHolderType.OWNER_REPRESENTATIVE },
       acquisitionFileId: 1,
       personId: 2,
       person: {
@@ -278,11 +283,18 @@ export const mockAcquisitionFileResponse = (
         firstName: 'Han',
         surname: 'Solo',
       },
+      organization: null,
+      organizationId: null,
+      interestHolderProperties: [],
+      primaryContactId: null,
+      primaryContact: null,
       comment: 'test representative comment',
       isDisabled: false,
     },
   ],
   acquisitionFileChecklist: [],
+  totalAllowableCompensation: 0,
+  legacyStakeholders: [],
   appCreateTimestamp: '2022-05-28T00:57:37.42',
   appLastUpdateTimestamp: '2022-07-28T00:57:37.42',
   appLastUpdateUserid: 'admin',

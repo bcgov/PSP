@@ -9,7 +9,7 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Insurance Menu Elements
         private By licenseInsuranceLink = By.XPath("//a[contains(text(),'Insurance')]");
-        private By insuranceEditIcon = By.XPath("//div[@role='tabpanel'][4]/div/div/button");
+        private By insuranceEditIcon = By.XPath("//div[@role='tabpanel']/div/div/button");
 
         //Insurance Create Form Elements
         private By insuranceSubtitle = By.XPath("//h2[contains(text(),'Required coverage')]");
@@ -149,25 +149,24 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigate to Insurance section
         public void NavigateToInsuranceSection()
         {
-            Wait();
+            WaitUntilClickable(licenseInsuranceLink);
             webDriver.FindElement(licenseInsuranceLink).Click();
         }
 
         //Edit Insurance section
         public void EditInsuranceButton()
         {
-            Wait();
+            WaitUntilClickable(insuranceEditIcon);
             webDriver.FindElement(insuranceEditIcon).Click();
         }
 
         //Add Aircraft Insurance
         public void AddAircraftInsurance(Lease lease)
         {
-            Wait();
             FocusAndClick(insuranceAircraftCheckbox);
 
             //Verify Presence of elements on the form
-            Wait();
+            WaitUntilVisible(insuranceAircraftInPlaceLabel);
             Assert.True(webDriver.FindElement(insuranceAircraftSubtitle).Displayed);
             Assert.True(webDriver.FindElement(insuranceAircraftInPlaceLabel).Displayed);
             Assert.True(webDriver.FindElement(insuranceAircraftLimitLabel).Displayed);
@@ -178,7 +177,6 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(insuranceAircraftDescriptionTextarea).Displayed);
 
             //Fill out form
-            Wait();
 
             if(lease.AircraftInsuranceInPlace != "")
                 ChooseSpecificRadioButton(insuranceAircraftInPlaceRadioBttnGroup, lease.AircraftInsuranceInPlace);
@@ -200,11 +198,11 @@ namespace PIMS.Tests.Automation.PageObjects
         //Add CGL Insurance
         public void AddCGLInsurance(Lease lease)
         {
-            Wait();
+            WaitUntilClickable(insuranceCGLCheckbox);
             FocusAndClick(insuranceCGLCheckbox);
 
             //Verify Presence of elements on the form
-            Wait();
+            WaitUntilVisible(insuranceCGLSubtitle);
             Assert.True(webDriver.FindElement(insuranceCGLSubtitle).Displayed);
             Assert.True(webDriver.FindElement(insuranceCGLInPlaceLabel).Displayed);
             Assert.True(webDriver.FindElement(insuranceCGLLimitLabel).Displayed);
@@ -216,26 +214,41 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Fill out form
             Wait();
-            if(lease.CGLInsuranceInPlace != "")
+            if (lease.CGLInsuranceInPlace != "")
+            {
+                WaitUntilClickable(insuranceCGLInPlaceRadioBttnGroup);
                 ChooseSpecificRadioButton(insuranceCGLInPlaceRadioBttnGroup, lease.CGLInsuranceInPlace);
-            if(lease.CGLLimit != "")
+            }
+            if (lease.CGLLimit != "")
+            {
+                WaitUntilClickable(insuranceCGLLimitInput);
                 webDriver.FindElement(insuranceCGLLimitInput).SendKeys(lease.CGLLimit);
-            webDriver.FindElement(insuranceCGLExpiryDateInput).Click();
+            }  
             if (lease.CGLPolicyExpiryDate != "")
+            {
+                WaitUntilClickable(insuranceCGLExpiryDateInput);
+                webDriver.FindElement(insuranceCGLExpiryDateInput).Click();
                 webDriver.FindElement(insuranceCGLExpiryDateInput).SendKeys(lease.CGLPolicyExpiryDate);
-            webDriver.FindElement(insuranceCGLDescriptionTextarea).Click();
+                webDriver.FindElement(insuranceCGLExpiryDateInput).SendKeys(Keys.Enter);
+            }
+                
+            
             if (lease.CGLDescriptionCoverage != "")
+            {
+                WaitUntilClickable(insuranceCGLDescriptionTextarea);
+                webDriver.FindElement(insuranceCGLDescriptionTextarea).Click();
                 webDriver.FindElement(insuranceCGLDescriptionTextarea).SendKeys(lease.CGLDescriptionCoverage);
+            }
         }
 
         //Add Marine Insurance
         public void AddMarineInsurance(Lease lease)
         {
-            Wait();
+            WaitUntilClickable(insuranceMarineCheckbox);
             FocusAndClick(insuranceMarineCheckbox);
 
             //Verify Presence of elements on the form
-            Wait();
+            WaitUntilClickable(insuranceMarineSubtitle);
             Assert.True(webDriver.FindElement(insuranceMarineSubtitle).Displayed);
             Assert.True(webDriver.FindElement(insuranceMarineInPlaceLabel).Displayed);
             Assert.True(webDriver.FindElement(insuranceMarineLimitLabel).Displayed);
@@ -246,27 +259,44 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(insuranceMarineDescriptionTextarea).Displayed);
 
             //Fill out form
-            Wait();
+
             if (lease.MarineInsuranceInPlace != "")
+            {
+                WaitUntilClickable(insuranceMarineInPlaceRadioBttnGroup);
                 ChooseSpecificRadioButton(insuranceMarineInPlaceRadioBttnGroup, lease.MarineInsuranceInPlace);
+            }
+                
             if (lease.MarineLimit != "")
+            {
+                WaitUntilClickable(insuranceMarineLimitInput);
                 webDriver.FindElement(insuranceMarineLimitInput).SendKeys(lease.MarineLimit);
-            webDriver.FindElement(insuranceMarineExpiryDateInput).Click();
+            }
+                
             if (lease.MarinePolicyExpiryDate != "")
+            {
+                WaitUntilClickable(insuranceMarineExpiryDateInput);
+                webDriver.FindElement(insuranceMarineExpiryDateInput).Click();
                 webDriver.FindElement(insuranceMarineExpiryDateInput).SendKeys(lease.MarinePolicyExpiryDate);
-            webDriver.FindElement(insuranceMarineDescriptionTextarea).Click();
+                webDriver.FindElement(insuranceMarineExpiryDateInput).SendKeys(Keys.Enter);
+            }
+                
+            
             if (lease.MarineDescriptionCoverage != "")
+            {
+                WaitUntilClickable(insuranceMarineDescriptionTextarea);
+                webDriver.FindElement(insuranceMarineDescriptionTextarea).Click();
                 webDriver.FindElement(insuranceMarineDescriptionTextarea).SendKeys(lease.MarineDescriptionCoverage);
+            }
+                
         }
 
         //Add Vehicle Insurance
         public void AddVehicleInsurance(Lease lease)
         {
-            Wait();
             FocusAndClick(insuranceVehicleCheckbox);
 
             //Verify Presence of elements on the form
-            Wait();
+            WaitUntilVisible(insuranceVehicleLimitInput);
             Assert.True(webDriver.FindElement(insuranceVehicleSubtitle).Displayed);
             Assert.True(webDriver.FindElement(insuranceVehicleInPlaceLabel).Displayed);
             Assert.True(webDriver.FindElement(insuranceVehicleLimitLabel).Displayed);
@@ -277,28 +307,45 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(insuranceVehicleDescriptionTextarea).Displayed);
 
             //Fill out form
-            Wait();
             if (lease.VehicleInsuranceInPlace != "")
+            {
+                WaitUntilClickable(insuranceVehicleInPlaceRadioBttnGroup);
                 ChooseSpecificRadioButton(insuranceVehicleInPlaceRadioBttnGroup, lease.VehicleInsuranceInPlace);
+            }
+                
             if (lease.VehicleLimit != "")
+            {
+                WaitUntilClickable(insuranceVehicleLimitInput);
                 webDriver.FindElement(insuranceVehicleLimitInput).SendKeys(lease.VehicleLimit);
-            webDriver.FindElement(insuranceVehicleExpiryDateInput).Click();
+            }
+                
+            
             if (lease.VehiclePolicyExpiryDate != "")
+            {
+                WaitUntilClickable(insuranceVehicleExpiryDateInput);
+                webDriver.FindElement(insuranceVehicleExpiryDateInput).Click();
                 webDriver.FindElement(insuranceVehicleExpiryDateInput).SendKeys(lease.VehiclePolicyExpiryDate);
-            webDriver.FindElement(insuranceVehicleDescriptionTextarea).Click();
+                webDriver.FindElement(insuranceVehicleExpiryDateInput).SendKeys(Keys.Enter);
+            }
+                
+            
             if (lease.VehicleDescriptionCoverage != "")
+            {
+                WaitUntilClickable(insuranceVehicleDescriptionTextarea);
+                webDriver.FindElement(insuranceVehicleDescriptionTextarea).Click();
                 webDriver.FindElement(insuranceVehicleDescriptionTextarea).SendKeys(lease.VehicleDescriptionCoverage);
+            }
+                
 
         }
 
         //Add Other Insurance
         public void AddOtherInsurance(Lease lease)
         {
-            Wait();
             FocusAndClick(insuranceOtherCheckbox);
 
             //Verify Presence of elements on the form
-            Wait();
+            WaitUntilVisible(insuranceOtherLimitInput);
             Assert.True(webDriver.FindElement(insuranceOtherSubtitle).Displayed);
             Assert.True(webDriver.FindElement(insuranceOtherInPlaceLabel).Displayed);
             Assert.True(webDriver.FindElement(insuranceOtherLimitLabel).Displayed);
@@ -309,24 +356,41 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(insuranceOtherDescriptionTextarea).Displayed);
 
             //Fill out form
-            Wait();
             if (lease.OtherInsuranceType != "")
+            {
+                WaitUntilVisible(insuranceOtherTypeInput);
                 webDriver.FindElement(insuranceOtherTypeInput).SendKeys(lease.OtherInsuranceType);
+            }
+                
             if (lease.OtherInsuranceInPlace != "")
+            {
+                WaitUntilVisible(insuranceOtherInPlaceRadioBttnGroup);
                 ChooseSpecificRadioButton(insuranceOtherInPlaceRadioBttnGroup, lease.OtherInsuranceInPlace);
+            }
+                
             if (lease.OtherLimit != "")
+            {
+                WaitUntilVisible(insuranceOtherInPlaceRadioBttnGroup);
                 webDriver.FindElement(insuranceOtherLimitInput).SendKeys(lease.OtherLimit);
-            webDriver.FindElement(insuranceOtherExpiryDateInput).Click();
+            }
+               
             if (lease.OtherPolicyExpiryDate != "")
+            {
+                WaitUntilVisible(insuranceOtherExpiryDateInput);
                 webDriver.FindElement(insuranceOtherExpiryDateInput).SendKeys(lease.OtherPolicyExpiryDate);
-            webDriver.FindElement(insuranceOtherDescriptionTextarea).Click();
+                webDriver.FindElement(insuranceOtherExpiryDateInput).SendKeys(Keys.Enter);
+            }
+                
             if (lease.OtherDescriptionCoverage != "")
+            {
+                WaitUntilVisible(insuranceOtherDescriptionTextarea);
                 webDriver.FindElement(insuranceOtherDescriptionTextarea).SendKeys(lease.OtherDescriptionCoverage);
+            }  
         }
 
         public void DeleteLastInsurance()
         {
-            Wait();
+            WaitUntilVisible(insuranceEditTotal);
             var totalInsertedInsurance = webDriver.FindElements(insuranceEditTotal).Count;
             var lastInsuranceInserted = webDriver.FindElement(By.XPath("//h2[contains(text(),'Coverage details')]/following-sibling::div/div[" + totalInsertedInsurance + "]/h2")).Text;
             
@@ -352,7 +416,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInsuranceInitForm()
         {
-            Wait();
+            WaitUntilVisible(insuranceAircraftCheckbox);
             Assert.True(webDriver.FindElement(insuranceSubtitle).Displayed);
             Assert.True(webDriver.FindElement(insuranceInstructions).Displayed);
 
@@ -372,7 +436,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInsuranceViewForm(Lease lease)
         {
-            Wait();
+            WaitUntilVisible(insuranceRequiredLabel);
 
             Assert.True(webDriver.FindElement(insuranceRequiredLabel).Displayed);
 

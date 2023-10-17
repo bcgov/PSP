@@ -104,22 +104,22 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Deposit Section
         public void NavigateToDepositSection()
         {
-            Wait();
+            WaitUntilClickable(licenseDepositsLink);
             webDriver.FindElement(licenseDepositsLink).Click();
         }
 
         public void AddDepositBttn()
         {
-            Wait();
+            WaitUntilClickable(licenseDepositAddBttn);
             FocusAndClick(licenseDepositAddBttn);
         }
 
         public void AddDeposit(Deposit deposit)
         {
-            Wait();
+            WaitUntilClickable(licenseDepositAddTypeSelect);
             ChooseSpecificSelectOption(licenseDepositAddTypeSelect, deposit.DepositType);
 
-            Wait();
+            WaitUntilVisible(licenseDepositAddDescriptionTextarea);
             if (webDriver.FindElements(licenseDepositAddOtherTypeInput).Count() > 0)
             {
                 webDriver.FindElement(licenseDepositAddOtherTypeInput).SendKeys(deposit.DepositTypeOther);
@@ -139,13 +139,16 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddReturnBttn()
         {
-            Wait();
-            webDriver.FindElement(licenseDepositTable1stRowReturnBttn).Click();
+            WaitUntilVisible(licenseDepositTableTotal);
+            var totalDeposits = webDriver.FindElements(licenseDepositTableTotal).Count;
+            var licenseDepositTableLastRowReturnBttn = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") div[class='td']:nth-child(6) button[title='return deposit']");
+
+            webDriver.FindElement(licenseDepositTableLastRowReturnBttn).Click();
         }
 
         public void AddReturn(Deposit deposit)
         {
-            Wait();
+            WaitUntilVisible(licenseDepositReturnTerminationDateInput);
 
             webDriver.FindElement(licenseDepositReturnTerminationDateInput).SendKeys(deposit.ReturnTerminationDate);
             webDriver.FindElement(licenseDepositReturnClaimInput).SendKeys(deposit.TerminationClaimDeposit);
@@ -162,19 +165,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddNotes(string notes)
         {
-            Wait();
+            WaitUntilClickable(licenseDepositEditNotesBttn);
             webDriver.FindElement(licenseDepositEditNotesBttn).Click();
 
-            WaitUntil(licenseDepositNotesTextarea);
+            WaitUntilVisible(licenseDepositNotesTextarea);
             webDriver.FindElement(licenseDepositNotesTextarea).SendKeys(notes);
         }
 
         public void DeleteFirstReturn()
         {
-            Wait();
+            WaitUntilClickable(licenseDepositReturn1stRowDeleteBttn);
             FocusAndClick(licenseDepositReturn1stRowDeleteBttn);
 
-            WaitUntil(licenseDepositModal);
+            WaitUntilVisible(licenseDepositModal);
             Assert.True(sharedModals.ModalHeader() == "Delete Deposit Return");
             Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this deposit return?");
             sharedModals.ModalClickOKBttn();
@@ -182,13 +185,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditLastDeposit(Deposit deposit)
         {
-            Wait();
+            WaitUntilVisible(licenseDepositTableTotal);
             var totalDeposits = webDriver.FindElements(licenseDepositTableTotal).Count;
             webDriver.FindElement(By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") button[title='edit deposit']")).Click();
 
             ChooseSpecificSelectOption(licenseDepositAddTypeSelect, deposit.DepositType);
 
-            Wait();
+            WaitUntilVisible(licenseDepositAddDescriptionTextarea);
             if (webDriver.FindElements(licenseDepositAddOtherTypeInput).Count() > 0)
             {
                 ClearInput(licenseDepositAddOtherTypeInput);
@@ -211,23 +214,22 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Save");
         }
 
-        public void DeleteLastDeposit()
+        public void DeleteFirstDeposit()
         {
-            Wait();
-            var totalDeposits = webDriver.FindElements(licenseDepositTableTotal).Count();
-            var lastDepositDeleteIcon = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") button[title='delete deposit']");
+            var lastDepositDeleteIcon = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) button[title='delete deposit']");
+            WaitUntilClickable(lastDepositDeleteIcon);
             FocusAndClick(lastDepositDeleteIcon);
 
-            WaitUntil(licenseDepositModal);
+            WaitUntilVisible(licenseDepositModal);
             Assert.True(sharedModals.ModalHeader() == "Delete Deposit");
             Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove the deposit?");
             sharedModals.ModalClickOKBttn();
-
         }
 
         public void VerifyDepositInitForm()
         {
-            Wait();
+            WaitUntilVisible(licenseDepositTypeColumn);
+
             Assert.True(webDriver.FindElement(licenseDepositsReceivedSubtitle).Displayed);
             Assert.True(webDriver.FindElement(licenseDepositAddBttn).Displayed);
             Assert.True(webDriver.FindElement(licenseDepositTypeColumn).Displayed);
@@ -257,7 +259,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreateDepositForm()
         {
-            Wait();
+            WaitUntilVisible(licenseDepositAddTypeLabel);
 
             Assert.True(sharedModals.ModalHeader() == "Add a Deposit");
 
@@ -282,28 +284,39 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreatedDepositTable(Deposit deposit)
         {
-            Wait();
+            var totalDeposits = webDriver.FindElements(licenseDepositTableTotal).Count;
 
+            var licenseDepositTableLastRowDepositTypeContent = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") div[class='td']:nth-child(1)");
+            var licenseDepositTableLastRowDescriptionContent = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") div[class='td']:nth-child(2)");
+            var licenseDepositTableLastRowAmountPaidContent = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") div[class='td']:nth-child(3)");
+            var licenseDepositTableLastRowPaidDateContent = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") div[class='td']:nth-child(4)");
+            var licenseDepositTableLastRowDepositHolderContent = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") div[class='td']:nth-child(5)");
+            var licenseDepositTableLastRowEditBttn = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") div[class='td']:nth-child(6) button[title='edit deposit']");
+            var licenseDepositTableLastRowReturnBttn = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") div[class='td']:nth-child(6) button[title='return deposit']");
+            var licenseDepositTableLastRowDeleteBttn = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") div[class='td']:nth-child(6) button[title='delete deposit']");
+            var licenseDepositTableLastRowTooltipBttn = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") div[class='td']:nth-child(6) span[class='tooltip-icon']");
+
+            WaitUntilVisible(licenseDepositTableLastRowDescriptionContent);
             if (deposit.DepositType == "Other deposit")
-                Assert.True(webDriver.FindElement(licenseDepositTable1stRowDepositTypeContent).Text == deposit.DepositTypeOther + " (Other)");
+                Assert.True(webDriver.FindElement(licenseDepositTableLastRowDepositTypeContent).Text == deposit.DepositTypeOther + " (Other)");
             else
-                Assert.True(webDriver.FindElement(licenseDepositTable1stRowDepositTypeContent).Text == deposit.DepositType);
+                Assert.True(webDriver.FindElement(licenseDepositTableLastRowDepositTypeContent).Text == deposit.DepositType);
            
-            Assert.True(webDriver.FindElement(licenseDepositTable1stRowDescriptionContent).Text == deposit.DepositDescription);
-            Assert.True(webDriver.FindElement(licenseDepositTable1stRowAmountPaidContent).Text == TransformCurrencyFormat(deposit.DepositAmount));
-            Assert.True(webDriver.FindElement(licenseDepositTable1stRowPaidDateContent).Text == TransformDateFormat(deposit.DepositPaidDate));
-            Assert.True(webDriver.FindElement(licenseDepositTable1stRowDepositHolderContent).Text == deposit.DepositHolder);
-            Assert.True(webDriver.FindElement(licenseDepositTable1stRowEditBttn).Displayed);
-            if(webDriver.FindElements(licenseDepositTable1stRowDeleteBttn).Count == 0)
-                Assert.True(webDriver.FindElement(licenseDepositTable1stRowTooltipBttn).Displayed);
+            Assert.True(webDriver.FindElement(licenseDepositTableLastRowDescriptionContent).Text == deposit.DepositDescription);
+            Assert.True(webDriver.FindElement(licenseDepositTableLastRowAmountPaidContent).Text == TransformCurrencyFormat(deposit.DepositAmount));
+            Assert.True(webDriver.FindElement(licenseDepositTableLastRowPaidDateContent).Text == TransformDateFormat(deposit.DepositPaidDate));
+            Assert.True(webDriver.FindElement(licenseDepositTableLastRowDepositHolderContent).Text == deposit.DepositHolder);
+            Assert.True(webDriver.FindElement(licenseDepositTableLastRowEditBttn).Displayed);
+            if(webDriver.FindElements(licenseDepositTableLastRowDeleteBttn).Count == 0)
+                Assert.True(webDriver.FindElement(licenseDepositTableLastRowTooltipBttn).Displayed);
             else
-                Assert.True(webDriver.FindElement(licenseDepositTable1stRowDeleteBttn).Displayed);
-            Assert.True(webDriver.FindElement(licenseDepositTable1stRowReturnBttn).Displayed);
+                Assert.True(webDriver.FindElement(licenseDepositTableLastRowDeleteBttn).Displayed);
+            Assert.True(webDriver.FindElement(licenseDepositTableLastRowReturnBttn).Displayed);
         }
 
         public void VerifyCreateReturnForm(Deposit deposit)
         {
-            Wait();
+            WaitUntilVisible(licenseDepositReturnDepositTypeLabel);
             Assert.True(sharedModals.ModalHeader() == "Return a Deposit");
 
             Assert.True(webDriver.FindElement(licenseDepositReturnDepositTypeLabel).Displayed);
@@ -333,8 +346,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreatedReturnTable(Deposit deposit)
         {
-            Wait();
-
             var totalReturns = webDriver.FindElements(licenseDepositReturnTableTotal).Count;
 
             var licenseDepositReturnTableLastRowDepositTypeContent = By.CssSelector("div[data-testid='securityDepositReturnsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalReturns + ") div[class='td']:nth-child(1)");
@@ -347,6 +358,8 @@ namespace PIMS.Tests.Automation.PageObjects
             var licenseDepositReturnTableLastRowReturnedPayeeNameContent = By.CssSelector("div[data-testid='securityDepositReturnsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalReturns + ") div[class='td']:nth-child(8)");
             var licenseDepositReturnTableLastRowDeleteBttn = By.CssSelector("div[data-testid='securityDepositReturnsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalReturns + ") div[class='td']:nth-child(9) button[title='delete deposit return']");
             var licenseDepositReturnTableLastRowEditBttn = By.CssSelector("div[data-testid='securityDepositReturnsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalReturns + ") div[class='td']:nth-child(9) button[title='edit deposit return']");
+
+            WaitUntilVisible(licenseDepositReturnTableLastRowTerminationContent);
 
             if (deposit.DepositType == "Other deposit")
                 Assert.True(webDriver.FindElement(licenseDepositReturnTableLastRowDepositTypeContent).Text == deposit.DepositTypeOther + " (Other)");
@@ -366,7 +379,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int TotalDeposits()
         {
-            Wait();
+            WaitUntilVisible(licenseDepositTableTotal);
             return webDriver.FindElements(licenseDepositTableTotal).Count;
         }
     }

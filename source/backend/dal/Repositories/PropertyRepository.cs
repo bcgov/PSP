@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
@@ -66,6 +67,13 @@ namespace Pims.Dal.Repositories
                 .Take(filter.Quantity)
                 .ToArray();
 
+            if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
+            {
+                Regex nonInteger = new Regex("[^\\d]");
+                var formattedPidPin = nonInteger.Replace(filter.PinOrPid, string.Empty);
+                items = items.Where(i => i.Pid.ToString().PadLeft(9, '0').Contains(formattedPidPin) || i.Pin.ToString().Contains(formattedPidPin)).ToArray();
+            }
+
             return new Paged<PimsProperty>(items, filter.Page, filter.Quantity, query.Count());
         }
 
@@ -89,8 +97,6 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
-                .Include(p => p.PimsPropPropAdjacentLandTypes)
-                    .ThenInclude(t => t.PropertyAdjacentLandTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTypes)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -139,8 +145,6 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
-                .Include(p => p.PimsPropPropAdjacentLandTypes)
-                    .ThenInclude(t => t.PropertyAdjacentLandTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTypes)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -192,8 +196,6 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
-                .Include(p => p.PimsPropPropAdjacentLandTypes)
-                    .ThenInclude(t => t.PropertyAdjacentLandTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTypes)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -231,8 +233,6 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
-                .Include(p => p.PimsPropPropAdjacentLandTypes)
-                    .ThenInclude(t => t.PropertyAdjacentLandTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTypes)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -345,7 +345,6 @@ namespace Pims.Dal.Repositories
 
             // update direct relationships - anomalies, tenures, etc
             Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyType, long>(p => p.PimsPropPropAnomalyTypes, propertyId, property.PimsPropPropAnomalyTypes.ToArray());
-            Context.UpdateChild<PimsProperty, long, PimsPropPropAdjacentLandType, long>(p => p.PimsPropPropAdjacentLandTypes, propertyId, property.PimsPropPropAdjacentLandTypes.ToArray());
             Context.UpdateChild<PimsProperty, long, PimsPropPropRoadType, long>(p => p.PimsPropPropRoadTypes, propertyId, property.PimsPropPropRoadTypes.ToArray());
             Context.UpdateChild<PimsProperty, long, PimsPropPropTenureType, long>(p => p.PimsPropPropTenureTypes, propertyId, property.PimsPropPropTenureTypes.ToArray());
 
@@ -376,6 +375,48 @@ namespace Pims.Dal.Repositories
             existingProperty.IsPropertyOfInterest = false;
             existingProperty.IsOwned = true;
             return existingProperty;
+        }
+
+        public HashSet<long> GetMatchingIds(PropertyFilterCriteria filter)
+        {
+            var query = Context.PimsProperties.AsNoTracking();
+
+            // Project filters
+            if (filter.ProjectId.HasValue)
+            {
+                query = query.Where(p =>
+                    p.PimsPropertyLeases.Any(pl => pl.Lease.ProjectId == filter.ProjectId) ||
+                    p.PimsPropertyResearchFiles.Any(pr => pr.ResearchFile.PimsResearchFileProjects.Any(r => r.ProjectId == filter.ProjectId)) ||
+                    p.PimsPropertyAcquisitionFiles.Any(pa => pa.AcquisitionFile.ProjectId == filter.ProjectId));
+            }
+
+            // Lease filters
+            if (!string.IsNullOrEmpty(filter.LeaseStatus))
+            {
+                query = query.Where(p =>
+                    p.PimsPropertyLeases.Any(pl => pl.Lease.LeaseStatusTypeCode == filter.LeaseStatus));
+            }
+
+            if (filter.LeaseTypes != null && filter.LeaseTypes.Count > 0)
+            {
+                query = query.Where(p =>
+                    p.PimsPropertyLeases.Any(pl => filter.LeaseTypes.Contains(pl.Lease.LeaseLicenseTypeCode)));
+            }
+
+            if (filter.LeasePurposes != null && filter.LeasePurposes.Count > 0)
+            {
+                query = query.Where(p =>
+                    p.PimsPropertyLeases.Any(pl => filter.LeasePurposes.Contains(pl.Lease.LeasePurposeTypeCode)));
+            }
+
+            // Anomalies
+            if (filter.AnomalyIds != null && filter.AnomalyIds.Count > 0)
+            {
+                query = query.Where(p =>
+                    p.PimsPropPropAnomalyTypes.Any(at => filter.AnomalyIds.Contains(at.PropertyAnomalyTypeCode)));
+            }
+
+            return query.Select(p => p.PropertyId).ToHashSet();
         }
 
         #endregion

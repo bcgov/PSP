@@ -31,6 +31,10 @@ const defaultFilterValues: IPropertyFilter = {
   searchBy: 'pinOrPid',
   pinOrPid: '',
   address: '',
+  page: '1',
+  quantity: '10',
+  latitude: undefined,
+  longitude: undefined,
 };
 
 const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {

@@ -8,20 +8,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DotNetEnv" Version="2.5.0" />
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
-    <PackageReference Include="Selenium.Support" Version="4.9.0" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="112.0.5615.4900" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3" />
+    <PackageReference Include="Selenium.Support" Version="4.10.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="115.0.5790.9800" />
     <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
     <PackageReference Include="FluentAssertions" Version="6.11.0" />
     <PackageReference Include="SpecFlow.xUnit" Version="3.9.74" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
-    <PackageReference Include="xunit" Version="2.4.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+    <PackageReference Include="xunit" Version="2.5.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -31,6 +33,10 @@
     <None Update="Data\PIMS_Testing_Data.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TestDocuments\" />
   </ItemGroup>
 
 </Project>

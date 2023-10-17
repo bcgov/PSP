@@ -1,16 +1,20 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
+using Pims.Core.Extensions;
+using Pims.Dal.Entities;
+using Entity = Pims.Dal.Entities;
+
 namespace Pims.Dal.Helpers.Extensions
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Microsoft.EntityFrameworkCore;
-    using Pims.Core.Extensions;
-    using Entity = Pims.Dal.Entities;
-
     /// <summary>
     /// AcquisitionExtensions static class, provides extension methods for acquisition files.
     /// </summary>
     public static class AcquisitionExtensions
     {
+        private const string LEGACYSTAKEHOLDERSPATTER = @"<([^>]+)\|\|([^>]+)>";
+
         /// <summary>
         /// Generate a query for the specified 'filter'.
         /// </summary>
@@ -28,6 +32,33 @@ namespace Pims.Dal.Helpers.Extensions
             query = query.GenerateCommonAcquisitionQuery(filter, regions, filterPersonId);
 
             return query;
+        }
+
+        /// <summary>
+        /// Extension method that returns a list of Legacy Interest Holders split by a pattern.
+        /// </summary>
+        /// <param name="acquisitionFile"></param>
+        /// <returns></returns>
+        public static List<string> GetLegacyInterestHolders(this PimsAcquisitionFile acquisitionFile)
+        {
+            acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
+
+            List<string> list = new();
+            if (string.IsNullOrEmpty(acquisitionFile.LegacyStakeholder))
+            {
+                return list;
+            }
+
+            MatchCollection matches = Regex.Matches(acquisitionFile.LegacyStakeholder, LEGACYSTAKEHOLDERSPATTER);
+            foreach (Match match in matches.Cast<Match>())
+            {
+                string value = match.Groups[1].Value;
+                string property = match.Groups[2].Value;
+
+                list.Add(value);
+            }
+
+            return list;
         }
 
         /// <summary>

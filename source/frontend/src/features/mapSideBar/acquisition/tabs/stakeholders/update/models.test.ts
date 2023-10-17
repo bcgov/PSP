@@ -1,21 +1,41 @@
+import { InterestHolderType } from '@/constants/interestHolderTypes';
+import { emptyApiInterestHolder, emptyInterestHolderProperty } from '@/mocks/interestHolder.mock';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
 
-import {
-  emptyApiInterestHolder,
-  emptyInterestHolderForm,
-  emptyInterestHolderProperty,
-  InterestHolderForm,
-  StakeHolderForm,
-} from './models';
+import { InterestHolderForm, StakeHolderForm } from './models';
+
+const emptyInterestHolderForm: InterestHolderForm = {
+  interestHolderId: null,
+  primaryContactId: null,
+  isDisabled: false,
+  impactedProperties: [],
+  contact: null,
+  acquisitionFileId: null,
+  rowVersion: null,
+  interestTypeCode: 'test_code',
+  comment: null,
+  personId: '',
+  organizationId: '',
+  propertyInterestTypeCode: '',
+};
 
 describe('Interest Holder model tests', () => {
-  it('StakeHolderForm splits a single InterestHolder into interests and non-interests', () => {
+  it('StakeHolderForm fromApi splits a single InterestHolder into interests and non-interests', () => {
     const apiInterestHolders: Api_InterestHolder = {
       ...emptyApiInterestHolder,
       interestHolderId: 1,
+      interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
       interestHolderProperties: [
-        { ...emptyInterestHolderProperty, interestTypeCode: { id: 'NIP' }, interestHolderId: 1 },
-        { ...emptyInterestHolderProperty, interestTypeCode: { id: 'IP' }, interestHolderId: 1 },
+        {
+          ...emptyInterestHolderProperty,
+          propertyInterestTypes: [{ id: 'NIP' }],
+          interestHolderId: 1,
+        },
+        {
+          ...emptyInterestHolderProperty,
+          propertyInterestTypes: [{ id: 'IP' }],
+          interestHolderId: 1,
+        },
       ],
     };
     const stakeholderModel = StakeHolderForm.fromApi([apiInterestHolders]);
@@ -23,35 +43,54 @@ describe('Interest Holder model tests', () => {
     expect(stakeholderModel.nonInterestPayees).toHaveLength(1);
   });
 
-  it('StakeHolderForm splits a single InterestHolder into multiple if an interest holder has multiple properties of different types', () => {
+  it('StakeHolderForm fromApi splits a single InterestHolder into multiple if an interest holder has multiple properties of different types', () => {
     const apiInterestHolders: Api_InterestHolder = {
       ...emptyApiInterestHolder,
       interestHolderId: 1,
+      interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
       interestHolderProperties: [
-        { ...emptyInterestHolderProperty, interestTypeCode: { id: 'PI' }, interestHolderId: 1 },
-        { ...emptyInterestHolderProperty, interestTypeCode: { id: 'IP' }, interestHolderId: 1 },
+        {
+          ...emptyInterestHolderProperty,
+          propertyInterestTypes: [{ id: 'PI' }],
+          interestHolderId: 1,
+        },
+        {
+          ...emptyInterestHolderProperty,
+          propertyInterestTypes: [{ id: 'IP' }],
+          interestHolderId: 1,
+        },
       ],
     };
     const stakeholderModel = StakeHolderForm.fromApi([apiInterestHolders]);
     expect(stakeholderModel.interestHolders).toHaveLength(2);
   });
 
-  it('StakeHolderForm does not combine multiple stakeholders even if they have the same type', () => {
+  it('StakeHolderForm fromApi does not combine multiple stakeholders even if they have the same type', () => {
     const apiInterestHolders: Api_InterestHolder[] = [
       {
         ...emptyApiInterestHolder,
         interestHolderId: 1,
+        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
         personId: 2,
         interestHolderProperties: [
-          { ...emptyInterestHolderProperty, interestTypeCode: { id: 'ip' }, interestHolderId: 1 },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'ip' }],
+            interestHolderId: 1,
+          },
         ],
       },
       {
         ...emptyApiInterestHolder,
         interestHolderId: 2,
+        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
         personId: 1,
         interestHolderProperties: [
-          { ...emptyInterestHolderProperty, interestTypeCode: { id: 'ip' }, interestHolderId: 2 },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'ip' }],
+            interestHolderId: 2,
+          },
         ],
       },
     ];
@@ -59,22 +98,90 @@ describe('Interest Holder model tests', () => {
     expect(stakeholderModel.interestHolders).toHaveLength(2);
   });
 
-  it('StakeHolderForm splits multiple InterestHolders into interests and non-interests', () => {
+  it('StakeHolderForm fromApi does not split an interest holder with multiple properties if the properties have the same type', () => {
     const apiInterestHolders: Api_InterestHolder[] = [
       {
         ...emptyApiInterestHolder,
         interestHolderId: 1,
+        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        personId: 2,
         interestHolderProperties: [
-          { ...emptyInterestHolderProperty, interestTypeCode: { id: 'NIP' }, interestHolderId: 1 },
-          { ...emptyInterestHolderProperty, interestTypeCode: { id: 'IP' }, interestHolderId: 1 },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'ip' }],
+            interestHolderId: 1,
+          },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'ip' }],
+            interestHolderId: 1,
+          },
+        ],
+      },
+    ];
+    const stakeholderModel = StakeHolderForm.fromApi(apiInterestHolders);
+    expect(stakeholderModel.interestHolders).toHaveLength(1);
+  });
+
+  it('StakeHolderForm fromApi does split an interest holder with multiple properties if the properties have different types', () => {
+    const apiInterestHolders: Api_InterestHolder[] = [
+      {
+        ...emptyApiInterestHolder,
+        interestHolderId: 1,
+        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        personId: 2,
+        interestHolderProperties: [
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'ip' }],
+            interestHolderId: 1,
+          },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'ip2' }],
+            interestHolderId: 1,
+          },
+        ],
+      },
+    ];
+    const stakeholderModel = StakeHolderForm.fromApi(apiInterestHolders);
+    expect(stakeholderModel.interestHolders).toHaveLength(2);
+  });
+
+  it('StakeHolderForm fromApi splits multiple InterestHolders into interests and non-interests', () => {
+    const apiInterestHolders: Api_InterestHolder[] = [
+      {
+        ...emptyApiInterestHolder,
+        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        interestHolderId: 1,
+        interestHolderProperties: [
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'NIP' }],
+            interestHolderId: 1,
+          },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'IP' }],
+            interestHolderId: 1,
+          },
         ],
       },
       {
         ...emptyApiInterestHolder,
+        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
         interestHolderId: 2,
         interestHolderProperties: [
-          { ...emptyInterestHolderProperty, interestTypeCode: { id: 'NIP' }, interestHolderId: 2 },
-          { ...emptyInterestHolderProperty, interestTypeCode: { id: 'PI' }, interestHolderId: 2 },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'NIP' }],
+            interestHolderId: 2,
+          },
+          {
+            ...emptyInterestHolderProperty,
+            propertyInterestTypes: [{ id: 'PI' }],
+            interestHolderId: 2,
+          },
         ],
       },
     ];
@@ -88,23 +195,25 @@ describe('Interest Holder model tests', () => {
     model.interestHolders = [
       {
         ...emptyInterestHolderForm,
-        personId: 1,
+        contact: { id: 'P1', personId: 1 },
         impactedProperties: [
           {
             ...emptyInterestHolderProperty,
             interestHolderPropertyId: 1,
             acquisitionFilePropertyId: 1,
+            rowVersion: 1,
           },
         ],
       },
       {
         ...emptyInterestHolderForm,
-        personId: 1,
+        contact: { id: 'P1', personId: 1 },
         impactedProperties: [
           {
             ...emptyInterestHolderProperty,
             interestHolderPropertyId: 1,
             acquisitionFilePropertyId: 2,
+            rowVersion: 1,
           },
         ],
       },
@@ -119,23 +228,25 @@ describe('Interest Holder model tests', () => {
     model.interestHolders = [
       {
         ...emptyInterestHolderForm,
-        personId: 1,
+        contact: { id: 'P1', personId: 1 },
         impactedProperties: [
           {
             ...emptyInterestHolderProperty,
             interestHolderPropertyId: 1,
             acquisitionFilePropertyId: 1,
+            rowVersion: 1,
           },
         ],
       },
       {
         ...emptyInterestHolderForm,
-        personId: 1,
+        contact: { id: 'P1', personId: 1 },
         impactedProperties: [
           {
             ...emptyInterestHolderProperty,
             interestHolderPropertyId: 1,
             acquisitionFilePropertyId: 1,
+            rowVersion: 1,
           },
         ],
       },
@@ -150,13 +261,15 @@ describe('Interest Holder model tests', () => {
     model.interestHolders = [
       {
         ...emptyInterestHolderForm,
-        personId: 1,
+        contact: { id: 'P1', personId: 1 },
+        propertyInterestTypeCode: 'IP',
         impactedProperties: [
           {
             ...emptyInterestHolderProperty,
             interestHolderPropertyId: 1,
             acquisitionFilePropertyId: 1,
-            interestTypeCode: { id: 'IP' },
+
+            rowVersion: 1,
           },
         ],
       },
@@ -164,13 +277,14 @@ describe('Interest Holder model tests', () => {
     model.nonInterestPayees = [
       {
         ...emptyInterestHolderForm,
-        personId: 1,
+        contact: { id: 'P1', personId: 1 },
+        propertyInterestTypeCode: 'NIP',
         impactedProperties: [
           {
             ...emptyInterestHolderProperty,
             interestHolderPropertyId: 1,
             acquisitionFilePropertyId: 1,
-            interestTypeCode: { id: 'NIP' },
+            rowVersion: 1,
           },
         ],
       },
@@ -180,43 +294,51 @@ describe('Interest Holder model tests', () => {
     expect(apiInterestHolders[0].interestHolderProperties).toHaveLength(1);
   });
 
-  it('StakeHolderForm toApi combines multiple persons with the same id but keeps their properties if the interest types are different', () => {
+  it('StakeHolderForm toApi combines multiple persons with the same id and combines the properties with the same id while having different interest types', () => {
     const model = new StakeHolderForm();
     model.interestHolders = [
       {
         ...emptyInterestHolderForm,
-        personId: 1,
-        interestTypeCode: 'IP',
+        contact: { id: 'P1', personId: 1 },
+        interestTypeCode: InterestHolderType.INTEREST_HOLDER,
+        propertyInterestTypeCode: 'IP',
         impactedProperties: [
           {
             ...emptyInterestHolderProperty,
             interestHolderPropertyId: 1,
             acquisitionFilePropertyId: 1,
+            rowVersion: 1,
           },
         ],
       },
       {
         ...emptyInterestHolderForm,
-        personId: 1,
-        interestTypeCode: 'PI',
+        contact: { id: 'P1', personId: 1 },
+        interestTypeCode: InterestHolderType.INTEREST_HOLDER,
+        propertyInterestTypeCode: 'PI',
         impactedProperties: [
           {
             ...emptyInterestHolderProperty,
             interestHolderPropertyId: 1,
             acquisitionFilePropertyId: 1,
+            rowVersion: 1,
           },
         ],
       },
     ];
     const apiInterestHolders = StakeHolderForm.toApi(model);
     expect(apiInterestHolders).toHaveLength(1);
-    expect(apiInterestHolders[0].interestHolderProperties).toHaveLength(2);
+    expect(apiInterestHolders[0].interestHolderProperties).toHaveLength(1);
+    expect(apiInterestHolders[0].interestHolderProperties[0].propertyInterestTypes).toHaveLength(2);
   });
 
   it('InterestHolderForm sets contact based on api response', () => {
     const apiInterestHolder: Api_InterestHolder = { ...emptyApiInterestHolder, personId: 1 };
 
-    const interestHolderModel = InterestHolderForm.fromApi(apiInterestHolder);
+    const interestHolderModel = InterestHolderForm.fromApi(
+      apiInterestHolder,
+      InterestHolderType.INTEREST_HOLDER,
+    );
     expect(interestHolderModel.contact?.personId).toBe(1);
     expect(interestHolderModel.contact?.id).toBe('P1');
   });
@@ -227,7 +349,7 @@ describe('Interest Holder model tests', () => {
       contact: { id: 'P1', personId: 1 },
     };
 
-    const apiInterestHolder = InterestHolderForm.toApi(interestHolderModel);
+    const apiInterestHolder = InterestHolderForm.toApi(interestHolderModel, []);
     expect(apiInterestHolder?.personId).toBe(1);
   });
 
@@ -237,7 +359,7 @@ describe('Interest Holder model tests', () => {
       contact: { id: 'O1', organizationId: 1 },
     };
 
-    const apiInterestHolder = InterestHolderForm.toApi(interestHolderModel);
+    const apiInterestHolder = InterestHolderForm.toApi(interestHolderModel, []);
     expect(apiInterestHolder?.organizationId).toBe(1);
   });
 });

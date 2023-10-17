@@ -1,15 +1,15 @@
 import { FormikProps } from 'formik';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
-import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
-import { MapStateContext } from '@/components/maps/providers/MapStateContext';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
+import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
@@ -25,32 +25,43 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const { onClose } = props;
   const history = useHistory();
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);
+  const [isValid, setIsValid] = useState<boolean>(true);
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
-  const { selectedFileFeature } = React.useContext(MapStateContext);
-  const { searchMany } = useMapSearch();
+  const mapMachine = useMapStateMachine();
+  const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
 
   const initialForm = useMemo(() => {
     const acquisitionForm = new AcquisitionForm();
-    if (!!selectedFileFeature) {
-      const property = PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature));
+    if (selectedFeatureDataset !== null) {
+      const property = PropertyForm.fromMapProperty(
+        featuresetToMapProperty(selectedFeatureDataset),
+      );
       acquisitionForm.properties = [property];
       acquisitionForm.region =
         property.regionName !== 'Cannot determine' ? property.region?.toString() : undefined;
     }
     return acquisitionForm;
-  }, [selectedFileFeature]);
+  }, [selectedFeatureDataset]);
 
   useEffect(() => {
-    if (!!selectedFileFeature && !!formikRef.current) {
+    if (!!selectedFeatureDataset && !!formikRef.current) {
       formikRef.current.resetForm();
       formikRef.current?.setFieldValue('properties', [
-        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
+        PropertyForm.fromMapProperty(featuresetToMapProperty(selectedFeatureDataset)),
       ]);
     }
-  }, [initialForm, selectedFileFeature]);
+  }, [initialForm, selectedFeatureDataset]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    // Sets the formik field `isValid` to false at start
+    await formikRef?.current?.validateForm();
+    if (!formikRef?.current?.isValid) {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+    }
+
     formikRef.current?.setSubmitting(true);
     formikRef.current?.submitForm();
   };
@@ -63,7 +74,8 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         { autoClose: 15000 },
       );
     }
-    await searchMany();
+
+    mapMachine.refreshMapProperties();
     history.replace(`/mapview/sidebar/acquisition/${acqFile.id}`);
     formikRef.current?.resetForm({ values: AcquisitionForm.fromApi(acqFile) });
   };
@@ -71,7 +83,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const helper = useAddAcquisitionFormManagement({
     onSuccess,
     initialForm,
-    selectedFeature: selectedFileFeature,
+    selectedFeature: selectedFeatureDataset,
     formikRef,
   });
 
@@ -89,9 +101,17 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         />
       }
       onClose={close}
-      footer={<SidebarFooter isOkDisabled={helper.loading} onSave={handleSave} onCancel={close} />}
+      footer={
+        <SidebarFooter
+          isOkDisabled={helper.loading}
+          onSave={handleSave}
+          onCancel={close}
+          isValid={isValid}
+        />
+      }
     >
       <StyledFormWrapper>
+        <LoadingBackdrop show={helper.loading} parentScreen={true} />
         <AddAcquisitionForm
           ref={formikRef}
           initialValues={helper.initialValues}

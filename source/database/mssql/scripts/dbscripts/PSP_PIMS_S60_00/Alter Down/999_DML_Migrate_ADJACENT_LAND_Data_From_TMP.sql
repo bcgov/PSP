@@ -1,0 +1,67 @@
+/* -----------------------------------------------------------------------------
+Migrate the data to PIMS_PROP_PROP_ADJACENT_LAND_TYPE.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+Author        Date         Comment
+------------  -----------  -----------------------------------------------------
+Doug Filteau  2023-Aug-03  Initial version
+----------------------------------------------------------------------------- */
+
+SET XACT_ABORT ON
+GO
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+GO
+BEGIN TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Disable the constraints on PIMS_PROP_PROP_ADJACENT_LAND_TYPE
+ALTER TABLE PIMS_PROP_PROP_ADJACENT_LAND_TYPE NOCHECK CONSTRAINT ALL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Migrate the Adjacent Land data to PIMS_PROPERTY
+INSERT INTO PIMS_PROP_PROP_ADJACENT_LAND_TYPE (PROPERTY_ID, PROPERTY_ADJACENT_LAND_TYPE_CODE)
+SELECT PROPERTY_ID
+     , PROPERTY_ADJACENT_LAND_TYPE_CODE
+FROM   TMP_PIMS_PROP_PROP_ADJACENT_LAND_TYPE
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Remove the duiplicate rows on PIMS_PROP_PROP_ADJACENT_LAND_TYPE
+WITH CTE AS 
+  (SELECT *
+        , ROW_NUMBER() OVER (PARTITION BY PROPERTY_ID, PROPERTY_ADJACENT_LAND_TYPE_CODE ORDER BY PROPERTY_ID, PROPERTY_ADJACENT_LAND_TYPE_CODE) AS DupRow
+   FROM   PIMS_PROP_PROP_ADJACENT_LAND_TYPE)
+DELETE FROM CTE WHERE DupRow <> 1
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Re-enable the constraints on PIMS_PROP_PROP_TENURE_TYPE
+ALTER TABLE PIMS_PROP_PROP_ADJACENT_LAND_TYPE WITH CHECK CHECK CONSTRAINT ALL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop the existing TMP_PIMS_PROP_PROP_ADJACENT_LAND_TYPE temporary table
+DROP TABLE IF EXISTS [dbo].[TMP_PIMS_PROP_PROP_ADJACENT_LAND_TYPE] 
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+COMMIT TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+DECLARE @Success AS BIT
+SET @Success = 1
+SET NOEXEC OFF
+IF (@Success = 1) PRINT 'The database update succeeded'
+ELSE BEGIN
+   IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
+   PRINT 'The database update failed'
+END
+GO

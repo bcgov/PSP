@@ -1,4 +1,5 @@
 import { DivIcon, LatLngExpression, Marker } from 'leaflet';
+import { ClusterFeature, ClusterProperties } from 'supercluster';
 
 import {
   PropertyAreaUnitTypes,
@@ -9,6 +10,10 @@ import {
 } from '@/constants/index';
 import { toCqlFilterValue } from '@/hooks/layer-api/layerUtils';
 import { IProperty } from '@/interfaces';
+import {
+  EmptyPropertyLocation,
+  PIMS_Property_Location_View,
+} from '@/models/layers/pimsPropertyLocationView';
 
 import { ICluster } from '../../types';
 import {
@@ -22,14 +27,14 @@ import {
 describe('mapUtils tests', () => {
   describe('pointToLayer function', () => {
     it('converts a feature and latlng expression into a layer', () => {
-      const feature: ICluster = {
-        id: 1,
+      const feature: ICluster<PIMS_Property_Location_View> = {
+        id: 'PIMS_PROPERTY_LOCATION_VW.1234',
         type: 'Feature',
         geometry: {
           type: 'Point',
           coordinates: [1, 2],
         },
-        properties: { PROPERTY_ID: 1 },
+        properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1' },
       };
       const latlng: LatLngExpression = { lat: 1, lng: 2 };
 
@@ -37,18 +42,23 @@ describe('mapUtils tests', () => {
     });
 
     it('converts a cluster and latlng expression into a layer', () => {
-      const feature: ICluster = {
+      const feature: ClusterFeature<ClusterProperties> = {
         id: 1,
         type: 'Feature',
         geometry: {
           type: 'Point',
           coordinates: [1, 2],
         },
-        properties: { cluster: true, point_count_abbreviated: 100 },
+        properties: {
+          cluster: true,
+          point_count_abbreviated: 1000,
+          cluster_id: 1,
+          point_count: 1000,
+        },
       };
       const latlng: LatLngExpression = { lat: 1, lng: 2 };
       const icon = new DivIcon({
-        html: `<div><span>100</span></div>`,
+        html: `<div><span>1000</span></div>`,
         className: `marker-cluster marker-cluster-large`,
         iconSize: [40, 40],
       });
@@ -89,7 +99,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { PROPERTY_ID: 1 },
+            properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1' },
           },
           true,
         ),

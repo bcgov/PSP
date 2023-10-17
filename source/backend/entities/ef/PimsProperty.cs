@@ -25,13 +25,13 @@ namespace Pims.Dal.Entities
     [Index(nameof(PropMgmtOrgId), Name = "PRPRTY_PROP_MGMT_ORG_ID_IDX")]
     [Index(nameof(RegionCode), Name = "PRPRTY_REGION_CODE_IDX")]
     [Index(nameof(SurplusDeclarationTypeCode), Name = "PRPRTY_SURPLUS_DECLARATION_TYPE_CODE_IDX")]
+    [Index(nameof(SurveyPlanNumber), Name = "PRPRTY_SURVEY_PLAN_NUMBER_IDX")]
     [Index(nameof(VolumetricTypeCode), Name = "PRPRTY_VOLUMETRIC_TYPE_CODE_IDX")]
     [Index(nameof(VolumeUnitTypeCode), Name = "PRPRTY_VOLUME_UNIT_TYPE_CODE_IDX")]
     public partial class PimsProperty
     {
         public PimsProperty()
         {
-            PimsPropPropAdjacentLandTypes = new HashSet<PimsPropPropAdjacentLandType>();
             PimsPropPropAnomalyTypes = new HashSet<PimsPropPropAnomalyType>();
             PimsPropPropRoadTypes = new HashSet<PimsPropPropRoadType>();
             PimsPropPropTenureTypes = new HashSet<PimsPropPropTenureType>();
@@ -247,8 +247,6 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(VolumetricTypeCode))]
         [InverseProperty(nameof(PimsVolumetricType.PimsProperties))]
         public virtual PimsVolumetricType VolumetricTypeCodeNavigation { get; set; }
-        [InverseProperty(nameof(PimsPropPropAdjacentLandType.Property))]
-        public virtual ICollection<PimsPropPropAdjacentLandType> PimsPropPropAdjacentLandTypes { get; set; }
         [InverseProperty(nameof(PimsPropPropAnomalyType.Property))]
         public virtual ICollection<PimsPropPropAnomalyType> PimsPropPropAnomalyTypes { get; set; }
         [InverseProperty(nameof(PimsPropPropRoadType.Property))]

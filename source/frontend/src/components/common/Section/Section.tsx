@@ -31,7 +31,8 @@ export const Section: React.FC<
                 {isCollapsed && (
                   <ArrowDropDownIcon
                     title={`expand-${title ?? 'section'}`}
-                    onClick={() => {
+                    onClick={(event: React.MouseEvent<SVGElement>) => {
+                      event.preventDefault();
                       setIsCollapsed(!isCollapsed);
                     }}
                   />
@@ -39,7 +40,8 @@ export const Section: React.FC<
                 {!isCollapsed && (
                   <ArrowDropUpIcon
                     title={`collapse-${title ?? 'section'}`}
-                    onClick={() => {
+                    onClick={(event: React.MouseEvent<SVGElement>) => {
+                      event.preventDefault();
                       setIsCollapsed(!isCollapsed);
                     }}
                   />

@@ -5,8 +5,8 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSectionParagraph } from '@/components/common/styles';
 
+import { DetailAcquisitionFileOwner } from '../../../models/DetailAcquisitionFileOwner';
 import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryContainer';
-import { DetailAcquisitionFileOwner } from './models';
 
 const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps> = ({
   isLoading,

@@ -6,7 +6,7 @@ exports[`Research List View matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c12.btn {
+  .c13.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`Research List View matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c12.btn:hover {
+.c13.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c12.btn:focus {
+.c13.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c12.btn.btn-primary {
+.c13.btn.btn-primary {
   border: none;
 }
 
-.c12.btn.btn-secondary {
+.c13.btn.btn-secondary {
   background: none;
 }
 
-.c12.btn.btn-info {
+.c13.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c12.btn.btn-info:hover,
-.c12.btn.btn-info:active,
-.c12.btn.btn-info:focus {
+.c13.btn.btn-info:hover,
+.c13.btn.btn-info:active,
+.c13.btn.btn-info:focus {
   background: none;
 }
 
-.c12.btn.btn-light {
+.c13.btn.btn-light {
   border: none;
 }
 
-.c12.btn.btn-dark {
+.c13.btn.btn-dark {
   border: none;
 }
 
-.c12.btn.btn-link {
+.c13.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`Research List View matches snapshot 1`] = `
   padding: 0;
 }
 
-.c12.btn.btn-link:hover,
-.c12.btn.btn-link:active,
-.c12.btn.btn-link:focus {
+.c13.btn.btn-link:hover,
+.c13.btn.btn-link:active,
+.c13.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`Research List View matches snapshot 1`] = `
   outline: none;
 }
 
-.c12.btn.btn-link:disabled,
-.c12.btn.btn-link.disabled {
+.c13.btn.btn-link:disabled,
+.c13.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c12.btn:disabled,
-.c12.btn:disabled:hover {
+.c13.btn:disabled,
+.c13.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,23 +128,39 @@ exports[`Research List View matches snapshot 1`] = `
   opacity: 0.65;
 }
 
-.c12.Button .Button__icon {
+.c13.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c12.Button--icon-only:focus {
+.c13.Button--icon-only:focus {
   outline: none;
 }
 
-.c12.Button--icon-only .Button__icon {
+.c13.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c10.c10.form-control.is-valid {
+.c9 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c9 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c9 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c11.c11.form-control.is-valid {
   background-image: none;
 }
 
-.c10.c10.form-control.is-invalid {
+.c11.c11.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
@@ -166,7 +182,7 @@ exports[`Research List View matches snapshot 1`] = `
   border-bottom-left-radius: 0;
 }
 
-.c13 {
+.c14 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -185,12 +201,12 @@ exports[`Research List View matches snapshot 1`] = `
   margin-left: 0.5rem;
 }
 
-.c15 {
+.c16 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c14 {
+.c15 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -199,7 +215,7 @@ exports[`Research List View matches snapshot 1`] = `
   width: 16rem;
 }
 
-.c9 {
+.c10 {
   width: 18rem;
   max-width: 100%;
 }
@@ -217,7 +233,7 @@ exports[`Research List View matches snapshot 1`] = `
   max-width: 100%;
 }
 
-.c11 {
+.c12 {
   border-left: 0.2rem solid white;
 }
 
@@ -547,17 +563,26 @@ exports[`Research List View matches snapshot 1`] = `
                               class="c7 col"
                             >
                               <div
-                                class="c9 form-group"
+                                class="c9 c10 form-group"
                               >
                                 <div
                                   class="react-datepicker-wrapper d-block"
                                 >
                                   <div
-                                    class="react-datepicker__input-container"
+                                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                                   >
+                                    <svg
+                                      class="react-datepicker__calendar-icon"
+                                      viewBox="0 0 448 512"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                                      />
+                                    </svg>
                                     <input
                                       autocomplete="off"
-                                      class="c10 form-control date-picker"
+                                      class="c11 form-control date-picker"
                                       id="datepicker-updatedOnStartDate"
                                       name="updatedOnStartDate"
                                       placeholder="from date"
@@ -574,17 +599,26 @@ exports[`Research List View matches snapshot 1`] = `
                           class="col-xl-4 col-lg-12"
                         >
                           <div
-                            class="c9 form-group"
+                            class="c9 c10 form-group"
                           >
                             <div
                               class="react-datepicker-wrapper d-block"
                             >
                               <div
-                                class="react-datepicker__input-container"
+                                class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                               >
+                                <svg
+                                  class="react-datepicker__calendar-icon"
+                                  viewBox="0 0 448 512"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                                  />
+                                </svg>
                                 <input
                                   autocomplete="off"
-                                  class="c10 form-control date-picker"
+                                  class="c11 form-control date-picker"
                                   id="datepicker-updatedOnEndDate"
                                   name="updatedOnEndDate"
                                   placeholder="to date"
@@ -660,7 +694,7 @@ exports[`Research List View matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c11 col-xl-1"
+                  class="c12 col-xl-1"
                 >
                   <div
                     class="row"
@@ -669,7 +703,7 @@ exports[`Research List View matches snapshot 1`] = `
                       class="pr-0 col-xl-auto"
                     >
                       <button
-                        class="c12 Button Button--icon-only primary btn btn-primary"
+                        class="c13 Button Button--icon-only primary btn btn-primary"
                         data-testid="search"
                         id="search-button"
                         title="search"
@@ -698,7 +732,7 @@ exports[`Research List View matches snapshot 1`] = `
                       class="col-xl-auto"
                     >
                       <button
-                        class="c12 Button Button--icon-only btn btn-info"
+                        class="c13 Button Button--icon-only btn btn-info"
                         data-testid="reset-button"
                         id="reset-button"
                         title="reset-button"
@@ -754,11 +788,11 @@ exports[`Research List View matches snapshot 1`] = `
               >
                 File #
                 <div
-                  class="c13"
+                  class="c14"
                   data-testid="sort-column-rfileNumber"
                 >
                   <svg
-                    class="c14"
+                    class="c15"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -773,7 +807,7 @@ exports[`Research List View matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c15"
+                    class="c16"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -800,11 +834,11 @@ exports[`Research List View matches snapshot 1`] = `
               >
                 File name
                 <div
-                  class="c13"
+                  class="c14"
                   data-testid="sort-column-name"
                 >
                   <svg
-                    class="c14"
+                    class="c15"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -819,7 +853,7 @@ exports[`Research List View matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c15"
+                    class="c16"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -858,11 +892,11 @@ exports[`Research List View matches snapshot 1`] = `
               >
                 Created by
                 <div
-                  class="c13"
+                  class="c14"
                   data-testid="sort-column-appCreateUserid"
                 >
                   <svg
-                    class="c14"
+                    class="c15"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -877,7 +911,7 @@ exports[`Research List View matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c15"
+                    class="c16"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -904,11 +938,11 @@ exports[`Research List View matches snapshot 1`] = `
               >
                 Created date
                 <div
-                  class="c13"
+                  class="c14"
                   data-testid="sort-column-appCreateTimestamp"
                 >
                   <svg
-                    class="c14"
+                    class="c15"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -923,7 +957,7 @@ exports[`Research List View matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c15"
+                    class="c16"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -950,11 +984,11 @@ exports[`Research List View matches snapshot 1`] = `
               >
                 Last updated by
                 <div
-                  class="c13"
+                  class="c14"
                   data-testid="sort-column-appLastUpdateUserid"
                 >
                   <svg
-                    class="c14"
+                    class="c15"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -969,7 +1003,7 @@ exports[`Research List View matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c15"
+                    class="c16"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -996,11 +1030,11 @@ exports[`Research List View matches snapshot 1`] = `
               >
                 Last updated date
                 <div
-                  class="c13"
+                  class="c14"
                   data-testid="sort-column-appLastUpdateTimestamp"
                 >
                   <svg
-                    class="c14"
+                    class="c15"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1015,7 +1049,7 @@ exports[`Research List View matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c15"
+                    class="c16"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1042,11 +1076,11 @@ exports[`Research List View matches snapshot 1`] = `
               >
                 Status
                 <div
-                  class="c13"
+                  class="c14"
                   data-testid="sort-column-researchFileStatusTypeCode"
                 >
                   <svg
-                    class="c14"
+                    class="c15"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1061,7 +1095,7 @@ exports[`Research List View matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c15"
+                    class="c16"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"

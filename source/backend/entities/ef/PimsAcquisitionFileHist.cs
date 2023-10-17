@@ -54,6 +54,9 @@ namespace Pims.Dal.Entities
         [Column("LEGACY_FILE_NUMBER")]
         [StringLength(18)]
         public string LegacyFileNumber { get; set; }
+        [Column("LEGACY_STAKEHOLDER")]
+        [StringLength(4000)]
+        public string LegacyStakeholder { get; set; }
         [Column("FUNDING_OTHER")]
         [StringLength(200)]
         public string FundingOther { get; set; }
@@ -65,6 +68,10 @@ namespace Pims.Dal.Entities
         public DateTime? CompletionDate { get; set; }
         [Column("PAIMS_ACQUISITION_FILE_ID")]
         public int? PaimsAcquisitionFileId { get; set; }
+        [Column("TOTAL_ALLOWABLE_COMPENSATION", TypeName = "money")]
+        public decimal? TotalAllowableCompensation { get; set; }
+        [Column("ALTERNATE_PROJECT")]
+        public long? AlternateProject { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

@@ -703,11 +703,27 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
   margin-right: 0;
 }
 
-.c8.c8.form-control.is-valid {
+.c8 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c8 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c8 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c9.c9.form-control.is-valid {
   background-image: none;
 }
 
-.c8.c8.form-control.is-invalid {
+.c9.c9.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
@@ -770,13 +786,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
   font-weight: bold;
 }
 
-.c9 textarea.form-control {
+.c10 textarea.form-control {
   min-width: 80rem;
   height: 7rem;
   resize: none;
 }
 
-.c10 {
+.c11 {
   border-bottom: 0.1rem solid grey;
 }
 
@@ -1280,22 +1296,31 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="c4 text-left col-4"
               >
                 <div
-                  class="form-group"
+                  class="c8 form-group"
                 >
                   <div
                     class="react-datepicker-wrapper d-block"
                   >
                     <div
-                      class="react-datepicker__input-container"
+                      class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                     >
+                      <svg
+                        class="react-datepicker__calendar-icon"
+                        viewBox="0 0 448 512"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                        />
+                      </svg>
                       <input
                         autocomplete="off"
-                        class="c8 form-control date-picker"
+                        class="c9 form-control date-picker"
                         id="datepicker-products.0.startDate"
                         name="products.0.startDate"
-                        placeholder="--/--/----"
+                        placeholder="MTH DD, YYYY"
                         type="text"
-                        value="02/01/2023"
+                        value="Feb 01, 2023"
                       />
                     </div>
                   </div>
@@ -1362,22 +1387,31 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     class="c4 text-left col"
                   >
                     <div
-                      class="form-group"
+                      class="c8 form-group"
                     >
                       <div
                         class="react-datepicker-wrapper d-block"
                       >
                         <div
-                          class="react-datepicker__input-container"
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                         >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
                           <input
                             autocomplete="off"
-                            class="c8 form-control date-picker"
+                            class="c9 form-control date-picker"
                             id="datepicker-products.0.costEstimateDate"
                             name="products.0.costEstimateDate"
-                            placeholder="--/--/----"
+                            placeholder="MTH DD, YYYY"
                             type="text"
-                            value="02/02/2023"
+                            value="Feb 02, 2023"
                           />
                         </div>
                       </div>
@@ -1402,7 +1436,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="c4 text-left col"
               >
                 <div
-                  class="c9 textarea input form-group"
+                  class="c10 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -1431,7 +1465,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="c4 text-left col"
               >
                 <div
-                  class="c9 textarea input form-group"
+                  class="c10 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -1445,7 +1479,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
               </div>
             </div>
             <div
-              class="c10 my-5"
+              class="c11 my-5"
             />
           </div>
           <div>
@@ -1567,22 +1601,31 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="c4 text-left col-4"
               >
                 <div
-                  class="form-group"
+                  class="c8 form-group"
                 >
                   <div
                     class="react-datepicker-wrapper d-block"
                   >
                     <div
-                      class="react-datepicker__input-container"
+                      class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                     >
+                      <svg
+                        class="react-datepicker__calendar-icon"
+                        viewBox="0 0 448 512"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                        />
+                      </svg>
                       <input
                         autocomplete="off"
-                        class="c8 form-control date-picker"
+                        class="c9 form-control date-picker"
                         id="datepicker-products.1.startDate"
                         name="products.1.startDate"
-                        placeholder="--/--/----"
+                        placeholder="MTH DD, YYYY"
                         type="text"
-                        value="02/03/2023"
+                        value="Feb 03, 2023"
                       />
                     </div>
                   </div>
@@ -1649,22 +1692,31 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     class="c4 text-left col"
                   >
                     <div
-                      class="form-group"
+                      class="c8 form-group"
                     >
                       <div
                         class="react-datepicker-wrapper d-block"
                       >
                         <div
-                          class="react-datepicker__input-container"
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                         >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
                           <input
                             autocomplete="off"
-                            class="c8 form-control date-picker"
+                            class="c9 form-control date-picker"
                             id="datepicker-products.1.costEstimateDate"
                             name="products.1.costEstimateDate"
-                            placeholder="--/--/----"
+                            placeholder="MTH DD, YYYY"
                             type="text"
-                            value="02/04/2023"
+                            value="Feb 04, 2023"
                           />
                         </div>
                       </div>
@@ -1689,7 +1741,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="c4 text-left col"
               >
                 <div
-                  class="c9 textarea input form-group"
+                  class="c10 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -1718,7 +1770,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="c4 text-left col"
               >
                 <div
-                  class="c9 textarea input form-group"
+                  class="c10 textarea input form-group"
                 >
                   <textarea
                     class="form-control"

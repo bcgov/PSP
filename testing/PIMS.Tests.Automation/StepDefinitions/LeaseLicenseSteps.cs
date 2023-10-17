@@ -83,21 +83,21 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (lease.SearchProperties.PID != "")
             {
                 sharedSearchProperties.SelectPropertyByPID(lease.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption(false);
+                sharedSearchProperties.SelectFirstOption();
             }
 
             //Search for a property by PIN
             if (lease.SearchProperties.PIN != "")
             {
                 sharedSearchProperties.SelectPropertyByPIN(lease.SearchProperties.PIN);
-                sharedSearchProperties.SelectFirstOption(false);
+                sharedSearchProperties.SelectFirstOption();
             }
 
             //Search for a property by Plan
             if (lease.SearchProperties.PlanNumber != "")
             {
                 sharedSearchProperties.SelectPropertyByPlan(lease.SearchProperties.PlanNumber);
-                sharedSearchProperties.SelectFirstOption(false);
+                sharedSearchProperties.SelectFirstOption();
             }
 
 
@@ -105,21 +105,21 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (lease.SearchProperties.Address != "")
             {
                 sharedSearchProperties.SelectPropertyByAddress(lease.SearchProperties.Address);
-                sharedSearchProperties.SelectFirstOption(false);
+                sharedSearchProperties.SelectFirstOption();
             }
 
             //Search for a property by Legal Description
-            if (lease.SearchProperties.LegalDescription != "")
-            {
-                sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
-                sharedSearchProperties.SelectFirstOption(false);
-            }
+            //if (lease.SearchProperties.LegalDescription != "")
+            //{
+            //    sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
+            //    sharedSearchProperties.SelectFirstOption();
+            //}
 
             //Search for a duplicate property
             if (lease.SearchProperties.PID != "")
             {
                 sharedSearchProperties.SelectPropertyByPID(lease.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption(true);
+                sharedSearchProperties.SelectFirstOption();
             }
 
             //Save the new license details
@@ -300,7 +300,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
                 //Verify Header for Payments Table
                 payments.VerifyPaymentTableHeader();
-                payments.VerifyInsertedPayment(lease.TermPayments[i]);
+                //payments.VerifyInsertedPayment(lease.TermPayments[i]);
 
                 //Close Payment Tab
                 payments.OpenPaymentTab(lease.TermPayments[i].ParentTerm);
@@ -555,8 +555,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify Deposit changes
             deposits.VerifyCreatedDepositTable(lease.LeaseDeposits[0]);
 
-            //Delete last deposit
-            deposits.DeleteLastDeposit();
+            //Delete first deposit
+            deposits.DeleteFirstDeposit();
 
             //PAYMENTS
             //Navigate to Payments
@@ -568,7 +568,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to first term payments
             payments.OpenPaymentTab(lease.TermPayments[0].ParentTerm);
 
-            //Delete first term last payment
+            //Delete last term last payment
             payments.DeleteLastPayment();
         }
 

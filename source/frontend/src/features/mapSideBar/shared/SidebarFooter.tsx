@@ -10,7 +10,7 @@ interface ISidebarFooterProps {
   editMode?: boolean;
   onEdit?: (editMode: boolean) => void;
   onCancel: () => void;
-  errorMessage?: string | undefined;
+  isValid?: boolean;
 }
 
 const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = ({
@@ -20,14 +20,14 @@ const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = ({
   onSave,
   onCancel,
   isOkDisabled,
-  errorMessage,
+  isValid,
 }) => {
   return (
     <SidebarFooterBar className="justify-content-end mt-auto no-gutters">
       {(!showEdit || editMode) && (
         <>
           <Col xs="auto" className="pr-3">
-            <StyledError>{errorMessage}</StyledError>
+            {!isValid && <StyledError>Please check the required fields.</StyledError>}
           </Col>
           <Col xs="auto" className="pr-4">
             <Button variant="secondary" onClick={onCancel}>

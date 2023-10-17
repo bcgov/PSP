@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
 
 import { Button, StyledRemoveLinkButton } from '@/components/common/buttons';
-import { DisplayError, Select } from '@/components/common/form';
+import { DisplayError } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -13,12 +13,12 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
-import * as API from '@/constants/API';
-import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
+import { InterestHolderSubForm } from './InterestHolderSubForm';
 import { InterestHolderForm, StakeHolderForm } from './models';
 import { UpdateStakeHolderYupSchema } from './UpdateStakeHolderYupSchema';
 
@@ -40,8 +40,8 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
   interestHolders,
   loading,
 }) => {
-  const { getOptionsByType } = useLookupCodeHelpers();
-  const interestHolderTypes = getOptionsByType(API.INTEREST_HOLDER_TYPES);
+  const legacyStakeHolders: string[] = file.legacyStakeholders ?? [];
+
   return (
     <Formik<StakeHolderForm>
       enableReinitialize
@@ -69,91 +69,47 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                 name="interestHolders"
                 render={arrayHelpers => (
                   <>
-                    {values.interestHolders.length === 0 && <i>No Interest holders to display</i>}
+                    {values.interestHolders.length === 0 && legacyStakeHolders.length === 0 && (
+                      <i>No Interest holders to display</i>
+                    )}
                     {values.interestHolders.map((interestHolder, index) => (
-                      <React.Fragment
-                        key={
-                          interestHolder?.interestHolderId
-                            ? `interest-holder-${interestHolder?.interestHolderId}`
-                            : `interest-holder-${index}`
-                        }
-                      >
-                        <SectionField label="Interest holder">
-                          <Row className="pb-0">
-                            <Col>
-                              <ContactInputContainer
-                                field={`interestHolders.${index}.contact`}
-                                View={ContactInputView}
-                              ></ContactInputContainer>
-                            </Col>
-                            <Col xs="auto">
-                              <StyledRemoveLinkButton
-                                title="Remove Interest"
-                                variant="light"
-                                onClick={() => {
-                                  arrayHelpers.remove(index);
-                                }}
-                              >
-                                <FaTrash size="2rem" />
-                              </StyledRemoveLinkButton>
-                            </Col>
-                            {getIn(errors, `interestHolders.${index}.contact`) && (
-                              <DisplayError field={`interestHolders.${index}.contact`} />
-                            )}
-                          </Row>
-                        </SectionField>
-                        <SectionField label="Interest type">
-                          <Select
-                            options={interestHolderTypes}
-                            field={`interestHolders.${index}.interestTypeCode`}
-                            placeholder="Select an interest type"
-                          />
-                        </SectionField>
-                        <SectionField
-                          label="Impacted properties"
-                          tooltip="The interest holder will show on the Compensation Request form relevant to these properties."
-                        >
-                          <FilePropertiesTable
-                            fileProperties={file.fileProperties ?? []}
-                            selectedFileProperties={
-                              (interestHolder.impactedProperties
-                                .map(ip =>
-                                  file.fileProperties?.find(
-                                    fp => fp.id === ip.acquisitionFilePropertyId,
-                                  ),
-                                )
-                                .filter(fp => !!fp) as Api_PropertyFile[]) ?? []
-                            }
-                            setSelectedFileProperties={(fileProperties: Api_PropertyFile[]) => {
-                              const interestHolderProperties = fileProperties.map(fileProperty => {
-                                const matchingProperty = interestHolder.impactedProperties.find(
-                                  ip => ip.acquisitionFileProperty?.id === fileProperty.id,
-                                );
+                      <InterestHolderSubForm
+                        index={index}
+                        errors={errors}
+                        arrayHelpers={arrayHelpers}
+                        file={file}
+                        interestHolder={interestHolder}
+                      ></InterestHolderSubForm>
+                    ))}
 
-                                return matchingProperty
-                                  ? matchingProperty
-                                  : {
-                                      acquisitionFileProperty: fileProperty,
-                                      acquisitionFilePropertyId: fileProperty.id,
-                                    };
-                              });
-                              setFieldValue(
-                                `interestHolders.${index}.impactedProperties`,
-                                interestHolderProperties,
-                              );
-                            }}
-                            disabledSelection={false}
-                          />
-                          {getIn(errors, `interestHolders.${index}.impactedProperties`) && (
-                            <DisplayError field={`interestHolders.${index}.impactedProperties`} />
-                          )}
+                    {legacyStakeHolders.length > 0 && (
+                      <React.Fragment>
+                        <hr />
+                        <SectionField
+                          label="Legacy interest holders"
+                          tooltip="This is read-only field to display legacy information"
+                          labelWidth="4"
+                          contentWidth="8"
+                          valueTestId="acq-file-legacy-stakeholders"
+                        >
+                          {legacyStakeHolders.map((stakeholder, index) => (
+                            <div key={index}>
+                              <label key={index}>{stakeholder}</label>
+                              {index < legacyStakeHolders.length - 1 && <br />}
+                            </div>
+                          ))}
                         </SectionField>
                       </React.Fragment>
-                    ))}
+                    )}
                     <hr />
+
                     <Button
                       variant="link"
-                      onClick={() => arrayHelpers.push(new InterestHolderForm(file.id))}
+                      onClick={() =>
+                        arrayHelpers.push(
+                          new InterestHolderForm(InterestHolderType.INTEREST_HOLDER, file.id),
+                        )
+                      }
                     >
                       + Add an Interest holder
                     </Button>
@@ -218,18 +174,18 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                           <FilePropertiesTable
                             fileProperties={file.fileProperties ?? []}
                             selectedFileProperties={
-                              (interestHolder.impactedProperties
+                              interestHolder.impactedProperties
                                 .map(ip =>
                                   file.fileProperties?.find(
                                     fp => fp.id === ip.acquisitionFilePropertyId,
                                   ),
                                 )
-                                .filter(fp => !!fp) as Api_PropertyFile[]) ?? []
+                                .filter((fp): fp is Api_PropertyFile => !!fp) ?? []
                             }
                             setSelectedFileProperties={(fileProperties: Api_PropertyFile[]) => {
                               const interestHolderProperties = fileProperties.map(fileProperty => {
                                 const matchingProperty = interestHolder.impactedProperties.find(
-                                  ip => ip.acquisitionFileProperty?.id === fileProperty.id,
+                                  ip => ip.acquisitionFilePropertyId === fileProperty.id,
                                 );
 
                                 return matchingProperty
@@ -257,8 +213,11 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                     <Button
                       variant="link"
                       onClick={() => {
-                        const interestHolderForm = new InterestHolderForm(file.id);
-                        interestHolderForm.interestTypeCode = 'NIP';
+                        const interestHolderForm = new InterestHolderForm(
+                          InterestHolderType.INTEREST_HOLDER,
+                          file.id,
+                        );
+                        interestHolderForm.propertyInterestTypeCode = 'NIP';
                         arrayHelpers.push(interestHolderForm);
                       }}
                     >

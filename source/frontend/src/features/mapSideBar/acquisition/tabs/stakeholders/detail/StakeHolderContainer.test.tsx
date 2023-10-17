@@ -2,14 +2,15 @@ import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { forwardRef } from 'react';
 
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { emptyApiInterestHolder, emptyInterestHolderProperty } from '@/mocks/interestHolder.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, waitFor } from '@/utils/test-utils';
 
-import { emptyApiInterestHolder, emptyInterestHolderProperty } from '../update/models';
 import StakeHolderContainer, { IStakeHolderContainerProps } from './StakeHolderContainer';
 import { IStakeHolderViewProps } from './StakeHolderView';
 
@@ -99,7 +100,7 @@ describe('StakeHolderContainer component', () => {
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
-            interestTypeCode: { id: 'NIP' },
+            propertyInterestTypes: [{ id: 'NIP' }],
             acquisitionFilePropertyId: 1,
           },
         ],
@@ -109,7 +110,7 @@ describe('StakeHolderContainer component', () => {
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
-            interestTypeCode: { id: 'IP' },
+            propertyInterestTypes: [{ id: 'IP' }],
             acquisitionFilePropertyId: 1,
           },
         ],
@@ -122,23 +123,29 @@ describe('StakeHolderContainer component', () => {
     });
   });
 
-  it('does not group interest holders for different properties', async () => {
+  it('does not group interest holders for different properties interest types', async () => {
     mockGetApi.response = [
       {
         ...emptyApiInterestHolder,
+        personId: 1,
+        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
             acquisitionFilePropertyId: 1,
+            propertyInterestTypes: [{ id: 'test_interest_1' }],
           },
         ],
       },
       {
         ...emptyApiInterestHolder,
+        personId: 1,
+        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
             acquisitionFilePropertyId: 2,
+            propertyInterestTypes: [{ id: 'test_interest_2' }],
           },
         ],
       },
@@ -147,6 +154,30 @@ describe('StakeHolderContainer component', () => {
     await waitFor(async () => {
       expect(viewProps.groupedInterestProperties).toHaveLength(2);
       expect(viewProps.groupedInterestProperties[0].groupedPropertyInterests).toHaveLength(1);
+    });
+  });
+
+  it('it separates non-interest and interest payees even if they are for the same interest holder property', async () => {
+    mockGetApi.response = [
+      {
+        ...emptyApiInterestHolder,
+        personId: 1,
+        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        interestHolderProperties: [
+          {
+            ...emptyInterestHolderProperty,
+            acquisitionFilePropertyId: 1,
+            propertyInterestTypes: [{ id: 'test_interest_1' }, { id: 'NIP' }],
+          },
+        ],
+      },
+    ];
+    setup({});
+    await waitFor(async () => {
+      expect(viewProps.groupedInterestProperties).toHaveLength(1);
+      expect(viewProps.groupedInterestProperties[0].groupedPropertyInterests).toHaveLength(1);
+      expect(viewProps.groupedNonInterestProperties).toHaveLength(1);
+      expect(viewProps.groupedNonInterestProperties[0].groupedPropertyInterests).toHaveLength(1);
     });
   });
 });

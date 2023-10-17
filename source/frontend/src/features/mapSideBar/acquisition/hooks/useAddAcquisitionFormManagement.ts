@@ -1,10 +1,13 @@
+import axios, { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
-import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { useCallback } from 'react';
+import { toast } from 'react-toastify';
 
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
+import { IApiError } from '@/interfaces/IApiError';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
@@ -15,7 +18,7 @@ export interface IUseAddAcquisitionFormManagementProps {
   /** Optional - callback to execute after acquisition file has been added to the datastore */
   onSuccess?: (acquisitionFile: Api_AcquisitionFile) => Promise<void>;
   initialForm?: AcquisitionForm;
-  selectedFeature: Feature<Geometry, GeoJsonProperties> | null;
+  selectedFeature: LocationFeatureDataset | null;
   formikRef: React.RefObject<FormikProps<AcquisitionForm>>;
 }
 
@@ -35,14 +38,22 @@ export function useAddAcquisitionFormManagement(props: IUseAddAcquisitionFormMan
   const handleSubmit = useCallback(
     async (values: AcquisitionForm, setSubmitting: (isSubmitting: boolean) => void) => {
       return withUserOverride(async (userOverrideCodes: UserOverrideCode[]) => {
-        const acquisitionFile = values.toApi();
-        const response = await addAcquisitionFile.execute(acquisitionFile, userOverrideCodes);
-        if (!!response?.id) {
-          if (typeof onSuccess === 'function') {
-            await onSuccess(response);
+        try {
+          const acquisitionFile = values.toApi();
+          const response = await addAcquisitionFile.execute(acquisitionFile, userOverrideCodes);
+          if (!!response?.id) {
+            if (typeof onSuccess === 'function') {
+              await onSuccess(response);
+            }
           }
+        } catch (e) {
+          const axiosError = e as AxiosError<IApiError>;
+          if (axios.isAxiosError(e) && e.response?.status === 409) {
+            toast.error(axiosError?.response?.data.error);
+          }
+        } finally {
+          setSubmitting(false);
         }
-        setSubmitting(false);
       });
     },
     [addAcquisitionFile, onSuccess, withUserOverride],

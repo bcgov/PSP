@@ -1,35 +1,81 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+using System.IO;
+using System.Xml.Linq;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
     public abstract class PageObjectBase
     {
         protected readonly IWebDriver webDriver;
+        private WebDriverWait wait;
+        private DefaultWait<IWebDriver> fluentWait;
+
+        private By loadingSpinner = By.CssSelector("div[data-testid='filter-backdrop-loading']");
 
         protected PageObjectBase(IWebDriver webDriver)
         {
             this.webDriver = webDriver;
+            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(60));
+            fluentWait = new DefaultWait<IWebDriver>(webDriver);
+            fluentWait.Timeout = TimeSpan.FromSeconds(60);
+            fluentWait.PollingInterval = TimeSpan.FromMilliseconds(100);
         }
 
-        public virtual void Wait(int milliseconds = 4000) => Thread.Sleep(milliseconds);
+        protected virtual void Wait(int milliseconds = 1000) => Thread.Sleep(milliseconds);
 
-        public void WaitUntil(By element)
+        protected void WaitUntilSpinnerDisappear()
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(60));
-            wait.Until(ExpectedConditions.ElementIsVisible(element));
+            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(loadingSpinner));
+        }
+
+        protected void WaitUntilStale(By element)
+        {
+            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
+            fluentWait.Until(ExpectedConditions.StalenessOf(webDriver.FindElement(element)));
+        }
+
+        protected void WaitUntilVisible(By element)
+        {
+            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
+            fluentWait.Until(ExpectedConditions.ElementIsVisible(element));
+        }
+
+        protected void WaitUntilClickable(By element)
+        {
+            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
+            wait.Until(ExpectedConditions.ElementToBeClickable(element));
+        }
+
+        public void WaitUntilVisibleText(By element, string text)
+        {
+            var webElement = webDriver.FindElement(element);
+            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
+            fluentWait.Until(ExpectedConditions.TextToBePresentInElement(webElement, text));
         }
 
         protected void ButtonElement(string btnContent)
         {
-            Wait();
+            Wait(5000);
 
             var js = (IJavaScriptExecutor)webDriver;
 
             var buttons = webDriver.FindElements(By.TagName("button"));
+
             var selectedBtn = buttons.Should().ContainSingle(b => b.Text.Contains(btnContent)).Subject;
             selectedBtn.Click();
+
+            //try
+            //{
+            //    var selectedBtn = buttons.Should().ContainSingle(b => b.Text.Contains(btnContent)).Subject;
+            //    selectedBtn.Click();
+            //}
+            //catch(Exception e)
+            //{
+            //    var selectedBtn = buttons.Should().ContainSingle(b => b.Text.Contains(btnContent)).Subject;
+            //    selectedBtn.Click();
+            //}
         }
 
         protected void FocusAndClick(By element)
@@ -41,17 +87,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedElement);
 
-            Wait();
             js.ExecuteScript("arguments[0].click();", selectedElement);
         }
 
         protected void ScrollToElement(By element)
         {
-            Wait();
-
             var js = (IJavaScriptExecutor)webDriver;
             var selectedElement = webDriver.FindElement(element);
 
+            WaitUntilClickable(element);
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedElement);
         }
 
@@ -67,12 +111,13 @@ namespace PIMS.Tests.Automation.PageObjects
             var selectedRadioBttn = childrenElements[index];
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedRadioBttn);
-            Wait();
             selectedRadioBttn.Click();
         }
 
         protected void ChooseSpecificSelectOption(By parentElement, string option)
         {
+            Wait();
+
             var js = (IJavaScriptExecutor)webDriver;
 
             var selectElement = webDriver.FindElement(parentElement);
@@ -80,7 +125,7 @@ namespace PIMS.Tests.Automation.PageObjects
             var selectedOption = childrenElements.Should().ContainSingle(b => b.Text.Equals(option)).Subject;
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
-            Wait();
+
             selectedOption.Click();
         }
 
@@ -93,7 +138,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
 
-            Wait();
             selectedOption.Click();
         }
 
@@ -106,9 +150,7 @@ namespace PIMS.Tests.Automation.PageObjects
             var selectedOption = childrenElements.Should().ContainSingle(o => o.Text.Equals(option)).Subject;
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
-
-             Wait();
-             selectedOption.Click();
+            selectedOption.Click();
         }
 
         protected void ChooseMultiSelectRandomOptions(By element, int options)
@@ -125,14 +167,14 @@ namespace PIMS.Tests.Automation.PageObjects
                 var selectedOption = childrenElements[index];
 
                 js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
-
-                Wait();
                 selectedOption.Click();
             } 
         }
 
         protected void ClearInput(By elementBy)
         {
+            WaitUntilClickable(elementBy);
+
             var element = webDriver.FindElement(elementBy);
             while (!element.GetAttribute("value").Equals(""))
             {

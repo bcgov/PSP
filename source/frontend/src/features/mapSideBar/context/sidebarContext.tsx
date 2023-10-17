@@ -1,10 +1,13 @@
+import { LatLngLiteral } from 'leaflet';
 import { findIndex } from 'lodash';
 import * as React from 'react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FileTypes } from '@/constants/fileTypes';
 import { Api_File } from '@/models/api/File';
 import { Api_Project } from '@/models/api/Project';
+import { getLatLng } from '@/utils/mapPropertyUtils';
 
 export interface TypedFile extends Api_File {
   fileType: FileTypes;
@@ -19,6 +22,7 @@ export interface ISideBarContext {
   setStaleFile: (stale: boolean) => void;
   fileLoading: boolean;
   setFileLoading: (loading: boolean) => void;
+  resetFilePropertyLocations: () => void;
   projectLoading: boolean;
   project?: Api_Project;
   setProject: (project?: Api_Project) => void;
@@ -36,6 +40,9 @@ export const SideBarContext = React.createContext<ISideBarContext>({
   fileLoading: false,
   setFileLoading: (loading: boolean) => {
     throw Error('setFileLoading function not defined');
+  },
+  resetFilePropertyLocations: () => {
+    throw Error('resetFilePropertyLocations function not defined');
   },
   staleFile: false,
   setStaleFile: (stale: boolean) => {
@@ -87,6 +94,26 @@ export const SideBarContextProvider = (props: {
   const getFilePropertyIndexById = (filePropertyId: number) =>
     findIndex(file?.fileProperties, fp => fp.id === filePropertyId);
 
+  const { setFilePropertyLocations } = useMapStateMachine();
+
+  const fileProperties = file?.fileProperties;
+
+  const resetFilePropertyLocations = useCallback(() => {
+    if (fileProperties !== undefined) {
+      const propertyLocations = fileProperties
+        .map(x => getLatLng(x.property?.location))
+        .filter((x): x is LatLngLiteral => x !== undefined && x !== null);
+
+      setFilePropertyLocations(propertyLocations);
+    } else {
+      setFilePropertyLocations([]);
+    }
+  }, [fileProperties, setFilePropertyLocations]);
+
+  useEffect(() => {
+    resetFilePropertyLocations();
+  }, [resetFilePropertyLocations]);
+
   return (
     <SideBarContext.Provider
       value={{
@@ -94,6 +121,7 @@ export const SideBarContextProvider = (props: {
         file: file,
         setFileLoading: setFileLoading,
         fileLoading: fileLoading,
+        resetFilePropertyLocations,
         staleFile,
         setStaleFile,
         getFilePropertyIndexById,

@@ -1,15 +1,26 @@
 import { createMemoryHistory } from 'history';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import {
   getMockApiCompensationList,
   getMockApiDefaultCompensation,
   getMockDefaultCreateCompenReq,
 } from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
+import {
+  act,
+  createAxiosError,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+  waitFor,
+} from '@/utils/test-utils';
 
 import CompensationListContainer, {
   ICompensationListContainerProps,
@@ -32,7 +43,17 @@ const mockGetApi = {
   loading: false,
 };
 
+const mockPutApi = {
+  error: undefined,
+  response: { ...mockAcquisitionFileResponse(), totalAllowableCompensation: 1000 },
+  execute: jest.fn(),
+  loading: false,
+};
+
 jest.mock('@/hooks/repositories/useRequisitionCompensationRepository');
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');
@@ -42,6 +63,7 @@ jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
     return {
       getAcquisitionCompensationRequisitions: mockGetApi,
       postAcquisitionCompensationRequisition: mockPostApi,
+      updateAcquisitionFile: mockPutApi,
     };
   },
 }));
@@ -62,6 +84,7 @@ describe('compensation list view container', () => {
         <CompensationListContainer
           View={CompensationListView}
           fileId={renderOptions?.fileId ?? 1}
+          file={renderOptions?.file ?? ({} as any)}
         />
       </SideBarContextProvider>,
       {
@@ -129,5 +152,24 @@ describe('compensation list view container', () => {
     });
 
     expect(mockPostApi.execute).toHaveBeenCalledWith(1, getMockDefaultCreateCompenReq());
+  });
+
+  it('returns an updated total allowable compensation if the update operation was successful', async () => {
+    await setup({});
+    await act(async () => {
+      viewProps?.onUpdateTotalCompensation(1000);
+    });
+
+    expect(mockPutApi.execute).toHaveBeenCalledWith({ totalAllowableCompensation: 1000 }, []);
+  });
+
+  it('displays a toast and throws an error if the api call fails', async () => {
+    mockPutApi.execute.mockRejectedValue(createAxiosError(400, 'total allowable update error'));
+
+    await setup({});
+    await expect(async () => await viewProps?.onUpdateTotalCompensation(1000)).rejects.toThrowError(
+      'total allowable update error',
+    );
+    await screen.findByText('total allowable update error');
   });
 });

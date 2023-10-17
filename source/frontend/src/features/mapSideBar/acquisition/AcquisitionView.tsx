@@ -1,5 +1,5 @@
 import { FormikProps } from 'formik';
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   match,
   matchPath,
@@ -13,12 +13,15 @@ import styled from 'styled-components';
 
 import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
 import GenericModal from '@/components/common/GenericModal';
+import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_File } from '@/models/api/File';
 import { stripTrailingSlash } from '@/utils';
 import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
+import { SideBarContext } from '../context/sidebarContext';
 import { InventoryTabNames } from '../property/InventoryTabs';
 import { FileTabType } from '../shared/detail/FileTabs';
 import SidebarFooter from '../shared/SidebarFooter';
@@ -44,6 +47,7 @@ export interface IAcquisitionViewProps {
   containerState: AcquisitionContainerState;
   setContainerState: React.Dispatch<Partial<AcquisitionContainerState>>;
   formikRef: React.RefObject<FormikProps<any>>;
+  isFormValid: boolean;
 }
 
 export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = ({
@@ -61,11 +65,17 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   containerState,
   setContainerState,
   formikRef,
+  isFormValid,
 }) => {
   // match for the current route
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
+  const { file } = useContext(SideBarContext);
+  if (!!file && file?.fileType !== FileTypes.Acquisition) {
+    throw Error('Context file is not an acquisition file');
+  }
+  const acquisitionFile: Api_AcquisitionFile = file as Api_AcquisitionFile;
 
   // match for property menu routes - eg /property/1/ltsa
   const fileMatch = matchPath<Record<string, string>>(location.pathname, `${match.path}/:tab`);
@@ -84,8 +94,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
     ? getEditTitle(fileMatch, propertySelectorMatch, propertiesMatch)
     : 'Acquisition File';
 
-  const menuItems =
-    containerState.acquisitionFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
+  const menuItems = file?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('File Summary');
 
   const closePropertySelector = () => {
@@ -96,9 +105,9 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   return (
     <Switch>
       <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
-        {containerState.acquisitionFile && (
+        {file && (
           <UpdateProperties
-            file={containerState.acquisitionFile}
+            file={file}
             setIsShowingPropertySelector={closePropertySelector}
             onSuccess={onSuccess}
             updateFileProperties={onUpdateProperties}
@@ -121,13 +130,14 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
               className="mr-2"
             />
           }
-          header={<AcquisitionHeader acquisitionFile={containerState.acquisitionFile} />}
+          header={<AcquisitionHeader acquisitionFile={acquisitionFile} />}
           footer={
             isEditing && (
               <SidebarFooter
                 isOkDisabled={formikRef?.current?.isSubmitting}
                 onSave={onSave}
                 onCancel={onCancel}
+                isValid={isFormValid}
               />
             )
           }
@@ -136,7 +146,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
             leftComponent={
               <>
                 <AcquisitionMenu
-                  acquisitionFileId={containerState.acquisitionFile?.id || 0}
+                  acquisitionFileId={file?.id || 0}
                   items={menuItems}
                   selectedIndex={selectedMenuIndex}
                   onChange={onMenuChange}
@@ -148,7 +158,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
               <StyledFormWrapper>
                 <AcquisitionRouter
                   formikRef={formikRef}
-                  acquisitionFile={containerState.acquisitionFile}
+                  acquisitionFile={acquisitionFile}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   defaultFileTab={containerState.defaultFileTab}
@@ -161,7 +171,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                     <FilePropertyRouter
                       formikRef={formikRef}
                       selectedMenuIndex={Number(match.params.menuIndex)}
-                      acquisitionFile={containerState.acquisitionFile}
+                      acquisitionFile={acquisitionFile}
                       isEditing={isEditing}
                       setIsEditing={setIsEditing}
                       defaultFileTab={containerState.defaultFileTab}

@@ -69,7 +69,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
       class="c2"
     />
   </div>
-  .c19.btn {
+  .c20.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -99,49 +99,49 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c19.btn:hover {
+.c20.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c19.btn:focus {
+.c20.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c19.btn.btn-primary {
+.c20.btn.btn-primary {
   border: none;
 }
 
-.c19.btn.btn-secondary {
+.c20.btn.btn-secondary {
   background: none;
 }
 
-.c19.btn.btn-info {
+.c20.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c19.btn.btn-info:hover,
-.c19.btn.btn-info:active,
-.c19.btn.btn-info:focus {
+.c20.btn.btn-info:hover,
+.c20.btn.btn-info:active,
+.c20.btn.btn-info:focus {
   background: none;
 }
 
-.c19.btn.btn-light {
+.c20.btn.btn-light {
   border: none;
 }
 
-.c19.btn.btn-dark {
+.c20.btn.btn-dark {
   border: none;
 }
 
-.c19.btn.btn-link {
+.c20.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -162,9 +162,9 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c19.btn.btn-link:hover,
-.c19.btn.btn-link:active,
-.c19.btn.btn-link:focus {
+.c20.btn.btn-link:hover,
+.c20.btn.btn-link:active,
+.c20.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -173,14 +173,14 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c19.btn.btn-link:disabled,
-.c19.btn.btn-link.disabled {
+.c20.btn.btn-link:disabled,
+.c20.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c19.btn:disabled,
-.c19.btn:disabled:hover {
+.c20.btn:disabled,
+.c20.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -191,15 +191,15 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c19.Button .Button__icon {
+.c20.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c19.Button--icon-only:focus {
+.c20.Button--icon-only:focus {
   outline: none;
 }
 
-.c19.Button--icon-only .Button__icon {
+.c20.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -207,33 +207,49 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   font-size: 2.4rem;
 }
 
-.c7.c7.form-control.is-valid {
+.c7 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c7 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c7 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c8.c8.form-control.is-valid {
   background-image: none;
 }
 
-.c7.c7.form-control.is-invalid {
+.c8.c8.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c17 {
+.c18 {
   padding-right: 0;
 }
 
-.c17 .form-control {
+.c18 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c18:not(:first-child) {
+.c19:not(:first-child) {
   padding-left: 0;
 }
 
-.c18:not(:first-child) .form-control {
+.c19:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c22 {
+.c23 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -245,13 +261,13 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c22 .form-label {
+.c23 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c25 {
+.c26 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -263,41 +279,41 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c25 .form-label {
+.c26 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c20 {
+.c21 {
   font-size: 1.4rem;
 }
 
-.c11 {
+.c12 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c11 .nav-tabs {
+.c12 .nav-tabs {
   height: auto;
 }
 
-.c11 .nav-item {
+.c12 .nav-item {
   min-width: 5rem;
   padding: 0.1rem 0.6rem;
 }
 
-.c11 .nav-item:hover {
+.c12 .nav-item:hover {
   border-color: transparent;
 }
 
-.c11 .nav-item.active {
+.c12 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
 }
 
-.c12 {
+.c13 {
   font-family: 'BCSans-Bold';
   font-size: 2rem;
   border-bottom: solid 0.2rem;
@@ -320,12 +336,12 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   width: 100%;
 }
 
-.c24 {
+.c25 {
   float: right;
   cursor: pointer;
 }
 
-.c8 {
+.c9 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -339,7 +355,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c14:hover {
+.c15:hover {
   cursor: pointer;
 }
 
@@ -354,9 +370,9 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c13.c13.c13 input,
-.c13.c13.c13 select,
-.c13.c13.c13 textarea {
+.c14.c14.c14 input,
+.c14.c14.c14 select,
+.c14.c14.c14 textarea {
   background: none;
   border: none;
   resize: none;
@@ -366,51 +382,51 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c13.c13.c13 .form-label {
+.c14.c14.c14 .form-label {
   font-weight: bold;
 }
 
-.c15 {
+.c16 {
   font-family: 'BcSans-Bold';
   margin-bottom: 1rem;
 }
 
-.c9 {
+.c10 {
   height: 100%;
 }
 
-.c9 .tab-content {
+.c10 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   height: calc(100% - 2.4rem);
   overflow-y: auto;
 }
 
-.c9 .tab-content .tab-pane {
+.c10 .tab-content .tab-pane {
   position: relative;
 }
 
-.c10 {
+.c11 {
   height: auto;
 }
 
-.c10.tab-content {
+.c11.tab-content {
   height: auto;
 }
 
-.c16 {
+.c17 {
   border-radius: 0.5rem;
 }
 
-.c16 .idir-input-group .input-group-prepend select {
+.c17 .idir-input-group .input-group-prepend select {
   width: 16rem;
 }
 
-.c16 .idir-input-group input {
+.c17 .idir-input-group input {
   width: 18rem;
   max-width: 100%;
 }
 
-.c21 {
+.c22 {
   font-size: 1.6rem;
   border-bottom: 0.2rem solid;
   margin-bottom: 0.9rem;
@@ -418,12 +434,12 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c26 input.form-control {
+.c27 input.form-control {
   min-width: 50rem;
   max-width: 50rem;
 }
 
-.c23 textarea.form-control {
+.c24 textarea.form-control {
   min-width: 80rem;
   height: 7rem;
   resize: none;
@@ -484,6 +500,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                         class="rbt-input-main form-control rbt-input"
                         id="typeahead-project"
                         name="typeahead-project"
+                        placeholder="Type to search for a Project"
                         role="combobox"
                         type="text"
                         value=""
@@ -665,20 +682,29 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                     class="c5 required text-left col"
                   >
                     <div
-                      class="required form-group"
+                      class="c7 required form-group"
                     >
                       <div
                         class="react-datepicker-wrapper d-block"
                       >
                         <div
-                          class="react-datepicker__input-container"
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                         >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
                           <input
                             autocomplete="off"
-                            class="c7 form-control date-picker"
+                            class="c8 form-control date-picker"
                             id="datepicker-startDate"
                             name="startDate"
-                            placeholder="--/--/----"
+                            placeholder="MTH DD, YYYY"
                             required=""
                             type="text"
                             value=""
@@ -708,20 +734,29 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                     class="c5 text-left col"
                   >
                     <div
-                      class="form-group"
+                      class="c7 form-group"
                     >
                       <div
                         class="react-datepicker-wrapper d-block"
                       >
                         <div
-                          class="react-datepicker__input-container"
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                         >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
                           <input
                             autocomplete="off"
-                            class="c7 form-control date-picker"
+                            class="c8 form-control date-picker"
                             id="datepicker-expiryDate"
                             name="expiryDate"
-                            placeholder="--/--/----"
+                            placeholder="MTH DD, YYYY"
                             type="text"
                             value=""
                           />
@@ -738,7 +773,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           class="c3 form-section"
         >
           <h2
-            class="c8"
+            class="c9"
           >
             <div
               class="no-gutters row"
@@ -765,10 +800,10 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="c9 c10"
+                  class="c10 c11"
                 >
                   <nav
-                    class="c11 nav nav-tabs"
+                    class="c12 nav nav-tabs"
                     role="tablist"
                   >
                     <a
@@ -805,12 +840,12 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                           class="collapse show"
                         >
                           <h3
-                            class="c12"
+                            class="c13"
                           >
                             Select a property
                           </h3>
                           <div
-                            class="c13 row"
+                            class="c14 row"
                           >
                             <div
                               class="col-md-4"
@@ -819,7 +854,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                 class="d-flex flex-column align-items-center"
                               >
                                 <svg
-                                  class="c14"
+                                  class="c15"
                                   height="97"
                                   title="Click once to enter property selection mode."
                                   width="97"
@@ -846,7 +881,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                 class="row"
                               >
                                 <div
-                                  class="c15 col"
+                                  class="c16 col"
                                 >
                                   Selected property attributes
                                 </div>
@@ -964,12 +999,12 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                           class="collapse show"
                         >
                           <h3
-                            class="c12"
+                            class="c13"
                           >
                             Search for a property
                           </h3>
                           <form
-                            class="c16 p-3"
+                            class="c17 p-3"
                             novalidate=""
                           >
                             <div
@@ -982,7 +1017,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                   class="flex-nowrap input-group row"
                                 >
                                   <div
-                                    class="c17 col-auto"
+                                    class="c18 col-auto"
                                   >
                                     <div
                                       class="input-group-prepend"
@@ -1035,7 +1070,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                     </div>
                                   </div>
                                   <div
-                                    class="c18 col"
+                                    class="c19 col"
                                   >
                                     <div
                                       class="input form-group"
@@ -1063,7 +1098,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                     class="pr-0 col"
                                   >
                                     <button
-                                      class="c19 Button Button--icon-only primary btn btn-primary"
+                                      class="c20 Button Button--icon-only primary btn btn-primary"
                                       data-testid="search"
                                       id="search-button"
                                       title="search"
@@ -1092,7 +1127,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                     class="pl-0 col"
                                   >
                                     <button
-                                      class="c19 Button Button--icon-only btn btn-info"
+                                      class="c20 Button Button--icon-only btn btn-info"
                                       data-testid="reset-button"
                                       id="reset-button"
                                       title="reset-button"
@@ -1240,7 +1275,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                               class="ml-auto align-self-center col-auto"
                             >
                               <p
-                                class="c20"
+                                class="c21"
                               >
                                 0 selected
                               </p>
@@ -1260,7 +1295,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               class="c3 form-section"
             >
               <h2
-                class="c8"
+                class="c9"
               >
                 <div
                   class="no-gutters row"
@@ -1276,7 +1311,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="collapse show"
               >
                 <div
-                  class="c21 no-gutters row"
+                  class="c22 no-gutters row"
                 >
                   <div
                     class="col-3"
@@ -1325,7 +1360,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           class="c3 form-section"
         >
           <h2
-            class="c8"
+            class="c9"
           >
             <div
               class="no-gutters row"
@@ -1356,7 +1391,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col-8"
               >
                 <div
-                  class="c22 input form-group"
+                  class="c23 input form-group"
                 >
                   <input
                     class="form-control"
@@ -2175,20 +2210,29 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                     class="c5 text-left col"
                   >
                     <div
-                      class="form-group"
+                      class="c7 form-group"
                     >
                       <div
                         class="react-datepicker-wrapper d-block"
                       >
                         <div
-                          class="react-datepicker__input-container"
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                         >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
                           <input
                             autocomplete="off"
-                            class="c7 form-control date-picker"
+                            class="c8 form-control date-picker"
                             id="datepicker-responsibilityEffectiveDate"
                             name="responsibilityEffectiveDate"
-                            placeholder="--/--/----"
+                            placeholder="MTH DD, YYYY"
                             type="text"
                             value=""
                           />
@@ -2215,7 +2259,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col"
               >
                 <div
-                  class="c23 textarea input form-group"
+                  class="c24 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -2232,7 +2276,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           class="c3 form-section"
         >
           <h2
-            class="c8"
+            class="c9"
           >
             <div
               class="no-gutters row"
@@ -2246,7 +2290,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c24"
+                  class="c25"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -2760,7 +2804,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           class="c3 form-section"
         >
           <h2
-            class="c8"
+            class="c9"
           >
             <div
               class="no-gutters row"
@@ -2791,7 +2835,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col-5"
               >
                 <div
-                  class="c25 form-group"
+                  class="c26 form-group"
                 >
                   <select
                     class="form-control"
@@ -2833,7 +2877,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col-5"
               >
                 <div
-                  class="c25 form-group"
+                  class="c26 form-group"
                 >
                   <select
                     class="form-control"
@@ -2899,7 +2943,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col"
               >
                 <div
-                  class="c23 textarea input form-group"
+                  class="c24 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -2926,7 +2970,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col"
               >
                 <div
-                  class="c22 c26 input form-group"
+                  class="c23 c27 input form-group"
                 >
                   <input
                     class="form-control"
@@ -2954,7 +2998,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col"
               >
                 <div
-                  class="c22 c26 input form-group"
+                  class="c23 c27 input form-group"
                 >
                   <input
                     class="form-control"
@@ -2982,7 +3026,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col"
               >
                 <div
-                  class="c23 textarea input form-group"
+                  class="c24 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -2998,7 +3042,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c2.btn {
+  .c1.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -3028,49 +3072,49 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c2.btn:hover {
+.c1.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c2.btn:focus {
+.c1.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c2.btn.btn-primary {
+.c1.btn.btn-primary {
   border: none;
 }
 
-.c2.btn.btn-secondary {
+.c1.btn.btn-secondary {
   background: none;
 }
 
-.c2.btn.btn-info {
+.c1.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c2.btn.btn-info:hover,
-.c2.btn.btn-info:active,
-.c2.btn.btn-info:focus {
+.c1.btn.btn-info:hover,
+.c1.btn.btn-info:active,
+.c1.btn.btn-info:focus {
   background: none;
 }
 
-.c2.btn.btn-light {
+.c1.btn.btn-light {
   border: none;
 }
 
-.c2.btn.btn-dark {
+.c1.btn.btn-dark {
   border: none;
 }
 
-.c2.btn.btn-link {
+.c1.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -3091,9 +3135,9 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c2.btn.btn-link:hover,
-.c2.btn.btn-link:active,
-.c2.btn.btn-link:focus {
+.c1.btn.btn-link:hover,
+.c1.btn.btn-link:active,
+.c1.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -3102,14 +3146,14 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c2.btn.btn-link:disabled,
-.c2.btn.btn-link.disabled {
+.c1.btn.btn-link:disabled,
+.c1.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c2.btn:disabled,
-.c2.btn:disabled:hover {
+.c1.btn:disabled,
+.c1.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -3120,15 +3164,15 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c2.Button .Button__icon {
+.c1.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c2.Button--icon-only:focus {
+.c1.Button--icon-only:focus {
   outline: none;
 }
 
-.c2.Button--icon-only .Button__icon {
+.c1.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -3141,11 +3185,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   z-index: 10;
 }
 
-.c1 {
-  padding-top: 0.7rem;
-  color: red;
-}
-
 <div
     class=""
   >
@@ -3154,16 +3193,12 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
     >
       <div
         class="pr-3 col-auto"
-      >
-        <div
-          class="c1"
-        />
-      </div>
+      />
       <div
         class="pr-4 col-auto"
       >
         <button
-          class="c2 Button btn btn-secondary"
+          class="c1 Button btn btn-secondary"
           type="button"
         >
           <div
@@ -3177,7 +3212,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
         class="col-auto"
       >
         <button
-          class="c2 Button btn btn-primary"
+          class="c1 Button btn btn-primary"
           type="button"
         >
           <div

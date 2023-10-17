@@ -2,7 +2,9 @@ import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { mockProjectGetResponse, mockProjectPostResponse } from '@/mocks/projects.mock';
 import { act, render, RenderOptions, screen, waitFor } from '@/utils/test-utils';
 
@@ -24,6 +26,8 @@ jest.mock('@/hooks/repositories/useProjectProvider', () => ({
     };
   },
 }));
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 let viewProps: IAddProjectFormProps | undefined;
 const TestView = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFormProps>(
@@ -61,6 +65,7 @@ describe('UpdateProjectContainer', () => {
       onSubmit: jest.fn(),
     };
     jest.resetAllMocks();
+    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
   });
 
   it('renders the underlying form', () => {

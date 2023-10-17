@@ -41,15 +41,37 @@ const getColumnsByProperty = (
     },
   },
   {
+    Header: 'Primary Contact',
+    accessor: 'primaryContact',
+    align: 'left',
+    minWidth: 60,
+    maxWidth: 60,
+    Cell: (cellProps: CellProps<InterestHolderViewRow, Api_Person | null>) => {
+      return cellProps.row.original?.primaryContact ? (
+        <StyledLink
+          target="_blank"
+          rel="noopener noreferrer"
+          to={`/contact/${`P${cellProps.row.original.primaryContact?.id}`}`}
+        >
+          {formatApiPersonNames(cellProps.row.original?.primaryContact)}
+        </StyledLink>
+      ) : cellProps.row.original?.person ? (
+        <>{'N/A'}</>
+      ) : (
+        <>{'No contacts available/selected'}</>
+      );
+    },
+  },
+  {
     Header: 'Interest Type',
     accessor: 'interestHolderProperty',
     align: 'left',
     minWidth: 60,
     maxWidth: 60,
     Cell: (cellProps: CellProps<InterestHolderViewRow, Api_InterestHolderProperty | null>) => {
-      return (
-        <>{cellProps.row.original.interestHolderProperty?.interestTypeCode?.description ?? ''}</>
-      );
+      const propertyInterestType = cellProps.row.original.interestHolderType?.description ?? '';
+
+      return <>{propertyInterestType}</>;
     },
   },
 ];
@@ -57,11 +79,22 @@ const getColumnsByProperty = (
 const InterestHolderPropertiesTable: React.FunctionComponent<
   React.PropsWithChildren<IPropertyHoldersViewTableProps>
 > = ({ propertyInterestHolders }) => {
+  const isNonPayeeInterests = propertyInterestHolders.groupedPropertyInterests.find(
+    ih => ih.interestHolderType?.id === 'NIP',
+  );
+
+  const columns = getColumnsByProperty(propertyInterestHolders);
+
+  if (isNonPayeeInterests) {
+    // If interest holders are of type non-interest payees then delete primary contact column
+    columns.splice(1, 1);
+  }
+
   return (
     <>
       <Table
         name="interest-holders-by-property-table"
-        columns={getColumnsByProperty(propertyInterestHolders)}
+        columns={columns}
         hideToolbar
         data={propertyInterestHolders.groupedPropertyInterests}
       />

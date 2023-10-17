@@ -1,20 +1,18 @@
-import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { useEffect, useState } from 'react';
 
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { AddressForm, PropertyForm } from '@/features/mapSideBar/shared/models';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
-import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
+import { featuresetToMapProperty, pidFromFeatureSet } from '@/utils/mapPropertyUtils';
 
-export const useInitialMapSelectorProperties = (
-  selectedFeature: Feature<Geometry, GeoJsonProperties> | null,
-) => {
+export const useInitialMapSelectorProperties = (selectedFeature: LocationFeatureDataset | null) => {
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
   const [bcaAddress, setBcaAddress] = useState<AddressForm>();
 
-  const pid = selectedFeature?.properties?.PID;
+  const pid = selectedFeature !== null ? pidFromFeatureSet(selectedFeature) : null;
   useEffect(() => {
     const getInitialPropertyAddress = async () => {
-      if (pid) {
+      if (pid !== null) {
         const bcaSummary = await getPrimaryAddressByPid(pid, 3000);
         bcaSummary?.address && setBcaAddress(AddressForm.fromBcaAddress(bcaSummary?.address));
       }
@@ -26,7 +24,7 @@ export const useInitialMapSelectorProperties = (
     initialProperty:
       selectedFeature !== null
         ? {
-            ...PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFeature)),
+            ...PropertyForm.fromMapProperty(featuresetToMapProperty(selectedFeature)),
             address: bcaAddress,
           }
         : null,

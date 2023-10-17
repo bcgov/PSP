@@ -1,11 +1,16 @@
+import { GeoJsonProperties } from 'geojson';
 import L, { DivIcon, GeoJSON, LatLngExpression, Layer, Map, Marker } from 'leaflet';
-import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Supercluster from 'supercluster';
 
 import { ICluster, PointFeature } from '@/components/maps/types';
 import { DraftCircleNumber } from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { IProperty } from '@/interfaces';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import {
+  PIMS_Property_Boundary_View,
+  PIMS_Property_Location_View,
+} from '@/models/layers/pimsPropertyLocationView';
 
 // parcel icon (green)
 export const parcelIcon = L.icon({
@@ -103,6 +108,7 @@ export const parcelIconSelect = L.icon({
  * Creates map points (in GeoJSON format) for further clustering by `supercluster`
  * @param properties
  */
+// TODO:is this necessary?
 export const createPoints = (properties: IProperty[], type: string = 'Point') =>
   properties.map(x => {
     return {
@@ -119,26 +125,39 @@ export const createPoints = (properties: IProperty[], type: string = 'Point') =>
     } as PointFeature;
   });
 
+type MarkerFeature =
+  | PIMS_Property_Location_View
+  | PIMS_Property_Boundary_View
+  | PMBC_FullyAttributed_Feature_Properties;
+
 /**
  * This function defines how GeoJSON points spawn Leaflet layers on the map.
  * It is called internally by the `GeoJSON` leaflet component.
  * @param feature
  * @param latlng
  */
-export const pointToLayer = (feature: ICluster, latlng: LatLngExpression): Layer => {
-  const { cluster: isCluster } = feature?.properties as Supercluster.ClusterProperties;
-  if (!!isCluster) {
-    return createClusterMarker(feature, latlng);
+export function pointToLayer<P extends MarkerFeature, C extends Supercluster.ClusterProperties>(
+  point: Supercluster.ClusterFeature<C> | Supercluster.PointFeature<P>,
+  latlng: LatLngExpression,
+): Layer {
+  if ('cluster' in point.properties) {
+    const cluster = point as Supercluster.ClusterFeature<C>;
+    return createClusterMarker(cluster, latlng);
+  } else {
+    const feature = point as Supercluster.PointFeature<P>;
+    // we have a single point to render
+    return createSingleMarker(feature, latlng);
   }
-  // we have a single point to render
-  return createSingleMarker(feature, latlng);
-};
+}
 
 /**
  * Get an icon type for the specified cluster property details.
  */
-export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
-  if (feature.properties.IS_PAYABLE_LEASE || feature.properties.isPayableLease) {
+export function getMarkerIcon(
+  feature: Supercluster.PointFeature<PIMS_Property_Location_View | PIMS_Property_Boundary_View>,
+  selected: boolean,
+): L.Icon<L.IconOptions> {
+  if (feature.properties.IS_PAYABLE_LEASE) {
     if (selected) {
       return propertyWithLeaseIconSelect;
     } else {
@@ -146,7 +165,7 @@ export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
     }
   }
 
-  if (feature.properties.IS_PROPERTY_OF_INTEREST || feature.properties.isPropertyOfInterest) {
+  if (feature.properties.IS_PROPERTY_OF_INTEREST) {
     if (selected) {
       return propertyOfInterestIconSelect;
     } else {
@@ -154,18 +173,21 @@ export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
     }
   }
 
-  if (feature.properties.PROPERTY_ID || feature.properties.id) {
-    if (selected) {
-      return parcelIconSelect;
-    }
-  } else {
-    if (selected) {
-      return notOwnedPropertyIconSelect;
-    }
-    return notOwnedPropertyIcon;
+  if (selected) {
+    return parcelIconSelect;
   }
   return parcelIcon;
-};
+}
+
+/**
+ * Get an icon type for the specified cluster property details.
+ */
+export function getNotOwnerMarkerIcon(selected: boolean): L.Icon<L.IconOptions> {
+  if (selected) {
+    return notOwnedPropertyIconSelect;
+  }
+  return notOwnedPropertyIcon;
+}
 
 // parcel icon (green) highlighted
 export const getDraftIcon = (text: string) => {
@@ -183,9 +205,45 @@ export const getDraftIcon = (text: string) => {
  * @param feature the geojson object
  * @param latlng the point position
  */
-export const createSingleMarker = (feature: ICluster, latlng: LatLngExpression): Layer => {
-  const icon = getMarkerIcon(feature);
-  return new Marker(latlng, { icon });
+export const createSingleMarker = <P extends MarkerFeature>(
+  feature: Supercluster.PointFeature<P>,
+  latlng: LatLngExpression,
+): Layer => {
+  const isOwned = isPimsFeature(feature);
+
+  if (isOwned) {
+    const icon = getMarkerIcon(feature, false);
+    return new Marker(latlng, { icon });
+  } else {
+    const icon = getNotOwnerMarkerIcon(false);
+    return new Marker(latlng, { icon });
+  }
+};
+
+export const isPimsFeature = (
+  feature: Supercluster.PointFeature<MarkerFeature>,
+): feature is Supercluster.PointFeature<
+  PIMS_Property_Location_View | PIMS_Property_Boundary_View
+> => {
+  return isPimsLocation(feature) || isPimsBoundary(feature);
+};
+
+export const isPimsLocation = (
+  feature: Supercluster.PointFeature<MarkerFeature>,
+): feature is Supercluster.PointFeature<PIMS_Property_Location_View> => {
+  return feature.id?.toString().startsWith('PIMS_PROPERTY_LOCATION_VW') ?? false;
+};
+
+export const isPimsBoundary = (
+  feature: Supercluster.PointFeature<MarkerFeature>,
+): feature is Supercluster.PointFeature<PIMS_Property_Boundary_View> => {
+  return feature.id?.toString().startsWith('PIMS_PROPERTY_BOUNDARY_VW') ?? false;
+};
+
+export const isFullyAttributed = (
+  feature: Supercluster.PointFeature<MarkerFeature>,
+): feature is Supercluster.PointFeature<PMBC_FullyAttributed_Feature_Properties> => {
+  return feature.id?.toString().startsWith('WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW') ?? false;
 };
 
 // Internal cache of cluster icons to avoid re-creating the same icon over and over again.
@@ -196,7 +254,10 @@ const iconsCache: Record<number, DivIcon> = {};
  * @param feature the cluster geojson object
  * @param latlng the cluster position
  */
-export const createClusterMarker = (feature: ICluster, latlng: LatLngExpression): Layer => {
+export function createClusterMarker<P extends GeoJsonProperties>(
+  feature: ICluster<P>,
+  latlng: LatLngExpression,
+): Layer {
   const {
     cluster: isCluster,
     point_count: count,
@@ -220,10 +281,14 @@ export const createClusterMarker = (feature: ICluster, latlng: LatLngExpression)
 
   icon = iconsCache[count];
   return new Marker(latlng, { icon });
-};
+}
 
 /** Zooms to a cluster */
-export const zoomToCluster = (cluster: ICluster, expansionZoom: number, map: Map) => {
+export function zoomToCluster<P extends GeoJsonProperties>(
+  cluster: ICluster<P>,
+  expansionZoom: number,
+  map: Map,
+) {
   const latlng = GeoJSON.coordsToLatLng(cluster?.geometry?.coordinates as [number, number]);
   map?.setView(latlng, expansionZoom, { animate: true });
-};
+}

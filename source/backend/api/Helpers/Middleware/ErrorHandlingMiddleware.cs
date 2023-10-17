@@ -137,6 +137,13 @@ namespace Pims.Api.Helpers.Middleware
 
                 _logger.LogError(ex, ex.Message);
             }
+            else if (ex is BusinessRuleViolationException)
+            {
+                code = HttpStatusCode.BadRequest;
+                message = ex.Message;
+
+                _logger.LogWarning(ex, "Business Rule violation.");
+            }
             else if (ex is BadRequestException || ex is InvalidOperationException)
             {
                 code = HttpStatusCode.BadRequest;
@@ -161,6 +168,15 @@ namespace Pims.Api.Helpers.Middleware
                 errorCode = null;
 
                 _logger.LogError(ex, "User deleting a foreign key dependency");
+            }
+            else if (ex is ContractorNotInTeamException)
+            {
+                var exception = ex as ContractorNotInTeamException;
+                code = HttpStatusCode.Conflict;
+                message = exception.Message;
+                errorCode = null;
+
+                _logger.LogError(ex, "Contractor User missing as a team member on the creation of Acquisition File");
             }
             else if (ex is ApiHttpRequestException)
             {

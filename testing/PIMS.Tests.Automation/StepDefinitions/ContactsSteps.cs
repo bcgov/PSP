@@ -218,7 +218,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void IndividualContactUpdated()
         {
             /* TEST COVERAGE: PSP-2705 */
-
             contacts.VerifyIndividualContactView(individualContact);
         }
 
@@ -226,8 +225,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void CorrectSearchContact()
         {
             /* TEST COVERAGE: PSP-2704, PSP-2541 */
-
-            contacts.Wait();
             Assert.True(searchContacts.SearchContactRender());
         }
 
@@ -235,8 +232,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void NoContactResults()
         {
             /* TEST COVERAGE: PSP-4200 */
-
-            contacts.Wait();
             Assert.True(searchContacts.GetNoSearchMessage().Equals("No Contacts match the search criteria"));
         }
 

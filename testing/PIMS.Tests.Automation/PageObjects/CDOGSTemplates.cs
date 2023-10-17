@@ -47,25 +47,27 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateAdminTemplates()
         {
-            Wait();
+            Wait(3000);
+
+            WaitUntilClickable(adminToolsTemplatesLink);
             webDriver.FindElement(adminToolsTemplatesLink).Click();
         }
 
         public void SelectTemplateType(string type)
         {
-            Wait();
+            WaitUntilClickable(adminToolsTemplateTypeSelect);
             ChooseSpecificSelectOption(adminToolsTemplateTypeSelect, type);
         }
 
         public void AddNewTemplate()
         {
-            Wait();
+            WaitUntilClickable(CDOGSAddTemplateBttn);
             FocusAndClick(CDOGSAddTemplateBttn);
         }
 
         public void VerifyCDOGSListView()
         {
-            Wait();
+            WaitUntilVisible(CDOGSAddTemplateBttn);
             Assert.True(webDriver.FindElement(CDOGSDocumentsTitle).Displayed);
             Assert.True(webDriver.FindElement(CDOGSAddTemplateBttn).Displayed);
 
@@ -85,10 +87,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void Delete1stTemplate()
         {
-            Wait();
+            WaitUntilClickable(CDOGSTableResults1stDeleteBttn);
             webDriver.FindElement(CDOGSTableResults1stDeleteBttn).Click();
             
-            Wait();
+            WaitUntilVisible(documentDeleteHeader);
             Assert.True(webDriver.FindElement(documentDeleteHeader).Text.Equals("Delete a document"));
             Assert.True(webDriver.FindElement(documentDeleteContent1).Text.Equals("You have chosen to delete this document."));
             Assert.True(webDriver.FindElement(documentDeteleContent2).Text.Equals("If the document is linked to other files or entities in PIMS it will still be accessible from there, however if this the only instance then the file will be removed from the document store completely."));

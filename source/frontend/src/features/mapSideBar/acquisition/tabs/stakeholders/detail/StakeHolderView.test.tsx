@@ -5,7 +5,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions } from '@/utils/test-utils';
 
-import { InterestHolderViewForm } from '../update/models';
+import { InterestHolderViewForm, InterestHolderViewRow } from '../update/models';
 import StakeHolderView, { IStakeHolderViewProps } from './StakeHolderView';
 
 jest.mock('@react-keycloak/web');
@@ -29,6 +29,7 @@ describe('StakeHolderView component', () => {
             .flatMap(i => i.interestHolderProperties)
             .map(i => InterestHolderViewForm.fromApi(i))
         }
+        legacyStakeHolders={renderOptions.props?.legacyStakeHolders ?? []}
         groupedNonInterestProperties={
           renderOptions.props?.groupedNonInterestProperties ??
           getMockApiInterestHolders()
@@ -91,6 +92,37 @@ describe('StakeHolderView component', () => {
     expect(getByText('PID: 025-196-375')).toBeVisible();
   });
 
+  it('displays table with grouped property values where there are multiple interest type codes', () => {
+    const interestHolder = getMockApiInterestHolders()[0];
+    const interestHolderProperty = interestHolder.interestHolderProperties[0];
+    interestHolderProperty.propertyInterestTypes = [
+      { id: 'O', description: 'Ordinal' },
+      { id: 'R', description: 'Registered' },
+    ];
+    const model = InterestHolderViewForm.fromApi(interestHolderProperty);
+    model.identifier = 'PID: 025-196-375';
+    model.groupedPropertyInterests = [
+      InterestHolderViewRow.fromApi(interestHolderProperty, interestHolder, {
+        id: 'O',
+        description: 'Ordinal',
+      }),
+      InterestHolderViewRow.fromApi(interestHolderProperty, interestHolder, {
+        id: 'R',
+        description: 'Registered',
+      }),
+    ];
+    const { getByText } = setup({
+      props: {
+        groupedInterestProperties: [model],
+        groupedNonInterestProperties: [],
+      },
+    });
+
+    expect(getByText('PID: 025-196-375')).toBeVisible();
+    expect(getByText('Ordinal')).toBeVisible();
+    expect(getByText('Registered')).toBeVisible();
+  });
+
   it('displays table with grouped non-interest property values', () => {
     const model = InterestHolderViewForm.fromApi(
       getMockApiInterestHolders()[0].interestHolderProperties[0],
@@ -105,5 +137,17 @@ describe('StakeHolderView component', () => {
     });
 
     expect(getByText('PID: 025-196-375')).toBeVisible();
+  });
+
+  it('it hides the legacy stakeholders', () => {
+    const { queryByTestId } = setup({});
+
+    expect(queryByTestId('acq-file-legacy-stakeholders')).not.toBeInTheDocument();
+  });
+
+  it('it displays the legacy stakeholders', () => {
+    const { queryByTestId } = setup({ props: { legacyStakeHolders: ['John,Doe'] } });
+    expect(queryByTestId('acq-file-legacy-stakeholders')).toBeInTheDocument();
+    expect(queryByTestId('acq-file-legacy-stakeholders')).toHaveTextContent('John,Doe');
   });
 });
