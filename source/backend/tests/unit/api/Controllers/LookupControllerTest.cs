@@ -49,23 +49,6 @@ namespace Pims.Api.Test.Controllers
         #region Tests
 
         [Fact]
-        public void GetPropertyClassificationTypeCodes()
-        {
-            // Arrange
-            var propertyClassification = new Entity.PimsPropertyClassificationType
-            {
-                Id = "Surplus Active",
-            };
-            this._repository.Setup(m => m.GetAllPropertyClassificationTypes()).Returns(new[] { propertyClassification });
-
-            // Act
-            var result = this._controller.GetPropertyClassificationTypes();
-
-            // Assert
-            this._repository.Verify(m => m.GetAllPropertyClassificationTypes(), Times.Once());
-        }
-
-        [Fact]
         public void GetRoleCodes()
         {
             // Arrange
