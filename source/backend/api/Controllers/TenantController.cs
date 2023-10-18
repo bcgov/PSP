@@ -1,12 +1,9 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Pims.Api.Policies;
 using Pims.Dal;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Tenant;
 
 namespace Pims.Api.Controllers
@@ -62,23 +59,6 @@ namespace Pims.Api.Controllers
                 return new NoContentResult();
             }
 
-            return new JsonResult(_mapper.Map<Model.TenantModel>(tenant));
-        }
-
-        /// <summary>
-        /// Updates the tenant for the specified 'code'.
-        /// </summary>
-        /// <returns></returns>
-        [HttpPut("{code}")]
-        [HasPermission(Permissions.SystemAdmin)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.TenantModel), 200)]
-        [ProducesResponseType(403)]
-        [SwaggerOperation(Tags = new[] { "tenants" })]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "To support standardized routes (/{code})")]
-        public IActionResult UpdateTenant(string code, Model.TenantModel model)
-        {
-            var tenant = _tenantRepository.UpdateTenant(_mapper.Map<Entity.PimsTenant>(model));
             return new JsonResult(_mapper.Map<Model.TenantModel>(tenant));
         }
         #endregion

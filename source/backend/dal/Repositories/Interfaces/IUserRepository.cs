@@ -30,8 +30,6 @@ namespace Pims.Dal.Repositories
 
         PimsUser RemoveRole(PimsUser user, long roleId);
 
-        PimsUser RemoveRegion(PimsUser user, long regionId);
-
         ICollection<PimsUserRole> UpdateAllRolesForUser(long userId, ICollection<PimsUserRole> roles);
 
         ICollection<PimsRegionUser> UpdateAllRegionsForUser(long userId, ICollection<PimsRegionUser> regions);

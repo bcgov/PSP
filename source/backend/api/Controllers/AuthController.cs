@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -101,20 +99,6 @@ namespace Pims.Api.Controllers
             uri.AppendQuery("client_id", _optionsKeycloak.Client);
             uri.AppendQuery("redirect_uri", redirect_uri);
             return Redirect(uri.ToString());
-        }
-
-        /// <summary>
-        /// Return a list of claims for the current user.
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        [HttpGet("claims")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Model.ClaimModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "auth" })]
-        public IActionResult Claims()
-        {
-            return new JsonResult(User.Claims.Select(c => new Model.ClaimModel(c.Type, c.Value)));
         }
         #endregion
     }

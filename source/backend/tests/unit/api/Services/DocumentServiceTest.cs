@@ -244,8 +244,8 @@ namespace Pims.Api.Test.Services
                                     {
                                         Id= 100,
                                     },
-                                    Value = "test_value"
-                                }
+                                    Value = "test_value",
+                                },
                             },
                     },
                 });

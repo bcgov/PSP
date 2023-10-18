@@ -48,15 +48,6 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Returns the total number of projects in the database.
-        /// </summary>
-        /// <returns></returns>
-        public int Count()
-        {
-            return Context.PimsProjects.Count();
-        }
-
-        /// <summary>
         /// Returns a Paged Result of Projects based on ProjectFilter params.
         /// </summary>
         /// <returns></returns>

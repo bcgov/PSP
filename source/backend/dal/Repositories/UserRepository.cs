@@ -404,14 +404,6 @@ namespace Pims.Dal.Repositories
             return user;
         }
 
-        public PimsUser RemoveRegion(PimsUser user, long regionId)
-        {
-            var userRegion = user.PimsRegionUsers.FirstOrDefault(r => r.Internal_Id == regionId);
-            user.PimsRegionUsers.Remove(userRegion);
-            Context.PimsRegionUsers.Remove(userRegion);
-            return user;
-        }
-
         public ICollection<PimsUserRole> UpdateAllRolesForUser(long userId, ICollection<PimsUserRole> roles)
         {
             Context.UpdateChild<PimsUser, long, PimsUserRole, long>(u => u.PimsUserRoles, userId, roles.ToArray());
