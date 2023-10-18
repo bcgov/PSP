@@ -24,8 +24,6 @@ namespace Pims.Dal.Repositories
 
         PimsProperty GetByPin(int pin);
 
-        PimsProperty TryGetByLocation(Geometry location);
-
         PimsProperty GetAllAssociationsById(long id);
 
         PimsProperty Update(PimsProperty property, bool overrideLocation = false);

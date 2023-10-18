@@ -76,15 +76,6 @@ namespace Pims.Dal.Repositories
             return query.ToList();
         }
 
-        public PimsAgreement Update(PimsAgreement agreement)
-        {
-            agreement.ThrowIfNull(nameof(agreement));
-
-            Context.Entry(agreement).CurrentValues.SetValues(agreement);
-            Context.Entry(agreement).State = EntityState.Modified;
-            return agreement;
-        }
-
         public List<PimsAgreement> UpdateAllForAcquisition(long acquisitionFileId, List<PimsAgreement> agreements)
         {
             Context.UpdateChild<PimsAcquisitionFile, long, PimsAgreement, long>(p => p.PimsAgreements, acquisitionFileId, agreements.ToArray());

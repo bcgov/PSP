@@ -537,13 +537,13 @@ namespace Pims.Dal.Test.Repositories
             helper.SaveChanges();
 
             // Act
-            var ImprovementToUpdate = lease.PimsPropertyImprovements.FirstOrDefault();
-            ImprovementToUpdate.Address = "test update";
+            var improvementToUpdate = lease.PimsPropertyImprovements.FirstOrDefault();
+            improvementToUpdate.Address = "test update";
             var updatedImprovements = repository.Update(1, lease.PimsPropertyImprovements);
 
             // Assert
             updatedImprovements.Should().HaveCount(1);
-            updatedImprovements.Should().Contain(ImprovementToUpdate);
+            updatedImprovements.Should().Contain(improvementToUpdate);
         }
 
         [Fact]
