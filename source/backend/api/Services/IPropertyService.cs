@@ -27,5 +27,9 @@ namespace Pims.Api.Services
         PropertyManagementModel GetPropertyManagement(long propertyId);
 
         PropertyManagementModel UpdatePropertyManagement(PimsProperty property);
+
+        IList<PimsPropPropActivity> GetManagementActivities(long propertyId);
+
+        bool DeleteManagementActivity(long propertyId, long managementActivityId);
     }
 }

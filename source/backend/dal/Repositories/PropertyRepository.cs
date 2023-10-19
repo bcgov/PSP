@@ -464,6 +464,28 @@ namespace Pims.Dal.Repositories
             return query.Select(p => p.PropertyId).ToHashSet();
         }
 
+        /// <summary>
+        /// Return a summary List of Management activities for a especific property.
+        /// </summary>
+        /// <param name="propertyId"></param>
+        /// <returns>List of Property's management activities.</returns>
+        public IList<PimsPropPropActivity> GetManagementActivitiesByProperty(long propertyId)
+        {
+            this.User.ThrowIfNotAllAuthorized(Permissions.ManagementView);
+
+            List<PimsPropPropActivity> activities = Context.PimsPropPropActivities.AsNoTracking()
+                    .Include(x => x.PimsPropertyActivity)
+                        .ThenInclude(y => y.PropMgmtActivityTypeCodeNavigation)
+                    .Include(x => x.PimsPropertyActivity)
+                        .ThenInclude(y => y.PropMgmtActivitySubtypeCodeNavigation)
+                    .Include(x => x.PimsPropertyActivity)
+                       .ThenInclude(y => y.PropMgmtActivityStatusTypeCodeNavigation)
+                    .Where(p => p.PropertyId == propertyId)
+                    .ToList();
+
+            return activities;
+        }
+
         #endregion
     }
 }

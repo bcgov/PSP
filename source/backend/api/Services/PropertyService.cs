@@ -191,6 +191,22 @@ namespace Pims.Api.Services
             return GetPropertyManagement(newProperty.Internal_Id);
         }
 
+        public IList<PimsPropPropActivity> GetManagementActivities(long propertyId)
+        {
+            _logger.LogInformation("Getting property management activities for property with id {propertyId}", propertyId);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementView, Permissions.PropertyView);
+
+            return _propertyRepository.GetManagementActivitiesByProperty(propertyId);
+        }
+
+        public bool DeleteManagementActivity(long propertyId, long managementActivityId)
+        {
+            _logger.LogInformation("Deleting Management Activity with id {managementActivityId} from property with Id {propertyId}", managementActivityId, propertyId);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementDelete);
+
+            return false;
+        }
+
         private Point TransformCoordinates(Geometry location)
         {
             // return property spatial location in lat/long (4326)
