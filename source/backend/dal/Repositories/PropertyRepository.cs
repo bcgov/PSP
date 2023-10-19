@@ -522,7 +522,10 @@ namespace Pims.Dal.Repositories
                 else
                 {
                     Context.PimsPropPropActivities.Remove(deletedEntity);
-                    Context.PimsPropertyActivities.Remove(new PimsPropertyActivity() { PimsPropertyActivityId = deletedEntity.PimsPropertyActivityId });
+
+                    var propertyActivity = Context.PimsPropertyActivities.FirstOrDefault(x => x.PimsPropertyActivityId.Equals(deletedEntity.PimsPropertyActivityId));
+                    Context.PimsPropertyActivities.Remove(propertyActivity);
+
                     deletedSuccessfully = true;
                 }
             }

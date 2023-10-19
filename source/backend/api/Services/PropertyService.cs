@@ -5,6 +5,7 @@ using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
+using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Core.Extensions;
@@ -204,10 +205,15 @@ namespace Pims.Api.Services
             _logger.LogInformation("Deleting Management Activity with id {managementActivityId} from property with Id {propertyId}", managementActivityId, propertyId);
             _user.ThrowIfNotAuthorized(Permissions.ManagementDelete);
 
-            var propertyActivity = _propertyRepository.GetManagementActivityById(managementActivityId);
-            if(propertyActivity.PropertyId != propertyId)
+            var propertyManagementActivity = _propertyRepository.GetManagementActivityById(managementActivityId);
+            if(propertyManagementActivity.PropertyId != propertyId)
             {
                 throw new BadRequestException($"PropertyManagementActivity with Id: {managementActivityId} and PropertyId {propertyId} doesn't exists");
+            }
+
+            if (!propertyManagementActivity.PimsPropertyActivity.PropMgmtActivityStatusTypeCode.Equals(PropertyActivityStatusTypeCode.NOTSTARTED.ToString()))
+            {
+                throw new BadRequestException($"PropertyManagementActivity can not be deleted since it has already started");
             }
 
             var sucess = _propertyRepository.TryDeletePropertyActivity(managementActivityId);
