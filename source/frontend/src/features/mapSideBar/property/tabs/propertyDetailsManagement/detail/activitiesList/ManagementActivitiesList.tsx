@@ -83,7 +83,7 @@ export function createTableColumns(onDelete: (managementActivityId: number) => v
               PropertyManagementActivityStatusTypes.NOTSTARTED ? (
               <StyledRemoveIconButton
                 id={`activity-delete-${cellProps.row.id}`}
-                data-testid={`activity-delete-${cellProps.row.id}`}
+                data-testid={`activity-delete-${cellProps.row.original.id}`}
                 onClick={() => cellProps.row.original.id && onDelete(cellProps.row.original.id)}
                 title="Delete"
               >

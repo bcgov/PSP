@@ -36,6 +36,42 @@ export const mockGetPropertyManagementActivity = (
   rowVersion: 1,
 });
 
+export const mockGetPropertyManagementActivityNotStarted = (
+  id: number = 1,
+  propertyId: number = 1,
+): Api_PropertyManagementActivity => ({
+  id,
+  propertyId,
+  propertyActivityId: 200,
+  activity: {
+    id: 200,
+    activityTypeCode: 'ACTIVITY-TYPE',
+    activityType: {
+      id: 'ACTIVITY-TYPE',
+      description: 'Activity Type Description',
+      isDisabled: false,
+      displayOrder: 100,
+    },
+    activitySubTypeCode: 'ACTIVITYSUB-TYPE',
+    activitySubType: {
+      id: 'ACTIVITYSUB-TYPE',
+      description: 'Activity Sub-Type Description',
+      isDisabled: false,
+      displayOrder: 100,
+    },
+    activityStatusTypeCode: 'NOTSTARTED',
+    activityStatusType: {
+      id: 'NOTSTARTED',
+      description: 'Not started',
+      isDisabled: false,
+      displayOrder: 100,
+    },
+    requestedAddedDate: '2023-10-17T00:00:00',
+    rowVersion: 1,
+  },
+  rowVersion: 1,
+});
+
 export const mockGetPropertyManagementActivityList = (): Api_PropertyManagementActivity[] => [
   {
     id: 1,

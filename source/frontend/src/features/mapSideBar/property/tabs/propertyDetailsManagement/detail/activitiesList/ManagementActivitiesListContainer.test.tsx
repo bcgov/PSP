@@ -1,8 +1,11 @@
 import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants';
-import { mockGetPropertyManagementActivityList } from '@/mocks/PropertyManagementActivity.mock';
-import { render, RenderOptions, screen, waitFor } from '@/utils/test-utils';
+import {
+  mockGetPropertyManagementActivityList,
+  mockGetPropertyManagementActivityNotStarted,
+} from '@/mocks/PropertyManagementActivity.mock';
+import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
 
 import PropertyManagementActivitiesListContainer, {
   IPropertyManagementActivitiesListContainerProps,
@@ -85,5 +88,18 @@ describe('ManagementActivitiesListContainer component', () => {
     const modal = await screen.findByText('Confirm Delete');
 
     expect(modal).toBeVisible();
+  });
+
+  it('confirming delete modal sends delete call', async () => {
+    mockGetApi.execute.mockResolvedValue([mockGetPropertyManagementActivityNotStarted()]);
+    setup({
+      claims: [Claims.MANAGEMENT_DELETE],
+    });
+
+    viewProps.onDelete(1);
+    const continueButton = await screen.findByText('Continue');
+    act(() => userEvent.click(continueButton));
+
+    expect(mockDeleteApi.execute).toHaveBeenCalledTimes(1);
   });
 });
