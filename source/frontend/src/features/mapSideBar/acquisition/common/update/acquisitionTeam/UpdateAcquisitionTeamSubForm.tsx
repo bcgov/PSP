@@ -6,7 +6,8 @@ import { LinkButton, RemoveButton } from '@/components/common/buttons';
 import { Select } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
+import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
+import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 
@@ -22,48 +23,57 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
   const [showRemoveMemberModal, setShowRemoveMemberModal] = useState<boolean>(false);
   const [removeIndex, setRemoveIndex] = useState<number>(-1);
   const { getOptionsByType } = useLookupCodeHelpers();
-  const personProfileTypes = getOptionsByType(API.ACQUISITION_FILE_TEAM_PROFILE_TYPES);
+  const teamProfileTypes = getOptionsByType(API.ACQUISITION_FILE_TEAM_PROFILE_TYPES);
 
   return (
     <FieldArray
       name="team"
       render={arrayHelpers => (
         <>
-          {values.team.map((person, index) => (
-            <Row
-              key={`team-parent-${index}`}
-              className="py-3"
-              data-testid={`teamMemberRow[${index}]`}
-            >
-              <Col xs="auto" xl="5">
-                <Select
-                  data-testid="select-profile"
-                  placeholder="Select profile..."
-                  field={`team.${index}.contactTypeCode`}
-                  options={personProfileTypes}
-                  value={person.contactTypeCode}
-                  onChange={() => {
-                    setFieldTouched(`team.${index}.contact`);
-                  }}
-                />
-              </Col>
-              <Col xs="auto" xl="5" className="pl-0" data-testid="contact-input">
-                <ContactInputContainer
-                  field={`team.${index}.contact`}
-                  View={ContactInputView}
-                  restrictContactType={RestrictContactType.ONLY_INDIVIDUALS}
-                  displayErrorAsTooltip={false}
-                ></ContactInputContainer>
-              </Col>
-              <Col xs="auto" xl="2" className="pl-0 mt-2">
-                <RemoveButton
-                  onRemove={() => {
-                    setRemoveIndex(index);
-                    setShowRemoveMemberModal(true);
-                  }}
-                />
-              </Col>
-            </Row>
+          {values.team.map((teamMember, index) => (
+            <>
+              <Row
+                key={`team-parent-${index}`}
+                className="py-3"
+                data-testid={`teamMemberRow[${index}]`}
+              >
+                <Col xs="auto" xl="5">
+                  <Select
+                    data-testid="select-profile"
+                    placeholder="Select profile..."
+                    field={`team.${index}.contactTypeCode`}
+                    options={teamProfileTypes}
+                    value={teamMember.contactTypeCode}
+                    onChange={() => {
+                      setFieldTouched(`team.${index}.contact`);
+                    }}
+                  />
+                </Col>
+                <Col xs="auto" xl="5" className="pl-0" data-testid="contact-input">
+                  <ContactInputContainer
+                    field={`team.${index}.contact`}
+                    View={ContactInputView}
+                    displayErrorAsTooltip={false}
+                  ></ContactInputContainer>
+                </Col>
+                <Col xs="auto" xl="2" className="pl-0 mt-2">
+                  <RemoveButton
+                    onRemove={() => {
+                      setRemoveIndex(index);
+                      setShowRemoveMemberModal(true);
+                    }}
+                  />
+                </Col>
+              </Row>
+              {teamMember.contact?.organizationId && !teamMember.contact?.personId && (
+                <SectionField label="Primary contact" labelWidth="5" noGutters>
+                  <PrimaryContactSelector
+                    field={`team.${index}.primaryContactId`}
+                    contactInfo={teamMember?.contact}
+                  ></PrimaryContactSelector>
+                </SectionField>
+              )}
+            </>
           ))}
           <LinkButton
             data-testid="add-team-member"
