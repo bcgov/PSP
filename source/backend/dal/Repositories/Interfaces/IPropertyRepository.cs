@@ -39,5 +39,9 @@ namespace Pims.Dal.Repositories
         HashSet<long> GetMatchingIds(PropertyFilterCriteria filter);
 
         IList<PimsPropPropActivity> GetManagementActivitiesByProperty(long propertyId);
+
+        PimsPropPropActivity GetManagementActivityById(long id);
+
+        bool TryDeletePropertyActivity(long managementActivityId);
     }
 }

@@ -204,7 +204,16 @@ namespace Pims.Api.Services
             _logger.LogInformation("Deleting Management Activity with id {managementActivityId} from property with Id {propertyId}", managementActivityId, propertyId);
             _user.ThrowIfNotAuthorized(Permissions.ManagementDelete);
 
-            return false;
+            var propertyActivity = _propertyRepository.GetManagementActivityById(managementActivityId);
+            if(propertyActivity.PropertyId != propertyId)
+            {
+                throw new BadRequestException($"PropertyManagementActivity with Id: {managementActivityId} and PropertyId {propertyId} doesn't exists");
+            }
+
+            var sucess = _propertyRepository.TryDeletePropertyActivity(managementActivityId);
+            _propertyRepository.CommitTransaction();
+
+            return sucess;
         }
 
         private Point TransformCoordinates(Geometry location)

@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
 using NetTopologySuite.Geometries;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -471,7 +472,7 @@ namespace Pims.Dal.Repositories
         /// <returns>List of Property's management activities.</returns>
         public IList<PimsPropPropActivity> GetManagementActivitiesByProperty(long propertyId)
         {
-            this.User.ThrowIfNotAllAuthorized(Permissions.ManagementView);
+            User.ThrowIfNotAllAuthorized(Permissions.ManagementView);
 
             List<PimsPropPropActivity> activities = Context.PimsPropPropActivities.AsNoTracking()
                     .Include(x => x.PimsPropertyActivity)
@@ -484,6 +485,49 @@ namespace Pims.Dal.Repositories
                     .ToList();
 
             return activities;
+        }
+
+        /// <summary>
+        /// Get the Property Management Activity by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public PimsPropPropActivity GetManagementActivityById(long id)
+        {
+            User.ThrowIfNotAllAuthorized(Permissions.ManagementView);
+
+            return Context.PimsPropPropActivities
+                        .AsNoTracking()
+                        .Include(x => x.PimsPropertyActivity)
+                        .FirstOrDefault(p => p.PropPropActivityId == id) ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// TryDelete the Activity asscociated with the property and if no property associated to activity delete the activicy as well.
+        /// </summary>
+        /// <param name="managementActivityId"></param>
+        /// <returns>Boolean of deletion sucess.</returns>
+        public bool TryDeletePropertyActivity(long managementActivityId)
+        {
+            bool deletedSuccessfully = false;
+            var deletedEntity = Context.PimsPropPropActivities.FirstOrDefault(x => x.PropPropActivityId == managementActivityId);
+
+            if (deletedEntity is not null)
+            {
+                if (Context.PimsPropPropActivities.Count(x => x.PimsPropertyActivityId == deletedEntity.PimsPropertyActivityId) > 1)
+                {
+                    Context.PimsPropPropActivities.Remove(deletedEntity);
+                    deletedSuccessfully = true;
+                }
+                else
+                {
+                    Context.PimsPropPropActivities.Remove(deletedEntity);
+                    Context.PimsPropertyActivities.Remove(new PimsPropertyActivity() { PimsPropertyActivityId = deletedEntity.PimsPropertyActivityId });
+                    deletedSuccessfully = true;
+                }
+            }
+
+            return deletedSuccessfully;
         }
 
         #endregion

@@ -86,7 +86,7 @@ namespace Pims.Api.Areas.Property.Controllers
         }
 
         /// <summary>
-        /// Delete a Property's management activity.
+        /// Delete a Property's management activity and Activity.
         /// </summary>
         /// <param name="propertyId"></param>
         /// <param name="activityId"></param>
