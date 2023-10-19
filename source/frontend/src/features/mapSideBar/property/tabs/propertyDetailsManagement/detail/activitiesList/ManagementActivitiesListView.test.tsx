@@ -8,7 +8,7 @@ import {
 } from '@/mocks/PropertyManagementActivity.mock';
 import { Api_PropertyManagementActivity } from '@/models/api/Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fireEvent, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { fireEvent, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import ManagementActivitiesListView, {
   IManagementActivitiesListViewProps,
