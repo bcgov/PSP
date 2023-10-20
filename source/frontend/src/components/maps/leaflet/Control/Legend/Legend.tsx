@@ -21,6 +21,10 @@ export const Legend = () => {
         pin: require('@/assets/images/pins/other-interest.png'),
         label: 'Other Interest',
       },
+      {
+        pin: require('@/assets/images/pins/marker-info-orange.png'),
+        label: 'Search result (not in inventory)',
+      },
     ];
   }, []);
 
