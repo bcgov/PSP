@@ -31,12 +31,8 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
       render={arrayHelpers => (
         <>
           {values.team.map((teamMember, index) => (
-            <>
-              <Row
-                key={`team-parent-${index}`}
-                className="py-3"
-                data-testid={`teamMemberRow[${index}]`}
-              >
+            <React.Fragment key={`acq-team-${index}`}>
+              <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>
                 <Col xs="auto" xl="5">
                   <Select
                     data-testid="select-profile"
@@ -58,6 +54,7 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
                 </Col>
                 <Col xs="auto" xl="2" className="pl-0 mt-2">
                   <RemoveButton
+                    dataTestId={`team.${index}.remove-button`}
                     onRemove={() => {
                       setRemoveIndex(index);
                       setShowRemoveMemberModal(true);
@@ -73,7 +70,7 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
                   ></PrimaryContactSelector>
                 </SectionField>
               )}
-            </>
+            </React.Fragment>
           ))}
           <LinkButton
             data-testid="add-team-member"

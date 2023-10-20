@@ -51,7 +51,7 @@ export const PrimaryContactSelector: React.FC<IPrimaryContactSelectorProps> = ({
     return primaryContacts.length > 1 ? (
       <Select options={primaryContacts} field={field} placeholder="Select a primary contact" />
     ) : primaryContacts.length > 0 ? (
-      <span>primaryContacts[0].label</span>
+      <span>{primaryContacts[0].label}</span>
     ) : (
       <span>'No contacts available'</span>
     );
