@@ -434,6 +434,7 @@ describe('TermsForm component', () => {
     } = await setup({
       initialValues: {
         ...new LeaseFormModel(),
+        leaseTypeCode: 'LIOCCUTIL',
         terms: [
           {
             ...defaultTestFormLeaseTerm,
