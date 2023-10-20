@@ -105,11 +105,8 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
       </Section>
       <Section header="Acquisition Team">
         {detail.acquisitionTeam.map((teamMember, index) => (
-          <>
-            <SectionField
-              key={`acq-team-${index}`}
-              label={teamMember?.teamProfileTypeCodeDescription || ''}
-            >
+          <React.Fragment key={`acq-team-${index}`}>
+            <SectionField label={teamMember?.teamProfileTypeCodeDescription || ''}>
               <StyledLink
                 target="_blank"
                 rel="noopener noreferrer"
@@ -124,7 +121,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
               </StyledLink>
             </SectionField>
             {teamMember?.organizationId && (
-              <SectionField label="Primary Contact">
+              <SectionField label="Primary contact">
                 {teamMember?.primaryContactId ? (
                   <StyledLink
                     target="_blank"
@@ -139,7 +136,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
                 )}
               </SectionField>
             )}
-          </>
+          </React.Fragment>
         ))}
       </Section>
       <Section header="Owner Information">
@@ -170,7 +167,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
           </SectionField>
         )}
         {ownerSolicitor?.organization && (
-          <SectionField label="Primary Contact">
+          <SectionField label="Primary contact">
             {ownerSolicitor?.primaryContactId ? (
               <StyledLink
                 target="_blank"
