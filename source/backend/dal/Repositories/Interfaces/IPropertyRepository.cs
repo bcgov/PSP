@@ -42,6 +42,6 @@ namespace Pims.Dal.Repositories
 
         PimsPropPropActivity GetManagementActivityById(long id);
 
-        bool TryDeletePropertyActivity(long managementActivityId);
+        bool TryDeletePropPropActivity(long managementActivityId);
     }
 }

@@ -9,17 +9,18 @@ import { TableSort } from '@/components/Table/TableSort';
 import Claims from '@/constants/claims';
 import { PropertyManagementActivityStatusTypes } from '@/constants/propertyMgmtActivityStatusTypes';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_PropertyManagementActivity } from '@/models/api/Property';
+import { Api_PropPropManagementActivity } from '@/models/api/Property';
 import { stringToFragment } from '@/utils/columnUtils';
 import { prettyFormatDate } from '@/utils/dateUtils';
 
 import { PropertyActivityRow } from './models/PropertyActivityRow';
 
 export interface IManagementActivitiesListProps {
+  loading: boolean;
   propertyActivities: PropertyActivityRow[];
   handleDelete: (managementActivityId: number) => void;
-  sort: TableSort<Api_PropertyManagementActivity>;
-  setSort: (value: TableSort<Api_PropertyManagementActivity>) => void;
+  sort: TableSort<Api_PropPropManagementActivity>;
+  setSort: (value: TableSort<Api_PropPropManagementActivity>) => void;
 }
 
 export function createTableColumns(onDelete: (managementActivityId: number) => void) {
@@ -100,6 +101,7 @@ export function createTableColumns(onDelete: (managementActivityId: number) => v
 }
 
 const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesListProps> = ({
+  loading,
   propertyActivities,
   handleDelete,
   sort,
@@ -108,8 +110,9 @@ const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesLis
 }) => {
   return (
     <Table<PropertyActivityRow>
+      loading={loading}
       name="PropertyManagementActivitiesTable"
-      manualSortBy={false}
+      manualSortBy={true}
       totalItems={propertyActivities.length}
       columns={createTableColumns(handleDelete)}
       externalSort={{ sort, setSort }}

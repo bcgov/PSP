@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
 using NetTopologySuite.Geometries;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -466,7 +465,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Return a summary List of Management activities for a especific property.
+        /// Return a summary List of Management activities for a specific property.
         /// </summary>
         /// <param name="propertyId"></param>
         /// <returns>List of Property's management activities.</returns>
@@ -503,17 +502,19 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// TryDelete the Activity asscociated with the property and if no property associated to activity delete the activicy as well.
+        /// TryDelete the Activity associated with the property and if no property associated to activity delete the activicy as well.
         /// </summary>
         /// <param name="managementActivityId"></param>
         /// <returns>Boolean of deletion sucess.</returns>
-        public bool TryDeletePropertyActivity(long managementActivityId)
+        public bool TryDeletePropPropActivity(long managementActivityId)
         {
             bool deletedSuccessfully = false;
             var deletedEntity = Context.PimsPropPropActivities.FirstOrDefault(x => x.PropPropActivityId == managementActivityId);
 
             if (deletedEntity is not null)
             {
+                // This will check if there is no other Property that has the same activity associated.
+                // If there is, it will only remove the relationship for the current property.
                 if (Context.PimsPropPropActivities.Count(x => x.PimsPropertyActivityId == deletedEntity.PimsPropertyActivityId) > 1)
                 {
                     Context.PimsPropPropActivities.Remove(deletedEntity);

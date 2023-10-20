@@ -1,6 +1,6 @@
 import { ENVIRONMENT } from '@/constants/environment';
 import CustomAxios from '@/customAxios';
-import { Api_PropertyManagement, Api_PropertyManagementActivity } from '@/models/api/Property';
+import { Api_PropertyManagement, Api_PropPropManagementActivity } from '@/models/api/Property';
 
 export const getPropertyManagementApi = (propertyId: number) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_PropertyManagement>(
@@ -17,7 +17,7 @@ export const putPropertyManagementApi = (
   );
 
 export const getPropertyManagementActivitiesApi = (propertyId: number) =>
-  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_PropertyManagementActivity[]>(
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_PropPropManagementActivity[]>(
     `/properties/${propertyId}/management-activities`,
   );
 

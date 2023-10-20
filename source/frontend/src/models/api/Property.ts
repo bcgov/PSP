@@ -156,7 +156,7 @@ export interface Api_PropertyManagementPurpose extends Api_ConcurrentVersion_Nul
   propertyPurposeTypeCode: Api_TypeCode<string> | null;
 }
 
-export interface Api_PropertyManagementActivity
+export interface Api_PropPropManagementActivity
   extends Api_ConcurrentVersion_Null,
     Api_AuditFields {
   id: number | null;
@@ -174,5 +174,4 @@ export interface Api_PropertyActivity extends Api_ConcurrentVersion_Null, Api_Au
   activityStatusTypeCode: string | null;
   activityStatusType: Api_TypeCode<string> | null;
   requestedAddedDate: string | null;
-  displayOrder?: number;
 }

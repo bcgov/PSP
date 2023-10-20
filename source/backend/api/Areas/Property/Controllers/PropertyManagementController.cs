@@ -99,7 +99,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult DeleteManagementActivity([FromRoute] long propertyId, [FromRoute] long activityId)
         {
-            var result = _propertyService.DeleteManagementActivity(propertyId, activityId);
+            var result = _propertyService.DeleteManagementPropPropActivity(propertyId, activityId);
             return new JsonResult(result);
         }
     }

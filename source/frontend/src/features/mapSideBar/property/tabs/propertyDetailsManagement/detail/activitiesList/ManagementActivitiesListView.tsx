@@ -1,10 +1,9 @@
 import { orderBy } from 'lodash';
 import React from 'react';
 
-import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { TableSort } from '@/components/Table/TableSort';
-import { Api_PropertyManagementActivity } from '@/models/api/Property';
+import { Api_PropPropManagementActivity } from '@/models/api/Property';
 
 import ManagementActivitiesList from './ManagementActivitiesList';
 import { PropertyActivityRow } from './models/PropertyActivityRow';
@@ -20,7 +19,7 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
   propertyActivities,
   onDelete,
 }) => {
-  const [sort, setSort] = React.useState<TableSort<Api_PropertyManagementActivity>>({});
+  const [sort, setSort] = React.useState<TableSort<Api_PropPropManagementActivity>>({});
 
   const mapSortField = (sortField: string) => {
     if (sortField === 'activityType') {
@@ -30,6 +29,7 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
     } else if (sortField === 'activityStatusType') {
       return 'activityStatusType.description';
     }
+
     return sortField;
   };
 
@@ -53,12 +53,12 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
 
   return (
     <Section isCollapsable initiallyExpanded header="Activities List">
-      <LoadingBackdrop show={isLoading} />
       <ManagementActivitiesList
         propertyActivities={sortedActivities}
         handleDelete={onDelete}
         sort={sort}
         setSort={setSort}
+        loading={isLoading}
       ></ManagementActivitiesList>
     </Section>
   );

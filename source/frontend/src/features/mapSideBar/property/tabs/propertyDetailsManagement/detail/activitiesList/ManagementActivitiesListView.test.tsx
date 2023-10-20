@@ -6,7 +6,7 @@ import {
   mockGetPropertyManagementActivityList,
   mockGetPropertyManagementActivityNotStarted,
 } from '@/mocks/PropertyManagementActivity.mock';
-import { Api_PropertyManagementActivity } from '@/models/api/Property';
+import { Api_PropPropManagementActivity } from '@/models/api/Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fireEvent, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
@@ -57,7 +57,7 @@ describe('compensation list view', () => {
     const { asFragment } = await setup({
       claims: [Claims.MANAGEMENT_VIEW],
       propertyActivities: [
-        ...apiModelList.map((x: Api_PropertyManagementActivity) => PropertyActivityRow.fromApi(x)),
+        ...apiModelList.map((x: Api_PropPropManagementActivity) => PropertyActivityRow.fromApi(x)),
       ],
     });
     const fragment = await waitFor(() => asFragment());
@@ -69,7 +69,7 @@ describe('compensation list view', () => {
     const { queryByTestId } = await setup({
       claims: [Claims.MANAGEMENT_VIEW],
       propertyActivities: [
-        ...apiModelList.map((x: Api_PropertyManagementActivity) => PropertyActivityRow.fromApi(x)),
+        ...apiModelList.map((x: Api_PropPropManagementActivity) => PropertyActivityRow.fromApi(x)),
       ],
     });
 
@@ -93,7 +93,7 @@ describe('compensation list view', () => {
     const { queryByTestId } = await setup({
       claims: [Claims.MANAGEMENT_VIEW, Claims.MANAGEMENT_DELETE],
       propertyActivities: [
-        ...apiModelList.map((x: Api_PropertyManagementActivity) => PropertyActivityRow.fromApi(x)),
+        ...apiModelList.map((x: Api_PropPropManagementActivity) => PropertyActivityRow.fromApi(x)),
       ],
     });
     const firstRowDelete = queryByTestId(`activity-delete-${apiModelList[0].id}`);

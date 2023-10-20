@@ -1,9 +1,9 @@
-import { Api_PropertyManagementActivity } from '@/models/api/Property';
+import { Api_PropPropManagementActivity } from '@/models/api/Property';
 
 export const mockGetPropertyManagementActivity = (
   id: number = 1,
   propertyId: number = 1,
-): Api_PropertyManagementActivity => ({
+): Api_PropPropManagementActivity => ({
   id,
   propertyId,
   propertyActivityId: 200,
@@ -39,7 +39,7 @@ export const mockGetPropertyManagementActivity = (
 export const mockGetPropertyManagementActivityNotStarted = (
   id: number = 1,
   propertyId: number = 1,
-): Api_PropertyManagementActivity => ({
+): Api_PropPropManagementActivity => ({
   id,
   propertyId,
   propertyActivityId: 200,
@@ -72,7 +72,7 @@ export const mockGetPropertyManagementActivityNotStarted = (
   rowVersion: 1,
 });
 
-export const mockGetPropertyManagementActivityList = (): Api_PropertyManagementActivity[] => [
+export const mockGetPropertyManagementActivityList = (): Api_PropPropManagementActivity[] => [
   {
     id: 1,
     propertyId: 1,

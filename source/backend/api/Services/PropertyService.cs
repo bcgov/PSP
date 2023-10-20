@@ -200,7 +200,7 @@ namespace Pims.Api.Services
             return _propertyRepository.GetManagementActivitiesByProperty(propertyId);
         }
 
-        public bool DeleteManagementActivity(long propertyId, long managementActivityId)
+        public bool DeleteManagementPropPropActivity(long propertyId, long managementActivityId)
         {
             _logger.LogInformation("Deleting Management Activity with id {managementActivityId} from property with Id {propertyId}", managementActivityId, propertyId);
             _user.ThrowIfNotAuthorized(Permissions.ManagementDelete);
@@ -208,7 +208,7 @@ namespace Pims.Api.Services
             var propertyManagementActivity = _propertyRepository.GetManagementActivityById(managementActivityId);
             if(propertyManagementActivity.PropertyId != propertyId)
             {
-                throw new BadRequestException($"PropertyManagementActivity with Id: {managementActivityId} and PropertyId {propertyId} doesn't exists");
+                throw new BadRequestException($"PropertyManagementActivity with Id: {managementActivityId} and PropertyId {propertyId} doesn't exist");
             }
 
             if (!propertyManagementActivity.PimsPropertyActivity.PropMgmtActivityStatusTypeCode.Equals(PropertyActivityStatusTypeCode.NOTSTARTED.ToString()))
@@ -216,10 +216,10 @@ namespace Pims.Api.Services
                 throw new BadRequestException($"PropertyManagementActivity can not be deleted since it has already started");
             }
 
-            var sucess = _propertyRepository.TryDeletePropertyActivity(managementActivityId);
+            var success = _propertyRepository.TryDeletePropPropActivity(managementActivityId);
             _propertyRepository.CommitTransaction();
 
-            return sucess;
+            return success;
         }
 
         private Point TransformCoordinates(Geometry location)

@@ -321,7 +321,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = CreateRepositoryWithPermissions(Permissions.ManagementView);
 
             // Act
-            var updatedProperty = repository.TryDeletePropertyActivity(9999);
+            var updatedProperty = repository.TryDeletePropPropActivity(9999);
 
             // Assert
             Assert.False(updatedProperty);
@@ -342,7 +342,7 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(propertyManagementActivity);
 
             // Act
-            var updatedProperty = repository.TryDeletePropertyActivity(propertyManagementActivity.Internal_Id);
+            var updatedProperty = repository.TryDeletePropPropActivity(propertyManagementActivity.Internal_Id);
 
             // Assert
             Assert.True(updatedProperty);

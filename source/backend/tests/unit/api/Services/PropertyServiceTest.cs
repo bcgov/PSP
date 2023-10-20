@@ -325,11 +325,11 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
 
             // Act
-            Action act = () => service.DeleteManagementActivity(1, 10);
+            Action act = () => service.DeleteManagementPropPropActivity(1, 10);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.TryDeletePropertyActivity(It.IsAny<long>()), Times.Never);
+            repository.Verify(x => x.TryDeletePropPropActivity(It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
@@ -345,15 +345,15 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetManagementActivityById(It.IsAny<long>())).Returns(propertyManagementActivity);
 
             // Act
-            Action act = () => service.DeleteManagementActivity(99, 1);
+            Action act = () => service.DeleteManagementPropPropActivity(99, 1);
 
             // Assert
             act.Should().Throw<BadRequestException>();
-            repository.Verify(x => x.TryDeletePropertyActivity(It.IsAny<long>()), Times.Never);
+            repository.Verify(x => x.TryDeletePropPropActivity(It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
-        public void Delete_PropertyManagementActivity_BadRequest_Activity_STARTED()
+        public void Delete_PropertyManagementActivity_BadRequest_Activity_Status_IsNot_NotStarted()
         {
             // Arrange
             var property = EntityHelper.CreateProperty(1);
@@ -367,11 +367,11 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetManagementActivityById(It.IsAny<long>())).Returns(propertyManagementActivity);
 
             // Act
-            Action act = () => service.DeleteManagementActivity(propertyManagementActivity.PropertyId, propertyManagementActivity.PimsPropertyActivityId);
+            Action act = () => service.DeleteManagementPropPropActivity(propertyManagementActivity.PropertyId, propertyManagementActivity.PimsPropertyActivityId);
 
             // Assert
             act.Should().Throw<BadRequestException>();
-            repository.Verify(x => x.TryDeletePropertyActivity(It.IsAny<long>()), Times.Never);
+            repository.Verify(x => x.TryDeletePropPropActivity(It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
@@ -387,14 +387,14 @@ namespace Pims.Api.Test.Services
             propertyManagementActivity.PimsPropertyActivity = EntityHelper.CreatePropertyActivity(propertyManagementActivity.PimsPropertyActivityId);
 
             repository.Setup(x => x.GetManagementActivityById(It.IsAny<long>())).Returns(propertyManagementActivity);
-            repository.Setup(x => x.TryDeletePropertyActivity(It.IsAny<long>())).Returns(true);
+            repository.Setup(x => x.TryDeletePropPropActivity(It.IsAny<long>())).Returns(true);
 
             // Act
-            var result = service.DeleteManagementActivity(propertyManagementActivity.PropertyId, propertyManagementActivity.PimsPropertyActivityId);
+            var result = service.DeleteManagementPropPropActivity(propertyManagementActivity.PropertyId, propertyManagementActivity.PimsPropertyActivityId);
 
             // Assert
             Assert.True(result);
-            repository.Verify(x => x.TryDeletePropertyActivity(It.IsAny<long>()), Times.Once);
+            repository.Verify(x => x.TryDeletePropPropActivity(It.IsAny<long>()), Times.Once);
         }
         #endregion
 

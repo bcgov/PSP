@@ -30,6 +30,6 @@ namespace Pims.Api.Services
 
         IList<PimsPropPropActivity> GetManagementActivities(long propertyId);
 
-        bool DeleteManagementActivity(long propertyId, long managementActivityId);
+        bool DeleteManagementPropPropActivity(long propertyId, long managementActivityId);
     }
 }

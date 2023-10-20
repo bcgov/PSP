@@ -1,4 +1,4 @@
-import { Api_PropertyManagementActivity } from '@/models/api/Property';
+import { Api_PropPropManagementActivity } from '@/models/api/Property';
 import Api_TypeCode from '@/models/api/TypeCode';
 
 export class PropertyActivityRow {
@@ -6,6 +6,7 @@ export class PropertyActivityRow {
   activitySubType: Api_TypeCode<string> | null = null;
   activityStatusType: Api_TypeCode<string> | null = null;
   requestedAddedDate: string | null = null;
+  displayOrder: number | null = null;
 
   constructor(
     readonly id: number | null,
@@ -13,7 +14,7 @@ export class PropertyActivityRow {
     readonly activityId: number,
   ) {}
 
-  public static fromApi(model: Api_PropertyManagementActivity): PropertyActivityRow {
+  public static fromApi(model: Api_PropPropManagementActivity): PropertyActivityRow {
     const row = new PropertyActivityRow(model.id, model.propertyId, model.propertyActivityId);
     row.activityType = model.activity.activityType;
     row.activitySubType = model.activity.activitySubType;
