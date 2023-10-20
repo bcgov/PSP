@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// UserOrganization class, provides an entity for the datamodel to manage user organizations.
     /// </summary>
-    public partial class PimsUserOrganization : IDisableBaseAppEntity
+    public partial class PimsUserOrganization : IBaseAppEntity
     {
         public PimsUserOrganization()
         {

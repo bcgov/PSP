@@ -7,8 +7,6 @@ namespace Pims.Dal.Repositories
     {
         PimsAcquisitionFileForm GetById(long id);
 
-        long GetRowVersion(long fileFormId);
-
         PimsAcquisitionFileForm Add(PimsAcquisitionFileForm fileForm);
 
         IEnumerable<PimsAcquisitionFileForm> GetAllByAcquisitionFileId(long acquisitionFileId);

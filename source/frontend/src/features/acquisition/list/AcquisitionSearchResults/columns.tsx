@@ -6,7 +6,7 @@ import ExpandableTextList from '@/components/common/ExpandableTextList';
 import { ColumnWithProps, renderTypeCode } from '@/components/Table';
 import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
-import { Api_AcquisitionFilePerson } from '@/models/api/AcquisitionFile';
+import { Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
 import { Api_Person } from '@/models/api/Person';
 import { Api_Project } from '@/models/api/Project';
 import Api_TypeCode from '@/models/api/TypeCode';
@@ -110,13 +110,13 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
       const acquisitionTeam = props.row.original.aquisitionTeam;
       const teamAsString: PersonRoleGroup[] = chain(acquisitionTeam)
-        .groupBy((groupedPersons: Api_AcquisitionFilePerson) => groupedPersons.personId)
+        .groupBy((groupedTeams: Api_AcquisitionFileTeam) => groupedTeams.personId)
         .map<PersonRoleGroup>(x => {
           return {
             id: x[0].id?.toString() || '',
             person: x[0].person || {},
             roles: x
-              .map(t => t.personProfileType)
+              .map(t => t.teamProfileType)
               .filter((z): z is Api_TypeCode<string> => z !== undefined)
               .flatMap(y => y.description || ''),
           };

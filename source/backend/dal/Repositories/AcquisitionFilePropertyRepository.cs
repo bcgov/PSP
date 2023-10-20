@@ -93,19 +93,6 @@ namespace Pims.Dal.Repositories
             return propertyAcquisitionFile;
         }
 
-        public List<PimsCompensationRequisition> GetCompensationRequisitionsByAcquisitionFileId(long acquisitionFileId)
-        {
-            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView, Permissions.AcquisitionFileView);
-
-            var acquisitionFile = Context.PimsAcquisitionFiles
-                .Where(x => x.Internal_Id == acquisitionFileId)
-                .Include(y => y.PimsCompensationRequisitions)
-                .AsNoTracking()
-                .FirstOrDefault() ?? throw new KeyNotFoundException();
-
-            return acquisitionFile.PimsCompensationRequisitions.ToList();
-        }
-
         #endregion
     }
 }

@@ -31,10 +31,10 @@ export class Api_GenerateCompensationPayee {
       } else {
         this.name = compensation.interestHolder.organization?.name ?? '';
       }
-    } else if (compensation?.acquisitionFilePerson) {
+    } else if (compensation?.acquisitionFileTeam) {
       this.name = formatNames([
-        compensation.acquisitionFilePerson?.person?.firstName,
-        compensation.acquisitionFilePerson?.person?.surname,
+        compensation.acquisitionFileTeam?.person?.firstName,
+        compensation.acquisitionFileTeam?.person?.surname,
       ]);
     } else if (compensation?.legacyPayee) {
       this.name = compensation.legacyPayee ?? '';

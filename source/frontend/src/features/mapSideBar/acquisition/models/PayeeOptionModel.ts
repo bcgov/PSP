@@ -1,5 +1,5 @@
 import { InterestHolderType } from '@/constants/interestHolderTypes';
-import { Api_AcquisitionFileOwner, Api_AcquisitionFilePerson } from '@/models/api/AcquisitionFile';
+import { Api_AcquisitionFileOwner, Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { isNullOrWhitespace } from '@/utils';
@@ -33,8 +33,8 @@ export class PayeeOption {
       return PayeeOption.generateKey(apiModel.acquisitionOwnerId, PayeeType.Owner);
     }
 
-    if (apiModel.acquisitionFilePersonId) {
-      return PayeeOption.generateKey(apiModel.acquisitionFilePersonId, PayeeType.AcquisitionTeam);
+    if (apiModel.acquisitionFileTeamId) {
+      return PayeeOption.generateKey(apiModel.acquisitionFileTeamId, PayeeType.AcquisitionTeam);
     }
 
     if (apiModel.interestHolderId) {
@@ -66,11 +66,10 @@ export class PayeeOption {
       alternateProject: null,
       alternateProjectId: null,
       interestHolderId: null,
-      acquisitionFilePerson: null,
-      isDisabled: null,
+      acquisitionFileTeam: null,
       acquisitionOwner: null,
       interestHolder: null,
-      acquisitionFilePersonId: null,
+      acquisitionFileTeamId: null,
       id: null,
       acquisitionFileId: 0,
       acquisitionFile: null,
@@ -106,7 +105,7 @@ export class PayeeOption {
 
     switch (payeeOption.payeeType) {
       case PayeeType.AcquisitionTeam:
-        compensationModel.acquisitionFilePersonId = payeeOption.api_id;
+        compensationModel.acquisitionFileTeamId = payeeOption.api_id;
         break;
       case PayeeType.OwnerRepresentative:
       case PayeeType.OwnerSolicitor:
@@ -169,12 +168,12 @@ export class PayeeOption {
     );
   }
 
-  public static createTeamMember(model: Api_AcquisitionFilePerson): PayeeOption {
+  public static createTeamMember(model: Api_AcquisitionFileTeam): PayeeOption {
     let name = formatApiPersonNames(model.person);
     return new PayeeOption(
       model.id || 0,
       name,
-      `${model.personProfileType?.description}`,
+      `${model.teamProfileType?.description}`,
       PayeeOption.generateKey(model.id, PayeeType.AcquisitionTeam),
       PayeeType.AcquisitionTeam,
     );

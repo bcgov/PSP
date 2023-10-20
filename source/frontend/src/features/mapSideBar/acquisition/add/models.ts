@@ -3,8 +3,8 @@ import { IAutocompletePrediction } from '@/interfaces';
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFileOwner,
-  Api_AcquisitionFilePerson,
   Api_AcquisitionFileProperty,
+  Api_AcquisitionFileTeam,
 } from '@/models/api/AcquisitionFile';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { fromTypeCode, stringToNull, toTypeCode } from '@/utils/formUtils';
@@ -67,7 +67,6 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
         return {
           id: ap.id,
           propertyName: ap.name,
-          isDisabled: ap.isDisabled,
           displayOrder: ap.displayOrder,
           rowVersion: ap.rowVersion,
           property: ap.toApi(),
@@ -80,7 +79,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
         .map<Api_AcquisitionFileOwner>(x => x.toApi()),
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
-        .map<Api_AcquisitionFilePerson>(x => x.toApi(this.id || 0)),
+        .map<Api_AcquisitionFileTeam>(x => x.toApi(this.id || 0)),
       acquisitionFileInterestHolders: [
         InterestHolderForm.toApi(this.ownerSolicitor, []),
         InterestHolderForm.toApi(this.ownerRepresentative, []),

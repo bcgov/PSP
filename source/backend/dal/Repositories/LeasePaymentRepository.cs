@@ -42,12 +42,6 @@ namespace Pims.Dal.Repositories
             return updatedEntity.Entity;
         }
 
-        public PimsLeasePayment GetById(long leasePaymentId)
-        {
-            var query = this.Context.PimsLeasePayments.AsNoTracking().Where(p => p.LeasePaymentId == leasePaymentId);
-            return query.FirstOrDefault() ?? throw new KeyNotFoundException();
-        }
-
         public IEnumerable<PimsLeasePayment> GetAll(DateTime startDate, DateTime endDate)
         {
             return this.Context.PimsLeasePayments

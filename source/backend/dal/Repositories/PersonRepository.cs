@@ -34,18 +34,6 @@ namespace Pims.Dal.Repositories
 
         #region Methods
 
-        /// <summary>
-        /// Get a page of persons from the datasource.
-        /// </summary>
-        /// <param name="page"></param>
-        /// <param name="quantity"></param>
-        /// <param name="sort"></param>
-        /// <returns></returns>
-        public IEnumerable<PimsPerson> GetAll()
-        {
-            return this.Context.PimsPeople.AsNoTracking().ToArray();
-        }
-
         public long GetRowVersion(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ContactView);

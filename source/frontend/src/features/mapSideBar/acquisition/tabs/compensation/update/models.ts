@@ -27,7 +27,6 @@ export class CompensationRequisitionFormModel {
   financials: FinancialActivityFormModel[] = [];
   payee: AcquisitionPayeeFormModel;
   alternateProject: IAutocompletePrediction | null = null;
-  isDisabled: string = '';
   rowVersion: number | null = null;
 
   constructor(id: number | null, acquisitionFileId: number = 0, finalizedDate: string) {
@@ -64,7 +63,6 @@ export class CompensationRequisitionFormModel {
       generationDate: stringToUndefined(this.generationDatetTime),
       specialInstruction: stringToUndefined(this.specialInstruction),
       detailedRemarks: stringToUndefined(this.detailedRemarks),
-      isDisabled: stringToBoolean(this.isDisabled),
       financials: this.financials
         .filter(x => !x.isEmpty())
         .map<Api_CompensationFinancial>(x => x.toApi()),
@@ -102,7 +100,6 @@ export class CompensationRequisitionFormModel {
     compensation.generationDatetTime = apiModel.generationDate || '';
     compensation.specialInstruction = apiModel.specialInstruction || '';
     compensation.detailedRemarks = apiModel.detailedRemarks || '';
-    compensation.isDisabled = booleanToString(apiModel.isDisabled);
     compensation.financials =
       apiModel.financials?.map(x => FinancialActivityFormModel.fromApi(x)) || [];
 

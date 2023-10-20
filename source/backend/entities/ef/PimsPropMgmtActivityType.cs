@@ -8,18 +8,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_PROPERTY_TAX_REMIT_TYPE")]
-    public partial class PimsPropertyTaxRemitType
+    [Table("PIMS_PROP_MGMT_ACTIVITY_TYPE")]
+    public partial class PimsPropMgmtActivityType
     {
-        public PimsPropertyTaxRemitType()
+        public PimsPropMgmtActivityType()
         {
-            PimsPropertyTaxes = new HashSet<PimsPropertyTax>();
+            PimsPropMgmtActivitySubtypes = new HashSet<PimsPropMgmtActivitySubtype>();
+            PimsPropertyActivities = new HashSet<PimsPropertyActivity>();
         }
 
         [Key]
-        [Column("PROPERTY_TAX_REMIT_TYPE_CODE")]
+        [Column("PROP_MGMT_ACTIVITY_TYPE_CODE")]
         [StringLength(20)]
-        public string PropertyTaxRemitTypeCode { get; set; }
+        public string PropMgmtActivityTypeCode { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
@@ -44,7 +45,9 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsPropertyTax.PropertyTaxRemitTypeCodeNavigation))]
-        public virtual ICollection<PimsPropertyTax> PimsPropertyTaxes { get; set; }
+        [InverseProperty(nameof(PimsPropMgmtActivitySubtype.PropMgmtActivityTypeCodeNavigation))]
+        public virtual ICollection<PimsPropMgmtActivitySubtype> PimsPropMgmtActivitySubtypes { get; set; }
+        [InverseProperty(nameof(PimsPropertyActivity.PropMgmtActivityTypeCodeNavigation))]
+        public virtual ICollection<PimsPropertyActivity> PimsPropertyActivities { get; set; }
     }
 }

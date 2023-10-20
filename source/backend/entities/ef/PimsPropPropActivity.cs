@@ -8,30 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_PROPERTY_EVALUATION_HIST")]
-    [Index(nameof(PropertyEvaluationHistId), nameof(EndDateHist), Name = "PIMS_PRPEVL_H_UK", IsUnique = true)]
-    public partial class PimsPropertyEvaluationHist
+    [Table("PIMS_PROP_PROP_ACTIVITY")]
+    [Index(nameof(PimsPropertyActivityId), Name = "PRPRAC_PIMS_PROPERTY_ACTIVITY_ID_IDX")]
+    [Index(nameof(PropertyId), Name = "PRPRAC_PROPERTY_ID_IDX")]
+    public partial class PimsPropPropActivity
     {
         [Key]
-        [Column("_PROPERTY_EVALUATION_HIST_ID")]
-        public long PropertyEvaluationHistId { get; set; }
-        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-        public DateTime EffectiveDateHist { get; set; }
-        [Column("END_DATE_HIST", TypeName = "datetime")]
-        public DateTime? EndDateHist { get; set; }
-        [Column("PROPERTY_EVALUATION_ID")]
-        public long PropertyEvaluationId { get; set; }
+        [Column("PROP_PROP_ACTIVITY_ID")]
+        public long PropPropActivityId { get; set; }
         [Column("PROPERTY_ID")]
         public long PropertyId { get; set; }
-        [Column("EVALUATION_DATE", TypeName = "date")]
-        public DateTime EvaluationDate { get; set; }
-        [Column("KEY")]
-        public int Key { get; set; }
-        [Column("VALUE", TypeName = "money")]
-        public decimal Value { get; set; }
-        [Column("NOTE")]
-        [StringLength(1000)]
-        public string Note { get; set; }
+        [Column("PIMS_PROPERTY_ACTIVITY_ID")]
+        public long PimsPropertyActivityId { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -70,5 +58,12 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [ForeignKey(nameof(PimsPropertyActivityId))]
+        [InverseProperty("PimsPropPropActivities")]
+        public virtual PimsPropertyActivity PimsPropertyActivity { get; set; }
+        [ForeignKey(nameof(PropertyId))]
+        [InverseProperty(nameof(PimsProperty.PimsPropPropActivities))]
+        public virtual PimsProperty Property { get; set; }
     }
 }

@@ -216,7 +216,7 @@ namespace Pims.Api.Repositories.Rest
             const string fileNameFlag = "filename";
             string[] parts = contentDisposition.Split("; ");
             string fileNamePart = parts.FirstOrDefault(x => x.Contains(fileNameFlag));
-            return fileNamePart[(fileNameFlag.Length + 1)..].Replace("\"", string.Empty);
+            return fileNamePart[(fileNameFlag.Length + 1) ..].Replace("\"", string.Empty);
         }
 
         private async Task<ExternalResult<T>> ProcessResponse<T>(HttpResponseMessage response)

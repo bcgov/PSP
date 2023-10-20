@@ -14,13 +14,6 @@ namespace Pims.Api.Models.Concepts
         /// </summary>
         public long PropertyId { get; set; }
 
-        // TODO: Remove this from DB schema
-
-        /// <summary>
-        /// get/set - Whether this relationship is disabled.
-        /// </summary>
-        public bool IsDisabled { get; set; }
-
         /// <summary>
         /// get/set - The property purpose type code.
         /// </summary>

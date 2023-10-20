@@ -8,17 +8,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_PROPERTY_ACTIVITY_HIST")]
-    [Index(nameof(PropertyActivityHistId), nameof(EndDateHist), Name = "PIMS_PRPACT_H_UK", IsUnique = true)]
-    public partial class PimsPropertyActivityHist
+    [Table("PIMS_PROPERTY_ACTIVITY")]
+    [Index(nameof(PropMgmtActivityStatusTypeCode), Name = "PRPACT_PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE_IDX")]
+    [Index(nameof(PropMgmtActivitySubtypeCode), Name = "PRPACT_PROP_MGMT_ACTIVITY_SUBTYPE_CODE_IDX")]
+    [Index(nameof(PropMgmtActivityTypeCode), Name = "PRPACT_PROP_MGMT_ACTIVITY_TYPE_CODE_IDX")]
+    [Index(nameof(ServiceProviderOrgId), Name = "PRPACT_SERVICE_PROVIDER_ORG_ID_IDX")]
+    [Index(nameof(ServiceProviderPersonId), Name = "PRPACT_SERVICE_PROVIDER_PERSON_ID_IDX")]
+    public partial class PimsPropertyActivity
     {
+        public PimsPropertyActivity()
+        {
+            PimsPropActInvolvedParties = new HashSet<PimsPropActInvolvedParty>();
+            PimsPropActMinContacts = new HashSet<PimsPropActMinContact>();
+            PimsPropPropActivities = new HashSet<PimsPropPropActivity>();
+            PimsPropertyActivityInvoices = new HashSet<PimsPropertyActivityInvoice>();
+        }
+
         [Key]
-        [Column("_PROPERTY_ACTIVITY_HIST_ID")]
-        public long PropertyActivityHistId { get; set; }
-        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-        public DateTime EffectiveDateHist { get; set; }
-        [Column("END_DATE_HIST", TypeName = "datetime")]
-        public DateTime? EndDateHist { get; set; }
         [Column("PIMS_PROPERTY_ACTIVITY_ID")]
         public long PimsPropertyActivityId { get; set; }
         [Required]
@@ -95,5 +101,29 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [ForeignKey(nameof(PropMgmtActivityStatusTypeCode))]
+        [InverseProperty(nameof(PimsPropMgmtActivityStatusType.PimsPropertyActivities))]
+        public virtual PimsPropMgmtActivityStatusType PropMgmtActivityStatusTypeCodeNavigation { get; set; }
+        [ForeignKey(nameof(PropMgmtActivitySubtypeCode))]
+        [InverseProperty(nameof(PimsPropMgmtActivitySubtype.PimsPropertyActivities))]
+        public virtual PimsPropMgmtActivitySubtype PropMgmtActivitySubtypeCodeNavigation { get; set; }
+        [ForeignKey(nameof(PropMgmtActivityTypeCode))]
+        [InverseProperty(nameof(PimsPropMgmtActivityType.PimsPropertyActivities))]
+        public virtual PimsPropMgmtActivityType PropMgmtActivityTypeCodeNavigation { get; set; }
+        [ForeignKey(nameof(ServiceProviderOrgId))]
+        [InverseProperty(nameof(PimsOrganization.PimsPropertyActivities))]
+        public virtual PimsOrganization ServiceProviderOrg { get; set; }
+        [ForeignKey(nameof(ServiceProviderPersonId))]
+        [InverseProperty(nameof(PimsPerson.PimsPropertyActivities))]
+        public virtual PimsPerson ServiceProviderPerson { get; set; }
+        [InverseProperty(nameof(PimsPropActInvolvedParty.PimsPropertyActivity))]
+        public virtual ICollection<PimsPropActInvolvedParty> PimsPropActInvolvedParties { get; set; }
+        [InverseProperty(nameof(PimsPropActMinContact.PimsPropertyActivity))]
+        public virtual ICollection<PimsPropActMinContact> PimsPropActMinContacts { get; set; }
+        [InverseProperty(nameof(PimsPropPropActivity.PimsPropertyActivity))]
+        public virtual ICollection<PimsPropPropActivity> PimsPropPropActivities { get; set; }
+        [InverseProperty(nameof(PimsPropertyActivityInvoice.PimsPropertyActivity))]
+        public virtual ICollection<PimsPropertyActivityInvoice> PimsPropertyActivityInvoices { get; set; }
     }
 }

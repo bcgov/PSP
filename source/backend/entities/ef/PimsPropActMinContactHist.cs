@@ -8,23 +8,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_PROPERTY_SERVICE_FILE_HIST")]
-    [Index(nameof(PropertyServiceFileHistId), nameof(EndDateHist), Name = "PIMS_PRPSVC_H_UK", IsUnique = true)]
-    public partial class PimsPropertyServiceFileHist
+    [Table("PIMS_PROP_ACT_MIN_CONTACT_HIST")]
+    [Index(nameof(PropActMinContactHistId), nameof(EndDateHist), Name = "PIMS_PRACMC_H_UK", IsUnique = true)]
+    public partial class PimsPropActMinContactHist
     {
         [Key]
-        [Column("_PROPERTY_SERVICE_FILE_HIST_ID")]
-        public long PropertyServiceFileHistId { get; set; }
+        [Column("_PROP_ACT_MIN_CONTACT_HIST_ID")]
+        public long PropActMinContactHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("PROPERTY_SERVICE_FILE_ID")]
-        public long PropertyServiceFileId { get; set; }
-        [Required]
-        [Column("PROPERTY_SERVICE_FILE_TYPE_CODE")]
-        [StringLength(20)]
-        public string PropertyServiceFileTypeCode { get; set; }
+        [Column("PROP_ACT_MIN_CONTACT_ID")]
+        public long PropActMinContactId { get; set; }
+        [Column("PIMS_PROPERTY_ACTIVITY_ID")]
+        public long PimsPropertyActivityId { get; set; }
+        [Column("PERSON_ID")]
+        public long PersonId { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

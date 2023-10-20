@@ -526,34 +526,6 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void DeleteDocumentAcquisition_Success_NoResults_Status_Success()
-        {
-            // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
-            var documentService = this._helper.GetService<Mock<IDocumentService>>();
-            var acquisitionDocumentRepository = this._helper.GetService<Mock<IAcquisitionFileDocumentRepository>>();
-
-            acquisitionDocumentRepository.Setup(x => x.GetAllByDocument(It.IsAny<long>())).Returns(new List<PimsAcquisitionFileDocument>()); ;
-            documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
-                {
-                    Status = ExternalResultStatus.Success,
-                });
-
-            PimsAcquisitionFileDocument doc = new()
-            {
-                Internal_Id = 1,
-                DocumentId = 2,
-            };
-
-            // Act
-            await service.DeleteAcquisitionDocumentAsync(doc);
-
-            // Assert
-            acquisitionDocumentRepository.Verify(x => x.DeleteAcquisition(It.IsAny<PimsAcquisitionFileDocument>()), Times.Once);
-        }
-
-        [Fact]
         public async void DeleteDocumentAcquisition_Success_Status_NotFound()
         {
             // Arrange

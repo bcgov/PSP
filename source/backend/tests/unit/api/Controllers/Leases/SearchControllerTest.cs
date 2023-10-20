@@ -50,9 +50,9 @@ namespace Pims.Api.Test.Controllers.Lease
 
         public readonly static IEnumerable<object[]> LeaseQueryFilters = new List<object[]>()
         {
-            new object [] { new Uri("http://host/api/lease/search?TenantName=test") },
-            new object [] { new Uri("http://host/api/lease/search?LFileNo=1") },
-            new object [] { new Uri("http://host/api/lease/search?PinOrPid=2") },
+            new object [] { "?TenantName=test" },
+            new object [] { "?LFileNo=1" },
+            new object [] { "?PinOrPid=2" },
         };
         #endregion
 
@@ -82,7 +82,7 @@ namespace Pims.Api.Test.Controllers.Lease
         /// </summary>
         [Theory]
         [MemberData(nameof(LeaseQueryFilters))]
-        public void GetProperties_Query_Success(Uri uri)
+        public void GetProperties_Query_Success(String uri)
         {
             // Arrange
             var leases = new[] { EntityHelper.CreateLease(1) };
@@ -90,6 +90,7 @@ namespace Pims.Api.Test.Controllers.Lease
             this._service.Setup(m => m.GetPage(It.IsAny<LeaseFilter>(), false)).Returns(new Paged<Entity.PimsLease>(leases));
 
             // Act
+            this._controller.Request.QueryString = new QueryString(uri);
             var result = this._controller.GetLeases();
 
             // Assert

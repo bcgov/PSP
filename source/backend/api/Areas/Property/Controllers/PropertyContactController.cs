@@ -127,6 +127,7 @@ namespace Pims.Api.Areas.Property.Controllers
         /// <summary>
         /// Deletes the property contact with the matching id.
         /// </summary>
+        /// <param name="propertyId"></param>
         /// <param name="contactId">Used to identify the entity to delete.</param>
         /// <returns></returns>
         [HttpDelete("{propertyId}/contacts/{contactId}")]

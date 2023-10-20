@@ -252,16 +252,6 @@ namespace Pims.Dal.Repositories
             return property;
         }
 
-        public PimsProperty TryGetByLocation(Geometry location)
-        {
-            return this.Context.PimsProperties
-                    .AsNoTracking()
-                    .Include(p => p.PimsPropertyLeases)
-                    .Where(p => (p != null && p.Location.IsWithinDistance(location, 1)))
-                    .OrderBy(p => p.Location.Distance(location))
-                    .FirstOrDefault();
-        }
-
         /// <summary>
         /// Get the property for the specified id value.
         /// </summary>

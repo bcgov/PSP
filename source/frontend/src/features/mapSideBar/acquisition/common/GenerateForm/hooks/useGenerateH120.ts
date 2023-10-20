@@ -53,8 +53,8 @@ export const useGenerateH120 = () => {
     const interestHoldersPromise = getAcquisitionInterestHolders.execute(
       compensation.acquisitionFileId,
     );
-    const acquisitionFilePersonPromise = compensation?.acquisitionFilePerson?.personId
-      ? getPersonConcept(compensation.acquisitionFilePerson.personId)
+    const acquisitionFileTeamPromise = compensation?.acquisitionFileTeam?.personId
+      ? getPersonConcept(compensation.acquisitionFileTeam.personId)
       : Promise.resolve(null);
 
     const [
@@ -63,14 +63,14 @@ export const useGenerateH120 = () => {
       h120Categories,
       compReqFinalH120s,
       interestHolders,
-      acquisitionFilePerson,
+      acquisitionFileTeam,
     ] = await Promise.all([
       filePromise,
       propertiesPromise,
       h120CategoriesPromise,
       compReqFinalH120sPromise,
       interestHoldersPromise,
-      acquisitionFilePersonPromise,
+      acquisitionFileTeamPromise,
     ]);
 
     if (!file) {
@@ -95,8 +95,8 @@ export const useGenerateH120 = () => {
     }
 
     // Populate payee information
-    if (compensation?.acquisitionFilePerson && compensation?.acquisitionFilePerson?.personId) {
-      compensation.acquisitionFilePerson.person = acquisitionFilePerson?.data;
+    if (compensation?.acquisitionFileTeam && compensation?.acquisitionFileTeam?.personId) {
+      compensation.acquisitionFileTeam.person = acquisitionFileTeam?.data;
     } else if (compensation?.interestHolderId) {
       const matchedInterestHolder =
         interestHolders?.find(ih => ih.interestHolderId === compensation?.interestHolderId) ?? null;
