@@ -1151,7 +1151,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             <label
                               class="c17"
                             >
-                              Primary Contact:
+                              Primary contact:
                             </label>
                           </div>
                           <div
