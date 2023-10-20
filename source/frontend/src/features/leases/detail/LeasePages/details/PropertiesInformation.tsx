@@ -55,7 +55,7 @@ export const PropertiesInformation: React.FunctionComponent<
           properties.map((property: FormLeaseProperty, index) => (
             <PropertyInformation
               {...renderProps}
-              nameSpace={withNameSpace(nameSpace, `properties.${index}.property`)}
+              nameSpace={withNameSpace(nameSpace, `properties.${index}`)}
               disabled={disabled}
               hideAddress={hideAddress}
             />
