@@ -5,6 +5,7 @@ using System.Linq;
 using FluentAssertions;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
+using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
@@ -299,6 +300,54 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             act.Should().Throw<ArgumentNullException>();
         }
+
+        [Fact]
+        public void GetManagementActivityById_Throw_KeyNotFoundException()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.ManagementView);
+
+            // Act
+            Action act = () => repository.GetManagementActivityById(9999);
+
+            // Assert
+            act.Should().Throw<KeyNotFoundException>();
+        }
+
+        [Fact]
+        public void TryDeletePropertyActivity_Returns_False()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.ManagementView);
+
+            // Act
+            var updatedProperty = repository.TryDeletePropPropActivity(9999);
+
+            // Assert
+            Assert.False(updatedProperty);
+        }
+
+        [Fact]
+        public void TryDeletePropertyActivity_Returns_True()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.ManagementView, Permissions.ManagementDelete);
+            var property = EntityHelper.CreateProperty(1);
+            _helper.AddAndSaveChanges(property);
+
+            var propertyActivity = EntityHelper.CreatePropertyActivity(10);
+            _helper.AddAndSaveChanges(propertyActivity);
+
+            var propertyManagementActivity = EntityHelper.CreatePropertyManagementActivity(100, property.PropertyId, propertyActivity.PimsPropertyActivityId);
+            _helper.AddAndSaveChanges(propertyManagementActivity);
+
+            // Act
+            var updatedProperty = repository.TryDeletePropPropActivity(propertyManagementActivity.Internal_Id);
+
+            // Assert
+            Assert.True(updatedProperty);
+        }
+
         #endregion
 
         #endregion
