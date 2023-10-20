@@ -42,37 +42,6 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsTenants.FirstOrDefault(t => t.Code == code);
         }
-
-        /// <summary>
-        /// Update the specified tenant in the datasource.
-        /// </summary>
-        /// <param name="tenant"></param>
-        /// <returns></returns>
-        public PimsTenant UpdateTenant(PimsTenant tenant)
-        {
-            if (tenant == null)
-            {
-                throw new ArgumentNullException(nameof(tenant));
-            }
-
-            this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin);
-            var originalTenant = this.Context.PimsTenants.FirstOrDefault(t => t.Code == tenant.Code);
-
-            if (originalTenant == null)
-            {
-                throw new KeyNotFoundException();
-            }
-
-            originalTenant.Name = tenant.Name;
-            originalTenant.Description = tenant.Description;
-            originalTenant.Settings = tenant.Settings;
-            originalTenant.ConcurrencyControlNumber = tenant.ConcurrencyControlNumber;
-
-            this.Context.PimsTenants.Update(originalTenant);
-            this.Context.CommitTransaction();
-
-            return originalTenant;
-        }
         #endregion
     }
 }

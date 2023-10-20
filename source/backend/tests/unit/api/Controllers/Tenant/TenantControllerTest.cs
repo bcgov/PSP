@@ -113,30 +113,6 @@ namespace Pims.Api.Test.Controllers
             repository.Verify(m => m.TryGetTenantByCode(null), Times.Once());
         }
         #endregion
-
-        #region UpdateTenant
-        [Fact]
-        public void UpdateTenant_200Response()
-        {
-            // Arrange
-            var controller = this._helper.CreateController<TenantController>(Permissions.SystemAdmin);
-            var repository = this._helper.GetService<Mock<ITenantRepository>>();
-
-            var tenant = EntityHelper.CreateTenant(1, "TEST");
-            repository.Setup(m => m.UpdateTenant(It.IsAny<Entity.PimsTenant>())).Returns(tenant);
-
-            var mapper = this._helper.GetService<IMapper>();
-
-            var model = mapper.Map<Model.TenantModel>(tenant);
-
-            // Act
-            var result = (JsonResult)controller.UpdateTenant(tenant.Code, model);
-
-            // Assert
-            Assert.Null(result.StatusCode);
-            repository.Verify(m => m.UpdateTenant(It.IsAny<Entity.PimsTenant>()), Times.Once());
-        }
-        #endregion
         #endregion
     }
 }

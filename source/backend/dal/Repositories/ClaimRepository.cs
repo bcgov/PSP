@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -72,89 +71,6 @@ namespace Pims.Dal.Repositories
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
             return this.Context.PimsClaims.AsNoTracking().FirstOrDefault(c => c.ClaimUid == key) ?? throw new KeyNotFoundException();
-        }
-
-        /// <summary>
-        /// Get the claim with the specified name.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
-        /// <returns></returns>
-        public PimsClaim GetByName(string name)
-        {
-            return this.Context.PimsClaims.AsNoTracking().FirstOrDefault(c => c.Name == name) ?? throw new KeyNotFoundException();
-        }
-
-        /// <summary>
-        /// Updates the specified claim in the datasource.
-        /// </summary>
-        /// <param name="add"></param>
-        /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
-        /// <returns></returns>
-        public PimsClaim Add(PimsClaim add)
-        {
-            add.ThrowIfNull(nameof(add));
-            this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
-
-            this.Context.PimsClaims.Add(add);
-            this.Context.CommitTransaction();
-            return add;
-        }
-
-        /// <summary>
-        /// Updates the specified claim in the datasource.
-        /// </summary>
-        /// <param name="update"></param>
-        /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
-        /// <returns></returns>
-        public PimsClaim Update(PimsClaim update)
-        {
-            update.ThrowIfNull(nameof(update));
-            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.AdminRoles, _keycloakOptions);
-
-            var claim = this.Context.PimsClaims.Find(update.ClaimId) ?? throw new KeyNotFoundException();
-
-            this.Context.Entry(claim).CurrentValues.SetValues(update);
-            this.Context.CommitTransaction();
-            return claim;
-        }
-
-        /// <summary>
-        /// Remove the specified claim from the datasource.
-        /// </summary>
-        /// <param name="delete"></param>
-        /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
-        public void Delete(PimsClaim delete)
-        {
-            delete.ThrowIfNull(nameof(delete));
-            this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
-
-            var claim = this.Context.PimsClaims.Find(delete.ClaimId) ?? throw new KeyNotFoundException();
-
-            this.Context.Entry(claim).CurrentValues.SetValues(delete);
-            this.Context.CommitTransaction();
-        }
-
-        /// <summary>
-        /// Remove the claims from the datasource, excluding those listed.
-        /// </summary>
-        /// <param name="exclude"></param>
-        /// <returns></returns>
-        public int RemoveAll(Guid[] exclude)
-        {
-            this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
-            var claims = this.Context.PimsClaims
-                .Include(r => r.PimsRoleClaims)
-                .ThenInclude(r => r.Role)
-                .Where(r => !exclude.Contains(r.ClaimUid));
-            claims.ForEach(r =>
-            {
-                r.PimsRoleClaims.Clear();
-            });
-
-            this.Context.PimsClaims.RemoveRange(claims);
-            var result = this.Context.CommitTransaction();
-            return result;
         }
         #endregion
     }

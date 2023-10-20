@@ -61,20 +61,6 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Get all of the property classification code values.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("property/classifications")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Model.LookupModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "lookup" })]
-        public IActionResult GetPropertyClassificationTypes()
-        {
-            var classifications = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyClassificationTypes());
-            return new JsonResult(classifications.ToArray());
-        }
-
-        /// <summary>
         /// Get all of the code values.
         /// </summary>
         /// <returns></returns>
