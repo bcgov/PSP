@@ -1,5 +1,3 @@
-using System;
-
 namespace Pims.Api.Models.Concepts
 {
     public class PropertyActivityInvolvedPartyModel : BaseAppModel

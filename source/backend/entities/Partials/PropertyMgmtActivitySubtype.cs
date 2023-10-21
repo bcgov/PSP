@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// PimsPropMgmtActivitySubtype class, provides an entity for the datamodel to manage management activities stubtypes.
+    /// PimsPropMgmtActivitySubtype class, provides an entity for the datamodel to manage types.
     /// </summary>
     public partial class PimsPropMgmtActivitySubtype : ITypeEntity<string>
     {
