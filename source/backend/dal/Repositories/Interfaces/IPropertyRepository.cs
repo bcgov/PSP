@@ -35,11 +35,5 @@ namespace Pims.Dal.Repositories
         PimsProperty TransferToCoreInventory(PimsProperty property);
 
         HashSet<long> GetMatchingIds(PropertyFilterCriteria filter);
-
-        IList<PimsPropPropActivity> GetManagementActivitiesByProperty(long propertyId);
-
-        PimsPropPropActivity GetManagementActivityById(long id);
-
-        bool TryDeletePropPropActivity(long managementActivityId);
     }
 }

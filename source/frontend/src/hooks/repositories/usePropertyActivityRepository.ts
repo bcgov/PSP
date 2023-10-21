@@ -11,8 +11,14 @@ import { useApiPropertyActivities } from '../pims-api/useApiPropertyActivities';
  * hook that interacts with the Property Activity API.
  */
 export const usePropertyActivityRepository = () => {
-  const { getActivitySubtypesApi, getActivityApi, postActivityApi, putActivityApi } =
-    useApiPropertyActivities();
+  const {
+    getActivitySubtypesApi,
+    getActivitiesApi,
+    getActivityApi,
+    postActivityApi,
+    putActivityApi,
+    deleteActivityApi,
+  } = useApiPropertyActivities();
 
   const getActivitySubtypes = useApiRequestWrapper<
     () => Promise<AxiosResponse<Api_PropertyActivitySubtype[], any>>
@@ -24,6 +30,18 @@ export const usePropertyActivityRepository = () => {
     requestName: 'getActivitySubtypes',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler('Failed to retreive property activity subtypes.'),
+  });
+
+  const getActivities = useApiRequestWrapper<
+    (propertyId: number) => Promise<AxiosResponse<Api_PropertyActivity[], any>>
+  >({
+    requestFunction: useCallback(
+      async (propertyId: number) => await getActivitiesApi(propertyId),
+      [getActivitiesApi],
+    ),
+    requestName: 'getActivities',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to load property management activities list.'),
   });
 
   const getActivity = useApiRequestWrapper<
@@ -71,13 +89,37 @@ export const usePropertyActivityRepository = () => {
     onError: useAxiosErrorHandler('Failed to update a property activity.'),
   });
 
+  const deleteActivity = useApiRequestWrapper<
+    (propertyId: number, activityId: number) => Promise<AxiosResponse<boolean, any>>
+  >({
+    requestFunction: useCallback(
+      async (propertyId: number, activityId: number) =>
+        await deleteActivityApi(propertyId, activityId),
+      [deleteActivityApi],
+    ),
+    requestName: 'deleteActivity',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler(
+      'Failed to delete property management activity. Refresh the page to try again.',
+    ),
+  });
+
   return useMemo(
     () => ({
       getActivitySubtypes,
+      getActivities,
       getActivity,
       createActivity,
       updateActivity,
+      deleteActivity,
     }),
-    [getActivitySubtypes, getActivity, createActivity, updateActivity],
+    [
+      getActivitySubtypes,
+      getActivities,
+      getActivity,
+      createActivity,
+      updateActivity,
+      deleteActivity,
+    ],
   );
 };

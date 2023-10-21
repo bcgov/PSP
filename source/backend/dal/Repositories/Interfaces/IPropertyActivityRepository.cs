@@ -1,5 +1,6 @@
 namespace Pims.Dal.Repositories
 {
+    using System.Collections.Generic;
     using Pims.Dal.Entities;
 
     /// <summary>
@@ -7,12 +8,14 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IPropertyActivityRepository : IRepository<PimsPropertyActivity>
     {
+        IList<PimsPropertyActivity> GetActivitiesByProperty(long propertyId);
+
         PimsPropertyActivity GetActivity(long activityId);
 
         PimsPropertyActivity Create(PimsPropertyActivity propertyActivity);
 
         PimsPropertyActivity Update(PimsPropertyActivity propertyActivity);
 
-        void Delete(long activityId);
+        bool TryDelete(long activityId);
     }
 }

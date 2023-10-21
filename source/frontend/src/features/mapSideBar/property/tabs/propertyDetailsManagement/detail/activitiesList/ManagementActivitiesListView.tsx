@@ -2,8 +2,10 @@ import { orderBy } from 'lodash';
 import React from 'react';
 
 import { Section } from '@/components/common/Section/Section';
+import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { TableSort } from '@/components/Table/TableSort';
-import { Api_PropPropManagementActivity } from '@/models/api/Property';
+import Claims from '@/constants/claims';
+import { Api_PropertyActivity } from '@/models/api/PropertyActivity';
 
 import ManagementActivitiesList from './ManagementActivitiesList';
 import { PropertyActivityRow } from './models/PropertyActivityRow';
@@ -11,15 +13,19 @@ import { PropertyActivityRow } from './models/PropertyActivityRow';
 export interface IManagementActivitiesListViewProps {
   isLoading: boolean;
   propertyActivities: PropertyActivityRow[];
+  onCreate: () => void;
+  onView: (activityId: number) => void;
   onDelete: (managementActivityId: number) => void;
 }
 
 const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitiesListViewProps> = ({
   isLoading,
   propertyActivities,
+  onCreate,
+  onView,
   onDelete,
 }) => {
-  const [sort, setSort] = React.useState<TableSort<Api_PropPropManagementActivity>>({});
+  const [sort, setSort] = React.useState<TableSort<Api_PropertyActivity>>({});
 
   const mapSortField = (sortField: string) => {
     if (sortField === 'activityType') {
@@ -52,9 +58,22 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
   }, [propertyActivities, sort]);
 
   return (
-    <Section isCollapsable initiallyExpanded header="Activities List">
+    <Section
+      isCollapsable
+      initiallyExpanded
+      header={
+        <SectionListHeader
+          claims={[Claims.MANAGEMENT_EDIT]}
+          title="Activities List"
+          addButtonText="Add an Activity"
+          addButtonIcon="person"
+          onAdd={onCreate}
+        />
+      }
+    >
       <ManagementActivitiesList
         propertyActivities={sortedActivities}
+        handleView={onView}
         handleDelete={onDelete}
         sort={sort}
         setSort={setSort}

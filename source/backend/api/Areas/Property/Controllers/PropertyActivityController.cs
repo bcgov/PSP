@@ -55,7 +55,7 @@ namespace Pims.Api.Areas.Property.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("management-activities/subtypes")]
-        [HasPermission(Permissions.PropertyView)]
+        [HasPermission(Permissions.ManagementView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<PropertyActivitySubtypeModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
@@ -67,11 +67,27 @@ namespace Pims.Api.Areas.Property.Controllers
         }
 
         /// <summary>
+        /// Get the property management activities for the property with 'propertyId'.
+        /// </summary>
+        /// <returns>Collection of Property management activities.</returns>
+        [HttpGet("{propertyId}/management-activities")]
+        [HasPermission(Permissions.ManagementView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<PropertyActivityModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetPropertyActivities(long propertyId)
+        {
+            var activities = _propertyService.GetActivities(propertyId);
+            return new JsonResult(_mapper.Map<List<PropertyActivityModel>>(activities));
+        }
+
+        /// <summary>
         /// Get the activity with the given identifiers.
         /// </summary>
         /// <returns></returns>
         [HttpGet("{propertyId}/management-activities/{activityId}")]
-        [HasPermission(Permissions.PropertyView)]
+        [HasPermission(Permissions.ManagementView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(PropertyActivityModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
@@ -87,12 +103,12 @@ namespace Pims.Api.Areas.Property.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("{propertyId}/management-activities")]
-        [HasPermission(Permissions.PropertyEdit)]
+        [HasPermission(Permissions.ManagementEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(PropertyActivityModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult CreateContact(long propertyId, [FromBody] PropertyActivityModel activityModel)
+        public IActionResult CreatePropertyActivity(long propertyId, [FromBody] PropertyActivityModel activityModel)
         {
             if (propertyId != activityModel.ActivityProperties[0].PropertyId)
             {
@@ -109,12 +125,12 @@ namespace Pims.Api.Areas.Property.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut("{propertyId}/management-activities/{activityId}")]
-        [HasPermission(Permissions.PropertyEdit)]
+        [HasPermission(Permissions.ManagementEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(PropertyActivityModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateContact(long propertyId, long activityId, [FromBody] PropertyActivityModel activityModel)
+        public IActionResult UpdatePropertyActivity(long propertyId, long activityId, [FromBody] PropertyActivityModel activityModel)
         {
             if (propertyId != activityModel.ActivityProperties[0].PropertyId || activityId != activityModel.Id)
             {
@@ -127,18 +143,18 @@ namespace Pims.Api.Areas.Property.Controllers
         }
 
         /// <summary>
-        /// Deletes the property activity with the matching id.
+        /// Delete a Property's management activity.
         /// </summary>
         /// <param name="propertyId"></param>
-        /// <param name="activityId">Used to identify the entity to delete.</param>
+        /// <param name="activityId"></param>
         /// <returns></returns>
         [HttpDelete("{propertyId}/management-activities/{activityId}")]
-        [HasPermission(Permissions.PropertyEdit)]
+        [HasPermission(Permissions.ManagementDelete)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult DeleteContact([FromRoute] long propertyId, [FromRoute] long activityId)
+        public IActionResult DeletePropertyActivity([FromRoute] long propertyId, [FromRoute] long activityId)
         {
             var result = _propertyService.DeleteActivity(activityId);
             return new JsonResult(result);

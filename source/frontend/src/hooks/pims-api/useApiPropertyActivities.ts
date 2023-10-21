@@ -17,17 +17,26 @@ export const useApiPropertyActivities = () => {
     () => ({
       getActivitySubtypesApi: () =>
         api.get<Api_PropertyActivitySubtype[]>(`/properties/management-activities/subtypes`),
+
+      getActivitiesApi: (propertyId: number) =>
+        api.get<Api_PropertyActivity[]>(`/properties/${propertyId}/management-activities`),
+
       getActivityApi: (propertyId: number, activityId: number) =>
         api.get<Api_PropertyActivity>(
           `/properties/${propertyId}/management-activities/${activityId}`,
         ),
+
       postActivityApi: (propertyId: number, activity: Api_PropertyActivity) =>
         api.post<Api_PropertyActivity>(`/properties/${propertyId}/management-activities`, activity),
+
       putActivityApi: (propertyId: number, activity: Api_PropertyActivity) =>
         api.put<Api_PropertyActivity>(
           `/properties/${propertyId}/management-activities/${activity.id}`,
           activity,
         ),
+
+      deleteActivityApi: (propertyId: number, activityId: number) =>
+        api.delete<boolean>(`/properties/${propertyId}/management-activities/${activityId}`),
     }),
     [api],
   );

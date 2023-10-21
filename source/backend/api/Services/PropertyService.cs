@@ -202,18 +202,18 @@ namespace Pims.Api.Services
             return GetPropertyManagement(newProperty.Internal_Id);
         }
 
-        public IList<PimsPropPropActivity> GetManagementActivities(long propertyId)
+        public IList<PimsPropertyActivity> GetActivities(long propertyId)
         {
             _logger.LogInformation("Getting property management activities for property with id {propertyId}", propertyId);
             _user.ThrowIfNotAuthorized(Permissions.ManagementView, Permissions.PropertyView);
 
-            return _propertyRepository.GetManagementActivitiesByProperty(propertyId);
+            return _propertyActivityRepository.GetActivitiesByProperty(propertyId);
         }
 
         public PimsPropertyActivity GetActivity(long propertyId, long activityId)
         {
             _logger.LogInformation("Retrieving single property Activity...");
-            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementView, Permissions.PropertyView);
 
             var propertyActivity = _propertyActivityRepository.GetActivity(activityId);
 
@@ -228,7 +228,7 @@ namespace Pims.Api.Services
         public PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity)
         {
             _logger.LogInformation("Creating property Activity...");
-            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementEdit, Permissions.PropertyEdit);
 
             var propertyActivityResult = _propertyActivityRepository.Create(propertyActivity);
             _propertyActivityRepository.CommitTransaction();
@@ -239,7 +239,7 @@ namespace Pims.Api.Services
         public PimsPropertyActivity UpdateActivity(PimsPropertyActivity propertyActivity)
         {
             _logger.LogInformation("Updating property Activity...");
-            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementEdit, Permissions.PropertyEdit);
 
             var propertyActivityResult = _propertyActivityRepository.Update(propertyActivity);
             _propertyActivityRepository.CommitTransaction();
@@ -249,33 +249,17 @@ namespace Pims.Api.Services
 
         public bool DeleteActivity(long activityId)
         {
-            _logger.LogInformation("Deleting property Activity...");
-            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+            _logger.LogInformation("Deleting Management Activity with id {activityId}", activityId);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementDelete, Permissions.PropertyEdit);
 
-            _propertyActivityRepository.Delete(activityId);
+            var propertyManagementActivity = _propertyActivityRepository.GetActivity(activityId);
 
-            _propertyActivityRepository.CommitTransaction();
-
-            return true;
-        }
-
-        public bool DeleteManagementPropPropActivity(long propertyId, long managementActivityId)
-        {
-            _logger.LogInformation("Deleting Management Activity with id {managementActivityId} from property with Id {propertyId}", managementActivityId, propertyId);
-            _user.ThrowIfNotAuthorized(Permissions.ManagementDelete);
-
-            var propertyManagementActivity = _propertyRepository.GetManagementActivityById(managementActivityId);
-            if (propertyManagementActivity.PropertyId != propertyId)
-            {
-                throw new BadRequestException($"PropertyManagementActivity with Id: {managementActivityId} and PropertyId {propertyId} doesn't exist");
-            }
-
-            if (!propertyManagementActivity.PimsPropertyActivity.PropMgmtActivityStatusTypeCode.Equals(PropertyActivityStatusTypeCode.NOTSTARTED.ToString()))
+            if (!propertyManagementActivity.PropMgmtActivityStatusTypeCode.Equals(PropertyActivityStatusTypeCode.NOTSTARTED.ToString()))
             {
                 throw new BadRequestException($"PropertyManagementActivity can not be deleted since it has already started");
             }
 
-            var success = _propertyRepository.TryDeletePropPropActivity(managementActivityId);
+            var success = _propertyActivityRepository.TryDelete(activityId);
             _propertyRepository.CommitTransaction();
 
             return success;

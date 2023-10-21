@@ -29,12 +29,6 @@ export const PropertyManagementTabView: React.FunctionComponent<IPropertyManagem
   loading,
   setEditManagementState,
 }) => {
-  const history = useHistory();
-
-  const createActivity = () => {
-    history.push(`/mapview/sidebar/property/${property.id}/activity/new`);
-  };
-
   if (property.id !== undefined) {
     return (
       <StyledSummarySection>
