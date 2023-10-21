@@ -79,6 +79,15 @@ export const selectOptions = async (elementName: string, values: string[] | stri
   return userEvent.selectOptions(element, values);
 };
 
+/**
+ * Finds a DOM element by its name.
+ * @param elementName The HTML element name
+ * @returns The element (or null if not found in the DOM)
+ */
+export const getByName = (elementName: string) => {
+  return elementName ? (document.querySelector(`[name="${elementName}"]`) as HTMLElement) : null;
+};
+
 export const fillInput = async (
   container: HTMLElement,
   name: string,

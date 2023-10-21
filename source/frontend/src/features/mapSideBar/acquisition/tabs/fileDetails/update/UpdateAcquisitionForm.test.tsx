@@ -98,7 +98,7 @@ describe('UpdateAcquisitionForm component', () => {
         utils.container.querySelector(`input[name="completionDate"]`) as HTMLInputElement,
       getTeamMemberProfileDropDownList: (index: number = 0) =>
         utils.container.querySelector(
-          `select[name="team[${index}].contactTypeCode"]`,
+          `select[name="team.${index}.contactTypeCode"]`,
         ) as HTMLSelectElement,
       getRemoveProjectButton: () =>
         utils.container.querySelector(

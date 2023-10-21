@@ -174,6 +174,19 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
   line-height: 2rem;
 }
 
+.c6 {
+  background: none;
+  position: relative;
+  border-radius: 0.3rem;
+  padding: 0.6rem;
+  padding-right: 2.1rem;
+  border: solid 0.1rem;
+}
+
+.c6.is-invalid {
+  border: solid 0.1rem;
+}
+
 .c8.c8.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
@@ -193,19 +206,6 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
-}
-
-.c6 {
-  background: none;
-  position: relative;
-  border-radius: 0.3rem;
-  padding: 0.6rem;
-  padding-right: 2.1rem;
-  border: solid 0.1rem;
-}
-
-.c6.is-invalid {
-  border: solid 0.1rem;
 }
 
 .c0 {
