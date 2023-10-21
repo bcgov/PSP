@@ -4,6 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 
 import { StyledSectionAddButton } from '@/components/common/styles';
+import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 
 import { InvoiceForm } from './InvoiceForm';
 import { ActivityInvoiceFormModel, PropertyActivityFormModel } from './models';
@@ -18,6 +19,8 @@ export interface IInvoiceListForm {
 export const InvoiceListForm: React.FunctionComponent<
   React.PropsWithChildren<IInvoiceListForm>
 > = ({ field, formikProps, gstConstant, pstConstant }) => {
+  const { setModalContent, setDisplayModal } = useModalContext();
+
   // clear out existing values instead of removing last item from array
   const onRemove = (index: number, arrayHelpers: ArrayHelpers) => {
     arrayHelpers.remove(index);
@@ -45,7 +48,23 @@ export const InvoiceListForm: React.FunctionComponent<
               namespace={`${field}.${index}`}
               index={index}
               formikProps={formikProps}
-              onDelete={() => onRemove(index, arrayHelpers)}
+              onDelete={() => {
+                setModalContent({
+                  ...getDeleteModalProps(),
+                  title: 'Remove Invoice',
+                  message:
+                    'You have selected to delete an invoice. Are you sure you want to proceed?',
+                  okButtonText: 'Remove',
+                  handleOk: async () => {
+                    onRemove(index, arrayHelpers);
+                    setDisplayModal(false);
+                  },
+                  handleCancel: () => {
+                    setDisplayModal(false);
+                  },
+                });
+                setDisplayModal(true);
+              }}
               gstConstant={gstConstant}
               pstConstant={pstConstant}
             />

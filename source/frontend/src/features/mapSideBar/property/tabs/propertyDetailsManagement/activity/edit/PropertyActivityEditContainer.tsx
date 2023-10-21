@@ -176,7 +176,6 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
       subtypes={subtypes}
       gstConstant={gstDecimal}
       pstConstant={pstDecimal}
-      onClose={onClose}
       onCancel={onCancelClick}
       loading={
         getSubtypesLoading ||

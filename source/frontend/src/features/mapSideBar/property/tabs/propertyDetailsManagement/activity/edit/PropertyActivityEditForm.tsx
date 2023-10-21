@@ -1,10 +1,10 @@
 import clsx from 'classnames';
 import { Formik, FormikProps } from 'formik';
 import React, { ChangeEvent, useMemo, useRef, useState } from 'react';
-import { MdClose } from 'react-icons/md';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
 
+import { CancelConfirmationModal } from '@/components/common/CancelConfirmationModal';
 import { FastDatePicker, Input, Select, SelectOption } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
@@ -18,6 +18,7 @@ import { RestrictContactType } from '@/components/contact/ContactManagerView/Con
 import { PROP_MGMT_ACTIVITY_STATUS_TYPES, PROP_MGMT_ACTIVITY_TYPES } from '@/constants/API';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { useModalManagement } from '@/hooks/useModalManagement';
 import { Api_PropertyActivity, Api_PropertyActivitySubtype } from '@/models/api/PropertyActivity';
 import { mapLookupCode } from '@/utils/mapLookupCode';
 
@@ -33,7 +34,6 @@ export interface IPropertyActivityEditFormProps {
   subtypes: Api_PropertyActivitySubtype[];
   gstConstant: number;
   pstConstant: number;
-  onClose: () => void;
   onCancel: () => void;
   loading: boolean;
   show: boolean;
@@ -45,6 +45,8 @@ export const PropertyActivityEditForm: React.FunctionComponent<
   React.PropsWithChildren<IPropertyActivityEditFormProps>
 > = props => {
   const formikRef = useRef<FormikProps<PropertyActivityFormModel>>(null);
+
+  const [showConfirmModal, openConfirmModal, closeConfirmModal] = useModalManagement();
 
   const [activityType, setActivityType] = useState<string | null>(null);
 
@@ -84,11 +86,6 @@ export const PropertyActivityEditForm: React.FunctionComponent<
     }
   };
 
-  const onCloseClick = () => {
-    props.setShow(false);
-    props.onClose();
-  };
-
   const onActivityTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
     const typeCode = changeEvent.target.value;
     setActivityType(typeCode ?? null);
@@ -103,15 +100,7 @@ export const PropertyActivityEditForm: React.FunctionComponent<
       }}
     >
       <Styled.PopupTray className={clsx({ show: props.show })}>
-        <Styled.TrayHeader>
-          {isEditMode ? 'Edit ' : 'New '}Property Activity
-          <Styled.CloseButton
-            id="close-tray"
-            icon={<MdClose size={20} />}
-            title="close"
-            onClick={onCloseClick}
-          />
-        </Styled.TrayHeader>
+        <Styled.TrayHeader>{isEditMode ? 'Edit ' : 'New '}Property Activity</Styled.TrayHeader>
         <Styled.TrayContent>
           <StyledFormWrapper>
             <StyledSummarySection>
@@ -195,7 +184,21 @@ export const PropertyActivityEditForm: React.FunctionComponent<
                         pstConstant={props.pstConstant}
                       />
                       <InvoiceTotalsForm formikProps={formikProps} />
-                      <SaveCancelButtons onCancel={props.onCancel} formikProps={formikProps} />
+                      <SaveCancelButtons
+                        onCancel={() => {
+                          if (formikProps.dirty === true) {
+                            openConfirmModal();
+                          } else {
+                            props.onCancel();
+                          }
+                        }}
+                        formikProps={formikProps}
+                      />
+                      <CancelConfirmationModal
+                        display={showConfirmModal}
+                        handleOk={props.onCancel}
+                        handleCancel={closeConfirmModal}
+                      />
                     </>
                   )}
                 </Formik>
