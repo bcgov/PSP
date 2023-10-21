@@ -23,16 +23,26 @@ namespace Pims.Api.Services
         private readonly ILogger _logger;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyContactRepository _propertyContactRepository;
+        private readonly IPropertyActivityRepository _propertyActivityRepository;
         private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
         private readonly IMapper _mapper;
 
-        public PropertyService(ClaimsPrincipal user, ILogger<PropertyService> logger, IPropertyRepository propertyRepository, IPropertyContactRepository propertyContactRepository, ICoordinateTransformService coordinateService, IPropertyLeaseRepository propertyLeaseRepository, IMapper mapper)
+        public PropertyService(
+            ClaimsPrincipal user,
+            ILogger<PropertyService> logger,
+            IPropertyRepository propertyRepository,
+            IPropertyContactRepository propertyContactRepository,
+            IPropertyActivityRepository propertyActivityRepository,
+            ICoordinateTransformService coordinateService,
+            IPropertyLeaseRepository propertyLeaseRepository,
+            IMapper mapper)
         {
             _user = user;
             _logger = logger;
             _propertyRepository = propertyRepository;
             _propertyContactRepository = propertyContactRepository;
+            _propertyActivityRepository = propertyActivityRepository;
             _coordinateService = coordinateService;
             _propertyLeaseRepository = propertyLeaseRepository;
             _mapper = mapper;
@@ -189,6 +199,55 @@ namespace Pims.Api.Services
             _propertyRepository.CommitTransaction();
 
             return GetPropertyManagement(newProperty.Internal_Id);
+        }
+
+        public PimsPropertyActivity GetActivity(long propertyId, long activityId)
+        {
+            _logger.LogInformation("Retrieving single property Activity...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var propertyActivity = _propertyActivityRepository.GetActivity(activityId);
+
+            if (propertyActivity.PimsPropPropActivities.Any(x => x.PropertyId == propertyId))
+            {
+                return propertyActivity;
+            }
+
+            throw new BadRequestException("Activity with the given id does not match the property id");
+        }
+
+        public PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity)
+        {
+            _logger.LogInformation("Creating property Activity...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var propertyActivityResult = _propertyActivityRepository.Create(propertyActivity);
+            _propertyActivityRepository.CommitTransaction();
+
+            return propertyActivityResult;
+        }
+
+        public PimsPropertyActivity UpdateActivity(PimsPropertyActivity propertyActivity)
+        {
+            _logger.LogInformation("Updating property Activity...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var propertyActivityResult = _propertyActivityRepository.Update(propertyActivity);
+            _propertyActivityRepository.CommitTransaction();
+
+            return propertyActivityResult;
+        }
+
+        public bool DeleteActivity(long activityId)
+        {
+            _logger.LogInformation("Deleting property Activity...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            _propertyActivityRepository.Delete(activityId);
+
+            _propertyActivityRepository.CommitTransaction();
+
+            return true;
         }
 
         private Point TransformCoordinates(Geometry location)
