@@ -169,11 +169,16 @@ export class PayeeOption {
   }
 
   public static createTeamMember(model: Api_AcquisitionFileTeam): PayeeOption {
-    let name = formatApiPersonNames(model.person);
+    let name = '';
+    if (model.person) {
+      name = formatApiPersonNames(model.person);
+    } else {
+      name = model.organization?.name || '';
+    }
     return new PayeeOption(
       model.id || 0,
       name,
-      `${model.teamProfileType?.description}`,
+      model.teamProfileType?.description ?? '',
       PayeeOption.generateKey(model.id, PayeeType.AcquisitionTeam),
       PayeeType.AcquisitionTeam,
     );

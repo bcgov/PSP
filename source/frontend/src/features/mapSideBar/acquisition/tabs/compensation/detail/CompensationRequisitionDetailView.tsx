@@ -91,9 +91,15 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         payeeDetail.contactEnabled = true;
       }
     } else if (compensation.acquisitionFileTeamId) {
-      payeeDetail.displayName = formatApiPersonNames(compensationContactPerson);
-      payeeDetail.contactString = 'P' + compensationContactPerson?.id;
-      payeeDetail.contactEnabled = true;
+      if (compensationContactPerson) {
+        payeeDetail.displayName = formatApiPersonNames(compensationContactPerson);
+        payeeDetail.contactString = 'P' + compensationContactPerson?.id;
+        payeeDetail.contactEnabled = true;
+      } else if (compensationContactOrganization) {
+        payeeDetail.displayName = compensationContactOrganization?.name ?? '';
+        payeeDetail.contactString = 'O' + compensationContactOrganization.id;
+        payeeDetail.contactEnabled = true;
+      }
     } else if (!!compensation.legacyPayee) {
       payeeDetail.displayName = `${compensation.legacyPayee}`;
     }
