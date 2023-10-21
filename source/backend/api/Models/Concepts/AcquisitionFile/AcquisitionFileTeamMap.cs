@@ -11,8 +11,12 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Id, src => src.AcquisitionFileTeamId)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.Person, src => src.Person)
-                .Map(dest => dest.TeamProfileType, src => src.AcqFlTeamProfileTypeCodeNavigation)
                 .Map(dest => dest.PersonId, src => src.PersonId)
+                .Map(dest => dest.Organization, src => src.Organization)
+                .Map(dest => dest.OrganizationId, src => src.OrganizationId)
+                .Map(dest => dest.PrimaryContact, src => src.PrimaryContact)
+                .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
+                .Map(dest => dest.TeamProfileType, src => src.AcqFlTeamProfileTypeCodeNavigation)
                 .Map(dest => dest.TeamProfileTypeCode, src => src.AcqFlTeamProfileTypeCode)
                 .Inherits<Entity.IBaseEntity, BaseModel>();
 
@@ -20,6 +24,8 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.AcquisitionFileTeamId, src => src.Id)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.PersonId, src => src.PersonId)
+                .Map(dest => dest.OrganizationId, src => src.OrganizationId)
+                .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
                 .Map(dest => dest.AcqFlTeamProfileTypeCode, src => src.TeamProfileTypeCode)
                 .Inherits<BaseModel, Entity.IBaseEntity>();
         }

@@ -15,5 +15,6 @@ namespace Pims.Dal.Entities
         [NotMapped]
         public string Id { get => PropMgmtActivityStatusTypeCode; set => PropMgmtActivityStatusTypeCode = value; }
         #endregion
+
     }
 }

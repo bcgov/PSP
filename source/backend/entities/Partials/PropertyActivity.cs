@@ -11,5 +11,6 @@ namespace Pims.Dal.Entities
         [NotMapped]
         public override long Internal_Id { get => this.PimsPropertyActivityId; set => this.PimsPropertyActivityId = value; }
         #endregion
+
     }
 }

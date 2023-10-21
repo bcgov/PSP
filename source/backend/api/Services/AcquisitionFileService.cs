@@ -204,6 +204,7 @@ namespace Pims.Api.Services
             }
 
             ValidateStaff(acquisitionFile);
+            ValidateOrganizationStaff(acquisitionFile);
 
             acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
             MatchProperties(acquisitionFile, userOverrides);
@@ -235,6 +236,7 @@ namespace Pims.Api.Services
             }
 
             ValidateStaff(acquisitionFile);
+            ValidateOrganizationStaff(acquisitionFile);
 
             acquisitionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
 
@@ -494,6 +496,15 @@ namespace Pims.Api.Services
         private static void ValidateStaff(PimsAcquisitionFile pimsAcquisitionFile)
         {
             bool duplicate = pimsAcquisitionFile.PimsAcquisitionFileTeams.GroupBy(p => (p.AcqFlTeamProfileTypeCode, p.PersonId)).Any(g => g.Count() > 1);
+            if (duplicate)
+            {
+                throw new BadRequestException("Invalid Acquisition team, each team member and role combination can only be added once.");
+            }
+        }
+
+        private static void ValidateOrganizationStaff(PimsAcquisitionFile pimsAcquisitionFile)
+        {
+            bool duplicate = pimsAcquisitionFile.PimsAcquisitionFileTeams.GroupBy(p => (p.AcqFlTeamProfileTypeCode, p.OrganizationId)).Any(g => g.Count() > 1);
             if (duplicate)
             {
                 throw new BadRequestException("Invalid Acquisition team, each team member and role combination can only be added once.");

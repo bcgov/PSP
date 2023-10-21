@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 
-import { fromApiPerson, IContactSearchResult } from '@/interfaces';
+import { fromApiOrganization, fromApiPerson, IContactSearchResult } from '@/interfaces';
 import { Api_AcquisitionFileOwner, Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
 import { Api_Address } from '@/models/api/Address';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
@@ -19,6 +19,7 @@ export class AcquisitionTeamFormModel {
   rowVersion?: number;
   contact?: IContactSearchResult;
   contactTypeCode: string;
+  primaryContactId: string = '';
 
   constructor(contactTypeCode: string, id?: number, contact?: IContactSearchResult) {
     this.id = id;
@@ -26,27 +27,46 @@ export class AcquisitionTeamFormModel {
     this.contact = contact;
   }
 
-  toApi(acquisitionFileId: number): Api_AcquisitionFileTeam {
+  toApi(acquisitionFileId: number): Api_AcquisitionFileTeam | null {
+    const personId = this.contact?.personId ?? null;
+    const organizationId = !personId ? this.contact?.organizationId ?? null : null;
+    if (personId === null && organizationId === null) {
+      return null;
+    }
+
     return {
       id: this.id,
       rowVersion: this.rowVersion,
       acquisitionFileId: acquisitionFileId,
-      personId: this.contact?.personId || 0,
-      person: { id: this.contact?.personId || 0 },
+      personId: personId ?? undefined,
+      person: undefined,
+      organizationId: organizationId ?? undefined,
+      organization: undefined,
+      primaryContactId: this.primaryContactId !== '' ? Number(this.primaryContactId) : undefined,
       teamProfileType: toTypeCode(this.contactTypeCode),
       teamProfileTypeCode: this.contactTypeCode,
     };
   }
 
-  static fromApi(model: Api_AcquisitionFileTeam): AcquisitionTeamFormModel {
+  static fromApi(model: Api_AcquisitionFileTeam | null): AcquisitionTeamFormModel {
+    const contact: IContactSearchResult | undefined =
+      model?.person !== undefined
+        ? fromApiPerson(model.person)
+        : model?.organization !== undefined
+        ? fromApiOrganization(model.organization)
+        : undefined;
+
     const newForm = new AcquisitionTeamFormModel(
-      fromTypeCode(model.teamProfileType) || '',
-      model.id ?? 0,
-      model.person !== undefined ? fromApiPerson(model.person) : undefined,
+      fromTypeCode(model?.teamProfileType) || '',
+      model?.id ?? 0,
+      contact,
     );
 
-    newForm.rowVersion = model.rowVersion;
-    //newForm.acquisitionFileId = model.acquisitionFileId;
+    if (model?.primaryContactId) {
+      newForm.primaryContactId = model.primaryContactId.toString();
+    }
+
+    newForm.rowVersion = model?.rowVersion ?? 0;
 
     return newForm;
   }
