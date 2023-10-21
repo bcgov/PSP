@@ -147,7 +147,6 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
   const pstDecimal = pstConstant !== undefined ? parseFloat(pstConstant.value) * 0.01 : 0;
 
   const onSave = async (model: Api_PropertyActivity) => {
-    console.log(model);
     let result = undefined;
     if (model.id !== 0) {
       result = await updateActivity(propertyId, model);
