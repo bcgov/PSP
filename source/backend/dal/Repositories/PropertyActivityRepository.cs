@@ -38,8 +38,6 @@ namespace Pims.Dal.Repositories
         /// <returns>List of Property's management activities.</returns>
         public IList<PimsPropertyActivity> GetActivitiesByProperty(long propertyId)
         {
-            User.ThrowIfNotAllAuthorized(Permissions.ManagementView);
-
             List<PimsPropertyActivity> activities = Context.PimsPropertyActivities.AsNoTracking()
                     .Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
                     .Include(pa => pa.PropMgmtActivitySubtypeCodeNavigation)
@@ -58,8 +56,6 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsPropertyActivity GetActivity(long activityId)
         {
-            this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
-
             var activity = this.Context.PimsPropertyActivities
                 .Include(a => a.PimsPropPropActivities)
                 .Include(a => a.PimsPropertyActivityInvoices)
