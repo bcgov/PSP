@@ -44,7 +44,7 @@ export const mockGetPropertyManagementActivity = (
   propertyId: number = 1,
 ): Api_PropertyActivity => ({
   ...emptyActivity,
-  id: 200,
+  id: id,
   activityTypeCode: {
     id: 'ACTIVITY-TYPE',
     description: 'Activity Type Description',
@@ -67,7 +67,7 @@ export const mockGetPropertyManagementActivity = (
   rowVersion: 1,
   activityProperties: [
     {
-      id: id,
+      id: 15,
       propertyActivityId: 200,
       propertyActivityModel: null,
       propertyId: propertyId,
@@ -82,7 +82,7 @@ export const mockGetPropertyManagementActivityNotStarted = (
   propertyId: number = 1,
 ): Api_PropertyActivity => ({
   ...emptyActivity,
-  id: 200,
+  id: id,
   activityTypeCode: {
     id: 'ACTIVITY-TYPE',
     description: 'Activity Type Description',
@@ -105,7 +105,7 @@ export const mockGetPropertyManagementActivityNotStarted = (
   rowVersion: 1,
   activityProperties: [
     {
-      id: id,
+      id: 73,
       propertyActivityId: 200,
       propertyActivityModel: null,
       propertyId: propertyId,

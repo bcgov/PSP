@@ -15,7 +15,7 @@ export interface IManagementActivitiesListViewProps {
   propertyActivities: PropertyActivityRow[];
   onCreate: () => void;
   onView: (activityId: number) => void;
-  onDelete: (managementActivityId: number) => void;
+  onDelete: (activityId: number) => void;
 }
 
 const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitiesListViewProps> = ({

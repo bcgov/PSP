@@ -26,7 +26,7 @@ const onCreate = jest.fn();
 const onView = jest.fn();
 const onDelete = jest.fn();
 
-describe('compensation list view', () => {
+describe('Activities list view', () => {
   const setup = async (
     renderOptions?: RenderOptions & Partial<IManagementActivitiesListViewProps>,
   ) => {

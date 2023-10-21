@@ -34,8 +34,8 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
   }, [getActivities, isMounted, propertyId]);
 
   const onDelete = useCallback(
-    async (managementActivityId: number) => {
-      const result = await deleteActivity(propertyId, managementActivityId);
+    async (activityId: number) => {
+      const result = await deleteActivity(propertyId, activityId);
       if (result === true) {
         fetchPropertyActivities();
       }
@@ -61,11 +61,11 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
       propertyActivities={propertyActivities}
       onCreate={onCreate}
       onView={onView}
-      onDelete={async (managementActivityId: number) => {
+      onDelete={async (activityId: number) => {
         setModalContent({
           ...getDeleteModalProps(),
           handleOk: async () => {
-            await onDelete(managementActivityId);
+            await onDelete(activityId);
             setDisplayModal(false);
           },
           handleCancel: () => {
