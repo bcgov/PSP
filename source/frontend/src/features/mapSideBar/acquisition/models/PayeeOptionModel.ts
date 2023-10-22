@@ -22,8 +22,8 @@ export class PayeeOption {
     payeeType: PayeeType,
   ) {
     this.api_id = api_id;
-    this.fullText = `${name}(${key})`;
-    this.text = `${PayeeOption.truncateName(name)}(${key})`;
+    this.fullText = `${name} (${key})`;
+    this.text = `${PayeeOption.truncateName(name)} (${key})`;
     this.value = value;
     this.payeeType = payeeType;
   }
