@@ -45,8 +45,8 @@ describe('Compensation Detail View Component', () => {
     };
   };
 
-  beforeEach(() => {
-    jest.restoreAllMocks();
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('renders as expected', async () => {

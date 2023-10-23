@@ -83,6 +83,7 @@ export const EmptyPropertyLocation: PIMS_Property_Location_View = {
 // Source : Pims Geoserverview
 // name: PIMS_PROPERTY_BOUNDARY_VW
 export interface PIMS_Property_Boundary_View {
+  readonly PROPERTY_ID: string | null;
   readonly PID: string | null;
   readonly PID_PADDED: string | null;
   readonly PIN: string | null;
