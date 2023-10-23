@@ -5,6 +5,7 @@ import { useCallback } from 'react';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
 import { useLegalAdminBoundariesMapLayer } from '@/hooks/repositories/mapLayer/useLegalAdminBoundariesMapLayer';
+import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
 import { useMapProperties } from '@/hooks/repositories/useMapProperties';
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
@@ -29,6 +30,7 @@ const useLocationFeatureLoader = () => {
   const {
     loadProperties: { execute: loadProperties },
   } = useMapProperties();
+  const { findOneByBoundary } = usePimsPropertyLayer();
 
   const fullyAttributedServiceFindOne = fullyAttributedService.findOne;
   const adminBoundaryLayerServiceFindRegion = adminBoundaryLayerService.findRegion;
@@ -63,7 +65,12 @@ const useLocationFeatureLoader = () => {
           | undefined = undefined;
 
         // Load PimsProperties
-        if (parcelFeature !== undefined) {
+        if (latLng) {
+          const latLngFeature = await findOneByBoundary(latLng, 'GEOMETRY', 4326);
+          if (latLngFeature !== undefined) {
+            pimsLocationProperties = { features: [latLngFeature], type: 'FeatureCollection' };
+          }
+        } else if (parcelFeature !== undefined) {
           pimsLocationProperties = await loadProperties({
             PID: parcelFeature.properties?.PID || '',
             PIN: parcelFeature.properties?.PIN?.toString() || '',
@@ -90,11 +97,12 @@ const useLocationFeatureLoader = () => {
       return result;
     },
     [
-      loadProperties,
       fullyAttributedServiceFindOne,
       adminBoundaryLayerServiceFindRegion,
       adminBoundaryLayerServiceFindDistrict,
       adminLegalBoundaryLayerServiceFindOneMunicipality,
+      findOneByBoundary,
+      loadProperties,
     ],
   );
 

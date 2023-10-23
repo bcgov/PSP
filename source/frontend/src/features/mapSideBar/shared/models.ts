@@ -78,6 +78,7 @@ export class PropertyForm {
 
   public static fromMapProperty(model: IMapProperty): PropertyForm {
     return new PropertyForm({
+      apiId: model.propertyId,
       pid: model.pid,
       pin: model.pin,
       latitude: model.latitude,
