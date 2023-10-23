@@ -138,7 +138,11 @@ export const TermPaymentsContainer: React.FunctionComponent<
         onSavePayment={onSavePayment}
         onGenerate={onGenerate}
         isReceivable={lease?.paymentReceivableType?.id === 'RCVBL'}
-        lease={LeaseFormModel.fromApi({ ...defaultApiLease, terms: terms })}
+        lease={LeaseFormModel.fromApi({
+          ...defaultApiLease,
+          terms: terms,
+          type: lease?.type ?? null,
+        })}
         formikRef={formikRef as React.RefObject<FormikProps<LeaseFormModel>>}
       ></TermsForm>
       <PaymentModal

@@ -73,7 +73,8 @@ export class UpdateAcquisitionSummaryFormModel
         .map<Api_AcquisitionFileOwner>(x => x.toApi()),
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
-        .map<Api_AcquisitionFileTeam>(x => x.toApi(this.id || 0)),
+        .map(x => x.toApi(this.id || 0))
+        .filter((x): x is Api_AcquisitionFileTeam => x !== null),
       acquisitionFileInterestHolders: [
         ...this.otherInterestHolders,
         InterestHolderForm.toApi(this.ownerSolicitor, []),

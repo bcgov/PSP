@@ -17,12 +17,32 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The Id of the person associated with an acquisition file as part of the acquisition team.
         /// </summary>
-        public long PersonId { get; set; }
+        public long? PersonId { get; set; }
 
         /// <summary>
-        /// get/set - The team associated with an acquisition file as part of the acquisition team.
+        /// get/set - The person associated with an acquisition file as part of the acquisition team.
         /// </summary>
         public PersonModel Person { get; set; }
+
+        /// <summary>
+        /// get/set - The Id of the organization associated with an acquisition file as part of the acquisition team.
+        /// </summary>
+        public long? OrganizationId { get; set; }
+
+        /// <summary>
+        /// get/set - The organization associated with an acquisition file as part of the acquisition team.
+        /// </summary>
+        public OrganizationModel Organization { get; set; }
+
+        /// <summary>
+        /// get/set - The Id of the primary contact associated with an acquisition file as part of the acquisition team.
+        /// </summary>
+        public long? PrimaryContactId { get; set; }
+
+        /// <summary>
+        /// get/set - The primary contact associated with an acquisition file as part of the acquisition team.
+        /// </summary>
+        public PersonModel PrimaryContact { get; set; }
 
         /// <summary>
         /// get/set - The Team's profile type code.

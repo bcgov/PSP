@@ -8,6 +8,7 @@ import { Api_AuditFields } from './AuditFields';
 import { Api_CompensationRequisition } from './CompensationRequisition';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_InterestHolder } from './InterestHolder';
+import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
 import { Api_Product, Api_Project } from './Project';
 import { Api_PropertyFile } from './PropertyFile';
@@ -55,6 +56,10 @@ export interface Api_AcquisitionFileTeam extends Api_ConcurrentVersion, Api_Audi
   acquisitionFileId: number;
   personId?: number;
   person?: Api_Person;
+  organizationId?: number;
+  organization?: Api_Organization;
+  primaryContactId?: number;
+  primaryContact?: Api_Person;
   teamProfileTypeCode?: string;
   teamProfileType?: Api_TypeCode<string>;
 }
