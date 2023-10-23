@@ -71,13 +71,15 @@ const setup = (params?: { storeValues?: any; acquisitionResponse?: Api_Acquisiti
 describe('useGenerateH0443 functions', () => {
   it('makes requests to expected api endpoints', async () => {
     const generate = setup();
-    await act(async () => {
-      await generate(0);
-      expect(generateFn).toHaveBeenCalled();
-    });
+    await act(async () => await generate(0));
+
+    expect(generateFn).toHaveBeenCalled();
   });
 
   it('makes requests to expected api endpoints for each required team member', async () => {
+    const organizationPersonMock = getMockPerson({ id: 3, firstName: 'JONH', surname: 'Doe' });
+    getPersonConceptFn.mockResolvedValue(Promise.resolve({ data: organizationPersonMock }));
+
     const responseWithTeam: Api_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
@@ -99,11 +101,10 @@ describe('useGenerateH0443 functions', () => {
     };
     const generate = setup({ acquisitionResponse: responseWithTeam });
 
-    await act(async () => {
-      await generate(0);
-      expect(generateFn).toHaveBeenCalled();
-      expect(getPersonConceptFn).toHaveBeenCalledTimes(2);
-    });
+    await act(async () => await generate(0));
+
+    expect(generateFn).toHaveBeenCalled();
+    expect(getPersonConceptFn).toHaveBeenCalledTimes(2);
   });
 
   it('makes requests to Organization when Property Coordinator is an organization with a Primary Contact', async () => {
@@ -111,7 +112,7 @@ describe('useGenerateH0443 functions', () => {
     getPersonConceptFn.mockResolvedValue(Promise.resolve({ data: organizationPersonMock }));
 
     const organizationMock = getMockOrganization();
-    getOrganizationConceptFn.mockResolvedValue(Promise.resolve({ data: organizationMock }));
+    getOrganizationConceptFn.mockResolvedValue({ data: organizationMock });
 
     const responseWithTeam: Api_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
@@ -128,12 +129,11 @@ describe('useGenerateH0443 functions', () => {
     };
     const generate = setup({ acquisitionResponse: responseWithTeam });
 
-    await act(async () => {
-      await generate(0);
-      expect(generateFn).toHaveBeenCalled();
-      expect(getPersonConceptFn).toHaveBeenLastCalledWith(3);
-      expect(getOrganizationConceptFn).toHaveBeenCalledTimes(1);
-    });
+    await act(async () => await generate(0));
+
+    expect(generateFn).toHaveBeenCalled();
+    expect(getPersonConceptFn).toHaveBeenLastCalledWith(3);
+    expect(getOrganizationConceptFn).toHaveBeenCalledTimes(1);
   });
 
   it('makes requests to Organization when Property Coordinator is an organization and no Primary Contact', async () => {
@@ -157,12 +157,11 @@ describe('useGenerateH0443 functions', () => {
     };
     const generate = setup({ acquisitionResponse: responseWithTeam });
 
-    await act(async () => {
-      await generate(0);
-      expect(generateFn).toHaveBeenCalled();
-      expect(getOrganizationConceptFn).toHaveBeenCalledTimes(1);
-      expect(getPersonConceptFn).not.toHaveBeenCalled();
-    });
+    await act(async () => await generate(0));
+
+    expect(generateFn).toHaveBeenCalled();
+    expect(getOrganizationConceptFn).toHaveBeenCalledTimes(1);
+    expect(getPersonConceptFn).not.toHaveBeenCalled();
   });
 
   it('makes requests to Organization when Property Agent is an organization with Primary Contact', async () => {
@@ -186,12 +185,11 @@ describe('useGenerateH0443 functions', () => {
     };
     const generate = setup({ acquisitionResponse: responseWithTeam });
 
-    await act(async () => {
-      await generate(0);
-      expect(generateFn).toHaveBeenCalled();
-      expect(getOrganizationConceptFn).toHaveBeenCalledTimes(1);
-      expect(getPersonConceptFn).toHaveBeenCalledWith(3);
-    });
+    await act(async () => generate(0));
+
+    expect(generateFn).toHaveBeenCalled();
+    expect(getOrganizationConceptFn).toHaveBeenCalledTimes(1);
+    expect(getPersonConceptFn).toHaveBeenCalledWith(3);
   });
 
   it('makes requests to Organization when Property Agent is an organization with no Primary Contact', async () => {
@@ -214,12 +212,11 @@ describe('useGenerateH0443 functions', () => {
     };
     const generate = setup({ acquisitionResponse: responseWithTeam });
 
-    await act(async () => {
-      await generate(0);
-      expect(generateFn).toHaveBeenCalled();
-      expect(getOrganizationConceptFn).toHaveBeenCalledTimes(1);
-      expect(getPersonConceptFn).not.toHaveBeenCalled();
-    });
+    await act(async () => await generate(0));
+
+    expect(generateFn).toHaveBeenCalled();
+    expect(getOrganizationConceptFn).toHaveBeenCalledTimes(1);
+    expect(getPersonConceptFn).not.toHaveBeenCalled();
   });
 
   it('makes requests to expected api endpoints if there are properties', async () => {

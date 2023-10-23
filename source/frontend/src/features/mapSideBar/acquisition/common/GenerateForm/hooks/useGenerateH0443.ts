@@ -44,7 +44,7 @@ export const useGenerateH0443 = () => {
         file.acquisitionFileOwners?.filter((x): x is Api_AcquisitionFileOwner => !!x) || [];
       const contactOwner = owners.find(x => x.isPrimaryContact === true);
 
-      let h0443Data: H0443Data = {
+      const h0443Data: H0443Data = {
         file_name: file.fileName || '',
         file_number: file.fileNumber || '',
         project_number: file.project?.code || '',
@@ -64,9 +64,7 @@ export const useGenerateH0443 = () => {
         if (propertyCoordinator.personId) {
           const personConceptResponse = await getPersonConcept(propertyCoordinator?.personId);
 
-          h0443Data.property_coordinator = personConceptResponse?.data
-            ? new Api_GeneratePerson(personConceptResponse.data)
-            : null;
+          h0443Data.property_coordinator = new Api_GeneratePerson(personConceptResponse.data);
         } else if (propertyCoordinator.organizationId) {
           const organizationConceptResponse = await getOrganizationConcept(
             propertyCoordinator?.organizationId,
@@ -80,9 +78,7 @@ export const useGenerateH0443 = () => {
           ) {
             const personResponse = await getPersonConcept(propertyCoordinator.primaryContactId);
 
-            h0443Data.property_coordinator = personResponse.data
-              ? new Api_GeneratePerson(personResponse.data)
-              : null;
+            h0443Data.property_coordinator = new Api_GeneratePerson(personResponse.data);
           }
         }
       }
@@ -92,9 +88,7 @@ export const useGenerateH0443 = () => {
         if (propertyAgent.personId) {
           const personResponse = await getPersonConcept(propertyAgent?.personId);
 
-          h0443Data.property_agent = personResponse?.data
-            ? new Api_GeneratePerson(personResponse.data)
-            : null;
+          h0443Data.property_agent = new Api_GeneratePerson(personResponse.data);
         } else if (propertyAgent.organizationId) {
           const organizationConceptResponse = await getOrganizationConcept(
             propertyAgent?.organizationId,
@@ -107,9 +101,7 @@ export const useGenerateH0443 = () => {
           ) {
             const personResponse = await getPersonConcept(propertyAgent.primaryContactId);
 
-            h0443Data.property_agent = personResponse.data
-              ? new Api_GeneratePerson(personResponse.data)
-              : null;
+            h0443Data.property_agent = new Api_GeneratePerson(personResponse.data);
           }
         }
       }
