@@ -1,6 +1,15 @@
-import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import {
+  mockAcquisitionFileResponse,
+  mockApiAcquisitionFileTeamOrganization,
+  mockApiAcquisitionFileTeamPerson,
+} from '@/mocks/acquisitionFiles.mock';
 import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
-import { render, RenderOptions, waitFor } from '@/utils/test-utils';
+import { emptyApiInterestHolder } from '@/mocks/interestHolder.mock';
+import { getMockOrganization } from '@/mocks/organization.mock';
+import { Api_InterestHolder } from '@/models/api/InterestHolder';
+import { Api_Person } from '@/models/api/Person';
+import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import {
   CompensationRequisitionDetailContainer,
@@ -8,7 +17,18 @@ import {
 } from './CompensationRequisitionDetailContainer';
 import { CompensationRequisitionDetailViewProps } from './CompensationRequisitionDetailView';
 
+jest.mock('@/hooks/pims-api/useApiContacts');
+const getPersonConceptFn = jest.fn();
+const getOrganizationConceptFn = jest.fn();
+(useApiContacts as jest.Mock).mockImplementation(() => ({
+  getPersonConcept: getPersonConceptFn,
+  getOrganizationConcept: getOrganizationConceptFn,
+}));
+
+let viewProps: CompensationRequisitionDetailViewProps;
+
 const CompensationViewComponent = (props: CompensationRequisitionDetailViewProps) => {
+  viewProps = props;
   return <></>;
 };
 
@@ -40,14 +60,108 @@ describe('Compensation Detail View container', () => {
   };
 
   beforeEach(() => {
+    getPersonConceptFn.mockResolvedValue({
+      data: {
+        id: 1,
+        firstName: 'first',
+        surname: 'last',
+      } as Api_Person,
+    });
+    getOrganizationConceptFn.mockResolvedValue({
+      data: getMockOrganization(),
+    });
+  });
+
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('renders as expected', async () => {
-    const { asFragment } = setup({
-      claims: [],
+  it('makes request to get person concept for acquisition team payee', async () => {
+    const teamPerson = mockApiAcquisitionFileTeamPerson();
+    setup({
+      props: {
+        compensation: {
+          ...getMockApiDefaultCompensation(),
+          acquisitionFileTeamId: teamPerson.id ?? 1,
+          acquisitionFileTeam: teamPerson,
+        },
+      },
     });
-    const fragment = await waitFor(() => asFragment());
-    expect(fragment).toMatchSnapshot();
+
+    await waitForEffects();
+    expect(getPersonConceptFn).toHaveBeenCalled();
+    expect(viewProps.compensationContactPerson).toStrictEqual({
+      id: 1,
+      firstName: 'first',
+      surname: 'last',
+    } as Api_Person);
+  });
+
+  it('makes request to get organization concept for acquisition team payee', async () => {
+    const teamOrg = mockApiAcquisitionFileTeamOrganization();
+    setup({
+      props: {
+        compensation: {
+          ...getMockApiDefaultCompensation(),
+          acquisitionFileTeamId: teamOrg.id ?? 1,
+          acquisitionFileTeam: teamOrg,
+        },
+      },
+    });
+
+    await waitForEffects();
+    expect(getOrganizationConceptFn).toHaveBeenCalled();
+    expect(viewProps.compensationContactOrganization).toStrictEqual(getMockOrganization());
+  });
+
+  it('makes request to get person concept for interest holder payee', async () => {
+    const ihPerson: Api_InterestHolder = {
+      ...emptyApiInterestHolder,
+      interestHolderId: 1,
+      acquisitionFileId: 2,
+      personId: 1,
+      person: { id: 1, firstName: 'first', surname: 'last' },
+    };
+    setup({
+      props: {
+        compensation: {
+          ...getMockApiDefaultCompensation(),
+          interestHolderId: ihPerson.interestHolderId,
+          interestHolder: ihPerson,
+        },
+      },
+    });
+
+    await waitForEffects();
+    expect(getPersonConceptFn).toHaveBeenCalled();
+    expect(viewProps.compensationContactPerson).toStrictEqual({
+      id: 1,
+      firstName: 'first',
+      surname: 'last',
+    } as Api_Person);
+  });
+
+  it('makes request to get organization concept for interest holder payee', async () => {
+    const ihOrg: Api_InterestHolder = {
+      ...emptyApiInterestHolder,
+      interestHolderId: 1,
+      acquisitionFileId: 2,
+      organizationId: 100,
+      organization: { id: 100, name: 'ABC Inc' },
+    };
+
+    setup({
+      props: {
+        compensation: {
+          ...getMockApiDefaultCompensation(),
+          interestHolderId: ihOrg.interestHolderId,
+          interestHolder: ihOrg,
+        },
+      },
+    });
+
+    await waitForEffects();
+    expect(getOrganizationConceptFn).toHaveBeenCalled();
+    expect(viewProps.compensationContactOrganization).toStrictEqual(getMockOrganization());
   });
 });
