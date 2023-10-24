@@ -130,6 +130,9 @@ namespace Pims.Api.Controllers
                 var agreementTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAgreementTypes());
                 var interestHolderInterestTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllInterestHolderInterestTypes());
                 var expropriationPaymentItemTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllExpropriationPaymentItemTypes());
+                var mgmtActivityStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivityStatusTypes());
+                var mgmtActivitySubtypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivitySubtypes());
+                var mgmtActivityTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivityTypes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -188,6 +191,9 @@ namespace Pims.Api.Controllers
                 codes.AddRange(agreementTypes);
                 codes.AddRange(interestHolderInterestTypes);
                 codes.AddRange(expropriationPaymentItemTypes);
+                codes.AddRange(mgmtActivityStatusTypes);
+                codes.AddRange(mgmtActivitySubtypes);
+                codes.AddRange(mgmtActivityTypes);
 
                 var response = new JsonResult(codes);
 

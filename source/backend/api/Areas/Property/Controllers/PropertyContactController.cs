@@ -116,7 +116,7 @@ namespace Pims.Api.Areas.Property.Controllers
         {
             if (propertyId != contactModel.PropertyId || contactId != contactModel.Id)
             {
-                throw new BadRequestException("Invalid compensationRequisitionId.");
+                throw new BadRequestException("Invalid property contact identifiers.");
             }
             var contactEntity = _mapper.Map<PimsPropertyContact>(contactModel);
             var updatedProperty = _propertyService.UpdateContact(contactEntity);

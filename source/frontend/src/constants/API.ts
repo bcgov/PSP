@@ -112,6 +112,9 @@ export const ACQUISITION_CHECKLIST_ITEM_STATUS_TYPES = 'PimsAcqChklstItemStatusT
 export const AGREEMENT_TYPES = 'PimsAgreementType';
 export const INTEREST_HOLDER_TYPES = 'PimsInterestHolderInterestType';
 export const PAYMENT_ITEM_TYPES = 'PimsPaymentItemType';
+export const PROP_MGMT_ACTIVITY_STATUS_TYPES = 'PimsPropMgmtActivityStatusType';
+export const PROP_MGMT_ACTIVITY_SUBTYPES_TYPES = 'PimsPropMgmtActivitySubtype';
+export const PROP_MGMT_ACTIVITY_TYPES = 'PimsPropMgmtActivityType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

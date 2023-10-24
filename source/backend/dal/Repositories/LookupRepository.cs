@@ -357,6 +357,22 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsPaymentItemTypes.AsNoTracking().ToArray();
         }
+
+        public IEnumerable<PimsPropMgmtActivityStatusType> GetAllPropMgmtActivityStatusTypes()
+        {
+            return Context.PimsPropMgmtActivityStatusTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsPropMgmtActivitySubtype> GetAllPropMgmtActivitySubtypes()
+        {
+            return Context.PimsPropMgmtActivitySubtypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsPropMgmtActivityType> GetAllPropMgmtActivityTypes()
+        {
+            return Context.PimsPropMgmtActivityTypes.AsNoTracking().ToArray();
+        }
+
         #endregion
     }
 }
