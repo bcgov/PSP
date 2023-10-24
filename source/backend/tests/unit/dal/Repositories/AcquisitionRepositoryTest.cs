@@ -42,7 +42,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPage(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
 
             // Assert
             result.Should().HaveCount(1);
@@ -63,7 +63,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPage(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
 
             // Assert
             result.Should().HaveCount(1);
@@ -84,7 +84,28 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPage(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetPage_AlternateProject()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { AlternateProject = new PimsProject() { Code = "1", Description = "test" } } };
+            var filter = new AcquisitionFilter() { ProjectNameOrNumber = "test" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
 
             // Assert
             result.Should().HaveCount(1);
@@ -347,7 +368,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetAcquisitionFileExport(filter, new HashSet<short>() { 1 });
+            var result = repository.GetAcquisitionFileExportDeep(filter, new HashSet<short>() { 1 });
 
             // Assert
             result.Should().HaveCount(1);
@@ -368,7 +389,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetAcquisitionFileExport(filter, new HashSet<short>() { 1 });
+            var result = repository.GetAcquisitionFileExportDeep(filter, new HashSet<short>() { 1 });
 
             // Assert
             result.Should().HaveCount(1);

@@ -64,7 +64,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             acquisitionFileId={props.acquisitionFile.id || -1}
             View={UpdateAgreementsForm}
             formikRef={props.formikRef}
-            onSuccess={() => props.setIsEditing(false)}
+            onSuccess={props.onSuccess}
           />
         </Route>
         <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.STAKEHOLDERS}`}>
@@ -72,7 +72,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             View={UpdateStakeHolderForm}
             formikRef={props.formikRef}
             acquisitionFile={props.acquisitionFile}
-            onSuccess={() => props.setIsEditing(false)}
+            onSuccess={props.onSuccess}
           />
         </Route>
         {/* Ignore property-related routes (which are handled in separate FilePropertyRouter) */}
@@ -100,7 +100,8 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             <AddForm8Container
               acquisitionFileId={props.acquisitionFile?.id!}
               View={UpdateForm8Form}
-            ></AddForm8Container>
+              onSuccess={props.onSuccess}
+            />
           )}
           claim={Claims.ACQUISITION_EDIT}
           key={'expropriation'}
@@ -112,7 +113,8 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             <UpdateForm8Container
               form8Id={+match.params.form8Id}
               View={UpdateForm8Form}
-            ></UpdateForm8Container>
+              onSuccess={props.onSuccess}
+            />
           )}
           claim={Claims.ACQUISITION_EDIT}
           key={'expropriation'}

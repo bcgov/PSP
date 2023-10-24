@@ -35,7 +35,6 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         /// Creates a new instance of a ResearchFileController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="researchFileService"></param>
-        /// <param name="activityService"></param>
         /// <param name="mapper"></param>
         ///
         public ResearchFileController(IResearchFileService researchFileService, IMapper mapper)
@@ -60,6 +59,21 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         {
             var researchFile = _researchFileService.GetById(id);
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
+        }
+
+        /// <summary>
+        /// Gets the specified research file last updated-by information.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/updateInfo")]
+        [HasPermission(Permissions.ResearchFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Dal.Entities.Models.LastUpdatedByModel), 200)]
+        [SwaggerOperation(Tags = new[] { "researchfile" })]
+        public IActionResult GetLastUpdatedBy(long id)
+        {
+            var lastUpdated = _researchFileService.GetLastUpdateInformation(id);
+            return new JsonResult(lastUpdated);
         }
 
         /// <summary>

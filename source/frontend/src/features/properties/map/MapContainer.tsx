@@ -12,6 +12,7 @@ import AdvancedFilterBar from '@/features/advancedFilterBar/AdvancedFilterBar';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBar from '@/features/mapSideBar/MapSideBar';
 import CompensationRequisitionRouter from '@/features/mapSideBar/router/CompensationRequisitionRouter';
+import PropertyActivityRouter from '@/features/mapSideBar/router/PropertyActivityRouter';
 
 enum MapCursors {
   DRAFT = 'draft-cursor',
@@ -31,6 +32,7 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
       <SideBarContextProvider>
         <MapSideBar />
         <CompensationRequisitionRouter setShowActionBar={setShowActionBar} />
+        <PropertyActivityRouter setShowActionBar={setShowActionBar} />
       </SideBarContextProvider>
       {!showActionBar && (
         <FilterProvider>

@@ -554,6 +554,16 @@ exports[`EditUserForm component renders as expected 1`] = `
                   <li
                     class="option    "
                   >
+                    Management functional
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Management read-only
+                  </li>
+                  <li
+                    class="option    "
+                  >
                     Read Only
                   </li>
                 </ul>

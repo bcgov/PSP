@@ -267,12 +267,11 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
 }
 
 .c8 {
+  background: none;
   position: relative;
   border-radius: 0.3rem;
   padding: 0.6rem;
   padding-right: 2.1rem;
-  min-height: 2.5em;
-  background-image: none;
   border: solid 0.1rem;
 }
 
@@ -299,19 +298,6 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
-}
-
-.c20 {
-  background: none;
-  position: relative;
-  border-radius: 0.3rem;
-  padding: 0.6rem;
-  padding-right: 2.1rem;
-  border: solid 0.1rem;
-}
-
-.c20.is-invalid {
-  border: solid 0.1rem;
 }
 
 .c4 {
@@ -1144,6 +1130,13 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 >
                   Section 6 Expropriation
                 </option>
+                <option
+                  class="option"
+                  data-testid="select-option-XFR"
+                  value="XFR"
+                >
+                  Transferred
+                </option>
               </select>
             </div>
           </div>
@@ -1235,8 +1228,8 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
               <select
                 class="form-select form-control"
                 data-testid="select-profile"
-                id="input-team[0].contactTypeCode"
-                name="team[0].contactTypeCode"
+                id="input-team.0.contactTypeCode"
+                name="team.0.contactTypeCode"
               >
                 <option
                   value=""
@@ -1293,7 +1286,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             data-testid="contact-input"
           >
             <div
-              class="input form-group"
+              class="form-group"
             >
               <div
                 class="row"
@@ -1307,6 +1300,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     Bob Billy Smith
                     <button
                       class="c9 Button c10 btn btn-link"
+                      title="remove"
                       type="button"
                     >
                       <div
@@ -1321,9 +1315,6 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                           width="2rem"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <title>
-                            remove
-                          </title>
                           <path
                             d="M0 0h24v24H0z"
                             fill="none"
@@ -1340,8 +1331,8 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   >
                     <input
                       class="form-control"
-                      id="input-team[0].contact.id"
-                      name="team[0].contact.id"
+                      id="input-team.0.contact.id"
+                      name="team.0.contact.id"
                       placeholder="Select from Contacts"
                       title="P1"
                       value="P1"
@@ -1353,6 +1344,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 >
                   <button
                     class="c9 Button Button--icon-only px-2 btn btn-primary"
+                    title="Select Contact"
                     type="button"
                   >
                     <div
@@ -1376,6 +1368,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 </div>
               </div>
             </div>
+            <div />
           </div>
           <div
             class="pl-0 mt-2 col-xl-2 col-auto"
@@ -1388,7 +1381,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 class="Button__value"
               >
                 <svg
-                  data-testid="remove-button"
+                  data-testid="team.0.remove-button"
                   fill="currentColor"
                   height="2rem"
                   stroke="currentColor"
@@ -1431,8 +1424,8 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
               <select
                 class="form-select form-control"
                 data-testid="select-profile"
-                id="input-team[1].contactTypeCode"
-                name="team[1].contactTypeCode"
+                id="input-team.1.contactTypeCode"
+                name="team.1.contactTypeCode"
               >
                 <option
                   value=""
@@ -1489,7 +1482,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             data-testid="contact-input"
           >
             <div
-              class="input form-group"
+              class="form-group"
             >
               <div
                 class="row"
@@ -1503,6 +1496,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     Stinky Cheese
                     <button
                       class="c9 Button c10 btn btn-link"
+                      title="remove"
                       type="button"
                     >
                       <div
@@ -1517,9 +1511,6 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                           width="2rem"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <title>
-                            remove
-                          </title>
                           <path
                             d="M0 0h24v24H0z"
                             fill="none"
@@ -1536,8 +1527,8 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   >
                     <input
                       class="form-control"
-                      id="input-team[1].contact.id"
-                      name="team[1].contact.id"
+                      id="input-team.1.contact.id"
+                      name="team.1.contact.id"
                       placeholder="Select from Contacts"
                       title="P3"
                       value="P3"
@@ -1549,6 +1540,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 >
                   <button
                     class="c9 Button Button--icon-only px-2 btn btn-primary"
+                    title="Select Contact"
                     type="button"
                   >
                     <div
@@ -1572,6 +1564,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 </div>
               </div>
             </div>
+            <div />
           </div>
           <div
             class="pl-0 mt-2 col-xl-2 col-auto"
@@ -1584,7 +1577,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 class="Button__value"
               >
                 <svg
-                  data-testid="remove-button"
+                  data-testid="team.1.remove-button"
                   fill="currentColor"
                   height="2rem"
                   stroke="currentColor"
@@ -1625,7 +1618,6 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             + Add another team member
           </div>
         </button>
-        <div />
         <div />
       </div>
     </div>
@@ -3105,7 +3097,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c20"
+                    class="c8"
                   >
                     Millennium Inc
                     <button
@@ -3224,7 +3216,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c20"
+                    class="c8"
                   >
                     Han Solo
                     <button

@@ -18,12 +18,10 @@ namespace Pims.Dal.Entities
         public long PropPropPurposeId { get; set; }
         [Column("PROPERTY_ID")]
         public long PropertyId { get; set; }
+        [Required]
         [Column("PROPERTY_PURPOSE_TYPE_CODE")]
         [StringLength(20)]
         public string PropertyPurposeTypeCode { get; set; }
-        [Required]
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

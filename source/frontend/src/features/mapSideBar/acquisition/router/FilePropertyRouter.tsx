@@ -1,5 +1,5 @@
 import { FormikProps } from 'formik';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -8,6 +8,7 @@ import { InventoryTabNames, InventoryTabs } from '@/features/mapSideBar/property
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
+import { SideBarContext } from '../../context/sidebarContext';
 import { UpdatePropertyDetailsContainer } from '../../property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 import { TakesUpdateContainer } from '../../property/tabs/takes/update/TakesUpdateContainer';
 import { TakesUpdateForm } from '../../property/tabs/takes/update/TakesUpdateForm';
@@ -26,6 +27,13 @@ export interface IFilePropertyRouterProps {
 
 export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
   const { path, url } = useRouteMatch();
+
+  const { setStaleLastUpdatedBy } = useContext(SideBarContext);
+
+  const onChildSucess = () => {
+    props.setIsEditing(false);
+    setStaleLastUpdatedBy(true);
+  };
 
   if (props.acquisitionFile === undefined || props.acquisitionFile === null) {
     return null;
@@ -63,7 +71,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
             fileProperty={fileProperty}
             View={TakesUpdateForm}
             ref={props.formikRef}
-            onSuccess={() => props.setIsEditing(false)}
+            onSuccess={onChildSucess}
           />
         </Route>
         <Redirect from={`${path}`} to={`${url}/${InventoryTabNames.property}?edit=true`} />

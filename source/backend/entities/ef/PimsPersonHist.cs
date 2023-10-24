@@ -88,5 +88,7 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("PIMS_PROPERTY_ACTIVITY_ID")]
+        public long? PimsPropertyActivityId { get; set; }
     }
 }

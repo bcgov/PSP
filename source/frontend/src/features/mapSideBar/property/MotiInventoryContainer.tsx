@@ -36,7 +36,8 @@ export const MotiInventoryContainer: React.FunctionComponent<
 
   const composedPropertyState = useComposedProperties({
     id: props.id,
-    pid: props?.pid === undefined || isNaN(+props.pid) ? undefined : +props.pid,
+    pid:
+      props?.pid === undefined || props?.pid === '' || isNaN(+props.pid) ? undefined : +props.pid,
     propertyTypes: [
       PROPERTY_TYPES.ASSOCIATIONS,
       PROPERTY_TYPES.LTSA,

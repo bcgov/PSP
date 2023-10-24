@@ -6,8 +6,6 @@ namespace Pims.Dal.Repositories
     {
         PimsNote GetById(long id);
 
-        PimsNote Add(PimsNote note);
-
         PimsNote Update(PimsNote note);
 
         long GetRowVersion(long id);

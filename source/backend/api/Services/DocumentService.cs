@@ -28,7 +28,7 @@ namespace Pims.Api.Services
     /// </summary>
     public class DocumentService : BaseService, IDocumentService
     {
-        private static readonly string[] validExtensions =
+        private static readonly string[] ValidExtensions =
         {
                 "txt",
                 "pdf",
@@ -49,7 +49,7 @@ namespace Pims.Api.Services
                 "gml",
                 "kml",
                 "kmz",
-                };
+        };
 
         private readonly IDocumentRepository documentRepository;
         private readonly IEdmsDocumentRepository documentStorageRepository;
@@ -368,7 +368,7 @@ namespace Pims.Api.Services
         private static bool IsValidDocumentExtension(string fileName)
         {
             var fileNameExtension = Path.GetExtension(fileName).Replace(".", string.Empty).ToLower();
-            return validExtensions.Contains(fileNameExtension);
+            return ValidExtensions.Contains(fileNameExtension);
         }
 
         private async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(long documentType, IFormFile fileRaw)

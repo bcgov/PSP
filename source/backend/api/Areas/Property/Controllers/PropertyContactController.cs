@@ -116,7 +116,7 @@ namespace Pims.Api.Areas.Property.Controllers
         {
             if (propertyId != contactModel.PropertyId || contactId != contactModel.Id)
             {
-                throw new BadRequestException("Invalid compensationRequisitionId.");
+                throw new BadRequestException("Invalid property contact identifiers.");
             }
             var contactEntity = _mapper.Map<PimsPropertyContact>(contactModel);
             var updatedProperty = _propertyService.UpdateContact(contactEntity);
@@ -127,6 +127,7 @@ namespace Pims.Api.Areas.Property.Controllers
         /// <summary>
         /// Deletes the property contact with the matching id.
         /// </summary>
+        /// <param name="propertyId"></param>
         /// <param name="contactId">Used to identify the entity to delete.</param>
         /// <returns></returns>
         [HttpDelete("{propertyId}/contacts/{contactId}")]

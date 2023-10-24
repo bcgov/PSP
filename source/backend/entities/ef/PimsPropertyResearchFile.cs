@@ -31,8 +31,6 @@ namespace Pims.Dal.Entities
         public string PropertyName { get; set; }
         [Column("DISPLAY_ORDER")]
         public int? DisplayOrder { get; set; }
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
         [Column("IS_LEGAL_OPINION_REQUIRED")]
         public bool? IsLegalOpinionRequired { get; set; }
         [Column("IS_LEGAL_OPINION_OBTAINED")]

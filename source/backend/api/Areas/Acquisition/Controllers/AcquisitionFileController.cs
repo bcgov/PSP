@@ -84,6 +84,21 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         }
 
         /// <summary>
+        /// Gets the specified acquisition file last updated-by information.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/updateInfo")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Dal.Entities.Models.LastUpdatedByModel), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetLastUpdatedBy(long id)
+        {
+            var lastUpdated = _acquisitionService.GetLastUpdateInformation(id);
+            return new JsonResult(lastUpdated);
+        }
+
+        /// <summary>
         /// Adds the specified acquisition file.
         /// </summary>
         /// <returns></returns>
@@ -195,7 +210,8 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         public IActionResult GetAcquisitionTeamMembers()
         {
-            var team = _acquisitionService.GetTeamMembers();
+            // TODO: This endpoint needs to be fixed to support ORGANIZATIONS as team members (which were introduced by PSP-6960)
+            var team = _acquisitionService.GetTeamMembers().Where(t => t.Person is not null);
 
             return new JsonResult(_mapper.Map<IEnumerable<PersonModel>>(team.Select(t => t.Person)));
         }

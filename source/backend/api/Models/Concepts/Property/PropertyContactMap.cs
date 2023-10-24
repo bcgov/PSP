@@ -17,7 +17,6 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
                 .Map(dest => dest.PrimaryContact, src => src.PrimaryContact)
                 .Map(dest => dest.Purpose, src => src.Purpose)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<PropertyContactModel, Entity.PimsPropertyContact>()
@@ -27,7 +26,6 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)
                 .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
                 .Map(dest => dest.Purpose, src => src.Purpose)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }

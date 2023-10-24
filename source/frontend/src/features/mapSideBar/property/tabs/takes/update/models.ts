@@ -10,7 +10,7 @@ export const TakesYupSchema = Yup.object().shape({
   takes: Yup.array().of(
     Yup.object().shape({
       description: Yup.string().max(4000, 'Description must be at most ${max} characters'),
-      takeTypeCode: Yup.string().required('Take type is required'),
+      takeTypeCode: Yup.string().required('Take type is required').nullable(),
       takeStatusTypeCode: Yup.string().required('Take status type is required.'),
       isSurplus: Yup.bool().required('Surplus flag required'),
       isNewRightOfWay: Yup.bool().required('Surplus flag required'),

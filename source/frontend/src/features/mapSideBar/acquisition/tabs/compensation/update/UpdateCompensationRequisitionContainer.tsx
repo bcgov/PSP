@@ -7,7 +7,7 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
-import { Api_AcquisitionFile, Api_AcquisitionFilePerson } from '@/models/api/AcquisitionFile';
+import { Api_AcquisitionFile, Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
@@ -109,8 +109,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
           const teamMemberOptions: PayeeOption[] =
             acquisitionFile.acquisitionTeam
               ?.filter(
-                (x): x is Api_AcquisitionFilePerson =>
-                  !!x && x.personProfileTypeCode === 'MOTILAWYER',
+                (x): x is Api_AcquisitionFileTeam => !!x && x.teamProfileTypeCode === 'MOTILAWYER',
               )
               .map(x => PayeeOption.createTeamMember(x)) || [];
           options.push(...teamMemberOptions);

@@ -24,7 +24,6 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
         interestHolderPropertyId: 101,
         acquisitionFilePropertyId: 1,
         acquisitionFileProperty: null,
-        isDisabled: false,
         propertyInterestTypes: [
           {
             id: 'AC',
@@ -45,7 +44,6 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
         interestHolderPropertyId: 102,
         acquisitionFilePropertyId: 2,
         acquisitionFileProperty: null,
-        isDisabled: false,
         propertyInterestTypes: [
           {
             id: 'AC',
@@ -97,7 +95,6 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
         interestHolderPropertyId: 103,
         acquisitionFilePropertyId: 1,
         acquisitionFileProperty: null,
-        isDisabled: false,
         propertyInterestTypes: [
           {
             id: 'AC',
@@ -118,7 +115,6 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
         interestHolderPropertyId: 104,
         acquisitionFilePropertyId: 2,
         acquisitionFileProperty: null,
-        isDisabled: false,
         propertyInterestTypes: [
           {
             id: 'AC',

@@ -93,9 +93,9 @@ namespace Pims.Api.Models.Concepts
         public IList<AcquisitionFilePropertyModel> FileProperties { get; set; }
 
         /// <summary>
-        /// get/set - A list of acquisition file person relationships.
+        /// get/set - A list of acquisition file team relationships.
         /// </summary>
-        public IList<AcquisitionFilePersonModel> AcquisitionTeam { get; set; }
+        public IList<AcquisitionFileTeamModel> AcquisitionTeam { get; set; }
 
         /// <summary>
         /// get/set - A list of acquisition file person relationships.
@@ -111,6 +111,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - A list of acquisition file checklist items.
         /// </summary>
         public IList<AcquisitionFileChecklistItemModel> AcquisitionFileChecklist { get; set; }
+
+        /// <summary>
+        /// get/set - A list of compensation requisitions related to the acquisition file.
+        /// </summary>
+        public IList<CompensationRequisitionModel> CompensationRequisitions { get; set; }
 
         #endregion
     }

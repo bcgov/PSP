@@ -11,6 +11,8 @@ namespace Pims.Api.Services
 
         PimsAcquisitionFile GetById(long id);
 
+        LastUpdatedByModel GetLastUpdateInformation(long acquisitionFileId);
+
         PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides);
 
         PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides);
@@ -21,7 +23,7 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsAcquisitionOwner> GetOwners(long id);
 
-        IEnumerable<PimsAcquisitionFilePerson> GetTeamMembers();
+        IEnumerable<PimsAcquisitionFileTeam> GetTeamMembers();
 
         IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id);
 

@@ -25,13 +25,13 @@ export const useGenerateAgreement = () => {
     file.fileProperties = properties;
 
     const coordinator = file.acquisitionTeam?.find(
-      team => team.personProfileTypeCode === 'PROPCOORD',
+      team => team.teamProfileTypeCode === 'PROPCOORD',
     );
     const negotiatingAgent = file.acquisitionTeam?.find(
-      team => team.personProfileTypeCode === 'NEGOTAGENT',
+      team => team.teamProfileTypeCode === 'NEGOTAGENT',
     );
     const provincialSolicitor = file.acquisitionTeam?.find(
-      team => team.personProfileTypeCode === 'MOTILAWYER',
+      team => team.teamProfileTypeCode === 'MOTILAWYER',
     );
     const ownerSolicitor = file.acquisitionFileInterestHolders?.find(
       x => x.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR,

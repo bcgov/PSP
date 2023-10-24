@@ -8,7 +8,6 @@ export interface Api_PropertyFile extends Api_ConcurrentVersion {
   file?: Api_File;
   fileId?: number;
   propertyName?: string;
-  isDisabled?: boolean;
   displayOrder?: number;
   isLegalOpinionRequired?: boolean;
   isLegalOpinionObtained?: boolean;

@@ -51,7 +51,7 @@ namespace Pims.Dal.Repositories
                 .Include(c => c.PimsCompReqFinancials)
                     .ThenInclude(y => y.FinancialActivityCode)
                 .Include(x => x.AcquisitionOwner)
-                .Include(x => x.AcquisitionFilePerson)
+                .Include(x => x.AcquisitionFileTeam)
                 .Include(x => x.InterestHolder)
                 .Include(x => x.AlternateProject)
                 .AsNoTracking()

@@ -17,7 +17,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectContact(string contactSearchName, string contactType)
         {
-            Wait(3000);
+            Wait(5000);
 
             switch (contactType)
             {

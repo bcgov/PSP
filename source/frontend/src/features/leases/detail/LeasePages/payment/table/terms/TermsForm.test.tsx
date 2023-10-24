@@ -365,12 +365,76 @@ describe('TermsForm component', () => {
     expect(tooltip.id).toBe('no-delete-tooltip-term-1');
   });
 
+  it('does not render generation button if missing permissions', async () => {
+    const {
+      component: { queryByTitle },
+    } = await setup({
+      initialValues: {
+        ...new LeaseFormModel(),
+        terms: [
+          {
+            ...defaultTestFormLeaseTerm,
+            isTermExercised: false,
+            payments: [{ amountTotal: 1, receivedDate: '2020-01-01T18:00' }] as FormLeasePayment[],
+          },
+        ],
+      },
+      claims: [],
+    });
+
+    expect(queryByTitle('Generate H1005(a)')).toBeNull();
+  });
+
+  it('does not render generation button if lease is not of expected type', async () => {
+    const {
+      component: { queryByTitle },
+    } = await setup({
+      initialValues: {
+        ...new LeaseFormModel(),
+        leaseTypeCode: 'OTHER',
+        terms: [
+          {
+            ...defaultTestFormLeaseTerm,
+            isTermExercised: false,
+            payments: [{ amountTotal: 1, receivedDate: '2020-01-01T18:00' }] as FormLeasePayment[],
+          },
+        ],
+      },
+    });
+
+    expect(queryByTitle('Generate H1005(a)')).toBeNull();
+  });
+
+  it('only renders generation button on first term', async () => {
+    const { findFirstRow, findCell } = await setup({
+      initialValues: {
+        ...new LeaseFormModel(),
+        leaseTypeCode: 'LIOCCUTIL',
+        terms: [
+          {
+            ...defaultTestFormLeaseTerm,
+            isTermExercised: false,
+          },
+          {
+            ...defaultTestFormLeaseTerm,
+            isTermExercised: false,
+          },
+        ],
+      },
+    });
+
+    const row = findFirstRow() as HTMLElement;
+    expect(row).not.toBeNull();
+    expect(findCell(row, 11)?.textContent).toContain('Generate H1005(a)');
+  });
+
   it('calls onGenerate when generation button is clicked', async () => {
     const {
       component: { queryAllByTitle },
     } = await setup({
       initialValues: {
         ...new LeaseFormModel(),
+        leaseTypeCode: 'LIOCCUTIL',
         terms: [
           {
             ...defaultTestFormLeaseTerm,

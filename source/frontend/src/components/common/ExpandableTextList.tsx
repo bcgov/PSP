@@ -4,7 +4,7 @@ import { LinkButton } from './buttons';
 
 export interface IExpandableTextListProps<T> {
   items: T[];
-  renderFunction: (item: T) => ReactElement;
+  renderFunction: (item: T, index?: number) => ReactElement;
   keyFunction: (item: T, index: number) => string;
   delimiter?: ReactElement | string;
   maxCollapsedLength?: number;
@@ -28,15 +28,17 @@ export function ExpandableTextList<T>({
     <div>
       {displayedItems.map((item: T, index: number) => (
         <span key={keyFunction(item, index)}>
-          {renderFunction(item)}
+          {renderFunction(item, index)}
           {index < items.length - 1 && delimiter}
         </span>
       ))}
-      {!!maxCollapsedLength && maxCollapsedLength < items.length && (
-        <LinkButton data-testid="expand" onClick={() => setIsExpanded(collapse => !collapse)}>
-          {isExpanded ? 'hide' : `[+${items.length - displayedItemsLength} more...]`}
-        </LinkButton>
-      )}
+      {maxCollapsedLength !== undefined &&
+        maxCollapsedLength !== null &&
+        maxCollapsedLength < items.length && (
+          <LinkButton data-testid="expand" onClick={() => setIsExpanded(collapse => !collapse)}>
+            {isExpanded ? 'hide' : `[+${items.length - displayedItemsLength} more...]`}
+          </LinkButton>
+        )}
     </div>
   );
 }

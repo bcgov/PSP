@@ -105,49 +105,47 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(searchResearchRegionInput);
 
             //Search Bar Elements
-            Assert.True(webDriver.FindElement(searchResearchRegionInput).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchBySelect).Displayed);
+            AssertTrueIsDisplayed(searchResearchRegionInput);
+            AssertTrueIsDisplayed(searchResearchBySelect);
+
             if (webDriver.FindElements(searchResearchFileNbrInput).Count > 0)
-            {
-                Assert.True(webDriver.FindElement(searchResearchFileNbrInput).Displayed);
-            }
+                AssertTrueIsDisplayed(searchResearchFileNbrInput);
             else
-            {
-                Assert.True(webDriver.FindElement(searchResearchNameInput).Displayed);
-            }
-            Assert.True(webDriver.FindElement(searchResearchStatusSelect).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchRoadInput).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchCreateUpdateDateSelect).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchFromDateInput).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchToDateInput).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchCreateUpdateBySelect).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchUserUpdatedIdirInput).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchFileButton).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchFileResetButton).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchCreateNewBttn).Displayed);
+                AssertTrueIsDisplayed(searchResearchNameInput);
+
+            AssertTrueIsDisplayed(searchResearchStatusSelect);
+            AssertTrueIsDisplayed(searchResearchRoadInput);
+            AssertTrueIsDisplayed(searchResearchCreateUpdateDateSelect);
+            AssertTrueIsDisplayed(searchResearchFromDateInput);
+            AssertTrueIsDisplayed(searchResearchToDateInput);
+            AssertTrueIsDisplayed(searchResearchCreateUpdateBySelect);
+            AssertTrueIsDisplayed(searchResearchUserUpdatedIdirInput);
+            AssertTrueIsDisplayed(searchResearchFileButton);
+            AssertTrueIsDisplayed(searchResearchFileResetButton);
+            AssertTrueIsDisplayed(searchResearchCreateNewBttn);
 
             //Table Elements
-            Assert.True(webDriver.FindElement(searchResearchFileNbrLabel).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchFileNameLabel).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchFileRegionLabel).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchFileCreatedByLabel).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchFileCreatedDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchFileUpdatedByLabel).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchFileUpdatedDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchFileStatusLabel).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchFileSortByRFileBttn).Displayed);
+            AssertTrueIsDisplayed(searchResearchFileNbrLabel);
+            AssertTrueIsDisplayed(searchResearchFileNameLabel);
+            AssertTrueIsDisplayed(searchResearchFileRegionLabel);
+            AssertTrueIsDisplayed(searchResearchFileCreatedByLabel);
+            AssertTrueIsDisplayed(searchResearchFileCreatedDateLabel);
+            AssertTrueIsDisplayed(searchResearchFileUpdatedByLabel);
+            AssertTrueIsDisplayed(searchResearchFileUpdatedDateLabel);
+            AssertTrueIsDisplayed(searchResearchFileStatusLabel);
+            AssertTrueIsDisplayed(searchResearchFileSortByRFileBttn);
 
             //Pagination Elements
             WaitUntilVisible(searchResearchFilePaginationMenu);
-            Assert.True(webDriver.FindElement(searchResearchFilePaginationMenu).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchPaginationList).Displayed);
+            AssertTrueIsDisplayed(searchResearchFilePaginationMenu);
+            AssertTrueIsDisplayed(searchResearchPaginationList);
         }
 
         public void VerifyResearchFileTableContent(ResearchFile researchFile, string user)
         {
             AssertTrueIsDisplayed(searchResearchFile1stResultLink);
             AssertTrueContentEquals(searchResearchFile1stResultFileName, researchFile.ResearchFileName);
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultRegion).Text != "");
+            AssertTrueContentEquals(searchResearchFile1stResultRegion, researchFile.ResearchFileMOTIRegion);
             AssertTrueContentEquals(searchResearchFile1stResultCreator, user);
             AssertTrueContentEquals(searchResearchFile1stResultCreateDate, GetTodayFormattedDate());
             AssertTrueContentEquals(searchResearchFile1stResultUpdatedBy, user);
