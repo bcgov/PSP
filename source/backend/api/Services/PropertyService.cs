@@ -228,7 +228,7 @@ namespace Pims.Api.Services
         public PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity)
         {
             _logger.LogInformation("Creating property Activity...");
-            _user.ThrowIfNotAuthorized(Permissions.ManagementEdit, Permissions.PropertyEdit);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementAdd, Permissions.PropertyEdit);
 
             var propertyActivityResult = _propertyActivityRepository.Create(propertyActivity);
             _propertyActivityRepository.CommitTransaction();

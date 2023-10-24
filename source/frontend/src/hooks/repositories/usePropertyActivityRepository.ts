@@ -29,7 +29,7 @@ export const usePropertyActivityRepository = () => {
     ),
     requestName: 'getActivitySubtypes',
     onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to retreive property activity subtypes.'),
+    onError: useAxiosErrorHandler('Failed to retrive property activity subtypes.'),
   });
 
   const getActivities = useApiRequestWrapper<
@@ -54,7 +54,7 @@ export const usePropertyActivityRepository = () => {
     ),
     requestName: 'getActivityApi',
     onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to retreive property activity.'),
+    onError: useAxiosErrorHandler('Failed to retrive property activity.'),
   });
 
   const createActivity = useApiRequestWrapper<

@@ -1,14 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
-import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
-import {
-  Api_PropertyActivity,
-  Api_PropertyActivityInvolvedParty,
-  Api_PropertyMinistryContact,
-} from '@/models/api/PropertyActivity';
+import { Api_PropertyActivity } from '@/models/api/PropertyActivity';
 
+import useActivityContactRetriever from '../hooks';
 import { IPropertyActivityDetailViewProps } from './PropertyActivityDetailView';
 
 export interface IPropertyActivityDetailContainerProps {
@@ -26,64 +21,15 @@ export const PropertyActivityDetailContainer: React.FunctionComponent<
   const [loadedActivity, setLoadedActivity] = useState<Api_PropertyActivity | null>(null);
 
   const {
+    fetchMinistryContacts,
+    fetchPartiesContact,
+    fetchProviderContact,
+    isLoading: isContactLoading,
+  } = useActivityContactRetriever();
+
+  const {
     getActivity: { execute: getActivity, loading: getActivityLoading },
   } = usePropertyActivityRepository();
-
-  const {
-    getPersonDetail: { execute: getPerson, loading: loadingPerson },
-  } = usePersonRepository();
-
-  const {
-    getOrganizationDetail: { execute: getOrganization, loading: loadingOrganization },
-  } = useOrganizationRepository();
-
-  const fetchMinistryContacs = useCallback(
-    async (c: Api_PropertyMinistryContact) => {
-      if (c.personId !== undefined && c.personId !== null) {
-        const person = await getPerson(c.personId);
-        if (person !== undefined) {
-          c.person = person;
-        }
-      }
-    },
-    [getPerson],
-  );
-
-  const fetchPartiesContact = useCallback(
-    async (c: Api_PropertyActivityInvolvedParty) => {
-      if (c.personId !== undefined && c.personId !== null) {
-        const person = await getPerson(c.personId);
-        if (person !== undefined) {
-          c.person = person;
-        }
-      }
-      if (!!c.organizationId) {
-        const organization = await getOrganization(c.organizationId);
-        if (organization !== undefined) {
-          c.organization = organization;
-        }
-      }
-    },
-    [getPerson, getOrganization],
-  );
-
-  const fetchProviderContact = useCallback(
-    async (c: Api_PropertyActivity) => {
-      if (c.serviceProviderPersonId !== undefined && c.serviceProviderPersonId !== null) {
-        const person = await getPerson(c.serviceProviderPersonId);
-        if (person !== undefined) {
-          c.serviceProviderPerson = person;
-        }
-      }
-      if (!!c.serviceProviderOrgId) {
-        const organization = await getOrganization(c.serviceProviderOrgId);
-        if (organization !== undefined) {
-          c.serviceProviderOrg = organization;
-        }
-      }
-    },
-    [getPerson, getOrganization],
-  );
 
   // Load the activity
   const fetchActivity = useCallback(
@@ -91,7 +37,7 @@ export const PropertyActivityDetailContainer: React.FunctionComponent<
       const retrieved = await getActivity(propertyId, activityId);
       if (retrieved !== undefined) {
         for (let i = 0; i < retrieved.ministryContacts.length; i++) {
-          await fetchMinistryContacs(retrieved.ministryContacts[i]);
+          await fetchMinistryContacts(retrieved.ministryContacts[i]);
         }
         for (let i = 0; i < retrieved.involvedParties.length; i++) {
           await fetchPartiesContact(retrieved.involvedParties[i]);
@@ -103,7 +49,7 @@ export const PropertyActivityDetailContainer: React.FunctionComponent<
         setLoadedActivity(null);
       }
     },
-    [getActivity, fetchProviderContact, fetchMinistryContacs, fetchPartiesContact],
+    [fetchMinistryContacts, fetchPartiesContact, fetchProviderContact, getActivity],
   );
 
   useEffect(() => {
@@ -117,7 +63,7 @@ export const PropertyActivityDetailContainer: React.FunctionComponent<
       propertyId={propertyId}
       activity={loadedActivity}
       onClose={onClose}
-      loading={getActivityLoading || loadingOrganization || loadingPerson}
+      loading={getActivityLoading || isContactLoading}
       show={show}
       setShow={setShow}
     />

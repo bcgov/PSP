@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
 export const PropertyActivityEditFormYupSchema = Yup.object().shape({
-  activityTypeCode: Yup.string().required('Activitiy type is required'),
+  activityTypeCode: Yup.string().required('Activity type is required'),
   activitySubtypeCode: Yup.string().required('Sub-type is required'),
   activityStatusCode: Yup.string().required('Status is required'),
   requestedDate: Yup.string().required('Requested added date is required'),
@@ -23,8 +23,14 @@ export const PropertyActivityEditFormYupSchema = Yup.object().shape({
         .required('Description is required')
         .max(1000, 'Description must be at most 1000 characters'),
       pretaxAmount: Yup.string().required('Pre-tax amount is required'),
-      pstAmount: Yup.number().required('Pst amount is required'),
+      //pstAmount: Yup.number().required('Pst amount is required'),
       isPstRequired: Yup.boolean().required('Is-Pst-required is required'),
+      pstAmount: Yup.number().when('isPstRequired', {
+        is: (isPstRequired: boolean) => isPstRequired === true,
+        then: Yup.number()
+          .moreThan(0, 'Pst must be greater than 0')
+          .required('Pst amount is required'),
+      }),
     }),
   ),
 });

@@ -103,7 +103,7 @@ namespace Pims.Api.Areas.Property.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("{propertyId}/management-activities")]
-        [HasPermission(Permissions.ManagementEdit)]
+        [HasPermission(Permissions.ManagementAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(PropertyActivityModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
@@ -136,8 +136,8 @@ namespace Pims.Api.Areas.Property.Controllers
             {
                 throw new BadRequestException("Invalid activity identifiers.");
             }
-            var activityEntitiy = _mapper.Map<PimsPropertyActivity>(activityModel);
-            var updatedProperty = _propertyService.UpdateActivity(activityEntitiy);
+            var activityEntity = _mapper.Map<PimsPropertyActivity>(activityModel);
+            var updatedProperty = _propertyService.UpdateActivity(activityEntity);
 
             return new JsonResult(_mapper.Map<PropertyActivityModel>(updatedProperty));
         }

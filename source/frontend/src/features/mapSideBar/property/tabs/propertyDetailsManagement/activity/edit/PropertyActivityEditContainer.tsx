@@ -1,18 +1,12 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
-import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
-import {
-  Api_PropertyActivity,
-  Api_PropertyActivityInvolvedParty,
-  Api_PropertyActivitySubtype,
-  Api_PropertyMinistryContact,
-} from '@/models/api/PropertyActivity';
+import { Api_PropertyActivity, Api_PropertyActivitySubtype } from '@/models/api/PropertyActivity';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
+import useActivityContactRetriever from '../hooks';
 import { IPropertyActivityEditFormProps } from './PropertyActivityEditForm';
 
 export interface IPropertyActivityEditContainerProps {
@@ -38,19 +32,18 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
   const [subtypes, setSubtypes] = useState<Api_PropertyActivitySubtype[]>([]);
 
   const {
+    fetchMinistryContacts,
+    fetchPartiesContact,
+    fetchProviderContact,
+    isLoading: isContactLoading,
+  } = useActivityContactRetriever();
+
+  const {
     getActivitySubtypes: { execute: getSubtypes, loading: getSubtypesLoading },
     getActivity: { execute: getActivity, loading: getActivityLoading },
     createActivity: { execute: createActivity, loading: createActivityLoading },
     updateActivity: { execute: updateActivity, loading: updateActivityLoading },
   } = usePropertyActivityRepository();
-
-  const {
-    getPersonDetail: { execute: getPerson, loading: loadingPerson },
-  } = usePersonRepository();
-
-  const {
-    getOrganizationDetail: { execute: getOrganization, loading: loadingOrganization },
-  } = useOrganizationRepository();
 
   // Load the subtypes
   const fetchSubtypes = useCallback(async () => {
@@ -66,61 +59,13 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
     fetchSubtypes();
   }, [fetchSubtypes]);
 
-  const fetchMinistryContacs = useCallback(
-    async (c: Api_PropertyMinistryContact) => {
-      if (c.personId !== undefined && c.personId !== null) {
-        const person = await getPerson(c.personId);
-        if (person !== undefined) {
-          c.person = person;
-        }
-      }
-    },
-    [getPerson],
-  );
-
-  const fetchPartiesContact = useCallback(
-    async (c: Api_PropertyActivityInvolvedParty) => {
-      if (c.personId !== undefined && c.personId !== null) {
-        const person = await getPerson(c.personId);
-        if (person !== undefined) {
-          c.person = person;
-        }
-      }
-      if (c.organizationId !== null) {
-        const organization = await getOrganization(c.organizationId);
-        if (organization !== undefined) {
-          c.organization = organization;
-        }
-      }
-    },
-    [getPerson, getOrganization],
-  );
-
-  const fetchProviderContact = useCallback(
-    async (c: Api_PropertyActivity) => {
-      if (c.serviceProviderPersonId !== undefined && c.serviceProviderPersonId !== null) {
-        const person = await getPerson(c.serviceProviderPersonId);
-        if (person !== undefined) {
-          c.serviceProviderPerson = person;
-        }
-      }
-      if (c.serviceProviderOrgId !== null) {
-        const organization = await getOrganization(c.serviceProviderOrgId);
-        if (organization !== undefined) {
-          c.serviceProviderOrg = organization;
-        }
-      }
-    },
-    [getPerson, getOrganization],
-  );
-
   // Load the activity
   const fetchActivity = useCallback(
     async (propertyId: number, activityId: number) => {
       const retrieved = await getActivity(propertyId, activityId);
       if (retrieved !== undefined) {
         for (let i = 0; i < retrieved.ministryContacts.length; i++) {
-          await fetchMinistryContacs(retrieved.ministryContacts[i]);
+          await fetchMinistryContacts(retrieved.ministryContacts[i]);
         }
         for (let i = 0; i < retrieved.involvedParties.length; i++) {
           await fetchPartiesContact(retrieved.involvedParties[i]);
@@ -132,7 +77,7 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
         setLoadedActivity(undefined);
       }
     },
-    [fetchMinistryContacs, fetchPartiesContact, fetchProviderContact, getActivity],
+    [fetchMinistryContacts, fetchPartiesContact, fetchProviderContact, getActivity],
   );
 
   useEffect(() => {
@@ -181,8 +126,7 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
         getActivityLoading ||
         createActivityLoading ||
         updateActivityLoading ||
-        loadingPerson ||
-        loadingOrganization
+        isContactLoading
       }
       show={show}
       setShow={setShow}

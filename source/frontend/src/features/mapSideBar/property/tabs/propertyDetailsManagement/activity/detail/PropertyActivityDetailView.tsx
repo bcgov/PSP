@@ -62,9 +62,9 @@ export const PropertyActivityDetailView: React.FunctionComponent<
               <StyledSummarySection>
                 <LoadingBackdrop show={props.loading} />
                 <StyledEditWrapper className="mr-3 my-1">
-                  {hasClaim(Claims.PROPERTY_EDIT) && (
+                  {hasClaim(Claims.MANAGEMENT_EDIT) && (
                     <EditButton
-                      title="Edit property details"
+                      title="Edit property activity"
                       onClick={() => {
                         history.push(
                           `/mapview/sidebar/property/${props.propertyId}/activity/${props.activity?.id}/edit`,

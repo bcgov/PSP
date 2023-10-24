@@ -1,5 +1,5 @@
 import { FormikProps, useFormikContext } from 'formik';
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
 
@@ -30,11 +30,16 @@ export const InvoiceForm: React.FunctionComponent<React.PropsWithChildren<IInvoi
 }) => {
   const { values, setFieldValue } = useFormikContext<PropertyActivityFormModel>();
 
+  const [customGst, setCustomGst] = useState<number | null>(null);
+  const [customPst, setCustomPst] = useState<number | null>(null);
+
   useEffect(() => {
     const pretaxAmount = values.invoices[index].pretaxAmount;
     const isPstRequired = values.invoices[index].isPstRequired;
-    const gstAmount = pretaxAmount * gstConstant;
-    const pstAmount = pretaxAmount * pstConstant * (isPstRequired ? 1 : 0);
+    const gstAmount = customGst === null ? pretaxAmount * gstConstant : customGst;
+
+    const pstAmount =
+      (customPst === null ? pretaxAmount * pstConstant : customPst) * (isPstRequired ? 1 : 0);
     const totalValue = pretaxAmount + gstAmount + pstAmount;
 
     if (totalValue !== values.invoices[index].totalAmount) {
@@ -42,25 +47,63 @@ export const InvoiceForm: React.FunctionComponent<React.PropsWithChildren<IInvoi
       setFieldValue(`${namespace}.pstAmount`, pstAmount);
       setFieldValue(`${namespace}.totalAmount`, totalValue);
     }
-  }, [gstConstant, index, namespace, pstConstant, setFieldValue, values.invoices]);
+  }, [
+    customGst,
+    customPst,
+    gstConstant,
+    index,
+    namespace,
+    pstConstant,
+    setFieldValue,
+    values.invoices,
+  ]);
+
+  const onAmountChange = async () => {
+    setCustomGst(null);
+    setCustomPst(null);
+  };
+
+  const onGstChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
+    const regex = /[^0-9.-]/g;
+    const cleanValue = changeEvent.target.value.replace(regex, '');
+    const gstValue = parseFloat(cleanValue);
+    debugger;
+    if (isNaN(gstValue)) {
+      setCustomGst(null);
+    } else {
+      setCustomGst(gstValue ?? null);
+    }
+  };
+
+  const onPstChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
+    const regex = /[^0-9.-]/g;
+    const cleanValue = changeEvent.target.value.replace(regex, '');
+    const pstValue = parseFloat(cleanValue);
+    debugger;
+    if (isNaN(pstValue)) {
+      setCustomPst(null);
+    } else {
+      setCustomPst(pstValue ?? null);
+    }
+  };
 
   return (
     <Section header={`Invoice ${index + 1}`} isCollapsable initiallyExpanded>
-      <Row>
-        <Col className="col-10">
-          <SectionField label="Invoice number" labelWidth="4" contentWidth="8">
-            <Input field={`${namespace}.invoiceNum`} className="pl-5" />
-          </SectionField>
-        </Col>
-        <Col className="col-auto">
-          <StyledRemoveLinkButton
-            title="invoice delete"
-            data-testid="invoice-delete-button"
-            icon={<FaTrash size={24} id={`invoice-delete-${index}`} title="invoice delete" />}
-            onClick={onDelete}
-          />
-        </Col>
-      </Row>
+      <SectionField label="Invoice number" contentWidth="7">
+        <Row className="border no-gutters">
+          <Col className="col-10">
+            <Input field={`${namespace}.invoiceNum`} />
+          </Col>
+          <Col className="col-1 pl-4">
+            <StyledRemoveLinkButton
+              title="invoice delete"
+              data-testid="invoice-delete-button"
+              icon={<FaTrash size={24} id={`invoice-delete-${index}`} title="invoice delete" />}
+              onClick={onDelete}
+            />
+          </Col>
+        </Row>
+      </SectionField>
 
       <SectionField label="Invoice date" contentWidth="7" required>
         <FastDatePicker field={`${namespace}.invoiceDateTime`} formikProps={formikProps} />
@@ -71,19 +114,36 @@ export const InvoiceForm: React.FunctionComponent<React.PropsWithChildren<IInvoi
       </SectionField>
 
       <SectionField label="Amount (before tax)" contentWidth="7" required>
-        <FastCurrencyInput field={`${namespace}.pretaxAmount`} formikProps={formikProps} />
+        <FastCurrencyInput
+          field={`${namespace}.pretaxAmount`}
+          formikProps={formikProps}
+          onChange={onAmountChange}
+        />
       </SectionField>
 
       <SectionField label="GST amount" contentWidth="7">
-        <FastCurrencyInput field={`${namespace}.gstAmount`} formikProps={formikProps} disabled />
+        <FastCurrencyInput
+          field={`${namespace}.gstAmount`}
+          formikProps={formikProps}
+          onChange={onGstChange}
+        />
       </SectionField>
 
       <SectionField label="PST applicable?" contentWidth="7">
         <YesNoSelect field={`${namespace}.isPstRequired`} notNullable />
       </SectionField>
 
-      <SectionField label="PST amount" contentWidth="7">
-        <FastCurrencyInput field={`${namespace}.pstAmount`} formikProps={formikProps} disabled />
+      <SectionField
+        label="PST amount"
+        contentWidth="7"
+        required={formikProps.values.invoices[index].isPstRequired}
+      >
+        <FastCurrencyInput
+          field={`${namespace}.pstAmount`}
+          formikProps={formikProps}
+          onChange={onPstChange}
+          disabled={!formikProps.values.invoices[index].isPstRequired}
+        />
       </SectionField>
 
       <SectionField label="Total amount" contentWidth="7">
