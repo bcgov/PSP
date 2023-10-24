@@ -60,7 +60,7 @@ Scenario: 09. Acquisition File Compensation Tab
 #Scenario: 10. Acquisition File Expropriation Tab
 
 Scenario: 11. Acquisition File from Pin
-	Given I create an Acquisition File from a pin on map from row number 16
+	Given I create an Acquisition File from a pin on map from row number 5
 	Then A new Acquisition file is created successfully
 
 Scenario: 12. Acquisition Files List View

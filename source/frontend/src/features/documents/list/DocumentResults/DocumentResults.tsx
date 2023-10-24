@@ -33,7 +33,7 @@ export const DocumentResults: React.FunctionComponent<
       externalSort={{ sort, setSort }}
       data={results ?? []}
       noRowsMessage="No matching Documents found"
-      pageSize={1}
+      pageSize={10}
       manualPagination={false}
       {...rest}
     ></Table>

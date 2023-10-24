@@ -117,7 +117,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
 
 .c17 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.4rem);
+  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
@@ -436,9 +436,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
               >
                 Last updated:
                  
-                <strong>
-                  Sep 2, 2022
-                </strong>
+                <strong />
                  by
                  
                 <span
@@ -447,7 +445,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
                   id="userNameTooltip"
                 >
                   <strong>
-                    admin
+                    USER
                   </strong>
                 </span>
               </span>

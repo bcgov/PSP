@@ -84,7 +84,6 @@ const emptyPropertyContact: Api_PropertyContact = {
   primaryContactId: null,
   primaryContact: null,
   purpose: null,
-  isDisabled: null,
   rowVersion: 0,
 };
 

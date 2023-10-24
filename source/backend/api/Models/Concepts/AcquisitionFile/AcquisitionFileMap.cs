@@ -29,11 +29,12 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCodeNavigation)
                 .Map(dest => dest.RegionCode, src => src.RegionCodeNavigation)
                 .Map(dest => dest.FileProperties, src => src.PimsPropertyAcquisitionFiles)
-                .Map(dest => dest.AcquisitionTeam, src => src.PimsAcquisitionFilePeople)
+                .Map(dest => dest.AcquisitionTeam, src => src.PimsAcquisitionFileTeams)
                 .Map(dest => dest.AcquisitionFileOwners, src => src.PimsAcquisitionOwners)
                 .Map(dest => dest.AcquisitionFileInterestHolders, src => src.PimsInterestHolders)
                 .Map(dest => dest.AcquisitionFileChecklist, src => src.PimsAcquisitionChecklistItems)
                 .Map(dest => dest.LegacyStakeholders, src => src.GetLegacyInterestHolders())
+                .Map(dest => dest.CompensationRequisitions, src => src.PimsCompensationRequisitions)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<AcquisitionFileModel, Entity.PimsAcquisitionFile>()
@@ -55,7 +56,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCode.Id)
                 .Map(dest => dest.RegionCode, src => src.RegionCode.Id)
                 .Map(dest => dest.PimsPropertyAcquisitionFiles, src => src.FileProperties)
-                .Map(dest => dest.PimsAcquisitionFilePeople, src => src.AcquisitionTeam)
+                .Map(dest => dest.PimsAcquisitionFileTeams, src => src.AcquisitionTeam)
                 .Map(dest => dest.PimsAcquisitionOwners, src => src.AcquisitionFileOwners)
                 .Map(dest => dest.PimsInterestHolders, src => src.AcquisitionFileInterestHolders)
                 .Map(dest => dest.PimsAcquisitionChecklistItems, src => src.AcquisitionFileChecklist)

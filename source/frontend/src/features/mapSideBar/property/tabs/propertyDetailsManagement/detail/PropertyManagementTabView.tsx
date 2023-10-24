@@ -5,10 +5,12 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { Api_Property } from '@/models/api/Property';
 
 import { EditManagementState } from '../../../PropertyViewSelector';
-import { ManagementSummaryContainer } from './ManagementSummaryContainer';
-import { ManagementSummaryView } from './ManagementSummaryView';
+import PropertyManagementActivitiesListContainer from '../activity/list/ManagementActivitiesListContainer';
+import ManagementActivitiesListView from '../activity/list/ManagementActivitiesListView';
 import { PropertyContactListContainer } from './PropertyContactListContainer';
 import { PropertyContactListView } from './PropertyContactListView';
+import { PropertyManagementDetailContainer } from './summary/PropertyManagementDetailContainer';
+import { PropertyManagementDetailView } from './summary/PropertyManagementDetailView';
 
 export interface IPropertyManagementTabView {
   property: Api_Property;
@@ -29,10 +31,9 @@ export const PropertyManagementTabView: React.FunctionComponent<IPropertyManagem
     return (
       <StyledSummarySection>
         <LoadingBackdrop show={loading} parentScreen={true} />
-
-        <ManagementSummaryContainer
-          property={property}
-          View={ManagementSummaryView}
+        <PropertyManagementDetailContainer
+          propertyId={property.id}
+          View={PropertyManagementDetailView}
           setEditManagementState={setEditManagementState}
         />
         <PropertyContactListContainer
@@ -40,6 +41,11 @@ export const PropertyManagementTabView: React.FunctionComponent<IPropertyManagem
           View={PropertyContactListView}
           setEditManagementState={setEditManagementState}
         />
+
+        <PropertyManagementActivitiesListContainer
+          View={ManagementActivitiesListView}
+          propertyId={property.id}
+        ></PropertyManagementActivitiesListContainer>
       </StyledSummarySection>
     );
   } else {

@@ -41,6 +41,7 @@ export interface IPaginateProperties extends IPaginateParams {
 export interface IGeoSearchParams {
   STREET_ADDRESS_1?: string;
   PID?: string;
+  PID_PADDED?: string;
   PIN?: string;
   SURVEY_PLAN_NUMBER?: string;
   BBOX?: string;
@@ -78,6 +79,7 @@ export const PROPERTY_TENURE_TYPES = 'PimsPropertyTenureType';
 export const PROPERTY_ROAD_TYPES = 'PimsPropertyRoadType';
 export const PROPERTY_ADJACENT_LAND_TYPES = 'PimsPropertyAdjacentLandType';
 export const PROPERTY_VOLUMETRIC_TYPES = 'PimsVolumetricType';
+export const PROPERTY_MANAGEMENT_PURPOSE_TYPES = 'PimsPropertyPurposeType';
 export const PROVINCE_TYPES = 'PimsProvinceState';
 export const REGION_TYPES = 'PimsRegion';
 export const DISTRICT_TYPES = 'PimsDistrict';
@@ -95,7 +97,7 @@ export const ACQUISITION_PHYSICAL_FILE_STATUS_TYPES = 'PimsAcqPhysFileStatusType
 export const ACQUISITION_TYPES = 'PimsAcquisitionType';
 export const ACTIVITY_TEMPLATE_TYPE = 'PimsActivityTemplateType';
 export const ACTIVITY_STATUS_TYPE = 'PimsActivityInstanceStatusType';
-export const ACQUISITION_FILE_PERSON_PROFILE_TYPES = 'PimsAcqFlPersonProfileType';
+export const ACQUISITION_FILE_TEAM_PROFILE_TYPES = 'PimsAcqFlTeamProfileType';
 export const TENANT_TYPES = 'PimsTenantType';
 export const ACQUISITION_FUNDING_TYPES = 'PimsAcquisitionFundingType';
 export const PROJECT_STATUS_TYPES = 'PimsProjectStatusType';
@@ -110,6 +112,9 @@ export const ACQUISITION_CHECKLIST_ITEM_STATUS_TYPES = 'PimsAcqChklstItemStatusT
 export const AGREEMENT_TYPES = 'PimsAgreementType';
 export const INTEREST_HOLDER_TYPES = 'PimsInterestHolderInterestType';
 export const PAYMENT_ITEM_TYPES = 'PimsPaymentItemType';
+export const PROP_MGMT_ACTIVITY_STATUS_TYPES = 'PimsPropMgmtActivityStatusType';
+export const PROP_MGMT_ACTIVITY_SUBTYPES_TYPES = 'PimsPropMgmtActivitySubtype';
+export const PROP_MGMT_ACTIVITY_TYPES = 'PimsPropMgmtActivityType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

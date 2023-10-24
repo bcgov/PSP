@@ -1,13 +1,18 @@
 import { act } from 'react-test-renderer';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import Claims from '@/constants/claims';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
+import { SideBarContextProvider } from '../../context/sidebarContext';
 import ResearchTabsContainer, { IResearchTabsContainerProps } from './ResearchTabsContainer';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 const setEditKey = jest.fn();
 const setEditMode = jest.fn();
@@ -16,11 +21,13 @@ describe('ResearchFileTabs component', () => {
   // render component under test
   const setup = (props: IResearchTabsContainerProps, renderOptions: RenderOptions = {}) => {
     const utils = render(
-      <ResearchTabsContainer
-        researchFile={props.researchFile}
-        setEditKey={setEditKey}
-        setEditMode={setEditMode}
-      />,
+      <SideBarContextProvider>
+        <ResearchTabsContainer
+          researchFile={props.researchFile}
+          setEditKey={setEditKey}
+          setEditMode={setEditMode}
+        />
+      </SideBarContextProvider>,
       {
         useMockAuthentication: true,
         ...renderOptions,
@@ -29,6 +36,10 @@ describe('ResearchFileTabs component', () => {
 
     return { ...utils };
   };
+
+  beforeEach(() => {
+    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+  });
 
   afterEach(() => {
     jest.resetAllMocks();

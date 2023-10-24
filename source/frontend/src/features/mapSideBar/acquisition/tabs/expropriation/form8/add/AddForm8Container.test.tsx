@@ -1,4 +1,5 @@
 import { createMemoryHistory } from 'history';
+import { noop } from 'lodash';
 
 import { Claims } from '@/constants';
 import { mockAcquisitionFileOwnersResponse } from '@/mocks/acquisitionFiles.mock';
@@ -67,16 +68,19 @@ describe('Add Form8 Container component', () => {
       props?: Partial<IAddForm8ContainerProps>;
     } = {},
   ) => {
-    const component = render(<AddForm8Container acquisitionFileId={1} View={TestView} />, {
-      history,
-      store: {
-        [lookupCodesSlice.name]: { lookupCodes: mockLookups },
-        [systemConstantsSlice.name]: { systemConstants: [{ name: 'GST', value: '5.0' }] },
+    const component = render(
+      <AddForm8Container acquisitionFileId={1} View={TestView} onSuccess={noop} />,
+      {
+        history,
+        store: {
+          [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+          [systemConstantsSlice.name]: { systemConstants: [{ name: 'GST', value: '5.0' }] },
+        },
+        useMockAuthentication: true,
+        claims: renderOptions?.claims ?? [Claims.ACQUISITION_EDIT],
+        ...renderOptions,
       },
-      useMockAuthentication: true,
-      claims: renderOptions?.claims ?? [Claims.ACQUISITION_EDIT],
-      ...renderOptions,
-    });
+    );
 
     return {
       ...component,

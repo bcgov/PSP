@@ -11,6 +11,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By menuResearchButton = By.XPath("//a/label[contains(text(),'Research')]/parent::a");
         private By createResearchFileButton = By.XPath("//a[contains(text(),'Create a Research File')]");
 
+        //File Details Tab Element
+        private By fileDetailsTab = By.CssSelector("a[data-rb-event-key='fileDetails']");
+
         //Research File Edit Form Button
         private By researchFileEditButton = By.CssSelector("button[title='Edit research file']");
 
@@ -167,6 +170,12 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(researchFileSummaryBttn).Click();
         }
 
+        public void NavigateToFileDetailsTab()
+        {
+            WaitUntilClickable(fileDetailsTab);
+            webDriver.FindElement(fileDetailsTab).Click();
+        }
+
         public void NavigateToAddPropertiesReseachFile()
         {
             Wait(2000);
@@ -180,8 +189,6 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilClickable(researchProperty1stPropLink);
             webDriver.FindElement(researchProperty1stPropLink).Click();
-
-            //sharedModals.SiteMinderModal();
         }
 
         public void CreateResearchFile(ResearchFile researchFile)
@@ -192,14 +199,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddAdditionalResearchFileInfo(ResearchFile researchFile)
         {
-            WaitUntilVisible(researchFileEditButton);
+            Wait(2000);
             webDriver.FindElement(researchFileEditButton).Click();
 
             //Status
             if (researchFile.Status != "")
-            {
                 ChooseSpecificSelectOption(researchFileStatusSelect, researchFile.Status);
-            }
 
             //Projects
             if (researchFile.Projects.First() != "")
@@ -225,13 +230,28 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Roads
             if (researchFile.RoadName != "")
-            {
                 webDriver.FindElement(researchRoadNameInput).SendKeys(researchFile.RoadName);
-            }
+          
             if (researchFile.RoadAlias != "")
-            {
                 webDriver.FindElement(researchRoadAliasInput).SendKeys(researchFile.RoadAlias);
+
+            //Result
+            if (researchFile.ResearchCompletedDate != "")
+            {
+                webDriver.FindElement(researchCompleteDateInput).SendKeys(researchFile.ResearchCompletedDate);
+                webDriver.FindElement(researchCompleteDateInput).SendKeys(Keys.Enter);
             }
+            if (researchFile.RequestResult != "")
+                webDriver.FindElement(researchResultTextarea).SendKeys(researchFile.RequestResult);
+ 
+            //Expropiation
+            if (researchFile.Expropriation)
+                FocusAndClick(researchResultExpropiationYesRadioBttn);
+             else
+                FocusAndClick(researchResultExpropiationNoRadioBttn);
+            
+            if (researchFile.ExpropriationNotes != "")
+                webDriver.FindElement(researchExpropiationNotes).SendKeys(researchFile.ExpropriationNotes);
 
             //Research Request
             if (researchFile.ResearchPurpose.First() != "")
@@ -251,39 +271,16 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 ChooseSpecificSelectOption(researchRequestSourceSelect, researchFile.RequestSource);
             }
-            if (researchFile.Requester != "")
-            {
-                webDriver.FindElement(selectContactButton).Click();
-                sharedSelectContact.SelectContact(researchFile.Requester, "");
-            }
+
             if (researchFile.RequestDescription != "")
             {
                 WaitUntilVisible(researchDescriptionRequestTextarea);
                 webDriver.FindElement(researchDescriptionRequestTextarea).SendKeys(researchFile.RequestDescription);
             }
-
-            //Result
-            if (researchFile.ResearchCompletedDate != "")
+            if (researchFile.Requester != "")
             {
-                webDriver.FindElement(researchCompleteDateInput).SendKeys(researchFile.ResearchCompletedDate);
-                webDriver.FindElement(researchCompleteDateInput).SendKeys(Keys.Enter);
-            }
-            if (researchFile.RequestResult != "")
-            {
-                webDriver.FindElement(researchResultTextarea).SendKeys(researchFile.RequestResult);
-            }  
-
-            //Expropiation
-            if (researchFile.Expropriation)
-            {
-                FocusAndClick(researchResultExpropiationYesRadioBttn);
-            } else
-            {
-                FocusAndClick(researchResultExpropiationNoRadioBttn);
-            }
-            if (researchFile.ExpropriationNotes != "")
-            {
-                webDriver.FindElement(researchExpropiationNotes).SendKeys(researchFile.ExpropriationNotes);
+                webDriver.FindElement(selectContactButton).Click();
+                sharedSelectContact.SelectContact(researchFile.Requester, "");
             }
         }
 
@@ -333,6 +330,10 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(researchFileEditButton);
             webDriver.FindElement(researchFileEditButton).Click();
+
+            //Status
+            if (researchFile.Status != "")
+                ChooseSpecificSelectOption(researchFileStatusSelect, researchFile.Status);
 
             //Projects
             //Delete previous projects if any
@@ -445,6 +446,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Pick Property
             var elementIndex = index + 1;
             By propertyLink = By.CssSelector("div[data-testid='menu-item-row-" + elementIndex + "'] div:nth-child(3)");
+
             WaitUntilClickable(propertyLink);
             webDriver.FindElement(propertyLink).Click();
 
@@ -567,14 +569,14 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait(2000);
 
             //Title and Name
-            Assert.True(webDriver.FindElement(researchFileCreateHeader).Displayed);
-            Assert.True(webDriver.FindElement(researchFileNameLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileNameInput).Displayed);
-            Assert.True(webDriver.FindElement(researchFileHelpNameTooltip).Displayed);
+            AssertTrueIsDisplayed(researchFileCreateHeader);
+            AssertTrueIsDisplayed(researchFileNameLabel);
+            AssertTrueIsDisplayed(researchFileNameInput);
+            AssertTrueIsDisplayed(researchFileHelpNameTooltip);
 
             //Project
-            Assert.True(webDriver.FindElement(researchFileDetailsProjectSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsProjectAddBttn).Displayed);
+            AssertTrueIsDisplayed(researchFileDetailsProjectSubtitle);
+            AssertTrueIsDisplayed(researchFileDetailsProjectAddBttn);
 
             //Properties to include
             sharedSearchProperties.VerifyLocateOnMapFeature();
@@ -587,45 +589,45 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Header
             VerifyResearchFileHeader(researchFile, user);
-            Assert.True(webDriver.FindElement(researchFileHeaderStatusContent).Text.Equals("Active"));
+            AssertTrueContentEquals(researchFileHeaderStatusContent,"Active");
 
             //Left Bar Elements
-            Assert.True(webDriver.FindElement(researchFileSummaryBttn).Displayed);
-            Assert.True(webDriver.FindElement(researchFilePropertiesLeftSection).Displayed);
-            Assert.True(webDriver.FindElement(researchEditPropertiesBttn).Displayed);
+            AssertTrueIsDisplayed(researchFileSummaryBttn);
+            AssertTrueIsDisplayed(researchFilePropertiesLeftSection);
+            AssertTrueIsDisplayed(researchEditPropertiesBttn);
 
             //Main section Elements
-            Assert.True(webDriver.FindElement(researchFileDetailsTab).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDocumentsTab).Displayed);
-            Assert.True(webDriver.FindElement(researchFileNotesTab).Displayed);
+            AssertTrueIsDisplayed(researchFileDetailsTab);
+            AssertTrueIsDisplayed(researchFileDocumentsTab);
+            AssertTrueIsDisplayed(researchFileNotesTab);
 
             //File Details Elements
             //Project
-            Assert.True(webDriver.FindElement(researchFileDetailsProjectSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(reserachFileDetailsProjectLabel).Displayed);
+            AssertTrueIsDisplayed(researchFileDetailsProjectSubtitle);
+            AssertTrueIsDisplayed(reserachFileDetailsProjectLabel);
 
             //Roads
-            Assert.True(webDriver.FindElement(researchFileDetailsRoadSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsRoadNameLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsRoadAliasLabel).Displayed);
+            AssertTrueIsDisplayed(researchFileDetailsRoadSubtitle);
+            AssertTrueIsDisplayed(researchFileDetailsRoadNameLabel);
+            AssertTrueIsDisplayed(researchFileDetailsRoadAliasLabel);
 
             //Research Request
-            Assert.True(webDriver.FindElement(researchFileDetailsResearchRequestSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsRequestPurposeLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsRequestDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsRequestSourceLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsRquesterLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsRequestDescripLabel).Displayed);
+            AssertTrueIsDisplayed(researchFileDetailsResearchRequestSubtitle);
+            AssertTrueIsDisplayed(researchFileDetailsRequestPurposeLabel);
+            AssertTrueIsDisplayed(researchFileDetailsRequestDateLabel);
+            AssertTrueIsDisplayed(researchFileDetailsRequestSourceLabel);
+            AssertTrueIsDisplayed(researchFileDetailsRquesterLabel);
+            AssertTrueIsDisplayed(researchFileDetailsRequestDescripLabel);
 
             //Result
-            Assert.True(webDriver.FindElement(researchFileDetailsResultSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsResultCompleteLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsResultRequestLabel).Displayed);
+            AssertTrueIsDisplayed(researchFileDetailsResultSubtitle);
+            AssertTrueIsDisplayed(researchFileDetailsResultCompleteLabel);
+            AssertTrueIsDisplayed(researchFileDetailsResultRequestLabel);
 
             //Expropriation
-            Assert.True(webDriver.FindElement(researchFileDetailsExpropriationSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsExpropriationLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsExpropriationNotesLabel).Displayed);
+            AssertTrueIsDisplayed(researchFileDetailsExpropriationSubtitle);
+            AssertTrueIsDisplayed(researchFileDetailsExpropriationLabel);
+            AssertTrueIsDisplayed(researchFileDetailsExpropriationNotesLabel);
         }
 
         //Verify UI/UX Elements - Research Main Form - View Form
@@ -635,11 +637,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Header
             VerifyResearchFileHeader(researchFile, user);
-            Assert.True(webDriver.FindElement(researchFileHeaderStatusContent).Text.Equals(researchFile.Status));
+            AssertTrueContentEquals(researchFileHeaderStatusContent, researchFile.Status);
 
             //Project
-            Assert.True(webDriver.FindElement(researchFileDetailsProjectSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(reserachFileDetailsProjectLabel).Displayed);
+            AssertTrueIsDisplayed(researchFileDetailsProjectSubtitle);
+            AssertTrueIsDisplayed(reserachFileDetailsProjectLabel);
 
             if (researchFile.Projects.First() != "")
             {
@@ -648,53 +650,54 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Roads
-            Assert.True(webDriver.FindElement(researchFileDetailsRoadSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsRoadNameLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsRoadNameInput).Text.Equals(researchFile.RoadName));
-            Assert.True(webDriver.FindElement(researchFileDetailsRoadAliasLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsRoadAliasInput).Text.Equals(researchFile.RoadAlias));
+            AssertTrueIsDisplayed(researchFileDetailsRoadSubtitle);
+            AssertTrueIsDisplayed(researchFileDetailsRoadNameLabel);
+            AssertTrueContentEquals(researchFileDetailsRoadNameInput,researchFile.RoadName);
+            AssertTrueIsDisplayed(researchFileDetailsRoadAliasLabel);
+            AssertTrueContentEquals(researchFileDetailsRoadAliasInput,researchFile.RoadAlias);
 
             //Research Request
-            Assert.True(webDriver.FindElement(researchFileDetailsResearchRequestSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsRequestPurposeLabel).Displayed);
+            AssertTrueIsDisplayed(researchFileDetailsResearchRequestSubtitle);
+            AssertTrueIsDisplayed(researchFileDetailsRequestPurposeLabel);
             if (researchFile.ResearchPurpose.First() != "")
             {
                 var purposesUI = GetProjects(researchFileDetailsProjectsCount);
                 Assert.True(Enumerable.SequenceEqual(purposesUI, researchFile.Projects));
             }
-            Assert.True(webDriver.FindElement(researchFileDetailsRequestDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsRequestDateInput).Text.Equals(TransformDateFormat(researchFile.RequestDate)));
-            Assert.True(webDriver.FindElement(researchFileDetailsRequestSourceLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsRequestSourceInput).Text.Equals(researchFile.RequestSource));
-            Assert.True(webDriver.FindElement(researchFileDetailsRquesterLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsRequesterInput).Text.Equals(researchFile.Requester));
-            Assert.True(webDriver.FindElement(researchFileDetailsRequestDescripLabel).Displayed);
+            AssertTrueIsDisplayed(researchFileDetailsRequestDateLabel);
+            AssertTrueContentEquals(researchFileDetailsRequestDateInput, TransformDateFormat(researchFile.RequestDate));
+            AssertTrueIsDisplayed(researchFileDetailsRequestSourceLabel);
+            AssertTrueContentEquals(researchFileDetailsRequestSourceInput, researchFile.RequestSource);
+            AssertTrueIsDisplayed(researchFileDetailsRquesterLabel);
+            AssertTrueContentEquals(researchFileDetailsRequesterInput, researchFile.Requester);
+            AssertTrueIsDisplayed(researchFileDetailsRequestDescripLabel);
 
             //Result
-            Assert.True(webDriver.FindElement(researchFileDetailsResultSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsResultCompleteLabel).Displayed);
+            AssertTrueIsDisplayed(researchFileDetailsResultSubtitle);
+            AssertTrueIsDisplayed(researchFileDetailsResultCompleteLabel);
             if (researchFile.ResearchCompletedDate != "")
             {
-                Assert.True(webDriver.FindElement(researchFileDetailsResultCompleteInput).Text.Equals(TransformDateFormat(researchFile.ResearchCompletedDate)));
+                AssertTrueContentEquals(researchFileDetailsResultCompleteInput, TransformDateFormat(researchFile.ResearchCompletedDate));
             }
             else
             {
-                Assert.True(webDriver.FindElement(researchFileDetailsResultCompleteInput).Text.Equals("not complete"));
+                AssertTrueContentEquals(researchFileDetailsResultCompleteInput,"not complete");
             }
-            Assert.True(webDriver.FindElement(researchFileDetailsResultRequestLabel).Displayed);
+            AssertTrueIsDisplayed(researchFileDetailsResultRequestLabel);
 
             //Expropriation
-            Assert.True(webDriver.FindElement(researchFileDetailsExpropriationSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(researchFileDetailsExpropriationLabel).Displayed);
+            AssertTrueIsDisplayed(researchFileDetailsExpropriationSubtitle);
+            AssertTrueIsDisplayed(researchFileDetailsExpropriationLabel);
+
             if (researchFile.Expropriation)
             {
-                Assert.True(webDriver.FindElement(researchFileDetailsExpropriationInput).Text.Equals("Yes"));
+                AssertTrueContentEquals(researchFileDetailsExpropriationInput, "Yes");
             }
             else
             {
-                Assert.True(webDriver.FindElement(researchFileDetailsExpropriationInput).Text.Equals("No"));
+                AssertTrueContentEquals(researchFileDetailsExpropriationInput, "No");
             }
-            Assert.True(webDriver.FindElement(researchFileDetailsExpropriationNotesLabel).Displayed);
+            AssertTrueIsDisplayed(researchFileDetailsExpropriationNotesLabel);
         }
 
         //Verify UI/UX Elements - Research Properties - Property Research - View Form
@@ -702,62 +705,60 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait(2000);
 
-            Assert.True(webDriver.FindElement(researchPropertyInterestLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchPropertyNameLabel).Displayed);
+            AssertTrueIsDisplayed(researchPropertyInterestLabel);
+            AssertTrueIsDisplayed(researchPropertyNameLabel);
+
             if (propertyResearch.DescriptiveName != "")
-            {
-                Assert.True(webDriver.FindElement(researchPropertyNameViewInput).Text.Equals(propertyResearch.DescriptiveName));
-            }  
-            Assert.True(webDriver.FindElement(researchPropertyPurposeLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchPropertyPurposeViewInput).Text.Equals(propertyResearch.Purpose));
-            Assert.True(webDriver.FindElement(researchPropertyLegalReqLabel).Displayed);
+                AssertTrueContentEquals(researchPropertyNameViewInput, propertyResearch.DescriptiveName);
+
+            AssertTrueIsDisplayed(researchPropertyPurposeLabel);
+            AssertTrueContentEquals(researchPropertyPurposeViewInput,propertyResearch.Purpose);
+            AssertTrueIsDisplayed(researchPropertyLegalReqLabel);
+
             if (propertyResearch.LegalOpinionRequest == "Unknown")
-            {
-                Assert.True(webDriver.FindElement(researchPropertyLegalReqViewInput).Text.Equals(""));
-            }
+                AssertTrueContentEquals(researchPropertyLegalReqViewInput,"");
+           
             else
-            {
-                Assert.True(webDriver.FindElement(researchPropertyLegalReqViewInput).Text.Equals(propertyResearch.LegalOpinionRequest));
-            }
-            Assert.True(webDriver.FindElement(researchPropertyLegalObtLabel).Displayed);
+                AssertTrueContentEquals(researchPropertyLegalReqViewInput, propertyResearch.LegalOpinionRequest);
+            
+            AssertTrueIsDisplayed(researchPropertyLegalObtLabel);
+
             if (propertyResearch.LegalOpinionObtained == "Unknown")
-            {
-                Assert.True(webDriver.FindElement(researchPropertyLegalObtViewInput).Text.Equals(""));
-            }
+                AssertTrueContentEquals(researchPropertyLegalObtViewInput, "");
+
             else
-            {
-                Assert.True(webDriver.FindElement(researchPropertyLegalObtViewInput).Text.Equals(propertyResearch.LegalOpinionObtained));
-            }
-            Assert.True(webDriver.FindElement(researchPropertyDocRefLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchPropertyDocRefInput).Text.Equals(propertyResearch.DocumentReference));
-            Assert.True(webDriver.FindElement(researchPropertySummaryLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchPropertyNotesLabel).Displayed);
+                AssertTrueContentEquals(researchPropertyLegalObtViewInput, propertyResearch.LegalOpinionObtained);
+
+            AssertTrueIsDisplayed(researchPropertyDocRefLabel);
+            AssertTrueContentEquals(researchPropertyDocRefInput, propertyResearch.DocumentReference);
+            AssertTrueIsDisplayed(researchPropertySummaryLabel);
+            AssertTrueIsDisplayed(researchPropertyNotesLabel);
         }
 
         private void VerifyResearchFileHeader(ResearchFile researchFile, string user)
         {
             WaitUntilVisible(researchFileHeaderNbrContent);
-            
-            Assert.True(webDriver.FindElement(researchFileViewTitle).Displayed);
 
-            Assert.True(webDriver.FindElement(researchFileHeaderNbrLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileHeaderNbrContent).Displayed);
-            Assert.True(webDriver.FindElement(researchFileHeaderNameLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileHeaderNameContent).Text.Equals(researchFile.ResearchFileName));
+            AssertTrueIsDisplayed(researchFileViewTitle);
 
-            Assert.True(webDriver.FindElement(researchFileHeaderMOTIRegionLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileHeaderDistrictLabel).Displayed);
+            AssertTrueIsDisplayed(researchFileHeaderNbrLabel);
+            AssertTrueIsDisplayed(researchFileHeaderNbrContent);
+            AssertTrueIsDisplayed(researchFileHeaderNameLabel);
+            AssertTrueContentEquals(researchFileHeaderNameContent,researchFile.ResearchFileName);
 
-            Assert.True(webDriver.FindElement(researchFileHeaderCreatedLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileHeaderCreatedDateContent).Text.Equals(GetTodayFormattedDate()));
+            AssertTrueIsDisplayed(researchFileHeaderMOTIRegionLabel);
+            AssertTrueIsDisplayed(researchFileHeaderDistrictLabel);
 
-            Assert.True(webDriver.FindElement(researchFileHeaderCreatedByContent).Text.Equals(user));
+            AssertTrueIsDisplayed(researchFileHeaderCreatedLabel);
+            AssertTrueContentEquals(researchFileHeaderCreatedDateContent, GetTodayFormattedDate());
 
-            Assert.True(webDriver.FindElement(researchFileHeaderLastUpdatedLabel).Displayed);
-            Assert.True(webDriver.FindElement(researchFileHeaderLastUpdatedDateContent).Text.Equals(GetTodayFormattedDate()));
-            Assert.True(webDriver.FindElement(researchFileHeaderLastUpdatedByContent).Text.Equals(user));
+            AssertTrueContentEquals(researchFileHeaderCreatedByContent,user);
 
-            Assert.True(webDriver.FindElement(researchFileHeaderStatusLabel).Displayed);
+            AssertTrueIsDisplayed(researchFileHeaderLastUpdatedLabel);
+            AssertTrueContentEquals(researchFileHeaderLastUpdatedDateContent,GetTodayFormattedDate());
+            AssertTrueContentEquals(researchFileHeaderLastUpdatedByContent, user);
+
+            AssertTrueIsDisplayed(researchFileHeaderStatusLabel);
         }
 
     }

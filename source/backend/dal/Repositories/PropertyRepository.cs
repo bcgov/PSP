@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using NetTopologySuite.Geometries;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -99,6 +98,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTypes)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.PimsPropPropPurposes)
+                    .ThenInclude(t => t.PropertyPurposeTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(p => p.VolumetricTypeCodeNavigation)
                 .Include(p => p.VolumeUnitTypeCodeNavigation)
@@ -250,16 +251,6 @@ namespace Pims.Dal.Repositories
             return property;
         }
 
-        public PimsProperty TryGetByLocation(Geometry location)
-        {
-            return this.Context.PimsProperties
-                    .AsNoTracking()
-                    .Include(p => p.PimsPropertyLeases)
-                    .Where(p => (p != null && p.Location.IsWithinDistance(location, 1)))
-                    .OrderBy(p => p.Location.Distance(location))
-                    .FirstOrDefault();
-        }
-
         /// <summary>
         /// Get the property for the specified id value.
         /// </summary>
@@ -347,6 +338,31 @@ namespace Pims.Dal.Repositories
             Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyType, long>(p => p.PimsPropPropAnomalyTypes, propertyId, property.PimsPropPropAnomalyTypes.ToArray());
             Context.UpdateChild<PimsProperty, long, PimsPropPropRoadType, long>(p => p.PimsPropPropRoadTypes, propertyId, property.PimsPropPropRoadTypes.ToArray());
             Context.UpdateChild<PimsProperty, long, PimsPropPropTenureType, long>(p => p.PimsPropPropTenureTypes, propertyId, property.PimsPropPropTenureTypes.ToArray());
+
+            return existingProperty;
+        }
+
+        /// <summary>
+        /// Update the passed property management information in the database assuming the user has the required claims.
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public PimsProperty UpdatePropertyManagement(PimsProperty property)
+        {
+            property.ThrowIfNull(nameof(property));
+
+            var propertyId = property.Internal_Id;
+            var existingProperty = Context.PimsProperties
+                .FirstOrDefault(p => p.PropertyId == propertyId) ?? throw new KeyNotFoundException();
+
+            // update property management fields
+            existingProperty.AdditionalDetails = property.AdditionalDetails;
+            existingProperty.IsUtilitiesPayable = property.IsUtilitiesPayable;
+            existingProperty.IsTaxesPayable = property.IsTaxesPayable;
+            Context.Update(existingProperty);
+
+            // update direct relationships - Property Purposes
+            Context.UpdateChild<PimsProperty, long, PimsPropPropPurpose, long>(p => p.PimsPropPropPurposes, propertyId, property.PimsPropPropPurposes.ToArray());
 
             return existingProperty;
         }

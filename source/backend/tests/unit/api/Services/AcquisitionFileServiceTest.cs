@@ -131,7 +131,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFilePeople.Add(new PimsAcquisitionFilePerson() { PersonId = 1, AcqFlPersonProfileTypeCode = "test" });
+            acqFile.PimsAcquisitionFileTeams.Add(new PimsAcquisitionFileTeam() { PersonId = 1, AcqFlTeamProfileTypeCode = "test" });
             acqFile.ConcurrencyControlNumber = 1;
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
@@ -178,8 +178,8 @@ namespace Pims.Api.Test.Services
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFilePeople.Add(new PimsAcquisitionFilePerson() { PersonId = 1, AcqFlPersonProfileTypeCode = "test" });
-            acqFile.PimsAcquisitionFilePeople.Add(new PimsAcquisitionFilePerson() { PersonId = 1, AcqFlPersonProfileTypeCode = "test" });
+            acqFile.PimsAcquisitionFileTeams.Add(new PimsAcquisitionFileTeam() { PersonId = 1, AcqFlTeamProfileTypeCode = "test" });
+            acqFile.PimsAcquisitionFileTeams.Add(new PimsAcquisitionFileTeam() { PersonId = 1, AcqFlTeamProfileTypeCode = "test" });
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
@@ -844,8 +844,8 @@ namespace Pims.Api.Test.Services
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFilePeople.Add(new PimsAcquisitionFilePerson() { PersonId = 1, AcqFlPersonProfileTypeCode = "test" });
-            acqFile.PimsAcquisitionFilePeople.Add(new PimsAcquisitionFilePerson() { PersonId = 1, AcqFlPersonProfileTypeCode = "test" });
+            acqFile.PimsAcquisitionFileTeams.Add(new PimsAcquisitionFileTeam() { PersonId = 1, AcqFlTeamProfileTypeCode = "test" });
+            acqFile.PimsAcquisitionFileTeams.Add(new PimsAcquisitionFileTeam() { PersonId = 1, AcqFlTeamProfileTypeCode = "test" });
             acqFile.ConcurrencyControlNumber = 1;
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
@@ -871,7 +871,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFilePeople.Add(new PimsAcquisitionFilePerson() { PersonId = 1, AcqFlPersonProfileTypeCode = EnumUserTypeCodes.CONTRACT.ToString() });
+            acqFile.PimsAcquisitionFileTeams.Add(new PimsAcquisitionFileTeam() { PersonId = 1, AcqFlTeamProfileTypeCode = EnumUserTypeCodes.CONTRACT.ToString() });
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
@@ -1028,9 +1028,9 @@ namespace Pims.Api.Test.Services
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() {
-                new PimsAcquisitionFilePerson() {
-                    AcquisitionFilePersonId = 100,
+            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() {
+                new PimsAcquisitionFileTeam() {
+                    AcquisitionFileTeamId = 100,
                 },
             };
 
@@ -1045,7 +1045,7 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        AcquisitionFilePersonId = 100,
+                        AcquisitionFileTeamId = 100,
                     },
                 });
 
@@ -1070,9 +1070,9 @@ namespace Pims.Api.Test.Services
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() {
-                new PimsAcquisitionFilePerson() {
-                    AcquisitionFilePersonId = 100,
+            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() {
+                new PimsAcquisitionFileTeam() {
+                    AcquisitionFileTeamId = 100,
                 },
             };
 
@@ -1111,9 +1111,9 @@ namespace Pims.Api.Test.Services
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() {
-                new PimsAcquisitionFilePerson() {
-                    AcquisitionFilePersonId = 100,
+            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() {
+                new PimsAcquisitionFileTeam() {
+                    AcquisitionFileTeamId = 100,
                 },
             };
 
@@ -1665,7 +1665,7 @@ namespace Pims.Api.Test.Services
                                         CompensationRequisitionId = 1,
                                         AcquisitionOwnerId = null,
                                         InterestHolderId = null,
-                                        AcquisitionFilePersonId = null
+                                        AcquisitionFileTeamId = null
                                     },
                                 },
                             },
@@ -1710,7 +1710,7 @@ namespace Pims.Api.Test.Services
                                         CompensationRequisitionId = 1,
                                         AcquisitionOwnerId = null,
                                         InterestHolderId = 100,
-                                        AcquisitionFilePersonId = null
+                                        AcquisitionFileTeamId = null
                                     },
                                 },
                             },
@@ -1810,8 +1810,8 @@ namespace Pims.Api.Test.Services
 
             var repository = this._helper.GetService<Mock<IAgreementRepository>>();
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            var matchingPerson = new PimsAcquisitionFilePerson() { PersonId = user.PersonId };
-            var matchingAgreement = new PimsAgreement() { AcquisitionFile = new PimsAcquisitionFile() { RegionCode = 1, PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() { matchingPerson } } };
+            var matchingPerson = new PimsAcquisitionFileTeam() { PersonId = user.PersonId };
+            var matchingAgreement = new PimsAgreement() { AcquisitionFile = new PimsAcquisitionFile() { RegionCode = 1, PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { matchingPerson } } };
             var nonMatchingAgreement = new PimsAgreement() { AcquisitionFile = new PimsAcquisitionFile() { } };
             repository.Setup(x => x.SearchAgreements(It.IsAny<AcquisitionReportFilterModel>())).Returns(new List<PimsAgreement>() { matchingAgreement, nonMatchingAgreement });
 
@@ -1824,7 +1824,7 @@ namespace Pims.Api.Test.Services
             // Assert
             agreements.Should().HaveCount(1);
             agreements.FirstOrDefault().AcquisitionFile.RegionCode.Should().Be(1);
-            agreements.FirstOrDefault().AcquisitionFile.PimsAcquisitionFilePeople.FirstOrDefault().PersonId.Should().Be(user.PersonId);
+            agreements.FirstOrDefault().AcquisitionFile.PimsAcquisitionFileTeams.FirstOrDefault().PersonId.Should().Be(user.PersonId);
         }
 
         [Fact]
@@ -1910,7 +1910,7 @@ namespace Pims.Api.Test.Services
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
-            repository.Setup(x => x.GetTeamMembers(It.IsAny<HashSet<short>>(), null)).Returns(new List<PimsAcquisitionFilePerson>());
+            repository.Setup(x => x.GetTeamMembers(It.IsAny<HashSet<short>>(), null)).Returns(new List<PimsAcquisitionFileTeam>());
 
             // Act
             Action act = () => service.GetOwners(1);
@@ -1929,7 +1929,7 @@ namespace Pims.Api.Test.Services
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            repository.Setup(x => x.GetTeamMembers(It.IsAny<HashSet<short>>(), It.IsAny<long>())).Returns(new List<PimsAcquisitionFilePerson>());
+            repository.Setup(x => x.GetTeamMembers(It.IsAny<HashSet<short>>(), It.IsAny<long>())).Returns(new List<PimsAcquisitionFileTeam>());
 
             var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
@@ -2145,7 +2145,7 @@ namespace Pims.Api.Test.Services
 
             var filter = new AcquisitionFilter();
             var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
-            acqFilerepository.Setup(x => x.GetAcquisitionFileExport(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()))
+            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()))
                         .Returns(new List<PimsAcquisitionFile>()
                         {
                             acquisitionFile,
@@ -2160,7 +2160,7 @@ namespace Pims.Api.Test.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(1, result.Count);
-            acqFilerepository.Verify(x => x.GetAcquisitionFileExport(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
+            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
         }
 
         [Fact]
@@ -2197,7 +2197,7 @@ namespace Pims.Api.Test.Services
                 },
             };
 
-            acqFilerepository.Setup(x => x.GetAcquisitionFileExport(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()))
+            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()))
                         .Returns(new List<PimsAcquisitionFile>()
                         {
                             acquisitionFile,
@@ -2216,7 +2216,7 @@ namespace Pims.Api.Test.Services
             Assert.Equal("10-25-2023", result[1].FileNumber);
             Assert.Equal("8000", result[0].Pid);
             Assert.Equal("9000", result[1].Pid);
-            acqFilerepository.Verify(x => x.GetAcquisitionFileExport(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
+            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
         }
 
         #endregion

@@ -35,7 +35,6 @@ export class PropertyResearchFilePurposeFormModel {
 export class UpdatePropertyFormModel {
   public id?: number;
   public propertyName?: string;
-  public isDisabled?: boolean;
   public displayOrder?: number;
   public isLegalOpinionRequired?: string;
   public isLegalOpinionObtained?: string;
@@ -51,7 +50,6 @@ export class UpdatePropertyFormModel {
     var model = new UpdatePropertyFormModel();
     model.id = base.id;
     model.propertyName = base.propertyName;
-    model.isDisabled = base.isDisabled;
     model.displayOrder = base.displayOrder;
     model.isLegalOpinionRequired =
       base.isLegalOpinionRequired === undefined
@@ -83,7 +81,6 @@ export class UpdatePropertyFormModel {
       id: this.id,
       propertyId: this.propertyId,
       propertyName: this.propertyName,
-      isDisabled: this.isDisabled,
       displayOrder: this.displayOrder,
       isLegalOpinionRequired:
         this.isLegalOpinionRequired === undefined || this.isLegalOpinionRequired === 'unknown'

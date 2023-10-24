@@ -25,7 +25,6 @@ namespace Pims.Api.Areas.Property.Controllers
         #region Variables
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyService _propertyService;
-        private readonly IPropertyLeaseRepository _propertyLeaseRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -36,14 +35,12 @@ namespace Pims.Api.Areas.Property.Controllers
         /// </summary>
         /// <param name="propertyRepository"></param>
         /// <param name="propertyService"></param>
-        /// <param name="propertyLeaseRepository"></param>
         /// <param name="mapper"></param>
         ///
-        public PropertyController(IPropertyRepository propertyRepository, IPropertyService propertyService, IPropertyLeaseRepository propertyLeaseRepository, IMapper mapper)
+        public PropertyController(IPropertyRepository propertyRepository, IPropertyService propertyService, IMapper mapper)
         {
             _propertyRepository = propertyRepository;
             _propertyService = propertyService;
-            _propertyLeaseRepository = propertyLeaseRepository;
             _mapper = mapper;
         }
         #endregion
@@ -66,22 +63,6 @@ namespace Pims.Api.Areas.Property.Controllers
             return new JsonResult(_mapper.Map<PropertyAssociationModel>(property));
         }
 
-        /// <summary>
-        /// Get all associated leases for the specified unique property 'id'.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("{id}/leases")]
-        [HasPermission(Permissions.PropertyView)]
-        [HasPermission(Permissions.LeaseView)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Api.Models.Concepts.PropertyLeaseModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "property" })]
-        public IActionResult GetPropertyLeases(long propertyId)
-        {
-            var propertyLeases = _propertyLeaseRepository.GetAllByPropertyId(propertyId);
-
-            return new JsonResult(_mapper.Map<List<Api.Models.Concepts.PropertyLeaseModel>>(propertyLeases));
-        }
         #endregion
 
         #region Concept Endpoints

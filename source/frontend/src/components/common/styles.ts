@@ -175,12 +175,9 @@ export const TrayHeader = styled.div`
   padding: 1rem;
   background-color: ${props => props.theme.css.primaryColor};
   color: white;
-  position: sticky;
 `;
 
-export const ActivityTrayPage = styled.div`
-  padding: 0rem;
-`;
+export const TrayContent = styled.div``;
 
 export const CloseButton = styled(Button)`
   &#close-tray {

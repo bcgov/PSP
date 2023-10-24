@@ -8,6 +8,8 @@ import { useDocumentGenerationRepository } from '@/features/documents/hooks/useD
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useInsurancesRepository } from '@/hooks/repositories/useInsuranceRepository';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
+import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
+import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
 import { getMockDeposits } from '@/mocks/deposits.mock';
 import { getMockApiLease } from '@/mocks/lease.mock';
@@ -23,7 +25,9 @@ const generateFn = jest
 const getLeaseTenantsFn = jest.fn<Promise<Api_LeaseTenant[] | undefined>, any[]>();
 const getSecurityDepositsFn = jest.fn();
 const getInsurancesFn = jest.fn();
+const getPropertyLeasesFn = jest.fn();
 const getApiLeaseFn = jest.fn();
+const getLeaseTermFn = jest.fn();
 
 jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
 (useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
@@ -43,6 +47,16 @@ jest.mock('@/hooks/repositories/useLeaseTenantRepository');
 jest.mock('@/hooks/repositories/useInsuranceRepository');
 (useInsurancesRepository as jest.Mock).mockImplementation(() => ({
   getInsurances: { execute: getInsurancesFn },
+}));
+
+jest.mock('@/hooks/repositories/usePropertyLeaseRepository');
+(usePropertyLeaseRepository as jest.Mock).mockImplementation(() => ({
+  getPropertyLeases: { execute: getPropertyLeasesFn },
+}));
+
+jest.mock('@/hooks/repositories/useLeaseTermRepository');
+(useLeaseTermRepository as jest.Mock).mockImplementation(() => ({
+  getLeaseTerms: { execute: getLeaseTermFn },
 }));
 
 jest.mock('@/hooks/pims-api/useApiLeases');
@@ -68,7 +82,7 @@ const setup = (params?: { storeValues?: any; acquisitionResponse?: Api_Acquisiti
   return result.current;
 };
 
-describe('useGenerateH120 functions', () => {
+describe('useGenerateH10005a functions', () => {
   beforeEach(() => {
     getSecurityDepositsFn.mockResolvedValue(getMockDeposits());
     getLeaseTenantsFn.mockResolvedValue(getMockApiLease().tenants);
@@ -82,6 +96,8 @@ describe('useGenerateH120 functions', () => {
     expect(getLeaseTenantsFn).toHaveBeenCalled();
     expect(getInsurancesFn).toHaveBeenCalled();
     expect(getSecurityDepositsFn).toHaveBeenCalled();
+    expect(getLeaseTermFn).toHaveBeenCalled();
+    expect(getPropertyLeasesFn).toHaveBeenCalled();
     expect(getApiLeaseFn).toHaveBeenCalled();
   });
 

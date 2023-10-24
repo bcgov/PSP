@@ -1,19 +1,19 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Moq;
 using NetTopologySuite.Geometries;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 using Xunit;
 
 namespace Pims.Api.Test.Services
@@ -31,7 +31,7 @@ namespace Pims.Api.Test.Services
             this._helper = new TestHelper();
         }
 
-        private PropertyService CreateProjectServiceWithPermissions(params Permissions[] permissions)
+        private PropertyService CreatePropertyServiceWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
             this._helper.CreatePimsContext(user, true);
@@ -46,7 +46,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var property = EntityHelper.CreateProperty(1);
 
-            var service = this.CreateProjectServiceWithPermissions(Permissions.PropertyView);
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView);
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
 
@@ -67,7 +67,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var property = EntityHelper.CreateProperty(1);
 
-            var service = this.CreateProjectServiceWithPermissions();
+            var service = this.CreatePropertyServiceWithPermissions();
 
             // Assert
             Assert.Throws<NotAuthorizedException>(() => service.GetById(1));
@@ -81,7 +81,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var property = EntityHelper.CreateProperty(1);
 
-            var service = this.CreateProjectServiceWithPermissions(Permissions.PropertyView);
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView);
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(property);
 
@@ -102,7 +102,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var property = EntityHelper.CreateProperty(1);
 
-            var service = this.CreateProjectServiceWithPermissions();
+            var service = this.CreatePropertyServiceWithPermissions();
 
             // Assert
             Assert.Throws<NotAuthorizedException>(() => service.GetByPid(1.ToString()));
@@ -116,7 +116,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var property = EntityHelper.CreateProperty(1);
 
-            var service = this.CreateProjectServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>())).Returns(property);
 
@@ -143,7 +143,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var property = EntityHelper.CreateProperty(1);
 
-            var service = this.CreateProjectServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>())).Returns(property);
 
@@ -169,7 +169,7 @@ namespace Pims.Api.Test.Services
         public void Update_Property_KeyNotFound()
         {
             // Arrange
-            var service = this.CreateProjectServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
 
             // Try to update a non-existent property
             var property = EntityHelper.CreateProperty(1);
@@ -187,7 +187,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var property = EntityHelper.CreateProperty(1);
 
-            var service = this.CreateProjectServiceWithPermissions(Permissions.PropertyView);
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView);
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
 
             // Assert
@@ -196,6 +196,178 @@ namespace Pims.Api.Test.Services
         }
 
         #endregion
+
+        #region Property Management
+        [Fact]
+        public void GetPropertyManagement_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.ManagementView);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
+
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
+
+            var propertyLeasesRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            propertyLeasesRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>());
+
+            // Act
+            var result = service.GetPropertyManagement(1);
+
+            // Assert
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
+            propertyLeasesRepository.Verify(x => x.GetAllByPropertyId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetPropertyManagement_NoPermission()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+            var service = this.CreatePropertyServiceWithPermissions();
+
+            // Act
+            Action act = () => service.GetPropertyManagement(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void Update_PropertyManagement_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit, Permissions.ManagementView, Permissions.ManagementEdit);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            repository.Setup(x => x.UpdatePropertyManagement(It.IsAny<PimsProperty>())).Returns(property);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
+
+            var newValues = new PimsProperty();
+            property.CopyValues(newValues);
+            newValues.AdditionalDetails = "test";
+            newValues.IsTaxesPayable = true;
+
+            // Act
+            var updatedProperty = service.UpdatePropertyManagement(newValues);
+
+            // Assert
+            repository.Verify(x => x.UpdatePropertyManagement(It.IsAny<PimsProperty>()), Times.Once);
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void Update_PropertyManagement_KeyNotFound()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit, Permissions.ManagementView, Permissions.ManagementEdit);
+
+            // Try to update a non-existent property
+            var property = EntityHelper.CreateProperty(1);
+
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            repository.Setup(x => x.UpdatePropertyManagement(property)).Throws<KeyNotFoundException>();
+
+            // Act
+            Action act = () => service.UpdatePropertyManagement(property);
+
+            // Assert
+            act.Should().Throw<KeyNotFoundException>();
+        }
+
+        [Fact]
+        public void Update_PropertyManagement_NoPermission()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.ManagementView);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+
+            // Act
+            Action act = () => service.UpdatePropertyManagement(property);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.UpdatePropertyManagement(It.IsAny<PimsProperty>()), Times.Never);
+        }
+
+
+        [Fact]
+        public void Get_PropertyManagement_Activities_NoPermission()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions();
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+
+            // Act
+            Action act = () => service.GetActivities(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.GetActivity(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void Delete_PropertyManagementActivity_NoPermission()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions();
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+
+            // Act
+            Action act = () => service.DeleteActivity(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.TryDelete(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void Delete_PropertyManagementActivity_BadRequest_Activity_Status_IsNot_NotStarted()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete);
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+
+            var propertyManagementActivity = EntityHelper.CreatePropertyActivity(10, activityStatusTypeCode: "STARTED");
+
+            repository.Setup(x => x.GetActivity(It.IsAny<long>())).Returns(propertyManagementActivity);
+
+            // Act
+            Action act = () => service.DeleteActivity(1);
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+            repository.Verify(x => x.TryDelete(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void Delete_PropertyManagementActivity_Success()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete);
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+
+            var propertyManagementActivity = EntityHelper.CreatePropertyActivity(1);
+
+            repository.Setup(x => x.GetActivity(It.IsAny<long>())).Returns(propertyManagementActivity);
+            repository.Setup(x => x.TryDelete(It.IsAny<long>())).Returns(true);
+
+            // Act
+            var result = service.DeleteActivity(1);
+
+            // Assert
+            Assert.True(result);
+            repository.Verify(x => x.TryDelete(It.IsAny<long>()), Times.Once);
+        }
+        #endregion
+
         #endregion
     }
 }

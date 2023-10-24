@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using NetTopologySuite.Geometries;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 
@@ -24,11 +23,11 @@ namespace Pims.Dal.Repositories
 
         PimsProperty GetByPin(int pin);
 
-        PimsProperty TryGetByLocation(Geometry location);
-
         PimsProperty GetAllAssociationsById(long id);
 
         PimsProperty Update(PimsProperty property, bool overrideLocation = false);
+
+        PimsProperty UpdatePropertyManagement(PimsProperty property);
 
         void Delete(PimsProperty property);
 

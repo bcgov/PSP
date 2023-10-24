@@ -4,12 +4,14 @@ import styled from 'styled-components';
 
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
+import { Api_LastUpdatedBy } from '@/models/api/File';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import Api_TypeCode from '@/models/api/TypeCode';
 import { prettyFormatUTCDate } from '@/utils';
 
 export interface IResearchHeaderProps {
   researchFile?: Api_ResearchFile;
+  lastUpdatedBy: Api_LastUpdatedBy | null;
 }
 
 const ResearchHeader: React.FunctionComponent<
@@ -39,6 +41,7 @@ const ResearchHeader: React.FunctionComponent<
         return acc;
       }, []);
   }
+
   return (
     <StyledRow className="no-gutters">
       <Col xs={leftColumnWidth}>
@@ -87,10 +90,10 @@ const ResearchHeader: React.FunctionComponent<
           <Col className="text-right">
             <StyleSmallText>
               Last updated:{' '}
-              <strong>{prettyFormatUTCDate(researchFile?.appLastUpdateTimestamp)}</strong> by{' '}
+              <strong>{prettyFormatUTCDate(props.lastUpdatedBy?.appLastUpdateTimestamp)}</strong> by{' '}
               <UserNameTooltip
-                userName={researchFile?.appLastUpdateUserid}
-                userGuid={researchFile?.appLastUpdateUserGuid}
+                userName={props.lastUpdatedBy?.appLastUpdateUserid}
+                userGuid={props.lastUpdatedBy?.appLastUpdateUserGuid}
               />
             </StyleSmallText>
           </Col>

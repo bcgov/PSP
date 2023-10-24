@@ -29,6 +29,7 @@ const getAcquisitionCompReqH120s = jest.fn();
 const getH120sCategoryFn = jest.fn();
 const getInterestHoldersFn = jest.fn();
 const getPersonConceptFn = jest.fn();
+const getOrganizationConceptFn = jest.fn();
 const findElectoralDistrictFn = jest.fn();
 
 jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
@@ -56,6 +57,7 @@ jest.mock('@/hooks/repositories/useInterestHolderRepository');
 jest.mock('@/hooks/pims-api/useApiContacts');
 (useApiContacts as jest.Mock).mockImplementation(() => ({
   getPersonConcept: getPersonConceptFn,
+  getOrganizationConcept: getOrganizationConceptFn,
 }));
 
 jest.mock('@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer');
@@ -106,18 +108,33 @@ describe('useGenerateH120 functions', () => {
   it('makes request to get person concept for compensation payee', async () => {
     const apiCompensation: Api_CompensationRequisition = {
       ...getMockApiDefaultCompensation(),
-      acquisitionFilePerson: {
+      acquisitionFileTeam: {
         id: 101,
         acquisitionFileId: 2,
         personId: 8,
-        personProfileTypeCode: 'MOTILAWYER',
-        isDisabled: false,
+        teamProfileTypeCode: 'MOTILAWYER',
         rowVersion: 1,
       },
     };
     const generate = setup();
     await act(async () => generate(apiCompensation));
     expect(getPersonConceptFn).toHaveBeenCalled();
+  });
+
+  it('makes request to get organization concept for compensation payee', async () => {
+    const apiCompensation: Api_CompensationRequisition = {
+      ...getMockApiDefaultCompensation(),
+      acquisitionFileTeam: {
+        id: 101,
+        acquisitionFileId: 2,
+        organizationId: 8,
+        teamProfileTypeCode: 'MOTILAWYER',
+        rowVersion: 1,
+      },
+    };
+    const generate = setup();
+    await act(async () => generate(apiCompensation));
+    expect(getOrganizationConceptFn).toHaveBeenCalled();
   });
 
   it('searches interest holder array for compensation payee ', async () => {

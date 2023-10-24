@@ -11,6 +11,7 @@ import {
   mockAcquisitionFileResponse,
 } from '@/mocks/acquisitionFiles.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
+import { mockLastUpdatedBy } from '@/mocks/lastUpdatedBy.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { rest, server } from '@/mocks/msw/server';
@@ -89,6 +90,9 @@ describe('AcquisitionView component', () => {
           ...mockAcquisitionFileResponse(),
           fileType: FileTypes.Acquisition,
         }}
+        lastUpdatedBy={{
+          ...mockLastUpdatedBy(1),
+        }}
       >
         <Route path="/mapview/sidebar/acquisition/:id">
           <AcquisitionView {...props} />
@@ -149,7 +153,7 @@ describe('AcquisitionView component', () => {
     expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
     expect(getByText(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
     expect(
-      getByText(prettyFormatUTCDate(testAcquisitionFile.appLastUpdateTimestamp)),
+      getByText(prettyFormatUTCDate(mockLastUpdatedBy(1).appLastUpdateTimestamp)),
     ).toBeVisible();
   });
 

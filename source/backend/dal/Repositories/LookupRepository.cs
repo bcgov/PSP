@@ -97,7 +97,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         public IEnumerable<PimsPropertyTenureType> GetAllPropertyTenureTypes()
         {
-            return this.Context.PimsPropertyTenureTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).OrderBy(a => a.PropertyTenureTypeCode).ToArray();
+            return this.Context.PimsPropertyTenureTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.PropertyTenureTypeCode).ToArray();
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         public IEnumerable<PimsAreaUnitType> GetAllPropertyAreaUnitTypes()
         {
-            return this.Context.PimsAreaUnitTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).OrderBy(a => a.AreaUnitTypeCode).ToArray();
+            return this.Context.PimsAreaUnitTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.AreaUnitTypeCode).ToArray();
         }
 
         /// <summary>
@@ -114,6 +114,14 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsVolumeUnitType> GetAllPropertyVolumeUnitTypes()
         {
             return this.Context.PimsVolumeUnitTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.VolumeUnitTypeCode).ToArray();
+        }
+
+        /// <summary>
+        /// Get all property management purpose types sorted by DisplayOrder and Id.
+        /// </summary>
+        public IEnumerable<PimsPropertyPurposeType> GetAllPropertyManagementPurposeTypes()
+        {
+            return this.Context.PimsPropertyPurposeTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.PropertyPurposeTypeCode).ToArray();
         }
 
         /// <summary>
@@ -279,9 +287,9 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsAcquisitionTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsAcqFlPersonProfileType> GetAllAcqFilePersonProfileTypes()
+        public IEnumerable<PimsAcqFlTeamProfileType> GetAllAcqFileTeamProfileTypes()
         {
-            return this.Context.PimsAcqFlPersonProfileTypes.AsNoTracking().ToArray();
+            return this.Context.PimsAcqFlTeamProfileTypes.AsNoTracking().ToArray();
         }
 
         public IEnumerable<PimsTenantType> GetAllTenantTypes()
@@ -349,6 +357,22 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsPaymentItemTypes.AsNoTracking().ToArray();
         }
+
+        public IEnumerable<PimsPropMgmtActivityStatusType> GetAllPropMgmtActivityStatusTypes()
+        {
+            return Context.PimsPropMgmtActivityStatusTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsPropMgmtActivitySubtype> GetAllPropMgmtActivitySubtypes()
+        {
+            return Context.PimsPropMgmtActivitySubtypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsPropMgmtActivityType> GetAllPropMgmtActivityTypes()
+        {
+            return Context.PimsPropMgmtActivityTypes.AsNoTracking().ToArray();
+        }
+
         #endregion
     }
 }

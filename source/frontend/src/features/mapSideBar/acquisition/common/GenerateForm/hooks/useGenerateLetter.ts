@@ -22,7 +22,7 @@ export const useGenerateLetter = () => {
     const file = await getAcquisitionFile(acquisitionFileId);
     if (file) {
       const coordinator = file.acquisitionTeam?.find(
-        team => team.personProfileTypeCode === 'PROPCOORD',
+        team => team.teamProfileTypeCode === 'PROPCOORD',
       );
       const coordinatorPerson = !!coordinator?.personId
         ? (await getPersonConcept(coordinator?.personId))?.data

@@ -172,6 +172,14 @@ namespace Pims.Api.Services
             return _researchFileRepository.GetById(researchFileId);
         }
 
+        public LastUpdatedByModel GetLastUpdateInformation(long researchFileId)
+        {
+            _logger.LogInformation("Retrieving last updated-by information...");
+            _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
+
+            return _researchFileRepository.GetLastUpdateBy(researchFileId);
+        }
+
         private void UpdateLocation(PimsProperty researchProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> userOverrideCodes)
         {
             if (propertyToUpdate.Location == null)

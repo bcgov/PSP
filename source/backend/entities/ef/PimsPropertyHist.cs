@@ -135,6 +135,12 @@ namespace Pims.Dal.Entities
         public bool? IsUtilitiesPayable { get; set; }
         [Column("IS_TAXES_PAYABLE")]
         public bool? IsTaxesPayable { get; set; }
+        [Column("BAND_NAME")]
+        [StringLength(80)]
+        public string BandName { get; set; }
+        [Column("RESERVE_NAME")]
+        [StringLength(100)]
+        public string ReserveName { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

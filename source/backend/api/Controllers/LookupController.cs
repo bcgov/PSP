@@ -61,20 +61,6 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Get all of the property classification code values.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("property/classifications")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Model.LookupModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "lookup" })]
-        public IActionResult GetPropertyClassificationTypes()
-        {
-            var classifications = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyClassificationTypes());
-            return new JsonResult(classifications.ToArray());
-        }
-
-        /// <summary>
         /// Get all of the code values.
         /// </summary>
         /// <returns></returns>
@@ -122,12 +108,13 @@ namespace Pims.Api.Controllers
                 var propertyRoadTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyRoadTypes());
                 var volumeUnitTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyVolumeUnitTypes());
                 var propertyVolumetricTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyVolumetricTypes());
+                var propertyManagementPurposeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyManagementPurposeTypes());
                 var pphStatusType = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPPHStatusType());
                 var documentStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDocumentStatusTypes());
                 var acquisitionFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileStatusTypes());
                 var acquisitionPhysFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionPhysFileStatusTypes());
                 var acquisitionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionTypes());
-                var acqFilePersonProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcqFilePersonProfileTypes());
+                var acqFilePersonProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcqFileTeamProfileTypes());
                 var tenantTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTenantTypes());
                 var acqFundingTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFundingTypes());
                 var projectStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllProjectStatusTypes());
@@ -143,6 +130,9 @@ namespace Pims.Api.Controllers
                 var agreementTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAgreementTypes());
                 var interestHolderInterestTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllInterestHolderInterestTypes());
                 var expropriationPaymentItemTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllExpropriationPaymentItemTypes());
+                var mgmtActivityStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivityStatusTypes());
+                var mgmtActivitySubtypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivitySubtypes());
+                var mgmtActivityTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivityTypes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -179,6 +169,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(propertyRoadTypes);
                 codes.AddRange(volumeUnitTypes);
                 codes.AddRange(propertyVolumetricTypes);
+                codes.AddRange(propertyManagementPurposeTypes);
                 codes.AddRange(pphStatusType);
                 codes.AddRange(documentStatusTypes);
                 codes.AddRange(acquisitionFileStatusTypes);
@@ -200,6 +191,9 @@ namespace Pims.Api.Controllers
                 codes.AddRange(agreementTypes);
                 codes.AddRange(interestHolderInterestTypes);
                 codes.AddRange(expropriationPaymentItemTypes);
+                codes.AddRange(mgmtActivityStatusTypes);
+                codes.AddRange(mgmtActivitySubtypes);
+                codes.AddRange(mgmtActivityTypes);
 
                 var response = new JsonResult(codes);
 

@@ -16,11 +16,12 @@ import { IForm8FormProps } from '../UpdateForm8Form';
 export interface IUpdateForm8ContainerProps {
   form8Id: number;
   View: React.FC<IForm8FormProps>;
+  onSuccess: () => void;
 }
 
 export const UpdateForm8Container: React.FunctionComponent<
   React.PropsWithChildren<IUpdateForm8ContainerProps>
-> = ({ form8Id, View }) => {
+> = ({ form8Id, View, onSuccess }) => {
   const history = useHistory();
   const location = useLocation();
 
@@ -86,6 +87,7 @@ export const UpdateForm8Container: React.FunctionComponent<
   };
 
   const onUpdateSuccess = async () => {
+    onSuccess();
     history.push(backUrl);
   };
 

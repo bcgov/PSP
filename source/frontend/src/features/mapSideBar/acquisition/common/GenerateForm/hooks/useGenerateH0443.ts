@@ -27,7 +27,7 @@ export const useGenerateH0443 = () => {
     if (file) {
       // Retrieve Property Coordinator
       const propertyCoordinator = file.acquisitionTeam?.find(
-        team => team.personProfileTypeCode === 'PROPCOORD',
+        team => team.teamProfileTypeCode === 'PROPCOORD',
       );
       const coordinatorPerson = !!propertyCoordinator?.personId
         ? (await getPersonConcept(propertyCoordinator?.personId))?.data
@@ -35,7 +35,7 @@ export const useGenerateH0443 = () => {
 
       // Retrieve Property Agent
       const propertyAgent = file.acquisitionTeam?.find(
-        team => team.personProfileTypeCode === 'PROPAGENT',
+        team => team.teamProfileTypeCode === 'PROPAGENT',
       );
 
       const agentPerson = !!propertyAgent?.personId

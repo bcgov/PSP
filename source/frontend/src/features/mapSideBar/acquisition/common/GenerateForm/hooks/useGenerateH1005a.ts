@@ -4,6 +4,8 @@ import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useInsurancesRepository } from '@/hooks/repositories/useInsuranceRepository';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
+import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
+import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { ExternalResultStatus } from '@/models/api/ExternalResult';
@@ -25,6 +27,14 @@ export const useGenerateH1005a = (lease?: Api_Lease) => {
     getSecurityDeposits: { execute: getLeaseDeposits },
   } = useSecurityDepositRepository();
 
+  const {
+    getLeaseTerms: { execute: getLeaseTerms },
+  } = useLeaseTermRepository();
+
+  const {
+    getPropertyLeases: { execute: getPropertyLeases },
+  } = usePropertyLeaseRepository();
+
   const { getApiLease } = useApiLeases();
   const { execute: getLease } = useApiRequestWrapper({
     requestFunction: getApiLease,
@@ -34,17 +44,30 @@ export const useGenerateH1005a = (lease?: Api_Lease) => {
 
   const generateH1005a = async (lease: Api_Lease) => {
     if (lease?.id) {
-      const updatedLease = (await getLease(lease.id)) ?? null;
-      const insurances = (await getInsurances(lease.id)) ?? [];
-      const tenants = (await getLeaseTenants(lease.id)) ?? [];
-      const getSecurityDeposits = (await getLeaseDeposits(lease.id)) ?? [];
-      if (updatedLease === null)
+      const updatedLeasePromise = getLease(lease.id);
+      const insurancesPromise = getInsurances(lease.id);
+      const tenantsPromise = getLeaseTenants(lease.id);
+      const securityDepositsPromise = getLeaseDeposits(lease.id);
+      const termsPromise = getLeaseTerms(lease.id);
+      const propertyLeasesPromise = getPropertyLeases(lease.id);
+      const [updatedLease, insurances, tenants, securityDeposits, terms, propertyLeases] =
+        await Promise.all([
+          updatedLeasePromise,
+          insurancesPromise,
+          tenantsPromise,
+          securityDepositsPromise,
+          termsPromise,
+          propertyLeasesPromise,
+        ]);
+      if (updatedLease === null || updatedLease === undefined)
         throw new Error('Failed to load lease, reload this page to try again.');
       const leaseData = new Api_GenerateLease(
         updatedLease,
-        insurances,
-        tenants,
-        getSecurityDeposits,
+        insurances ?? [],
+        tenants ?? [],
+        securityDeposits ?? [],
+        propertyLeases ?? [],
+        terms ?? [],
       );
 
       const generatedFile = await generate({

@@ -13,7 +13,6 @@ export const getMockResearchFile = (): Api_ResearchFile => ({
   fileProperties: [
     {
       id: 55,
-      isDisabled: false,
       propertyId: 495,
       property: {
         id: 495,

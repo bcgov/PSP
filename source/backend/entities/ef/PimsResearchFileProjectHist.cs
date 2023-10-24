@@ -25,8 +25,6 @@ namespace Pims.Dal.Entities
         public long ResearchFileId { get; set; }
         [Column("PROJECT_ID")]
         public long ProjectId { get; set; }
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
