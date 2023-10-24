@@ -11,8 +11,9 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="17"
-  DTS:VersionGUID="{CE6135CB-E88B-4285-810D-85184651A2A4}">
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="18"
+  DTS:VersionGUID="{B74CB7AB-E4A6-442D-9D21-84E01FA69064}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -28,8 +29,7 @@
           DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;User ID=PIMS_TST;Initial Catalog=PIMS_TST;Provider=SQLOLEDB.1;Persist Security Info=True;Auto Translate=False;Application Name=SSIS-Package-{9F7D64E5-8609-4E90-B349-2644A16FDD58}sqldevtst.th.gov.bc.ca.PIMS_DEV;">
           <DTS:Password
             DTS:Name="Password"
-            Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAr1Xd1nKpe021koy+KNtNfwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACTJ+srnALevKy8q8jyaaoGD+LeN20LXVJZ7dFs0cI7kwAAAAAOgAAAAAIAACAAAABR4/2hH9YS3Vr+j8Z9F9AX3AJ0HNAeUczHS8DH2nwJ5TAAAACpDkRU3WidFRVF2skhIex895bc4QPSjXc44iflwm4ewU/hOf1ZpwimXE0ALbVILoBAAAAA1iYdwYzlJqCme4aqCXGw/nWgEEo/Urz4kwG5c6ztv/ZLKmBXtlgTMm6+ghkhktpTc24ub9e0oskCwAvfpDGKwA</DTS:Password>
+            Sensitive="1"></DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
