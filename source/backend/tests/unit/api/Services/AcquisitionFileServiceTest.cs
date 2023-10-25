@@ -60,7 +60,7 @@ namespace Pims.Api.Test.Services
             new object[] { new List<PimsTake>() { new PimsTake() { IsLandAct = true, LandActTypeCode = "Crown Grant (New)" } }, true },
             new object[] { new List<PimsTake>() { new PimsTake() { IsStatutoryRightOfWay = true } }, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsLicenseToConstruct = true } }, false },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsSurplus = true } }, true },
+            new object[] { new List<PimsTake>() { new PimsTake() { IsSurplus = true } }, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewRightOfWay = true } }, true },
         }.ToArray();
 

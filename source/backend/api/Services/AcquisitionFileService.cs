@@ -704,6 +704,7 @@ namespace Pims.Api.Services
                 //see psp-6589 for business rules.
                 var isOwned = !(activeTakes.All(t => (t.IsLandAct.HasValue && t.IsLandAct.Value && coreInventoryInterestCodes.Contains(t.LandActTypeCode))
                     || (t.IsStatutoryRightOfWay.HasValue && t.IsStatutoryRightOfWay.Value)
+                    || (t.IsSurplus.HasValue && t.IsSurplus.Value)
                     || (t.IsLicenseToConstruct.HasValue && t.IsLicenseToConstruct.Value)) && activeTakes.Any());
                 _propertyRepository.TransferFileProperty(property, isOwned);
             }
