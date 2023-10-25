@@ -123,5 +123,11 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsInterestHolderInterestType> GetAllInterestHolderInterestTypes();
 
         IEnumerable<PimsPaymentItemType> GetAllExpropriationPaymentItemTypes();
+
+        IEnumerable<PimsPropMgmtActivityStatusType> GetAllPropMgmtActivityStatusTypes();
+
+        IEnumerable<PimsPropMgmtActivitySubtype> GetAllPropMgmtActivitySubtypes();
+
+        IEnumerable<PimsPropMgmtActivityType> GetAllPropMgmtActivityTypes();
     }
 }

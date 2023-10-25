@@ -7,8 +7,10 @@ namespace Pims.Dal.Entities
     /// </summary>
     public partial class PimsPropertyActivity : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
-
+        #region Properties
         [NotMapped]
         public override long Internal_Id { get => this.PimsPropertyActivityId; set => this.PimsPropertyActivityId = value; }
+        #endregion
+
     }
 }
