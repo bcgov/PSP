@@ -45,7 +45,7 @@ export const CompensationRequisitionRouter: React.FunctionComponent<
             compensationRequisitionId={Number(match.params.id)}
             onClose={onClose}
             View={CompensationRequisitionTrayView}
-          ></CompensationRequisitionTrayContainer>
+          />
         )}
         claim={Claims.COMPENSATION_REQUISITION_VIEW}
         exact

@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using NetTopologySuite.Geometries;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -452,76 +451,6 @@ namespace Pims.Dal.Repositories
             }
 
             return query.Select(p => p.PropertyId).ToHashSet();
-        }
-
-        /// <summary>
-        /// Return a summary List of Management activities for a specific property.
-        /// </summary>
-        /// <param name="propertyId"></param>
-        /// <returns>List of Property's management activities.</returns>
-        public IList<PimsPropPropActivity> GetManagementActivitiesByProperty(long propertyId)
-        {
-            User.ThrowIfNotAllAuthorized(Permissions.ManagementView);
-
-            List<PimsPropPropActivity> activities = Context.PimsPropPropActivities.AsNoTracking()
-                    .Include(x => x.PimsPropertyActivity)
-                        .ThenInclude(y => y.PropMgmtActivityTypeCodeNavigation)
-                    .Include(x => x.PimsPropertyActivity)
-                        .ThenInclude(y => y.PropMgmtActivitySubtypeCodeNavigation)
-                    .Include(x => x.PimsPropertyActivity)
-                       .ThenInclude(y => y.PropMgmtActivityStatusTypeCodeNavigation)
-                    .Where(p => p.PropertyId == propertyId)
-                    .ToList();
-
-            return activities;
-        }
-
-        /// <summary>
-        /// Get the Property Management Activity by Id.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public PimsPropPropActivity GetManagementActivityById(long id)
-        {
-            User.ThrowIfNotAllAuthorized(Permissions.ManagementView);
-
-            return Context.PimsPropPropActivities
-                        .AsNoTracking()
-                        .Include(x => x.PimsPropertyActivity)
-                        .FirstOrDefault(p => p.PropPropActivityId == id) ?? throw new KeyNotFoundException();
-        }
-
-        /// <summary>
-        /// TryDelete the Activity associated with the property and if no property associated to activity delete the activicy as well.
-        /// </summary>
-        /// <param name="managementActivityId"></param>
-        /// <returns>Boolean of deletion sucess.</returns>
-        public bool TryDeletePropPropActivity(long managementActivityId)
-        {
-            bool deletedSuccessfully = false;
-            var deletedEntity = Context.PimsPropPropActivities.FirstOrDefault(x => x.PropPropActivityId == managementActivityId);
-
-            if (deletedEntity is not null)
-            {
-                // This will check if there is no other Property that has the same activity associated.
-                // If there is, it will only remove the relationship for the current property.
-                if (Context.PimsPropPropActivities.Count(x => x.PimsPropertyActivityId == deletedEntity.PimsPropertyActivityId) > 1)
-                {
-                    Context.PimsPropPropActivities.Remove(deletedEntity);
-                    deletedSuccessfully = true;
-                }
-                else
-                {
-                    Context.PimsPropPropActivities.Remove(deletedEntity);
-
-                    var propertyActivity = Context.PimsPropertyActivities.FirstOrDefault(x => x.PimsPropertyActivityId.Equals(deletedEntity.PimsPropertyActivityId));
-                    Context.PimsPropertyActivities.Remove(propertyActivity);
-
-                    deletedSuccessfully = true;
-                }
-            }
-
-            return deletedSuccessfully;
         }
 
         #endregion

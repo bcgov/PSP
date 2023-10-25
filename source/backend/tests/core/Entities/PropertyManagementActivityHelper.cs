@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -26,25 +27,6 @@ namespace Pims.Core.Test
             };
 
             return propertyActivity;
-        }
-
-        /// <summary>
-        /// Return a PropertyManagementActivity relationship to PropertyActivity.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="propertyId"></param>
-        /// <param name="propertyActivityId"></param>
-        /// <returns></returns>
-        public static PimsPropPropActivity CreatePropertyManagementActivity(long id, long propertyId, long propertyActivityId)
-        {
-            PimsPropPropActivity propertyManagementActivity = new PimsPropPropActivity
-            {
-                Internal_Id = id,
-                PropertyId = propertyId,
-                PimsPropertyActivityId = propertyActivityId,
-            };
-
-            return propertyManagementActivity;
         }
     }
 }

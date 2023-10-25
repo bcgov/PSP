@@ -34,11 +34,11 @@ const mockDeleteApi = {
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/usePropertyManagementRepository', () => ({
-  usePropertyManagementRepository: () => {
+jest.mock('@/hooks/repositories/usePropertyActivityRepository', () => ({
+  usePropertyActivityRepository: () => {
     return {
-      getPropertyManagementActivities: mockGetApi,
-      deletePropertyManagementActivity: mockDeleteApi,
+      getActivities: mockGetApi,
+      deleteActivity: mockDeleteApi,
     };
   },
 }));
