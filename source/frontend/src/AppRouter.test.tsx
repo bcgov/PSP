@@ -11,7 +11,7 @@ import { lookupCodesSlice } from './store/slices/lookupCodes';
 import { networkSlice } from './store/slices/network/networkSlice';
 import { tenantsSlice } from './store/slices/tenants';
 import { defaultTenant } from './tenants/config/defaultTenant';
-import { mockKeycloak, render, RenderOptions, screen } from './utils/test-utils';
+import { cleanup, mockKeycloak, render, RenderOptions, screen } from './utils/test-utils';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -61,11 +61,11 @@ jest.mock('@/store/slices/tenants/useTenants', () => ({
 jest.mock('./hooks/pims-api/useApiUsers');
 (useApiUsers as jest.MockedFunction<typeof useApiUsers>).mockReturnValue({
   activateUser: jest.fn(),
-  exportUsers: jest.fn(),
   getUser: jest.fn().mockResolvedValue(getUserMock()),
   getUserInfo: jest.fn().mockResolvedValue(getUserMock()),
   getUsersPaged: jest.fn(),
   putUser: jest.fn(),
+  exportUsers: jest.fn(),
 });
 
 describe('PSP routing', () => {
@@ -86,7 +86,7 @@ describe('PSP routing', () => {
   };
 
   afterEach(() => {
-    // cleanup();
+    cleanup();
     jest.clearAllMocks();
   });
 

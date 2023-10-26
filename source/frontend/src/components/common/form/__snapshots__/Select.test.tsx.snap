@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Select component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  <div
+    class="form-group"
+  >
+    <label
+      class="form-label"
+      for="input-countryId"
+    >
+      Test Dropdown 
+    </label>
+    <select
+      class="form-select form-control"
+      id="input-countryId"
+      name="countryId"
+    >
+      <option
+        value=""
+      >
+        Select a country
+      </option>
+      <option
+        class="option"
+        data-testid="select-option-AT"
+        value="AT"
+      >
+        Austria
+      </option>
+      <option
+        class="option"
+        data-testid="select-option-US"
+        value="US"
+      >
+        United States
+      </option>
+      <option
+        class="option"
+        data-testid="select-option-IE"
+        value="IE"
+      >
+        Ireland
+      </option>
+    </select>
+  </div>
+</DocumentFragment>
+`;
