@@ -1,0 +1,1774 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/23/2023 4:37:21 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="XERCES"
+  DTS:CreatorName="Xerces\Devin Smith"
+  DTS:DTSID="{74037122-414C-4317-B096-F0B5505A0733}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.948.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="30"
+  DTS:VersionGUID="{B3C7597B-AE58-4536-A564-210E27812896}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PIMS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C854C770-B13C-477E-8DD4-44721E1B9FCF}"
+      DTS:ObjectName="PIMS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_DEV;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{C854C770-B13C-477E-8DD4-44721E1B9FCF}sqldevtst.th.gov.bc.ca.PIMS_DEV;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Correct PIMS Locations"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{0672244B-9B78-4F1F-A275-B350033D157F}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Correct PIMS Locations"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Correct PIMS Locations\Conditional Split"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Conditional Split"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Correct PIMS Locations\Conditional Split.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Correct PIMS Locations\Conditional Split.Inputs[Conditional Split Input].Columns[POLE_OF_INACCESSABILITY]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="POLE_OF_INACCESSABILITY"
+                      lineageId="Package\Correct PIMS Locations\Script Component.Outputs[Output 0].Columns[POLE_OF_INACCESSABILITY]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Correct PIMS Locations\Conditional Split.Outputs[VALID_NEW_LOCATION]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="VALID_NEW_LOCATION"
+                  synchronousInputId="Package\Correct PIMS Locations\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">![ISNULL](#{Package\Correct PIMS Locations\Script Component.Outputs[Output 0].Columns[POLE_OF_INACCESSABILITY]}) &amp;&amp; [LEN](#{Package\Correct PIMS Locations\Script Component.Outputs[Output 0].Columns[POLE_OF_INACCESSABILITY]}) &gt; 0</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">!ISNULL(POLE_OF_INACCESSABILITY) &amp;&amp; LEN(POLE_OF_INACCESSABILITY) &gt; 0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Correct PIMS Locations\Conditional Split.Outputs[Conditional Split Default Output]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="Conditional Split Default Output"
+                  synchronousInputId="Package\Correct PIMS Locations\Conditional Split.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Correct PIMS Locations\Conditional Split.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\Correct PIMS Locations\Conditional Split.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Correct PIMS Locations\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Correct PIMS Locations\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Correct PIMS Locations\PIMS_PROPERTY"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="PIMS_PROPERTY"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">UPDATE PIMS_PROPERTY SET LOCATION = geometry::STGeomFromText(?, 3008), CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1 WHERE PROPERTY_ID = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Correct PIMS Locations\PIMS_PROPERTY.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Correct PIMS Locations\PIMS_PROPERTY.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY.Inputs[OLE DB Command Input].Columns[POLE_OF_INACCESSABILITY]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="POLE_OF_INACCESSABILITY"
+                      externalMetadataColumnId="Package\Correct PIMS Locations\PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Correct PIMS Locations\Script Component.Outputs[Output 0].Columns[POLE_OF_INACCESSABILITY]" />
+                    <inputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY.Inputs[OLE DB Command Input].Columns[PROPERTY_ID]"
+                      cachedDataType="i8"
+                      cachedName="PROPERTY_ID"
+                      externalMetadataColumnId="Package\Correct PIMS Locations\PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="wstr"
+                      length="4000"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      dataType="i8"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Correct PIMS Locations\PIMS_PROPERTY.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Correct PIMS Locations\PIMS_PROPERTY.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Correct PIMS Locations\PIMS_PROPERTY.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Correct PIMS Locations\PIMS_PROPERTY.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="PIMS_PROPERTY_BOUNDARY_VIEW"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[PIMS_PROPERTY_BOUNDARY_VW]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select cast(BOUNDARY.STAsText() as varchar(max)) as BOUNDARY_TEXT, PROPERTY_ID from PIMS_PROPERTY WHERE BOUNDARY IS NOT NULL and APP_CREATE_USERID in ('APP_PIMS_PROXY_ETL_EDIT', 'LISDB_ETL_USER', 'PMBC_PIMS_BCTFA', 'LISOS_ETL_USER')</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].Columns[BOUNDARY_TEXT]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].ExternalColumns[BOUNDARY_TEXT]"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].Columns[BOUNDARY_TEXT]"
+                      name="BOUNDARY_TEXT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].ExternalColumns[BOUNDARY_TEXT]"
+                      codePage="1252"
+                      dataType="text"
+                      name="BOUNDARY_TEXT" />
+                    <externalMetadataColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      dataType="i8"
+                      name="PROPERTY_ID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[BOUNDARY_TEXT]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[BOUNDARY_TEXT]"
+                      name="BOUNDARY_TEXT" />
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID" />
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Correct PIMS Locations\Script Component"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Includes and runs custom script code. For example, apply a business rule that limits the range of valid values in an &quot;income&quot; column or add values in two columns and calculate the average of the sum.;Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;12"
+              description="Includes and runs custom script code. For example, apply a business rule that limits the range of valid values in an &quot;income&quot; column or add values in two columns and calculate the average of the sum."
+              name="Script Component"
+              version="12">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Stores the source code of the component"
+                  isArray="true"
+                  name="SourceCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="36">
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Settings.settings]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Resources.resx]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[main.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[#region Help:  Introduction to the Script Component
+/* The Script Component allows you to perform virtually any operation that can be accomplished in
+ * a .Net application within the context of an Integration Services data flow.
+ *
+ * Expand the other regions which have "Help" prefixes for examples of specific ways to use
+ * Integration Services features within this script component. */
+#endregion
+
+#region Namespaces
+using Microsoft.SqlServer.Types;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlTypes;
+using System.Drawing;
+using System.Text;
+using System.Text.RegularExpressions;
+#endregion
+
+/// <summary>
+/// This is the class to which to add your code.  Do not change the name, attributes, or parent
+/// of this class.
+/// </summary>
+[Microsoft.SqlServer.Dts.Pipeline.SSISScriptComponentEntryPointAttribute]
+public class ScriptMain : UserComponent
+{
+    #region Help:  Using Integration Services variables and parameters
+    /* To use a variable in this script, first ensure that the variable has been added to
+     * either the list contained in the ReadOnlyVariables property or the list contained in
+     * the ReadWriteVariables property of this script component, according to whether or not your
+     * code needs to write into the variable.  To do so, save this script, close this instance of
+     * Visual Studio, and update the ReadOnlyVariables and ReadWriteVariables properties in the
+     * Script Transformation Editor window.
+     * To use a parameter in this script, follow the same steps. Parameters are always read-only.
+     *
+     * Example of reading from a variable or parameter:
+     *  DateTime startTime = Variables.MyStartTime;
+     *
+     * Example of writing to a variable:
+     *  Variables.myStringVariable = "new value";
+     */
+    #endregion
+
+    #region Help:  Using Integration Services Connnection Managers
+    /* Some types of connection managers can be used in this script component.  See the help topic
+     * "Working with Connection Managers Programatically" for details.
+     *
+     * To use a connection manager in this script, first ensure that the connection manager has
+     * been added to either the list of connection managers on the Connection Managers page of the
+     * script component editor.  To add the connection manager, save this script, close this instance of
+     * Visual Studio, and add the Connection Manager to the list.
+     *
+     * If the component needs to hold a connection open while processing rows, override the
+     * AcquireConnections and ReleaseConnections methods.
+     * 
+     * Example of using an ADO.Net connection manager to acquire a SqlConnection:
+     *  object rawConnection = Connections.SalesDB.AcquireConnection(transaction);
+     *  SqlConnection salesDBConn = (SqlConnection)rawConnection;
+     *
+     * Example of using a File connection manager to acquire a file path:
+     *  object rawConnection = Connections.Prices_zip.AcquireConnection(transaction);
+     *  string filePath = (string)rawConnection;
+     *
+     * Example of releasing a connection manager:
+     *  Connections.SalesDB.ReleaseConnection(rawConnection);
+     */
+    #endregion
+
+    #region Help:  Firing Integration Services Events
+    /* This script component can fire events.
+     *
+     * Example of firing an error event:
+     *  ComponentMetaData.FireError(10, "Process Values", "Bad value", "", 0, out cancel);
+     *
+     * Example of firing an information event:
+     *  ComponentMetaData.FireInformation(10, "Process Values", "Processing has started", "", 0, fireAgain);
+     *
+     * Example of firing a warning event:
+     *  ComponentMetaData.FireWarning(10, "Process Values", "No rows were received", "", 0);
+     */
+    #endregion
+
+    /// <summary>
+    /// This method is called once, before rows begin to be processed in the data flow.
+    ///
+    /// You can remove this method if you don't need to do anything here.
+    /// </summary>
+    public override void PreExecute()
+    {
+        base.PreExecute();
+        /*
+         * Add your code here
+         */
+    }
+
+    /// <summary>
+    /// This method is called after all the rows have passed through this component.
+    ///
+    /// You can delete this method if you don't need to do anything here.
+    /// </summary>
+    public override void PostExecute()
+    {
+        base.PostExecute();
+        /*
+         * Add your code here
+         */
+    }
+
+    /// <summary>
+    /// This method is called once for every row that passes through the component from Input0.
+    ///
+    /// Example of reading a value from a column in the the row:
+    ///  string zipCode = Row.ZipCode
+    ///
+    /// Example of writing a value to a column in the row:
+    ///  Row.ZipCode = zipCode
+    /// </summary>
+    /// <param name="Row">The row that is currently passing through the component</param>
+    public override void Input0_ProcessInputRow(Input0Buffer Row)
+    {
+        try
+        {
+            /*
+             * Add your code here
+             */
+            if (Row.BOUNDARYTEXT_IsNull)
+            {
+                return;
+            }
+            //get the lenght of the string of our Meshblock
+
+            //change my string data to sqlchars. this is needed for the STGeomFromText function
+            string pattern = @"\d.*?\s[^,\)]*";
+            var blobLength = Convert.ToInt32(Row.BOUNDARYTEXT.Length);
+            var blobData = Row.BOUNDARYTEXT.GetBlobData(0, blobLength);
+            var stringData = Encoding.UTF8.GetString(blobData);
+            var matches = Regex.Matches(stringData, pattern, RegexOptions.None);
+
+            List<PointF> points = new List<PointF>();
+            foreach (Match match in matches)
+            {
+                string[] latLng = match.Value.Split(' ');
+                points.Add(new PointF(float.Parse(latLng[0]), float.Parse(latLng[1])));
+            }
+
+            var newPoint = PolyLabel.PolyLabel.GetPolyLabel(points, .01f);
+
+            Row.POLEOFINACCESSABILITY = $"POINT ({newPoint.Centroid.X} {newPoint.Centroid.Y})";
+        }
+        catch (Exception e)
+        {
+            bool cancel = false;  // set to true to cause execution to abort
+            ComponentMetaData.FireError(-1, "Input0_ProcessInputRow()", e.Message, "", -1, out cancel);  // raise the error event to SSIS
+        }
+    }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[BufferWrapper.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[/* THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+*  Microsoft SQL Server Integration Services buffer wrappers
+*  This module defines classes for accessing data flow buffers
+*  THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT! */
+
+
+
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+
+public class Input0Buffer: ScriptBuffer
+
+{
+    public Input0Buffer(PipelineBuffer Buffer, int[] BufferColumnIndexes, OutputNameMap OutputMap)
+        : base(Buffer, BufferColumnIndexes, OutputMap)
+    {
+    }
+
+    public BlobColumn BOUNDARYTEXT
+    {
+        get
+        {
+            return (BlobColumn)Buffer[BufferColumnIndexes[0]];
+        }
+    }
+    public bool BOUNDARYTEXT_IsNull
+    {
+        get
+        {
+            return IsNull(0);
+        }
+    }
+
+    public String POLEOFINACCESSABILITY
+    {
+        set
+        {
+            this[1] = value;
+        }
+    }
+    public bool POLEOFINACCESSABILITY_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(1);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    new public bool NextRow()
+    {
+        return base.NextRow();
+    }
+
+    new public bool EndOfRowset()
+    {
+        return base.EndOfRowset();
+    }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\AssemblyInfo.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("SC_4664d38d6d774888963e21557351c901")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("SC_4664d38d6d774888963e21557351c901")]
+[assembly: AssemblyCopyright("Copyright @  2023")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.0.0")]
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[ComponentWrapper.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[/* THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+*  Microsoft SQL Server Integration Services component wrapper
+*  This module defines the base class for your component
+*  THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT! */
+
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+using Microsoft.SqlServer.Dts.Runtime.Wrapper;
+
+public class UserComponent: ScriptComponent
+{
+    public Connections Connections;
+    public Variables Variables;
+    public UserComponent()
+    {
+        Connections = new Connections(this);
+        Variables = new Variables(this);
+    }
+
+    public override void ProcessInput(int InputID, string InputName, PipelineBuffer Buffer, OutputNameMap OutputMap)
+    {
+
+        if (InputName.Equals(@"Input 0", StringComparison.Ordinal))
+        {
+            Input0_ProcessInput(new Input0Buffer(Buffer, GetColumnIndexes(InputID), OutputMap));
+        }
+
+    }
+
+    public virtual void Input0_ProcessInput(Input0Buffer Buffer)
+    {
+        while (Buffer.NextRow())
+        {
+            Input0_ProcessInputRow(Buffer);
+        }
+    }
+
+    public virtual void Input0_ProcessInputRow(Input0Buffer Row)
+    {
+    }
+
+}
+
+public class Connections
+{
+    ScriptComponent ParentComponent;
+
+    public Connections(ScriptComponent Component)
+    {
+        ParentComponent = Component;
+    }
+
+}
+
+public class Variables
+{
+    ScriptComponent ParentComponent;
+
+    public Variables(ScriptComponent Component)
+    {
+        ParentComponent = Component;
+    }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Project]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF16LE]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
+  <msb:PropertyGroup>
+    <msb:CodeName>SC_4664d38d6d774888963e21557351c901</msb:CodeName>
+    <msb:Language>msBuild</msb:Language>
+    <msb:DisplayName>SC_4664d38d6d774888963e21557351c901</msb:DisplayName>
+    <msb:ProjectId>{1916879A-8FAA-48B9-9C04-D9C7C0D9DE1A}</msb:ProjectId>
+  </msb:PropertyGroup>
+  <msb:ItemGroup>
+    <msb:Project Include="SC_4664d38d6d774888963e21557351c901.csproj" />
+    <msb:File Include="packages.config" />
+    <msb:File Include="main.cs" />
+    <msb:File Include="BufferWrapper.cs" />
+    <msb:File Include="ComponentWrapper.cs" />
+    <msb:File Include="PolyLabel.cs" />
+    <msb:File Include="Properties\AssemblyInfo.cs" />
+    <msb:File Include="Properties\Resources.resx" />
+    <msb:File Include="Properties\Resources.Designer.cs" />
+    <msb:File Include="Properties\Settings.settings" />
+    <msb:File Include="Properties\Settings.Designer.cs" />
+  </msb:ItemGroup>
+</c:Project>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Settings.Designer.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_4664d38d6d774888963e21557351c901.Properties.Settings.get_Default():SC_4664d38d6d774888963e21557351c901.Properties.Sett" +
+    "ings")]
+
+namespace SC_4664d38d6d774888963e21557351c901.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[SC_4664d38d6d774888963e21557351c901.csproj]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props" Condition="Exists('..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props')" />
+  <PropertyGroup>
+    <ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BA45C723-8B9F-453A-A231-4AA3D2D0ECDC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SC_4664d38d6d774888963e21557351c901</RootNamespace>
+    <AssemblyName>SC_4664d38d6d774888963e21557351c901</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <NuGetPackageImportStamp></NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.SqlServer.Types, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\git\PSP\etl\PIMS_PROPERTY_SPATIAL_CORRECTION\PIMS_PROPERTY_SPATIAL_CORRECTION\PIMS_PROPERTY_SPATIAL_CORRECTION\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="PriorityQueue">
+      <HintPath>C:\git\PSP\etl\PIMS_PROPERTY_SPATIAL_CORRECTION\PIMS_PROPERTY_SPATIAL_CORRECTION\PIMS_PROPERTY_SPATIAL_CORRECTION\PriorityQueue.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.SqlServer.TxScript, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.DTSRuntimeWrap, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.DTSPipelineWrap, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.PipelineHost, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Compile Include="main.cs" />
+    <Compile Include="BufferWrapper.cs" />
+    <Compile Include="ComponentWrapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+    <Compile Include="PolyLabel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <!-- Include the build rules for a C# project.-->
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- This section defines VSTA properties that describe the host-changable project properties. -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}">
+        <ProjectProperties HostName="VSTAHostName" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" />
+        <Host Name="ScriptComponent" IconIndex="0" />
+        <ProjectClient>
+          <HostIdentifier>SSIS_SC150</HostIdentifier>
+        </ProjectClient>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild"></Target>
+</Project>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Resources.Designer.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_4664d38d6d774888963e21557351c901.Properties.Resources.get_ResourceManager():System.Resources.Resou" +
+    "rceManager")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_4664d38d6d774888963e21557351c901.Properties.Resources.get_Culture():System.Globalization.CultureIn" +
+    "fo")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_4664d38d6d774888963e21557351c901.Properties.Resources.set_Culture(System.Globalization.CultureInfo" +
+    "):Void")]
+
+namespace SC_4664d38d6d774888963e21557351c901.Properties {
+    
+    
+    /// <summary>
+    ///   A strongly-typed resource class, for looking up localized strings, etc.
+    /// </summary>
+    // This class was auto-generated by the StronglyTypedResourceBuilder
+    // class via a tool like ResGen or Visual Studio.
+    // To add or remove a member, edit your .ResX file then rerun ResGen
+    // with the /str option, or rebuild your VS project.
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    internal class Resources {
+        
+        private static global::System.Resources.ResourceManager resourceMan;
+        
+        private static global::System.Globalization.CultureInfo resourceCulture;
+        
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        internal Resources() {
+        }
+        
+        /// <summary>
+        ///   Returns the cached ResourceManager instance used by this class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if ((resourceMan == null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SC_4664d38d6d774888963e21557351c901.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        
+        /// <summary>
+        ///   Overrides the current thread's CurrentUICulture property for all
+        ///   resource lookups using this strongly typed resource class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
+                return resourceCulture;
+            }
+            set {
+                resourceCulture = value;
+            }
+        }
+    }
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[packages.config]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="OptimizedPriorityQueue" version="5.1.0" targetFramework="net47" />
+</packages>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[PolyLabel.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using Priority_Queue;
+
+namespace PolyLabel
+{
+    public class PolyLabel
+    {
+        public PointF Centroid { get; set; }
+        public float Radius { get; set; }
+
+        public static PolyLabel GetPolyLabel(List<PointF> polygon, float precision = 1.0f, bool debug = false)
+        {
+            float minX = float.MaxValue;
+            float minY = float.MaxValue;
+            float maxX = float.MinValue;
+            float maxY = float.MinValue;
+
+            for (int i = 0; i < polygon.Count; i++)
+            {
+                PointF p = polygon[i];
+                if (i == 0 || p.X < minX) minX = p.X;
+                if (i == 0 || p.Y < minY) minY = p.Y;
+                if (i == 0 || p.X > maxX) maxX = p.X;
+                if (i == 0 || p.Y > maxY) maxY = p.Y;
+            }
+
+            float width = maxX - minX;
+            float height = maxY - minY;
+            float cellSize = Math.Min(width, height);
+            float h = cellSize / 2;
+
+            SimplePriorityQueue<Cell> cellQueue = new SimplePriorityQueue<Cell>();
+
+            if (cellSize == 0)
+            {
+                PolyLabel degeneratePoleOfInaccessibility = new PolyLabel()
+                {
+                    Centroid = new PointF(minX, minY),
+                    Radius = 0
+                };
+                return degeneratePoleOfInaccessibility;
+            }
+
+            for (var x = minX; x < maxX; x += cellSize)
+            {
+                for (var y = minY; y < maxY; y += cellSize)
+                {
+                    Cell cell = new Cell(x + h, y + h, h, polygon);
+                    cellQueue.Enqueue(cell, cell.Max);
+                }
+            }
+
+            Cell bestCell = GetCentroidCell(polygon);
+
+            Cell bBoxCell = new Cell(minX + width / 2, minY + height / 2, 0, polygon);
+            if (bBoxCell.D > bestCell.D)
+                bestCell = bBoxCell;
+
+            int numProbes = cellQueue.Count;
+
+            while (cellQueue.Count != 0)
+            {
+                // pick the most promising cell from the queue
+                var cell = cellQueue.Dequeue();
+
+                // update the best cell if we found a better one
+                if (cell.D > bestCell.D)
+                {
+                    bestCell = cell;
+                    if (debug)
+                        Console.WriteLine("found best {0} after {1} probes", Math.Round(1e4 * cell.D) / 1e4, numProbes);
+                }
+
+                // do not drill down further if there's no chance of a better solution
+                if (cell.Max - bestCell.D <= precision)
+                    continue;
+
+                // split the cell into four cells
+                h = cell.H / 2;
+
+                Cell temp;
+                temp = new Cell(cell.X - h, cell.Y - h, h, polygon);
+                cellQueue.Enqueue(temp, temp.Max);
+                temp = new Cell(cell.X + h, cell.Y - h, h, polygon);
+                cellQueue.Enqueue(temp, temp.Max);
+                temp = new Cell(cell.X - h, cell.Y + h, h, polygon);
+                cellQueue.Enqueue(temp, temp.Max);
+                temp = new Cell(cell.X + h, cell.Y + h, h, polygon);
+                cellQueue.Enqueue(temp, temp.Max);
+                numProbes += 4;
+            }
+
+            if (debug)
+            {
+                Console.WriteLine("num probes: " + numProbes);
+                Console.WriteLine("best distance: " + bestCell.D);
+            }
+
+            PolyLabel poleOfInaccessibility = new PolyLabel()
+            {
+                Centroid = new PointF(bestCell.X, bestCell.Y),
+                Radius = bestCell.D
+            };
+
+            return poleOfInaccessibility;
+        }
+
+        private static Cell GetCentroidCell(List<PointF> polygon)
+        {
+            float area = 0;
+            float x = 0;
+            float y = 0;
+            List<PointF> points = polygon;
+
+            for (int i = 0, len = points.Count, j = len - 1; i < len; j = i++)
+            {
+                PointF a = points[i];
+                PointF b = points[j];
+                float f = a.X * b.Y - b.X * a.Y;
+                x += (a.X + b.X) * f;
+                y += (a.Y + b.Y) * f;
+                area += f * 3;
+            }
+            if (area == 0)
+                return new Cell(points[0].X, points[0].Y, 0, polygon);
+
+            return new Cell(x / area, y / area, 0, polygon);
+        }
+
+        class Cell
+        {
+            public float X { get; set; }
+            public float Y { get; set; }
+            public float H { get; set; }
+            public float D { get; set; }
+            public float Max { get; set; }
+            public Cell(float x, float y, float h, List<PointF> polygon)
+            {
+                this.X = x;
+                this.Y = y;
+                this.H = h;
+                this.D = PointToPolygonDist(x, y, polygon);
+                this.Max = Convert.ToSingle(this.D + this.H * Math.Sqrt(2));
+            }
+
+            float PointToPolygonDist(float x, float y, List<PointF> polygon)
+            {
+                bool inside = false;
+                float minDistSq = float.PositiveInfinity;
+
+                for (int i = 0, len = polygon.Count, j = len - 1; i < len; j = i++)
+                {
+                    PointF a = polygon[i];
+                    PointF b = polygon[j];
+
+                    if ((a.Y > y != b.Y > y) && (x < (b.X - a.X) * (y - a.Y) / (b.Y - a.Y) + a.X))
+                        inside = !inside;
+
+                    minDistSq = Math.Min(minDistSq, GetSeqDistSq(x, y, a, b));
+                }
+
+                return Convert.ToSingle((inside ? 1 : -1) * Math.Sqrt(minDistSq));
+            }
+
+            float GetSeqDistSq(float px, float py, PointF a, PointF b)
+            {
+                float x = a.X;
+                float y = a.Y;
+                float dx = b.X - x;
+                float dy = b.Y - y;
+
+                if (dx != 0 || dy != 0)
+                {
+
+                    var t = ((px - x) * dx + (py - y) * dy) / (dx * dx + dy * dy);
+
+                    if (t > 1)
+                    {
+                        x = b.X;
+                        y = b.Y;
+
+                    }
+                    else if (t > 0)
+                    {
+                        x += dx * t;
+                        y += dy * t;
+                    }
+                }
+
+                dx = px - x;
+                dy = py - y;
+
+                return dx * dx + dy * dy;
+            }
+        }
+    }
+}]]></arrayElement>
+                  </arrayElements>
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Stores the binary representation of the component"
+                  isArray="true"
+                  name="BinaryCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="2">
+                    <arrayElement
+                      dataType="System.String"><![CDATA[SC_4664d38d6d774888963e21557351c901.dll]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[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
+pAQGALEAQwU1AAkBWwA5ALEACwE+ABEBeQBFABEBGQVLABkBOQhRAAwAlgcGACEBiAdjAIEAcQlo
+ADkB3QRsAEkBMQlwAFEB4AJ3AHkAlgd8AAwAOwGCAIEA+QmIAIkA2AIGAHkAwwCMAHkA6QCMAEkB
+FwmQALkA9QCXAJEAAgJsAFkBcgedAJkAlgeoAJkALgeyAJkAegi2AKEA6gW6AJkA2wW/AJkA8wXE
+AJkA4gUBAGEBlgcQAJkAJQqIAJkAJQmIALkAlgcGAEkBqAjKALkAjgjSAMEAlgcGAHEBMwLYAHEB
+RgrhANEAlgfnAPEAlgcGAAwA6gUSAQwAfQkYAYkBDwYcARQAlgcGABwA1QQzARwAfQkYARwAzQQ7
+AYkB7AFAAakBYAJFAaEBEAVsAEkBEAlMAakBYAJSAVEBEAVsAIkBrAlAAQkBRQJtAQwATQCqAQIA
+UQCvAS4ACwB5Ai4AEwCCAi4AGwChAi4AIwCqAi4AKwDTAi4AMwDTAi4AOwDTAi4AQwCqAi4ASwDZ
+Ai4AUwDTAi4AWwDwAkMAYwA6A6kAcwChAskAcwChAuEAewA6A+MAawA6AwEBewA6AyEBewA6A0EB
+ewA6A2EBewA6A4EBewA6A6EBewA6A8EBewA6AyADewA6A0ADewA6A2ADewA6A4ADewA6AwAEewA6
+AyAEewA6A0AEewA6A2AEewA6A4AEewA6A6AEewA6A8AEewA6A+AEewA6AwAFewA6AyAFewA6AxsA
+7wBXAXIBfgEDAAEABwAFAAgABwAJAAgACgAKAAAAtgBUAgAArQVZAgAA0wBdAgAAxQVZAgAAOQdh
+AgAAsAJmAgAAOwlrAgAAUAFwAgAACQl1AgAAzQB1AgAA8wB1AgAAsAB1AgAAnQB1AgAAOQp1AgIA
+BgADAAIABwAFAAEACAAHAAEACQAJAAIAEwALAAIAFAANAAEAFQANAAIAFgAPAAIAGQARAAEAGgAR
+AAIAGwATAAEAHAATAAIAIAAVAAEAIQAVAAIAIgAXAAEAIwAXAAIAJAAZAAEAJQAZAAIAJgAbAAEA
+JwAbAAIAKAAdAAEAKQAdAFwAIgEqAQSAAAABAAAAAAAAAAAAAAAAABoAAAAEAAAAAAAAAAAAAACG
+ARcBAAAAAA8AAAAAAAAAAAAAAI8BhwkAAAAABAAAAAAAAAAAAAAAmAEjBQAAAAAPAAAAAAAAAAAA
+AACPAcQJAAAAAAQAAAAAAAAAAAAAAIYB/AUAAAAABQAAAAAAAAAAAAAAoQG/BAAAAAAPAAAAAAAA
+AAAAAACPAdYGAAAAAAAAAAABAAAA5wcAAAoACQAAAABJRFRTQ29tcG9uZW50TWV0YURhdGExMDAA
+U0NfNDY2NGQzOGQ2ZDc3NDg4ODk2M2UyMTU1NzM1MWM5MDEAU2ltcGxlUHJpb3JpdHlRdWV1ZWAx
+AExpc3RgMQBUb0ludDMyAFNpbXBsZVByaW9yaXR5UXVldWVgMgBnZXRfVVRGOAA8TW9kdWxlPgBJ
+bnB1dElEAGdldF9EAHNldF9EAFBvaW50RgBnZXRfSABzZXRfSABnZXRfQk9VTkRBUllURVhUAGdl
+dF9YAHNldF9YAHNldF9QT0xFT0ZJTkFDQ0VTU0FCSUxJVFkAZ2V0X1kAc2V0X1kAZ2V0X0NvbXBv
+bmVudE1ldGFEYXRhAEdldEJsb2JEYXRhAG1zY29ybGliAFN5c3RlbS5Db2xsZWN0aW9ucy5HZW5l
+cmljAEFkZABnZXRfQ2VudHJvaWQAc2V0X0NlbnRyb2lkADxEPmtfX0JhY2tpbmdGaWVsZAA8SD5r
+X19CYWNraW5nRmllbGQAPFg+a19fQmFja2luZ0ZpZWxkADxZPmtfX0JhY2tpbmdGaWVsZAA8Q2Vu
+dHJvaWQ+a19fQmFja2luZ0ZpZWxkADxSYWRpdXM+a19fQmFja2luZ0ZpZWxkADxNYXg+a19fQmFj
+a2luZ0ZpZWxkAFJvdW5kAGRlZmF1bHRJbnN0YW5jZQBnZXRfTWVzc2FnZQBJRGlzcG9zYWJsZQBE
+b3VibGUAUnVudGltZVR5cGVIYW5kbGUAR2V0VHlwZUZyb21IYW5kbGUAVG9TaW5nbGUAQ29uc29s
+ZQBJbnB1dE5hbWUAV3JpdGVMaW5lAE1pY3Jvc29mdC5TcWxTZXJ2ZXIuRHRzLlBpcGVsaW5lAFR5
+cGUAZ2V0X0N1bHR1cmUAc2V0X0N1bHR1cmUAcmVzb3VyY2VDdWx0dXJlAENhcHR1cmUAQXBwbGlj
+YXRpb25TZXR0aW5nc0Jhc2UARGlzcG9zZQBQYXJzZQBFZGl0b3JCcm93c2FibGVTdGF0ZQBDb21w
+aWxlckdlbmVyYXRlZEF0dHJpYnV0ZQBEZWJ1Z2dlck5vblVzZXJDb2RlQXR0cmlidXRlAERlYnVn
+Z2FibGVBdHRyaWJ1dGUARWRpdG9yQnJvd3NhYmxlQXR0cmlidXRlAEFzc2VtYmx5VGl0bGVBdHRy
+aWJ1dGUAQXNzZW1ibHlUcmFkZW1hcmtBdHRyaWJ1dGUAVGFyZ2V0RnJhbWV3b3JrQXR0cmlidXRl
+AEFzc2VtYmx5Q29uZmlndXJhdGlvbkF0dHJpYnV0ZQBBc3NlbWJseURlc2NyaXB0aW9uQXR0cmli
+dXRlAENvbXBpbGF0aW9uUmVsYXhhdGlvbnNBdHRyaWJ1dGUAQXNzZW1ibHlQcm9kdWN0QXR0cmli
+dXRlAEFzc2VtYmx5Q29weXJpZ2h0QXR0cmlidXRlAFNTSVNTY3JpcHRDb21wb25lbnRFbnRyeVBv
+aW50QXR0cmlidXRlAEFzc2VtYmx5Q29tcGFueUF0dHJpYnV0ZQBSdW50aW1lQ29tcGF0aWJpbGl0
+eUF0dHJpYnV0ZQBQcmVFeGVjdXRlAFBvc3RFeGVjdXRlAFByaW9yaXR5X1F1ZXVlAFByaW9yaXR5
+UXVldWUARGVxdWV1ZQBFbnF1ZXVlAGdldF9WYWx1ZQB2YWx1ZQBFbmNvZGluZwBTeXN0ZW0uUnVu
+dGltZS5WZXJzaW9uaW5nAFRvU3RyaW5nAEdldFN0cmluZwBTeXN0ZW0uRHJhd2luZwBkZWJ1ZwBN
+YXRjaABNYXRoAGdldF9MZW5ndGgAR2V0UG9seUxhYmVsAFN5c3RlbS5Db21wb25lbnRNb2RlbABT
+Q180NjY0ZDM4ZDZkNzc0ODg4OTYzZTIxNTU3MzUxYzkwMS5kbGwAR2V0Q2VudHJvaWRDZWxsAGdl
+dF9CT1VOREFSWVRFWFRfSXNOdWxsAHNldF9QT0xFT0ZJTkFDQ0VTU0FCSUxJVFlfSXNOdWxsAFNl
+dE51bGwAZ2V0X0l0ZW0Ac2V0X0l0ZW0AU3lzdGVtAHJlc291cmNlTWFuAE1pbgBTY3JpcHRNYWlu
+AEJsb2JDb2x1bW4AcG9seWdvbgBwcmVjaXNpb24AU3lzdGVtLkNvbmZpZ3VyYXRpb24AU3lzdGVt
+Lkdsb2JhbGl6YXRpb24AU3lzdGVtLlJlZmxlY3Rpb24ATWF0Y2hDb2xsZWN0aW9uAEludmFsaWRP
+cGVyYXRpb25FeGNlcHRpb24AU3RyaW5nQ29tcGFyaXNvbgBDdWx0dXJlSW5mbwBPdXRwdXROYW1l
+TWFwAE91dHB1dE1hcABNaWNyb3NvZnQuU3FsU2VydmVyLkRUU1BpcGVsaW5lV3JhcABHZXRTZXFE
+aXN0U3EAQ2hhcgBJbnB1dDBCdWZmZXIAUGlwZWxpbmVCdWZmZXIAU2NyaXB0QnVmZmVyAGdldF9S
+ZXNvdXJjZU1hbmFnZXIATWljcm9zb2Z0LlNxbFNlcnZlci5EdHMuUGlwZWxpbmUuV3JhcHBlcgBG
+aXJlRXJyb3IASUVudW1lcmF0b3IAR2V0RW51bWVyYXRvcgAuY3RvcgAuY2N0b3IAU3lzdGVtLkRp
+YWdub3N0aWNzAFN5c3RlbS5SdW50aW1lLkNvbXBpbGVyU2VydmljZXMAU3lzdGVtLlJlc291cmNl
+cwBTQ180NjY0ZDM4ZDZkNzc0ODg4OTYzZTIxNTU3MzUxYzkwMS5Qcm9wZXJ0aWVzLlJlc291cmNl
+cy5yZXNvdXJjZXMARGVidWdnaW5nTW9kZXMATWF0Y2hlcwBTQ180NjY0ZDM4ZDZkNzc0ODg4OTYz
+ZTIxNTU3MzUxYzkwMS5Qcm9wZXJ0aWVzAFZhcmlhYmxlcwBCdWZmZXJDb2x1bW5JbmRleGVzAEdl
+dENvbHVtbkluZGV4ZXMAU2V0dGluZ3MARXF1YWxzAFN5c3RlbS5UZXh0LlJlZ3VsYXJFeHByZXNz
+aW9ucwBTeXN0ZW0uQ29sbGVjdGlvbnMAQ29ubmVjdGlvbnMAUmVnZXhPcHRpb25zAGdldF9SYWRp
+dXMAc2V0X1JhZGl1cwBDb25jYXQARm9ybWF0AE9iamVjdABFbmRPZlJvd3NldABTcGxpdABnZXRf
+RGVmYXVsdABVc2VyQ29tcG9uZW50AFBhcmVudENvbXBvbmVudABTY3JpcHRDb21wb25lbnQAZ2V0
+X0N1cnJlbnQAZ2V0X0NvdW50AE1pY3Jvc29mdC5TcWxTZXJ2ZXIuVHhTY3JpcHQAQ29udmVydABT
+cXJ0AFBvaW50VG9Qb2x5Z29uRGlzdABNaWNyb3NvZnQuU3FsU2VydmVyLlBpcGVsaW5lSG9zdABJ
+bnB1dDBfUHJvY2Vzc0lucHV0AE1vdmVOZXh0AFN5c3RlbS5UZXh0AElucHV0MF9Qcm9jZXNzSW5w
+dXRSb3cATmV4dFJvdwBnZXRfTWF4AHNldF9NYXgAUmVnZXgAcHgAZ2V0X0Fzc2VtYmx5AHB5AAAA
+AB1cAGQALgAqAD8AXABzAFsAXgAsAFwAKQBdACoAAB9QAE8ASQBOAFQAIAAoAHsAMAB9ACAAewAx
+AH0AKQAAMUkAbgBwAHUAdAAwAF8AUAByAG8AYwBlAHMAcwBJAG4AcAB1AHQAUgBvAHcAKAApAAAB
+AICbSQBzAE4AdQBsAGwAIABwAHIAbwBwAGUAcgB0AHkAIABjAGEAbgBuAG8AdAAgAGIAZQAgAHMA
+ZQB0ACAAdABvACAARgBhAGwAcwBlAC4AIABBAHMAcwBpAGcAbgAgAGEAIAB2AGEAbAB1AGUAIAB0
+AG8AIAB0AGgAZQAgAGMAbwBsAHUAbQBuACAAaQBuAHMAdABlAGEAZAAuAAAPSQBuAHAAdQB0ACAA
+MAAAcVMAQwBfADQANgA2ADQAZAAzADgAZAA2AGQANwA3ADQAOAA4ADgAOQA2ADMAZQAyADEANQA1
+ADcAMwA1ADEAYwA5ADAAMQAuAFAAcgBvAHAAZQByAHQAaQBlAHMALgBSAGUAcwBvAHUAcgBjAGUA
+cwAAP2YAbwB1AG4AZAAgAGIAZQBzAHQAIAB7ADAAfQAgAGEAZgB0AGUAcgAgAHsAMQB9ACAAcABy
+AG8AYgBlAHMAABluAHUAbQAgAHAAcgBvAGIAZQBzADoAIAAAH2IAZQBzAHQAIABkAGkAcwB0AGEA
+bgBjAGUAOgAgAAAfcHvaI0riSamRxzYcylsLAAQgAQEIAyAAAQUgAQEREQQgAQEOBSABARFxGQcL
+DggdBRUSOQERPRIkEkEdDhJFET0SSQIDIAAJBAABCAkGIAIdBQgIBQAAEoCJBSABDh0FCgADEoCR
+Dg4RgJUGFRI5ARE9BCAAEkEDIAAcAyAADgYgAR0OHQMEAAEMDgUgAgEMDAUgAQETAAMgAAIDIAAM
+BgADDg4cHAUgABKArQogBgEIDg4OCBACCSADARJRHQgSVQMGElEDBh0IBCABHAgEIAECCAUgAgEI
+HAcgAgIOEYC1BSABHQgICAABEoC5EYC9BSAAEoDBByACAQ4SgMEiBxQMDAwMDAwMDBUSgIEBEigS
+KBIoCAgRPQwMEigSKBIoDAUgARMACAMgAAgFAAIMDAwHFRKAgQESKAgVEoDJAhIoDAcgAgETABMB
+BCAAEwAEAAENDQYAAwEOHBwFAAIODg4EAAEBDhUHCwwMDBUSOQERPQgICBE9ET0MET0EAAEMDQsH
+BwIMCAgIET0RPQcHBQwMDAwMCLd6XFYZNOCJCImEXc2AgMyRCLA/X38R1Qo6CF4Tbb8EN9rNBAAA
+gD8BAAMGEhQDBhIYAwYSXQMGEmkDBhJtAwYSIAMGET0CBgwFIAEBEgwEIAASWQQgAQECCSAEAQgO
+ElESVQUgAQESXQQAABJpBAAAEm0FAAEBEm0EAAASIAMAAAEEIAARPQUgAQERPQQgAQEMDAADEiQV
+EjkBET0MAgoAARIoFRI5ARE9DCAEAQwMDBUSOQERPQsgAwwMDBUSOQERPQkgBAwMDBE9ET0EKAAS
+WQMoAAIDKAAOBAgAEmkECAASbQQIABIgBCgAET0DKAAMCAEACAAAAAAAHgEAAQBUAhZXcmFwTm9u
+RXhjZXB0aW9uVGhyb3dzAQgBAAIAAAAAACgBACNTQ180NjY0ZDM4ZDZkNzc0ODg4OTYzZTIxNTU3
+MzUxYzkwMQAABQEAAAAAFgEAEUNvcHlyaWdodCBAICAyMDIzAABJAQAaLk5FVEZyYW1ld29yayxW
+ZXJzaW9uPXY0LjcBAFQOFEZyYW1ld29ya0Rpc3BsYXlOYW1lEi5ORVQgRnJhbWV3b3JrIDQuNwQB
+AAAAALQAAADOyu++AQAAAJEAAABsU3lzdGVtLlJlc291cmNlcy5SZXNvdXJjZVJlYWRlciwgbXNj
+b3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1i
+NzdhNWM1NjE5MzRlMDg5I1N5c3RlbS5SZXNvdXJjZXMuUnVudGltZVJlc291cmNlU2V0AgAAAAAA
+AAAAAAAAUEFEUEFEULQAAABMRAAAAAAAAAAAAABmRAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+WEQAAAAAAAAAAAAAAABfQ29yRGxsTWFpbgBtc2NvcmVlLmRsbAAAAAAA/yUAIAAQAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAQAAAA
+GAAAgAAAAAAAAAAAAAAAAAAAAQABAAAAMAAAgAAAAAAAAAAAAAAAAAAAAQAAAAAASAAAAFhgAADs
+AwAAAAAAAAAAAADsAzQAAABWAFMAXwBWAEUAUgBTAEkATwBOAF8ASQBOAEYATwAAAAAAvQTv/gAA
+AQAAAAEAAAAAAAAAAQAAAAAAPwAAAAAAAAAEAAAAAgAAAAAAAAAAAAAAAAAAAEQAAAABAFYAYQBy
+AEYAaQBsAGUASQBuAGYAbwAAAAAAJAAEAAAAVAByAGEAbgBzAGwAYQB0AGkAbwBuAAAAAAAAALAE
+TAMAAAEAUwB0AHIAaQBuAGcARgBpAGwAZQBJAG4AZgBvAAAAKAMAAAEAMAAwADAAMAAwADQAYgAw
+AAAAGgABAAEAQwBvAG0AbQBlAG4AdABzAAAAAAAAACIAAQABAEMAbwBtAHAAYQBuAHkATgBhAG0A
+ZQAAAAAAAAAAAHAAJAABAEYAaQBsAGUARABlAHMAYwByAGkAcAB0AGkAbwBuAAAAAABTAEMAXwA0
+ADYANgA0AGQAMwA4AGQANgBkADcANwA0ADgAOAA4ADkANgAzAGUAMgAxADUANQA3ADMANQAxAGMA
+OQAwADEAAAAwAAgAAQBGAGkAbABlAFYAZQByAHMAaQBvAG4AAAAAADEALgAwAC4AMAAuADAAAABw
+ACgAAQBJAG4AdABlAHIAbgBhAGwATgBhAG0AZQAAAFMAQwBfADQANgA2ADQAZAAzADgAZAA2AGQA
+NwA3ADQAOAA4ADgAOQA2ADMAZQAyADEANQA1ADcAMwA1ADEAYwA5ADAAMQAuAGQAbABsAAAASAAS
+AAEATABlAGcAYQBsAEMAbwBwAHkAcgBpAGcAaAB0AAAAQwBvAHAAeQByAGkAZwBoAHQAIABAACAA
+IAAyADAAMgAzAAAAKgABAAEATABlAGcAYQBsAFQAcgBhAGQAZQBtAGEAcgBrAHMAAAAAAAAAAAB4
+ACgAAQBPAHIAaQBnAGkAbgBhAGwARgBpAGwAZQBuAGEAbQBlAAAAUwBDAF8ANAA2ADYANABkADMA
+OABkADYAZAA3ADcANAA4ADgAOAA5ADYAMwBlADIAMQA1ADUANwAzADUAMQBjADkAMAAxAC4AZABs
+AGwAAABoACQAAQBQAHIAbwBkAHUAYwB0AE4AYQBtAGUAAAAAAFMAQwBfADQANgA2ADQAZAAzADgA
+ZAA2AGQANwA3ADQAOAA4ADgAOQA2ADMAZQAyADEANQA1ADcAMwA1ADEAYwA5ADAAMQAAADQACAAB
+AFAAcgBvAGQAdQBjAHQAVgBlAHIAcwBpAG8AbgAAADEALgAwAC4AMAAuADAAAAA4AAgAAQBBAHMA
+cwBlAG0AYgBsAHkAIABWAGUAcgBzAGkAbwBuAAAAMQAuADAALgAwAC4AMAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAMAAAAeDQAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA]]></arrayElement>
+                  </arrayElements>
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the Microsoft Visual Studio Tools for Applications project. Project names must be unique within a package."
+                  name="VSTAProjectName"
+                  typeConverter="NOTBROWSABLE">SC_4664d38d6d774888963e21557351c901</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the programming language used by the script."
+                  name="ScriptLanguage"
+                  typeConverter="Microsoft.SqlServer.VSTAHosting.ScriptingLanguages">CSharp</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a comma-separated list of read-only variables."
+                  name="ReadOnlyVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a comma-separated list of read/write variables."
+                  name="ReadWriteVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIWriteableVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="List of breakpoints present on the script."
+                  isArray="true"
+                  name="BreakpointCollection"
+                  typeConverter="NOTBROWSABLE">
+                  <arrayElements
+                    arrayElementCount="0" />
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Checksum to match component metedata against compiled codes."
+                  name="MetadataChecksum140"
+                  typeConverter="NOTBROWSABLE">D5</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ScriptComponentHost</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Correct PIMS Locations\Script Component.Inputs[Input 0]"
+                  hasSideEffects="true"
+                  name="Input 0">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Correct PIMS Locations\Script Component.Inputs[Input 0].Columns[BOUNDARY_TEXT]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="BOUNDARY_TEXT"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].Columns[BOUNDARY_TEXT]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Correct PIMS Locations\Script Component.Outputs[Output 0]"
+                  name="Output 0"
+                  synchronousInputId="Package\Correct PIMS Locations\Script Component.Inputs[Input 0]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\Script Component.Outputs[Output 0].Columns[POLE_OF_INACCESSABILITY]"
+                      dataType="wstr"
+                      length="4000"
+                      lineageId="Package\Correct PIMS Locations\Script Component.Outputs[Output 0].Columns[POLE_OF_INACCESSABILITY]"
+                      name="POLE_OF_INACCESSABILITY" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Correct PIMS Locations.Paths[OLE DB Source Output]"
+              endId="Package\Correct PIMS Locations\Script Component.Inputs[Input 0]"
+              name="OLE DB Source Output"
+              startId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Correct PIMS Locations.Paths[Output 0]"
+              endId="Package\Correct PIMS Locations\Conditional Split.Inputs[Conditional Split Input]"
+              name="Output 0"
+              startId="Package\Correct PIMS Locations\Script Component.Outputs[Output 0]" />
+            <path
+              refId="Package\Correct PIMS Locations.Paths[VALID_NEW_LOCATION]"
+              endId="Package\Correct PIMS Locations\PIMS_PROPERTY.Inputs[OLE DB Command Input]"
+              name="VALID_NEW_LOCATION"
+              startId="Package\Correct PIMS Locations\Conditional Split.Outputs[VALID_NEW_LOCATION]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="195,42"
+          Id="Package\Correct PIMS Locations"
+          TopLeft="405,133" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Correct PIMS Locations">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="167,42"
+          Id="Package\Correct PIMS Locations\Script Component"
+          TopLeft="59.5,107.5" />
+        <NodeLayout
+          Size="275,42"
+          Id="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW"
+          TopLeft="5.5,5.5" />
+        <EdgeLayout
+          Id="Package\Correct PIMS Locations.Paths[OLE DB Source Output]"
+          TopLeft="143,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Correct PIMS Locations\PIMS_PROPERTY"
+          TopLeft="57.0000000000001,311.5" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\Correct PIMS Locations\Conditional Split"
+          TopLeft="63.5,209.5" />
+        <EdgeLayout
+          Id="Package\Correct PIMS Locations.Paths[Output 0]"
+          TopLeft="143,149.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Correct PIMS Locations.Paths[VALID_NEW_LOCATION]"
+          TopLeft="143,251.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-54.18828125,20.806640625,108.3765625,10.88671875"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">View</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
