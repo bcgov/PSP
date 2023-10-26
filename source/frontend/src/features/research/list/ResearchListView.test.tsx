@@ -515,7 +515,6 @@ const mockResearchListViewResponse: Api_ResearchFile[] = [
     fileProperties: [
       {
         id: 1,
-        isDisabled: false,
         propertyId: 1,
         property: {
           id: 1,
@@ -537,7 +536,6 @@ const mockResearchListViewResponse: Api_ResearchFile[] = [
       },
       {
         id: 2,
-        isDisabled: false,
         propertyId: 2,
         property: {
           id: 2,

@@ -5,6 +5,7 @@ using System.Linq;
 using FluentAssertions;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
+using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
@@ -299,6 +300,7 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             act.Should().Throw<ArgumentNullException>();
         }
+
         #endregion
 
         #endregion

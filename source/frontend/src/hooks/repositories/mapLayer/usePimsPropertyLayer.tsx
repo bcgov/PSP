@@ -23,9 +23,12 @@ export const usePimsPropertyLayer = () => {
     tenant: { propertiesUrl, boundaryLayerUrl },
   } = useContext(TenantContext);
 
-  const { findOneWhereContainsWrapped } = useLayerQuery(boundaryLayerUrl, true);
-  const findOneWhereContainsWrappedExecute = findOneWhereContainsWrapped.execute;
-  const findOneWhereContainsWrappedLoading = findOneWhereContainsWrapped.loading;
+  const {
+    findOneWhereContainsWrapped: {
+      execute: findOneWhereContainsWrappedExecute,
+      loading: findOneWhereContainsWrappedLoading,
+    },
+  } = useLayerQuery(boundaryLayerUrl, true);
 
   const loadPropertyLayer = useApiRequestWrapper({
     requestFunction: useCallback(
@@ -47,7 +50,7 @@ export const usePimsPropertyLayer = () => {
     requestName: 'LOAD_PROPERTIES',
   });
 
-  const findOne = useCallback(
+  const findOneByBoundary = useCallback(
     async (
       latlng: LatLngLiteral,
       geometryName?: string | undefined,
@@ -75,9 +78,9 @@ export const usePimsPropertyLayer = () => {
   return useMemo(
     () => ({
       loadPropertyLayer,
-      findOne,
-      findOneLoading: findOneWhereContainsWrappedLoading,
+      findOneByBoundary,
+      findOneByBoundaryLoading: findOneWhereContainsWrappedLoading,
     }),
-    [loadPropertyLayer, findOne, findOneWhereContainsWrappedLoading],
+    [loadPropertyLayer, findOneByBoundary, findOneWhereContainsWrappedLoading],
   );
 };

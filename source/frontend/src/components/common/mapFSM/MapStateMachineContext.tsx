@@ -95,13 +95,23 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     },
     services: {
       loadLocationData: (context: MachineContext, event: any) => {
-        let latLng: LatLngLiteral = { lat: 0, lng: 0 };
-        if (event.type === 'MAP_CLICK') {
-          latLng = event.latlng;
-        } else if (event.type === 'MAP_MARKER_CLICK') {
-          latLng = event.featureSelected.latlng;
+        const result = locationLoader.loadLocationDetails(
+          event.type === 'MAP_CLICK' ? event.latlng : event.featureSelected.latlng,
+        );
+        if (event.type === 'MAP_MARKER_CLICK') {
+          // In the case of the map marker being clicked, always used the clicked marker instead of the search result.
+          // TODO: refactor loadLocationDetails method to allow for optional loading of various feature types.
+          result.then(data => {
+            data.pimsFeature = {
+              properties: event.featureSelected?.pimsLocationFeature,
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [event.featureSelected.latlng.lng, event.featureSelected.latlng.lat],
+              },
+            };
+          });
         }
-        const result = locationLoader.loadLocationDetails(latLng);
 
         return result;
       },

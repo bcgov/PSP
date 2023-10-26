@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
@@ -130,15 +129,6 @@ namespace Pims.Dal.Repositories
 
             this.Context.PimsDocuments.Remove(new PimsDocument() { Internal_Id = document.Internal_Id });
             return true;
-        }
-
-        public List<PimsDocument> GetAllByDocumentType(string documentType)
-        {
-            return this.Context.PimsDocuments
-                .Include(d => d.DocumentType)
-                .Where(d => d.DocumentType.DocumentType == documentType)
-                .AsNoTracking()
-                .ToList();
         }
 
         public int DocumentRelationshipCount(long documentId)

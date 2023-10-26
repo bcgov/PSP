@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsDocument for Leases.
     /// </summary>
-    public partial class PimsLeaseDocument : PimsFileDocument, IDisableBaseAppEntity
+    public partial class PimsLeaseDocument : PimsFileDocument, IBaseAppEntity
     {
         [NotMapped]
         public override long Internal_Id { get => LeaseDocumentId; set => LeaseDocumentId = value; }

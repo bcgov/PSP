@@ -27,8 +27,8 @@ namespace Pims.Dal.Entities
         public long? AcquisitionOwnerId { get; set; }
         [Column("INTEREST_HOLDER_ID")]
         public long? InterestHolderId { get; set; }
-        [Column("ACQUISITION_FILE_PERSON_ID")]
-        public long? AcquisitionFilePersonId { get; set; }
+        [Column("ACQUISITION_FILE_TEAM_ID")]
+        public long? AcquisitionFileTeamId { get; set; }
         [Column("CHART_OF_ACCOUNTS_ID")]
         public long? ChartOfAccountsId { get; set; }
         [Column("RESPONSIBILITY_ID")]

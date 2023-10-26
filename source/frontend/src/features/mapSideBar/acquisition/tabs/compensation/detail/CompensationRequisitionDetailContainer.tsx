@@ -27,8 +27,8 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
 > = ({ compensation, setEditMode, View, clientConstant, acquisitionFile, loading }) => {
   const onGenerate = useGenerateH120();
 
-  const [contactPerson, setCompensationPayee] = useState<Api_Person | undefined>();
-  const [contactOrganization, setContactOrganization] = useState<Api_Organization | undefined>();
+  const [payeePerson, setPayeePerson] = useState<Api_Person | undefined>();
+  const [payeeOrganization, setPayeeOrganization] = useState<Api_Organization | undefined>();
 
   const {
     getPersonDetail: { execute: getPerson, loading: loadingPerson },
@@ -41,27 +41,35 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
   const fetchCompensationPayee = useCallback(async () => {
     if (compensation.id !== null) {
       try {
-        if (!!compensation.acquisitionFilePerson && !!compensation.acquisitionFilePerson.personId) {
-          const person = await getPerson(compensation.acquisitionFilePerson.personId);
-          setCompensationPayee(person);
+        if (!!compensation.acquisitionFileTeam) {
+          if (!!compensation.acquisitionFileTeam.personId) {
+            const person = await getPerson(compensation.acquisitionFileTeam.personId);
+            setPayeePerson(person);
+          }
+          if (!!compensation.acquisitionFileTeam.organizationId) {
+            const organization = await getOrganization(
+              compensation.acquisitionFileTeam.organizationId,
+            );
+            setPayeeOrganization(organization);
+          }
         } else if (!!compensation.interestHolder) {
           if (
             compensation.interestHolder.personId !== undefined &&
             compensation.interestHolder.personId !== null
           ) {
             const person = await getPerson(compensation.interestHolder.personId);
-            setCompensationPayee(person);
+            setPayeePerson(person);
           }
           if (!!compensation.interestHolder.organizationId) {
             const organization = await getOrganization(compensation.interestHolder.organizationId);
-            setContactOrganization(organization);
+            setPayeeOrganization(organization);
           }
         }
       } catch (e) {
         if (axios.isAxiosError(e)) {
           const axiosError = e as AxiosError<IApiError>;
           if (axiosError.response?.status === 404) {
-            setCompensationPayee(undefined);
+            setPayeePerson(undefined);
           } else {
             toast.error(axiosError.response?.data.error);
           }
@@ -69,7 +77,7 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
       }
     }
   }, [
-    compensation.acquisitionFilePerson,
+    compensation.acquisitionFileTeam,
     compensation.id,
     compensation.interestHolder,
     getOrganization,
@@ -84,8 +92,8 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
     <View
       loading={loading || loadingPerson || loadingOrganization}
       compensation={compensation}
-      compensationContactPerson={contactPerson}
-      compensationContactOrganization={contactOrganization}
+      compensationContactPerson={payeePerson}
+      compensationContactOrganization={payeeOrganization}
       acqFileProject={acquisitionFile?.project}
       acqFileProduct={acquisitionFile?.product}
       setEditMode={setEditMode}

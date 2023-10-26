@@ -31,7 +31,6 @@ export const PropertyContactEditContainer = React.forwardRef<
     primaryContactId: null,
     primaryContact: null,
     purpose: null,
-    isDisabled: null,
     rowVersion: null,
   });
 

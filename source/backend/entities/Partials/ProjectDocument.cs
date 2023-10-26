@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsDocument for Projects.
     /// </summary>
-    public partial class PimsProjectDocument : PimsFileDocument, IDisableBaseAppEntity
+    public partial class PimsProjectDocument : PimsFileDocument, IBaseAppEntity
     {
         [NotMapped]
         public override long Internal_Id { get => ProjectDocumentId; set => ProjectDocumentId = value; }

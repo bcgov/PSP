@@ -30,7 +30,6 @@ namespace Pims.Core.Test
                 AppLastUpdateUserid = string.Empty,
                 DbCreateUserid = string.Empty,
                 DbLastUpdateUserid = string.Empty,
-                IsDisabled = false,
                 ConcurrencyControlNumber = 1,
             };
         }
@@ -57,7 +56,6 @@ namespace Pims.Core.Test
                 AppLastUpdateUserid = string.Empty,
                 DbCreateUserid = string.Empty,
                 DbLastUpdateUserid = string.Empty,
-                IsDisabled = false,
                 ConcurrencyControlNumber = 1,
             };
         }
@@ -84,7 +82,6 @@ namespace Pims.Core.Test
                 AppLastUpdateUserid = string.Empty,
                 DbCreateUserid = string.Empty,
                 DbLastUpdateUserid = string.Empty,
-                IsDisabled = false,
                 ConcurrencyControlNumber = 1,
             };
         }

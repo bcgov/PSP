@@ -1,21 +1,29 @@
-import { Formik } from 'formik';
-import { noop } from 'lodash';
+import { Formik, FormikProps, getIn } from 'formik';
+import React from 'react';
 
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import {
+  act,
+  getByName,
+  render,
+  RenderOptions,
+  selectOptions,
+  userEvent,
+} from '@/utils/test-utils';
 
 import { WithAcquisitionTeam } from '../../models';
 import { UpdateAcquisitionTeamSubForm } from './UpdateAcquisitionTeamSubForm';
 
-describe('AcquisitionTeam component', () => {
+describe('AcquisitionTeamSubForm component', () => {
   // render component under test
   const setup = (
     props: { initialForm: WithAcquisitionTeam },
     renderOptions: RenderOptions = {},
   ) => {
+    const ref = React.createRef<FormikProps<WithAcquisitionTeam>>();
     const utils = render(
-      <Formik initialValues={props.initialForm} onSubmit={noop}>
+      <Formik innerRef={ref} initialValues={props.initialForm} onSubmit={jest.fn()}>
         {formikProps => <UpdateAcquisitionTeamSubForm />}
       </Formik>,
       {
@@ -24,7 +32,10 @@ describe('AcquisitionTeam component', () => {
       },
     );
 
-    return { ...utils };
+    return {
+      ...utils,
+      getFormikRef: () => ref,
+    };
   };
 
   let testForm: WithAcquisitionTeam;
@@ -42,27 +53,69 @@ describe('AcquisitionTeam component', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders add new team member link', async () => {
+  it(`renders 'Add team member' link`, async () => {
     const { getByTestId } = setup({ initialForm: testForm });
     expect(getByTestId('add-team-member')).toBeVisible();
   });
 
-  it('renders remove new team member link', async () => {
+  it(`renders 'Remove team member' link`, async () => {
     const { getByTestId } = setup({ initialForm: testForm });
-    const addTeamMember = getByTestId('add-team-member');
-    await act(async () => {
-      userEvent.click(addTeamMember);
-    });
-
-    expect(getByTestId('remove-button')).toBeVisible();
+    const addRow = getByTestId('add-team-member');
+    await act(async () => userEvent.click(addRow));
+    expect(getByTestId('team.0.remove-button')).toBeVisible();
   });
 
-  it('renders person profile select', async () => {
+  it(`renders 'Profile type' dropdown`, async () => {
     const { getByTestId } = setup({ initialForm: testForm });
-    const addTeamMember = getByTestId('add-team-member');
-    await act(async () => {
-      userEvent.click(addTeamMember);
-    });
+    const addRow = getByTestId('add-team-member');
+    await act(async () => userEvent.click(addRow));
     expect(getByTestId('select-profile')).toBeVisible();
+  });
+
+  it(`displays a confirmation popup before team member is removed`, async () => {
+    const { getByTestId, getByText } = setup({ initialForm: testForm });
+    const addRow = getByTestId('add-team-member');
+    await act(async () => userEvent.click(addRow));
+    await act(async () => userEvent.click(getByTestId('team.0.remove-button')));
+
+    expect(getByText(/Are you sure you want to remove this row/i)).toBeVisible();
+  });
+
+  it(`removes the team member upon user confirmation`, async () => {
+    const { getByTestId, getByText, getByTitle } = setup({
+      initialForm: testForm,
+    });
+    const addRow = getByTestId('add-team-member');
+    await act(async () => userEvent.click(addRow));
+    await act(async () => userEvent.click(getByTestId('team.0.remove-button')));
+
+    expect(getByText(/Are you sure you want to remove this row/i)).toBeVisible();
+
+    await act(async () => userEvent.click(getByTitle('ok-modal')));
+    expect(getByName('team.0.contactTypeCode')).toBeNull();
+  });
+
+  it(`does not remove the owner when confirmation popup is cancelled`, async () => {
+    const { getByTestId, getByText, getByTitle } = setup({
+      initialForm: testForm,
+    });
+    const addRow = getByTestId('add-team-member');
+    await act(async () => userEvent.click(addRow));
+    await act(async () => userEvent.click(getByTestId('team.0.remove-button')));
+
+    expect(getByText(/Are you sure you want to remove this row/i)).toBeVisible();
+
+    await act(async () => userEvent.click(getByTitle('cancel-modal')));
+    expect(getByName('team.0.contactTypeCode')).toBeVisible();
+  });
+
+  it(`sets the contact manager field as 'touched' when team profile type is changed`, async () => {
+    const { getByTestId, getFormikRef } = setup({
+      initialForm: testForm,
+    });
+    const addRow = getByTestId('add-team-member');
+    await act(async () => userEvent.click(addRow));
+    await act(async () => selectOptions('team.0.contactTypeCode', 'MOTILAWYER'));
+    expect(getIn(getFormikRef().current?.touched, 'team.0.contact')).toBe(true);
   });
 });
