@@ -3,6 +3,7 @@ import React from 'react';
 
 import { ILeaseFilter } from '@/features/leases';
 import { ILeaseSearchResult, IPagedItems } from '@/interfaces';
+import { Api_LastUpdatedBy } from '@/models/api/File';
 import { Api_Lease } from '@/models/api/Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
@@ -23,6 +24,7 @@ export const useApiLeases = () => {
           `/leases/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getApiLease: (id: number) => api.get<Api_Lease>(`/leases/${id}`),
+      getLastUpdatedByApi: (id: number) => api.get<Api_LastUpdatedBy>(`/leases/${id}/updateInfo`),
       postLease: (lease: Api_Lease, userOverrideCodes: UserOverrideCode[]) =>
         api.post<Api_Lease>(
           `/leases?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,

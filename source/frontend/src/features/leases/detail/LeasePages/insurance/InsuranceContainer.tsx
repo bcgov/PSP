@@ -20,6 +20,7 @@ const InsuranceContainer: React.FunctionComponent<React.PropsWithChildren<LeaseP
   isEditing,
   onEdit,
   formikRef,
+  onSuccess,
 }) => {
   const { hasClaim } = useKeycloakWrapper();
   const [showCancelModal, setShowCancelModal] = useState(false);
@@ -49,10 +50,11 @@ const InsuranceContainer: React.FunctionComponent<React.PropsWithChildren<LeaseP
         if (updatedInsurance) {
           leaseId && (await getInsurances(leaseId));
           onEdit && onEdit(false);
+          onSuccess();
         }
       }
     },
-    [getInsurances, leaseId, onEdit, updateInsurances],
+    [getInsurances, leaseId, onEdit, updateInsurances, onSuccess],
   );
 
   return (

@@ -76,6 +76,21 @@ namespace Pims.Api.Areas.Lease.Controllers
         }
 
         /// <summary>
+        /// Gets the specified lease last updated-by information.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/updateInfo")]
+        [HasPermission(Permissions.LeaseView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Dal.Entities.Models.LastUpdatedByModel), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        public IActionResult GetLastUpdatedBy(long id)
+        {
+            var lastUpdated = _leaseService.GetLastUpdateInformation(id);
+            return new JsonResult(lastUpdated);
+        }
+
+        /// <summary>
         /// Add the specified lease. Allows the user to override the normal restriction on adding properties already associated to a lease.
         /// </summary>
         /// <returns></returns>

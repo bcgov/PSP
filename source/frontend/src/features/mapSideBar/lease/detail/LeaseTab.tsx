@@ -11,9 +11,16 @@ export interface ILeaseTabProps {
   onEdit?: () => void;
   isEditing: boolean;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
+  onSuccess: () => void;
 }
 
-export const LeaseTab: React.FC<ILeaseTabProps> = ({ leasePage, onEdit, isEditing, formikRef }) => {
+export const LeaseTab: React.FC<ILeaseTabProps> = ({
+  leasePage,
+  onEdit,
+  isEditing,
+  formikRef,
+  onSuccess,
+}) => {
   if (!leasePage) {
     throw Error('The requested lease page does not exist');
   }
@@ -22,7 +29,12 @@ export const LeaseTab: React.FC<ILeaseTabProps> = ({ leasePage, onEdit, isEditin
 
   return (
     <LeaseViewPageForm isEditing={isEditing} onEdit={onEdit}>
-      <Component onEdit={onEdit} isEditing={isEditing} formikRef={formikRef} />
+      <Component
+        onEdit={onEdit}
+        isEditing={isEditing}
+        formikRef={formikRef}
+        onSuccess={onSuccess}
+      />
     </LeaseViewPageForm>
   );
 };
