@@ -11,7 +11,7 @@ import { lookupCodesSlice } from './store/slices/lookupCodes';
 import { networkSlice } from './store/slices/network/networkSlice';
 import { tenantsSlice } from './store/slices/tenants';
 import { defaultTenant } from './tenants/config/defaultTenant';
-import { cleanup, mockKeycloak, render, RenderOptions, screen } from './utils/test-utils';
+import { mockKeycloak, render, RenderOptions, screen } from './utils/test-utils';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -86,7 +86,6 @@ describe('PSP routing', () => {
   };
 
   afterEach(() => {
-    cleanup();
     jest.clearAllMocks();
   });
 
