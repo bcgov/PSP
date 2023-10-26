@@ -16,7 +16,7 @@ import { Improvements } from './Improvements';
 
 export const ImprovementsContainer: React.FunctionComponent<
   React.PropsWithChildren<LeasePageProps>
-> = ({ isEditing, formikRef, onEdit }) => {
+> = ({ isEditing, formikRef, onEdit, onSuccess }) => {
   const { lease } = useContext(LeaseStateContext);
   const {
     getPropertyImprovements: { execute: getPropertyImprovements, loading, response: improvements },
@@ -44,6 +44,7 @@ export const ImprovementsContainer: React.FunctionComponent<
         onEdit={onEdit}
         improvements={improvements ?? []}
         loading={loading}
+        onSuccess={onSuccess}
       />
     </ProtectedComponent>
   ) : (

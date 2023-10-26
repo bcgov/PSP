@@ -19,6 +19,8 @@ namespace Pims.Dal.Repositories
 
         PimsLease GetNoTracking(long id);
 
+        LastUpdatedByModel GetLastUpdateBy(long leaseId);
+
         Paged<PimsLease> GetPage(LeaseFilter filter, HashSet<short> regions);
 
         IList<PimsLeaseDocument> GetAllLeaseDocuments(long leaseId);

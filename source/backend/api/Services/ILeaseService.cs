@@ -11,6 +11,8 @@ namespace Pims.Api.Services
 
         PimsLease GetById(long leaseId);
 
+        LastUpdatedByModel GetLastUpdateInformation(long leaseId);
+
         Paged<PimsLease> GetPage(LeaseFilter filter, bool? all = false);
 
         PimsLease Add(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides);

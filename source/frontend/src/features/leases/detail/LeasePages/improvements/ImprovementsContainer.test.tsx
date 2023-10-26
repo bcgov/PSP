@@ -19,6 +19,8 @@ const storeState = {
 };
 const mockAxios = new MockAdapter(axios);
 
+const onSuccessMock = jest.fn();
+
 describe('Improvements Container component', () => {
   const setup = async (
     renderOptions: RenderOptions & { improvements?: Partial<ILeaseImprovementForm>[] } = {},
@@ -37,6 +39,7 @@ describe('Improvements Container component', () => {
         <ImprovementsContainer
           isEditing={false}
           formikRef={React.createRef()}
+          onSuccess={onSuccessMock}
         ></ImprovementsContainer>
       </LeaseStateContext.Provider>,
       {

@@ -11,6 +11,7 @@ import { FormLeasePayment, FormLeaseTerm } from '../models';
 export const useDeleteTermsPayments = (
   deleteLeaseTerm: IResponseWrapper<(term: Api_LeaseTerm) => Promise<AxiosResponse<boolean, any>>>,
   getLeaseTerms: (leaseId: number) => Promise<void>,
+  onSuccess: () => void,
 ) => {
   const [comfirmDeleteModalValues, setConfirmDeleteModalValues] = useState<
     IDeleteConfirmationModal | undefined
@@ -36,9 +37,10 @@ export const useDeleteTermsPayments = (
       });
       if (deleted && lease?.id) {
         getLeaseTerms(lease.id);
+        onSuccess();
       }
     },
-    [deleteLeaseTerm, lease, getLeaseTerms],
+    [deleteLeaseTerm, lease, getLeaseTerms, onSuccess],
   );
 
   /**
@@ -96,10 +98,11 @@ export const useDeleteTermsPayments = (
         );
         if (deleted && leaseId) {
           getLeaseTerms(leaseId);
+          onSuccess();
         }
       }
     },
-    [deleteLeasePayment, leaseId, getLeaseTerms],
+    [deleteLeasePayment, leaseId, getLeaseTerms, onSuccess],
   );
 
   /**
