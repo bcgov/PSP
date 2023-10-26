@@ -74,6 +74,7 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
   },
   formikRef: React.createRef(),
   isFormValid: true,
+  error: undefined,
 };
 
 const history = createMemoryHistory();
