@@ -6,7 +6,7 @@ import { ADD_ACTIVATE_USER, GET_REQUEST_ACCESS } from './constants/actionTypes';
 import { AuthStateContext } from './contexts/authStateContext';
 import { useApiUsers } from './hooks/pims-api/useApiUsers';
 import { mockLookups } from './mocks/lookups.mock';
-import { getUserMock } from './mocks/user.mock';
+import { getMockPagedUsers, getUserMock } from './mocks/user.mock';
 import { lookupCodesSlice } from './store/slices/lookupCodes';
 import { networkSlice } from './store/slices/network/networkSlice';
 import { tenantsSlice } from './store/slices/tenants';
@@ -63,7 +63,7 @@ jest.mock('./hooks/pims-api/useApiUsers');
   activateUser: jest.fn(),
   getUser: jest.fn().mockResolvedValue(getUserMock()),
   getUserInfo: jest.fn().mockResolvedValue(getUserMock()),
-  getUsersPaged: jest.fn(),
+  getUsersPaged: jest.fn().mockResolvedValue(getMockPagedUsers()),
   putUser: jest.fn(),
   exportUsers: jest.fn(),
 });
