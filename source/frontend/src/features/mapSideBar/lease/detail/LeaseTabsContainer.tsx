@@ -44,6 +44,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
         }
         isEditing={isEditing}
         formikRef={formikRef}
+        onSuccess={onSuccess}
       />
     ),
     key: LeaseFileTabNames.fileDetails,
@@ -57,6 +58,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
         onEdit={() => setContainerState({ activeEditForm: LeasePageNames.TENANT, isEditing: true })}
         isEditing={isEditing}
         formikRef={formikRef}
+        onSuccess={onSuccess}
       />
     ),
     key: LeaseFileTabNames.tenant,
@@ -72,6 +74,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
         }
         isEditing={isEditing}
         formikRef={formikRef}
+        onSuccess={onSuccess}
       />
     ),
     key: LeaseFileTabNames.improvements,
@@ -87,6 +90,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
         }
         isEditing={isEditing}
         formikRef={formikRef}
+        onSuccess={onSuccess}
       />
     ),
     key: LeaseFileTabNames.insurance,
@@ -99,6 +103,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
         leasePage={leasePages.get(LeasePageNames.DEPOSIT)}
         isEditing={isEditing}
         formikRef={formikRef}
+        onSuccess={onSuccess}
       />
     ),
     key: LeaseFileTabNames.deposit,
@@ -111,6 +116,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
         leasePage={leasePages.get(LeasePageNames.PAYMENTS)}
         isEditing={isEditing}
         formikRef={formikRef}
+        onSuccess={onSuccess}
       />
     ),
     key: LeaseFileTabNames.payments,
@@ -123,6 +129,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
         leasePage={leasePages.get(LeasePageNames.SURPLUS)}
         isEditing={isEditing}
         formikRef={formikRef}
+        onSuccess={onSuccess}
       />
     ),
     key: LeaseFileTabNames.surplusDeclaration,

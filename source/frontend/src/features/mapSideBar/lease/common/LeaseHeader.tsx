@@ -80,8 +80,7 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
           <Row className="no-gutters">
             <Col className="text-right">
               <StyledSmallText>
-                Last updated:{' '}
-                <strong>{prettyFormatDate(lastUpdatedBy?.appLastUpdateTimestamp)}</strong> by{' '}
+                Last updated: <strong>{lastUpdatedBy?.appLastUpdateTimestamp}</strong> by{' '}
                 <UserNameTooltip
                   userName={lastUpdatedBy?.appLastUpdateUserid}
                   userGuid={lastUpdatedBy?.appLastUpdateUserGuid}

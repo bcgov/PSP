@@ -32,6 +32,7 @@ export const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props =
         isEditing={props.isEditing}
         onEdit={(isEditing: boolean) => props.setContainerState({ isEditing: isEditing })}
         formikRef={props.formikRef}
+        onSuccess={props.onSuccess}
       />
     );
   } else {

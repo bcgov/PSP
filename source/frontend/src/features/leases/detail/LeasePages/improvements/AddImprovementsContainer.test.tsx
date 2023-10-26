@@ -24,6 +24,8 @@ const storeState = {
 };
 const mockAxios = new MockAdapter(axios);
 
+const onSuccessMock = jest.fn();
+
 const SaveButton = () => {
   const { submitForm } = useFormikContext();
   return <button onClick={submitForm}>Save</button>;
@@ -51,6 +53,7 @@ describe('Add Improvements container component', () => {
           onEdit={noop}
           improvements={renderOptions.improvements ?? []}
           loading={false}
+          onSuccess={onSuccessMock}
         >
           <SaveButton />
         </AddImprovementsContainer>

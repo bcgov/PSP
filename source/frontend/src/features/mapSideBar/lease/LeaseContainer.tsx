@@ -51,6 +51,7 @@ export interface LeasePageProps {
   isEditing: boolean;
   onEdit?: (isEditing: boolean) => void;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
+  onSuccess: () => void;
 }
 
 export interface ILeasePage {
