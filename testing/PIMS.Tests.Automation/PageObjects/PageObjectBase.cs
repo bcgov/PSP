@@ -33,6 +33,12 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
         }
 
+        protected void WaitUntilTableSpinnerDisappear()
+        {
+            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(tableLoadingSpinner));
+            Wait();
+        }
+
         protected void WaitUntilStale(By element)
         {
             wait.Until(ExpectedConditions.StalenessOf(webDriver.FindElement(element)));
@@ -129,8 +135,7 @@ namespace PIMS.Tests.Automation.PageObjects
             var selectedOption = childrenElements.Should().ContainSingle(o => o.GetAttribute("value").Equals(option)).Subject;
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
-
-            selectedOption.Click();
+            js.ExecuteScript("arguments[0].click();", selectedOption);
         }
 
         protected void ChooseMultiSelectSpecificOption(By element, string option)
@@ -194,6 +199,15 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(elementBy).GetAttribute("Value").Equals(text));
         }
 
+        protected void AssertTrueDoublesEquals(By elementBy, double number2)
+        {
+            WaitUntilVisible(elementBy);
+            var numberFromElement = webDriver.FindElement(elementBy).GetAttribute("Value");
+            var number1 = double.Parse(numberFromElement);
+
+            Assert.True(number1.Equals(number2));
+        }
+
         protected void AssertTrueContentNotEquals(By elementBy, string text)
         {
             WaitUntilVisible(elementBy);
@@ -243,6 +257,11 @@ namespace PIMS.Tests.Automation.PageObjects
                 { return "Y"; }
             else
                 { return "N"; }
+        }
+
+        protected double TransformStringToDouble(string elementValue)
+        {
+            return double.Parse(elementValue, System.Globalization.CultureInfo.InvariantCulture);
         }
 
         protected List<string> GetViewFieldListContent(By element)

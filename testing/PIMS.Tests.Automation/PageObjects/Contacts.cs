@@ -860,7 +860,7 @@ namespace PIMS.Tests.Automation.PageObjects
         // ASSERT FUNCTIONS
         public void VerifyIndividualContactView(IndividualContact contact)
         {
-            WaitUntilVisible(contactIndFullName);
+            Wait(2000);
             Assert.True(webDriver.FindElement(contactTitle).Displayed);
             Assert.True(webDriver.FindElement(contactEditButton).Displayed);
 

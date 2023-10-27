@@ -293,7 +293,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(checklistFileDataEnteredIntoPIMSLabel);
             AssertTrueIsDisplayed(checklistFileDataEnteredIntoPIMSContent);
 
-            Assert.True(webDriver.FindElements(checklistTooltips).Count == 23);
+            Assert.True(webDriver.FindElements(checklistTooltips).Count == 24);
         }
 
         public void VerifyChecklistEditForm()

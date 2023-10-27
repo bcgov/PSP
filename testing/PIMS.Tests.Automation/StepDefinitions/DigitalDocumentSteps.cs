@@ -111,9 +111,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Close Digital Documents Details View
             digitalDocumentsTab.CloseDigitalDocumentViewDetails();
 
-            //Delete digital document
-            digitalDocumentsTab.Delete1stDocument();
-
             //Filter Documents by Type
             digitalDocumentsTab.FilterByType(digitalDocumentList[0].DocumentType);
             Assert.True(digitalDocumentsTab.TotalSearchDocuments() > 0);
@@ -125,6 +122,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Filter Documents by Status
             digitalDocumentsTab.FilterByStatus(digitalDocumentList[0].DocumentStatus);
             Assert.True(digitalDocumentsTab.TotalSearchDocuments() > 0);
+
+            //Delete digital document
+            digitalDocumentsTab.Delete1stDocument();
         }
 
         public List<DocumentFile> UploadFileDocuments()
