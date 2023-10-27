@@ -115,8 +115,8 @@ exports[`PropertiesInformation component renders as expected 1`] = `
             >
               <input
                 class="form-control"
-                id="input-properties.0.property.propertyName"
-                name="properties.0.property.propertyName"
+                id="input-properties.0.propertyName"
+                name="properties.0.propertyName"
                 value=""
               />
             </div>
@@ -137,7 +137,10 @@ exports[`PropertiesInformation component renders as expected 1`] = `
           <div
             class="c5 text-left col"
           >
-            NaN 
+            NaN m
+            <sup>
+              2
+            </sup>
           </div>
         </div>
         <div

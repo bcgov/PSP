@@ -172,7 +172,6 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
           />
         )}
         claim={Claims.PROPERTY_VIEW}
-        exact
         key={'Property'}
         title={'Property Information'}
       />

@@ -23,6 +23,7 @@ interface IAddLeaseTenantContainerProps {
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
   onEdit?: (isEditing: boolean) => void;
   tenants: FormTenant[];
+  onSuccess: () => void;
   View: React.FunctionComponent<
     React.PropsWithChildren<IAddLeaseTenantFormProps & IPrimaryContactWarningModalProps>
   >;
@@ -30,7 +31,7 @@ interface IAddLeaseTenantContainerProps {
 
 export const AddLeaseTenantContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddLeaseTenantContainerProps>
-> = ({ formikRef, onEdit, children, View, tenants: initialTenants }) => {
+> = ({ formikRef, onEdit, children, View, tenants: initialTenants, onSuccess }) => {
   const { lease } = useContext(LeaseStateContext);
   const [tenants, setTenants] = useState<FormTenant[]>(initialTenants);
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>(
@@ -38,10 +39,12 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
   );
   const [showContactManager, setShowContactManager] = React.useState<boolean>(false);
   const [handleSubmit, setHandleSubmit] = useState<Function | undefined>(undefined);
+
   const {
     updateLeaseTenants,
     getLeaseTenants: { execute: getLeaseTenants, loading },
   } = useLeaseTenantRepository();
+
   const leaseId = lease?.id;
   useEffect(() => {
     const tenantFunc = async () => {
@@ -113,6 +116,7 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
             }),
           });
           onEdit && onEdit(false);
+          onSuccess();
         }
       } finally {
         formikRef?.current?.setSubmitting(false);

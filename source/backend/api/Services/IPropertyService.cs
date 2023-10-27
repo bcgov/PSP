@@ -28,8 +28,14 @@ namespace Pims.Api.Services
 
         PropertyManagementModel UpdatePropertyManagement(PimsProperty property);
 
-        IList<PimsPropPropActivity> GetManagementActivities(long propertyId);
+        IList<PimsPropertyActivity> GetActivities(long propertyId);
 
-        bool DeleteManagementPropPropActivity(long propertyId, long managementActivityId);
+        PimsPropertyActivity GetActivity(long propertyId, long activityId);
+
+        PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity);
+
+        PimsPropertyActivity UpdateActivity(PimsPropertyActivity propertyActivity);
+
+        bool DeleteActivity(long activityId);
     }
 }

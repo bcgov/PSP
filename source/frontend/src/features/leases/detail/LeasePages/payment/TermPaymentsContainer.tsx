@@ -26,7 +26,7 @@ import TermsForm from './table/terms/TermsForm';
  */
 export const TermPaymentsContainer: React.FunctionComponent<
   React.PropsWithChildren<LeasePageProps>
-> = ({ formikRef }) => {
+> = ({ formikRef, onSuccess }) => {
   const { lease } = useContext(LeaseStateContext);
   const generateH1005a = useGenerateH1005a(lease);
   const [editModalValues, setEditModalValues] = useState<FormLeaseTerm | undefined>(undefined);
@@ -67,7 +67,7 @@ export const TermPaymentsContainer: React.FunctionComponent<
     setDeleteModalWarning,
     setConfirmDeleteModalValues,
     comfirmDeleteModalValues,
-  } = useDeleteTermsPayments(deleteLeaseTerm, refreshLeaseTerms);
+  } = useDeleteTermsPayments(deleteLeaseTerm, refreshLeaseTerms, onSuccess);
 
   /**
    * Send the save request (either an update or an add). Use the response to update the parent lease.
@@ -82,9 +82,10 @@ export const TermPaymentsContainer: React.FunctionComponent<
         const response = await getLeaseTerms.execute(leaseId);
         setTerms(response ?? []);
         setEditModalValues(undefined);
+        onSuccess();
       }
     },
-    [addLeaseTerm, getLeaseTerms, gstDecimal, leaseId, updateLeaseTerm],
+    [addLeaseTerm, getLeaseTerms, gstDecimal, leaseId, updateLeaseTerm, onSuccess],
   );
 
   /**
@@ -101,10 +102,11 @@ export const TermPaymentsContainer: React.FunctionComponent<
           const response = await getLeaseTerms.execute(leaseId);
           setTerms(response ?? []);
           setEditPaymentModalValues(undefined);
+          onSuccess();
         }
       }
     },
-    [leaseId, updateLeasePayment, addLeasePayment, getLeaseTerms],
+    [leaseId, updateLeasePayment, addLeasePayment, getLeaseTerms, onSuccess],
   );
 
   const onEdit = useCallback(

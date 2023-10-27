@@ -1,15 +1,16 @@
 import React from 'react';
-import { Row } from 'react-bootstrap';
-import { FaTrash } from 'react-icons/fa';
+import { Col, Row } from 'react-bootstrap';
+import { FaEye, FaTrash } from 'react-icons/fa';
 import { CellProps } from 'react-table';
 
+import { LinkButton } from '@/components/common/buttons';
 import { StyledRemoveIconButton } from '@/components/common/buttons/RemoveButton';
 import { ColumnWithProps, Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
 import Claims from '@/constants/claims';
 import { PropertyManagementActivityStatusTypes } from '@/constants/propertyMgmtActivityStatusTypes';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_PropPropManagementActivity } from '@/models/api/Property';
+import { Api_PropertyActivity } from '@/models/api/PropertyActivity';
 import { stringToFragment } from '@/utils/columnUtils';
 import { prettyFormatDate } from '@/utils/dateUtils';
 
@@ -18,12 +19,16 @@ import { PropertyActivityRow } from './models/PropertyActivityRow';
 export interface IManagementActivitiesListProps {
   loading: boolean;
   propertyActivities: PropertyActivityRow[];
-  handleDelete: (managementActivityId: number) => void;
-  sort: TableSort<Api_PropPropManagementActivity>;
-  setSort: (value: TableSort<Api_PropPropManagementActivity>) => void;
+  handleView: (activityId: number) => void;
+  handleDelete: (activityId: number) => void;
+  sort: TableSort<Api_PropertyActivity>;
+  setSort: (value: TableSort<Api_PropertyActivity>) => void;
 }
 
-export function createTableColumns(onDelete: (managementActivityId: number) => void) {
+export function createTableColumns(
+  onView: (activityId: number) => void,
+  onDelete: (activityId: number) => void,
+) {
   const columns: ColumnWithProps<PropertyActivityRow>[] = [
     {
       Header: 'Activity type',
@@ -73,23 +78,41 @@ export function createTableColumns(onDelete: (managementActivityId: number) => v
       Header: 'Actions',
       align: 'left',
       sortable: false,
-      width: 15,
-      maxWidth: 15,
+      width: 20,
+      maxWidth: 20,
       Cell: (cellProps: CellProps<PropertyActivityRow>) => {
         const { hasClaim } = useKeycloakWrapper();
+        const activityRow = cellProps.row.original;
         return (
           <Row className="no-gutters">
+            {hasClaim(Claims.MANAGEMENT_VIEW) && (
+              <Col>
+                <LinkButton
+                  data-testid={`activity-view-${activityRow.id}`}
+                  icon={
+                    <FaEye
+                      size="2rem"
+                      id={`activity-view-${cellProps.row.id}`}
+                      title="property-activity view details"
+                    />
+                  }
+                  onClick={() => activityRow?.id && onView(activityRow.activityId)}
+                />
+              </Col>
+            )}
             {hasClaim(Claims.MANAGEMENT_DELETE) &&
-            cellProps.row.original?.activityStatusType?.id ===
+            activityRow?.activityStatusType?.id ===
               PropertyManagementActivityStatusTypes.NOTSTARTED ? (
-              <StyledRemoveIconButton
-                id={`activity-delete-${cellProps.row.id}`}
-                data-testid={`activity-delete-${cellProps.row.original.id}`}
-                onClick={() => cellProps.row.original.id && onDelete(cellProps.row.original.id)}
-                title="Delete"
-              >
-                <FaTrash size="2rem" />
-              </StyledRemoveIconButton>
+              <Col>
+                <StyledRemoveIconButton
+                  id={`activity-delete-${cellProps.row.id}`}
+                  data-testid={`activity-delete-${activityRow.id}`}
+                  onClick={() => activityRow.id && onDelete(activityRow.id)}
+                  title="Delete"
+                >
+                  <FaTrash size="2rem" />
+                </StyledRemoveIconButton>
+              </Col>
             ) : null}
           </Row>
         );
@@ -103,6 +126,7 @@ export function createTableColumns(onDelete: (managementActivityId: number) => v
 const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesListProps> = ({
   loading,
   propertyActivities,
+  handleView,
   handleDelete,
   sort,
   setSort,
@@ -114,7 +138,7 @@ const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesLis
       name="PropertyManagementActivitiesTable"
       manualSortBy={true}
       totalItems={propertyActivities.length}
-      columns={createTableColumns(handleDelete)}
+      columns={createTableColumns(handleView, handleDelete)}
       externalSort={{ sort, setSort }}
       data={propertyActivities ?? []}
       noRowsMessage="No property management activities found"

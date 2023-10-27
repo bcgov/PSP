@@ -49,13 +49,15 @@ namespace Pims.Api.Models.Concepts.Document
 
             config.NewConfig<Entity.PimsFormType, DocumentRelationshipModel>()
                 .Map(dest => dest.ParentId, src => src.FormTypeCode)
-                //.Map(dest => dest.IsDisabled, src => src.IsDisabled) TODO: Verify if this needs to be removed
+
+                // .Map(dest => dest.IsDisabled, src => src.IsDisabled) TODO: Verify if this needs to be removed
                 .Map(dest => dest.Document, src => src.Document)
                 .Map(dest => dest.RelationshipType, src => DocumentRelationType.Templates);
 
             config.NewConfig<DocumentRelationshipModel, Entity.PimsFormType>()
                 .Map(dest => dest.FormTypeCode, src => src.ParentId)
-                //.Map(dest => dest.IsDisabled, src => src.IsDisabled)  TODO: Verify if this needs to be removed
+
+                // .Map(dest => dest.IsDisabled, src => src.IsDisabled)  TODO: Verify if this needs to be removed
                 .Map(dest => dest.DocumentId, src => src.Document.Id)
                 .Map(dest => dest.Document, src => src.Document);
 

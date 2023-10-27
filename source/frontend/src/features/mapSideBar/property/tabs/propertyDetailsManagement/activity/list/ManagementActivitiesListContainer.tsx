@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
-import { usePropertyManagementRepository } from '@/hooks/repositories/usePropertyManagementRepository';
+import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
 
@@ -15,14 +16,15 @@ export interface IPropertyManagementActivitiesListContainerProps {
 const PropertyManagementActivitiesListContainer: React.FunctionComponent<
   IPropertyManagementActivitiesListContainerProps
 > = ({ propertyId, View }) => {
+  const history = useHistory();
   const isMounted = useIsMounted();
   const { setModalContent, setDisplayModal } = useModalContext();
   const [propertyActivities, setPropertyActivities] = useState<PropertyActivityRow[]>([]);
 
   const {
-    getPropertyManagementActivities: { execute: getActivities, loading },
-    deletePropertyManagementActivity: { execute: deleteActivity, loading: deletingActivity },
-  } = usePropertyManagementRepository();
+    getActivities: { execute: getActivities, loading },
+    deleteActivity: { execute: deleteActivity, loading: deletingActivity },
+  } = usePropertyActivityRepository();
 
   const fetchPropertyActivities = useCallback(async () => {
     const response = await getActivities(propertyId);
@@ -32,8 +34,8 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
   }, [getActivities, isMounted, propertyId]);
 
   const onDelete = useCallback(
-    async (managementActivityId: number) => {
-      const result = await deleteActivity(propertyId, managementActivityId);
+    async (activityId: number) => {
+      const result = await deleteActivity(propertyId, activityId);
       if (result === true) {
         fetchPropertyActivities();
       }
@@ -45,15 +47,25 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
     fetchPropertyActivities();
   }, [fetchPropertyActivities]);
 
+  const onCreate = () => {
+    history.push(`/mapview/sidebar/property/${propertyId}/activity/new`);
+  };
+
+  const onView = (activityId: number) => {
+    history.push(`/mapview/sidebar/property/${propertyId}/activity/${activityId}`);
+  };
+
   return (
     <View
       isLoading={loading || deletingActivity}
       propertyActivities={propertyActivities}
-      onDelete={async (managementActivityId: number) => {
+      onCreate={onCreate}
+      onView={onView}
+      onDelete={async (activityId: number) => {
         setModalContent({
           ...getDeleteModalProps(),
           handleOk: async () => {
-            await onDelete(managementActivityId);
+            await onDelete(activityId);
             setDisplayModal(false);
           },
           handleCancel: () => {
