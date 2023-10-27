@@ -14,7 +14,7 @@ exports[`App Header renders correctly 1`] = `
 }
 
 <div />
-  .c1 {
+  .c2 {
   border-left: 1px solid white;
   font-size: 3.4rem;
   margin: 0 36px 0 36px;
@@ -37,6 +37,10 @@ exports[`App Header renders correctly 1`] = `
 
 .c0 .brand-box {
   padding: 1rem 0;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -48,14 +52,13 @@ exports[`App Header renders correctly 1`] = `
 }
 
 .c0 .title {
-  -webkit-box-flex: 2;
-  -webkit-flex-grow: 2;
-  -ms-flex-positive: 2;
-  flex-grow: 2;
+  margin-left: 8px;
+  display: inline-block;
 }
 
-.c0 .title h1 {
-  margin-top: 1rem;
+.c0 .title label {
+  margin: 0;
+  color: #ffffff;
   padding-left: 0px;
   text-align: center;
   font-size: 2.4rem;
@@ -94,6 +97,21 @@ exports[`App Header renders correctly 1`] = `
   font-weight: 700;
 }
 
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  margin-left: 36px;
+}
+
 @media (min-width:99.2rem) {
   .c0 .longAppName {
     display: block;
@@ -112,54 +130,56 @@ exports[`App Header renders correctly 1`] = `
     <span
       class="brand-box navbar-brand"
     >
-      <a
-        href="https://www2.gov.bc.ca/gov/content/home"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        <img
-          alt="Government of BC logo"
-          class="bc-gov-icon"
-          height="43"
-          src="logo-banner.svg"
-          width="156"
-        />
-      </a>
-      <span
-        class="c1"
-      />
-      <a
-        href="/mapview"
-      >
-        <img
-          alt="PIMS logo"
-          class="pims-logo"
-          height="50"
-          src="/tenants/MOTI/PIMS-logo.png"
-        />
-      </a>
-    </span>
-    <div
-      class="title mr-auto navbar-nav"
-    >
       <div
-        class="nav-item"
+        class="c1"
       >
-        <h1
-          class="longAppName"
+        <a
+          href="https://www2.gov.bc.ca/gov/content/home"
+          rel="noopener noreferrer"
+          target="_blank"
         >
-          Property Information Management System
-        </h1>
-        <h1
-          class="shortAppName"
+          <img
+            alt="Government of BC logo"
+            class="bc-gov-icon"
+            height="43"
+            src="logo-banner.svg"
+            width="156"
+          />
+        </a>
+        <div>
+          <span
+            class="c2"
+          />
+        </div>
+        <a
+          href="/mapview"
         >
-          PIMS
-        </h1>
+          <img
+            alt="PIMS logo"
+            class="pims-logo"
+            height="50"
+            src="/tenants/MOTI/PIMS-logo.png"
+          />
+        </a>
+        <div
+          class="title"
+        >
+          <label
+            class="longAppName"
+          >
+            Property Information Management System
+          </label>
+          <label
+            class="shortAppName"
+          >
+            PIMS
+          </label>
+        </div>
       </div>
-    </div>
+    </span>
     <div>
       <span
-        class="c1"
+        class="c2"
       />
     </div>
     <div

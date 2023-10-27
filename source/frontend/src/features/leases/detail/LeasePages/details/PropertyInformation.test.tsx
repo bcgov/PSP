@@ -2,8 +2,9 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { LeaseFormModel } from '@/features/leases/models';
 import { mockParcel } from '@/mocks/filterData.mock';
+import { getMockApiLease } from '@/mocks/lease.mock';
+import { Api_Lease } from '@/models/api/Lease';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertyInformation, { IPropertyInformationProps } from './PropertyInformation';
@@ -12,13 +13,13 @@ const history = createMemoryHistory();
 
 describe('PropertyInformation component', () => {
   const setup = (
-    renderOptions: RenderOptions & IPropertyInformationProps & { lease?: LeaseFormModel } = {
+    renderOptions: RenderOptions & IPropertyInformationProps & { lease?: Api_Lease } = {
       nameSpace: 'properties',
     },
   ) => {
     // render component under test
     const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? new LeaseFormModel()}>
+      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? getMockApiLease()}>
         <PropertyInformation
           disabled={renderOptions.disabled}
           nameSpace={renderOptions.nameSpace}
@@ -38,8 +39,16 @@ describe('PropertyInformation component', () => {
     const { component } = setup({
       nameSpace: 'properties.0',
       lease: {
-        ...new LeaseFormModel(),
-        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
+        ...getMockApiLease(),
+        properties: [
+          {
+            ...mockParcel,
+            areaUnitType: { id: 'test' },
+            leaseArea: 123,
+            leaseId: null,
+            lease: null,
+          },
+        ],
       },
     });
     expect(component.asFragment()).toMatchSnapshot();
@@ -49,11 +58,18 @@ describe('PropertyInformation component', () => {
     const { component } = setup({
       nameSpace: 'properties.0',
       lease: {
-        ...new LeaseFormModel(),
-        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
+        ...getMockApiLease(),
+        properties: [
+          {
+            ...mockParcel,
+            areaUnitType: { id: 'test' },
+            leaseArea: 123,
+            leaseId: null,
+            lease: null,
+          },
+        ],
         amount: 1,
         description: 'a test description',
-        programName: 'A program',
         lFileNo: '222',
         tfaFileNumber: '333',
         psFileNo: '444',
@@ -70,11 +86,12 @@ describe('PropertyInformation component', () => {
     const { component } = setup({
       nameSpace: 'properties.0',
       lease: {
-        ...new LeaseFormModel(),
-        properties: [{ ...mockParcel, landArea: '1', areaUnitTypeCode: 'test', leaseId: null }],
+        ...getMockApiLease(),
+        properties: [
+          { ...mockParcel, leaseArea: 1, areaUnitType: { id: 'test' }, leaseId: null, lease: null },
+        ],
         amount: 1,
         description: 'a test description',
-        programName: 'A program',
         lFileNo: '222',
         tfaFileNumber: '333',
         psFileNo: '444',
@@ -91,11 +108,12 @@ describe('PropertyInformation component', () => {
     const { component } = setup({
       nameSpace: 'properties.0',
       lease: {
-        ...new LeaseFormModel(),
-        properties: [{ ...mockParcel, landArea: '123', areaUnitTypeCode: 'test', leaseId: null }],
+        ...getMockApiLease(),
+        properties: [
+          { ...mockParcel, leaseArea: 123, areaUnitType: null, leaseId: null, lease: null },
+        ],
         amount: 1,
         description: 'a test description',
-        programName: 'A program',
         lFileNo: '222',
         tfaFileNumber: '333',
         psFileNo: '444',
@@ -105,7 +123,7 @@ describe('PropertyInformation component', () => {
         startDate: '2020-01-01',
       },
     });
-    expect(component.getByText('123.00')).toBeVisible();
+    expect(component.getByText(/123.00/i)).toBeVisible();
     expect(component.queryByDisplayValue('undefined')).toBeNull();
   });
 });
