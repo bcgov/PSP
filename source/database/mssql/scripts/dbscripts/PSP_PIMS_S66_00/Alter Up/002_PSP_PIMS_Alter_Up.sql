@@ -454,9 +454,26 @@ GO
 --IF @@ERROR <> 0 SET NOEXEC ON
 --GO
 ALTER TABLE [dbo].[PIMS_TAKE_HIST]
-	ADD [IS_ACQUIRED_FOR_INVENTORY] bit NOT NULL, -- DEFAULT CONVERT([bit],(1)), 
+	ADD [IS_ACQUIRED_FOR_INVENTORY] bit NOT NULL DEFAULT CONVERT([bit],(1)), 
 	[SRW_END_DT] date NULL
 GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop dynamically-named default constraints
+PRINT N'Drop dynamically-named default constraints'
+GO
+DECLARE @sqlQry  VARCHAR(1000)
+DECLARE @defName VARCHAR(100)
+SET @defName = (SELECT obj.NAME
+                FROM   SYSOBJECTS obj                          INNER JOIN
+                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
+                       SYSOBJECTS tbl on col.ID = tbl.ID
+                WHERE  obj.XTYPE = 'D'
+                   AND tbl.NAME = 'PIMS_TAKE_HIST' 
+                   AND col.NAME = 'IS_ACQUIRED_FOR_INVENTORY')
+SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_TAKE_HIST] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
+EXEC (@sqlQry)
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
