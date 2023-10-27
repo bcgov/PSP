@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Input } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { LeaseFormModel } from '@/features/leases/models';
+import { Api_Lease } from '@/models/api/Lease';
 import { formatNumber, pidFormatter } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 
@@ -23,11 +23,14 @@ export interface IPropertyInformationProps {
 export const PropertyInformation: React.FunctionComponent<
   React.PropsWithChildren<IPropertyInformationProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace, disabled, hideAddress }) => {
-  const formikProps = useFormikContext<LeaseFormModel>();
-  const landArea = getIn(formikProps.values, withNameSpace(nameSpace, 'landArea'));
+  const formikProps = useFormikContext<Api_Lease>();
+  const landArea = getIn(formikProps.values, withNameSpace(nameSpace, 'leaseArea'));
   const areaUnitType = getIn(formikProps.values, withNameSpace(nameSpace, 'areaUnitType'));
-  const legalDescription = getIn(formikProps.values, withNameSpace(nameSpace, 'legalDescription'));
-  const pid = getIn(formikProps.values, withNameSpace(nameSpace, 'pid'));
+  const legalDescription = getIn(
+    formikProps.values,
+    withNameSpace(nameSpace, 'property.legalDescription'),
+  );
+  const pid = getIn(formikProps.values, withNameSpace(nameSpace, 'property.pid'));
   const pidText = pid ? `PID: ${pidFormatter(pid)}` : '';
   const legalPidText = [legalDescription, pidText].filter(x => x).join(' ');
   return (
@@ -37,11 +40,20 @@ export const PropertyInformation: React.FunctionComponent<
       </SectionField>
       <SectionField label="Area included" labelWidth="3">
         {formatNumber(landArea, 2, 2)}{' '}
-        {areaUnitType?.description ? `${areaUnitType?.description}.` : ''}
+        {areaUnitType?.description ? (
+          `${areaUnitType?.description}.`
+        ) : (
+          <>
+            m<sup>2</sup>
+          </>
+        )}
       </SectionField>
       {!hideAddress ? (
         <SectionField label="Address" labelWidth="3">
-          <AddressSubForm nameSpace={withNameSpace(nameSpace, 'address')} disabled={disabled} />
+          <AddressSubForm
+            nameSpace={withNameSpace(nameSpace, 'property.address')}
+            disabled={disabled}
+          />
         </SectionField>
       ) : null}
       <SectionField label="Legal description" labelWidth="3">
