@@ -46,9 +46,7 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
       </div>
       <div
         class="c2 text-left col"
-      >
-        PID: 000-000-000
-      </div>
+      />
     </div>
     <div
       class="pb-2 row"
@@ -192,9 +190,7 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
       </div>
       <div
         class="c2 text-left col"
-      >
-        PID: 000-000-000
-      </div>
+      />
     </div>
     <div
       class="pb-2 row"
