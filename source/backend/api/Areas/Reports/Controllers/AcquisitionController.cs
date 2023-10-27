@@ -46,6 +46,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <param name="acquisitionFileService"></param>
         /// <param name="user"></param>
         /// <param name="compReqFinancialService"></param>
+        /// <param name="logger"></param>
         public AcquisitionController(IAcquisitionFileService acquisitionFileService, ClaimsPrincipal user, ICompReqFinancialService compReqFinancialService, ILogger<AcquisitionController> logger)
         {
             _acquisitionFileService = acquisitionFileService;

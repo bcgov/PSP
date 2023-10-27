@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -43,19 +42,6 @@ namespace Pims.Dal.Repositories
             entity.ThrowIfNull(nameof(entity));
             this.Context.Add<T>(entity);
             return entity;
-        }
-
-        /// <summary>
-        /// Retrieves all notes associated with a parent entity.
-        /// </summary>
-        /// <typeparam name="T">The entity type - e.g. PimsActivityInstanceNote.</typeparam>
-        /// <param name="predicate">The predicate to filter all notes - e.g. where parentId == parent.Id.</param>
-        /// <returns>The entity-notes associations.</returns>
-        public IEnumerable<T> GetAll<T>(Func<T, bool> predicate)
-            where T : class
-        {
-            predicate.ThrowIfNull(nameof(predicate));
-            return this.Context.Set<T>().AsNoTracking().Where(predicate).ToArray();
         }
 
         public IEnumerable<PimsNote> GetAllAcquisitionNotesById(long acquisitionId)

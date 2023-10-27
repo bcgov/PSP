@@ -1,7 +1,7 @@
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFileOwner,
-  Api_AcquisitionFilePerson,
+  Api_AcquisitionFileTeam,
 } from './AcquisitionFile';
 import { Api_AuditFields } from './AuditFields';
 import { Api_CompensationFinancial } from './CompensationFinancial';
@@ -35,12 +35,11 @@ export interface Api_CompensationRequisition extends Api_ConcurrentVersion, Api_
   acquisitionOwner: Api_AcquisitionFileOwner | null;
   interestHolderId: number | null;
   interestHolder: Api_InterestHolder | null;
-  acquisitionFilePersonId: number | null;
-  acquisitionFilePerson: Api_AcquisitionFilePerson | null;
+  acquisitionFileTeamId: number | null;
+  acquisitionFileTeam: Api_AcquisitionFileTeam | null;
   legacyPayee: string | null;
   isPaymentInTrust: boolean | null;
   gstNumber: string | null;
   specialInstruction: string | null;
   detailedRemarks: string | null;
-  isDisabled: boolean | null;
 }

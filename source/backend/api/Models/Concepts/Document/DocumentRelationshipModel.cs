@@ -20,11 +20,6 @@ namespace Pims.Api.Models.Concepts
         public string ParentId { get; set; }
 
         /// <summary>
-        /// get/set - True if disabled.
-        /// </summary>
-        public bool? IsDisabled { get; set; }
-
-        /// <summary>
         /// get/set - The document that is linked though this relationship.
         /// </summary>
         public DocumentModel Document { get; set; }

@@ -218,10 +218,10 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsBusinessFunctionCode>())).Returns(codeEntity as PimsBusinessFunctionCode);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            var _mapper = this._helper.GetService<IMapper>();
+            var mapper = this._helper.GetService<IMapper>();
 
             // Act
-            var model = _mapper.Map<FinancialCodeModel>(codeEntity);
+            var model = mapper.Map<FinancialCodeModel>(codeEntity);
             var result = service.Update(FinancialCodeTypes.BusinessFunction, model);
 
             // Assert

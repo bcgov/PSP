@@ -30,7 +30,7 @@ export const ContactInputContainer: React.FC<
 }) => {
   const [showContactManager, setShowContactManager] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>([]);
-  const { setFieldValue } = useFormikContext<any>();
+  const { setFieldValue, setFieldTouched } = useFormikContext<any>();
 
   const handleContactManagerOk = () => {
     setFieldValue(field, selectedContacts[0]);
@@ -44,7 +44,10 @@ export const ContactInputContainer: React.FC<
   return (
     <View
       field={field}
-      onClear={() => setFieldValue(field, null)}
+      onClear={() => {
+        setFieldValue(field, null);
+        setFieldTouched(field);
+      }}
       label={label}
       displayErrorTooltips={displayErrorAsTooltip}
       setShowContactManager={() => {

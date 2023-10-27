@@ -10,7 +10,7 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_COMPENSATION_REQUISITION")]
     [Index(nameof(AcquisitionFileId), Name = "CMPREQ_ACQUISITION_FILE_ID_IDX")]
-    [Index(nameof(AcquisitionFilePersonId), Name = "CMPREQ_ACQUISITION_FILE_PERSON_ID_IDX")]
+    [Index(nameof(AcquisitionFileTeamId), Name = "CMPREQ_ACQUISITION_FILE_PERSON_ID_IDX")]
     [Index(nameof(AcquisitionOwnerId), Name = "CMPREQ_ACQUISITION_OWNER_ID_IDX")]
     [Index(nameof(AlternateProjectId), Name = "CMPREQ_ALTERNATE_PROJECT_ID_IDX")]
     [Index(nameof(ChartOfAccountsId), Name = "CMPREQ_CHART_OF_ACCOUNTS_ID_IDX")]
@@ -33,8 +33,8 @@ namespace Pims.Dal.Entities
         public long? AcquisitionOwnerId { get; set; }
         [Column("INTEREST_HOLDER_ID")]
         public long? InterestHolderId { get; set; }
-        [Column("ACQUISITION_FILE_PERSON_ID")]
-        public long? AcquisitionFilePersonId { get; set; }
+        [Column("ACQUISITION_FILE_TEAM_ID")]
+        public long? AcquisitionFileTeamId { get; set; }
         [Column("CHART_OF_ACCOUNTS_ID")]
         public long? ChartOfAccountsId { get; set; }
         [Column("RESPONSIBILITY_ID")]
@@ -118,9 +118,9 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(AcquisitionFileId))]
         [InverseProperty(nameof(PimsAcquisitionFile.PimsCompensationRequisitions))]
         public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
-        [ForeignKey(nameof(AcquisitionFilePersonId))]
-        [InverseProperty(nameof(PimsAcquisitionFilePerson.PimsCompensationRequisitions))]
-        public virtual PimsAcquisitionFilePerson AcquisitionFilePerson { get; set; }
+        [ForeignKey(nameof(AcquisitionFileTeamId))]
+        [InverseProperty(nameof(PimsAcquisitionFileTeam.PimsCompensationRequisitions))]
+        public virtual PimsAcquisitionFileTeam AcquisitionFileTeam { get; set; }
         [ForeignKey(nameof(AcquisitionOwnerId))]
         [InverseProperty(nameof(PimsAcquisitionOwner.PimsCompensationRequisitions))]
         public virtual PimsAcquisitionOwner AcquisitionOwner { get; set; }

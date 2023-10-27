@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PropertyOrganization class, provides an entity for the datamodel to manage property organizations.
     /// </summary>
-    public partial class PimsPropertyOrganization : IDisableBaseAppEntity
+    public partial class PimsPropertyOrganization : IBaseAppEntity
     {
         #region Constructors
         public PimsPropertyOrganization()

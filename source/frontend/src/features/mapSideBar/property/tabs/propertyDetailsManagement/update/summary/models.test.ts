@@ -103,7 +103,6 @@ describe('Property management model tests', () => {
           id: 1,
           rowVersion: 1,
           propertyId: 123459,
-          isDisabled: false,
           propertyPurposeTypeCode: {
             id: 'TEST',
             description: 'test description',

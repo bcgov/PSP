@@ -21,7 +21,6 @@ export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult 
     organizationAddresses: [
       {
         id: 4,
-        isDisabled: false,
         address: {
           id: 3,
           streetAddress1: '1012 Douglas',
@@ -128,14 +127,12 @@ export const getMockPerson = ({
         contactMethods: [],
         rowVersion: 1,
       },
-      isDisabled: false,
       rowVersion: 1,
     },
   ],
   personAddresses: [
     {
       id: 3,
-      isDisabled: false,
       address: {
         id: 3,
         streetAddress1: '123 Main Street',
@@ -166,7 +163,6 @@ export const getMockPerson = ({
     },
     {
       id: 4,
-      isDisabled: false,
       address: {
         id: 3,
         streetAddress1: '123 Main Street',

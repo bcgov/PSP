@@ -7,8 +7,6 @@ namespace Pims.Dal.Repositories
     {
         List<PimsPropertyResearchFile> GetAllByResearchFileId(long researchFileId);
 
-        int GetResearchFilePropertyRelatedCount(long propertyId);
-
         PimsPropertyResearchFile Add(PimsPropertyResearchFile propertyResearchFile);
 
         PimsPropertyResearchFile Update(PimsPropertyResearchFile propertyResearchFile);

@@ -107,6 +107,423 @@ namespace Pims.Dal.Repositories
             return lease;
         }
 
+        /// <summary>
+        /// Retrieves the lease with the specified id last update information.
+        /// </summary>
+        /// <param name="leaseId"></param>
+        /// <returns></returns>
+        public LastUpdatedByModel GetLastUpdateBy(long leaseId)
+        {
+            // Lease details
+            var lastUpdatedByAggregate = new List<LastUpdatedByModel>();
+            var leaseDetailsLastUpdatedBy = this.Context.PimsLeases.AsNoTracking()
+                .Where(a => a.LeaseId == leaseId)
+                .Select(a => new LastUpdatedByModel()
+                {
+                    ParentId = leaseId,
+                    AppLastUpdateUserid = a.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = a.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = a.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(leaseDetailsLastUpdatedBy);
+
+            // Lease Properties
+            var propertiesLastUpdatedBy = this.Context.PimsPropertyLeases.AsNoTracking()
+                .Where(ap => ap.LeaseId == leaseId)
+                .Select(ap => new LastUpdatedByModel()
+                {
+                    ParentId = leaseId,
+                    AppLastUpdateUserid = ap.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = ap.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = ap.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(propertiesLastUpdatedBy);
+
+            // Lease Deleted Properties
+            // This is needed to get the properties last-updated-by when deleted
+            var propertiesHistoryLastUpdatedBy = this.Context.PimsPropertyLeaseHists.AsNoTracking()
+            .Where(aph => aph.LeaseId == leaseId)
+            .Select(aph => new LastUpdatedByModel()
+            {
+                ParentId = leaseId,
+                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
+            })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(propertiesHistoryLastUpdatedBy);
+
+            // Lease Consultations
+            var consultationsLastUpdatedBy = this.Context.PimsLeaseConsultations.AsNoTracking()
+                .Where(ap => ap.LeaseId == leaseId)
+                .Select(ap => new LastUpdatedByModel()
+                {
+                    ParentId = leaseId,
+                    AppLastUpdateUserid = ap.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = ap.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = ap.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(consultationsLastUpdatedBy);
+
+            // Lease Deleted Consultations
+            // This is needed to get the consultations last-updated-by when deleted
+            var consultationHistoryLastUpdatedBy = this.Context.PimsLeaseConsultationHists.AsNoTracking()
+            .Where(aph => aph.LeaseId == leaseId)
+            .Select(aph => new LastUpdatedByModel()
+            {
+                ParentId = leaseId,
+                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
+            })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(consultationHistoryLastUpdatedBy);
+
+            // Lease Tenants
+            var tenantsLastUpdatedBy = this.Context.PimsLeaseTenants.AsNoTracking()
+                .Where(ap => ap.LeaseId == leaseId)
+                .Select(ap => new LastUpdatedByModel()
+                {
+                    ParentId = leaseId,
+                    AppLastUpdateUserid = ap.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = ap.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = ap.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(tenantsLastUpdatedBy);
+
+            // Lease Deleted Tenants
+            // This is needed to get the tenants last-updated-by when deleted
+            var tenantsHistoryLastUpdatedBy = this.Context.PimsLeaseTenantHists.AsNoTracking()
+            .Where(aph => aph.LeaseId == leaseId)
+            .Select(aph => new LastUpdatedByModel()
+            {
+                ParentId = leaseId,
+                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
+            })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(tenantsHistoryLastUpdatedBy);
+
+            // Lease Improvements
+            var improvementLastUpdatedBy = this.Context.PimsPropertyImprovements.AsNoTracking()
+                .Where(ap => ap.LeaseId == leaseId)
+                .Select(ap => new LastUpdatedByModel()
+                {
+                    ParentId = leaseId,
+                    AppLastUpdateUserid = ap.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = ap.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = ap.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(improvementLastUpdatedBy);
+
+            // Lease Deleted Improvements
+            // This is needed to get the property improvements last-updated-by when deleted
+            var improvementsHistoryLastUpdatedBy = this.Context.PimsPropertyImprovementHists.AsNoTracking()
+            .Where(aph => aph.LeaseId == leaseId)
+            .Select(aph => new LastUpdatedByModel()
+            {
+                ParentId = leaseId,
+                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
+            })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(improvementsHistoryLastUpdatedBy);
+
+            // Lease Insurance
+            var insuranceLastUpdatedBy = this.Context.PimsInsurances.AsNoTracking()
+                .Where(ap => ap.LeaseId == leaseId)
+                .Select(ap => new LastUpdatedByModel()
+                {
+                    ParentId = leaseId,
+                    AppLastUpdateUserid = ap.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = ap.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = ap.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(insuranceLastUpdatedBy);
+
+            // Lease Deleted Insurance
+            // This is needed to get the property insurance last-updated-by when deleted
+            var insuranceHistoryLastUpdatedBy = this.Context.PimsInsuranceHists.AsNoTracking()
+            .Where(aph => aph.LeaseId == leaseId)
+            .Select(aph => new LastUpdatedByModel()
+            {
+                ParentId = leaseId,
+                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
+            })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(insuranceHistoryLastUpdatedBy);
+
+            // Lease Deposits
+            var depositsLastUpdatedBy = this.Context.PimsSecurityDeposits.AsNoTracking()
+                .Where(ap => ap.LeaseId == leaseId)
+                .Select(ap => new LastUpdatedByModel()
+                {
+                    ParentId = leaseId,
+                    AppLastUpdateUserid = ap.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = ap.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = ap.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(depositsLastUpdatedBy);
+
+            // Lease Deleted Deposits
+            // This is needed to get the lease deposits last-updated-by when deleted
+            var depositsHistoryLastUpdatedBy = this.Context.PimsSecurityDepositHists.AsNoTracking()
+            .Where(aph => aph.LeaseId == leaseId)
+            .Select(aph => new LastUpdatedByModel()
+            {
+                ParentId = leaseId,
+                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
+            })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(depositsHistoryLastUpdatedBy);
+
+            // Lease Return Deposits
+            var depositReturnsLastUpdatedBy = this.Context.PimsSecurityDepositReturns.AsNoTracking()
+                .Include(l => l.SecurityDeposit)
+                .Where(ap => ap.SecurityDeposit.LeaseId == leaseId)
+                .Select(ap => new LastUpdatedByModel()
+                {
+                    ParentId = leaseId,
+                    AppLastUpdateUserid = ap.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = ap.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = ap.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(depositReturnsLastUpdatedBy);
+
+            // Lease Deleted Return Deposits
+            // This is needed to get the returned deposits last-updated-by when deleted
+            var returnsHistory = this.Context.PimsSecurityDepositReturnHists.AsNoTracking();
+            var returnsHistoryLastUpdatedBy = this.Context.PimsSecurityDepositHists.AsNoTracking()
+                .Where(at => at.LeaseId == leaseId)
+                .Join(
+                    returnsHistory,
+                    securityDepositHist => securityDepositHist.SecurityDepositId,
+                    securityDepositReturnHolderHist => securityDepositReturnHolderHist.SecurityDepositId,
+                    (securityDepositHist, securityDepositReturnHist) => new LastUpdatedByModel()
+                    {
+                        ParentId = leaseId,
+                        AppLastUpdateUserid = securityDepositReturnHist.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                        AppLastUpdateUserGuid = securityDepositReturnHist.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                        AppLastUpdateTimestamp = securityDepositReturnHist.EndDateHist ?? DateTime.UnixEpoch,
+                    })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(returnsHistoryLastUpdatedBy);
+
+            // Lease Deposit Holder
+            var depositHolderReturnsLastUpdatedBy = this.Context.PimsSecurityDepositHolders.AsNoTracking()
+                .Include(l => l.SecurityDeposit)
+                .Where(ap => ap.SecurityDeposit.LeaseId == leaseId)
+                .Select(ap => new LastUpdatedByModel()
+                {
+                    ParentId = leaseId,
+                    AppLastUpdateUserid = ap.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = ap.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = ap.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(depositHolderReturnsLastUpdatedBy);
+
+            // Lease Deleted Deposit Holder
+            // This is needed to get the returned deposits last-updated-by when deleted
+            var returnHoldersHistory = this.Context.PimsSecurityDepositHolderHists.AsNoTracking();
+            var returnHoldersHistoryLastUpdatedBy = this.Context.PimsSecurityDepositHists.AsNoTracking()
+                .Where(at => at.LeaseId == leaseId)
+                .Join(
+                    returnHoldersHistory,
+                    securityDepositHist => securityDepositHist.SecurityDepositId,
+                    securityDepositHolderHist => securityDepositHolderHist.SecurityDepositId,
+                    (securityDepositHist, securityDepositHolderHist) => new LastUpdatedByModel()
+                    {
+                        ParentId = leaseId,
+                        AppLastUpdateUserid = securityDepositHolderHist.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                        AppLastUpdateUserGuid = securityDepositHolderHist.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                        AppLastUpdateTimestamp = securityDepositHolderHist.EndDateHist ?? DateTime.UnixEpoch,
+                    })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(returnHoldersHistoryLastUpdatedBy);
+
+            // Lease Terms
+            var termLastUpdatedBy = this.Context.PimsLeaseTerms.AsNoTracking()
+                .Where(ap => ap.LeaseId == leaseId)
+                .Select(ap => new LastUpdatedByModel()
+                {
+                    ParentId = leaseId,
+                    AppLastUpdateUserid = ap.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = ap.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = ap.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(termLastUpdatedBy);
+
+            // Lease Deleted Terms
+            // This is needed to get the lease terms last-updated-by when deleted
+            var termHistoryLastUpdatedBy = this.Context.PimsLeaseTermHists.AsNoTracking()
+            .Where(aph => aph.LeaseId == leaseId)
+            .Select(aph => new LastUpdatedByModel()
+            {
+                ParentId = leaseId,
+                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
+            })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(termHistoryLastUpdatedBy);
+
+            // Lease Term Payment
+            var termPaymentReturnsLastUpdatedBy = this.Context.PimsLeasePayments.AsNoTracking()
+                .Include(l => l.LeaseTerm)
+                .Where(ap => ap.LeaseTerm.LeaseId == leaseId)
+                .Select(ap => new LastUpdatedByModel()
+                {
+                    ParentId = leaseId,
+                    AppLastUpdateUserid = ap.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = ap.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = ap.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(termPaymentReturnsLastUpdatedBy);
+
+            // Lease Deleted Term Payment
+            // This is needed to get the term payments last-updated-by when deleted
+            var termPaymentHistory = this.Context.PimsLeasePaymentHists.AsNoTracking();
+            var termPaymentHistoryLastUpdatedBy = this.Context.PimsLeaseTermHists.AsNoTracking()
+                .Where(at => at.LeaseId == leaseId)
+                .Join(
+                    termPaymentHistory,
+                    leaseTermHist => leaseTermHist.LeaseTermId,
+                    leasePaymentHist => leasePaymentHist.LeaseTermId,
+                    (leaseTermHist, leasePaymentHist) => new LastUpdatedByModel()
+                    {
+                        ParentId = leaseId,
+                        AppLastUpdateUserid = leasePaymentHist.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                        AppLastUpdateUserGuid = leasePaymentHist.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                        AppLastUpdateTimestamp = leasePaymentHist.EndDateHist ?? DateTime.UnixEpoch,
+                    })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(termPaymentHistoryLastUpdatedBy);
+
+            // Lease Documents
+            var documentsUpdatedBy = this.Context.PimsLeaseDocuments.AsNoTracking()
+                .Where(ap => ap.LeaseId == leaseId)
+                .Select(ap => new LastUpdatedByModel()
+                {
+                    ParentId = leaseId,
+                    AppLastUpdateUserid = ap.Document.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = ap.Document.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = ap.Document.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(documentsUpdatedBy);
+
+            // Lease Deleted Documents
+            // This is needed to get the lease documents last-updated-by when deleted
+            var documentsHistoryLastUpdatedBy = this.Context.PimsLeaseDocumentHists.AsNoTracking()
+            .Where(aph => aph.LeaseId == leaseId)
+            .Select(aph => new LastUpdatedByModel()
+            {
+                ParentId = leaseId,
+                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
+            })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(documentsHistoryLastUpdatedBy);
+
+            // Lease Notes
+            var notesUpdatedBy = this.Context.PimsLeaseNotes.AsNoTracking()
+                .Where(ap => ap.LeaseId == leaseId)
+                .Include(a => a.Note)
+                .Select(ap => new LastUpdatedByModel()
+                {
+                    ParentId = leaseId,
+                    AppLastUpdateUserid = ap.Note.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = ap.Note.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = ap.Note.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(notesUpdatedBy);
+
+            // Lease Deleted Notes
+            // This is needed to get the notes last-updated-by from the document that where deleted
+            var notesHistoryLastUpdatedBy = this.Context.PimsLeaseNoteHists.AsNoTracking()
+                .Where(anh => anh.LeaseId == leaseId)
+                .Select(anh => new LastUpdatedByModel()
+                {
+                    ParentId = leaseId,
+                    AppLastUpdateUserid = anh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                    AppLastUpdateUserGuid = anh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                    AppLastUpdateTimestamp = anh.EndDateHist ?? DateTime.UnixEpoch,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(notesHistoryLastUpdatedBy);
+
+            return lastUpdatedByAggregate.OrderByDescending(x => x.AppLastUpdateTimestamp).FirstOrDefault();
+        }
+
         // TODO: original Get method should have AsNoTracking() but that breaks a number of existing workflows. Added this as a temporary fix until lease logic is refactored.
         public PimsLease GetNoTracking(long id)
         {

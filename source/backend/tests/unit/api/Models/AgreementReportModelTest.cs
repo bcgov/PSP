@@ -14,8 +14,8 @@ namespace Pims.Api.Test
         {
             // Arrange
             var testAgreement = new Dal.Entities.PimsAgreement();
-            var propCoord = new PimsAcquisitionFilePerson() { AcqFlPersonProfileTypeCode = "PROPCOORD", Person = new PimsPerson() { Surname = "test" } };
-            testAgreement.AcquisitionFile = new Dal.Entities.PimsAcquisitionFile() { PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() { propCoord } };
+            var propCoord = new PimsAcquisitionFileTeam() { AcqFlTeamProfileTypeCode = "PROPCOORD", Person = new PimsPerson() { Surname = "test" } };
+            testAgreement.AcquisitionFile = new Dal.Entities.PimsAcquisitionFile() { PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { propCoord } };
 
             // Act
             var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());
@@ -29,7 +29,7 @@ namespace Pims.Api.Test
         {
             // Arrange
             var testAgreement = new Dal.Entities.PimsAgreement();
-            testAgreement.AcquisitionFile = new Dal.Entities.PimsAcquisitionFile() { PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() { } };
+            testAgreement.AcquisitionFile = new Dal.Entities.PimsAcquisitionFile() { PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { } };
 
             // Act
             var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());

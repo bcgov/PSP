@@ -22,6 +22,8 @@ import {
 import DepositsContainer from './DepositsContainer';
 import { FormLeaseDeposit } from './models/FormLeaseDeposit';
 
+const onSuccessMock = jest.fn();
+
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -44,7 +46,7 @@ const setup = (renderOptions: RenderOptions & { lease?: LeaseFormModel } = {}): 
       }}
     >
       <Formik onSubmit={noop} initialValues={renderOptions.lease ?? new LeaseFormModel()}>
-        <DepositsContainer />
+        <DepositsContainer onSuccess={onSuccessMock} />
       </Formik>
     </LeaseStateContext.Provider>,
     {

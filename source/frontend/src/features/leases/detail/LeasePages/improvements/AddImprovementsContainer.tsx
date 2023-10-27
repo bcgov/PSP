@@ -17,11 +17,12 @@ interface IAddImprovementsContainerProps {
   onEdit?: (isEditing: boolean) => void;
   improvements: Api_PropertyImprovement[];
   loading: boolean;
+  onSuccess: () => void;
 }
 
 export const AddImprovementsContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddImprovementsContainerProps>
-> = ({ formikRef, onEdit, children, loading, improvements }) => {
+> = ({ formikRef, onEdit, children, loading, improvements, onSuccess }) => {
   const { lease } = useContext(LeaseStateContext);
   const { updatePropertyImprovements } = usePropertyImprovementRepository();
   const { getByType } = useLookupCodeHelpers();
@@ -44,6 +45,7 @@ export const AddImprovementsContainer: React.FunctionComponent<
           );
           formikRef?.current?.resetForm({ values: form });
           onEdit && onEdit(false);
+          onSuccess();
         }
       }
     } finally {

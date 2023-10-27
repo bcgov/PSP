@@ -1,4 +1,4 @@
-import { Api_AcquisitionFile, Api_AcquisitionFilePerson } from '@/models/api/AcquisitionFile';
+import { Api_AcquisitionFile, Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 export class DetailAcquisitionFile {
@@ -10,7 +10,7 @@ export class DetailAcquisitionFile {
   acquisitionPhysFileStatusTypeDescription?: string;
   acquisitionTypeDescription?: string;
   regionDescription?: string;
-  acquisitionTeam: DetailAcquisitionFilePerson[] = [];
+  acquisitionTeam: DetailAcquisitionFileTeam[] = [];
 
   static fromApi(model?: Api_AcquisitionFile): DetailAcquisitionFile {
     const detail = new DetailAcquisitionFile();
@@ -24,23 +24,35 @@ export class DetailAcquisitionFile {
     detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description;
     detail.regionDescription = model?.regionCode?.description;
     detail.acquisitionTeam =
-      model?.acquisitionTeam?.map(x => DetailAcquisitionFilePerson.fromApi(x)) || [];
+      model?.acquisitionTeam?.map(x => DetailAcquisitionFileTeam.fromApi(x)) || [];
 
     return detail;
   }
 }
 
-export class DetailAcquisitionFilePerson {
+export class DetailAcquisitionFileTeam {
   personId?: number;
-  personName?: string;
-  personProfileTypeCodeDescription?: string;
+  organizationId?: number;
+  primaryContactId?: number;
+  teamName?: string;
+  primaryContactName?: string;
+  teamProfileTypeCodeDescription?: string;
 
-  static fromApi(model: Api_AcquisitionFilePerson): DetailAcquisitionFilePerson {
-    const personDetail = new DetailAcquisitionFilePerson();
-    personDetail.personId = model?.person?.id;
-    personDetail.personName = formatApiPersonNames(model?.person);
-    personDetail.personProfileTypeCodeDescription = model?.personProfileType?.description;
+  static fromApi(model: Api_AcquisitionFileTeam): DetailAcquisitionFileTeam {
+    const teamDetail = new DetailAcquisitionFileTeam();
+    teamDetail.personId = model?.person?.id;
+    teamDetail.organizationId = model?.organization?.id;
+    teamDetail.primaryContactId = model?.primaryContact?.id;
+    teamDetail.teamProfileTypeCodeDescription = model?.teamProfileType?.description;
 
-    return personDetail;
+    teamDetail.teamName = model?.person
+      ? formatApiPersonNames(model?.person)
+      : model?.organization?.name ?? '';
+
+    teamDetail.primaryContactName = model?.primaryContact
+      ? formatApiPersonNames(model.primaryContact)
+      : '';
+
+    return teamDetail;
   }
 }

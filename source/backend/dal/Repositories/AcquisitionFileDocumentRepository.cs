@@ -47,22 +47,6 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get a list of all the document file relationships for a a given acquisition file.
-        /// </summary>
-        /// <returns></returns>
-        public IList<PimsAcquisitionFileDocument> GetAllByDocument(long documentId)
-        {
-            return this.Context.PimsAcquisitionFileDocuments
-                .Include(ad => ad.Document)
-                    .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
-                .Include(ad => ad.Document)
-                    .ThenInclude(d => d.DocumentType)
-                .Where(ad => ad.DocumentId == documentId)
-                .AsNoTracking()
-                .ToList();
-        }
-
-        /// <summary>
         /// Adds the passed document acquisition file to the database.
         /// </summary>
         /// <param name="acquisitionDocument"></param>

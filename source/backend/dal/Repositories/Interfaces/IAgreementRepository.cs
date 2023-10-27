@@ -10,8 +10,6 @@ namespace Pims.Dal.Repositories
 
         List<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter);
 
-        PimsAgreement Update(PimsAgreement agreement);
-
         List<PimsAgreement> UpdateAllForAcquisition(long acquisitionFileId, List<PimsAgreement> agreements);
     }
 }

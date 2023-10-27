@@ -104,6 +104,22 @@ exports[`PropertiesInformation component renders as expected 1`] = `
             <label
               class="c4"
             >
+              PID:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label
+              class="c4"
+            >
               Descriptive name:
             </label>
           </div>
@@ -115,8 +131,8 @@ exports[`PropertiesInformation component renders as expected 1`] = `
             >
               <input
                 class="form-control"
-                id="input-properties.0.property.propertyName"
-                name="properties.0.property.propertyName"
+                id="input-properties.0.propertyName"
+                name="properties.0.propertyName"
                 value=""
               />
             </div>
@@ -137,7 +153,10 @@ exports[`PropertiesInformation component renders as expected 1`] = `
           <div
             class="c5 text-left col"
           >
-            NaN 
+            NaN m
+            <sup>
+              2
+            </sup>
           </div>
         </div>
         <div

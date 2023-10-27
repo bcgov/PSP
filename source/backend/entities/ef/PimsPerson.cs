@@ -13,7 +13,8 @@ namespace Pims.Dal.Entities
     {
         public PimsPerson()
         {
-            PimsAcquisitionFilePeople = new HashSet<PimsAcquisitionFilePerson>();
+            PimsAcquisitionFileTeamPeople = new HashSet<PimsAcquisitionFileTeam>();
+            PimsAcquisitionFileTeamPrimaryContacts = new HashSet<PimsAcquisitionFileTeam>();
             PimsContactMethods = new HashSet<PimsContactMethod>();
             PimsInterestHolderPeople = new HashSet<PimsInterestHolder>();
             PimsInterestHolderPrimaryContacts = new HashSet<PimsInterestHolder>();
@@ -22,7 +23,10 @@ namespace Pims.Dal.Entities
             PimsPersonAddresses = new HashSet<PimsPersonAddress>();
             PimsPersonOrganizations = new HashSet<PimsPersonOrganization>();
             PimsProjectPeople = new HashSet<PimsProjectPerson>();
+            PimsPropActInvolvedParties = new HashSet<PimsPropActInvolvedParty>();
+            PimsPropActMinContacts = new HashSet<PimsPropActMinContact>();
             PimsProperties = new HashSet<PimsProperty>();
+            PimsPropertyActivities = new HashSet<PimsPropertyActivity>();
             PimsPropertyContactPeople = new HashSet<PimsPropertyContact>();
             PimsPropertyContactPrimaryContacts = new HashSet<PimsPropertyContact>();
             PimsResearchFiles = new HashSet<PimsResearchFile>();
@@ -102,9 +106,13 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("PIMS_PROPERTY_ACTIVITY_ID")]
+        public long? PimsPropertyActivityId { get; set; }
 
-        [InverseProperty(nameof(PimsAcquisitionFilePerson.Person))]
-        public virtual ICollection<PimsAcquisitionFilePerson> PimsAcquisitionFilePeople { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionFileTeam.Person))]
+        public virtual ICollection<PimsAcquisitionFileTeam> PimsAcquisitionFileTeamPeople { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionFileTeam.PrimaryContact))]
+        public virtual ICollection<PimsAcquisitionFileTeam> PimsAcquisitionFileTeamPrimaryContacts { get; set; }
         [InverseProperty(nameof(PimsContactMethod.Person))]
         public virtual ICollection<PimsContactMethod> PimsContactMethods { get; set; }
         [InverseProperty(nameof(PimsInterestHolder.Person))]
@@ -121,8 +129,14 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsPersonOrganization> PimsPersonOrganizations { get; set; }
         [InverseProperty(nameof(PimsProjectPerson.Person))]
         public virtual ICollection<PimsProjectPerson> PimsProjectPeople { get; set; }
+        [InverseProperty(nameof(PimsPropActInvolvedParty.Person))]
+        public virtual ICollection<PimsPropActInvolvedParty> PimsPropActInvolvedParties { get; set; }
+        [InverseProperty(nameof(PimsPropActMinContact.Person))]
+        public virtual ICollection<PimsPropActMinContact> PimsPropActMinContacts { get; set; }
         [InverseProperty(nameof(PimsProperty.PropertyManager))]
         public virtual ICollection<PimsProperty> PimsProperties { get; set; }
+        [InverseProperty(nameof(PimsPropertyActivity.ServiceProviderPerson))]
+        public virtual ICollection<PimsPropertyActivity> PimsPropertyActivities { get; set; }
         [InverseProperty(nameof(PimsPropertyContact.Person))]
         public virtual ICollection<PimsPropertyContact> PimsPropertyContactPeople { get; set; }
         [InverseProperty(nameof(PimsPropertyContact.PrimaryContact))]

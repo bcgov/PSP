@@ -25,7 +25,6 @@ export interface Api_DocumentType extends Api_ConcurrentVersion, Api_AuditFields
 export interface Api_DocumentRelationship extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
   parentId: number | null;
-  isDisabled?: boolean;
   document: Api_Document | null;
   relationshipType: DocumentRelationshipType | null;
 }

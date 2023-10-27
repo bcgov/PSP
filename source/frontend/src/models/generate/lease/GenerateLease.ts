@@ -5,6 +5,7 @@ import { Api_Insurance } from '@/models/api/Insurance';
 import { Api_Lease } from '@/models/api/Lease';
 import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
 import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
+import { Api_PropertyLease } from '@/models/api/PropertyLease';
 import { Api_SecurityDeposit } from '@/models/api/SecurityDeposit';
 import { formatMoney, pidFormatter } from '@/utils';
 
@@ -35,14 +36,16 @@ export class Api_GenerateLease {
     insurances: Api_Insurance[],
     tenants: Api_LeaseTenant[],
     securityDeposits: Api_SecurityDeposit[],
+    propertyLeases: Api_PropertyLease[],
+    terms: Api_LeaseTerm[],
   ) {
-    const firstTerm = first(orderBy(lease.terms, (t: Api_LeaseTerm) => t.id));
+    const firstTerm = first(orderBy(terms, (t: Api_LeaseTerm) => t.id));
     this.file_number = lease.lFileNo ?? '';
     this.commencement_date = firstTerm?.startDate
       ? moment.utc(firstTerm?.startDate).format('MMMM DD, YYYY')
       : '';
     this.land_string =
-      lease.properties
+      propertyLeases
         ?.map(p =>
           [
             `Parcel Identifier: ${pidFormatter(p.property?.pid?.toString())}`,
@@ -80,6 +83,6 @@ export class Api_GenerateLease {
     this.person_tenants = tenants
       .filter(t => t.tenantTypeCode?.id === 'TEN' && t.lessorType?.id === 'PER')
       .map(t => new Api_GenerateTenant(t));
-    this.lease_properties = lease.properties?.map(p => new Api_GenerateLeaseProperty(p)) ?? [];
+    this.lease_properties = propertyLeases?.map(p => new Api_GenerateLeaseProperty(p)) ?? [];
   }
 }
