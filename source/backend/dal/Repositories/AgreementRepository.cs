@@ -4,7 +4,6 @@ using System.Security.Claims;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
@@ -56,13 +55,13 @@ namespace Pims.Dal.Repositories
             }
             if (filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
             {
-                predicate.And(a => a.AcquisitionFile.PimsAcquisitionFilePeople.Any(afp => filter.AcquisitionTeamPersons.Contains(afp.PersonId)));
+                predicate.And(a => a.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId.HasValue && filter.AcquisitionTeamPersons.Contains((long)afp.PersonId)));
             }
 
             var query = Context.PimsAgreements
                 .Include(a => a.AgreementTypeCodeNavigation)
                 .Include(a => a.AcquisitionFile)
-                    .ThenInclude(a => a.PimsAcquisitionFilePeople)
+                    .ThenInclude(a => a.PimsAcquisitionFileTeams)
                     .ThenInclude(afp => afp.Person)
                 .Include(a => a.AcquisitionFile)
                     .ThenInclude(a => a.Project)
@@ -74,15 +73,6 @@ namespace Pims.Dal.Repositories
                 .Where(predicate);
 
             return query.ToList();
-        }
-
-        public PimsAgreement Update(PimsAgreement agreement)
-        {
-            agreement.ThrowIfNull(nameof(agreement));
-
-            Context.Entry(agreement).CurrentValues.SetValues(agreement);
-            Context.Entry(agreement).State = EntityState.Modified;
-            return agreement;
         }
 
         public List<PimsAgreement> UpdateAllForAcquisition(long acquisitionFileId, List<PimsAgreement> agreements)

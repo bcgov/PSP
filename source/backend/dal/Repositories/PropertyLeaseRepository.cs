@@ -62,15 +62,6 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Delete a propertyLeaseFile. Note that this method will fail unless all dependencies are removed first.
-        /// </summary>
-        /// <param name="propertyLeaseFile"></param>
-        public void Delete(PimsPropertyLease propertyLeaseFile)
-        {
-            Context.Remove(new PimsPropertyResearchFile() { Internal_Id = propertyLeaseFile.Internal_Id });
-        }
-
-        /// <summary>
         /// update the properties on the lease.
         /// </summary>
         /// <param name="leaseId"></param>

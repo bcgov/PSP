@@ -1,7 +1,7 @@
 import {
   Api_AcquisitionFile,
-  Api_AcquisitionFilePerson,
   Api_AcquisitionFileProperty,
+  Api_AcquisitionFileTeam,
 } from '@/models/api/AcquisitionFile';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_Project } from '@/models/api/Project';
@@ -21,7 +21,7 @@ export class AcquisitionSearchResultModel {
   fileProperties?: Api_AcquisitionFileProperty[];
   project?: Api_Project;
   alternateProject?: Api_Project;
-  aquisitionTeam?: Api_AcquisitionFilePerson[];
+  aquisitionTeam?: Api_AcquisitionFileTeam[];
   compensationRequisitions?: Api_CompensationRequisition[];
 
   static fromApi(base: Api_AcquisitionFile): AcquisitionSearchResultModel {

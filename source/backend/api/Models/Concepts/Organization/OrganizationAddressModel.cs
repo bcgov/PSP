@@ -10,11 +10,6 @@ namespace Pims.Api.Models.Concepts
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - The relationship's disabled status flag.
-        /// </summary>
-        public bool IsDisabled { get; set; }
-
-        /// <summary>
         /// get/set - The organization id associated with the address.
         /// </summary>
         public long OrganizationId { get; set; }

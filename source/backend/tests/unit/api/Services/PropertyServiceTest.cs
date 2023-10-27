@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Moq;
 using NetTopologySuite.Geometries;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
@@ -294,6 +295,76 @@ namespace Pims.Api.Test.Services
             // Assert
             act.Should().Throw<NotAuthorizedException>();
             repository.Verify(x => x.UpdatePropertyManagement(It.IsAny<PimsProperty>()), Times.Never);
+        }
+
+
+        [Fact]
+        public void Get_PropertyManagement_Activities_NoPermission()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions();
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+
+            // Act
+            Action act = () => service.GetActivities(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.GetActivity(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void Delete_PropertyManagementActivity_NoPermission()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions();
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+
+            // Act
+            Action act = () => service.DeleteActivity(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.TryDelete(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void Delete_PropertyManagementActivity_BadRequest_Activity_Status_IsNot_NotStarted()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete);
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+
+            var propertyManagementActivity = EntityHelper.CreatePropertyActivity(10, activityStatusTypeCode: "STARTED");
+
+            repository.Setup(x => x.GetActivity(It.IsAny<long>())).Returns(propertyManagementActivity);
+
+            // Act
+            Action act = () => service.DeleteActivity(1);
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+            repository.Verify(x => x.TryDelete(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void Delete_PropertyManagementActivity_Success()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete);
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+
+            var propertyManagementActivity = EntityHelper.CreatePropertyActivity(1);
+
+            repository.Setup(x => x.GetActivity(It.IsAny<long>())).Returns(propertyManagementActivity);
+            repository.Setup(x => x.TryDelete(It.IsAny<long>())).Returns(true);
+
+            // Act
+            var result = service.DeleteActivity(1);
+
+            // Assert
+            Assert.True(result);
+            repository.Verify(x => x.TryDelete(It.IsAny<long>()), Times.Once);
         }
         #endregion
 

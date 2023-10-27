@@ -12,8 +12,6 @@ namespace Pims.Dal.Repositories
 
         PimsLeasePayment Add(PimsLeasePayment pimsLeasePayment);
 
-        PimsLeasePayment GetById(long leasePaymentId);
-
         IEnumerable<PimsLeasePayment> GetAll(DateTime startDate, DateTime endDate);
     }
 }

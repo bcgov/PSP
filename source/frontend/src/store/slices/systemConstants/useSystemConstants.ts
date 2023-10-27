@@ -13,6 +13,7 @@ export enum SystemConstants {
   FYEND = 'FYEND',
   FYSTART = 'FYSTART',
   GST = 'GST',
+  PST = 'PST',
   CLIENT = 'CLIENT',
 }
 

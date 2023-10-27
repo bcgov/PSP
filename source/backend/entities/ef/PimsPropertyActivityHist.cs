@@ -21,8 +21,6 @@ namespace Pims.Dal.Entities
         public DateTime? EndDateHist { get; set; }
         [Column("PIMS_PROPERTY_ACTIVITY_ID")]
         public long PimsPropertyActivityId { get; set; }
-        [Column("PROPERTY_ID")]
-        public long PropertyId { get; set; }
         [Required]
         [Column("PROP_MGMT_ACTIVITY_TYPE_CODE")]
         [StringLength(20)]
@@ -31,27 +29,24 @@ namespace Pims.Dal.Entities
         [Column("PROP_MGMT_ACTIVITY_SUBTYPE_CODE")]
         [StringLength(20)]
         public string PropMgmtActivitySubtypeCode { get; set; }
+        [Required]
         [Column("PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE")]
         [StringLength(20)]
         public string PropMgmtActivityStatusTypeCode { get; set; }
-        [Column("MINISTRY_CONTACT_ID")]
-        public long? MinistryContactId { get; set; }
-        [Column("VENDOR_ID")]
-        public long? VendorId { get; set; }
-        [Column("REQUEST_RECEIVED_DT", TypeName = "date")]
-        public DateTime? RequestReceivedDt { get; set; }
+        [Column("SERVICE_PROVIDER_PERSON_ID")]
+        public long? ServiceProviderPersonId { get; set; }
+        [Column("SERVICE_PROVIDER_ORG_ID")]
+        public long? ServiceProviderOrgId { get; set; }
+        [Column("REQUEST_ADDED_DT", TypeName = "date")]
+        public DateTime RequestAddedDt { get; set; }
         [Column("COMPLETION_DT", TypeName = "date")]
         public DateTime? CompletionDt { get; set; }
-        [Required]
         [Column("DESCRIPTION")]
         [StringLength(2000)]
         public string Description { get; set; }
         [Column("REQUEST_SOURCE")]
         [StringLength(2000)]
         public string RequestSource { get; set; }
-        [Column("INVOLVED_PARTY")]
-        [StringLength(2000)]
-        public string InvolvedParty { get; set; }
         [Column("PRETAX_AMT", TypeName = "money")]
         public decimal? PretaxAmt { get; set; }
         [Column("GST_AMT", TypeName = "money")]
@@ -61,7 +56,7 @@ namespace Pims.Dal.Entities
         [Column("TOTAL_AMT", TypeName = "money")]
         public decimal? TotalAmt { get; set; }
         [Column("IS_DISABLED")]
-        public bool IsDisabled { get; set; }
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

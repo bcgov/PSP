@@ -100,27 +100,27 @@ namespace Pims.Api.Services
             var acqFiles = _acqFileRepository.GetAcquisitionFileExportDeep(filter, userRegions, contractorPersonId);
 
             return acqFiles.SelectMany(file => file.PimsPropertyAcquisitionFiles.Where(fp => fp.AcquisitionFileId.Equals(file.AcquisitionFileId)).DefaultIfEmpty(), (file, fp) => (file, fp))
-                                .Select(fileProperty => new AcquisitionFileExportModel
-                                {
-                                    FileNumber = fileProperty.file.FileNumber ?? string.Empty,
-                                    LegacyFileNumber = fileProperty.file.LegacyFileNumber ?? string.Empty,
-                                    FileName = fileProperty.file.FileName ?? string.Empty,
-                                    MotiRegion = fileProperty.file.RegionCodeNavigation?.Description ?? string.Empty,
-                                    MinistryProject = fileProperty.file.Project is not null ? $"{fileProperty.file.Project.Code} {fileProperty.file.Project.Description}" : string.Empty,
-                                    CivicAddress = (fileProperty.fp?.Property is not null && fileProperty.fp.Property.Address is not null) ? fileProperty.fp.Property.Address.FormatFullAddressString() : string.Empty,
-                                    GeneralLocation = (fileProperty.fp?.Property is not null) ? fileProperty.fp.Property.GeneralLocation : string.Empty,
-                                    Pid = fileProperty.fp is not null && fileProperty.fp.Property.Pid.HasValue ? fileProperty.fp.Property.Pid.ToString() : string.Empty,
-                                    Pin = fileProperty.fp is not null && fileProperty.fp.Property.Pin.HasValue ? fileProperty.fp.Property.Pin.ToString() : string.Empty,
-                                    AcquisitionFileStatusTypeCode = fileProperty.file.AcquisitionFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFileStatusTypeCodeNavigation.Description : string.Empty,
-                                    FileFunding = fileProperty.file.AcquisitionFundingTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFundingTypeCodeNavigation.Description : string.Empty,
-                                    FileAssignedDate = fileProperty.file.AssignedDate.HasValue ? fileProperty.file.AssignedDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
-                                    FileDeliveryDate = fileProperty.file.DeliveryDate.HasValue ? fileProperty.file.DeliveryDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
-                                    FileAcquisitionCompleted = fileProperty.file.CompletionDate.HasValue ? fileProperty.file.CompletionDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
-                                    FilePhysicalStatus = fileProperty.file.AcqPhysFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcqPhysFileStatusTypeCodeNavigation.Description : string.Empty,
-                                    FileAcquisitionType = fileProperty.file.AcquisitionTypeCodeNavigation is not null ? fileProperty.file.AcquisitionTypeCodeNavigation.Description : string.Empty,
-                                    FileAcquisitionTeam = string.Join(", ", fileProperty.file.PimsAcquisitionFilePeople.Select(x => x.Person.GetFullName(true))),
-                                    FileAcquisitionOwners = string.Join(", ", fileProperty.file.PimsAcquisitionOwners.Select(x => x.FormatOwnerName())),
-                                }).ToList();
+                .Select(fileProperty => new AcquisitionFileExportModel
+                {
+                    FileNumber = fileProperty.file.FileNumber ?? string.Empty,
+                    LegacyFileNumber = fileProperty.file.LegacyFileNumber ?? string.Empty,
+                    FileName = fileProperty.file.FileName ?? string.Empty,
+                    MotiRegion = fileProperty.file.RegionCodeNavigation?.Description ?? string.Empty,
+                    MinistryProject = fileProperty.file.Project is not null ? $"{fileProperty.file.Project.Code} {fileProperty.file.Project.Description}" : string.Empty,
+                    CivicAddress = (fileProperty.fp?.Property is not null && fileProperty.fp.Property.Address is not null) ? fileProperty.fp.Property.Address.FormatFullAddressString() : string.Empty,
+                    GeneralLocation = (fileProperty.fp?.Property is not null) ? fileProperty.fp.Property.GeneralLocation : string.Empty,
+                    Pid = fileProperty.fp is not null && fileProperty.fp.Property.Pid.HasValue ? fileProperty.fp.Property.Pid.ToString() : string.Empty,
+                    Pin = fileProperty.fp is not null && fileProperty.fp.Property.Pin.HasValue ? fileProperty.fp.Property.Pin.ToString() : string.Empty,
+                    AcquisitionFileStatusTypeCode = fileProperty.file.AcquisitionFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFileStatusTypeCodeNavigation.Description : string.Empty,
+                    FileFunding = fileProperty.file.AcquisitionFundingTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFundingTypeCodeNavigation.Description : string.Empty,
+                    FileAssignedDate = fileProperty.file.AssignedDate.HasValue ? fileProperty.file.AssignedDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    FileDeliveryDate = fileProperty.file.DeliveryDate.HasValue ? fileProperty.file.DeliveryDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    FileAcquisitionCompleted = fileProperty.file.CompletionDate.HasValue ? fileProperty.file.CompletionDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    FilePhysicalStatus = fileProperty.file.AcqPhysFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcqPhysFileStatusTypeCodeNavigation.Description : string.Empty,
+                    FileAcquisitionType = fileProperty.file.AcquisitionTypeCodeNavigation is not null ? fileProperty.file.AcquisitionTypeCodeNavigation.Description : string.Empty,
+                    FileAcquisitionTeam = string.Join(", ", fileProperty.file.PimsAcquisitionFileTeams.Select(x => x.Person.GetFullName(true))),
+                    FileAcquisitionOwners = string.Join(", ", fileProperty.file.PimsAcquisitionOwners.Select(x => x.FormatOwnerName())),
+                }).ToList();
         }
 
         public PimsAcquisitionFile GetById(long id)
@@ -163,7 +163,7 @@ namespace Pims.Api.Services
             return _acqFileRepository.GetOwnersByAcquisitionFileId(id);
         }
 
-        public IEnumerable<PimsAcquisitionFilePerson> GetTeamMembers()
+        public IEnumerable<PimsAcquisitionFileTeam> GetTeamMembers()
         {
             _logger.LogInformation("Getting acquisition team members");
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
@@ -204,6 +204,7 @@ namespace Pims.Api.Services
             }
 
             ValidateStaff(acquisitionFile);
+            ValidateOrganizationStaff(acquisitionFile);
 
             acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
             MatchProperties(acquisitionFile, userOverrides);
@@ -235,6 +236,7 @@ namespace Pims.Api.Services
             }
 
             ValidateStaff(acquisitionFile);
+            ValidateOrganizationStaff(acquisitionFile);
 
             acquisitionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
 
@@ -366,7 +368,7 @@ namespace Pims.Api.Services
             var allMatchingAgreements = _agreementRepository.SearchAgreements(filter);
             if (pimsUser.IsContractor)
             {
-                return allMatchingAgreements.Where(a => a.AcquisitionFile.PimsAcquisitionFilePeople.Any(afp => afp.PersonId == pimsUser.PersonId));
+                return allMatchingAgreements.Where(a => a.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId == pimsUser.PersonId));
             }
 
             return allMatchingAgreements.Where(a => pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == a.AcquisitionFile.RegionCode));
@@ -493,7 +495,16 @@ namespace Pims.Api.Services
 
         private static void ValidateStaff(PimsAcquisitionFile pimsAcquisitionFile)
         {
-            bool duplicate = pimsAcquisitionFile.PimsAcquisitionFilePeople.GroupBy(p => (p.AcqFlPersonProfileTypeCode, p.PersonId)).Any(g => g.Count() > 1);
+            bool duplicate = pimsAcquisitionFile.PimsAcquisitionFileTeams.GroupBy(p => (p.AcqFlTeamProfileTypeCode, p.PersonId)).Any(g => g.Count() > 1);
+            if (duplicate)
+            {
+                throw new BadRequestException("Invalid Acquisition team, each team member and role combination can only be added once.");
+            }
+        }
+
+        private static void ValidateOrganizationStaff(PimsAcquisitionFile pimsAcquisitionFile)
+        {
+            bool duplicate = pimsAcquisitionFile.PimsAcquisitionFileTeams.GroupBy(p => (p.AcqFlTeamProfileTypeCode, p.OrganizationId)).Any(g => g.Count() > 1);
             if (duplicate)
             {
                 throw new BadRequestException("Invalid Acquisition team, each team member and role combination can only be added once.");
@@ -788,9 +799,9 @@ namespace Pims.Api.Services
                 }
 
                 // Check for File Person
-                if (compReq.AcquisitionFilePersonId is not null
-                    && !acquisitionFile.PimsAcquisitionFilePeople.Any(x => x.Internal_Id.Equals(compReq.AcquisitionFilePersonId))
-                    && currentAquisitionFile.PimsAcquisitionFilePeople.Any(x => x.Internal_Id.Equals(compReq.AcquisitionFilePersonId)))
+                if (compReq.AcquisitionFileTeamId is not null
+                    && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.Internal_Id.Equals(compReq.AcquisitionFileTeamId))
+                    && currentAquisitionFile.PimsAcquisitionFileTeams.Any(x => x.Internal_Id.Equals(compReq.AcquisitionFileTeamId)))
                 {
                     throw new ForeignKeyDependencyException("Acquisition File team member can not be removed since it's assigned as a payee for a compensation requisition");
                 }

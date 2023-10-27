@@ -25,7 +25,7 @@ namespace Pims.Api.Helpers.Extensions
 
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
 
-            if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFilePeople.Any(x => x.PersonId == pimsUser.PersonId))
+            if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.PersonId == pimsUser.PersonId))
             {
                 throw new ContractorNotInTeamException("As a Contractor your user contact information should be assigned to the Acquisition File's team");
             }
@@ -45,7 +45,7 @@ namespace Pims.Api.Helpers.Extensions
 
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
 
-            if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFilePeople.Any(x => x.PersonId == pimsUser.PersonId))
+            if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.PersonId == pimsUser.PersonId))
             {
                 throw new UserOverrideException(UserOverrideCode.ContractorSelfRemoved, "Contractors cannot remove themselves from a file. Please contact the admin at pims@gov.bc.ca");
             }

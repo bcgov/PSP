@@ -23,8 +23,14 @@ namespace Pims.Api.Services
         private readonly IAcquisitionFileRepository _acqFileRepository;
         private readonly ICompReqFinancialService _compReqFinancialService;
 
-        public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository,
-         IEntityNoteRepository entityNoteRepository, IUserRepository userRepository, IAcquisitionFileRepository acqFileRepository, ICompReqFinancialService compReqFinancialService)
+        public CompensationRequisitionService(
+            ClaimsPrincipal user,
+            ILogger<CompensationRequisitionService> logger,
+            ICompensationRequisitionRepository compensationRequisitionRepository,
+            IEntityNoteRepository entityNoteRepository,
+            IUserRepository userRepository,
+            IAcquisitionFileRepository acqFileRepository,
+            ICompReqFinancialService compReqFinancialService)
         {
             _user = user;
             _logger = logger;

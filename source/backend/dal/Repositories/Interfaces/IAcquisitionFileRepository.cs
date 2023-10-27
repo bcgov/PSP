@@ -14,7 +14,7 @@ namespace Pims.Dal.Repositories
 
         List<PimsAcquisitionOwner> GetOwnersByAcquisitionFileId(long acquisitionFileId);
 
-        List<PimsAcquisitionFilePerson> GetTeamMembers(HashSet<short> regions, long? contractorPersonId = null);
+        List<PimsAcquisitionFileTeam> GetTeamMembers(HashSet<short> regions, long? contractorPersonId = null);
 
         PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile);
 

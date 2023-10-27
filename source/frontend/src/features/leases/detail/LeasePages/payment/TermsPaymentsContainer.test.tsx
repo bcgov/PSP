@@ -71,6 +71,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 const setLease = jest.fn();
+const onSuccessMock = jest.fn();
 
 describe('TermsPaymentsContainer component', () => {
   const setup = async (
@@ -93,7 +94,11 @@ describe('TermsPaymentsContainer component', () => {
         }}
       >
         <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-          <TermPaymentsContainer formikRef={React.createRef()} isEditing={false} />
+          <TermPaymentsContainer
+            formikRef={React.createRef()}
+            isEditing={false}
+            onSuccess={onSuccessMock}
+          />
         </Formik>
       </LeaseStateContext.Provider>,
       {

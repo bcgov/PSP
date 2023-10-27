@@ -10,11 +10,6 @@ namespace Pims.Api.Models.Concepts
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - The relationship's disabled status flag.
-        /// </summary>
-        public bool IsDisabled { get; set; }
-
-        /// <summary>
         /// get/set - The relationship's project.
         /// </summary>
         public ProjectModel Project { get; set; }

@@ -1,8 +1,6 @@
 import './Table.scss';
 
-import classnames from 'classnames';
-import classNames from 'classnames';
-import clsx from 'classnames';
+import cx from 'classnames';
 import { Form, Formik, FormikProps } from 'formik';
 import keys from 'lodash/keys';
 import map from 'lodash/map';
@@ -518,7 +516,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             {...(props.hideHeaders
               ? columnProps.getHeaderProps(noHeadersGetter)
               : columnProps.getHeaderProps(headerPropsGetter))}
-            className={classnames(
+            className={cx(
               'th',
               columnProps.isSorted ? (columnProps.isSortedDesc ? 'sort-desc' : 'sort-asc') : '',
             )}
@@ -635,7 +633,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     const renderRow = (row: Row<T>, index: number) => {
       return (
         <div key={index} className="tr-wrapper">
-          <div {...row.getRowProps()} className={clsx('tr', row.isSelected ? 'selected' : '')}>
+          <div {...row.getRowProps()} className={cx('tr', row.isSelected ? 'selected' : '')}>
             {/* If canRowExpand prop is passed only allow expansions on those rows */}
             {props.canRowExpand &&
               props.canRowExpand(row) &&
@@ -666,7 +664,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                 <div
                   {...cell.getCellProps(cellPropsGetter)}
                   title={cell.column.clickable && clickableTooltip ? clickableTooltip : ''}
-                  className={classnames(
+                  className={cx(
                     'td',
                     cell.column.clickable ? 'clickable' : '',
                     cell.column.className,
@@ -733,7 +731,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     <>
       <div
         {...getTableProps({ style: { minWidth: undefined } })}
-        className={classNames('table', props.className ?? '')}
+        className={cx('table', props.className ?? '')}
         data-testid={`${props.name}`}
       >
         <div className="thead thead-light">
@@ -769,7 +767,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
         <RowBootstrap>
           <ColBootstrap xs="auto" className="align-self-center">
             {canShowTotals && props.data.length > 0 && (
-              <span>{`${initialCount} - ${finalCount} of  ${totalItems}`}</span>
+              <span>{`${initialCount} - ${finalCount} of ${totalItems}`}</span>
             )}
           </ColBootstrap>
           <ColBootstrap xs="auto" className="ml-auto align-self-center">

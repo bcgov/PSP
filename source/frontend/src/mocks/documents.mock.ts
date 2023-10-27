@@ -5,11 +5,54 @@ import {
   Api_Storage_DocumentTypeMetadataType,
 } from '@/models/api/DocumentStorage';
 
+export const mockDocumentResponse = (id = 1): Api_DocumentRelationship => ({
+  id,
+  parentId: 1,
+  document: {
+    id: 21,
+    mayanDocumentId: 33,
+    documentType: {
+      id: 8,
+      documentType: 'MoTI Plan',
+      documentTypeDescription: 'MOTIPLAN',
+      mayanId: 24,
+      appCreateTimestamp: '2022-09-08T21:18:09.01',
+      appLastUpdateTimestamp: '2022-09-08T21:18:09.01',
+      appLastUpdateUserid: 'admin',
+      appCreateUserid: 'admin',
+      appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+      appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+      rowVersion: 1,
+      isDisabled: false,
+    },
+    statusTypeCode: {
+      id: 'AMENDD',
+      description: 'Amended',
+      isDisabled: false,
+    },
+    fileName: 'moti_plan.txt',
+    appCreateTimestamp: '2022-09-08T21:18:54.057',
+    appLastUpdateTimestamp: '2022-09-08T21:18:54.057',
+    appLastUpdateUserid: 'admin',
+    appCreateUserid: 'admin',
+    appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+    appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+    rowVersion: 1,
+  },
+  relationshipType: DocumentRelationshipType.ACQUISITION_FILES,
+  appCreateTimestamp: '2022-09-08T21:18:54.057',
+  appLastUpdateTimestamp: '2022-09-08T21:18:54.057',
+  appLastUpdateUserid: 'admin',
+  appCreateUserid: 'admin',
+  appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  rowVersion: 1,
+});
+
 export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
   {
     id: 1,
     parentId: 1,
-    isDisabled: false,
     document: {
       id: 20,
       mayanDocumentId: 13,
@@ -47,7 +90,6 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
   {
     id: 2,
     parentId: 1,
-    isDisabled: false,
     document: {
       id: 21,
       mayanDocumentId: 33,

@@ -35,7 +35,6 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         /// Creates a new instance of a ResearchFileController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="researchFileService"></param>
-        /// <param name="activityService"></param>
         /// <param name="mapper"></param>
         ///
         public ResearchFileController(IResearchFileService researchFileService, IMapper mapper)

@@ -25,7 +25,6 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - The property plan number.
         /// </summary>
-
         public string PlanNumber { get; set; }
 
         #endregion

@@ -25,7 +25,6 @@ export interface Api_Address extends Api_ConcurrentVersion {
 
 export interface Api_OrganizationAddress extends Api_ConcurrentVersion {
   id?: number;
-  isDisabled?: boolean;
   organization?: Api_Organization;
   address?: Api_Address;
   addressUsageType?: Api_TypeCode<string>;
@@ -33,7 +32,6 @@ export interface Api_OrganizationAddress extends Api_ConcurrentVersion {
 
 export interface Api_PersonAddress extends Api_ConcurrentVersion {
   id?: number;
-  isDisabled?: boolean;
   person?: Api_Person;
   address?: Api_Address;
   addressUsageType?: Api_TypeCode<string>;

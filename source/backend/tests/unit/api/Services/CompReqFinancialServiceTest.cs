@@ -133,7 +133,7 @@ namespace Pims.Api.Test.Services
                     AcquisitionFile = new PimsAcquisitionFile
                     {
                         RegionCode = 1,
-                        PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson> { new PimsAcquisitionFilePerson { PersonId = contractorUser.PersonId } }
+                        PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam> { new PimsAcquisitionFileTeam { PersonId = contractorUser.PersonId } }
                     },
                 },
             };
@@ -152,7 +152,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             financials.Should().HaveCount(1);
-            financials.FirstOrDefault().CompensationRequisition.AcquisitionFile.PimsAcquisitionFilePeople.FirstOrDefault().PersonId.Should().Be(contractorUser.PersonId);
+            financials.FirstOrDefault().CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.FirstOrDefault().PersonId.Should().Be(contractorUser.PersonId);
         }
 
         private CompReqFinancialService CreateWithPermissions(params Permissions[] permissions)

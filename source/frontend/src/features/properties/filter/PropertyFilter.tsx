@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, Select } from '@/components/common/form';
 import { TableSort } from '@/components/Table/TableSort';
+import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { useRouterFilter } from '@/hooks/useRouterFilter';
 import { FilterBarSchema } from '@/utils/YupSchema';
 
@@ -48,6 +49,8 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   useGeocoder,
 }) => {
   const [propertyFilter, setPropertyFilter] = useState<IPropertyFilter>(defaultFilter);
+
+  const { getSitePids } = useGeocoderRepository();
 
   useRouterFilter<IPropertyFilter>({
     filter: propertyFilter,
@@ -111,7 +114,6 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 ]}
                 className="idir-input-group"
                 onChange={() => {
-                  setFieldValue('pinOrPid', '');
                   setFieldValue('latitude', null);
                   setFieldValue('longitude', null);
                 }}
@@ -126,9 +128,14 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   data-testid="geocoder-mapview"
                   field="address"
                   placeholder="Enter an address"
-                  onSelectionChanged={val => {
-                    setFieldValue('latitude', val.latitude);
-                    setFieldValue('longitude', val.longitude);
+                  onSelectionChanged={async val => {
+                    const geocoderPidResponse = await getSitePids(val.siteId);
+                    if (geocoderPidResponse?.pids?.length === 1) {
+                      setFieldValue('pinOrPid', geocoderPidResponse?.pids[0]);
+                    } else {
+                      setFieldValue('latitude', val.latitude);
+                      setFieldValue('longitude', val.longitude);
+                    }
                   }}
                   value={values.address}
                   autoSetting="off"
