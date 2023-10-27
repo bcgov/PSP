@@ -32,9 +32,11 @@ export const PropertyInformation: React.FunctionComponent<
   );
   const pid = getIn(formikProps.values, withNameSpace(nameSpace, 'property.pid'));
   const pidText = pid ? `PID: ${pidFormatter(pid)}` : '';
-  const legalPidText = [legalDescription, pidText].filter(x => x).join(' ');
   return (
     <StyledPropertyInfo>
+      <SectionField label="PID" labelWidth="3">
+        {pidText}
+      </SectionField>
       <SectionField label="Descriptive name" labelWidth="3">
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'propertyName')} />
       </SectionField>
@@ -57,7 +59,7 @@ export const PropertyInformation: React.FunctionComponent<
         </SectionField>
       ) : null}
       <SectionField label="Legal description" labelWidth="3">
-        {legalPidText}
+        {legalDescription}
       </SectionField>
 
       <hr />
