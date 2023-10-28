@@ -1,17 +1,30 @@
+import axios from 'axios';
 import { createMemoryHistory } from 'history';
 
 import AppRouter from './AppRouter';
 import { Claims } from './constants';
 import { ADD_ACTIVATE_USER, GET_REQUEST_ACCESS } from './constants/actionTypes';
 import { AuthStateContext } from './contexts/authStateContext';
+import { IGeocoderResponse } from './hooks/pims-api/interfaces/IGeocoder';
+import { useApiAcquisitionFile } from './hooks/pims-api/useApiAcquisitionFile';
+import { useApiGeocoder } from './hooks/pims-api/useApiGeocoder';
+import { useApiLeases } from './hooks/pims-api/useApiLeases';
+import { useApiProperties } from './hooks/pims-api/useApiProperties';
+import { useApiResearchFile } from './hooks/pims-api/useApiResearchFile';
 import { useApiUsers } from './hooks/pims-api/useApiUsers';
+import { ILeaseSearchResult, IPagedItems, IProperty } from './interfaces';
+import { IResearchSearchResult } from './interfaces/IResearchSearchResult';
 import { mockLookups } from './mocks/lookups.mock';
 import { getMockPagedUsers, getUserMock } from './mocks/user.mock';
+import { Api_AcquisitionFile } from './models/api/AcquisitionFile';
 import { lookupCodesSlice } from './store/slices/lookupCodes';
 import { networkSlice } from './store/slices/network/networkSlice';
 import { tenantsSlice } from './store/slices/tenants';
 import { defaultTenant } from './tenants/config/defaultTenant';
 import { mockKeycloak, render, RenderOptions, screen } from './utils/test-utils';
+
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 const history = createMemoryHistory();
 const storeState = {
@@ -61,11 +74,80 @@ jest.mock('@/store/slices/tenants/useTenants', () => ({
 jest.mock('./hooks/pims-api/useApiUsers');
 (useApiUsers as jest.MockedFunction<typeof useApiUsers>).mockReturnValue({
   activateUser: jest.fn(),
-  getUser: jest.fn().mockResolvedValue(getUserMock()),
-  getUserInfo: jest.fn().mockResolvedValue(getUserMock()),
-  getUsersPaged: jest.fn().mockResolvedValue(getMockPagedUsers()),
+  getUser: jest.fn().mockResolvedValue({ data: getUserMock() }),
+  getUserInfo: jest.fn().mockResolvedValue({ data: getUserMock() }),
+  getUsersPaged: jest.fn().mockResolvedValue({ data: getMockPagedUsers() }),
   putUser: jest.fn(),
   exportUsers: jest.fn(),
+});
+
+jest.mock('./hooks/pims-api/useApiProperties');
+(useApiProperties as jest.MockedFunction<typeof useApiProperties>).mockReturnValue({
+  getPropertiesPagedApi: jest.fn().mockResolvedValue({ data: {} as IPagedItems<IProperty> }),
+  getMatchingPropertiesApi: jest.fn(),
+  getPropertyAssociationsApi: jest.fn(),
+  exportPropertiesApi: jest.fn(),
+  getPropertiesApi: jest.fn(),
+  getPropertyConceptWithIdApi: jest.fn(),
+  putPropertyConceptApi: jest.fn(),
+});
+
+jest.mock('./hooks/pims-api/useApiLeases');
+(useApiLeases as jest.MockedFunction<typeof useApiLeases>).mockReturnValue({
+  getLeases: jest.fn().mockResolvedValue({ data: {} as IPagedItems<ILeaseSearchResult> }),
+  getApiLease: jest.fn(),
+  getLastUpdatedByApi: jest.fn(),
+  postLease: jest.fn(),
+  putApiLease: jest.fn(),
+  exportLeases: jest.fn(),
+  exportAggregatedLeases: jest.fn(),
+  exportLeasePayments: jest.fn(),
+});
+
+jest.mock('./hooks/pims-api/useApiAcquisitionFile');
+(useApiAcquisitionFile as jest.MockedFunction<typeof useApiAcquisitionFile>).mockReturnValue({
+  getAcquisitionFiles: jest
+    .fn()
+    .mockResolvedValue({ data: {} as IPagedItems<Api_AcquisitionFile> }),
+  getAcquisitionFile: jest.fn(),
+  getLastUpdatedByApi: jest.fn(),
+  getAgreementReport: jest.fn(),
+  getCompensationReport: jest.fn(),
+  exportAcquisitionFiles: jest.fn(),
+  postAcquisitionFile: jest.fn(),
+  putAcquisitionFile: jest.fn(),
+  putAcquisitionFileProperties: jest.fn(),
+  getAcquisitionFileProperties: jest.fn(),
+  getAcquisitionFileOwners: jest.fn(),
+  getAllAcquisitionFileTeamMembers: jest.fn(),
+  getAcquisitionFileProject: jest.fn(),
+  getAcquisitionFileProduct: jest.fn(),
+  getAcquisitionFileChecklist: jest.fn(),
+  putAcquisitionFileChecklist: jest.fn(),
+  getFileCompensationRequisitions: jest.fn(),
+  getFileCompReqH120s: jest.fn(),
+  postFileCompensationRequisition: jest.fn(),
+  getAcquisitionFileForm8s: jest.fn(),
+  postFileForm8: jest.fn(),
+});
+
+jest.mock('./hooks/pims-api/useApiResearchFile');
+(useApiResearchFile as jest.MockedFunction<typeof useApiResearchFile>).mockReturnValue({
+  getResearchFiles: jest.fn().mockResolvedValue({ data: {} as IPagedItems<IResearchSearchResult> }),
+  getResearchFile: jest.fn(),
+  postResearchFile: jest.fn(),
+  putResearchFile: jest.fn(),
+  getLastUpdatedByApi: jest.fn(),
+  putResearchFileProperties: jest.fn(),
+  putPropertyResearchFile: jest.fn(),
+  getResearchFileProperties: jest.fn(),
+});
+
+jest.mock('./hooks/pims-api/useApiGeocoder');
+(useApiGeocoder as jest.MockedFunction<typeof useApiGeocoder>).mockReturnValue({
+  searchAddressApi: jest.fn().mockResolvedValue({ data: [] as IGeocoderResponse[] }),
+  getSitePidsApi: jest.fn(),
+  getNearestToPointApi: jest.fn(),
 });
 
 describe('PSP routing', () => {
@@ -84,6 +166,10 @@ describe('PSP routing', () => {
 
     return { ...utils };
   };
+
+  beforeEach(() => {
+    mockedAxios.get.mockResolvedValue({ data: {}, status: 200 });
+  });
 
   afterEach(() => {
     jest.clearAllMocks();
