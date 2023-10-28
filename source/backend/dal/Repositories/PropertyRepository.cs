@@ -448,6 +448,12 @@ namespace Pims.Dal.Repositories
                     p.PimsPropertyLeases.Any(pl => filter.LeasePurposes.Contains(pl.Lease.LeasePurposeTypeCode)));
             }
 
+            if (!string.IsNullOrEmpty(filter.LeasePayRcvblType))
+            {
+                query = query.Where(p =>
+                    p.PimsPropertyLeases.Any(pl => pl.Lease.LeasePayRvblTypeCode == filter.LeasePayRcvblType || filter.LeasePayRcvblType == "all"));
+            }
+
             // Anomalies
             if (filter.AnomalyIds != null && filter.AnomalyIds.Count > 0)
             {
