@@ -1,3 +1,4 @@
+import { IPagedItems } from '@/interfaces';
 import { Api_AccessRequest } from '@/models/api/AccessRequest';
 
 export const getMockAccessRequest = (): Api_AccessRequest => ({
@@ -76,7 +77,7 @@ export const getMockAccessRequest = (): Api_AccessRequest => ({
   rowVersion: 1,
 });
 
-export const getMockPagedAccessRequests = () => ({
+export const getMockPagedAccessRequests = (): IPagedItems<Api_AccessRequest> => ({
   items: [
     {
       id: 7,
@@ -238,6 +239,7 @@ export const getMockPagedAccessRequests = () => ({
       rowVersion: 4,
     },
   ],
+  pageIndex: 0,
   page: 1,
   quantity: 10,
   total: 2,
