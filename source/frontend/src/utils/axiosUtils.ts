@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { IApiError } from '@/interfaces/IApiError';
@@ -31,6 +32,28 @@ export function useAxiosErrorHandler(message = 'Network error. Check responses a
       }
     },
     [message],
+  );
+}
+
+/**
+ * Provides default boilerplate applicable to handling most common axios request errors.
+ * @param axiosError The request error object
+ */
+export function useAxiosErrorHandlerWithAuthorization(
+  message = 'Network error. Check responses and try again.',
+) {
+  const history = useHistory();
+  return useCallback(
+    (axiosError: AxiosError<IApiError>) => {
+      if (axiosError?.response?.status === 400) {
+        toast.error(axiosError?.response.data.error, { autoClose: 10000 });
+      } else if (axiosError?.response?.status === 403) {
+        history.push('/forbidden');
+      } else {
+        toast.error(message);
+      }
+    },
+    [history, message],
   );
 }
 
