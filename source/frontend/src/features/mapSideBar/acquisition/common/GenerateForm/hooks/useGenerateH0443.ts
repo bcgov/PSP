@@ -11,7 +11,7 @@ import { Api_GeneratePerson } from '@/models/generate/GeneratePerson';
 import { Api_GenerateProperty } from '@/models/generate/GenerateProperty';
 
 export const useGenerateH0443 = () => {
-  const { getPersonConcept } = useApiContacts();
+  const { getPersonConcept, getOrganizationConcept } = useApiContacts();
   const {
     getAcquisitionFile: { execute: getAcquisitionFile },
   } = useAcquisitionProvider();
@@ -29,18 +29,11 @@ export const useGenerateH0443 = () => {
       const propertyCoordinator = file.acquisitionTeam?.find(
         team => team.teamProfileTypeCode === 'PROPCOORD',
       );
-      const coordinatorPerson = !!propertyCoordinator?.personId
-        ? (await getPersonConcept(propertyCoordinator?.personId))?.data
-        : null;
 
       // Retrieve Property Agent
       const propertyAgent = file.acquisitionTeam?.find(
         team => team.teamProfileTypeCode === 'PROPAGENT',
       );
-
-      const agentPerson = !!propertyAgent?.personId
-        ? (await getPersonConcept(propertyAgent?.personId))?.data
-        : null;
 
       // Retrieve Properties
       const filePropertiesIds =
@@ -62,9 +55,56 @@ export const useGenerateH0443 = () => {
             : [],
         owner_names: owners.map<string>(x => getOwnerName(x)) || [],
         owner_contact: contactOwner !== undefined ? new Api_GenerateOwner(contactOwner) : null,
-        property_coordinator: new Api_GeneratePerson(coordinatorPerson),
-        property_agent: new Api_GeneratePerson(agentPerson),
+        property_coordinator: null,
+        property_agent: null,
       };
+
+      // Get the property coordinator by checking if it's a person or an org.
+      if (propertyCoordinator) {
+        if (propertyCoordinator.personId) {
+          const personConceptResponse = await getPersonConcept(propertyCoordinator?.personId);
+
+          h0443Data.property_coordinator = new Api_GeneratePerson(personConceptResponse.data);
+        } else if (propertyCoordinator.organizationId) {
+          const organizationConceptResponse = await getOrganizationConcept(
+            propertyCoordinator?.organizationId,
+          );
+
+          if (
+            organizationConceptResponse &&
+            organizationConceptResponse?.data &&
+            organizationConceptResponse?.data.organizationPersons?.length &&
+            propertyCoordinator.primaryContactId
+          ) {
+            const personResponse = await getPersonConcept(propertyCoordinator.primaryContactId);
+
+            h0443Data.property_coordinator = new Api_GeneratePerson(personResponse.data);
+          }
+        }
+      }
+
+      // Get the property agent by checking if it's a person or an org.
+      if (propertyAgent) {
+        if (propertyAgent.personId) {
+          const personResponse = await getPersonConcept(propertyAgent?.personId);
+
+          h0443Data.property_agent = new Api_GeneratePerson(personResponse.data);
+        } else if (propertyAgent.organizationId) {
+          const organizationConceptResponse = await getOrganizationConcept(
+            propertyAgent?.organizationId,
+          );
+
+          if (
+            organizationConceptResponse.data &&
+            organizationConceptResponse?.data.organizationPersons?.length &&
+            propertyAgent.primaryContactId
+          ) {
+            const personResponse = await getPersonConcept(propertyAgent.primaryContactId);
+
+            h0443Data.property_agent = new Api_GeneratePerson(personResponse.data);
+          }
+        }
+      }
 
       const generatedFile = await generate({
         templateType: FormDocumentType.H0443,
@@ -102,6 +142,6 @@ interface H0443Data {
   project_number: string;
   project_name: string;
   properties: Api_GenerateProperty[];
-  property_agent: Api_GeneratePerson;
-  property_coordinator: Api_GeneratePerson;
+  property_agent: Api_GeneratePerson | null;
+  property_coordinator: Api_GeneratePerson | null;
 }
