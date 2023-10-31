@@ -26,6 +26,7 @@ namespace Pims.Api.Services
         private readonly IProjectRepository _projectRepository;
         private readonly IDocumentRepository _documentRepository;
         private readonly ILeaseRepository _leaseRepository;
+        private readonly IPropertyActivityDocumentRepository _propertyActivityDocumentRepository;
         private readonly IMapper mapper;
 
         public DocumentFileService(
@@ -37,7 +38,8 @@ namespace Pims.Api.Services
             IMapper mapper,
             IProjectRepository projectRepository,
             IDocumentRepository documentRepository,
-            ILeaseRepository leaseRepository)
+            ILeaseRepository leaseRepository,
+            IPropertyActivityDocumentRepository propertyActivityDocumentRepository)
             : base(user, logger)
         {
             this.acquisitionFileDocumentRepository = acquisitionFileDocumentRepository;
@@ -47,6 +49,7 @@ namespace Pims.Api.Services
             _projectRepository = projectRepository;
             _documentRepository = documentRepository;
             _leaseRepository = leaseRepository;
+            _propertyActivityDocumentRepository = propertyActivityDocumentRepository;
         }
 
         public IList<T> GetFileDocuments<T>(FileType fileType, long fileId)
@@ -69,6 +72,9 @@ namespace Pims.Api.Services
                 case FileType.Lease:
                     this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
                     return _leaseRepository.GetAllLeaseDocuments(fileId).Select(f => f as T).ToArray();
+                case FileType.Management:
+                    this.User.ThrowIfNotAuthorized(Permissions.ManagementView);
+                    return _propertyActivityDocumentRepository.GetAllByPropertyActivityFile(fileId).Select(f => f as T).ToArray();
                 default:
                     throw new BadRequestException("FileT type not valid to get documents.");
             }
@@ -188,6 +194,34 @@ namespace Pims.Api.Services
             return relationshipResponse;
         }
 
+        public async Task<DocumentUploadRelationshipResponse> UploadPropertyActivityDocumentAsync(long propertyActivityId, DocumentUploadRequest uploadRequest)
+        {
+            this.Logger.LogInformation("Uploading document for single Property Activity");
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd, Permissions.ManagementEdit);
+
+            DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
+
+            DocumentUploadRelationshipResponse relationshipResponse = new()
+            {
+                UploadResponse = uploadResult,
+            };
+
+            if (uploadResult.Document.Id != 0)
+            {
+                PimsPropertyActivityDocument newDocument = new()
+                {
+                    PimsPropertyActivityId = propertyActivityId,
+                    DocumentId = uploadResult.Document.Id,
+                };
+                newDocument = _propertyActivityDocumentRepository.AddPropertyActivityDocument(newDocument);
+                _leaseRepository.CommitTransaction();
+
+                relationshipResponse.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newDocument);
+            }
+
+            return relationshipResponse;
+        }
+
         public async Task<ExternalResult<string>> DeleteResearchDocumentAsync(PimsResearchFileDocument researchFileDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single research file");
@@ -256,6 +290,24 @@ namespace Pims.Api.Services
             {
                 _leaseRepository.DeleteLeaseDocument(leaseDocument.LeaseDocumentId);
                 _leaseRepository.CommitTransaction();
+                return new ExternalResult<string>() { Status = ExternalResultStatus.NotExecuted };
+            }
+        }
+
+        public async Task<ExternalResult<string>> DeletePropertyActivityDocumentAsync(PimsPropertyActivityDocument propertyActivityDocument)
+        {
+            this.Logger.LogInformation("Deleting PIMS document for single Property Activity");
+            this.User.ThrowIfNotAuthorized(Permissions.ManagementDelete);
+
+            var relationshipCount = _documentRepository.DocumentRelationshipCount(propertyActivityDocument.DocumentId);
+            if (relationshipCount == 1)
+            {
+                return await documentService.DeleteDocumentAsync(propertyActivityDocument.Document);
+            }
+            else
+            {
+                _propertyActivityDocumentRepository.DeletePropertyActivityDocument(propertyActivityDocument);
+                _propertyActivityDocumentRepository.CommitTransaction();
                 return new ExternalResult<string>() { Status = ExternalResultStatus.NotExecuted };
             }
         }

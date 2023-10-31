@@ -15,5 +15,6 @@ VALUES
   ('RESEARCH', 'Research file',    2),
   ('ACQUIRE',  'Acquisition file', 3),
   ('LEASLIC',  'Lease/License',    4),
-  ('DISPOSE',  'Disposition file', 5);
+  ('DISPOSE',  'Disposition file', 5),
+  ('MANAGEMENT',  'Management file', 6);
 GO

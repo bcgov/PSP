@@ -94,6 +94,22 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void GetPimsDocumentTypes_PropertyActivity_Success()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentView, Permissions.ManagementView);
+            var propertyActivityFileDocumentRepository = this._helper.GetService<Mock<IPropertyActivityDocumentRepository>>();
+
+            propertyActivityFileDocumentRepository.Setup(x => x.GetAllByPropertyActivityFile(It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
+
+            // Act
+            var sut = service.GetFileDocuments<PimsResearchFileDocument>(Constants.FileType.Management, 1);
+
+            // Assert
+            propertyActivityFileDocumentRepository.Verify(x => x.GetAllByPropertyActivityFile(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
         public void GetPimsDocumentTypes_Acquisition_Success()
         {
             // Arrange
@@ -139,6 +155,22 @@ namespace Pims.Api.Test.Services
 
             // Assert
             leaseRepository.Verify(x => x.GetAllLeaseDocuments(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetAllDocuments_PropertyActivity_Success()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentView, Permissions.ManagementView);
+            var propertyActivityDocumentRepository = this._helper.GetService<Mock<IPropertyActivityDocumentRepository>>();
+
+            propertyActivityDocumentRepository.Setup(x => x.GetAllByPropertyActivityFile(It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
+
+            // Act
+            var sut = service.GetFileDocuments<PimsLeaseDocument>(Constants.FileType.Management, 1);
+
+            // Assert
+            propertyActivityDocumentRepository.Verify(x => x.GetAllByPropertyActivityFile(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -233,6 +265,23 @@ namespace Pims.Api.Test.Services
 
             // Assert
             Func<Task> sut = async () => await service.UploadLeaseDocumentAsync(1, uploadRequest);
+
+            // Assert
+            sut.Should().Throw<NotAuthorizedException>();
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+        }
+
+        [Fact]
+        public void UploadDocumentAsync_PropertyActivity_ShouldThrowException_NotAuthorized()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions();
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile(string.Empty) };
+
+            // Assert
+            Func<Task> sut = async () => await service.UploadPropertyActivityDocumentAsync(1, uploadRequest);
 
             // Assert
             sut.Should().Throw<NotAuthorizedException>();
@@ -372,6 +421,39 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public async void UploadDocumentAsync_PropertyActivity_Success()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+            var propertyActivityDocumentRepository = this._helper.GetService<Mock<IPropertyActivityDocumentRepository>>();
+
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()))
+                .ReturnsAsync(new DocumentUploadResponse()
+                {
+                    Document = new DocumentModel()
+                    {
+                        Id = 1,
+                    },
+                });
+
+            // Act
+            DocumentUploadRequest uploadRequest = new()
+            {
+                DocumentTypeMayanId = 3,
+                DocumentTypeId = 4,
+                File = this._helper.GetFormFile(string.Empty),
+                DocumentStatusCode = "DocumentStatus",
+            };
+
+            await service.UploadPropertyActivityDocumentAsync(1, uploadRequest);
+
+            // Assert
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
+            propertyActivityDocumentRepository.Verify(x => x.AddPropertyActivityDocument(It.IsAny<PimsPropertyActivityDocument>()));
+        }
+
+        [Fact]
         public void DeleteDocumentResearch_ShouldThrowException_NotAuthorized()
         {
             // Arrange
@@ -477,6 +559,62 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public async void DeleteDocumentPropertyActivity_Success_NoResults_Status_NotFound()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.ManagementDelete);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+            var propertyActivityDocumentRepository = this._helper.GetService<Mock<IPropertyActivityDocumentRepository>>();
+
+            propertyActivityDocumentRepository.Setup(x => x.GetAllByPropertyActivityFile(It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
+            documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
+                .ReturnsAsync(new ExternalResult<string>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.NotFound,
+                });
+
+            PimsPropertyActivityDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+            };
+
+            // Act
+            await service.DeletePropertyActivityDocumentAsync(doc);
+
+            // Assert
+            propertyActivityDocumentRepository.Verify(x => x.DeletePropertyActivityDocument(It.IsAny<PimsPropertyActivityDocument>()), Times.Once);
+        }
+
+        [Fact]
+        public async void Delete_PropertyActivity_Success_Status_Success()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.ManagementDelete);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+            var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
+
+            documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
+            documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
+                .ReturnsAsync(new ExternalResult<string>()
+                {
+                    Status = ExternalResultStatus.Success,
+                });
+
+            PimsPropertyActivityDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+            };
+
+            // Act
+            await service.DeletePropertyActivityDocumentAsync(doc);
+
+            // Assert
+            documentService.Verify(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()), Times.Once);
+        }
+
+        [Fact]
         public void DeleteDocumentAcquisition_ShouldThrowException_NotAuthorized()
         {
             // Arrange
@@ -495,6 +633,27 @@ namespace Pims.Api.Test.Services
             // Assert
             act.Should().Throw<NotAuthorizedException>();
             documentRepository.Verify(x => x.DeleteAcquisition(doc), Times.Never);
+        }
+
+        [Fact]
+        public void DeletePropertyActivity_ShouldThrowException_NotAuthorized()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions();
+            var documentRepository = this._helper.GetService<Mock<IPropertyActivityDocumentRepository>>();
+
+            PimsPropertyActivityDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+            };
+
+            // Act
+            Func<Task> act = async () => await service.DeletePropertyActivityDocumentAsync(doc);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            documentRepository.Verify(x => x.DeletePropertyActivityDocument(doc), Times.Never);
         }
 
         [Fact]

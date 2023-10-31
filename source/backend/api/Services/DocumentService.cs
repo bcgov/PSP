@@ -102,6 +102,9 @@ namespace Pims.Api.Services
                 case DocumentRelationType.Projects:
                     categoryType = "PROJECT";
                     break;
+                case DocumentRelationType.ManagementFiles:
+                    categoryType = "MANAGEMENT";
+                    break;
                 default:
                     throw new InvalidDataException("The requested category relationship does not exist");
             }
