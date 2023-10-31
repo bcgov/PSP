@@ -74,7 +74,8 @@ namespace Pims.Dal.Repositories
 
             return Context.PimsProjects
                     .AsNoTracking()
-                    .Include(x => x.PimsProducts)
+                    .Include(x => x.PimsProjectProducts)
+                        .ThenInclude(x => x.Product)
                     .Include(x => x.ProjectStatusTypeCodeNavigation)
                     .Include(x => x.RegionCodeNavigation)
                     .Include(x => x.CostTypeCode)
@@ -93,10 +94,11 @@ namespace Pims.Dal.Repositories
         {
             User.ThrowIfNotAuthorized(Permissions.ProjectAdd);
 
-            foreach (var product in project.PimsProducts)
+            // TODO: Fix this
+            /*foreach (var product in project.PimsProducts)
             {
                 product.ParentProject = project;
-            }
+            }*/
 
             Context.PimsProjects.Add(project);
             return project;
@@ -115,7 +117,7 @@ namespace Pims.Dal.Repositories
             var existingProject = Context.PimsProjects
                 .FirstOrDefault(x => x.Id == project.Id) ?? throw new KeyNotFoundException();
 
-            this.Context.UpdateChild<PimsProject, long, PimsProduct, long>(p => p.PimsProducts, project.Id, project.PimsProducts.ToArray(), true);
+            this.Context.UpdateGrandchild<PimsProject, long, PimsProjectProduct>(p => p.PimsProjectProducts, pp => pp.Product, project.Id, project.PimsProjectProducts.ToArray(), true);
 
             Context.Entry(existingProject).CurrentValues.SetValues(project);
 

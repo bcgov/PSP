@@ -143,6 +143,7 @@ export const mockAcquisitionFileResponse = (
     {
       id: 1,
       acquisitionFileId: 1,
+      personId: 1,
       person: {
         id: 1,
         isDisabled: false,
@@ -166,6 +167,7 @@ export const mockAcquisitionFileResponse = (
     {
       id: 2,
       acquisitionFileId: 1,
+      personId: 3,
       person: {
         id: 3,
         isDisabled: false,

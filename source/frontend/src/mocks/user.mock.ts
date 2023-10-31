@@ -1,3 +1,4 @@
+import { IPagedItems } from '@/interfaces';
 import { Api_User } from '@/models/api/User';
 
 export const getUserMock = (): Api_User => ({
@@ -145,7 +146,7 @@ export const getUserMock = (): Api_User => ({
   rowVersion: 107,
 });
 
-export const getMockPagedUsers = () => ({
+export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
   items: [
     {
       id: 30,
@@ -538,6 +539,7 @@ export const getMockPagedUsers = () => ({
     },
   ],
   page: 1,
+  pageIndex: 0,
   quantity: 5,
   total: 42,
 });

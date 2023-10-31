@@ -133,7 +133,9 @@ namespace Pims.Api.Services
             {
                 throw new ArgumentNullException(nameof(project), "Project cannot be null.");
             }
-            CheckForDuplicateProducts(project.PimsProducts, project.Id);
+
+            // TODO: Verify this is not needed
+            //CheckForDuplicateProducts(project.PimsProducts, project.Id);
 
             var newProject = _projectRepository.Add(project);
             _projectRepository.CommitTransaction();
@@ -147,7 +149,8 @@ namespace Pims.Api.Services
             project.ThrowIfNull(nameof(project));
             _logger.LogInformation($"Updating project with id ${project.Internal_Id}");
 
-            CheckForDuplicateProducts(project.PimsProducts, project.Id);
+            // TODO: Verify this is not needed
+            //CheckForDuplicateProducts(project.PimsProducts, project.Id);
             var updatedProject = _projectRepository.Update(project);
             AddNoteIfStatusChanged(project);
             _projectRepository.CommitTransaction();
@@ -155,7 +158,7 @@ namespace Pims.Api.Services
             return updatedProject;
         }
 
-        private void CheckForDuplicateProducts(IEnumerable<PimsProduct> products, long projectId)
+        /*private void CheckForDuplicateProducts(IEnumerable<PimsProduct> products, long projectId)
         {
             var duplicateProductsInArray = products.GroupBy(p => (p.Code, p.Description)).Where(g => g.Count() > 1).Select(g => g.Key);
             if (duplicateProductsInArray.Any())
@@ -168,7 +171,7 @@ namespace Pims.Api.Services
             {
                 throw new DuplicateEntityException($"Unable to add project with duplicated product codes: {string.Join(", ", duplicateProducts.Select(dp => dp.Code))}");
             }
-        }
+        }*/
 
         private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, IEnumerable<short> userRegions)
         {

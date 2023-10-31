@@ -21,6 +21,7 @@ namespace Pims.Dal.Entities
             PimsPropActInvolvedParties = new HashSet<PimsPropActInvolvedParty>();
             PimsPropActMinContacts = new HashSet<PimsPropActMinContact>();
             PimsPropPropActivities = new HashSet<PimsPropPropActivity>();
+            PimsPropertyActivityDocuments = new HashSet<PimsPropertyActivityDocument>();
             PimsPropertyActivityInvoices = new HashSet<PimsPropertyActivityInvoice>();
         }
 
@@ -123,6 +124,8 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsPropActMinContact> PimsPropActMinContacts { get; set; }
         [InverseProperty(nameof(PimsPropPropActivity.PimsPropertyActivity))]
         public virtual ICollection<PimsPropPropActivity> PimsPropPropActivities { get; set; }
+        [InverseProperty(nameof(PimsPropertyActivityDocument.PimsPropertyActivity))]
+        public virtual ICollection<PimsPropertyActivityDocument> PimsPropertyActivityDocuments { get; set; }
         [InverseProperty(nameof(PimsPropertyActivityInvoice.PimsPropertyActivity))]
         public virtual ICollection<PimsPropertyActivityInvoice> PimsPropertyActivityInvoices { get; set; }
     }
