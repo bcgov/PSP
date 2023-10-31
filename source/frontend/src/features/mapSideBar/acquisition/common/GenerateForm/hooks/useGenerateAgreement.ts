@@ -38,14 +38,28 @@ export const useGenerateAgreement = () => {
     );
 
     const coordinatorPromise = coordinator?.personId
-      ? getPersonConcept(coordinator?.personId)
-      : Promise.resolve(null);
+      ? getPersonConcept(coordinator?.personId).then(p => (coordinator.person = p?.data))
+      : provincialSolicitor?.organizationId
+      ? getOrganizationConcept(provincialSolicitor?.organizationId).then(o =>
+          !!coordinator ? (coordinator.organization = o?.data) : null,
+        )
+      : Promise.resolve();
     const negotiatingAgentPromise = negotiatingAgent?.personId
-      ? getPersonConcept(negotiatingAgent?.personId)
-      : Promise.resolve(null);
+      ? getPersonConcept(negotiatingAgent?.personId).then(p => (negotiatingAgent.person = p?.data))
+      : provincialSolicitor?.organizationId
+      ? getOrganizationConcept(provincialSolicitor?.organizationId).then(o =>
+          !!negotiatingAgent ? (negotiatingAgent.organization = o?.data) : null,
+        )
+      : Promise.resolve();
     const provincialSolicitorPromise = provincialSolicitor?.personId
-      ? getPersonConcept(provincialSolicitor?.personId)
-      : Promise.resolve(null);
+      ? getPersonConcept(provincialSolicitor?.personId).then(
+          p => (provincialSolicitor.person = p?.data),
+        )
+      : provincialSolicitor?.organizationId
+      ? getOrganizationConcept(provincialSolicitor?.organizationId).then(o =>
+          !!provincialSolicitor ? (provincialSolicitor.organization = o?.data) : null,
+        )
+      : Promise.resolve();
 
     // Owner solicitor can be either a Person or an Organization (with optional primary contact)
     const ownerSolicitorPersonPromise = ownerSolicitor?.personId
@@ -59,21 +73,10 @@ export const useGenerateAgreement = () => {
         ? getPersonConcept(ownerSolicitor?.primaryContactId)
         : Promise.resolve(null);
 
-    const [
-      coordinatorConcept,
-      negotiatingAgentConcept,
-      provincialSolicitorConcept,
-      ownerSolicitorPersonConcept,
-      ownerSolicitorOrganizationConcept,
-      ownerSolicitorPrimaryContactConcept,
-    ] = await Promise.all([
-      coordinatorPromise,
-      negotiatingAgentPromise,
-      provincialSolicitorPromise,
-      ownerSolicitorPersonPromise,
-      ownerSolicitorOrganizationPromise,
-      ownerSolicitorPrimaryContactPromise,
-    ]);
+    await Promise.all([coordinatorPromise, negotiatingAgentPromise, provincialSolicitorPromise]);
+    const ownerSolicitorPersonConcept = await ownerSolicitorPersonPromise;
+    const ownerSolicitorOrganizationConcept = await ownerSolicitorOrganizationPromise;
+    const ownerSolicitorPrimaryContactConcept = await ownerSolicitorPrimaryContactPromise;
 
     if (ownerSolicitor) {
       ownerSolicitor.person = ownerSolicitorPersonConcept?.data ?? null;
@@ -83,9 +86,9 @@ export const useGenerateAgreement = () => {
 
     const fileData = new Api_GenerateAcquisitionFile({
       file,
-      coordinatorContact: coordinatorConcept?.data ?? null,
-      negotiatingAgent: negotiatingAgentConcept?.data ?? null,
-      provincialSolicitor: provincialSolicitorConcept?.data ?? null,
+      coordinatorContact: coordinator ?? null,
+      negotiatingAgent: negotiatingAgent ?? null,
+      provincialSolicitor: provincialSolicitor ?? null,
       ownerSolicitor: ownerSolicitor ?? null,
       interestHolders: [],
     });
