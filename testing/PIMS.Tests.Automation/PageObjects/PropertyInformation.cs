@@ -899,6 +899,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPimsFiles()
         {
+            Wait(2000);
+
             WaitUntilClickable(propertyPimsFilesLinkTab);
             webDriver.FindElement(propertyPimsFilesLinkTab).Click();
 

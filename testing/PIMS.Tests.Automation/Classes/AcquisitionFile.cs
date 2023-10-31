@@ -28,6 +28,9 @@
         public string? OwnerComment { get; set; } = String.Empty;
         public int SearchPropertiesIndex { get; set; } = 0;
         public SearchProperty? SearchProperties { get; set; } = new SearchProperty();
+        public int TakesStartRow { get; set; } = 0;
+        public int TakesCount { get; set; } = 0;
+        public List<Take>? AcquisitionTakes { get; set; } = new List<Take>();
         public int AcquisitionFileChecklistIndex { get; set; } = 0;
         public AcquisitionFileChecklist? AcquisitionFileChecklist { get; set; } = new AcquisitionFileChecklist();
         public int AgreementStartRow { get; set; } = 0;
@@ -40,6 +43,9 @@
         public int CompensationCount { get; set; } = 0;
         public string? CompensationTotalAllowableAmount { get; set; } = String.Empty;
         public List<AcquisitionCompensation>? AcquisitionCompensations { get; set; } = new List<AcquisitionCompensation>();
+        public int ExpropriationStartRow { get; set; } = 0;
+        public int ExpropriationCount { get; set; } = 0;
+        public List<AcquisitionExpropriationForm8>? AcquisitionExpropriationForm8s { get; set; } = new List<AcquisitionExpropriationForm8>();
     }
 
     public class AcquisitionTeamMember
@@ -182,5 +188,48 @@
         public string? ActGSTEligible { get; set; } = String.Empty;
         public string? ActGSTAmount { get; set; } = String.Empty;
         public string? ActTotalAmount { get; set; } = String.Empty;
+    }
+
+    public class Take
+    {
+        public string TakeType { get; set; } = null!;
+        public string TakeStatus { get; set; } = null!;
+        public string? SiteContamination { get; set; } = String.Empty;
+        public string? TakeDescription { get; set; } = String.Empty;
+        public string? IsNewRightWay { get; set; } = String.Empty;
+        public string? IsNewRightWayArea { get; set; } = String.Empty;
+        public string? IsStatutoryRightWay { get; set; } = String.Empty;
+        public string? IsStatutoryRightWayArea { get; set; } = String.Empty;
+        public string? IsLandNotation { get; set; } = String.Empty;
+        public string? IsLandNotationDetail { get; set; } = String.Empty;
+        public string? IsLandNotationArea { get; set; } = String.Empty;
+        public string? IsLandNotationDate { get; set; } = String.Empty;
+        public string? IsLicenseConstruct { get; set; } = String.Empty;
+        public string? IsLicenseConstructArea { get; set; } = String.Empty;
+        public string IsLicenseConstructDate { get; set; } = String.Empty;
+        public string IsSurplus { get; set; } = String.Empty;
+        public string? IsSurplusArea { get; set; } = String.Empty;
+        public int FromProperty { get; set; } = 0;
+        public int TakeCounter { get; set; } = 0;
+    }
+
+    public class AcquisitionExpropriationForm8
+    {
+        public string Form8Payee { get; set; } = null!;
+        public string Form8PayeeDisplay { get; set; } = null!;
+        public string? Form8ExpropriationAuthority { get; set; } = String.Empty;
+        public string? Form8Description { get; set; } = String.Empty;
+        public int ExpPaymentStartRow { get; set; } = 0;
+        public int ExpPaymentCount { get; set; } = 0;
+        public List<ExpropriationPayment>? ExpropriationPayments { get; set; } = new List<ExpropriationPayment>();
+    }
+
+    public class ExpropriationPayment
+    {
+        public string ExpPaymentItem { get; set; } = null!;
+        public string ExpPaymentAmount { get; set; } = null!;
+        public string? ExpPaymentGSTApplicable { get; set; } = String.Empty;
+        public string? ExpPaymentGSTAmount { get; set; } = String.Empty;
+        public string? ExpPaymentTotalAmount { get; set; } = String.Empty;
     }
 }
