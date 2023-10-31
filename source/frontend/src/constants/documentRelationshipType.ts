@@ -4,4 +4,5 @@ export enum DocumentRelationshipType {
   TEMPLATES = 'templates',
   LEASES = 'leases',
   PROJECTS = 'projects',
+  MANAGEMENT_FILES = 'managementFiles',
 }
