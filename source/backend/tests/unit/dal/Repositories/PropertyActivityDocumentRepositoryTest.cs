@@ -47,7 +47,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<PropertyActivityDocumentRepository>(user);
 
             // Act
-            var result = repository.GetAllByPropertyActivityFile(propertyActivityFileDocument.PimsPropertyActivityId);
+            var result = repository.GetAllByPropertyActivity(propertyActivityFileDocument.PimsPropertyActivityId);
 
             // Assert
             result.FirstOrDefault().Internal_Id.Should().Be(1);

@@ -100,13 +100,13 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentView, Permissions.ManagementView);
             var propertyActivityFileDocumentRepository = this._helper.GetService<Mock<IPropertyActivityDocumentRepository>>();
 
-            propertyActivityFileDocumentRepository.Setup(x => x.GetAllByPropertyActivityFile(It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
+            propertyActivityFileDocumentRepository.Setup(x => x.GetAllByPropertyActivity(It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
 
             // Act
             var sut = service.GetFileDocuments<PimsResearchFileDocument>(Constants.FileType.Management, 1);
 
             // Assert
-            propertyActivityFileDocumentRepository.Verify(x => x.GetAllByPropertyActivityFile(It.IsAny<long>()), Times.Once);
+            propertyActivityFileDocumentRepository.Verify(x => x.GetAllByPropertyActivity(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -164,13 +164,13 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentView, Permissions.ManagementView);
             var propertyActivityDocumentRepository = this._helper.GetService<Mock<IPropertyActivityDocumentRepository>>();
 
-            propertyActivityDocumentRepository.Setup(x => x.GetAllByPropertyActivityFile(It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
+            propertyActivityDocumentRepository.Setup(x => x.GetAllByPropertyActivity(It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
 
             // Act
             var sut = service.GetFileDocuments<PimsLeaseDocument>(Constants.FileType.Management, 1);
 
             // Assert
-            propertyActivityDocumentRepository.Verify(x => x.GetAllByPropertyActivityFile(It.IsAny<long>()), Times.Once);
+            propertyActivityDocumentRepository.Verify(x => x.GetAllByPropertyActivity(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -566,7 +566,7 @@ namespace Pims.Api.Test.Services
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var propertyActivityDocumentRepository = this._helper.GetService<Mock<IPropertyActivityDocumentRepository>>();
 
-            propertyActivityDocumentRepository.Setup(x => x.GetAllByPropertyActivityFile(It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
+            propertyActivityDocumentRepository.Setup(x => x.GetAllByPropertyActivity(It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
                 .ReturnsAsync(new ExternalResult<string>()
                 {
