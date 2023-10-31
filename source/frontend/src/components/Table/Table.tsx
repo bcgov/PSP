@@ -289,10 +289,13 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     externalSort,
     isSingleSelect,
     disableSelection,
+    lockPageSize,
   } = props;
   const manualSortBy = !!externalSort || props.manualSortBy;
   const totalItems = externalTotalItems ?? data?.length;
-  const pageCount = externalPageCount ?? Math.ceil(totalItems / (pageSizeProp ?? internalPageSize));
+  const pageCount =
+    externalPageCount ??
+    Math.ceil(totalItems / (!!lockPageSize ? pageSizeProp ?? internalPageSize : internalPageSize));
   const selectedRowsRef = React.useRef<T[]>(externalSelectedRows ?? []); // used as a global var for providing up to date list of selected rows to code within the table (that is arrow function scoped).
 
   // manually update the contents of the global ref of selected rows if the list of external selected rows changes.
@@ -330,7 +333,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
         ? {
             sortBy,
             pageIndex: pageIndexProp ?? 0,
-            pageSize: pageSizeProp ?? internalPageSize,
+            pageSize: lockPageSize ? pageSizeProp : internalPageSize,
           }
         : { sortBy, pageIndex: pageIndexProp ?? 0 },
       manualPagination: (props.hideToolbar || manualPagination) ?? true, // Tell the usePagination hook
