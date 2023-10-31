@@ -8,7 +8,7 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IPropertyActivityDocumentRepository : IRepository<PimsPropertyActivityDocument>
     {
-        IList<PimsPropertyActivityDocument> GetAllByPropertyActivityFile(long fileId);
+        IList<PimsPropertyActivityDocument> GetAllByPropertyActivity(long propertyActivityId);
 
         PimsPropertyActivityDocument AddPropertyActivityDocument(PimsPropertyActivityDocument propertyActivityDocument);
 

@@ -10,7 +10,7 @@ using Pims.Dal.Entities;
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// PropertyActivityDocumentRepository class, provides a service layer to interact with document acquisition files within the datasource.
+    /// PropertyActivityDocumentRepository class, provides a service layer to interact with document activity files within the datasource.
     /// </summary>
     public class PropertyActivityDocumentRepository : BaseRepository<PimsPropertyActivityDocument>, IPropertyActivityDocumentRepository
     {
@@ -22,7 +22,7 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public PropertyActivityDocumentRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<AcquisitionFileDocumentRepository> logger)
+        public PropertyActivityDocumentRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<PropertyActivityDocumentRepository> logger)
             : base(dbContext, user, logger)
         {
         }
@@ -31,17 +31,17 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
-        /// Get a list of all the document file relationships for a a given acquisition file.
+        /// Get a list of all the document file relationships for a a given property activity.
         /// </summary>
         /// <returns></returns>
-        public IList<PimsPropertyActivityDocument> GetAllByPropertyActivityFile(long fileId)
+        public IList<PimsPropertyActivityDocument> GetAllByPropertyActivity(long propertyActivityId)
         {
             return this.Context.PimsPropertyActivityDocuments
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentType)
-                .Where(ad => ad.PimsPropertyActivityId == fileId)
+                .Where(ad => ad.PimsPropertyActivityId == propertyActivityId)
                 .AsNoTracking()
                 .ToList();
         }

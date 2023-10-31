@@ -181,7 +181,7 @@ namespace Pims.Api.Test.Controllers
         public void DownloadWrappedFile_Success()
         {
             // Arrange
-            this._service.Setup(m => m.DownloadFileLatestAsync(1)).ReturnsAsync(new Models.ExternalResult<Models.Download.FileDownload>());
+            this._service.Setup(m => m.DownloadFileLatestAsync(1)).ReturnsAsync(new Models.ExternalResult<Models.Download.FileDownload>() { Payload = new Models.Download.FileDownload()});
 
             // Act
             var result = this._controller.DownloadWrappedFile(1);

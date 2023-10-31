@@ -74,7 +74,7 @@ namespace Pims.Api.Services
                     return _leaseRepository.GetAllLeaseDocuments(fileId).Select(f => f as T).ToArray();
                 case FileType.Management:
                     this.User.ThrowIfNotAuthorized(Permissions.ManagementView);
-                    return _propertyActivityDocumentRepository.GetAllByPropertyActivityFile(fileId).Select(f => f as T).ToArray();
+                    return _propertyActivityDocumentRepository.GetAllByPropertyActivity(fileId).Select(f => f as T).ToArray();
                 default:
                     throw new BadRequestException("FileT type not valid to get documents.");
             }
