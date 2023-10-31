@@ -1,5 +1,6 @@
 import { orderBy } from 'lodash';
 import React from 'react';
+import { BiListPlus } from 'react-icons/bi';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
@@ -66,7 +67,7 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
           claims={[Claims.MANAGEMENT_EDIT]}
           title="Activities List"
           addButtonText="Add an Activity"
-          addButtonIcon="person"
+          addButtonIcon={<BiListPlus size={'2.5rem'} />}
           onAdd={onCreate}
         />
       }

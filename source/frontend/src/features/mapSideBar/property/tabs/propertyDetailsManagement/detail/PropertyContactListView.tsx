@@ -1,4 +1,5 @@
 import { generatePath, useHistory, useRouteMatch } from 'react-router-dom';
+import { FaUserPlus } from 'react-icons/fa';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -32,7 +33,7 @@ export const PropertyContactListView: React.FunctionComponent<IPropertyContactLi
           claims={[Claims.PROPERTY_EDIT]}
           title="Property Contact"
           addButtonText="Add a Contact"
-          addButtonIcon="person"
+          addButtonIcon={<FaUserPlus size={'2rem'} />}
           onAdd={() => {
             const path = generatePath(match.path, {
               propertyId: match.params.propertyId,
