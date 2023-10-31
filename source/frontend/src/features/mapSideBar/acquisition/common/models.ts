@@ -42,7 +42,7 @@ export class AcquisitionTeamFormModel {
       person: undefined,
       organizationId: organizationId ?? undefined,
       organization: undefined,
-      primaryContactId: this.primaryContactId !== '' ? Number(this.primaryContactId) : undefined,
+      primaryContactId: !isNaN(+this.primaryContactId) ? Number(this.primaryContactId) : undefined,
       teamProfileType: toTypeCode(this.contactTypeCode),
       teamProfileTypeCode: this.contactTypeCode,
     };
