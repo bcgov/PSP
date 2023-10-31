@@ -61,7 +61,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
           <SectionField
             labelWidth="8"
             label="Takes for this property in the current file"
-            tooltip="The number of takes in completed, , In-progress or cancelled state for this property in this acquisition file."
+            tooltip="The number of takes in completed, In-progress or cancelled state for this property in this acquisition file."
           >
             {takes?.length ?? 0}
           </SectionField>
@@ -99,7 +99,11 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
             </SectionField>
             <StyledNoTabSection header="Area">
               <StyledBorderSection>
-                <SectionField label="Is there a new right of way? *" labelWidth="8">
+                <SectionField
+                  label="Is there a new highway dedication? *"
+                  labelWidth="8"
+                  tooltip="The term new highway dedication includes municipal road or provincial public highway."
+                >
                   <YesNoButtons id="newRightOfWayToggle" disabled value={take.isNewRightOfWay} />
                 </SectionField>
                 {take.isNewRightOfWay && (
@@ -109,7 +113,10 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                 )}
               </StyledBorderSection>
               <StyledBorderSection>
-                <SectionField label="Is there a Statutory Right of Way: (SRW)? *" labelWidth="8">
+                <SectionField
+                  label="Is there a new registered interest in land (SRW, Easement or Covenant)? *"
+                  labelWidth="8"
+                >
                   <YesNoButtons
                     id="statutoryRightOfWayToggle"
                     disabled
@@ -125,10 +132,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                 )}
               </StyledBorderSection>
               <StyledBorderSection>
-                <SectionField
-                  label="Is there Land Act-Reserve(s)/Withdrawal(s)/Notation(s)? *"
-                  labelWidth="8"
-                >
+                <SectionField label="Is a there a new Land Act tenure? *" labelWidth="8">
                   <YesNoButtons id="landActToggle" disabled value={take.isLandAct} />
                 </SectionField>
                 {take.isLandAct && (
@@ -150,7 +154,10 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                 )}
               </StyledBorderSection>
               <StyledBorderSection>
-                <SectionField label="Is there a License to Construct (LTC)? *" labelWidth="8">
+                <SectionField
+                  label="Is there a new License for Construction Access (TLCA/LTC)? *"
+                  labelWidth="8"
+                >
                   <YesNoButtons
                     id="licenseToConstructToggle"
                     disabled

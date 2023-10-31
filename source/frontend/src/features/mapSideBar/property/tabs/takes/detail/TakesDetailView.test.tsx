@@ -146,7 +146,7 @@ describe('TakesDetailView component', () => {
         ],
       },
     });
-    const date = await findByText('Is there Land Act-Reserve(s)/Withdrawal(s)/Notation(s)', {
+    const date = await findByText('Is a there a new Land Act tenure', {
       exact: false,
     });
     expect(date).toBeVisible();
