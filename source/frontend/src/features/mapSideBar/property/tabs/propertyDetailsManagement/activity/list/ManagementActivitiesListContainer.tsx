@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
@@ -20,6 +21,7 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
   const isMounted = useIsMounted();
   const { setModalContent, setDisplayModal } = useModalContext();
   const [propertyActivities, setPropertyActivities] = useState<PropertyActivityRow[]>([]);
+  const { staleLastUpdatedBy } = useContext(SideBarContext);
 
   const {
     getActivities: { execute: getActivities, loading },
@@ -45,7 +47,7 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
 
   useEffect(() => {
     fetchPropertyActivities();
-  }, [fetchPropertyActivities]);
+  }, [fetchPropertyActivities, staleLastUpdatedBy]);
 
   const onCreate = () => {
     history.push(`/mapview/sidebar/property/${propertyId}/activity/new`);
