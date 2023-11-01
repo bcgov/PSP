@@ -9,7 +9,7 @@ import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
 import { IFilterContentFormProps } from './FilterContentForm';
 import { PropertyFilterFormModel } from './models';
 
-interface IFilterContentContainerProps {
+export interface IFilterContentContainerProps {
   View: React.FunctionComponent<IFilterContentFormProps>;
 }
 

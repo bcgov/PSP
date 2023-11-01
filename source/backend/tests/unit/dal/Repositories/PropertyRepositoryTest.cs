@@ -132,6 +132,165 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
+        #region GetMatchingIds
+        [Fact]
+        public void GetMatchingIds_LeaseRcbvl_All_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            var lease = EntityHelper.CreateLease(1, addProperty:false);
+            property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { LeasePayRcvblType = "all" });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetMatchingIds_LeaseStatus_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            var lease = EntityHelper.CreateLease(1, pimsLeaseStatusType: new PimsLeaseStatusType() { Id = "test2" }, addProperty: false);
+            property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { LeaseStatus = "test2" });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetMatchingIds_LeaseType_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            var lease = EntityHelper.CreateLease(1, pimsLeaseLicenseType: new PimsLeaseLicenseType() { Id = "test" }, addProperty: false);
+            property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { LeaseTypes = new List<string>() { "test" } });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetMatchingIds_LeasePurpose_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            var lease = EntityHelper.CreateLease(1, pimsLeasePurposeType: new PimsLeasePurposeType() { Id = "test" }, addProperty: false);
+            property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { LeasePurposes = new List<string>() { "test" } });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetMatchingIds_Anomaly_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            property.PimsPropPropAnomalyTypes.Add(new PimsPropPropAnomalyType() { PropertyAnomalyTypeCode = "test" });
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { AnomalyIds = new List<string>() { "test" } });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetMatchingIds_Project_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            property.PimsPropertyAcquisitionFiles.Add(new PimsPropertyAcquisitionFile() { AcquisitionFile = new PimsAcquisitionFile() { ProjectId = 1 } });
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { ProjectId = 1 });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetMatchingIds_Tenure_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            property.PimsPropPropTenureTypes.Add(new PimsPropPropTenureType() { PropertyTenureTypeCode = "test" });
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { TenureStatuses = new List<string>() { "test" } });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetMatchingIds_TenureRoad_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            property.PimsPropPropRoadTypes.Add(new PimsPropPropRoadType() { PropertyRoadTypeCode = "test" });
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { TenureRoadTypes = new List<string>() { "test" } });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetMatchingIds_TenurePph_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            property.PphStatusTypeCode = "test";
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { TenurePPH = "test" });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(1);
+        }
+        #endregion
+
         #region GetByPid
         [Fact]
         public void GetByPid_Success()
