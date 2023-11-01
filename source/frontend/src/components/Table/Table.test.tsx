@@ -1,4 +1,4 @@
-import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { ColumnWithProps, Table, TableProps } from '.';
 import { IIdentifiedObject } from './Table';
@@ -171,6 +171,23 @@ describe('Generic table component', () => {
         userEvent.click(getByTitle('menu-item-5'));
       });
       expect(onPageSizeChange).toHaveBeenCalledWith(5);
+    });
+
+    it('page size displays a second page as expected', async () => {
+      const { getByLabelText, container } = setup({
+        props: {
+          pageSize: 5,
+          manualPagination: false,
+        },
+      });
+
+      await act(async () => {
+        userEvent.click(getByLabelText('Page 2'));
+      });
+      await waitFor(async () => {
+        const tableRows = container.querySelectorAll('.table .tbody .tr-wrapper');
+        expect(tableRows).toHaveLength(1);
+      });
     });
   });
 

@@ -45,6 +45,7 @@ export const TablePageSizeSelector: React.FC<React.PropsWithChildren<IProps>> = 
           value={`${selected}`}
           type="number"
           style={{ width: 50, marginLeft: 10, marginRight: 10, backgroundColor: 'white' }}
+          disabled
         />
         <StyledText>Entries</StyledText>
       </div>
