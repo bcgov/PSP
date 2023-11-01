@@ -8,7 +8,7 @@ import { Api_GenerateLetter } from '@/models/generate/GenerateLetter';
 import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
 
 export const useGenerateLetter = () => {
-  const { getPersonConcept } = useApiContacts();
+  const { getPersonConcept, getOrganizationConcept } = useApiContacts();
   const {
     getAcquisitionFile: { execute: getAcquisitionFile },
   } = useAcquisitionProvider();
@@ -24,10 +24,14 @@ export const useGenerateLetter = () => {
       const coordinator = file.acquisitionTeam?.find(
         team => team.teamProfileTypeCode === 'PROPCOORD',
       );
-      const coordinatorPerson = !!coordinator?.personId
-        ? (await getPersonConcept(coordinator?.personId))?.data
-        : null;
-      const letterData = new Api_GenerateLetter(file, coordinatorPerson);
+      if (!!coordinator?.personId) {
+        coordinator.person = (await getPersonConcept(coordinator?.personId))?.data;
+      } else if (!!coordinator?.organizationId) {
+        coordinator.organization = (
+          await getOrganizationConcept(coordinator?.organizationId)
+        )?.data;
+      }
+      const letterData = new Api_GenerateLetter(file, coordinator);
       letterData.owners = recipients ?? letterData.owners;
       const generatedFile = await generate({
         templateType: FormDocumentType.LETTER,

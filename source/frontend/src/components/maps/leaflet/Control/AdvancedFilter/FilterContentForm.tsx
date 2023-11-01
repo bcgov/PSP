@@ -83,6 +83,13 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
     return { codeType: x.id.toString(), codeTypeDescription: x.name };
   });
 
+  const leasePaymentRcvblOptions = getByType(API.LEASE_PAYMENT_RECEIVABLE_TYPES).map<SelectOption>(
+    x => {
+      return { value: x.id.toString(), label: x.name };
+    },
+  );
+  leasePaymentRcvblOptions.push({ value: 'all', label: 'Payable and Receivable' });
+
   return (
     <Formik<PropertyFilterFormModel> initialValues={initialFilter} onSubmit={noop}>
       <Form>
@@ -122,6 +129,18 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
           </SectionField>
         </Section>
         <Section header="Lease / License" isCollapsable initiallyExpanded>
+          <SectionField
+            label="Lease Transaction"
+            contentWidth="12"
+            tooltip="Selecting the Payable and Receivable lease transaction option will display properties that have both a payable and a receivable lease on them."
+          >
+            <Select
+              field="leasePayRcvblType"
+              placeholder="Select Lease Transaction"
+              options={leasePaymentRcvblOptions}
+              data-testid="leasePayRcvblType"
+            />
+          </SectionField>
           <SectionField label="Status" contentWidth="12">
             <Select
               field="leaseStatus"

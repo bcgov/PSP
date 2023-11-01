@@ -11,7 +11,6 @@ import {
 
 import {
   getMarkerIcon,
-  getNotOwnerMarkerIcon,
   isFullyAttributed,
   isPimsBoundary,
   isPimsFeature,
@@ -41,7 +40,6 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
     if (isOwned) {
       return getMarkerIcon(pointFeature, isSelected);
     } else {
-      return getNotOwnerMarkerIcon(isSelected);
     }
   };
 

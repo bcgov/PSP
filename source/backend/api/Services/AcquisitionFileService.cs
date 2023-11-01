@@ -37,6 +37,7 @@ namespace Pims.Api.Services
         private readonly IInterestHolderRepository _interestHolderRepository;
         private readonly ICompReqFinancialService _compReqFinancialService;
         private readonly IExpropriationPaymentRepository _expropriationPaymentRepository;
+        private readonly ITakeRepository _takeRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -53,7 +54,8 @@ namespace Pims.Api.Services
             ICompensationRequisitionRepository compensationRequisitionRepository,
             IInterestHolderRepository interestHolderRepository,
             ICompReqFinancialService compReqFinancialService,
-            IExpropriationPaymentRepository expropriationPaymentRepository)
+            IExpropriationPaymentRepository expropriationPaymentRepository,
+            ITakeRepository takeRepository)
         {
             _user = user;
             _logger = logger;
@@ -70,6 +72,7 @@ namespace Pims.Api.Services
             _interestHolderRepository = interestHolderRepository;
             _compReqFinancialService = compReqFinancialService;
             _expropriationPaymentRepository = expropriationPaymentRepository;
+            _takeRepository = takeRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -232,7 +235,7 @@ namespace Pims.Api.Services
 
             if (acquisitionFile.AcquisitionFileStatusTypeCode == "COMPLT")
             {
-                TransferPropertiesOfInterestToInventory(acquisitionFile, userOverrides.Contains(UserOverrideCode.PoiToInventory));
+                TransferPropertiesOfInterest(acquisitionFile, userOverrides.Contains(UserOverrideCode.PoiToInventory));
             }
 
             ValidateStaff(acquisitionFile);
@@ -680,7 +683,7 @@ namespace Pims.Api.Services
         /// </summary>
         /// <param name="acquisitionFile"></param>
         /// <param name="userOverride"></param>
-        private void TransferPropertiesOfInterestToInventory(PimsAcquisitionFile acquisitionFile, bool userOverride = false)
+        private void TransferPropertiesOfInterest(PimsAcquisitionFile acquisitionFile, bool userOverride = false)
         {
             // Get the current properties in the research file
             var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
@@ -694,7 +697,16 @@ namespace Pims.Api.Services
                 {
                     throw new UserOverrideException(UserOverrideCode.PoiToInventory, "The properties of interest will be added to the inventory as acquired properties.");
                 }
-                _propertyRepository.TransferToCoreInventory(property);
+                var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionProperty.Internal_Id);
+                var coreInventoryInterestCodes = new string[] { "Section 15", "Section 17", "NOI", "Section 66" };
+                var activeTakes = takes.Where(t => !(t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && t.LandActEndDt.HasValue && t.LandActEndDt.Value.Date < DateTime.UtcNow.Date)
+                && !(t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value && t.LtcEndDt.HasValue && t.LtcEndDt.Value.Date < DateTime.UtcNow.Date));
+                //see psp-6589 for business rules.
+                var isOwned = !(activeTakes.All(t => (t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && coreInventoryInterestCodes.Contains(t.LandActTypeCode))
+                    || (t.IsNewInterestInSrw.HasValue && t.IsNewInterestInSrw.Value)
+                    || (t.IsThereSurplus.HasValue && t.IsThereSurplus.Value)
+                    || (t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value)) && activeTakes.Any());
+                _propertyRepository.TransferFileProperty(property, isOwned);
             }
         }
 

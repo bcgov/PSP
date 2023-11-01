@@ -15,6 +15,7 @@ import { useGenerateLetter } from '../hooks/useGenerateLetter';
 const generateFn = jest.fn();
 const getAcquisitionFileFn = jest.fn<Api_AcquisitionFile | undefined, any[]>();
 const getPersonConceptFn = jest.fn();
+const getOrganizationConceptFn = jest.fn();
 
 jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
 (useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
@@ -29,6 +30,7 @@ jest.mock('@/hooks/repositories/useAcquisitionProvider');
 jest.mock('@/hooks/pims-api/useApiContacts');
 (useApiContacts as jest.Mock).mockImplementation(() => ({
   getPersonConcept: getPersonConceptFn,
+  getOrganizationConcept: getOrganizationConceptFn,
 }));
 
 let currentStore: MockStoreEnhanced<any, {}>;
@@ -64,7 +66,7 @@ describe('useGenerateLetter functions', () => {
       expect(generateFn).toHaveBeenCalled();
     });
   });
-  it('makes requests to expected api endpoints if a team member is a property coordinator', async () => {
+  it('makes requests to expected api endpoints if a team member is a property coordinator with person', async () => {
     const responseWithTeam: Api_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
@@ -83,6 +85,28 @@ describe('useGenerateLetter functions', () => {
       await generate(0);
       expect(generateFn).toHaveBeenCalled();
       expect(getPersonConceptFn).toHaveBeenCalled();
+    });
+  });
+
+  it('makes requests to expected api endpoints if a team member is a property coordinator with org', async () => {
+    const responseWithTeam: Api_AcquisitionFile = {
+      ...mockAcquisitionFileResponse(),
+      acquisitionTeam: [
+        {
+          id: 1,
+          acquisitionFileId: 1,
+          organizationId: 1,
+          teamProfileTypeCode: 'PROPCOORD',
+          rowVersion: 2,
+        },
+      ],
+    };
+    const generate = setup({ acquisitionResponse: responseWithTeam });
+
+    await act(async () => {
+      await generate(0);
+      expect(generateFn).toHaveBeenCalled();
+      expect(getOrganizationConceptFn).toHaveBeenCalled();
     });
   });
 });

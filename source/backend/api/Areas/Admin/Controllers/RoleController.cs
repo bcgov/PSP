@@ -75,6 +75,23 @@ namespace Pims.Api.Areas.Admin.Controllers
             var result = _mapper.Map<Api.Models.PageModel<Model.RoleModel>>(paged);
             return new JsonResult(result);
         }
+
+        /// <summary>
+        /// GET - Returns a role for the specified 'key' from the datasource.
+        /// </summary>
+        /// <param name="key">The unique 'key' for the role to return.</param>
+        /// <returns>The role requested.</returns>
+        [HttpGet("{key}")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Model.RoleModel), 200)]
+        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
+        [SwaggerOperation(Tags = new[] { "admin-role" })]
+        public IActionResult GetRole(Guid key)
+        {
+            var entity = _roleRepository.GetByKey(key);
+            var role = _mapper.Map<Model.RoleModel>(entity);
+            return new JsonResult(role);
+        }
         #endregion
     }
 }
