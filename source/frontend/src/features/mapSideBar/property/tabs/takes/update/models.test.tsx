@@ -10,7 +10,7 @@ describe('take model tests', () => {
       isLicenseToConstruct: false,
       isNewRightOfWay: false,
       isLandAct: false,
-      isStatutoryRightOfWay: false,
+      isNewInterestInSrw: false,
       isSurplus: false,
     };
     const takeModel = new TakeModel(apiTake);
@@ -27,7 +27,7 @@ describe('take model tests', () => {
       isLicenseToConstruct: true,
       isNewRightOfWay: true,
       isLandAct: true,
-      isStatutoryRightOfWay: true,
+      isNewInterestInSrw: true,
       isSurplus: true,
     };
     const takeModel = new TakeModel(apiTake);

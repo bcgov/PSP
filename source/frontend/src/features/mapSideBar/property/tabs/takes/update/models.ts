@@ -69,7 +69,7 @@ export class TakeModel {
     this.isNewRightOfWay = base.isNewRightOfWay ? 'true' : 'false';
     this.isLandAct = base.isLandAct ? 'true' : 'false';
     this.isLicenseToConstruct = base.isLicenseToConstruct ? 'true' : 'false';
-    this.isStatutoryRightOfWay = base.isStatutoryRightOfWay ? 'true' : 'false';
+    this.isStatutoryRightOfWay = base.isNewInterestInSrw ? 'true' : 'false';
     this.licenseToConstructArea = base.licenseToConstructArea ?? 0;
     this.licenseToConstructAreaUnitTypeCode =
       base.areaUnitTypeCode ?? AreaUnitTypes.SquareMeters.toString();
@@ -137,7 +137,7 @@ export class TakeModel {
       isNewRightOfWay: this.isNewRightOfWay === 'true',
       isLandAct: this.isLandAct === 'true',
       isLicenseToConstruct: this.isLicenseToConstruct === 'true',
-      isStatutoryRightOfWay: this.isStatutoryRightOfWay === 'true',
+      isNewInterestInSrw: this.isStatutoryRightOfWay === 'true',
     };
   }
 }

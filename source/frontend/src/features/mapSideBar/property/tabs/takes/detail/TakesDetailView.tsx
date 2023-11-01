@@ -120,10 +120,10 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                   <YesNoButtons
                     id="statutoryRightOfWayToggle"
                     disabled
-                    value={take.isStatutoryRightOfWay}
+                    value={take.isNewInterestInSrw}
                   />
                 </SectionField>
-                {take.isStatutoryRightOfWay && (
+                {take.isNewInterestInSrw && (
                   <>
                     <SectionField label="Area" labelWidth="12">
                       <AreaContainer landArea={take.statutoryRightOfWayArea ?? undefined} />
