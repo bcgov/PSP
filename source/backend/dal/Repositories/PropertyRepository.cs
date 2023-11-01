@@ -381,7 +381,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="property">The property to update.</param>
         /// <returns>The updated property.</returns>
-        public PimsProperty TransferToCoreInventory(PimsProperty property)
+        public PimsProperty TransferFileProperty(PimsProperty property, bool isOwned = true)
         {
             property.ThrowIfNull(nameof(property));
 
@@ -389,7 +389,12 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(p => p.PropertyId == property.Internal_Id) ?? throw new KeyNotFoundException();
 
             existingProperty.IsPropertyOfInterest = false;
-            existingProperty.IsOwned = true;
+            existingProperty.IsOwned = isOwned;
+            existingProperty.PropertyClassificationTypeCode = "COREOPER";
+            if (!isOwned)
+            {
+                existingProperty.PropertyClassificationTypeCode = "OTHER";
+            }
             return existingProperty;
         }
 
@@ -441,6 +446,12 @@ namespace Pims.Dal.Repositories
             {
                 query = query.Where(p =>
                     p.PimsPropertyLeases.Any(pl => filter.LeasePurposes.Contains(pl.Lease.LeasePurposeTypeCode)));
+            }
+
+            if (!string.IsNullOrEmpty(filter.LeasePayRcvblType))
+            {
+                query = query.Where(p =>
+                    p.PimsPropertyLeases.Any(pl => pl.Lease.LeasePayRvblTypeCode == filter.LeasePayRcvblType || filter.LeasePayRcvblType == "all"));
             }
 
             // Anomalies

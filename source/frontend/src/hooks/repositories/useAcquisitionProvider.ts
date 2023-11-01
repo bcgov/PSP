@@ -17,7 +17,11 @@ import { Api_Person } from '@/models/api/Person';
 import { Api_Product, Api_Project } from '@/models/api/Project';
 import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
+import {
+  useAxiosErrorHandler,
+  useAxiosErrorHandlerWithAuthorization,
+  useAxiosSuccessHandler,
+} from '@/utils';
 
 const ignoreErrorCodes = [409];
 
@@ -72,7 +76,7 @@ export const useAcquisitionProvider = () => {
       [getAcquisitionFile],
     ),
     requestName: 'RetrieveAcquisitionFile',
-    onError: useAxiosErrorHandler('Failed to load Acquisition File'),
+    onError: useAxiosErrorHandlerWithAuthorization('Failed to load Acquisition File'),
   });
 
   const getLastUpdatedBy = useApiRequestWrapper<

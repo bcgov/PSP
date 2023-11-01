@@ -14,12 +14,16 @@ export const Legend = () => {
         label: 'Parcel',
       },
       {
-        pin: require('@/assets/images/pins/land-poi.svg').default,
+        pin: require('@/assets/images/pins/land-poi.png'),
         label: 'Property of Interest',
       },
       {
-        pin: require('@/assets/images/pins/land-lease.svg').default,
-        label: 'Payable lease/license',
+        pin: require('@/assets/images/pins/other-interest.png'),
+        label: 'Other Interest',
+      },
+      {
+        pin: require('@/assets/images/pins/marker-info-orange.png'),
+        label: 'Search result (not in inventory)',
       },
     ];
   }, []);

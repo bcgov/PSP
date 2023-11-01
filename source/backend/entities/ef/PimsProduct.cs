@@ -10,19 +10,17 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_PRODUCT")]
     [Index(nameof(Code), Name = "PRODCT_CODE_IDX")]
-    [Index(nameof(ParentProjectId), Name = "PRODCT_PARENT_PROJECT_ID_IDX")]
     public partial class PimsProduct
     {
         public PimsProduct()
         {
             PimsAcquisitionFiles = new HashSet<PimsAcquisitionFile>();
+            PimsProjectProducts = new HashSet<PimsProjectProduct>();
         }
 
         [Key]
         [Column("ID")]
         public long Id { get; set; }
-        [Column("PARENT_PROJECT_ID")]
-        public long ParentProjectId { get; set; }
         [Required]
         [Column("CODE")]
         [StringLength(20)]
@@ -82,10 +80,9 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [ForeignKey(nameof(ParentProjectId))]
-        [InverseProperty(nameof(PimsProject.PimsProducts))]
-        public virtual PimsProject ParentProject { get; set; }
         [InverseProperty(nameof(PimsAcquisitionFile.Product))]
         public virtual ICollection<PimsAcquisitionFile> PimsAcquisitionFiles { get; set; }
+        [InverseProperty(nameof(PimsProjectProduct.Product))]
+        public virtual ICollection<PimsProjectProduct> PimsProjectProducts { get; set; }
     }
 }
