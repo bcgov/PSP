@@ -699,13 +699,13 @@ namespace Pims.Api.Services
                 }
                 var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionProperty.Internal_Id);
                 var coreInventoryInterestCodes = new string[] { "Section 15", "Section 17", "NOI", "Section 66" };
-                var activeTakes = takes.Where(t => !(t.IsLandAct.HasValue && t.IsLandAct.Value && t.LandActEndDt.HasValue && t.LandActEndDt.Value.Date < DateTime.UtcNow.Date)
-                && !(t.IsLicenseToConstruct.HasValue && t.IsLicenseToConstruct.Value && t.LtcEndDt.HasValue && t.LtcEndDt.Value.Date < DateTime.UtcNow.Date));
+                var activeTakes = takes.Where(t => !(t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && t.LandActEndDt.HasValue && t.LandActEndDt.Value.Date < DateTime.UtcNow.Date)
+                && !(t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value && t.LtcEndDt.HasValue && t.LtcEndDt.Value.Date < DateTime.UtcNow.Date));
                 //see psp-6589 for business rules.
-                var isOwned = !(activeTakes.All(t => (t.IsLandAct.HasValue && t.IsLandAct.Value && coreInventoryInterestCodes.Contains(t.LandActTypeCode))
-                    || (t.IsStatutoryRightOfWay.HasValue && t.IsStatutoryRightOfWay.Value)
-                    || (t.IsSurplus.HasValue && t.IsSurplus.Value)
-                    || (t.IsLicenseToConstruct.HasValue && t.IsLicenseToConstruct.Value)) && activeTakes.Any());
+                var isOwned = !(activeTakes.All(t => (t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && coreInventoryInterestCodes.Contains(t.LandActTypeCode))
+                    || (t.IsNewInterestInSrw.HasValue && t.IsNewInterestInSrw.Value)
+                    || (t.IsThereSurplus.HasValue && t.IsThereSurplus.Value)
+                    || (t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value)) && activeTakes.Any());
                 _propertyRepository.TransferFileProperty(property, isOwned);
             }
         }
