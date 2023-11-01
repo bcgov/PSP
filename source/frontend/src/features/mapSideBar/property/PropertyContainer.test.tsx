@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { Claims } from '@/constants';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { cleanup, getByText, render, RenderOptions } from '@/utils/test-utils';
+import { cleanup, render, RenderOptions } from '@/utils/test-utils';
 
 import PropertyContainer, { IPropertyContainerProps } from './PropertyContainer';
 
