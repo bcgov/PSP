@@ -13,7 +13,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.IsSurplus, src => src.IsThereSurplus)
                 .Map(dest => dest.LicenseToConstructArea, src => src.LicenseToConstructArea)
                 .Map(dest => dest.LtcEndDt, src => src.LtcEndDt)
-                .Map(dest => dest.NewRightOfWayArea, src => src.StatutoryRightOfWayArea)
+                .Map(dest => dest.NewRightOfWayArea, src => src.NewHighwayDedicationArea)
                 .Map(dest => dest.LandActArea, src => src.LandActArea)
                 .Map(dest => dest.LandActEndDt, src => src.LandActEndDt)
                 .Map(dest => dest.PropertyAcquisitionFile, src => src.PropertyAcquisitionFile)
@@ -25,22 +25,23 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.TakeStatusTypeCode, src => src.TakeStatusTypeCode)
                 .Map(dest => dest.LandActTypeCode, src => src.LandActTypeCodeNavigation)
                 .Map(dest => dest.IsLicenseToConstruct, src => src.IsNewLicenseToConstruct)
-                //.Map(dest => dest.IsNewRightOfWay, src => src.IsNewRightOfWay)  // TODO: Fix this
+                .Map(dest => dest.IsNewRightOfWay, src => src.IsNewHighwayDedication)
                 .Map(dest => dest.IsLandAct, src => src.IsNewLandAct)
-                //.Map(dest => dest.IsStatutoryRightOfWay, src => src.IsStatutoryRightOfWay) // TODO: Fix this
-                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
+                .Map(dest => dest.IsNewInterestInSrw, src => src.IsNewInterestInSrw)
+                .Map(dest => dest.SrwEndDt, src => src.SrwEndDt)
+                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<TakeModel, Entity.PimsTake>()
                 .Map(dest => dest.TakeId, src => src.Id)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsThereSurplus, src => src.IsSurplus)
-                //.Map(dest => dest.IsNewRightOfWay, src => src.IsNewRightOfWay) // TODO: Fix this.
+                .Map(dest => dest.IsNewHighwayDedication, src => src.IsNewRightOfWay)
                 .Map(dest => dest.IsNewLandAct, src => src.IsLandAct)
-                //.Map(dest => dest.IsStatutoryRightOfWay, src => src.IsStatutoryRightOfWay) // TODO: Fix this
+                .Map(dest => dest.IsNewInterestInSrw, src => src.IsNewInterestInSrw)
                 .Map(dest => dest.IsNewLicenseToConstruct, src => src.IsLicenseToConstruct)
                 .Map(dest => dest.LicenseToConstructArea, src => src.LicenseToConstructArea)
                 .Map(dest => dest.LtcEndDt, src => src.LtcEndDt)
-                .Map(dest => dest.StatutoryRightOfWayArea, src => src.NewRightOfWayArea)
+                .Map(dest => dest.NewHighwayDedicationArea, src => src.NewRightOfWayArea)
                 .Map(dest => dest.LandActArea, src => src.LandActArea)
                 .Map(dest => dest.LandActEndDt, src => src.LandActEndDt)
                 .Map(dest => dest.PropertyAcquisitionFile, src => src.PropertyAcquisitionFile)
@@ -51,6 +52,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.TakeTypeCode, src => src.TakeTypeCode)
                 .Map(dest => dest.TakeStatusTypeCode, src => src.TakeStatusTypeCode)
                 .Map(dest => dest.LandActTypeCode, src => src.LandActTypeCode.Id)
+                .Map(dest => dest.SrwEndDt, src => src.SrwEndDt)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }
