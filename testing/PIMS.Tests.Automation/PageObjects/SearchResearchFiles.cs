@@ -146,6 +146,9 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait(2000);
 
             AssertTrueIsDisplayed(searchResearchFile1stResultLink);
+
+            System.Diagnostics.Debug.WriteLine(webDriver.FindElement(searchResearchFile1stResultFileName).Text);
+            System.Diagnostics.Debug.WriteLine(researchFile.ResearchFileName);
             AssertTrueContentEquals(searchResearchFile1stResultFileName, researchFile.ResearchFileName);
             AssertTrueContentEquals(searchResearchFile1stResultRegion, researchFile.ResearchFileMOTIRegion);
             AssertTrueContentEquals(searchResearchFile1stResultCreator, user);

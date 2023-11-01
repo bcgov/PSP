@@ -24,41 +24,41 @@ Scenario: 03. Acquisition File Property Takes
 	Then A new Acquisition file is created successfully
 
 Scenario: 04. Acquisition Checklist Tab
-	Given I create a new Acquisition File from row number 6
+	Given I create a new Acquisition File from row number 7
 	When I insert Checklist information to an Acquisition File
 	Then Acquisition File's Checklist has been saved successfully
 
 Scenario: 05. Acquisition Files Digital Documents
-	Given I create a new Acquisition File from row number 7
+	Given I create a new Acquisition File from row number 8
 	When I create Digital Documents for a "Acquisition File" row number 4
 	And  I edit a Digital Document for a "Acquisition File" from row number 7
 	Then A new Acquisition file is created successfully
 
 Scenario: 06. Acquisition File Notes
-	Given I create a new Acquisition File from row number 8
+	Given I create a new Acquisition File from row number 9
 	When  I create a new Note on the Notes Tab from row number 3
-	And  I edit a Note on the Notes Tab from row number 7
+	And  I edit a Note on the Notes Tab from row number 4
 	Then A new Acquisition file is created successfully
 
 Scenario: 07. Acquisition File Agreements Tab
-	Given I create a new Acquisition File from row number 9
+	Given I create a new Acquisition File from row number 10
 	When I create Agreements within an Acquisition File
-	And I update an Agreement within an Acquisition File from row number 10
+	And I update an Agreement within an Acquisition File from row number 11
 	Then A new Acquisition file is created successfully
 
 Scenario: 08. Acquisition File Stakeholders Tab
-	Given I create a new Acquisition File from row number 11
+	Given I create a new Acquisition File from row number 12
 	When I add Properties to the Acquisition File
 	And I create Stakeholders within an Acquisition File
 	Then A new Acquisition file is created successfully
 
 Scenario: 09. Acquisition File Compensation Tab
-	Given I create a new Acquisition File from row number 12
+	Given I create a new Acquisition File from row number 13
 	When I add additional information to the Acquisition File Details
 	And I add Properties to the Acquisition File
 	And I create Stakeholders within an Acquisition File
 	And I create Compensation Requisition within an Acquisition File
-	And I update Compensation Requisition within an Acquisition File from row number 13
+	And I update Compensation Requisition within an Acquisition File from row number 14
 	Then A new Acquisition file is created successfully
 
 Scenario: 10. Acquisition File Expropriation Tab

@@ -1,7 +1,5 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.DevTools.V115.Network;
 using PIMS.Tests.Automation.Classes;
-using Sprache;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -26,7 +24,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By take1DeleteButton = By.CssSelector("button[title='delete take']");
         private By takeStatusLabel = By.XPath("//label[contains(text(),'Take status')]");
         private By take1StatusSelect = By.Id("input-takes.0.takeStatusTypeCode");
-        private By takeSiteContaminationLabel = By.XPath("//label[contains(text(),'Site Contamination')]");
+        private By takeSiteContaminationLabel = By.XPath("//label[contains(text(),'Site contamination')]");
         private By take1SiteContaminationSelect = By.Id("input-takes.0.takeSiteContamTypeCode");
         private By takeDescriptionLabel = By.XPath("//label[contains(text(),'Description of this Take')]");
         private By take1DescriptionInput = By.Id("input-takes.0.description");

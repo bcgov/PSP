@@ -42,6 +42,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateNewAgreementBttn()
         {
+            Wait(2000);
+
             WaitUntilClickable(agreementsCreateNewAgreementBttn);
             webDriver.FindElement(agreementsCreateNewAgreementBttn).Click();
         }
