@@ -48,6 +48,7 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
   useEffect(() => {
     fetchPropertyActivities();
   }, [fetchPropertyActivities, staleLastUpdatedBy]);
+  //TODO: remove staleLastUpdatedBy when side bar context is refactored.
 
   const onCreate = () => {
     history.push(`/mapview/sidebar/property/${propertyId}/activity/new`);
