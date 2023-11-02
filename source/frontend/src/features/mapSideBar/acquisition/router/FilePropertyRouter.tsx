@@ -83,7 +83,6 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
       <Switch>
         <Route path={`${path}/:tab`}>
           <PropertyFileContainer
-            withRouter
             setEditFileProperty={() => props.setIsEditing(true)}
             setEditTakes={() => props.setIsEditing(true)}
             fileProperty={fileProperty}

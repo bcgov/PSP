@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import { Claims } from '@/constants';
 import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
@@ -14,12 +15,10 @@ import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/prop
 import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
-import { EditManagementState } from './PropertyViewSelector';
 import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 
 export interface IPropertyContainerProps {
   composedPropertyState: ComposedPropertyState;
-  setEditManagementState: (state: EditManagementState | null) => void;
 }
 
 /**
@@ -27,7 +26,7 @@ export interface IPropertyContainerProps {
  */
 export const PropertyContainer: React.FunctionComponent<
   React.PropsWithChildren<IPropertyContainerProps>
-> = ({ composedPropertyState, setEditManagementState }) => {
+> = ({ composedPropertyState }) => {
   const showPropertyInfoTab = composedPropertyState?.id !== undefined;
   const { hasClaim } = useKeycloakWrapper();
 
@@ -79,7 +78,6 @@ export const PropertyContainer: React.FunctionComponent<
         <PropertyDetailsTabView
           property={propertyViewForm}
           loading={composedPropertyState.apiWrapper?.loading ?? false}
-          setEditManagementState={setEditManagementState}
         />
       ),
       key: InventoryTabNames.property,
@@ -114,7 +112,6 @@ export const PropertyContainer: React.FunctionComponent<
         <PropertyManagementTabView
           property={composedPropertyState.apiWrapper?.response}
           loading={composedPropertyState.apiWrapper?.loading ?? false}
-          setEditManagementState={setEditManagementState}
         />
       ),
       key: InventoryTabNames.management,
@@ -123,15 +120,14 @@ export const PropertyContainer: React.FunctionComponent<
     defaultTab = InventoryTabNames.management;
   }
 
-  const [activeTab, setActiveTab] = useState<InventoryTabNames>(defaultTab);
-
+  const params = useParams<{ tab?: string }>();
+  const activeTab = Object.values(InventoryTabNames).find(t => t === params.tab) ?? defaultTab;
   return (
     <InventoryTabs
       loading={composedPropertyState.composedLoading}
       tabViews={tabViews}
       defaultTabKey={defaultTab}
       activeTab={activeTab}
-      setActiveTab={setActiveTab}
     />
   );
 };

@@ -52,7 +52,6 @@ describe('PropertyManagementDetailContainer component', () => {
       <PropertyManagementDetailContainer
         {...renderOptions.props}
         propertyId={renderOptions.props?.propertyId ?? 1}
-        setEditManagementState={setEditManagementState}
         View={View}
       />,
       {

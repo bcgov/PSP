@@ -1,5 +1,7 @@
+import { createMemoryHistory } from 'history';
+
 import { Claims } from '@/constants';
-import { PropertyEditForms } from '@/features/mapSideBar/property/PropertyViewSelector';
+import { PropertyEditForms } from '@/features/mapSideBar/property/PropertyRouter';
 import { mockLookups } from '@/mocks/lookups.mock';
 import {
   getMockApiPropertyManagement,
@@ -20,7 +22,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const setEditManagementState = jest.fn();
+const history = createMemoryHistory();
 
 describe('PropertyManagementDetailView component', () => {
   const setup = (
@@ -30,7 +32,6 @@ describe('PropertyManagementDetailView component', () => {
     const utils = render(
       <PropertyManagementDetailView
         {...renderOptions.props}
-        setEditManagementState={setEditManagementState}
         propertyManagement={
           renderOptions.props?.propertyManagement ?? getMockApiPropertyManagement()
         }
@@ -38,6 +39,7 @@ describe('PropertyManagementDetailView component', () => {
       />,
       {
         ...renderOptions,
+        history: history,
         store: storeState,
         useMockAuthentication: true,
       },
@@ -97,9 +99,6 @@ describe('PropertyManagementDetailView component', () => {
     const { getByTitle } = setup({ claims: [Claims.MANAGEMENT_EDIT] });
     const editButton = getByTitle('Edit property management information');
     await act(async () => userEvent.click(editButton));
-    expect(setEditManagementState).toHaveBeenCalledWith({
-      form: PropertyEditForms.UpdateManagementSummaryContainer,
-      childId: null,
-    });
+    expect(history.location.search).toBe('?edit=true');
   });
 });
