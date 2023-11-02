@@ -167,11 +167,15 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilClickable(compensationAddBttn);
             webDriver.FindElement(compensationAddBttn).Click();
+
+            WaitUntilSpinnerDisappear();
         }
 
         public void OpenCompensationDetails(int index)
         {
             Wait(2000);
+
+            WaitUntilClickable(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button div svg[data-testid='compensation-view-"+ index +"']"));
             webDriver.FindElement(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button div svg[data-testid='compensation-view-"+ index +"']")).Click();
         }
 
@@ -187,6 +191,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.True(sharedModals.ModalContent().Equals("Are you sure you want to delete this item?"));
                 sharedModals.ModalClickOKBttn();
             }
+
+            WaitUntilSpinnerDisappear();
         }
 
         public void SaveAcquisitionFileCompensation()

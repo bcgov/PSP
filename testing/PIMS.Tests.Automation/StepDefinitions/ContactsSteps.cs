@@ -27,7 +27,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a new Individual Contact from row number (.*)")]
         public void IndividualContact(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-2705, PSP-2797, PSP-4559 */
+            /* TEST COVERAGE: PSP-2705, PSP-2797, PSP-4559, PSP-2706, PSP-4559 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -37,7 +37,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             PopulateIndividualContact(rowNumber);
 
-            //Create new Individual Contact with maximum fields
+            //Create new Individual Contact
+            contacts.CreateIndividualContact(individualContact);
+
+            //Cancel Contact
+            contacts.CancelContact();
+
+            //Go to the create new contact form
+            contacts.CreateNewContactBttn();
+
+            //Create new Individual Contact
             contacts.CreateIndividualContact(individualContact);
 
             //Save Contact
@@ -50,7 +59,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a new Organization Contact from row number (.*)")]
         public void OrganizationContact(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-4208, PSP-2797, PSP-4559 */
+            /* TEST COVERAGE: PSP-4208, PSP-2797, PSP-4559, PSP-2706, PSP-4559 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -61,7 +70,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Populate the organization Object with selected data
             PopulateOrganizationContact(rowNumber);
 
-            //Create new Organization Contact with maximum fields
+            //Create new Organization Contact
+            contacts.CreateOrganizationContact(organizationContact);
+
+            //Cancel Contact
+            contacts.CancelContact();
+
+            //Go to the create new contact form
+            contacts.CreateNewContactBttn();
+
+            //Create new Organization Contact
             contacts.CreateOrganizationContact(organizationContact);
 
             //Save Contact
@@ -74,51 +92,33 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update an existing Organization Contact from row number (.*)")]
         public void UpdateOrganizationContact(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-3021, PSP-4200, PSP-4559 */
-
-            //Login to PIMS
-            loginSteps.Idir(userName);
-
-            //Navigate to Search a Contact
-            searchContacts.NavigateToSearchContact();
-
-            //Search for a contact
-            PopulateOrganizationContact(rowNumber);
-            searchContacts.SearchOrganizationContact(organizationContact.OrganizationName);
-
-            //Select the first option from search
-            searchContacts.SelectFirstResultLink();
+            /* TEST COVERAGE: PSP-3021, PSP-4200, PSP-4559, PSP-4208 */
 
             //Update an Organization Contact
+            PopulateOrganizationContact(rowNumber);
             contacts.UpdateOrganizationContact(organizationContact);
 
             //Save Contact
             contacts.SaveContact();
 
+            //Verify updated contact
+            contacts.VerifyOrganizationContactView(organizationContact);
         }
 
         [StepDefinition(@"I update an existing Individual Contact from row number (.*)")]
         public void UpdateIndividualContact(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-4207, PSP-4200, PSP-4559 */
-
-            //Login to PIMS
-            loginSteps.Idir(userName);
-
-            //Navigate to Search a Contact
-            searchContacts.NavigateToSearchContact();
-           
-            PopulateIndividualContact(rowNumber);
-            searchContacts.SearchIndividualContact(individualContact.FullName);
-
-            //Select the first option from search
-            searchContacts.SelectFirstResultLink();
+            /* TEST COVERAGE: PSP-4207, PSP-4200, PSP-4559, PSP-2705 */
 
             //Update an Organization Contact
+            PopulateIndividualContact(rowNumber);
             contacts.UpdateIndividualContact(individualContact);
 
             //Save Contact
             contacts.SaveContact();
+
+            //Verify updated contact
+            contacts.VerifyIndividualContactView(individualContact);
         }
 
         [StepDefinition(@"I search for an existing contact from type ""(.*)"" row number (.*)")]
@@ -131,12 +131,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             if (contactType == "Individual")
             {
-                //PopulateIndividualContact(rowNumber);
+                PopulateIndividualContact(rowNumber);
                 searchContacts.SearchGeneralContact(individualContact.FullName);
             }
             else
             {
-                //PopulateOrganizationContact(rowNumber);
+                PopulateOrganizationContact(rowNumber);
                 searchContacts.SearchGeneralContact(organizationContact.OrganizationName);
             }
         }
@@ -165,29 +165,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
         }
 
-        [StepDefinition(@"I cancel creating a new contact from row number (.*)")]
-        public void CancelContactCreation(int rowNumber)
-        {
-            /* TEST COVERAGE: PSP-2706, PSP-4559 */
-
-            //Login to PIMS
-            loginSteps.Idir(userName);
-
-            //Navigate to Search a Contact
-            searchContacts.NavigateToSearchContact();
-
-            //Click on Create new Contact button
-            searchContacts.CreateNewContactFromSearch();
-
-            PopulateIndividualContact(rowNumber);
-
-            //Create new Individual Contact with minimum fields
-            contacts.CreateIndividualContact(individualContact);
-
-            //Cancel Contact
-            contacts.CancelContact();
-        }
-
         [StepDefinition(@"I verify the Contacts List View")]
         public void VerifyContactsListView()
         {
@@ -201,29 +178,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify List View
             searchContacts.VerifyContactsListView();
-        }
-
-        //ASSERT FUNCTIONS
-        [StepDefinition(@"An Organization contact is successfully updated")]
-        public void OrganizationContactUpdated()
-        {
-            /* TEST COVERAGE: PSP-4208 */
-
-            contacts.VerifyOrganizationContactView(organizationContact);
-        }
-
-        [StepDefinition(@"An Individual contact is successfully updated")]
-        public void IndividualContactUpdated()
-        {
-            /* TEST COVERAGE: PSP-2705 */
-            contacts.VerifyIndividualContactView(individualContact);
-        }
-
-        [StepDefinition(@"Search Contacts screen is correctly rendered")]
-        public void CorrectSearchContact()
-        {
-            /* TEST COVERAGE: PSP-2704, PSP-2541 */
-            Assert.True(searchContacts.SearchContactRender());
         }
 
         [StepDefinition(@"No contacts results are found")]
