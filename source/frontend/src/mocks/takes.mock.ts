@@ -26,7 +26,7 @@ export const getMockApiTakes = (): Api_Take[] => [
     areaUnitTypeCode: 'M2',
     ltcEndDt: '2020-01-01',
     landActEndDt: '2020-01-01',
-    srwEndDt: '2020-01-01',
+    srwEndDt: '2022-11-20',
     landActTypeCode: { id: 'Section 15', description: 'Reserve' },
     rowVersion: 2,
   },

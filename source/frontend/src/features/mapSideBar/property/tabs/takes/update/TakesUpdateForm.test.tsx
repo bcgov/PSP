@@ -122,16 +122,18 @@ describe('TakesUpdateForm component', () => {
     expect(queryByDisplayValue('4046.86')).toBeNull();
   });
 
-  it('resets isstatutoryrightofway values if radio button toggled from yes to no', async () => {
+  it('resets isNewInterestInSrw values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
-    const noButton = getByTestId('radio-takes.0.isstatutoryrightofway-no');
+    const noButton = getByTestId('radio-takes.0.isnewinterestinsrw-no');
     await act(async () => userEvent.click(noButton));
 
     expect(queryByDisplayValue('8093.71')).not.toBeNull();
+    expect(queryByDisplayValue('Nov 20, 2022')).not.toBeNull();
     const confirmButton = await screen.findByText('Confirm');
     await act(async () => userEvent.click(confirmButton));
 
     expect(queryByDisplayValue('8093.71')).toBeNull();
+    expect(queryByDisplayValue('Nov 20, 2022')).toBeNull();
   });
 
   it('resets islandAct values if radio button toggled from yes to no', async () => {
