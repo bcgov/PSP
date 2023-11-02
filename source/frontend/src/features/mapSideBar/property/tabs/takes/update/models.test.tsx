@@ -17,7 +17,7 @@ describe('take model tests', () => {
     expect(takeModel.isLicenseToConstruct).toBe('false');
     expect(takeModel.isNewRightOfWay).toBe('false');
     expect(takeModel.isLandAct).toBe('false');
-    expect(takeModel.isStatutoryRightOfWay).toBe('false');
+    expect(takeModel.isNewInterestInSrw).toBe('false');
     expect(takeModel.isSurplus).toBe('false');
   });
 
@@ -34,7 +34,7 @@ describe('take model tests', () => {
     expect(takeModel.isLicenseToConstruct).toBe('true');
     expect(takeModel.isNewRightOfWay).toBe('true');
     expect(takeModel.isLandAct).toBe('true');
-    expect(takeModel.isStatutoryRightOfWay).toBe('true');
+    expect(takeModel.isNewInterestInSrw).toBe('true');
     expect(takeModel.isSurplus).toBe('true');
   });
   it('sets all undefined areas to 0', () => {
