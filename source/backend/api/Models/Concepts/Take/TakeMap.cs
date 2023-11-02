@@ -53,6 +53,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.TakeStatusTypeCode, src => src.TakeStatusTypeCode)
                 .Map(dest => dest.LandActTypeCode, src => src.LandActTypeCode.Id)
                 .Map(dest => dest.SrwEndDt, src => src.SrwEndDt)
+                .Map(dest => dest.IsAcquiredForInventory, () => true) // TODO: fix this
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }
