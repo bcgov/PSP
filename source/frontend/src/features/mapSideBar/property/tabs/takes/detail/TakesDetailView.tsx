@@ -118,7 +118,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                   labelWidth="8"
                 >
                   <YesNoButtons
-                    id="statutoryRightOfWayToggle"
+                    id="newInterestInSrwToggle"
                     disabled
                     value={take.isNewInterestInSrw}
                   />
@@ -127,6 +127,10 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                   <>
                     <SectionField label="Area" labelWidth="12">
                       <AreaContainer landArea={take.statutoryRightOfWayArea ?? undefined} />
+                    </SectionField>
+
+                    <SectionField label="SRW end date" labelWidth="3" contentWidth="4">
+                      {prettyFormatDate(take.srwEndDt ?? undefined)}
                     </SectionField>
                   </>
                 )}
