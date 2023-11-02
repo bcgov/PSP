@@ -1,6 +1,7 @@
 import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants';
+import { PropertyEditForms } from '@/features/mapSideBar/property/PropertyRouter';
 import { mockLookups } from '@/mocks/lookups.mock';
 import {
   getMockApiPropertyManagement,
