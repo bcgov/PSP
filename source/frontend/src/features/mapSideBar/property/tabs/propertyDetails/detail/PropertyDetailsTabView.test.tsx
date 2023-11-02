@@ -1,5 +1,4 @@
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
 
 import { Claims, PropertyTenureTypes } from '@/constants/index';
 import { mockLookups } from '@/mocks/lookups.mock';
