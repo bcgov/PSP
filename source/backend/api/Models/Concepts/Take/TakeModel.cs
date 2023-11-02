@@ -24,7 +24,7 @@ namespace Pims.Api.Models.Concepts
 
         public bool IsLandAct { get; set; }
 
-        public bool IsStatutoryRightOfWay { get; set; }
+        public bool IsNewInterestInSrw { get; set; }
 
         public float? LicenseToConstructArea { get; set; }
 
@@ -41,6 +41,8 @@ namespace Pims.Api.Models.Concepts
         public long PropertyAcquisitionFileId { get; set; }
 
         public float? StatutoryRightOfWayArea { get; set; }
+
+        public DateTime? SrwEndDt { get; set; }
 
         public float? SurplusArea { get; set; }
 

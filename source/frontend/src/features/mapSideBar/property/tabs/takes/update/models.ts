@@ -13,9 +13,9 @@ export const TakesYupSchema = Yup.object().shape({
       takeTypeCode: Yup.string().required('Take type is required').nullable(),
       takeStatusTypeCode: Yup.string().required('Take status type is required.'),
       isSurplus: Yup.bool().required('Surplus flag required'),
-      isNewRightOfWay: Yup.bool().required('Surplus flag required'),
+      isNewRightOfWay: Yup.bool().required('New highway dedication flag required'),
       isLandAct: Yup.bool().required('Section 16 flag required'),
-      isStatutoryRightOfWay: Yup.bool().required('Statutory right of way flag required'),
+      isNewInterestInSrw: Yup.bool().required('Statutory right of way (SRW) flag required'),
       isLicenseToConstruct: Yup.bool().required('License to construct flag required'),
       ltcEndDt: Yup.string().when('isLicenseToConstruct', {
         is: (isLicenseToConstruct: boolean) => isLicenseToConstruct,
@@ -39,7 +39,7 @@ export class TakeModel {
   isSurplus: 'false' | 'true';
   isNewRightOfWay: 'false' | 'true';
   isLandAct: 'false' | 'true';
-  isStatutoryRightOfWay: 'false' | 'true';
+  isNewInterestInSrw: 'false' | 'true';
   isLicenseToConstruct: 'false' | 'true';
   ltcEndDt: string;
   licenseToConstructArea: number;
@@ -53,6 +53,7 @@ export class TakeModel {
   landActTypeCode: string | null;
   statutoryRightOfWayArea: number;
   statutoryRightOfWayAreaUnitTypeCode: string;
+  srwEndDt: string;
   surplusArea: number;
   surplusAreaUnitTypeCode: string;
   propertyAcquisitionFileId: number | null;
@@ -69,7 +70,7 @@ export class TakeModel {
     this.isNewRightOfWay = base.isNewRightOfWay ? 'true' : 'false';
     this.isLandAct = base.isLandAct ? 'true' : 'false';
     this.isLicenseToConstruct = base.isLicenseToConstruct ? 'true' : 'false';
-    this.isStatutoryRightOfWay = base.isStatutoryRightOfWay ? 'true' : 'false';
+    this.isNewInterestInSrw = base.isNewInterestInSrw ? 'true' : 'false';
     this.licenseToConstructArea = base.licenseToConstructArea ?? 0;
     this.licenseToConstructAreaUnitTypeCode =
       base.areaUnitTypeCode ?? AreaUnitTypes.SquareMeters.toString();
@@ -89,6 +90,7 @@ export class TakeModel {
     this.propertyAcquisitionFileId = base.propertyAcquisitionFileId;
     this.landActEndDt = base.landActEndDt ?? '';
     this.ltcEndDt = base.ltcEndDt ?? '';
+    this.srwEndDt = base.srwEndDt ?? '';
     this.landActDescription = base.landActTypeCode?.description ?? '';
     this.landActTypeCode = base.landActTypeCode?.id ?? '';
   }
@@ -130,6 +132,7 @@ export class TakeModel {
           this.statutoryRightOfWayAreaUnitTypeCode,
           AreaUnitTypes.SquareMeters.toString(),
         ) || null,
+      srwEndDt: stringToUndefined(this.srwEndDt),
       ltcEndDt: stringToUndefined(this.ltcEndDt),
       landActEndDt: stringToUndefined(this.landActEndDt),
       landActTypeCode: toTypeCode(this.landActTypeCode),
@@ -137,7 +140,7 @@ export class TakeModel {
       isNewRightOfWay: this.isNewRightOfWay === 'true',
       isLandAct: this.isLandAct === 'true',
       isLicenseToConstruct: this.isLicenseToConstruct === 'true',
-      isStatutoryRightOfWay: this.isStatutoryRightOfWay === 'true',
+      isNewInterestInSrw: this.isNewInterestInSrw === 'true',
     };
   }
 }

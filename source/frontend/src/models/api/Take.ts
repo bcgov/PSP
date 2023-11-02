@@ -8,7 +8,7 @@ export interface Api_Take extends Api_ConcurrentVersion, Api_AuditFields {
   areaUnitTypeCode: string;
   isSurplus: boolean;
   isLandAct: boolean;
-  isStatutoryRightOfWay: boolean;
+  isNewInterestInSrw: boolean;
   isNewRightOfWay: boolean;
   isLicenseToConstruct: boolean;
   licenseToConstructArea: number | null;
@@ -18,6 +18,7 @@ export interface Api_Take extends Api_ConcurrentVersion, Api_AuditFields {
   landActEndDt: string | null;
   landActTypeCode: Api_TypeCode<string> | null;
   statutoryRightOfWayArea: number | null;
+  srwEndDt: string | null;
   surplusArea: number | null;
   propertyAcquisitionFileId: number | null;
   takeSiteContamTypeCode: string | null;
