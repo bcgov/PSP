@@ -518,7 +518,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ViewLastDocument(int index)
         {
-            Wait();
+            Wait(2000);
             WaitUntilClickable(documentTableResults1stViewBttn);
 
             if (index > 9)
