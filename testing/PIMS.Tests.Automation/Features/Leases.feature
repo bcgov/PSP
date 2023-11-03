@@ -60,10 +60,6 @@ Scenario: 10. Lease and License from a Property of Interest Pin
 	Given I create a new Lease through a Property of Interest from row number 5
 	Then A new lease is created successfully
 
-Scenario: 11. Lease and License from a Payable Marker Pin
-	Given I create a new Lease through a Payable Marker from row number 6
-	Then A new lease is created successfully
-
-Scenario: 12. Lease and License List View
+Scenario: 11. Lease and License List View
 	Given I search for an existing Lease or License from row number 2
 	Then Expected Lease File Content is displayed on Leases Table

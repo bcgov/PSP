@@ -126,7 +126,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateToCreateNewAcquisitionFile()
         {
             Wait(3000);
-            webDriver.FindElement(menuAcquisitionButton).Click();
+            FocusAndClick(menuAcquisitionButton);
 
             WaitUntilVisible(createAcquisitionFileButton);
             FocusAndClick(createAcquisitionFileButton);

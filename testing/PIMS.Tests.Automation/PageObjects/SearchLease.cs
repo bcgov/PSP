@@ -93,6 +93,15 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
         }
 
+        public void OrderByLastLease()
+        {
+            WaitUntilClickable(searchLicenseOrderByLFileBttn);
+            webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
+
+            Wait();
+            webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
+        }
+
         public void SelectFirstOption()
         {
             WaitUntilClickable(searchLicense1stResultLink);
@@ -141,7 +150,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Search Leases Filters
             Assert.True(webDriver.FindElement(searchBySelect).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenseLFileInput).Displayed);
+            Assert.True(webDriver.FindElement(searchLicensePIDInput).Displayed);
             Assert.True(webDriver.FindElement(searchLicenseStatusInput).Displayed);
             Assert.True(webDriver.FindElement(searchLicenseProgramInput).Displayed);
             Assert.True(webDriver.FindElement(searchLicenceTenantInput).Displayed);

@@ -127,6 +127,7 @@
         public string? Section6ExpropriationSelect9 { get; set; } = String.Empty;
         public string? Section6ExpropriationSelect10 { get; set; } = String.Empty;
         public string? Section6ExpropriationSelect11 { get; set; } = String.Empty;
+        public string? Section6ExpropriationSelect12 { get; set; } = String.Empty;
 
         public string? AcquisitionCompletionSelect1 { get; set; } = String.Empty;
     }

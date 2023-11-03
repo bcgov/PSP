@@ -4,13 +4,13 @@ Feature: SmokeTest
 Test cases allocated for Smoke Testing
 
 Scenario: Create Minimum Individual Contact
-	Given I create a new Individual Contact from row number 3
-	When I search for an existing contact from type "Individual" row number 3
+	Given I create a new Individual Contact from row number 7
+	When I search for an existing contact from type "Individual" row number 7
 	Then  Expected Content is displayed on Contacts Table from contact type "Individual"
 
 Scenario: Create Minimum Organization Contact
-	Given I create a new Organization Contact from row number 2
-	When I search for an existing contact from type "Organization" row number 2
+	Given I create a new Organization Contact from row number 5
+	When I search for an existing contact from type "Organization" row number 5
 	Then Expected Content is displayed on Contacts Table from contact type "Organization"
 
 Scenario: Create Minimum Lease and License

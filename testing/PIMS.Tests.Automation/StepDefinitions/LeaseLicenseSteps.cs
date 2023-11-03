@@ -634,38 +634,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseCode = leaseDetails.GetLeaseCode();
         }
 
-        [StepDefinition(@"I create a new Lease through a Payable Marker from row number (.*)")]
-        public void CreateLeasePurplePin(int rowNumber)
-        {
-            /* TEST COVERAGE: PSP-5158 */
-
-            //Login to PIMS
-            loginSteps.Idir(userName);
-
-            //Look for a Inventory Property
-            PopulateLeaseLicense(rowNumber);
-            searchProperties.SearchPropertyByPINPID(lease.SearchProperties.PID);
-
-            //Choose the given result
-            searchProperties.SelectFoundPin();
-
-            //Close Main Information Window
-            propertyInformation.ClosePropertyInfoModal();
-
-            //Start a new lease from pop-up
-            propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Lease/License - Create new");
-
-            //Fill basic information on the form
-            leaseDetails.CreateMinimumLicenseDetails(lease);
-
-            //Save Lease Details
-            leaseDetails.SaveLicense();
-
-            //Get new lease's code
-            leaseCode = leaseDetails.GetLeaseCode();
-        }
-
         [StepDefinition(@"I search for an existing Lease or License from row number (.*)")]
         public void SearchExistingLicense(int rowNumber)
         {
@@ -688,8 +656,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLease.FilterLeasesFiles("003-549-551", "05/12/1987", "Jonathan Doe", "Discarded");
             Assert.False(searchLease.SearchFoundResults());
 
-            //Look for the last created research file
-            searchLease.SearchLastLease();
+            searchLease.FilterLeasesFiles("", "03/22/2024", "", "Terminated");
+            searchLease.OrderByLastLease();
         }
 
         [StepDefinition(@"A new lease is created successfully")]

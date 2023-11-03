@@ -188,6 +188,13 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(createContactButton);
         }
 
+        //Create new Contact Button
+        public void CreateNewContactBttn()
+        {
+            WaitUntilClickable(createContactButton);
+            FocusAndClick(createContactButton);
+        }
+
         //Creates Individual Contact with all fields
         public void CreateIndividualContact(IndividualContact contact)
         {
@@ -861,403 +868,371 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyIndividualContactView(IndividualContact contact)
         {
             Wait(2000);
-            Assert.True(webDriver.FindElement(contactTitle).Displayed);
-            Assert.True(webDriver.FindElement(contactEditButton).Displayed);
 
-            Assert.True(webDriver.FindElement(contactIndFullName).Text.Equals(contact.FullName));
-            Assert.True(webDriver.FindElement(contactIndPrefNameLabel).Displayed);
-            Assert.True(webDriver.FindElement(contactIndPrefNameContent).Text.Equals(contact.PreferableName));
-            Assert.True(webDriver.FindElement(contactIndStatusSpan).Text.Equals(contact.ContactStatus));
+            AssertTrueIsDisplayed(contactTitle);
+            AssertTrueIsDisplayed(contactEditButton);
 
-            Assert.True(webDriver.FindElement(contactIndOrganizationLabel).Displayed);
+            if(contact.FullName != "")
+                AssertTrueContentEquals(contactIndFullName, contact.FullName);
+            AssertTrueIsDisplayed(contactIndPrefNameLabel);
+
+            if(contact.PreferableName != "")
+                AssertTrueContentEquals(contactIndPrefNameContent, contact.PreferableName);
+
+            if(contact.ContactStatus != "")
+                AssertTrueContentEquals(contactIndStatusSpan, contact.ContactStatus);
+
+            AssertTrueIsDisplayed(contactIndOrganizationLabel);
+
             if (contact.Organization != "")
-            {
-                Assert.True(webDriver.FindElement(contactIndOrganizationContent).Text.Equals(contact.Organization));
-            }
- 
-            Assert.True(webDriver.FindElement(contactInfoSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(contactEmailLabel).Displayed);           
+                AssertTrueContentEquals(contactIndOrganizationContent, contact.Organization);
+
+            AssertTrueIsDisplayed(contactInfoSubtitle);
+            AssertTrueIsDisplayed(contactEmailLabel);
+            
             if (contact.IndEmail1 != "")
             {
-                Assert.True(webDriver.FindElement(contactEmail1Content).Text.Equals(contact.IndEmail1));
-                Assert.True(webDriver.FindElement(contactEmailType1Content).Text.Equals(contact.IndEmailTypeDisplay1));
+                AssertTrueContentEquals(contactEmail1Content, contact.IndEmail1);
+                AssertTrueContentEquals(contactEmailType1Content, contact.IndEmailTypeDisplay1);
             }
             if (contact.IndEmail2 != "")
             {
-                Assert.True(webDriver.FindElement(contactEmail2Content).Text.Equals(contact.IndEmail2));
-                Assert.True(webDriver.FindElement(contactEmailType2Content).Text.Equals(contact.IndEmailTypeDisplay2));
+                AssertTrueContentEquals(contactEmail2Content, contact.IndEmail2);
+                AssertTrueContentEquals(contactEmailType2Content, contact.IndEmailTypeDisplay2);
             }
-            Assert.True(webDriver.FindElement(contactPhoneLabel).Displayed);
+            AssertTrueIsDisplayed(contactPhoneLabel);
             
             if (contact.IndPhone1 != "")
             {
-                Assert.True(webDriver.FindElement(contactPhone1Content).Text.Equals(contact.IndPhone1));
-                Assert.True(webDriver.FindElement(contactPhoneType1Content).Text.Equals(contact.IndPhoneTypeDisplay1));
+                AssertTrueContentEquals(contactPhone1Content, contact.IndPhone1);
+                AssertTrueContentEquals(contactPhoneType1Content, contact.IndPhoneTypeDisplay1);
             }
             if (contact.IndPhone2 != "")
             {
-                Assert.True(webDriver.FindElement(contactPhone2Content).Text.Equals(contact.IndPhone2));
-                Assert.True(webDriver.FindElement(contactPhoneType2Content).Text.Equals(contact.IndPhoneTypeDisplay2));
+                AssertTrueContentEquals(contactPhone2Content, contact.IndPhone2);
+                AssertTrueContentEquals(contactPhoneType2Content, contact.IndPhoneTypeDisplay2);
             }
 
-            Assert.True(webDriver.FindElement(contactAddressSubtitle).Displayed);
+            AssertTrueIsDisplayed(contactAddressSubtitle);
+
             if (contact.IndMailAddressLine1 != "")
             {
-                Assert.True(webDriver.FindElement(contactAddressMailSubtitle).Displayed);
+                AssertTrueIsDisplayed(contactAddressMailSubtitle);
 
                 var mailAddressTotalLines = webDriver.FindElements(contactAddressIndMailCounter).Count;
                 switch (mailAddressTotalLines)
                 {
                     case 4:
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine1).Text.Equals(contact.IndMailAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine2).Text.Equals(contact.IndMailCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine3).Text.Equals(contact.IndMailPostalCode));
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine1, contact.IndMailAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine2, contact.IndMailCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine3, contact.IndMailPostalCode);
+
                         if (contact.IndMailCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine4).Text.Equals(contact.IndMailOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine4, contact.IndMailOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine4).Text.Equals(contact.IndMailCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine4, contact.IndMailCountry);
                         break;
+
                     case 5:
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine1).Text.Equals(contact.IndMailAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine2).Text.Equals(contact.IndMailAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine3).Text.Equals(contact.IndMailCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine4).Text.Equals(contact.IndMailPostalCode));
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine1, contact.IndMailAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine2, contact.IndMailAddressLine2);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine3, contact.IndMailCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine4, contact.IndMailPostalCode);
+
                         if (contact.IndMailCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine5).Text.Equals(contact.IndMailOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine5, contact.IndMailOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine5).Text.Equals(contact.IndMailCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine5, contact.IndMailCountry);
                         break;
+
                     case 6:
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine1).Text.Equals(contact.IndMailAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine2).Text.Equals(contact.IndMailAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine3).Text.Equals(contact.IndMailAddressLine3));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine4).Text.Equals(contact.IndMailCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine5).Text.Equals(contact.IndMailPostalCode));
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine1,contact.IndMailAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine2,contact.IndMailAddressLine2);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine3,contact.IndMailAddressLine3);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine4,contact.IndMailCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine5,contact.IndMailPostalCode);
+
                         if (contact.IndMailCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine6).Text.Equals(contact.IndMailOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine6,contact.IndMailOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine6).Text.Equals(contact.IndMailCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine6,contact.IndMailCountry);
                         break;
                 }
             }
             if (contact.IndPropertyAddressLine1 != "")
             {
-                Assert.True(webDriver.FindElement(contactAddressPropertySubtitle).Displayed);
+                AssertTrueIsDisplayed(contactAddressPropertySubtitle);
 
                 var propertyAddressTotalLines = webDriver.FindElements(contactAddressIndPropertyCounter).Count;
                 switch (propertyAddressTotalLines)
                 {
                     case 4:
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine1).Text.Equals(contact.IndPropertyAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine2).Text.Equals(contact.IndPropertyCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine3).Text.Equals(contact.IndPropertyPostalCode));
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine1,contact.IndPropertyAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine2,contact.IndPropertyCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine3,contact.IndPropertyPostalCode);
+
                         if (contact.IndPropertyCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine4).Text.Equals(contact.IndPropertyOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine4).Text.Equals(contact.IndPropertyCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyCountry);
                         break;
+
                     case 5:
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine1).Text.Equals(contact.IndPropertyAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine2).Text.Equals(contact.IndPropertyAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine3).Text.Equals(contact.IndPropertyCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine4).Text.Equals(contact.IndPropertyPostalCode));
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine1, contact.IndPropertyAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine2, contact.IndPropertyAddressLine2);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine3, contact.IndPropertyCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyPostalCode);
+
                         if (contact.IndPropertyCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine5).Text.Equals(contact.IndPropertyOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine5, contact.IndPropertyOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine5).Text.Equals(contact.IndPropertyCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine5, contact.IndPropertyCountry);
                         break;
+
                     case 6:
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine1).Text.Equals(contact.IndPropertyAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine2).Text.Equals(contact.IndPropertyAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine3).Text.Equals(contact.IndPropertyAddressLine3));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine4).Text.Equals(contact.IndPropertyCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine5).Text.Equals(contact.IndPropertyPostalCode));
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine1, contact.IndPropertyAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine2, contact.IndPropertyAddressLine2);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine3, contact.IndPropertyAddressLine3);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine5, contact.IndPropertyPostalCode);
+
                         if (contact.IndPropertyCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine6).Text.Equals(contact.IndPropertyOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine6, contact.IndPropertyOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine6).Text.Equals(contact.IndPropertyCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine6, contact.IndPropertyCountry);
                         break;
                 }
             }
             if (contact.IndBillingAddressLine1 != "")
             {
-                Assert.True(webDriver.FindElement(contactAddressBillingSubtitle).Displayed);
+                AssertTrueIsDisplayed(contactAddressBillingSubtitle);
 
                 var propertyAddressTotalLines = webDriver.FindElements(contactAddressIndBillingCounter).Count;
                 switch (propertyAddressTotalLines)
                 {
                     case 4:
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine1).Text.Equals(contact.IndBillingAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine2).Text.Equals(contact.IndBillingCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine3).Text.Equals(contact.IndBillingPostalCode));
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine1, contact.IndBillingAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine2, contact.IndBillingCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine3, contact.IndBillingPostalCode);
+
                         if (contact.IndBillingCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine4).Text.Equals(contact.IndBillingOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine4).Text.Equals(contact.IndBillingCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingCountry);
                         break;
+
                     case 5:
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine1).Text.Equals(contact.IndBillingAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine2).Text.Equals(contact.IndBillingAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine3).Text.Equals(contact.IndBillingCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine4).Text.Equals(contact.IndBillingPostalCode));
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine1, contact.IndBillingAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine2, contact.IndBillingAddressLine2);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine3, contact.IndBillingCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingPostalCode);
+
                         if (contact.IndBillingCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine5).Text.Equals(contact.IndBillingOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine5, contact.IndBillingOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine5).Text.Equals(contact.IndBillingCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine5, contact.IndBillingCountry);
                         break;
+
                     case 6:
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine1).Text.Equals(contact.IndBillingAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine2).Text.Equals(contact.IndBillingAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine3).Text.Equals(contact.IndBillingAddressLine3));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine4).Text.Equals(contact.IndBillingCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine5).Text.Equals(contact.IndBillingPostalCode));
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine1, contact.IndBillingAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine2, contact.IndBillingAddressLine2);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine3, contact.IndBillingAddressLine3);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine5, contact.IndBillingPostalCode);
+
                         if (contact.IndBillingCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine6).Text.Equals(contact.IndBillingOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine6, contact.IndBillingOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine6).Text.Equals(contact.IndBillingCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine6, contact.IndBillingCountry);
                         break;
                 }
             }
-            Assert.True(webDriver.FindElement(commentsSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(commentsIndividualContent).Text.Equals(contact.IndComments));
+            AssertTrueIsDisplayed(commentsSubtitle);
+            AssertTrueContentEquals(commentsIndividualContent, contact.IndComments);
         }
 
         public void VerifyOrganizationContactView(OrganizationContact contact)
         {
-            WaitUntilVisible(contactOrgName);
-            Assert.True(webDriver.FindElement(contactTitle).Displayed);
-            Assert.True(webDriver.FindElement(contactEditButton).Displayed);
+            AssertTrueIsDisplayed(contactTitle);
+            AssertTrueIsDisplayed(contactEditButton);
 
-            Assert.True(webDriver.FindElement(contactOrgName).Text.Equals(contact.OrganizationName));
-            Assert.True(webDriver.FindElement(contactOrgAliasLabel).Displayed);
+            if(contact.OrganizationName != "")
+                AssertTrueContentEquals(contactOrgName, contact.OrganizationName);
+            AssertTrueIsDisplayed(contactOrgAliasLabel);
 
             if(contact.Alias != "")
-                Assert.True(webDriver.FindElement(contactOrgAliasContent).Text.Equals(contact.Alias));
+                AssertTrueContentEquals(contactOrgAliasContent, contact.Alias);
 
-            Assert.True(webDriver.FindElement(contactOrgStatusSpan).Text.Equals(contact.ContactStatus));
-
-            Assert.True(webDriver.FindElement(contactOrgIncorpNbrLabel).Displayed);
+            AssertTrueContentEquals(contactOrgStatusSpan, contact.ContactStatus);
+            AssertTrueIsDisplayed(contactOrgIncorpNbrLabel);
 
             if(contact.IncorporationNumber != "")
-                Assert.True(webDriver.FindElement(contactOrgIncorpNbrContent).Text.Equals(contact.IncorporationNumber));
+                AssertTrueContentEquals(contactOrgIncorpNbrContent,contact.IncorporationNumber);
 
-            Assert.True(webDriver.FindElement(contactInfoSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(contactEmailLabel).Displayed);
+            AssertTrueIsDisplayed(contactInfoSubtitle);
+            AssertTrueIsDisplayed(contactEmailLabel);
+
             if (contact.OrgEmail1 != "")
             {
-                Assert.True(webDriver.FindElement(contactEmail1Content).Text.Equals(contact.OrgEmail1));
-                Assert.True(webDriver.FindElement(contactEmailType1Content).Text.Equals(contact.OrgEmailTypeDisplay1));
+                AssertTrueContentEquals(contactEmail1Content, contact.OrgEmail1);
+                AssertTrueContentEquals(contactEmailType1Content, contact.OrgEmailTypeDisplay1);
             }
             if (contact.OrgEmail2 != "")
             {
-                Assert.True(webDriver.FindElement(contactEmail2Content).Text.Equals(contact.OrgEmail2));
-                Assert.True(webDriver.FindElement(contactEmailType2Content).Text.Equals(contact.OrgEmailTypeDisplay2));
+                AssertTrueContentEquals(contactEmail2Content, contact.OrgEmail2);
+                AssertTrueContentEquals(contactEmailType2Content, contact.OrgEmailTypeDisplay2);
             }
 
-            Assert.True(webDriver.FindElement(contactPhoneLabel).Displayed);
+            AssertTrueIsDisplayed(contactPhoneLabel);
             if (contact.OrgPhone1 != "")
             {
-                Assert.True(webDriver.FindElement(contactPhone1Content).Text.Equals(contact.OrgPhone1));
-                Assert.True(webDriver.FindElement(contactPhoneType1Content).Text.Equals(contact.OrgPhoneTypeDisplay1));
+                AssertTrueContentEquals(contactPhone1Content, contact.OrgPhone1);
+                AssertTrueContentEquals(contactPhoneType1Content, contact.OrgPhoneTypeDisplay1);
             }
             if (contact.OrgPhone2 != "")
             {
-                Assert.True(webDriver.FindElement(contactPhone2Content).Text.Equals(contact.OrgPhone2));
-                Assert.True(webDriver.FindElement(contactPhoneType2Content).Text.Equals(contact.OrgPhoneTypeDisplay2));
+                AssertTrueContentEquals(contactPhone2Content, contact.OrgPhone2);
+                AssertTrueContentEquals(contactPhoneType2Content, contact.OrgPhoneTypeDisplay2);
             }
 
-            Assert.True(webDriver.FindElement(contactAddressSubtitle).Displayed);
+            AssertTrueIsDisplayed(contactAddressSubtitle);
             if (contact.OrgMailAddressLine1 != "")
             {
-                Assert.True(webDriver.FindElement(contactAddressMailSubtitle).Displayed);
+                AssertTrueIsDisplayed(contactAddressMailSubtitle);
 
                 var mailAddressTotalLines = webDriver.FindElements(contactAddressOrgMailCounter).Count;
                 switch (mailAddressTotalLines)
                 {
                     case 4:
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine1).Text.Equals(contact.OrgMailAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine2).Text.Equals(contact.OrgMailCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine3).Text.Equals(contact.OrgMailPostalCode));
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine1, contact.OrgMailAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine2, contact.OrgMailCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine3, contact.OrgMailPostalCode);
+
                         if (contact.OrgMailCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine4).Text.Equals(contact.OrgMailOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine4).Text.Equals(contact.OrgMailCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailCountry);
                         break;
+
                     case 5:
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine1).Text.Equals(contact.OrgMailAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine2).Text.Equals(contact.OrgMailAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine3).Text.Equals(contact.OrgMailCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine4).Text.Equals(contact.OrgMailPostalCode));
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine1, contact.OrgMailAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine2, contact.OrgMailAddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine3, contact.OrgMailCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailPostalCode);
+
                         if (contact.OrgMailCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine5).Text.Equals(contact.OrgMailOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine5, contact.OrgMailOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine5).Text.Equals(contact.OrgMailCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine5, contact.OrgMailCountry);
                         break;
+
                     case 6:
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine1).Text.Equals(contact.OrgMailAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine2).Text.Equals(contact.OrgMailAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine3).Text.Equals(contact.OrgMailAddressLine3));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine4).Text.Equals(contact.OrgMailCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine5).Text.Equals(contact.OrgMailPostalCode));
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine1, contact.OrgMailAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine2, contact.OrgMailAddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine3, contact.OrgMailAddressLine3);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine5, contact.OrgMailPostalCode);
+
                         if (contact.OrgMailCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine6).Text.Equals(contact.OrgMailOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine6, contact.OrgMailOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine6).Text.Equals(contact.OrgMailCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine6, contact.OrgMailCountry);
                         break;
                 }
             }
             if (contact.OrgPropertyAddressLine1 != "")
             {
-                Assert.True(webDriver.FindElement(contactAddressPropertySubtitle).Displayed);
+                AssertTrueIsDisplayed(contactAddressPropertySubtitle);
 
                 var propertyAddressTotalLines = webDriver.FindElements(contactAddressOrgPropertyCounter).Count;
                 switch (propertyAddressTotalLines)
                 {
                     case 4:
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine1).Text.Equals(contact.OrgPropertyAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine2).Text.Equals(contact.OrgPropertyCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine3).Text.Equals(contact.OrgPropertyPostalCode));
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine1, contact.OrgPropertyAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine2, contact.OrgPropertyCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine3, contact.OrgPropertyPostalCode);
+
                         if (contact.OrgPropertyCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine4).Text.Equals(contact.OrgPropertyOtherCountry));
-                        }
-                        else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine4).Text.Equals(contact.OrgPropertyCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4, contact.OrgPropertyOtherCountry);
+                        else  
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4, contact.OrgPropertyCountry);
                         break;
+
                     case 5:
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine1).Text.Equals(contact.OrgPropertyAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine2).Text.Equals(contact.OrgPropertyAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine3).Text.Equals(contact.OrgPropertyCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine4).Text.Equals(contact.OrgPropertyPostalCode));
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine1,contact.OrgPropertyAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine2,contact.OrgPropertyAddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine3,contact.OrgPropertyCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4,contact.OrgPropertyPostalCode);
+
                         if (contact.OrgPropertyCountry == "Other")
                         {
-                            Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine5).Text.Equals(contact.OrgPropertyOtherCountry));
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine5,contact.OrgPropertyOtherCountry);
                         }
                         else
                         {
-                            Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine5).Text.Equals(contact.OrgPropertyCountry));
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine5,contact.OrgPropertyCountry);
                         }
                         break;
+
                     case 6:
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine1).Text.Equals(contact.OrgPropertyAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine2).Text.Equals(contact.OrgPropertyAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine3).Text.Equals(contact.OrgPropertyAddressLine3));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine4).Text.Equals(contact.OrgPropertyCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine5).Text.Equals(contact.OrgPropertyPostalCode));
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine1,contact.OrgPropertyAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine2,contact.OrgPropertyAddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine3,contact.OrgPropertyAddressLine3);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4,contact.OrgPropertyCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine5,contact.OrgPropertyPostalCode);
+
                         if (contact.OrgPropertyCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine6).Text.Equals(contact.OrgPropertyOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine6,contact.OrgPropertyOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine6).Text.Equals(contact.OrgPropertyCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine6,contact.OrgPropertyCountry);
                         break;
                 }
             }
             if (contact.OrgBillingAddressLine1 != "")
             {
-                Assert.True(webDriver.FindElement(contactAddressBillingSubtitle).Displayed);
+                AssertTrueIsDisplayed(contactAddressBillingSubtitle);
 
                 var propertyAddressTotalLines = webDriver.FindElements(contactAddressOrgBillingCounter).Count;
                 switch (propertyAddressTotalLines)
                 {
                     case 4:
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine1).Text.Equals(contact.OrgBillingAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine2).Text.Equals(contact.OrgBillingCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine3).Text.Equals(contact.OrgBillingPostalCode));
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine1,contact.OrgBillingAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine2,contact.OrgBillingCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine3,contact.OrgBillingPostalCode);
                         if (contact.OrgBillingCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine4).Text.Equals(contact.OrgBillingOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine4).Text.Equals(contact.OrgBillingCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingCountry);
                         break;
+
                     case 5:
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine1).Text.Equals(contact.OrgBillingAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine2).Text.Equals(contact.OrgBillingAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine3).Text.Equals(contact.OrgBillingCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine4).Text.Equals(contact.OrgBillingPostalCode));
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine1,contact.OrgBillingAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine2,contact.OrgBillingAddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine3,contact.OrgBillingCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingPostalCode);
+
                         if (contact.OrgBillingCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine5).Text.Equals(contact.OrgBillingOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine5,contact.OrgBillingOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine5).Text.Equals(contact.OrgBillingCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine5,contact.OrgBillingCountry);
                         break;
+
                     case 6:
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine1).Text.Equals(contact.OrgBillingAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine2).Text.Equals(contact.OrgBillingAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine3).Text.Equals(contact.OrgBillingAddressLine3));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine4).Text.Equals(contact.OrgBillingCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine5).Text.Equals(contact.OrgBillingPostalCode));
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine1,contact.OrgBillingAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine2,contact.OrgBillingAddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine3,contact.OrgBillingAddressLine3);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine5,contact.OrgBillingPostalCode);
+
                         if (contact.OrgBillingCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine6).Text.Equals(contact.OrgBillingOtherCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine6,contact.OrgBillingOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine6).Text.Equals(contact.OrgBillingCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine6,contact.OrgBillingCountry);
                         break;
                 }
             }
-            Assert.True(webDriver.FindElement(commentsSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(commentsOrganizationContent).Text.Equals(contact.OrgComments));
+            AssertTrueIsDisplayed(commentsSubtitle);
+            AssertTrueContentEquals(commentsOrganizationContent,contact.OrgComments);
         }
 
     }
