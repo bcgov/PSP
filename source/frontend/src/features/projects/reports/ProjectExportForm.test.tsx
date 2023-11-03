@@ -8,6 +8,7 @@ import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-util
 
 import { ProjectExportTypes } from './models';
 import ProjectExportForm, { IProjectExportFormProps } from './ProjectExportForm';
+import { getMockOrganization } from '@/mocks/organization.mock';
 
 const history = createMemoryHistory();
 
@@ -97,9 +98,14 @@ describe('ProjectExportForm component', () => {
     expect(screen.getByText(/776/g)).not.toBeNull();
   });
 
-  it('displays team members when passed', async () => {
+  it('displays team members when passed person', async () => {
     const { getByDisplayValue } = setup({
-      teamMembers: [getMockPerson({ id: 1, surname: 'last', firstName: 'first' })],
+      teamMembers: [
+        {
+          personId: 1,
+          person: getMockPerson({ id: 1, surname: 'last', firstName: 'first' }),
+        },
+      ],
     } as any);
 
     const select = getByDisplayValue(/Select Export Type.../i);
@@ -109,6 +115,25 @@ describe('ProjectExportForm component', () => {
     });
 
     expect(screen.getByText(/first last/g)).not.toBeNull();
+  });
+
+  it('displays team members when passed organization', async () => {
+    const { getByDisplayValue } = setup({
+      teamMembers: [
+        {
+          organizationId: 100,
+          organization: getMockOrganization({ id: 100, name: 'FORTIS BC' }),
+        },
+      ],
+    } as any);
+
+    const select = getByDisplayValue(/Select Export Type.../i);
+
+    await act(async () => {
+      userEvent.selectOptions(select, ProjectExportTypes.AGREEMENT);
+    });
+
+    expect(screen.getByText(/FORTIS BC/g)).not.toBeNull();
   });
 
   it('hides submit, project, team members by default', async () => {

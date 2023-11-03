@@ -59,6 +59,10 @@ namespace Pims.Dal.Repositories
                         .ThenInclude(afp => afp.Person)
                 .Include(f => f.CompensationRequisition)
                     .ThenInclude(cr => cr.AcquisitionFile)
+                        .ThenInclude(a => a.PimsAcquisitionFileTeams)
+                        .ThenInclude(o => o.Organization)
+                .Include(f => f.CompensationRequisition)
+                    .ThenInclude(cr => cr.AcquisitionFile)
                         .ThenInclude(a => a.Project)
                 .Include(f => f.CompensationRequisition)
                     .ThenInclude(cr => cr.AcquisitionFile)
@@ -71,9 +75,15 @@ namespace Pims.Dal.Repositories
                     (f.CompensationRequisition.AlternateProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.AlternateProjectId.Value)) ||
                     (!f.CompensationRequisition.AlternateProjectId.HasValue && f.CompensationRequisition.AcquisitionFile.ProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.AcquisitionFile.ProjectId.Value)));
             }
+
             if (filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
             {
                 query = query.Where(f => f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId.HasValue && filter.AcquisitionTeamPersons.Contains((long)afp.PersonId)));
+            }
+
+            if (filter.AcquisitionTeamOrganizations != null && filter.AcquisitionTeamOrganizations.Any())
+            {
+                query = query.Where(f => f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(o => o.OrganizationId.HasValue && filter.AcquisitionTeamOrganizations.Contains((long)o.OrganizationId)));
             }
 
             return query.ToList();
