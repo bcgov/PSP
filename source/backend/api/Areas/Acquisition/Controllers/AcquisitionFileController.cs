@@ -210,7 +210,6 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         public IActionResult GetAcquisitionTeamMembers()
         {
-            // TODO: This endpoint needs to be fixed to support ORGANIZATIONS as team members (which were introduced by PSP-6960)
             var team = _acquisitionService.GetTeamMembers();
 
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileTeamModel>>(team));
