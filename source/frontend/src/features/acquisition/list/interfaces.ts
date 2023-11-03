@@ -54,8 +54,6 @@ export class AcquisitionFilterModel {
     newModel.pin = model.pin;
     newModel.pid = model.pid;
     newModel.address = model.address;
-    console.log(model);
-    debugger;
 
     if (model.acquisitionTeamMemberPersonId) {
       const memberPerson = teamMembers.find(
@@ -101,7 +99,6 @@ const getParameterIdFromOptions = (
   }
 
   var filterOrgItems = options.filter(option => String(option.id).startsWith(selector));
-  console.log(filterOrgItems);
   if (!filterOrgItems.length) {
     return '';
   }
