@@ -53,9 +53,15 @@ namespace Pims.Dal.Repositories
             {
                 predicate.And(a => a.AcquisitionFile.ProjectId.HasValue && filter.Projects.Contains(a.AcquisitionFile.ProjectId.Value));
             }
+
             if (filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
             {
                 predicate.And(a => a.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId.HasValue && filter.AcquisitionTeamPersons.Contains((long)afp.PersonId)));
+            }
+
+            if (filter.AcquisitionTeamOrganizations != null && filter.AcquisitionTeamOrganizations.Any())
+            {
+                predicate.And(a => a.AcquisitionFile.PimsAcquisitionFileTeams.Any(o => o.OrganizationId.HasValue && filter.AcquisitionTeamOrganizations.Contains((long)o.OrganizationId)));
             }
 
             var query = Context.PimsAgreements
@@ -63,6 +69,9 @@ namespace Pims.Dal.Repositories
                 .Include(a => a.AcquisitionFile)
                     .ThenInclude(a => a.PimsAcquisitionFileTeams)
                     .ThenInclude(afp => afp.Person)
+                .Include(a => a.AcquisitionFile)
+                    .ThenInclude(a => a.PimsAcquisitionFileTeams)
+                    .ThenInclude(o => o.Organization)
                 .Include(a => a.AcquisitionFile)
                     .ThenInclude(a => a.Project)
                 .Include(a => a.AcquisitionFile)
