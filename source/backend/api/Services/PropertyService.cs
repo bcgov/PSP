@@ -116,7 +116,7 @@ namespace Pims.Api.Services
         public IList<PimsPropertyContact> GetContacts(long propertyId)
         {
             _logger.LogInformation("Retrieving property contacts...");
-            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             return _propertyContactRepository.GetContactsByProperty(propertyId);
         }
@@ -124,7 +124,7 @@ namespace Pims.Api.Services
         public PimsPropertyContact GetContact(long propertyId, long contactId)
         {
             _logger.LogInformation("Retrieving single property contact...");
-            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             var propertyContact = _propertyContactRepository.GetContact(contactId);
 
