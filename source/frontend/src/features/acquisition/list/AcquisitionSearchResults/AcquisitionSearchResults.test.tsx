@@ -136,4 +136,42 @@ describe('Acquisition Search Results Table', () => {
     expect(getByText('Alt Project: 1 alternate project')).toBeVisible();
     expect(queryByText('[+1 more...]')).toBeNull();
   });
+
+  it('displays a team member as Organization', async () => {
+    const { getByText } = setup({
+      results: [
+        {
+          aquisitionTeam: [
+            {
+              id: 4,
+              acquisitionFileId: 5,
+              organizationId: 6,
+              organization: {
+                id: 6,
+                isDisabled: false,
+                name: 'FORTIS BC',
+                alias: 'FORTIS',
+                incorporationNumber: '123456789',
+                organizationPersons: [],
+                organizationAddresses: [],
+                contactMethods: [],
+                comment: '',
+                rowVersion: 1,
+              },
+              primaryContactId: 8,
+              teamProfileTypeCode: 'PROPANLYS',
+              teamProfileType: {
+                id: 'PROPANLYS',
+                description: 'Property analyst',
+                isDisabled: false,
+              },
+              rowVersion: 1,
+            },
+          ],
+        },
+      ],
+    });
+
+    expect(getByText('FORTIS BC (Property analyst)')).toBeVisible();
+  });
 });
