@@ -8,12 +8,12 @@ import {
   Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
+  Api_AcquisitionFileTeam,
 } from '@/models/api/AcquisitionFile';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
 import { Api_LastUpdatedBy } from '@/models/api/File';
-import { Api_Person } from '@/models/api/Person';
 import { Api_Product, Api_Project } from '@/models/api/Project';
 import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -95,7 +95,7 @@ export const useApiAcquisitionFile = () => {
       getAcquisitionFileOwners: (acqFileId: number) =>
         api.get<Api_AcquisitionFileOwner[]>(`/acquisitionfiles/${acqFileId}/owners`),
       getAllAcquisitionFileTeamMembers: () =>
-        api.get<Api_Person[]>(`/acquisitionfiles/team-members`),
+        api.get<Api_AcquisitionFileTeam[]>(`/acquisitionfiles/team-members`),
       getAcquisitionFileProject: (acqFileId: number) =>
         api.get<Api_Project>(`/acquisitionfiles/${acqFileId}/project`),
       getAcquisitionFileProduct: (acqFileId: number) =>

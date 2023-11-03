@@ -206,14 +206,14 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [HasPermission(Permissions.AcquisitionFileView)]
         [HasPermission(Permissions.ContactView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<PersonModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<AcquisitionFileTeamModel>), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         public IActionResult GetAcquisitionTeamMembers()
         {
             // TODO: This endpoint needs to be fixed to support ORGANIZATIONS as team members (which were introduced by PSP-6960)
-            var team = _acquisitionService.GetTeamMembers().Where(t => t.Person is not null);
+            var team = _acquisitionService.GetTeamMembers();
 
-            return new JsonResult(_mapper.Map<IEnumerable<PersonModel>>(team.Select(t => t.Person)));
+            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileTeamModel>>(team));
         }
 
         /// <summary>
