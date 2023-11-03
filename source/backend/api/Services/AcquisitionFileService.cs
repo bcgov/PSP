@@ -175,7 +175,16 @@ namespace Pims.Api.Services
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            return _acqFileRepository.GetTeamMembers(userRegions, contractorPersonId);
+            var teamMembers = _acqFileRepository.GetTeamMembers(userRegions, contractorPersonId);
+
+            var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First()).ToList();
+            var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First()).ToList();
+
+            List<PimsAcquisitionFileTeam> teamFilterOptions = new();
+            teamFilterOptions.AddRange(persons);
+            teamFilterOptions.AddRange(organizations);
+
+            return teamFilterOptions;
         }
 
         public IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id)
