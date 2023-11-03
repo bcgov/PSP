@@ -2,13 +2,13 @@ import { createMemoryHistory } from 'history';
 
 import { getMockPerson } from '@/mocks/contacts.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { getMockOrganization } from '@/mocks/organization.mock';
 import { mockProjects } from '@/mocks/projects.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { ProjectExportTypes } from './models';
 import ProjectExportForm, { IProjectExportFormProps } from './ProjectExportForm';
-import { getMockOrganization } from '@/mocks/organization.mock';
 
 const history = createMemoryHistory();
 
