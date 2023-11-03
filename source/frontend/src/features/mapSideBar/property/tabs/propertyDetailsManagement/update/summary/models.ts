@@ -1,6 +1,6 @@
 import { Api_PropertyManagement, Api_PropertyManagementPurpose } from '@/models/api/Property';
 import { ILookupCode } from '@/store/slices/lookupCodes';
-import { prettyFormatDate } from '@/utils';
+import { formatApiPropertyManagementLease } from '@/utils';
 import { stringToNull } from '@/utils/formUtils';
 
 export class PropertyManagementFormModel {
@@ -10,9 +10,7 @@ export class PropertyManagementFormModel {
   additionalDetails: string = '';
   isUtilitiesPayable: boolean | null = null;
   isTaxesPayable: boolean | null = null;
-  isLeaseActive: boolean = false;
-  isLeaseExpired: boolean = false;
-  leaseExpiryDate: string | null = null;
+  formattedLeaseInformation: string | null = null;
 
   static fromApi(base: Api_PropertyManagement | null): PropertyManagementFormModel {
     const newFormModel = new PropertyManagementFormModel();
@@ -23,9 +21,7 @@ export class PropertyManagementFormModel {
     newFormModel.additionalDetails = base?.additionalDetails || '';
     newFormModel.isUtilitiesPayable = base?.isUtilitiesPayable ?? null;
     newFormModel.isTaxesPayable = base?.isTaxesPayable ?? null;
-    newFormModel.isLeaseActive = base?.isLeaseActive || false;
-    newFormModel.isLeaseExpired = base?.isLeaseExpired || false;
-    newFormModel.leaseExpiryDate = base?.leaseExpiryDate || '';
+    newFormModel.formattedLeaseInformation = formatApiPropertyManagementLease(base);
 
     return newFormModel;
   }
@@ -41,19 +37,9 @@ export class PropertyManagementFormModel {
       additionalDetails: stringToNull(this.additionalDetails),
       isUtilitiesPayable: this.isUtilitiesPayable,
       isTaxesPayable: this.isTaxesPayable,
-      isLeaseActive: this.isLeaseActive,
-      isLeaseExpired: this.isLeaseExpired,
-      leaseExpiryDate: stringToNull(this.leaseExpiryDate),
+      relatedLeases: 0,
+      leaseExpiryDate: null,
     };
-  }
-
-  formatLeaseInformation(): string {
-    if (this.isLeaseActive) {
-      const expiryDate = this.leaseExpiryDate ? `(${prettyFormatDate(this.leaseExpiryDate)})` : '';
-      return this.isLeaseExpired ? `Expired ${expiryDate}`.trim() : `Yes ${expiryDate}`.trim();
-    } else {
-      return 'No active Lease/License';
-    }
   }
 }
 
