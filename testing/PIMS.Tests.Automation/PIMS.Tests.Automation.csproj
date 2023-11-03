@@ -22,13 +22,13 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
-    <PackageReference Include="Selenium.Support" Version="4.14.1" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="118.0.5993.7000" />
+    <PackageReference Include="Selenium.Support" Version="4.15.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="119.0.6045.10500" />
     <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="SpecFlow.xUnit" Version="3.9.74" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
-    <PackageReference Include="xunit" Version="2.5.3" />
+    <PackageReference Include="xunit" Version="2.6.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
