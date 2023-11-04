@@ -24,7 +24,7 @@ namespace Pims.Api.Models.Concepts
         public string AdditionalDetails { get; set; }
 
         /// <summary>
-        /// get/set - Whether utilities are payable for this property..
+        /// get/set - Whether utilities are payable for this property.
         /// </summary>
         public bool? IsUtilitiesPayable { get; set; }
 
@@ -34,17 +34,13 @@ namespace Pims.Api.Models.Concepts
         public bool? IsTaxesPayable { get; set; }
 
         /// <summary>
-        /// get/set - Whether this property has an "active lease".
+        /// get/set - The number of leases for this property. Returns 0 when there are no leases.
         /// </summary>
-        public bool IsLeaseActive { get; set; }
+        public long RelatedLeases { get; set; }
 
         /// <summary>
-        /// get/set - Whether this property has an "active lease" that is expired.
-        /// </summary>
-        public bool IsLeaseExpired { get; set; }
-
-        /// <summary>
-        /// get/set - The expiry date on the active lease for this property (if any).
+        /// get/set - The expiry date of the lease when there is only ONE lease for this property (regardless of status).
+        /// This field is null when the lease does not expire.
         /// </summary>
         public DateTime? LeaseExpiryDate { get; set; }
     }

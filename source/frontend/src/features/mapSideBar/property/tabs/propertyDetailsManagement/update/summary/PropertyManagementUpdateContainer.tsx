@@ -27,8 +27,7 @@ export const PropertyManagementUpdateContainer = React.forwardRef<
     additionalDetails: null,
     isUtilitiesPayable: null,
     isTaxesPayable: null,
-    isLeaseActive: false,
-    isLeaseExpired: false,
+    relatedLeases: 0,
     leaseExpiryDate: null,
   });
 

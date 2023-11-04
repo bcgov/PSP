@@ -179,12 +179,12 @@ namespace Pims.Api.Services
             var property = GetById(propertyId);
 
             var propertyLeases = _propertyLeaseRepository.GetAllByPropertyId(propertyId);
-            var activeLease = propertyLeases.FirstOrDefault(pl => pl.Lease.LeaseStatusTypeCode == "ACTIVE")?.Lease;
-            var leaseExpiryDate = activeLease?.GetExpiryDate()?.FilterSqlMinDate() ?? null;
+            var leaseCount = propertyLeases.Count();
+            var firstLease = leaseCount == 1 ? propertyLeases.First().Lease : null;
+            var leaseExpiryDate = firstLease is not null ? firstLease.GetExpiryDate()?.FilterSqlMinDate() : null;
 
             var propertyManagement = _mapper.Map<PropertyManagementModel>(property);
-            propertyManagement.IsLeaseActive = activeLease is not null;
-            propertyManagement.IsLeaseExpired = leaseExpiryDate is not null && (leaseExpiryDate < DateTime.UtcNow);
+            propertyManagement.RelatedLeases = leaseCount;
             propertyManagement.LeaseExpiryDate = leaseExpiryDate;
 
             return propertyManagement;
