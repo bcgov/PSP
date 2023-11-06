@@ -112,7 +112,7 @@ describe('MapFilterBar', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  it('submits correct values', async () => {
+  it('does not submit if there is no pid/pin for address', async () => {
     // Arrange
     mockKeycloak(['admin-properties']);
 
@@ -128,16 +128,7 @@ describe('MapFilterBar', () => {
     });
 
     // Assert
-    expect(onFilterChange).toBeCalledWith({
-      address: '',
-      latitude: '',
-      longitude: '',
-      page: undefined,
-      pinOrPid: '',
-      planNumber: '',
-      quantity: undefined,
-      searchBy: 'pinOrPid',
-    });
+    expect(onFilterChange).not.toHaveBeenCalled();
   });
 
   it('resets values when reset button is clicked', async () => {
