@@ -230,6 +230,11 @@ namespace Pims.Api.Services
             _logger.LogInformation("Creating property Activity...");
             _user.ThrowIfNotAuthorized(Permissions.ManagementAdd, Permissions.PropertyEdit);
 
+            if (propertyActivity.PropMgmtActivityStatusTypeCode == null)
+            {
+                propertyActivity.PropMgmtActivityStatusTypeCode = "NOTSTARTED";
+            }
+
             var propertyActivityResult = _propertyActivityRepository.Create(propertyActivity);
             _propertyActivityRepository.CommitTransaction();
 

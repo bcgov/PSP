@@ -131,7 +131,7 @@ export const PropertyActivityEditForm: React.FunctionComponent<
                             placeholder="Select subtype"
                           />
                         </SectionField>
-                        <SectionField label="Activity status" contentWidth="7">
+                        <SectionField label="Activity status" contentWidth="7" required>
                           <Select
                             field="activityStatusCode"
                             options={activityStatusOptions}
