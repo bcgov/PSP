@@ -1,5 +1,4 @@
 import { FormikProps } from 'formik';
-import noop from 'lodash/noop';
 import * as React from 'react';
 import { matchPath, Route, useHistory, useRouteMatch } from 'react-router-dom';
 

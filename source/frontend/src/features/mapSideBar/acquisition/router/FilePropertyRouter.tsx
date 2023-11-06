@@ -1,5 +1,4 @@
 import { FormikProps } from 'formik';
-import noop from 'lodash/noop';
 import React, { useContext } from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
