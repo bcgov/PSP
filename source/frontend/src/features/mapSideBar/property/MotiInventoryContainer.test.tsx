@@ -123,6 +123,7 @@ describe('MotiInventoryContainer component', () => {
 
   it('hides the property information tab for non-inventory properties', async () => {
     mockAxios.onPost().reply(200, {});
+    history.push('/mapview/sidebar/non-inventory-property/9212434');
     // non-inventory properties will not attempt to contact the backend.
     const error = {
       isAxiosError: true,

@@ -51,11 +51,11 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
   //TODO: remove staleLastUpdatedBy when side bar context is refactored.
 
   const onCreate = () => {
-    history.push(`/mapview/sidebar/property/${propertyId}/activity/new`);
+    history.push(`/mapview/sidebar/property/${propertyId}/management/activity/new`);
   };
 
   const onView = (activityId: number) => {
-    history.push(`/mapview/sidebar/property/${propertyId}/activity/${activityId}`);
+    history.push(`/mapview/sidebar/property/${propertyId}/management/activity/${activityId}`);
   };
 
   return (
