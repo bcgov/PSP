@@ -58,7 +58,7 @@ export const PropertyManagementUpdateForm = React.forwardRef<
                 />
               </SectionField>
               <SectionField label="Lease/Licensed">
-                {formikProps.values.formatLeaseInformation()}
+                {formikProps.values.formattedLeaseInformation ?? ''}
               </SectionField>
               <SectionField label="Utilities payable">
                 <YesNoSelect field="isUtilitiesPayable" />

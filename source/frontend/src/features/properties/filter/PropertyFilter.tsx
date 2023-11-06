@@ -116,12 +116,17 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 onChange={() => {
                   setFieldValue('latitude', null);
                   setFieldValue('longitude', null);
+                  setFieldValue('pinOrPid', null);
                 }}
               />
             </NoRightPaddingColumn>
             <StyledCol xs="3" md="2" lg="4" xl="3">
               {values.searchBy === 'pinOrPid' && (
-                <Input field="pinOrPid" placeholder="Enter a PID or PIN"></Input>
+                <Input
+                  field="pinOrPid"
+                  placeholder="Enter a PID or PIN"
+                  displayErrorTooltips
+                ></Input>
               )}
               {values.searchBy === 'address' && useGeocoder && (
                 <GeocoderAutoComplete
@@ -150,7 +155,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
             </StyledCol>
             <Col xs="auto">
               <SearchButton
-                disabled={isSubmitting}
+                disabled={isSubmitting || !(values.pinOrPid || values.latitude || values.longitude)}
                 onClick={() => searchButtonClicked && searchButtonClicked()}
               />
             </Col>

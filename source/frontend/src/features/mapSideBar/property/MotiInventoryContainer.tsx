@@ -1,17 +1,19 @@
 import { FormikProps } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
+import { generatePath, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ReactComponent as LotSvg } from '@/assets/images/icon-lot.svg';
 import GenericModal from '@/components/common/GenericModal';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import PropertyViewSelector from '@/features/mapSideBar/property/PropertyViewSelector';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
+import { useQuery } from '@/hooks/use-query';
 import { Api_Property } from '@/models/api/Property';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
 import SidebarFooter from '../shared/SidebarFooter';
 import { MotiInventoryHeader } from './MotiInventoryHeader';
+import PropertyRouter from './PropertyRouter';
 
 export interface IMotiInventoryContainerProps {
   id?: number;
@@ -27,7 +29,11 @@ export const MotiInventoryContainer: React.FunctionComponent<
 > = props => {
   const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
 
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const query = useQuery();
+  const { push } = useHistory();
+  const match = useRouteMatch();
+  const tabMatch = useRouteMatch<{ tab: string; propertyId: string }>(`${match.path}/:tab`);
+  const isEditing = query.get('edit') === 'true';
   const [isValid, setIsValid] = useState<boolean>(true);
 
   const mapMachine = useMapStateMachine();
@@ -48,12 +54,12 @@ export const MotiInventoryContainer: React.FunctionComponent<
   });
 
   useEffect(() => {
-    setIsEditing(false);
-  }, [props.pid]);
+    push({ search: '' });
+  }, [props.pid, push]);
 
   const onSuccess = () => {
     props.id && composedPropertyState.apiWrapper?.execute(props.id);
-    setIsEditing(false);
+    stripEditFromPath();
   };
 
   const handleSaveClick = async () => {
@@ -80,8 +86,20 @@ export const MotiInventoryContainer: React.FunctionComponent<
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
     }
-    setIsEditing(false);
+
+    stripEditFromPath();
     setShowCancelConfirmModal(false);
+  };
+
+  const stripEditFromPath = () => {
+    if (!tabMatch) {
+      return;
+    }
+    const path = generatePath('/mapview/sidebar/property/:propertyId/:tab', {
+      propertyId: tabMatch?.params.propertyId,
+      tab: tabMatch?.params.tab,
+    });
+    push(path, { search: query.toString() });
   };
 
   const handleZoom = (apiProperty?: Api_Property | undefined) => {
@@ -120,10 +138,8 @@ export const MotiInventoryContainer: React.FunctionComponent<
       onClose={props.onClose}
     >
       <>
-        <PropertyViewSelector
+        <PropertyRouter
           composedPropertyState={composedPropertyState}
-          isEditMode={isEditing}
-          setEditMode={setIsEditing}
           onSuccess={onSuccess}
           ref={formikRef}
         />

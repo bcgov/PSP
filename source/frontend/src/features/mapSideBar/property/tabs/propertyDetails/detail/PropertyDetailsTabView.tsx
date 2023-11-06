@@ -1,6 +1,7 @@
 import Multiselect from 'multiselect-react-dropdown';
 import React from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 import { EditButton } from '@/components/common/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -16,18 +17,17 @@ import AreaContainer from '@/components/measurements/AreaContainer';
 import VolumeContainer from '@/components/measurements/VolumeContainer';
 import * as API from '@/constants/API';
 import { Claims, PropertyTenureTypes } from '@/constants/index';
+import { useQuery } from '@/hooks/use-query';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { booleanToYesNoUnknownString, stringToBoolean } from '@/utils/formUtils';
 import { getPrettyLatLng } from '@/utils/mapPropertyUtils';
 
-import { EditManagementState, PropertyEditForms } from '../../../PropertyViewSelector';
 import { IPropertyDetailsForm, readOnlyMultiSelectStyle } from './PropertyDetailsTabView.helpers';
 
 export interface IPropertyDetailsTabView {
   property?: IPropertyDetailsForm;
   loading: boolean;
-  setEditManagementState: (state: EditManagementState | null) => void;
 }
 
 /**
@@ -37,7 +37,6 @@ export interface IPropertyDetailsTabView {
 export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTabView> = ({
   property,
   loading,
-  setEditManagementState,
 }) => {
   const { getOptionsByType } = useLookupCodeHelpers();
   const { hasClaim } = useKeycloakWrapper();
@@ -52,6 +51,8 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
   const tenureStatus = property?.tenures;
   const roadType = property?.roadTypes;
   const address = property?.address;
+  const query = useQuery();
+  const history = useHistory();
 
   // show/hide conditionals
   const isHighwayRoad = tenureStatus?.some(obj => obj?.id === PropertyTenureTypes.HighwayRoad);
@@ -67,10 +68,8 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
           <EditButton
             title="Edit property details"
             onClick={() => {
-              setEditManagementState({
-                form: PropertyEditForms.UpdatePropertyDetailsContainer,
-                childId: null,
-              });
+              query.set('edit', 'true');
+              history.push({ search: query.toString() });
             }}
           />
         )}

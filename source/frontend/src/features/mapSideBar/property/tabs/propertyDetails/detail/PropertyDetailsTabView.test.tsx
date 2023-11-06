@@ -1,5 +1,4 @@
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
 
 import { Claims, PropertyTenureTypes } from '@/constants/index';
 import { mockLookups } from '@/mocks/lookups.mock';
@@ -23,19 +22,12 @@ describe('PropertyDetailsTabView component', () => {
   const setup = (renderOptions: RenderOptions & { property?: Api_Property } = {}) => {
     const { property, ...rest } = renderOptions;
     const formValues = toFormValues(property);
-    const component = render(
-      <PropertyDetailsTabView
-        property={formValues}
-        loading={false}
-        setEditManagementState={noop}
-      />,
-      {
-        ...rest,
-        store: storeState,
-        claims: [Claims.PROPERTY_EDIT],
-        history,
-      },
-    );
+    const component = render(<PropertyDetailsTabView property={formValues} loading={false} />, {
+      ...rest,
+      store: storeState,
+      claims: [Claims.PROPERTY_EDIT],
+      history,
+    });
 
     return {
       ...component,

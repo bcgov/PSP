@@ -1,3 +1,5 @@
+import { useHistory } from 'react-router-dom';
+
 import { EditButton } from '@/components/common/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { MultiselectTextList } from '@/components/common/MultiselectTextList';
@@ -5,10 +7,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper } from '@/components/common/Section/SectionStyles';
 import { Claims } from '@/constants/index';
-import {
-  EditManagementState,
-  PropertyEditForms,
-} from '@/features/mapSideBar/property/PropertyViewSelector';
+import { useQuery } from '@/hooks/use-query';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_PropertyManagement } from '@/models/api/Property';
 import { formatApiPropertyManagementLease } from '@/utils';
@@ -17,27 +16,25 @@ import { booleanToYesNoUnknownString } from '@/utils/formUtils';
 export interface IPropertyManagementDetailViewProps {
   isLoading: boolean;
   propertyManagement: Api_PropertyManagement | null;
-  setEditManagementState: (state: EditManagementState | null) => void;
 }
 
 export const PropertyManagementDetailView: React.FC<IPropertyManagementDetailViewProps> = ({
   isLoading,
   propertyManagement,
-  setEditManagementState,
 }) => {
   const { hasClaim } = useKeycloakWrapper();
+  const query = useQuery();
+  const history = useHistory();
   return (
     <Section header="Summary" isCollapsable initiallyExpanded>
       <StyledEditWrapper className="mr-3 my-1">
-        {setEditManagementState !== undefined && hasClaim(Claims.MANAGEMENT_EDIT) && (
+        {hasClaim(Claims.MANAGEMENT_EDIT) && (
           <EditButton
             title="Edit property management information"
-            onClick={() =>
-              setEditManagementState({
-                form: PropertyEditForms.UpdateManagementSummaryContainer,
-                childId: null,
-              })
-            }
+            onClick={() => {
+              query.set('edit', 'true');
+              history.push({ search: query.toString() });
+            }}
           />
         )}
       </StyledEditWrapper>

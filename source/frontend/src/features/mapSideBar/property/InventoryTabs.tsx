@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Tab } from 'react-bootstrap';
+import { generatePath, useHistory, useRouteMatch } from 'react-router-dom';
 
 import TabView from '@/components/common/TabView';
 
@@ -14,7 +15,6 @@ export interface IInventoryTabsProps {
   defaultTabKey: InventoryTabNames;
   tabViews: TabInventoryView[];
   activeTab: InventoryTabNames;
-  setActiveTab: (tab: InventoryTabNames) => void;
 }
 
 export enum InventoryTabNames {
@@ -32,16 +32,17 @@ export enum InventoryTabNames {
  */
 export const InventoryTabs: React.FunctionComponent<
   React.PropsWithChildren<IInventoryTabsProps>
-> = ({ defaultTabKey, tabViews, activeTab, setActiveTab }) => {
+> = ({ defaultTabKey, tabViews, activeTab }) => {
+  const history = useHistory();
+  const match = useRouteMatch<{ propertyId: string }>();
   return (
     <TabView
       defaultActiveKey={defaultTabKey}
       activeKey={activeTab}
       onSelect={(eventKey: string | null) => {
         const tab = Object.values(InventoryTabNames).find(value => value === eventKey);
-        if (tab && tab !== activeTab) {
-          setActiveTab(tab);
-        }
+        const path = generatePath(match.path, { propertyId: match.params.propertyId, tab });
+        history.push(path);
       }}
     >
       {tabViews.map((view: TabInventoryView, index: number) => (
