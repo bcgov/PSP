@@ -45,10 +45,9 @@ const ActivityView = (props: IInventoryTabsProps) => {
 const DEFAULT_PROPS: IPropertyFileContainerProps = {
   View: ActivityView,
   fileProperty: (getMockResearchFile().fileProperties ?? [])[0],
-  setEditFileProperty: noop,
+  setEditing: noop,
   customTabs: [],
   defaultTab: InventoryTabNames.property,
-  setEditTakes: noop,
 };
 
 describe('PropertyFileContainer component', () => {

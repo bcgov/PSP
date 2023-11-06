@@ -17,10 +17,11 @@ import TakesDetailView from '@/features/mapSideBar/property/tabs/takes/detail/Ta
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
+import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
+
 export interface IPropertyFileContainerProps {
   fileProperty: Api_PropertyFile;
-  setEditFileProperty: () => void;
-  setEditTakes: () => void;
+  setEditing: () => void;
   View: React.FunctionComponent<React.PropsWithChildren<IInventoryTabsProps>>;
   customTabs: TabInventoryView[];
   defaultTab: InventoryTabNames;
@@ -76,6 +77,16 @@ export const PropertyFileContainer: React.FunctionComponent<
     name: 'Value',
   });
 
+  if (props.fileContext === FileTypes.Research) {
+    tabViews.push({
+      content: (
+        <PropertyResearchTabView researchFile={props.fileProperty} setEditMode={props.setEditing} />
+      ),
+      key: InventoryTabNames.research,
+      name: 'Property Research',
+    });
+  }
+
   tabViews.push(...props.customTabs);
 
   if (!!id) {
@@ -108,7 +119,7 @@ export const PropertyFileContainer: React.FunctionComponent<
       content: (
         <TakesDetailContainer
           fileProperty={props.fileProperty}
-          onEdit={props.setEditTakes}
+          onEdit={props.setEditing}
           View={TakesDetailView}
         ></TakesDetailContainer>
       ),
