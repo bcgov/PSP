@@ -712,12 +712,25 @@ namespace Pims.Api.Services
                     !(t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && t.LandActEndDt.HasValue && t.LandActEndDt.Value.Date < DateTime.UtcNow.Date) &&
                     !(t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value && t.LtcEndDt.HasValue && t.LtcEndDt.Value.Date < DateTime.UtcNow.Date) &&
                     !(t.IsNewInterestInSrw.HasValue && t.IsNewInterestInSrw.Value && t.SrwEndDt.HasValue && t.SrwEndDt.Value.Date < DateTime.UtcNow.Date));
-                //see psp-6589 for business rules.
+
+                // see psp-6589 for business rules.
                 var isOwned = !(activeTakes.All(t => (t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && coreInventoryInterestCodes.Contains(t.LandActTypeCode))
                     || (t.IsNewInterestInSrw.HasValue && t.IsNewInterestInSrw.Value)
                     || (t.IsThereSurplus.HasValue && t.IsThereSurplus.Value)
                     || (t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value)) && activeTakes.Any());
-                _propertyRepository.TransferFileProperty(property, isOwned);
+                var isPropertyOfInterest = false;
+
+                // Override for dedication psp-7048.
+                var doNotAcquire = takes.All(t =>
+                    t.IsNewHighwayDedication.HasValue && t.IsNewHighwayDedication.Value && t.IsAcquiredForInventory.HasValue && !t.IsAcquiredForInventory.Value);
+
+                if (doNotAcquire)
+                {
+                    isOwned = false;
+                    isPropertyOfInterest = true;
+                }
+
+                _propertyRepository.TransferFileProperty(property, isOwned, isPropertyOfInterest);
             }
         }
 

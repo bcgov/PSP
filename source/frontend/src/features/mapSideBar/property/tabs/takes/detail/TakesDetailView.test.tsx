@@ -69,8 +69,8 @@ describe('TakesDetailView component', () => {
       props: {
         loading: false,
         takes: [
-          { ...getMockApiTakes()[0], takeStatusTypeCode: 'CANCELLED', id: 1 },
-          { ...getMockApiTakes()[0], takeStatusTypeCode: 'INPROGRESS' },
+          { ...getMockApiTakes()[0], takeStatusTypeCode: { id: 'CANCELLED' }, id: 1 },
+          { ...getMockApiTakes()[0], takeStatusTypeCode: { id: 'INPROGRESS' } },
         ],
       },
     });
@@ -85,11 +85,11 @@ describe('TakesDetailView component', () => {
         takes: [
           {
             ...getMockApiTakes()[0],
-            isLicenseToConstruct: false,
-            isNewRightOfWay: false,
-            isLandAct: false,
+            isNewLicenseToConstruct: false,
+            isNewHighwayDedication: false,
+            isNewLandAct: false,
             isNewInterestInSrw: false,
-            isSurplus: false,
+            isThereSurplus: false,
           },
         ],
       },
@@ -104,11 +104,11 @@ describe('TakesDetailView component', () => {
         takes: [
           {
             ...getMockApiTakes()[0],
-            isLicenseToConstruct: true,
-            isNewRightOfWay: true,
-            isLandAct: true,
+            isNewLicenseToConstruct: true,
+            isNewHighwayDedication: true,
+            isNewLandAct: true,
             isNewInterestInSrw: true,
-            isSurplus: true,
+            isThereSurplus: true,
           },
         ],
       },
@@ -123,7 +123,7 @@ describe('TakesDetailView component', () => {
         takes: [
           {
             ...getMockApiTakes()[0],
-            isLicenseToConstruct: true,
+            isNewLicenseToConstruct: true,
             ltcEndDt: '2020-01-01',
           },
         ],
@@ -140,7 +140,7 @@ describe('TakesDetailView component', () => {
         takes: [
           {
             ...getMockApiTakes()[0],
-            isLandAct: true,
+            isNewLandAct: true,
             landActEndDt: '2020-01-01',
           },
         ],
@@ -159,7 +159,7 @@ describe('TakesDetailView component', () => {
         takes: [
           {
             ...getMockApiTakes()[0],
-            isLicenseToConstruct: true,
+            isNewLicenseToConstruct: true,
             ltcEndDt: '2020-01-01',
           },
         ],
