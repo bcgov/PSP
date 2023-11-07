@@ -7,6 +7,7 @@ env:
   MS_TEAMS_WEBHOOK_BUILD_CHANNEL: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
   AUTH__KEYCLOAK__SECRET: ${{ secrets.KEYCLOAK_SECRET_UAT }}
   AUTH__KEYCLOAK__SERVICEACCOUNT__SECRET: ${{ secrets.KEYCLOAK_SERVICEACCOUNT_SECRET }}
+  sync-directory: ./tools/keycloak/sync
 
   ## variables for scripts under git\openshift\4.0\scripts\oc-*.sh
   APP_PORT: 8080
@@ -83,7 +84,7 @@ jobs:
       - name: call scripts to upgrade database
         shell: bash
         run: |
-          oc process -f ./openshift/4.0/templates/jobs/db-deploy.yaml -p DB_SECRET_NAME=pims-database GIT_BRANCH=test SERVER_NAME=sqlprd.th.gov.bc.ca -p DB_NAME=PIMS_UAT -p NAMESPACE=3cd915-test | oc create -f - | grep -oP "(?<=job\.batch/)[^\s]*" | (read JOB_NAME; oc wait --for=condition=complete job/$JOB_NAME --timeout=120s)
+          oc process -f ./openshift/4.0/templates/jobs/db-deploy.yaml -p DB_SECRET_NAME=pims-database -p GIT_BRANCH=test -p SERVER_NAME=sqlprd.th.gov.bc.ca -p DB_NAME=PIMS_UAT -p NAMESPACE=3cd915-test | oc create -f - | grep -oP "(?<=job\.batch/)[^\s]*" | (read JOB_NAME; oc wait --for=condition=complete job/$JOB_NAME --timeout=120s)
 
   sync-keycloak:
     name: Sync Keycloak
