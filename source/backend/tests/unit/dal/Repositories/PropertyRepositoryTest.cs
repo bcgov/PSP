@@ -140,6 +140,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var property = EntityHelper.CreateProperty(100);
             var lease = EntityHelper.CreateLease(1, addProperty:false);
+            lease.OrigExpiryDate = DateTime.Now.AddDays(1);
             property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
             _helper.AddAndSaveChanges(property);
 
