@@ -456,7 +456,7 @@ namespace Pims.Dal.Repositories
             if (!string.IsNullOrEmpty(filter.LeasePayRcvblType))
             {
                 query = query.Where(p =>
-                    p.PimsPropertyLeases.Any(pl => pl.Lease.LeasePayRvblTypeCode == filter.LeasePayRcvblType || filter.LeasePayRcvblType == "all"));
+                    p.PimsPropertyLeases.Any(pl => (pl.Lease.LeasePayRvblTypeCode == filter.LeasePayRcvblType || filter.LeasePayRcvblType == "all") && (pl.Lease.OrigExpiryDate >= DateTime.Now.Date || pl.Lease.PimsLeaseTerms.Any(t => t.TermExpiryDate == null || t.TermExpiryDate >= DateTime.Now.Date))));
             }
 
             // Anomalies
