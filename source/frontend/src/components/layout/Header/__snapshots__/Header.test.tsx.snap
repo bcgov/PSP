@@ -47,10 +47,6 @@ exports[`App Header renders correctly 1`] = `
   flex-grow: 1;
 }
 
-.c0 .brand-box .pims-logo {
-  margin: 0 1rem;
-}
-
 .c0 .title {
   margin-left: 8px;
   display: inline-block;

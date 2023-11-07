@@ -34,15 +34,39 @@ export const InventoryTabs: React.FunctionComponent<
   React.PropsWithChildren<IInventoryTabsProps>
 > = ({ defaultTabKey, tabViews, activeTab }) => {
   const history = useHistory();
-  const match = useRouteMatch<{ propertyId: string }>();
+  const match = useRouteMatch<{
+    propertyId: string;
+    menuIndex: string;
+    id: string;
+    researchId: string;
+  }>();
   return (
     <TabView
       defaultActiveKey={defaultTabKey}
       activeKey={activeTab}
       onSelect={(eventKey: string | null) => {
         const tab = Object.values(InventoryTabNames).find(value => value === eventKey);
-        const path = generatePath(match.path, { propertyId: match.params.propertyId, tab });
-        history.push(path);
+        if (match.path.includes('acquisition')) {
+          const path = generatePath(match.path, {
+            menuIndex: match.params.menuIndex,
+            id: match.params.id,
+            tab,
+          });
+          history.push(path);
+        } else if (match.path.includes('research')) {
+          const path = generatePath(match.path, {
+            menuIndex: match.params.menuIndex,
+            researchId: match.params.researchId,
+            tab,
+          });
+          history.push(path);
+        } else {
+          const path = generatePath(match.path, {
+            propertyId: match.params.propertyId,
+            tab,
+          });
+          history.push(path);
+        }
       }}
     >
       {tabViews.map((view: TabInventoryView, index: number) => (
