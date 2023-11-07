@@ -64,6 +64,21 @@ describe('TakesDetailView component', () => {
     expect(onEdit).toHaveBeenCalled();
   });
 
+  it('displays the number of takes in other files', () => {
+    setup({
+      props: {
+        loading: false,
+        takes: [
+          { ...getMockApiTakes()[0], takeStatusTypeCode: 'CANCELLED', id: 1 },
+          { ...getMockApiTakes()[0], takeStatusTypeCode: 'INPROGRESS' },
+        ],
+        allTakesCount: 10,
+      },
+    });
+    const takesNotInFile = screen.getByTestId('takes-in-other-files');
+    expect(takesNotInFile).toHaveTextContent('8');
+  });
+
   it('displays all non-cancelled takes and then cancelled takes', () => {
     setup({
       props: {
@@ -75,7 +90,7 @@ describe('TakesDetailView component', () => {
       },
     });
     const { getByText } = within(screen.getByTestId('take-0'));
-    expect(getByText('In-progress'));
+    expect(getByText('In-progress')).toBeVisible();
   });
 
   it('does not display an area fields if all is radio buttons are false', () => {
@@ -114,6 +129,23 @@ describe('TakesDetailView component', () => {
       },
     });
     expect(getAllByText('Area:')).toHaveLength(5);
+  });
+
+  it('displays srwEndDt if specified', async () => {
+    const { findByText } = setup({
+      props: {
+        loading: false,
+        takes: [
+          {
+            ...getMockApiTakes()[0],
+            isNewInterestInSrw: true,
+            srwEndDt: '2020-01-01',
+          },
+        ],
+      },
+    });
+    const date = await findByText('SRW end date:');
+    expect(date).toBeVisible();
   });
 
   it('displays ltcEndDt if specified', async () => {
