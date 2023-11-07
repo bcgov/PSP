@@ -30,8 +30,8 @@ objects:
                   touch /usr/config/psp/source/database/mssql/.env;
                   PATH="/opt/mssql-tools/bin:$PATH"; cd
                   /usr/config/psp;
-                  git fetch origin dev;
-                  git reset --h origin/dev;
+                  git fetch origin ${GIT_BRANCH};
+                  git reset --h origin/${GIT_BRANCH};
                   cd /usr/config/psp/source/database/mssql/scripts/dbscripts;
                   chmod 777 db-upgrade.sh;
                   ./db-upgrade.sh;
@@ -43,12 +43,12 @@ objects:
                 - name: DB_USER
                   valueFrom:
                     secretKeyRef:
-                      name: pims-database
+                      name: ${DB_SECRET_NAME}
                       key: DB_USER
                 - name: DB_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: pims-database
+                      name: ${DB_SECRET_NAME}
                       key: DB_PASSWORD
               resources: {}
               terminationMessagePath: /dev/termination-log
@@ -64,4 +64,10 @@ parameters:
     required: true
   - name: NAMESPACE
     description: the openshift namespace to run this job in.
+    required: true
+  - name: GIT_BRANCH
+    description: the git branch to pull the database scripts from.
+    required: true
+  - name: DB_SECRET_NAME
+    description: the git branch to pull the database scripts from.
     required: true
