@@ -183,7 +183,8 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                     <FilePropertyRouter
                       formikRef={formikRef}
                       selectedMenuIndex={Number(match.params.menuIndex)}
-                      acquisitionFile={acquisitionFile}
+                      file={acquisitionFile}
+                      fileType={FileTypes.Acquisition}
                       isEditing={isEditing}
                       setIsEditing={setIsEditing}
                       defaultFileTab={containerState.defaultFileTab}
