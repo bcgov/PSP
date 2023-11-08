@@ -2,18 +2,16 @@ import { useCallback, useEffect } from 'react';
 
 import { usePropertyManagementRepository } from '@/hooks/repositories/usePropertyManagementRepository';
 
-import { EditManagementState } from '../../../../PropertyViewSelector';
 import { IPropertyManagementDetailViewProps } from './PropertyManagementDetailView';
 
 export interface IPropertyManagementDetailContainerProps {
   propertyId: number;
-  setEditManagementState: (state: EditManagementState | null) => void;
   View: React.FC<IPropertyManagementDetailViewProps>;
 }
 
 export const PropertyManagementDetailContainer: React.FunctionComponent<
   IPropertyManagementDetailContainerProps
-> = ({ propertyId, setEditManagementState, View }) => {
+> = ({ propertyId, View }) => {
   const {
     getPropertyManagement: {
       execute: getPropertyManagement,
@@ -33,11 +31,5 @@ export const PropertyManagementDetailContainer: React.FunctionComponent<
     fetchPropertyManagement();
   }, [fetchPropertyManagement]);
 
-  return (
-    <View
-      isLoading={loading}
-      propertyManagement={propertyManagement ?? null}
-      setEditManagementState={setEditManagementState}
-    />
-  );
+  return <View isLoading={loading} propertyManagement={propertyManagement ?? null} />;
 };

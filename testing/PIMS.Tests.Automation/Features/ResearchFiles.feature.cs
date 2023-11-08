@@ -107,7 +107,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("I add additional details to Research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 9
- testRunner.And("I update a Research File Details from row number 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I update a Research File Details from row number 4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 10
  testRunner.Then("A new Research File is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -141,7 +141,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("I add Properties to a Research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 15
- testRunner.And("I update a Research File Properties from row number 4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I update a Research File Properties from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 16
  testRunner.Then("A new Research File is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -169,7 +169,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 19
- testRunner.Given("I create a basic Research File from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I create a basic Research File from row number 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 20
  testRunner.When("I create Digital Documents for a \"Research File\" row number 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -234,7 +234,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 30
- testRunner.Given("I create a Research File from a pin on map and from row number 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I create a Research File from a pin on map and from row number 6", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 31
  testRunner.Then("A new Research File is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -243,14 +243,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="06. Research File Search Filters")]
+        [Xunit.SkippableFactAttribute(DisplayName="06. Research File List View")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "06. Research File Search Filters")]
-        public void _06_ResearchFileSearchFilters()
+        [Xunit.TraitAttribute("Description", "06. Research File List View")]
+        public void _06_ResearchFileListView()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Research File Search Filters", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Research File List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 33
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -262,7 +262,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 34
- testRunner.Given("I search for Research Files from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I search for Research Files from row number 8", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 35
  testRunner.Then("Research File Properties remain unchanged", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

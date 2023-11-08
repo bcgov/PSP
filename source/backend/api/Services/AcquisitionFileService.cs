@@ -37,6 +37,7 @@ namespace Pims.Api.Services
         private readonly IInterestHolderRepository _interestHolderRepository;
         private readonly ICompReqFinancialService _compReqFinancialService;
         private readonly IExpropriationPaymentRepository _expropriationPaymentRepository;
+        private readonly ITakeRepository _takeRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -53,7 +54,8 @@ namespace Pims.Api.Services
             ICompensationRequisitionRepository compensationRequisitionRepository,
             IInterestHolderRepository interestHolderRepository,
             ICompReqFinancialService compReqFinancialService,
-            IExpropriationPaymentRepository expropriationPaymentRepository)
+            IExpropriationPaymentRepository expropriationPaymentRepository,
+            ITakeRepository takeRepository)
         {
             _user = user;
             _logger = logger;
@@ -70,6 +72,7 @@ namespace Pims.Api.Services
             _interestHolderRepository = interestHolderRepository;
             _compReqFinancialService = compReqFinancialService;
             _expropriationPaymentRepository = expropriationPaymentRepository;
+            _takeRepository = takeRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -118,7 +121,7 @@ namespace Pims.Api.Services
                     FileAcquisitionCompleted = fileProperty.file.CompletionDate.HasValue ? fileProperty.file.CompletionDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
                     FilePhysicalStatus = fileProperty.file.AcqPhysFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcqPhysFileStatusTypeCodeNavigation.Description : string.Empty,
                     FileAcquisitionType = fileProperty.file.AcquisitionTypeCodeNavigation is not null ? fileProperty.file.AcquisitionTypeCodeNavigation.Description : string.Empty,
-                    FileAcquisitionTeam = string.Join(", ", fileProperty.file.PimsAcquisitionFileTeams.Select(x => x.Person.GetFullName(true))),
+                    FileAcquisitionTeam = string.Join(", ", fileProperty.file.PimsAcquisitionFileTeams.Select(x => x.PersonId.HasValue ? x.Person.GetFullName(true) : x.Organization.Name)),
                     FileAcquisitionOwners = string.Join(", ", fileProperty.file.PimsAcquisitionOwners.Select(x => x.FormatOwnerName())),
                 }).ToList();
         }
@@ -172,7 +175,16 @@ namespace Pims.Api.Services
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            return _acqFileRepository.GetTeamMembers(userRegions, contractorPersonId);
+            var teamMembers = _acqFileRepository.GetTeamMembers(userRegions, contractorPersonId);
+
+            var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First()).ToList();
+            var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First()).ToList();
+
+            List<PimsAcquisitionFileTeam> teamFilterOptions = new();
+            teamFilterOptions.AddRange(persons);
+            teamFilterOptions.AddRange(organizations);
+
+            return teamFilterOptions;
         }
 
         public IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id)
@@ -232,7 +244,7 @@ namespace Pims.Api.Services
 
             if (acquisitionFile.AcquisitionFileStatusTypeCode == "COMPLT")
             {
-                TransferPropertiesOfInterestToInventory(acquisitionFile, userOverrides.Contains(UserOverrideCode.PoiToInventory));
+                TransferPropertiesOfInterest(acquisitionFile, userOverrides.Contains(UserOverrideCode.PoiToInventory));
             }
 
             ValidateStaff(acquisitionFile);
@@ -296,9 +308,9 @@ namespace Pims.Api.Services
             foreach (var deletedProperty in differenceSet)
             {
                 var acqFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id).FirstOrDefault(ap => ap.PropertyId == deletedProperty.PropertyId);
-                if (acqFileProperties.PimsTakes.Any())
+                if (acqFileProperties.PimsTakes.Any() || acqFileProperties.PimsInthldrPropInterests.Any())
                 {
-                    throw new BusinessRuleViolationException();
+                    throw new BusinessRuleViolationException("You must remove all takes and interest holders from an acquisition file property before removing that property from an acquisition file");
                 }
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
                 if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
@@ -680,7 +692,7 @@ namespace Pims.Api.Services
         /// </summary>
         /// <param name="acquisitionFile"></param>
         /// <param name="userOverride"></param>
-        private void TransferPropertiesOfInterestToInventory(PimsAcquisitionFile acquisitionFile, bool userOverride = false)
+        private void TransferPropertiesOfInterest(PimsAcquisitionFile acquisitionFile, bool userOverride = false)
         {
             // Get the current properties in the research file
             var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
@@ -694,7 +706,31 @@ namespace Pims.Api.Services
                 {
                     throw new UserOverrideException(UserOverrideCode.PoiToInventory, "The properties of interest will be added to the inventory as acquired properties.");
                 }
-                _propertyRepository.TransferToCoreInventory(property);
+                var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionProperty.Internal_Id);
+                var coreInventoryInterestCodes = new string[] { "Section 15", "Section 17", "NOI", "Section 66" };
+                var activeTakes = takes.Where(t =>
+                    !(t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && t.LandActEndDt.HasValue && t.LandActEndDt.Value.Date < DateTime.UtcNow.Date) &&
+                    !(t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value && t.LtcEndDt.HasValue && t.LtcEndDt.Value.Date < DateTime.UtcNow.Date) &&
+                    !(t.IsNewInterestInSrw.HasValue && t.IsNewInterestInSrw.Value && t.SrwEndDt.HasValue && t.SrwEndDt.Value.Date < DateTime.UtcNow.Date));
+
+                // see psp-6589 for business rules.
+                var isOwned = !(activeTakes.All(t => (t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && coreInventoryInterestCodes.Contains(t.LandActTypeCode))
+                    || (t.IsNewInterestInSrw.HasValue && t.IsNewInterestInSrw.Value)
+                    || (t.IsThereSurplus.HasValue && t.IsThereSurplus.Value)
+                    || (t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value)) && activeTakes.Any());
+                var isPropertyOfInterest = false;
+
+                // Override for dedication psp-7048.
+                var doNotAcquire = takes.All(t =>
+                    t.IsNewHighwayDedication.HasValue && t.IsNewHighwayDedication.Value && t.IsAcquiredForInventory.HasValue && !t.IsAcquiredForInventory.Value);
+
+                if (doNotAcquire)
+                {
+                    isOwned = false;
+                    isPropertyOfInterest = true;
+                }
+
+                _propertyRepository.TransferFileProperty(property, isOwned, isPropertyOfInterest);
             }
         }
 

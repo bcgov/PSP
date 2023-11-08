@@ -633,7 +633,31 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     <label
                       class="c8"
                     >
-                      Is there a new right of way? *:
+                      Is there a new highway dedication? *:
+                      <span
+                        class="ml-2"
+                      >
+                        <span
+                          class="tooltip-icon"
+                          data-testid="tooltip-icon-section-field-tooltip"
+                          id="section-field-tooltip"
+                        >
+                          <svg
+                            class="tooltip-icon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
                     </label>
                   </div>
                   <div
@@ -654,16 +678,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             <input
                               checked=""
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.isnewrightofway-yes"
+                              data-testid="radio-takes.0.isnewhighwaydedication-yes"
                               id="input-true"
-                              name="takes.0.isNewRightOfWay"
+                              name="takes.0.isNewHighwayDedication"
                               type="radio"
                               value="true"
                             />
                           </div>
                           <label
                             class="form-check-label form-label"
-                            for="takes.0.isNewRightOfWay"
+                            for="takes.0.isNewHighwayDedication"
                           >
                             Yes
                           </label>
@@ -676,16 +700,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           >
                             <input
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.isnewrightofway-no"
+                              data-testid="radio-takes.0.isnewhighwaydedication-no"
                               id="input-false"
-                              name="takes.0.isNewRightOfWay"
+                              name="takes.0.isNewHighwayDedication"
                               type="radio"
                               value="false"
                             />
                           </div>
                           <label
                             class="form-check-label form-label"
-                            for="takes.0.isNewRightOfWay"
+                            for="takes.0.isNewHighwayDedication"
                           >
                             No
                           </label>
@@ -832,7 +856,109 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     <label
                       class="c8"
                     >
-                      Is there a Statutory Right of Way: (SRW)? *:
+                      Is this being acquired for MoTI inventory? *:
+                      <span
+                        class="ml-2"
+                      >
+                        <span
+                          class="tooltip-icon"
+                          data-testid="tooltip-icon-section-field-tooltip"
+                          id="section-field-tooltip"
+                        >
+                          <svg
+                            class="tooltip-icon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    class="c9 text-left col"
+                  >
+                    <div
+                      class="c12 form-group"
+                    >
+                      <div
+                        class="radio-group"
+                      >
+                        <div
+                          class="c13"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              class="form-check-input position-static"
+                              data-testid="radio-takes.0.isacquiredforinventory-yes"
+                              id="input-true"
+                              name="takes.0.isAcquiredForInventory"
+                              type="radio"
+                              value="true"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="takes.0.isAcquiredForInventory"
+                          >
+                            Yes
+                          </label>
+                        </div>
+                        <div
+                          class="c13"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              checked=""
+                              class="form-check-input position-static"
+                              data-testid="radio-takes.0.isacquiredforinventory-no"
+                              id="input-false"
+                              name="takes.0.isAcquiredForInventory"
+                              type="radio"
+                              value="false"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="takes.0.isAcquiredForInventory"
+                          >
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c3 form-section c11"
+            >
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-8"
+                  >
+                    <label
+                      class="c8"
+                    >
+                      Is there a new registered interest in land (SRW, Easement or Covenant)? *:
                     </label>
                   </div>
                   <div
@@ -853,16 +979,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             <input
                               checked=""
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.isstatutoryrightofway-yes"
+                              data-testid="radio-takes.0.isnewinterestinsrw-yes"
                               id="input-true"
-                              name="takes.0.isStatutoryRightOfWay"
+                              name="takes.0.isNewInterestInSrw"
                               type="radio"
                               value="true"
                             />
                           </div>
                           <label
                             class="form-check-label form-label"
-                            for="takes.0.isStatutoryRightOfWay"
+                            for="takes.0.isNewInterestInSrw"
                           >
                             Yes
                           </label>
@@ -875,16 +1001,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           >
                             <input
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.isstatutoryrightofway-no"
+                              data-testid="radio-takes.0.isnewinterestinsrw-no"
                               id="input-false"
-                              name="takes.0.isStatutoryRightOfWay"
+                              name="takes.0.isNewInterestInSrw"
                               type="radio"
                               value="false"
                             />
                           </div>
                           <label
                             class="form-check-label form-label"
-                            for="takes.0.isStatutoryRightOfWay"
+                            for="takes.0.isNewInterestInSrw"
                           >
                             No
                           </label>
@@ -1014,6 +1140,53 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     </div>
                   </div>
                 </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c8"
+                    >
+                      SRW end date:
+                    </label>
+                  </div>
+                  <div
+                    class="c9 text-left col-4"
+                  >
+                    <div
+                      class="c17 form-group"
+                    >
+                      <div
+                        class="react-datepicker-wrapper d-block"
+                      >
+                        <div
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                        >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
+                          <input
+                            autocomplete="off"
+                            class="c18 form-control date-picker"
+                            id="datepicker-takes.0.srwEndDt"
+                            name="takes.0.srwEndDt"
+                            placeholder="MTH DD, YYYY"
+                            type="text"
+                            value="Nov 20, 2022"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div
@@ -1031,7 +1204,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     <label
                       class="c8"
                     >
-                      Is there Land Act-Reserve(s)/Withdrawal(s)/Notation(s)? *:
+                      Is a there a new Land Act tenure? *:
                     </label>
                   </div>
                   <div
@@ -1052,16 +1225,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             <input
                               checked=""
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.islandact-yes"
+                              data-testid="radio-takes.0.isnewlandact-yes"
                               id="input-true"
-                              name="takes.0.isLandAct"
+                              name="takes.0.isNewLandAct"
                               type="radio"
                               value="true"
                             />
                           </div>
                           <label
                             class="form-check-label form-label"
-                            for="takes.0.isLandAct"
+                            for="takes.0.isNewLandAct"
                           >
                             Yes
                           </label>
@@ -1074,16 +1247,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           >
                             <input
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.islandact-no"
+                              data-testid="radio-takes.0.isnewlandact-no"
                               id="input-false"
-                              name="takes.0.isLandAct"
+                              name="takes.0.isNewLandAct"
                               type="radio"
                               value="false"
                             />
                           </div>
                           <label
                             class="form-check-label form-label"
-                            for="takes.0.isLandAct"
+                            for="takes.0.isNewLandAct"
                           >
                             No
                           </label>
@@ -1344,7 +1517,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     <label
                       class="c8"
                     >
-                      Is there a License to Construct (LTC)? *:
+                      Is there a new License for Construction Access (TLCA/LTC)? *:
                     </label>
                   </div>
                   <div
@@ -1365,16 +1538,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             <input
                               checked=""
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.islicensetoconstruct-yes"
+                              data-testid="radio-takes.0.isnewlicensetoconstruct-yes"
                               id="input-true"
-                              name="takes.0.isLicenseToConstruct"
+                              name="takes.0.isNewLicenseToConstruct"
                               type="radio"
                               value="true"
                             />
                           </div>
                           <label
                             class="form-check-label form-label"
-                            for="takes.0.isLicenseToConstruct"
+                            for="takes.0.isNewLicenseToConstruct"
                           >
                             Yes
                           </label>
@@ -1387,16 +1560,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           >
                             <input
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.islicensetoconstruct-no"
+                              data-testid="radio-takes.0.isnewlicensetoconstruct-no"
                               id="input-false"
-                              name="takes.0.isLicenseToConstruct"
+                              name="takes.0.isNewLicenseToConstruct"
                               type="radio"
                               value="false"
                             />
                           </div>
                           <label
                             class="form-check-label form-label"
-                            for="takes.0.isLicenseToConstruct"
+                            for="takes.0.isNewLicenseToConstruct"
                           >
                             No
                           </label>
@@ -1632,16 +1805,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             <input
                               checked=""
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.issurplus-yes"
+                              data-testid="radio-takes.0.istheresurplus-yes"
                               id="input-true"
-                              name="takes.0.isSurplus"
+                              name="takes.0.isThereSurplus"
                               type="radio"
                               value="true"
                             />
                           </div>
                           <label
                             class="form-check-label form-label"
-                            for="takes.0.isSurplus"
+                            for="takes.0.isThereSurplus"
                           >
                             Yes
                           </label>
@@ -1654,16 +1827,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           >
                             <input
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.issurplus-no"
+                              data-testid="radio-takes.0.istheresurplus-no"
                               id="input-false"
-                              name="takes.0.isSurplus"
+                              name="takes.0.isThereSurplus"
                               type="radio"
                               value="false"
                             />
                           </div>
                           <label
                             class="form-check-label form-label"
-                            for="takes.0.isSurplus"
+                            for="takes.0.isThereSurplus"
                           >
                             No
                           </label>

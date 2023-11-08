@@ -260,7 +260,9 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   const filterFormRef = useRef<FormikProps<any>>();
 
   const [expandedRows, setExpandedRows] = React.useState<T[]>([]);
-  const [internalPageSize, setInternalPageSize] = React.useState<number>(DEFAULT_PAGE_SIZE);
+  const [internalPageSize, setInternalPageSize] = React.useState<number>(
+    props.pageSize ?? DEFAULT_PAGE_SIZE,
+  );
   const defaultColumn = React.useMemo(
     () => ({
       // When using the useFlexLayout:
@@ -292,7 +294,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   } = props;
   const manualSortBy = !!externalSort || props.manualSortBy;
   const totalItems = externalTotalItems ?? data?.length;
-  const pageCount = externalPageCount ?? Math.ceil(totalItems / (pageSizeProp ?? internalPageSize));
+  const pageCount = externalPageCount ?? Math.ceil(totalItems / internalPageSize);
   const selectedRowsRef = React.useRef<T[]>(externalSelectedRows ?? []); // used as a global var for providing up to date list of selected rows to code within the table (that is arrow function scoped).
 
   // manually update the contents of the global ref of selected rows if the list of external selected rows changes.

@@ -42,8 +42,6 @@ describe('PropertyManagementDetailContainer component', () => {
     return <></>;
   });
 
-  const setEditManagementState = jest.fn();
-
   const setup = (
     renderOptions?: RenderOptions & { props?: Partial<IPropertyManagementDetailContainerProps> },
   ) => {
@@ -52,7 +50,6 @@ describe('PropertyManagementDetailContainer component', () => {
       <PropertyManagementDetailContainer
         {...renderOptions.props}
         propertyId={renderOptions.props?.propertyId ?? 1}
-        setEditManagementState={setEditManagementState}
         View={View}
       />,
       {

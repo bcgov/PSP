@@ -97,14 +97,16 @@ export const formatBcaAddress = (address?: IBcAssessmentSummary['ADDRESSES'][0])
     .join(' ');
 
 export function formatApiPropertyManagementLease(base?: Api_PropertyManagement | null): string {
-  if (!base) {
-    return '';
-  }
+  const count = base?.relatedLeases || 0;
+  switch (count) {
+    case 0:
+      return 'No active Lease/License';
 
-  if (base.isLeaseActive) {
-    const expiryDate = base.leaseExpiryDate ? `(${prettyFormatDate(base.leaseExpiryDate)})` : '';
-    return base.isLeaseExpired ? `Expired ${expiryDate}`.trim() : `Yes ${expiryDate}`.trim();
-  } else {
-    return 'No active Lease/License';
+    case 1:
+      const expiryDate = base?.leaseExpiryDate ? `(${prettyFormatDate(base.leaseExpiryDate)})` : '';
+      return `Yes ${expiryDate}`.trim();
+
+    default:
+      return 'Multiple';
   }
 }

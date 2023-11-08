@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FaHandHoldingUsd, FaMoneyCheckAlt, FaPencilRuler } from 'react-icons/fa';
+import { FaHandHoldingUsd, FaMoneyCheckAlt, FaPencilRuler, FaPlus } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router';
 import styled from 'styled-components';
 
@@ -67,7 +67,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
             claims={[Claims.COMPENSATION_REQUISITION_ADD]}
             title="Add Compensation"
             addButtonText="Add a Requisition"
-            addButtonIcon={'add'}
+            addButtonIcon={<FaPlus size={'2rem'} />}
             onAdd={onAdd}
           />
         }

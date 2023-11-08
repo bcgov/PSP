@@ -335,6 +335,13 @@ namespace PIMS.Tests.Automation.PageObjects
             if (researchFile.Status != "")
                 ChooseSpecificSelectOption(researchFileStatusSelect, researchFile.Status);
 
+            //File Name
+            if (researchFile.ResearchFileName != "")
+            {
+                ClearInput(researchFileNameInput);
+                webDriver.FindElement(researchFileNameInput).SendKeys(researchFile.ResearchFileName);
+            }
+                
             //Projects
             //Delete previous projects if any
             if (webDriver.FindElements(researchFileDetailsProjectsRemoveBttn).Count > 0)
@@ -559,7 +566,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Get the research file number
         public string GetResearchFileCode()
         {
-            WaitUntilVisible(researchFileHeaderCode);
+            Wait(2000);
             return webDriver.FindElement(researchFileHeaderCode).Text;
         }
 

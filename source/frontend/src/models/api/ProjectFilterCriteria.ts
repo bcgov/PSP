@@ -6,6 +6,7 @@ export interface Api_PropertyFilterCriteria {
   tenureRoadTypes: string[];
 
   leaseStatus: string | null;
+  leasePayRcvblType: string | null;
   leaseTypes: string[];
   leasePurposes: string[];
 

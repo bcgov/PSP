@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import { Select, SelectOption } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { Api_Person } from '@/models/api/Person';
+import { Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
 import { Api_Project } from '@/models/api/Project';
 import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 
@@ -14,7 +14,7 @@ export interface IProjectExportFormProps {
   onExportTypeSelected: () => void;
   onExport: (filter: Api_ExportProjectFilter) => Promise<void>;
   projects: Api_Project[];
-  teamMembers: Api_Person[];
+  teamMembers: Api_AcquisitionFileTeam[];
   loading: boolean;
 }
 

@@ -105,8 +105,14 @@ namespace Pims.Api.Areas.Reports.Models.Agreement
 
         private static string GetTeamMemberName(PimsAcquisitionFile file, string teamProfileTypeCode)
         {
-            PimsPerson matchingPerson = file?.PimsAcquisitionFileTeams?.FirstOrDefault(x => x.AcqFlTeamProfileTypeCode == teamProfileTypeCode)?.Person;
-            return matchingPerson?.GetFullName() ?? string.Empty;
+            var matchingTeamMember = file?.PimsAcquisitionFileTeams?.FirstOrDefault(x => x.AcqFlTeamProfileTypeCode == teamProfileTypeCode);
+
+            if(matchingTeamMember is not null)
+            {
+                return matchingTeamMember.PersonId.HasValue ? matchingTeamMember.Person?.GetFullName() : matchingTeamMember.Organization.Name;
+            }
+
+            return string.Empty;
         }
 
         private static string GetNullableDate(DateTime? dateTime)

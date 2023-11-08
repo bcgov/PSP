@@ -17,6 +17,7 @@ export class PropertyFilterFormModel {
 
   // Lease filters
   public leaseStatus: string = '';
+  public leasePayRcvblType: string = '';
   public leaseTypes: CodeTypeSelectOption[] = [];
   public leasePurposes: CodeTypeSelectOption[] = [];
 
@@ -32,6 +33,7 @@ export class PropertyFilterFormModel {
       tenureRoadTypes: this.tenureRoadTypes.map(lp => lp.codeType),
 
       leaseStatus: this.leaseStatus !== '' ? this.leaseStatus : null,
+      leasePayRcvblType: this.leasePayRcvblType !== '' ? this.leasePayRcvblType : null,
       leaseTypes: this.leaseTypes.map(lt => lt.codeType),
       leasePurposes: this.leasePurposes.map(lp => lp.codeType),
 

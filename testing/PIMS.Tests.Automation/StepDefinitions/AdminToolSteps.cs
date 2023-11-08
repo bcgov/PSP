@@ -18,7 +18,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly IEnumerable<DocumentFile> documentFiles;
 
         private readonly string userName = "TRANPSP1";
-        //private readonly string userName = "sutairak";
 
         private FinancialCode financialCode;
 
@@ -46,29 +45,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to Help Desk Section
             helpDesk.NavigateToHelpDesk();
 
-            //Verify Header
-            helpDesk.VerifyHelpDeskHeader();
-
-            //Verify Map Section
-            helpDesk.VerifyMapHelpDesk();
-
-            //Verify Filter Section
-            helpDesk.VerifyFilterHelpDesk();
-
-            //Verify Navigation Section
-            helpDesk.VerifyNavigationHelpDesk();
-
-            //Verify Question Form
-            helpDesk.VerifyQuestionForm();
-
-            //Verify Bug Form
-            helpDesk.VerifyBugForm();
-
-            //Verify Feature Form
-            helpDesk.VerifyFeatureForm();
-
-            //Verify Buttons
-            helpDesk.VerifyButtons();
+            //Verify Help Desk Modal
+            helpDesk.VerifyHelpDeskModal();
         }
 
         [StepDefinition(@"I enter to the User Management List View")]

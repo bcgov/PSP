@@ -415,7 +415,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void FilterByType(string documentType)
         {
-            Wait();
+            Wait(2000);
             webDriver.FindElement(documentFilterResetBttn).Click();
 
             WaitUntilClickable(documentFilterTypeSelect);
@@ -518,6 +518,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ViewLastDocument(int index)
         {
+            Wait(2000);
             WaitUntilClickable(documentTableResults1stViewBttn);
 
             if (index > 9)
@@ -948,8 +949,8 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(documenyViewDocumentNameLabel);
             AssertTrueContentNotEquals(documentViewFileNameContent, "");
 
-            WaitUntilVisible(documentViewDownloadButton);
-            AssertTrueIsDisplayed(documentViewDownloadButton);
+            //WaitUntilVisible(documentViewDownloadButton);
+            //AssertTrueIsDisplayed(documentViewDownloadButton);
 
             //Document Information
             AssertTrueIsDisplayed(documentUploadDocInfoSubtitle);

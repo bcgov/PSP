@@ -66,8 +66,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SearchAcquisitionFileByAFile(string AFile)
         {
-            Wait(2000);
-            
+            WaitUntilTableSpinnerDisappear();
+
+            WaitUntilVisible(searchAcquisitionFileNameInput);
             webDriver.FindElement(searchAcquisitionFileNameInput).SendKeys(AFile);
             ChooseSpecificSelectOption(searchAcquisitionFileStatusSelect, "All Status");
 
@@ -117,7 +118,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public Boolean SearchFoundResults()
         {
-            Wait();
+            WaitUntilTableSpinnerDisappear();
             return webDriver.FindElements(searchAcquisitionFile1stResult).Count > 0;
         }
 

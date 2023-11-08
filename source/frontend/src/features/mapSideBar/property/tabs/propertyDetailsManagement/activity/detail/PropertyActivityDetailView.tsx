@@ -12,7 +12,9 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import * as Styled from '@/components/common/styles';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { Claims } from '@/constants/index';
+import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_PropertyActivity, Api_PropertyActivityInvoice } from '@/models/api/PropertyActivity';
 import { formatMoney, prettyFormatDate } from '@/utils';
@@ -67,7 +69,7 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                       title="Edit property activity"
                       onClick={() => {
                         history.push(
-                          `/mapview/sidebar/property/${props.propertyId}/activity/${props.activity?.id}/edit`,
+                          `/mapview/sidebar/property/${props.propertyId}/management/activity/${props.activity?.id}/edit`,
                         );
                       }}
                     />
@@ -146,6 +148,12 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                 </Section>
               </StyledSummarySection>
             </StyledFormWrapper>
+
+            <DocumentListContainer
+              parentId={props.activity?.id.toString() ?? ''}
+              addButtonText="Add a Management Document"
+              relationshipType={DocumentRelationshipType.MANAGEMENT_FILES}
+            />
           </Styled.TrayContent>
         </Styled.PopupTray>
       </ReactVisibilitySensor>

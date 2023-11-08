@@ -22,9 +22,6 @@ export const HeaderStyled = styled(Navbar)`
     padding: 1rem 0;
     align-items: center;
     flex-grow: 1;
-    .pims-logo {
-      margin: 0 1rem;
-    }
   }
 
   .title {

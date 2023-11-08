@@ -7,48 +7,52 @@ describe('take model tests', () => {
   it("converts all false it values to 'false'", () => {
     const apiTake: Api_Take = {
       ...emptyTake,
-      isLicenseToConstruct: false,
-      isNewRightOfWay: false,
-      isLandAct: false,
-      isStatutoryRightOfWay: false,
-      isSurplus: false,
+      isAcquiredForInventory: false,
+      isNewLicenseToConstruct: false,
+      isNewHighwayDedication: false,
+      isNewLandAct: false,
+      isNewInterestInSrw: false,
+      isThereSurplus: false,
     };
     const takeModel = new TakeModel(apiTake);
-    expect(takeModel.isLicenseToConstruct).toBe('false');
-    expect(takeModel.isNewRightOfWay).toBe('false');
-    expect(takeModel.isLandAct).toBe('false');
-    expect(takeModel.isStatutoryRightOfWay).toBe('false');
-    expect(takeModel.isSurplus).toBe('false');
+    expect(takeModel.isAcquiredForInventory).toBe('false');
+    expect(takeModel.isNewLicenseToConstruct).toBe('false');
+    expect(takeModel.isNewHighwayDedication).toBe('false');
+    expect(takeModel.isNewLandAct).toBe('false');
+    expect(takeModel.isNewInterestInSrw).toBe('false');
+    expect(takeModel.isThereSurplus).toBe('false');
   });
 
   it("converts all true it values to 'true'", () => {
     const apiTake: Api_Take = {
       ...emptyTake,
-      isLicenseToConstruct: true,
-      isNewRightOfWay: true,
-      isLandAct: true,
-      isStatutoryRightOfWay: true,
-      isSurplus: true,
+      isAcquiredForInventory: true,
+      isNewLicenseToConstruct: true,
+      isNewHighwayDedication: true,
+      isNewLandAct: true,
+      isNewInterestInSrw: true,
+      isThereSurplus: true,
     };
     const takeModel = new TakeModel(apiTake);
-    expect(takeModel.isLicenseToConstruct).toBe('true');
-    expect(takeModel.isNewRightOfWay).toBe('true');
-    expect(takeModel.isLandAct).toBe('true');
-    expect(takeModel.isStatutoryRightOfWay).toBe('true');
-    expect(takeModel.isSurplus).toBe('true');
+    expect(takeModel.isAcquiredForInventory).toBe('true');
+    expect(takeModel.isNewLicenseToConstruct).toBe('true');
+    expect(takeModel.isNewHighwayDedication).toBe('true');
+    expect(takeModel.isNewLandAct).toBe('true');
+    expect(takeModel.isNewInterestInSrw).toBe('true');
+    expect(takeModel.isThereSurplus).toBe('true');
   });
   it('sets all undefined areas to 0', () => {
     const apiTake: Api_Take = {
       ...emptyTake,
       landActArea: null,
-      newRightOfWayArea: null,
+      newHighwayDedicationArea: null,
       surplusArea: null,
       statutoryRightOfWayArea: null,
       licenseToConstructArea: null,
     };
     const takeModel = new TakeModel(apiTake);
     expect(takeModel.landActArea).toBe(0);
-    expect(takeModel.newRightOfWayArea).toBe(0);
+    expect(takeModel.newHighwayDedicationArea).toBe(0);
     expect(takeModel.surplusArea).toBe(0);
     expect(takeModel.statutoryRightOfWayArea).toBe(0);
     expect(takeModel.licenseToConstructArea).toBe(0);
@@ -57,11 +61,11 @@ describe('take model tests', () => {
   it('sets all area units to the unit from the backend', () => {
     const apiTake: Api_Take = {
       ...emptyTake,
-      areaUnitTypeCode: 'FEET2',
+      areaUnitTypeCode: { id: 'FEET2' },
     };
     const takeModel = new TakeModel(apiTake);
     expect(takeModel.landActAreaUnitTypeCode).toBe('FEET2');
-    expect(takeModel.newRightOfWayAreaUnitTypeCode).toBe('FEET2');
+    expect(takeModel.newHighwayDedicationAreaUnitTypeCode).toBe('FEET2');
     expect(takeModel.surplusAreaUnitTypeCode).toBe('FEET2');
     expect(takeModel.statutoryRightOfWayAreaUnitTypeCode).toBe('FEET2');
     expect(takeModel.licenseToConstructAreaUnitTypeCode).toBe('FEET2');
@@ -72,22 +76,22 @@ describe('take model tests', () => {
       const apiTake: Api_Take = {
         ...emptyTake,
         landActArea: 1,
-        newRightOfWayArea: 2,
+        newHighwayDedicationArea: 2,
         surplusArea: 3,
         statutoryRightOfWayArea: 4,
         licenseToConstructArea: 5,
       };
       const takeModel = new TakeModel(apiTake);
       takeModel.landActAreaUnitTypeCode = 'M2';
-      takeModel.newRightOfWayAreaUnitTypeCode = 'FEET2';
+      takeModel.newHighwayDedicationAreaUnitTypeCode = 'FEET2';
       takeModel.surplusAreaUnitTypeCode = 'HA';
       takeModel.statutoryRightOfWayAreaUnitTypeCode = 'ACRE';
       takeModel.licenseToConstructAreaUnitTypeCode = 'ACRE';
 
       const actualApiTake = takeModel.toApi();
-      expect(actualApiTake.areaUnitTypeCode).toBe('M2');
+      expect(actualApiTake.areaUnitTypeCode?.id).toBe('M2');
       expect(actualApiTake.landActArea).toBe(1);
-      expect(actualApiTake.newRightOfWayArea).toBe(0.18580608);
+      expect(actualApiTake.newHighwayDedicationArea).toBe(0.18580608);
       expect(actualApiTake.surplusArea).toBe(30000);
       expect(actualApiTake.statutoryRightOfWayArea).toBe(16187.4256896);
       expect(actualApiTake.licenseToConstructArea).toBe(20234.282112);

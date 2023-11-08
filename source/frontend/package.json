@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "4.0.0-66.7",
+  "version": "4.0.0-66.40",
   "private": true,
   "dependencies": {
     "@bcgov/bc-sans": "1.0.1",
@@ -35,7 +35,7 @@
     "react-draggable": "4.4.5",
     "react-error-boundary": "3.1.4",
     "react-fast-compare": "3.2.0",
-    "react-icons": "4.3.1",
+    "react-icons": "4.11.0",
     "react-idle-timer": "^5.4.2",
     "react-leaflet": "4.1.0",
     "react-number-format": "4.9.3",

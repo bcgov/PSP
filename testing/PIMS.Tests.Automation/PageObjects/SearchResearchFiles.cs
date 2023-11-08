@@ -143,13 +143,20 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyResearchFileTableContent(ResearchFile researchFile, string user)
         {
+            Wait(2000);
+
             AssertTrueIsDisplayed(searchResearchFile1stResultLink);
+
+            System.Diagnostics.Debug.WriteLine(webDriver.FindElement(searchResearchFile1stResultFileName).Text);
+            System.Diagnostics.Debug.WriteLine(researchFile.ResearchFileName);
             AssertTrueContentEquals(searchResearchFile1stResultFileName, researchFile.ResearchFileName);
             AssertTrueContentEquals(searchResearchFile1stResultRegion, researchFile.ResearchFileMOTIRegion);
             AssertTrueContentEquals(searchResearchFile1stResultCreator, user);
             AssertTrueContentEquals(searchResearchFile1stResultCreateDate, GetTodayFormattedDate());
             AssertTrueContentEquals(searchResearchFile1stResultUpdatedBy, user);
             AssertTrueContentEquals(searchResearchFile1stResultUpdateDate, GetTodayFormattedDate());
+            System.Diagnostics.Debug.WriteLine(researchFile.Status);
+            System.Diagnostics.Debug.WriteLine(webDriver.FindElement(searchResearchFile1stResultStatus).Text);
             AssertTrueContentEquals(searchResearchFile1stResultStatus, researchFile.Status);
         }
 

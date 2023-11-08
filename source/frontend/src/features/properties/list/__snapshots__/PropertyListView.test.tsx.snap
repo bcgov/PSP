@@ -363,8 +363,9 @@ exports[`Property list view matches snapshot 1`] = `
               class="col-auto"
             >
               <button
-                class="c4 Button Button--icon-only primary btn btn-primary"
+                class="c4 Button Button--disabled Button--icon-only primary btn btn-primary"
                 data-testid="search"
+                disabled=""
                 id="search-button"
                 title="search"
                 type="submit"

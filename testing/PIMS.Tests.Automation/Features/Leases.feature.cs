@@ -413,14 +413,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="11. Lease and License from a Payable Marker Pin")]
+        [Xunit.SkippableFactAttribute(DisplayName="11. Lease and License List View")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "11. Lease and License from a Payable Marker Pin")]
-        public void _11_LeaseAndLicenseFromAPayableMarkerPin()
+        [Xunit.TraitAttribute("Description", "11. Lease and License List View")]
+        public void _11_LeaseAndLicenseListView()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("11. Lease and License from a Payable Marker Pin", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("11. Lease and License List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 63
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -432,37 +432,9 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 64
- testRunner.Given("I create a new Lease through a Payable Marker from row number 6", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 65
- testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="12. Lease and License List View")]
-        [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "12. Lease and License List View")]
-        public void _12_LeaseAndLicenseListView()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("12. Lease and License List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 67
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 68
  testRunner.Given("I search for an existing Lease or License from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 69
+#line 65
  testRunner.Then("Expected Lease File Content is displayed on Leases Table", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

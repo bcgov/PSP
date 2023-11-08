@@ -53,7 +53,7 @@ export const PrimaryContactSelector: React.FC<IPrimaryContactSelectorProps> = ({
     ) : primaryContacts.length > 0 ? (
       <span>{primaryContacts[0].label}</span>
     ) : (
-      <span>'No contacts available'</span>
+      <span>No contacts available</span>
     );
   }
 
