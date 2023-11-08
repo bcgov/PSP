@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
-using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -171,8 +170,8 @@ namespace Pims.Api.Services
         }
 
         /*
-        Updates the passed project with the matched products in place.
-        Note: The return list contains the external products matched
+        * Updates the passed project with the matched products in place.
+        * Note: The return list contains the external products matched
         */
         private List<PimsProduct> MatchProducts(PimsProject project)
         {
@@ -192,6 +191,7 @@ namespace Pims.Api.Services
                     // Manually update the members with the new data
                     existing.Product.StartDate = projectProduct.Product.StartDate;
                     existing.Product.CostEstimate = projectProduct.Product.CostEstimate;
+                    existing.Product.CostEstimateDate = projectProduct.Product.CostEstimateDate;
                     existing.Product.Objective = projectProduct.Product.Objective;
                     existing.Product.Scope = projectProduct.Product.Scope;
 
@@ -218,6 +218,7 @@ namespace Pims.Api.Services
                     // Manually update the members with the new data
                     updatedProduct.StartDate = projectProduct.Product.StartDate;
                     updatedProduct.CostEstimate = projectProduct.Product.CostEstimate;
+                    updatedProduct.CostEstimateDate = projectProduct.Product.CostEstimateDate;
                     updatedProduct.Objective = projectProduct.Product.Objective;
                     updatedProduct.Scope = projectProduct.Product.Scope;
 

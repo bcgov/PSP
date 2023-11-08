@@ -18,6 +18,7 @@ namespace Pims.Api.Models.Concepts
             config.NewConfig<ProjectProductModel, Entity.PimsProjectProduct>()
                 .Map(dest => dest.ProjectProductId, src => src.Id)
                 .Map(dest => dest.ProjectId, src => src.ProjectId)
+                .Map(dest => dest.ProductId, src => src.Product.Id)
                 .Map(dest => dest.Product, src => src.Product)
                 .Inherits<BaseModel, Entity.IBaseEntity>();
         }
