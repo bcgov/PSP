@@ -156,12 +156,11 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
               </SectionField>
             </>
           )}
-        </StyledBorderSection>
-        <StyledBorderSection>
           <SectionField
             label="Is this being acquired for MoTI inventory? *"
             labelWidth="8"
             tooltip="Selecting Yes for this option will result in the property being added to inventory."
+            className="pt-4"
           >
             <RadioGroup
               field={withNameSpace(nameSpace, 'isAcquiredForInventory')}

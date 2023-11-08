@@ -55,6 +55,7 @@ export const useProjectProvider = () => {
         toast.error('Failed to save project.');
       }
     }, []),
+    throwError: true,
   });
 
   const getProjectApi = useApiRequestWrapper<
