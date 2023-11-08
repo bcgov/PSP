@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Json;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -113,11 +115,11 @@ namespace Pims.Api.Areas.Projects.Controllers
         [ProducesResponseType(typeof(ProjectModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public IActionResult AddProject(ProjectModel projectModel)
+        public IActionResult AddProject(ProjectModel projectModel, [FromQuery] string[] userOverrideCodes)
         {
             try
             {
-                var newProject = _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
+                var newProject = _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel), userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
                 return new JsonResult(_mapper.Map<ProjectModel>(newProject));
             }
             catch (DuplicateEntityException e)
@@ -135,7 +137,7 @@ namespace Pims.Api.Areas.Projects.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProjectModel), 200)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public IActionResult UpdateProject([FromRoute] long id, [FromBody] ProjectModel model)
+        public IActionResult UpdateProject([FromRoute] long id, [FromBody] ProjectModel model, [FromQuery] string[] userOverrideCodes)
         {
             if (id != model.Id)
             {
@@ -144,7 +146,7 @@ namespace Pims.Api.Areas.Projects.Controllers
 
             try
             {
-                var updatedProject = _projectService.Update(_mapper.Map<Dal.Entities.PimsProject>(model));
+                var updatedProject = _projectService.Update(_mapper.Map<Dal.Entities.PimsProject>(model), userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
                 return new JsonResult(updatedProject);
             }
             catch (DuplicateEntityException e)

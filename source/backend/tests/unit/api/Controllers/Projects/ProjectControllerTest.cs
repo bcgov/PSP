@@ -14,6 +14,7 @@ using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
@@ -81,7 +82,7 @@ namespace Pims.Api.Test.Controllers
         public void UpdateProject_BadRequest()
         {
             // Act
-            var result = this._controller.UpdateProject(1, new ProjectModel { Id = 2 });
+            var result = this._controller.UpdateProject(1, new ProjectModel { Id = 2 }, Array.Empty<string>());
 
             // Assert
             result.Should().BeOfType(typeof(BadRequestObjectResult));
@@ -92,10 +93,10 @@ namespace Pims.Api.Test.Controllers
         {
             var helper = new TestHelper();
 
-            this._service.Setup(x => x.Update(It.IsAny<PimsProject>())).Throws(new DuplicateEntityException());
+            this._service.Setup(x => x.Update(It.IsAny<PimsProject>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Throws(new DuplicateEntityException());
 
             // Act
-            var result = this._controller.UpdateProject(1, new ProjectModel { Id = 1 });
+            var result = this._controller.UpdateProject(1, new ProjectModel { Id = 1 }, Array.Empty<string>());
 
             // Assert
             result.Should().BeOfType(typeof(ConflictObjectResult));
@@ -106,10 +107,10 @@ namespace Pims.Api.Test.Controllers
         {
             var helper = new TestHelper();
 
-            this._service.Setup(x => x.Add(It.IsAny<PimsProject>())).Throws(new DuplicateEntityException());
+            this._service.Setup(x => x.Add(It.IsAny<PimsProject>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Throws(new DuplicateEntityException());
 
             // Act
-            var result = this._controller.AddProject(new ProjectModel { Id = 2 });
+            var result = this._controller.AddProject(new ProjectModel { Id = 2 }, Array.Empty<string>());
 
             // Assert
             result.Should().BeOfType(typeof(ConflictObjectResult));
