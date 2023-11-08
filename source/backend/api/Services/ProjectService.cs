@@ -189,17 +189,15 @@ namespace Pims.Api.Services
                 var existing = existingProjectProducts.FirstOrDefault(x => x.Product.Code == projectProduct.Product.Code && x.Product.Description == projectProduct.Product.Description);
                 if (existing != null)
                 {
-                    var updatedProduct = existing;
-
                     // Manually update the members with the new data
-                    updatedProduct.Product.StartDate = projectProduct.Product.StartDate;
-                    updatedProduct.Product.CostEstimate = projectProduct.Product.CostEstimate;
-                    updatedProduct.Product.Objective = projectProduct.Product.Objective;
-                    updatedProduct.Product.Scope = projectProduct.Product.Scope;
+                    existing.Product.StartDate = projectProduct.Product.StartDate;
+                    existing.Product.CostEstimate = projectProduct.Product.CostEstimate;
+                    existing.Product.Objective = projectProduct.Product.Objective;
+                    existing.Product.Scope = projectProduct.Product.Scope;
 
-                    projectProduct.Product = updatedProduct.Product;
+                    projectProduct.Product = existing.Product;
 
-                    matchedProjectProducts.Add(updatedProduct);
+                    matchedProjectProducts.Add(existing);
                 }
                 else
                 {
@@ -239,21 +237,6 @@ namespace Pims.Api.Services
 
             return externalProducts;
         }
-
-        /*private void CheckForDuplicateProducts(IEnumerable<PimsProduct> products, long projectId)
-        {
-            var duplicateProductsInArray = products.GroupBy(p => (p.Code, p.Description)).Where(g => g.Count() > 1).Select(g => g.Key);
-            if (duplicateProductsInArray.Any())
-            {
-                throw new DuplicateEntityException($"Unable to add project with duplicated product codes: {string.Join(", ", duplicateProductsInArray.Select(dp => dp.Code))}");
-            }
-
-            IEnumerable<PimsProduct> duplicateProducts = _productRepository.GetByProductBatch(products, projectId);
-            if (duplicateProducts.Any())
-            {
-                throw new DuplicateEntityException($"Unable to add project with duplicated product codes: {string.Join(", ", duplicateProducts.Select(dp => dp.Code))}");
-            }
-        }*/
 
         private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, IEnumerable<short> userRegions)
         {

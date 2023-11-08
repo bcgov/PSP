@@ -20,7 +20,8 @@ export const ProductSubForm: React.FunctionComponent<IProductSubFormProps> = ({
   nameSpace,
   formikProps,
 }) => {
-  const isExistingProduct = formikProps.values.products[index].id !== 0;
+  const productId = formikProps.values.products[index].id;
+  const isExistingProduct = productId !== 0 && productId !== null;
   const costEstimate = formikProps.values.products[index].costEstimate;
   return (
     <>

@@ -125,7 +125,9 @@ namespace Pims.Dal.Repositories
             var existingProject = Context.PimsProjects
                 .FirstOrDefault(x => x.Id == project.Id) ?? throw new KeyNotFoundException();
 
-            this.Context.UpdateGrandchild<PimsProject, long, PimsProjectProduct>(p => p.PimsProjectProducts, pp => pp.Product, project.Id, project.PimsProjectProducts.ToArray(), true);
+            Func<PimsContext, PimsProjectProduct, bool> canDeleteGrandchild = (context, pa) => !context.PimsProducts.Any(o => o.Id == pa.ProductId);
+
+            this.Context.UpdateGrandchild<PimsProject, long, PimsProjectProduct>(p => p.PimsProjectProducts, pp => pp.Product, project.Id, project.PimsProjectProducts.ToArray(), canDeleteGrandchild);
 
             Context.Entry(existingProject).CurrentValues.SetValues(project);
 
