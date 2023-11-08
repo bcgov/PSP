@@ -20,18 +20,19 @@ export const ProductSubForm: React.FunctionComponent<IProductSubFormProps> = ({
   nameSpace,
   formikProps,
 }) => {
+  const isExistingProduct = formikProps.values.products[index].id !== 0;
   const costEstimate = formikProps.values.products[index].costEstimate;
   return (
     <>
       <Row>
         <Col>
           <SectionField label="Product code" required>
-            <Input field={withNameSpace(nameSpace, 'code')} />
+            <Input field={withNameSpace(nameSpace, 'code')} disabled={isExistingProduct} />
           </SectionField>
         </Col>
         <Col>
           <SectionField label="Name" labelWidth="2" required>
-            <Input field={withNameSpace(nameSpace, 'description')} />
+            <Input field={withNameSpace(nameSpace, 'description')} disabled={isExistingProduct} />
           </SectionField>
         </Col>
       </Row>

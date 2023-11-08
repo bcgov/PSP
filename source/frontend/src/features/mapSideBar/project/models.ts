@@ -1,9 +1,10 @@
-import { Api_Product, Api_Project } from '@/models/api/Project';
+import { Api_Product, Api_Project, Api_ProjectProduct } from '@/models/api/Project';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { fromTypeCode, stringToUndefined, toTypeCode } from '@/utils/formUtils';
 
 export class ProductForm {
   id: number | null = null;
+
   code: string = '';
   description: string = '';
   startDate: string | '' = '';
@@ -13,11 +14,10 @@ export class ProductForm {
   scope: string | '' = '';
   rowVersion: number | null = null;
 
-  toApi(parentId?: number | null): Api_Product {
+  toApi(): Api_Product {
     return {
       id: this.id,
-      parentProject: null,
-      parentProjectId: !!parentId ? parentId : null,
+      projectProducts: [],
       code: this.code,
       description: this.description,
       startDate: stringToUndefined(this.startDate),
@@ -67,7 +67,16 @@ export class ProjectForm {
       projectStatusTypeCode: toTypeCode<string>(this.projectStatusType) ?? null,
       regionCode: this.region ? toTypeCode<number>(+this.region) ?? null : null,
       note: this.summary ?? null,
-      products: this.products?.map(x => x.toApi(this.id)),
+      projectProducts: this.products?.map<Api_ProjectProduct>(x => {
+        return {
+          id: 0,
+          projectId: 0,
+          product: x.toApi(),
+          productId: 0,
+          project: null,
+          rowVersion: 0,
+        };
+      }),
       rowVersion: this.rowVersion ?? null,
       businessFunctionCode: this.businessFunctionCode
         ? toTypeCode<number>(+this.businessFunctionCode) ?? null
@@ -88,7 +97,11 @@ export class ProjectForm {
     newForm.region = model.regionCode?.id ? +model.regionCode?.id ?? '' : '';
     newForm.summary = model.note ?? '';
     newForm.rowVersion = model.rowVersion ?? null;
-    newForm.products = model.products?.map(x => ProductForm.fromApi(x)) || [];
+    newForm.products =
+      model.projectProducts
+        .map(x => x.product)
+        ?.filter((x): x is Api_Product => x !== null)
+        .map(x => ProductForm.fromApi(x)) || [];
     newForm.businessFunctionCode = model.businessFunctionCode?.id
       ? fromTypeCode<number>(model.businessFunctionCode) ?? ''
       : '';

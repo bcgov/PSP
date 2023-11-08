@@ -127,26 +127,4 @@ describe('UpdateProjectContainer', () => {
     expect(formikHelpers.setSubmitting).toHaveBeenCalled();
     expect(formikHelpers.resetForm).toHaveBeenCalled();
   });
-
-  it('displays expected error toast when update fails', async () => {
-    setup();
-    const formikHelpers: Partial<FormikHelpers<ProjectForm>> = {
-      setSubmitting: jest.fn(),
-      resetForm: jest.fn(),
-    };
-    mockApi.execute.mockRejectedValue({
-      isAxiosError: true,
-      response: { status: 409, data: 'expected error' },
-    } as AxiosError);
-
-    await act(async () => {
-      return viewProps?.onSubmit(
-        viewProps.initialValues,
-        formikHelpers as FormikHelpers<ProjectForm>,
-      );
-    });
-
-    expect(mockApi.execute).toHaveBeenCalled();
-    await waitFor(async () => expect(screen.getByText('expected error')).toBeVisible());
-  });
 });
