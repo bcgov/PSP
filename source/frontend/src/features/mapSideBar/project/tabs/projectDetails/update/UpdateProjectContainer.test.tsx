@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 
@@ -6,7 +5,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { mockProjectGetResponse, mockProjectPostResponse } from '@/mocks/projects.mock';
-import { act, render, RenderOptions, screen, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { IAddProjectFormProps } from '../../../add/AddProjectForm';
 import { ProjectForm } from '../../../models';
