@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { isEmpty, isNumber } from 'lodash';
 
 import { fromApiOrganization, fromApiPerson, IContactSearchResult } from '@/interfaces';
 import { Api_AcquisitionFileOwner, Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
@@ -42,9 +42,10 @@ export class AcquisitionTeamFormModel {
       person: undefined,
       organizationId: organizationId ?? undefined,
       organization: undefined,
-      primaryContactId: Number.isFinite(this.primaryContactId)
-        ? Number(this.primaryContactId)
-        : undefined,
+      primaryContactId:
+        !!this.primaryContactId && isNumber(+this.primaryContactId)
+          ? Number(this.primaryContactId)
+          : undefined,
       teamProfileType: toTypeCode(this.contactTypeCode),
       teamProfileTypeCode: this.contactTypeCode,
     };

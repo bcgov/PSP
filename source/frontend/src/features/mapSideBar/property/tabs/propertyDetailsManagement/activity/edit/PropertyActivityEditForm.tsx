@@ -52,6 +52,9 @@ export const PropertyActivityEditForm: React.FunctionComponent<
 
   const initialForm = useMemo(() => {
     const initialModel = PropertyActivityFormModel.fromApi(props.activity);
+    if (props.activity === undefined) {
+      initialModel.activityStatusCode = 'NOTSTARTED';
+    }
     setActivityType(initialModel.activityTypeCode);
     return initialModel;
   }, [props.activity]);

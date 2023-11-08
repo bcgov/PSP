@@ -69,6 +69,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
             labelWidth="8"
             label="Takes for this property in other files"
             tooltip="The number of takes in completed, In-progress or cancelled state for this property, in files other than this acquisition file. The other files can be found under the Acquisition section of the PIMS Files tab"
+            valueTestId="takes-in-other-files"
           >
             {takesNotInFile}
           </SectionField>

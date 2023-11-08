@@ -18,7 +18,7 @@ export interface ITakesUpdateFormProps {
   fileProperty: Api_PropertyFile;
   takes: TakeModel[];
   loading: boolean;
-  onSubmit: (model: TakesForm, formikHelpers: FormikHelpers<TakesForm>) => void;
+  onSubmit: (model: TakesForm, formikHelpers: FormikHelpers<TakesForm>) => Promise<void>;
 }
 
 export interface TakesForm {
