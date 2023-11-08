@@ -207,11 +207,7 @@ export const ResearchContainer: React.FunctionComponent<
   };
 
   if (researchFile === undefined && (loadingResearchFile || loadingResearchFileProperties)) {
-    return (
-      <>
-        <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>
-      </>
-    );
+    return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 
   if (isShowingPropertySelector && researchFile) {
