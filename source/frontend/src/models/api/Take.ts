@@ -1,27 +1,31 @@
+import { Api_AcquisitionFile } from './AcquisitionFile';
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import Api_TypeCode from './TypeCode';
 
+// LINK @backend/api/Models/Concepts/Take/TakeModel.cs
 export interface Api_Take extends Api_ConcurrentVersion, Api_AuditFields {
-  id?: number;
+  id: number;
   description: string;
-  areaUnitTypeCode: string;
-  isSurplus: boolean;
-  isLandAct: boolean;
-  isNewInterestInSrw: boolean;
-  isNewRightOfWay: boolean;
-  isLicenseToConstruct: boolean;
+  newHighwayDedicationArea: number | null;
+  areaUnitTypeCode: Api_TypeCode<string> | null;
+  isAcquiredForInventory: boolean | null;
+  isThereSurplus: boolean | null;
+  isNewLicenseToConstruct: boolean | null;
+  isNewHighwayDedication: boolean | null;
+  isNewLandAct: boolean | null;
+  isNewInterestInSrw: boolean | null;
   licenseToConstructArea: number | null;
   ltcEndDt: string | null;
-  newRightOfWayArea: number | null;
   landActArea: number | null;
   landActEndDt: string | null;
-  landActTypeCode: Api_TypeCode<string> | null;
+  propertyAcquisitionFile: Api_AcquisitionFile | null;
+  propertyAcquisitionFileId: number;
   statutoryRightOfWayArea: number | null;
   srwEndDt: string | null;
   surplusArea: number | null;
-  propertyAcquisitionFileId: number | null;
-  takeSiteContamTypeCode: string | null;
-  takeTypeCode: string | null;
-  takeStatusTypeCode: string | null;
+  takeSiteContamTypeCode: Api_TypeCode<string> | null;
+  takeTypeCode: Api_TypeCode<string> | null;
+  takeStatusTypeCode: Api_TypeCode<string> | null;
+  landActTypeCode: Api_TypeCode<string> | null;
 }

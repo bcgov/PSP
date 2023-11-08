@@ -381,20 +381,25 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="property">The property to update.</param>
         /// <returns>The updated property.</returns>
-        public PimsProperty TransferFileProperty(PimsProperty property, bool isOwned = true)
+        public PimsProperty TransferFileProperty(PimsProperty property, bool isOwned, bool isPropertyOfInterest)
         {
             property.ThrowIfNull(nameof(property));
 
             var existingProperty = Context.PimsProperties
                 .FirstOrDefault(p => p.PropertyId == property.Internal_Id) ?? throw new KeyNotFoundException();
 
-            existingProperty.IsPropertyOfInterest = false;
+            existingProperty.IsPropertyOfInterest = isPropertyOfInterest;
             existingProperty.IsOwned = isOwned;
-            existingProperty.PropertyClassificationTypeCode = "COREOPER";
-            if (!isOwned)
+
+            if (isOwned)
+            {
+                existingProperty.PropertyClassificationTypeCode = "COREOPER";
+            }
+            else
             {
                 existingProperty.PropertyClassificationTypeCode = "OTHER";
             }
+
             return existingProperty;
         }
 

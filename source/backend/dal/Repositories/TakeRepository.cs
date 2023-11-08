@@ -85,7 +85,7 @@ namespace Pims.Dal.Repositories
 
         public IEnumerable<PimsTake> GetAllByPropertyAcquisitionFileId(long acquisitionFilePropertyId)
         {
-            return Context.PimsTakes.Include(t => t.PropertyAcquisitionFile).Where(pf => pf.PropertyAcquisitionFileId == acquisitionFilePropertyId);
+            return Context.PimsTakes.Include(t => t.PropertyAcquisitionFile).Where(pf => pf.PropertyAcquisitionFileId == acquisitionFilePropertyId).ToList();
         }
     }
 }
