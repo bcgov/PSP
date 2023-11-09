@@ -7,6 +7,7 @@ import { useApiProjects } from '@/hooks/pims-api/useApiProjects';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import { Api_Product, Api_Project } from '@/models/api/Project';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 /**
@@ -35,10 +36,14 @@ export const useProjectProvider = () => {
     });
 
   const addProjectApi = useApiRequestWrapper<
-    (project: Api_Project) => Promise<AxiosResponse<Api_Project, any>>
+    (
+      project: Api_Project,
+      userOverrideCodes: UserOverrideCode[],
+    ) => Promise<AxiosResponse<Api_Project, any>>
   >({
     requestFunction: useCallback(
-      async (project: Api_Project) => await postProject(project),
+      async (project: Api_Project, userOverrideCodes: UserOverrideCode[]) =>
+        await postProject(project, userOverrideCodes),
       [postProject],
     ),
     requestName: 'AddProject',
@@ -50,6 +55,7 @@ export const useProjectProvider = () => {
         toast.error('Failed to save project.');
       }
     }, []),
+    throwError: true,
   });
 
   const getProjectApi = useApiRequestWrapper<
@@ -70,10 +76,14 @@ export const useProjectProvider = () => {
   });
 
   const updateProject = useApiRequestWrapper<
-    (project: Api_Project) => Promise<AxiosResponse<Api_Project, any>>
+    (
+      project: Api_Project,
+      userOverrideCodes: UserOverrideCode[],
+    ) => Promise<AxiosResponse<Api_Project, any>>
   >({
     requestFunction: useCallback(
-      async (project: Api_Project) => await putProject(project),
+      async (project: Api_Project, userOverrideCodes: UserOverrideCode[]) =>
+        await putProject(project, userOverrideCodes),
       [putProject],
     ),
     requestName: 'UpdateProject',

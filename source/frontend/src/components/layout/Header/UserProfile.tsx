@@ -1,17 +1,15 @@
 import React from 'react';
-import Image from 'react-bootstrap/Image';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { FaSignOutAlt } from 'react-icons/fa';
+import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import profileUrl from '@/assets/images/profile.svg';
 import variables from '@/assets/scss/_variables.module.scss';
 import { useConfiguration } from '@/hooks/useConfiguration';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 /** the styling for the dropdown menu that appears after clicking the user's name */
 const StyleDropDown = styled(NavDropdown)`
-  font-size: 1.4rem;
+  font-size: 16px;
   .dropdown-menu {
     width: 30rem;
     padding: 0rem;
@@ -39,10 +37,8 @@ const LogoutText = styled.p`
   margin-left: 12rem;
 `;
 
-/** the styling for the avatar next to user's name */
-const ProfileAvatar = styled(Image)`
-  height: 3rem;
-  width: 3rem;
+const StyledUserAvatar = styled(FaUserCircle)`
+  cursor: pointer;
   margin-right: 10px;
 `;
 
@@ -65,7 +61,7 @@ export const UserProfile: React.FC<React.PropsWithChildren<unknown>> = () => {
 
   return (
     <>
-      <ProfileAvatar src={profileUrl} rounded />
+      <StyledUserAvatar size="24px" />
       <StyleDropDown className="px-0" title={displayName} id="user-dropdown" alignRight>
         {!!keycloak.roles.length && (
           <RolesBox>

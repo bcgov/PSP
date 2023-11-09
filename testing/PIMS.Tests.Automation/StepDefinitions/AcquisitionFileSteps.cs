@@ -17,11 +17,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SharedSearchProperties sharedSearchProperties;
         private readonly SearchProperties searchProperties;
         private readonly AcquisitionProperties acquisitionProperties;
+        private readonly AcquisitionTakes acquisitionTakes;
         private readonly PropertyInformation propertyInformation;
         private readonly AcquisitionChecklist checklist;
         private readonly AcquisitionAgreements agreements;
         private readonly AcquisitionStakeholders stakeholders;
         private readonly AcquisitionCompensations h120;
+        private readonly AcquisitionExpropriation expropriation;
         private readonly Notes notes;
 
         private readonly string userName = "TRANPSP1";
@@ -41,11 +43,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties = new SharedSearchProperties(driver.Current);
             searchProperties = new SearchProperties(driver.Current);
             acquisitionProperties = new AcquisitionProperties(driver.Current);
+            acquisitionTakes = new AcquisitionTakes(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
             checklist = new AcquisitionChecklist(driver.Current);
             agreements = new AcquisitionAgreements(driver.Current);
             stakeholders = new AcquisitionStakeholders(driver.Current);
             h120 = new AcquisitionCompensations(driver.Current);
+            expropriation = new AcquisitionExpropriation(driver.Current);
             notes = new Notes(driver.Current);
         }
 
@@ -238,6 +242,87 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Select 1st Property
             acquisitionProperties.ChooseFirstPropertyOption();
+        }
+
+        [StepDefinition(@"I create Takes within Acquisition File's Properties")]
+        public void CreateTakes()
+        {
+            /* TEST COVERAGE:  PSP-5892, PSP-5893, PSP-5896, PSP-5898 */
+
+            for (int i = 0; i < acquisitionFile.AcquisitionTakes.Count; i++)
+            {
+                //Choose Take's Property
+                acquisitionProperties.ChooseNthPropertyOption(acquisitionFile.AcquisitionTakes[i].FromProperty);
+
+                //Navigate to the Takes Tab
+                acquisitionTakes.NavigateTakesTab();
+
+                //Verify Init form
+                acquisitionTakes.VerifyInitTakesView();
+
+                //Click on Edit button
+                acquisitionTakes.ClickEditTakesButton();
+
+                //Insert Take
+                if (acquisitionFile.AcquisitionTakes[i].TakeCounter.Equals(0))
+                {
+                    acquisitionTakes.VerifyInitCreateForm();
+                    acquisitionTakes.InsertTake(acquisitionFile.AcquisitionTakes[i]);
+                }
+                else
+                {
+                    acquisitionTakes.ClickCreateNewTakeBttn();
+                    acquisitionTakes.InsertTake(acquisitionFile.AcquisitionTakes[i]);
+                }
+
+                //Save Take
+                acquisitionTakes.SaveTake();
+
+                //Verify View Form
+                //acquisitionTakes.VerifyCreatedTakeViewForm(acquisitionFile.AcquisitionTakes[i]);
+            }
+        }
+
+        [StepDefinition(@"I update Takes within Acquisition File's Properties from row number (.*)")]
+        public void UpdateTakes(int rowNumber)
+        {
+            /* TEST COVERAGE:  PSP-5894, PSP-5895 */
+
+            PopulateAcquisitionFile(rowNumber);
+
+            //Search for an existing Acquisition File
+            searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
+            searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
+            searchAcquisitionFiles.SelectFirstOption();
+
+            //Choose Take's Property
+            acquisitionProperties.ChooseNthPropertyOption(acquisitionFile.AcquisitionTakes[0].FromProperty);
+
+            //Navigate to Takes Tab
+            acquisitionTakes.NavigateTakesTab();
+
+            //Update Take
+            acquisitionTakes.ClickEditTakesButton();
+            acquisitionTakes.InsertTake(acquisitionFile.AcquisitionTakes[0]);
+
+            //Save Take
+            acquisitionTakes.SaveTake();
+
+            //Verify View Form
+            //acquisitionTakes.VerifyCreatedTakeViewForm(acquisitionFile.AcquisitionTakes[i]);
+
+            //Choose Take's Property
+            acquisitionProperties.ChooseNthPropertyOption(acquisitionFile.AcquisitionTakes[0].FromProperty);
+
+            //Navigate to Takes Tab
+            acquisitionTakes.NavigateTakesTab();
+
+            //Delete Take
+            acquisitionTakes.ClickEditTakesButton();
+            acquisitionTakes.DeleteTake(acquisitionFile.AcquisitionTakes[0].TakeCounter);
+
+            //Save Take
+            acquisitionTakes.SaveTake();
         }
 
         [StepDefinition(@"I insert Checklist information to an Acquisition File")]
@@ -585,6 +670,108 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(compensationsBeforeDelete - compensationsAfterDelete == 1);
         }
 
+        [StepDefinition(@"I create Expropriations within an Acquisition File")]
+        public void CreateExpropriation()
+        {
+            /* TEST COVERAGE:  PSP-6555, PSP-6559, PSP-6560 */
+
+            //Navigate to Expropriation Requisition Tab
+            expropriation.NavigateToExpropriationTab();
+
+            //Verify initial Expropriation Tab List View
+            if (acquisitionFile.AcquisitionType.Equals("Section 3 Agreement"))
+                expropriation.VerifySection3InitExpropriationTab();
+            else
+                expropriation.VerifySection6InitExpropriationTab();
+
+            //Create Compensation Requisition Forms
+            if (acquisitionFile.AcquisitionExpropriationForm8s.Count > 0)
+            {
+                for (int i = 0; i < acquisitionFile.AcquisitionExpropriationForm8s.Count; i++)
+                {
+                    //Click on Add new Form 8
+                    expropriation.AddForm8Button();
+
+                    //Verify Initial Create Form
+                    expropriation.VerifyInitCreateForm8();
+
+                    //Add Details to the Expropriation Form 8
+                    expropriation.CreateForm8(acquisitionFile.AcquisitionExpropriationForm8s[i]);
+
+                    //Save the Form 8
+                    expropriation.SaveExpropriation();
+
+                    //Verify Created Form 8 View
+                    expropriation.VerifyCreatedForm8View(acquisitionFile.AcquisitionExpropriationForm8s[i], i);
+                }
+            }
+        }
+
+        [StepDefinition(@"I update Expropriation within an Acquisition File from row number (.*)")]
+        public void UpdateExpropriation(int rowNumber)
+        {
+
+            //Populate data
+            PopulateAcquisitionFile(rowNumber);
+
+            //Search for an existing Acquisition File
+            searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
+            searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
+            searchAcquisitionFiles.SelectFirstOption();
+
+            //Update type of Acquisition File
+            acquisitionFilesDetails.EditAcquisitionFileBttn();
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
+            acquisitionFilesDetails.SaveAcquisitionFileDetails();
+
+            //Navigate to Expropriation Requisition Tab
+            expropriation.NavigateToExpropriationTab();
+
+            //Verify initial Expropriation Tab List View
+            if (acquisitionFile.AcquisitionType.Equals("Section 3 Agreement"))
+                expropriation.VerifySection3InitExpropriationTab();
+            else
+                expropriation.VerifySection6InitExpropriationTab();
+
+            //Edit Expropriation button
+            expropriation.EditNthForm8Button(0);
+
+            //Make changes on created Expropriation Form 8
+            expropriation.UpdateForm8(acquisitionFile.AcquisitionExpropriationForm8s[0]);
+
+            //Cancel changes
+            expropriation.CancelExpropriation();
+
+            //Make changes on created Compensation Requisition Form
+            expropriation.EditNthForm8Button(0);
+            expropriation.UpdateForm8(acquisitionFile.AcquisitionExpropriationForm8s[0]);
+
+            //Save changes
+            expropriation.SaveExpropriation();
+
+            //Verify Created Form 8 View
+            expropriation.VerifyCreatedForm8View(acquisitionFile.AcquisitionExpropriationForm8s[0], 0);
+
+            //Edit First Form 8
+            var paymentsBeforeDelete = expropriation.TotalPaymentsCount();
+            expropriation.EditNthForm8Button(0);
+
+            //Delete Payment
+            expropriation.DeleteFirstPayment();
+
+            //Save Compensation changes
+            expropriation.SaveExpropriation();
+            var paymentsAfterDelete = expropriation.TotalPaymentsCount();
+            Assert.True(paymentsBeforeDelete - paymentsAfterDelete == 1);
+
+            //Delete Form 8
+            var expropriationsBeforeDelete = expropriation.TotalExpropriationCount();
+            expropriation.DeleteNthForm8(1);
+
+            var expropriationsAfterDelete = expropriation.TotalExpropriationCount();
+            Assert.True(expropriationsBeforeDelete - expropriationsAfterDelete == 1);
+        }
+
         [StepDefinition(@"I create an Acquisition File from a pin on map from row number (.*)")]
         public void CreateAcquisitionFileFromPin(int rowNumber)
         {
@@ -812,6 +999,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 acquisitionFile.SearchProperties.LegalDescription = ExcelDataContext.ReadData(acquisitionFile.SearchPropertiesIndex, "LegalDescription");
             }
 
+            //Acquisition's Properties' Takes
+            acquisitionFile.TakesStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "TakesStartRow"));
+            acquisitionFile.TakesCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "TakesCount"));
+            if (acquisitionFile.TakesStartRow != 0 && acquisitionFile.TakesCount != 0)
+                PopulateTakesCollection(acquisitionFile.TakesStartRow, acquisitionFile.TakesCount);
+
             //Acquisition File Checklist
             acquisitionFile.AcquisitionFileChecklistIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionFileChecklistIndex"));
             if (acquisitionFile.AcquisitionFileChecklistIndex > 0)
@@ -868,6 +1061,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect9 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect9");
                 acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect10 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect10");
                 acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect11 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect11");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect12 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect12");
 
                 acquisitionFile.AcquisitionFileChecklist.AcquisitionCompletionSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcquisitionCompletionSelect1");
             }
@@ -876,26 +1070,26 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.AgreementStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "AgreementStartRow"));
             acquisitionFile.AgreementCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "AgreementCount"));
             if (acquisitionFile.AgreementStartRow != 0 && acquisitionFile.AgreementCount != 0)
-            {
                 PopulateAgreementsCollection(acquisitionFile.AgreementStartRow, acquisitionFile.AgreementCount);
-            }
 
             //Acquisition Stakeholders
             acquisitionFile.StakeholderStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "StakeholderStartRow"));
             acquisitionFile.StakeholderCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "StakeholderCount"));
             if (acquisitionFile.StakeholderStartRow != 0 && acquisitionFile.StakeholderCount != 0)
-            {
                 PopulateStakeholdersCollection(acquisitionFile.StakeholderStartRow, acquisitionFile.StakeholderCount);
-            }
 
             //Acquisition Compensation Requisition
             acquisitionFile.CompensationStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "CompensationStartRow"));
             acquisitionFile.CompensationCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "CompensationCount"));
             acquisitionFile.CompensationTotalAllowableAmount = ExcelDataContext.ReadData(rowNumber, "CompensationTotalAllowableAmount");
             if (acquisitionFile.CompensationStartRow != 0 && acquisitionFile.CompensationCount != 0)
-            {
                 PopulateCompensationsCollection(acquisitionFile.CompensationStartRow, acquisitionFile.CompensationCount);
-            }
+
+            //Acquisition Expropriation
+            acquisitionFile.ExpropriationStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "ExpropriationStartRow"));
+            acquisitionFile.ExpropriationCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "ExpropriationCount"));
+            if (acquisitionFile.ExpropriationStartRow != 0 && acquisitionFile.ExpropriationCount != 0)
+                PopulateExpropriationCollection(acquisitionFile.ExpropriationStartRow, acquisitionFile.ExpropriationCount);
         }
 
         private void PopulateTeamsCollection(int startRow, int rowsCount)
@@ -941,6 +1135,44 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 owner.Phone = ExcelDataContext.ReadData(i, "Phone");
 
                 acquisitionFile.AcquisitionOwners.Add(owner);
+            }
+        }
+
+        private void PopulateTakesCollection(int startRow, int rowsCount)
+        {
+            DataTable takeSheet = ExcelDataContext.GetInstance().Sheets["Takes"];
+            ExcelDataContext.PopulateInCollection(takeSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                Take take = new Take();
+
+                take.TakeType = ExcelDataContext.ReadData(i, "TakeType");
+                take.TakeStatus = ExcelDataContext.ReadData(i, "TakeStatus");
+                take.SiteContamination = ExcelDataContext.ReadData(i, "SiteContamination");
+                take.TakeDescription = ExcelDataContext.ReadData(i, "TakeDescription");
+
+                take.IsNewRightWay = ExcelDataContext.ReadData(i, "IsNewRightWay");
+                take.IsNewRightWayArea = ExcelDataContext.ReadData(i, "IsNewRightWayArea");
+                take.IsStatutoryRightWay = ExcelDataContext.ReadData(i, "IsStatutoryRightWay");
+                take.IsStatutoryRightWayArea = ExcelDataContext.ReadData(i, "IsStatutoryRightWayArea");
+
+                take.IsLandNotation = ExcelDataContext.ReadData(i, "IsLandNotation");
+                take.IsLandNotationDetail = ExcelDataContext.ReadData(i, "IsLandNotationDetail");
+                take.IsLandNotationArea = ExcelDataContext.ReadData(i, "IsLandNotationArea");
+                take.IsLandNotationDate = ExcelDataContext.ReadData(i, "IsLandNotationDate");
+
+                take.IsLicenseConstruct = ExcelDataContext.ReadData(i, "IsLicenseConstruct");
+                take.IsLicenseConstructArea = ExcelDataContext.ReadData(i, "IsLicenseConstructArea");
+                take.IsLicenseConstructDate = ExcelDataContext.ReadData(i, "IsLicenseConstructDate");
+
+                take.IsSurplus = ExcelDataContext.ReadData(i, "IsSurplus");
+                take.IsSurplusArea = ExcelDataContext.ReadData(i, "IsSurplusArea");
+
+                take.FromProperty = int.Parse(ExcelDataContext.ReadData(i, "FromProperty"));
+                take.TakeCounter = int.Parse(ExcelDataContext.ReadData(i, "TakeCounter"));
+
+                acquisitionFile.AcquisitionTakes.Add(take);
             }
         }
 
@@ -1044,6 +1276,50 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 activity.ActTotalAmount = ExcelDataContext.ReadData(i, "ActTotalAmount");
 
                 activities.Add(activity);
+            }
+        }
+
+        private void PopulateExpropriationCollection(int startRow, int rowsCount)
+        {
+            DataTable expropriationSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionExpropriationForm8"];
+            ExcelDataContext.PopulateInCollection(expropriationSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                AcquisitionExpropriationForm8 expropriation = new AcquisitionExpropriationForm8();
+
+                expropriation.Form8Payee = ExcelDataContext.ReadData(i, "Form8Payee");
+                expropriation.Form8PayeeDisplay = ExcelDataContext.ReadData(i, "Form8PayeeDisplay");
+                expropriation.Form8ExpropriationAuthority = ExcelDataContext.ReadData(i, "Form8ExpropriationAuthority");
+                expropriation.Form8Description = ExcelDataContext.ReadData(i, "Form8Description");
+                expropriation.ExpPaymentStartRow = int.Parse(ExcelDataContext.ReadData(i, "ExpPaymentStartRow"));
+                expropriation.ExpPaymentCount = int.Parse(ExcelDataContext.ReadData(i, "ExpPaymentCount"));
+                
+                if (expropriation.ExpPaymentStartRow != 0 && expropriation.ExpPaymentCount != 0)
+                {
+                    PopulateExpropPaymentsCollection(expropriation.ExpPaymentStartRow, expropriation.ExpPaymentCount, expropriation.ExpropriationPayments);
+                }
+
+                acquisitionFile.AcquisitionExpropriationForm8s.Add(expropriation);
+            }
+        }
+
+        private void PopulateExpropPaymentsCollection(int startRow, int rowsCount, List<ExpropriationPayment> payments)
+        {
+            DataTable paymentsSheet = ExcelDataContext.GetInstance().Sheets["ExpropriationPayment"];
+            ExcelDataContext.PopulateInCollection(paymentsSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                ExpropriationPayment payment = new ExpropriationPayment();
+
+                payment.ExpPaymentItem = ExcelDataContext.ReadData(i, "ExpPaymentItem");
+                payment.ExpPaymentAmount = ExcelDataContext.ReadData(i, "ExpPaymentAmount");
+                payment.ExpPaymentGSTApplicable = ExcelDataContext.ReadData(i, "ExpPaymentGSTApplicable");
+                payment.ExpPaymentGSTAmount = ExcelDataContext.ReadData(i, "ExpPaymentGSTAmount");
+                payment.ExpPaymentTotalAmount = ExcelDataContext.ReadData(i, "ExpPaymentTotalAmount");
+
+                payments.Add(payment);
             }
         }
     }

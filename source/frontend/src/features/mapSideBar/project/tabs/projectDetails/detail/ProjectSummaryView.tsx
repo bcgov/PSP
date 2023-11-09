@@ -9,7 +9,7 @@ import { Api_Project } from '@/models/api/Project';
 import ProjectProductView from './ProjectProductView';
 
 export interface IProjectSummaryViewProps {
-  project?: Api_Project;
+  project: Api_Project;
   onEdit: () => void;
 }
 
@@ -27,18 +27,18 @@ const ProjectSummaryView: React.FunctionComponent<
       </StyledEditWrapper>
       <Section header="Project Details" isCollapsable initiallyExpanded>
         <SectionField label="Project summary" labelWidth={'12'}>
-          {project?.note}
+          {project.note}
         </SectionField>
       </Section>
       <Section header="Associated Codes" isCollapsable initiallyExpanded>
         <SectionField label="Cost type" labelWidth="3">
-          {project?.costTypeCode?.description ?? ''}
+          {project.costTypeCode?.description ?? ''}
         </SectionField>
         <SectionField label="Work activity" labelWidth="3">
-          {project?.workActivityCode?.description ?? ''}
+          {project.workActivityCode?.description ?? ''}
         </SectionField>
         <SectionField label="Business function" labelWidth="3">
-          {project?.businessFunctionCode?.description ?? ''}
+          {project.businessFunctionCode?.description ?? ''}
         </SectionField>
       </Section>
       <ProjectProductView project={project} />

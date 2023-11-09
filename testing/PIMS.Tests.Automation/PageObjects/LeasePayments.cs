@@ -197,7 +197,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteLastTerm()
         {
-            WaitUntilClickable(licensePaymentDeleteTermBttn);
+            Wait();
             webDriver.FindElement(licensePaymentDeleteTermBttn).Click();
 
             WaitUntilVisible(licensePaymentsModal);

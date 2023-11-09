@@ -85,6 +85,14 @@ namespace Pims.Api.Services
             return lease;
         }
 
+        public LastUpdatedByModel GetLastUpdateInformation(long leaseId)
+        {
+            _logger.LogInformation("Retrieving last updated-by information...");
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            return _leaseRepository.GetLastUpdateBy(leaseId);
+        }
+
         public Paged<PimsLease> GetPage(LeaseFilter filter, bool? all = false)
         {
             _logger.LogInformation("Getting lease page {filter}", filter);
@@ -289,8 +297,9 @@ namespace Pims.Api.Services
                     {
                         throw new UserOverrideException(UserOverrideCode.AddPropertyToInventory, $"PID {propertyLease?.Property?.Pid.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
                     }
-                    throw new UserOverrideException(UserOverrideCode.AddPropertyToInventory, $"Lng/Lat {propertyLease?.Property?.Location.Coordinate.X.ToString(CultureInfo.CurrentCulture) ?? string.Empty}, " +
-                        $"{propertyLease?.Property?.Location.Coordinate.Y.ToString(CultureInfo.CurrentCulture) ?? string.Empty} {genericOverrideErrorMsg}");
+                    string overrideError = $"Lng/Lat {propertyLease?.Property?.Location.Coordinate.X.ToString(CultureInfo.CurrentCulture) ?? string.Empty}, " +
+                        $"{propertyLease?.Property?.Location.Coordinate.Y.ToString(CultureInfo.CurrentCulture) ?? string.Empty} {genericOverrideErrorMsg}";
+                    throw new UserOverrideException(UserOverrideCode.AddPropertyToInventory, overrideError);
                 }
 
                 // If the property exist dont update it, just refer to it by id.

@@ -9,8 +9,6 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IContactRepository : IRepository<PimsContactMgrVw>
     {
-        int Count();
-
         IEnumerable<PimsContactMgrVw> GetAll(ContactFilter filter);
 
         PimsContactMgrVw GetById(string id);

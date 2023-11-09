@@ -1,7 +1,7 @@
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_AcquisitionFile, Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
 import { Api_InterestHolder, Api_InterestHolderProperty } from '@/models/api/InterestHolder';
-import { Api_Person } from '@/models/api/Person';
 
+import { Api_GenerateOrganization } from '../GenerateOrganization';
 import { Api_GenerateOwner } from '../GenerateOwner';
 import { Api_GeneratePerson } from '../GeneratePerson';
 import { Api_GenerateProduct } from '../GenerateProduct';
@@ -12,16 +12,16 @@ import { Api_GenerateInterestHolder } from './GenerateInterestHolder';
 
 export interface IApiGenerateAcquisitionFileInput {
   file: Api_AcquisitionFile | null;
-  coordinatorContact?: Api_Person | null;
-  negotiatingAgent?: Api_Person | null;
-  provincialSolicitor?: Api_Person | null;
+  coordinatorContact?: Api_AcquisitionFileTeam | null;
+  negotiatingAgent?: Api_AcquisitionFileTeam | null;
+  provincialSolicitor?: Api_AcquisitionFileTeam | null;
   ownerSolicitor?: Api_InterestHolder | null;
   interestHolders?: Api_InterestHolder[];
 }
 
 export class Api_GenerateAcquisitionFile {
   properties: Api_GenerateH120Property[];
-  property_coordinator: Api_GeneratePerson;
+  property_coordinator?: Api_GeneratePerson | Api_GenerateOrganization;
   primary_owner?: Api_GenerateOwner;
   owners: Api_GenerateOwner[];
   person_owners: Api_GenerateOwner[];
@@ -32,9 +32,10 @@ export class Api_GenerateAcquisitionFile {
   file_name: string;
   project_number: string;
   project_name: string;
-  prov_solicitor?: Api_GeneratePerson;
+  prov_solicitor?: Api_GeneratePerson | Api_GenerateOrganization;
+  prov_solicitor_attn?: Api_GeneratePerson;
   owner_solicitor?: Api_GenerateInterestHolder;
-  neg_agent?: Api_GeneratePerson;
+  neg_agent?: Api_GeneratePerson | Api_GenerateOrganization;
   project?: Api_GenerateProject;
   product?: Api_GenerateProduct;
 
@@ -47,8 +48,8 @@ export class Api_GenerateAcquisitionFile {
     interestHolders = [],
   }: IApiGenerateAcquisitionFileInput) {
     this.owners = file?.acquisitionFileOwners?.map(owner => new Api_GenerateOwner(owner)) ?? [];
-    this.property_coordinator = new Api_GeneratePerson(coordinatorContact);
-    this.neg_agent = new Api_GeneratePerson(negotiatingAgent);
+    this.property_coordinator = this.getTeam(coordinatorContact);
+    this.neg_agent = this.getTeam(negotiatingAgent, true);
     const allInterestHoldersPropertes = interestHolders.flatMap(
       ih => ih?.interestHolderProperties ?? [],
     );
@@ -84,7 +85,8 @@ export class Api_GenerateAcquisitionFile {
     this.primary_owner = new Api_GenerateOwner(
       file?.acquisitionFileOwners?.find(owner => owner.isPrimaryContact) ?? null,
     );
-    this.prov_solicitor = new Api_GeneratePerson(provincialSolicitor);
+    this.prov_solicitor = this.getTeam(provincialSolicitor);
+    this.prov_solicitor_attn = new Api_GeneratePerson(provincialSolicitor?.primaryContact);
     this.owner_solicitor = new Api_GenerateInterestHolder(ownerSolicitor);
     this.person_owners =
       file?.acquisitionFileOwners
@@ -99,4 +101,22 @@ export class Api_GenerateAcquisitionFile {
     this.all_owners_string = this.owners.map(owner => owner.owner_string).join(', ');
     this.all_owners_string_and = this.owners.map(owner => owner.owner_string).join(' And ');
   }
+
+  getTeam = (team: Api_AcquisitionFileTeam | null, overrideOrgAddress: boolean = false) => {
+    if (!team) return undefined;
+
+    if (team.person) {
+      return new Api_GeneratePerson(team.person);
+    }
+
+    const org = new Api_GenerateOrganization(team.organization);
+    const primary = new Api_GeneratePerson(team.primaryContact);
+    //replace organization contact info with primary contact info but leave address, name.
+    org.phone = primary?.phone;
+    org.email = primary?.email;
+    if (overrideOrgAddress) {
+      org.address = primary?.address;
+    }
+    return org;
+  };
 }

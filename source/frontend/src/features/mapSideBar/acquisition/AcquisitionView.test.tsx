@@ -74,6 +74,7 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
   },
   formikRef: React.createRef(),
   isFormValid: true,
+  error: undefined,
 };
 
 const history = createMemoryHistory();
@@ -233,5 +234,14 @@ describe('AcquisitionView component', () => {
     const tab = getByRole('tab', { name: /Property Details/i });
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
+  });
+
+  it(`should display an error message when the error prop is set.`, async () => {
+    const { getByText } = await act(() => setup({ ...DEFAULT_PROPS, error: {} } as any));
+    expect(
+      getByText(
+        'Failed to load Acquisition File. Check the detailed error in the top right for more details.',
+      ),
+    ).toBeVisible();
   });
 });

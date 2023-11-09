@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PrimaryContactSelector component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  <div
+    class="form-group"
+  >
+    <select
+      class="form-select form-control"
+      id="input-primaryContactId"
+      name="primaryContactId"
+    >
+      <option
+        value=""
+      >
+        Select a primary contact
+      </option>
+      <option
+        class="option"
+        data-testid="select-option-1"
+        value="1"
+      >
+        chester tester
+      </option>
+      <option
+        class="option"
+        data-testid="select-option-3"
+        value="3"
+      >
+        first last
+      </option>
+    </select>
+  </div>
+</DocumentFragment>
+`;

@@ -8,6 +8,7 @@ import { Api_AuditFields } from './AuditFields';
 import { Api_CompensationRequisition } from './CompensationRequisition';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_InterestHolder } from './InterestHolder';
+import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
 import { Api_Product, Api_Project } from './Project';
 import { Api_PropertyFile } from './PropertyFile';
@@ -18,6 +19,7 @@ export enum EnumAcquisitionFileType {
   SECTN6 = 'SECTN6',
 }
 
+// LINK @backend/api/Models/Concepts/AcquisitionFile/AcquisitionFileModel.cs
 export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFields, Api_File {
   id?: number;
   fileNo?: number;
@@ -30,7 +32,7 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   acquisitionTypeCode?: Api_TypeCode<string>;
   // MOTI region
   regionCode?: Api_TypeCode<number>;
-  acquisitionTeam?: Api_AcquisitionFilePerson[];
+  acquisitionTeam?: Api_AcquisitionFileTeam[];
   acquisitionFileOwners?: Api_AcquisitionFileOwner[];
   acquisitionFileInterestHolders?: Api_InterestHolder[];
   acquisitionFileChecklist?: Api_AcquisitionFileChecklistItem[];
@@ -50,14 +52,17 @@ export interface Api_AcquisitionFileProperty
     Api_PropertyFile,
     Api_AuditFields {}
 
-export interface Api_AcquisitionFilePerson extends Api_ConcurrentVersion, Api_AuditFields {
+export interface Api_AcquisitionFileTeam extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
   acquisitionFileId: number;
   personId?: number;
   person?: Api_Person;
-  personProfileTypeCode?: string;
-  personProfileType?: Api_TypeCode<string>;
-  isDisabled?: boolean;
+  organizationId?: number;
+  organization?: Api_Organization;
+  primaryContactId?: number;
+  primaryContact?: Api_Person;
+  teamProfileTypeCode?: string;
+  teamProfileType?: Api_TypeCode<string>;
 }
 
 export interface Api_AcquisitionFileOwner extends Api_ConcurrentVersion, Api_AuditFields {

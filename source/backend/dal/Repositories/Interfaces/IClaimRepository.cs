@@ -12,15 +12,5 @@ namespace Pims.Dal.Repositories
         Paged<PimsClaim> GetPage(int page, int quantity, string name = null);
 
         PimsClaim GetByKey(Guid key);
-
-        PimsClaim GetByName(string name);
-
-        int RemoveAll(Guid[] exclude);
-
-        PimsClaim Add(PimsClaim add);
-
-        PimsClaim Update(PimsClaim update);
-
-        void Delete(PimsClaim delete);
     }
 }

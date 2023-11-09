@@ -40,8 +40,14 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
   formikRef,
 }) => {
   const columns = useMemo(
-    () => getLeaseTermColumns({ onEdit, onDelete: onDelete, onGenerate }),
-    [onEdit, onDelete, onGenerate],
+    () =>
+      getLeaseTermColumns({
+        onEdit,
+        onDelete: onDelete,
+        onGenerate,
+        leaseTypeCode: lease?.leaseTypeCode,
+      }),
+    [onEdit, onDelete, onGenerate, lease?.leaseTypeCode],
   );
   const { hasClaim } = useKeycloakWrapper();
   const leaseForm = { ...new LeaseFormModel(), ...lease };

@@ -44,14 +44,6 @@ namespace Pims.Dal.Repositories
                 .ToList();
         }
 
-        public int GetResearchFilePropertyRelatedCount(long propertyId)
-        {
-            return Context.PimsPropertyResearchFiles
-                .Where(x => x.PropertyId == propertyId)
-                .AsNoTracking()
-                .Count();
-        }
-
         public PimsPropertyResearchFile Add(PimsPropertyResearchFile propertyResearchFile)
         {
             // Mark the property not to be changed if it did not exist already.

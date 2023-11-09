@@ -137,7 +137,6 @@ export interface Api_PropertyContact extends Api_ConcurrentVersion_Null {
   primaryContactId: number | null;
   primaryContact: Api_Person | null;
   purpose: string | null;
-  isDisabled: boolean | null;
 }
 
 export interface Api_PropertyManagement extends Api_ConcurrentVersion_Null, Api_AuditFields {
@@ -146,14 +145,12 @@ export interface Api_PropertyManagement extends Api_ConcurrentVersion_Null, Api_
   additionalDetails: string | null;
   isUtilitiesPayable: boolean | null;
   isTaxesPayable: boolean | null;
-  isLeaseActive: boolean;
-  isLeaseExpired: boolean;
+  relatedLeases: number;
   leaseExpiryDate: string | null;
 }
 
 export interface Api_PropertyManagementPurpose extends Api_ConcurrentVersion_Null, Api_AuditFields {
   id: number | null;
   propertyId: number | null;
-  isDisabled: boolean | null;
   propertyPurposeTypeCode: Api_TypeCode<string> | null;
 }

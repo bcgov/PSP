@@ -36,12 +36,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditAgreementButton()
         {
-            WaitUntilClickable(agreementsEditBttn);
+            Wait(2000);
             webDriver.FindElement(agreementsEditBttn).Click();
         }
 
         public void CreateNewAgreementBttn()
         {
+            Wait(2000);
+
             WaitUntilClickable(agreementsCreateNewAgreementBttn);
             webDriver.FindElement(agreementsCreateNewAgreementBttn).Click();
         }

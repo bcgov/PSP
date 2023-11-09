@@ -6,7 +6,8 @@ import ExpandableTextList from '@/components/common/ExpandableTextList';
 import { ColumnWithProps, renderTypeCode } from '@/components/Table';
 import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
-import { Api_AcquisitionFilePerson } from '@/models/api/AcquisitionFile';
+import { Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
+import { Api_Organization } from '@/models/api/Organization';
 import { Api_Person } from '@/models/api/Person';
 import { Api_Project } from '@/models/api/Project';
 import Api_TypeCode from '@/models/api/TypeCode';
@@ -16,9 +17,10 @@ import { formatApiPersonNames } from '@/utils/personUtils';
 import AcquisitionProperties from './AcquisitionProperties';
 import { AcquisitionSearchResultModel } from './models';
 
-interface PersonRoleGroup {
+interface MemberRoleGroup {
   id: string;
-  person: Api_Person;
+  person: Api_Person | null;
+  organization: Api_Organization | null;
   roles: string[];
 }
 
@@ -109,28 +111,56 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     maxWidth: 40,
     Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
       const acquisitionTeam = props.row.original.aquisitionTeam;
-      const teamAsString: PersonRoleGroup[] = chain(acquisitionTeam)
-        .groupBy((groupedPersons: Api_AcquisitionFilePerson) => groupedPersons.personId)
-        .map<PersonRoleGroup>(x => {
+      const personsInTeam = acquisitionTeam?.filter(x => x.personId !== undefined);
+      const organizationsInTeam = acquisitionTeam?.filter(x => x.organizationId !== undefined);
+
+      const personsAsString: MemberRoleGroup[] = chain(personsInTeam)
+        .groupBy((groupedTeams: Api_AcquisitionFileTeam) => groupedTeams.personId)
+        .map<MemberRoleGroup>(x => {
           return {
             id: x[0].id?.toString() || '',
             person: x[0].person || {},
+            organization: null,
             roles: x
-              .map(t => t.personProfileType)
+              .map(t => t.teamProfileType)
               .filter((z): z is Api_TypeCode<string> => z !== undefined)
               .flatMap(y => y.description || ''),
           };
         })
         .value();
+
+      const organizationsAsString: MemberRoleGroup[] = chain(organizationsInTeam)
+        .groupBy((groupedTeams: Api_AcquisitionFileTeam) => groupedTeams.organizationId)
+        .map<MemberRoleGroup>(x => {
+          return {
+            id: x[0].id?.toString() || '',
+            person: null,
+            organization: x[0].organization || {},
+            roles: x
+              .map(t => t.teamProfileType)
+              .filter((z): z is Api_TypeCode<string> => z !== undefined)
+              .flatMap(y => y.description || ''),
+          };
+        })
+        .value();
+
+      const teamAsString = personsAsString.concat(organizationsAsString);
+
       return (
-        <ExpandableTextList<PersonRoleGroup>
+        <ExpandableTextList<MemberRoleGroup>
           items={teamAsString ?? []}
-          keyFunction={(item: PersonRoleGroup, index: number) =>
-            `aquisition-team-${item.id}-person-${item.person.id ?? index}`
+          keyFunction={(item: MemberRoleGroup, index: number) =>
+            item.person
+              ? `aquisition-team-${item.id}-person-${item.person.id ?? index}`
+              : `aquisition-team-${item.id}-org-${item.organization?.id ?? index}`
           }
-          renderFunction={(item: PersonRoleGroup) => (
-            <>{`${formatApiPersonNames(item.person)} (${item.roles.join(', ')})`}</>
-          )}
+          renderFunction={(item: MemberRoleGroup) =>
+            item.person ? (
+              <>{`${formatApiPersonNames(item.person)} (${item.roles.join(', ')})`}</>
+            ) : (
+              <>{`${item.organization?.name} (${item.roles.join(', ')})`}</>
+            )
+          }
           delimiter={', '}
           maxCollapsedLength={2}
         />

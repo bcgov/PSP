@@ -32,7 +32,7 @@ namespace Pims.Dal.Helpers.Extensions
             foreach (Match match in matches.Cast<Match>())
             {
                 string value = match.Groups[1].Value;
-                string property = match.Groups[2].Value;
+                _ = match.Groups[2].Value;
 
                 list.Add(value);
             }

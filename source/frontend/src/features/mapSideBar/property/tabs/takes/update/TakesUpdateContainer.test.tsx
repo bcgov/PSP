@@ -5,8 +5,9 @@ import { forwardRef } from 'react';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
 import { getMockApiTakes } from '@/mocks/takes.mock';
+import { Api_Take } from '@/models/api/Take';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { act, render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import { TakeModel } from './models';
 import TakesUpdateContainer, { ITakesDetailContainerProps } from './TakesUpdateContainer';
@@ -77,8 +78,9 @@ describe('TakesUpdateContainer component', () => {
     jest.clearAllMocks();
   });
 
-  it('renders as expected', () => {
+  it('renders as expected', async () => {
     const { asFragment } = setup({});
+    await waitForEffects();
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -87,17 +89,31 @@ describe('TakesUpdateContainer component', () => {
     expect(render).toThrow('File property must have id');
   });
 
-  it('calls onSuccess when onSubmit method is called', () => {
+  it('calls onSuccess when onSubmit method is called', async () => {
     setup({});
     const formikHelpers = { setSubmitting: jest.fn() };
-    viewProps.onSubmit({ takes: [new TakeModel(getMockApiTakes()[0])] }, formikHelpers as any);
+    await waitForEffects();
+    await act(() =>
+      viewProps.onSubmit({ takes: [new TakeModel(getMockApiTakes()[0])] }, formikHelpers as any),
+    );
 
     expect(mockUpdateApi.execute).toHaveBeenCalled();
+    expect(onSuccess).toHaveBeenCalled();
   });
 
-  it('returns an empty takes array if no takes are returned from the api', () => {
+  it('returns an empty takes array if no takes are returned from the api', async () => {
     setup({});
+    await waitForEffects();
 
     expect(viewProps.takes).toStrictEqual([new TakeModel(emptyTake)]);
+  });
+
+  it('returns converts takes returned from the api into form models', async () => {
+    const apiTake: Api_Take = { ...getMockApiTakes()[0], propertyAcquisitionFileId: 1 };
+    mockGetApi.execute.mockResolvedValue([apiTake]);
+    setup({});
+    await waitForEffects();
+
+    expect(viewProps.takes).toStrictEqual([new TakeModel(apiTake)]);
   });
 });

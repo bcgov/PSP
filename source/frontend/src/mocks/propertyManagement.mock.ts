@@ -7,8 +7,7 @@ export const getMockApiPropertyManagement = (id = 123459): Api_PropertyManagemen
   additionalDetails: 'test',
   isTaxesPayable: null,
   isUtilitiesPayable: null,
-  isLeaseActive: false,
-  isLeaseExpired: false,
+  relatedLeases: 0,
   leaseExpiryDate: null,
 });
 
@@ -16,7 +15,6 @@ export const getMockApiPropertyManagementPurpose = (id = 1): Api_PropertyManagem
   id,
   rowVersion: 1,
   propertyId: 123459,
-  isDisabled: false,
   propertyPurposeTypeCode: {
     id: 'BCFERRIES',
     description: 'BC Ferries',

@@ -114,18 +114,22 @@ const termActions = (
   onEdit: (values: FormLeaseTerm) => void,
   onDelete: (values: FormLeaseTerm) => void,
   onGenerate: () => void,
+  leaseTypeCode?: string,
 ) => {
   return function ({ row: { original, index } }: CellProps<FormLeaseTerm, string>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIcons>
-        {hasClaim(Claims.LEASE_VIEW) && index === 0 && (
-          <Button
-            title="Generate H1005(a)"
-            icon={<GenerateIcon size={24} id={`generate-h1005-a`} title="Generate H1005(a)" />}
-            onClick={() => onGenerate()}
-          ></Button>
-        )}
+        {hasClaim(Claims.LEASE_VIEW) &&
+          index === 0 &&
+          !!leaseTypeCode &&
+          ['LIOCCACCS', 'LIOCCTTLD', 'LIOCCUSE', 'LIOCCUTIL'].includes(leaseTypeCode) && (
+            <Button
+              title="Generate H1005(a)"
+              icon={<GenerateIcon size={24} id={`generate-h1005-a`} title="Generate H1005(a)" />}
+              onClick={() => onGenerate()}
+            ></Button>
+          )}
         {hasClaim(Claims.LEASE_EDIT) && (
           <Button
             title="edit term"
@@ -159,6 +163,7 @@ export interface IPaymentColumnProps {
   onEdit: (values: FormLeaseTerm) => void;
   onDelete: (values: FormLeaseTerm) => void;
   onGenerate: () => void;
+  leaseTypeCode?: string;
   gstConstant?: ISystemConstant;
 }
 
@@ -166,6 +171,7 @@ export const getLeaseTermColumns = ({
   onEdit,
   onDelete,
   onGenerate,
+  leaseTypeCode,
 }: IPaymentColumnProps): ColumnWithProps<FormLeaseTerm>[] => {
   return [
     {
@@ -284,7 +290,7 @@ export const getLeaseTermColumns = ({
       Header: 'Actions',
       align: 'right',
       maxWidth: 30,
-      Cell: termActions(onEdit, onDelete, onGenerate),
+      Cell: termActions(onEdit, onDelete, onGenerate, leaseTypeCode),
     },
   ];
 };

@@ -24,7 +24,7 @@ export function HelpContainer() {
     <Nav.Item>
       <TooltipWrapper toolTipId="help-tooltip" toolTip="Ask for Help">
         <StyledContainer onClick={() => setShowHelp(true)}>
-          <StyledHelpIcon />
+          <StyledHelpIcon size="24px" />
           <label>Help</label>
         </StyledContainer>
       </TooltipWrapper>

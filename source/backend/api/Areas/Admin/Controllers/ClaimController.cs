@@ -76,23 +76,6 @@ namespace Pims.Api.Areas.Admin.Controllers
             var result = _mapper.Map<Api.Models.PageModel<Model.ClaimModel>>(paged);
             return new JsonResult(result);
         }
-
-        /// <summary>
-        /// GET - Returns a claim for the specified 'key' from the datasource.
-        /// </summary>
-        /// <param name="key">The unique 'key' for the claim to return.</param>
-        /// <returns>The claim requested.</returns>
-        [HttpGet("{key}")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.ClaimModel), 200)]
-        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
-        [SwaggerOperation(Tags = new[] { "admin-claim" })]
-        public IActionResult GetClaim(Guid key)
-        {
-            var entity = _claimRepository.GetByKey(key);
-            var claim = _mapper.Map<Model.ClaimModel>(entity);
-            return new JsonResult(claim);
-        }
         #endregion
     }
 }

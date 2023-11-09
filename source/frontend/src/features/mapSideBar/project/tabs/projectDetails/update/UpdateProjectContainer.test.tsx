@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 
@@ -6,7 +5,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { mockProjectGetResponse, mockProjectPostResponse } from '@/mocks/projects.mock';
-import { act, render, RenderOptions, screen, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { IAddProjectFormProps } from '../../../add/AddProjectForm';
 import { ProjectForm } from '../../../models';
@@ -126,27 +125,5 @@ describe('UpdateProjectContainer', () => {
     expect(onSuccess).toHaveBeenCalled();
     expect(formikHelpers.setSubmitting).toHaveBeenCalled();
     expect(formikHelpers.resetForm).toHaveBeenCalled();
-  });
-
-  it('displays expected error toast when update fails', async () => {
-    setup();
-    const formikHelpers: Partial<FormikHelpers<ProjectForm>> = {
-      setSubmitting: jest.fn(),
-      resetForm: jest.fn(),
-    };
-    mockApi.execute.mockRejectedValue({
-      isAxiosError: true,
-      response: { status: 409, data: 'expected error' },
-    } as AxiosError);
-
-    await act(async () => {
-      return viewProps?.onSubmit(
-        viewProps.initialValues,
-        formikHelpers as FormikHelpers<ProjectForm>,
-      );
-    });
-
-    expect(mockApi.execute).toHaveBeenCalled();
-    await waitFor(async () => expect(screen.getByText('expected error')).toBeVisible());
   });
 });

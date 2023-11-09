@@ -4,7 +4,6 @@ using System.Security.Claims;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
@@ -54,16 +53,25 @@ namespace Pims.Dal.Repositories
             {
                 predicate.And(a => a.AcquisitionFile.ProjectId.HasValue && filter.Projects.Contains(a.AcquisitionFile.ProjectId.Value));
             }
+
             if (filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
             {
-                predicate.And(a => a.AcquisitionFile.PimsAcquisitionFilePeople.Any(afp => filter.AcquisitionTeamPersons.Contains(afp.PersonId)));
+                predicate.And(a => a.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId.HasValue && filter.AcquisitionTeamPersons.Contains((long)afp.PersonId)));
+            }
+
+            if (filter.AcquisitionTeamOrganizations != null && filter.AcquisitionTeamOrganizations.Any())
+            {
+                predicate.And(a => a.AcquisitionFile.PimsAcquisitionFileTeams.Any(o => o.OrganizationId.HasValue && filter.AcquisitionTeamOrganizations.Contains((long)o.OrganizationId)));
             }
 
             var query = Context.PimsAgreements
                 .Include(a => a.AgreementTypeCodeNavigation)
                 .Include(a => a.AcquisitionFile)
-                    .ThenInclude(a => a.PimsAcquisitionFilePeople)
+                    .ThenInclude(a => a.PimsAcquisitionFileTeams)
                     .ThenInclude(afp => afp.Person)
+                .Include(a => a.AcquisitionFile)
+                    .ThenInclude(a => a.PimsAcquisitionFileTeams)
+                    .ThenInclude(o => o.Organization)
                 .Include(a => a.AcquisitionFile)
                     .ThenInclude(a => a.Project)
                 .Include(a => a.AcquisitionFile)
@@ -74,15 +82,6 @@ namespace Pims.Dal.Repositories
                 .Where(predicate);
 
             return query.ToList();
-        }
-
-        public PimsAgreement Update(PimsAgreement agreement)
-        {
-            agreement.ThrowIfNull(nameof(agreement));
-
-            Context.Entry(agreement).CurrentValues.SetValues(agreement);
-            Context.Entry(agreement).State = EntityState.Modified;
-            return agreement;
         }
 
         public List<PimsAgreement> UpdateAllForAcquisition(long acquisitionFileId, List<PimsAgreement> agreements)

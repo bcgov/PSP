@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 
+import { Claims } from '@/constants';
 import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
 import {
   InventoryTabNames,
@@ -11,13 +13,12 @@ import LtsaTabView from '@/features/mapSideBar/property/tabs/ltsa/LtsaTabView';
 import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/propertyAssociations/PropertyAssociationTabView';
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
-import { EditManagementState } from './PropertyViewSelector';
 import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 
 export interface IPropertyContainerProps {
   composedPropertyState: ComposedPropertyState;
-  setEditManagementState: (state: EditManagementState | null) => void;
 }
 
 /**
@@ -25,8 +26,9 @@ export interface IPropertyContainerProps {
  */
 export const PropertyContainer: React.FunctionComponent<
   React.PropsWithChildren<IPropertyContainerProps>
-> = ({ composedPropertyState, setEditManagementState }) => {
+> = ({ composedPropertyState }) => {
   const showPropertyInfoTab = composedPropertyState?.id !== undefined;
+  const { hasClaim } = useKeycloakWrapper();
 
   const tabViews: TabInventoryView[] = [];
 
@@ -76,7 +78,6 @@ export const PropertyContainer: React.FunctionComponent<
         <PropertyDetailsTabView
           property={propertyViewForm}
           loading={composedPropertyState.apiWrapper?.loading ?? false}
-          setEditManagementState={setEditManagementState}
         />
       ),
       key: InventoryTabNames.property,
@@ -98,7 +99,11 @@ export const PropertyContainer: React.FunctionComponent<
     });
   }
 
-  if (composedPropertyState.apiWrapper?.response !== undefined && showPropertyInfoTab) {
+  if (
+    composedPropertyState.apiWrapper?.response !== undefined &&
+    showPropertyInfoTab &&
+    hasClaim(Claims.MANAGEMENT_VIEW)
+  ) {
     // After API property object has been received, we query relevant map layers to find
     // additional information which we store in a different model (IPropertyDetailsForm)
 
@@ -107,7 +112,6 @@ export const PropertyContainer: React.FunctionComponent<
         <PropertyManagementTabView
           property={composedPropertyState.apiWrapper?.response}
           loading={composedPropertyState.apiWrapper?.loading ?? false}
-          setEditManagementState={setEditManagementState}
         />
       ),
       key: InventoryTabNames.management,
@@ -116,15 +120,14 @@ export const PropertyContainer: React.FunctionComponent<
     defaultTab = InventoryTabNames.management;
   }
 
-  const [activeTab, setActiveTab] = useState<InventoryTabNames>(defaultTab);
-
+  const params = useParams<{ tab?: string }>();
+  const activeTab = Object.values(InventoryTabNames).find(t => t === params.tab) ?? defaultTab;
   return (
     <InventoryTabs
       loading={composedPropertyState.composedLoading}
       tabViews={tabViews}
       defaultTabKey={defaultTab}
       activeTab={activeTab}
-      setActiveTab={setActiveTab}
     />
   );
 };

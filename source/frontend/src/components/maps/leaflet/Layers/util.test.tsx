@@ -20,8 +20,8 @@ import {
   createClusterMarker,
   createPoints,
   getMarkerIcon,
-  parcelIcon,
-  parcelIconSelect,
+  otherInterestIcon,
+  otherInterestIconSelect,
   pointToLayer,
 } from './util';
 describe('mapUtils tests', () => {
@@ -38,7 +38,9 @@ describe('mapUtils tests', () => {
       };
       const latlng: LatLngExpression = { lat: 1, lng: 2 };
 
-      expect(pointToLayer(feature, latlng)).toEqual(new Marker(latlng, { icon: parcelIcon }));
+      expect(pointToLayer(feature, latlng)).toEqual(
+        new Marker(latlng, { icon: otherInterestIcon }),
+      );
     });
 
     it('converts a cluster and latlng expression into a layer', () => {
@@ -103,7 +105,7 @@ describe('mapUtils tests', () => {
           },
           true,
         ),
-      ).toEqual(parcelIconSelect);
+      ).toEqual(otherInterestIconSelect);
     });
 
     describe('create points function', () => {

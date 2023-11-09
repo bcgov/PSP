@@ -37,6 +37,15 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(acquisitionProperty1stPropLink).Click();
         }
 
+        public void ChooseNthPropertyOption(int index)
+        {
+            var elementOrder = index ++;
+            By chosenProperty = By.CssSelector("div[data-testid='menu-item-row-"+ elementOrder +"'] div:nth-child(3)");
+
+            WaitUntilClickable(chosenProperty);
+            webDriver.FindElement(chosenProperty).Click();
+        }
+
         public void DeleteLastProperty()
         {
             Wait();

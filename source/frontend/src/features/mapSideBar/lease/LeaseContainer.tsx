@@ -51,6 +51,7 @@ export interface LeasePageProps {
   isEditing: boolean;
   onEdit?: (isEditing: boolean) => void;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
+  onSuccess: () => void;
 }
 
 export interface ILeasePage {
@@ -135,7 +136,9 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   const close = useCallback(() => onClose && onClose(), [onClose]);
   const { lease, setLease, refresh, loading } = useLeaseDetail(leaseId);
 
-  const { setFullWidth, setStaleFile, staleFile } = useContext(SideBarContext);
+  const { setFullWidth, setStaleFile, staleFile, setStaleLastUpdatedBy, lastUpdatedBy } =
+    useContext(SideBarContext);
+
   const [isValid, setIsValid] = useState<boolean>(true);
 
   const activeTab = containerState.activeTab;
@@ -157,6 +160,10 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       refreshLease();
     }
   }, [staleFile, refresh, setStaleFile]);
+
+  const onChildSucess = () => {
+    setStaleLastUpdatedBy(true);
+  };
 
   const handleCancelConfirm = () => {
     if (formikRef !== undefined) {
@@ -209,7 +216,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
           className="mr-2"
         />
       }
-      header={<LeaseHeader lease={lease} />}
+      header={<LeaseHeader lease={lease} lastUpdatedBy={lastUpdatedBy} />}
       footer={
         containerState.isEditing && (
           <SidebarFooter
@@ -248,6 +255,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
           activeEditForm={containerState.activeEditForm}
           activeTab={containerState.activeTab}
           setContainerState={setContainerState}
+          onSuccess={onChildSucess}
         />
       </StyledFormWrapper>
     </MapSideBarLayout>

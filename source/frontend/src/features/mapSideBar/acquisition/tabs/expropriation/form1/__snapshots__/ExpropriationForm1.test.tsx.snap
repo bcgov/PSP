@@ -140,6 +140,19 @@ exports[`Expropriation Form 1 matches snapshot 1`] = `
   margin-right: 0;
 }
 
+.c2 {
+  background: none;
+  position: relative;
+  border-radius: 0.3rem;
+  padding: 0.6rem;
+  padding-right: 2.1rem;
+  border: solid 0.1rem;
+}
+
+.c2.is-invalid {
+  border: solid 0.1rem;
+}
+
 .c4.c4.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
@@ -159,19 +172,6 @@ exports[`Expropriation Form 1 matches snapshot 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
-}
-
-.c2 {
-  background: none;
-  position: relative;
-  border-radius: 0.3rem;
-  padding: 0.6rem;
-  padding-right: 2.1rem;
-  border: solid 0.1rem;
-}
-
-.c2.is-invalid {
-  border: solid 0.1rem;
 }
 
 .c1.required::before {

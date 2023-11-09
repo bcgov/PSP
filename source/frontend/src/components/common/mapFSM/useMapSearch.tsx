@@ -32,7 +32,7 @@ export const useMapSearch = () => {
   const fullyAttributedServiceFindByPLanNumber = fullyAttributedService.findByPlanNumber;
 
   const fullyAttributedServiceFindOne = fullyAttributedService.findOne;
-  const pimsPropertyLayerServiceFindOne = pimsPropertyLayerService.findOne;
+  const pimsPropertyLayerServiceFindOne = pimsPropertyLayerService.findOneByBoundary;
 
   const searchOneLocation = useCallback(
     async (latitude: number, longitude: number) => {
