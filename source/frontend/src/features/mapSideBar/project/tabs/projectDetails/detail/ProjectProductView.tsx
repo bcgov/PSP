@@ -7,18 +7,20 @@ import { Api_Product, Api_Project } from '@/models/api/Project';
 import { formatMoney, prettyFormatDate } from '@/utils';
 
 export interface IProjectProductViewProps {
-  project?: Api_Project;
+  project: Api_Project;
 }
 
 const ProjectProductView: React.FunctionComponent<
   React.PropsWithChildren<IProjectProductViewProps>
 > = ({ project }) => {
-  const productCount = project?.products?.length || 0;
-
+  const productCount = project.projectProducts?.length || 0;
+  const products = project.projectProducts
+    .map(x => x.product)
+    .filter((x): x is Api_Product => x !== null);
   return (
     <StyledSummarySection>
       <Section header="Associated Products" isCollapsable initiallyExpanded>
-        {project?.products?.map((product: Api_Product, index: number) => (
+        {products?.map((product: Api_Product, index: number) => (
           <div
             className={index === productCount - 1 ? '' : 'pb-5'}
             key={`project-${project.id}-product-${product.id}`}

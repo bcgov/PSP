@@ -1,15 +1,15 @@
-import axios from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
 import React, { useEffect, useMemo, useState } from 'react';
-import { toast } from 'react-toastify';
 
 import { FinancialCodeTypes } from '@/constants';
 import * as API from '@/constants/API';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
+import useApiUserOverride from '@/hooks/useApiUserOverride';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { Api_FinancialCode } from '@/models/api/FinancialCode';
 import { Api_Project } from '@/models/api/Project';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { isExpiredCode, toDropDownOptions } from '@/utils/financialCodeUtils';
 
 import { AddProjectYupSchema } from '../../../add/AddProjectFileYupSchema';
@@ -30,6 +30,10 @@ const UpdateProjectContainer = React.forwardRef<
 >((props, formikRef) => {
   const { project, View, onSuccess } = props;
   const { costTypeCode, businessFunctionCode, workActivityCode } = project;
+
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<Api_Project | void>
+  >('Failed to Update Project File');
 
   const {
     getFinancialCodesByType: { execute: getFinancialCodes },
@@ -108,27 +112,23 @@ const UpdateProjectContainer = React.forwardRef<
   const initialValues = ProjectForm.fromApi(project);
   const projectStatusTypeCodes = getOptionsByType(API.PROJECT_STATUS_TYPES);
 
-  const handleSubmit = async (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
-    try {
-      formikHelpers?.setSubmitting(true);
-      const updatedProject = values.toApi();
-      const response = await updateProject(updatedProject);
+  const handleSubmit = async (
+    values: ProjectForm,
+    formikHelpers: FormikHelpers<ProjectForm>,
+    userOverrideCodes: UserOverrideCode[],
+  ) => {
+    formikHelpers?.setSubmitting(true);
+    const updatedProject = values.toApi();
+    const response = await updateProject(updatedProject, userOverrideCodes);
 
-      if (!!response?.id) {
-        formikHelpers?.resetForm();
-        if (typeof onSuccess === 'function') {
-          onSuccess();
-        }
+    if (!!response?.id) {
+      formikHelpers?.resetForm();
+      if (typeof onSuccess === 'function') {
+        onSuccess();
       }
-    } catch (e) {
-      if (axios.isAxiosError(e) && e.response?.status === 409) {
-        toast.error(e.response.data as any);
-      } else {
-        toast.error('Failed to update project.');
-      }
-    } finally {
-      formikHelpers?.setSubmitting(false);
     }
+
+    formikHelpers?.setSubmitting(false);
   };
 
   return (
@@ -140,7 +140,11 @@ const UpdateProjectContainer = React.forwardRef<
       costTypeOptions={costTypeOptions ?? []}
       workActivityOptions={workActivityOptions ?? []}
       initialValues={initialValues}
-      onSubmit={handleSubmit}
+      onSubmit={(projectForm, formikHelpers) =>
+        withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
+          handleSubmit(projectForm, formikHelpers, userOverrideCodes),
+        )
+      }
     />
   );
 });

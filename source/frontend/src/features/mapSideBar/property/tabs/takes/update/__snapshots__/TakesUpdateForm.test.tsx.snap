@@ -839,16 +839,8 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div
-              class="c3 form-section c11"
-            >
-              <div
-                class="collapse show"
-              >
                 <div
-                  class="pb-2 row"
+                  class="pt-4 row"
                 >
                   <div
                     class="pr-0 text-left col-8"

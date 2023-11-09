@@ -17,7 +17,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Code, src => src.Code)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.Note, src => src.Note)
-                //.Map(dest => dest.Products, src => src.PimsProducts) // TODO: Fix this.
+                .Map(dest => dest.ProjectProducts, src => src.PimsProjectProducts)
                 .Map(dest => dest.AppLastUpdateUserid, src => src.AppLastUpdateUserid)
                 .Map(dest => dest.AppLastUpdateTimestamp, src => src.AppLastUpdateTimestamp)
                 .Inherits<Entity.IBaseEntity, BaseModel>();
@@ -32,7 +32,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Code, src => src.Code)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.Note, src => src.Note)
-                //.Map(dest => dest.PimsProducts, src => src.Products) // TODO: Fix this.
+                .Map(dest => dest.PimsProjectProducts, src => src.ProjectProducts)
                 .Inherits<BaseModel, Entity.IBaseEntity>();
         }
     }

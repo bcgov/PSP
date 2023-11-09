@@ -275,7 +275,12 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   };
 
   // UI components
-  if (loadingAcquisitionFile || (loadingAcquisitionFileProperties && !isPropertySelector)) {
+  if (
+    loadingAcquisitionFile ||
+    (loadingAcquisitionFileProperties && !isPropertySelector) ||
+    file?.fileType !== FileTypes.Acquisition ||
+    file?.id !== acquisitionFileId
+  ) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 

@@ -177,7 +177,7 @@ describe('AddProjectContainer component', () => {
       const axiosData: Api_Project = JSON.parse(mockAxios.history.post[0].data);
       const expectedValues = formValues.toApi();
 
-      expect(mockAxios.history.post[0].url).toBe('/projects');
+      expect(mockAxios.history.post[0].url).toBe('/projects?');
       expect(axiosData).toEqual(expectedValues);
 
       expect(history.location.pathname).toBe('/mapview/sidebar/project/1');

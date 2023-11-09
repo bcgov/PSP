@@ -105,20 +105,6 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
             <StyledNoTabSection header="Area">
               <StyledBorderSection>
                 <SectionField
-                  label="Is this being acquired for MoTI inventory? *"
-                  labelWidth="8"
-                  tooltip="The property will be added to inventory."
-                >
-                  <YesNoButtons
-                    id="addPropertyToggle"
-                    disabled
-                    value={take.isAcquiredForInventory ?? undefined}
-                  />
-                </SectionField>
-              </StyledBorderSection>
-
-              <StyledBorderSection>
-                <SectionField
                   label="Is there a new highway dedication? *"
                   labelWidth="8"
                   tooltip="The term new highway dedication includes municipal road or provincial public highway."
@@ -134,6 +120,18 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                     <AreaContainer landArea={take.newHighwayDedicationArea ?? undefined} />
                   </SectionField>
                 )}
+                <SectionField
+                  label="Is this being acquired for MoTI inventory? *"
+                  labelWidth="8"
+                  tooltip="The property will be added to inventory."
+                  className="pt-4"
+                >
+                  <YesNoButtons
+                    id="addPropertyToggle"
+                    disabled
+                    value={take.isAcquiredForInventory ?? undefined}
+                  />
+                </SectionField>
               </StyledBorderSection>
               <StyledBorderSection>
                 <SectionField

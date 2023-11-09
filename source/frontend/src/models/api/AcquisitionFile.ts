@@ -19,6 +19,7 @@ export enum EnumAcquisitionFileType {
   SECTN6 = 'SECTN6',
 }
 
+// LINK @backend/api/Models/Concepts/AcquisitionFile/AcquisitionFileModel.cs
 export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFields, Api_File {
   id?: number;
   fileNo?: number;
