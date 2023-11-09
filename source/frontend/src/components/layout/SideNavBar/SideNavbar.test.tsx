@@ -50,8 +50,8 @@ describe('SideNavbar display and logic', () => {
     const { getByTitle, queryByText, getByTestId } = renderComponent();
     await waitFor(async () => {
       expect(getByTitle('expand')).toBeInTheDocument();
-      expect(queryByText('Management')?.clientWidth).toBe(0);
-      expect(getByTestId('nav-tooltip-management')).toContainHTML('svg');
+      expect(queryByText('Leases & Licenses')?.clientWidth).toBe(0);
+      expect(getByTestId('nav-tooltip-leases&licenses')).toContainHTML('svg');
     });
   });
 
@@ -73,8 +73,8 @@ describe('SideNavbar display and logic', () => {
       userEvent.click(expandButton);
     });
     await waitFor(async () => {
-      expect(getByTestId('nav-tooltip-management')).toContainHTML('svg');
-      expect(getByText('Management')).toBeInTheDocument();
+      expect(getByTestId('nav-tooltip-leases&licenses')).toContainHTML('svg');
+      expect(getByText('Leases & Licenses')).toBeInTheDocument();
     });
   });
 
@@ -118,7 +118,7 @@ describe('SideNavbar display and logic', () => {
       const { getByText, getByTestId } = renderComponent({
         roles: [Roles.SYSTEM_ADMINISTRATOR],
       });
-      const managementButton = getByTestId('nav-tooltip-management');
+      const managementButton = getByTestId('nav-tooltip-leases&licenses');
       await act(async () => {
         userEvent.click(managementButton);
       });
@@ -131,7 +131,7 @@ describe('SideNavbar display and logic', () => {
       const { getByTestId, getByTitle } = renderComponent({
         roles: [Roles.SYSTEM_ADMINISTRATOR],
       });
-      const managementButton = getByTestId('nav-tooltip-management');
+      const managementButton = getByTestId('nav-tooltip-leases&licenses');
       await act(async () => {
         userEvent.click(managementButton);
       });
@@ -148,7 +148,7 @@ describe('SideNavbar display and logic', () => {
       const { getByTestId, getByTitle } = renderComponent({
         roles: [Roles.SYSTEM_ADMINISTRATOR],
       });
-      const managementButton = getByTestId('nav-tooltip-management');
+      const managementButton = getByTestId('nav-tooltip-leases&licenses');
       await act(async () => {
         userEvent.click(managementButton);
       });
