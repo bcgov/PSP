@@ -3,7 +3,9 @@ import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { FileTypes } from '@/constants';
 import { Claims } from '@/constants/claims';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
@@ -11,7 +13,7 @@ import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, waitForElementToBeRemoved } from '@/utils/test-utils';
 
-import { SideBarContextProvider } from '../context/sidebarContext';
+import { SideBarContextProvider, TypedFile } from '../context/sidebarContext';
 import ResearchContainer, { IResearchContainerProps } from './ResearchContainer';
 
 const history = createMemoryHistory();
@@ -35,9 +37,13 @@ const onClose = jest.fn();
 
 describe('ResearchContainer component', () => {
   // render component under test
-  const setup = (props: Partial<IResearchContainerProps>, renderOptions: RenderOptions = {}) => {
+  const setup = (
+    renderOptions: RenderOptions & { props?: Partial<IResearchContainerProps> } & {
+      context?: { file?: TypedFile };
+    } = {},
+  ) => {
     const utils = render(
-      <SideBarContextProvider>
+      <SideBarContextProvider {...renderOptions?.context}>
         <ResearchContainer researchFileId={getMockResearchFile().id as number} onClose={onClose} />
       </SideBarContextProvider>,
       {
@@ -55,28 +61,13 @@ describe('ResearchContainer component', () => {
     };
   };
 
+  const mockResearchFile = getMockResearchFile();
+
   beforeEach(() => {
     mockAxios.resetHistory();
     mockAxios.reset();
     mockAxios.onGet(/users\/info.*?/).reply(200, {});
-  });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('renders as expected', async () => {
-    const mockResearchFile = getMockResearchFile();
-    mockAxios.onGet(`/researchFiles/${mockResearchFile?.id}`).reply(200, getMockResearchFile());
-    mockAxios.onGet(`/researchFiles/${mockResearchFile?.id}/properties`).reply(200, []);
-    const { getByTestId } = setup({});
-
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
-    expect(document.body).toMatchSnapshot();
-  });
-
-  it('displays a properties pid if that is the only valid identifier', async () => {
-    const mockResearchFile = getMockResearchFile();
     mockAxios.onGet(`/researchFiles/${mockResearchFile?.id}`).reply(200, {
       ...mockResearchFile,
       fileProperties: [{ id: 1 }],
@@ -84,58 +75,72 @@ describe('ResearchContainer component', () => {
     mockAxios
       .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
       .reply(200, [{ id: 1, property: { pid: '123-456-789' } }]);
-    const { getByTestId, findByText } = setup({});
+  });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders as expected', async () => {
+    const { getByTestId } = setup();
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+    expect(document.body).toMatchSnapshot();
+  });
 
+  it('renders a spinner while loading', async () => {
+    const { findByTestId } = setup();
+    const spinner = await findByTestId('filter-backdrop-loading');
+    expect(spinner).toBeVisible();
+  });
+
+  it('renders research details when file is in context', async () => {
+    const typedFile: TypedFile = { ...getMockResearchFile(), fileType: FileTypes.Research };
+    const { findByText } = setup({ context: { file: typedFile } });
+    expect(await findByText('File Summary')).toBeVisible();
+  });
+
+  it(`doesn't render research details when wrong file type is in context`, async () => {
+    const typedFile: TypedFile = {
+      ...mockAcquisitionFileResponse(),
+      fileType: FileTypes.Acquisition,
+    };
+    const { findByTestId } = setup({ context: { file: typedFile } });
+    expect(await findByTestId('filter-backdrop-loading')).toBeVisible();
+  });
+
+  it('displays a properties pid if that is the only valid identifier', async () => {
+    const { getByTestId, findByText } = setup();
+    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
     expect(await findByText('123-456-789')).toBeVisible();
   });
 
   it('displays a properties pin if that is the only valid identifier', async () => {
-    const mockResearchFile = getMockResearchFile();
-    mockAxios.onGet(`/researchFiles/${mockResearchFile?.id}`).reply(200, {
-      ...mockResearchFile,
-      fileProperties: [{ id: 1 }],
-    } as Api_ResearchFile);
     mockAxios
       .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
       .reply(200, [{ id: 1, property: { pin: 123456 } }]);
-    const { getByTestId, findByText } = setup({});
 
+    const { getByTestId, findByText } = setup();
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
-
     expect(await findByText('123456')).toBeVisible();
   });
 
   it('displays a properties plan number if that is the only valid identifier', async () => {
-    const mockResearchFile = getMockResearchFile();
-    mockAxios.onGet(`/researchFiles/${mockResearchFile?.id}`).reply(200, {
-      ...mockResearchFile,
-      fileProperties: [{ id: 1 }],
-    } as Api_ResearchFile);
     mockAxios
       .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
       .reply(200, [{ id: 1, property: { planNumber: 'EPP92028' } }]);
-    const { getByTestId, findByText } = setup({});
 
+    const { getByTestId, findByText } = setup();
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
-
     expect(await findByText('EPP92028')).toBeVisible();
   });
 
   it('displays a properties lat/lng if that is the only valid identifier', async () => {
-    const mockResearchFile = getMockResearchFile();
-    mockAxios.onGet(`/researchFiles/${mockResearchFile?.id}`).reply(200, {
-      ...mockResearchFile,
-      fileProperties: [{ id: 1 }],
-    } as Api_ResearchFile);
     mockAxios
       .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
       .reply(200, [{ id: 1, property: { latitude: 1, longitude: 2 } }]);
-    const { getByTestId, findByText } = setup({});
 
+    const { getByTestId, findByText } = setup();
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
-
     expect(await findByText('2.000000, 1.000000')).toBeVisible();
   });
 });
