@@ -7,9 +7,11 @@ import * as API from '@/constants/API';
 import { FinancialCodeTypes } from '@/constants/index';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
+import useApiUserOverride from '@/hooks/useApiUserOverride';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { Api_FinancialCode } from '@/models/api/FinancialCode';
 import { Api_Project } from '@/models/api/Project';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { toDropDownOptions } from '@/utils/financialCodeUtils';
 
 import SidebarFooter from '../../shared/SidebarFooter';
@@ -33,6 +35,10 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
   const [costTypes, setCostTypes] = useState<Api_FinancialCode[]>([]);
   const [workActivities, setWorkActivities] = useState<Api_FinancialCode[]>([]);
   const [isValid, setIsValid] = useState<boolean>(true);
+
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<Api_Project | void>
+  >('Failed to Add Project File');
 
   useEffect(() => {
     async function fetchBusinessFunctions() {
@@ -107,7 +113,11 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
         businessFunctionOptions={businessFunctionOptions ?? []}
         costTypeOptions={costTypeOptions ?? []}
         workActivityOptions={workActivityOptions ?? []}
-        onSubmit={helper.handleSubmit}
+        onSubmit={(projectForm, formikHelpers) =>
+          withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
+            helper.handleSubmit(projectForm, formikHelpers, userOverrideCodes),
+          )
+        }
         validationSchema={helper.validationSchema}
         isCreating
       />

@@ -67,7 +67,11 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   >('Failed to update Acquisition File');
 
   const {
-    getAcquisitionFile: { execute: retrieveAcquisitionFile, loading: loadingAcquisitionFile },
+    getAcquisitionFile: {
+      execute: retrieveAcquisitionFile,
+      loading: loadingAcquisitionFile,
+      error,
+    },
     updateAcquisitionProperties,
     getAcquisitionProperties: {
       execute: retrieveAcquisitionFileProperties,
@@ -121,6 +125,10 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   // Retrieve acquisition file from API and save it to local state and side-bar context
   const fetchAcquisitionFile = useCallback(async () => {
     var retrieved = await retrieveAcquisitionFile(acquisitionFileId);
+    if (retrieved === undefined) {
+      return;
+    }
+
     // retrieve related entities (ie properties, checklist items) in parallel
     const acquisitionPropertiesTask = retrieveAcquisitionFileProperties(acquisitionFileId);
     const acquisitionChecklistTask = retrieveAcquisitionFileChecklist(acquisitionFileId);
@@ -130,9 +138,9 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     if (retrieved) {
       retrieved.fileProperties = acquisitionProperties;
       retrieved.acquisitionFileChecklist = acquisitionChecklist;
+      setFile({ ...retrieved, fileType: FileTypes.Acquisition });
+      setStaleFile(false);
     }
-    setFile({ ...retrieved, fileType: FileTypes.Acquisition });
-    setStaleFile(false);
   }, [
     acquisitionFileId,
     retrieveAcquisitionFileProperties,
@@ -267,7 +275,12 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   };
 
   // UI components
-  if (loadingAcquisitionFile || (loadingAcquisitionFileProperties && !isPropertySelector)) {
+  if (
+    loadingAcquisitionFile ||
+    (loadingAcquisitionFileProperties && !isPropertySelector) ||
+    file?.fileType !== FileTypes.Acquisition ||
+    file?.id !== acquisitionFileId
+  ) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 
@@ -288,6 +301,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       canRemove={canRemove}
       formikRef={formikRef}
       isFormValid={isValid}
+      error={error}
     ></View>
   );
 };

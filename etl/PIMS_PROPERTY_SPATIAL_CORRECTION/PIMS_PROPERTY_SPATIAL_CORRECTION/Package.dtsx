@@ -1,0 +1,3504 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/23/2023 4:37:21 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="XERCES"
+  DTS:CreatorName="Xerces\Devin Smith"
+  DTS:DTSID="{74037122-414C-4317-B096-F0B5505A0733}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.948.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="47"
+  DTS:VersionGUID="{C036C22A-FB08-4CA9-8625-018613EC0B33}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PIMS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C854C770-B13C-477E-8DD4-44721E1B9FCF}"
+      DTS:ObjectName="PIMS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_DEV;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{C854C770-B13C-477E-8DD4-44721E1B9FCF}sqldevtst.th.gov.bc.ca.PIMS_DEV;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Correct PIMS Locations"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{0672244B-9B78-4F1F-A275-B350033D157F}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Correct PIMS Locations"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          autoAdjustBufferSize="true"
+          version="1">
+          <components>
+            <component
+              refId="Package\Correct PIMS Locations\Conditional Split"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Conditional Split"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Correct PIMS Locations\Conditional Split.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Correct PIMS Locations\Conditional Split.Inputs[Conditional Split Input].Columns[POLE_OF_INACCESSABILITY]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="POLE_OF_INACCESSABILITY"
+                      lineageId="Package\Correct PIMS Locations\Script Component.Outputs[Output 0].Columns[POLE_OF_INACCESSABILITY]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Correct PIMS Locations\Conditional Split.Outputs[VALID_NEW_LOCATION]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="VALID_NEW_LOCATION"
+                  synchronousInputId="Package\Correct PIMS Locations\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">![ISNULL](#{Package\Correct PIMS Locations\Script Component.Outputs[Output 0].Columns[POLE_OF_INACCESSABILITY]}) &amp;&amp; [LEN](#{Package\Correct PIMS Locations\Script Component.Outputs[Output 0].Columns[POLE_OF_INACCESSABILITY]}) &gt; 0</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">!ISNULL(POLE_OF_INACCESSABILITY) &amp;&amp; LEN(POLE_OF_INACCESSABILITY) &gt; 0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Correct PIMS Locations\Conditional Split.Outputs[Conditional Split Default Output]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="Conditional Split Default Output"
+                  synchronousInputId="Package\Correct PIMS Locations\Conditional Split.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Correct PIMS Locations\Conditional Split.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\Correct PIMS Locations\Conditional Split.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Correct PIMS Locations\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Correct PIMS Locations\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="PIMS_PROPERTY_BOUNDARY_VIEW"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[PIMS_PROPERTY_BOUNDARY_VW]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select cast(BOUNDARY.STAsText() as varchar(max)) as BOUNDARY_TEXT, PROPERTY_ID from PIMS_PROPERTY WHERE BOUNDARY IS NOT NULL and APP_CREATE_USERID in ('APP_PIMS_PROXY_ETL_EDIT', 'LISDB_ETL_USER', 'PMBC_PIMS_BCTFA', 'LISOS_ETL_USER')</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].Columns[BOUNDARY_TEXT]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].ExternalColumns[BOUNDARY_TEXT]"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].Columns[BOUNDARY_TEXT]"
+                      name="BOUNDARY_TEXT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].ExternalColumns[BOUNDARY_TEXT]"
+                      codePage="1252"
+                      dataType="text"
+                      name="BOUNDARY_TEXT" />
+                    <externalMetadataColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      dataType="i8"
+                      name="PROPERTY_ID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[BOUNDARY_TEXT]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[BOUNDARY_TEXT]"
+                      name="BOUNDARY_TEXT" />
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID" />
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Correct PIMS Locations\Script Component"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Includes and runs custom script code. For example, apply a business rule that limits the range of valid values in an &quot;income&quot; column or add values in two columns and calculate the average of the sum.;Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;12"
+              description="Includes and runs custom script code. For example, apply a business rule that limits the range of valid values in an &quot;income&quot; column or add values in two columns and calculate the average of the sum."
+              name="Script Component"
+              version="11">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Stores the source code of the component"
+                  isArray="true"
+                  name="SourceCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="51">
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Settings.settings]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Resources.resx]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[main.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[#region Help:  Introduction to the Script Component
+/* The Script Component allows you to perform virtually any operation that can be accomplished in
+ * a .Net application within the context of an Integration Services data flow.
+ *
+ * Expand the other regions which have "Help" prefixes for examples of specific ways to use
+ * Integration Services features within this script component. */
+#endregion
+
+#region Namespaces
+using Microsoft.SqlServer.Types;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlTypes;
+using System.Drawing;
+using System.Text;
+using System.Text.RegularExpressions;
+#endregion
+
+/// <summary>
+/// This is the class to which to add your code.  Do not change the name, attributes, or parent
+/// of this class.
+/// </summary>
+[Microsoft.SqlServer.Dts.Pipeline.SSISScriptComponentEntryPointAttribute]
+public class ScriptMain : UserComponent
+{
+    #region Help:  Using Integration Services variables and parameters
+    /* To use a variable in this script, first ensure that the variable has been added to
+     * either the list contained in the ReadOnlyVariables property or the list contained in
+     * the ReadWriteVariables property of this script component, according to whether or not your
+     * code needs to write into the variable.  To do so, save this script, close this instance of
+     * Visual Studio, and update the ReadOnlyVariables and ReadWriteVariables properties in the
+     * Script Transformation Editor window.
+     * To use a parameter in this script, follow the same steps. Parameters are always read-only.
+     *
+     * Example of reading from a variable or parameter:
+     *  DateTime startTime = Variables.MyStartTime;
+     *
+     * Example of writing to a variable:
+     *  Variables.myStringVariable = "new value";
+     */
+    #endregion
+
+    #region Help:  Using Integration Services Connnection Managers
+    /* Some types of connection managers can be used in this script component.  See the help topic
+     * "Working with Connection Managers Programatically" for details.
+     *
+     * To use a connection manager in this script, first ensure that the connection manager has
+     * been added to either the list of connection managers on the Connection Managers page of the
+     * script component editor.  To add the connection manager, save this script, close this instance of
+     * Visual Studio, and add the Connection Manager to the list.
+     *
+     * If the component needs to hold a connection open while processing rows, override the
+     * AcquireConnections and ReleaseConnections methods.
+     * 
+     * Example of using an ADO.Net connection manager to acquire a SqlConnection:
+     *  object rawConnection = Connections.SalesDB.AcquireConnection(transaction);
+     *  SqlConnection salesDBConn = (SqlConnection)rawConnection;
+     *
+     * Example of using a File connection manager to acquire a file path:
+     *  object rawConnection = Connections.Prices_zip.AcquireConnection(transaction);
+     *  string filePath = (string)rawConnection;
+     *
+     * Example of releasing a connection manager:
+     *  Connections.SalesDB.ReleaseConnection(rawConnection);
+     */
+    #endregion
+
+    #region Help:  Firing Integration Services Events
+    /* This script component can fire events.
+     *
+     * Example of firing an error event:
+     *  ComponentMetaData.FireError(10, "Process Values", "Bad value", "", 0, out cancel);
+     *
+     * Example of firing an information event:
+     *  ComponentMetaData.FireInformation(10, "Process Values", "Processing has started", "", 0, fireAgain);
+     *
+     * Example of firing a warning event:
+     *  ComponentMetaData.FireWarning(10, "Process Values", "No rows were received", "", 0);
+     */
+    #endregion
+
+    /// <summary>
+    /// This method is called once, before rows begin to be processed in the data flow.
+    ///
+    /// You can remove this method if you don't need to do anything here.
+    /// </summary>
+    public override void PreExecute()
+    {
+        base.PreExecute();
+        /*
+         * Add your code here
+         */
+    }
+
+    /// <summary>
+    /// This method is called after all the rows have passed through this component.
+    ///
+    /// You can delete this method if you don't need to do anything here.
+    /// </summary>
+    public override void PostExecute()
+    {
+        base.PostExecute();
+        /*
+         * Add your code here
+         */
+    }
+
+    /// <summary>
+    /// This method is called once for every row that passes through the component from Input0.
+    ///
+    /// Example of reading a value from a column in the the row:
+    ///  string zipCode = Row.ZipCode
+    ///
+    /// Example of writing a value to a column in the row:
+    ///  Row.ZipCode = zipCode
+    /// </summary>
+    /// <param name="Row">The row that is currently passing through the component</param>
+    public override void Input0_ProcessInputRow(Input0Buffer Row)
+    {
+        try
+        {
+            /*
+             * Add your code here
+             */
+            if (Row.BOUNDARYTEXT_IsNull)
+            {
+                return;
+            }
+            //get the lenght of the string of our Meshblock
+
+            //change my string data to sqlchars. this is needed for the STGeomFromText function
+            string pattern = @"\d.*?\s[^,\)]*";
+            var blobLength = Convert.ToInt32(Row.BOUNDARYTEXT.Length);
+            var blobData = Row.BOUNDARYTEXT.GetBlobData(0, blobLength);
+            var stringData = Encoding.UTF8.GetString(blobData);
+            var matches = Regex.Matches(stringData, pattern, RegexOptions.None);
+
+            List<PointF> points = new List<PointF>();
+            foreach (Match match in matches)
+            {
+                string[] latLng = match.Value.Split(' ');
+                points.Add(new PointF(float.Parse(latLng[0]), float.Parse(latLng[1])));
+            }
+
+            var newPoint = PolyLabel.PolyLabel.GetPolyLabel(points, .1f);
+            var bytes = Encoding.UTF8.GetBytes($"POINT ({newPoint.Centroid.X} {newPoint.Centroid.Y})");
+
+            Row.POLEOFINACCESSABILITY.AddBlobData(bytes);
+        }
+        catch (Exception e)
+        {
+            bool cancel = false;  // set to true to cause execution to abort
+            ComponentMetaData.FireError(-1, "Input0_ProcessInputRow()", e.Message, "", -1, out cancel);  // raise the error event to SSIS
+        }
+    }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[packages.config]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="OptimizedPriorityQueue" version="5.1.0" targetFramework="net47" />
+</packages>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[ComponentWrapper.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[/* THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+*  Microsoft SQL Server Integration Services component wrapper
+*  This module defines the base class for your component
+*  THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT! */
+
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+using Microsoft.SqlServer.Dts.Runtime.Wrapper;
+
+public class UserComponent: ScriptComponent
+{
+    public Connections Connections;
+    public Variables Variables;
+    public UserComponent()
+    {
+        Connections = new Connections(this);
+        Variables = new Variables(this);
+    }
+
+    public override void ProcessInput(int InputID, string InputName, PipelineBuffer Buffer, OutputNameMap OutputMap)
+    {
+
+        if (InputName.Equals(@"Input 0", StringComparison.Ordinal))
+        {
+            Input0_ProcessInput(new Input0Buffer(Buffer, GetColumnIndexes(InputID), OutputMap));
+        }
+
+    }
+
+    public virtual void Input0_ProcessInput(Input0Buffer Buffer)
+    {
+        while (Buffer.NextRow())
+        {
+            Input0_ProcessInputRow(Buffer);
+        }
+    }
+
+    public virtual void Input0_ProcessInputRow(Input0Buffer Row)
+    {
+    }
+
+}
+
+public class Connections
+{
+    ScriptComponent ParentComponent;
+
+    public Connections(ScriptComponent Component)
+    {
+        ParentComponent = Component;
+    }
+
+}
+
+public class Variables
+{
+    ScriptComponent ParentComponent;
+
+    public Variables(ScriptComponent Component)
+    {
+        ParentComponent = Component;
+    }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[PolyLabel.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using Priority_Queue;
+
+namespace PolyLabel
+{
+    public class PolyLabel
+    {
+        public PointF Centroid { get; set; }
+        public float Radius { get; set; }
+
+        public static PolyLabel GetPolyLabel(List<PointF> polygon, float precision = 1.0f, bool debug = false)
+        {
+            float minX = float.MaxValue;
+            float minY = float.MaxValue;
+            float maxX = float.MinValue;
+            float maxY = float.MinValue;
+
+            for (int i = 0; i < polygon.Count; i++)
+            {
+                PointF p = polygon[i];
+                if (i == 0 || p.X < minX) minX = p.X;
+                if (i == 0 || p.Y < minY) minY = p.Y;
+                if (i == 0 || p.X > maxX) maxX = p.X;
+                if (i == 0 || p.Y > maxY) maxY = p.Y;
+            }
+
+            float width = maxX - minX;
+            float height = maxY - minY;
+            float cellSize = Math.Min(width, height);
+            float h = cellSize / 2;
+
+            SimplePriorityQueue<Cell> cellQueue = new SimplePriorityQueue<Cell>();
+
+            if (cellSize == 0)
+            {
+                PolyLabel degeneratePoleOfInaccessibility = new PolyLabel()
+                {
+                    Centroid = new PointF(minX, minY),
+                    Radius = 0
+                };
+                return degeneratePoleOfInaccessibility;
+            }
+
+            for (var x = minX; x < maxX; x += cellSize)
+            {
+                for (var y = minY; y < maxY; y += cellSize)
+                {
+                    Cell cell = new Cell(x + h, y + h, h, polygon);
+                    cellQueue.Enqueue(cell, cell.Max);
+                }
+            }
+
+            Cell bestCell = GetCentroidCell(polygon);
+
+            Cell bBoxCell = new Cell(minX + width / 2, minY + height / 2, 0, polygon);
+            if (bBoxCell.D > bestCell.D)
+                bestCell = bBoxCell;
+
+            int numProbes = cellQueue.Count;
+
+            while (cellQueue.Count != 0)
+            {
+                // pick the most promising cell from the queue
+                var cell = cellQueue.Dequeue();
+
+                // update the best cell if we found a better one
+                if (cell.D > bestCell.D)
+                {
+                    bestCell = cell;
+                    if (debug)
+                        Console.WriteLine("found best {0} after {1} probes", Math.Round(1e4 * cell.D) / 1e4, numProbes);
+                }
+
+                // do not drill down further if there's no chance of a better solution
+                if (cell.Max - bestCell.D <= precision)
+                    continue;
+
+                // split the cell into four cells
+                h = cell.H / 2;
+
+                Cell temp;
+                temp = new Cell(cell.X - h, cell.Y - h, h, polygon);
+                cellQueue.Enqueue(temp, temp.Max);
+                temp = new Cell(cell.X + h, cell.Y - h, h, polygon);
+                cellQueue.Enqueue(temp, temp.Max);
+                temp = new Cell(cell.X - h, cell.Y + h, h, polygon);
+                cellQueue.Enqueue(temp, temp.Max);
+                temp = new Cell(cell.X + h, cell.Y + h, h, polygon);
+                cellQueue.Enqueue(temp, temp.Max);
+                numProbes += 4;
+            }
+
+            if (debug)
+            {
+                Console.WriteLine("num probes: " + numProbes);
+                Console.WriteLine("best distance: " + bestCell.D);
+            }
+
+            PolyLabel poleOfInaccessibility = new PolyLabel()
+            {
+                Centroid = new PointF(bestCell.X, bestCell.Y),
+                Radius = bestCell.D
+            };
+
+            return poleOfInaccessibility;
+        }
+
+        private static Cell GetCentroidCell(List<PointF> polygon)
+        {
+            float area = 0;
+            float x = 0;
+            float y = 0;
+            List<PointF> points = polygon;
+
+            for (int i = 0, len = points.Count, j = len - 1; i < len; j = i++)
+            {
+                PointF a = points[i];
+                PointF b = points[j];
+                float f = a.X * b.Y - b.X * a.Y;
+                x += (a.X + b.X) * f;
+                y += (a.Y + b.Y) * f;
+                area += f * 3;
+            }
+            if (area == 0)
+                return new Cell(points[0].X, points[0].Y, 0, polygon);
+
+            return new Cell(x / area, y / area, 0, polygon);
+        }
+
+        class Cell
+        {
+            public float X { get; set; }
+            public float Y { get; set; }
+            public float H { get; set; }
+            public float D { get; set; }
+            public float Max { get; set; }
+            public Cell(float x, float y, float h, List<PointF> polygon)
+            {
+                this.X = x;
+                this.Y = y;
+                this.H = h;
+                this.D = PointToPolygonDist(x, y, polygon);
+                this.Max = Convert.ToSingle(this.D + this.H * Math.Sqrt(2));
+            }
+
+            float PointToPolygonDist(float x, float y, List<PointF> polygon)
+            {
+                bool inside = false;
+                float minDistSq = float.PositiveInfinity;
+
+                for (int i = 0, len = polygon.Count, j = len - 1; i < len; j = i++)
+                {
+                    PointF a = polygon[i];
+                    PointF b = polygon[j];
+
+                    if ((a.Y > y != b.Y > y) && (x < (b.X - a.X) * (y - a.Y) / (b.Y - a.Y) + a.X))
+                        inside = !inside;
+
+                    minDistSq = Math.Min(minDistSq, GetSeqDistSq(x, y, a, b));
+                }
+
+                return Convert.ToSingle((inside ? 1 : -1) * Math.Sqrt(minDistSq));
+            }
+
+            float GetSeqDistSq(float px, float py, PointF a, PointF b)
+            {
+                float x = a.X;
+                float y = a.Y;
+                float dx = b.X - x;
+                float dy = b.Y - y;
+
+                if (dx != 0 || dy != 0)
+                {
+
+                    var t = ((px - x) * dx + (py - y) * dy) / (dx * dx + dy * dy);
+
+                    if (t > 1)
+                    {
+                        x = b.X;
+                        y = b.Y;
+
+                    }
+                    else if (t > 0)
+                    {
+                        x += dx * t;
+                        y += dy * t;
+                    }
+                }
+
+                dx = px - x;
+                dy = py - y;
+
+                return dx * dx + dy * dy;
+            }
+        }
+    }
+}]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Settings.Designer.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_4664d38d6d774888963e21557351c901.Properties.Settings.get_Default():SC_4664d38d6d774888963e21557351c901.Properties.Sett" +
+    "ings")]
+
+namespace SC_4664d38d6d774888963e21557351c901.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[BufferWrapper.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[/* THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+*  Microsoft SQL Server Integration Services buffer wrappers
+*  This module defines classes for accessing data flow buffers
+*  THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT! */
+
+
+
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+
+public class Input0Buffer: ScriptBuffer
+
+{
+    public Input0Buffer(PipelineBuffer Buffer, int[] BufferColumnIndexes, OutputNameMap OutputMap)
+        : base(Buffer, BufferColumnIndexes, OutputMap)
+    {
+    }
+
+    public BlobColumn BOUNDARYTEXT
+    {
+        get
+        {
+            return (BlobColumn)Buffer[BufferColumnIndexes[0]];
+        }
+    }
+    public bool BOUNDARYTEXT_IsNull
+    {
+        get
+        {
+            return IsNull(0);
+        }
+    }
+
+    public BlobColumn POLEOFINACCESSABILITY
+    {
+        get
+        {
+            return (BlobColumn)Buffer[BufferColumnIndexes[1]];
+        }
+        set
+        {
+            this[1] = value;
+        }
+    }
+    public bool POLEOFINACCESSABILITY_IsNull
+    {
+        get
+        {
+            return IsNull(1);
+        }
+        set
+        {
+            if (value)
+            {
+                SetNull(1);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    new public bool NextRow()
+    {
+        return base.NextRow();
+    }
+
+    new public bool EndOfRowset()
+    {
+        return base.EndOfRowset();
+    }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Project]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF16LE]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
+  <msb:PropertyGroup>
+    <msb:CodeName>SC_4664d38d6d774888963e21557351c901</msb:CodeName>
+    <msb:Language>msBuild</msb:Language>
+    <msb:DisplayName>SC_4664d38d6d774888963e21557351c901</msb:DisplayName>
+    <msb:ProjectId>{9DFA908A-4CC6-4FE2-93C1-582187F61F61}</msb:ProjectId>
+  </msb:PropertyGroup>
+  <msb:ItemGroup>
+    <msb:Project Include="SC_4664d38d6d774888963e21557351c901.csproj" />
+    <msb:File Include="main.cs" />
+    <msb:File Include="BufferWrapper.cs" />
+    <msb:File Include="Properties\Resources.resx" />
+    <msb:File Include="FixedSizePriorityQueue.cs" />
+    <msb:File Include="GenericPriorityQueueNode.cs" />
+    <msb:File Include="IPriorityQueue.cs" />
+    <msb:File Include="GenericPriorityQueue.cs" />
+    <msb:File Include="SimplePriorityQueue.cs" />
+    <msb:File Include="PolyLabel.cs" />
+    <msb:File Include="ComponentWrapper.cs" />
+    <msb:File Include="Properties\AssemblyInfo.cs" />
+    <msb:File Include="Properties\Resources.Designer.cs" />
+    <msb:File Include="packages.config" />
+    <msb:File Include="Properties\Settings.settings" />
+    <msb:File Include="Properties\Settings.Designer.cs" />
+  </msb:ItemGroup>
+</c:Project>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\AssemblyInfo.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("SC_4664d38d6d774888963e21557351c901")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("SC_4664d38d6d774888963e21557351c901")]
+[assembly: AssemblyCopyright("Copyright @  2023")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.0.0")]
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[SC_4664d38d6d774888963e21557351c901.csproj]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props" Condition="Exists('..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props')" />
+  <PropertyGroup>
+    <ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BA45C723-8B9F-453A-A231-4AA3D2D0ECDC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SC_4664d38d6d774888963e21557351c901</RootNamespace>
+    <AssemblyName>SC_4664d38d6d774888963e21557351c901</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <NuGetPackageImportStamp></NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="FixedSizePriorityQueue.cs" />
+    <Compile Include="GenericPriorityQueue.cs" />
+    <Compile Include="GenericPriorityQueueNode.cs" />
+    <Compile Include="IPriorityQueue.cs" />
+    <Compile Include="SimplePriorityQueue.cs" />
+    <Reference Include="Microsoft.SqlServer.Types, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\git\PSP\etl\PIMS_PROPERTY_SPATIAL_CORRECTION\PIMS_PROPERTY_SPATIAL_CORRECTION\PIMS_PROPERTY_SPATIAL_CORRECTION\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.SqlServer.TxScript, Version=14.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.DTSRuntimeWrap, Version=14.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.DTSPipelineWrap, Version=14.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.PipelineHost, Version=14.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Compile Include="main.cs" />
+    <Compile Include="BufferWrapper.cs" />
+    <Compile Include="ComponentWrapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+    <Compile Include="PolyLabel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <!-- Include the build rules for a C# project.-->
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- This section defines VSTA properties that describe the host-changable project properties. -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}">
+        <ProjectProperties HostName="VSTAHostName" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" />
+        <Host Name="ScriptComponent" IconIndex="0" />
+        <ProjectClient>
+          <HostIdentifier>SSIS_SC140</HostIdentifier>
+        </ProjectClient>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild"></Target>
+</Project>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Resources.Designer.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_4664d38d6d774888963e21557351c901.Properties.Resources.get_ResourceManager():System.Resources.Resou" +
+    "rceManager")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_4664d38d6d774888963e21557351c901.Properties.Resources.get_Culture():System.Globalization.CultureIn" +
+    "fo")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_4664d38d6d774888963e21557351c901.Properties.Resources.set_Culture(System.Globalization.CultureInfo" +
+    "):Void")]
+
+namespace SC_4664d38d6d774888963e21557351c901.Properties {
+    
+    
+    /// <summary>
+    ///   A strongly-typed resource class, for looking up localized strings, etc.
+    /// </summary>
+    // This class was auto-generated by the StronglyTypedResourceBuilder
+    // class via a tool like ResGen or Visual Studio.
+    // To add or remove a member, edit your .ResX file then rerun ResGen
+    // with the /str option, or rebuild your VS project.
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    internal class Resources {
+        
+        private static global::System.Resources.ResourceManager resourceMan;
+        
+        private static global::System.Globalization.CultureInfo resourceCulture;
+        
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        internal Resources() {
+        }
+        
+        /// <summary>
+        ///   Returns the cached ResourceManager instance used by this class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if ((resourceMan == null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SC_4664d38d6d774888963e21557351c901.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        
+        /// <summary>
+        ///   Overrides the current thread's CurrentUICulture property for all
+        ///   resource lookups using this strongly typed resource class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
+                return resourceCulture;
+            }
+            set {
+                resourceCulture = value;
+            }
+        }
+    }
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[FixedSizePriorityQueue.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Priority_Queue
+{
+    /// <summary>
+    /// A helper-interface only needed to make writing unit tests a bit easier (hence the 'internal' access modifier)
+    /// </summary>
+    internal interface IFixedSizePriorityQueue<TItem, in TPriority> : IPriorityQueue<TItem, TPriority>
+    {
+        /// <summary>
+        /// Resize the queue so it can accept more nodes.  All currently enqueued nodes are remain.
+        /// Attempting to decrease the queue size to a size too small to hold the existing nodes results in undefined behavior
+        /// </summary>
+        void Resize(int maxNodes);
+
+        /// <summary>
+        /// Returns the maximum number of items that can be enqueued at once in this queue.  Once you hit this number (ie. once Count == MaxSize),
+        /// attempting to enqueue another item will cause undefined behavior.
+        /// </summary>
+        int MaxSize { get; }
+
+        /// <summary>
+        /// By default, nodes that have been previously added to one queue cannot be added to another queue.
+        /// If you need to do this, please call originalQueue.ResetNode(node) before attempting to add it in the new queue
+        /// </summary>
+        void ResetNode(TItem node);
+    }
+}]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[IPriorityQueue.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[using System;
+using System.Collections.Generic;
+
+namespace Priority_Queue
+{
+    /// <summary>
+    /// The IPriorityQueue interface.  This is mainly here for purists, and in case I decide to add more implementations later.
+    /// For speed purposes, it is actually recommended that you *don't* access the priority queue through this interface, since the JIT can
+    /// (theoretically?) optimize method calls from concrete-types slightly better.
+    /// </summary>
+    public interface IPriorityQueue<TItem, in TPriority> : IEnumerable<TItem>
+    {
+        /// <summary>
+        /// Enqueue a node to the priority queue.  Lower values are placed in front. Ties are broken by first-in-first-out.
+        /// See implementation for how duplicates are handled.
+        /// </summary>
+        void Enqueue(TItem node, TPriority priority);
+
+        /// <summary>
+        /// Removes the head of the queue (node with minimum priority; ties are broken by order of insertion), and returns it.
+        /// </summary>
+        TItem Dequeue();
+
+        /// <summary>
+        /// Removes every node from the queue.
+        /// </summary>
+        void Clear();
+
+        /// <summary>
+        /// Returns whether the given node is in the queue.
+        /// </summary>
+        bool Contains(TItem node);
+
+        /// <summary>
+        /// Removes a node from the queue.  The node does not need to be the head of the queue.  
+        /// </summary>
+        void Remove(TItem node);
+
+        /// <summary>
+        /// Call this method to change the priority of a node.  
+        /// </summary>
+        void UpdatePriority(TItem node, TPriority priority);
+
+        /// <summary>
+        /// Returns the head of the queue, without removing it (use Dequeue() for that).
+        /// </summary>
+        TItem First { get; }
+
+        /// <summary>
+        /// Returns the number of nodes in the queue.
+        /// </summary>
+        int Count { get; }
+    }
+}]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[GenericPriorityQueueNode.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[namespace Priority_Queue
+{
+    public class GenericPriorityQueueNode<TPriority>
+    {
+        /// <summary>
+        /// The Priority to insert this node at.
+        /// Cannot be manually edited - see queue.Enqueue() and queue.UpdatePriority() instead
+        /// </summary>
+        public TPriority Priority { get; protected internal set; }
+
+        /// <summary>
+        /// Represents the current position in the queue
+        /// </summary>
+        public int QueueIndex { get; internal set; }
+
+        /// <summary>
+        /// Represents the order the node was inserted in
+        /// </summary>
+        public long InsertionIndex { get; internal set; }
+
+
+#if DEBUG
+        /// <summary>
+        /// The queue this node is tied to. Used only for debug builds.
+        /// </summary>
+        public object Queue { get; internal set; }
+#endif
+    }
+}]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[SimplePriorityQueue.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[using System;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace Priority_Queue
+{
+    /// <summary>
+    /// A simplified priority queue implementation.  Is stable, auto-resizes, and thread-safe, at the cost of being slightly slower than
+    /// FastPriorityQueue
+    /// Methods tagged as O(1) or O(log n) are assuming there are no duplicates.  Duplicates may increase the algorithmic complexity.
+    /// </summary>
+    /// <typeparam name="TItem">The type to enqueue</typeparam>
+    /// <typeparam name="TPriority">The priority-type to use for nodes.  Must extend IComparable&lt;TPriority&gt;</typeparam>
+    public class SimplePriorityQueue<TItem, TPriority> : IPriorityQueue<TItem, TPriority>
+    {
+        private class SimpleNode : GenericPriorityQueueNode<TPriority>
+        {
+            public TItem Data { get; private set; }
+
+            public SimpleNode(TItem data)
+            {
+                Data = data;
+            }
+        }
+
+        private const int INITIAL_QUEUE_SIZE = 10;
+        private readonly GenericPriorityQueue<SimpleNode, TPriority> _queue;
+        private readonly Dictionary<TItem, IList<SimpleNode>> _itemToNodesCache;
+        private readonly IList<SimpleNode> _nullNodesCache;
+
+        #region Constructors
+        /// <summary>
+        /// Instantiate a new Priority Queue
+        /// </summary>
+        public SimplePriorityQueue() : this(Comparer<TPriority>.Default, EqualityComparer<TItem>.Default) { }
+
+        /// <summary>
+        /// Instantiate a new Priority Queue
+        /// </summary>
+        /// <param name="priorityComparer">The comparer used to compare TPriority values.  Defaults to Comparer&lt;TPriority&gt;.default</param>
+        public SimplePriorityQueue(IComparer<TPriority> priorityComparer) : this(priorityComparer.Compare, EqualityComparer<TItem>.Default) { }
+
+        /// <summary>
+        /// Instantiate a new Priority Queue
+        /// </summary>
+        /// <param name="priorityComparer">The comparison function to use to compare TPriority values</param>
+        public SimplePriorityQueue(Comparison<TPriority> priorityComparer) : this(priorityComparer, EqualityComparer<TItem>.Default) { }
+
+        /// <summary>
+        /// Instantiate a new Priority Queue       
+        /// </summary>
+        /// <param name="itemEquality">The equality comparison function to use to compare TItem values</param>
+        public SimplePriorityQueue(IEqualityComparer<TItem> itemEquality) : this(Comparer<TPriority>.Default, itemEquality) { }
+
+        /// <summary>
+        /// Instantiate a new Priority Queue
+        /// </summary>
+        /// <param name="priorityComparer">The comparer used to compare TPriority values.  Defaults to Comparer&lt;TPriority&gt;.default</param>
+        /// <param name="itemEquality">The equality comparison function to use to compare TItem values</param>
+        public SimplePriorityQueue(IComparer<TPriority> priorityComparer, IEqualityComparer<TItem> itemEquality) : this(priorityComparer.Compare, itemEquality) { }
+
+        /// <summary>
+        /// Instantiate a new Priority Queue
+        /// </summary>
+        /// <param name="priorityComparer">The comparison function to use to compare TPriority values</param>
+        /// <param name="itemEquality">The equality comparison function to use to compare TItem values</param>
+        public SimplePriorityQueue(Comparison<TPriority> priorityComparer, IEqualityComparer<TItem> itemEquality)
+        {
+            _queue = new GenericPriorityQueue<SimpleNode, TPriority>(INITIAL_QUEUE_SIZE, priorityComparer);
+            _itemToNodesCache = new Dictionary<TItem, IList<SimpleNode>>(itemEquality);
+            _nullNodesCache = new List<SimpleNode>();
+        }
+        #endregion
+
+        /// <summary>
+        /// Given an item of type T, returns the existing SimpleNode in the queue
+        /// </summary>
+        private SimpleNode GetExistingNode(TItem item)
+        {
+            if (item == null)
+            {
+                return _nullNodesCache.Count > 0 ? _nullNodesCache[0] : null;
+            }
+
+            IList<SimpleNode> nodes;
+            if (!_itemToNodesCache.TryGetValue(item, out nodes))
+            {
+                return null;
+            }
+            return nodes[0];
+        }
+
+        /// <summary>
+        /// Adds an item to the Node-cache to allow for many methods to be O(1) or O(log n)
+        /// </summary>
+        private void AddToNodeCache(SimpleNode node)
+        {
+            if (node.Data == null)
+            {
+                _nullNodesCache.Add(node);
+                return;
+            }
+
+            IList<SimpleNode> nodes;
+            if (!_itemToNodesCache.TryGetValue(node.Data, out nodes))
+            {
+                nodes = new List<SimpleNode>();
+                _itemToNodesCache[node.Data] = nodes;
+            }
+            nodes.Add(node);
+        }
+
+        /// <summary>
+        /// Removes an item to the Node-cache to allow for many methods to be O(1) or O(log n) (assuming no duplicates)
+        /// </summary>
+        private void RemoveFromNodeCache(SimpleNode node)
+        {
+            if (node.Data == null)
+            {
+                _nullNodesCache.Remove(node);
+                return;
+            }
+
+            IList<SimpleNode> nodes;
+            if (!_itemToNodesCache.TryGetValue(node.Data, out nodes))
+            {
+                return;
+            }
+            nodes.Remove(node);
+            if (nodes.Count == 0)
+            {
+                _itemToNodesCache.Remove(node.Data);
+            }
+        }
+
+        /// <summary>
+        /// Returns the number of nodes in the queue.
+        /// O(1)
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                lock (_queue)
+                {
+                    return _queue.Count;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns the head of the queue, without removing it (use Dequeue() for that).
+        /// Throws an exception when the queue is empty.
+        /// O(1)
+        /// </summary>
+        public TItem First
+        {
+            get
+            {
+                lock (_queue)
+                {
+                    if (_queue.Count <= 0)
+                    {
+                        throw new InvalidOperationException("Cannot call .First on an empty queue");
+                    }
+
+                    return _queue.First.Data;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes every node from the queue.
+        /// O(n)
+        /// </summary>
+        public void Clear()
+        {
+            lock (_queue)
+            {
+                _queue.Clear();
+                _itemToNodesCache.Clear();
+                _nullNodesCache.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Returns whether the given item is in the queue.
+        /// O(1)
+        /// </summary>
+        public bool Contains(TItem item)
+        {
+            lock (_queue)
+            {
+                return item == null ? _nullNodesCache.Count > 0 : _itemToNodesCache.ContainsKey(item);
+            }
+        }
+
+        /// <summary>
+        /// Removes the head of the queue (node with minimum priority; ties are broken by order of insertion), and returns it.
+        /// If queue is empty, throws an exception
+        /// O(log n)
+        /// </summary>
+        public TItem Dequeue()
+        {
+            lock (_queue)
+            {
+                if (_queue.Count <= 0)
+                {
+                    throw new InvalidOperationException("Cannot call Dequeue() on an empty queue");
+                }
+
+                SimpleNode node = _queue.Dequeue();
+                RemoveFromNodeCache(node);
+                return node.Data;
+            }
+        }
+
+        /// <summary>
+        /// Enqueue the item with the given priority, without calling lock(_queue) or AddToNodeCache(node)
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="priority"></param>
+        /// <returns></returns>
+        private SimpleNode EnqueueNoLockOrCache(TItem item, TPriority priority)
+        {
+            SimpleNode node = new SimpleNode(item);
+            if (_queue.Count == _queue.MaxSize)
+            {
+                _queue.Resize(_queue.MaxSize * 2 + 1);
+            }
+            _queue.Enqueue(node, priority);
+            return node;
+        }
+
+        /// <summary>
+        /// Enqueue a node to the priority queue.  Lower values are placed in front. Ties are broken by first-in-first-out.
+        /// This queue automatically resizes itself, so there's no concern of the queue becoming 'full'.
+        /// Duplicates and null-values are allowed.
+        /// O(log n)
+        /// </summary>
+        public void Enqueue(TItem item, TPriority priority)
+        {
+            lock (_queue)
+            {
+                IList<SimpleNode> nodes;
+                if (item == null)
+                {
+                    nodes = _nullNodesCache;
+                }
+                else if (!_itemToNodesCache.TryGetValue(item, out nodes))
+                {
+                    nodes = new List<SimpleNode>();
+                    _itemToNodesCache[item] = nodes;
+                }
+                SimpleNode node = EnqueueNoLockOrCache(item, priority);
+                nodes.Add(node);
+            }
+        }
+
+        /// <summary>
+        /// Enqueue a node to the priority queue if it doesn't already exist.  Lower values are placed in front. Ties are broken by first-in-first-out.
+        /// This queue automatically resizes itself, so there's no concern of the queue becoming 'full'.  Null values are allowed.
+        /// Returns true if the node was successfully enqueued; false if it already exists.
+        /// O(log n)
+        /// </summary>
+        public bool EnqueueWithoutDuplicates(TItem item, TPriority priority)
+        {
+            lock (_queue)
+            {
+                IList<SimpleNode> nodes;
+                if (item == null)
+                {
+                    if (_nullNodesCache.Count > 0)
+                    {
+                        return false;
+                    }
+                    nodes = _nullNodesCache;
+                }
+                else if (_itemToNodesCache.ContainsKey(item))
+                {
+                    return false;
+                }
+                else
+                {
+                    nodes = new List<SimpleNode>();
+                    _itemToNodesCache[item] = nodes;
+                }
+                SimpleNode node = EnqueueNoLockOrCache(item, priority);
+                nodes.Add(node);
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Removes an item from the queue.  The item does not need to be the head of the queue.  
+        /// If the item is not in the queue, an exception is thrown.  If unsure, check Contains() first.
+        /// If multiple copies of the item are enqueued, only the first one is removed. 
+        /// O(log n)
+        /// </summary>
+        public void Remove(TItem item)
+        {
+            lock (_queue)
+            {
+                SimpleNode removeMe;
+                IList<SimpleNode> nodes;
+                if (item == null)
+                {
+                    if (_nullNodesCache.Count == 0)
+                    {
+                        throw new InvalidOperationException("Cannot call Remove() on a node which is not enqueued: " + item);
+                    }
+                    removeMe = _nullNodesCache[0];
+                    nodes = _nullNodesCache;
+                }
+                else
+                {
+                    if (!_itemToNodesCache.TryGetValue(item, out nodes))
+                    {
+                        throw new InvalidOperationException("Cannot call Remove() on a node which is not enqueued: " + item);
+                    }
+                    removeMe = nodes[0];
+                    if (nodes.Count == 1)
+                    {
+                        _itemToNodesCache.Remove(item);
+                    }
+                }
+                _queue.Remove(removeMe);
+                nodes.Remove(removeMe);
+            }
+        }
+
+        /// <summary>
+        /// Call this method to change the priority of an item.
+        /// Calling this method on a item not in the queue will throw an exception.
+        /// If the item is enqueued multiple times, only the first one will be updated.
+        /// (If your requirements are complex enough that you need to enqueue the same item multiple times <i>and</i> be able
+        /// to update all of them, please wrap your items in a wrapper class so they can be distinguished).
+        /// O(log n)
+        /// </summary>
+        public void UpdatePriority(TItem item, TPriority priority)
+        {
+            lock (_queue)
+            {
+                SimpleNode updateMe = GetExistingNode(item);
+                if (updateMe == null)
+                {
+                    throw new InvalidOperationException("Cannot call UpdatePriority() on a node which is not enqueued: " + item);
+                }
+                _queue.UpdatePriority(updateMe, priority);
+            }
+        }
+
+        /// <summary>
+        /// Returns the priority of the given item.
+        /// Calling this method on a item not in the queue will throw an exception.
+        /// If the item is enqueued multiple times, only the priority of the first will be returned.
+        /// (If your requirements are complex enough that you need to enqueue the same item multiple times <i>and</i> be able
+        /// to query all their priorities, please wrap your items in a wrapper class so they can be distinguished).
+        /// O(1)
+        /// </summary>
+        public TPriority GetPriority(TItem item)
+        {
+            lock (_queue)
+            {
+                SimpleNode findMe = GetExistingNode(item);
+                if (findMe == null)
+                {
+                    throw new InvalidOperationException("Cannot call GetPriority() on a node which is not enqueued: " + item);
+                }
+                return findMe.Priority;
+            }
+        }
+
+        #region Try* methods for multithreading
+        /// Get the head of the queue, without removing it (use TryDequeue() for that).
+        /// Useful for multi-threading, where the queue may become empty between calls to Contains() and First
+        /// Returns true if successful, false otherwise
+        /// O(1)
+        public bool TryFirst(out TItem first)
+        {
+            if (_queue.Count > 0)
+            {
+                lock (_queue)
+                {
+                    if (_queue.Count > 0)
+                    {
+                        first = _queue.First.Data;
+                        return true;
+                    }
+                }
+            }
+
+            first = default(TItem);
+            return false;
+        }
+
+        /// <summary>
+        /// Removes the head of the queue (node with minimum priority; ties are broken by order of insertion), and sets it to first.
+        /// Useful for multi-threading, where the queue may become empty between calls to Contains() and Dequeue()
+        /// Returns true if successful; false if queue was empty
+        /// O(log n)
+        /// </summary>
+        public bool TryDequeue(out TItem first)
+        {
+            if (_queue.Count > 0)
+            {
+                lock (_queue)
+                {
+                    if (_queue.Count > 0)
+                    {
+                        SimpleNode node = _queue.Dequeue();
+                        first = node.Data;
+                        RemoveFromNodeCache(node);
+                        return true;
+                    }
+                }
+            }
+
+            first = default(TItem);
+            return false;
+        }
+
+        /// <summary>
+        /// Attempts to remove an item from the queue.  The item does not need to be the head of the queue.  
+        /// Useful for multi-threading, where the queue may become empty between calls to Contains() and Remove()
+        /// Returns true if the item was successfully removed, false if it wasn't in the queue.
+        /// If multiple copies of the item are enqueued, only the first one is removed. 
+        /// O(log n)
+        /// </summary>
+        public bool TryRemove(TItem item)
+        {
+            lock (_queue)
+            {
+                SimpleNode removeMe;
+                IList<SimpleNode> nodes;
+                if (item == null)
+                {
+                    if (_nullNodesCache.Count == 0)
+                    {
+                        return false;
+                    }
+                    removeMe = _nullNodesCache[0];
+                    nodes = _nullNodesCache;
+                }
+                else
+                {
+                    if (!_itemToNodesCache.TryGetValue(item, out nodes))
+                    {
+                        return false;
+                    }
+                    removeMe = nodes[0];
+                    if (nodes.Count == 1)
+                    {
+                        _itemToNodesCache.Remove(item);
+                    }
+                }
+                _queue.Remove(removeMe);
+                nodes.Remove(removeMe);
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Call this method to change the priority of an item.
+        /// Useful for multi-threading, where the queue may become empty between calls to Contains() and UpdatePriority()
+        /// If the item is enqueued multiple times, only the first one will be updated.
+        /// (If your requirements are complex enough that you need to enqueue the same item multiple times <i>and</i> be able
+        /// to update all of them, please wrap your items in a wrapper class so they can be distinguished).
+        /// Returns true if the item priority was updated, false otherwise.
+        /// O(log n)
+        /// </summary>
+        public bool TryUpdatePriority(TItem item, TPriority priority)
+        {
+            lock (_queue)
+            {
+                SimpleNode updateMe = GetExistingNode(item);
+                if (updateMe == null)
+                {
+                    return false;
+                }
+                _queue.UpdatePriority(updateMe, priority);
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Attempt to get the priority of the given item.
+        /// Useful for multi-threading, where the queue may become empty between calls to Contains() and GetPriority()
+        /// If the item is enqueued multiple times, only the priority of the first will be returned.
+        /// (If your requirements are complex enough that you need to enqueue the same item multiple times <i>and</i> be able
+        /// to query all their priorities, please wrap your items in a wrapper class so they can be distinguished).
+        /// Returns true if the item was found in the queue, false otherwise
+        /// O(1)
+        /// </summary>
+        public bool TryGetPriority(TItem item, out TPriority priority)
+        {
+            lock (_queue)
+            {
+                SimpleNode findMe = GetExistingNode(item);
+                if (findMe == null)
+                {
+                    priority = default(TPriority);
+                    return false;
+                }
+                priority = findMe.Priority;
+                return true;
+            }
+        }
+        #endregion
+
+        public IEnumerator<TItem> GetEnumerator()
+        {
+            List<TItem> queueData = new List<TItem>();
+            lock (_queue)
+            {
+                //Copy to a separate list because we don't want to 'yield return' inside a lock
+                foreach (var node in _queue)
+                {
+                    queueData.Add(node.Data);
+                }
+            }
+
+            return queueData.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public bool IsValidQueue()
+        {
+            lock (_queue)
+            {
+                // Check all items in cache are in the queue
+                foreach (IList<SimpleNode> nodes in _itemToNodesCache.Values)
+                {
+                    foreach (SimpleNode node in nodes)
+                    {
+                        if (!_queue.Contains(node))
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+                // Check all items in queue are in cache
+                foreach (SimpleNode node in _queue)
+                {
+                    if (GetExistingNode(node.Data) == null)
+                    {
+                        return false;
+                    }
+                }
+
+                // Check queue structure itself
+                return _queue.IsValidQueue();
+            }
+        }
+    }
+
+    /// <summary>
+    /// A simplified priority queue implementation.  Is stable, auto-resizes, and thread-safe, at the cost of being slightly slower than
+    /// FastPriorityQueue
+    /// This class is kept here for backwards compatibility.  It's recommended you use SimplePriorityQueue&lt;TItem, TPriority&gt;
+    /// </summary>
+    /// <typeparam name="TItem">The type to enqueue</typeparam>
+    public class SimplePriorityQueue<TItem> : SimplePriorityQueue<TItem, float>
+    {
+        /// <summary>
+        /// Instantiate a new Priority Queue
+        /// </summary>
+        public SimplePriorityQueue() { }
+
+        /// <summary>
+        /// Instantiate a new Priority Queue
+        /// </summary>
+        /// <param name="comparer">The comparer used to compare priority values.  Defaults to Comparer&lt;float&gt;.default</param>
+        public SimplePriorityQueue(IComparer<float> comparer) : base(comparer) { }
+
+        /// <summary>
+        /// Instantiate a new Priority Queue
+        /// </summary>
+        /// <param name="comparer">The comparison function to use to compare priority values</param>
+        public SimplePriorityQueue(Comparison<float> comparer) : base(comparer) { }
+    }
+}]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[GenericPriorityQueue.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
+namespace Priority_Queue
+{
+    /// <summary>
+    /// A copy of StablePriorityQueue which also has generic priority-type
+    /// </summary>
+    /// <typeparam name="TItem">The values in the queue.  Must extend the GenericPriorityQueueNode class</typeparam>
+    /// <typeparam name="TPriority">The priority-type.  Must extend IComparable&lt;TPriority&gt;</typeparam>
+    public sealed class GenericPriorityQueue<TItem, TPriority> : IFixedSizePriorityQueue<TItem, TPriority>
+        where TItem : GenericPriorityQueueNode<TPriority>
+    {
+        private int _numNodes;
+        private TItem[] _nodes;
+        private long _numNodesEverEnqueued;
+        private readonly Comparison<TPriority> _comparer;
+
+        /// <summary>
+        /// Instantiate a new Priority Queue
+        /// </summary>
+        /// <param name="maxNodes">The max nodes ever allowed to be enqueued (going over this will cause undefined behavior)</param>
+        public GenericPriorityQueue(int maxNodes) : this(maxNodes, Comparer<TPriority>.Default) { }
+
+        /// <summary>
+        /// Instantiate a new Priority Queue
+        /// </summary>
+        /// <param name="maxNodes">The max nodes ever allowed to be enqueued (going over this will cause undefined behavior)</param>
+        /// <param name="comparer">The comparer used to compare TPriority values.</param>
+        public GenericPriorityQueue(int maxNodes, IComparer<TPriority> comparer) : this(maxNodes, comparer.Compare) { }
+
+        /// <summary>
+        /// Instantiate a new Priority Queue
+        /// </summary>
+        /// <param name="maxNodes">The max nodes ever allowed to be enqueued (going over this will cause undefined behavior)</param>
+        /// <param name="comparer">The comparison function to use to compare TPriority values</param>
+        public GenericPriorityQueue(int maxNodes, Comparison<TPriority> comparer)
+        {
+#if DEBUG
+            if (maxNodes <= 0)
+            {
+                throw new InvalidOperationException("New queue size cannot be smaller than 1");
+            }
+#endif
+
+            _numNodes = 0;
+            _nodes = new TItem[maxNodes + 1];
+            _numNodesEverEnqueued = 0;
+            _comparer = comparer;
+        }
+
+        /// <summary>
+        /// Returns the number of nodes in the queue.
+        /// O(1)
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return _numNodes;
+            }
+        }
+
+        /// <summary>
+        /// Returns the maximum number of items that can be enqueued at once in this queue.  Once you hit this number (ie. once Count == MaxSize),
+        /// attempting to enqueue another item will cause undefined behavior.  O(1)
+        /// </summary>
+        public int MaxSize
+        {
+            get
+            {
+                return _nodes.Length - 1;
+            }
+        }
+
+        /// <summary>
+        /// Removes every node from the queue.
+        /// O(n) (So, don't do this often!)
+        /// </summary>
+#if NET_VERSION_4_5
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public void Clear()
+        {
+            Array.Clear(_nodes, 1, _numNodes);
+            _numNodes = 0;
+        }
+
+        /// <summary>
+        /// Returns (in O(1)!) whether the given node is in the queue.
+        /// If node is or has been previously added to another queue, the result is undefined unless oldQueue.ResetNode(node) has been called
+        /// O(1)
+        /// </summary>
+#if NET_VERSION_4_5
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public bool Contains(TItem node)
+        {
+#if DEBUG
+            if (node == null)
+            {
+                throw new ArgumentNullException("node");
+            }
+            if (node.Queue != null && !Equals(node.Queue))
+            {
+                throw new InvalidOperationException("node.Contains was called on a node from another queue.  Please call originalQueue.ResetNode() first");
+            }
+            if (node.QueueIndex < 0 || node.QueueIndex >= _nodes.Length)
+            {
+                throw new InvalidOperationException("node.QueueIndex has been corrupted. Did you change it manually?");
+            }
+#endif
+
+            return (_nodes[node.QueueIndex] == node);
+        }
+
+        /// <summary>
+        /// Enqueue a node to the priority queue.  Lower values are placed in front. Ties are broken by first-in-first-out.
+        /// If the queue is full, the result is undefined.
+        /// If the node is already enqueued, the result is undefined.
+        /// If node is or has been previously added to another queue, the result is undefined unless oldQueue.ResetNode(node) has been called
+        /// O(log n)
+        /// </summary>
+#if NET_VERSION_4_5
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public void Enqueue(TItem node, TPriority priority)
+        {
+#if DEBUG
+            if (node == null)
+            {
+                throw new ArgumentNullException("node");
+            }
+            if (_numNodes >= _nodes.Length - 1)
+            {
+                throw new InvalidOperationException("Queue is full - node cannot be added: " + node);
+            }
+            if (node.Queue != null && !Equals(node.Queue))
+            {
+                throw new InvalidOperationException("node.Enqueue was called on a node from another queue.  Please call originalQueue.ResetNode() first");
+            }
+            if (Contains(node))
+            {
+                throw new InvalidOperationException("Node is already enqueued: " + node);
+            }
+            node.Queue = this;
+#endif
+
+            node.Priority = priority;
+            _numNodes++;
+            _nodes[_numNodes] = node;
+            node.QueueIndex = _numNodes;
+            node.InsertionIndex = _numNodesEverEnqueued++;
+            CascadeUp(node);
+        }
+
+#if NET_VERSION_4_5
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        private void CascadeUp(TItem node)
+        {
+            //aka Heapify-up
+            int parent;
+            if (node.QueueIndex > 1)
+            {
+                parent = node.QueueIndex >> 1;
+                TItem parentNode = _nodes[parent];
+                if (HasHigherPriority(parentNode, node))
+                    return;
+
+                //Node has lower priority value, so move parent down the heap to make room
+                _nodes[node.QueueIndex] = parentNode;
+                parentNode.QueueIndex = node.QueueIndex;
+
+                node.QueueIndex = parent;
+            }
+            else
+            {
+                return;
+            }
+            while (parent > 1)
+            {
+                parent >>= 1;
+                TItem parentNode = _nodes[parent];
+                if (HasHigherPriority(parentNode, node))
+                    break;
+
+                //Node has lower priority value, so move parent down the heap to make room
+                _nodes[node.QueueIndex] = parentNode;
+                parentNode.QueueIndex = node.QueueIndex;
+
+                node.QueueIndex = parent;
+            }
+            _nodes[node.QueueIndex] = node;
+        }
+
+#if NET_VERSION_4_5
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        private void CascadeDown(TItem node)
+        {
+            //aka Heapify-down
+            int finalQueueIndex = node.QueueIndex;
+            int childLeftIndex = 2 * finalQueueIndex;
+
+            // If leaf node, we're done
+            if (childLeftIndex > _numNodes)
+            {
+                return;
+            }
+
+            // Check if the left-child is higher-priority than the current node
+            int childRightIndex = childLeftIndex + 1;
+            TItem childLeft = _nodes[childLeftIndex];
+            if (HasHigherPriority(childLeft, node))
+            {
+                // Check if there is a right child. If not, swap and finish.
+                if (childRightIndex > _numNodes)
+                {
+                    node.QueueIndex = childLeftIndex;
+                    childLeft.QueueIndex = finalQueueIndex;
+                    _nodes[finalQueueIndex] = childLeft;
+                    _nodes[childLeftIndex] = node;
+                    return;
+                }
+                // Check if the left-child is higher-priority than the right-child
+                TItem childRight = _nodes[childRightIndex];
+                if (HasHigherPriority(childLeft, childRight))
+                {
+                    // left is highest, move it up and continue
+                    childLeft.QueueIndex = finalQueueIndex;
+                    _nodes[finalQueueIndex] = childLeft;
+                    finalQueueIndex = childLeftIndex;
+                }
+                else
+                {
+                    // right is even higher, move it up and continue
+                    childRight.QueueIndex = finalQueueIndex;
+                    _nodes[finalQueueIndex] = childRight;
+                    finalQueueIndex = childRightIndex;
+                }
+            }
+            // Not swapping with left-child, does right-child exist?
+            else if (childRightIndex > _numNodes)
+            {
+                return;
+            }
+            else
+            {
+                // Check if the right-child is higher-priority than the current node
+                TItem childRight = _nodes[childRightIndex];
+                if (HasHigherPriority(childRight, node))
+                {
+                    childRight.QueueIndex = finalQueueIndex;
+                    _nodes[finalQueueIndex] = childRight;
+                    finalQueueIndex = childRightIndex;
+                }
+                // Neither child is higher-priority than current, so finish and stop.
+                else
+                {
+                    return;
+                }
+            }
+
+            while (true)
+            {
+                childLeftIndex = 2 * finalQueueIndex;
+
+                // If leaf node, we're done
+                if (childLeftIndex > _numNodes)
+                {
+                    node.QueueIndex = finalQueueIndex;
+                    _nodes[finalQueueIndex] = node;
+                    break;
+                }
+
+                // Check if the left-child is higher-priority than the current node
+                childRightIndex = childLeftIndex + 1;
+                childLeft = _nodes[childLeftIndex];
+                if (HasHigherPriority(childLeft, node))
+                {
+                    // Check if there is a right child. If not, swap and finish.
+                    if (childRightIndex > _numNodes)
+                    {
+                        node.QueueIndex = childLeftIndex;
+                        childLeft.QueueIndex = finalQueueIndex;
+                        _nodes[finalQueueIndex] = childLeft;
+                        _nodes[childLeftIndex] = node;
+                        break;
+                    }
+                    // Check if the left-child is higher-priority than the right-child
+                    TItem childRight = _nodes[childRightIndex];
+                    if (HasHigherPriority(childLeft, childRight))
+                    {
+                        // left is highest, move it up and continue
+                        childLeft.QueueIndex = finalQueueIndex;
+                        _nodes[finalQueueIndex] = childLeft;
+                        finalQueueIndex = childLeftIndex;
+                    }
+                    else
+                    {
+                        // right is even higher, move it up and continue
+                        childRight.QueueIndex = finalQueueIndex;
+                        _nodes[finalQueueIndex] = childRight;
+                        finalQueueIndex = childRightIndex;
+                    }
+                }
+                // Not swapping with left-child, does right-child exist?
+                else if (childRightIndex > _numNodes)
+                {
+                    node.QueueIndex = finalQueueIndex;
+                    _nodes[finalQueueIndex] = node;
+                    break;
+                }
+                else
+                {
+                    // Check if the right-child is higher-priority than the current node
+                    TItem childRight = _nodes[childRightIndex];
+                    if (HasHigherPriority(childRight, node))
+                    {
+                        childRight.QueueIndex = finalQueueIndex;
+                        _nodes[finalQueueIndex] = childRight;
+                        finalQueueIndex = childRightIndex;
+                    }
+                    // Neither child is higher-priority than current, so finish and stop.
+                    else
+                    {
+                        node.QueueIndex = finalQueueIndex;
+                        _nodes[finalQueueIndex] = node;
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns true if 'higher' has higher priority than 'lower', false otherwise.
+        /// Note that calling HasHigherPriority(node, node) (ie. both arguments the same node) will return false
+        /// </summary>
+#if NET_VERSION_4_5
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        private bool HasHigherPriority(TItem higher, TItem lower)
+        {
+            var cmp = _comparer(higher.Priority, lower.Priority);
+            return (cmp < 0 || (cmp == 0 && higher.InsertionIndex < lower.InsertionIndex));
+        }
+
+        /// <summary>
+        /// Removes the head of the queue (node with minimum priority; ties are broken by order of insertion), and returns it.
+        /// If queue is empty, result is undefined
+        /// O(log n)
+        /// </summary>
+#if NET_VERSION_4_5
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public TItem Dequeue()
+        {
+#if DEBUG
+            if (_numNodes <= 0)
+            {
+                throw new InvalidOperationException("Cannot call Dequeue() on an empty queue");
+            }
+
+            if (!IsValidQueue())
+            {
+                throw new InvalidOperationException("Queue has been corrupted (Did you update a node priority manually instead of calling UpdatePriority()?" +
+                                                    "Or add the same node to two different queues?)");
+            }
+#endif
+
+            TItem returnMe = _nodes[1];
+            //If the node is already the last node, we can remove it immediately
+            if (_numNodes == 1)
+            {
+                _nodes[1] = null;
+                _numNodes = 0;
+                return returnMe;
+            }
+
+            //Swap the node with the last node
+            TItem formerLastNode = _nodes[_numNodes];
+            _nodes[1] = formerLastNode;
+            formerLastNode.QueueIndex = 1;
+            _nodes[_numNodes] = null;
+            _numNodes--;
+
+            //Now bubble formerLastNode (which is no longer the last node) down
+            CascadeDown(formerLastNode);
+            return returnMe;
+        }
+
+        /// <summary>
+        /// Resize the queue so it can accept more nodes.  All currently enqueued nodes are remain.
+        /// Attempting to decrease the queue size to a size too small to hold the existing nodes results in undefined behavior
+        /// O(n)
+        /// </summary>
+        public void Resize(int maxNodes)
+        {
+#if DEBUG
+            if (maxNodes <= 0)
+            {
+                throw new InvalidOperationException("Queue size cannot be smaller than 1");
+            }
+
+            if (maxNodes < _numNodes)
+            {
+                throw new InvalidOperationException("Called Resize(" + maxNodes + "), but current queue contains " + _numNodes + " nodes");
+            }
+#endif
+
+            TItem[] newArray = new TItem[maxNodes + 1];
+            int highestIndexToCopy = Math.Min(maxNodes, _numNodes);
+            Array.Copy(_nodes, newArray, highestIndexToCopy + 1);
+            _nodes = newArray;
+        }
+
+        /// <summary>
+        /// Returns the head of the queue, without removing it (use Dequeue() for that).
+        /// If the queue is empty, behavior is undefined.
+        /// O(1)
+        /// </summary>
+        public TItem First
+        {
+            get
+            {
+#if DEBUG
+                if (_numNodes <= 0)
+                {
+                    throw new InvalidOperationException("Cannot call .First on an empty queue");
+                }
+#endif
+
+                return _nodes[1];
+            }
+        }
+
+        /// <summary>
+        /// This method must be called on a node every time its priority changes while it is in the queue.  
+        /// <b>Forgetting to call this method will result in a corrupted queue!</b>
+        /// Calling this method on a node not in the queue results in undefined behavior
+        /// O(log n)
+        /// </summary>
+#if NET_VERSION_4_5
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public void UpdatePriority(TItem node, TPriority priority)
+        {
+#if DEBUG
+            if (node == null)
+            {
+                throw new ArgumentNullException("node");
+            }
+            if (node.Queue != null && !Equals(node.Queue))
+            {
+                throw new InvalidOperationException("node.UpdatePriority was called on a node from another queue");
+            }
+            if (!Contains(node))
+            {
+                throw new InvalidOperationException("Cannot call UpdatePriority() on a node which is not enqueued: " + node);
+            }
+#endif
+
+            node.Priority = priority;
+            OnNodeUpdated(node);
+        }
+
+#if NET_VERSION_4_5
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        private void OnNodeUpdated(TItem node)
+        {
+            //Bubble the updated node up or down as appropriate
+            int parentIndex = node.QueueIndex >> 1;
+
+            if (parentIndex > 0 && HasHigherPriority(node, _nodes[parentIndex]))
+            {
+                CascadeUp(node);
+            }
+            else
+            {
+                //Note that CascadeDown will be called if parentNode == node (that is, node is the root)
+                CascadeDown(node);
+            }
+        }
+
+        /// <summary>
+        /// Removes a node from the queue.  The node does not need to be the head of the queue.  
+        /// If the node is not in the queue, the result is undefined.  If unsure, check Contains() first
+        /// O(log n)
+        /// </summary>
+#if NET_VERSION_4_5
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public void Remove(TItem node)
+        {
+#if DEBUG
+            if (node == null)
+            {
+                throw new ArgumentNullException("node");
+            }
+            if (node.Queue != null && !Equals(node.Queue))
+            {
+                throw new InvalidOperationException("node.Remove was called on a node from another queue");
+            }
+            if (!Contains(node))
+            {
+                throw new InvalidOperationException("Cannot call Remove() on a node which is not enqueued: " + node);
+            }
+#endif
+
+            //If the node is already the last node, we can remove it immediately
+            if (node.QueueIndex == _numNodes)
+            {
+                _nodes[_numNodes] = null;
+                _numNodes--;
+                return;
+            }
+
+            //Swap the node with the last node
+            TItem formerLastNode = _nodes[_numNodes];
+            _nodes[node.QueueIndex] = formerLastNode;
+            formerLastNode.QueueIndex = node.QueueIndex;
+            _nodes[_numNodes] = null;
+            _numNodes--;
+
+            //Now bubble formerLastNode (which is no longer the last node) up or down as appropriate
+            OnNodeUpdated(formerLastNode);
+        }
+
+        /// <summary>
+        /// By default, nodes that have been previously added to one queue cannot be added to another queue.
+        /// If you need to do this, please call originalQueue.ResetNode(node) before attempting to add it in the new queue
+        /// </summary>
+#if NET_VERSION_4_5
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public void ResetNode(TItem node)
+        {
+#if DEBUG
+            if (node == null)
+            {
+                throw new ArgumentNullException("node");
+            }
+            if (node.Queue != null && !Equals(node.Queue))
+            {
+                throw new InvalidOperationException("node.ResetNode was called on a node from another queue");
+            }
+            if (Contains(node))
+            {
+                throw new InvalidOperationException("node.ResetNode was called on a node that is still in the queue");
+            }
+
+            node.Queue = null;
+#endif
+
+            node.QueueIndex = 0;
+        }
+
+
+        public IEnumerator<TItem> GetEnumerator()
+        {
+#if NET_VERSION_4_5 // ArraySegment does not implement IEnumerable before 4.5
+            IEnumerable<TItem> e = new ArraySegment<TItem>(_nodes, 1, _numNodes);
+            return e.GetEnumerator();
+#else
+            for (int i = 1; i <= _numNodes; i++)
+                yield return _nodes[i];
+#endif
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        /// <summary>
+        /// <b>Should not be called in production code.</b>
+        /// Checks to make sure the queue is still in a valid state.  Used for testing/debugging the queue.
+        /// </summary>
+        public bool IsValidQueue()
+        {
+            for (int i = 1; i < _nodes.Length; i++)
+            {
+                if (_nodes[i] != null)
+                {
+                    int childLeftIndex = 2 * i;
+                    if (childLeftIndex < _nodes.Length && _nodes[childLeftIndex] != null && HasHigherPriority(_nodes[childLeftIndex], _nodes[i]))
+                        return false;
+
+                    int childRightIndex = childLeftIndex + 1;
+                    if (childRightIndex < _nodes.Length && _nodes[childRightIndex] != null && HasHigherPriority(_nodes[childRightIndex], _nodes[i]))
+                        return false;
+                }
+            }
+            return true;
+        }
+    }
+}]]></arrayElement>
+                  </arrayElements>
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Stores the binary representation of the component"
+                  isArray="true"
+                  name="BinaryCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="2">
+                    <arrayElement
+                      dataType="System.String"><![CDATA[SC_4664d38d6d774888963e21557351c901.dll]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[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
+EQuMPgAAAShJAAAKERFvcAAABhEJb24AAAZZAz7NAAAAERFvbAAABiIAAABAWxMHERFvaAAABhEH
+WRERb2oAAAYRB1kRBwJzcgAABhMSEQgREhESb3AAAAZvRQAAChERb2gAAAYRB1gREW9qAAAGEQdZ
+EQcCc3IAAAYTEhEIERIREm9wAAAGb0UAAAoREW9oAAAGEQdZERFvagAABhEHWBEHAnNyAAAGExIR
+CBESERJvcAAABm9FAAAKERFvaAAABhEHWBERb2oAAAYRB1gRBwJzcgAABhMSEQgREhESb3AAAAZv
+RQAAChELGlgTCxEIb0YAAAo6u/7//wQsNXLSAQBwEgsoSgAACihLAAAKKEwAAApy7AEAcBEJb24A
+AAYTExITKE0AAAooSwAACihMAAAKcyEAAAYlEQlvaAAABhEJb2oAAAZzJQAACm8cAAAGJREJb24A
+AAZvHgAABioAABMwBADmAAAAAwAAESIAAAAACiIAAAAACyIAAAAADAINFhMECW9CAAAKEwURBRdZ
+EwYrcwkRBG9BAAAKEwcJEQZvQQAAChMIEgcoJwAAChIIKCgAAApaEggoJwAAChIHKCgAAApaWRMJ
+BxIHKCcAAAoSCCgnAAAKWBEJWlgLCBIHKCgAAAoSCCgoAAAKWBEJWlgMBhEJIgAAQEBaWAoRBCUX
+WBMEEwYRBBEFMocGIgAAAAAzLAkWb0EAAAoTChIKKCcAAAoJFm9BAAAKEwoSCigoAAAKIgAAAAAC
+c3IAAAYqBwZbCAZbIgAAAAACc3IAAAYqNgIDKE4AAAooTwAACipWAgMEJf4HUAAACnNRAAAKKFIA
+AAoqrgIoPAAACgIWfVMAAAoCAxdYjQ4AABt9VAAACgIWan1VAAAKAgR9VgAACioeAntTAAAKKi4C
+e1QAAAqOaRdZKmoCe1QAAAoXAntTAAAKKFcAAAoCFn1TAAAKKpICe1QAAAoDjA4AABtvWAAACqMO
+AAAbjA4AABsDjA4AABv+ASoAABMwBABiAAAABAAAEQOMDgAAGwRvWQAACgICe1MAAAoXWH1TAAAK
+AntUAAAKAntTAAAKA6QOAAAbA4wOAAAbAntTAAAKb1oAAAoDjA4AABsCAntVAAAKCgYXalh9VQAA
+CgZvWwAACgIDKFwAAAoqAAATMAMA4AAAAAUAABEDjA4AABtvWAAAChcxYQOMDgAAG29YAAAKF2MK
+AntUAAAKBqMOAAAbCwIHAyhdAAAKLAEqAntUAAAKA4wOAAAbb1gAAAoHpA4AABsHjA4AABsDjA4A
+ABtvWAAACm9aAAAKA4wOAAAbBm9aAAAKK1UqBhdjCgJ7VAAACgajDgAAGwwCCAMoXQAACi09AntU
+AAAKA4wOAAAbb1gAAAoIpA4AABsIjA4AABsDjA4AABtvWAAACm9aAAAKA4wOAAAbBm9aAAAKBhcw
+qAJ7VAAACgOMDgAAG29YAAAKA6QOAAAbKhMwAwBgAgAABgAAEQOMDgAAG29YAAAKChgGWgsHAntT
+AAAKMQEqBxdYDAJ7VAAACgejDgAAGw0CCQMoXQAACjmRAAAACAJ7UwAACjEzA4wOAAAbB29aAAAK
+CYwOAAAbBm9aAAAKAntUAAAKBgmkDgAAGwJ7VAAACgcDpA4AABsqAntUAAAKCKMOAAAbEwQCCREE
+KF0AAAosHQmMDgAAGwZvWgAACgJ7VAAACgYJpA4AABsHCitiEQSMDgAAGwZvWgAACgJ7VAAACgYR
+BKQOAAAbCAorQwgCe1MAAAoxASoCe1QAAAoIow4AABsTBQIRBQMoXQAACiwfEQWMDgAAGwZvWgAA
+CgJ7VAAACgYRBaQOAAAbCAorASoYBloLBwJ7UwAACjEaA4wOAAAbBm9aAAAKAntUAAAKBgOkDgAA
+GyoHF1gMAntUAAAKB6MOAAAbDQIJAyhdAAAKOZcAAAAIAntTAAAKMTMDjA4AABsHb1oAAAoJjA4A
+ABsGb1oAAAoCe1QAAAoGCaQOAAAbAntUAAAKBwOkDgAAGyoCe1QAAAoIow4AABsTBgIJEQYoXQAA
+CiwgCYwOAAAbBm9aAAAKAntUAAAKBgmkDgAAGwcKOEb///8RBowOAAAbBm9aAAAKAntUAAAKBhEG
+pA4AABsICjgk////CAJ7UwAACjEaA4wOAAAbBm9aAAAKAntUAAAKBgOkDgAAGyoCe1QAAAoIow4A
+ABsTBwIRBwMoXQAACiwiEQeMDgAAGwZvWgAACgJ7VAAACgYRB6QOAAAbCAo4xv7//wOMDgAAGwZv
+WgAACgJ7VAAACgYDpA4AABsqEzADAEYAAAAHAAARAntWAAAKA4wOAAAbb14AAAoEjA4AABtvXgAA
+Cm9fAAAKCgYWMh4GLRkDjA4AABtvYAAACgSMDgAAG29gAAAK/gQqFioXKgAAEzADAJAAAAAIAAAR
+AntUAAAKF6MOAAAbCgJ7UwAAChczHgJ7VAAAChcSAv4VDgAAGwikDgAAGwIWfVMAAAoGKgJ7VAAA
+CgJ7UwAACqMOAAAbCwJ7VAAAChcHpA4AABsHjA4AABsXb1oAAAoCe1QAAAoCe1MAAAoSAv4VDgAA
+GwikDgAAGwICe1MAAAoXWX1TAAAKAgcoYQAACgYqEzAEAC0AAAAJAAARAxdYjQ4AABsKAwJ7UwAA
+CihiAAAKCwJ7VAAACgYHF1goYwAACgIGfVQAAAoqNgJ7VAAAChejDgAAGypSA4wOAAAbBG9ZAAAK
+AgMoZAAACioTMAQANwAAAAcAABEDjA4AABtvWAAAChdjCgYWMR0CAwJ7VAAACgajDgAAGyhdAAAK
+LAgCAyhcAAAKKgIDKGEAAAoqABMwAwCrAAAACgAAEQOMDgAAG29YAAAKAntTAAAKMykCe1QAAAoC
+e1MAAAoSAf4VDgAAGwekDgAAGwICe1MAAAoXWX1TAAAKKgJ7VAAACgJ7UwAACqMOAAAbCgJ7VAAA
+CgOMDgAAG29YAAAKBqQOAAAbBowOAAAbA4wOAAAbb1gAAApvWgAACgJ7VAAACgJ7UwAAChIB/hUO
+AAAbB6QOAAAbAgJ7UwAAChdZfVMAAAoCBihkAAAKKjYDjA4AABsWb1oAAAoqOhZzZQAACiUCfWYA
+AAoqHgIoZwAACioTMAQAuQAAAAsAABEXCjiiAAAAAntUAAAKBqMOAAAbjA4AABs5iAAAABgGWgsH
+AntUAAAKjmkvNQJ7VAAACgejDgAAG4wOAAAbLCICAntUAAAKB6MOAAAbAntUAAAKBqMOAAAbKF0A
+AAosAhYqBxdYDAgCe1QAAAqOaS81AntUAAAKCKMOAAAbjA4AABssIgICe1QAAAoIow4AABsCe1QA
+AAoGow4AABsoXQAACiwCFioGF1gKBgJ7VAAACo5pP1D///8XKh4Ce2gAAAoqIgIDfWgAAAoqHgJ7
+aQAACioiAgN9aQAACioeAntqAAAKKiICA31qAAAKKkYCKE4AAAooawAACihsAAAKKmYCAyX+B1AA
+AApzUQAACihrAAAKKG0AAAoqNgIDKGsAAAoobQAACio2AihOAAAKAyhsAAAKKlYCAyX+B1AAAApz
+UQAACgQobQAACiqyAig8AAAKAh8KA3NuAAAKfW8AAAoCBHNwAAAKfXEAAAoCc3IAAAp9cwAACioA
+EzADAD8AAAAMAAARA4wOAAAbLR0Ce3MAAApvdAAAChYwAhQqAntzAAAKFm91AAAKKgJ7cQAACgMS
+AG92AAAKLQIUKgYWb3UAAAoqABMwAwBPAAAADAAAEQNvdwAACowOAAAbLQ0Ce3MAAAoDb3gAAAoq
+AntxAAAKA293AAAKEgBvdgAACi0Yc3IAAAoKAntxAAAKA293AAAKBm95AAAKBgNveAAACioAEzAD
+AFQAAAAMAAARA293AAAKjA4AABstDgJ7cwAACgNvegAACiYqAntxAAAKA293AAAKEgBvdgAACi0B
+KgYDb3oAAAomBm90AAAKLRICe3EAAAoDb3cAAApvewAACiYqGzACACsAAAANAAARAntvAAAKChYL
+BhIBKHwAAAoCe28AAApvfQAACgzeCgcsBgYofgAACtwIKgABEAAAAgAJABYfAAoAAAAAGzACAEkA
+AAAOAAARAntvAAAKChYLBhIBKHwAAAoCe28AAApvfQAAChYwC3IMAgBwczYAAAp6AntvAAAKb38A
+AApvdwAACgzeCgcsBgYofgAACtwIKgAAAAEQAAACAAkAND0ACgAAAAAbMAIAPwAAAA8AABECe28A
+AAoKFgsGEgEofAAACgJ7bwAACm+AAAAKAntxAAAKb4EAAAoCe3MAAApvggAACt4KBywGBih+AAAK
+3CoAARAAAAIACQArNAAKAAAAABswAgBEAAAAEAAAEQJ7bwAACgoWCwYSASh8AAAKA4wOAAAbLA4C
+e3EAAAoDb4MAAAorDgJ7cwAACm90AAAKFv4CDN4KBywGBih+AAAK3AgqARAAAAIACQAvOAAKAAAA
+ABswAgBSAAAAEQAAEQJ7bwAACgoWCwYSASh8AAAKAntvAAAKb30AAAoWMAtyVgIAcHM2AAAKegJ7
+bwAACm+EAAAKDAIIKIUAAAoIb3cAAAoN3goHLAYGKH4AAArcCSoAAAEQAAACAAkAPUYACgAAAAAT
+MAMASAAAABIAABEDc4YAAAoKAntvAAAKb30AAAoCe28AAApvhwAACjMaAntvAAAKAntvAAAKb4cA
+AAoYWhdYb4gAAAoCe28AAAoGBG+JAAAKBiobMAMAYgAAABMAABECe28AAAoKFgsGEgEofAAACgOM
+DgAAGy0JAntzAAAKDCsjAntxAAAKAxICb3YAAAotE3NyAAAKDAJ7cQAACgMIb3kAAAoCAwQoigAA
+Cg0ICW94AAAK3goHLAYGKH4AAArcKgAAARAAAAIACQBOVwAKAAAAABswAwB9AAAAFAAAEQJ7bwAA
+CgoWCwYSASh8AAAKA4wOAAAbLRwCe3MAAApvdAAAChYxBRYTBN5OAntzAAAKDCsmAntxAAAKA2+D
+AAAKLAUWEwTeMnNyAAAKDAJ7cQAACgMIb3kAAAoCAwQoigAACg0ICW94AAAKFxME3goHLAYGKH4A
+AArcEQQqAAAAARAAAAIACQBncAAKAAAAABswAwDjAAAAFQAAEQJ7bwAACgoWCwYSASh8AAAKA4wO
+AAAbLU8Ce3MAAApvdAAACi0scqYCAHADEwQRBIwOAAAbLQMUKw0SBP4WDgAAG2+LAAAKKEsAAApz
+NgAACnoCe3MAAAoWb3UAAAoMAntzAAAKDStaAntxAAAKAxIDb3YAAAotLHKmAgBwAxMEEQSMDgAA
+Gy0DFCsNEgT+Fg4AABtviwAACihLAAAKczYAAAp6CRZvdQAACgwJb3QAAAoXMw0Ce3EAAAoDb3sA
+AAomAntvAAAKCG+MAAAKCQhvegAACibeCgcsBgYofgAACtwqAAEQAAACAAkAz9gACgAAAAAbMAMA
+YAAAABEAABECe28AAAoKFgsGEgEofAAACgIDKI0AAAoMCC0qchQDAHADDQmMDgAAGy0DFCsNEgP+
+Fg4AABtviwAACihLAAAKczYAAAp6AntvAAAKCARvjgAACt4KBywGBih+AAAK3CoBEAAAAgAJAExV
+AAoAAAAAGzADAFkAAAAWAAARAntvAAAKChYLBhIBKHwAAAoCAyiNAAAKJS0qcpIDAHADDAiMDgAA
+Gy0DFCsNEgL+Fg4AABtviwAACihLAAAKczYAAAp6b14AAAoN3goHLAYGKH4AAArcCSoAAAABEAAA
+AgAJAERNAAoAAAAAGzACAF4AAAAQAAARAntvAAAKb30AAAoWMUUCe28AAAoKFgsGEgEofAAACgJ7
+bwAACm99AAAKFjEaAwJ7bwAACm9/AAAKb3cAAAqBDgAAGxcM3hXeCgcsBgYofgAACtwD/hUOAAAb
+FioIKgAAARAAAAIAFwAySQAKAAAAABswAgBnAAAAFwAAEQJ7bwAACm99AAAKFjFOAntvAAAKChYL
+BhIBKHwAAAoCe28AAApvfQAAChYxIwJ7bwAACm+EAAAKDAMIb3cAAAqBDgAAGwIIKIUAAAoXDd4V
+3goHLAYGKH4AAArcA/4VDgAAGxYqCSoAARAAAAIAFwA7UgAKAAAAABswAwCaAAAAGAAAEQJ7bwAA
+CgoWCwYSASh8AAAKA4wOAAAbLSgCe3MAAApvdAAACi0FFhME3mwCe3MAAAoWb3UAAAoMAntzAAAK
+DSszAntxAAAKAxIDb3YAAAotBRYTBN5BCRZvdQAACgwJb3QAAAoXMw0Ce3EAAAoDb3sAAAomAntv
+AAAKCG+MAAAKCQhvegAACiYXEwTeCgcsBgYofgAACtwRBCoAAAEQAAACAAkAhI0ACgAAAAAbMAMA
+PQAAABcAABECe28AAAoKFgsGEgEofAAACgIDKI0AAAoMCC0EFg3eGwJ7bwAACggEb44AAAoXDd4K
+BywGBih+AAAK3AkqAAAAARAAAAIACQAoMQAKAAAAABswAgBDAAAAFwAAEQJ7bwAACgoWCwYSASh8
+AAAKAgMojQAACgwILQsE/hUZAAAbFg3eGgQIb14AAAqBGQAAGxcN3goHLAYGKH4AAArcCSoAARAA
+AAIACQAuNwAKAAAAABswAgBkAAAAGQAAEXOPAAAKCgJ7bwAACgsWDAcSAih8AAAKAntvAAAKb5AA
+AAoNKxUJb5EAAAoTBAYRBG93AAAKb5IAAAoJbxMAAAot494UCSwGCW8SAAAK3AgsBgcofgAACtwG
+b5MAAAqMHAAAGyoBHAAAAgAjACFEAAoAAAAAAgAPAD9OAAoAAAAAHgIolAAACiobMAIA2QAAABoA
+ABECe28AAAoKFgsGEgEofAAACgJ7cQAACm+VAAAKb5YAAAoMK0ISAiiXAAAKb5gAAAoNKx8Jb5EA
+AAoTBAJ7bwAAChEEb5kAAAotCBYTBd2EAAAACW8TAAAKLdneCgksBglvEgAACtwSAiiaAAAKLbXe
+DhIC/hYeAAAbbxIAAArcAntvAAAKb5AAAAoNKxwJb5EAAAoTBgIRBm93AAAKKI0AAAotBRYTBd4t
+CW8TAAAKLdzeCgksBglvEgAACtwCe28AAApvmwAAChMF3goHLAYGKH4AAArcEQUqAAAAATQAAAIA
+MQArXAAKAAAAAAIAIgBPcQAOAAAAAAIAiwAoswAKAAAAAAIACQDDzAAKAAAAAB4CKJwAAAoqIgID
+KJ0AAAoqIgIDKJ4AAAoqHgJ7FQAABCoiAgN9FQAABCoeAnsWAAAEKiICA30WAAAEKh4CexcAAAQq
+IgIDfRcAAAQqHgJ7GAAABCoiAgN9GAAABCoeAnsZAAAEKiICA30ZAAAEKgATMAUAVQAAAAAAAAAC
+KDwAAAoCAyhpAAAGAgQoawAABgIFKG0AAAYCAgMEDgQocwAABihvAAAGAgIobgAABmwCKGwAAAZs
+IwAAAAAAAABAKJ8AAApaWCigAAAKKHEAAAYqAAAAEzAGAK4AAAAbAAARFgoiAACAfwsWDAVvQgAA
+Cg0JF1kTBCt8BQhvQQAAChMFBREEb0EAAAoTBhIFKCgAAAoE/gISBigoAAAKBP4CLjkDEgYoJwAA
+ChIFKCcAAApZBBIFKCgAAApZWhIGKCgAAAoSBSgoAAAKWVsSBSgnAAAKWDQFBhb+AQoHAgMEEQUR
+Bih0AAAGKEMAAAoLCCUXWAwTBAgJMoAGLQMVKwEXbAdsKJ8AAApaKKAAAAoqAAATMAQAiwAAABwA
+ABEPAygnAAAKCg8DKCgAAAoLDwQoJwAACgZZDA8EKCgAAAoHWQ0IIgAAAAAzCAkiAAAAAC5HAwZZ
+CFoEB1kJWlgICFoJCVpYWxMEEQQiAACAPzYSDwQoJwAACgoPBCgoAAAKCysXEQQiAAAAADYOBggR
+BFpYCgcJEQRaWAsDBlkMBAdZDQgIWgkJWlgqOgIoPAAACgIDfaEAAAoqAAATMAMAbgAAAB0AABEC
+e6EAAAoKAntmAAAKCwYsBgYXLjIWKgIVfaEAAAoCF32iAAAKKzcCB3tUAAAKAnuiAAAKow4AABt9
+owAACgIXfaEAAAoXKgIVfaEAAAoCe6IAAAoMAggXWH2iAAAKAnuiAAAKB3tTAAAKMbsWKh4Ce6MA
+AAoqGnOkAAAKejICe6MAAAqMDgAAGyoeAnulAAAKKiICA32lAAAKKjoCKKYAAAoCAyinAAAKKgAA
+QlNKQgEAAQAAAAAADAAAAHY0LjAuMzAzMTkAAAAABQBsAAAAFBYAACN+AACAFgAANBAAACNTdHJp
+bmdzAAAAALQmAAAMBAAAI1VTAMAqAAAQAAAAI0dVSUQAAADQKgAAdAgAACNCbG9iAAAAAAAAAAIA
+AAFXH6ILCRcAAAD6ATMAFgAAAQAAAEYAAAASAAAAHgAAAH0AAABjAAAADwAAAKcAAAADAAAAOAAA
+AB0AAAAMAAAAHAAAACoAAAAHAAAAHwAAAAEAAAAGAAAAAQAAAAMAAAAOAAAAAgAAAAAAZggBAAAA
+AAAGAJkGbgsGAC0HbgsGAK8FWwsPAOILAAAGANwFhgkGAHwGhgkGAF0GhgkGABQHhgkGALkGhgkG
+ANIGhgkGABEGhgkGACwG6wcKAO0GwAQGAMcATwIOAJEBGAgGAA0L4AwGAGQEHQkGAN4JHQkKAIsK
+wAQSAHwKwAQKABsKwAQSAD8JwAQKAJ0NwAQGADANHQkGAJIFWwsGAJwKjgsGAAUKcQkWAFcFUAgW
+AMMFUAgWAB4FXAkGAHcFbgsGAFkATwIGAFgE4AwGAIsAHQkGAJgATwIGAOEEHQkGAPMFbgsGALgA
+TwIGAEUGWwsGADYBTwIGAMYATwIGAKQATwKjAJgJAACvADsLAAAGAKMOHQkGAOIHGg8WAJkPwQwW
+AKgJwQwWAP8MwQwWAC0IwQwWABYFwQwGAGoKHQkGABEIHQkGAJ0EHQkaAAEAswoGAM4JHQkGAOgJ
+HQkGAHcEHQkGALgPhgkGADMIHQkGAHAEHQkGANAAHQkGAKQEHQkGAK0ATwIGAKIPHQkGAKUATwIG
+AH0ATwIGAFML0Qc7ADsLAAAGALgJHQkAAAAAYQEAAAAAAQABAAEAEAA0CQAAEAABAAEAAQAQAG8K
+AABNAAEABQABABAAfw0AAF0AAQAOAAEAEADzDAAAYQADABIAAQAQAEIMAABhAAQAEwAAABAAlQsT
+DGEABQAUAAABEACeDBMMeQAHABgAAQAQAEYIRghhAAgAGwCgAAAAHAFiBwAACgAiAAEBEADvAGIH
+YQAKACUAAQAQAD4AYgdhAA4AOgChAAAA3gBiBwAAEQBBAAEAEAAGAWIHYQARAEkAAQAQAGcAYgca
+ABUAZQADABAAmQgAAGEAFQBoAAMBEABDAQAAYQAaAHUAAwAQAMEDAAASAB4AewAGAPMMZwYGAEIM
+awYBAI0NbwYBAI0NbwYRACQJcwYRAAYFdwYRALEDewYBAA4DfwYBACgDgwYBAPELAQIBAAQMBwIB
+AHwCDAIhAO0KDwIBAJEDpAIBAFUDAQIBAHEDDAJRgH4BAQIhAH4H9gIhAD8EJgMhAC8ESQMBANIC
+gwYBAOUCgwYBAL8CgwYBAKwCgwYBAEADgwYBAGwFAQIBAG8OpAIGAKcMgwIBANYAAQIBAPgCpAJQ
+IAAAAADGAEsHBgABAFggAAAAAMYAVgcGAAEAYCAAAAAAxgAmD4YGAQDYIQAAAACGGEYLBgACAOAh
+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
+AAABAOYDAAABAPsLAAABAPsLAAACAO4KAAABAPsLAAACAO4KAAABAOYDAAABAOYDAAACACoQAAAB
+AOYDAAABAOYDAAABAKwKAAACAP0KAAABAPsLAAABAOYDAAACACoQAAABAOYDAAABAOYDAAABAOYD
+AAABAK4HAAABAK4HAAABAK4HAAABAOYDAAACACoQAAABAOYDAAABAOYDAAABAOYDAAACACoQAAAB
+ANwKAAABANwKAAABAMYPAAABANwKAAACAMYPAAABANwKAAACAMYPAAABABgJAAABAOYDAAABAOYD
+AAABABgJAAABABgJAAACACoQAAABABgJAAACACoQAAABABgJAAACACoQAAABABgJAAABABgJAAAC
+ACoQAAABABgJAgABAPcOAgABAPcOAAABABgJAAABABgJAAACACoQAAABABgJAgACACoQAAABAO4K
+AAABAO4KAAABAK4HAAABAK4HAAABAK4HAAABAK4HAAABAK4HAAABAKAPAAACADEQAAADAEEIAAAE
+AEoJAAABAKAPAAACADEQAAADAEoJAAABAJ8PAAACAMMPAAADAEQCAAAEAE0CAAABAGwFAAABAK4H
+AAABAEECCgAGAAoACgAKAIUACwAOAAsABgALAAoACwCFAA0ACgANAIUADgAGAA4ACgAOAIUAEQAW
+ABEARQARAEEACQBGCwEAEQBGCwYAGQBGCwoAKQBGCxAAMQBGCxAAOQBGCxAAQQBGCxAASQBGCxAA
+UQBGCxAAWQBGCxAAYQBGCxAAaQBGCwYAyQBGCwYA6QBGCxUA+QBGCwYACQE4CywAKQFGC0EAiQBJ
+BQYAgQARD0gALABjDlQAgQBWDQYAgQBjDlkAOQFGCwYAuQBLBwYAuQBWBwYAsQA4CIEAaQHOAIUA
+sQA1AooAcQFYAZEAcQEOCJcAeQELDJ0APABGCwYAgQE4CywAmQGYB68AqQFoDbMAsQFRBboAeQBG
+C78APABqAsUAeQC1AcsAeQD1AcsAqQEpDc8AcQFlDNYAsQApAtwAuQATAuIAkQDrA68AuQEDC+gA
+mQBGC/MAmQCRCv0AmQB5DAEBoQAGCQUBmQDxCAoBmQAPCQ8BmQD4CAEAwQFGCxAAmQA9D0gAmQBc
+DUgAuQBGCwYAqQGxDBUBuQCNDB0BwQBGCwYAIQGJBCMBIQG0DywB0QBGCzIB8QBGCwYAPAAGCVwB
+PAB8DmIB4QEwCWYBRABGCwYATACQB3sBTAB8DmIBTACIB1QA4QGrA4MB+QG2BIgB8QEFCK8AqQEi
+DY8B+QG2BJUBsQEFCK8AVABzDbgBXABGC8sBZADmBN8BbABGC+8BXABGC/UBXADxCwECXAAEDAcC
+XAB8AgwCXADtCg8CCQJkChgCJABVD2IBJADqD8UAJABkDwEAJACGDyUCXAARCsUAXAAJEDICJADd
+D1QAbABRBN8BJABzD04CXAD5CcUA4QEwCWICCQLBD2gCXABuAsUAfABGCwEAfACnDIMCXAA4C40C
+hACRA6QChABVAwEChABxAwwCjABzDbAClABGC8MClABGC9UCnABGC/UBlAB+B/YCpABGCxsDlAA/
+BCYDrABGCwYAlAAvBEkDtAB8DmIBvAAGCVwBpACiB4QDxAABAlQAtABqAsUApAAPCXsBtAC3B5YD
+pAC3B5YDIQL3Cq8DnAB8DmIBIQJuDbYDnADkDlQAnABkCgYApABkCgYAtABkCgYApACoD5YDnACI
+B1QAlAD3AxAExABGC8UAnAC+B2IBnADKBwEAnACQB3sBlAAaBE4EwQAFCK8AnAC3B8UAlADMA64E
+nAD6D3sB1ABGCwYAnAA4C40C3ABjDlQA1ABqAsUA1AA4C1kFlAA4C40CpABuDK8F7AA4C9AF9ABj
+DvEF/AA4C40CnAC4DJYD9AARD0gAnABxB0gANABGCwYANABGCwQGNABGCw8G4QGrDoMBaQGbBBoG
+fABsBQECfADWAAECfABvDqQCMQJGCwYAxAD4AqQCJABGCwYAxAAKAsUACABEAFsGDABNAGAGAgBR
+AGUGLgALAGwHLgATAHUHLgAbAJQHLgAjAJ0HLgArAMYHLgAzAMYHLgA7AMYHLgBDAJ0HLgBLAMwH
+LgBTAMYHLgBbAOMHQwBjAC0IqQBzAJQHyQBzAJQH4QB7AC0I4wBrAC0IAQF7AC0IIQF7AC0IwQF7
+AC0I4QF7AC0IAQJ7AC0IIwJ7AC0IoQJ7AC0IwQJ7AC0I4QJ7AC0IAQN7AC0IIQN7AC0IYAN7AC0I
+gAN7AC0IoAN7AC0IwAN7AC0IwQN7AC0I4AaLADIIQAd7AC0IYAd7AC0IgAd7AC0IoAd7AC0IwAd7
+AC0I4Ad7AC0IAA17AC0IIA17AC0IQA17AC0IYA17AC0IgA17AC0IoA17AC0IwA17AC0I4A17AC0I
+AA57AC0IIA57AC0IoA67AC0IwA67AC0IAA+7AC0IIA+7AC0IQA+7AC0IYA97AC0IgA97AC0IZQA6
+AZoBIQIqAjoCSgJSAlsCcwKXAlgDnAO7A88D4QP0AxwEJwRdBIUEuwTRBOwEFwVrBR8GKwYzBgMA
+AQAHAAUACAAHAAkACAAKAAoACwALAAwADgANABEADgATABAAFQARABoAEgAcAAAAqAE6BwAAogg/
+BwAA3wE6BwAA2wg/BwAAnApDBwAADgVIBwAAdw1NBwAAowJSBwAAGw1XBwAAwgdbBwAAgA5bBwAA
+wgdbBwAA8Q5fBwAAIRBfBwAAaA9bBwAAig9kBwAA8Q5fBwAAgA5bBwAAgA5bBwAA8Q5fBwAAvwFX
+BwAA/wFXBwAAogFXBwAAfAFXBwAAUQ9XBwAArQ1fBwAA4w1oBwAAPAJfBwIABgADAAIABwAFAAIA
+CAAHAAEACQAHAAIACgAJAAEACwAJAAIAFQALAAIAFgANAAEAFwANAAIAGAAPAAIAGwARAAEAHAAR
+AAIAHQATAAEAHgATAAIAIwAVAAIAKAAXAAIAKQAZAAIAMgAbAAIAOgAdAAEAOwAdAAIAPAAfAAEA
+PQAfAAIAPgAhAAEAPwAhAAIARwAjAAIASAAlAAIAUgAnAAIAUwApAAIAaAArAAEAaQArAAIAagAt
+AAEAawAtAAIAbAAvAAEAbQAvAAIAbgAxAAEAbwAxAAIAcAAzAAEAcQAzAAIAeAA1AAIAegA3AAIA
+ewA5AAEAfAA5AAsAcAAhAA4AxgAhABEA7AAlABEA7gAnABEA8AApABEA8gArABEA9AAtABsAJAAx
+ADoATABdAKgAbAFzAbABwgHXAecBBAJ6Ap0CqAK6AucCBgM8A2gDdgONAxQFRAVLBWMFuwXcBfYF
+BIAAAAEAAAAAAAAAAAAAAAAAGgAAAAQAAAAAAAAAAAAAAEAGRgIAAAAADgAAAAAAAAAAAAAASQaG
+DgAAAAAEAAAAAAAAAAAAAABSBhgIAAAAAA4AAAAAAAAAAAAAAEkGww4AAAAABAAAAAAAAAAAAAAA
+QAYdCQAAAAAOAAAAAAAAAAAAAABJBjMKAAAAAAAAAAABAAAAnwsAABAACQARAAsAEgAOAAAAAAAU
+AAAJAQACABQA0w8AAAAAFgAACQEAAAAWANMPAAAAABgA0w8AAAAAGgAACQEAAgAaANMPAAAAABwA
+AAkBAAAAHADTDwAAAAAeAAAJAAAAACIAAAkBAAAAIgDTDwAAAAAkAAAJAQAAACQA0w8DABIACwAS
+AAAAAElEVFNDb21wb25lbnRNZXRhRGF0YTEwMABTQ180NjY0ZDM4ZDZkNzc0ODg4OTYzZTIxNTU3
+MzUxYzkwMQBHZW5lcmljUHJpb3JpdHlRdWV1ZU5vZGVgMQBJRW51bWVyYWJsZWAxAFNpbXBsZVBy
+aW9yaXR5UXVldWVgMQBJQ29sbGVjdGlvbmAxAENvbXBhcmlzb25gMQBJQ29tcGFyZXJgMQBJRXF1
+YWxpdHlDb21wYXJlcmAxAElFbnVtZXJhdG9yYDEASUxpc3RgMQBUb0ludDMyADxpPjVfXzIASVBy
+aW9yaXR5UXVldWVgMgBHZW5lcmljUHJpb3JpdHlRdWV1ZWAyAFNpbXBsZVByaW9yaXR5UXVldWVg
+MgBJRml4ZWRTaXplUHJpb3JpdHlRdWV1ZWAyAERpY3Rpb25hcnlgMgA8R2V0RW51bWVyYXRvcj5k
+X18yNQBnZXRfVVRGOAA8TW9kdWxlPgBJbnB1dElEAGdldF9EAHNldF9EAElOSVRJQUxfUVVFVUVf
+U0laRQBQb2ludEYAZ2V0X0gAc2V0X0gAZ2V0X0JPVU5EQVJZVEVYVABnZXRfWABzZXRfWABnZXRf
+UE9MRU9GSU5BQ0NFU1NBQklMSVRZAHNldF9QT0xFT0ZJTkFDQ0VTU0FCSUxJVFkAZ2V0X1kAc2V0
+X1kAZ2V0X0RhdGEAc2V0X0RhdGEAZ2V0X0NvbXBvbmVudE1ldGFEYXRhAEFkZEJsb2JEYXRhAEdl
+dEJsb2JEYXRhAGRhdGEAbXNjb3JsaWIAU3lzdGVtLkNvbGxlY3Rpb25zLkdlbmVyaWMAQWRkAE9u
+Tm9kZVVwZGF0ZWQAX251bU5vZGVzRXZlckVucXVldWVkAGdldF9DZW50cm9pZABzZXRfQ2VudHJv
+aWQAPEQ+a19fQmFja2luZ0ZpZWxkADxIPmtfX0JhY2tpbmdGaWVsZAA8WD5rX19CYWNraW5nRmll
+bGQAPFk+a19fQmFja2luZ0ZpZWxkADxEYXRhPmtfX0JhY2tpbmdGaWVsZAA8Q2VudHJvaWQ+a19f
+QmFja2luZ0ZpZWxkADxSYWRpdXM+a19fQmFja2luZ0ZpZWxkADxNYXg+a19fQmFja2luZ0ZpZWxk
+ADxRdWV1ZUluZGV4PmtfX0JhY2tpbmdGaWVsZAA8SW5zZXJ0aW9uSW5kZXg+a19fQmFja2luZ0Zp
+ZWxkADxQcmlvcml0eT5rX19CYWNraW5nRmllbGQAUm91bmQAZGVmYXVsdEluc3RhbmNlAFNpbXBs
+ZU5vZGUAR2V0RXhpc3RpbmdOb2RlAFJlc2V0Tm9kZQBub2RlAGdldF9NZXNzYWdlAFJlbW92ZUZy
+b21Ob2RlQ2FjaGUAQWRkVG9Ob2RlQ2FjaGUARW5xdWV1ZU5vTG9ja09yQ2FjaGUAX251bGxOb2Rl
+c0NhY2hlAF9pdGVtVG9Ob2Rlc0NhY2hlAEludm9rZQBJRW51bWVyYWJsZQBJRGlzcG9zYWJsZQBE
+b3VibGUAUnVudGltZVR5cGVIYW5kbGUAR2V0VHlwZUZyb21IYW5kbGUAVG9TaW5nbGUAQ29uc29s
+ZQBJbnB1dE5hbWUAV3JpdGVMaW5lAE1pY3Jvc29mdC5TcWxTZXJ2ZXIuRHRzLlBpcGVsaW5lAFR5
+cGUAQ29tcGFyZQBnZXRfQ3VsdHVyZQBzZXRfQ3VsdHVyZQByZXNvdXJjZUN1bHR1cmUAQ2FwdHVy
+ZQBBcHBsaWNhdGlvblNldHRpbmdzQmFzZQBTeXN0ZW0uSURpc3Bvc2FibGUuRGlzcG9zZQBQYXJz
+ZQBFZGl0b3JCcm93c2FibGVTdGF0ZQA8PjFfX3N0YXRlAENvbXBpbGVyR2VuZXJhdGVkQXR0cmli
+dXRlAERlYnVnZ2VyTm9uVXNlckNvZGVBdHRyaWJ1dGUARGVidWdnYWJsZUF0dHJpYnV0ZQBFZGl0
+b3JCcm93c2FibGVBdHRyaWJ1dGUAQXNzZW1ibHlUaXRsZUF0dHJpYnV0ZQBJdGVyYXRvclN0YXRl
+TWFjaGluZUF0dHJpYnV0ZQBBc3NlbWJseVRyYWRlbWFya0F0dHJpYnV0ZQBUYXJnZXRGcmFtZXdv
+cmtBdHRyaWJ1dGUARGVidWdnZXJIaWRkZW5BdHRyaWJ1dGUAQXNzZW1ibHlDb25maWd1cmF0aW9u
+QXR0cmlidXRlAEFzc2VtYmx5RGVzY3JpcHRpb25BdHRyaWJ1dGUAQ29tcGlsYXRpb25SZWxheGF0
+aW9uc0F0dHJpYnV0ZQBBc3NlbWJseVByb2R1Y3RBdHRyaWJ1dGUAQXNzZW1ibHlDb3B5cmlnaHRB
+dHRyaWJ1dGUAU1NJU1NjcmlwdENvbXBvbmVudEVudHJ5UG9pbnRBdHRyaWJ1dGUAQXNzZW1ibHlD
+b21wYW55QXR0cmlidXRlAFJ1bnRpbWVDb21wYXRpYmlsaXR5QXR0cmlidXRlAFByZUV4ZWN1dGUA
+UG9zdEV4ZWN1dGUAUHJpb3JpdHlfUXVldWUASXNWYWxpZFF1ZXVlAF9xdWV1ZQBUcnlEZXF1ZXVl
+AEVucXVldWUAZ2V0X1ZhbHVlAFRyeUdldFZhbHVlAHZhbHVlAFRyeVJlbW92ZQBnZXRfTWF4U2l6
+ZQBSZXNpemUAU3lzdGVtLlRocmVhZGluZwBFbmNvZGluZwBTeXN0ZW0uUnVudGltZS5WZXJzaW9u
+aW5nAFRvU3RyaW5nAEdldFN0cmluZwBTeXN0ZW0uRHJhd2luZwBkZWJ1ZwBNYXRjaABNYXRoAGdl
+dF9MZW5ndGgAR2V0UG9seUxhYmVsAFN5c3RlbS5Db21wb25lbnRNb2RlbABTQ180NjY0ZDM4ZDZk
+Nzc0ODg4OTYzZTIxNTU3MzUxYzkwMS5kbGwAR2V0Q2VudHJvaWRDZWxsAGdldF9CT1VOREFSWVRF
+WFRfSXNOdWxsAGdldF9QT0xFT0ZJTkFDQ0VTU0FCSUxJVFlfSXNOdWxsAHNldF9QT0xFT0ZJTkFD
+Q0VTU0FCSUxJVFlfSXNOdWxsAFNldE51bGwAVEl0ZW0AZ2V0X0l0ZW0Ac2V0X0l0ZW0AaXRlbQBT
+eXN0ZW0AcmVzb3VyY2VNYW4ATWluAFNjcmlwdE1haW4AQmxvYkNvbHVtbgBwb2x5Z29uAHByZWNp
+c2lvbgBTeXN0ZW0uQ29uZmlndXJhdGlvbgBTeXN0ZW0uR2xvYmFsaXphdGlvbgBTeXN0ZW0uUmVm
+bGVjdGlvbgBWYWx1ZUNvbGxlY3Rpb24ATWF0Y2hDb2xsZWN0aW9uAE5vdFN1cHBvcnRlZEV4Y2Vw
+dGlvbgBJbnZhbGlkT3BlcmF0aW9uRXhjZXB0aW9uAFN0cmluZ0NvbXBhcmlzb24AQ2FzY2FkZURv
+d24AQ3VsdHVyZUluZm8AQ2FzY2FkZVVwAE91dHB1dE5hbWVNYXAAT3V0cHV0TWFwAE1pY3Jvc29m
+dC5TcWxTZXJ2ZXIuRFRTUGlwZWxpbmVXcmFwAEdldFNlcURpc3RTcQBDbGVhcgBDaGFyAElucHV0
+MEJ1ZmZlcgBQaXBlbGluZUJ1ZmZlcgBTY3JpcHRCdWZmZXIAZ2V0X1Jlc291cmNlTWFuYWdlcgBo
+aWdoZXIATWljcm9zb2Z0LlNxbFNlcnZlci5EdHMuUGlwZWxpbmUuV3JhcHBlcgBwcmlvcml0eUNv
+bXBhcmVyAF9jb21wYXJlcgBFbnRlcgBsb3dlcgBGaXJlRXJyb3IASUVudW1lcmF0b3IAU3lzdGVt
+LkNvbGxlY3Rpb25zLklFbnVtZXJhYmxlLkdldEVudW1lcmF0b3IALmN0b3IALmNjdG9yAE1vbml0
+b3IAU3lzdGVtLkRpYWdub3N0aWNzAFN5c3RlbS5SdW50aW1lLkNvbXBpbGVyU2VydmljZXMAU3lz
+dGVtLlJlc291cmNlcwBTQ180NjY0ZDM4ZDZkNzc0ODg4OTYzZTIxNTU3MzUxYzkwMS5Qcm9wZXJ0
+aWVzLlJlc291cmNlcy5yZXNvdXJjZXMARGVidWdnaW5nTW9kZXMAX251bU5vZGVzAG1heE5vZGVz
+AF9ub2RlcwBNYXRjaGVzAFNDXzQ2NjRkMzhkNmQ3NzQ4ODg5NjNlMjE1NTczNTFjOTAxLlByb3Bl
+cnRpZXMAVmFyaWFibGVzAEVucXVldWVXaXRob3V0RHVwbGljYXRlcwBHZXRCeXRlcwBnZXRfVmFs
+dWVzAEJ1ZmZlckNvbHVtbkluZGV4ZXMAR2V0Q29sdW1uSW5kZXhlcwBTZXR0aW5ncwA8PjRfX3Ro
+aXMARXF1YWxzAENvbnRhaW5zAFN5c3RlbS5UZXh0LlJlZ3VsYXJFeHByZXNzaW9ucwBTeXN0ZW0u
+Q29sbGVjdGlvbnMAQ29ubmVjdGlvbnMAUmVnZXhPcHRpb25zAGdldF9SYWRpdXMAc2V0X1JhZGl1
+cwBDb25jYXQARm9ybWF0AE9iamVjdABTeXN0ZW0uQ29sbGVjdGlvbnMuSUVudW1lcmF0b3IuUmVz
+ZXQARW5kT2ZSb3dzZXQAU3BsaXQARXhpdABnZXRfRGVmYXVsdABVc2VyQ29tcG9uZW50AFBhcmVu
+dENvbXBvbmVudABTY3JpcHRDb21wb25lbnQAU3lzdGVtLkNvbGxlY3Rpb25zLkdlbmVyaWMuSUVu
+dW1lcmF0b3I8VEl0ZW0+LkN1cnJlbnQAU3lzdGVtLkNvbGxlY3Rpb25zLklFbnVtZXJhdG9yLkN1
+cnJlbnQAU3lzdGVtLkNvbGxlY3Rpb25zLkdlbmVyaWMuSUVudW1lcmF0b3I8VEl0ZW0+LmdldF9D
+dXJyZW50AFN5c3RlbS5Db2xsZWN0aW9ucy5JRW51bWVyYXRvci5nZXRfQ3VycmVudAA8PjJfX2N1
+cnJlbnQAZ2V0X0NvdW50AE1pY3Jvc29mdC5TcWxTZXJ2ZXIuVHhTY3JpcHQAQ29udmVydABTcXJ0
+AFBvaW50VG9Qb2x5Z29uRGlzdABNaWNyb3NvZnQuU3FsU2VydmVyLlBpcGVsaW5lSG9zdABnZXRf
+Rmlyc3QAVHJ5Rmlyc3QAZmlyc3QASW5wdXQwX1Byb2Nlc3NJbnB1dABNb3ZlTmV4dABTeXN0ZW0u
+VGV4dABJbnB1dDBfUHJvY2Vzc0lucHV0Um93AE5leHRSb3cAZ2V0X01heABzZXRfTWF4AGdldF9R
+dWV1ZUluZGV4AHNldF9RdWV1ZUluZGV4AGdldF9JbnNlcnRpb25JbmRleABzZXRfSW5zZXJ0aW9u
+SW5kZXgAUmVnZXgAcHgAQXJyYXkAQ29udGFpbnNLZXkAZ2V0X0Fzc2VtYmx5AENvcHkAaXRlbUVx
+dWFsaXR5AFRQcmlvcml0eQBnZXRfUHJpb3JpdHkAc2V0X1ByaW9yaXR5AFRyeVVwZGF0ZVByaW9y
+aXR5AEhhc0hpZ2hlclByaW9yaXR5AFRyeUdldFByaW9yaXR5AHByaW9yaXR5AAAAHVwAZAAuACoA
+PwBcAHMAWwBeACwAXAApAF0AKgAAH1AATwBJAE4AVAAgACgAewAwAH0AIAB7ADEAfQApAAAxSQBu
+AHAAdQB0ADAAXwBQAHIAbwBjAGUAcwBzAEkAbgBwAHUAdABSAG8AdwAoACkAAAEAgJtJAHMATgB1
+AGwAbAAgAHAAcgBvAHAAZQByAHQAeQAgAGMAYQBuAG4AbwB0ACAAYgBlACAAcwBlAHQAIAB0AG8A
+IABGAGEAbABzAGUALgAgAEEAcwBzAGkAZwBuACAAYQAgAHYAYQBsAHUAZQAgAHQAbwAgAHQAaABl
+ACAAYwBvAGwAdQBtAG4AIABpAG4AcwB0AGUAYQBkAC4AAA9JAG4AcAB1AHQAIAAwAABxUwBDAF8A
+NAA2ADYANABkADMAOABkADYAZAA3ADcANAA4ADgAOAA5ADYAMwBlADIAMQA1ADUANwAzADUAMQBj
+ADkAMAAxAC4AUAByAG8AcABlAHIAdABpAGUAcwAuAFIAZQBzAG8AdQByAGMAZQBzAAA/ZgBvAHUA
+bgBkACAAYgBlAHMAdAAgAHsAMAB9ACAAYQBmAHQAZQByACAAewAxAH0AIABwAHIAbwBiAGUAcwAA
+GW4AdQBtACAAcAByAG8AYgBlAHMAOgAgAAAfYgBlAHMAdAAgAGQAaQBzAHQAYQBuAGMAZQA6ACAA
+AElDAGEAbgBuAG8AdAAgAGMAYQBsAGwAIAAuAEYAaQByAHMAdAAgAG8AbgAgAGEAbgAgAGUAbQBw
+AHQAeQAgAHEAdQBlAHUAZQAAT0MAYQBuAG4AbwB0ACAAYwBhAGwAbAAgAEQAZQBxAHUAZQB1AGUA
+KAApACAAbwBuACAAYQBuACAAZQBtAHAAdAB5ACAAcQB1AGUAdQBlAABtQwBhAG4AbgBvAHQAIABj
+AGEAbABsACAAUgBlAG0AbwB2AGUAKAApACAAbwBuACAAYQAgAG4AbwBkAGUAIAB3AGgAaQBjAGgA
+IABpAHMAIABuAG8AdAAgAGUAbgBxAHUAZQB1AGUAZAA6ACAAAH1DAGEAbgBuAG8AdAAgAGMAYQBs
+AGwAIABVAHAAZABhAHQAZQBQAHIAaQBvAHIAaQB0AHkAKAApACAAbwBuACAAYQAgAG4AbwBkAGUA
+IAB3AGgAaQBjAGgAIABpAHMAIABuAG8AdAAgAGUAbgBxAHUAZQB1AGUAZAA6ACAAAHdDAGEAbgBu
+AG8AdAAgAGMAYQBsAGwAIABHAGUAdABQAHIAaQBvAHIAaQB0AHkAKAApACAAbwBuACAAYQAgAG4A
+bwBkAGUAIAB3AGgAaQBjAGgAIABpAHMAIABuAG8AdAAgAGUAbgBxAHUAZQB1AGUAZAA6ACAAAAAA
+FPTDiMIBpE6upGKoSEkXaQAEIAEBCAMgAAEFIAEBEREEIAEBDgUgAQERcQgVEjQCEwATAQcVEoCB
+ARMABCAAEkEIFRIoAhMAEwEGFRIwARMBBiABARKAkQMgAAIHFRKAmQETAAQgABMAAyAAHAcVEjgC
+EwAMGwcMDggdBRUSOQERPRIkHQUSQR0OEkURPRJJAgMgAAkEAAEICQYgAh0FCAgFAAASgLkFIAEO
+HQUKAAMSgMEODhGAxQYVEjkBET0DIAAOBiABHQ4dAwQAAQwOBSACAQwMBSABARMAAyAADAYAAw4O
+HBwFIAEdBQ4FIAEBHQUFIAASgN0KIAYBCA4ODggQAgkgAwESUR0IElUDBhJRAwYdCAQgARwIBCAB
+AggFIAIBCBwHIAICDhGA5QUgAR0ICAgAARKAkRGA6QUgABKA7QcgAgEOEoDtIQcUDAwMDAwMDAwV
+EjwBEkASQBJACAgRPQwMEkASQBJADAUgARMACAMgAAgFAAIMDAwGFRI8ARJABxUSOAISQAwHIAIB
+EwATAQQAAQ0NBgADAQ4cHAUAAg4ODgQAAQEOFQcLDAwMFRI5ARE9CAgIET0RPQwRPQcVEoEBARMB
+CQAAFRKBAQETAAgVEiwCEwATAQsgAgEIFRKAjQETAQcVEoCNARMBByACCBMAEwAHFRKAiQETAQUg
+AgEcGAsgAgEIFRKAiQETAQIGCAITAAQGHRMAAgYKCAYVEoCJARMBCAADARKBBQgIAwcBCgQgAQEK
+BwcDCBMAEwAHIAICEwATAA8HCAgICBMAEwATABMAEwADBwEIAyAACggHAxMAEwATAAYHAh0TAAgF
+AAIICAgKAAMBEoEFEoEFCAYHAhMAEwAIFRJEAhMAEwEJBhUSLAITABMBCSAAFRKAmQETAAUHAwgI
+CAYVEjABEwADBhMABxUSgQkBEwAJAAAVEoEJARMACBUSOAITABMBESACARUSgI0BEwEVEoCpARMA
+ESACARUSgIkBEwEVEoCpARMADhUSLAIVEkgCEwATARMBDwYVEiwCFRJIAhMAEwETARQVEoChAhMA
+FRKApQEVEkgCEwATAQogAQEVEoCpARMAFQYVEoChAhMAFRKApQEVEkgCEwATAQwVEjkBFRJIAhMA
+EwEOBhUSgKUBFRJIAhMAEwEPBwEVEoClARUSSAITABMBDRUSgQ0BFRJIAhMAEwENFRKApQEVEkgC
+EwATAQggAgITABATAQgVEkgCEwATAQUgAQITABIHAxUSLAIVEkgCEwATARMBAggGAAIBHBACBAAB
+ARwTBwMVEiwCFRJIAhMAEwETAQITABEHAhUSLAIVEkgCEwATARMBAhIHAxUSLAIVEkgCEwATARMB
+AgIbBwQVEiwCFRJIAhMAEwETAQIVEkgCEwATARMACyABARUSSAITABMBCgcBFRJIAhMAEwEmBwQV
+EiwCFRJIAhMAEwETAQIVEoClARUSSAITABMBFRJIAhMAEwEOIAIVEkgCEwATARMAEwEnBwUVEiwC
+FRJIAhMAEwETAQIVEoClARUSSAITABMBFRJIAhMAEwECKAcFFRIsAhUSSAITABMBEwECFRJIAhMA
+EwEVEoClARUSSAITABMBEwAMIAEVEkgCEwATARMAFQcEFRIsAhUSSAITABMBEwECEwATARoHBBUS
+LAIVEkgCEwATARMBAhUSSAITABMBAicHBRUSLAIVEkgCEwATARMBAhUSSAITABMBFRKApQEVEkgC
+EwATAQICEwEsBwUVEjkBEwAVEiwCFRJIAhMAEwETAQIVEoCZARUSSAITABMBFRJIAhMAEwEGFRI5
+ARMADRUSgJkBFRJIAhMAEwEJIAAVEYEVARMABxURgRUBEwBDBwcVEiwCFRJIAhMAEwETAQIVEYCx
+AhMAFRKApQEVEkgCEwATARUSgJkBFRJIAhMAEwEVEkgCEwATAQIVEkgCEwATAQsgABUSgK0CEwAT
+ARQVEoCtAhMAFRKApQEVEkgCEwATAQsgABURgLECEwATARQVEYCxAhMAFRKApQEVEkgCEwATAQQg
+ABMBDRUSgIEBFRJIAhMAEwEKIAEBFRKAjQETAQogAQEVEoCJARMBBAABDA0LBwcCDAgICBE9ET0H
+BwUMDAwMDAwHAwgVEiwCEwATAQgIt3pcVhk04IkIiYRdzYCAzJEIsD9ffxHVCjoECgAAAAQAAIA/
+AQADBhIUAwYSGAMGEl0DBhJpAwYSbQMGEiADBhE9AgYMBSABARIMBCAAElkFIAEBElkEIAEBAgkg
+BAEIDhJRElUFIAEBEl0EAAASaQQAABJtBQABARJtBAAAEiADAAABBCAAET0FIAEBET0EIAEBDAwA
+AxIkFRI5ARE9DAIKAAESQBUSOQERPQcgAgITABMBBiABEwETAAYgAQIQEwAJIAEBFRKAjQEMCSAB
+ARUSgIkBDAwgBAEMDAwVEjkBET0LIAMMDAwVEjkBET0JIAQMDAwRPRE9BCgAElkDKAACBAgAEmkE
+CAASbQQIABIgBCgAET0DKAAMAygACAQoABMAAygACgMoABwIAQAIAAAAAAAeAQABAFQCFldyYXBO
+b25FeGNlcHRpb25UaHJvd3MBCAEAAgAAAAAAKAEAI1NDXzQ2NjRkMzhkNmQ3NzQ4ODg5NjNlMjE1
+NTczNTFjOTAxAAAFAQAAAAAWAQARQ29weXJpZ2h0IEAgIDIwMjMAAEkBABouTkVURnJhbWV3b3Jr
+LFZlcnNpb249djQuNQEAVA4URnJhbWV3b3JrRGlzcGxheU5hbWUSLk5FVCBGcmFtZXdvcmsgNC41
+BAEAAAA/AQA6UHJpb3JpdHlfUXVldWUuR2VuZXJpY1ByaW9yaXR5UXVldWVgMis8R2V0RW51bWVy
+YXRvcj5kX18yNQAAAAC0AAAAzsrvvgEAAACRAAAAbFN5c3RlbS5SZXNvdXJjZXMuUmVzb3VyY2VS
+ZWFkZXIsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGlj
+S2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OSNTeXN0ZW0uUmVzb3VyY2VzLlJ1bnRpbWVSZXNvdXJj
+ZVNldAIAAAAAAAAAAAAAAFBBRFBBRFC0AAAAUHEAAAAAAAAAAAAAanEAAAAgAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAFxxAAAAAAAAAAAAAAAAX0NvckRsbE1haW4AbXNjb3JlZS5kbGwAAAAAAP8lACAA
+EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABABAAAAAYAACAAAAAAAAAAAAAAAAAAAABAAEA
+AAAwAACAAAAAAAAAAAAAAAAAAAABAAAAAABIAAAAWIAAAOwDAAAAAAAAAAAAAOwDNAAAAFYAUwBf
+AFYARQBSAFMASQBPAE4AXwBJAE4ARgBPAAAAAAC9BO/+AAABAAAAAQAAAAAAAAABAAAAAAA/AAAA
+AAAAAAQAAAACAAAAAAAAAAAAAAAAAAAARAAAAAEAVgBhAHIARgBpAGwAZQBJAG4AZgBvAAAAAAAk
+AAQAAABUAHIAYQBuAHMAbABhAHQAaQBvAG4AAAAAAAAAsARMAwAAAQBTAHQAcgBpAG4AZwBGAGkA
+bABlAEkAbgBmAG8AAAAoAwAAAQAwADAAMAAwADAANABiADAAAAAaAAEAAQBDAG8AbQBtAGUAbgB0
+AHMAAAAAAAAAIgABAAEAQwBvAG0AcABhAG4AeQBOAGEAbQBlAAAAAAAAAAAAcAAkAAEARgBpAGwA
+ZQBEAGUAcwBjAHIAaQBwAHQAaQBvAG4AAAAAAFMAQwBfADQANgA2ADQAZAAzADgAZAA2AGQANwA3
+ADQAOAA4ADgAOQA2ADMAZQAyADEANQA1ADcAMwA1ADEAYwA5ADAAMQAAADAACAABAEYAaQBsAGUA
+VgBlAHIAcwBpAG8AbgAAAAAAMQAuADAALgAwAC4AMAAAAHAAKAABAEkAbgB0AGUAcgBuAGEAbABO
+AGEAbQBlAAAAUwBDAF8ANAA2ADYANABkADMAOABkADYAZAA3ADcANAA4ADgAOAA5ADYAMwBlADIA
+MQA1ADUANwAzADUAMQBjADkAMAAxAC4AZABsAGwAAABIABIAAQBMAGUAZwBhAGwAQwBvAHAAeQBy
+AGkAZwBoAHQAAABDAG8AcAB5AHIAaQBnAGgAdAAgAEAAIAAgADIAMAAyADMAAAAqAAEAAQBMAGUA
+ZwBhAGwAVAByAGEAZABlAG0AYQByAGsAcwAAAAAAAAAAAHgAKAABAE8AcgBpAGcAaQBuAGEAbABG
+AGkAbABlAG4AYQBtAGUAAABTAEMAXwA0ADYANgA0AGQAMwA4AGQANgBkADcANwA0ADgAOAA4ADkA
+NgAzAGUAMgAxADUANQA3ADMANQAxAGMAOQAwADEALgBkAGwAbAAAAGgAJAABAFAAcgBvAGQAdQBj
+AHQATgBhAG0AZQAAAAAAUwBDAF8ANAA2ADYANABkADMAOABkADYAZAA3ADcANAA4ADgAOAA5ADYA
+MwBlADIAMQA1ADUANwAzADUAMQBjADkAMAAxAAAANAAIAAEAUAByAG8AZAB1AGMAdABWAGUAcgBz
+AGkAbwBuAAAAMQAuADAALgAwAC4AMAAAADgACAABAEEAcwBzAGUAbQBiAGwAeQAgAFYAZQByAHMA
+aQBvAG4AAAAxAC4AMAAuADAALgAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAHAAAAwAAAB8MQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAA=]]></arrayElement>
+                  </arrayElements>
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the Microsoft Visual Studio Tools for Applications project. Project names must be unique within a package."
+                  name="VSTAProjectName"
+                  typeConverter="NOTBROWSABLE">SC_4664d38d6d774888963e21557351c901</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the programming language used by the script."
+                  name="ScriptLanguage"
+                  typeConverter="Microsoft.SqlServer.VSTAHosting.ScriptingLanguages">CSharp</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a comma-separated list of read-only variables."
+                  name="ReadOnlyVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a comma-separated list of read/write variables."
+                  name="ReadWriteVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIWriteableVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="List of breakpoints present on the script."
+                  isArray="true"
+                  name="BreakpointCollection"
+                  typeConverter="NOTBROWSABLE">
+                  <arrayElements
+                    arrayElementCount="0" />
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Checksum to match component metedata against compiled codes."
+                  name="MetadataChecksum140"
+                  typeConverter="NOTBROWSABLE">D5</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ScriptComponentHost</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Correct PIMS Locations\Script Component.Inputs[Input 0]"
+                  hasSideEffects="true"
+                  name="Input 0">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Correct PIMS Locations\Script Component.Inputs[Input 0].Columns[BOUNDARY_TEXT]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="BOUNDARY_TEXT"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].Columns[BOUNDARY_TEXT]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Correct PIMS Locations\Script Component.Outputs[Output 0]"
+                  name="Output 0"
+                  synchronousInputId="Package\Correct PIMS Locations\Script Component.Inputs[Input 0]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\Script Component.Outputs[Output 0].Columns[POLE_OF_INACCESSABILITY]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Correct PIMS Locations\Script Component.Outputs[Output 0].Columns[POLE_OF_INACCESSABILITY]"
+                      name="POLE_OF_INACCESSABILITY" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Correct PIMS Locations\Store Location In Temp Table"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Store Location In Temp Table"
+              usesDispositions="true"
+              validateExternalMetadata="False"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[TEMP_PROPERTY_LOCATION]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS,ROWS_PER_BATCH = 1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Correct PIMS Locations\Store Location In Temp Table.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Correct PIMS Locations\Store Location In Temp Table.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Correct PIMS Locations\Store Location In Temp Table.Inputs[OLE DB Destination Input].Columns[PROPERTY_ID]"
+                      cachedDataType="i8"
+                      cachedName="PROPERTY_ID"
+                      externalMetadataColumnId="Package\Correct PIMS Locations\Store Location In Temp Table.Inputs[OLE DB Destination Input].ExternalColumns[PROPERTY_ID]"
+                      lineageId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]" />
+                    <inputColumn
+                      refId="Package\Correct PIMS Locations\Store Location In Temp Table.Inputs[OLE DB Destination Input].Columns[POLE_OF_INACCESSABILITY]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="POLE_OF_INACCESSABILITY"
+                      externalMetadataColumnId="Package\Correct PIMS Locations\Store Location In Temp Table.Inputs[OLE DB Destination Input].ExternalColumns[LOCATION]"
+                      lineageId="Package\Correct PIMS Locations\Script Component.Outputs[Output 0].Columns[POLE_OF_INACCESSABILITY]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Correct PIMS Locations\Store Location In Temp Table.Inputs[OLE DB Destination Input].ExternalColumns[LOCATION]"
+                      codePage="1252"
+                      dataType="text"
+                      name="LOCATION" />
+                    <externalMetadataColumn
+                      refId="Package\Correct PIMS Locations\Store Location In Temp Table.Inputs[OLE DB Destination Input].ExternalColumns[PROPERTY_ID]"
+                      dataType="i8"
+                      name="PROPERTY_ID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Correct PIMS Locations\Store Location In Temp Table.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Correct PIMS Locations\Store Location In Temp Table.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\Store Location In Temp Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Correct PIMS Locations\Store Location In Temp Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Correct PIMS Locations\Store Location In Temp Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Correct PIMS Locations\Store Location In Temp Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Correct PIMS Locations.Paths[OLE DB Source Output]"
+              endId="Package\Correct PIMS Locations\Script Component.Inputs[Input 0]"
+              name="OLE DB Source Output"
+              startId="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Correct PIMS Locations.Paths[Output 0]"
+              endId="Package\Correct PIMS Locations\Conditional Split.Inputs[Conditional Split Input]"
+              name="Output 0"
+              startId="Package\Correct PIMS Locations\Script Component.Outputs[Output 0]" />
+            <path
+              refId="Package\Correct PIMS Locations.Paths[VALID_NEW_LOCATION]"
+              endId="Package\Correct PIMS Locations\Store Location In Temp Table.Inputs[OLE DB Destination Input]"
+              name="VALID_NEW_LOCATION"
+              startId="Package\Correct PIMS Locations\Conditional Split.Outputs[VALID_NEW_LOCATION]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Temp Output Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2F13A05B-8676-42ED-BB12-13A1471B6017}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Temp Output Table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C854C770-B13C-477E-8DD4-44721E1B9FCF}"
+          SQLTask:SqlStatementSource="IF OBJECT_ID(N'dbo.TEMP_PROPERTY_LOCATION', N'U') IS NULL BEGIN CREATE TABLE dbo.TEMP_PROPERTY_LOCATION (LOCATION VARCHAR(MAX) null, PROPERTY_ID bigint not null); END;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Delete Temp Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{EFD0FB4C-6611-49E1-9D6B-0E9B2BAC11EB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete Temp Table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C854C770-B13C-477E-8DD4-44721E1B9FCF}"
+          SQLTask:SqlStatementSource="IF OBJECT_ID(N'dbo.TEMP_PROPERTY_LOCATION', N'U') IS NOT NULL DROP TABLE TEMP_PROPERTY_LOCATION" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update PIMS_PROPERTY Using Temp Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C6BCDB2C-04FA-48B9-8A77-839BA6ACFC01}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update PIMS_PROPERTY Using Temp Table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C854C770-B13C-477E-8DD4-44721E1B9FCF}"
+          SQLTask:SqlStatementSource="UPDATE PIMS_PROPERTY SET PIMS_PROPERTY.LOCATION = geometry::STGeomFromText( tpl.LOCATION , 3008 ), CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1&#xA;FROM PIMS_PROPERTY p&#xA;INNER JOIN&#xA;dbo.TEMP_PROPERTY_LOCATION tpl&#xA;ON tpl.PROPERTY_ID = p.PROPERTY_ID" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{E2077DFA-66E5-4D42-BCF9-8210B5CB56FB}"
+      DTS:From="Package\Create Temp Output Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Correct PIMS Locations" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{C22E7D0C-75CD-424D-9F42-9C8C10695054}"
+      DTS:From="Package\Correct PIMS Locations"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Update PIMS_PROPERTY Using Temp Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{0925555F-44DA-434E-8EA5-398BED1DC245}"
+      DTS:From="Package\Update PIMS_PROPERTY Using Temp Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Delete Temp Table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="195,42"
+          Id="Package\Correct PIMS Locations"
+          TopLeft="60,107.5" />
+        <NodeLayout
+          Size="209,42"
+          Id="Package\Create Temp Output Table"
+          TopLeft="53,5.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="157.5,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="304,42"
+          Id="Package\Update PIMS_PROPERTY Using Temp Table"
+          TopLeft="5.50000000000003,209.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="157.5,149.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Delete Temp Table"
+          TopLeft="71.5000000000001,311.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="157.5,251.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Correct PIMS Locations">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="167,42"
+          Id="Package\Correct PIMS Locations\Script Component"
+          TopLeft="59.5,107.5" />
+        <NodeLayout
+          Size="275,42"
+          Id="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW"
+          TopLeft="5.5,5.5" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\Correct PIMS Locations\Conditional Split"
+          TopLeft="63.5,209.5" />
+        <EdgeLayout
+          Id="Package\Correct PIMS Locations.Paths[Output 0]"
+          TopLeft="143,149.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Correct PIMS Locations.Paths[OLE DB Source Output]"
+          TopLeft="143,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="223,42"
+          Id="Package\Correct PIMS Locations\Store Location In Temp Table"
+          TopLeft="345,326" />
+        <EdgeLayout
+          Id="Package\Correct PIMS Locations.Paths[VALID_NEW_LOCATION]"
+          TopLeft="143,251.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="313.5,74.5"
+              Start="0,0"
+              End="313.5,67">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,33.25"
+                    Point2="0,37.25"
+                    Point3="4,37.25" />
+                  <mssgle:LineSegment
+                    End="309.5,37.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="309.5,37.25"
+                    Point2="313.5,37.25"
+                    Point3="313.5,41.25" />
+                  <mssgle:LineSegment
+                    End="313.5,67" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="102.56171875,42.25,108.3765625,10.88671875"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Correct PIMS Locations\PIMS_PROPERTY_BOUNDARY_VIEW">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">View</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Correct PIMS Locations\Store Location In Temp Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

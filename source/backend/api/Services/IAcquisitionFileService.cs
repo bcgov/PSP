@@ -23,7 +23,7 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsAcquisitionOwner> GetOwners(long id);
 
-        IEnumerable<PimsAcquisitionFilePerson> GetTeamMembers();
+        IEnumerable<PimsAcquisitionFileTeam> GetTeamMembers();
 
         IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id);
 

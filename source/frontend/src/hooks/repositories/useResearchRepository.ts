@@ -23,7 +23,7 @@ export const useResearchRepository = () => {
     requestName: 'getLastUpdatedBy',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(
-      'Failed to retreive last-updated-by information for research file.',
+      'Failed to retrive last-updated-by information for research file.',
     ),
   });
 

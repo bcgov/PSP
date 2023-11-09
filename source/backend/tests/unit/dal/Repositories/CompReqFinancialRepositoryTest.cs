@@ -158,11 +158,11 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public void SearchCompensationRequisitionFinancials_Team()
+        public void SearchCompensationRequisitionFinancials_Team_Person()
         {
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() { new PimsAcquisitionFilePerson() { PersonId = 1 } };
+            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { PersonId = 1 } };
             var financial = new PimsCompReqFinancial
             {
                 FinancialActivityCode = new PimsFinancialActivityCode { Code = "test" },
@@ -179,6 +179,34 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var filter = new AcquisitionReportFilterModel() { AcquisitionTeamPersons = new List<long> { 1 } };
+            var result = repository.SearchCompensationRequisitionFinancials(filter);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void SearchCompensationRequisitionFinancials_Team_Organization()
+        {
+            // Arrange
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { OrganizationId = 100 } };
+            var financial = new PimsCompReqFinancial
+            {
+                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test" },
+                CompensationRequisitionId = 1,
+                CompensationRequisition = new PimsCompensationRequisition
+                {
+                    AcquisitionFileId = acqFile.Internal_Id,
+                    AcquisitionFile = acqFile,
+                },
+            };
+
+            var repository = this.CreateWithPermissions(Permissions.AcquisitionFileAdd);
+            this._helper.AddAndSaveChanges(financial);
+
+            // Act
+            var filter = new AcquisitionReportFilterModel() { AcquisitionTeamOrganizations = new List<long> { 100 } };
             var result = repository.SearchCompensationRequisitionFinancials(filter);
 
             // Assert

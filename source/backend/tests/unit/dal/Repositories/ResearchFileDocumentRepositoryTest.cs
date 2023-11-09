@@ -21,12 +21,12 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
 
-            var ResearchFileDocument = new PimsResearchFileDocument();
+            var researchFileDocument = new PimsResearchFileDocument();
 
             var repository = helper.CreateRepository<ResearchFileDocumentRepository>(user);
 
             // Act
-            var result = repository.AddResearch(ResearchFileDocument);
+            var result = repository.AddResearch(researchFileDocument);
 
             // Assert
             result.ResearchFileDocumentId.Should().Be(1);
@@ -39,12 +39,12 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
 
-            var ResearchFileDocument = new PimsResearchFileDocument();
+            var researchFileDocument = new PimsResearchFileDocument();
 
             var repository = helper.CreateRepository<ResearchFileDocumentRepository>(user);
 
             // Act
-            var result = repository.DeleteResearch(ResearchFileDocument);
+            var result = repository.DeleteResearch(researchFileDocument);
 
             // Assert
             result.Should().BeTrue();

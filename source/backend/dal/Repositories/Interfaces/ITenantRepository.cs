@@ -8,7 +8,5 @@ namespace Pims.Dal.Repositories
     public interface ITenantRepository : IRepository<PimsTenant>
     {
         PimsTenant TryGetTenantByCode(string code);
-
-        PimsTenant UpdateTenant(PimsTenant tenant);
     }
 }

@@ -23,7 +23,6 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import AuthLayout from '@/layouts/AuthLayout';
 import PublicLayout from '@/layouts/PublicLayout';
 import { NotFoundPage } from '@/pages/404/NotFoundPage';
-import { TestFileManagement } from '@/pages/TestFileManagement';
 import AppRoute from '@/utils/AppRoute';
 import componentLoader from '@/utils/utils';
 
@@ -283,13 +282,6 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             layout={AuthLayout}
             claim={Claims.ADMIN_USERS}
             title={getTitle('Edit User')}
-          />
-          <AppRoute
-            protected
-            path="/testFileManagement"
-            title={getTitle('Test')}
-            customComponent={TestFileManagement}
-            layout={AuthLayout}
           />
           <AppRoute title="*" path="*" customComponent={() => <Redirect to="/page-not-found" />} />
         </Switch>

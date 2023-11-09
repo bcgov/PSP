@@ -29,7 +29,6 @@ describe('PropertyContactListView component', () => {
       <PropertyContactListView
         isLoading={false}
         propertyContacts={renderOptions.propertyContacts}
-        setEditManagementState={noop}
         onDelete={noop}
       />,
       {
@@ -84,7 +83,6 @@ const emptyPropertyContact: Api_PropertyContact = {
   primaryContactId: null,
   primaryContact: null,
   purpose: null,
-  isDisabled: null,
   rowVersion: 0,
 };
 

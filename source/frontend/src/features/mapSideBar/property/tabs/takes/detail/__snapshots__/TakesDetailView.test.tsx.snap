@@ -147,6 +147,7 @@ exports[`TakesDetailView component renders as expected 1`] = `
             </div>
             <div
               class="c6 text-left col"
+              data-testid="takes-in-other-files"
             >
               0
             </div>

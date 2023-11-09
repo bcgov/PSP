@@ -899,6 +899,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPimsFiles()
         {
+            Wait(2000);
+
             WaitUntilClickable(propertyPimsFilesLinkTab);
             webDriver.FindElement(propertyPimsFilesLinkTab).Click();
 
@@ -907,6 +909,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Assert.True(webDriver.FindElement(propertyResearchFileSubtitle).Displayed);
             Assert.True(webDriver.FindElement(propertyResearchCountLabel).Displayed);
+
+            WaitUntilClickable(propertyResearchExpandTableBttn);
             webDriver.FindElement(propertyResearchExpandTableBttn).Click();
 
             WaitUntilVisible(propertyResearchTable);
@@ -914,6 +918,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Assert.True(webDriver.FindElement(propertyAcquisitionFileSubtitle).Displayed);
             Assert.True(webDriver.FindElement(propertyAcquisitionCountLabel).Displayed);
+
+            WaitUntilClickable(propertyAcquisitionExpandTableBttn);
             webDriver.FindElement(propertyAcquisitionExpandTableBttn).Click();
 
             WaitUntilVisible(propertyAcquisitionTable);
@@ -921,6 +927,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Assert.True(webDriver.FindElement(propertyLeasesSubtitle).Displayed);
             Assert.True(webDriver.FindElement(propertyLeaseCountLabel).Displayed);
+
+            WaitUntilVisible(propertyLeaseExpandTableBttn);
             webDriver.FindElement(propertyLeaseExpandTableBttn).Click();
 
             WaitUntilVisible(propertyLeaseTable);

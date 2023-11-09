@@ -63,13 +63,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddInterestStakeholderButton()
         {
-            Wait();
+            WaitUntilSpinnerDisappear();
             webDriver.FindElement(stakeholderInterestAddInterestHolderLink).Click();
         }
 
         public void AddNonInterestStakeholderButton()
         {
-            Wait();
+            WaitUntilSpinnerDisappear();
             webDriver.FindElement(stakeholderInterestAddNonInterestHolderLink).Click();
         }
 

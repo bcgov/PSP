@@ -4,13 +4,13 @@ Feature: SmokeTest
 Test cases allocated for Smoke Testing
 
 Scenario: Create Minimum Individual Contact
-	Given I create a new Individual Contact from row number 3
-	When I search for an existing contact from type "Individual" row number 3
+	Given I create a new Individual Contact from row number 7
+	When I search for an existing contact from type "Individual" row number 7
 	Then  Expected Content is displayed on Contacts Table from contact type "Individual"
 
 Scenario: Create Minimum Organization Contact
-	Given I create a new Organization Contact from row number 2
-	When I search for an existing contact from type "Organization" row number 2
+	Given I create a new Organization Contact from row number 5
+	When I search for an existing contact from type "Organization" row number 5
 	Then Expected Content is displayed on Contacts Table from contact type "Organization"
 
 Scenario: Create Minimum Lease and License
@@ -20,12 +20,13 @@ Scenario: Create Minimum Lease and License
 	Then A new lease is created successfully
 
 Scenario: Create Minimum Research File
-	Given I create a new complete Research File from row number 4
-	When I create a new Note on the Notes Tab from row number 5
+	Given I create a basic Research File from row number 4
+	When I add additional details to Research File
+	And I create a new Note on the Notes Tab from row number 5
 	Then A new Research File is created successfully
 
 Scenario: Create Minimum Acquisition File
-	Given I create a new Acquisition File from row number 16
+	Given I create a new Acquisition File from row number 18
 	When I add additional information to the Acquisition File Details
 	Then A new Acquisition file is created successfully
 

@@ -170,7 +170,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteProperty()
         {
-            Wait();
+            Wait(2000);
             var PropertiesTotal = webDriver.FindElements(searchPropertiesSelectedPropertiesTotal).Count();
 
             WaitUntilSpinnerDisappear();
@@ -185,9 +185,9 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedModals.ModalClickOKBttn();
             }
 
+            Wait(2000);
             var PropertiesLeft = webDriver.FindElements(searchPropertiesSelectedPropertiesTotal).Count();
 
-            Wait();
             Assert.True(PropertiesTotal - PropertiesLeft == 1);
         }
 

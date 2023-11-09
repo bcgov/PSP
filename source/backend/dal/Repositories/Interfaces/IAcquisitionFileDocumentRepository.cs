@@ -10,8 +10,6 @@ namespace Pims.Dal.Repositories
     {
         IList<PimsAcquisitionFileDocument> GetAllByAcquisitionFile(long fileId);
 
-        IList<PimsAcquisitionFileDocument> GetAllByDocument(long documentId);
-
         PimsAcquisitionFileDocument AddAcquisition(PimsAcquisitionFileDocument acquisitionDocument);
 
         bool DeleteAcquisition(PimsAcquisitionFileDocument acquisitionDocument);

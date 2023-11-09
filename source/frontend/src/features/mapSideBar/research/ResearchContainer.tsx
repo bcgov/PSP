@@ -2,6 +2,7 @@ import { FormikProps } from 'formik';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { MdTopic } from 'react-icons/md';
+import { matchPath, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import GenericModal from '@/components/common/GenericModal';
@@ -11,10 +12,12 @@ import { FileTypes } from '@/constants/fileTypes';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { useResearchRepository } from '@/hooks/repositories/useResearchRepository';
+import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { Api_File } from '@/models/api/File';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { stripTrailingSlash } from '@/utils';
 import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 import { SideBarContext } from '../context/sidebarContext';
@@ -22,10 +25,9 @@ import SidebarFooter from '../shared/SidebarFooter';
 import { UpdateProperties } from '../shared/update/properties/UpdateProperties';
 import ResearchHeader from './common/ResearchHeader';
 import ResearchMenu from './common/ResearchMenu';
-import { FormKeys } from './FormKeys';
 import { useGetResearch } from './hooks/useGetResearch';
 import { useUpdateResearchProperties } from './hooks/useUpdateResearchProperties';
-import ViewSelector from './ViewSelector';
+import ResearchView from './ResearchView';
 
 export interface IResearchContainerProps {
   researchFileId: number;
@@ -61,9 +63,6 @@ export const ResearchContainer: React.FunctionComponent<
     setStaleLastUpdatedBy,
   } = React.useContext(SideBarContext);
 
-  const [selectedMenuIndex, setSelectedMenuIndex] = useState<number>(0);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [editKey, setEditKey] = useState(FormKeys.none);
   const [isValid, setIsValid] = useState<boolean>(true);
 
   const [isShowingPropertySelector, setIsShowingPropertySelector] = useState<boolean>(false);
@@ -71,6 +70,9 @@ export const ResearchContainer: React.FunctionComponent<
   const formikRef = useRef<FormikProps<any>>(null);
 
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
+
+  const history = useHistory();
+  const match = useRouteMatch();
 
   const menuItems = researchFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('File Summary');
@@ -104,13 +106,27 @@ export const ResearchContainer: React.FunctionComponent<
     }
   }, [props.researchFileId, getLastUpdatedBy, setLastUpdatedBy]);
 
+  const push = history.push;
+  const query = useQuery();
+  const setIsEditing = React.useCallback(
+    (editing: boolean) => {
+      if (editing) {
+        query.set('edit', 'true');
+      } else {
+        query.delete('edit');
+      }
+
+      push({ search: query.toString() });
+    },
+    [push, query],
+  );
+
   const onSuccess = React.useCallback(() => {
     setStaleFile(true);
     setStaleLastUpdatedBy(true);
     mapMachine.refreshMapProperties();
     setIsEditing(false);
-    setEditKey(FormKeys.none);
-  }, [mapMachine, setStaleFile, setStaleLastUpdatedBy]);
+  }, [mapMachine, setIsEditing, setStaleFile, setStaleLastUpdatedBy]);
 
   React.useEffect(() => {
     if (researchFile === undefined || researchFileId !== researchFile?.id || staleFile) {
@@ -128,13 +144,17 @@ export const ResearchContainer: React.FunctionComponent<
     }
   }, [fetchLastUpdatedBy, lastUpdatedBy, researchFileId, staleLastUpdatedBy]);
 
-  if (researchFile === undefined && (loadingResearchFile || loadingResearchFileProperties)) {
-    return (
-      <>
-        <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>
-      </>
-    );
-  }
+  const isEditing = query.get('edit') === 'true';
+
+  const navigateToMenuRoute = (selectedIndex: number) => {
+    const route = selectedIndex === 0 ? '' : `/property/${selectedIndex}`;
+    history.push(`${stripTrailingSlash(match.url)}${route}`);
+  };
+  const propertiesMatch = matchPath<Record<string, string>>(
+    history.location.pathname,
+    `${stripTrailingSlash(match.path)}/property/:menuIndex/:tab?`,
+  );
+  const selectedMenuIndex = propertiesMatch !== null ? Number(propertiesMatch.params.menuIndex) : 0;
 
   const onMenuChange = (selectedIndex: number) => {
     if (isEditing) {
@@ -143,14 +163,14 @@ export const ResearchContainer: React.FunctionComponent<
           window.confirm('You have made changes on this form. Do you wish to leave without saving?')
         ) {
           handleCancelClick();
-          setSelectedMenuIndex(selectedIndex);
+          navigateToMenuRoute(selectedIndex);
         }
       } else {
         handleCancelClick();
-        setSelectedMenuIndex(selectedIndex);
+        navigateToMenuRoute(selectedIndex);
       }
     } else {
-      setSelectedMenuIndex(selectedIndex);
+      navigateToMenuRoute(selectedIndex);
     }
   };
 
@@ -180,12 +200,20 @@ export const ResearchContainer: React.FunctionComponent<
     }
     setShowConfirmModal(false);
     setIsEditing(false);
-    setEditKey(FormKeys.none);
   };
 
   const showPropertiesSelector = () => {
     setIsShowingPropertySelector(true);
   };
+
+  if (
+    loadingResearchFile ||
+    (loadingResearchFileProperties && !isShowingPropertySelector) ||
+    researchFile?.fileType !== FileTypes.Research ||
+    researchFile?.id !== researchFileId
+  ) {
+    return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
+  }
 
   if (isShowingPropertySelector && researchFile) {
     return (
@@ -255,15 +283,12 @@ export const ResearchContainer: React.FunctionComponent<
                   cancelButtonText="Resume editing"
                   show
                 />
-                <ViewSelector
+                <ResearchView
                   researchFile={researchFile}
-                  selectedIndex={selectedMenuIndex}
-                  isEditMode={isEditing}
-                  editKey={editKey}
                   onSuccess={onSuccess}
                   setEditMode={setIsEditing}
-                  setEditKey={setEditKey}
                   ref={formikRef}
+                  isEditing={isEditing}
                 />
               </>
             </StyledFormWrapper>

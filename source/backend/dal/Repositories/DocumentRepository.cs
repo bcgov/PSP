@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
@@ -95,6 +94,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.PimsProjectDocuments)
                 .Include(d => d.PimsFormTypes)
                 .Include(d => d.PimsLeaseDocuments)
+                .Include(d => d.PimsPropertyActivityDocuments)
                 .Where(d => d.DocumentId == document.Internal_Id)
                 .AsNoTracking()
                 .FirstOrDefault();
@@ -119,6 +119,11 @@ namespace Pims.Dal.Repositories
                 this.Context.PimsLeaseDocuments.Remove(new PimsLeaseDocument() { Internal_Id = pimsLeaseDocument.Internal_Id });
             }
 
+            foreach (var pimsPropertyActivityDocument in documentToDelete.PimsPropertyActivityDocuments)
+            {
+                this.Context.PimsPropertyActivityDocuments.Remove(new PimsPropertyActivityDocument() { Internal_Id = pimsPropertyActivityDocument.Internal_Id });
+            }
+
             foreach (var pimsFormTypeDocument in documentToDelete.PimsFormTypes)
             {
                 var updatedFormType = pimsFormTypeDocument;
@@ -132,15 +137,6 @@ namespace Pims.Dal.Repositories
             return true;
         }
 
-        public List<PimsDocument> GetAllByDocumentType(string documentType)
-        {
-            return this.Context.PimsDocuments
-                .Include(d => d.DocumentType)
-                .Where(d => d.DocumentType.DocumentType == documentType)
-                .AsNoTracking()
-                .ToList();
-        }
-
         public int DocumentRelationshipCount(long documentId)
         {
             var documentRelationships = this.Context.PimsDocuments.AsNoTracking()
@@ -149,6 +145,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.PimsProjectDocuments)
                 .Include(d => d.PimsFormTypes)
                 .Include(d => d.PimsLeaseDocuments)
+                .Include(d => d.PimsPropertyActivityDocuments)
                 .Where(d => d.DocumentId == documentId)
                 .AsNoTracking()
                 .FirstOrDefault();
@@ -157,7 +154,8 @@ namespace Pims.Dal.Repositories
                     documentRelationships.PimsAcquisitionFileDocuments.Count +
                     documentRelationships.PimsProjectDocuments.Count +
                     documentRelationships.PimsFormTypes.Count +
-                    documentRelationships.PimsLeaseDocuments.Count;
+                    documentRelationships.PimsLeaseDocuments.Count +
+                    documentRelationships.PimsPropertyActivityDocuments.Count;
         }
 
         #endregion

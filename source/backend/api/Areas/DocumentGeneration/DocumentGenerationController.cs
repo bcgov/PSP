@@ -79,7 +79,7 @@ namespace Pims.Api.Controllers
         public async Task<IActionResult> UploadTemplateAndDownloadWrapped([FromBody] DocumentGenerationRequest request)
         {
             var result = await _documentGenerationService.GenerateDocument(request.TemplateType, request.TemplateData, request.ConvertToType);
-            if(result.HttpStatusCode != HttpStatusCode.OK)
+            if (result.HttpStatusCode != HttpStatusCode.OK)
             {
                 return StatusCode(500, result.Message);
             }

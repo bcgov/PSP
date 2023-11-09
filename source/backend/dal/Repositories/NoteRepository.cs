@@ -41,18 +41,6 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Adds the specified note to the datasource.
-        /// </summary>
-        /// <param name="note">The note to add.</param>
-        /// <returns></returns>
-        public PimsNote Add(PimsNote note)
-        {
-            note.ThrowIfNull(nameof(note));
-            this.Context.PimsNotes.Add(note);
-            return note;
-        }
-
-        /// <summary>
         /// Updates the specified note.
         /// </summary>
         /// <param name="note"></param>

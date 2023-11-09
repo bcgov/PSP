@@ -28,8 +28,8 @@ export const ProjectExportFormContent: React.FunctionComponent<IProjectExportFor
   });
   const teamMembersOptions = teamMembers.map<CodeTypeSelectOption>(x => {
     return {
-      codeType: x?.id?.toString() ?? '',
-      codeTypeDescription: formatApiPersonNames(x),
+      codeType: x.personId ? `P-${x.personId}` : `O-${x.organizationId}`,
+      codeTypeDescription: x.personId ? formatApiPersonNames(x.person) : x.organization?.name ?? '',
     };
   });
 

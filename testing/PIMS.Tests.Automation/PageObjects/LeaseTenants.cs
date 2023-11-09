@@ -68,7 +68,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Edit Tenant section
         public void EditTenant()
         {
-            WaitUntilClickable(tenantEditIcon);
+            Wait(2000);
             webDriver.FindElement(tenantEditIcon).Click();
         }
 

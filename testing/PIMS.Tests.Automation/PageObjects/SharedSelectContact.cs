@@ -17,7 +17,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectContact(string contactSearchName, string contactType)
         {
-            Wait(3000);
+            WaitUntilTableSpinnerDisappear();
 
             switch (contactType)
             {
@@ -31,6 +31,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     break;
             }
 
+            Wait(2000);
             webDriver.FindElement(selectContactSearchInput).SendKeys(contactSearchName);
             webDriver.FindElement(selectContactSearchButton).Click();
 

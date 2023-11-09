@@ -1,3 +1,4 @@
+using System.Data.Entity.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Pims.Dal.Repositories
 {
@@ -48,15 +51,6 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Returns the total number of projects in the database.
-        /// </summary>
-        /// <returns></returns>
-        public int Count()
-        {
-            return Context.PimsProjects.Count();
-        }
-
-        /// <summary>
         /// Returns a Paged Result of Projects based on ProjectFilter params.
         /// </summary>
         /// <returns></returns>
@@ -83,7 +77,8 @@ namespace Pims.Dal.Repositories
 
             return Context.PimsProjects
                     .AsNoTracking()
-                    .Include(x => x.PimsProducts)
+                    .Include(x => x.PimsProjectProducts)
+                        .ThenInclude(x => x.Product)
                     .Include(x => x.ProjectStatusTypeCodeNavigation)
                     .Include(x => x.RegionCodeNavigation)
                     .Include(x => x.CostTypeCode)
@@ -100,14 +95,20 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsProject Add(PimsProject project)
         {
-            User.ThrowIfNotAuthorized(Permissions.ProjectAdd);
-
-            foreach (var product in project.PimsProducts)
+            foreach (var projectProduct in project.PimsProjectProducts)
             {
-                product.ParentProject = project;
+                if (projectProduct.ProductId != 0)
+                {
+                    this.Context.Entry(projectProduct.Product).State = EntityState.Modified;
+                }
+                else
+                {
+                    this.Context.Entry(projectProduct.Product).State = EntityState.Added;
+                }
             }
 
             Context.PimsProjects.Add(project);
+
             return project;
         }
 
@@ -124,7 +125,9 @@ namespace Pims.Dal.Repositories
             var existingProject = Context.PimsProjects
                 .FirstOrDefault(x => x.Id == project.Id) ?? throw new KeyNotFoundException();
 
-            this.Context.UpdateChild<PimsProject, long, PimsProduct, long>(p => p.PimsProducts, project.Id, project.PimsProducts.ToArray(), true);
+            Func<PimsContext, PimsProjectProduct, bool> canDeleteGrandchild = (context, pa) => !context.PimsProducts.Any(o => o.Id == pa.ProductId);
+
+            this.Context.UpdateGrandchild<PimsProject, long, PimsProjectProduct>(p => p.PimsProjectProducts, pp => pp.Product, project.Id, project.PimsProjectProducts.ToArray(), canDeleteGrandchild);
 
             Context.Entry(existingProject).CurrentValues.SetValues(project);
 

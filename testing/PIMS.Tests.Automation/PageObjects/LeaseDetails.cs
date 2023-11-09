@@ -593,9 +593,10 @@ namespace PIMS.Tests.Automation.PageObjects
             //If PID is already associated with another license
             if (webDriver.FindElements(licenseDetailsModalPIDAttached).Count > 0)
             {
+                Wait();
                 sharedModals.ModalClickOKBttn();
 
-                Wait(3000);
+                Wait(5000);
                 if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
                 {
                     Assert.True(sharedModals.ModalHeader().Equals("User Override Required"));

@@ -10,6 +10,10 @@ namespace Pims.Dal.Repositories
     {
         IList<PimsProduct> GetByProject(long projectId);
 
+        IList<PimsProjectProduct> GetProjectProductsByProject(long projectId);
+
+        IEnumerable<PimsProduct> GetProducts(IEnumerable<PimsProduct> incomingProducts);
+
         IEnumerable<PimsProduct> GetByProductBatch(IEnumerable<PimsProduct> incomingProducts, long projectId);
     }
 }

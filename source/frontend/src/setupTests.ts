@@ -85,9 +85,9 @@ afterEach(() => {
     ];
 
     throw new Error(messageTemplate.join('\n\n'));
+  } finally {
+    onUnhandledRequest.mockClear();
   }
-
-  onUnhandledRequest.mockClear();
 });
 
 // Clean up after the tests are finished.

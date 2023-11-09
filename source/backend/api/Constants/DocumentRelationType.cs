@@ -16,5 +16,7 @@ namespace Pims.Api.Constants
         Leases,
         [EnumMember(Value = "projects")]
         Projects,
+        [EnumMember(Value = "managementfiles")]
+        ManagementFiles,
     }
 }

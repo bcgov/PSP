@@ -8,7 +8,6 @@ export class PropertyContactFormModel {
   public contact: IContactSearchResult | undefined = undefined;
   public primaryContactId: string = '';
   public purposeDescription: string = '';
-  public isDisabled: boolean = false;
   public rowVersion: number = 0;
 
   public toApi(): Api_PropertyContact {
@@ -22,7 +21,6 @@ export class PropertyContactFormModel {
       primaryContactId: this.primaryContactId !== '' ? Number(this.primaryContactId) : null,
       primaryContact: null,
       purpose: stringToNull(this.purposeDescription),
-      isDisabled: this.isDisabled,
       rowVersion: this.rowVersion,
     };
   }
@@ -31,7 +29,6 @@ export class PropertyContactFormModel {
     const newFormModel = new PropertyContactFormModel();
     newFormModel.id = model?.id || 0;
     newFormModel.propertyId = model?.propertyId || 0;
-    newFormModel.isDisabled = model?.isDisabled || false;
     newFormModel.rowVersion = model?.rowVersion || 0;
     if (model?.organization) {
       newFormModel.contact = fromApiOrganization(model.organization);

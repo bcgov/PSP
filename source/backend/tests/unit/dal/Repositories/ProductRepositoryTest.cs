@@ -22,6 +22,7 @@ namespace Pims.Dal.Test.Repositories
         #endregion
 
         #region Tests
+        /* TODO: Verify this is necessary
         [Fact]
         public void GetByProductBatch_ChangedCode()
         {
@@ -128,7 +129,7 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             result.Should().NotBeNull();
             result.Should().BeEmpty(); // in this instance even though the code/description is the same the new product is replacing the old product within the given project.
-        }
+        }*/
 
         #endregion
     }

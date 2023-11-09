@@ -83,10 +83,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     actions: {
       navigateToProperty: (context, event: any) => {
         const selectedFeatureData = context.mapLocationFeatureDataset;
-        if (selectedFeatureData?.pimsFeature?.properties.PROPERTY_ID) {
+        if (selectedFeatureData?.pimsFeature?.properties?.PROPERTY_ID) {
           const pimsFeature = selectedFeatureData.pimsFeature;
           history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
-        } else if (selectedFeatureData?.parcelFeature?.properties.PID) {
+        } else if (selectedFeatureData?.parcelFeature?.properties?.PID) {
           const parcelFeature = selectedFeatureData.parcelFeature;
           const parsedPid = pidParser(parcelFeature.properties.PID);
           history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
@@ -95,13 +95,23 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     },
     services: {
       loadLocationData: (context: MachineContext, event: any) => {
-        let latLng: LatLngLiteral = { lat: 0, lng: 0 };
-        if (event.type === 'MAP_CLICK') {
-          latLng = event.latlng;
-        } else if (event.type === 'MAP_MARKER_CLICK') {
-          latLng = event.featureSelected.latlng;
+        const result = locationLoader.loadLocationDetails(
+          event.type === 'MAP_CLICK' ? event.latlng : event.featureSelected.latlng,
+        );
+        if (event.type === 'MAP_MARKER_CLICK') {
+          // In the case of the map marker being clicked, always used the clicked marker instead of the search result.
+          // TODO: refactor loadLocationDetails method to allow for optional loading of various feature types.
+          result.then(data => {
+            data.pimsFeature = {
+              properties: event.featureSelected?.pimsLocationFeature,
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [event.featureSelected.latlng.lng, event.featureSelected.latlng.lat],
+              },
+            };
+          });
         }
-        const result = locationLoader.loadLocationDetails(latLng);
 
         return result;
       },
@@ -115,7 +125,9 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
         const geoFilter = getQueryParams(searchCriteria);
 
-        if (geoFilter?.latitude && geoFilter?.longitude) {
+        if (geoFilter?.PID || geoFilter?.PID_PADDED || geoFilter?.PIN) {
+          return mapSearch.searchMany(geoFilter);
+        } else if (geoFilter?.latitude && geoFilter?.longitude) {
           const geoLat = Number(geoFilter.latitude);
           const geoLng = Number(geoFilter.longitude);
           return mapSearch.searchOneLocation(geoLat, geoLng);
@@ -319,6 +331,7 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
   // The map will search for either identifier.
   const pinOrPidValue = filter.pinOrPid ? filter.pinOrPid?.replace(/-/g, '') : undefined;
   return {
+    PID_PADDED: pinOrPidValue,
     PID: pinOrPidValue,
     PIN: pinOrPidValue,
     STREET_ADDRESS_1: filter.address,

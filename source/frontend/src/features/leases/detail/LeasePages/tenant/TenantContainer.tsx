@@ -18,6 +18,7 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
   isEditing,
   formikRef,
   onEdit,
+  onSuccess,
 }) => {
   const { lease } = useContext(LeaseStateContext);
   const {
@@ -36,6 +37,7 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
         onEdit={onEdit}
         tenants={formTenants}
         View={AddLeaseTenantForm}
+        onSuccess={onSuccess}
       />
     </ProtectedComponent>
   ) : (

@@ -106,6 +106,10 @@ namespace Pims.Api.Controllers
                     var projectDocuments = _documentFileService.GetFileDocuments<PimsProjectDocument>(FileType.Project, long.Parse(parentId));
                     var mappedProjectDocuments = _mapper.Map<List<DocumentRelationshipModel>>(projectDocuments);
                     return new JsonResult(mappedProjectDocuments);
+                case DocumentRelationType.ManagementFiles:
+                    var managementDocuments = _documentFileService.GetFileDocuments<PimsPropertyActivityDocument>(FileType.Management, long.Parse(parentId));
+                    var mappedPropertyActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(managementDocuments);
+                    return new JsonResult(mappedPropertyActivityDocuments);
                 default:
                     throw new BadRequestException("Relationship type not valid for retrieve.");
             }
@@ -135,6 +139,7 @@ namespace Pims.Api.Controllers
                 DocumentRelationType.Templates => await _formDocumentService.UploadFormDocumentTemplateAsync(parentId, uploadRequest),
                 DocumentRelationType.Projects => await _documentFileService.UploadProjectDocumentAsync(long.Parse(parentId), uploadRequest),
                 DocumentRelationType.Leases => await _documentFileService.UploadLeaseDocumentAsync(long.Parse(parentId), uploadRequest),
+                DocumentRelationType.ManagementFiles => await _documentFileService.UploadPropertyActivityDocumentAsync(long.Parse(parentId), uploadRequest),
                 _ => throw new BadRequestException("Relationship type not valid for upload."),
             };
 
@@ -176,6 +181,10 @@ namespace Pims.Api.Controllers
                     var projectRelationship = _mapper.Map<PimsProjectDocument>(model);
                     var projectResult = await _documentFileService.DeleteProjectDocumentAsync(projectRelationship);
                     return new JsonResult(projectResult);
+                case DocumentRelationType.ManagementFiles:
+                    var propertyActivityRelationship = _mapper.Map<PimsPropertyActivityDocument>(model);
+                    var propertyActivityResult = await _documentFileService.DeletePropertyActivityDocumentAsync(propertyActivityRelationship);
+                    return new JsonResult(propertyActivityResult);
                 default:
                     throw new BadRequestException("Relationship type not valid for delete.");
             }

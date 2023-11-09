@@ -18,7 +18,7 @@ import { SystemConstants, useSystemConstants } from '@/store/slices/systemConsta
 import { getLatLng } from '@/utils/mapPropertyUtils';
 
 export const useGenerateH120 = () => {
-  const { getPersonConcept } = useApiContacts();
+  const { getPersonConcept, getOrganizationConcept } = useApiContacts();
   const { getAcquisitionFile, getAcquisitionProperties, getAcquisitionCompReqH120s } =
     useAcquisitionProvider();
   const { getAcquisitionInterestHolders } = useInterestHolderRepository();
@@ -53,8 +53,13 @@ export const useGenerateH120 = () => {
     const interestHoldersPromise = getAcquisitionInterestHolders.execute(
       compensation.acquisitionFileId,
     );
-    const acquisitionFilePersonPromise = compensation?.acquisitionFilePerson?.personId
-      ? getPersonConcept(compensation.acquisitionFilePerson.personId)
+
+    // Team members can be either a person or an organization
+    const acquisitionFileTeamPersonPromise = compensation?.acquisitionFileTeam?.personId
+      ? getPersonConcept(compensation.acquisitionFileTeam.personId)
+      : Promise.resolve(null);
+    const acquisitionFileTeamOrganizationPromise = compensation?.acquisitionFileTeam?.organizationId
+      ? getOrganizationConcept(compensation.acquisitionFileTeam.organizationId)
       : Promise.resolve(null);
 
     const [
@@ -63,14 +68,16 @@ export const useGenerateH120 = () => {
       h120Categories,
       compReqFinalH120s,
       interestHolders,
-      acquisitionFilePerson,
+      acquisitionFileTeamPerson,
+      acquisitionFileTeamOrganization,
     ] = await Promise.all([
       filePromise,
       propertiesPromise,
       h120CategoriesPromise,
       compReqFinalH120sPromise,
       interestHoldersPromise,
-      acquisitionFilePersonPromise,
+      acquisitionFileTeamPersonPromise,
+      acquisitionFileTeamOrganizationPromise,
     ]);
 
     if (!file) {
@@ -95,8 +102,12 @@ export const useGenerateH120 = () => {
     }
 
     // Populate payee information
-    if (compensation?.acquisitionFilePerson && compensation?.acquisitionFilePerson?.personId) {
-      compensation.acquisitionFilePerson.person = acquisitionFilePerson?.data;
+    if (compensation?.acquisitionFileTeam) {
+      if (compensation?.acquisitionFileTeam?.personId) {
+        compensation.acquisitionFileTeam.person = acquisitionFileTeamPerson?.data;
+      } else if (compensation?.acquisitionFileTeam?.organizationId) {
+        compensation.acquisitionFileTeam.organization = acquisitionFileTeamOrganization?.data;
+      }
     } else if (compensation?.interestHolderId) {
       const matchedInterestHolder =
         interestHolders?.find(ih => ih.interestHolderId === compensation?.interestHolderId) ?? null;

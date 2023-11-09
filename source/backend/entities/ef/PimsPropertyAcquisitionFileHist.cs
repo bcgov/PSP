@@ -30,8 +30,6 @@ namespace Pims.Dal.Entities
         public string PropertyName { get; set; }
         [Column("DISPLAY_ORDER")]
         public int? DisplayOrder { get; set; }
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

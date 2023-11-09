@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { FileTypes } from '@/constants/fileTypes';
 import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
@@ -18,17 +17,15 @@ import TakesDetailView from '@/features/mapSideBar/property/tabs/takes/detail/Ta
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
-import { PropertyEditForms } from '../../property/PropertyViewSelector';
+import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
 
 export interface IPropertyFileContainerProps {
   fileProperty: Api_PropertyFile;
-  setEditFileProperty: () => void;
-  setEditTakes: () => void;
+  setEditing: () => void;
   View: React.FunctionComponent<React.PropsWithChildren<IInventoryTabsProps>>;
   customTabs: TabInventoryView[];
   defaultTab: InventoryTabNames;
   fileContext?: FileTypes;
-  withRouter?: boolean;
 }
 
 export const PropertyFileContainer: React.FunctionComponent<
@@ -80,6 +77,16 @@ export const PropertyFileContainer: React.FunctionComponent<
     name: 'Value',
   });
 
+  if (props.fileContext === FileTypes.Research) {
+    tabViews.push({
+      content: (
+        <PropertyResearchTabView researchFile={props.fileProperty} setEditMode={props.setEditing} />
+      ),
+      key: InventoryTabNames.research,
+      name: 'Property Research',
+    });
+  }
+
   tabViews.push(...props.customTabs);
 
   if (!!id) {
@@ -88,11 +95,6 @@ export const PropertyFileContainer: React.FunctionComponent<
         <PropertyDetailsTabView
           property={propertyViewForm}
           loading={composedProperties.composedLoading ?? false}
-          setEditManagementState={state => {
-            if (state?.form === PropertyEditForms.UpdatePropertyDetailsContainer) {
-              props.setEditFileProperty();
-            }
-          }}
         />
       ),
       key: InventoryTabNames.property,
@@ -117,7 +119,7 @@ export const PropertyFileContainer: React.FunctionComponent<
       content: (
         <TakesDetailContainer
           fileProperty={props.fileProperty}
-          onEdit={props.setEditTakes}
+          onEdit={props.setEditing}
           View={TakesDetailView}
         ></TakesDetailContainer>
       ),
@@ -128,24 +130,9 @@ export const PropertyFileContainer: React.FunctionComponent<
 
   const InventoryTabsView = props.View;
   let activeTab: InventoryTabNames;
-  let setActiveTab: (tab: InventoryTabNames) => void;
 
-  // Use state-based tabs OR route-based tabs (as passed in the 'withRouter' property)
-  const [activeTabState, setActiveTabState] = useState<InventoryTabNames>(props.defaultTab);
-  const history = useHistory();
   const params = useParams<{ tab?: string }>();
-
-  if (!!props.withRouter) {
-    activeTab = Object.values(InventoryTabNames).find(t => t === params.tab) ?? props.defaultTab;
-    setActiveTab = (tab: InventoryTabNames) => {
-      if (activeTab !== tab) {
-        history.push(`${tab}`);
-      }
-    };
-  } else {
-    activeTab = activeTabState;
-    setActiveTab = setActiveTabState;
-  }
+  activeTab = Object.values(InventoryTabNames).find(t => t === params.tab) ?? props.defaultTab;
 
   return (
     <InventoryTabsView
@@ -153,7 +140,6 @@ export const PropertyFileContainer: React.FunctionComponent<
       tabViews={tabViews}
       defaultTabKey={props.defaultTab}
       activeTab={activeTab}
-      setActiveTab={setActiveTab}
     />
   );
 };

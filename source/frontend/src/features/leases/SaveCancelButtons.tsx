@@ -32,7 +32,6 @@ const SaveCancelButtons: React.FunctionComponent<
           if (onSaveOverride) {
             onSaveOverride();
           } else {
-            formikProps.setSubmitting(true);
             formikProps.submitForm();
           }
         }}

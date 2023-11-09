@@ -93,6 +93,15 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
         }
 
+        public void OrderByLastLease()
+        {
+            WaitUntilClickable(searchLicenseOrderByLFileBttn);
+            webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
+
+            Wait();
+            webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
+        }
+
         public void SelectFirstOption()
         {
             WaitUntilClickable(searchLicense1stResultLink);
@@ -104,7 +113,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void FilterLeasesFiles(string pid, string expiryDate, string tenant, string status)
         {
-            WaitUntilClickable(searchLicenseResetButton);
+            Wait();
             webDriver.FindElement(searchLicenseResetButton).Click();
             webDriver.FindElement(searchLicenseActiveStatusDeleteBttn).Click();
 
@@ -113,11 +122,15 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchLicensePIDInput).SendKeys(pid);
             webDriver.FindElement(searchLicenceFromDateInput).SendKeys(expiryDate);
             webDriver.FindElement(searchLicenceTenantInput).SendKeys(tenant);
-            webDriver.FindElement(searchLicenseStatusInput).Click();
 
-            WaitUntilClickable(searchLicenseStatusOptions);
-            ChooseMultiSelectSpecificOption(searchLicenseStatusOptions, status);
+            if (status != "")
+            {
+                webDriver.FindElement(searchLicenseStatusInput).Click();
 
+                WaitUntilClickable(searchLicenseStatusOptions);
+                ChooseMultiSelectSpecificOption(searchLicenseStatusOptions, status);
+            }
+             
             WaitUntilClickable(searchLicenseSearchButton);
             FocusAndClick(searchLicenseSearchButton);
         }
@@ -137,7 +150,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Search Leases Filters
             Assert.True(webDriver.FindElement(searchBySelect).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenseLFileInput).Displayed);
+            Assert.True(webDriver.FindElement(searchLicensePIDInput).Displayed);
             Assert.True(webDriver.FindElement(searchLicenseStatusInput).Displayed);
             Assert.True(webDriver.FindElement(searchLicenseProgramInput).Displayed);
             Assert.True(webDriver.FindElement(searchLicenceTenantInput).Displayed);
@@ -173,7 +186,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchLicense1stResultLink).Displayed);
             Assert.True(webDriver.FindElement(searchLicense1stResultExpiryDateContent).Text.Equals(TransformDateFormat(expiryDate)));
             Assert.True(webDriver.FindElement(searchLicense1stResultProgramContent).Text.Equals(program));
-            Assert.True(webDriver.FindElements(searchLicense1stResultTenantsContent).Count > 0);
+            Assert.True(webDriver.FindElements(searchLicense1stResultTenantsContent).Count.Equals(0));
             Assert.True(webDriver.FindElements(searchLicense1stResultPropertiesContent).Count > 0);
             Assert.True(webDriver.FindElement(searchLicense1stResultStatusContent).Text.Equals(status));
         }

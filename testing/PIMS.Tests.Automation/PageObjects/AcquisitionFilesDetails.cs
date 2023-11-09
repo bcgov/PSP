@@ -3,8 +3,6 @@ using SeleniumExtras.WaitHelpers;
 using OpenQA.Selenium.Support.UI;
 using System.Text.RegularExpressions;
 using PIMS.Tests.Automation.Classes;
-using Sprache;
-using OpenQA.Selenium.DevTools.V112.Debugger;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -128,7 +126,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateToCreateNewAcquisitionFile()
         {
             Wait(3000);
-            webDriver.FindElement(menuAcquisitionButton).Click();
+            FocusAndClick(menuAcquisitionButton);
 
             WaitUntilVisible(createAcquisitionFileButton);
             FocusAndClick(createAcquisitionFileButton);
@@ -158,7 +156,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditAcquisitionFileBttn()
         {
-            Wait();
+            WaitUntilSpinnerDisappear();
             webDriver.FindElement(acquisitionFileEditButton).Click();
         }
 
@@ -351,7 +349,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.PhysicalFileStatus != "") 
                 ChooseSpecificSelectOption(acquisitionFilePhysicalStatusSelect, acquisition.PhysicalFileStatus);
 
-            if (acquisition.AcquisitionTeam.First().ContactName != "")
+            if (acquisition.AcquisitionTeam.Count > 0)
             {
                 while (webDriver.FindElements(acquisitionFileTeamMembersGroup).Count > 0)
                     DeleteFirstStaffMember();
@@ -362,7 +360,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
             }
 
-            if (acquisition.AcquisitionOwners.First().ContactType != "")
+            if (acquisition.AcquisitionOwners.Count > 0)
             {
                 while (webDriver.FindElements(acquisitionFileOwnersGroup).Count > 0)
                     DeleteOwner();
@@ -673,8 +671,8 @@ namespace PIMS.Tests.Automation.PageObjects
             var teamMemberIndex = webDriver.FindElements(acquisitionFileTeamMembersGroup).Count() -1;
             var teamMemberCount = webDriver.FindElements(acquisitionFileTeamMembersGroup).Count();
 
-            WaitUntilVisible(By.CssSelector("select[id='input-team["+ teamMemberIndex +"].contactTypeCode']"));
-            ChooseSpecificSelectOption(By.CssSelector("select[id='input-team["+ teamMemberIndex +"].contactTypeCode']"), teamRole);
+            WaitUntilVisible(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"));
+            ChooseSpecificSelectOption(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"), teamRole);
             FocusAndClick(By.CssSelector("div[class='collapse show'] div[class='py-3 row']:nth-child("+ teamMemberCount +") div[class='pl-0 col-auto'] button"));
             sharedSelectContact.SelectContact(contactName, "");
         }

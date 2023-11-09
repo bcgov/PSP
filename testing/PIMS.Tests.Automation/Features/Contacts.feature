@@ -3,44 +3,35 @@ Feature: Contacts
 
 A short summary of the feature
 
-Scenario Outline: Create new Organization Complete Contact
+Scenario Outline: 01. Organization Contacts
 	Given I create a new Organization Contact from row number <RowNumber>
+	When I update an existing Organization Contact from row number <EditNumber>
 	And I search for an existing contact from type "<ContactType>" row number <RowNumber>
 	Then  Expected Content is displayed on Contacts Table from contact type "<ContactType>"
 	Examples: 
-	| ContactType	| RowNumber |
-	| Organization  | 1         |
-	| Organization  | 3         |
+	| ContactType  | RowNumber | EditNumber |
+	| Organization | 1         | 2          |
+	| Organization | 3         | 4          |
 
-Scenario Outline: Create new Individual Complete Contact
+Scenario Outline: 02. Individual Contacts
 	Given I create a new Individual Contact from row number <RowNumber>
+	When I update an existing Individual Contact from row number <EditNumber>
 	And I search for an existing contact from type "<ContactType>" row number <RowNumber>
 	Then Expected Content is displayed on Contacts Table from contact type "<ContactType>"
 	Examples:
-	| ContactType	| RowNumber |
-	| Individual	| 1         |
-	| Individual	| 2         |
-	| Individual	| 4         |
+	| ContactType | RowNumber | EditNumber |
+	| Individual  | 1         | 2          |
+	| Individual  | 3         | 4          |
+	| Individual  | 5         | 6          |
 
-Scenario: Cancel creating a new contact
-	Given I cancel creating a new contact from row number 2
-	Then Search Contacts screen is correctly rendered
 
-Scenario: Update an Existing Organization Contact
-	Given I update an existing Organization Contact from row number 4
-	Then An Organization contact is successfully updated
-
-Scenario: Update an Existing Individual Contact
-	Given I update an existing Individual Contact from row number 5
-	Then An Individual contact is successfully updated
-
-Scenario Outline: Search for a non-existing Contact
+Scenario Outline: 03. Search for a non-existing Contact
 	Given I search for an non-existing contact from type "<ContactType>" row number <RowNumber>
 	Then No contacts results are found
 	Examples:
 	| ContactType	| RowNumber |
-	| Individual	| 6         |
-	| Organization	| 5         |
+	| Individual	| 8         |
+	| Organization	| 6         |
 
 
 

@@ -39,7 +39,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ModalClickOKBttn()
         {
-            WaitUntilVisible(generalModal);
+            Wait(2000);
             webDriver.FindElement(generalModalOkBttn).Click();
         }
 

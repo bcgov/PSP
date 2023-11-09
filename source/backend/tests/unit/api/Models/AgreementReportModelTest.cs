@@ -10,12 +10,12 @@ namespace Pims.Api.Test
     public class AgreementReportModelTest
     {
         [Fact]
-        public void AgreementReportModel_TeamMember()
+        public void AgreementReportModel_TeamMember_Person()
         {
             // Arrange
             var testAgreement = new Dal.Entities.PimsAgreement();
-            var propCoord = new PimsAcquisitionFilePerson() { AcqFlPersonProfileTypeCode = "PROPCOORD", Person = new PimsPerson() { Surname = "test" } };
-            testAgreement.AcquisitionFile = new Dal.Entities.PimsAcquisitionFile() { PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() { propCoord } };
+            var propCoord = new PimsAcquisitionFileTeam() { AcqFlTeamProfileTypeCode = "PROPCOORD", PersonId = 1, Person = new PimsPerson() { PersonId = 1, Surname = "test" } };
+            testAgreement.AcquisitionFile = new Dal.Entities.PimsAcquisitionFile() { PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { propCoord } };
 
             // Act
             var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());
@@ -25,11 +25,26 @@ namespace Pims.Api.Test
         }
 
         [Fact]
+        public void AgreementReportModel_TeamMember_Organization()
+        {
+            // Arrange
+            var testAgreement = new Dal.Entities.PimsAgreement();
+            var propCoord = new PimsAcquisitionFileTeam() { AcqFlTeamProfileTypeCode = "PROPCOORD", OrganizationId = 100, Organization = new PimsOrganization() { OrganizationId = 100, Name = "FORTIS BC" } };
+            testAgreement.AcquisitionFile = new Dal.Entities.PimsAcquisitionFile() { PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { propCoord } };
+
+            // Act
+            var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());
+
+            // Assert
+            model.PropertyCoordinator.Should().Be("FORTIS BC");
+        }
+
+        [Fact]
         public void AgreementReportModel_TeamMember_Null()
         {
             // Arrange
             var testAgreement = new Dal.Entities.PimsAgreement();
-            testAgreement.AcquisitionFile = new Dal.Entities.PimsAcquisitionFile() { PimsAcquisitionFilePeople = new List<PimsAcquisitionFilePerson>() { } };
+            testAgreement.AcquisitionFile = new Dal.Entities.PimsAcquisitionFile() { PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { } };
 
             // Act
             var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());

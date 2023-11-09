@@ -21,6 +21,5 @@ export const emptyInterestHolderProperty: Api_InterestHolderProperty = {
   interestHolderPropertyId: null,
   acquisitionFileProperty: null,
   acquisitionFilePropertyId: null,
-  isDisabled: false,
   rowVersion: 0,
 };

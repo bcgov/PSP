@@ -33,6 +33,7 @@ jest.mock('@/hooks/repositories/useLeaseTenantRepository');
 const getPersonConcept = jest.fn();
 const updateTenants = jest.fn().mockResolvedValue({ ...defaultApiLease, id: 1 });
 const onEdit = jest.fn();
+const onSuccess = jest.fn();
 
 const history = createMemoryHistory();
 const storeState = {
@@ -69,6 +70,7 @@ describe('AddLeaseTenantContainer component', () => {
           View={View}
           onEdit={onEdit}
           tenants={renderOptions.tenants ?? []}
+          onSuccess={onSuccess}
         >
           <SaveButton />
         </AddLeaseTenantContainer>

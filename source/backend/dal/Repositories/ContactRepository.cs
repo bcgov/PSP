@@ -34,15 +34,6 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
-        /// Returns the total number of contacts in the database.
-        /// </summary>
-        /// <returns></returns>
-        public int Count()
-        {
-            return this.Context.PimsContactMgrVws.Count();
-        }
-
-        /// <summary>
         /// Get an array of contacts within the specified filters.
         /// Note that the 'contactFilter' will control the 'page' and 'quantity'.
         /// </summary>

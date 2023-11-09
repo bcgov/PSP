@@ -35,6 +35,11 @@ namespace Pims.Dal.Entities.Models
         public string LeaseStatus { get; set; }
 
         /// <summary>
+        /// get/set - The lease receivable/payable type to filter by.
+        /// </summary>
+        public string LeasePayRcvblType { get; set; }
+
+        /// <summary>
         /// get/set - The multiple lease types to filter by.
         /// </summary>
         public List<string> LeaseTypes { get; set; }
