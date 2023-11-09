@@ -206,7 +206,12 @@ export const ResearchContainer: React.FunctionComponent<
     setIsShowingPropertySelector(true);
   };
 
-  if (researchFile === undefined && (loadingResearchFile || loadingResearchFileProperties)) {
+  if (
+    loadingResearchFile ||
+    (loadingResearchFileProperties && !isShowingPropertySelector) ||
+    researchFile?.fileType !== FileTypes.Research ||
+    researchFile?.id !== researchFileId
+  ) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 
