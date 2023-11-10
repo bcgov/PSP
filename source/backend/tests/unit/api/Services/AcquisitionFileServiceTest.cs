@@ -525,7 +525,7 @@ namespace Pims.Api.Test.Services
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActTypeCode = "Crown Grant (New)" } }, true, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewInterestInSrw = true } }, false, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewLicenseToConstruct = true } }, false, false },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsThereSurplus = true } }, false, false },
+            new object[] { new List<PimsTake>() { new PimsTake() { IsThereSurplus = true } }, true, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true } }, true, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true, IsAcquiredForInventory = false } }, false, true },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = false, IsAcquiredForInventory = true } }, true, false },
