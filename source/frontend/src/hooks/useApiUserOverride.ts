@@ -1,4 +1,4 @@
-import { Axios, AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { uniq } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
