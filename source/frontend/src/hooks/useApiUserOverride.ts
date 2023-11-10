@@ -1,7 +1,9 @@
+import { Axios, AxiosError } from 'axios';
 import { uniq } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { RemoveSelfContractorContent } from '@/features/mapSideBar/acquisition/tabs/fileDetails/update/UpdateAcquisitionContainer';
+import { IApiError } from '@/interfaces/IApiError';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandlerWithConfirmation } from '@/utils';
 
@@ -48,13 +50,17 @@ export const useApiUserOverride = <
   );
 
   const apiCallWithOverride = useCallback(
-    async (apiFunction: FunctionType, userOverrideCodes: UserOverrideCode[] = []) => {
+    async (
+      apiFunction: FunctionType,
+      userOverrideCodes: UserOverrideCode[] = [],
+      handleError?: (e: AxiosError<IApiError>) => void,
+    ) => {
       try {
         var response = await apiFunction(uniq(userOverrideCodes));
         setDisplayModal(false);
         return response;
       } catch (e) {
-        handleOverrideError(e);
+        handleOverrideError(e, handleError);
       } finally {
         overridenApiFunction.current = apiFunction;
       }

@@ -5,6 +5,7 @@ using System.Linq;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using FluentAssertions;
 using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Constants;
@@ -400,6 +401,51 @@ namespace Pims.Api.Test.Services
             var ex = act.Should().Throw<UserOverrideException>();
             ex.Which.UserOverride.Should().Be(UserOverrideCode.UpdateRegion);
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_Version_Violation()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(2);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            Action act = () => service.Update(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            var ex = act.Should().Throw<DbUpdateConcurrencyException>();
+        }
+
+        [Fact]
+        public void Update_Drafts_Violation()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>() { new PimsAgreement() { IsDraft = true } });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            Action act = () => service.Update(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            var ex = act.Should().Throw<BusinessRuleViolationException>();
         }
 
         [Fact]

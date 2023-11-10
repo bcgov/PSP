@@ -277,6 +277,21 @@ describe('UpdateAcquisition container', () => {
     expect(onSuccess).toHaveBeenCalled();
   });
 
+  it(`displays custom 400 errors in a modal`, async () => {
+    mockUpdateAcquisitionFile.mockRejectedValue(
+      createAxiosError(400, 'test error', {
+        errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
+      }),
+    );
+    const { formikRef } = setup();
+
+    expect(formikRef.current).not.toBeNull();
+    await act(async () => formikRef.current?.submitForm());
+
+    const popup = await screen.findByText(/test error/i);
+    expect(popup).toBeVisible();
+  });
+
   it(`dismisses the properties popup when clicking 'Cancel Update'`, async () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
       createAxiosError(
