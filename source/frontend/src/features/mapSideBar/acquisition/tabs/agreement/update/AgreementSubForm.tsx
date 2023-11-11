@@ -1,5 +1,5 @@
-import { FormikProps } from 'formik';
-import React from 'react';
+import { FormikProps, getIn } from 'formik';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import {
@@ -7,10 +7,13 @@ import {
   FastDatePicker,
   Input,
   Select,
-  SelectOption,
   TextArea,
 } from '@/components/common/form';
 import { SectionField, StyledFieldLabel } from '@/components/common/Section/SectionField';
+import * as API from '@/constants/API';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { useModalContext } from '@/hooks/useModalContext';
+import { AgreementStatusTypes } from '@/models/api/Agreement';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { mapLookupCode } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
@@ -32,16 +35,50 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
   agreementTypes,
 }) => {
   const H0074Type = 'H0074';
-  const options: SelectOption[] = [
-    { label: 'Draft', value: 'true' },
-    { label: 'Final', value: 'false' },
-  ];
+  const { getOptionsByType } = useLookupCodeHelpers();
+
+  const agreementStatusOptions = getOptionsByType(API.AGREEMENT_STATUS_TYPES);
+  const agreement = getIn(formikProps.values, nameSpace);
+
+  const { setDisplayModal, setModalContent } = useModalContext();
+  const setFieldValue = formikProps.setFieldValue;
+
+  useEffect(() => {
+    if (
+      agreement.agreementStatusType !== AgreementStatusTypes.CANCELLED &&
+      !!agreement.cancellationNote
+    ) {
+      setModalContent({
+        okButtonText: 'Yes',
+        cancelButtonText: 'No',
+        message:
+          'Changing status to a status other than "Cancelled" will remove your "Cancellation reason". Are you sure you want to continue?',
+        title: 'Warning',
+        handleCancel: () => {
+          setDisplayModal(false);
+        },
+        handleOk: () => {
+          setFieldValue(withNameSpace(nameSpace, 'cancellationNote'), '');
+          setDisplayModal(false);
+        },
+      });
+      setDisplayModal(true);
+    }
+  }, [agreement, setFieldValue, nameSpace, setDisplayModal, setModalContent]);
   return (
     <>
       <StyledSectionSubheader>Agreement details</StyledSectionSubheader>
       <SectionField labelWidth="5" label="Agreement status">
-        <Select options={options} field={withNameSpace(nameSpace, 'isDraft')} />
+        <Select
+          options={agreementStatusOptions}
+          field={withNameSpace(nameSpace, 'agreementStatusType')}
+        />
       </SectionField>
+      {agreement.agreementStatusType === AgreementStatusTypes.CANCELLED && (
+        <SectionField labelWidth="5" label="Cancellation reason">
+          <Input field={withNameSpace(nameSpace, 'cancellationNote')} />
+        </SectionField>
+      )}
       <SectionField labelWidth="5" label="Legal survey plan">
         <Input field={withNameSpace(nameSpace, 'legalSurveyPlanNum')} />
       </SectionField>

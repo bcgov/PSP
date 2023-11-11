@@ -1,10 +1,5 @@
 import { Api_Agreement } from '@/models/api/Agreement';
-import {
-  booleanToString,
-  stringToBooleanOrNull,
-  stringToUndefined,
-  toTypeCode,
-} from '@/utils/formUtils';
+import { stringToUndefined, toTypeCode } from '@/utils/formUtils';
 
 export class SingleAgreementFormModel {
   public agreementId: number = 0;
@@ -12,7 +7,6 @@ export class SingleAgreementFormModel {
   public agreementTypeCode: string = '';
   public agreementTypeDescription: string = '';
   public agreementDate: string = '';
-  public isDraft: string = '';
   public completionDate: string = '';
   public terminationDate: string = '';
   public commencementDate: string = '';
@@ -25,6 +19,9 @@ export class SingleAgreementFormModel {
   public expiryDateTime: string = '';
   public signedDate: string = '';
   public inspectionDate: string = '';
+  public agreementStatusTypeCode: string = '';
+  public agreementStatusTypeDescription: string = '';
+  public cancellationNote: string = '';
 
   public rowVersion: number | null = null;
 
@@ -35,7 +32,8 @@ export class SingleAgreementFormModel {
     agreement.agreementTypeCode = apiModel.agreementType.id || '';
     agreement.agreementTypeDescription = apiModel.agreementType.description || '';
     agreement.agreementDate = apiModel.agreementDate || '';
-    agreement.isDraft = apiModel.isDraft !== null ? booleanToString(apiModel.isDraft) : '';
+    agreement.agreementStatusTypeCode = apiModel.agreementStatusType?.id || '';
+    agreement.agreementStatusTypeDescription = apiModel.agreementStatusType?.description || '';
     agreement.completionDate = apiModel.completionDate || '';
     agreement.terminationDate = apiModel.terminationDate || '';
     agreement.commencementDate = apiModel.commencementDate || '';
@@ -59,7 +57,7 @@ export class SingleAgreementFormModel {
       acquisitionFileId: acquisitionFileId,
       agreementType: toTypeCode(this.agreementTypeCode) || {},
       agreementDate: stringToUndefined(this.agreementDate),
-      isDraft: stringToBooleanOrNull(this.isDraft),
+      agreementStatusType: toTypeCode(this.agreementStatusTypeCode) || {},
       completionDate: stringToUndefined(this.completionDate),
       terminationDate: stringToUndefined(this.terminationDate),
       commencementDate: stringToUndefined(this.commencementDate),
@@ -73,6 +71,7 @@ export class SingleAgreementFormModel {
       signedDate: stringToUndefined(this.signedDate),
       inspectionDate: stringToUndefined(this.inspectionDate),
       rowVersion: this.rowVersion ?? undefined,
+      cancellationNote: stringToUndefined(this.cancellationNote),
     };
   }
 }
