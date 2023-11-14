@@ -27,10 +27,12 @@ namespace Pims.Dal.Entities
         [Column("AGREEMENT_TYPE_CODE")]
         [StringLength(20)]
         public string AgreementTypeCode { get; set; }
+        [Required]
+        [Column("AGREEMENT_STATUS_TYPE_CODE")]
+        [StringLength(20)]
+        public string AgreementStatusTypeCode { get; set; }
         [Column("AGREEMENT_DATE", TypeName = "date")]
         public DateTime? AgreementDate { get; set; }
-        [Column("IS_DRAFT")]
-        public bool? IsDraft { get; set; }
         [Column("COMPLETION_DATE", TypeName = "date")]
         public DateTime? CompletionDate { get; set; }
         [Column("TERMINATION_DATE", TypeName = "date")]
@@ -58,6 +60,9 @@ namespace Pims.Dal.Entities
         public DateTime? ExpropriationDate { get; set; }
         [Column("POSSESSION_DATE", TypeName = "date")]
         public DateTime? PossessionDate { get; set; }
+        [Column("CANCELLATION_NOTE")]
+        [StringLength(2000)]
+        public string CancellationNote { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
