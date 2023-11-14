@@ -161,7 +161,7 @@ exports[`PropertyManagementDetailView component renders as expected when provide
         <div
           class="c5 text-left col"
         >
-          No active Lease/License
+          No
         </div>
       </div>
       <div
