@@ -12,7 +12,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.AgreementType, src => src.AgreementTypeCodeNavigation)
                 .Map(dest => dest.AgreementDate, src => src.AgreementDate)
-                .Map(dest => dest.IsDraft, src => src.IsDraft)
+                //.Map(dest => dest.IsDraft, src => src.IsDraft) TODO: Fix this
                 .Map(dest => dest.CompletionDate, src => src.CompletionDate)
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate)
                 .Map(dest => dest.CommencementDate, src => src.CommencementDate)
@@ -32,7 +32,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.AgreementTypeCode, src => src.AgreementType.Id)
                 .Map(dest => dest.AgreementDate, src => src.AgreementDate)
-                .Map(dest => dest.IsDraft, src => src.IsDraft)
+                //.Map(dest => dest.IsDraft, src => src.IsDraft) TODO: Fix this
                 .Map(dest => dest.CompletionDate, src => src.CompletionDate)
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate)
                 .Map(dest => dest.CommencementDate, src => src.CommencementDate)
