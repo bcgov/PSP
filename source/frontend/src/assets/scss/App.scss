@@ -1,19 +1,112 @@
 @import './styles.scss';
 
-.modal-dialog.modal-xl {
-  max-width: 100rem;
-}
+.modal-dialog {
+  div.modal-header {
+    height: 38px;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: $primary-background-color;
+    background-color: $primary-color;
 
-.modal-dialog.modal-l {
-  max-width: 75rem;
-}
+    .modal-title {
+      font-family: BcSans-Bold;
+      font-size: 18px;
+      height: 2.75rem;
+      height: auto;
+    }
 
-.modal-dialog.modal-m {
-  max-width: 50rem;
-}
+    .header-icon {
+      margin-right: 8px;
+      display: inline-block;
+    }
 
-.modal-dialog.modal-s {
-  max-width: 40rem;
+    .modal-close-btn {
+      cursor: pointer;
+    }
+  }
+
+  div.modal-body {
+    padding: 24px 16px;
+    text-align: justify;
+  }
+
+  div.modal-footer {
+    border-top: none;
+
+    hr {
+      width: 100%;
+    }
+
+    .button-wrap {
+      display: inline-flex;
+      margin-top: 36px;
+      margin-bottom: 36px;
+    }
+
+    button {
+      margin-right: 24px;
+      min-width: 95px;
+      height: 39px;
+    }
+  }
+
+  .close {
+    color: black;
+  }
+
+  &.modal-xl {
+    max-width: 100rem;
+  }
+
+  &.modal-l {
+    max-width: 75rem;
+  }
+
+  &.modal-m {
+    max-width: 50rem;
+  }
+
+  &.modal-s {
+    max-width: 40rem;
+  }
+
+  &.info {
+    .modal-header {
+      color: $dark-blue;
+      background-color: $filter-box-color;
+    }
+
+    .modal-close-btn {
+      color: $text-color;
+      cursor: pointer;
+    }
+  }
+
+  &.error {
+    .modal-header {
+      color: $font-danger-color;
+      background-color: $danger-background-color;
+    }
+
+    .modal-close-btn {
+      color: $text-color;
+      cursor: pointer;
+    }
+  }
+
+  &.warning {
+    .modal-header {
+      color: $font-warning-color;
+      background-color: $summary-color;
+    }
+
+    .modal-close-btn {
+      color: $text-color;
+      cursor: pointer;
+    }
+  }
 }
 
 .Toastify__toast .Toastify__toast-body {

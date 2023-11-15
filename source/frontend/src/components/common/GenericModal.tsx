@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { noop } from 'lodash';
 import React, { useState } from 'react';
 import { Modal, ModalProps as BsModalProps } from 'react-bootstrap';
+import { FaExclamationCircle, FaTimesCircle, FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons/Button';
@@ -68,6 +69,8 @@ export interface ModalContent {
     | 'outline-light';
   /** Optional title to display - no default. */
   title?: string | React.ReactNode;
+  /** Optional Heacer Icon to display - no default. */
+  headerIcon?: string | React.ReactNode;
   /** Optional message to display - no default. */
   message?: string | React.ReactNode;
   /** optional override to control the x button in the top right of the modal. Default is to show. */
@@ -103,6 +106,8 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     closeButton,
     hideFooter,
     modalSize,
+    className,
+    headerIcon,
     ...rest
   } = props;
   const [show, setShow] = useState(true);
@@ -134,29 +139,65 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     }
   };
 
+  const getHeaderIcon = () => {
+    if (headerIcon) {
+      return <>{headerIcon}</>;
+    }
+
+    switch (className) {
+      case 'info':
+      case 'warning': {
+        return <FaExclamationCircle size={24} />;
+      }
+      case 'error': {
+        return <FaTimesCircle size={24} />;
+      }
+      default: {
+        return null;
+      }
+    }
+  };
+
   return (
-    <ModalContainer {...rest} show={showState} modalSize={modalSize} onHide={noop}>
+    <ModalContainer
+      {...rest}
+      show={showState}
+      modalSize={modalSize}
+      onHide={noop}
+      className={className}
+    >
       <Modal.Header closeButton={closeButton} onHide={close}>
-        <Modal.Title>{title}</Modal.Title>
+        <Modal.Title>
+          {getHeaderIcon() && <div className="header-icon">{getHeaderIcon()}</div>}
+          {title}
+        </Modal.Title>
+        {!closeButton && (
+          <div className="modal-close-btn">
+            <FaWindowClose size={24} onClick={close} />
+          </div>
+        )}
       </Modal.Header>
 
       <Modal.Body style={{ whiteSpace: 'pre-line' }}>{message}</Modal.Body>
 
       {!hideFooter && (
         <Modal.Footer>
-          {cancelButtonText && (
-            <Button
-              title="cancel-modal"
-              variant={cancelButtonVariant ?? 'secondary'}
-              onClick={close}
-              style={{ width: 'unset' }}
-            >
-              {cancelButtonText}
+          <hr />
+          <div className="button-wrap">
+            {cancelButtonText && (
+              <Button
+                title="cancel-modal"
+                variant={cancelButtonVariant ?? 'secondary'}
+                onClick={close}
+              >
+                {cancelButtonText}
+              </Button>
+            )}
+
+            <Button title="ok-modal" variant={okButtonVariant ?? 'primary'} onClick={ok}>
+              {okButtonText ?? 'Ok'}
             </Button>
-          )}
-          <Button title="ok-modal" variant={okButtonVariant ?? 'primary'} onClick={ok}>
-            {okButtonText ?? 'Ok'}
-          </Button>
+          </div>
         </Modal.Footer>
       )}
     </ModalContainer>
@@ -186,15 +227,6 @@ const ModalContainer = (props: BsModalProps & ModalProps) => {
 
 const StyledModal = styled(Modal)`
   .modal-header {
-    height: 3.8rem;
-    padding: 0 1rem;
-    background-color: ${({ theme }) => theme.css.primaryColor};
-    .h4 {
-      color: white;
-      font-family: BcSans-Bold;
-      font-size: 2.2rem;
-      height: 2.75rem;
-    }
     .close {
       color: white;
       opacity: 1;

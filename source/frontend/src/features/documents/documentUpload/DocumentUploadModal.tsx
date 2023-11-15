@@ -21,12 +21,10 @@ export const DocumentUploadModal: React.FunctionComponent<
     <GenericModal
       display={props.display}
       setDisplay={props.setDisplay}
-      title={
-        <>
-          <FaUpload />
-          <span className="ml-3">Add a Document</span>
-        </>
-      }
+      className="info"
+      closeButton={false}
+      headerIcon={<FaUpload size={24} />}
+      title={'Add a Document'}
       message={
         <DocumentUploadContainer
           parentId={props.parentId}

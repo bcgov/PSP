@@ -53,6 +53,7 @@ const GenerateLetterRecipientsModal: React.FunctionComponent<
     >
       {formikProps => (
         <StyledModal
+          className="info"
           display={isOpened}
           title="Generate letter"
           message={
@@ -115,7 +116,6 @@ const GenerateLetterRecipientsModal: React.FunctionComponent<
               )}
             </>
           }
-          closeButton
           okButtonText="Continue"
           cancelButtonText="Cancel"
           handleOk={() => formikProps.submitForm()}

@@ -119,6 +119,7 @@ export const useMapSearch = () => {
           planNumberInventoryData = await loadPropertiesTask;
         } catch (err) {
           setModalContent({
+            className: 'info',
             title: 'Unable to connect to PIMS Inventory',
             message:
               'PIMS is unable to connect to connect to the PIMS Inventory map service. You may need to log out and log into the application in order to restore this functionality. If this error persists, contact a site administrator.',

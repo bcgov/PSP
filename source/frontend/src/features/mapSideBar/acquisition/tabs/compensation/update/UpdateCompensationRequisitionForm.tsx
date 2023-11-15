@@ -351,7 +351,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
 
             <GenericModal
               display={showAltProjectError}
-              className="projectError"
+              className="error"
               title="Alternate Project Error"
               message={[
                 <strong>Error: </strong>,
@@ -361,6 +361,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               handleOk={() => {
                 setShowAltProjectError(false);
                 formikRef.current?.setFieldValue('alternateProject', '');
+              }}
+              handleCancel={() => {
+                setShowAltProjectError(false);
               }}
             />
           </StyledFormWrapper>

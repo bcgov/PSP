@@ -135,18 +135,6 @@ exports[`AddNotesFormModal component renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c0 .modal-header {
-  height: 3.8rem;
-  padding: 0 1rem;
-}
-
-.c0 .modal-header .h4 {
-  color: white;
-  font-family: BcSans-Bold;
-  font-size: 2.2rem;
-  height: 2.75rem;
-}
-
 .c0 .modal-header .close {
   color: white;
   opacity: 1;
@@ -255,28 +243,33 @@ exports[`AddNotesFormModal component renders as expected 1`] = `
         <div
           class="modal-footer"
         >
-          <button
-            class="c2 Button btn btn-secondary"
-            title="cancel-modal"
-            type="button"
+          <hr />
+          <div
+            class="button-wrap"
           >
-            <div
-              class="Button__value"
+            <button
+              class="c2 Button btn btn-secondary"
+              title="cancel-modal"
+              type="button"
             >
-              Cancel
-            </div>
-          </button>
-          <button
-            class="c2 Button btn btn-primary"
-            title="ok-modal"
-            type="button"
-          >
-            <div
-              class="Button__value"
+              <div
+                class="Button__value"
+              >
+                Cancel
+              </div>
+            </button>
+            <button
+              class="c2 Button btn btn-primary"
+              title="ok-modal"
+              type="button"
             >
-              Save
-            </div>
-          </button>
+              <div
+                class="Button__value"
+              >
+                Save
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </div>
