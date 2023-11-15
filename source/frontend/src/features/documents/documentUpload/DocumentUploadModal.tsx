@@ -23,7 +23,7 @@ export const DocumentUploadModal: React.FunctionComponent<
       setDisplay={props.setDisplay}
       className="info"
       closeButton={false}
-      headerIcon={<FaUpload size={24} />}
+      headerIcon={<FaUpload size={22} />}
       title={'Add a Document'}
       message={
         <DocumentUploadContainer

@@ -2,7 +2,7 @@
 
 .modal-dialog {
   div.modal-header {
-    height: 38px;
+    height: 48px;
     padding: 0 16px;
     display: flex;
     flex-direction: row;
@@ -12,7 +12,7 @@
 
     .modal-title {
       font-family: BcSans-Bold;
-      font-size: 18px;
+      font-size: 22px;
       height: 2.75rem;
       height: auto;
     }
@@ -28,8 +28,8 @@
   }
 
   div.modal-body {
-    padding: 24px 16px;
-    text-align: justify;
+    padding: 24px 18px;
+    font-size: 18px;
   }
 
   div.modal-footer {
@@ -41,8 +41,8 @@
 
     .button-wrap {
       display: inline-flex;
-      margin-top: 36px;
-      margin-bottom: 36px;
+      margin-top: 24px;
+      margin-bottom: 24px;
     }
 
     button {

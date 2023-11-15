@@ -147,10 +147,10 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     switch (className) {
       case 'info':
       case 'warning': {
-        return <FaExclamationCircle size={24} />;
+        return <FaExclamationCircle size={22} />;
       }
       case 'error': {
-        return <FaTimesCircle size={24} />;
+        return <FaTimesCircle size={22} />;
       }
       default: {
         return null;

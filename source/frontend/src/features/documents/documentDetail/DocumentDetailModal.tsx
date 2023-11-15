@@ -21,7 +21,7 @@ export const DocumentDetailModal: React.FunctionComponent<
   return (
     <GenericModal
       className="info"
-      headerIcon={<FaEye size={24} />}
+      headerIcon={<FaEye size={22} />}
       display={props.display}
       setDisplay={props.setDisplay}
       title={
