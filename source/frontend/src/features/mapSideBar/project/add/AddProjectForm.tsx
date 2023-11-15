@@ -89,21 +89,13 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
               </Section>
               <Section header="Associated Codes">
                 <SectionField label="Cost type" labelWidth="2">
-                  <TypeaheadSelect field="costTypeCode" options={costTypeOptions} minLength={1} />
+                  <TypeaheadSelect field="costTypeCode" options={costTypeOptions} />
                 </SectionField>
                 <SectionField label="Work activity" labelWidth="2">
-                  <Select
-                    field="workActivityCode"
-                    options={workActivityOptions}
-                    placeholder="Select..."
-                  />
+                  <TypeaheadSelect field="workActivityCode" options={workActivityOptions} />
                 </SectionField>
                 <SectionField label="Business function" labelWidth="2">
-                  <Select
-                    field="businessFunctionCode"
-                    options={businessFunctionOptions}
-                    placeholder="Select..."
-                  />
+                  <TypeaheadSelect field="businessFunctionCode" options={businessFunctionOptions} />
                 </SectionField>
               </Section>
               <ProductsArrayForm formikProps={formikProps} field="products" />
