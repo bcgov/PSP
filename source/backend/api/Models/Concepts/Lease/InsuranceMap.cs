@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Core.Extensions;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts
@@ -14,7 +15,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.OtherInsuranceType, src => src.OtherInsuranceType)
                 .Map(dest => dest.CoverageDescription, src => src.CoverageDescription)
                 .Map(dest => dest.CoverageLimit, src => src.CoverageLimit)
-                .Map(dest => dest.ExpiryDate, src => src.ExpiryDate)
+                .Map(dest => dest.ExpiryDate, src => src.ExpiryDate.ToNullableDateOnly())
                 .Map(dest => dest.IsInsuranceInPlace, src => src.IsInsuranceInPlace)
                 .Inherits<Entity.IBaseEntity, BaseModel>();
 
@@ -25,7 +26,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.OtherInsuranceType, src => src.OtherInsuranceType)
                 .Map(dest => dest.CoverageDescription, src => src.CoverageDescription)
                 .Map(dest => dest.CoverageLimit, src => src.CoverageLimit)
-                .Map(dest => dest.ExpiryDate, src => src.ExpiryDate)
+                .Map(dest => dest.ExpiryDate, src => src.ExpiryDate.ToNullableDateTime())
                 .Map(dest => dest.IsInsuranceInPlace, src => src.IsInsuranceInPlace)
                 .Inherits<BaseModel, Entity.IBaseEntity>();
         }

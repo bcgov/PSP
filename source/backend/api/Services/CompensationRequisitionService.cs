@@ -61,7 +61,7 @@ namespace Pims.Api.Services
 
             CheckDraftStatusUpdateAuthorized(currentCompensation.IsDraft, compensationRequisition.IsDraft);
             CheckTotalAllowableCompensation(compensationRequisition.AcquisitionFileId, compensationRequisition);
-            compensationRequisition.FinalizedDate = CheckFinalizedDate(currentCompensation.IsDraft, compensationRequisition.IsDraft, currentCompensation.FinalizedDate);
+            compensationRequisition.FinalizedDate = CheckFinalizedDate(currentCompensation.IsDraft, compensationRequisition.IsDraft, currentCompensation.FinalizedDate.ToNullableDateOnly()).ToNullableDateTime();
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
             AddNoteIfStatusChanged(compensationRequisition.Internal_Id, compensationRequisition.AcquisitionFileId, currentCompensation.IsDraft, compensationRequisition.IsDraft);
@@ -69,7 +69,7 @@ namespace Pims.Api.Services
 
             return updatedEntity;
 
-            DateTime? CheckFinalizedDate(bool? currentStatusIsDraft, bool? newStatusIsDraft, DateTime? currentValue)
+            DateOnly? CheckFinalizedDate(bool? currentStatusIsDraft, bool? newStatusIsDraft, DateOnly? currentValue)
             {
                 if (currentStatusIsDraft.Equals(newStatusIsDraft))
                 {
@@ -78,7 +78,7 @@ namespace Pims.Api.Services
 
                 if (newStatusIsDraft.HasValue)
                 {
-                    return newStatusIsDraft.Value ? null : DateTime.UtcNow;
+                    return newStatusIsDraft.Value ? null : DateOnly.FromDateTime(DateTime.UtcNow);
                 }
 
                 return null;

@@ -68,12 +68,12 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The expiry filter start date.
         /// </summary>
-        public DateTime? ExpiryStartDate { get; set; }
+        public DateOnly? ExpiryStartDate { get; set; }
 
         /// <summary>
         /// get/set - The expiry filter end date.
         /// </summary>
-        public DateTime? ExpiryEndDate { get; set; }
+        public DateOnly? ExpiryEndDate { get; set; }
 
         public LeaseFilter(string lFileNo, string tenantName, string pinOrPid, string historical, string[] sort)
         {

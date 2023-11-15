@@ -23,7 +23,7 @@ export interface Api_Take extends Api_ConcurrentVersion, Api_AuditFields {
   propertyAcquisitionFile: Api_AcquisitionFile | null;
   propertyAcquisitionFileId: number;
   statutoryRightOfWayArea: number | null;
-  srwEndDt: string | null;
+  srwEndDt: DateOnly | null;
   surplusArea: number | null;
   takeSiteContamTypeCode: Api_TypeCode<string> | null;
   takeTypeCode: Api_TypeCode<string> | null;

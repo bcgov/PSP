@@ -43,7 +43,7 @@ namespace Pims.Api.Models.Concepts
 
         public float? StatutoryRightOfWayArea { get; set; }
 
-        public DateTime? SrwEndDt { get; set; }
+        public DateOnly? SrwEndDt { get; set; }
 
         public float? SurplusArea { get; set; }
 
