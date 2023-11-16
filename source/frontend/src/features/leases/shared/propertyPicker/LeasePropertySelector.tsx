@@ -79,6 +79,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
 
   const addModalProps: ModalProps = useDeepCompareMemo(() => {
     return {
+      className: 'info',
       title: 'Not inventory property',
       message:
         'You have selected a property not previously in the inventory. Do you want to add this property to the lease?',
