@@ -31,6 +31,8 @@ export interface ITypeaheadSelectProps {
   options: SelectOption[];
   /* Invoked when a user changes the selected option */
   onChange?: (selected: SelectOption | undefined) => void;
+  /* Invoked when the typeahead loses focus */
+  onBlur?: (e: Event) => void;
 }
 
 /**
@@ -49,6 +51,7 @@ export const TypeaheadSelect = React.forwardRef<Typeahead<SelectOption>, ITypeah
       minLength = 0,
       options,
       onChange,
+      onBlur,
     } = props;
     const { errors, touched, values, setFieldValue, setFieldTouched } = useFormikContext();
     const value = getIn(values, field);
@@ -68,8 +71,13 @@ export const TypeaheadSelect = React.forwardRef<Typeahead<SelectOption>, ITypeah
     );
 
     const onSelectBlur = React.useCallback(
-      () => setFieldTouched(field, true),
-      [field, setFieldTouched],
+      (e: Event) => {
+        setFieldTouched(field, true);
+        if (typeof onBlur === 'function') {
+          onBlur(e);
+        }
+      },
+      [field, onBlur, setFieldTouched],
     );
 
     return (
