@@ -17,6 +17,8 @@ export interface ITypeaheadSelectProps {
   label?: string;
   /* Whether or not the field is required. */
   required?: boolean;
+  /** Specifies that the HTML element should be disabled */
+  disabled?: boolean;
   /* Optional tooltip text to display after the label */
   tooltip?: string;
   /* Whether or not to display errors in a tooltip instead of in a div */
@@ -44,6 +46,7 @@ export const TypeaheadSelect = React.forwardRef<Typeahead<SelectOption>, ITypeah
       field,
       label,
       required,
+      disabled,
       tooltip,
       displayErrorTooltips,
       className,
@@ -95,6 +98,7 @@ export const TypeaheadSelect = React.forwardRef<Typeahead<SelectOption>, ITypeah
               name: `typeahead-select-${field}`,
               id: `typeahead-select-${field}`,
             }}
+            disabled={disabled}
             flip
             clearButton
             highlightOnlyResult
