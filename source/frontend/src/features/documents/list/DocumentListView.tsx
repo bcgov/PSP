@@ -206,6 +206,7 @@ export const DocumentListView: React.FunctionComponent<
         onClose={handleModalUploadClose}
       />
       <GenericModal
+        className="error"
         display={showDeleteConfirmModal}
         title={'Delete a document'}
         message={

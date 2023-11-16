@@ -135,18 +135,6 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c0 .modal-header {
-  height: 3.8rem;
-  padding: 0 1rem;
-}
-
-.c0 .modal-header .h4 {
-  color: white;
-  font-family: BcSans-Bold;
-  font-size: 2.2rem;
-  height: 2.75rem;
-}
-
 .c0 .modal-header .close {
   color: white;
   opacity: 1;
@@ -212,13 +200,13 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
   />
   <div
     aria-modal="true"
-    class="fade c0 c1 modal show"
+    class="fade c0 c1 info modal show"
     role="dialog"
     style="display: block;"
     tabindex="-1"
   >
     <div
-      class="modal-dialog c1"
+      class="modal-dialog c1 info"
     >
       <div
         class="modal-content"
@@ -231,21 +219,23 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
           >
             Generate letter
           </div>
-          <button
-            class="close"
-            type="button"
+          <div
+            class="modal-close-btn"
           >
-            <span
-              aria-hidden="true"
+            <svg
+              fill="currentColor"
+              height="24"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              ×
-            </span>
-            <span
-              class="sr-only"
-            >
-              Close
-            </span>
-          </button>
+              <path
+                d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+              />
+            </svg>
+          </div>
         </div>
         <div
           class="modal-body"
@@ -270,28 +260,33 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
         <div
           class="modal-footer"
         >
-          <button
-            class="c3 Button btn btn-secondary"
-            title="cancel-modal"
-            type="button"
+          <hr />
+          <div
+            class="button-wrap"
           >
-            <div
-              class="Button__value"
+            <button
+              class="c3 Button btn btn-secondary"
+              title="cancel-modal"
+              type="button"
             >
-              Cancel
-            </div>
-          </button>
-          <button
-            class="c3 Button btn btn-primary"
-            title="ok-modal"
-            type="button"
-          >
-            <div
-              class="Button__value"
+              <div
+                class="Button__value"
+              >
+                Cancel
+              </div>
+            </button>
+            <button
+              class="c3 Button btn btn-primary"
+              title="ok-modal"
+              type="button"
             >
-              Continue
-            </div>
-          </button>
+              <div
+                class="Button__value"
+              >
+                Continue
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </div>

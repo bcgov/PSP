@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import ModalDialog from 'react-bootstrap/ModalDialog';
 import Draggable from 'react-draggable';
-import { FaQuestionCircle } from 'react-icons/fa';
+import { FaQuestionCircle, FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import variables from '@/assets/scss/_variables.module.scss';
@@ -59,11 +59,14 @@ const HelpModal: FunctionComponent<React.PropsWithChildren<IModalProps>> = ({
   return (
     <Container>
       <ModalStyled dialogAs={DraggableModalDialog} show={show} onHide={handleCancel}>
-        <ModalHeader closeButton>
+        <ModalHeader>
           <DraggableTitle>
             <FaQuestionCircle size={24} />
             <DraggableTitleText>Help Desk</DraggableTitleText>
           </DraggableTitle>
+          <div className="modal-close-btn">
+            <FaWindowClose size={24} onClick={handleCancel} />
+          </div>
         </ModalHeader>
         <Modal.Body>
           <H3Styled>Get started with PIMS</H3Styled>
@@ -163,7 +166,6 @@ const LinkStyled = styled.a`
 const H3Styled = styled(H3)`
   border: none;
   margin-bottom: 16px;
-  margin-top: 24px;
 `;
 
 const ModalHeader = styled(Modal.Header)`
