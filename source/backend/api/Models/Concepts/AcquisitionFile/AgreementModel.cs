@@ -39,5 +39,7 @@ namespace Pims.Api.Models.Concepts
         public DateTime? SignedDate { get; set; }
 
         public DateTime? InspectionDate { get; set; }
+
+        public string CancellationNote { get; set; }
     }
 }

@@ -42,10 +42,9 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
 
   const { setDisplayModal, setModalContent } = useModalContext();
   const setFieldValue = formikProps.setFieldValue;
-
   useEffect(() => {
     if (
-      agreement.agreementStatusType !== AgreementStatusTypes.CANCELLED &&
+      agreement.agreementStatusTypeCode !== AgreementStatusTypes.CANCELLED &&
       !!agreement.cancellationNote
     ) {
       setModalContent({
@@ -55,6 +54,10 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
           'Changing status to a status other than "Cancelled" will remove your "Cancellation reason". Are you sure you want to continue?',
         title: 'Warning',
         handleCancel: () => {
+          setFieldValue(
+            withNameSpace(nameSpace, 'agreementStatusTypeCode'),
+            AgreementStatusTypes.CANCELLED,
+          );
           setDisplayModal(false);
         },
         handleOk: () => {
@@ -71,10 +74,10 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
       <SectionField labelWidth="5" label="Agreement status">
         <Select
           options={agreementStatusOptions}
-          field={withNameSpace(nameSpace, 'agreementStatusType')}
+          field={withNameSpace(nameSpace, 'agreementStatusTypeCode')}
         />
       </SectionField>
-      {agreement.agreementStatusType === AgreementStatusTypes.CANCELLED && (
+      {agreement.agreementStatusTypeCode === AgreementStatusTypes.CANCELLED && (
         <SectionField labelWidth="5" label="Cancellation reason">
           <Input field={withNameSpace(nameSpace, 'cancellationNote')} />
         </SectionField>

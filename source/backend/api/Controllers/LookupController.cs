@@ -128,6 +128,7 @@ namespace Pims.Api.Controllers
                 var acqChecklistSectionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionChecklistSectionTypes());
                 var acqChecklistItemStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionChecklistItemStatusTypes());
                 var agreementTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAgreementTypes());
+                var agreementStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAgreementStatusTypes());
                 var interestHolderInterestTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllInterestHolderInterestTypes());
                 var expropriationPaymentItemTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllExpropriationPaymentItemTypes());
                 var mgmtActivityStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivityStatusTypes());
@@ -189,6 +190,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(acqChecklistSectionTypes);
                 codes.AddRange(acqChecklistItemStatusTypes);
                 codes.AddRange(agreementTypes);
+                codes.AddRange(agreementStatusTypes);
                 codes.AddRange(interestHolderInterestTypes);
                 codes.AddRange(expropriationPaymentItemTypes);
                 codes.AddRange(mgmtActivityStatusTypes);

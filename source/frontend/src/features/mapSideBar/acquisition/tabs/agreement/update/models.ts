@@ -19,7 +19,7 @@ export class SingleAgreementFormModel {
   public expiryDateTime: string = '';
   public signedDate: string = '';
   public inspectionDate: string = '';
-  public agreementStatusTypeCode: string = '';
+  public agreementStatusTypeCode: string = 'DRAFT';
   public agreementStatusTypeDescription: string = '';
   public cancellationNote: string = '';
 
@@ -47,6 +47,7 @@ export class SingleAgreementFormModel {
     agreement.signedDate = apiModel.signedDate || '';
     agreement.inspectionDate = apiModel.inspectionDate || '';
     agreement.rowVersion = apiModel.rowVersion || null;
+    agreement.cancellationNote = apiModel.cancellationNote || '';
 
     return agreement;
   }
