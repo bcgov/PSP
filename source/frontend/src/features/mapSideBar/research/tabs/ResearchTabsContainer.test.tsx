@@ -1,3 +1,4 @@
+import { createMemoryHistory } from 'history';
 import { act } from 'react-test-renderer';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
@@ -14,8 +15,8 @@ jest.mock('@react-keycloak/web');
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
-const setEditKey = jest.fn();
-const setEditMode = jest.fn();
+const setIsEditing = jest.fn();
+const history = createMemoryHistory();
 
 describe('ResearchFileTabs component', () => {
   // render component under test
@@ -24,12 +25,12 @@ describe('ResearchFileTabs component', () => {
       <SideBarContextProvider>
         <ResearchTabsContainer
           researchFile={props.researchFile}
-          setEditKey={setEditKey}
-          setEditMode={setEditMode}
+          setIsEditing={props.setIsEditing}
         />
       </SideBarContextProvider>,
       {
         useMockAuthentication: true,
+        history,
         ...renderOptions,
       },
     );
@@ -49,8 +50,7 @@ describe('ResearchFileTabs component', () => {
     const { asFragment } = setup(
       {
         researchFile: getMockResearchFile(),
-        setEditKey,
-        setEditMode,
+        setIsEditing,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
     );
@@ -61,8 +61,7 @@ describe('ResearchFileTabs component', () => {
     const { getByText } = setup(
       {
         researchFile: getMockResearchFile(),
-        setEditKey,
-        setEditMode,
+        setIsEditing,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
     );
@@ -75,8 +74,7 @@ describe('ResearchFileTabs component', () => {
     const { getByText } = setup(
       {
         researchFile: getMockResearchFile(),
-        setEditKey,
-        setEditMode,
+        setIsEditing,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
     );
@@ -86,7 +84,7 @@ describe('ResearchFileTabs component', () => {
       userEvent.click(editButton);
     });
     await waitFor(() => {
-      expect(getByText('Documents')).toHaveClass('active');
+      expect(history.location.pathname).toBe('/documents');
     });
   });
 
@@ -94,8 +92,7 @@ describe('ResearchFileTabs component', () => {
     const { getAllByText } = setup(
       {
         researchFile: getMockResearchFile(),
-        setEditKey,
-        setEditMode,
+        setIsEditing,
       },
       { claims: [Claims.NOTE_VIEW] },
     );
@@ -105,7 +102,7 @@ describe('ResearchFileTabs component', () => {
       userEvent.click(editButton);
     });
     await waitFor(() => {
-      expect(getAllByText('Notes')[0]).toHaveClass('active');
+      expect(history.location.pathname).toBe('/notes');
     });
   });
 });

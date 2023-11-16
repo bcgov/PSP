@@ -5,7 +5,6 @@ import { forwardRef } from 'react';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { getMockApiPropertyManagement } from '@/mocks/propertyManagement.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, waitFor } from '@/utils/test-utils';
 
@@ -66,22 +65,10 @@ describe('FilterContentContainer component', () => {
   });
 
   it('fetches filter data from the api', async () => {
-    mockGetApi.execute.mockResolvedValue(getMockApiPropertyManagement(1));
+    mockGetApi.execute.mockResolvedValue([1, 2]);
     setup({});
     viewProps.onChange(new PropertyFilterFormModel());
     expect(mockGetApi.execute).toBeCalledWith(new PropertyFilterFormModel().toApi());
-    await waitFor(() =>
-      expect(mapMachineBaseMock.setVisiblePimsProperties).toBeCalledWith({
-        additionalDetails: 'test',
-        id: 1,
-        isLeaseActive: false,
-        isLeaseExpired: false,
-        isTaxesPayable: null,
-        isUtilitiesPayable: null,
-        leaseExpiryDate: null,
-        managementPurposes: [],
-        rowVersion: 1,
-      }),
-    );
+    await waitFor(() => expect(mapMachineBaseMock.setVisiblePimsProperties).toBeCalledWith([1, 2]));
   });
 });

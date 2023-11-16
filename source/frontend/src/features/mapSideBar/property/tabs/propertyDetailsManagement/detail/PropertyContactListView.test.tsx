@@ -29,7 +29,6 @@ describe('PropertyContactListView component', () => {
       <PropertyContactListView
         isLoading={false}
         propertyContacts={renderOptions.propertyContacts}
-        setEditManagementState={noop}
         onDelete={noop}
       />,
       {

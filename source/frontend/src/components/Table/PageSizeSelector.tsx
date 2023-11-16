@@ -40,7 +40,6 @@ export const TablePageSizeSelector: React.FC<React.PropsWithChildren<IProps>> = 
     <Menu options={pageSizeOptions} alignTop={alignTop}>
       <div style={{ display: 'flex' }}>
         <StyledText>Show</StyledText>
-        {/*the selector appears to capture the click event which prevents the page change from being registered*/}
         <Form.Control
           size="sm"
           value={`${selected}`}

@@ -4,6 +4,7 @@ import React from 'react';
 import { IProjectFilter } from '@/features/projects';
 import { IPagedItems } from '@/interfaces';
 import { Api_Product, Api_Project } from '@/models/api/Project';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
 import useAxiosApi from './useApi';
@@ -17,7 +18,11 @@ export const useApiProjects = () => {
 
   return React.useMemo(
     () => ({
-      postProject: (project: Api_Project) => api.post<Api_Project>(`/projects`, project),
+      postProject: (project: Api_Project, userOverrideCodes: UserOverrideCode[]) =>
+        api.post<Api_Project>(
+          `/projects?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
+          project,
+        ),
       searchProject: (query: string, top: number = 5) =>
         api.get<Api_Project[]>(`/projects/search=${query}&top=${top}`),
       searchProjects: (params: IPaginateProjects | null) =>
@@ -26,8 +31,12 @@ export const useApiProjects = () => {
         ),
       getAllProjects: () => api.get<Api_Project[]>(`/projects`),
       getProject: (id: number) => api.get<Api_Project>(`/projects/${id}`),
-      putProject: (project: Api_Project) =>
-        api.put<Api_Project>(`/projects/${project.id}`, project),
+      putProject: (project: Api_Project, userOverrideCodes: UserOverrideCode[]) =>
+        api.put<Api_Project>(
+          `/projects/${project.id}
+        ?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
+          project,
+        ),
       getProjectProducts: (id: number) => api.get<Api_Product[]>(`/projects/${id}/products`),
     }),
     [api],

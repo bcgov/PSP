@@ -8,7 +8,7 @@ import { Form, Input, Multiselect, Select } from '@/components/common/form';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { ACQUISITION_FILE_STATUS_TYPES } from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { Api_Person } from '@/models/api/Person';
+import { Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
 import { mapLookupCode } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
@@ -17,7 +17,7 @@ import { AcquisitionFilterModel, Api_AcquisitionFilter, MultiSelectOption } from
 export interface IAcquisitionFilterProps {
   filter?: Api_AcquisitionFilter;
   setFilter: (filter: Api_AcquisitionFilter) => void;
-  aquisitionTeam: Api_Person[];
+  aquisitionTeam: Api_AcquisitionFileTeam[];
 }
 
 /**
@@ -42,8 +42,8 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
   };
 
   const onResetClick = (formikProps: FormikProps<AcquisitionFilterModel>) => {
-    formikProps.resetForm();
     resetFilter();
+    formikProps.resetForm();
   };
 
   const lookupCodes = useLookupCodeHelpers();
@@ -55,8 +55,8 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
   const acquisitionTeamOptions = useMemo(() => {
     if (aquisitionTeam !== undefined) {
       return aquisitionTeam?.map<MultiSelectOption>(x => ({
-        id: x?.id?.toString() || '',
-        text: formatApiPersonNames(x),
+        id: x.personId ? `P-${x.personId}` : `O-${x.organizationId}`,
+        text: x.personId ? formatApiPersonNames(x.person) : x.organization?.name ?? '',
       }));
     } else {
       return [];

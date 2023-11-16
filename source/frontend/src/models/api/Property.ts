@@ -145,8 +145,7 @@ export interface Api_PropertyManagement extends Api_ConcurrentVersion_Null, Api_
   additionalDetails: string | null;
   isUtilitiesPayable: boolean | null;
   isTaxesPayable: boolean | null;
-  isLeaseActive: boolean;
-  isLeaseExpired: boolean;
+  relatedLeases: number;
   leaseExpiryDate: string | null;
 }
 

@@ -587,12 +587,12 @@ namespace Pims.Dal.Repositories
                 predicate.And(x => x.AcquisitionFile.PimsAcquisitionFileTeams.Any(p => p.PersonId == contractorPersonId));
             }
 
-            return Context.PimsAcquisitionFileTeams.Include(x => x.AcquisitionFile)
+            return Context.PimsAcquisitionFileTeams.AsNoTracking()
+                .Include(x => x.AcquisitionFile)
                 .Include(x => x.Person)
-                .AsNoTracking()
+                .Include(x => x.Organization)
                 .Where(predicate)
-                .AsEnumerable()
-                .DistinctBy(x => x.PersonId).ToList();
+                .ToList();
         }
 
         /// <summary>
@@ -787,6 +787,11 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.PersonId == long.Parse(filter.AcquisitionTeamMemberPersonId)));
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.AcquisitionTeamMemberOrganizationId))
+            {
+                predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.OrganizationId == long.Parse(filter.AcquisitionTeamMemberOrganizationId)));
+            }
+
             var query = Context.PimsAcquisitionFiles.AsNoTracking()
                 .Include(r => r.RegionCodeNavigation)
                 .Include(p => p.Project)
@@ -796,6 +801,8 @@ namespace Pims.Dal.Repositories
                 .Include(t => t.AcquisitionTypeCodeNavigation)
                 .Include(tm => tm.PimsAcquisitionFileTeams)
                     .ThenInclude(c => c.Person)
+                .Include(tm => tm.PimsAcquisitionFileTeams)
+                    .ThenInclude(c => c.Organization)
                 .Include(tm => tm.PimsAcquisitionFileTeams)
                     .ThenInclude(c => c.AcqFlTeamProfileTypeCodeNavigation)
                 .Include(ow => ow.PimsAcquisitionOwners)

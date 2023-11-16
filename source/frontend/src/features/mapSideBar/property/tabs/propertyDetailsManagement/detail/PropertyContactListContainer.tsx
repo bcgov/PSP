@@ -3,18 +3,16 @@ import { useCallback, useEffect, useState } from 'react';
 import { usePropertyContactRepository } from '@/hooks/repositories/usePropertyContactRepository';
 import { Api_PropertyContact } from '@/models/api/Property';
 
-import { EditManagementState } from '../../../PropertyViewSelector';
 import { IPropertyContactListViewProps } from './PropertyContactListView';
 
 interface IPropertyContactListContainerProps {
   propertyId: number;
-  setEditManagementState: (state: EditManagementState | null) => void;
   View: React.FC<IPropertyContactListViewProps>;
 }
 
 export const PropertyContactListContainer: React.FunctionComponent<
   IPropertyContactListContainerProps
-> = ({ propertyId, setEditManagementState, View }) => {
+> = ({ propertyId, View }) => {
   const [propertyContacts, setPropertyContacts] = useState<Api_PropertyContact[]>([]);
 
   const {
@@ -47,7 +45,6 @@ export const PropertyContactListContainer: React.FunctionComponent<
     <View
       isLoading={loading || loadingDelete}
       propertyContacts={propertyContacts}
-      setEditManagementState={setEditManagementState}
       onDelete={onDelete}
     />
   );

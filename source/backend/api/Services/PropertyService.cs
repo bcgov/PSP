@@ -116,7 +116,7 @@ namespace Pims.Api.Services
         public IList<PimsPropertyContact> GetContacts(long propertyId)
         {
             _logger.LogInformation("Retrieving property contacts...");
-            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             return _propertyContactRepository.GetContactsByProperty(propertyId);
         }
@@ -124,7 +124,7 @@ namespace Pims.Api.Services
         public PimsPropertyContact GetContact(long propertyId, long contactId)
         {
             _logger.LogInformation("Retrieving single property contact...");
-            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             var propertyContact = _propertyContactRepository.GetContact(contactId);
 
@@ -179,12 +179,12 @@ namespace Pims.Api.Services
             var property = GetById(propertyId);
 
             var propertyLeases = _propertyLeaseRepository.GetAllByPropertyId(propertyId);
-            var activeLease = propertyLeases.FirstOrDefault(pl => pl.Lease.LeaseStatusTypeCode == "ACTIVE")?.Lease;
-            var leaseExpiryDate = activeLease?.GetExpiryDate()?.FilterSqlMinDate() ?? null;
+            var leaseCount = propertyLeases.Count();
+            var firstLease = leaseCount == 1 ? propertyLeases.First().Lease : null;
+            var leaseExpiryDate = firstLease is not null ? firstLease.GetExpiryDate()?.FilterSqlMinDate() : null;
 
             var propertyManagement = _mapper.Map<PropertyManagementModel>(property);
-            propertyManagement.IsLeaseActive = activeLease is not null;
-            propertyManagement.IsLeaseExpired = leaseExpiryDate is not null && (leaseExpiryDate < DateTime.UtcNow);
+            propertyManagement.RelatedLeases = leaseCount;
             propertyManagement.LeaseExpiryDate = leaseExpiryDate;
 
             return propertyManagement;
@@ -229,6 +229,11 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Creating property Activity...");
             _user.ThrowIfNotAuthorized(Permissions.ManagementAdd, Permissions.PropertyEdit);
+
+            if (propertyActivity.PropMgmtActivityStatusTypeCode == null)
+            {
+                propertyActivity.PropMgmtActivityStatusTypeCode = "NOTSTARTED";
+            }
 
             var propertyActivityResult = _propertyActivityRepository.Create(propertyActivity);
             _propertyActivityRepository.CommitTransaction();

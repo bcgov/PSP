@@ -69,7 +69,7 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                       title="Edit property activity"
                       onClick={() => {
                         history.push(
-                          `/mapview/sidebar/property/${props.propertyId}/activity/${props.activity?.id}/edit`,
+                          `/mapview/sidebar/property/${props.propertyId}/management/activity/${props.activity?.id}/edit`,
                         );
                       }}
                     />

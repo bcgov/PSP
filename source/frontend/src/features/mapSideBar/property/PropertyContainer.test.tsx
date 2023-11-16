@@ -37,7 +37,6 @@ describe('PropertyContainer component', () => {
     const { queryByText } = setup({
       claims: [],
       composedPropertyState: { apiWrapper: { response: {} }, id: 1 } as any,
-      setEditManagementState: jest.fn(),
     });
 
     expect(queryByText('Management')).toBeNull();
@@ -47,7 +46,6 @@ describe('PropertyContainer component', () => {
     const { getByText } = setup({
       claims: [Claims.MANAGEMENT_VIEW],
       composedPropertyState: { apiWrapper: { response: {} }, id: 1 } as any,
-      setEditManagementState: jest.fn(),
     });
 
     expect(getByText('Management')).toBeVisible();

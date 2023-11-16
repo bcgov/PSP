@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Form, Input, Select, SelectOption, TextArea } from '@/components/common/form';
+import { TypeaheadSelect } from '@/components/common/form/TypeaheadSelect';
 import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -88,21 +89,13 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
               </Section>
               <Section header="Associated Codes">
                 <SectionField label="Cost type" labelWidth="2">
-                  <Select field="costTypeCode" options={costTypeOptions} placeholder="Select..." />
+                  <TypeaheadSelect field="costTypeCode" options={costTypeOptions} />
                 </SectionField>
                 <SectionField label="Work activity" labelWidth="2">
-                  <Select
-                    field="workActivityCode"
-                    options={workActivityOptions}
-                    placeholder="Select..."
-                  />
+                  <TypeaheadSelect field="workActivityCode" options={workActivityOptions} />
                 </SectionField>
                 <SectionField label="Business function" labelWidth="2">
-                  <Select
-                    field="businessFunctionCode"
-                    options={businessFunctionOptions}
-                    placeholder="Select..."
-                  />
+                  <TypeaheadSelect field="businessFunctionCode" options={businessFunctionOptions} />
                 </SectionField>
               </Section>
               <ProductsArrayForm formikProps={formikProps} field="products" />

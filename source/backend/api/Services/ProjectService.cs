@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
-using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -125,7 +126,7 @@ namespace Pims.Api.Services
             return _acquisitionFileRepository.GetByProductId(productId);
         }
 
-        public PimsProject Add(PimsProject project)
+        public PimsProject Add(PimsProject project, IEnumerable<UserOverrideCode> userOverrides)
         {
             _user.ThrowIfNotAuthorized(Permissions.ProjectAdd);
             _logger.LogInformation("Adding new project...");
@@ -134,8 +135,12 @@ namespace Pims.Api.Services
                 throw new ArgumentNullException(nameof(project), "Project cannot be null.");
             }
 
-            // TODO: Verify this is not needed
-            //CheckForDuplicateProducts(project.PimsProducts, project.Id);
+            var externalProducts = MatchProducts(project);
+            if (externalProducts.Count > 0 && !userOverrides.Contains(UserOverrideCode.ProductReuse))
+            {
+                var names = externalProducts.Select(x => $"{x.Code} {x.Description}");
+                throw new UserOverrideException(UserOverrideCode.ProductReuse, $"The product(s) {string.Join(",", names)} can also be found in one or more other projects. Please verify the correct product is being added");
+            }
 
             var newProject = _projectRepository.Add(project);
             _projectRepository.CommitTransaction();
@@ -143,35 +148,96 @@ namespace Pims.Api.Services
             return _projectRepository.Get(newProject.Internal_Id);
         }
 
-        public PimsProject Update(PimsProject project)
+        public PimsProject Update(PimsProject project, IEnumerable<UserOverrideCode> userOverrides)
         {
             _user.ThrowIfNotAuthorized(Permissions.ProjectEdit);
             project.ThrowIfNull(nameof(project));
             _logger.LogInformation($"Updating project with id ${project.Internal_Id}");
 
-            // TODO: Verify this is not needed
-            //CheckForDuplicateProducts(project.PimsProducts, project.Id);
+            var externalProducts = MatchProducts(project);
+            if (externalProducts.Count > 0 && !userOverrides.Contains(UserOverrideCode.ProductReuse))
+            {
+                var names = externalProducts.Select(x => $"{x.Code} {x.Description}");
+                throw new UserOverrideException(UserOverrideCode.ProductReuse, $"The product(s) {string.Join(",", names)} can also be found in one or more other projects. Please verify the correct product is being added");
+            }
+
             var updatedProject = _projectRepository.Update(project);
+
             AddNoteIfStatusChanged(project);
             _projectRepository.CommitTransaction();
 
             return updatedProject;
         }
 
-        /*private void CheckForDuplicateProducts(IEnumerable<PimsProduct> products, long projectId)
+        /*
+        * Updates the passed project with the matched products in place.
+        * Note: The return list contains the external products matched
+        */
+        private List<PimsProduct> MatchProducts(PimsProject project)
         {
-            var duplicateProductsInArray = products.GroupBy(p => (p.Code, p.Description)).Where(g => g.Count() > 1).Select(g => g.Key);
-            if (duplicateProductsInArray.Any())
+            var existingProjectProducts = _productRepository.GetProjectProductsByProject(project.Id);
+
+            var matchedProjectProducts = new List<PimsProjectProduct>();
+            var notMatched = new List<PimsProjectProduct>();
+
+            var externalProducts = new List<PimsProduct>();
+
+            // Try to match from the existing relationship by product code and description
+            foreach (var projectProduct in project.PimsProjectProducts)
             {
-                throw new DuplicateEntityException($"Unable to add project with duplicated product codes: {string.Join(", ", duplicateProductsInArray.Select(dp => dp.Code))}");
+                var existing = existingProjectProducts.FirstOrDefault(x => x.Product.Code == projectProduct.Product.Code && x.Product.Description == projectProduct.Product.Description);
+                if (existing != null)
+                {
+                    // Manually update the members with the new data
+                    existing.Product.StartDate = projectProduct.Product.StartDate;
+                    existing.Product.CostEstimate = projectProduct.Product.CostEstimate;
+                    existing.Product.CostEstimateDate = projectProduct.Product.CostEstimateDate;
+                    existing.Product.Objective = projectProduct.Product.Objective;
+                    existing.Product.Scope = projectProduct.Product.Scope;
+
+                    projectProduct.Product = existing.Product;
+
+                    matchedProjectProducts.Add(existing);
+                }
+                else
+                {
+                    notMatched.Add(projectProduct);
+                }
             }
 
-            IEnumerable<PimsProduct> duplicateProducts = _productRepository.GetByProductBatch(products, projectId);
-            if (duplicateProducts.Any())
+            var existingProducts = _productRepository.GetProducts(notMatched.Select(x => x.Product));
+
+            // Try to match from the existing products code and description
+            foreach (var projectProduct in notMatched)
             {
-                throw new DuplicateEntityException($"Unable to add project with duplicated product codes: {string.Join(", ", duplicateProducts.Select(dp => dp.Code))}");
+                var existing = existingProducts.FirstOrDefault(x => x.Code == projectProduct.Product.Code && x.Description == projectProduct.Product.Description);
+                if (existing != null)
+                {
+                    var updatedProduct = existing;
+
+                    // Manually update the members with the new data
+                    updatedProduct.StartDate = projectProduct.Product.StartDate;
+                    updatedProduct.CostEstimate = projectProduct.Product.CostEstimate;
+                    updatedProduct.CostEstimateDate = projectProduct.Product.CostEstimateDate;
+                    updatedProduct.Objective = projectProduct.Product.Objective;
+                    updatedProduct.Scope = projectProduct.Product.Scope;
+
+                    projectProduct.Product = updatedProduct;
+                    projectProduct.ProductId = updatedProduct.Id;
+                    projectProduct.ProjectId = project.Id;
+
+                    externalProducts.Add(existing);
+                }
+
+                // Add the updated to the list of matched ones.
+                matchedProjectProducts.Add(projectProduct);
             }
-        }*/
+
+            // Populate the products with the matched data
+            project.PimsProjectProducts = matchedProjectProducts;
+
+            return externalProducts;
+        }
 
         private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, IEnumerable<short> userRegions)
         {
@@ -232,3 +298,4 @@ namespace Pims.Api.Services
         }
     }
 }
+

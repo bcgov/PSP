@@ -101,13 +101,15 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
 
     if (result !== undefined) {
       setStaleLastUpdatedBy(true);
-      history.push(`/mapview/sidebar/property/${propertyId}/activity/${result.id}`);
+      history.push(`/mapview/sidebar/property/${propertyId}/management/activity/${result.id}`);
     }
   };
 
   const onCancelClick = () => {
     if (propertyActivityId !== undefined) {
-      history.push(`/mapview/sidebar/property/${propertyId}/activity/${propertyActivityId}`);
+      history.push(
+        `/mapview/sidebar/property/${propertyId}/management/activity/${propertyActivityId}`,
+      );
     } else {
       onClose();
     }

@@ -6,6 +6,7 @@ export type IRemoveTeamMemberModalProps = Omit<ModalProps, 'okButtonText' | 'can
 
 export const AcquisitionFormModal = (props: IRemoveTeamMemberModalProps) => (
   <GenericModal
+    className="info"
     title={props.title}
     message={props.message}
     okButtonText="Ok"

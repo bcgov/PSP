@@ -67,7 +67,6 @@ export const InvoiceForm: React.FunctionComponent<React.PropsWithChildren<IInvoi
     const regex = /[^0-9.-]/g;
     const cleanValue = changeEvent.target.value.replace(regex, '');
     const gstValue = parseFloat(cleanValue);
-    debugger;
     if (isNaN(gstValue)) {
       setCustomGst(null);
     } else {
@@ -79,7 +78,6 @@ export const InvoiceForm: React.FunctionComponent<React.PropsWithChildren<IInvoi
     const regex = /[^0-9.-]/g;
     const cleanValue = changeEvent.target.value.replace(regex, '');
     const pstValue = parseFloat(cleanValue);
-    debugger;
     if (isNaN(pstValue)) {
       setCustomPst(null);
     } else {
@@ -90,7 +88,7 @@ export const InvoiceForm: React.FunctionComponent<React.PropsWithChildren<IInvoi
   return (
     <Section header={`Invoice ${index + 1}`} isCollapsable initiallyExpanded>
       <SectionField label="Invoice number" contentWidth="7">
-        <Row className="border no-gutters">
+        <Row className="no-gutters">
           <Col className="col-10">
             <Input field={`${namespace}.invoiceNum`} />
           </Col>

@@ -41,7 +41,7 @@ export const PropertyActivityRouter: React.FunctionComponent<
   return (
     <Switch>
       <AppRoute
-        path={`/mapview/sidebar/property/:propertyId/activity/new`}
+        path={`/mapview/sidebar/property/:propertyId/management/activity/new`}
         customRender={({ match }) => (
           <PropertyActivityEditContainer
             propertyId={Number(match.params.propertyId)}
@@ -55,7 +55,7 @@ export const PropertyActivityRouter: React.FunctionComponent<
         title={'Activity New'}
       />
       <AppRoute
-        path={`/mapview/sidebar/property/:propertyId/activity/:activityId/edit`}
+        path={`/mapview/sidebar/property/:propertyId/management/activity/:activityId/edit`}
         customRender={({ match }) => (
           <PropertyActivityEditContainer
             propertyId={Number(match.params.propertyId)}
@@ -70,7 +70,7 @@ export const PropertyActivityRouter: React.FunctionComponent<
         title={'Activity Edit'}
       />
       <AppRoute
-        path={`/mapview/sidebar/property/:propertyId/activity/:activityId`}
+        path={`/mapview/sidebar/property/:propertyId/management/activity/:activityId`}
         customRender={({ match }) => (
           <PropertyActivityDetailContainer
             propertyId={Number(match.params.propertyId)}

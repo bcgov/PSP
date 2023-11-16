@@ -101,9 +101,9 @@ export function useLeaseDetail(leaseId?: number) {
   return {
     lease,
     setLease,
-    refresh: () => {
+    refresh: async () => {
       setStaleLastUpdatedBy(true);
-      getCompleteLease();
+      await getCompleteLease();
     },
     getCompleteLease,
     loading: loading,

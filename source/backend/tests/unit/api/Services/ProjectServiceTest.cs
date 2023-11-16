@@ -11,6 +11,7 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
+using Pims.Ltsa.Models;
 using Xunit;
 
 namespace Pims.Api.Test.Services
@@ -190,7 +191,7 @@ namespace Pims.Api.Test.Services
             var repository = helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action result = () => service.Add(new PimsProject());
+            Action result = () => service.Add(new PimsProject(), new List<UserOverrideCode>() { });
 
             // Assert
             result.Should().Throw<NotAuthorizedException>();
@@ -208,56 +209,50 @@ namespace Pims.Api.Test.Services
             var repository = helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action result = () => service.Add(null);
+            Action result = () => service.Add(null, new List<UserOverrideCode>() { });
 
             // Assert
             result.Should().Throw<ArgumentException>();
             repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
         }
 
+        [Fact]
+        public void Add_Project_ShouldFail_IfDuplicateProduct()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectAdd);
+            var service = helper.Create<ProjectService>(user);
 
-        // TODO: Verify this is not necessary anymore
-        /* [Fact]
-         public void Add_Project_ShouldFail_IfDuplicateProduct()
-         {
-             // Arrange
-             var helper = new TestHelper();
-             var user = PrincipalHelper.CreateForPermission(Permissions.ProjectAdd);
-             var service = helper.Create<ProjectService>(user);
+            var duplicateProduct = new PimsProduct() { Code = "1" };
 
-             var repository = helper.GetService<Mock<IProjectRepository>>();
-             var duplicateCode = new PimsProduct() { Code = "1" };
+            var existingProjectProducts = new List<PimsProjectProduct>()
+                {
+                    new PimsProjectProduct() {
+                        Product = duplicateProduct
+                    }
+                };
 
-             // Act
-             Action result = () => service.Add(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode, duplicateCode } });
+            var productRepo = helper.GetService<Mock<IProductRepository>>();
+            productRepo.Setup(x => x.GetProjectProductsByProject(It.IsAny<long>())).Returns(new List<PimsProjectProduct>());
+            productRepo.Setup(x => x.GetProducts(It.IsAny<IEnumerable<PimsProduct>>())).Returns(new List<PimsProduct> { duplicateProduct });
 
-             // Assert
-             result.Should().Throw<DuplicateEntityException>();
-             repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
-         }
 
-         [Fact]
-         public void Add_Project_ShouldFail_IfDuplicateProductInDb()
-         {
-             // Arrange
-             var helper = new TestHelper();
-             var user = PrincipalHelper.CreateForPermission(Permissions.ProjectAdd);
-             var service = helper.Create<ProjectService>(user);
+            var projectRepo = helper.GetService<Mock<IProjectRepository>>();
 
-             var repository = helper.GetService<Mock<IProjectRepository>>();
+            // Act
+            Action result = () => service.Add(
+                new PimsProject()
+                {
+                    PimsProjectProducts = existingProjectProducts,
+                },
+                new List<UserOverrideCode>() { }
+            );
 
-             var duplicateCode = new PimsProduct() { Code = "1" };
-
-             var productRepository = helper.GetService<Mock<IProductRepository>>();
-             productRepository.Setup(x => x.GetByProductBatch(It.IsAny<IEnumerable<PimsProduct>>(), It.IsAny<long>())).Returns(new List<PimsProduct>() { duplicateCode });
-
-             // Act
-             Action result = () => service.Add(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode } });
-
-             // Assert
-             result.Should().Throw<DuplicateEntityException>();
-             repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
-         }*/
+            // Assert
+            result.Should().Throw<UserOverrideException>();
+            projectRepo.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
+        }
 
         [Fact]
         public void Add_Project_Success()
@@ -272,7 +267,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.Get(It.IsAny<long>())).Returns(new PimsProject());
 
             // Act
-            var result = service.Add(new PimsProject());
+            var result = service.Add(new PimsProject(), new List<UserOverrideCode>() { });
 
             // Assert
             result.Should().NotBeNull();
@@ -363,7 +358,7 @@ namespace Pims.Api.Test.Services
             var repository = helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action result = () => service.Update(new PimsProject());
+            Action result = () => service.Update(new PimsProject(), new List<UserOverrideCode>() { });
 
             // Assert
             result.Should().Throw<NotAuthorizedException>();
@@ -377,55 +372,11 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action result = () => service.Update(null);
+            Action result = () => service.Update(null, new List<UserOverrideCode>() { });
 
             // Assert
             result.Should().Throw<ArgumentNullException>();
         }
-
-
-        // TODO: Verify this is not necessary anymore
-        /*[Fact]
-        public void Update_Project_ShouldFail_IfDuplicateProduct()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectEdit);
-            var service = helper.Create<ProjectService>(user);
-
-            var repository = helper.GetService<Mock<IProjectRepository>>();
-            var duplicateCode = new PimsProduct() { Code = "1" };
-
-            // Act
-            Action result = () => service.Update(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode, duplicateCode } });
-
-            // Assert
-            result.Should().Throw<DuplicateEntityException>();
-            repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
-        }
-
-        [Fact]
-        public void Update_Project_ShouldFail_IfDuplicateProductInDb()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectEdit);
-            var service = helper.Create<ProjectService>(user);
-
-            var repository = helper.GetService<Mock<IProjectRepository>>();
-
-            var duplicateCode = new PimsProduct() { Code = "1" };
-
-            var productRepository = helper.GetService<Mock<IProductRepository>>();
-            productRepository.Setup(x => x.GetByProductBatch(It.IsAny<IEnumerable<PimsProduct>>(), It.IsAny<long>())).Returns(new List<PimsProduct>() { duplicateCode });
-
-            // Act
-            Action result = () => service.Update(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode } });
-
-            // Assert
-            result.Should().Throw<DuplicateEntityException>();
-            repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
-        }*/
 
         [Fact]
         public void Update_Project_Success()
@@ -441,7 +392,7 @@ namespace Pims.Api.Test.Services
             });
 
             // Act
-            var result = service.Update(new PimsProject { Id = 1, ConcurrencyControlNumber = 100 });
+            var result = service.Update(new PimsProject { Id = 1, ConcurrencyControlNumber = 100 }, new List<UserOverrideCode>() { });
 
             // Assert
             result.Should().NotBeNull();
@@ -474,7 +425,7 @@ namespace Pims.Api.Test.Services
             },});
 
             // Act
-            var result = service.Update(project);
+            var result = service.Update(project, new List<UserOverrideCode>() { });
 
             // Assert
             projectRepository.Verify(x => x.Update(It.IsAny<PimsProject>()), Times.Once);

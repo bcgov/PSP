@@ -7,5 +7,7 @@ namespace Pims.Dal.Entities.Models
         public IEnumerable<long> Projects { get; set; }
 
         public IEnumerable<long> AcquisitionTeamPersons { get; set; }
+
+        public IEnumerable<long> AcquisitionTeamOrganizations { get; set; }
     }
 }
