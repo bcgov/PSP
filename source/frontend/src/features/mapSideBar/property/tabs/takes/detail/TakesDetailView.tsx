@@ -35,8 +35,12 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
   loading,
   onEdit,
 }) => {
-  const cancelledTakes = takes?.filter(t => t.takeStatusTypeCode === TakesStatusTypes.CANCELLED);
-  const nonCancelledTakes = takes?.filter(t => t.takeStatusTypeCode !== TakesStatusTypes.CANCELLED);
+  const cancelledTakes = takes?.filter(
+    t => t.takeStatusTypeCode?.id === TakesStatusTypes.CANCELLED,
+  );
+  const nonCancelledTakes = takes?.filter(
+    t => t.takeStatusTypeCode?.id !== TakesStatusTypes.CANCELLED,
+  );
   const takesNotInFile = allTakesCount - (takes?.length ?? 0);
 
   const { getCodeById } = useLookupCodeHelpers();
@@ -69,6 +73,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
             labelWidth="8"
             label="Takes for this property in other files"
             tooltip="The number of takes in completed, In-progress or cancelled state for this property, in files other than this acquisition file. The other files can be found under the Acquisition section of the PIMS Files tab"
+            valueTestId="takes-in-other-files"
           >
             {takesNotInFile}
           </SectionField>
@@ -82,16 +87,16 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
               {prettyFormatUTCDate(take.appCreateTimestamp)}
             </SectionField>
             <SectionField label="Take type *">
-              {take.takeTypeCode ? getCodeById(API.TAKE_TYPES, take.takeTypeCode) : ''}
+              {take.takeTypeCode?.id ? getCodeById(API.TAKE_TYPES, take.takeTypeCode.id) : ''}
             </SectionField>
             <SectionField label="Take status *">
-              {take.takeStatusTypeCode
-                ? getCodeById(API.TAKE_STATUS_TYPES, take.takeStatusTypeCode)
+              {take.takeStatusTypeCode?.id
+                ? getCodeById(API.TAKE_STATUS_TYPES, take.takeStatusTypeCode.id)
                 : ''}
             </SectionField>
             <SectionField label="Site contamination">
-              {take.takeSiteContamTypeCode
-                ? getCodeById(API.TAKE_SITE_CONTAM_TYPES, take.takeSiteContamTypeCode)
+              {take.takeSiteContamTypeCode?.id
+                ? getCodeById(API.TAKE_SITE_CONTAM_TYPES, take.takeSiteContamTypeCode.id)
                 : ''}
             </SectionField>
             <SectionField label="Description" labelWidth="12">
@@ -104,13 +109,29 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                   labelWidth="8"
                   tooltip="The term new highway dedication includes municipal road or provincial public highway."
                 >
-                  <YesNoButtons id="newRightOfWayToggle" disabled value={take.isNewRightOfWay} />
+                  <YesNoButtons
+                    id="newRightOfWayToggle"
+                    disabled
+                    value={take.isNewHighwayDedication ?? undefined}
+                  />
                 </SectionField>
-                {take.isNewRightOfWay && (
+                {take.isNewHighwayDedication && (
                   <SectionField label="Area" labelWidth="12">
-                    <AreaContainer landArea={take.newRightOfWayArea ?? undefined} />
+                    <AreaContainer landArea={take.newHighwayDedicationArea ?? undefined} />
                   </SectionField>
                 )}
+                <SectionField
+                  label="Is this being acquired for MoTI inventory? *"
+                  labelWidth="8"
+                  tooltip="The property will be added to inventory."
+                  className="pt-4"
+                >
+                  <YesNoButtons
+                    id="addPropertyToggle"
+                    disabled
+                    value={take.isAcquiredForInventory ?? undefined}
+                  />
+                </SectionField>
               </StyledBorderSection>
               <StyledBorderSection>
                 <SectionField
@@ -120,7 +141,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                   <YesNoButtons
                     id="newInterestInSrwToggle"
                     disabled
-                    value={take.isNewInterestInSrw}
+                    value={take.isNewInterestInSrw ?? undefined}
                   />
                 </SectionField>
                 {take.isNewInterestInSrw && (
@@ -137,9 +158,13 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
               </StyledBorderSection>
               <StyledBorderSection>
                 <SectionField label="Is a there a new Land Act tenure? *" labelWidth="8">
-                  <YesNoButtons id="landActToggle" disabled value={take.isLandAct} />
+                  <YesNoButtons
+                    id="landActToggle"
+                    disabled
+                    value={take.isNewLandAct ?? undefined}
+                  />
                 </SectionField>
-                {take.isLandAct && (
+                {take.isNewLandAct && (
                   <>
                     <SectionField label="Land Act" labelWidth="3">
                       {take.landActTypeCode
@@ -165,10 +190,10 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                   <YesNoButtons
                     id="licenseToConstructToggle"
                     disabled
-                    value={take.isLicenseToConstruct}
+                    value={take.isNewLicenseToConstruct ?? undefined}
                   />
                 </SectionField>
-                {take.isLicenseToConstruct && (
+                {take.isNewLicenseToConstruct && (
                   <>
                     <SectionField label="Area" labelWidth="12">
                       <AreaContainer landArea={take.licenseToConstructArea ?? undefined} />
@@ -184,9 +209,13 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
             <StyledNoTabSection header="Surplus">
               <StyledBorderSection>
                 <SectionField label="Is there a Surplus? *" labelWidth="8">
-                  <YesNoButtons id="surplusToggle" disabled value={take.isSurplus} />
+                  <YesNoButtons
+                    id="surplusToggle"
+                    disabled
+                    value={take.isThereSurplus ?? undefined}
+                  />
                 </SectionField>
-                {take.isSurplus && (
+                {take.isThereSurplus && (
                   <SectionField label="Area" labelWidth="12">
                     <AreaContainer landArea={take.surplusArea ?? undefined} />
                   </SectionField>

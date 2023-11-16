@@ -5,6 +5,7 @@ import { Api_ConcurrentVersion_Null } from './ConcurrentVersion';
 import { Api_FinancialCode } from './FinancialCode';
 import Api_TypeCode from './TypeCode';
 
+// LINK @backend/api/Models/Concepts/Project/ProjectModel.cs
 export interface Api_Project extends Api_ConcurrentVersion_Null, Api_AuditFields {
   id: number | null;
   projectStatusTypeCode: Api_TypeCode<string> | null;
@@ -15,19 +16,28 @@ export interface Api_Project extends Api_ConcurrentVersion_Null, Api_AuditFields
   code: string | null;
   description: string | null;
   note: string | null;
-  products: Api_Product[];
+  projectProducts: Api_ProjectProduct[];
 }
 
+// LINK @backend/api/Models/Concepts/Product/ProductModel.cs
 export interface Api_Product extends Api_ConcurrentVersion_Null, Api_AuditFields {
-  id?: number | null;
-  parentProject: Api_Project | null;
-  parentProjectId: number | null;
-  code: string | null;
-  description: string | null;
+  id: number | null;
+  projectProducts: Api_ProjectProduct[];
+  acquisitionFiles: Api_AcquisitionFile[];
+  code: string;
+  description: string;
   startDate: string | null;
   costEstimate: number | null;
   costEstimateDate: string | null;
-  objective: string | null;
+  objective: string;
   scope: string | null;
-  acquisitionFiles: Api_AcquisitionFile[];
+}
+
+// LINK @backend/api/Models/Concepts/Project/ProjectProductModel.cs
+export interface Api_ProjectProduct extends Api_ConcurrentVersion_Null, Api_AuditFields {
+  id: number;
+  projectId: number;
+  product: Api_Product | null;
+  productId: number;
+  project: Api_Project | null;
 }

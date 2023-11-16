@@ -88,11 +88,13 @@ describe('AddProjectForm component', () => {
       getProductCodeTextBox: (index: number) =>
         utils.container.querySelector(`input[name="products.${index}.code"]`) as HTMLInputElement,
       getCostTypeDropdown: () =>
-        utils.container.querySelector(`select[name="costTypeCode"]`) as HTMLSelectElement,
+        utils.container.querySelector(`[name="typeahead-select-costTypeCode"]`) as HTMLElement,
       getWorkActivityDropdown: () =>
-        utils.container.querySelector(`select[name="workActivityCode"]`) as HTMLSelectElement,
+        utils.container.querySelector(`[name="typeahead-select-workActivityCode"]`) as HTMLElement,
       getBusinessFunctionDropdown: () =>
-        utils.container.querySelector(`select[name="businessFunctionCode"]`) as HTMLSelectElement,
+        utils.container.querySelector(
+          `[name="typeahead-select-businessFunctionCode"]`,
+        ) as HTMLElement,
     };
   };
 
@@ -131,7 +133,7 @@ describe('AddProjectForm component', () => {
 
     const input = getNameTextbox();
     const number = getNumberTextbox();
-    const select = getRegionDropdown();
+    const region = getRegionDropdown();
     const status = getStatusDropdown();
     const summary = getSummaryTextbox();
     const costType = getCostTypeDropdown();
@@ -139,7 +141,7 @@ describe('AddProjectForm component', () => {
     const businessFunction = getBusinessFunctionDropdown();
 
     expect(input).toBeVisible();
-    expect(select).toBeVisible();
+    expect(region).toBeVisible();
     expect(number).toBeVisible();
     expect(status).toBeVisible();
     expect(summary).toBeVisible();
@@ -147,12 +149,12 @@ describe('AddProjectForm component', () => {
     expect(input.tagName).toBe('INPUT');
     expect(number.tagName).toBe('INPUT');
     expect(summary.tagName).toBe('TEXTAREA');
-    expect(select.tagName).toBe('SELECT');
+    expect(region.tagName).toBe('SELECT');
     expect(status.tagName).toBe('SELECT');
 
-    expect(costType.tagName).toBe('SELECT');
-    expect(workActivity.tagName).toBe('SELECT');
-    expect(businessFunction.tagName).toBe('SELECT');
+    expect(costType.tagName).toBe('INPUT');
+    expect(workActivity.tagName).toBe('INPUT');
+    expect(businessFunction.tagName).toBe('INPUT');
   });
 
   it('should validate character limits', async () => {

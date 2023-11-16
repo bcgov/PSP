@@ -140,6 +140,12 @@ export const SideBarContextProvider = (props: {
     resetFilePropertyLocations();
   }, [resetFilePropertyLocations]);
 
+  useEffect(() => {
+    if (staleLastUpdatedBy) {
+      setLastUpdatedByAndStale(lastUpdatedBy);
+    }
+  }, [lastUpdatedBy, setLastUpdatedByAndStale, staleLastUpdatedBy]);
+
   return (
     <SideBarContext.Provider
       value={{

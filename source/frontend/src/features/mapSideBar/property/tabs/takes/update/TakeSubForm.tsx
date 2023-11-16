@@ -40,11 +40,14 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
     label: landAct.value + ' ' + landAct.label,
   }));
 
-  const isSurplus = getIn(values, withNameSpace(nameSpace, 'isSurplus'));
-  const isNewRightOfWay = getIn(values, withNameSpace(nameSpace, 'isNewRightOfWay'));
+  const isThereSurplus = getIn(values, withNameSpace(nameSpace, 'isThereSurplus'));
+  const isNewHighwayDedication = getIn(values, withNameSpace(nameSpace, 'isNewHighwayDedication'));
   const isNewInterestInSrw = getIn(values, withNameSpace(nameSpace, 'isNewInterestInSrw'));
-  const isLandAct = getIn(values, withNameSpace(nameSpace, 'isLandAct'));
-  const isLicenseToConstruct = getIn(values, withNameSpace(nameSpace, 'isLicenseToConstruct'));
+  const isNewLandAct = getIn(values, withNameSpace(nameSpace, 'isNewLandAct'));
+  const isNewLicenseToConstruct = getIn(
+    values,
+    withNameSpace(nameSpace, 'isNewLicenseToConstruct'),
+  );
 
   const getModalWarning = (onOk: () => void) => {
     return (e: React.ChangeEvent<any>) => {
@@ -119,40 +122,52 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
             tooltip="The term new highway dedication includes municipal road or provincial public highway."
           >
             <RadioGroup
-              field={withNameSpace(nameSpace, 'isNewRightOfWay')}
+              field={withNameSpace(nameSpace, 'isNewHighwayDedication')}
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
               handleChange={getModalWarning(() => {
-                setFieldValue(withNameSpace(nameSpace, 'isNewRightOfWay'), 'false');
-                setFieldValue(withNameSpace(nameSpace, 'newRightOfWayArea'), 0);
+                setFieldValue(withNameSpace(nameSpace, 'isNewHighwayDedication'), 'false');
+                setFieldValue(withNameSpace(nameSpace, 'newHighwayDedicationArea'), 0);
               })}
             />
           </SectionField>
-          {isNewRightOfWay === 'true' && (
+          {isNewHighwayDedication === 'true' && (
             <>
               <SectionField label="Area" labelWidth="12">
                 <AreaContainer
                   onChange={(landArea, areaUnitTypeCode) => {
                     formikProps.setFieldValue(
-                      withNameSpace(nameSpace, 'newRightOfWayArea'),
+                      withNameSpace(nameSpace, 'newHighwayDedicationArea'),
                       landArea,
                     );
                     formikProps.setFieldValue(
-                      withNameSpace(nameSpace, 'newRightOfWayAreaUnitTypeCode'),
+                      withNameSpace(nameSpace, 'newHighwayDedicationAreaUnitTypeCode'),
                       areaUnitTypeCode,
                     );
                   }}
                   isEditable
                   unitCode={getIn(
                     values,
-                    withNameSpace(nameSpace, 'newRightOfWayAreaUnitTypeCode'),
+                    withNameSpace(nameSpace, 'newHighwayDedicationAreaUnitTypeCode'),
                   )}
-                  landArea={currentTake.newRightOfWayArea}
-                  field={withNameSpace(nameSpace, 'newRightOfWayArea')}
+                  landArea={currentTake.newHighwayDedicationArea}
+                  field={withNameSpace(nameSpace, 'newHighwayDedicationArea')}
                 />
               </SectionField>
             </>
           )}
+          <SectionField
+            label="Is this being acquired for MoTI inventory? *"
+            labelWidth="8"
+            tooltip="Selecting Yes for this option will result in the property being added to inventory."
+            className="pt-4"
+          >
+            <RadioGroup
+              field={withNameSpace(nameSpace, 'isAcquiredForInventory')}
+              radioValues={yesNoRadioGroupValues}
+              flexDirection="row"
+            />
+          </SectionField>
         </StyledBorderSection>
         <StyledBorderSection>
           <SectionField
@@ -207,16 +222,16 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
             <RadioGroup
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
-              field={withNameSpace(nameSpace, 'isLandAct')}
+              field={withNameSpace(nameSpace, 'isNewLandAct')}
               handleChange={getModalWarning(() => {
-                setFieldValue(withNameSpace(nameSpace, 'isLandAct'), 'false');
+                setFieldValue(withNameSpace(nameSpace, 'isNewLandAct'), 'false');
                 setFieldValue(withNameSpace(nameSpace, 'landActArea'), 0);
                 setFieldValue(withNameSpace(nameSpace, 'landActEndDt'), '');
                 setFieldValue(withNameSpace(nameSpace, 'landActTypeCode'), '');
               })}
             />
           </SectionField>
-          {isLandAct === 'true' && (
+          {isNewLandAct === 'true' && (
             <>
               <SectionField label="Land Act" required contentWidth="7">
                 <Select
@@ -257,15 +272,15 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
             <RadioGroup
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
-              field={withNameSpace(nameSpace, 'isLicenseToConstruct')}
+              field={withNameSpace(nameSpace, 'isNewLicenseToConstruct')}
               handleChange={getModalWarning(() => {
-                setFieldValue(withNameSpace(nameSpace, 'isLicenseToConstruct'), 'false');
+                setFieldValue(withNameSpace(nameSpace, 'isNewLicenseToConstruct'), 'false');
                 setFieldValue(withNameSpace(nameSpace, 'licenseToConstructArea'), 0);
                 setFieldValue(withNameSpace(nameSpace, 'ltcEndDt'), '');
               })}
             />
           </SectionField>
-          {isLicenseToConstruct === 'true' && (
+          {isNewLicenseToConstruct === 'true' && (
             <>
               <SectionField label="Area" labelWidth="12">
                 <AreaContainer
@@ -303,16 +318,16 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
         <StyledBorderSection>
           <SectionField label="Is there a Surplus? *" labelWidth="8">
             <RadioGroup
-              field={withNameSpace(nameSpace, 'isSurplus')}
+              field={withNameSpace(nameSpace, 'isThereSurplus')}
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
               handleChange={getModalWarning(() => {
-                setFieldValue(withNameSpace(nameSpace, 'isSurplus'), 'false');
+                setFieldValue(withNameSpace(nameSpace, 'isThereSurplus'), 'false');
                 setFieldValue(withNameSpace(nameSpace, 'surplusArea'), 0);
               })}
             />
           </SectionField>
-          {isSurplus === 'true' && (
+          {isThereSurplus === 'true' && (
             <>
               <SectionField label="Area" labelWidth="12">
                 <AreaContainer

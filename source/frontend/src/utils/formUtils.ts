@@ -65,8 +65,16 @@ export function toTypeCode<T = string>(value?: T | null): Api_TypeCode<T> | unde
   return !!value ? { id: value } : undefined;
 }
 
+export function toTypeCodeNullable<T = string>(value?: T | null): Api_TypeCode<T> | null {
+  return !!value ? { id: value } : null;
+}
+
 export function fromTypeCode<T = string>(value?: Api_TypeCode<T> | null): T | undefined {
   return value?.id;
+}
+
+export function fromTypeCodeNullable<T = string>(value?: Api_TypeCode<T> | null): T | null {
+  return value?.id ?? null;
 }
 
 export function stringToBoolean(value: string | boolean): boolean {

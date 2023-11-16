@@ -275,7 +275,7 @@ exports[`PropertyManagementUpdateForm component renders as expected 1`] = `
             <div
               class="c5 text-left col"
             >
-              No active Lease/License
+              No
             </div>
           </div>
           <div

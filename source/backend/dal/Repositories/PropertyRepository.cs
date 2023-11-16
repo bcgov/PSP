@@ -381,20 +381,25 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="property">The property to update.</param>
         /// <returns>The updated property.</returns>
-        public PimsProperty TransferFileProperty(PimsProperty property, bool isOwned = true)
+        public PimsProperty TransferFileProperty(PimsProperty property, bool isOwned, bool isPropertyOfInterest = false)
         {
             property.ThrowIfNull(nameof(property));
 
             var existingProperty = Context.PimsProperties
                 .FirstOrDefault(p => p.PropertyId == property.Internal_Id) ?? throw new KeyNotFoundException();
 
-            existingProperty.IsPropertyOfInterest = false;
+            existingProperty.IsPropertyOfInterest = isPropertyOfInterest;
             existingProperty.IsOwned = isOwned;
-            existingProperty.PropertyClassificationTypeCode = "COREOPER";
-            if (!isOwned)
+
+            if (isOwned)
+            {
+                existingProperty.PropertyClassificationTypeCode = "COREOPER";
+            }
+            else
             {
                 existingProperty.PropertyClassificationTypeCode = "OTHER";
             }
+
             return existingProperty;
         }
 
@@ -451,7 +456,7 @@ namespace Pims.Dal.Repositories
             if (!string.IsNullOrEmpty(filter.LeasePayRcvblType))
             {
                 query = query.Where(p =>
-                    p.PimsPropertyLeases.Any(pl => pl.Lease.LeasePayRvblTypeCode == filter.LeasePayRcvblType || filter.LeasePayRcvblType == "all"));
+                    p.PimsPropertyLeases.Any(pl => (pl.Lease.LeasePayRvblTypeCode == filter.LeasePayRcvblType || filter.LeasePayRcvblType == "all") && (pl.Lease.OrigExpiryDate >= DateTime.Now.Date || pl.Lease.PimsLeaseTerms.Any(t => t.TermExpiryDate == null || t.TermExpiryDate >= DateTime.Now.Date))));
             }
 
             // Anomalies

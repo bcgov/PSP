@@ -18,8 +18,7 @@ describe('Property management model tests', () => {
       expect(model.additionalDetails).toBe('');
       expect(model.isTaxesPayable).toBe(null);
       expect(model.isUtilitiesPayable).toBe(null);
-      expect(model.isLeaseActive).toBe(false);
-      expect(model.leaseExpiryDate).toBe('');
+      expect(model.formattedLeaseInformation).toBe('No');
     });
 
     it('fromApi sets values as expected from api response', () => {
@@ -36,46 +35,26 @@ describe('Property management model tests', () => {
       expect(model.additionalDetails).toBe('test');
       expect(model.isTaxesPayable).toBe(null);
       expect(model.isUtilitiesPayable).toBe(null);
-      expect(model.isLeaseActive).toBe(false);
-      expect(model.leaseExpiryDate).toBe('');
+      expect(model.formattedLeaseInformation).toBe('No');
     });
 
-    it('returns default text when no lease information is available', () => {
-      const model = PropertyManagementFormModel.fromApi(getMockApiPropertyManagement());
-      expect(model.formatLeaseInformation()).toBe('No active Lease/License');
-    });
-
-    it('returns active lease information and expiry date', () => {
-      let apiManagement: Api_PropertyManagement = {
-        ...getMockApiPropertyManagement(),
-        isLeaseActive: true,
-        leaseExpiryDate: '2020-03-15',
-      };
-      const model = PropertyManagementFormModel.fromApi(apiManagement);
-      expect(model.formatLeaseInformation()).toBe('Yes (Mar 15, 2020)');
-    });
-
-    it('returns expired lease information and expiry date', () => {
-      let apiManagement: Api_PropertyManagement = {
-        ...getMockApiPropertyManagement(),
-        isLeaseActive: true,
-        isLeaseExpired: true,
-        leaseExpiryDate: '2020-03-15',
-      };
-      const model = PropertyManagementFormModel.fromApi(apiManagement);
-      expect(model.formatLeaseInformation()).toBe('Expired (Mar 15, 2020)');
-    });
-
-    it('returns available lease information without an expiry date', () => {
-      let apiManagement: Api_PropertyManagement = {
-        ...getMockApiPropertyManagement(),
-        isLeaseActive: true,
-        isLeaseExpired: false,
-        leaseExpiryDate: null,
-      };
-      const model = PropertyManagementFormModel.fromApi(apiManagement);
-      expect(model.formatLeaseInformation()).toBe('Yes');
-    });
+    it.each([
+      ['NO lease found', 0, null, 'No'],
+      ['ONE lease with expiry date', 1, '2020-03-15', 'Yes (Mar 15, 2020)'],
+      ['ONE lease with no expiry date', 1, null, 'Yes'],
+      ['MULTIPLE leases', 5, null, 'Multiple'],
+    ])(
+      'returns lease information as expected - %s',
+      (_: string, leaseCount: number, expiryDate: string | null, expectedResult: string) => {
+        let apiManagement: Api_PropertyManagement = {
+          ...getMockApiPropertyManagement(),
+          relatedLeases: leaseCount,
+          leaseExpiryDate: expiryDate,
+        };
+        const model = PropertyManagementFormModel.fromApi(apiManagement);
+        expect(model.formattedLeaseInformation).toBe(expectedResult);
+      },
+    );
 
     it('toApi converts form values to the api format', () => {
       const purpose = new ManagementPurposeModel();
@@ -96,7 +75,6 @@ describe('Property management model tests', () => {
       expect(apiManagement.additionalDetails).toBe('test');
       expect(apiManagement.isUtilitiesPayable).toBe(true);
       expect(apiManagement.isTaxesPayable).toBe(null);
-      expect(apiManagement.leaseExpiryDate).toBe(null);
       expect(apiManagement.managementPurposes).toHaveLength(1);
       expect(apiManagement.managementPurposes[0]).toEqual(
         expect.objectContaining({

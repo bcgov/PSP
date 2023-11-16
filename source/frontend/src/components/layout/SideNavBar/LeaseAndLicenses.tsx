@@ -19,7 +19,7 @@ export const LeaseAndLicenses = ({ onLinkClick }: ISideTrayPageProps) => {
   return (
     <>
       <HalfHeightDiv>
-        <Styled.TrayHeader>Management</Styled.TrayHeader>
+        <Styled.TrayHeader>Leases & Licenses</Styled.TrayHeader>
         {hasClaim(Claims.LEASE_VIEW) && (
           <Link onClick={onLinkClick} to="/lease/list">
             Manage Lease/License Files
@@ -38,7 +38,7 @@ export const LeaseAndLicenses = ({ onLinkClick }: ISideTrayPageProps) => {
           </ExportH3>
           <p>Aggregated Lease & License Payments</p>
           <ExportAggregatedLeasesContainer />
-          <p>Lease and License Payments by Fiscal Year</p>
+          <p>Lease & License Payments by Fiscal Year</p>
           <ExportLeasePaymentsContainer />
         </HalfHeightDiv>
       )}

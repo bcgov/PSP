@@ -49,6 +49,7 @@ namespace Pims.Api.Services
                 "gml",
                 "kml",
                 "kmz",
+                "msg",
         };
 
         private readonly IDocumentRepository documentRepository;

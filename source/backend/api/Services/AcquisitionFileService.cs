@@ -22,6 +22,8 @@ namespace Pims.Api.Services
 {
     public class AcquisitionFileService : IAcquisitionFileService
     {
+        private static readonly string[] COREINVENTORYINTERESTCODES = { "Section 15", "Section 17", "NOI", "Section 66" };
+
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly IAcquisitionFileRepository _acqFileRepository;
@@ -121,7 +123,7 @@ namespace Pims.Api.Services
                     FileAcquisitionCompleted = fileProperty.file.CompletionDate.HasValue ? fileProperty.file.CompletionDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
                     FilePhysicalStatus = fileProperty.file.AcqPhysFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcqPhysFileStatusTypeCodeNavigation.Description : string.Empty,
                     FileAcquisitionType = fileProperty.file.AcquisitionTypeCodeNavigation is not null ? fileProperty.file.AcquisitionTypeCodeNavigation.Description : string.Empty,
-                    FileAcquisitionTeam = string.Join(", ", fileProperty.file.PimsAcquisitionFileTeams.Select(x => x.Person.GetFullName(true))),
+                    FileAcquisitionTeam = string.Join(", ", fileProperty.file.PimsAcquisitionFileTeams.Select(x => x.PersonId.HasValue ? x.Person.GetFullName(true) : x.Organization.Name)),
                     FileAcquisitionOwners = string.Join(", ", fileProperty.file.PimsAcquisitionOwners.Select(x => x.FormatOwnerName())),
                 }).ToList();
         }
@@ -175,7 +177,16 @@ namespace Pims.Api.Services
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            return _acqFileRepository.GetTeamMembers(userRegions, contractorPersonId);
+            var teamMembers = _acqFileRepository.GetTeamMembers(userRegions, contractorPersonId);
+
+            var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First()).ToList();
+            var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First()).ToList();
+
+            List<PimsAcquisitionFileTeam> teamFilterOptions = new();
+            teamFilterOptions.AddRange(persons);
+            teamFilterOptions.AddRange(organizations);
+
+            return teamFilterOptions;
         }
 
         public IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id)
@@ -688,26 +699,55 @@ namespace Pims.Api.Services
             // Get the current properties in the research file
             var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
             var propertiesOfInterest = currentProperties.Where(p => p.Property.IsPropertyOfInterest.HasValue && p.Property.IsPropertyOfInterest.Value);
+            var propertiesAccounted = currentProperties.Where(x => x.Property.IsPropertyOfInterest.HasValue && !x.Property.IsPropertyOfInterest.Value
+                                            && x.Property.IsOwned.HasValue && !x.Property.IsOwned.Value);
 
             // PSP-6111 Business rule: Transfer properties of interest to core inventory when acquisition file is completed
             foreach (var acquisitionProperty in propertiesOfInterest)
             {
                 var property = acquisitionProperty.Property;
-                if (!userOverride)
-                {
-                    throw new UserOverrideException(UserOverrideCode.PoiToInventory, "The properties of interest will be added to the inventory as acquired properties.");
-                }
                 var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionProperty.Internal_Id);
-                var coreInventoryInterestCodes = new string[] { "Section 15", "Section 17", "NOI", "Section 66" };
+
                 var activeTakes = takes.Where(t =>
                     !(t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && t.LandActEndDt.HasValue && t.LandActEndDt.Value.Date < DateTime.UtcNow.Date) &&
                     !(t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value && t.LtcEndDt.HasValue && t.LtcEndDt.Value.Date < DateTime.UtcNow.Date) &&
                     !(t.IsNewInterestInSrw.HasValue && t.IsNewInterestInSrw.Value && t.SrwEndDt.HasValue && t.SrwEndDt.Value.Date < DateTime.UtcNow.Date));
-                //see psp-6589 for business rules.
-                var isOwned = !(activeTakes.All(t => (t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && coreInventoryInterestCodes.Contains(t.LandActTypeCode))
+
+                // see psp-6589 for business rules.
+                var isOwned = !(activeTakes.All(t => (t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && COREINVENTORYINTERESTCODES.Contains(t.LandActTypeCode))
                     || (t.IsNewInterestInSrw.HasValue && t.IsNewInterestInSrw.Value)
-                    || (t.IsThereSurplus.HasValue && t.IsThereSurplus.Value)
                     || (t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value)) && activeTakes.Any());
+                var isPropertyOfInterest = false;
+
+                // Override for dedication psp-7048.
+                var doNotAcquire = takes.All(t =>
+                    t.IsNewHighwayDedication.HasValue && t.IsNewHighwayDedication.Value && t.IsAcquiredForInventory.HasValue && !t.IsAcquiredForInventory.Value);
+
+                if (doNotAcquire)
+                {
+                    isOwned = false;
+                    isPropertyOfInterest = true;
+                }
+
+                if (!userOverride && (isOwned || (!isOwned && !isPropertyOfInterest)))
+                {
+                    throw new UserOverrideException(UserOverrideCode.PoiToInventory, "You have one or more take(s) that will be added to MoTI Inventory. Do you want to acknowledge and proceed?");
+                }
+
+                _propertyRepository.TransferFileProperty(property, isOwned, isPropertyOfInterest);
+            }
+
+            foreach (var acqFileProperty in propertiesAccounted)
+            {
+                var property = acqFileProperty.Property;
+                if (!userOverride)
+                {
+                    throw new UserOverrideException(UserOverrideCode.PoiToInventory, "The properties of interest will be added to the inventory as acquired properties.");
+                }
+
+                var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acqFileProperty.Internal_Id);
+                var isOwned = takes.Any(x => x.IsThereSurplus.HasValue && x.IsThereSurplus.Value);
+
                 _propertyRepository.TransferFileProperty(property, isOwned);
             }
         }

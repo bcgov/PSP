@@ -83,10 +83,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     actions: {
       navigateToProperty: (context, event: any) => {
         const selectedFeatureData = context.mapLocationFeatureDataset;
-        if (selectedFeatureData?.pimsFeature?.properties.PROPERTY_ID) {
+        if (selectedFeatureData?.pimsFeature?.properties?.PROPERTY_ID) {
           const pimsFeature = selectedFeatureData.pimsFeature;
           history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
-        } else if (selectedFeatureData?.parcelFeature?.properties.PID) {
+        } else if (selectedFeatureData?.parcelFeature?.properties?.PID) {
           const parcelFeature = selectedFeatureData.parcelFeature;
           const parsedPid = pidParser(parcelFeature.properties.PID);
           history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);

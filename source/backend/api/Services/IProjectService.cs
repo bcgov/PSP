@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Exceptions;
 
 namespace Pims.Api.Services
 {
@@ -13,14 +14,14 @@ namespace Pims.Api.Services
 
         Task<Paged<PimsProject>> GetPage(ProjectFilter filter);
 
-        PimsProject Add(PimsProject project);
-
         PimsProject GetById(long projectId);
 
         IList<PimsProduct> GetProducts(long projectId);
 
         List<PimsAcquisitionFile> GetProductFiles(long productId);
 
-        PimsProject Update(PimsProject project);
+        PimsProject Add(PimsProject project, IEnumerable<UserOverrideCode> userOverrides);
+
+        PimsProject Update(PimsProject project, IEnumerable<UserOverrideCode> userOverrides);
     }
 }

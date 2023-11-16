@@ -2,6 +2,10 @@ using System.Collections.Generic;
 
 namespace Pims.Api.Models.Concepts
 {
+    /*
+    * Frontend model
+    * LINK @frontend/src\models\api\Project.ts:10
+    */
     public class ProjectModel : BaseAppModel
     {
         #region Properties
@@ -54,7 +58,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - Project products.
         /// </summary>
-        public List<ProductModel> Products { get; set; }
+        public List<ProjectProductModel> ProjectProducts { get; set; }
         #endregion
     }
 }

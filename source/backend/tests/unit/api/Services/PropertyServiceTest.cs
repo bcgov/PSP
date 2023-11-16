@@ -297,6 +297,37 @@ namespace Pims.Api.Test.Services
             repository.Verify(x => x.UpdatePropertyManagement(It.IsAny<PimsProperty>()), Times.Never);
         }
 
+        [Fact]
+        public void Create_PropertyManagementActivity_NoPermission()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions();
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+
+            // Act
+            Action act = () => service.CreateActivity(new PimsPropertyActivity());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Create(It.IsAny<PimsPropertyActivity>()), Times.Never);
+        }
+
+        [Fact]
+        public void Create_PropertyManagementActivity_Success()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementAdd, Permissions.PropertyEdit);
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+            var activity = new PimsPropertyActivity();
+
+            // Act
+            var result = service.CreateActivity(activity);
+
+            // Assert
+            activity.PropMgmtActivityStatusTypeCode.Should().Be("NOTSTARTED");
+            repository.Verify(x => x.Create(It.IsAny<PimsPropertyActivity>()), Times.Once);
+        }
+
 
         [Fact]
         public void Get_PropertyManagement_Activities_NoPermission()

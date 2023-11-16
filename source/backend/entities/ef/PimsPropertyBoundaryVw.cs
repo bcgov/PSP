@@ -112,5 +112,11 @@ namespace Pims.Dal.Entities
         public string ZoningPotential { get; set; }
         [Column("IS_PAYABLE_LEASE")]
         public bool? IsPayableLease { get; set; }
+        [Column("IS_ACTIVE_PAYABLE_LEASE")]
+        public bool? IsActivePayableLease { get; set; }
+        [Column("IS_RECEIVABLE_LEASE")]
+        public bool? IsReceivableLease { get; set; }
+        [Column("IS_ACTIVE_RECEIVABLE_LEASE")]
+        public bool? IsActiveReceivableLease { get; set; }
     }
 }

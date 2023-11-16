@@ -79,6 +79,30 @@ export const otherInterestIconSelect = L.icon({
   shadowSize: [41, 41],
 });
 
+// not owned property icon (orange)
+export const notOwnedPropertyIcon = L.icon({
+  iconUrl:
+    require('@/assets/images/pins/marker-info-orange.png') ??
+    'assets/images/pins/marker-info-orange.png',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+// not owned property icon (orange) highlighted
+export const notOwnedPropertyIconSelect = L.icon({
+  iconUrl:
+    require('@/assets/images/pins/marker-info-orange-highlight.png') ??
+    'assets/images/pins/marker-info-orange-highlight.png',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 /**
  * Creates map points (in GeoJSON format) for further clustering by `supercluster`
  * @param properties
@@ -154,6 +178,16 @@ export function getMarkerIcon(
   }
 }
 
+/**
+ * Get an icon type for the specified cluster property details.
+ */
+export function getNotOwnerMarkerIcon(selected: boolean): L.Icon<L.IconOptions> {
+  if (selected) {
+    return notOwnedPropertyIconSelect;
+  }
+  return notOwnedPropertyIcon;
+}
+
 // parcel icon (green) highlighted
 export const getDraftIcon = (text: string) => {
   return L.divIcon({
@@ -179,8 +213,10 @@ export const createSingleMarker = <P extends MarkerFeature>(
   if (isOwned) {
     const icon = getMarkerIcon(feature, false);
     return new Marker(latlng, { icon });
+  } else {
+    const icon = getNotOwnerMarkerIcon(false);
+    return new Marker(latlng, { icon });
   }
-  throw Error('marker type not found');
 };
 
 export const isPimsFeature = (

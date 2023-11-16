@@ -8,12 +8,12 @@ import {
   Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
+  Api_AcquisitionFileTeam,
 } from '@/models/api/AcquisitionFile';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
 import { Api_LastUpdatedBy } from '@/models/api/File';
-import { Api_Person } from '@/models/api/Person';
 import { Api_Product, Api_Project } from '@/models/api/Project';
 import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -169,7 +169,7 @@ export const useAcquisitionProvider = () => {
   });
 
   const getAllAcquisitionTeamMembersApi = useApiRequestWrapper<
-    () => Promise<AxiosResponse<Api_Person[], any>>
+    () => Promise<AxiosResponse<Api_AcquisitionFileTeam[], any>>
   >({
     requestFunction: useCallback(
       async () => await getAllAcquisitionFileTeamMembers(),
