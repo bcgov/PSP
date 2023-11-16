@@ -36,72 +36,76 @@ export interface ITypeaheadSelectProps {
 /**
  * Formik-connected <Select> form control with type-ahead capabilities.
  */
-export const TypeaheadSelect: React.FC<ITypeaheadSelectProps> = ({
-  field,
-  label,
-  required,
-  tooltip,
-  displayErrorTooltips,
-  className,
-  placeholder,
-  minLength = 0,
-  options,
-  onChange,
-}) => {
-  const { errors, touched, values, setFieldValue, setFieldTouched } = useFormikContext();
-  const value = getIn(values, field);
-  const error = getIn(errors, field);
-  const touch = getIn(touched, field);
-  const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
+export const TypeaheadSelect = React.forwardRef<Typeahead<SelectOption>, ITypeaheadSelectProps>(
+  (props, ref) => {
+    const {
+      field,
+      label,
+      required,
+      tooltip,
+      displayErrorTooltips,
+      className,
+      placeholder,
+      minLength = 0,
+      options,
+      onChange,
+    } = props;
+    const { errors, touched, values, setFieldValue, setFieldTouched } = useFormikContext();
+    const value = getIn(values, field);
+    const error = getIn(errors, field);
+    const touch = getIn(touched, field);
+    const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
 
-  const onSelectChange = React.useCallback(
-    (selectedArray: SelectOption[]) => {
-      const selected = selectedArray.length ? selectedArray[0] : undefined;
-      setFieldValue(field, selected);
-      if (typeof onChange === 'function') {
-        onChange(selected);
-      }
-    },
-    [field, setFieldValue, onChange],
-  );
+    const onSelectChange = React.useCallback(
+      (selectedArray: SelectOption[]) => {
+        const selected = selectedArray.length ? selectedArray[0] : undefined;
+        setFieldValue(field, selected);
+        if (typeof onChange === 'function') {
+          onChange(selected);
+        }
+      },
+      [field, setFieldValue, onChange],
+    );
 
-  const onSelectBlur = React.useCallback(
-    () => setFieldTouched(field, true),
-    [field, setFieldTouched],
-  );
+    const onSelectBlur = React.useCallback(
+      () => setFieldTouched(field, true),
+      [field, setFieldTouched],
+    );
 
-  return (
-    <StyledFormGroup
-      className={cx({ required: required }, className)}
-      data-testid={`typeahead-select-${field}`}
-    >
-      {label && <Form.Label htmlFor={`typeahead-select-${field}`}>{label}</Form.Label>}
-      {tooltip && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
-      <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
-        <Typeahead
-          id={`typeahead-select-${field}`}
-          inputProps={{
-            name: `typeahead-select-${field}`,
-            id: `typeahead-select-${field}`,
-          }}
-          flip
-          clearButton
-          highlightOnlyResult
-          multiple={false}
-          isInvalid={touch && error}
-          placeholder={placeholder ?? 'Type to search...'}
-          options={options}
-          labelKey="label"
-          selected={value ? [].concat(value) : []}
-          minLength={minLength}
-          onChange={onSelectChange}
-          onBlur={onSelectBlur}
-        ></Typeahead>
-      </TooltipWrapper>
-      {!displayErrorTooltips && <DisplayError field={field} />}
-    </StyledFormGroup>
-  );
-};
+    return (
+      <StyledFormGroup
+        className={cx({ required: required }, className)}
+        data-testid={`typeahead-select-${field}`}
+      >
+        {label && <Form.Label htmlFor={`typeahead-select-${field}`}>{label}</Form.Label>}
+        {tooltip && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
+        <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
+          <Typeahead
+            ref={ref}
+            id={`typeahead-select-${field}`}
+            inputProps={{
+              name: `typeahead-select-${field}`,
+              id: `typeahead-select-${field}`,
+            }}
+            flip
+            clearButton
+            highlightOnlyResult
+            multiple={false}
+            isInvalid={touch && error}
+            placeholder={placeholder ?? 'Type to search...'}
+            options={options}
+            labelKey="label"
+            selected={value ? [].concat(value) : []}
+            minLength={minLength}
+            onChange={onSelectChange}
+            onBlur={onSelectBlur}
+          ></Typeahead>
+        </TooltipWrapper>
+        {!displayErrorTooltips && <DisplayError field={field} />}
+      </StyledFormGroup>
+    );
+  },
+);
 
 const StyledFormGroup = styled(Form.Group)`
   // This is the close button of the type-ahead
