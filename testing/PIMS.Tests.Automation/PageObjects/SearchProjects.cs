@@ -9,7 +9,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class SearchProjects : PageObjectBase
     {
         //Menu Elements
-        private By projectMenuBttn = By.XPath("//a/label[contains(text(),'Project')]/parent::a");
+        private By projectMenuBttn = By.CssSelector("div[data-testid='nav-tooltip-project'] a");
         private By manageProjectButton = By.XPath("//a[contains(text(),'Manage Project')]");
 
         //Search Projects Filters Elements
@@ -24,13 +24,18 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Search Projects Table Column header Elements
         private By searchProjectNbrHeaderColumn = By.XPath("//div[@data-testid='projectsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Project #')]");
+        private By searchProjectNbrOrderBttn = By.CssSelector("div[data-testid='sort-column-code']");
         private By searchProjectNameHeaderColumn = By.XPath("//div[@data-testid='projectsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Project name')]");
+        private By searchProjectNameOrderBttn = By.CssSelector("div[data-testid='sort-column-description']");
         private By searchProjectRegionHeaderColumn = By.XPath("//div[@data-testid='projectsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Region')]");
         private By searchProjectStatusHeaderColumn = By.XPath("//div[@data-testid='projectsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");
         private By searchProjectLastUpdatedByHeaderColumn = By.XPath("//div[@data-testid='projectsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Last updated by')]");
+        private By searchProjectLastUpdatedByOrderBttn = By.CssSelector("div[data-testid='sort-column-lastUpdatedBy']");
         private By searchProjectUpdatedDateHeaderColumn = By.XPath("//div[@data-testid='projectsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Updated date')]");
+        private By searchProjectLastUpdatedDateOrderBttn = By.CssSelector("div[data-testid='sort-column-lastUpdatedDate']");
 
         //Search Projects Table 1st result Element
+        private By searchProject1stResult = By.CssSelector("div[data-testid='projectsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
         private By searchProject1stResultNbrLink = By.XPath("//div[@data-testid='projectsTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[1]/a");
         private By searchProject1stResultNameLink = By.XPath("//div[@data-testid='projectsTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[2]/a");
         private By searchProject1stResultRegionContent = By.XPath("//div[@data-testid='projectsTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[3]");
@@ -41,10 +46,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By searchProjectTotalCount = By.XPath("//div[@data-testid='projectsTable']/div[@class='tbody']/div[@class='tr-wrapper']");
 
+        //Search Projects Pagination elements
         private By searchProjectShowEntries = By.CssSelector("div[class='Menu-root']");
         private By searchProjectPagination = By.CssSelector("ul[class='pagination']");
+
         public SearchProjects(IWebDriver webDriver) : base(webDriver)
         {}
+
         //Navigates to Search a Project
         public void NavigateToSearchProject()
         {
@@ -124,30 +132,54 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchProject1stResultNbrLink).Click();
         }
 
+        public void OrderByProjectNumber()
+        {
+            WaitUntilClickable(searchProjectNbrOrderBttn);
+            webDriver.FindElement(searchProjectNbrOrderBttn).Click();
+        }
+
+        public void OrderByProjectName()
+        {
+            WaitUntilClickable(searchProjectNameOrderBttn);
+            webDriver.FindElement(searchProjectNameOrderBttn).Click();
+        }
+
+        public void OrderByProjectLastUpdatedBy()
+        {
+            WaitUntilClickable(searchProjectLastUpdatedByOrderBttn);
+            webDriver.FindElement(searchProjectLastUpdatedByOrderBttn).Click();
+        }
+
+        public void OrderByProjectLastUpdatedDate()
+        {
+            WaitUntilClickable(searchProjectLastUpdatedDateOrderBttn);
+            webDriver.FindElement(searchProjectLastUpdatedDateOrderBttn).Click();
+        }
+
         public void VerifySearchView()
         {
             WaitUntilVisible(searchProjectSubtitle);
 
             //Search Projects Filters Section
-            Assert.True(webDriver.FindElement(searchProjectSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(searchProjectNumberInput).Displayed);
-            Assert.True(webDriver.FindElement(searchProjectNameInput).Displayed);
-            Assert.True(webDriver.FindElement(searchProjectRegionSelect).Displayed);
-            Assert.True(webDriver.FindElement(searchProjectStatusSelect).Displayed);
-            Assert.True(webDriver.FindElement(searchProjectButton).Displayed);
-            Assert.True(webDriver.FindElement(searchProjectResetButton).Displayed);
-            Assert.True(webDriver.FindElement(searchProjectAddProjectBttn).Displayed);
+            AssertTrueIsDisplayed(searchProjectSubtitle);
+            AssertTrueIsDisplayed(searchProjectNumberInput);
+            AssertTrueIsDisplayed(searchProjectNameInput);
+            AssertTrueIsDisplayed(searchProjectRegionSelect);
+            AssertTrueIsDisplayed(searchProjectStatusSelect);
+            AssertTrueIsDisplayed(searchProjectButton);
+            AssertTrueIsDisplayed(searchProjectResetButton);
+            AssertTrueIsDisplayed(searchProjectAddProjectBttn);
 
             //Search Projects Table Column header Elements
-            Assert.True(webDriver.FindElement(searchProjectNbrHeaderColumn).Displayed);
-            Assert.True(webDriver.FindElement(searchProjectNameHeaderColumn).Displayed);
-            Assert.True(webDriver.FindElement(searchProjectRegionHeaderColumn).Displayed);
-            Assert.True(webDriver.FindElement(searchProjectStatusHeaderColumn).Displayed);
-            Assert.True(webDriver.FindElement(searchProjectLastUpdatedByHeaderColumn).Displayed);
-            Assert.True(webDriver.FindElement(searchProjectUpdatedDateHeaderColumn).Displayed);
- 
-            Assert.True(webDriver.FindElement(searchProjectShowEntries).Displayed);
-            Assert.True(webDriver.FindElement(searchProjectPagination).Displayed);
+            AssertTrueIsDisplayed(searchProjectNbrHeaderColumn);
+            AssertTrueIsDisplayed(searchProjectNameHeaderColumn);
+            AssertTrueIsDisplayed(searchProjectRegionHeaderColumn);
+            AssertTrueIsDisplayed(searchProjectStatusHeaderColumn);
+            AssertTrueIsDisplayed(searchProjectLastUpdatedByHeaderColumn);
+            AssertTrueIsDisplayed(searchProjectUpdatedDateHeaderColumn);
+
+            AssertTrueIsDisplayed(searchProjectShowEntries);
+            AssertTrueIsDisplayed(searchProjectPagination);
         }
 
         public void VerifyViewSearchResult(Project project)
@@ -155,19 +187,48 @@ namespace PIMS.Tests.Automation.PageObjects
             DateTime thisDay = DateTime.Today;
             string today = thisDay.ToString("MMM d, yyyy");
 
-            WaitUntilVisible(searchProject1stResultNbrLink);
-            Assert.True(webDriver.FindElement(searchProject1stResultNbrLink).Text.Equals(project.Number));
-            Assert.True(webDriver.FindElement(searchProject1stResultNameLink).Text.Equals(project.Name));
-            Assert.True(webDriver.FindElement(searchProject1stResultRegionContent).Text.Equals(project.ProjectMOTIRegion));
-            Assert.True(webDriver.FindElement(searchProject1stResultStatusContent).Text.Equals(project.ProjectStatus));
-            Assert.True(webDriver.FindElement(searchProject1stResultLastUpdatedByContent).Text.Equals(project.UpdatedBy));
-            Assert.True(webDriver.FindElement(searchProject1stResultLastUpdatedDateContent).Text.Equals(today));
+            AssertTrueContentEquals(searchProject1stResultNbrLink, project.Number);
+            AssertTrueContentEquals(searchProject1stResultNameLink, project.Name);
+            AssertTrueContentEquals(searchProject1stResultRegionContent, project.ProjectMOTIRegion);
+            AssertTrueContentEquals(searchProject1stResultStatusContent, project.ProjectStatus);
+            AssertTrueContentEquals(searchProject1stResultLastUpdatedByContent, project.UpdatedBy);
+            AssertTrueContentEquals(searchProject1stResultLastUpdatedDateContent, today);
         }
 
-        public int TotalSearchedProjects()
+        public int ProjectsTableResultNumber()
         {
-            Wait(2000);
+            WaitUntilTableSpinnerDisappear();
             return webDriver.FindElements(searchProjectTotalCount).Count();
+        }
+
+        public Boolean SearchFoundResults()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElements(searchProject1stResult).Count > 0;
+        }
+
+        public string FirstProjectCode()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchProject1stResultNbrLink).Text;
+        }
+
+        public string FirstProjectName()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchProject1stResultNameLink).Text;
+        }
+
+        public string FirstProjectLastUpdatedBy()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchProject1stResultLastUpdatedByContent).Text;
+        }
+
+        public string FirstProjectLastUpdatedDate()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchProject1stResultLastUpdatedDateContent).Text;
         }
     }
 }

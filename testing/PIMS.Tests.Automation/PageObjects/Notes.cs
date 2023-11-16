@@ -22,17 +22,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By notesTab1stResultViewBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][2]/div/div[4]/div/button[@title='View Note']");
         private By notesTab1stResultDeleteBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/button[@title='Delete Note']");
 
-        //Notes Add New button Element
-        //private By notesAddNoteBttn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/h2/div/div/div/div[contains(text(),'Notes')]/following-sibling::div/button");
-
-        //Notes List View Elements
-        //private By notesTitle = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/h2/div/div/div/div[contains(text(),'Notes')]");
-        //private By notesTable = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']");
-        //private By notesNoteColumn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']/div/div/div/div[contains(text(),'Note')]");
-        //private By notesCreatedDateColumn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']/div/div/div/div[contains(text(),'Created date')]");
-        //private By notesCreatedByColumn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']/div/div/div/div[contains(text(),'Last updated by')]");
-        //private By notesBodyRows = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper']");
-
         //Notes 1st result Elements
         private By note1stViewNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(4) div button[title='View Note']");
         private By note1stNoteContent = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='tr'] div[class='td']:nth-child(1)");
@@ -81,8 +70,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateNotesTabButton()
         {
-            Wait(2000);
-            webDriver.FindElement(notesTabAddBttn).Click();
+            Wait(3000);
+            FocusAndClick(notesTabAddBttn);
         }
 
         public void AddNewNoteDetails(string note)
@@ -132,74 +121,69 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(note2ndDeleteNoteBttn).Click();
 
             WaitUntilVisible(notesDeletePopupHeader);
-            Assert.True(webDriver.FindElement(notesDeletePopupHeader).Text.Equals("Delete Note"));
-            Assert.True(webDriver.FindElement(notesDeletePopupBody).Text.Equals("Are you sure you want to delete this note?"));
+            AssertTrueContentEquals(notesDeletePopupHeader, "Delete Note");
+            AssertTrueContentEquals(notesDeletePopupBody, "Are you sure you want to delete this note?");
+
             webDriver.FindElement(notesDeleteOkBttn).Click();
         }
 
         public void VerifyNotesAddNew()
         {
-            WaitUntilVisible(notesAddDetailsHeader);
-            Assert.True(webDriver.FindElement(notesAddDetailsHeader).Displayed);
-            Assert.True(webDriver.FindElement(notesAddDetailsHeader).Text == "Notes");
-            Assert.True(webDriver.FindElement(notesAddDetailsLabel).Displayed);
-            Assert.True(webDriver.FindElement(notesAddDetailsTextarea).Displayed);
-            Assert.True(webDriver.FindElement(notesAddDetailsSaveBttn).Displayed);
-            Assert.True(webDriver.FindElement(notesAddDetailsCancelBttn).Displayed);
+            AssertTrueIsDisplayed(notesAddDetailsHeader);
+            AssertTrueContentEquals(notesAddDetailsHeader, "Notes");
+            AssertTrueIsDisplayed(notesAddDetailsLabel);
+            AssertTrueIsDisplayed(notesAddDetailsTextarea);
+            AssertTrueIsDisplayed(notesAddDetailsSaveBttn);
+            AssertTrueIsDisplayed(notesAddDetailsCancelBttn);
         }
 
         public void VerifyNotesEditForm()
         {
-            WaitUntilVisible(notesEditCreatedLabel);
-            Assert.True(webDriver.FindElement(notesEditCreatedLabel).Displayed);
-            Assert.True(webDriver.FindElement(notesEditCreatedDate).Displayed);
-            Assert.True(webDriver.FindElement(notesEditCreatedBy).Displayed);
+            AssertTrueIsDisplayed(notesEditCreatedLabel);
+            AssertTrueIsDisplayed(notesEditCreatedDate);
+            AssertTrueIsDisplayed(notesEditCreatedBy);
 
             if(webDriver.FindElements(notesEditUpdatedLabel).Count > 0)
-                Assert.True(webDriver.FindElement(notesEditUpdatedDate).Displayed);
+                AssertTrueIsDisplayed(notesEditUpdatedDate);
 
-            Assert.True(webDriver.FindElement(notesEditUpdatedBy).Displayed);
-            Assert.True(webDriver.FindElement(notedEditBttn).Displayed);
-            Assert.True(webDriver.FindElement(noteEditViewTextarea).Displayed);
-            Assert.True(webDriver.FindElement(notesAddDetailsSaveBttn).Displayed);
+            AssertTrueIsDisplayed(notesEditUpdatedBy);
+            AssertTrueIsDisplayed(notedEditBttn);
+            AssertTrueIsDisplayed(noteEditViewTextarea);
+            AssertTrueIsDisplayed(notesAddDetailsSaveBttn);
         }
 
         public void VerifyNotesTabListView()
         {
             Wait(3000);
 
-            Assert.True(webDriver.FindElement(notesTabTitle).Displayed);
-            Assert.True(webDriver.FindElement(notesTabAddBttn).Displayed);
-            Assert.True(webDriver.FindElement(notesTabTableHeaderNoteColumn).Displayed);
-            Assert.True(webDriver.FindElement(notesTabTableHeaderCreatedDateColumn).Displayed);
-            Assert.True(webDriver.FindElement(notesTabTableHeaderUpdatedByColumn).Displayed);
+            AssertTrueIsDisplayed(notesTabTitle);
+            AssertTrueIsDisplayed(notesTabAddBttn);
+            AssertTrueIsDisplayed(notesTabTableHeaderNoteColumn);
+            AssertTrueIsDisplayed(notesTabTableHeaderCreatedDateColumn);
+            AssertTrueIsDisplayed(notesTabTableHeaderUpdatedByColumn);
 
             if (webDriver.FindElements(notesTabTableContentTotal).Count > 0)
-            {
-                Assert.True(webDriver.FindElement(notesTabTableBody).Displayed);
-            }
+                AssertTrueIsDisplayed(notesTabTableBody);
             else
-            {
-                Assert.True(webDriver.FindElement(notesTabTableNoContent).Displayed);
-            }
+                AssertTrueIsDisplayed(notesTabTableNoContent);
         }
 
         public int NotesTabCount()
         {
-            Wait();
+            WaitUntilTableSpinnerDisappear();
             return webDriver.FindElements(notesTabTableContentTotal).Count();
         }
 
         public void VerifyAutomaticNotes(string fileType, string fromStatus, string toStatus)
         {
             WaitUntilVisibleText(note1stNoteContent, webDriver.FindElement(note1stNoteContent).Text);
-            Assert.True(webDriver.FindElement(note1stNoteContent).Text == fileType + " status changed from "+ fromStatus +" to " + toStatus);
+            AssertTrueContentEquals(note1stNoteContent, fileType + " status changed from "+ fromStatus +" to " + toStatus);
         }
 
         public void VerifyAutomaticNotesCompensation(string CompensationNbr, string fromStatus, string toStatus)
         {
             WaitUntilVisibleText(note1stNoteContent, webDriver.FindElement(note1stNoteContent).Text);
-            Assert.True(webDriver.FindElement(note1stNoteContent).Text == "Compensation Requisition with # " + CompensationNbr + ", changed status from '"+ fromStatus +"' to '" + toStatus + "'");
+            AssertTrueContentEquals(note1stNoteContent, "Compensation Requisition with # " + CompensationNbr + ", changed status from '"+ fromStatus +"' to '" + toStatus + "'");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
+using PIMS.Tests.Automation.PageObjects;
 using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
@@ -9,6 +10,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     public class NotesSteps
     {
         private readonly Notes notes;
+        private readonly SharedPagination sharedPagination;
         private readonly GenericSteps genericSteps;
 
         private List<string> notesData;
@@ -17,6 +19,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public NotesSteps(BrowserDriver driver)
         {
             notes = new Notes(driver.Current);
+            sharedPagination = new SharedPagination(driver.Current);
             genericSteps = new GenericSteps(driver);
             notesData = new List<string>();
             notesCount = 0;
@@ -52,7 +55,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I edit a Note on the Notes Tab from row number (.*)")]
         public void EditNotesTab(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-5506, PSP-5507 */
+            /* TEST COVERAGE: PSP-4020, PSP-5506, PSP-5507 */
 
             //Navigate to the Notes Tab
             notes.NavigateNotesTab();
@@ -72,6 +75,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save changes
             notes.SaveNote();
+
+            //Verify Pagination on the list view
+            sharedPagination.ChoosePaginationOption(5);
+            Assert.Equal(5, notes.NotesTabCount());
+
+            sharedPagination.ChoosePaginationOption(10);
+            Assert.Equal(10, notes.NotesTabCount());
 
             //Delete Note
             notesCount = notes.NotesTabCount();

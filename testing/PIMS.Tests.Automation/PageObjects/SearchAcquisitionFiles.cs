@@ -7,7 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
 {
     public class SearchAcquisitionFiles : PageObjectBase
     {
-        private By menuAcquisitionButton = By.XPath("//a/label[contains(text(),'Acquisition')]/parent::a");
+        private By menuAcquisitionButton = By.CssSelector("div[data-testid='nav-tooltip-acquisition'] a");
         private By searchAcquisitionButton = By.XPath("//a[contains(text(),'Manage Acquisition Files')]");
 
         //Acquisition File Search Filters Elements
@@ -25,12 +25,16 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Acquisition Files List Elements
         private By searchAcquisitionFileNumberHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Acquisition file #')]");
+        private By searchAcquisitionOrderFileNumberBttn = By.CssSelector("div[data-testid='sort-column-fileNumber']");
+        private By searchAcquisitionLegacyNumberHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Historical file #')]");
+        private By searchAcquisitionOrderLegacyNumberBttn = By.CssSelector("div[data-testid='sort-column-legacyFileNumber']");
         private By searchAcquisitionFileNameHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Acquisition file name')]");
+        private By searchAcquisitionOrderFileNameBttn = By.CssSelector("div[data-testid='sort-column-fileName']");
         private By searchAcquisitionFileMOTIRegionHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'MOTI Region')]");
         private By searchAcquisitionFileProjectHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Project')]");
         private By searchAcquisitionFileAddressHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic Address')]");
         private By searchAcquisitionFileStatusHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");
-        private By searchAcquisitionFileTableContent = By.XPath("//div[@role='table']/div[@class='tbody']/div");
+        private By searchAcquisitionFileTableContent = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']");
 
         //Search Acquisition File Pagination
         private By searchAcquisitionFilePaginationMenu = By.CssSelector("div[class='Menu-root']");
@@ -93,6 +97,24 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchAcquisitionFileSortByAFileBttn).Click();
         }
 
+        public void OrderByAcquisitionFileNumber()
+        {
+            WaitUntilClickable(searchAcquisitionOrderFileNumberBttn);
+            webDriver.FindElement(searchAcquisitionOrderFileNumberBttn).Click();
+        }
+
+        public void OrderByAcquisitionFileHistoricalNumber()
+        {
+            WaitUntilClickable(searchAcquisitionOrderLegacyNumberBttn);
+            webDriver.FindElement(searchAcquisitionOrderLegacyNumberBttn).Click();
+        }
+
+        public void OrderByAcquisitionFileName()
+        {
+            WaitUntilClickable(searchAcquisitionOrderFileNameBttn);
+            webDriver.FindElement(searchAcquisitionOrderFileNameBttn).Click();
+        }
+
         public void SelectFirstOption()
         {
             WaitUntilClickable(searchAcquisitionFile1stResultLink);
@@ -122,6 +144,30 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElements(searchAcquisitionFile1stResult).Count > 0;
         }
 
+        public string FirstAcquisitionFileNumber()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchAcquisitionFile1stResultLink).Text;
+        }
+
+        public string FirstAcquisitionLegacyFileNumber()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchAcquisitionFile1stResultHistoricalFile).Text;
+        }
+
+        public string FirstAcquisitionFileName()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchAcquisitionFile1stResultName).Text;
+        }
+
+        public int AcquisitionFileTableResultNumber()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElements(searchAcquisitionFileTableContent).Count;
+        }
+
         public void VerifyAcquisitionFileListView()
         {
             Wait();
@@ -141,7 +187,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Acquisition Files List View
             AssertTrueIsDisplayed(searchAcquisitionFileNumberHeader);
+            AssertTrueIsDisplayed(searchAcquisitionOrderFileNumberBttn);
+            AssertTrueIsDisplayed(searchAcquisitionLegacyNumberHeader);
+            AssertTrueIsDisplayed(searchAcquisitionOrderLegacyNumberBttn);
             AssertTrueIsDisplayed(searchAcquisitionFileNameHeader);
+            AssertTrueIsDisplayed(searchAcquisitionOrderFileNameBttn);
             AssertTrueIsDisplayed(searchAcquisitionFileMOTIRegionHeader);
             AssertTrueIsDisplayed(searchAcquisitionFileProjectHeader);
             AssertTrueIsDisplayed(searchAcquisitionFileAddressHeader);
@@ -160,7 +210,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(searchAcquisitionFile1stResultName, acquisition.AcquisitionFileName);
             AssertTrueContentEquals(searchAcquisitionFile1stResultMOTIRegion, acquisition.AcquisitionMOTIRegion);
             AssertTrueContentEquals(searchAcquisitionFile1stResultProject, acquisition.AcquisitionProjCode + " " + acquisition.AcquisitionProject);
-            Assert.True(webDriver.FindElements(searchAcquisitionFile1stResultAddress).Count() > 0);
+            Assert.True(webDriver.FindElements(searchAcquisitionFile1stResultAddress).Count().Equals(0));
             AssertTrueContentEquals(searchAcquisitionFile1stResultStatus, acquisition.AcquisitionStatus);
         }
     }
