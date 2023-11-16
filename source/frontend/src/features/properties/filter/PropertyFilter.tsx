@@ -27,8 +27,6 @@ export interface IPropertyFilterProps {
   sort?: TableSort<any>;
   /** Event fire when sorting changes. */
   onSorting?: (sort: TableSort<any>) => void;
-  /** Override to trigger filterchanged in the parent */
-  searchButtonClicked?: () => void;
   /** Which toggle view is currently active */
   toggle?: SearchToggleOption;
   /** Which toggle view is currently active */
@@ -44,7 +42,6 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   onChange,
   sort,
   onSorting,
-  searchButtonClicked,
   toggle = SearchToggleOption.Map,
   useGeocoder,
 }) => {
@@ -117,6 +114,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   setFieldValue('latitude', null);
                   setFieldValue('longitude', null);
                   setFieldValue('pinOrPid', null);
+                  setFieldValue('planNumber', null);
                 }}
               />
             </NoRightPaddingColumn>
@@ -155,8 +153,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
             </StyledCol>
             <Col xs="auto">
               <SearchButton
-                disabled={isSubmitting || !(values.pinOrPid || values.latitude || values.longitude)}
-                onClick={() => searchButtonClicked && searchButtonClicked()}
+                disabled={
+                  isSubmitting ||
+                  !(values.pinOrPid || values.latitude || values.longitude || values.planNumber)
+                }
               />
             </Col>
             <Col xs="auto">
