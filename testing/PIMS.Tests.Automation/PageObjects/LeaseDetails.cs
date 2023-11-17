@@ -8,7 +8,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class LeaseDetails : PageObjectBase
     {
         //Main Menu links Elements
-        private By menuManagementButton = By.XPath("//a/label[contains(text(),'Management')]/parent::a");
+        private By menuManagementButton = By.CssSelector("div[data-testid='nav-tooltip-leases&licenses'] a");
         private By createLicenseButton = By.XPath("//a[contains(text(),'Create a Lease/License File')]");
 
         //File Details Edit Icon

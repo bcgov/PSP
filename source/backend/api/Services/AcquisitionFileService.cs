@@ -706,10 +706,6 @@ namespace Pims.Api.Services
             foreach (var acquisitionProperty in propertiesOfInterest)
             {
                 var property = acquisitionProperty.Property;
-                if (!userOverride)
-                {
-                    throw new UserOverrideException(UserOverrideCode.PoiToInventory, "The properties of interest will be added to the inventory as acquired properties.");
-                }
                 var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionProperty.Internal_Id);
 
                 var activeTakes = takes.Where(t =>
@@ -731,6 +727,11 @@ namespace Pims.Api.Services
                 {
                     isOwned = false;
                     isPropertyOfInterest = true;
+                }
+
+                if (!userOverride && (isOwned || (!isOwned && !isPropertyOfInterest)))
+                {
+                    throw new UserOverrideException(UserOverrideCode.PoiToInventory, "You have one or more take(s) that will be added to MoTI Inventory. Do you want to acknowledge and proceed?");
                 }
 
                 _propertyRepository.TransferFileProperty(property, isOwned, isPropertyOfInterest);

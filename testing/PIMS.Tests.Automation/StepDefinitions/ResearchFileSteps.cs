@@ -93,8 +93,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             researchFiles.NavigateToFileDetailsTab();
 
             //Cancel Changes
-            researchFiles.EditResearchFileForm(researchFile);
-            researchFiles.CancelResearchFile();
+            //researchFiles.EditResearchFileForm(researchFile);
+            //researchFiles.CancelResearchFile();
 
             //Save Changes
             researchFiles.EditResearchFileForm(researchFile);

@@ -5,7 +5,7 @@ namespace PIMS.Tests.Automation.PageObjects
 {
     public class SearchContacts : PageObjectBase
     {
-        private By menuContactsButton = By.XPath("//a/label[contains(text(),'Contacts')]/parent::a");
+        private By menuContactsButton = By.CssSelector("div[data-testid='nav-tooltip-contacts'] a");
         private By searchContactButton = By.XPath("//a[contains(text(),'Manage Contacts')]");
 
         private By searchContactOrgRadioBttn = By.Id("input-organizations");

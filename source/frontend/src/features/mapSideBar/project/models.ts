@@ -1,6 +1,9 @@
+import { isNumber } from 'lodash';
+
+import { SelectOption } from '@/components/common/form';
 import { Api_Product, Api_Project, Api_ProjectProduct } from '@/models/api/Project';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { fromTypeCode, stringToUndefined, toTypeCode } from '@/utils/formUtils';
+import { stringToUndefined, toTypeCode } from '@/utils/formUtils';
 
 export class ProductForm {
   id: number | null = null;
@@ -51,9 +54,9 @@ export class ProjectForm {
   projectName: string | '' = '';
   projectNumber: string | '' = '';
   projectStatusType: string | '' = '';
-  businessFunctionCode: NumberFieldValue | '' = '';
-  costTypeCode: NumberFieldValue | '' = '';
-  workActivityCode: NumberFieldValue | '' = '';
+  businessFunctionCode: SelectOption | null = null;
+  costTypeCode: SelectOption | null = null;
+  workActivityCode: SelectOption | null = null;
   region: NumberFieldValue | '' = '';
   summary: string | '' = '';
   rowVersion: number | null = null;
@@ -78,17 +81,27 @@ export class ProjectForm {
         };
       }),
       rowVersion: this.rowVersion ?? null,
-      businessFunctionCode: this.businessFunctionCode
-        ? toTypeCode<number>(+this.businessFunctionCode) ?? null
-        : null,
-      costTypeCode: this.costTypeCode ? toTypeCode<number>(+this.costTypeCode) ?? null : null,
-      workActivityCode: this.workActivityCode
-        ? toTypeCode<number>(+this.workActivityCode) ?? null
-        : null,
+      businessFunctionCode:
+        !!this.businessFunctionCode?.value && isNumber(this.businessFunctionCode.value)
+          ? toTypeCode<number>(+this.businessFunctionCode.value) ?? null
+          : null,
+      costTypeCode:
+        !!this.costTypeCode?.value && isNumber(this.costTypeCode.value)
+          ? toTypeCode<number>(+this.costTypeCode.value) ?? null
+          : null,
+      workActivityCode:
+        !!this.workActivityCode?.value && isNumber(this.workActivityCode.value)
+          ? toTypeCode<number>(+this.workActivityCode.value) ?? null
+          : null,
     };
   }
 
-  static fromApi(model: Api_Project): ProjectForm {
+  static fromApi(
+    model: Api_Project,
+    businessFunctionOptions: SelectOption[] = [],
+    costTypeOptions: SelectOption[] = [],
+    workActivityOptions: SelectOption[] = [],
+  ): ProjectForm {
     const newForm = new ProjectForm();
     newForm.id = model.id ?? null;
     newForm.projectName = model.description ?? '';
@@ -102,15 +115,18 @@ export class ProjectForm {
         .map(x => x.product)
         ?.filter((x): x is Api_Product => x !== null)
         .map(x => ProductForm.fromApi(x)) || [];
-    newForm.businessFunctionCode = model.businessFunctionCode?.id
-      ? fromTypeCode<number>(model.businessFunctionCode) ?? ''
-      : '';
-    newForm.costTypeCode = model.costTypeCode?.id
-      ? fromTypeCode<number>(model.costTypeCode) ?? ''
-      : '';
-    newForm.workActivityCode = model.workActivityCode?.id
-      ? fromTypeCode<number>(model.workActivityCode) ?? ''
-      : '';
+    newForm.businessFunctionCode =
+      !!model.businessFunctionCode?.id && isNumber(model.businessFunctionCode?.id)
+        ? businessFunctionOptions.find(c => +c.value === model.businessFunctionCode?.id) ?? null
+        : null;
+    newForm.costTypeCode =
+      !!model.costTypeCode?.id && isNumber(model.costTypeCode?.id)
+        ? costTypeOptions.find(c => +c.value === model.costTypeCode?.id) ?? null
+        : null;
+    newForm.workActivityCode =
+      !!model.workActivityCode?.id && isNumber(model.workActivityCode?.id)
+        ? workActivityOptions.find(c => +c.value === model.workActivityCode?.id) ?? null
+        : null;
 
     return newForm;
   }
