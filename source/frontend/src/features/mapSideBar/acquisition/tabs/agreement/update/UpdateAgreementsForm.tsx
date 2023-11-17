@@ -8,15 +8,18 @@ import { Button, StyledRemoveLinkButton } from '@/components/common/buttons';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_Agreement } from '@/models/api/Agreement';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 
+import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 import AgreementSubForm from './AgreementSubForm';
 import { AgreementsFormModel, SingleAgreementFormModel } from './models';
 import { UpdateAgreementsYupSchema } from './UpdateAgreementsYupSchema';
 
 export interface IUpdateAgreementsFormProps {
   isLoading: boolean;
+  acquistionFile: Api_AcquisitionFile | undefined;
   formikRef: React.Ref<FormikProps<AgreementsFormModel>>;
   initialValues: AgreementsFormModel;
   agreementTypes: ILookupCode[];
@@ -24,6 +27,7 @@ export interface IUpdateAgreementsFormProps {
 }
 
 export const UpdateAgreementsForm: React.FC<IUpdateAgreementsFormProps> = ({
+  acquistionFile,
   isLoading,
   formikRef,
   initialValues,
@@ -37,6 +41,8 @@ export const UpdateAgreementsForm: React.FC<IUpdateAgreementsFormProps> = ({
   const onRemove = (index: number, removeCallback: (index: number) => void) => {
     removeCallback(index);
   };
+
+  const statusSolver = new StatusUpdateSolver(acquistionFile);
 
   return (
     <StyledFormWrapper>
@@ -75,22 +81,26 @@ export const UpdateAgreementsForm: React.FC<IUpdateAgreementsFormProps> = ({
                         <Row className="align-items-end pb-0">
                           <Col />
                           <Col xs="auto">
-                            <StyledRemoveLinkButton
-                              title="Delete Agreement"
-                              variant="light"
-                              onClick={() => {
-                                setModalContent({
-                                  ...getDeleteModalProps(),
-                                  handleOk: () => {
-                                    onRemove(index, arrayHelpers.remove);
-                                    setDisplayModal(false);
-                                  },
-                                });
-                                setDisplayModal(true);
-                              }}
-                            >
-                              <FaTrash size="2rem" />
-                            </StyledRemoveLinkButton>
+                            {statusSolver.canEditOrDeleteAgreement(
+                              agreement.isDraft === 'true',
+                            ) && (
+                              <StyledRemoveLinkButton
+                                title="Delete Agreement"
+                                variant="light"
+                                onClick={() => {
+                                  setModalContent({
+                                    ...getDeleteModalProps(),
+                                    handleOk: () => {
+                                      onRemove(index, arrayHelpers.remove);
+                                      setDisplayModal(false);
+                                    },
+                                  });
+                                  setDisplayModal(true);
+                                }}
+                              >
+                                <FaTrash size="2rem" />
+                              </StyledRemoveLinkButton>
+                            )}
                           </Col>
                         </Row>
                         <AgreementSubForm

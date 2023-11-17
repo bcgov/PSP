@@ -21,6 +21,7 @@ jest.mock('@/hooks/pims-api/useApiUsers');
 const agreementTypes: ILookupCode[] = mockLookups.filter(x => x.type === AGREEMENT_TYPES);
 
 let mockViewProps: IUpdateAgreementsFormProps = {
+  acquistionFile: undefined,
   isLoading: false,
   formikRef: null as any,
   initialValues: new AgreementsFormModel(0),
@@ -33,6 +34,7 @@ describe('UpdateAgreementsForm component', () => {
     const formikRef = createRef<FormikProps<AgreementsFormModel>>();
     const utils = render(
       <UpdateAgreementsForm
+        acquistionFile={mockViewProps.acquistionFile}
         isLoading={false}
         formikRef={formikRef}
         initialValues={mockViewProps.initialValues}

@@ -608,7 +608,9 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           </div>
           <div
             class="c8 text-left col"
-          />
+          >
+            00048
+          </div>
         </div>
         <div
           class="pb-2 row"

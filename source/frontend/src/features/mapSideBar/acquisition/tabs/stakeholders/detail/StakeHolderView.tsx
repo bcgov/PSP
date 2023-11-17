@@ -8,26 +8,37 @@ import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Sec
 import { Claims } from '@/constants/index';
 import { StyledNoData } from '@/features/documents/commonStyles';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_InterestHolder } from '@/models/api/InterestHolder';
 
-import { InterestHolderViewForm } from '../update/models';
+import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 import PropertyInterestHoldersViewTable from './PropertyInterestHoldersViewTable';
+import StakeholderOrganizer from './stakeholderOrganizer';
 
 export interface IStakeHolderViewProps {
   loading: boolean;
-  groupedInterestProperties: InterestHolderViewForm[];
-  groupedNonInterestProperties: InterestHolderViewForm[];
-  legacyStakeHolders: string[];
+  acquisitionFile: Api_AcquisitionFile;
+  interestHolders: Api_InterestHolder[] | undefined;
   onEdit: () => void;
 }
 
 export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = ({
   loading,
-  groupedInterestProperties,
-  groupedNonInterestProperties,
-  legacyStakeHolders,
+  acquisitionFile,
+  interestHolders,
   onEdit,
 }) => {
   const keycloak = useKeycloakWrapper();
+
+  const legacyStakeHolders = acquisitionFile.legacyStakeholders ?? [];
+
+  const organizer = new StakeholderOrganizer(acquisitionFile, interestHolders);
+
+  const statusSolver = new StatusUpdateSolver(acquisitionFile);
+
+  const groupedInterestProperties = organizer.getInterestProperties();
+  const groupedNonInterestProperties = organizer.getNonInterestProperties();
+
   return (
     <>
       <StyledSummarySection>
@@ -35,7 +46,7 @@ export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = (
 
         <Section isCollapsable initiallyExpanded header="Interests">
           <StyledEditWrapper className="mr-3 my-1">
-            {keycloak.hasClaim(Claims.ACQUISITION_EDIT) ? (
+            {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && statusSolver.canEditStakeholders() ? (
               <EditButton title="Edit Interests" onClick={onEdit} />
             ) : null}
           </StyledEditWrapper>

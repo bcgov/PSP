@@ -13,21 +13,21 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { StyledAddButton } from '@/components/common/styles';
 import { Claims, Roles } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_Organization } from '@/models/api/Organization';
 import { Api_Person } from '@/models/api/Person';
-import { Api_Product, Api_Project } from '@/models/api/Project';
 import { formatMoney, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { DetailAcquisitionFileOwner } from '../../../models/DetailAcquisitionFileOwner';
+import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 
 export interface CompensationRequisitionDetailViewProps {
+  acquisitionFile: Api_AcquisitionFile;
   compensation: Api_CompensationRequisition;
   compensationContactPerson: Api_Person | undefined;
   compensationContactOrganization: Api_Organization | undefined;
-  acqFileProject?: Api_Project;
-  acqFileProduct?: Api_Product | undefined;
   clientConstant: string;
   loading: boolean;
   setEditMode: (editMode: boolean) => void;
@@ -45,11 +45,10 @@ interface PayeeViewDetails {
 export const CompensationRequisitionDetailView: React.FunctionComponent<
   React.PropsWithChildren<CompensationRequisitionDetailViewProps>
 > = ({
+  acquisitionFile,
   compensation,
   compensationContactPerson,
   compensationContactOrganization,
-  acqFileProject,
-  acqFileProduct,
   clientConstant,
   loading,
   setEditMode,
@@ -126,12 +125,18 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
     .map(f => f.totalAmount ?? 0)
     .reduce((prev, next) => prev + next, 0);
 
-  const userCanEditCompensationReq = (): boolean => {
-    if (compensation.isDraft && hasClaim(Claims.COMPENSATION_REQUISITION_EDIT)) {
-      return true;
-    }
+  const acqFileProject = acquisitionFile?.project;
+  const acqFileProduct = acquisitionFile?.product;
 
-    if (!compensation.isDraft && hasRole(Roles.SYSTEM_ADMINISTRATOR)) {
+  const statusSolver = new StatusUpdateSolver(acquisitionFile);
+
+  const userCanEditCompensationReq = (): boolean => {
+    if (
+      statusSolver.canEditOrDeleteCompensation(compensation.isDraft) &&
+      hasClaim(Claims.COMPENSATION_REQUISITION_EDIT)
+    ) {
+      return true;
+    } else if (hasRole(Roles.SYSTEM_ADMINISTRATOR)) {
       return true;
     }
 

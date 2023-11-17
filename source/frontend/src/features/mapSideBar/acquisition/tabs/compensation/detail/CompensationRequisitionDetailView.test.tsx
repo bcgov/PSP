@@ -1,7 +1,9 @@
 import { createMemoryHistory } from 'history';
 
+import { AcquisitionStatus } from '@/constants/acquisitionFileStatus';
 import Claims from '@/constants/claims';
 import { Roles } from '@/constants/index';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import {
   emptyCompensationFinancial,
   getMockApiDefaultCompensation,
@@ -25,6 +27,7 @@ describe('Compensation Detail View Component', () => {
     // render component under test
     const component = render(
       <CompensationRequisitionDetailView
+        acquisitionFile={renderOptions?.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
         compensation={renderOptions?.props?.compensation ?? getMockApiDefaultCompensation()}
         loading={renderOptions.props?.loading ?? false}
         setEditMode={setEditMode}
@@ -116,8 +119,18 @@ describe('Compensation Detail View Component', () => {
   });
 
   it('Edit Compensation Button not displayed without claims when is in "Draft" status', async () => {
+    const acquistionFile = mockAcquisitionFileResponse();
+    const mockFinalCompensation = getMockApiDefaultCompensation();
+
     const { queryByTitle } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_VIEW],
+      props: {
+        acquisitionFile: {
+          ...acquistionFile,
+          fileStatusTypeCode: { id: AcquisitionStatus.Active },
+        },
+        compensation: { ...mockFinalCompensation, isDraft: true },
+      },
     });
 
     const editButton = queryByTitle('Edit compensation requisition');
@@ -143,10 +156,17 @@ describe('Compensation Detail View Component', () => {
   });
 
   it('User does not have the option to Edit Compensation when is in "FINAL" status', async () => {
+    const acquistionFile = mockAcquisitionFileResponse();
     const mockFinalCompensation = getMockApiDefaultCompensation();
     const { queryByTitle } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_EDIT],
-      props: { compensation: { ...mockFinalCompensation, isDraft: false } },
+      props: {
+        acquisitionFile: {
+          ...acquistionFile,
+          fileStatusTypeCode: { id: AcquisitionStatus.Complete },
+        },
+        compensation: { ...mockFinalCompensation, isDraft: false },
+      },
     });
 
     const editButton = queryByTitle('Edit compensation requisition');

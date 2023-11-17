@@ -18,6 +18,7 @@ import { formatApiPersonNames } from '@/utils/personUtils';
 import AcquisitionOwnersSummaryContainer from './AcquisitionOwnersSummaryContainer';
 import AcquisitionOwnersSummaryView from './AcquisitionOwnersSummaryView';
 import { DetailAcquisitionFile } from './models';
+import StatusUpdateSolver from './statusUpdateSolver';
 
 export interface IAcquisitionSummaryViewProps {
   acquisitionFile?: Api_AcquisitionFile;
@@ -59,10 +60,12 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
     x => x.interestHolderType?.id === InterestHolderType.OWNER_REPRESENTATIVE,
   );
 
+  const statusSolver = new StatusUpdateSolver(acquisitionFile);
+
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
-        {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && acquisitionFile !== undefined ? (
+        {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && statusSolver.canEditDetails() ? (
           <EditButton title="Edit acquisition file" onClick={onEdit} />
         ) : null}
       </StyledEditWrapper>
