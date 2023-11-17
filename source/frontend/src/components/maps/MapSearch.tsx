@@ -31,8 +31,6 @@ const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
     setPropertySearchFilter(filter);
   };
 
-  const searchButtonClicked = () => {};
-
   return (
     <StyledFilterContainer fluid className="px-0">
       <PropertyFilter
@@ -41,7 +39,6 @@ const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
           ...defaultPropertyFilter,
         }}
         onChange={handleMapFilterChange}
-        searchButtonClicked={searchButtonClicked}
       />
     </StyledFilterContainer>
   );
