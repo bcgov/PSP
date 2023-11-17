@@ -490,7 +490,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 78
- testRunner.Given("I search for an existing Acquisition File from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I search for an existing Acquisition File from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 79
  testRunner.Then("Expected Acquisition File Content is displayed on Acquisition File Table", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

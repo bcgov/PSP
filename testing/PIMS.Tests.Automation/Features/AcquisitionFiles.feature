@@ -75,5 +75,5 @@ Scenario: 11. Acquisition File from Pin
 	Then A new Acquisition file is created successfully
 
 Scenario: 12. Acquisition Files List View
-	Given I search for an existing Acquisition File from row number 1
+	Given I search for an existing Acquisition File from row number 2
 	Then Expected Acquisition File Content is displayed on Acquisition File Table

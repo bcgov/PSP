@@ -15,6 +15,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly AcquisitionFilesDetails acquisitionFilesDetails;
         private readonly SearchAcquisitionFiles searchAcquisitionFiles;
         private readonly SharedSearchProperties sharedSearchProperties;
+        private readonly SharedPagination sharedPagination;
         private readonly SearchProperties searchProperties;
         private readonly AcquisitionProperties acquisitionProperties;
         private readonly AcquisitionTakes acquisitionTakes;
@@ -27,7 +28,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly Notes notes;
 
         private readonly string userName = "TRANPSP1";
-        //private readonly string userName = "sutairak";
 
         private AcquisitionFile acquisitionFile;
         protected string acquisitionFileCode = "";
@@ -41,6 +41,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails = new AcquisitionFilesDetails(driver.Current);
             searchAcquisitionFiles = new SearchAcquisitionFiles(driver.Current);
             sharedSearchProperties = new SharedSearchProperties(driver.Current);
+            sharedPagination = new SharedPagination(driver.Current);
             searchProperties = new SearchProperties(driver.Current);
             acquisitionProperties = new AcquisitionProperties(driver.Current);
             acquisitionTakes = new AcquisitionTakes(driver.Current);
@@ -56,7 +57,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a new Acquisition File from row number (.*)")]
         public void CreateAcquisitionFile(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-4163, PSP-4164, PSP-4323, PSP-4553  */
+            /* TEST COVERAGE: PSP-4163, PSP-4164, PSP-4165, PSP-4323, PSP-4472, PSP-4553 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -81,7 +82,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I add additional information to the Acquisition File Details")]
         public void AddAdditionalInfoAcquisitionFile()
         {
-            /* TEST COVERAGE:  PSP-4469, PSP-4471, PSP-4553, PSP-5308, PSP-5590, PSP-5634, PSP-5637, PSP-5790, PSP-6041 */
+            /* TEST COVERAGE:  PSP-4469, PSP-4471, PSP-4553, PSP-5308, PSP-5590, PSP-5634, PSP-5637, PSP-5790, PSP-5979, PSP-6041 */
 
             //Enter to Edit mode of Acquisition File
             acquisitionFilesDetails.EditAcquisitionFileBttn();
@@ -106,7 +107,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update the File details from an existing Acquisition File from row number (.*)")]
         public void UpdateFileDetails(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-4331, PSP-4544, PSP-4545, PSP-5638, PSP-5639, PSP-5970 */
+            /* TEST COVERAGE: PSP-4331, PSP-4544, PSP-4545, PSP-5638, PSP-5639, PSP-5970, PSP-5979s */
 
             PopulateAcquisitionFile(rowNumber);
 
@@ -775,7 +776,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create an Acquisition File from a pin on map from row number (.*)")]
         public void CreateAcquisitionFileFromPin(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-1546, PSP-1556, PSP-4164, PSP-4167, PSP-4601, PSP-4704, PSP-5308  */
+            /* TEST COVERAGE: PSP-1546, PSP-1556, PSP-4164, PSP-4165, PSP-4167, PSP-4472, PSP-4601, PSP-4704, PSP-5308  */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -880,7 +881,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I search for an existing Acquisition File from row number (.*)")]
         public void SearchExistingAcquisitionFile(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-4252, PSP-5589  */
+            /* TEST COVERAGE: PSP-4252, PSP-4255, PSP-5589 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -889,15 +890,55 @@ namespace PIMS.Tests.Automation.StepDefinitions
             PopulateAcquisitionFile(rowNumber);
             searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
 
-            //Filter research Files
-            searchAcquisitionFiles.FilterAcquisitionFiles(acquisitionFile.SearchProperties.PID, acquisitionFile.AcquisitionFileName, acquisitionFile.AcquisitionStatus);
-            Assert.True(searchAcquisitionFiles.SearchFoundResults());
+            //Verify Pagination
+            sharedPagination.ChoosePaginationOption(5);
+            Assert.Equal(5, searchAcquisitionFiles.AcquisitionFileTableResultNumber());
 
+            sharedPagination.ChoosePaginationOption(10);
+            Assert.Equal(10, searchAcquisitionFiles.AcquisitionFileTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(20);
+            Assert.Equal(20, searchAcquisitionFiles.AcquisitionFileTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(50);
+            Assert.Equal(50, searchAcquisitionFiles.AcquisitionFileTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(100);
+            Assert.Equal(100, searchAcquisitionFiles.AcquisitionFileTableResultNumber());
+
+            //Verify Column Sorting by File Number
+            searchAcquisitionFiles.OrderByAcquisitionFileNumber();
+            var firstFileNbrDescResult = searchAcquisitionFiles.FirstAcquisitionFileNumber();
+
+            searchAcquisitionFiles.OrderByAcquisitionFileNumber();
+            var firstFileNbrAscResult = searchAcquisitionFiles.FirstAcquisitionFileNumber();
+
+            Assert.NotEqual(firstFileNbrDescResult, firstFileNbrAscResult);
+
+            //Verify Column Sorting by Historical File Number
+            searchAcquisitionFiles.OrderByAcquisitionFileHistoricalNumber();
+            var firstHistoricalDescResult = searchAcquisitionFiles.FirstAcquisitionLegacyFileNumber();
+
+            searchAcquisitionFiles.OrderByAcquisitionFileHistoricalNumber();
+            var firstHistoricalAscResult = searchAcquisitionFiles.FirstAcquisitionLegacyFileNumber();
+
+            Assert.NotEqual(firstHistoricalDescResult, firstHistoricalAscResult);
+
+            //Verify Column Sorting by File Name
+            searchAcquisitionFiles.OrderByAcquisitionFileName();
+            var firstFileNameDescResult = searchAcquisitionFiles.FirstAcquisitionFileName();
+
+            searchAcquisitionFiles.OrderByAcquisitionFileName();
+            var firstFileNameAscResult = searchAcquisitionFiles.FirstAcquisitionFileName();
+
+            Assert.NotEqual(firstFileNameDescResult, firstFileNameAscResult);
+
+            //Filter research Files
             searchAcquisitionFiles.FilterAcquisitionFiles("003-549-551", "Acquisition from Jonathan Doe", "Cancelled");
             Assert.False(searchAcquisitionFiles.SearchFoundResults());
 
             //Look for the last created research file
-            searchAcquisitionFiles.FilterAcquisitionFiles(acquisitionFile.SearchProperties.PID, acquisitionFile.AcquisitionFileName, acquisitionFile.AcquisitionStatus);
+            searchAcquisitionFiles.FilterAcquisitionFiles("", acquisitionFile.AcquisitionFileName, acquisitionFile.AcquisitionStatus);
         }
 
         [StepDefinition(@"A new Acquisition file is created successfully")]
@@ -1152,15 +1193,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 take.SiteContamination = ExcelDataContext.ReadData(i, "SiteContamination");
                 take.TakeDescription = ExcelDataContext.ReadData(i, "TakeDescription");
 
-                take.IsNewRightWay = ExcelDataContext.ReadData(i, "IsNewRightWay");
-                take.IsNewRightWayArea = ExcelDataContext.ReadData(i, "IsNewRightWayArea");
-                take.IsStatutoryRightWay = ExcelDataContext.ReadData(i, "IsStatutoryRightWay");
-                take.IsStatutoryRightWayArea = ExcelDataContext.ReadData(i, "IsStatutoryRightWayArea");
+                take.IsNewHighwayDedication = ExcelDataContext.ReadData(i, "IsNewHighwayDedication");
+                take.IsNewHighwayDedicationArea = ExcelDataContext.ReadData(i, "IsNewHighwayDedicationArea");
+                take.IsMotiInventory = ExcelDataContext.ReadData(i, "IsMotiInventory");
 
-                take.IsLandNotation = ExcelDataContext.ReadData(i, "IsLandNotation");
-                take.IsLandNotationDetail = ExcelDataContext.ReadData(i, "IsLandNotationDetail");
-                take.IsLandNotationArea = ExcelDataContext.ReadData(i, "IsLandNotationArea");
-                take.IsLandNotationDate = ExcelDataContext.ReadData(i, "IsLandNotationDate");
+                take.IsNewInterestLand = ExcelDataContext.ReadData(i, "IsNewInterestLand");
+                take.IsNewInterestLandArea = ExcelDataContext.ReadData(i, "IsNewInterestLandArea");
+
+                take.IsLandActTenure = ExcelDataContext.ReadData(i, "IsLandActTenure");
+                take.IsLandActTenureDetail = ExcelDataContext.ReadData(i, "IsLandActTenureDetail");
+                take.IsLandActTenureArea = ExcelDataContext.ReadData(i, "IsLandActTenureArea");
+                take.IsLandActTenureDate = ExcelDataContext.ReadData(i, "IsLandActTenureDate");
 
                 take.IsLicenseConstruct = ExcelDataContext.ReadData(i, "IsLicenseConstruct");
                 take.IsLicenseConstructArea = ExcelDataContext.ReadData(i, "IsLicenseConstructArea");

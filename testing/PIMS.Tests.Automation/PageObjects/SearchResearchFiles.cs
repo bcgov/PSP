@@ -5,7 +5,7 @@ namespace PIMS.Tests.Automation.PageObjects
 {
     public class SearchResearchFiles : PageObjectBase
     {
-        private By menuResearchButton = By.XPath("//a/label[contains(text(),'Research')]/parent::a");
+        private By menuResearchButton = By.CssSelector("div[data-testid='nav-tooltip-research'] a");
         private By searchResearchButton = By.XPath("//a[contains(text(),'Manage Research File')]");
 
         //Search Research File Elements

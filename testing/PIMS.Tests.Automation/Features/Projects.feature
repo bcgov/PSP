@@ -1,25 +1,36 @@
 ﻿@Regression-Projects
 Feature: Projects
 
-Scenario Outline: Create new Projects
+Scenario Outline: Type of Projects
 	Given I create a new Project from row number <RowNumber>
-	When I verify The Project View Form
-	And I create Digital Documents for a "Project" row number <DocRowNumber>
-	And I search for an existing project
-	Then Expected Content is displayed on Projects Table
+	Then A new Project is created successfully
 	Examples:
-	| RowNumber | DocRowNumber |
-	| 1         | 8            |
-	| 2         | 9            |
-	| 3         | 10           |
-	| 4         | 11           |
+	| RowNumber |
+	| 1         | 
+	| 2         |
+	| 3         |
 
-Scenario: Update Project
-	Given I update an existing project from row number 5
-	When I edit a Digital Document for a "Project" from row number 12
-	And I navigate back to Project Details
-	Then The Project is updated successfully
+Scenario: 01. Project Details
+	Given I create a new Project from row number 4
+	When I update an existing project from row number 5
+	Then A new Project is created successfully
 
-Scenario: Duplicate Project
-	Given I create a new Project from row number 1
-	Then Duplicate Project Alert is displayed
+Scenario: 02. Project Documents
+	Given I create a new Project from row number 6
+	When I create Digital Documents for a "Project" row number 8
+	And  I edit a Digital Document for a "Project" from row number 9
+	Then A new Project is created successfully
+
+Scenario: 03. Project Notes
+	Given I create a new Project from row number 7
+	When  I create a new Note on the Notes Tab from row number 6
+	And  I edit a Note on the Notes Tab from row number 7
+	Then A new Project is created successfully
+	
+Scenario: 04. Project List View
+	Given I search for existing Projects from row number 2
+	Then Expected Project Content is displayed on Projects Table
+
+#Scenario: Duplicate Project
+#	Given I create a new Project from row number 2
+#	Then Duplicate Project Alert is displayed

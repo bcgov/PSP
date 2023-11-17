@@ -23,3 +23,7 @@ Scenario: 04. Financial Codes
 Scenario: 05. Duplicate existing Financial Code
 	Given I attempt to duplicate a Financial Code from row number 1
 	Then Financial Code cannot be duplicated successfully
+
+Scenario: 06. Financial Codes List View
+	Given I search for an existing Financial Code from row number 1
+	Then Financial Codes rendered successfully
