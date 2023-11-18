@@ -129,5 +129,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsPropMgmtActivitySubtype> GetAllPropMgmtActivitySubtypes();
 
         IEnumerable<PimsPropMgmtActivityType> GetAllPropMgmtActivityTypes();
+
+        IEnumerable<PimsAgreementStatusType> GetAllAgreementStatusTypes();
     }
 }
