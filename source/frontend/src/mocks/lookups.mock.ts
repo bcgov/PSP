@@ -4064,6 +4064,27 @@ export const mockLookups: ILookupCode[] = [
     displayOrder: 9,
     type: 'PimsPaymentItemType',
   },
+  {
+    id: 'CANCELLED',
+    name: 'Cancelled',
+    isDisabled: false,
+    displayOrder: 3,
+    type: 'PimsAgreementStatusType',
+  },
+  {
+    id: 'DRAFT',
+    name: 'Draft',
+    isDisabled: false,
+    displayOrder: 1,
+    type: 'PimsAgreementStatusType',
+  },
+  {
+    id: 'FINAL',
+    name: 'Final',
+    isDisabled: false,
+    displayOrder: 2,
+    type: 'PimsAgreementStatusType',
+  },
 ];
 export const getMockLookUpsByType = (codeType: string): SelectOption[] => {
   let codes = mockLookups.reduce(function (filtered: SelectOption[], reg) {
