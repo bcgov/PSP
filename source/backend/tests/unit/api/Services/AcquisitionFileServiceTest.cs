@@ -448,7 +448,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
 
             var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
-            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>() { new PimsAgreement() { IsDraft = true } });
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>() { new PimsAgreement() { AgreementStatusTypeCode = "DRAFT" } });
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
@@ -519,6 +519,9 @@ namespace Pims.Api.Test.Services
 
             var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
             takeRepository.Setup(x => x.GetAllByPropertyAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true } });
+
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
 
             // Act
             Action act = () => service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
