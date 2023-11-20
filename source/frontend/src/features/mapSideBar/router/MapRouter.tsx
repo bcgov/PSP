@@ -2,6 +2,7 @@ import queryString from 'query-string';
 import { memo, useEffect, useMemo } from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
 
+import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
 import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import Claims from '@/constants/claims';
@@ -13,12 +14,17 @@ import AppRoute from '@/utils/AppRoute';
 import AcquisitionContainer from '../acquisition/AcquisitionContainer';
 import AcquisitionView from '../acquisition/AcquisitionView';
 import AddAcquisitionContainer from '../acquisition/add/AddAcquisitionContainer';
+import AcquisitionHeader from '../acquisition/common/AcquisitionHeader';
 import LeaseContainer from '../lease/LeaseContainer';
 import AddProjectContainer from '../project/add/AddProjectContainer';
 import ProjectContainer from '../project/ProjectContainer';
 import ProjectContainerView from '../project/ProjectContainerView';
 import AddResearchContainer from '../research/add/AddResearchContainer';
 import ResearchContainer from '../research/ResearchContainer';
+import MapContentContainer from '../shared/MapContentContainer';
+import MapContentView from '../shared/MapContentView';
+import SidebarFooter from '../shared/SidebarFooter';
+import CompensationRequisitionRouter from './CompensationRequisitionRouter';
 
 interface IMapRouterProps {}
 
@@ -160,6 +166,31 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         )}
         claim={Claims.ACQUISITION_VIEW}
         key={'Acquisition'}
+        title={'Acquisition File'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/new_acq/:id`}
+        customRender={({ match }) => (
+          <MapContentContainer
+            Header={AcquisitionHeader}
+            Footer={SidebarFooter}
+            PopupRouter={CompensationRequisitionRouter}
+            View={MapContentView}
+            onClose={onClose}
+            title={'Acquisition File'}
+            icon={
+              <RealEstateAgent
+                title="Acquisition file Icon"
+                width="2.6rem"
+                height="2.6rem"
+                fill="currentColor"
+                className="mr-2"
+              />
+            }
+          />
+        )}
+        claim={Claims.ACQUISITION_VIEW}
+        key={'new_acq'}
         title={'Acquisition File'}
       />
       <AppRoute

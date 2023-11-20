@@ -6,13 +6,10 @@ import AppRoute from '@/utils/AppRoute';
 
 import { CompensationRequisitionTrayContainer } from '../acquisition/tabs/compensation/CompensationRequisitionTrayContainer';
 import { CompensationRequisitionTrayView } from '../acquisition/tabs/compensation/CompensationRequisitionTrayView';
-
-interface ICompensationRequisitionRouterProps {
-  setShowActionBar: (show: boolean) => void;
-}
+import { IMapSidebarPopoutRouterProps } from '../context/popoutContext';
 
 export const CompensationRequisitionRouter: React.FunctionComponent<
-  React.PropsWithChildren<ICompensationRequisitionRouterProps>
+  React.PropsWithChildren<IMapSidebarPopoutRouterProps>
 > = React.memo(props => {
   const location = useLocation();
   const history = useHistory();
@@ -45,6 +42,7 @@ export const CompensationRequisitionRouter: React.FunctionComponent<
             compensationRequisitionId={Number(match.params.id)}
             onClose={onClose}
             View={CompensationRequisitionTrayView}
+            onUpdate={props.onUpdate}
           />
         )}
         claim={Claims.COMPENSATION_REQUISITION_VIEW}

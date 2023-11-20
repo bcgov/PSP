@@ -13,13 +13,14 @@ export interface ICompensationRequisitionTrayContainerProps {
   compensationRequisitionId?: number;
   onClose: () => void;
   View: React.FunctionComponent<React.PropsWithChildren<CompensationRequisitionTrayViewProps>>;
+  onUpdate: () => void;
 }
 
 export const CompensationRequisitionTrayContainer: React.FunctionComponent<
   React.PropsWithChildren<ICompensationRequisitionTrayContainerProps>
-> = ({ compensationRequisitionId, onClose, View }) => {
+> = ({ compensationRequisitionId, onClose, View, onUpdate }) => {
   const { getSystemConstant } = useSystemConstants();
-  const { file, project, setProject, setProjectLoading, setStaleFile, setStaleLastUpdatedBy } =
+  const { file, project, setProject, setProjectLoading, setStaleLastUpdatedBy } =
     useContext(SideBarContext);
 
   const [editMode, setEditMode] = useState(false);
@@ -87,7 +88,7 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
       onUpdate={() => {
         fetchCompensationReq();
         setStaleLastUpdatedBy(true);
-        setStaleFile(true);
+        onUpdate();
       }}
     ></View>
   ) : null;

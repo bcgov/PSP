@@ -1,9 +1,11 @@
 import axios, { AxiosError } from 'axios';
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import { FileTypes } from '@/constants';
+import { PopoutContext } from '@/features/mapSideBar/context/popoutContext';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
+import CompensationRequisitionRouter from '@/features/mapSideBar/router/CompensationRequisitionRouter';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
@@ -43,6 +45,10 @@ export const CompensationListContainer: React.FunctionComponent<
   const fetchData = useCallback(async () => {
     await getAcquisitionCompensationRequisitions(fileId);
   }, [getAcquisitionCompensationRequisitions, fileId]);
+
+  const { setRouterComponent, popoutUpdated } = useContext(PopoutContext);
+
+  setRouterComponent(CompensationRequisitionRouter);
 
   const onUpdateTotalCompensation = async (
     totalAllowableCompensation: number | null,
@@ -121,10 +127,10 @@ export const CompensationListContainer: React.FunctionComponent<
   };
 
   React.useEffect(() => {
-    if (compensations === undefined || staleFile) {
+    if (compensations === undefined || popoutUpdated) {
       fetchData();
     }
-  }, [fetchData, staleFile, compensations]);
+  }, [fetchData, popoutUpdated, compensations]);
 
   return (
     <View

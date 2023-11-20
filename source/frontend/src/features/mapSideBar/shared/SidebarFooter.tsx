@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons/Button';
 
-interface ISidebarFooterProps {
+export interface ISidebarFooterProps {
   isOkDisabled?: boolean;
   onSave: () => void;
   showEdit?: boolean;

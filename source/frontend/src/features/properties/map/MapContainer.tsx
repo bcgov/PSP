@@ -1,5 +1,5 @@
 import clsx from 'classnames';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import DraftSvg from '@/assets/images/pins/icon-draft.svg';
@@ -9,10 +9,9 @@ import { FilterContentForm } from '@/components/maps/leaflet/Control/AdvancedFil
 import MapView from '@/components/maps/MapView';
 import { FilterProvider } from '@/components/maps/providers/FIlterProvider';
 import AdvancedFilterBar from '@/features/advancedFilterBar/AdvancedFilterBar';
+import { PopoutContext, PopoutContextProvider } from '@/features/mapSideBar/context/popoutContext';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBar from '@/features/mapSideBar/MapSideBar';
-import CompensationRequisitionRouter from '@/features/mapSideBar/router/CompensationRequisitionRouter';
-import PropertyActivityRouter from '@/features/mapSideBar/router/PropertyActivityRouter';
 
 enum MapCursors {
   DRAFT = 'draft-cursor',
@@ -22,23 +21,34 @@ enum MapCursors {
 interface MapContainerProps {}
 
 const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () => {
-  const [showActionBar, setShowActionBar] = useState(false);
   const { isSelecting, isFiltering, toggleMapFilter } = useMapStateMachine();
 
   const cursorClass = isSelecting ? MapCursors.DRAFT : MapCursors.DEFAULT;
 
   return (
     <StyleMapView className={clsx(cursorClass)}>
-      <SideBarContextProvider>
-        <MapSideBar />
-        <CompensationRequisitionRouter setShowActionBar={setShowActionBar} />
-        <PropertyActivityRouter setShowActionBar={setShowActionBar} />
-      </SideBarContextProvider>
-      {!showActionBar && (
-        <FilterProvider>
-          <MapView />
-        </FilterProvider>
-      )}
+      <PopoutContextProvider>
+        <PopoutContext.Consumer>
+          {({ showActionBar, setShowActionBar, RouterComponent, setPopoutUpdated }) => (
+            <>
+              <SideBarContextProvider>
+                <MapSideBar />
+                {RouterComponent && (
+                  <RouterComponent
+                    setShowActionBar={setShowActionBar}
+                    onUpdate={() => setPopoutUpdated(true)}
+                  />
+                )}
+              </SideBarContextProvider>
+              {!showActionBar && (
+                <FilterProvider>
+                  <MapView />
+                </FilterProvider>
+              )}
+            </>
+          )}
+        </PopoutContext.Consumer>
+      </PopoutContextProvider>
       <AdvancedFilterBar isOpen={isFiltering} toggle={toggleMapFilter}>
         <FilterContentContainer View={FilterContentForm} />
       </AdvancedFilterBar>
