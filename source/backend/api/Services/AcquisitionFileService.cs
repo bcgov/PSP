@@ -692,7 +692,7 @@ namespace Pims.Api.Services
         {
             var agreements = _agreementRepository.GetAgreementsByAquisitionFile(acqFileId);
             var compensations = _compensationRequisitionRepository.GetAllByAcquisitionFileId(acqFileId);
-            if (agreements.Any(a => a.IsDraft.HasValue && a.IsDraft.Value) || compensations.Any(c => c.IsDraft.HasValue && c.IsDraft.Value))
+            if (agreements.Any(a => a?.AgreementStatusTypeCode == "DRAFT" || compensations.Any(c => c.IsDraft.HasValue && c.IsDraft.Value)))
             {
                 throw new BusinessRuleViolationException("You cannot complete a file when there are one or more draft agreements, or one or more draft compensations requisitions." +
                     "\n\nRemove any draft compensations requisitions. Agreements should be set to final, cancelled, or removed.");
