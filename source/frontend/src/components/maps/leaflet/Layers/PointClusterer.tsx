@@ -19,6 +19,7 @@ import {
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 
+import { ONE_HUNDRED_METER_PRECISION } from '../../constants';
 import SinglePropertyMarker from '../Markers/SingleMarker';
 import { Spiderfier, SpiderSet } from './Spiderfier';
 import { getDraftIcon, pointToLayer, zoomToCluster } from './util';
@@ -353,9 +354,12 @@ export default PointClusterer;
  */
 const getLatLng = <P,>(feature: Feature<Geometry, P>) => {
   if (feature?.geometry?.type === 'Polygon') {
-    return polylabel((feature.geometry as Polygon).coordinates, 0.0001);
+    return polylabel((feature.geometry as Polygon).coordinates, ONE_HUNDRED_METER_PRECISION);
   } else if (feature?.geometry?.type === 'MultiPolygon') {
-    return polylabel((feature.geometry as MultiPolygon).coordinates[0], 0.0001);
+    return polylabel(
+      (feature.geometry as MultiPolygon).coordinates[0],
+      ONE_HUNDRED_METER_PRECISION,
+    );
   } else if ('coordinates' in feature.geometry) {
     // TODO: This is only needed to satisfy the types. Fix this.
     const latLng = geoJSON(feature.geometry).getBounds().getCenter();
