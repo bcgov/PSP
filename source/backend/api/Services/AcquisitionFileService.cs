@@ -241,6 +241,7 @@ namespace Pims.Api.Services
 
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
+            ValidateDrafts(acquisitionFile.Internal_Id);
 
             var statusSolver = GetStatusSolver(acquisitionFile.Internal_Id);
             if (!statusSolver.CanEditDetails())
@@ -728,6 +729,17 @@ namespace Pims.Api.Services
             if (currentRegion != updatedRegion)
             {
                 throw new UserOverrideException(UserOverrideCode.UpdateRegion, "The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.");
+            }
+        }
+
+        private void ValidateDrafts(long acqFileId)
+        {
+            var agreements = _agreementRepository.GetAgreementsByAquisitionFile(acqFileId);
+            var compensations = _compensationRequisitionRepository.GetAllByAcquisitionFileId(acqFileId);
+            if (agreements.Any(a => a?.AgreementStatusTypeCode == "DRAFT" || compensations.Any(c => c.IsDraft.HasValue && c.IsDraft.Value)))
+            {
+                throw new BusinessRuleViolationException("You cannot complete a file when there are one or more draft agreements, or one or more draft compensations requisitions." +
+                    "\n\nRemove any draft compensations requisitions. Agreements should be set to final, cancelled, or removed.");
             }
         }
 

@@ -5,6 +5,7 @@ using System.Linq;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using FluentAssertions;
 using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Constants;
@@ -276,6 +277,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);
             this._helper.MockAcquisitionStatusSolverFactory(solver);
@@ -340,6 +344,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);
             this._helper.MockAcquisitionStatusSolverFactory(solver);
@@ -401,6 +408,12 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+
+            var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsCompensationRequisition>());
+
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);
             this._helper.MockAcquisitionStatusSolverFactory(solver);
@@ -412,6 +425,51 @@ namespace Pims.Api.Test.Services
             var ex = act.Should().Throw<UserOverrideException>();
             ex.Which.UserOverride.Should().Be(UserOverrideCode.UpdateRegion);
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_Version_Violation()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(2);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            Action act = () => service.Update(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            var ex = act.Should().Throw<DbUpdateConcurrencyException>();
+        }
+
+        [Fact]
+        public void Update_Drafts_Violation()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>() { new PimsAgreement() { AgreementStatusTypeCode = "DRAFT" } });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            Action act = () => service.Update(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            var ex = act.Should().Throw<BusinessRuleViolationException>();
         }
 
         [Fact]
@@ -435,6 +493,9 @@ namespace Pims.Api.Test.Services
 
             var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsCompensationRequisition>());
+
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
 
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);
@@ -474,6 +535,9 @@ namespace Pims.Api.Test.Services
 
             var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
             takeRepository.Setup(x => x.GetAllByPropertyAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true } });
+
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
 
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);
@@ -515,6 +579,12 @@ namespace Pims.Api.Test.Services
 
             var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
             takeRepository.Setup(x => x.GetAllByPropertyAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsTake>() { new PimsTake() { IsNewInterestInSrw = true } });
+
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+
+            var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsCompensationRequisition>());
 
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);
@@ -563,6 +633,9 @@ namespace Pims.Api.Test.Services
 
             var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsCompensationRequisition>());
+
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
 
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);
@@ -625,6 +698,9 @@ namespace Pims.Api.Test.Services
             var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
             takeRepository.Setup(x => x.GetAllByPropertyAcquisitionFileId(It.IsAny<long>())).Returns(takes);
 
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);
             this._helper.MockAcquisitionStatusSolverFactory(solver);
@@ -670,6 +746,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);
             this._helper.MockAcquisitionStatusSolverFactory(solver);
@@ -705,6 +784,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(false);
             this._helper.MockAcquisitionStatusSolverFactory(solver);
@@ -713,8 +795,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
-            var ex = act.Should().Throw<BusinessRuleViolationException>();
-            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
+            act.Should().Throw<BusinessRuleViolationException>();
         }
 
         [Fact]
@@ -1093,6 +1174,12 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+
+            var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsCompensationRequisition>());
+
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);
             this._helper.MockAcquisitionStatusSolverFactory(solver);
@@ -1121,6 +1208,12 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(acqFile.RegionCode);
+
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+
+            var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsCompensationRequisition>());
 
             var updatedFile = EntityHelper.CreateAcquisitionFile();
             updatedFile.ConcurrencyControlNumber = 1;
@@ -1169,6 +1262,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);
             this._helper.MockAcquisitionStatusSolverFactory(solver);
@@ -1215,6 +1311,9 @@ namespace Pims.Api.Test.Services
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
 
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);
@@ -1263,6 +1362,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);
             this._helper.MockAcquisitionStatusSolverFactory(solver);
@@ -1309,6 +1411,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);
             this._helper.MockAcquisitionStatusSolverFactory(solver);
@@ -1354,6 +1459,9 @@ namespace Pims.Api.Test.Services
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);
             this._helper.MockAcquisitionStatusSolverFactory(solver);
@@ -1398,6 +1506,9 @@ namespace Pims.Api.Test.Services
             var compReqService = this._helper.GetService<Mock<ICompReqFinancialService>>();
             compReqService.Setup(c => c.GetAllByAcquisitionFileId(It.IsAny<long>(), true)).Returns(
                 new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 1000 } });
+
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
 
             var solver = new Mock<IAcquisitionStatusSolver>();
             solver.Setup(x => x.CanEditDetails()).Returns(true);

@@ -264,7 +264,11 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           {compensation.fiscalYear ?? ''}
         </SectionField>
         <SectionField label="STOB" labelWidth="4">
-          {compensation.yearlyFinancial?.code ?? ''} - {compensation.yearlyFinancial?.description}
+          {compensation.yearlyFinancial && (
+            <label>
+              {compensation.yearlyFinancial?.code} - {compensation.yearlyFinancial?.description}
+            </label>
+          )}
         </SectionField>
         <SectionField label="Service line" labelWidth="4">
           {compensation.chartOfAccounts && (
