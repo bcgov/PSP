@@ -123,7 +123,7 @@ describe('SideNavbar display and logic', () => {
         userEvent.click(managementButton);
       });
       await waitFor(async () => {
-        expect(getByText('Manage Lease/License Files')).toBeInTheDocument();
+        expect(getByText('Manage Lease & Licence Files')).toBeInTheDocument();
       });
     });
 
