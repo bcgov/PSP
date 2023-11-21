@@ -264,7 +264,7 @@ exports[`SideNavbar display and logic renders 1`] = `
       </div>
       <div
         class="c2 nav-item"
-        data-testid="nav-tooltip-leases&licenses"
+        data-testid="nav-tooltip-lease&licence"
       >
         <a
           class="c3 nav-link"
@@ -277,7 +277,7 @@ exports[`SideNavbar display and logic renders 1`] = `
           <label
             class="c4"
           >
-            Leases & Licenses
+            Lease & Licence
           </label>
         </a>
       </div>
