@@ -144,7 +144,7 @@ describe('UpdateAgreementsForm component', () => {
 
   it('Cannot edit if not allowed', async () => {
     organizerMock.canEditOrDeleteAgreement.mockReturnValue(false);
-    const {} = setup();
+    setup();
 
     const element: HTMLSelectElement | null = document.querySelector(
       `select[name="agreements.0.agreementStatusTypeCode"]`,
