@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Moq;
+using Pims.Api.Constants;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
@@ -124,19 +125,21 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
-            var repository = this._helper.GetService<Mock<ITakeRepository>>();
-            repository.Setup(x =>
+            var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
+            takeRepository.Setup(x =>
                 x.UpdateAcquisitionPropertyTakes(It.IsAny<long>(), It.IsAny<IEnumerable<PimsTake>>()));
 
-            var solver = new Mock<IAcquisitionStatusSolver>();
-            solver.Setup(x => x.CanEditTakes()).Returns(true);
-            this._helper.MockAcquisitionStatusSolverFactory(solver);
+            var acqRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { AcquisitionFileStatusTypeCode = AcqusitionStatusTypes.ACTIVE.ToString() });
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditTakes(It.IsAny<AcqusitionStatusTypes?>())).Returns(true);
 
             // Act
             var result = service.UpdateAcquisitionPropertyTakes(1, new List<PimsTake>());
 
             // Assert
-            repository.Verify(x => x.UpdateAcquisitionPropertyTakes(1, new List<PimsTake>()), Times.Once);
+            takeRepository.Verify(x => x.UpdateAcquisitionPropertyTakes(1, new List<PimsTake>()), Times.Once);
         }
 
         [Fact]
@@ -157,13 +160,15 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
-            var repository = this._helper.GetService<Mock<ITakeRepository>>();
-            repository.Setup(x =>
+            var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
+            takeRepository.Setup(x =>
                 x.UpdateAcquisitionPropertyTakes(It.IsAny<long>(), It.IsAny<IEnumerable<PimsTake>>()));
 
-            var solver = new Mock<IAcquisitionStatusSolver>();
-            solver.Setup(x => x.CanEditTakes()).Returns(false);
-            this._helper.MockAcquisitionStatusSolverFactory(solver);
+            var acqRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { AcquisitionFileStatusTypeCode = AcqusitionStatusTypes.ACTIVE.ToString() });
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditTakes(It.IsAny<AcqusitionStatusTypes?>())).Returns(false);
 
             // Act
             Action act = () => service.UpdateAcquisitionPropertyTakes(1, new List<PimsTake>());

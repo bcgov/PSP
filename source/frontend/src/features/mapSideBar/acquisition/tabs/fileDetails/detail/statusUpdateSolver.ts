@@ -3,18 +3,18 @@ import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { AgreementStatusTypes } from '@/models/api/Agreement';
 
 class StatusUpdateSolver {
-  private readonly aquisitionFile: Api_AcquisitionFile | null;
+  private readonly acquisitionFile: Api_AcquisitionFile | null;
 
   constructor(apiModel: Api_AcquisitionFile | undefined | null) {
-    this.aquisitionFile = apiModel ?? null;
+    this.acquisitionFile = apiModel ?? null;
   }
 
   canEditDetails(): boolean {
-    if (this.aquisitionFile === null) {
+    if (this.acquisitionFile === null) {
       return false;
     }
 
-    const statusCode = this.aquisitionFile.fileStatusTypeCode?.id;
+    const statusCode = this.acquisitionFile.fileStatusTypeCode?.id;
     let canEdit = false;
 
     switch (statusCode) {
@@ -38,11 +38,11 @@ class StatusUpdateSolver {
   }
 
   canEditTakes(): boolean {
-    if (this.aquisitionFile === null) {
+    if (this.acquisitionFile === null) {
       return false;
     }
 
-    const statusCode = this.aquisitionFile.fileStatusTypeCode?.id;
+    const statusCode = this.acquisitionFile.fileStatusTypeCode?.id;
     let canEdit = false;
 
     switch (statusCode) {
@@ -66,11 +66,11 @@ class StatusUpdateSolver {
   }
 
   canEditOrDeleteCompensation(isDraftCompensation: boolean | null): boolean {
-    if (this.aquisitionFile === null) {
+    if (this.acquisitionFile === null) {
       return false;
     }
 
-    const statusCode = this.aquisitionFile.fileStatusTypeCode?.id;
+    const statusCode = this.acquisitionFile.fileStatusTypeCode?.id;
     let canEdit = false;
 
     switch (statusCode) {
@@ -94,11 +94,11 @@ class StatusUpdateSolver {
   }
 
   canEditOrDeleteAgreement(agreementStatusCode: string | null): boolean {
-    if (this.aquisitionFile === null) {
+    if (this.acquisitionFile === null) {
       return false;
     }
 
-    const statusCode = this.aquisitionFile.fileStatusTypeCode?.id;
+    const statusCode = this.acquisitionFile.fileStatusTypeCode?.id;
     let canEdit = false;
 
     switch (statusCode) {
@@ -122,11 +122,11 @@ class StatusUpdateSolver {
   }
 
   canEditDocuments(): boolean {
-    if (this.aquisitionFile === null) {
+    if (this.acquisitionFile === null) {
       return false;
     }
 
-    const statusCode = this.aquisitionFile.fileStatusTypeCode?.id;
+    const statusCode = this.acquisitionFile.fileStatusTypeCode?.id;
     let canEdit = false;
 
     switch (statusCode) {
@@ -146,11 +146,11 @@ class StatusUpdateSolver {
   }
 
   canEditNotes(): boolean {
-    if (this.aquisitionFile === null) {
+    if (this.acquisitionFile === null) {
       return false;
     }
 
-    const statusCode = this.aquisitionFile.fileStatusTypeCode?.id;
+    const statusCode = this.acquisitionFile.fileStatusTypeCode?.id;
     let canEdit = false;
 
     switch (statusCode) {
@@ -170,11 +170,11 @@ class StatusUpdateSolver {
   }
 
   canEditChecklists(): boolean {
-    if (this.aquisitionFile === null) {
+    if (this.acquisitionFile === null) {
       return false;
     }
 
-    const statusCode = this.aquisitionFile.fileStatusTypeCode?.id;
+    const statusCode = this.acquisitionFile.fileStatusTypeCode?.id;
     let canEdit = false;
 
     switch (statusCode) {
@@ -194,11 +194,11 @@ class StatusUpdateSolver {
   }
 
   canEditStakeholders(): boolean {
-    if (this.aquisitionFile === null) {
+    if (this.acquisitionFile === null) {
       return false;
     }
 
-    const statusCode = this.aquisitionFile.fileStatusTypeCode?.id;
+    const statusCode = this.acquisitionFile.fileStatusTypeCode?.id;
     let canEdit = false;
 
     switch (statusCode) {
@@ -218,11 +218,11 @@ class StatusUpdateSolver {
   }
 
   canEditProperties(): boolean {
-    if (this.aquisitionFile === null) {
+    if (this.acquisitionFile === null) {
       return false;
     }
 
-    const statusCode = this.aquisitionFile.fileStatusTypeCode?.id;
+    const statusCode = this.acquisitionFile.fileStatusTypeCode?.id;
     let canEdit = false;
 
     switch (statusCode) {

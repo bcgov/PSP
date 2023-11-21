@@ -1,17 +1,19 @@
+using Pims.Api.Constants;
+
 namespace Pims.Api.Services
 {
     public interface IAcquisitionStatusSolver
     {
-        bool CanEditDetails();
+        bool CanEditDetails(AcqusitionStatusTypes? acquisitionStatus);
 
-        bool CanEditTakes();
+        bool CanEditTakes(AcqusitionStatusTypes? acquisitionStatus);
 
-        bool CanEditOrDeleteCompensation(bool? isDraftCompensation);
+        bool CanEditOrDeleteCompensation(AcqusitionStatusTypes? acquisitionStatus, bool? isDraftCompensation);
 
-        bool CanEditOrDeleteAgreement(string agreementStatusCode);
+        bool CanEditOrDeleteAgreement(AcqusitionStatusTypes? acquisitionStatus, AgreementStatusTypes? agreementStatus);
 
-        bool CanEditChecklists();
+        bool CanEditChecklists(AcqusitionStatusTypes? acquisitionStatus);
 
-        bool CanEditStakeholders();
+        bool CanEditStakeholders(AcqusitionStatusTypes? acquisitionStatus);
     }
 }

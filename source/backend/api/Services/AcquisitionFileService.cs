@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Core.Exceptions;
@@ -40,7 +41,7 @@ namespace Pims.Api.Services
         private readonly ICompReqFinancialService _compReqFinancialService;
         private readonly IExpropriationPaymentRepository _expropriationPaymentRepository;
         private readonly ITakeRepository _takeRepository;
-        private readonly IAcquisitionStatusSolverFactory _statusSolverFactory;
+        private readonly IAcquisitionStatusSolver _statusSolver;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -59,7 +60,7 @@ namespace Pims.Api.Services
             ICompReqFinancialService compReqFinancialService,
             IExpropriationPaymentRepository expropriationPaymentRepository,
             ITakeRepository takeRepository,
-            IAcquisitionStatusSolverFactory statusSolverFactory)
+            IAcquisitionStatusSolver statusSolver)
         {
             _user = user;
             _logger = logger;
@@ -77,7 +78,7 @@ namespace Pims.Api.Services
             _compReqFinancialService = compReqFinancialService;
             _expropriationPaymentRepository = expropriationPaymentRepository;
             _takeRepository = takeRepository;
-            _statusSolverFactory = statusSolverFactory;
+            _statusSolver = statusSolver;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -243,8 +244,8 @@ namespace Pims.Api.Services
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
             ValidateDrafts(acquisitionFile.Internal_Id);
 
-            var statusSolver = GetStatusSolver(acquisitionFile.Internal_Id);
-            if (!statusSolver.CanEditDetails())
+            AcqusitionStatusTypes? currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
+            if (!_statusSolver.CanEditDetails(currentAcquisitionStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
@@ -350,8 +351,8 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
 
-            var solver = GetStatusSolver(acquisitionFile.Internal_Id);
-            if (!solver.CanEditChecklists())
+            var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
+            if (!_statusSolver.CanEditChecklists(currentAcquisitionStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
@@ -387,7 +388,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
-            return _agreementRepository.GetAgreementsByAquisitionFile(id);
+            return _agreementRepository.GetAgreementsByAcquisitionFile(id);
         }
 
         public IEnumerable<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter)
@@ -408,15 +409,17 @@ namespace Pims.Api.Services
         {
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
-            var statusSolver = GetStatusSolver(acquisitionFileId);
-            var currentAgreements = _agreementRepository.GetAgreementsByAquisitionFile(acquisitionFileId);
+            var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
+
+            var currentAgreements = _agreementRepository.GetAgreementsByAcquisitionFile(acquisitionFileId);
 
             var toBeUpdated = currentAgreements.Where(ca => agreements.Any(na => ca.AgreementId == na.AgreementId && !ca.IsEqual(na)));
             var toBeDeleted = currentAgreements.Where(ca => !agreements.Any(na => ca.AgreementId == na.AgreementId));
 
             foreach (var agreement in toBeUpdated)
             {
-                if (!statusSolver.CanEditOrDeleteAgreement(agreement.AgreementStatusTypeCode))
+                var agreementStatus = Enum.Parse<AgreementStatusTypes>(agreement.AgreementStatusTypeCode);
+                if (!_statusSolver.CanEditOrDeleteAgreement(currentAcquisitionStatus, agreementStatus))
                 {
                     throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
                 }
@@ -424,7 +427,8 @@ namespace Pims.Api.Services
 
             foreach (var agreement in toBeDeleted)
             {
-                if (!statusSolver.CanEditOrDeleteAgreement(agreement.AgreementStatusTypeCode))
+                var agreementStatus = Enum.Parse<AgreementStatusTypes>(agreement.AgreementStatusTypeCode);
+                if (!_statusSolver.CanEditOrDeleteAgreement(currentAcquisitionStatus, agreementStatus))
                 {
                     throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
                 }
@@ -451,9 +455,8 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
-            var statusSolver = GetStatusSolver(acquisitionFileId);
-
-            if (!statusSolver.CanEditStakeholders())
+            var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
+            if (!_statusSolver.CanEditStakeholders(currentAcquisitionStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
@@ -734,7 +737,7 @@ namespace Pims.Api.Services
 
         private void ValidateDrafts(long acqFileId)
         {
-            var agreements = _agreementRepository.GetAgreementsByAquisitionFile(acqFileId);
+            var agreements = _agreementRepository.GetAgreementsByAcquisitionFile(acqFileId);
             var compensations = _compensationRequisitionRepository.GetAllByAcquisitionFileId(acqFileId);
             if (agreements.Any(a => a?.AgreementStatusTypeCode == "DRAFT" || compensations.Any(c => c.IsDraft.HasValue && c.IsDraft.Value)))
             {
@@ -882,7 +885,7 @@ namespace Pims.Api.Services
 
         private void ValidatePayeeDependency(PimsAcquisitionFile acquisitionFile)
         {
-            var currentAquisitionFile = _acqFileRepository.GetById(acquisitionFile.Internal_Id);
+            var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFile.Internal_Id);
             var compensationRequisitions = _compensationRequisitionRepository.GetAllByAcquisitionFileId(acquisitionFile.Internal_Id);
 
             if (compensationRequisitions.Count == 0)
@@ -895,7 +898,7 @@ namespace Pims.Api.Services
                 // Check for Acquisition File Owner removed
                 if (compReq.AcquisitionOwnerId is not null
                     && !acquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(compReq.AcquisitionOwnerId))
-                    && currentAquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(compReq.AcquisitionOwnerId)))
+                    && currentAcquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(compReq.AcquisitionOwnerId)))
                 {
                     throw new ForeignKeyDependencyException("Acquisition File Owner can not be removed since it's assigned as a payee for a compensation requisition");
                 }
@@ -903,7 +906,7 @@ namespace Pims.Api.Services
                 // Check for Acquisition InterestHolders
                 if (compReq.InterestHolderId is not null
                     && !acquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(compReq.InterestHolderId))
-                    && currentAquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(compReq.InterestHolderId)))
+                    && currentAcquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(compReq.InterestHolderId)))
                 {
                     throw new ForeignKeyDependencyException("Acquisition File Interest Holders can not be removed since it's assigned as a payee for a compensation requisition");
                 }
@@ -911,7 +914,7 @@ namespace Pims.Api.Services
                 // Check for File Person
                 if (compReq.AcquisitionFileTeamId is not null
                     && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.Internal_Id.Equals(compReq.AcquisitionFileTeamId))
-                    && currentAquisitionFile.PimsAcquisitionFileTeams.Any(x => x.Internal_Id.Equals(compReq.AcquisitionFileTeamId)))
+                    && currentAcquisitionFile.PimsAcquisitionFileTeams.Any(x => x.Internal_Id.Equals(compReq.AcquisitionFileTeamId)))
                 {
                     throw new ForeignKeyDependencyException("Acquisition File team member can not be removed since it's assigned as a payee for a compensation requisition");
                 }
@@ -920,7 +923,7 @@ namespace Pims.Api.Services
 
         private void ValidateInterestHoldersDependency(long acquisitionFileId, List<PimsInterestHolder> interestHolders)
         {
-            var currentAquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
+            var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
             var compensationRequisitions = _compensationRequisitionRepository.GetAllByAcquisitionFileId(acquisitionFileId);
 
             if (compensationRequisitions.Count == 0)
@@ -933,17 +936,24 @@ namespace Pims.Api.Services
                 // Check for Interest Holder
                 if (compReq.InterestHolderId is not null
                     && !interestHolders.Any(x => x.InterestHolderId.Equals(compReq.InterestHolderId))
-                    && currentAquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(compReq.InterestHolderId)))
+                    && currentAcquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(compReq.InterestHolderId)))
                 {
                     throw new ForeignKeyDependencyException("Acquisition File Interest Holder can not be removed since it's assigned as a payee for a compensation requisition");
                 }
             }
         }
 
-        private IAcquisitionStatusSolver GetStatusSolver(long acquisitionFileId)
+        private AcqusitionStatusTypes? GetCurrentAcquisitionStatus(long acquisitionFileId)
         {
-            var acquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
-            return _statusSolverFactory.CreateSolver(acquisitionFile);
+            var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
+            AcqusitionStatusTypes currentAcquisitionStatus;
+
+            if (Enum.TryParse(currentAcquisitionFile.AcquisitionFileStatusTypeCode, out currentAcquisitionStatus))
+            {
+                return currentAcquisitionStatus;
+            }
+
+            return currentAcquisitionStatus;
         }
     }
 }

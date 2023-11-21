@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Constants;
 using Pims.Core.Exceptions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
@@ -16,20 +18,20 @@ namespace Pims.Api.Services
         private readonly ILogger _logger;
         private readonly IAcquisitionFileRepository _acqFileRepository;
         private readonly ITakeRepository _takeRepository;
-        private readonly IAcquisitionStatusSolverFactory _statusSolverFactory;
+        private readonly IAcquisitionStatusSolver _statusSolver;
 
         public TakeService(
             ClaimsPrincipal user,
             ILogger<AcquisitionFileService> logger,
             IAcquisitionFileRepository acqFileRepository,
             ITakeRepository repository,
-            IAcquisitionStatusSolverFactory statusSolverFactory)
+            IAcquisitionStatusSolver statusSolver)
         {
             _user = user;
             _logger = logger;
             _acqFileRepository = acqFileRepository;
             _takeRepository = repository;
-            _statusSolverFactory = statusSolverFactory;
+            _statusSolver = statusSolver;
         }
 
         public IEnumerable<PimsTake> GetByFileId(long fileId)
@@ -60,8 +62,8 @@ namespace Pims.Api.Services
 
             var currentAcquistionFile = _acqFileRepository.GetByAcquisitionFilePropertyId(acquisitionFilePropertyId);
 
-            var statusSolver = _statusSolverFactory.CreateSolver(currentAcquistionFile);
-            if (!statusSolver.CanEditTakes())
+            var currentAcqusitionStatus = Enum.Parse<AcqusitionStatusTypes>(currentAcquistionFile.AcquisitionFileStatusTypeCode);
+            if (!_statusSolver.CanEditTakes(currentAcqusitionStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }

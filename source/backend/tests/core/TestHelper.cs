@@ -239,12 +239,6 @@ namespace Pims.Core.Test
             return file;
         }
 
-        public void MockAcquisitionStatusSolverFactory(Mock<IAcquisitionStatusSolver> solverMock)
-        {
-            var solverFactory = this.GetService<Mock<IAcquisitionStatusSolverFactory>>();
-            solverFactory.Setup(x => x.CreateSolver(It.IsAny<PimsAcquisitionFile>())).Returns(solverMock.Object);
-        }
-
         #endregion
     }
 }

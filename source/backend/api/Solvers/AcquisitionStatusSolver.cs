@@ -1,34 +1,19 @@
-using System;
 using Pims.Api.Constants;
-using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
 {
     public class AcquisitionStatusSolver : IAcquisitionStatusSolver
     {
-        private readonly AcqusitionStatusTypes? statusCode;
 
-        public AcquisitionStatusSolver(PimsAcquisitionFile aquisitionFile)
+        public bool CanEditDetails(AcqusitionStatusTypes? acquisitionStatus)
         {
-            if (aquisitionFile != null && !string.IsNullOrEmpty(aquisitionFile.AcquisitionFileStatusTypeCode))
-            {
-                Enum.Parse<AcqusitionStatusTypes>(aquisitionFile.AcquisitionFileStatusTypeCode);
-            }
-            else
-            {
-                statusCode = null;
-            }
-        }
-
-        public bool CanEditDetails()
-        {
-            if (statusCode == null)
+            if (acquisitionStatus == null)
             {
                 return false;
             }
 
             bool canEdit;
-            switch (statusCode)
+            switch (acquisitionStatus)
             {
                 case AcqusitionStatusTypes.ACTIVE:
                 case AcqusitionStatusTypes.DRAFT:
@@ -49,15 +34,15 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
-        public bool CanEditTakes()
+        public bool CanEditTakes(AcqusitionStatusTypes? acquisitionStatus)
         {
-            if (statusCode == null)
+            if (acquisitionStatus == null)
             {
                 return false;
             }
 
             bool canEdit;
-            switch (statusCode)
+            switch (acquisitionStatus)
             {
                 case AcqusitionStatusTypes.ACTIVE:
                 case AcqusitionStatusTypes.DRAFT:
@@ -78,15 +63,15 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
-        public bool CanEditOrDeleteCompensation(bool? isDraftCompensation)
+        public bool CanEditOrDeleteCompensation(AcqusitionStatusTypes? acquisitionStatus, bool? isDraftCompensation)
         {
-            if (statusCode == null)
+            if (acquisitionStatus == null)
             {
                 return false;
             }
 
             bool canEdit;
-            switch (statusCode)
+            switch (acquisitionStatus)
             {
                 case AcqusitionStatusTypes.ACTIVE:
                 case AcqusitionStatusTypes.DRAFT:
@@ -107,17 +92,15 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
-        public bool CanEditOrDeleteAgreement(string agreementStatusCode)
+        public bool CanEditOrDeleteAgreement(AcqusitionStatusTypes? acquisitionStatus, AgreementStatusTypes? agreementStatus)
         {
-            if (statusCode == null)
+            if (acquisitionStatus == null)
             {
                 return false;
             }
 
-            var agreementStatusCodeEnum = Enum.Parse<AgreementStatusTypes>(agreementStatusCode);
-
             bool canEdit;
-            switch (statusCode)
+            switch (acquisitionStatus)
             {
                 case AcqusitionStatusTypes.ACTIVE:
                 case AcqusitionStatusTypes.DRAFT:
@@ -128,7 +111,7 @@ namespace Pims.Api.Services
                 case AcqusitionStatusTypes.CLOSED:
                 case AcqusitionStatusTypes.COMPLT:
                 case AcqusitionStatusTypes.HOLD:
-                    canEdit = agreementStatusCodeEnum != AgreementStatusTypes.FINAL;
+                    canEdit = agreementStatus != AgreementStatusTypes.FINAL;
                     break;
                 default:
                     canEdit = false;
@@ -138,15 +121,15 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
-        public bool CanEditChecklists()
+        public bool CanEditChecklists(AcqusitionStatusTypes? acquisitionStatus)
         {
-            if (statusCode == null)
+            if (acquisitionStatus == null)
             {
                 return false;
             }
 
             bool canEdit;
-            switch (statusCode)
+            switch (acquisitionStatus)
             {
                 default:
                     canEdit = true;
@@ -156,15 +139,15 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
-        public bool CanEditStakeholders()
+        public bool CanEditStakeholders(AcqusitionStatusTypes? acquisitionStatus)
         {
-            if (statusCode == null)
+            if (acquisitionStatus == null)
             {
                 return false;
             }
 
             bool canEdit;
-            switch (statusCode)
+            switch (acquisitionStatus)
             {
                 default:
                     canEdit = true;

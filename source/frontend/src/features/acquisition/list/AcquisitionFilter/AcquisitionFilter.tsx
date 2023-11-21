@@ -17,7 +17,7 @@ import { AcquisitionFilterModel, Api_AcquisitionFilter, MultiSelectOption } from
 export interface IAcquisitionFilterProps {
   filter?: Api_AcquisitionFilter;
   setFilter: (filter: Api_AcquisitionFilter) => void;
-  aquisitionTeam: Api_AcquisitionFileTeam[];
+  acquisitionTeam: Api_AcquisitionFileTeam[];
 }
 
 /**
@@ -27,7 +27,7 @@ export interface IAcquisitionFilterProps {
 export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFilterProps>> = ({
   filter,
   setFilter,
-  aquisitionTeam,
+  acquisitionTeam,
 }) => {
   const onSearchSubmit = (
     values: AcquisitionFilterModel,
@@ -53,22 +53,22 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
     .map(c => mapLookupCode(c));
 
   const acquisitionTeamOptions = useMemo(() => {
-    if (aquisitionTeam !== undefined) {
-      return aquisitionTeam?.map<MultiSelectOption>(x => ({
+    if (acquisitionTeam !== undefined) {
+      return acquisitionTeam?.map<MultiSelectOption>(x => ({
         id: x.personId ? `P-${x.personId}` : `O-${x.organizationId}`,
         text: x.personId ? formatApiPersonNames(x.person) : x.organization?.name ?? '',
       }));
     } else {
       return [];
     }
-  }, [aquisitionTeam]);
+  }, [acquisitionTeam]);
 
   return (
     <Formik<AcquisitionFilterModel>
       enableReinitialize
       initialValues={
         filter
-          ? AcquisitionFilterModel.fromApi(filter, aquisitionTeam || [])
+          ? AcquisitionFilterModel.fromApi(filter, acquisitionTeam || [])
           : new AcquisitionFilterModel()
       }
       onSubmit={onSearchSubmit}

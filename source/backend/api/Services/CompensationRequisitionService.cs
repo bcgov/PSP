@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Constants;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -21,7 +22,7 @@ namespace Pims.Api.Services
         private readonly IUserRepository _userRepository;
         private readonly IAcquisitionFileRepository _acqFileRepository;
         private readonly ICompReqFinancialService _compReqFinancialService;
-        private readonly IAcquisitionStatusSolverFactory _statusSolverFactory;
+        private readonly IAcquisitionStatusSolver _statusSolver;
 
         public CompensationRequisitionService(
             ClaimsPrincipal user,
@@ -31,7 +32,7 @@ namespace Pims.Api.Services
             IUserRepository userRepository,
             IAcquisitionFileRepository acqFileRepository,
             ICompReqFinancialService compReqFinancialService,
-            IAcquisitionStatusSolverFactory acquisitionStatusSolverFactory)
+            IAcquisitionStatusSolver statusSolver)
         {
             _user = user;
             _logger = logger;
@@ -40,7 +41,7 @@ namespace Pims.Api.Services
             _userRepository = userRepository;
             _acqFileRepository = acqFileRepository;
             _compReqFinancialService = compReqFinancialService;
-            _statusSolverFactory = acquisitionStatusSolverFactory;
+            _statusSolver = statusSolver;
         }
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
@@ -61,15 +62,15 @@ namespace Pims.Api.Services
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
 
-            var currentAquisitionFile = _acqFileRepository.GetById(currentCompensation.AcquisitionFileId);
-            var statusSolver = _statusSolverFactory.CreateSolver(currentAquisitionFile);
+            var currentAcquisitionFile = _acqFileRepository.GetById(currentCompensation.AcquisitionFileId);
+            var currentAcquisitionStatus = Enum.Parse<AcqusitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
 
-            if (!statusSolver.CanEditOrDeleteCompensation(currentCompensation.IsDraft) && !_user.HasPermission(Permissions.SystemAdmin))
+            if (!_statusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
 
-            CheckTotalAllowableCompensation(currentAquisitionFile, compensationRequisition);
+            CheckTotalAllowableCompensation(currentAcquisitionFile, compensationRequisition);
             compensationRequisition.FinalizedDate = CheckFinalizedDate(currentCompensation.IsDraft, compensationRequisition.IsDraft, currentCompensation.FinalizedDate);
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
@@ -101,9 +102,9 @@ namespace Pims.Api.Services
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationId);
 
-            var statusSolver = GetStatusSolver(currentCompensation.AcquisitionFileId);
+            var currentAcqusitionStatus = GetCurrentAcqusitionStatus(currentCompensation.AcquisitionFileId);
 
-            if (!statusSolver.CanEditOrDeleteCompensation(currentCompensation.IsDraft))
+            if (!_statusSolver.CanEditOrDeleteCompensation(currentAcqusitionStatus, currentCompensation.IsDraft))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
@@ -168,10 +169,12 @@ namespace Pims.Api.Services
             }
         }
 
-        private IAcquisitionStatusSolver GetStatusSolver(long acquisitionFileId)
+        private AcqusitionStatusTypes GetCurrentAcqusitionStatus(long acquisitionFileId)
         {
-            var acquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
-            return _statusSolverFactory.CreateSolver(acquisitionFile);
+            var currentCompensation = _compensationRequisitionRepository.GetById(acquisitionFileId);
+
+            var currentAcquisitionFile = _acqFileRepository.GetById(currentCompensation.AcquisitionFileId);
+            return Enum.Parse<AcqusitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
         }
     }
 }
