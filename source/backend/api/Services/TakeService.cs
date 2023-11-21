@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -12,16 +14,22 @@ namespace Pims.Api.Services
     {
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
+        private readonly IAcquisitionFileRepository _acqFileRepository;
         private readonly ITakeRepository _takeRepository;
+        private readonly IAcquisitionStatusSolverFactory _statusSolverFactory;
 
         public TakeService(
             ClaimsPrincipal user,
             ILogger<AcquisitionFileService> logger,
-            ITakeRepository repository)
+            IAcquisitionFileRepository acqFileRepository,
+            ITakeRepository repository,
+            IAcquisitionStatusSolverFactory statusSolverFactory)
         {
             _user = user;
             _logger = logger;
+            _acqFileRepository = acqFileRepository;
             _takeRepository = repository;
+            _statusSolverFactory = statusSolverFactory;
         }
 
         public IEnumerable<PimsTake> GetByFileId(long fileId)
@@ -49,6 +57,14 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("updating takes with propertyFileId {propertyFileId}", acquisitionFilePropertyId);
             _user.ThrowIfNotAuthorized(Permissions.PropertyView, Permissions.AcquisitionFileView);
+
+            var currentAcquistionFile = _acqFileRepository.GetByAcquisitionFilePropertyId(acquisitionFilePropertyId);
+
+            var statusSolver = _statusSolverFactory.CreateSolver(currentAcquistionFile);
+            if (!statusSolver.CanEditTakes())
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             _takeRepository.UpdateAcquisitionPropertyTakes(acquisitionFilePropertyId, takes);
             _takeRepository.CommitTransaction();

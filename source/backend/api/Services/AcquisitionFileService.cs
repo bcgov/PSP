@@ -40,6 +40,7 @@ namespace Pims.Api.Services
         private readonly ICompReqFinancialService _compReqFinancialService;
         private readonly IExpropriationPaymentRepository _expropriationPaymentRepository;
         private readonly ITakeRepository _takeRepository;
+        private readonly IAcquisitionStatusSolverFactory _statusSolverFactory;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -57,7 +58,8 @@ namespace Pims.Api.Services
             IInterestHolderRepository interestHolderRepository,
             ICompReqFinancialService compReqFinancialService,
             IExpropriationPaymentRepository expropriationPaymentRepository,
-            ITakeRepository takeRepository)
+            ITakeRepository takeRepository,
+            IAcquisitionStatusSolverFactory statusSolverFactory)
         {
             _user = user;
             _logger = logger;
@@ -75,6 +77,7 @@ namespace Pims.Api.Services
             _compReqFinancialService = compReqFinancialService;
             _expropriationPaymentRepository = expropriationPaymentRepository;
             _takeRepository = takeRepository;
+            _statusSolverFactory = statusSolverFactory;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -239,6 +242,12 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
+            var statusSolver = GetStatusSolver(acquisitionFile.Internal_Id);
+            if (!statusSolver.CanEditDetails())
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             if (!userOverrides.Contains(UserOverrideCode.UpdateRegion))
             {
                 ValidateMinistryRegion(acquisitionFile.Internal_Id, acquisitionFile.RegionCode);
@@ -340,6 +349,12 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
 
+            var solver = GetStatusSolver(acquisitionFile.Internal_Id);
+            if (!solver.CanEditChecklists())
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             // Get the current checklist items for this acquisition file.
             var currentItems = _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(acquisitionFile.Internal_Id).ToDictionary(ci => ci.Internal_Id);
 
@@ -392,6 +407,28 @@ namespace Pims.Api.Services
         {
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
+            var statusSolver = GetStatusSolver(acquisitionFileId);
+            var currentAgreements = _agreementRepository.GetAgreementsByAquisitionFile(acquisitionFileId);
+
+            var toBeUpdated = currentAgreements.Where(ca => agreements.Any(na => ca.AgreementId == na.AgreementId && !ca.IsEqual(na)));
+            var toBeDeleted = currentAgreements.Where(ca => !agreements.Any(na => ca.AgreementId == na.AgreementId));
+
+            foreach (var agreement in toBeUpdated)
+            {
+                if (!statusSolver.CanEditOrDeleteAgreement(agreement.AgreementStatusTypeCode))
+                {
+                    throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+                }
+            }
+
+            foreach (var agreement in toBeDeleted)
+            {
+                if (!statusSolver.CanEditOrDeleteAgreement(agreement.AgreementStatusTypeCode))
+                {
+                    throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+                }
+            }
+
             var updatedAgreements = _agreementRepository.UpdateAllForAcquisition(acquisitionFileId, agreements);
             _agreementRepository.CommitTransaction();
 
@@ -412,6 +449,13 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating acquisition file InterestHolders with AcquisitionFile id: {acquisitionFileId}", acquisitionFileId);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            var statusSolver = GetStatusSolver(acquisitionFileId);
+
+            if (!statusSolver.CanEditStakeholders())
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             var currentInterestHolders = _interestHolderRepository.GetInterestHoldersByAcquisitionFile(acquisitionFileId);
 
@@ -882,6 +926,12 @@ namespace Pims.Api.Services
                     throw new ForeignKeyDependencyException("Acquisition File Interest Holder can not be removed since it's assigned as a payee for a compensation requisition");
                 }
             }
+        }
+
+        private IAcquisitionStatusSolver GetStatusSolver(long acquisitionFileId)
+        {
+            var acquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
+            return _statusSolverFactory.CreateSolver(acquisitionFile);
         }
     }
 }

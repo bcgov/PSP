@@ -692,6 +692,12 @@ namespace Pims.Dal.Repositories
                 .Where(a => a.ProductId == productId).ToList();
         }
 
+        public PimsAcquisitionFile GetByAcquisitionFilePropertyId(long acquisitionFilePropertyId)
+        {
+            return this.Context.PimsAcquisitionFiles.AsNoTracking()
+                .FirstOrDefault(a => a.PimsPropertyAcquisitionFiles.Any(x => x.PropertyAcquisitionFileId == acquisitionFilePropertyId));
+        }
+
         /// <summary>
         /// Generates a new Acquisition Number in the following format.
         /// </summary>

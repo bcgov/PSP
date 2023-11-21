@@ -107,7 +107,6 @@ namespace Pims.Api.Test.Services
             };
 
             compensationRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(currentCompensationStub);
-
             compensationRepository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>())).Returns(new PimsCompensationRequisition
             {
                 Internal_Id = 1,
@@ -116,6 +115,10 @@ namespace Pims.Api.Test.Services
                 IsDraft = false,
                 FinalizedDate = DateTime.UtcNow,
             });
+
+            var solver = new Mock<IAcquisitionStatusSolver>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<bool?>())).Returns(true);
+            this._helper.MockAcquisitionStatusSolverFactory(solver);
 
             // Act
             var result = service.Update(
@@ -151,6 +154,10 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true });
 
+            var solver = new Mock<IAcquisitionStatusSolver>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<bool?>())).Returns(true);
+            this._helper.MockAcquisitionStatusSolverFactory(solver);
+
             // Act
             var result = service.Update(new PimsCompensationRequisition()
             {
@@ -179,6 +186,10 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = false });
 
+            var solver = new Mock<IAcquisitionStatusSolver>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<bool?>())).Returns(false);
+            this._helper.MockAcquisitionStatusSolverFactory(solver);
+
             // Act
             Action act = () => service.Update(new PimsCompensationRequisition()
             {
@@ -189,7 +200,7 @@ namespace Pims.Api.Test.Services
             });
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<BusinessRuleViolationException>();
         }
 
         [Fact]
@@ -203,6 +214,10 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = false });
 
+            var solver = new Mock<IAcquisitionStatusSolver>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<bool?>())).Returns(false);
+            this._helper.MockAcquisitionStatusSolverFactory(solver);
+
             // Act
             Action act = () => service.Update(new PimsCompensationRequisition()
             {
@@ -213,7 +228,7 @@ namespace Pims.Api.Test.Services
             });
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<BusinessRuleViolationException>();
         }
 
         [Fact]
@@ -232,6 +247,10 @@ namespace Pims.Api.Test.Services
 
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true });
+
+            var solver = new Mock<IAcquisitionStatusSolver>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<bool?>())).Returns(false);
+            this._helper.MockAcquisitionStatusSolverFactory(solver);
 
             // Act
             var result = service.Update(new PimsCompensationRequisition()
@@ -267,6 +286,10 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
 
+            var solver = new Mock<IAcquisitionStatusSolver>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<bool?>())).Returns(false);
+            this._helper.MockAcquisitionStatusSolverFactory(solver);
+
             // Act
             var result = service.Update(new PimsCompensationRequisition()
             {
@@ -299,6 +322,10 @@ namespace Pims.Api.Test.Services
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
             repository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
+
+            var solver = new Mock<IAcquisitionStatusSolver>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<bool?>())).Returns(true);
+            this._helper.MockAcquisitionStatusSolverFactory(solver);
 
             // Act
             var result = service.Update(new PimsCompensationRequisition()
@@ -336,6 +363,10 @@ namespace Pims.Api.Test.Services
                 new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } });
 
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
+
+            var solver = new Mock<IAcquisitionStatusSolver>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<bool?>())).Returns(true);
+            this._helper.MockAcquisitionStatusSolverFactory(solver);
 
             // Act
             var result = service.Update(new PimsCompensationRequisition()
@@ -377,6 +408,10 @@ namespace Pims.Api.Test.Services
                     PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
             });
 
+            var solver = new Mock<IAcquisitionStatusSolver>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<bool?>())).Returns(true);
+            this._helper.MockAcquisitionStatusSolverFactory(solver);
+
             // Act
             var result = service.Update(new PimsCompensationRequisition()
             {
@@ -411,6 +446,10 @@ namespace Pims.Api.Test.Services
                 new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } });
 
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
+
+            var solver = new Mock<IAcquisitionStatusSolver>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<bool?>())).Returns(true);
+            this._helper.MockAcquisitionStatusSolverFactory(solver);
 
             // Act
             var result = service.Update(new PimsCompensationRequisition()
@@ -451,6 +490,12 @@ namespace Pims.Api.Test.Services
                     PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
             });
 
+
+            var solver = new Mock<IAcquisitionStatusSolver>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<bool?>())).Returns(true);
+
+            this._helper.MockAcquisitionStatusSolverFactory(solver);
+
             // Act
             // Assert
             Action act = () => service.Update(new PimsCompensationRequisition()
@@ -490,6 +535,10 @@ namespace Pims.Api.Test.Services
                     PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
             });
 
+            var solver = new Mock<IAcquisitionStatusSolver>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<bool?>())).Returns(true);
+            this._helper.MockAcquisitionStatusSolverFactory(solver);
+
             // Act
             // Assert
             Action act = () => service.Update(new PimsCompensationRequisition()
@@ -523,6 +572,11 @@ namespace Pims.Api.Test.Services
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionDelete);
             var repo = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             repo.Setup(x => x.TryDelete(It.IsAny<long>()));
+            repo.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsCompensationRequisition { Internal_Id = 1 });
+
+            var solver = new Mock<IAcquisitionStatusSolver>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<bool?>())).Returns(true);
+            this._helper.MockAcquisitionStatusSolverFactory(solver);
 
             // Act
             var result = service.DeleteCompensation(1);

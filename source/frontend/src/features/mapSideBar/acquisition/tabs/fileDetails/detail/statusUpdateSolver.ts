@@ -1,5 +1,6 @@
 import { AcquisitionStatus } from '@/constants/acquisitionFileStatus';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { AgreementStatusTypes } from '@/models/api/Agreement';
 
 class StatusUpdateSolver {
   private readonly aquisitionFile: Api_AcquisitionFile | null;
@@ -92,7 +93,7 @@ class StatusUpdateSolver {
     return canEdit;
   }
 
-  canEditOrDeleteAgreement(isDraftCompensation: boolean | null): boolean {
+  canEditOrDeleteAgreement(agreementStatusCode: string | null): boolean {
     if (this.aquisitionFile === null) {
       return false;
     }
@@ -110,7 +111,7 @@ class StatusUpdateSolver {
       case AcquisitionStatus.Closed:
       case AcquisitionStatus.Complete:
       case AcquisitionStatus.Hold:
-        canEdit = isDraftCompensation ?? true;
+        canEdit = agreementStatusCode !== AgreementStatusTypes.FINAL ?? true;
         break;
       default:
         canEdit = false;
@@ -119,8 +120,6 @@ class StatusUpdateSolver {
 
     return canEdit;
   }
-
-  // Documents, Notes, Checklists, Stakeholders, Property Details
 
   canEditDocuments(): boolean {
     if (this.aquisitionFile === null) {

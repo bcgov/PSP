@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Moq;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
@@ -127,6 +128,10 @@ namespace Pims.Api.Test.Services
             repository.Setup(x =>
                 x.UpdateAcquisitionPropertyTakes(It.IsAny<long>(), It.IsAny<IEnumerable<PimsTake>>()));
 
+            var solver = new Mock<IAcquisitionStatusSolver>();
+            solver.Setup(x => x.CanEditTakes()).Returns(true);
+            this._helper.MockAcquisitionStatusSolverFactory(solver);
+
             // Act
             var result = service.UpdateAcquisitionPropertyTakes(1, new List<PimsTake>());
 
@@ -145,6 +150,26 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void Update_InvalidStatus()
+        {
+            // Arrange
+            var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
+            var repository = this._helper.GetService<Mock<ITakeRepository>>();
+            repository.Setup(x =>
+                x.UpdateAcquisitionPropertyTakes(It.IsAny<long>(), It.IsAny<IEnumerable<PimsTake>>()));
+
+            var solver = new Mock<IAcquisitionStatusSolver>();
+            solver.Setup(x => x.CanEditTakes()).Returns(false);
+            this._helper.MockAcquisitionStatusSolverFactory(solver);
+
+            // Act
+            Action act = () => service.UpdateAcquisitionPropertyTakes(1, new List<PimsTake>());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>();
         }
     }
 }

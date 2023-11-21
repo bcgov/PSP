@@ -82,7 +82,7 @@ export const UpdateAgreementsForm: React.FC<IUpdateAgreementsFormProps> = ({
                           <Col />
                           <Col xs="auto">
                             {statusSolver.canEditOrDeleteAgreement(
-                              agreement.isDraft === 'true',
+                              agreement.agreementStatusTypeCode,
                             ) && (
                               <StyledRemoveLinkButton
                                 title="Delete Agreement"
@@ -108,6 +108,11 @@ export const UpdateAgreementsForm: React.FC<IUpdateAgreementsFormProps> = ({
                           nameSpace={`${field}.${index}`}
                           formikProps={formikProps}
                           agreementTypes={agreementTypes}
+                          isDisabled={
+                            !statusSolver.canEditOrDeleteAgreement(
+                              agreement.agreementStatusTypeCode,
+                            )
+                          }
                         />
                       </Section>
                     ))}

@@ -15,8 +15,15 @@ import {
   userEvent,
 } from '@/utils/test-utils';
 
+import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 import { AgreementsFormModel } from './models';
 import { IUpdateAgreementsFormProps, UpdateAgreementsForm } from './UpdateAgreementsForm';
+
+jest.mock('../../fileDetails/detail/statusUpdateSolver');
+
+export const organizerMock = {
+  canEditOrDeleteAgreement: jest.fn(),
+};
 
 // mock API service calls
 jest.mock('@/hooks/pims-api/useApiUsers');
@@ -68,6 +75,8 @@ describe('UpdateAgreementsForm component', () => {
     const agreements = mockAgreementsResponse();
 
     mockViewProps.initialValues = AgreementsFormModel.fromApi(1, agreements);
+    (StatusUpdateSolver as jest.Mock).mockImplementation(() => organizerMock);
+    organizerMock.canEditOrDeleteAgreement.mockReturnValue(true);
   });
 
   afterEach(() => {
@@ -131,5 +140,16 @@ describe('UpdateAgreementsForm component', () => {
 
     expect(queryByText(/Cancellation reason/i)).toBeNull();
     expect(formikRef.current?.values.agreements[0].cancellationNote).toBe('');
+  });
+
+  it('Cannot edit if not allowed', async () => {
+    organizerMock.canEditOrDeleteAgreement.mockReturnValue(false);
+    const {} = setup();
+
+    const element: HTMLSelectElement | null = document.querySelector(
+      `select[name="agreements.0.agreementStatusTypeCode"]`,
+    );
+
+    expect(element).toHaveAttribute('disabled');
   });
 });
