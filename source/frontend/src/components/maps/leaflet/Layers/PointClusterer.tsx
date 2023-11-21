@@ -1,8 +1,9 @@
 import './PointClusterer.scss';
 
-import { BBox, Feature, FeatureCollection, Geometry } from 'geojson';
+import { BBox, Feature, FeatureCollection, Geometry, MultiPolygon, Polygon } from 'geojson';
 import L, { geoJSON, LatLng } from 'leaflet';
 import { find } from 'lodash';
+import polylabel from 'polylabel';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FeatureGroup, Marker, Polyline, useMap } from 'react-leaflet';
 import Supercluster, { ClusterFeature, ClusterProperties, PointFeature } from 'supercluster';
@@ -351,9 +352,10 @@ export default PointClusterer;
  * @returns [lat, lng]
  */
 const getLatLng = <P,>(feature: Feature<Geometry, P>) => {
-  if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
-    const latLng = geoJSON(feature.geometry).getBounds().getCenter();
-    return [latLng.lng, latLng.lat];
+  if (feature?.geometry?.type === 'Polygon') {
+    return polylabel((feature.geometry as Polygon).coordinates, 0.0001);
+  } else if (feature?.geometry?.type === 'MultiPolygon') {
+    return polylabel((feature.geometry as MultiPolygon).coordinates[0], 0.0001);
   } else if ('coordinates' in feature.geometry) {
     // TODO: This is only needed to satisfy the types. Fix this.
     const latLng = geoJSON(feature.geometry).getBounds().getCenter();

@@ -129,10 +129,11 @@ export const featuresToIdentifiedMapProperty = (
     )
     .map((feature): IMapProperty => {
       if (feature?.geometry?.type === 'Polygon') {
-        const boundedCenter = polylabel((feature.geometry as Polygon).coordinates);
+        const boundedCenter = polylabel((feature.geometry as Polygon).coordinates, 0.0001);
         return toMapProperty(feature, address, boundedCenter[1], boundedCenter[0]);
       } else if (feature?.geometry?.type === 'MultiPolygon') {
-        const boundedCenter = polylabel((feature.geometry as MultiPolygon).coordinates[0]);
+        const boundedCenter = polylabel((feature.geometry as MultiPolygon).coordinates[0], 0.0001);
+        //TODO: calculate the center of the polygon with the largest area.
         return toMapProperty(feature, address, boundedCenter[1], boundedCenter[0]);
       } else {
         toast.error(
