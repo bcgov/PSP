@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace Pims.Api.Constants
 {
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
-    public enum AcqusitionStatusTypes
+    public enum AcquisitionStatusTypes
     {
 
         [EnumMember(Value = "ACTIVE")]

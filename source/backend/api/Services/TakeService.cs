@@ -62,7 +62,7 @@ namespace Pims.Api.Services
 
             var currentAcquistionFile = _acqFileRepository.GetByAcquisitionFilePropertyId(acquisitionFilePropertyId);
 
-            var currentAcqusitionStatus = Enum.Parse<AcqusitionStatusTypes>(currentAcquistionFile.AcquisitionFileStatusTypeCode);
+            var currentAcqusitionStatus = Enum.Parse<AcquisitionStatusTypes>(currentAcquistionFile.AcquisitionFileStatusTypeCode);
             if (!_statusSolver.CanEditTakes(currentAcqusitionStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");

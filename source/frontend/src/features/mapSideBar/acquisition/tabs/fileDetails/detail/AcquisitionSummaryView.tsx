@@ -7,6 +7,7 @@ import EditButton from '@/components/common/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims } from '@/constants';
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
@@ -62,13 +63,23 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
 
   const statusSolver = new StatusUpdateSolver(acquisitionFile);
 
+  const cannotEditMessage =
+    'The file you are viewing is in a non-editable state. Change the file status to active or draft to allow editing.';
+
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
         {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && statusSolver.canEditDetails() ? (
           <EditButton title="Edit acquisition file" onClick={onEdit} />
         ) : null}
+        {!statusSolver.canEditDetails() && (
+          <TooltipIcon
+            toolTipId={`${acquisitionFile?.id || 0}-summary-cannot-edit-tooltip`}
+            toolTip={cannotEditMessage}
+          />
+        )}
       </StyledEditWrapper>
+
       <Section header="Project">
         <SectionField label="Ministry project">{projectName}</SectionField>
         <SectionField label="Product">{productName}</SectionField>

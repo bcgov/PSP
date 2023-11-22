@@ -11,6 +11,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { StyledAddButton } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
@@ -143,6 +144,9 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
     return false;
   };
 
+  const cannotEditMessage =
+    'The file you are viewing is in a non-editable state. Change the file status to active or draft to allow editing.';
+
   const editButtonBlock = (
     <EditButton
       title="Edit compensation requisition"
@@ -204,7 +208,12 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
             Requisition Details
             <RightFlexDiv>
               {setEditMode !== undefined && userCanEditCompensationReq() && editButtonBlock}
-
+              {!userCanEditCompensationReq() && (
+                <TooltipIcon
+                  toolTipId={`${compensation?.id || 0}-compensation-cannot-edit-tooltip`}
+                  toolTip={cannotEditMessage}
+                />
+              )}
               <StyledAddButton
                 onClick={() => {
                   onGenerate(compensation);

@@ -5,7 +5,7 @@ namespace Pims.Api.Services
     public class AcquisitionStatusSolver : IAcquisitionStatusSolver
     {
 
-        public bool CanEditDetails(AcqusitionStatusTypes? acquisitionStatus)
+        public bool CanEditDetails(AcquisitionStatusTypes? acquisitionStatus)
         {
             if (acquisitionStatus == null)
             {
@@ -15,15 +15,15 @@ namespace Pims.Api.Services
             bool canEdit;
             switch (acquisitionStatus)
             {
-                case AcqusitionStatusTypes.ACTIVE:
-                case AcqusitionStatusTypes.DRAFT:
+                case AcquisitionStatusTypes.ACTIVE:
+                case AcquisitionStatusTypes.DRAFT:
                     canEdit = true;
                     break;
-                case AcqusitionStatusTypes.ARCHIV:
-                case AcqusitionStatusTypes.CANCEL:
-                case AcqusitionStatusTypes.CLOSED:
-                case AcqusitionStatusTypes.COMPLT:
-                case AcqusitionStatusTypes.HOLD:
+                case AcquisitionStatusTypes.ARCHIV:
+                case AcquisitionStatusTypes.CANCEL:
+                case AcquisitionStatusTypes.CLOSED:
+                case AcquisitionStatusTypes.COMPLT:
+                case AcquisitionStatusTypes.HOLD:
                     canEdit = false;
                     break;
                 default:
@@ -34,7 +34,7 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
-        public bool CanEditTakes(AcqusitionStatusTypes? acquisitionStatus)
+        public bool CanEditTakes(AcquisitionStatusTypes? acquisitionStatus)
         {
             if (acquisitionStatus == null)
             {
@@ -44,15 +44,15 @@ namespace Pims.Api.Services
             bool canEdit;
             switch (acquisitionStatus)
             {
-                case AcqusitionStatusTypes.ACTIVE:
-                case AcqusitionStatusTypes.DRAFT:
+                case AcquisitionStatusTypes.ACTIVE:
+                case AcquisitionStatusTypes.DRAFT:
                     canEdit = true;
                     break;
-                case AcqusitionStatusTypes.ARCHIV:
-                case AcqusitionStatusTypes.CANCEL:
-                case AcqusitionStatusTypes.CLOSED:
-                case AcqusitionStatusTypes.COMPLT:
-                case AcqusitionStatusTypes.HOLD:
+                case AcquisitionStatusTypes.ARCHIV:
+                case AcquisitionStatusTypes.CANCEL:
+                case AcquisitionStatusTypes.CLOSED:
+                case AcquisitionStatusTypes.COMPLT:
+                case AcquisitionStatusTypes.HOLD:
                     canEdit = false;
                     break;
                 default:
@@ -63,7 +63,7 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
-        public bool CanEditOrDeleteCompensation(AcqusitionStatusTypes? acquisitionStatus, bool? isDraftCompensation)
+        public bool CanEditOrDeleteCompensation(AcquisitionStatusTypes? acquisitionStatus, bool? isDraftCompensation)
         {
             if (acquisitionStatus == null)
             {
@@ -73,15 +73,15 @@ namespace Pims.Api.Services
             bool canEdit;
             switch (acquisitionStatus)
             {
-                case AcqusitionStatusTypes.ACTIVE:
-                case AcqusitionStatusTypes.DRAFT:
+                case AcquisitionStatusTypes.ACTIVE:
+                case AcquisitionStatusTypes.DRAFT:
                     canEdit = true;
                     break;
-                case AcqusitionStatusTypes.ARCHIV:
-                case AcqusitionStatusTypes.CANCEL:
-                case AcqusitionStatusTypes.CLOSED:
-                case AcqusitionStatusTypes.COMPLT:
-                case AcqusitionStatusTypes.HOLD:
+                case AcquisitionStatusTypes.ARCHIV:
+                case AcquisitionStatusTypes.CANCEL:
+                case AcquisitionStatusTypes.CLOSED:
+                case AcquisitionStatusTypes.COMPLT:
+                case AcquisitionStatusTypes.HOLD:
                     canEdit = isDraftCompensation ?? true;
                     break;
                 default:
@@ -92,7 +92,7 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
-        public bool CanEditOrDeleteAgreement(AcqusitionStatusTypes? acquisitionStatus, AgreementStatusTypes? agreementStatus)
+        public bool CanEditOrDeleteAgreement(AcquisitionStatusTypes? acquisitionStatus, AgreementStatusTypes? agreementStatus)
         {
             if (acquisitionStatus == null)
             {
@@ -102,15 +102,15 @@ namespace Pims.Api.Services
             bool canEdit;
             switch (acquisitionStatus)
             {
-                case AcqusitionStatusTypes.ACTIVE:
-                case AcqusitionStatusTypes.DRAFT:
+                case AcquisitionStatusTypes.ACTIVE:
+                case AcquisitionStatusTypes.DRAFT:
                     canEdit = true;
                     break;
-                case AcqusitionStatusTypes.ARCHIV:
-                case AcqusitionStatusTypes.CANCEL:
-                case AcqusitionStatusTypes.CLOSED:
-                case AcqusitionStatusTypes.COMPLT:
-                case AcqusitionStatusTypes.HOLD:
+                case AcquisitionStatusTypes.ARCHIV:
+                case AcquisitionStatusTypes.CANCEL:
+                case AcquisitionStatusTypes.CLOSED:
+                case AcquisitionStatusTypes.COMPLT:
+                case AcquisitionStatusTypes.HOLD:
                     canEdit = agreementStatus != AgreementStatusTypes.FINAL;
                     break;
                 default:
@@ -121,7 +121,7 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
-        public bool CanEditChecklists(AcqusitionStatusTypes? acquisitionStatus)
+        public bool CanEditChecklists(AcquisitionStatusTypes? acquisitionStatus)
         {
             if (acquisitionStatus == null)
             {
@@ -139,7 +139,7 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
-        public bool CanEditStakeholders(AcqusitionStatusTypes? acquisitionStatus)
+        public bool CanEditStakeholders(AcquisitionStatusTypes? acquisitionStatus)
         {
             if (acquisitionStatus == null)
             {

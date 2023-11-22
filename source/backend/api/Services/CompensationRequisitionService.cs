@@ -63,7 +63,7 @@ namespace Pims.Api.Services
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
 
             var currentAcquisitionFile = _acqFileRepository.GetById(currentCompensation.AcquisitionFileId);
-            var currentAcquisitionStatus = Enum.Parse<AcqusitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
+            var currentAcquisitionStatus = Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
 
             if (!_statusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft) && !_user.HasPermission(Permissions.SystemAdmin))
             {
@@ -102,7 +102,7 @@ namespace Pims.Api.Services
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationId);
 
-            var currentAcqusitionStatus = GetCurrentAcqusitionStatus(currentCompensation.AcquisitionFileId);
+            var currentAcqusitionStatus = GetCurrentAcquisitionStatus(currentCompensation.AcquisitionFileId);
 
             if (!_statusSolver.CanEditOrDeleteCompensation(currentAcqusitionStatus, currentCompensation.IsDraft))
             {
@@ -169,12 +169,12 @@ namespace Pims.Api.Services
             }
         }
 
-        private AcqusitionStatusTypes GetCurrentAcqusitionStatus(long acquisitionFileId)
+        private AcquisitionStatusTypes GetCurrentAcquisitionStatus(long acquisitionFileId)
         {
             var currentCompensation = _compensationRequisitionRepository.GetById(acquisitionFileId);
 
             var currentAcquisitionFile = _acqFileRepository.GetById(currentCompensation.AcquisitionFileId);
-            return Enum.Parse<AcqusitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
+            return Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
         }
     }
 }

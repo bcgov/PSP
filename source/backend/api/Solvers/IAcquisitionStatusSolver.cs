@@ -4,16 +4,16 @@ namespace Pims.Api.Services
 {
     public interface IAcquisitionStatusSolver
     {
-        bool CanEditDetails(AcqusitionStatusTypes? acquisitionStatus);
+        bool CanEditDetails(AcquisitionStatusTypes? acquisitionStatus);
 
-        bool CanEditTakes(AcqusitionStatusTypes? acquisitionStatus);
+        bool CanEditTakes(AcquisitionStatusTypes? acquisitionStatus);
 
-        bool CanEditOrDeleteCompensation(AcqusitionStatusTypes? acquisitionStatus, bool? isDraftCompensation);
+        bool CanEditOrDeleteCompensation(AcquisitionStatusTypes? acquisitionStatus, bool? isDraftCompensation);
 
-        bool CanEditOrDeleteAgreement(AcqusitionStatusTypes? acquisitionStatus, AgreementStatusTypes? agreementStatus);
+        bool CanEditOrDeleteAgreement(AcquisitionStatusTypes? acquisitionStatus, AgreementStatusTypes? agreementStatus);
 
-        bool CanEditChecklists(AcqusitionStatusTypes? acquisitionStatus);
+        bool CanEditChecklists(AcquisitionStatusTypes? acquisitionStatus);
 
-        bool CanEditStakeholders(AcqusitionStatusTypes? acquisitionStatus);
+        bool CanEditStakeholders(AcquisitionStatusTypes? acquisitionStatus);
     }
 }

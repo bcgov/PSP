@@ -130,10 +130,10 @@ namespace Pims.Api.Test.Services
                 x.UpdateAcquisitionPropertyTakes(It.IsAny<long>(), It.IsAny<IEnumerable<PimsTake>>()));
 
             var acqRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
-            acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { AcquisitionFileStatusTypeCode = AcqusitionStatusTypes.ACTIVE.ToString() });
+            acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString() });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditTakes(It.IsAny<AcqusitionStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditTakes(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
             // Act
             var result = service.UpdateAcquisitionPropertyTakes(1, new List<PimsTake>());
@@ -165,10 +165,10 @@ namespace Pims.Api.Test.Services
                 x.UpdateAcquisitionPropertyTakes(It.IsAny<long>(), It.IsAny<IEnumerable<PimsTake>>()));
 
             var acqRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
-            acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { AcquisitionFileStatusTypeCode = AcqusitionStatusTypes.ACTIVE.ToString() });
+            acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString() });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditTakes(It.IsAny<AcqusitionStatusTypes?>())).Returns(false);
+            solver.Setup(x => x.CanEditTakes(It.IsAny<AcquisitionStatusTypes?>())).Returns(false);
 
             // Act
             Action act = () => service.UpdateAcquisitionPropertyTakes(1, new List<PimsTake>());

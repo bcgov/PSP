@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { Button, StyledRemoveLinkButton } from '@/components/common/buttons';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_Agreement } from '@/models/api/Agreement';
@@ -43,6 +44,9 @@ export const UpdateAgreementsForm: React.FC<IUpdateAgreementsFormProps> = ({
   };
 
   const statusSolver = new StatusUpdateSolver(acquistionFile);
+
+  const cannotEditMessage =
+    'The file you are viewing is in a non-editable state. Change the file status to active or draft to allow editing.';
 
   return (
     <StyledFormWrapper>
@@ -81,6 +85,16 @@ export const UpdateAgreementsForm: React.FC<IUpdateAgreementsFormProps> = ({
                         <Row className="align-items-end pb-0">
                           <Col />
                           <Col xs="auto">
+                            {!statusSolver.canEditOrDeleteAgreement(
+                              agreement.agreementStatusTypeCode,
+                            ) && (
+                              <TooltipIcon
+                                toolTipId={`${
+                                  agreement?.agreementId || 0
+                                }-agreement-cannot-edit-tooltip`}
+                                toolTip={cannotEditMessage}
+                              />
+                            )}
                             {statusSolver.canEditOrDeleteAgreement(
                               agreement.agreementStatusTypeCode,
                             ) && (

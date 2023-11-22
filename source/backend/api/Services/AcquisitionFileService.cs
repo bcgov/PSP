@@ -244,7 +244,7 @@ namespace Pims.Api.Services
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
             ValidateDrafts(acquisitionFile.Internal_Id);
 
-            AcqusitionStatusTypes? currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
+            AcquisitionStatusTypes? currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
             if (!_statusSolver.CanEditDetails(currentAcquisitionStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
@@ -943,10 +943,10 @@ namespace Pims.Api.Services
             }
         }
 
-        private AcqusitionStatusTypes? GetCurrentAcquisitionStatus(long acquisitionFileId)
+        private AcquisitionStatusTypes? GetCurrentAcquisitionStatus(long acquisitionFileId)
         {
             var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
-            AcqusitionStatusTypes currentAcquisitionStatus;
+            AcquisitionStatusTypes currentAcquisitionStatus;
 
             if (Enum.TryParse(currentAcquisitionFile.AcquisitionFileStatusTypeCode, out currentAcquisitionStatus))
             {

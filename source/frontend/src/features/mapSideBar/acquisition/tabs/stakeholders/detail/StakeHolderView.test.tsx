@@ -102,10 +102,7 @@ describe('StakeHolderView component', () => {
 
     model.identifier = 'PID: 025-196-375';
     const { getByText } = setup({
-      props: {
-        //groupedInterestProperties: [model],
-        //groupedNonInterestProperties: [],
-      },
+      props: {},
     });
 
     expect(getByText('PID: 025-196-375')).toBeVisible();
@@ -134,10 +131,7 @@ describe('StakeHolderView component', () => {
     organizerMock.getInterestProperties.mockReturnValue([model]);
 
     const { getByText } = setup({
-      props: {
-        //groupedInterestProperties: [model],
-        //groupedNonInterestProperties: [],
-      },
+      props: {},
     });
 
     expect(getByText('PID: 025-196-375')).toBeVisible();
@@ -154,10 +148,7 @@ describe('StakeHolderView component', () => {
 
     model.identifier = 'PID: 025-196-375';
     const { getByText } = setup({
-      props: {
-        //groupedInterestProperties: [],
-        //groupedNonInterestProperties: [model],
-      },
+      props: {},
     });
 
     expect(getByText('PID: 025-196-375')).toBeVisible();
@@ -170,8 +161,6 @@ describe('StakeHolderView component', () => {
   });
 
   it('it displays the legacy stakeholders', () => {
-    //grouperMock.getGroupedInterestProperties.mockReturnValue([model]);
-
     const { queryByTestId } = setup({
       props: {
         acquisitionFile: {

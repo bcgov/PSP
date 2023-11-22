@@ -35,18 +35,18 @@ namespace Pims.Api.Test.Services
             new List<object[]>
             {
                 new object[] {null, false},
-                new object[] {AcqusitionStatusTypes.ACTIVE, true},
-                new object[] {AcqusitionStatusTypes.DRAFT, true},
-                new object[] {AcqusitionStatusTypes.ARCHIV, false},
-                new object[] {AcqusitionStatusTypes.CANCEL, false},
-                new object[] {AcqusitionStatusTypes.CLOSED, false},
-                new object[] {AcqusitionStatusTypes.COMPLT, false},
-                new object[] {AcqusitionStatusTypes.HOLD, false},
+                new object[] {AcquisitionStatusTypes.ACTIVE, true},
+                new object[] {AcquisitionStatusTypes.DRAFT, true},
+                new object[] {AcquisitionStatusTypes.ARCHIV, false},
+                new object[] {AcquisitionStatusTypes.CANCEL, false},
+                new object[] {AcquisitionStatusTypes.CLOSED, false},
+                new object[] {AcquisitionStatusTypes.COMPLT, false},
+                new object[] {AcquisitionStatusTypes.HOLD, false},
             };
 
         [Theory]
         [MemberData(nameof(CanEditDetailsParameters))]
-        public void CanEditDetails_Parametrized(AcqusitionStatusTypes? status, bool expectedResult)
+        public void CanEditDetails_Parametrized(AcquisitionStatusTypes? status, bool expectedResult)
         {
             // Arrange
             var solver = new AcquisitionStatusSolver();
@@ -62,18 +62,18 @@ namespace Pims.Api.Test.Services
             new List<object[]>
             {
                 new object[] {null, false},
-                new object[] {AcqusitionStatusTypes.ACTIVE, true},
-                new object[] {AcqusitionStatusTypes.DRAFT, true},
-                new object[] {AcqusitionStatusTypes.ARCHIV, true},
-                new object[] {AcqusitionStatusTypes.CANCEL, true},
-                new object[] {AcqusitionStatusTypes.CLOSED, true},
-                new object[] {AcqusitionStatusTypes.COMPLT, true},
-                new object[] {AcqusitionStatusTypes.HOLD, true},
+                new object[] {AcquisitionStatusTypes.ACTIVE, true},
+                new object[] {AcquisitionStatusTypes.DRAFT, true},
+                new object[] {AcquisitionStatusTypes.ARCHIV, true},
+                new object[] {AcquisitionStatusTypes.CANCEL, true},
+                new object[] {AcquisitionStatusTypes.CLOSED, true},
+                new object[] {AcquisitionStatusTypes.COMPLT, true},
+                new object[] {AcquisitionStatusTypes.HOLD, true},
             };
 
         [Theory]
         [MemberData(nameof(CanEditChecklistsParameters))]
-        public void CanEditChecklists_Parametrized(AcqusitionStatusTypes? status, bool expectedResult)
+        public void CanEditChecklists_Parametrized(AcquisitionStatusTypes? status, bool expectedResult)
         {
             // Arrange
             var solver = new AcquisitionStatusSolver();
@@ -89,39 +89,39 @@ namespace Pims.Api.Test.Services
             new List<object[]>
             {
                 new object[] {null, null, false},
-                new object[] {AcqusitionStatusTypes.ACTIVE, null, true},
-                new object[] {AcqusitionStatusTypes.ACTIVE, AgreementStatusTypes.CANCELLED, true},
-                new object[] {AcqusitionStatusTypes.ACTIVE, AgreementStatusTypes.DRAFT, true},
-                new object[] {AcqusitionStatusTypes.ACTIVE, AgreementStatusTypes.FINAL, true},
-                new object[] {AcqusitionStatusTypes.DRAFT,  null, true},
-                new object[] {AcqusitionStatusTypes.DRAFT, AgreementStatusTypes.CANCELLED, true},
-                new object[] {AcqusitionStatusTypes.DRAFT, AgreementStatusTypes.DRAFT, true},
-                new object[] {AcqusitionStatusTypes.DRAFT, AgreementStatusTypes.FINAL, true},
-                new object[] {AcqusitionStatusTypes.ARCHIV, null, true},
-                new object[] {AcqusitionStatusTypes.ARCHIV, AgreementStatusTypes.CANCELLED, true},
-                new object[] {AcqusitionStatusTypes.ARCHIV, AgreementStatusTypes.DRAFT, true},
-                new object[] {AcqusitionStatusTypes.ARCHIV, AgreementStatusTypes.FINAL, false},
-                new object[] {AcqusitionStatusTypes.CANCEL, null, true},
-                new object[] {AcqusitionStatusTypes.CANCEL, AgreementStatusTypes.CANCELLED, true},
-                new object[] {AcqusitionStatusTypes.CANCEL, AgreementStatusTypes.DRAFT, true},
-                new object[] {AcqusitionStatusTypes.CANCEL, AgreementStatusTypes.FINAL, false},
-                new object[] {AcqusitionStatusTypes.CLOSED, null, true},
-                new object[] {AcqusitionStatusTypes.CLOSED, AgreementStatusTypes.CANCELLED, true},
-                new object[] {AcqusitionStatusTypes.CLOSED, AgreementStatusTypes.DRAFT, true},
-                new object[] {AcqusitionStatusTypes.CLOSED, AgreementStatusTypes.FINAL, false},
-                new object[] {AcqusitionStatusTypes.COMPLT, null, true},
-                new object[] {AcqusitionStatusTypes.COMPLT, AgreementStatusTypes.CANCELLED, true},
-                new object[] {AcqusitionStatusTypes.COMPLT, AgreementStatusTypes.DRAFT, true},
-                new object[] {AcqusitionStatusTypes.COMPLT, AgreementStatusTypes.FINAL, false},
-                new object[] {AcqusitionStatusTypes.HOLD, null, true},
-                new object[] {AcqusitionStatusTypes.HOLD, AgreementStatusTypes.CANCELLED, true},
-                new object[] {AcqusitionStatusTypes.HOLD, AgreementStatusTypes.DRAFT, true},
-                new object[] {AcqusitionStatusTypes.HOLD, AgreementStatusTypes.FINAL, false},
+                new object[] {AcquisitionStatusTypes.ACTIVE, null, true},
+                new object[] {AcquisitionStatusTypes.ACTIVE, AgreementStatusTypes.CANCELLED, true},
+                new object[] {AcquisitionStatusTypes.ACTIVE, AgreementStatusTypes.DRAFT, true},
+                new object[] {AcquisitionStatusTypes.ACTIVE, AgreementStatusTypes.FINAL, true},
+                new object[] {AcquisitionStatusTypes.DRAFT,  null, true},
+                new object[] {AcquisitionStatusTypes.DRAFT, AgreementStatusTypes.CANCELLED, true},
+                new object[] {AcquisitionStatusTypes.DRAFT, AgreementStatusTypes.DRAFT, true},
+                new object[] {AcquisitionStatusTypes.DRAFT, AgreementStatusTypes.FINAL, true},
+                new object[] {AcquisitionStatusTypes.ARCHIV, null, true},
+                new object[] {AcquisitionStatusTypes.ARCHIV, AgreementStatusTypes.CANCELLED, true},
+                new object[] {AcquisitionStatusTypes.ARCHIV, AgreementStatusTypes.DRAFT, true},
+                new object[] {AcquisitionStatusTypes.ARCHIV, AgreementStatusTypes.FINAL, false},
+                new object[] {AcquisitionStatusTypes.CANCEL, null, true},
+                new object[] {AcquisitionStatusTypes.CANCEL, AgreementStatusTypes.CANCELLED, true},
+                new object[] {AcquisitionStatusTypes.CANCEL, AgreementStatusTypes.DRAFT, true},
+                new object[] {AcquisitionStatusTypes.CANCEL, AgreementStatusTypes.FINAL, false},
+                new object[] {AcquisitionStatusTypes.CLOSED, null, true},
+                new object[] {AcquisitionStatusTypes.CLOSED, AgreementStatusTypes.CANCELLED, true},
+                new object[] {AcquisitionStatusTypes.CLOSED, AgreementStatusTypes.DRAFT, true},
+                new object[] {AcquisitionStatusTypes.CLOSED, AgreementStatusTypes.FINAL, false},
+                new object[] {AcquisitionStatusTypes.COMPLT, null, true},
+                new object[] {AcquisitionStatusTypes.COMPLT, AgreementStatusTypes.CANCELLED, true},
+                new object[] {AcquisitionStatusTypes.COMPLT, AgreementStatusTypes.DRAFT, true},
+                new object[] {AcquisitionStatusTypes.COMPLT, AgreementStatusTypes.FINAL, false},
+                new object[] {AcquisitionStatusTypes.HOLD, null, true},
+                new object[] {AcquisitionStatusTypes.HOLD, AgreementStatusTypes.CANCELLED, true},
+                new object[] {AcquisitionStatusTypes.HOLD, AgreementStatusTypes.DRAFT, true},
+                new object[] {AcquisitionStatusTypes.HOLD, AgreementStatusTypes.FINAL, false},
             };
 
         [Theory]
         [MemberData(nameof(CanEditOrDeleteAgreementParameters))]
-        public void CanEditOrDeleteAgreements_Parametrized(AcqusitionStatusTypes? acquisitionStatus, AgreementStatusTypes? agreementStatus, bool expectedResult)
+        public void CanEditOrDeleteAgreements_Parametrized(AcquisitionStatusTypes? acquisitionStatus, AgreementStatusTypes? agreementStatus, bool expectedResult)
         {
             // Arrange
             var solver = new AcquisitionStatusSolver();
@@ -137,32 +137,32 @@ namespace Pims.Api.Test.Services
             new List<object[]>
             {
                 new object[] {null, null, false},
-                new object[] {AcqusitionStatusTypes.ACTIVE, null, true},
-                new object[] {AcqusitionStatusTypes.ACTIVE, true, true},
-                new object[] {AcqusitionStatusTypes.ACTIVE, false, true},
-                new object[] {AcqusitionStatusTypes.DRAFT,  null, true},
-                new object[] {AcqusitionStatusTypes.DRAFT, true, true},
-                new object[] {AcqusitionStatusTypes.DRAFT, false, true},
-                new object[] {AcqusitionStatusTypes.ARCHIV, null, true},
-                new object[] {AcqusitionStatusTypes.ARCHIV, true, true},
-                new object[] {AcqusitionStatusTypes.ARCHIV, false, false},
-                new object[] {AcqusitionStatusTypes.CANCEL, null, true},
-                new object[] {AcqusitionStatusTypes.CANCEL, true, true},
-                new object[] {AcqusitionStatusTypes.CANCEL, false, false},
-                new object[] {AcqusitionStatusTypes.CLOSED, null, true},
-                new object[] {AcqusitionStatusTypes.CLOSED, true, true},
-                new object[] {AcqusitionStatusTypes.CLOSED, false, false},
-                new object[] {AcqusitionStatusTypes.COMPLT, null, true},
-                new object[] {AcqusitionStatusTypes.COMPLT, true, true},
-                new object[] {AcqusitionStatusTypes.COMPLT, false, false},
-                new object[] {AcqusitionStatusTypes.HOLD, null, true},
-                new object[] {AcqusitionStatusTypes.HOLD, true, true},
-                new object[] {AcqusitionStatusTypes.HOLD, false, false},
+                new object[] {AcquisitionStatusTypes.ACTIVE, null, true},
+                new object[] {AcquisitionStatusTypes.ACTIVE, true, true},
+                new object[] {AcquisitionStatusTypes.ACTIVE, false, true},
+                new object[] {AcquisitionStatusTypes.DRAFT,  null, true},
+                new object[] {AcquisitionStatusTypes.DRAFT, true, true},
+                new object[] {AcquisitionStatusTypes.DRAFT, false, true},
+                new object[] {AcquisitionStatusTypes.ARCHIV, null, true},
+                new object[] {AcquisitionStatusTypes.ARCHIV, true, true},
+                new object[] {AcquisitionStatusTypes.ARCHIV, false, false},
+                new object[] {AcquisitionStatusTypes.CANCEL, null, true},
+                new object[] {AcquisitionStatusTypes.CANCEL, true, true},
+                new object[] {AcquisitionStatusTypes.CANCEL, false, false},
+                new object[] {AcquisitionStatusTypes.CLOSED, null, true},
+                new object[] {AcquisitionStatusTypes.CLOSED, true, true},
+                new object[] {AcquisitionStatusTypes.CLOSED, false, false},
+                new object[] {AcquisitionStatusTypes.COMPLT, null, true},
+                new object[] {AcquisitionStatusTypes.COMPLT, true, true},
+                new object[] {AcquisitionStatusTypes.COMPLT, false, false},
+                new object[] {AcquisitionStatusTypes.HOLD, null, true},
+                new object[] {AcquisitionStatusTypes.HOLD, true, true},
+                new object[] {AcquisitionStatusTypes.HOLD, false, false},
             };
 
         [Theory]
         [MemberData(nameof(CanEditCompensationsParameters))]
-        public void CanEditCompensations_Parametrized(AcqusitionStatusTypes? status, bool? isDraftCompensation, bool expectedResult)
+        public void CanEditCompensations_Parametrized(AcquisitionStatusTypes? status, bool? isDraftCompensation, bool expectedResult)
         {
             // Arrange
             var solver = new AcquisitionStatusSolver();
@@ -178,18 +178,18 @@ namespace Pims.Api.Test.Services
           new List<object[]>
           {
                 new object[] {null, false},
-                new object[] {AcqusitionStatusTypes.ACTIVE, true},
-                new object[] {AcqusitionStatusTypes.DRAFT, true},
-                new object[] {AcqusitionStatusTypes.ARCHIV, false},
-                new object[] {AcqusitionStatusTypes.CANCEL, false},
-                new object[] {AcqusitionStatusTypes.CLOSED, false},
-                new object[] {AcqusitionStatusTypes.COMPLT, false},
-                new object[] {AcqusitionStatusTypes.HOLD, false},
+                new object[] {AcquisitionStatusTypes.ACTIVE, true},
+                new object[] {AcquisitionStatusTypes.DRAFT, true},
+                new object[] {AcquisitionStatusTypes.ARCHIV, false},
+                new object[] {AcquisitionStatusTypes.CANCEL, false},
+                new object[] {AcquisitionStatusTypes.CLOSED, false},
+                new object[] {AcquisitionStatusTypes.COMPLT, false},
+                new object[] {AcquisitionStatusTypes.HOLD, false},
           };
 
         [Theory]
         [MemberData(nameof(CanEditTakesParameters))]
-        public void CanEditTakes_Parametrized(AcqusitionStatusTypes? status, bool expectedResult)
+        public void CanEditTakes_Parametrized(AcquisitionStatusTypes? status, bool expectedResult)
         {
             // Arrange
             var solver = new AcquisitionStatusSolver();
@@ -205,18 +205,18 @@ namespace Pims.Api.Test.Services
         new List<object[]>
         {
                 new object[] {null, false},
-                new object[] {AcqusitionStatusTypes.ACTIVE, true},
-                new object[] {AcqusitionStatusTypes.DRAFT, true},
-                new object[] {AcqusitionStatusTypes.ARCHIV, true},
-                new object[] {AcqusitionStatusTypes.CANCEL, true},
-                new object[] {AcqusitionStatusTypes.CLOSED, true},
-                new object[] {AcqusitionStatusTypes.COMPLT, true},
-                new object[] {AcqusitionStatusTypes.HOLD, true},
+                new object[] {AcquisitionStatusTypes.ACTIVE, true},
+                new object[] {AcquisitionStatusTypes.DRAFT, true},
+                new object[] {AcquisitionStatusTypes.ARCHIV, true},
+                new object[] {AcquisitionStatusTypes.CANCEL, true},
+                new object[] {AcquisitionStatusTypes.CLOSED, true},
+                new object[] {AcquisitionStatusTypes.COMPLT, true},
+                new object[] {AcquisitionStatusTypes.HOLD, true},
         };
 
         [Theory]
         [MemberData(nameof(CanEditStakeholdersParameters))]
-        public void CanEditStakeholders_Parametrized(AcqusitionStatusTypes? status, bool expectedResult)
+        public void CanEditStakeholders_Parametrized(AcquisitionStatusTypes? status, bool expectedResult)
         {
             // Arrange
             var solver = new AcquisitionStatusSolver();
