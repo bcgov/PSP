@@ -88,7 +88,30 @@ describe('useGenerateAgreement functions', () => {
     await act(async () => {
       await generate(mockAgreementsResponse()[1]);
       expect(generateFn).toHaveBeenCalled();
-      expect(getPersonConceptFn).toHaveBeenCalled();
+      expect(getPersonConceptFn).toHaveBeenCalledWith(1);
+      expect(getAcquisitionFileProperties).toHaveBeenCalled();
+    });
+  });
+
+  it('makes requests to expected api endpoints if a team member is a negotiating agent with person', async () => {
+    const responseWithTeam: Api_AcquisitionFile = {
+      ...mockAcquisitionFileResponse(),
+      acquisitionTeam: [
+        {
+          id: 1,
+          acquisitionFileId: 1,
+          personId: 1,
+          teamProfileTypeCode: 'NEGOTAGENT',
+          rowVersion: 2,
+        },
+      ],
+    };
+    const generate = setup({ acquisitionResponse: responseWithTeam });
+
+    await act(async () => {
+      await generate(mockAgreementsResponse()[1]);
+      expect(generateFn).toHaveBeenCalled();
+      expect(getPersonConceptFn).toHaveBeenCalledWith(1);
       expect(getAcquisitionFileProperties).toHaveBeenCalled();
     });
   });
@@ -111,7 +134,30 @@ describe('useGenerateAgreement functions', () => {
     await act(async () => {
       await generate(mockAgreementsResponse()[1]);
       expect(generateFn).toHaveBeenCalled();
-      expect(getOrganizationConceptFn).toHaveBeenCalled();
+      expect(getOrganizationConceptFn).toHaveBeenCalledWith(1);
+      expect(getAcquisitionFileProperties).toHaveBeenCalled();
+    });
+  });
+
+  it('makes requests to expected api endpoints if a team member is a negotiating agent with organization', async () => {
+    const responseWithTeam: Api_AcquisitionFile = {
+      ...mockAcquisitionFileResponse(),
+      acquisitionTeam: [
+        {
+          id: 1,
+          acquisitionFileId: 1,
+          organizationId: 1,
+          teamProfileTypeCode: 'NEGOTAGENT',
+          rowVersion: 2,
+        },
+      ],
+    };
+    const generate = setup({ acquisitionResponse: responseWithTeam });
+
+    await act(async () => {
+      await generate(mockAgreementsResponse()[1]);
+      expect(generateFn).toHaveBeenCalled();
+      expect(getOrganizationConceptFn).toHaveBeenCalledWith(1);
       expect(getAcquisitionFileProperties).toHaveBeenCalled();
     });
   });

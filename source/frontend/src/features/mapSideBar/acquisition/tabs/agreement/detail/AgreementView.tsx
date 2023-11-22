@@ -11,7 +11,7 @@ import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Sec
 import { StyledAddButton } from '@/components/common/styles';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_Agreement } from '@/models/api/Agreement';
+import { AgreementStatusTypes, Api_Agreement } from '@/models/api/Agreement';
 import { formatMoney, prettyFormatDate } from '@/utils';
 
 import { StyledSectionSubheader } from '../styles';
@@ -73,8 +73,13 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
         >
           <StyledSectionSubheader>Agreement details</StyledSectionSubheader>
           <SectionField labelWidth="5" label="Agreement status">
-            {agreement.isDraft === true ? 'Draft' : 'Final'}
+            {agreement.agreementStatusType?.description ?? ''}
           </SectionField>
+          {agreement.agreementStatusType?.id === AgreementStatusTypes.CANCELLED && (
+            <SectionField labelWidth="5" label="Cancellation reason">
+              {agreement.cancellationNote ?? ''}
+            </SectionField>
+          )}
           <SectionField labelWidth="5" label="Legal survey plan">
             {agreement.legalSurveyPlanNum}
           </SectionField>
