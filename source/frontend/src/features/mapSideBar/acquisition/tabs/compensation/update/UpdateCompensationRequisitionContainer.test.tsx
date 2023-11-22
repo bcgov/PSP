@@ -11,7 +11,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { Api_FinancialCode } from '@/models/api/FinancialCode';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { systemConstantsSlice } from '@/store/slices/systemConstants/systemConstantsSlice';
-import { act, render, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions, waitFor, waitForEffects } from '@/utils/test-utils';
 
 import { CompensationRequisitionFormModel } from './models';
 import UpdateCompensationRequisitionContainer, {
@@ -38,28 +38,7 @@ jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
       getAcquisitionOwners: {
         error: undefined,
         response: mockAcquisitionFileOwnersResponse(1),
-        execute: jest.fn().mockReturnValue(mockAcquisitionFileOwnersResponse(1)),
-        loading: false,
-      },
-      getAcquisitionFileSolicitors: {
-        execute: jest.fn(),
-        loading: false,
-      },
-      getAcquisitionFileRepresentatives: {
-        execute: jest.fn(),
-        loading: false,
-      },
-    };
-  },
-}));
-
-jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
-  useAcquisitionProvider: () => {
-    return {
-      getAcquisitionOwners: {
-        error: undefined,
-        response: mockAcquisitionFileOwnersResponse(1),
-        execute: jest.fn().mockReturnValue(mockAcquisitionFileOwnersResponse(1)),
+        execute: jest.fn().mockResolvedValue(mockAcquisitionFileOwnersResponse(1)),
         loading: false,
       },
       getAcquisitionFileSolicitors: {
@@ -78,29 +57,6 @@ jest.mock('@/hooks/repositories/useInterestHolderRepository', () => ({
   useInterestHolderRepository: () => {
     return {
       getAcquisitionInterestHolders: {
-        execute: jest.fn(),
-        loading: false,
-      },
-    };
-  },
-}));
-
-jest.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
-  useInterestHolderRepository: () => {
-    return {
-      getFinancialActivityCodeTypes: {
-        execute: jest.fn(),
-        loading: false,
-      },
-      getChartOfAccountsCodeTypes: {
-        execute: jest.fn(),
-        loading: false,
-      },
-      getYearlyFinancialsCodeTypes: {
-        execute: jest.fn(),
-        loading: false,
-      },
-      getResponsibilityCodeTypes: {
         execute: jest.fn(),
         loading: false,
       },
@@ -174,12 +130,12 @@ describe('UpdateCompensationRequisition Container component', () => {
     jest.clearAllMocks();
   });
 
-  it('Renders the underlying form', async () => {
+  it('renders the underlying form', async () => {
     const { getByText } = await setup();
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
 
-  it('Calls onSuccess when the compensation is saved successfully', async () => {
+  it('calls onSuccess when the compensation is saved successfully', async () => {
     const mockCompensationUpdate = getMockApiDefaultCompensation();
     await setup({
       props: { compensation: mockCompensationUpdate },
@@ -198,7 +154,7 @@ describe('UpdateCompensationRequisition Container component', () => {
     expect(onSuccess).toHaveBeenCalled();
   });
 
-  it('does not call onSucess if the returned value is invalid', async () => {
+  it('does not call onSuccess if the returned value is invalid', async () => {
     const mockCompensationUpdate = getMockApiDefaultCompensation();
     mockUpdateCompensation.mockResolvedValue(undefined);
 
@@ -222,6 +178,8 @@ describe('UpdateCompensationRequisition Container component', () => {
       props: { compensation: mockCompensationUpdate },
     });
 
+    await waitForEffects();
+
     mockCompensationUpdate.detailedRemarks = 'my update';
     mockUpdateCompensation.mockResolvedValue(mockCompensationUpdate);
 
@@ -238,15 +196,11 @@ describe('UpdateCompensationRequisition Container component', () => {
 
     updatedCompensationModel.payee.payeeKey = testPayeeOption.value;
 
-    setTimeout(async () => {
-      await act(async () => {
-        await viewProps?.onSave(updatedCompensationModel);
-      });
+    await act(async () => viewProps?.onSave(updatedCompensationModel));
 
-      expect(mockUpdateCompensation).toHaveBeenCalledWith(
-        updatedCompensationModel.toApi([testPayeeOption]),
-      );
-    }, 500);
+    expect(mockUpdateCompensation).toHaveBeenCalledWith(
+      updatedCompensationModel.toApi([testPayeeOption]),
+    );
   });
 
   it('filters expired financial codes when updating', async () => {

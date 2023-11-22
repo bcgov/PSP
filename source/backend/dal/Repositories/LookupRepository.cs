@@ -373,6 +373,11 @@ namespace Pims.Dal.Repositories
             return Context.PimsPropMgmtActivityTypes.AsNoTracking().ToArray();
         }
 
+        public IEnumerable<PimsAgreementStatusType> GetAllAgreementStatusTypes()
+        {
+            return Context.PimsAgreementStatusTypes.AsNoTracking().ToArray();
+        }
+
         #endregion
     }
 }

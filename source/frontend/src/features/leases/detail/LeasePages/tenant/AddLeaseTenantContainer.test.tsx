@@ -202,6 +202,29 @@ describe('AddLeaseTenantContainer component', () => {
     });
   });
 
+  it('onSubmit calls api with expected data when a person with organization is populated', async () => {
+    await setup({});
+    viewProps.onSubmit({
+      ...new LeaseFormModel(),
+      tenants: [{ personId: 1, organizationId: 2 }],
+      id: 1,
+    });
+    await waitFor(async () => {
+      expect(updateTenants).toHaveBeenCalledTimes(1);
+      expect(onEdit).toHaveBeenCalledWith(false);
+      expect(updateTenants.mock.calls[0][1][0]).toStrictEqual({
+        personId: 1,
+        organizationId: undefined,
+        lessorType: undefined,
+        tenantTypeCode: undefined,
+        primaryContactId: undefined,
+        note: undefined,
+        rowVersion: undefined,
+        leaseId: 0,
+      });
+    });
+  });
+
   it('onCancel removes the callback', async () => {
     await setup({});
 

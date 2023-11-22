@@ -6,8 +6,8 @@ export interface Api_Agreement extends Api_ConcurrentVersion, Api_AuditFields {
   agreementId: number;
   acquisitionFileId: number;
   agreementType: Api_TypeCode<string>;
+  agreementStatusType: Api_TypeCode<string>;
   agreementDate: string | null;
-  isDraft: boolean | null;
   completionDate: string | null;
   terminationDate: string | null;
   commencementDate: string | null;
@@ -20,6 +20,7 @@ export interface Api_Agreement extends Api_ConcurrentVersion, Api_AuditFields {
   expiryDateTime: string | null;
   signedDate: string | null;
   inspectionDate: string | null;
+  cancellationNote: string | null;
 }
 
 export enum AgreementTypes {
@@ -27,4 +28,10 @@ export enum AgreementTypes {
   H179A = 'H179A',
   H179P = 'H179P',
   H179T = 'H179T',
+}
+
+export enum AgreementStatusTypes {
+  DRAFT = 'DRAFT',
+  FINAL = 'FINAL',
+  CANCELLED = 'CANCELLED',
 }
