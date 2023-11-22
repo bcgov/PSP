@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TypeaheadSelect component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c0 button.close {
+  font-size: 2.4rem;
+}
+
+<div
+    class="c0 form-group"
+    data-testid="typeahead-select-country"
+  >
+    <div
+      class="rbt"
+      style="outline: none; position: relative;"
+      tabindex="-1"
+    >
+      <div
+        style="display: flex; flex: 1; height: 100%; position: relative;"
+      >
+        <input
+          aria-autocomplete="both"
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          autocomplete="off"
+          class="rbt-input-main form-control rbt-input"
+          id="typeahead-select-country"
+          name="typeahead-select-country"
+          placeholder="Select a country"
+          role="combobox"
+          type="text"
+          value=""
+        />
+        <input
+          aria-hidden="true"
+          class="rbt-input-hint"
+          readonly=""
+          style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
+          tabindex="-1"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

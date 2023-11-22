@@ -62,7 +62,7 @@ export function useAxiosErrorHandlerWithConfirmation(
   message = 'Network error. Check responses and try again.',
 ) {
   return useCallback(
-    (error: unknown) => {
+    (error: unknown, handleError?: (e: AxiosError<IApiError>) => void) => {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<IApiError>;
         if (axiosError?.response?.status === 409) {
@@ -79,7 +79,11 @@ export function useAxiosErrorHandlerWithConfirmation(
             toast.error(axiosError?.response.data.error);
           }
         } else if (axiosError?.response?.status === 400) {
-          toast.error(axiosError?.response.data.error);
+          if (handleError) {
+            handleError(axiosError);
+          } else {
+            toast.error(axiosError?.response.data.error);
+          }
         } else {
           toast.error(message);
         }

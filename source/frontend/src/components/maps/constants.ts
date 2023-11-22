@@ -12,3 +12,5 @@ export const defaultBounds = new LatLngBounds(
   [60.09114547, -119.49609429],
   [48.78370426, -139.35937554],
 );
+
+export const ONE_HUNDRED_METER_PRECISION = 0.0001;

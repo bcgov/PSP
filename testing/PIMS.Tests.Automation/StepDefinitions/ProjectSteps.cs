@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using PIMS.Tests.Automation.Data;
 using PIMS.Tests.Automation.Classes;
+using PIMS.Tests.Automation.PageObjects;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -10,18 +11,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly LoginSteps loginSteps;
         private readonly Projects projects;
         private readonly SearchProjects searchProjects;
+        private readonly SharedPagination sharedPagination;
 
         private readonly string userName = "TRANPSP1";
 
         private Project project;
+        protected string projectName = "";
 
         public ProjectSteps(BrowserDriver driver)
         {
             loginSteps = new LoginSteps(driver);
             projects = new Projects(driver.Current);
             searchProjects = new SearchProjects(driver.Current);
-
-            project = new Project();
+            sharedPagination = new SharedPagination(driver.Current);
         }
 
         [StepDefinition(@"I create a new Project from row number (.*)")]
@@ -46,38 +48,31 @@ namespace PIMS.Tests.Automation.StepDefinitions
             projects.VerifyCreateProductForm();
 
             //Add Products
-            for (int i = 0; i < project.ProductsCount; i++)
+            if (project.Products.Count > 0)
             {
-                projects.CreateProduct(project.Products[i], i);
+                for (int i = 0; i < project.ProductsCount; i++)
+                {
+                    projects.CreateProduct(project.Products[i], i);
+                }
             }
 
             //Save Project
             projects.SaveProject();
-        }
 
-        [StepDefinition(@"I verify The Project View Form")]
-        public void VerifyCreatedProject()
-        {
+            //Get the project's name
+            projectName = projects.GetProjectName();
+
             //Verify Project View
             projects.VerifyProjectViewForm(project);
 
             //Verify Products within a Project
-            for (int i = 0; i < project.ProductsCount; i++)
+            if (project.Products.Count > 0)
             {
-                projects.VerifyProductViewForm(project.Products[i], i, "Create");
+                for (int i = 0; i < project.ProductsCount; i++)
+                {
+                    projects.VerifyProductViewForm(project.Products[i], i, "Create");
+                }
             }
-        }
-
-        [StepDefinition(@"I search for an existing project")]
-        public void SearchExistingProject()
-        {
-            /* TEST COVERAGE:  */
-
-            //Navigate to Search a Contact
-            searchProjects.NavigateToSearchProject();
-
-            //Look for existing Project by name
-            searchProjects.SearchProjectByName(project.Name);
         }
 
         [StepDefinition(@"I update an existing project from row number (.*)")]
@@ -85,27 +80,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             /* TEST COVERAGE: PSP-5321, PSP-5536, PSP-5537 */
 
-            //Login to PIMS
-            loginSteps.Idir(userName);
-
             //Navigate to Manage Projects
             searchProjects.NavigateToSearchProject();
 
-            //Look for Projects by number
-            searchProjects.SearchProjectByNumber("AU-0003");
-            Assert.True(searchProjects.TotalSearchedProjects().Equals(1));
-
-            //Look for Projects by Region
-            searchProjects.SearchProjectByRegion("Northern Region");
-            Assert.True(searchProjects.TotalSearchedProjects().Equals(10));
-
-            //Look for Projects by Status
-            searchProjects.SearchProjectByStatus("Planning (PL)");
-            Assert.True(searchProjects.TotalSearchedProjects().Equals(6));
-
             //Look for existing Project by name
             PopulateProjectData(rowNumber);
-            searchProjects.SearchProjectByName(project.Name);
+            searchProjects.SearchProjectByName(projectName);
 
             //Select the 1st found Project
             searchProjects.SelectFirstResult();
@@ -114,40 +94,126 @@ namespace PIMS.Tests.Automation.StepDefinitions
             projects.UpdateProject(project);
 
             //Edit Products
-            for (int i = 0; i < project.ProductsCount; i++)
+            if (project.Products.Count > 0)
             {
-                projects.UpdateProduct(project.Products[i], i);
+                for (int i = 0; i < project.ProductsCount; i++)
+                {
+                    projects.UpdateProduct(project.Products[i], i);
+                }
             }
 
             //Save Project
             projects.SaveProject();
-        }
 
-        [StepDefinition(@"I navigate back to Project Details")]
-        public void NavigateProjectDetails()
-        {
-            projects.NavigateProjectDetails();
-        }
-
-        [StepDefinition(@"Expected Content is displayed on Projects Table")]
-        public void VerifyProjectsTableContent()
-        {
-            /* TEST COVERAGE: PSP-5319 */
-            searchProjects.VerifySearchView();
-            searchProjects.VerifyViewSearchResult(project);
-        }
-
-        [StepDefinition(@"The Project is updated successfully")]
-        public void UpdateProjectSuccessfully()
-        {
             //Verify Project View
             projects.VerifyProjectViewForm(project);
 
             //Verify Products within a Project
-            for (int i = 0; i < project.ProductsCount; i++)
+            if (project.Products.Count > 0)
             {
-                projects.VerifyProductViewForm(project.Products[i], i, "Update");
-            }
+                for (int i = 0; i < project.ProductsCount; i++)
+                {
+                    projects.VerifyProductViewForm(project.Products[i], i, "Update");
+                }
+            }   
+        }
+
+        [StepDefinition(@"I search for existing Projects from row number (.*)")]
+        public void SearchExistingProjects(int rowNumber)
+        {
+            /* TEST COVERAGE: PSP-5320, PSP-5321, PSP-5322, PSP-5536, PSP-5537 */
+
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Manage Projects
+            PopulateProjectData(rowNumber);
+            searchProjects.NavigateToSearchProject();
+
+            //Verify Pagination
+            sharedPagination.ChoosePaginationOption(5);
+            Assert.True(searchProjects.ProjectsTableResultNumber().Equals(5));
+
+            sharedPagination.ChoosePaginationOption(10);
+            Assert.True(searchProjects.ProjectsTableResultNumber().Equals(10));
+
+            sharedPagination.ChoosePaginationOption(20);
+            Assert.True(searchProjects.ProjectsTableResultNumber().Equals(20));
+
+            sharedPagination.ChoosePaginationOption(50);
+            Assert.True(searchProjects.ProjectsTableResultNumber().Equals(50));
+
+            sharedPagination.ChoosePaginationOption(100);
+            Assert.True(searchProjects.ProjectsTableResultNumber().Equals(100));
+
+            //Verify Column Sorting by Project Number
+            searchProjects.OrderByProjectNumber();
+            var firstProjectNbrDescResult = searchProjects.FirstProjectCode();
+
+            searchProjects.OrderByProjectNumber();
+            var firstProjectNbrAscResult = searchProjects.FirstProjectCode();
+
+            Assert.True(firstProjectNbrDescResult != firstProjectNbrAscResult);
+
+            //Verify Column Sorting by Project Name
+            searchProjects.OrderByProjectName();
+            var firstProjectNameResult = searchProjects.FirstProjectName();
+
+            searchProjects.OrderByProjectName();
+            var firstProjectNameAscResult = searchProjects.FirstProjectName();
+
+            Assert.True(firstProjectNameResult != firstProjectNameAscResult);
+
+            //Verify Column Sorting Last Updated By
+            searchProjects.OrderByProjectLastUpdatedBy();
+            var firstProjectLastUpdatedByDescResult = searchProjects.FirstProjectLastUpdatedBy();
+
+            searchProjects.OrderByProjectLastUpdatedBy();
+            var firstProjectLastUpdatedByAscResult = searchProjects.FirstProjectLastUpdatedBy();
+
+            Assert.True(firstProjectLastUpdatedByDescResult != firstProjectLastUpdatedByAscResult);
+
+            //Verify Column Sorting Last Updated Date
+            searchProjects.OrderByProjectLastUpdatedDate();
+            var firstProjectLastUpdatedDateDescResult = searchProjects.FirstProjectLastUpdatedDate();
+
+            searchProjects.OrderByProjectLastUpdatedDate();
+            var firstProjectLastUpdatedDateAscResult = searchProjects.FirstProjectLastUpdatedDate();
+
+            Assert.True(firstProjectLastUpdatedDateDescResult != firstProjectLastUpdatedDateAscResult);
+
+            //Filter Projects by Region
+            searchProjects.SearchProjectByRegion("Northern Region");
+            Assert.True(searchProjects.ProjectsTableResultNumber().Equals(100));
+
+            //Filter Projects by Status
+            searchProjects.SearchProjectByStatus("Planning (PL)");
+            Assert.True(searchProjects.ProjectsTableResultNumber().Equals(7));
+
+            //Filter Projects by number
+            searchProjects.SearchProjectByNumber(project.Number);
+            Assert.True(searchProjects.ProjectsTableResultNumber().Equals(1));
+
+        }
+
+        [StepDefinition(@"A new Project is created successfully")]
+        public void VerifyProjectsCreationSuccess()
+        {
+            //Navigate to Manage Projects
+            searchProjects.NavigateToSearchProject();
+            searchProjects.SearchProjectByName(projectName);
+
+            Assert.True(searchProjects.SearchFoundResults());
+        }
+
+        [StepDefinition(@"Expected Project Content is displayed on Projects Table")]
+        public void VerifyProjectsTableContent()
+        {
+            /* TEST COVERAGE: PSP-5319 */
+
+            //Verify List View
+            searchProjects.VerifySearchView();
+            searchProjects.VerifyViewSearchResult(project);
         }
 
         [StepDefinition(@"Duplicate Project Alert is displayed")]
@@ -155,13 +221,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             /* TEST COVERAGE:  PSP-5670 */
 
-            Assert.True(projects.duplicateProject());
+            Assert.True(projects.DuplicateProject());
         }
 
         private void PopulateProjectData(int rowNumber)
         {
             DataTable projectsSheet = ExcelDataContext.GetInstance().Sheets["Projects"];
             ExcelDataContext.PopulateInCollection(projectsSheet);
+
+            project = new Project();
 
             project.Number = ExcelDataContext.ReadData(rowNumber, "Number");
             project.Name = ExcelDataContext.ReadData(rowNumber, "Name");

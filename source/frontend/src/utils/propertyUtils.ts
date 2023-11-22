@@ -100,7 +100,7 @@ export function formatApiPropertyManagementLease(base?: Api_PropertyManagement |
   const count = base?.relatedLeases || 0;
   switch (count) {
     case 0:
-      return 'No active Lease/License';
+      return 'No';
 
     case 1:
       const expiryDate = base?.leaseExpiryDate ? `(${prettyFormatDate(base.leaseExpiryDate)})` : '';

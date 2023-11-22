@@ -86,10 +86,10 @@ export class FormTenant {
   public static toApi(model: FormTenant): Api_LeaseTenant {
     return {
       personId: model.personId,
-      organizationId: model.organizationId,
+      organizationId: !model.personId ? model.organizationId : undefined,
       lessorType: model.lessorTypeCode,
       tenantTypeCode: toTypeCode(model.tenantType),
-      primaryContactId: model.primaryContactId,
+      primaryContactId: !model.personId ? model.primaryContactId : undefined,
       note: model.note,
       rowVersion: model.rowVersion,
       leaseId: model.leaseId ?? 0,

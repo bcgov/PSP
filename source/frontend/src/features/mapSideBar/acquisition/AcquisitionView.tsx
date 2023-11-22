@@ -76,9 +76,6 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   const history = useHistory();
   const match = useRouteMatch();
   const { file, lastUpdatedBy } = useContext(SideBarContext);
-  if (!!file && file?.fileType !== FileTypes.Acquisition) {
-    throw Error('Context file is not an acquisition file');
-  }
   const acquisitionFile: Api_AcquisitionFile = file as Api_AcquisitionFile;
 
   // match for property menu routes - eg /property/1/ltsa
@@ -195,6 +192,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                 />
 
                 <GenericModal
+                  className="info"
                   display={containerState.showConfirmModal}
                   title={'Confirm changes'}
                   message={

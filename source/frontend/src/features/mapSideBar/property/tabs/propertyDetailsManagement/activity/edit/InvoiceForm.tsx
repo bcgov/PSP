@@ -88,7 +88,7 @@ export const InvoiceForm: React.FunctionComponent<React.PropsWithChildren<IInvoi
   return (
     <Section header={`Invoice ${index + 1}`} isCollapsable initiallyExpanded>
       <SectionField label="Invoice number" contentWidth="7">
-        <Row className="border no-gutters">
+        <Row className="no-gutters">
           <Col className="col-10">
             <Input field={`${namespace}.invoiceNum`} />
           </Col>

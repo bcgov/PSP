@@ -6,7 +6,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c6.btn {
+  .c7.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`AddProjectForm component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c6.btn:hover {
+.c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c6.btn:focus {
+.c7.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c6.btn.btn-primary {
+.c7.btn.btn-primary {
   border: none;
 }
 
-.c6.btn.btn-secondary {
+.c7.btn.btn-secondary {
   background: none;
 }
 
-.c6.btn.btn-info {
+.c7.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c6.btn.btn-info:hover,
-.c6.btn.btn-info:active,
-.c6.btn.btn-info:focus {
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
   background: none;
 }
 
-.c6.btn.btn-light {
+.c7.btn.btn-light {
   border: none;
 }
 
-.c6.btn.btn-dark {
+.c7.btn.btn-dark {
   border: none;
 }
 
-.c6.btn.btn-link {
+.c7.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`AddProjectForm component renders as expected 1`] = `
   padding: 0;
 }
 
-.c6.btn.btn-link:hover,
-.c6.btn.btn-link:active,
-.c6.btn.btn-link:focus {
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`AddProjectForm component renders as expected 1`] = `
   outline: none;
 }
 
-.c6.btn.btn-link:disabled,
-.c6.btn.btn-link.disabled {
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c6.btn:disabled,
-.c6.btn:disabled:hover {
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,16 +128,20 @@ exports[`AddProjectForm component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c6.Button .Button__icon {
+.c7.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c6.Button--icon-only:focus {
+.c7.Button--icon-only:focus {
   outline: none;
 }
 
-.c6.Button--icon-only .Button__icon {
+.c7.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c6 button.close {
+  font-size: 2.4rem;
 }
 
 .c2 {
@@ -443,19 +447,40 @@ exports[`AddProjectForm component renders as expected 1`] = `
               class="c4 text-left col"
             >
               <div
-                class="form-group"
+                class="c6 form-group"
+                data-testid="typeahead-select-costTypeCode"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-costTypeCode"
-                  name="costTypeCode"
+                <div
+                  class="rbt"
+                  style="outline: none; position: relative;"
+                  tabindex="-1"
                 >
-                  <option
-                    value=""
+                  <div
+                    style="display: flex; flex: 1; height: 100%; position: relative;"
                   >
-                    Select...
-                  </option>
-                </select>
+                    <input
+                      aria-autocomplete="both"
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      autocomplete="off"
+                      class="rbt-input-main form-control rbt-input"
+                      id="typeahead-select-costTypeCode"
+                      name="typeahead-select-costTypeCode"
+                      placeholder="Type to search..."
+                      role="combobox"
+                      type="text"
+                      value=""
+                    />
+                    <input
+                      aria-hidden="true"
+                      class="rbt-input-hint"
+                      readonly=""
+                      style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                      tabindex="-1"
+                      value=""
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -475,19 +500,40 @@ exports[`AddProjectForm component renders as expected 1`] = `
               class="c4 text-left col"
             >
               <div
-                class="form-group"
+                class="c6 form-group"
+                data-testid="typeahead-select-workActivityCode"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-workActivityCode"
-                  name="workActivityCode"
+                <div
+                  class="rbt"
+                  style="outline: none; position: relative;"
+                  tabindex="-1"
                 >
-                  <option
-                    value=""
+                  <div
+                    style="display: flex; flex: 1; height: 100%; position: relative;"
                   >
-                    Select...
-                  </option>
-                </select>
+                    <input
+                      aria-autocomplete="both"
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      autocomplete="off"
+                      class="rbt-input-main form-control rbt-input"
+                      id="typeahead-select-workActivityCode"
+                      name="typeahead-select-workActivityCode"
+                      placeholder="Type to search..."
+                      role="combobox"
+                      type="text"
+                      value=""
+                    />
+                    <input
+                      aria-hidden="true"
+                      class="rbt-input-hint"
+                      readonly=""
+                      style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                      tabindex="-1"
+                      value=""
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -507,19 +553,40 @@ exports[`AddProjectForm component renders as expected 1`] = `
               class="c4 text-left col"
             >
               <div
-                class="form-group"
+                class="c6 form-group"
+                data-testid="typeahead-select-businessFunctionCode"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-businessFunctionCode"
-                  name="businessFunctionCode"
+                <div
+                  class="rbt"
+                  style="outline: none; position: relative;"
+                  tabindex="-1"
                 >
-                  <option
-                    value=""
+                  <div
+                    style="display: flex; flex: 1; height: 100%; position: relative;"
                   >
-                    Select...
-                  </option>
-                </select>
+                    <input
+                      aria-autocomplete="both"
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      autocomplete="off"
+                      class="rbt-input-main form-control rbt-input"
+                      id="typeahead-select-businessFunctionCode"
+                      name="typeahead-select-businessFunctionCode"
+                      placeholder="Type to search..."
+                      role="combobox"
+                      type="text"
+                      value=""
+                    />
+                    <input
+                      aria-hidden="true"
+                      class="rbt-input-hint"
+                      readonly=""
+                      style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                      tabindex="-1"
+                      value=""
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -545,7 +612,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
           class="collapse show"
         >
           <button
-            class="c6 Button btn btn-link"
+            class="c7 Button btn btn-link"
             type="button"
           >
             <div
@@ -569,7 +636,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
     class="Toastify"
   />
   <div />
-  .c6.btn {
+  .c7.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -599,49 +666,49 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
   cursor: pointer;
 }
 
-.c6.btn:hover {
+.c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c6.btn:focus {
+.c7.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c6.btn.btn-primary {
+.c7.btn.btn-primary {
   border: none;
 }
 
-.c6.btn.btn-secondary {
+.c7.btn.btn-secondary {
   background: none;
 }
 
-.c6.btn.btn-info {
+.c7.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c6.btn.btn-info:hover,
-.c6.btn.btn-info:active,
-.c6.btn.btn-info:focus {
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
   background: none;
 }
 
-.c6.btn.btn-light {
+.c7.btn.btn-light {
   border: none;
 }
 
-.c6.btn.btn-dark {
+.c7.btn.btn-dark {
   border: none;
 }
 
-.c6.btn.btn-link {
+.c7.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -662,9 +729,9 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
   padding: 0;
 }
 
-.c6.btn.btn-link:hover,
-.c6.btn.btn-link:active,
-.c6.btn.btn-link:focus {
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -673,14 +740,14 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
   outline: none;
 }
 
-.c6.btn.btn-link:disabled,
-.c6.btn.btn-link.disabled {
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c6.btn:disabled,
-.c6.btn:disabled:hover {
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -691,19 +758,19 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
   opacity: 0.65;
 }
 
-.c6.Button .Button__icon {
+.c7.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c6.Button--icon-only:focus {
+.c7.Button--icon-only:focus {
   outline: none;
 }
 
-.c6.Button--icon-only .Button__icon {
+.c7.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c8 .react-datepicker__calendar-icon {
+.c9 .react-datepicker__calendar-icon {
   width: 3rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -711,36 +778,36 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
   pointer-events: none;
 }
 
-.c8 .react-datepicker__view-calendar-icon input {
+.c9 .react-datepicker__view-calendar-icon input {
   padding: 0.6rem 1rem 0.5rem 0.6rem;
 }
 
-.c8 .react-datepicker-wrapper {
+.c9 .react-datepicker-wrapper {
   max-width: 16rem;
 }
 
-.c9.c9.form-control.is-valid {
+.c10.c10.form-control.is-valid {
   background-image: none;
 }
 
-.c9.c9.form-control.is-invalid {
+.c10.c10.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c7.c7.btn {
+.c8.c8.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c7.c7.btn .text {
+.c8.c8.btn .text {
   display: none;
 }
 
-.c7.c7.btn:hover,
-.c7.c7.btn:active,
-.c7.c7.btn:focus {
+.c8.c8.btn:hover,
+.c8.c8.btn:active,
+.c8.c8.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -754,11 +821,15 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
   flex-direction: row;
 }
 
-.c7.c7.btn:hover .text,
-.c7.c7.btn:active .text,
-.c7.c7.btn:focus .text {
+.c8.c8.btn:hover .text,
+.c8.c8.btn:active .text,
+.c8.c8.btn:focus .text {
   display: inline;
   line-height: 2rem;
+}
+
+.c6 button.close {
+  font-size: 2.4rem;
 }
 
 .c2 {
@@ -786,13 +857,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
   font-weight: bold;
 }
 
-.c10 textarea.form-control {
+.c11 textarea.form-control {
   min-width: 80rem;
   height: 7rem;
   resize: none;
 }
 
-.c11 {
+.c12 {
   border-bottom: 0.1rem solid grey;
 }
 
@@ -1076,19 +1147,40 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
               class="c4 text-left col"
             >
               <div
-                class="form-group"
+                class="c6 form-group"
+                data-testid="typeahead-select-costTypeCode"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-costTypeCode"
-                  name="costTypeCode"
+                <div
+                  class="rbt"
+                  style="outline: none; position: relative;"
+                  tabindex="-1"
                 >
-                  <option
-                    value=""
+                  <div
+                    style="display: flex; flex: 1; height: 100%; position: relative;"
                   >
-                    Select...
-                  </option>
-                </select>
+                    <input
+                      aria-autocomplete="both"
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      autocomplete="off"
+                      class="rbt-input-main form-control rbt-input"
+                      id="typeahead-select-costTypeCode"
+                      name="typeahead-select-costTypeCode"
+                      placeholder="Type to search..."
+                      role="combobox"
+                      type="text"
+                      value=""
+                    />
+                    <input
+                      aria-hidden="true"
+                      class="rbt-input-hint"
+                      readonly=""
+                      style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                      tabindex="-1"
+                      value=""
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1108,19 +1200,40 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
               class="c4 text-left col"
             >
               <div
-                class="form-group"
+                class="c6 form-group"
+                data-testid="typeahead-select-workActivityCode"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-workActivityCode"
-                  name="workActivityCode"
+                <div
+                  class="rbt"
+                  style="outline: none; position: relative;"
+                  tabindex="-1"
                 >
-                  <option
-                    value=""
+                  <div
+                    style="display: flex; flex: 1; height: 100%; position: relative;"
                   >
-                    Select...
-                  </option>
-                </select>
+                    <input
+                      aria-autocomplete="both"
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      autocomplete="off"
+                      class="rbt-input-main form-control rbt-input"
+                      id="typeahead-select-workActivityCode"
+                      name="typeahead-select-workActivityCode"
+                      placeholder="Type to search..."
+                      role="combobox"
+                      type="text"
+                      value=""
+                    />
+                    <input
+                      aria-hidden="true"
+                      class="rbt-input-hint"
+                      readonly=""
+                      style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                      tabindex="-1"
+                      value=""
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1140,19 +1253,40 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
               class="c4 text-left col"
             >
               <div
-                class="form-group"
+                class="c6 form-group"
+                data-testid="typeahead-select-businessFunctionCode"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-businessFunctionCode"
-                  name="businessFunctionCode"
+                <div
+                  class="rbt"
+                  style="outline: none; position: relative;"
+                  tabindex="-1"
                 >
-                  <option
-                    value=""
+                  <div
+                    style="display: flex; flex: 1; height: 100%; position: relative;"
                   >
-                    Select...
-                  </option>
-                </select>
+                    <input
+                      aria-autocomplete="both"
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      autocomplete="off"
+                      class="rbt-input-main form-control rbt-input"
+                      id="typeahead-select-businessFunctionCode"
+                      name="typeahead-select-businessFunctionCode"
+                      placeholder="Type to search..."
+                      role="combobox"
+                      type="text"
+                      value=""
+                    />
+                    <input
+                      aria-hidden="true"
+                      class="rbt-input-hint"
+                      readonly=""
+                      style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                      tabindex="-1"
+                      value=""
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1188,7 +1322,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="col-auto"
               >
                 <button
-                  class="c6 Button c7 btn btn-link"
+                  class="c7 Button c8 btn btn-link"
                   title="Delete Project"
                   type="button"
                 >
@@ -1238,6 +1372,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     >
                       <input
                         class="form-control"
+                        disabled=""
                         id="input-products.0.code"
                         name="products.0.code"
                         title="70"
@@ -1270,6 +1405,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     >
                       <input
                         class="form-control"
+                        disabled=""
                         id="input-products.0.description"
                         name="products.0.description"
                         title="Product A"
@@ -1296,7 +1432,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="c4 text-left col-4"
               >
                 <div
-                  class="c8 form-group"
+                  class="c9 form-group"
                 >
                   <div
                     class="react-datepicker-wrapper d-block"
@@ -1315,7 +1451,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                       </svg>
                       <input
                         autocomplete="off"
-                        class="c9 form-control date-picker"
+                        class="c10 form-control date-picker"
                         id="datepicker-products.0.startDate"
                         name="products.0.startDate"
                         placeholder="MTH DD, YYYY"
@@ -1387,7 +1523,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     class="c4 text-left col"
                   >
                     <div
-                      class="c8 form-group"
+                      class="c9 form-group"
                     >
                       <div
                         class="react-datepicker-wrapper d-block"
@@ -1406,7 +1542,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                           </svg>
                           <input
                             autocomplete="off"
-                            class="c9 form-control date-picker"
+                            class="c10 form-control date-picker"
                             id="datepicker-products.0.costEstimateDate"
                             name="products.0.costEstimateDate"
                             placeholder="MTH DD, YYYY"
@@ -1436,7 +1572,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="c4 text-left col"
               >
                 <div
-                  class="c10 textarea input form-group"
+                  class="c11 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -1465,7 +1601,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="c4 text-left col"
               >
                 <div
-                  class="c10 textarea input form-group"
+                  class="c11 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -1479,7 +1615,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
               </div>
             </div>
             <div
-              class="c11 my-5"
+              class="c12 my-5"
             />
           </div>
           <div>
@@ -1493,7 +1629,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="col-auto"
               >
                 <button
-                  class="c6 Button c7 btn btn-link"
+                  class="c7 Button c8 btn btn-link"
                   title="Delete Project"
                   type="button"
                 >
@@ -1543,6 +1679,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     >
                       <input
                         class="form-control"
+                        disabled=""
                         id="input-products.1.code"
                         name="products.1.code"
                         title="71"
@@ -1575,6 +1712,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     >
                       <input
                         class="form-control"
+                        disabled=""
                         id="input-products.1.description"
                         name="products.1.description"
                         title="Product B"
@@ -1601,7 +1739,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="c4 text-left col-4"
               >
                 <div
-                  class="c8 form-group"
+                  class="c9 form-group"
                 >
                   <div
                     class="react-datepicker-wrapper d-block"
@@ -1620,7 +1758,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                       </svg>
                       <input
                         autocomplete="off"
-                        class="c9 form-control date-picker"
+                        class="c10 form-control date-picker"
                         id="datepicker-products.1.startDate"
                         name="products.1.startDate"
                         placeholder="MTH DD, YYYY"
@@ -1692,7 +1830,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     class="c4 text-left col"
                   >
                     <div
-                      class="c8 form-group"
+                      class="c9 form-group"
                     >
                       <div
                         class="react-datepicker-wrapper d-block"
@@ -1711,7 +1849,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                           </svg>
                           <input
                             autocomplete="off"
-                            class="c9 form-control date-picker"
+                            class="c10 form-control date-picker"
                             id="datepicker-products.1.costEstimateDate"
                             name="products.1.costEstimateDate"
                             placeholder="MTH DD, YYYY"
@@ -1741,7 +1879,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="c4 text-left col"
               >
                 <div
-                  class="c10 textarea input form-group"
+                  class="c11 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -1770,7 +1908,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="c4 text-left col"
               >
                 <div
-                  class="c10 textarea input form-group"
+                  class="c11 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -1785,7 +1923,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
             </div>
           </div>
           <button
-            class="c6 Button btn btn-link"
+            class="c7 Button btn btn-link"
             type="button"
           >
             <div

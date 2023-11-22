@@ -23,7 +23,7 @@ export class Api_GenerateAgreement {
     this.date = agreement?.agreementDate
       ? moment(agreement?.agreementDate).format('MMM DD, YYYY') ?? ''
       : '';
-    this.status = agreement?.isDraft ? 'DRAFT' : '';
+    this.status = agreement?.agreementStatusType?.description ?? '';
     this.completion_date = agreement?.completionDate
       ? moment(agreement?.completionDate).format('MMM DD, YYYY') ?? ''
       : '';

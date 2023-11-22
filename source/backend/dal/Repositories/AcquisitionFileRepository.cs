@@ -772,7 +772,7 @@ namespace Pims.Dal.Repositories
             if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))
             {
                 predicate = predicate.And(acq => EF.Functions.Like(acq.Project.Code, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(acq.Project.Description, $"%{filter.ProjectNameOrNumber}%")
-                || acq.PimsCompensationRequisitions.Any(cr => EF.Functions.Like(cr.AlternateProject.Code, $"%{filter.ProjectNameOrNumber}%") || acq.PimsCompensationRequisitions.Any(cr => EF.Functions.Like(cr.AlternateProject.Description, $"%{filter.ProjectNameOrNumber}%"))));
+                || acq.PimsCompensationRequisitions.Any(cr => EF.Functions.Like(cr.AlternateProject.Code, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(cr.AlternateProject.Description, $"%{filter.ProjectNameOrNumber}%")));
             }
 
             predicate = predicate.And(acq => regions.Contains(acq.RegionCode));

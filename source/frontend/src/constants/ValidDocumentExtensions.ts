@@ -18,6 +18,7 @@ const ValidDocumentExtensions: string[] = [
   'gml',
   'kml',
   'kmz',
+  'msg',
 ];
 
 export default ValidDocumentExtensions;

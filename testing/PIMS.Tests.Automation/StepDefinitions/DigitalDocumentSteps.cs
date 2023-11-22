@@ -8,6 +8,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     public class DigitalDocumentSteps
     {
         private readonly DigitalDocuments digitalDocumentsTab;
+        private readonly SharedPagination sharedPagination;
         private readonly IEnumerable<DocumentFile> documentFiles;
         private int documentsRowStart;
         private int documentsRowsQuantity;
@@ -17,8 +18,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public DigitalDocumentSteps(BrowserDriver driver)
         {
             digitalDocumentsTab = new DigitalDocuments(driver.Current);
+            sharedPagination = new SharedPagination(driver.Current);
             documentFiles = UploadFileDocuments();
-            digitalDocumentList = new List<DigitalDocument>();
             documentsRowStart = 0;
             documentsRowsQuantity = 0;
         }
@@ -67,7 +68,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I edit a Digital Document for a ""(.*)"" from row number (.*)")]
         public void UpdateDigitalDocuments(string fileType, int rowNumber)
         {
-            /* TEST COVERAGE: PSP-4030, PSP-4168, PSP-4335, PSP-4336, PSP-4338, PSP-5417, PSP-5418, PSP-5420, PSP-5436, PSP-5437, PSP-5439, PSP-5762, PSP-5765, PSP-5930 */
+            /* TEST COVERAGE: PSP-4026, PSP-4027, PSP-4030, PSP-4168, PSP-4335, PSP-4336, PSP-4338, PSP-5417, PSP-5418, PSP-5420, PSP-5436, PSP-5437, PSP-5439, PSP-5459,
+             *                PSP-5762, PSP-5765, PSP-5930 */
 
             //Access the documents tab
             digitalDocumentsTab.NavigateDocumentsTab();
@@ -77,17 +79,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Add new digital document
             digitalDocumentsTab.AddNewDocument(fileType);
+            digitalDocumentsTab.CreateNewDocumentType(digitalDocumentList[0]);
+
             Random random = new Random();
             var index2 = random.Next(0, documentFiles.Count());
             var document2 = documentFiles.ElementAt(index2);
 
             digitalDocumentsTab.UploadDocument(document2.Url);
-            digitalDocumentsTab.UpdateNewDocumentType(digitalDocumentList[0]);
-
+            
             //Cancel uploading a new document
             digitalDocumentsTab.CancelDigitalDocument();
 
             //Edit digital document's details
+            digitalDocumentsTab.NavigateToFirstPageDocumentsTable();
             digitalDocumentsTab.View1stDocument();
             digitalDocumentsTab.EditDocument();
             digitalDocumentsTab.UpdateNewDocumentType(digitalDocumentList[0]);
@@ -110,6 +114,47 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Close Digital Documents Details View
             digitalDocumentsTab.CloseDigitalDocumentViewDetails();
+
+            //Verify Pagination Elements
+            digitalDocumentsTab.VerifyPaginationElements();
+
+            //Verify Pagination Functionality
+            sharedPagination.ChoosePaginationOption(5);
+            Assert.Equal(5, digitalDocumentsTab.DigitalDocumentsTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(10);
+            Assert.Equal(10, digitalDocumentsTab.DigitalDocumentsTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(20);
+            Assert.True(digitalDocumentsTab.DigitalDocumentsTableResultNumber() <= 20);
+
+            //Verify Column Sorting by Document Type
+            digitalDocumentsTab.OrderByDocumentFileType();
+            var firstFileTypeDescResult = digitalDocumentsTab.FirstDocumentFileType();
+
+            digitalDocumentsTab.OrderByDocumentFileType();
+            var firstFileTypeAscResult = digitalDocumentsTab.FirstDocumentFileType();
+
+            Assert.NotEqual(firstFileTypeDescResult, firstFileTypeAscResult);
+
+            //Verify Column Sorting by Document Type
+            digitalDocumentsTab.OrderByDocumentFileName();
+            var firstFileNameDescResult = digitalDocumentsTab.FirstDocumentFileName();
+
+            digitalDocumentsTab.OrderByDocumentFileName();
+            var firstFileNameAscResult = digitalDocumentsTab.FirstDocumentFileName();
+
+            Assert.NotEqual(firstFileNameDescResult, firstFileNameAscResult);
+
+            //Verify Column Sorting by File Name
+            digitalDocumentsTab.OrderByDocumentFileStatus();
+            var firstFileStatusDescResult = digitalDocumentsTab.FirstDocumentFileStatus();
+
+            digitalDocumentsTab.OrderByDocumentFileStatus();
+            var firstFileStatusAscResult = digitalDocumentsTab.FirstDocumentFileStatus();
+
+            Assert.NotEqual(firstFileStatusDescResult,  firstFileStatusAscResult);
+            digitalDocumentsTab.OrderByDocumentFileStatus();
 
             //Filter Documents by Type
             digitalDocumentsTab.FilterByType(digitalDocumentList[0].DocumentType);
@@ -154,6 +199,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             DataTable documentsIndexSheet = ExcelDataContext.GetInstance().Sheets["DocumentsIndex"];
             ExcelDataContext.PopulateInCollection(documentsIndexSheet);
+
+            digitalDocumentList = new List<DigitalDocument>();
 
             documentsRowStart = int.Parse(ExcelDataContext.ReadData(rowNumber, "DigitalDocumentDetailsRowStart"));
             documentsRowsQuantity = int.Parse(ExcelDataContext.ReadData(rowNumber, "DigitalDocumentsRowEnd"));

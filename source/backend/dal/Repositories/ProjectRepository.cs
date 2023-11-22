@@ -1,3 +1,4 @@
+using System.Data.Entity.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Pims.Dal.Repositories
 {
@@ -92,15 +95,20 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsProject Add(PimsProject project)
         {
-            User.ThrowIfNotAuthorized(Permissions.ProjectAdd);
-
-            // TODO: Fix this
-            /*foreach (var product in project.PimsProducts)
+            foreach (var projectProduct in project.PimsProjectProducts)
             {
-                product.ParentProject = project;
-            }*/
+                if (projectProduct.ProductId != 0)
+                {
+                    this.Context.Entry(projectProduct.Product).State = EntityState.Modified;
+                }
+                else
+                {
+                    this.Context.Entry(projectProduct.Product).State = EntityState.Added;
+                }
+            }
 
             Context.PimsProjects.Add(project);
+
             return project;
         }
 
@@ -117,7 +125,9 @@ namespace Pims.Dal.Repositories
             var existingProject = Context.PimsProjects
                 .FirstOrDefault(x => x.Id == project.Id) ?? throw new KeyNotFoundException();
 
-            this.Context.UpdateGrandchild<PimsProject, long, PimsProjectProduct>(p => p.PimsProjectProducts, pp => pp.Product, project.Id, project.PimsProjectProducts.ToArray(), true);
+            Func<PimsContext, PimsProjectProduct, bool> canDeleteGrandchild = (context, pa) => !context.PimsProducts.Any(o => o.Id == pa.ProductId);
+
+            this.Context.UpdateGrandchild<PimsProject, long, PimsProjectProduct>(p => p.PimsProjectProducts, pp => pp.Product, project.Id, project.PimsProjectProducts.ToArray(), canDeleteGrandchild);
 
             Context.Entry(existingProject).CurrentValues.SetValues(project);
 
