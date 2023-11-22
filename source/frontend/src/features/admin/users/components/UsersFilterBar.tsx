@@ -67,10 +67,10 @@ export const UsersFilterBar: React.FC<React.PropsWithChildren<IProps>> = ({ valu
             <Col className="actions" md={2} sm={2}>
               <Row>
                 <Col className="d-flex">
-                  <TooltipWrapper toolTipId="map-filter-search-tooltip" toolTip="Search">
+                  <TooltipWrapper tooltipId="map-filter-search-tooltip" tooltip="Search">
                     <SearchButton className="mr-2" />
                   </TooltipWrapper>
-                  <TooltipWrapper toolTipId="map-filter-reset-tooltip" toolTip="Reset Filter">
+                  <TooltipWrapper tooltipId="map-filter-reset-tooltip" tooltip="Reset Filter">
                     <ResetButton
                       type=""
                       disabled={false}

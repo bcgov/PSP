@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 import { useRef } from 'react';
-import Form from 'react-bootstrap/Form';
 import { Typeahead, TypeaheadModel, TypeaheadProps } from 'react-bootstrap-typeahead';
+import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
 
 import TooltipIcon from '@/components/common/TooltipIcon';
@@ -117,7 +117,7 @@ export function TypeaheadField<T extends TypeaheadModel>({
     <StyledFormGroup className={classNames(!!required ? 'required' : '', outerClassName)}>
       {!!label && <Form.Label>{label}</Form.Label>}
       {!!tooltip && <TooltipIcon toolTipId="typeAhead-tip" toolTip={tooltip} />}
-      <TooltipWrapper toolTipId={`${name}-error-tooltip}`} toolTip={errorTooltip}>
+      <TooltipWrapper tooltipId={`${name}-error-tooltip}`} tooltip={errorTooltip}>
         <Typeahead<T>
           {...rest}
           inputProps={{ ...rest.inputProps, name: name, id: `${name}-field` }}

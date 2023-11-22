@@ -87,8 +87,8 @@ export const AccessRequestForm: React.FunctionComponent<
         <SectionField label="Role" labelWidth="2" required>
           <Select field="roleId" options={selectRoles} placeholder="Select..." />
           <TooltipWrapper
-            toolTipId="role description tooltip icon"
-            toolTip={<RolesToolTip />}
+            tooltipId="role description tooltip icon"
+            tooltip={<RolesToolTip />}
             placement="auto"
             className="tooltip-light"
           >

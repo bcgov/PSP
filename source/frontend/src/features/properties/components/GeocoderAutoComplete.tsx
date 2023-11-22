@@ -118,7 +118,7 @@ export const GeocoderAutoComplete: React.FC<
           controlId={`input-${field}`}
           className={classNames(!!required ? 'required' : '', outerClassName)}
         >
-          <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
+          <TooltipWrapper tooltipId={`${field}-error-tooltip}`} tooltip={errorTooltip}>
             <InputControl
               data-testid="geocoder-input"
               autoComplete={autoSetting}

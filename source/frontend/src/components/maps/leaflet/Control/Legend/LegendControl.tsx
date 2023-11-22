@@ -33,8 +33,8 @@ export const LegendControl: React.FC<React.PropsWithChildren<unknown>> = () => {
       <ClickAwayListener onClickAway={() => setVisible(false)}>
         <div>
           <TooltipWrapper
-            toolTipId="marker-legendId"
-            toolTip={visible ? undefined : 'Marker legend'}
+            tooltipId="marker-legendId"
+            tooltip={visible ? undefined : 'Marker legend'}
           >
             <LegendButton ref={target} onClick={() => setVisible(!visible)}>
               <FiMapPin />

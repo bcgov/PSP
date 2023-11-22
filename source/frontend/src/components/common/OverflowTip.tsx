@@ -32,7 +32,7 @@ const OverflowTip: React.FunctionComponent<
   const [hoverStatus, setHover] = useState(false);
 
   return (
-    <TooltipWrapper toolTipId={`tooltip-title`} toolTip={hoverStatus ? fullText : ''}>
+    <TooltipWrapper tooltipId={`tooltip-title`} tooltip={hoverStatus ? fullText : ''}>
       <StyledOverflowDiv className={className} ref={textElementRef as any}>
         {fullText ?? ''}
       </StyledOverflowDiv>
