@@ -4,8 +4,10 @@ import { useDocumentGenerationRepository } from '@/features/documents/hooks/useD
 import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
 import { AgreementTypes, Api_Agreement } from '@/models/api/Agreement';
 import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { Api_Organization } from '@/models/api/Organization';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateAgreement } from '@/models/generate/GenerateAgreement';
 
@@ -41,14 +43,14 @@ export const useGenerateAgreement = () => {
       ? getPersonConcept(coordinator?.personId).then(p => (coordinator.person = p?.data))
       : coordinator?.organizationId
       ? getOrganizationConcept(coordinator?.organizationId).then(o =>
-          !!coordinator ? (coordinator.organization = o?.data) : null,
+          !!coordinator ? setOrganization(coordinator, o?.data) : null,
         )
       : Promise.resolve();
     const negotiatingAgentPromise = negotiatingAgent?.personId
       ? getPersonConcept(negotiatingAgent?.personId).then(p => (negotiatingAgent.person = p?.data))
       : negotiatingAgent?.organizationId
       ? getOrganizationConcept(negotiatingAgent?.organizationId).then(o =>
-          !!negotiatingAgent ? (negotiatingAgent.organization = o?.data) : null,
+          !!negotiatingAgent ? setOrganization(negotiatingAgent, o?.data) : null,
         )
       : Promise.resolve();
     const provincialSolicitorPromise = provincialSolicitor?.personId
@@ -57,7 +59,7 @@ export const useGenerateAgreement = () => {
         )
       : provincialSolicitor?.organizationId
       ? getOrganizationConcept(provincialSolicitor?.organizationId).then(o =>
-          !!provincialSolicitor ? (provincialSolicitor.organization = o?.data) : null,
+          !!provincialSolicitor ? setOrganization(provincialSolicitor, o?.data) : null,
         )
       : Promise.resolve();
 
@@ -123,5 +125,14 @@ const getTemplateTypeFromAgreementType = (agreementType: string) => {
       return FormTemplateTypes.H0074;
     default:
       throw Error(`Unable to find form type for agreement type: ${agreementType}`);
+  }
+};
+
+const setOrganization = (team: Api_AcquisitionFileTeam, organization: Api_Organization) => {
+  if (!!team) {
+    team.organization = organization;
+    team.primaryContact =
+      organization?.organizationPersons?.find(op => op.personId === team.primaryContactId)
+        ?.person ?? team.primaryContact;
   }
 };
