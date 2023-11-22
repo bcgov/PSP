@@ -1,6 +1,5 @@
 import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
-import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Api_ResearchFileProperty } from '@/models/api/ResearchFile';
@@ -47,11 +46,6 @@ export const UpdatePropertyResearchContainer = React.forwardRef<
       {formikProps => (
         <StyledFormWrapper>
           <UpdatePropertyForm formikProps={formikProps} />
-
-          <Prompt
-            when={formikProps.dirty && formikProps.submitCount === 0}
-            message="You have made changes on this form. Do you wish to leave without saving?"
-          />
         </StyledFormWrapper>
       )}
     </Formik>
