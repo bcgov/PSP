@@ -40,9 +40,14 @@ export const useGenerateAgreement = () => {
     const coordinatorPromise = coordinator?.personId
       ? getPersonConcept(coordinator?.personId).then(p => (coordinator.person = p?.data))
       : coordinator?.organizationId
-      ? getOrganizationConcept(coordinator?.organizationId).then(o =>
-          !!coordinator ? (coordinator.organization = o?.data) : null,
-        )
+      ? getOrganizationConcept(coordinator?.organizationId).then(o => {
+          if (!!coordinator) {
+            coordinator.organization = o?.data;
+            coordinator.primaryContact =
+              o?.data?.organizationPersons?.find(op => op.personId === coordinator.primaryContactId)
+                ?.person ?? coordinator.primaryContact;
+          }
+        })
       : Promise.resolve();
     const negotiatingAgentPromise = negotiatingAgent?.personId
       ? getPersonConcept(negotiatingAgent?.personId).then(p => (negotiatingAgent.person = p?.data))
