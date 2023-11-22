@@ -50,12 +50,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private By notesCancelPopupContent = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/parent::div");
         private By notesCancelPopupHeader = By.XPath("//div[contains(text(),'Unsaved Changes')]");
         private By notesCancelPopupBody = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/following-sibling::div[@class='modal-body']");
-        private By notesCancelOkBttn = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/following-sibling::div[@class='modal-footer']/button[@title='ok-modal']");
+        private By notesCancelOkBttn = By.CssSelector("div[class='modal-dialog'] button[title='ok-modal']");
 
         //Notes Delete pop-up Elements
         private By notesDeletePopupHeader = By.CssSelector("div[class='modal-header'] div");
         private By notesDeletePopupBody = By.CssSelector("div[class='modal-body']");
-        private By notesDeleteOkBttn = By.XPath("//div[contains(text(),'Delete Note')]/parent::div/following-sibling::div[@class='modal-footer']/button[@title='ok-modal']");
+        private By notesDeleteOkBttn = By.CssSelector("div[class='modal-dialog'] button[title='ok-modal']");
 
         public Notes(IWebDriver webDriver) : base(webDriver)
         {}
@@ -82,7 +82,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ViewSecondLastNoteDetails()
         {
-            WaitUntilClickable(notesTab1stResultViewBttn);
+            Wait(2000);
             webDriver.FindElement(notesTab1stResultViewBttn).Click();
         }
 

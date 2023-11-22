@@ -18,7 +18,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ChoosePaginationOption(int pagination)
         {
-            WaitUntilClickable(searchTableEntriesSpan);
+            Wait(2000);
             webDriver.FindElement(searchTableEntriesSpan).Click();
 
             switch (pagination)

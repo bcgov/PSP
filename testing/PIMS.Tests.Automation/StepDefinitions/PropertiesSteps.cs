@@ -201,7 +201,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void NonInventoryPropertySucess()
         {
             //Validate tabs counting
-            Assert.True(propertyInformation.PropertyTabs() == 2);
+            Assert.Equal(2, propertyInformation.PropertyTabs());
 
             //Validate correct tabs are displayed
             propertyInformation.VerifyNonInventoryPropertyTabs();

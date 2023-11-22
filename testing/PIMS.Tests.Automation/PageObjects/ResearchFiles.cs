@@ -108,7 +108,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By selectContactButton = By.CssSelector("div[class='pl-0 col-auto'] button");
 
-        private By researchFileHeaderCode = By.XPath("//strong[contains(text(),'R-')]");
+        private By researchFileHeaderCode = By.XPath("//label[contains(text(),'File #:')]/parent::div/following-sibling::div/strong");
 
         //Research File - Properties Elements
         private By researchProperty1stPropLink = By.CssSelector("div[data-testid='menu-item-row-1'] div:nth-child(3)");
