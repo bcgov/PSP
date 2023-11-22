@@ -27,11 +27,17 @@ namespace PIMS.Tests.Automation.PageObjects
         private By projectSummaryLabel = By.XPath("//label[contains(text(),'Project summary')]");
         private By projectSummaryTextarea = By.Id("input-summary");
         private By projectCostTypeLabel = By.XPath("//label[contains(text(),'Cost type')]");
-        private By projectCostTypeSelect = By.Id("input-costTypeCode");
+        private By projectCostTypeInput = By.Id("typeahead-select-costTypeCode");
+        private By projectCostTypeOptions = By.CssSelector("div[id='typeahead-select-costTypeCode']");
+        private By projectCostType1stOption = By.CssSelector("div[id='typeahead-select-costTypeCode'] a:nth-child(1)");
         private By projectWorkActivityLabel = By.XPath("//label[contains(text(),'Work activity')]");
-        private By projectWorkActivitySelect = By.Id("input-workActivityCode");
+        private By projectWorkActivityInput = By.Id("typeahead-select-workActivityCode");
+        private By projectWorkActivityOptions = By.CssSelector("div[id='typeahead-select-workActivityCode']");
+        private By projectWorkActivity1stOption = By.CssSelector("div[id='typeahead-select-workActivityCode'] a:nth-child(1)");
         private By projectBusinessFunctionLabel = By.XPath("//label[contains(text(),'Business function')]");
-        private By projectBusinessFunctionSelect = By.Id("input-businessFunctionCode");
+        private By projectBusinessFunctionInput = By.Id("typeahead-select-businessFunctionCode");
+        private By projectBusinessFunctionOptions = By.CssSelector("div[id='typeahead-select-businessFunctionCode']");
+        private By projectBusinessFunction1stOption = By.CssSelector("div[id='typeahead-select-businessFunctionCode'] a:nth-child(1)");
 
         private By projectAssociatedProdsSubtitle = By.XPath("//div[contains(text(),'Associated products')]");
         private By projectAddProductButton = By.XPath("//div[contains(text(),'+ Add another product')]/parent::button");
@@ -125,15 +131,21 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (project.CostType != "")
             {
-                ChooseSpecificSelectOption(projectCostTypeSelect, project.CostType);
+                webDriver.FindElement(projectCostTypeInput).SendKeys(project.CostType);
+                WaitUntilVisible(projectCostTypeOptions);
+                webDriver.FindElement(projectCostType1stOption).Click();
             }
             if (project.WorkActivity != "")
             {
-                ChooseSpecificSelectOption(projectWorkActivitySelect, project.WorkActivity);
+                webDriver.FindElement(projectWorkActivityInput).SendKeys(project.WorkActivity);
+                WaitUntilVisible(projectWorkActivityOptions);
+                webDriver.FindElement(projectWorkActivity1stOption).Click();
             }
             if (project.BusinessFunction!= "")
             {
-                ChooseSpecificSelectOption(projectBusinessFunctionSelect, project.BusinessFunction);
+                webDriver.FindElement(projectBusinessFunctionInput).SendKeys(project.BusinessFunction);
+                WaitUntilVisible(projectBusinessFunctionOptions);
+                webDriver.FindElement(projectBusinessFunction1stOption).Click();
             }
         }
 
@@ -206,15 +218,21 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (project.CostType != "")
             {
-                ChooseSpecificSelectOption(projectCostTypeSelect, project.CostType);
+                webDriver.FindElement(projectCostTypeInput).SendKeys(project.CostType);
+                WaitUntilVisible(projectCostTypeOptions);
+                webDriver.FindElement(projectCostType1stOption).Click();
             }
             if (project.WorkActivity != "")
             {
-                ChooseSpecificSelectOption(projectWorkActivitySelect, project.WorkActivity);
+                webDriver.FindElement(projectWorkActivityInput).SendKeys(project.WorkActivity);
+                WaitUntilVisible(projectWorkActivityOptions);
+                webDriver.FindElement(projectWorkActivity1stOption).Click();
             }
-            if (project.BusinessFunction!= "")
+            if (project.BusinessFunction != "")
             {
-                ChooseSpecificSelectOption(projectBusinessFunctionSelect, project.BusinessFunction);
+                webDriver.FindElement(projectBusinessFunctionInput).SendKeys(project.BusinessFunction);
+                WaitUntilVisible(projectBusinessFunctionOptions);
+                webDriver.FindElement(projectBusinessFunction1stOption).Click();
             }
         }
 
@@ -317,11 +335,11 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(projectSummaryTextarea);
 
             AssertTrueIsDisplayed(projectCostTypeLabel);
-            AssertTrueIsDisplayed(projectCostTypeSelect);
+            AssertTrueIsDisplayed(projectCostTypeInput);
             AssertTrueIsDisplayed(projectWorkActivityLabel);
-            AssertTrueIsDisplayed(projectWorkActivitySelect);
+            AssertTrueIsDisplayed(projectWorkActivityInput);
             AssertTrueIsDisplayed(projectBusinessFunctionLabel);
-            AssertTrueIsDisplayed(projectBusinessFunctionSelect);
+            AssertTrueIsDisplayed(projectBusinessFunctionInput);
 
             AssertTrueIsDisplayed(projectAssociatedProdsSubtitle);
             AssertTrueIsDisplayed(projectAddProductButton);

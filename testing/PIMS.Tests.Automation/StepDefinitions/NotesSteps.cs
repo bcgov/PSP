@@ -88,13 +88,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             notes.DeleteLastSecondNote();
         }
 
-        [StepDefinition(@"Notes update have been done successfully")]
-        public void NoteUpdateSuccess()
-        {
-            
-            Assert.True(notes.NotesTabCount() == notesCount -1);
-        }
-
         private void PopulateNotes(int rowNumber)
         {
             DataTable notesSheet = ExcelDataContext.GetInstance().Sheets["Notes"];

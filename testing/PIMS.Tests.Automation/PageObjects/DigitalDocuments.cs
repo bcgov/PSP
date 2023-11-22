@@ -16,7 +16,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By addDocumentBttn = By.XPath("//div[contains(text(),'Documents')]/following-sibling::div/button");
 
         //Upload Documents Dialog General Elements
-        private By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4'] span");
+        private By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
         private By documentUploadInstructions = By.CssSelector("div[class='modal-body'] div div[class='pb-4']");
         private By documentUploadDocTypeLabel = By.XPath("//label[contains(text(),'Document type')]");
         private By documentUploadDocTypeModalSelect = By.XPath("//div[@class='modal-body']/div/div[2]/div[2]/div/select[@id='input-documentTypeId']");
@@ -242,8 +242,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentViewYearPrivyCouncilContent = By.XPath("//label[contains(text(),'Year - privy council #')]/parent::div/following-sibling::div");
 
         //Document Modal Elements
-        private By documentModalCloseIcon = By.CssSelector("button[class='close']");
-        private By documentModalContentDiv = By.CssSelector("div[class='modal-content']");
+        private By documentModalCloseIcon = By.CssSelector("div[class='modal-close-btn']");
         private By documentEditBttn = By.XPath("//div[@class='modal-body']/div/div[3]/div/div[2]/button");
         private By documentSaveButton = By.CssSelector("button[data-testid='save']");
         private By documentCancelButton = By.CssSelector("button[data-testid='cancel']");
@@ -256,7 +255,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Document Confirmation Modal Elements
         private By documentConfirmationModal = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/parent::div");
         private By documentConfirmationContent = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/following-sibling::div[@class='modal-body']");
-        private By documentConfirmModalOkBttn = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/following-sibling::div/button[@title='ok-modal']");
+        private By documentConfirmModalOkBttn = By.CssSelector("div[class='modal-content'] button[title='ok-modal']");
 
         //Document Delete Document Confirmation Modal Elements
         private By documentDeleteHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
