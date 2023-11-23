@@ -6,6 +6,7 @@ import { formatApiPersonNames } from '@/utils/personUtils';
 export interface IContactSearchResult {
   id: string;
   personId?: number;
+  person?: Api_Person;
   organizationId?: number;
   organization?: Api_Organization;
   leaseTenantId?: number;
