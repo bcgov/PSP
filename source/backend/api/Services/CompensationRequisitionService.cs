@@ -104,7 +104,7 @@ namespace Pims.Api.Services
 
             var currentAcqusitionStatus = GetCurrentAcquisitionStatus(currentCompensation.AcquisitionFileId);
 
-            if (!_statusSolver.CanEditOrDeleteCompensation(currentAcqusitionStatus, currentCompensation.IsDraft))
+            if (!_statusSolver.CanEditOrDeleteCompensation(currentAcqusitionStatus, currentCompensation.IsDraft) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }

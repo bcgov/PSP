@@ -245,7 +245,7 @@ namespace Pims.Api.Services
             ValidateDrafts(acquisitionFile.Internal_Id);
 
             AcquisitionStatusTypes? currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
-            if (!_statusSolver.CanEditDetails(currentAcquisitionStatus))
+            if (!_statusSolver.CanEditDetails(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
@@ -352,7 +352,7 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
 
             var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
-            if (!_statusSolver.CanEditChecklists(currentAcquisitionStatus))
+            if (!_statusSolver.CanEditChecklists(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
@@ -419,7 +419,7 @@ namespace Pims.Api.Services
             foreach (var agreement in toBeUpdated)
             {
                 var agreementStatus = Enum.Parse<AgreementStatusTypes>(agreement.AgreementStatusTypeCode);
-                if (!_statusSolver.CanEditOrDeleteAgreement(currentAcquisitionStatus, agreementStatus))
+                if (!_statusSolver.CanEditOrDeleteAgreement(currentAcquisitionStatus, agreementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
                 {
                     throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
                 }
@@ -428,7 +428,7 @@ namespace Pims.Api.Services
             foreach (var agreement in toBeDeleted)
             {
                 var agreementStatus = Enum.Parse<AgreementStatusTypes>(agreement.AgreementStatusTypeCode);
-                if (!_statusSolver.CanEditOrDeleteAgreement(currentAcquisitionStatus, agreementStatus))
+                if (!_statusSolver.CanEditOrDeleteAgreement(currentAcquisitionStatus, agreementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
                 {
                     throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
                 }
@@ -456,7 +456,7 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
             var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
-            if (!_statusSolver.CanEditStakeholders(currentAcquisitionStatus))
+            if (!_statusSolver.CanEditStakeholders(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
