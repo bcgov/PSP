@@ -142,10 +142,10 @@ describe('MapSelectorContainer component', () => {
         district: 12,
         districtName: 'Cannot determine',
         id: 'PID-009-727-493',
-        latitude: 48.7662,
+        latitude: 48.76613749999999,
         legalDescription:
           'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
-        longitude: -123.4617,
+        longitude: -123.46163749999998,
         name: undefined,
         pid: '9727493',
         pin: undefined,

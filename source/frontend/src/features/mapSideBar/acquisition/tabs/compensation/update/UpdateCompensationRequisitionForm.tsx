@@ -14,6 +14,7 @@ import {
   SelectOption,
   TextArea,
 } from '@/components/common/form';
+import { TypeaheadSelect } from '@/components/common/form/TypeaheadSelect';
 import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -220,20 +221,15 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   <Select field="fiscalYear" options={fiscalYearOptions} placeholder="Select..." />
                 </SectionField>
                 <SectionField label="STOB" labelWidth="4" required>
-                  <Select field="stob" options={yearlyFinancialOptions} placeholder="Select..." />
+                  <TypeaheadSelect field="stob" options={yearlyFinancialOptions} />
                 </SectionField>
                 <SectionField label="Service line" labelWidth="4" required>
-                  <Select
-                    field="serviceLine"
-                    options={chartOfAccountsOptions}
-                    placeholder="Select..."
-                  />
+                  <TypeaheadSelect field="serviceLine" options={chartOfAccountsOptions} />
                 </SectionField>
                 <SectionField label="Responsibility centre" labelWidth="4" required>
-                  <Select
+                  <TypeaheadSelect
                     field="responsibilityCentre"
                     options={responsiblityCentreOptions}
-                    placeholder="Select..."
                   />
                 </SectionField>
               </Section>
@@ -314,8 +310,8 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
             <StyledFooter>
               <SidebarFooter
                 onSave={async () => {
-                  await formikRef?.current?.validateForm();
-                  if (!formikRef?.current?.isValid) {
+                  await formikProps.validateForm();
+                  if (!formikProps.isValid) {
                     setIsValid(false);
                   } else {
                     setIsValid(true);
@@ -351,7 +347,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
 
             <GenericModal
               display={showAltProjectError}
-              className="projectError"
+              className="error"
               title="Alternate Project Error"
               message={[
                 <strong>Error: </strong>,
@@ -361,6 +357,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               handleOk={() => {
                 setShowAltProjectError(false);
                 formikRef.current?.setFieldValue('alternateProject', '');
+              }}
+              handleCancel={() => {
+                setShowAltProjectError(false);
               }}
             />
           </StyledFormWrapper>

@@ -12,7 +12,7 @@ export function toDropDownOptions(
     .filter(c => includeExpired || !isExpiredCode(c))
     .map<SelectOption>(c => {
       return {
-        label: c.description!,
+        label: `${c.code} - ${c.description}`,
         value: c.id!,
       };
     });

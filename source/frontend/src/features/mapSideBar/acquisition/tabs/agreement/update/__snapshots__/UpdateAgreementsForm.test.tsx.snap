@@ -394,22 +394,29 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
               >
                 <select
                   class="form-select form-control"
-                  id="input-agreements.0.isDraft"
-                  name="agreements.0.isDraft"
+                  id="input-agreements.0.agreementStatusTypeCode"
+                  name="agreements.0.agreementStatusTypeCode"
                 >
                   <option
                     class="option"
-                    data-testid="select-option-true"
-                    value="true"
+                    data-testid="select-option-DRAFT"
+                    value="DRAFT"
                   >
                     Draft
                   </option>
                   <option
                     class="option"
-                    data-testid="select-option-false"
-                    value="false"
+                    data-testid="select-option-FINAL"
+                    value="FINAL"
                   >
                     Final
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-CANCELLED"
+                    value="CANCELLED"
+                  >
+                    Cancelled
                   </option>
                 </select>
               </div>
@@ -977,22 +984,29 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
               >
                 <select
                   class="form-select form-control"
-                  id="input-agreements.1.isDraft"
-                  name="agreements.1.isDraft"
+                  id="input-agreements.1.agreementStatusTypeCode"
+                  name="agreements.1.agreementStatusTypeCode"
                 >
                   <option
                     class="option"
-                    data-testid="select-option-true"
-                    value="true"
+                    data-testid="select-option-DRAFT"
+                    value="DRAFT"
                   >
                     Draft
                   </option>
                   <option
                     class="option"
-                    data-testid="select-option-false"
-                    value="false"
+                    data-testid="select-option-FINAL"
+                    value="FINAL"
                   >
                     Final
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-CANCELLED"
+                    value="CANCELLED"
+                  >
+                    Cancelled
                   </option>
                 </select>
               </div>

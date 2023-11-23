@@ -76,7 +76,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
 
-            ChooseSpecificSelectOption(By.Id("input-agreements."+ index +".isDraft"), agreement.AgreementStatus);
+            ChooseSpecificSelectOption(By.Id("input-agreements."+ index +".agreementStatusTypeCode"), agreement.AgreementStatus);
 
             if(agreement.AgreementLegalSurveyPlan != "")
                 webDriver.FindElement(By.Id("input-agreements."+ index +".legalSurveyPlanNum")).SendKeys(agreement.AgreementLegalSurveyPlan);
@@ -122,7 +122,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
 
-            ChooseSpecificSelectOption(By.Id("input-agreements."+ index +".isDraft"), agreement.AgreementStatus);
+            ChooseSpecificSelectOption(By.Id("input-agreements."+ index +".agreementStatusTypeCode"), agreement.AgreementStatus);
 
             if (agreement.AgreementLegalSurveyPlan != "")
             {
@@ -210,7 +210,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(By.XPath("//form/button/following-sibling::div["+ agreementNbr +"]/div[@class='collapse show']/div[contains(text(),'Agreement details')]"));
 
             AssertTrueIsDisplayed(By.XPath("//form/button/following-sibling::div["+ agreementNbr +"]/div[@class='collapse show']/div/div/label[contains(text(),'Agreement status')]"));
-            AssertTrueIsDisplayed(By.Id("input-agreements."+ index +".isDraft"));
+            AssertTrueIsDisplayed(By.Id("input-agreements."+ index +".agreementStatusTypeCode"));
 
             AssertTrueIsDisplayed(By.XPath("//form/button/following-sibling::div["+ agreementNbr +"]/div[@class='collapse show']/div/div/label[contains(text(),'Legal survey plan')]"));
             AssertTrueIsDisplayed(By.Id("input-agreements."+ index +".legalSurveyPlanNum"));

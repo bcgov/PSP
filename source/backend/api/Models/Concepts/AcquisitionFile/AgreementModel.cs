@@ -10,6 +10,8 @@ namespace Pims.Api.Models.Concepts
 
         public TypeModel<string> AgreementType { get; set; }
 
+        public TypeModel<string> AgreementStatusType { get; set; }
+
         public DateTime? AgreementDate { get; set; }
 
         public bool? IsDraft { get; set; }
@@ -37,5 +39,7 @@ namespace Pims.Api.Models.Concepts
         public DateTime? SignedDate { get; set; }
 
         public DateTime? InspectionDate { get; set; }
+
+        public string CancellationNote { get; set; }
     }
 }

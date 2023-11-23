@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 import { toast } from 'react-toastify';
@@ -5,6 +6,8 @@ import styled from 'styled-components';
 
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { useModalContext } from '@/hooks/useModalContext';
+import { IApiError } from '@/interfaces/IApiError';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
@@ -34,6 +37,7 @@ export const UpdateAcquisitionContainer = React.forwardRef<
   IUpdateAcquisitionContainerProps
 >((props, formikRef) => {
   const { acquisitionFile, onSuccess, View } = props;
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const {
     updateAcquisitionFile: { execute: updateAcquisitionFile },
@@ -78,8 +82,18 @@ export const UpdateAcquisitionContainer = React.forwardRef<
           values: UpdateAcquisitionSummaryFormModel,
           formikHelpers: FormikHelpers<UpdateAcquisitionSummaryFormModel>,
         ) =>
-          withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
-            handleSubmit(values, formikHelpers, userOverrideCodes),
+          withUserOverride(
+            (userOverrideCodes: UserOverrideCode[]) =>
+              handleSubmit(values, formikHelpers, userOverrideCodes),
+            [],
+            (axiosError: AxiosError<IApiError>) => {
+              setModalContent({
+                title: 'Warning',
+                message: axiosError?.response?.data.error,
+                okButtonText: 'Close',
+              });
+              setDisplayModal(true);
+            },
           )
         }
         validationSchema={UpdateAcquisitionFileYupSchema}

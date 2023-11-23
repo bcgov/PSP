@@ -109,7 +109,12 @@ const UpdateProjectContainer = React.forwardRef<
 
   const { getOptionsByType } = useLookupCodeHelpers();
 
-  const initialValues = ProjectForm.fromApi(project);
+  const initialValues = ProjectForm.fromApi(
+    project,
+    businessFunctionOptions,
+    costTypeOptions,
+    workActivityOptions,
+  );
   const projectStatusTypeCodes = getOptionsByType(API.PROJECT_STATUS_TYPES);
 
   const handleSubmit = async (

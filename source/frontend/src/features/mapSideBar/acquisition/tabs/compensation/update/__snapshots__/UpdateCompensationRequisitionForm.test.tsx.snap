@@ -6,7 +6,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
     class="Toastify"
   />
   <div />
-  .c10.btn {
+  .c11.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   cursor: pointer;
 }
 
-.c10.btn:hover {
+.c11.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c10.btn:focus {
+.c11.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c10.btn.btn-primary {
+.c11.btn.btn-primary {
   border: none;
 }
 
-.c10.btn.btn-secondary {
+.c11.btn.btn-secondary {
   background: none;
 }
 
-.c10.btn.btn-info {
+.c11.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c10.btn.btn-info:hover,
-.c10.btn.btn-info:active,
-.c10.btn.btn-info:focus {
+.c11.btn.btn-info:hover,
+.c11.btn.btn-info:active,
+.c11.btn.btn-info:focus {
   background: none;
 }
 
-.c10.btn.btn-light {
+.c11.btn.btn-light {
   border: none;
 }
 
-.c10.btn.btn-dark {
+.c11.btn.btn-dark {
   border: none;
 }
 
-.c10.btn.btn-link {
+.c11.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   padding: 0;
 }
 
-.c10.btn.btn-link:hover,
-.c10.btn.btn-link:active,
-.c10.btn.btn-link:focus {
+.c11.btn.btn-link:hover,
+.c11.btn.btn-link:active,
+.c11.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   outline: none;
 }
 
-.c10.btn.btn-link:disabled,
-.c10.btn.btn-link.disabled {
+.c11.btn.btn-link:disabled,
+.c11.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c10.btn:disabled,
-.c10.btn:disabled:hover {
+.c11.btn:disabled,
+.c11.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,15 +128,15 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   opacity: 0.65;
 }
 
-.c10.Button .Button__icon {
+.c11.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c10.Button--icon-only:focus {
+.c11.Button--icon-only:focus {
   outline: none;
 }
 
-.c10.Button--icon-only .Button__icon {
+.c11.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -168,7 +168,11 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   border-color: #d8292f !important;
 }
 
-.c9 {
+.c9 button.close {
+  font-size: 2.4rem;
+}
+
+.c10 {
   float: right;
   cursor: pointer;
 }
@@ -198,7 +202,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   font-weight: bold;
 }
 
-.c12 {
+.c13 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -225,7 +229,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   padding-bottom: 1rem;
 }
 
-.c11 {
+.c12 {
   margin-right: 1rem;
   padding-bottom: 1rem;
 }
@@ -767,19 +771,40 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               class="c4 required text-left col"
             >
               <div
-                class="form-group"
+                class="c9 form-group"
+                data-testid="typeahead-select-stob"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-stob"
-                  name="stob"
+                <div
+                  class="rbt"
+                  style="outline: none; position: relative;"
+                  tabindex="-1"
                 >
-                  <option
-                    value=""
+                  <div
+                    style="display: flex; flex: 1; height: 100%; position: relative;"
                   >
-                    Select...
-                  </option>
-                </select>
+                    <input
+                      aria-autocomplete="both"
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      autocomplete="off"
+                      class="rbt-input-main form-control rbt-input"
+                      id="typeahead-select-stob"
+                      name="typeahead-select-stob"
+                      placeholder="Type to search..."
+                      role="combobox"
+                      type="text"
+                      value=""
+                    />
+                    <input
+                      aria-hidden="true"
+                      class="rbt-input-hint"
+                      readonly=""
+                      style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                      tabindex="-1"
+                      value=""
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -799,19 +824,40 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               class="c4 required text-left col"
             >
               <div
-                class="form-group"
+                class="c9 form-group"
+                data-testid="typeahead-select-serviceLine"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-serviceLine"
-                  name="serviceLine"
+                <div
+                  class="rbt"
+                  style="outline: none; position: relative;"
+                  tabindex="-1"
                 >
-                  <option
-                    value=""
+                  <div
+                    style="display: flex; flex: 1; height: 100%; position: relative;"
                   >
-                    Select...
-                  </option>
-                </select>
+                    <input
+                      aria-autocomplete="both"
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      autocomplete="off"
+                      class="rbt-input-main form-control rbt-input"
+                      id="typeahead-select-serviceLine"
+                      name="typeahead-select-serviceLine"
+                      placeholder="Type to search..."
+                      role="combobox"
+                      type="text"
+                      value=""
+                    />
+                    <input
+                      aria-hidden="true"
+                      class="rbt-input-hint"
+                      readonly=""
+                      style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                      tabindex="-1"
+                      value=""
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -831,19 +877,40 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               class="c4 required text-left col"
             >
               <div
-                class="form-group"
+                class="c9 form-group"
+                data-testid="typeahead-select-responsibilityCentre"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-responsibilityCentre"
-                  name="responsibilityCentre"
+                <div
+                  class="rbt"
+                  style="outline: none; position: relative;"
+                  tabindex="-1"
                 >
-                  <option
-                    value=""
+                  <div
+                    style="display: flex; flex: 1; height: 100%; position: relative;"
                   >
-                    Select...
-                  </option>
-                </select>
+                    <input
+                      aria-autocomplete="both"
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      autocomplete="off"
+                      class="rbt-input-main form-control rbt-input"
+                      id="typeahead-select-responsibilityCentre"
+                      name="typeahead-select-responsibilityCentre"
+                      placeholder="Type to search..."
+                      role="combobox"
+                      type="text"
+                      value=""
+                    />
+                    <input
+                      aria-hidden="true"
+                      class="rbt-input-hint"
+                      readonly=""
+                      style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                      tabindex="-1"
+                      value=""
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -867,7 +934,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               class="col-1"
             >
               <svg
-                class="c9"
+                class="c10"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -1178,7 +1245,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
               class="col-1"
             >
               <svg
-                class="c9"
+                class="c10"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -1205,7 +1272,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
           class="collapse show"
         >
           <button
-            class="c10 Button btn btn-link"
+            class="c11 Button btn btn-link"
             data-testid="add-financial-activity"
             type="button"
           >
@@ -1255,10 +1322,10 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
       </div>
     </div>
     <div
-      class="c11"
+      class="c12"
     >
       <div
-        class="c12 justify-content-end mt-auto no-gutters row"
+        class="c13 justify-content-end mt-auto no-gutters row"
       >
         <div
           class="pr-3 col-auto"
@@ -1267,7 +1334,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
           class="pr-4 col-auto"
         >
           <button
-            class="c10 Button btn btn-secondary"
+            class="c11 Button btn btn-secondary"
             type="button"
           >
             <div
@@ -1281,7 +1348,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
           class="col-auto"
         >
           <button
-            class="c10 Button Button--disabled btn btn-primary"
+            class="c11 Button Button--disabled btn btn-primary"
             disabled=""
             type="button"
           >

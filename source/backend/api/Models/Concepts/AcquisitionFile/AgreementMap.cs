@@ -11,8 +11,9 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.AgreementId, src => src.AgreementId)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.AgreementType, src => src.AgreementTypeCodeNavigation)
+                .Map(dest => dest.AgreementStatusType, src => src.AgreementStatusTypeCodeNavigation)
                 .Map(dest => dest.AgreementDate, src => src.AgreementDate)
-                .Map(dest => dest.IsDraft, src => src.IsDraft)
+                //.Map(dest => dest.IsDraft, src => src.IsDraft) TODO: Fix this
                 .Map(dest => dest.CompletionDate, src => src.CompletionDate)
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate)
                 .Map(dest => dest.CommencementDate, src => src.CommencementDate)
@@ -25,14 +26,16 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.ExpiryDateTime, src => src.ExpiryTs)
                 .Map(dest => dest.SignedDate, src => src.SignedDate)
                 .Map(dest => dest.InspectionDate, src => src.InspectionDate)
+                .Map(dest => dest.CancellationNote, src => src.CancellationNote)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<AgreementModel, Entity.PimsAgreement>()
                 .Map(dest => dest.AgreementId, src => src.AgreementId)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.AgreementTypeCode, src => src.AgreementType.Id)
+                .Map(dest => dest.AgreementStatusTypeCode, src => src.AgreementStatusType.Id)
                 .Map(dest => dest.AgreementDate, src => src.AgreementDate)
-                .Map(dest => dest.IsDraft, src => src.IsDraft)
+                //.Map(dest => dest.IsDraft, src => src.IsDraft) TODO: Fix this
                 .Map(dest => dest.CompletionDate, src => src.CompletionDate)
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate)
                 .Map(dest => dest.CommencementDate, src => src.CommencementDate)
@@ -45,6 +48,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.ExpiryTs, src => src.ExpiryDateTime)
                 .Map(dest => dest.SignedDate, src => src.SignedDate)
                 .Map(dest => dest.InspectionDate, src => src.InspectionDate)
+                .Map(dest => dest.CancellationNote, src => src.CancellationNote)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }
