@@ -58,6 +58,8 @@ namespace Pims.Dal.Repositories
                    .ThenInclude(pa => pa.AddressUsageTypeCodeNavigation)
                .Include(o => o.PimsPersonOrganizations)
                    .ThenInclude(po => po.Person)
+                        .ThenInclude(o => o.PimsContactMethods)
+                            .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
                .Include(o => o.PimsContactMethods)
                    .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
                .Where(o => o.OrganizationId == id)
