@@ -1,6 +1,6 @@
 import fileDownload from 'js-file-download';
 import isEmpty from 'lodash/isEmpty';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaFileExcel } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -75,7 +75,7 @@ export const ManageUsersPage = () => {
           <UsersFilterBar values={filter} onChange={setFilter} />
         </Col>
         <Col md={4} className="align-items-center d-flex">
-          <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
+          <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to Excel">
             <StyledIconButton onClick={() => fetch('excel')}>
               <FaFileExcel data-testid="excel-icon" size={36} />
             </StyledIconButton>

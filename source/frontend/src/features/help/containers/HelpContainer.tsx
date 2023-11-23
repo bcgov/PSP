@@ -22,7 +22,7 @@ export function HelpContainer() {
 
   return keycloak.obj.authenticated ? (
     <Nav.Item>
-      <TooltipWrapper toolTipId="help-tooltip" toolTip="Ask for Help">
+      <TooltipWrapper tooltipId="help-tooltip" tooltip="Ask for Help">
         <StyledContainer onClick={() => setShowHelp(true)}>
           <StyledHelpIcon size="24px" />
           <label>Help</label>

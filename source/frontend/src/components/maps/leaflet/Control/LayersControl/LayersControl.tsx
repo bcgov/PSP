@@ -109,7 +109,7 @@ const LayersControl: React.FC<React.PropsWithChildren<ILayersControl>> = ({ open
             <Title>Layers</Title>
           </LayersHeader>
         )}
-        <TooltipWrapper toolTipId="layer-control-id" toolTip="Layer Controls">
+        <TooltipWrapper tooltipId="layer-control-id" tooltip="Layer Controls">
           <ControlButton
             id="layersControlButton"
             variant="outline-secondary"

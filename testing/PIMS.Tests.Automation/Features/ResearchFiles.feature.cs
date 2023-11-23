@@ -212,20 +212,20 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("I edit a Note on the Notes Tab from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 28
- testRunner.Then("Notes update have been done successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("A new Research File is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05. Research File from pin")]
+        [Xunit.SkippableFactAttribute(DisplayName="05. Research File from Pin")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "05. Research File from pin")]
+        [Xunit.TraitAttribute("Description", "05. Research File from Pin")]
         public void _05_ResearchFileFromPin()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Research File from pin", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Research File from Pin", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 30
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

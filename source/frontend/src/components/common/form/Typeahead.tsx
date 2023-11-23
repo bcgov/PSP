@@ -117,7 +117,7 @@ export function TypeaheadField<T extends TypeaheadModel>({
     <StyledFormGroup className={classNames(!!required ? 'required' : '', outerClassName)}>
       {!!label && <Form.Label>{label}</Form.Label>}
       {!!tooltip && <TooltipIcon toolTipId="typeAhead-tip" toolTip={tooltip} />}
-      <TooltipWrapper toolTipId={`${name}-error-tooltip}`} toolTip={errorTooltip}>
+      <TooltipWrapper tooltipId={`${name}-error-tooltip}`} tooltip={errorTooltip}>
         <Typeahead<T>
           {...rest}
           inputProps={{ ...rest.inputProps, name: name, id: `${name}-field` }}

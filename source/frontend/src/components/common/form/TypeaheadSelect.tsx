@@ -90,7 +90,7 @@ export const TypeaheadSelect = React.forwardRef<Typeahead<SelectOption>, ITypeah
       >
         {label && <Form.Label htmlFor={`typeahead-select-${field}`}>{label}</Form.Label>}
         {tooltip && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
-        <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
+        <TooltipWrapper tooltipId={`${field}-error-tooltip}`} tooltip={errorTooltip}>
           <Typeahead
             ref={ref}
             id={`typeahead-select-${field}`}

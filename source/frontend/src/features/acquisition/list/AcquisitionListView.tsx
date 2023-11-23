@@ -1,6 +1,5 @@
 import { isEmpty } from 'lodash';
-import React, { useEffect } from 'react';
-import { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
@@ -109,7 +108,7 @@ export const AcquisitionListView: React.FunctionComponent<
               />
             </Col>
             <Col md="auto" className="px-0">
-              <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
+              <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to Excel">
                 <StyledIconButton onClick={() => fetch('excel')}>
                   <FaFileExcel data-testid="excel-icon" size={36} />
                 </StyledIconButton>

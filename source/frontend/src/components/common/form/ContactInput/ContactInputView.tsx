@@ -57,7 +57,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
       <Form.Group controlId={`input-${field}`}>
         {!!label && <Form.Label>{label}</Form.Label>}
 
-        <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
+        <TooltipWrapper tooltipId={`${field}-error-tooltip}`} tooltip={errorTooltip}>
           <Row>
             <Col>
               <StyledDiv className={!!error && !!touch ? 'is-invalid' : ''}>
