@@ -559,7 +559,7 @@ namespace Pims.Api.Test.Services
 
             var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
             takeRepository.Setup(x => x.GetAllByPropertyAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsTake>() { new PimsTake() { IsNewInterestInSrw = true } });
-            
+
             var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
             agreementRepository.Setup(x => x.GetAgreementsByAquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
 
