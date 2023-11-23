@@ -1,8 +1,8 @@
 import cx from 'classnames';
 import { getIn, useFormikContext } from 'formik';
 import React from 'react';
-import { Typeahead } from 'react-bootstrap-typeahead';
 import Form from 'react-bootstrap/Form';
+import { Typeahead } from 'react-bootstrap-typeahead';
 import styled from 'styled-components';
 
 import TooltipIcon from '../TooltipIcon';
