@@ -1,5 +1,5 @@
 using Mapster;
-using Pims.Api.Models.Concepts;
+using Pims.Api.Concepts.Models.Concepts.Address;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Mapping

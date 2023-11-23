@@ -3,17 +3,17 @@ using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Concepts.Models.Concepts.Document;
+using Pims.Api.Concepts.Models.Concepts.Document.UpdateMetadata;
+using Pims.Api.Concepts.Models.Concepts.Http;
+using Pims.Api.Concepts.Models.Mayan.Document;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Download;
 using Pims.Api.Models.Mayan;
-using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using Concepts = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Controllers
 {
@@ -55,12 +55,12 @@ namespace Pims.Api.Controllers
         [HttpGet("types")]
         [HasPermission(Permissions.DocumentView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(List<Concepts.DocumentTypeModel>), 200)]
+        [ProducesResponseType(typeof(List<DocumentTypeModel>), 200)]
         [SwaggerOperation(Tags = new[] { "document-types" })]
         public IActionResult GetDocumentTypes()
         {
             var documentTypes = _documentService.GetPimsDocumentTypes();
-            var mappedDocumentTypes = _mapper.Map<List<Concepts.DocumentTypeModel>>(documentTypes);
+            var mappedDocumentTypes = _mapper.Map<List<DocumentTypeModel>>(documentTypes);
             return new JsonResult(mappedDocumentTypes);
         }
 

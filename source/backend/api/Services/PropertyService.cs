@@ -1,13 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
+using Pims.Api.Concepts.Models.Concepts.Property;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models.Concepts;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;

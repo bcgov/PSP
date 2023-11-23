@@ -3,6 +3,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Areas.Property.Models.Property;
+using Pims.Api.Concepts.Models.Concepts.Property;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Repositories;
@@ -74,12 +75,12 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpGet("{id}")]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Pims.Api.Models.Concepts.PropertyModel), 200)]
+        [ProducesResponseType(typeof(PropertyModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetConceptPropertyWithId(long id)
         {
             var property = _propertyService.GetById(id);
-            return new JsonResult(_mapper.Map<Pims.Api.Models.Concepts.PropertyModel>(property));
+            return new JsonResult(_mapper.Map<PropertyModel>(property));
         }
 
         /// <summary>
@@ -89,12 +90,12 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpGet]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Pims.Api.Models.Concepts.PropertyModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<PropertyModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetMultipleConceptPropertyWithId([FromQuery] long[] ids)
         {
             var property = _propertyService.GetMultipleById(new List<long>(ids));
-            return new JsonResult(_mapper.Map<List<Pims.Api.Models.Concepts.PropertyModel>>(property));
+            return new JsonResult(_mapper.Map<List<PropertyModel>>(property));
         }
 
         /// <summary>
@@ -104,14 +105,14 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpPut("{id}")]
         [HasPermission(Permissions.PropertyEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Pims.Api.Models.Concepts.PropertyModel), 200)]
+        [ProducesResponseType(typeof(PropertyModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
-        public IActionResult UpdateConceptProperty([FromBody] Pims.Api.Models.Concepts.PropertyModel propertyModel)
+        public IActionResult UpdateConceptProperty([FromBody] PropertyModel propertyModel)
         {
             var propertyEntity = _mapper.Map<Pims.Dal.Entities.PimsProperty>(propertyModel);
             var updatedProperty = _propertyService.Update(propertyEntity);
 
-            return new JsonResult(_mapper.Map<Pims.Api.Models.Concepts.PropertyModel>(updatedProperty));
+            return new JsonResult(_mapper.Map<PropertyModel>(updatedProperty));
         }
         #endregion
     }

@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Api.Concepts.Models.Base;
 using Pims.Api.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 
@@ -13,14 +14,14 @@ namespace Pims.Api.Areas.Organizations.Mapping.Organization
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)
                 .Map(dest => dest.ContactMethodTypeCode, src => src.ContactMethodTypeCodeNavigation)
                 .Map(dest => dest.Value, src => src.ContactMethodValue)
-                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
+                .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<Pims.Api.Models.Contact.ContactMethodModel, Entity.PimsContactMethod>()
                 .Map(dest => dest.Internal_Id, src => src.Id)
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)
                 .Map(dest => dest.ContactMethodTypeCode, src => src.ContactMethodTypeCode.GetTypeId())
                 .Map(dest => dest.ContactMethodValue, src => src.Value)
-                .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>()
+                .Inherits<BaseAuditModel, Entity.IBaseAppEntity>()
                 .IgnoreNullValues(true);
         }
     }

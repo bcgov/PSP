@@ -1,0 +1,33 @@
+using System.Collections.Generic;
+using Pims.Api.Concepts.Models.Base;
+using Pims.Api.Concepts.Models.Concepts.AcquisitionFile;
+using Pims.Api.Concepts.Models.Concepts.InterestHolder;
+using Pims.Api.Concepts.Models.Concepts.Organization;
+
+namespace Pims.Api.Concepts.Models.Concepts.ExpropriationPayment
+{
+    public class ExpropriationPaymentModel : BaseAuditModel
+    {
+        public long? Id { get; set; }
+
+        public long AcquisitionFileId { get; set; }
+
+        public long? AcquisitionOwnerId { get; set; }
+
+        public AcquisitionFileOwnerModel AcquisitionOwner { get; set; }
+
+        public long? InterestHolderId { get; set; }
+
+        public InterestHolderModel InterestHolder { get; set; }
+
+        public long? ExpropriatingAuthorityId { get; set; }
+
+        public OrganizationModel ExpropriatingAuthority { get; set; }
+
+        public string Description { get; set; }
+
+        public bool? IsDisabled { get; set; }
+
+        public List<ExpropriationPaymentItemModel> PaymentItems { get; set; }
+    }
+}

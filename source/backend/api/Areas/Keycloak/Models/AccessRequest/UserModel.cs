@@ -1,11 +1,12 @@
 using System;
+using Pims.Api.Concepts.Models.Base;
 
 namespace Pims.Api.Areas.Keycloak.Models.AccessRequest
 {
     /// <summary>
     /// UserModel class, provides a model that represents a user attached to an access request.
     /// </summary>
-    public class UserModel : Api.Models.BaseAppModel
+    public class UserModel : BaseAuditModel
     {
         #region Properties
 

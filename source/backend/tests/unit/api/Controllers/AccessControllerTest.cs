@@ -3,6 +3,9 @@ using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Pims.Api.Concepts.Models.Base;
+using Pims.Api.Concepts.Models.Concepts.AccessRequest;
+using Pims.Api.Concepts.Models.Concepts.Role;
 using Pims.Api.Controllers;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Test;
@@ -10,7 +13,6 @@ using Pims.Dal;
 using Pims.Dal.Repositories;
 using Xunit;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Models.Concepts;
 
 namespace PimsApi.Test.Controllers
 {
@@ -35,14 +37,14 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = EntityHelper.CreateAccessRequest(11);
             repository.Setup(m => m.TryGet()).Returns(accessRequest);
-            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+            var model = mapper.Map<AccessRequestModel>(accessRequest);
 
             // Act
             var result = controller.GetAccessRequest();
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
+            var actualResult = Assert.IsType<AccessRequestModel>(actionResult.Value);
             model.Should().BeEquivalentTo(actualResult, options => options.Excluding(c => c.User));
             Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);
@@ -83,14 +85,14 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = EntityHelper.CreateAccessRequest(1);
             repository.Setup(m => m.TryGet()).Returns(accessRequest);
-            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+            var model = mapper.Map<AccessRequestModel>(accessRequest);
 
             // Act
             var result = controller.GetAccessRequest();
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
+            var actualResult = Assert.IsType<AccessRequestModel>(actionResult.Value);
             model.Should().BeEquivalentTo(actualResult, options => options.Excluding(c => c.User));
             Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);
@@ -111,7 +113,7 @@ namespace PimsApi.Test.Controllers
             var mapper = helper.GetService<IMapper>();
 
             var accessRequest = EntityHelper.CreateAccessRequest(1);
-            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+            var model = mapper.Map<AccessRequestModel>(accessRequest);
             repository.Setup(m => m.Add(It.IsAny<Entity.PimsAccessRequest>())).Returns(accessRequest);
 
             // Act
@@ -119,7 +121,7 @@ namespace PimsApi.Test.Controllers
 
             // Assert
             var actionResult = Assert.IsType<CreatedAtActionResult>(result);
-            var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
+            var actualResult = Assert.IsType<AccessRequestModel>(actionResult.Value);
             model.Should().BeEquivalentTo(actualResult);
             Assert.Equal(model.RegionCode.Id, actualResult.RegionCode.Id);
             Assert.Equal(model.RoleId, actualResult.RoleId);
@@ -157,13 +159,13 @@ namespace PimsApi.Test.Controllers
             var mapper = helper.GetService<IMapper>();
             repository.Setup(m => m.Add(It.IsAny<Entity.PimsAccessRequest>()));
 
-            var accessRequest = new Model.AccessRequestModel()
+            var accessRequest = new AccessRequestModel()
             {
                 RegionCode = null,
-                AccessRequestStatusTypeCode = new Pims.Api.Models.TypeModel<string>() { Id = "received" },
-                RoleId = new Model.RoleModel().Id,
+                AccessRequestStatusTypeCode = new TypeModel<string>() { Id = "received" },
+                RoleId = new RoleModel().Id,
             };
-            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+            var model = mapper.Map<AccessRequestModel>(accessRequest);
 
             // Act
             // Assert
@@ -183,13 +185,13 @@ namespace PimsApi.Test.Controllers
             var mapper = helper.GetService<IMapper>();
             repository.Setup(m => m.Add(It.IsAny<Entity.PimsAccessRequest>()));
 
-            var accessRequest = new Model.AccessRequestModel()
+            var accessRequest = new AccessRequestModel()
             {
-                RegionCode = new Pims.Api.Models.TypeModel<short>() { Id = 1 },
-                AccessRequestStatusTypeCode = new Pims.Api.Models.TypeModel<string>() { Id = "received" },
+                RegionCode = new TypeModel<short>() { Id = 1 },
+                AccessRequestStatusTypeCode = new TypeModel<string>() { Id = "received" },
                 RoleId = null,
             };
-            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+            var model = mapper.Map<AccessRequestModel>(accessRequest);
 
             // Act
             // Assert
@@ -209,13 +211,13 @@ namespace PimsApi.Test.Controllers
             var mapper = helper.GetService<IMapper>();
             repository.Setup(m => m.Add(It.IsAny<Entity.PimsAccessRequest>()));
 
-            var accessRequest = new Model.AccessRequestModel()
+            var accessRequest = new AccessRequestModel()
             {
-                RegionCode = new Pims.Api.Models.TypeModel<short>() { Id = 1 },
+                RegionCode = new TypeModel<short>() { Id = 1 },
                 AccessRequestStatusTypeCode = null,
-                RoleId = new Model.RoleModel().Id,
+                RoleId = new RoleModel().Id,
             };
-            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+            var model = mapper.Map<AccessRequestModel>(accessRequest);
 
             // Act
             // Assert
@@ -238,7 +240,7 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = EntityHelper.CreateAccessRequest(1);
             accessRequest.RegionCode = 1;
-            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+            var model = mapper.Map<AccessRequestModel>(accessRequest);
             repository.Setup(m => m.Update(It.IsAny<Entity.PimsAccessRequest>())).Returns(accessRequest);
 
             // Act
@@ -246,7 +248,7 @@ namespace PimsApi.Test.Controllers
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
+            var actualResult = Assert.IsType<AccessRequestModel>(actionResult.Value);
             model.Should().BeEquivalentTo(actualResult);
             Assert.Equal(model.RegionCode.Id, actualResult.RegionCode.Id);
             Assert.Equal(model.RoleId, actualResult.RoleId);
@@ -284,13 +286,13 @@ namespace PimsApi.Test.Controllers
             var mapper = helper.GetService<IMapper>();
             repository.Setup(m => m.Update(It.IsAny<Entity.PimsAccessRequest>()));
 
-            var accessRequest = new Model.AccessRequestModel()
+            var accessRequest = new AccessRequestModel()
             {
                 RegionCode = null,
-                AccessRequestStatusTypeCode = new Pims.Api.Models.TypeModel<string>() { Id = "received" },
-                RoleId = new Model.RoleModel().Id,
+                AccessRequestStatusTypeCode = new TypeModel<string>() { Id = "received" },
+                RoleId = new RoleModel().Id,
             };
-            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+            var model = mapper.Map<AccessRequestModel>(accessRequest);
 
             // Act
             // Assert
@@ -310,13 +312,13 @@ namespace PimsApi.Test.Controllers
             var mapper = helper.GetService<IMapper>();
             repository.Setup(m => m.Update(It.IsAny<Entity.PimsAccessRequest>()));
 
-            var accessRequest = new Model.AccessRequestModel()
+            var accessRequest = new AccessRequestModel()
             {
-                RegionCode = new Pims.Api.Models.TypeModel<short>() { Id = 1 },
-                AccessRequestStatusTypeCode = new Pims.Api.Models.TypeModel<string>() { Id = "received" },
+                RegionCode = new TypeModel<short>() { Id = 1 },
+                AccessRequestStatusTypeCode = new TypeModel<string>() { Id = "received" },
                 RoleId = null,
             };
-            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+            var model = mapper.Map<AccessRequestModel>(accessRequest);
 
             // Act
             // Assert
@@ -336,13 +338,13 @@ namespace PimsApi.Test.Controllers
             var mapper = helper.GetService<IMapper>();
             repository.Setup(m => m.Update(It.IsAny<Entity.PimsAccessRequest>()));
 
-            var accessRequest = new Model.AccessRequestModel()
+            var accessRequest = new AccessRequestModel()
             {
-                RegionCode = new Pims.Api.Models.TypeModel<short>() { Id = 1 },
+                RegionCode = new TypeModel<short>() { Id = 1 },
                 AccessRequestStatusTypeCode = null,
-                RoleId = new Model.RoleModel().Id,
+                RoleId = new RoleModel().Id,
             };
-            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+            var model = mapper.Map<AccessRequestModel>(accessRequest);
 
             // Act
             // Assert

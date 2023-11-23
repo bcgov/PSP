@@ -1,9 +1,11 @@
+using Pims.Api.Concepts.Models.Base;
+
 namespace Pims.Api.Areas.Keycloak.Models.AccessRequest
 {
     /// <summary>
     /// OrganizationModel class, provides a model that represents a role attached to an access request.
     /// </summary>
-    public class OrganizationModel : Api.Models.BaseAppModel
+    public class OrganizationModel : BaseAuditModel
     {
         #region Properties
 

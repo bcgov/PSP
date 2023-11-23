@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Pims.Api.Models;
+using Pims.Api.Concepts.Models.Concepts.Http;
+using Pims.Api.Concepts.Models.Mayan.Document;
 using Pims.Api.Models.Download;
 using Pims.Api.Models.Mayan;
-using Pims.Api.Models.Mayan.Document;
 
 namespace Pims.Api.Repositories.Mayan
 {

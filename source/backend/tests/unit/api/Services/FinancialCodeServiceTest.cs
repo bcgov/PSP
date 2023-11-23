@@ -5,6 +5,7 @@ using FluentAssertions;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using Pims.Api.Concepts.Models.Concepts.FinancialCode;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;

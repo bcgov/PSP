@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Pims.Api.Models;
+using Pims.Api.Concepts.Models.Concepts.Http;
+using Pims.Api.Concepts.Models.Mayan.Metadata;
 using Pims.Api.Models.Mayan;
-using Pims.Api.Models.Mayan.Metadata;
 
 namespace Pims.Api.Repositories.Mayan
 {

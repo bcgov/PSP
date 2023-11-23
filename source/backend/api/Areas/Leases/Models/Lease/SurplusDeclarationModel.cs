@@ -1,5 +1,5 @@
 using System;
-using Pims.Api.Models;
+using Pims.Api.Concepts.Models.Base;
 
 namespace Pims.Api.Areas.Lease.Models.Lease
 {

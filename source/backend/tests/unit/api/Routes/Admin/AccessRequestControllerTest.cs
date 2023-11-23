@@ -1,4 +1,5 @@
 using Pims.Api.Areas.Admin.Controllers;
+using Pims.Api.Concepts.Models.Concepts.AccessRequest;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
 using Pims.Dal.Security;
@@ -48,7 +49,7 @@ namespace Pims.Api.Test.Routes.Admin
         public void Delete_Route()
         {
             // Arrange
-            var endpoint = typeof(AccessRequestController).FindMethod(nameof(AccessRequestController.Delete), typeof(long), typeof(Pims.Api.Models.Concepts.AccessRequestModel));
+            var endpoint = typeof(AccessRequestController).FindMethod(nameof(AccessRequestController.Delete), typeof(long), typeof(AccessRequestModel));
 
             // Act
             // Assert

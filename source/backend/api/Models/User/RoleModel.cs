@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Pims.Api.Concepts.Models.Base;
 
 namespace Pims.Api.Models.User
 {
-    public class RoleModel : BaseModel
+    public class RoleModel : BaseConcurrentModel
     {
         #region Properties
 

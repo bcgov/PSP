@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Api.Concepts.Models.Base;
 using Pims.Api.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Organizations.Models.Organization;
@@ -48,7 +49,7 @@ namespace Pims.Api.Areas.Organizations.Mapping.Organization
                 .Map(dest => dest.CountryId, src => src.CountryId)
                 .Map(dest => dest.PostalCode, src => src.Postal)
                 .Map(dest => dest.OtherCountry, src => src.CountryOther)
-                .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>()
+                .Inherits<BaseAuditModel, Entity.IBaseAppEntity>()
                 .IgnoreNullValues(true);
         }
     }

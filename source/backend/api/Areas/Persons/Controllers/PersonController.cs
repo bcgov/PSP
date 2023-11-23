@@ -2,13 +2,13 @@ using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Areas.Contact.Models.Contact;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using Concepts = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Areas.Persons.Controllers
 {
@@ -70,12 +70,12 @@ namespace Pims.Api.Areas.Persons.Controllers
         [HttpGet("concept/{id:long}")]
         [HasPermission(Permissions.ContactView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Concepts.PersonModel), 200)]
+        [ProducesResponseType(typeof(PersonModel), 200)]
         [SwaggerOperation(Tags = new[] { "person" })]
         public IActionResult GetPersonConcept(int id)
         {
             var person = _personService.GetPerson(id);
-            return new JsonResult(_mapper.Map<Concepts.PersonModel>(person));
+            return new JsonResult(_mapper.Map<PersonModel>(person));
         }
 
         /// <summary>

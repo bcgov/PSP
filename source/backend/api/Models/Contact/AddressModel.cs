@@ -1,9 +1,11 @@
+using Pims.Api.Concepts.Models.Base;
+
 namespace Pims.Api.Models.Contact
 {
     /// <summary>
     /// Provides a contact-oriented address model.
     /// </summary>
-    public class AddressModel : BaseAppModel
+    public class AddressModel : BaseAuditModel
     {
         #region Properties
 

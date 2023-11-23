@@ -1,6 +1,7 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Concepts.Models.Concepts.AccessRequest;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
@@ -45,7 +46,7 @@ namespace Pims.Api.Controllers
         /// <returns></returns>
         [HttpGet("access/requests")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Models.Concepts.AccessRequestModel), 200)]
+        [ProducesResponseType(typeof(AccessRequestModel), 200)]
         [ProducesResponseType(204)]
         [SwaggerOperation(Tags = new[] { "user" })]
         public IActionResult GetAccessRequest()
@@ -56,7 +57,7 @@ namespace Pims.Api.Controllers
                 return NoContent();
             }
 
-            return new JsonResult(_mapper.Map<Pims.Api.Models.Concepts.AccessRequestModel>(accessRequest));
+            return new JsonResult(_mapper.Map<AccessRequestModel>(accessRequest));
         }
 
         /// <summary>
@@ -65,10 +66,10 @@ namespace Pims.Api.Controllers
         /// <returns></returns>
         [HttpPost("access/requests")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Models.Concepts.AccessRequestModel), 201)]
+        [ProducesResponseType(typeof(AccessRequestModel), 201)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "user" })]
-        public IActionResult AddAccessRequest([FromBody] Pims.Api.Models.Concepts.AccessRequestModel model)
+        public IActionResult AddAccessRequest([FromBody] AccessRequestModel model)
         {
             if (model == null || model.RoleId == null || model.RegionCode == null || model.AccessRequestStatusTypeCode == null)
             {
@@ -77,7 +78,7 @@ namespace Pims.Api.Controllers
             var accessRequest = _mapper.Map<Entity.PimsAccessRequest>(model);
             accessRequest = _accessRequestRepository.Add(accessRequest);
 
-            return CreatedAtAction(nameof(GetAccessRequest), new { id = accessRequest.AccessRequestId }, _mapper.Map<Pims.Api.Models.Concepts.AccessRequestModel>(accessRequest));
+            return CreatedAtAction(nameof(GetAccessRequest), new { id = accessRequest.AccessRequestId }, _mapper.Map<AccessRequestModel>(accessRequest));
         }
 
         /// <summary>
@@ -86,12 +87,12 @@ namespace Pims.Api.Controllers
         /// <returns></returns>
         [HttpPut("access/requests/{id}")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Models.Concepts.AccessRequestModel), 200)]
+        [ProducesResponseType(typeof(AccessRequestModel), 200)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 403)]
         [SwaggerOperation(Tags = new[] { "user" })]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'id' is used for consistent routing.")]
-        public IActionResult UpdateAccessRequest(long id, [FromBody] Pims.Api.Models.Concepts.AccessRequestModel model)
+        public IActionResult UpdateAccessRequest(long id, [FromBody] AccessRequestModel model)
         {
             if (model == null || model.RoleId == null || model.RegionCode == null || model.AccessRequestStatusTypeCode == null)
             {
@@ -100,7 +101,7 @@ namespace Pims.Api.Controllers
 
             var accessRequest = _mapper.Map<Entity.PimsAccessRequest>(model);
             accessRequest = _accessRequestRepository.Update(accessRequest);
-            return new JsonResult(_mapper.Map<Pims.Api.Models.Concepts.AccessRequestModel>(accessRequest));
+            return new JsonResult(_mapper.Map<AccessRequestModel>(accessRequest));
         }
         #endregion
     }

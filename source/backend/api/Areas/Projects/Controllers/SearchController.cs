@@ -4,7 +4,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Areas.Projects.Models;
-using Pims.Api.Models.Concepts;
+using Pims.Api.Concepts.Models.Concepts.Project;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Entities.Models;

@@ -7,9 +7,9 @@ namespace Pims.Api.Areas.Research.Controllers
     using Microsoft.AspNetCore.Http.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using Pims.Api.Areas.Research.Models.Search;
+    using Pims.Api.Concepts.Models.Concepts.ResearchFile;
     using Pims.Api.Helpers.Exceptions;
     using Pims.Api.Helpers.Extensions;
-    using Pims.Api.Models.Concepts;
     using Pims.Api.Policies;
     using Pims.Api.Services;
     using Pims.Dal.Entities.Models;

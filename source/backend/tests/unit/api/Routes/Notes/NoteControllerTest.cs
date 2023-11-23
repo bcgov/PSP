@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Pims.Api.Areas.Notes.Controllers;
+using Pims.Api.Concepts.Models.Concepts.Note;
 using Pims.Api.Constants;
 using Pims.Api.Models.Concepts;
 using Pims.Core.Extensions;

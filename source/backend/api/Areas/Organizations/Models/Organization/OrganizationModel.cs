@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Pims.Api.Models;
+using Pims.Api.Concepts.Models.Base;
 using Pims.Api.Models.Contact;
 
 namespace Pims.Api.Areas.Organizations.Models.Organization
@@ -8,7 +8,7 @@ namespace Pims.Api.Areas.Organizations.Models.Organization
     /// <summary>
     /// Provides a contact-oriented organization model.
     /// </summary>
-    public class OrganizationModel : BaseAppModel
+    public class OrganizationModel : BaseAuditModel
     {
         #region Properties
 

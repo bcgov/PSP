@@ -8,9 +8,9 @@ namespace Pims.Api.Areas.Acquisition.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using Pims.Api.Areas.Acquisition.Models.Search;
+    using Pims.Api.Concepts.Models.Concepts.AcquisitionFile;
     using Pims.Api.Helpers.Exceptions;
     using Pims.Api.Helpers.Extensions;
-    using Pims.Api.Models.Concepts;
     using Pims.Api.Policies;
     using Pims.Api.Services;
     using Pims.Core.Extensions;

@@ -1,9 +1,11 @@
+using Pims.Api.Concepts.Models.Base;
+
 namespace Pims.Api.Models
 {
     /// <summary>
     /// CodeModel class, provides a model that represents a code item.
     /// </summary>
-    public class CodeModel : BaseAppModel
+    public class CodeModel : BaseAuditModel
     {
         #region Properties
 

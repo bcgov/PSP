@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Concepts.Models.Concepts.InterestHolder;
 using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Json;
@@ -58,7 +58,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         public IActionResult GetAcquisitionFileInterestHolders([FromRoute] long id)
         {
             var interestHolders = _acquisitionService.GetInterestHolders(id);
-            return new JsonResult(_mapper.Map<List<Api.Models.Concepts.InterestHolderModel>>(interestHolders));
+            return new JsonResult(_mapper.Map<List<InterestHolderModel>>(interestHolders));
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Concepts.Models.Concepts.Lease;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
@@ -58,7 +59,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpGet("{id:long}")]
         [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Api.Models.Concepts.LeaseModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetLease(int id)
@@ -71,7 +72,7 @@ namespace Pims.Api.Areas.Lease.Controllers
                 DateTime.Now);
 
             var lease = _leaseService.GetById(id);
-            var mapped = _mapper.Map<Api.Models.Concepts.LeaseModel>(lease);
+            var mapped = _mapper.Map<LeaseModel>(lease);
             return new JsonResult(mapped);
         }
 
@@ -97,10 +98,10 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpPost]
         [HasPermission(Permissions.LeaseAdd)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Api.Models.Concepts.LeaseModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult AddLease(Api.Models.Concepts.LeaseModel leaseModel, [FromQuery] string[] userOverrideCodes)
+        public IActionResult AddLease(LeaseModel leaseModel, [FromQuery] string[] userOverrideCodes)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -113,7 +114,7 @@ namespace Pims.Api.Areas.Lease.Controllers
             var userOverrides = userOverrideCodes.Select(x => UserOverrideCode.Parse(x));
             var lease = _leaseService.Add(leaseEntity, userOverrides);
 
-            return new JsonResult(_mapper.Map<Api.Models.Concepts.LeaseModel>(lease));
+            return new JsonResult(_mapper.Map<LeaseModel>(lease));
         }
 
         /// <summary>
@@ -123,10 +124,10 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpPut("{id:long}")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Api.Models.Concepts.LeaseModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateLease(Api.Models.Concepts.LeaseModel leaseModel, [FromQuery] string[] userOverrideCodes)
+        public IActionResult UpdateLease(LeaseModel leaseModel, [FromQuery] string[] userOverrideCodes)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -139,7 +140,7 @@ namespace Pims.Api.Areas.Lease.Controllers
             var userOverrides = userOverrideCodes.Select(x => UserOverrideCode.Parse(x));
             var updatedLease = _leaseService.Update(leaseEntity, userOverrides);
 
-            return new JsonResult(_mapper.Map<Api.Models.Concepts.LeaseModel>(updatedLease));
+            return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
         }
         #endregion
     }

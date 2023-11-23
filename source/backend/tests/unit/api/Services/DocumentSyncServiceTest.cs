@@ -6,9 +6,9 @@ using FluentAssertions;
 using Moq;
 using Pims.Api.Models;
 using Pims.Api.Models.Mayan;
-using Pims.Api.Models.Mayan.Document;
-using Pims.Api.Models.Mayan.Metadata;
-using Pims.Api.Models.Mayan.Sync;
+using Pims.Api.Concepts.Models.Mayan.Document;
+using Pims.Api.Concepts.Models.Mayan.Metadata;
+using Pims.Api.Concepts.Models.Mayan.Sync;
 using Pims.Api.Repositories.Mayan;
 using Pims.Api.Services;
 using Pims.Core.Test;
@@ -16,6 +16,7 @@ using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
+using Pims.Api.Concepts.Models.Concepts.Http;
 
 namespace Pims.Api.Test.Services
 {

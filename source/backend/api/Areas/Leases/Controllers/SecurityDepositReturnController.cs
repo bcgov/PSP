@@ -3,8 +3,8 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Concepts.Models.Concepts.Deposit;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
@@ -61,7 +61,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [ProducesResponseType(typeof(SecurityDepositReturnModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult AddDepositReturn(long leaseId, long depositId, [FromBody] Pims.Api.Models.Concepts.SecurityDepositReturnModel securityDepositReturnModel)
+        public IActionResult AddDepositReturn(long leaseId, long depositId, [FromBody] SecurityDepositReturnModel securityDepositReturnModel)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -92,7 +92,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [ProducesResponseType(typeof(SecurityDepositReturnModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateDepositReturn(long leaseId, long depositId, long depositReturnId, Pims.Api.Models.Concepts.SecurityDepositReturnModel updateRequest)
+        public IActionResult UpdateDepositReturn(long leaseId, long depositId, long depositReturnId, SecurityDepositReturnModel updateRequest)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -122,7 +122,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult DeleteDepositReturn(long leaseId, long depositId, [FromBody] Pims.Api.Models.Concepts.SecurityDepositReturnModel deleteRequest)
+        public IActionResult DeleteDepositReturn(long leaseId, long depositId, [FromBody] SecurityDepositReturnModel deleteRequest)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",

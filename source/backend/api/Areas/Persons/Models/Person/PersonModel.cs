@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Pims.Api.Models;
+using Pims.Api.Concepts.Models.Base;
 using Pims.Api.Models.Contact;
 
 namespace Pims.Api.Areas.Persons.Models.Person
 {
-    public class PersonModel : BaseAppModel
+    public class PersonModel : BaseAuditModel
     {
         #region Properties
 

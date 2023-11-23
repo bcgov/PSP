@@ -1,12 +1,12 @@
 using System;
-using Pims.Api.Models;
+using Pims.Api.Concepts.Models.Base;
 
 namespace Pims.Api.Areas.Lease.Models.Lease
 {
     /// <summary>
     /// Provides a lease-oriented insurance model.
     /// </summary>
-    public class InsuranceModel : BaseModel
+    public class InsuranceModel : BaseConcurrentModel
     {
         /// <summary>
         /// get/set - The insurance's Id.

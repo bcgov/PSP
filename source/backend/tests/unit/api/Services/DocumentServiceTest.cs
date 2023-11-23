@@ -10,7 +10,7 @@ using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Download;
 using Pims.Api.Models.Mayan;
-using Pims.Api.Models.Mayan.Document;
+using Pims.Api.Concepts.Models.Mayan.Document;
 using Pims.Api.Repositories.Mayan;
 using Pims.Api.Services;
 using Pims.Av;
@@ -20,6 +20,12 @@ using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
+using Pims.Api.Concepts.Models.Concepts.Http;
+using Pims.Api.Concepts.CodeTypes;
+using Pims.Api.Concepts.Models.Concepts.Document.UpdateMetadata;
+using Pims.Api.Concepts.Models.Concepts.Document;
+using Pims.Api.Concepts.Models.Concepts.Document.Upload;
+using Pims.Api.Concepts.Models.Mayan.Metadata;
 
 namespace Pims.Api.Test.Services
 {
@@ -240,7 +246,7 @@ namespace Pims.Api.Test.Services
                             {
                                 new() {
                                     Id = 1,
-                                    MetadataType= new Models.Mayan.Metadata.MetadataType()
+                                    MetadataType= new MetadataType()
                                     {
                                         Id= 100,
                                     },
@@ -312,7 +318,7 @@ namespace Pims.Api.Test.Services
                     {
                         Id = 1,
                         Value = "test_value",
-                        MetadataType = new Models.Mayan.Metadata.MetadataType()
+                        MetadataType = new MetadataType()
                         {
                             Id = 1,
                         },
@@ -364,7 +370,7 @@ namespace Pims.Api.Test.Services
                             {
                                 new() {
                                     Id = 1,
-                                    MetadataType= new Models.Mayan.Metadata.MetadataType()
+                                    MetadataType= new MetadataType()
                                     {
                                         Id= 100,
                                     },

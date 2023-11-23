@@ -14,7 +14,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Mayan;
-using Pims.Api.Models.Mayan.Document;
+using Pims.Api.Concepts.Models.Mayan.Document;
 using Pims.Api.Repositories.Mayan;
 using Pims.Api.Repositories.Rest;
 using Pims.Api.Services;
@@ -28,6 +28,10 @@ using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Xunit;
+using Pims.Api.Concepts.CodeTypes;
+using Pims.Api.Concepts.Models.Concepts.Http;
+using Pims.Api.Concepts.Models.Concepts.Document.Upload;
+using Pims.Api.Concepts.Models.Concepts.Document;
 
 namespace Pims.Api.Test.Services
 {
