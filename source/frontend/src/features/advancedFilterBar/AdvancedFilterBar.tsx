@@ -20,7 +20,7 @@ const AdvancedFilterBar: React.FC<React.PropsWithChildren<IAdvancedFilterBarProp
         <>
           <StyledHeader>
             <StyledTitle>Filter By:</StyledTitle>
-            <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Advanced Map Filters">
+            <TooltipWrapper tooltipId="close-sidebar-tooltip" tooltip="Close Advanced Map Filters">
               <CloseIcon title="close" onClick={toggle} />
             </TooltipWrapper>
           </StyledHeader>

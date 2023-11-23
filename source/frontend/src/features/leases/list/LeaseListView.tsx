@@ -1,9 +1,7 @@
 import { isEmpty } from 'lodash';
-import { useEffect } from 'react';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
-import { FaPlus } from 'react-icons/fa';
+import { FaFileAlt, FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -90,14 +88,14 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
               <LeaseFilter filter={filter} setFilter={changeFilter} />
             </Col>
             <Col md="auto" className="px-0">
-              <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
+              <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to Excel">
                 <StyledIconButton onClick={() => fetch('excel')}>
                   <FaFileExcel data-testid="excel-icon" size={36} />
                 </StyledIconButton>
               </TooltipWrapper>
             </Col>
             <Col md="auto" className="px-0">
-              <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to CSV">
+              <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to CSV">
                 <StyledIconButton onClick={() => fetch('csv')}>
                   <FaFileAlt data-testid="csv-icon" size={36} />
                 </StyledIconButton>

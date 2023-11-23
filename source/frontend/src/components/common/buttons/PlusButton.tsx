@@ -22,7 +22,7 @@ export const PlusButton: React.FC<React.PropsWithChildren<IPlusButtonProps>> = (
   ...props
 }) => {
   return (
-    <TooltipWrapper toolTipId={toolId} toolTip={toolText}>
+    <TooltipWrapper tooltipId={toolId} tooltip={toolText}>
       <StyledAddButton className="primary" {...props} icon={<FaPlus size={20} />} />
     </TooltipWrapper>
   );

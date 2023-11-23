@@ -1,39 +1,38 @@
 import { renderHook } from '@testing-library/react-hooks';
 
+import { useTenant } from '@/tenants';
+
+import { ITenantConfig2 } from './pims-api/interfaces/ITenantConfig';
 import { useFavicon } from './useFavicon';
 
 jest.mock('@/tenants', () => ({
-  useTenant: () => ({ logo: { favicon: 'test' } }),
+  useTenant: jest.fn(),
 }));
 
-const spy = jest
-  .spyOn(document, 'getElementById')
-  .mockImplementation(() => document.createElement('<link id="favicon" />'));
+const mockUseTenant = useTenant as jest.Mock;
+const baseUrl = 'http://localhost/';
 
-describe('useFavicon suite', () => {
+describe('useFavicon hook', () => {
+  beforeAll(() => {
+    var favicon = document.createElement('link');
+    favicon.id = 'favicon';
+    favicon.rel = 'icon';
+    document.head.appendChild(favicon);
+  });
+
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.clearAllMocks();
   });
 
-  it('useFavicon returns undefined link', () => {
-    renderHook(() => {
-      const link = useFavicon();
-      expect(link).toBeUndefined();
-    });
+  it('returns empty link when tenant data is unavailable', () => {
+    mockUseTenant.mockReturnValue({} as ITenantConfig2);
+    const { result } = renderHook(useFavicon);
+    expect(result.current.href).toBe(baseUrl);
   });
 
-  it('useFavicon returns empty link', () => {
-    renderHook(() => {
-      const link = useFavicon();
-      expect(link.href).toBeEmpty(); // TODO: PSP-4409 This test doesn't actually work.
-      expect(spy).toBeCalledTimes(1);
-    });
-  });
-
-  it('useFavicon returns tenant link', () => {
-    renderHook(() => {
-      const link = useFavicon();
-      expect(link.href).toBe('test'); // TODO: PSP-4409 This test doesn't actually work.
-    });
+  it('returns valid icon link from tenant', () => {
+    mockUseTenant.mockReturnValue({ logo: { favicon: 'test.ico' } });
+    const { result } = renderHook(useFavicon);
+    expect(result.current.href).toBe(`${baseUrl}test.ico`);
   });
 });
