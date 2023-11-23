@@ -14,7 +14,7 @@ export class PropertyContactFormModel {
     return {
       id: this.id,
       propertyId: this.propertyId,
-      organizationId: this.contact?.organizationId ?? null,
+      organizationId: !this.contact?.personId ? this.contact?.organizationId ?? null : null,
       organization: null,
       personId: this.contact?.personId ?? null,
       person: null,
@@ -30,10 +30,10 @@ export class PropertyContactFormModel {
     newFormModel.id = model?.id || 0;
     newFormModel.propertyId = model?.propertyId || 0;
     newFormModel.rowVersion = model?.rowVersion || 0;
-    if (model?.organization) {
-      newFormModel.contact = fromApiOrganization(model.organization);
-    } else if (model?.person) {
+    if (model?.person) {
       newFormModel.contact = fromApiPerson(model.person);
+    } else if (model?.organization) {
+      newFormModel.contact = fromApiOrganization(model.organization);
     }
 
     if (model?.primaryContactId) {
