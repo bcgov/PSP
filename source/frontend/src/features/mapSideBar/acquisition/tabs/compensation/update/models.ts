@@ -1,21 +1,24 @@
+import isNumber from 'lodash/isNumber';
+
+import { SelectOption } from '@/components/common/form';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_FinancialCode } from '@/models/api/FinancialCode';
-import { booleanToString, stringToBoolean, stringToUndefined, toTypeCode } from '@/utils/formUtils';
+import { booleanToString, stringToBoolean, stringToUndefined } from '@/utils/formUtils';
 
 export class CompensationRequisitionFormModel {
   id: number | null;
   acquisitionFileId: number;
   status: string = '';
   fiscalYear: string = '';
-  stob: string = '';
+  stob: SelectOption | null = null;
   yearlyFinancial: Api_FinancialCode | null = null;
-  serviceLine: string = '';
+  serviceLine: SelectOption | null = null;
   chartOfAccounts: Api_FinancialCode | null = null;
-  responsibilityCentre: string = '';
-  Responsibility: Api_FinancialCode | null = null;
+  responsibilityCentre: SelectOption | null = null;
+  responsibility: Api_FinancialCode | null = null;
   readonly finalizedDate: string;
   agreementDateTime: string = '';
   expropriationNoticeServedDateTime: string = '';
@@ -49,11 +52,18 @@ export class CompensationRequisitionFormModel {
           : null,
       isDraft: this.status === 'draft' ? true : false,
       fiscalYear: stringToUndefined(this.fiscalYear),
-      yearlyFinancialId: this.stob === '' ? null : Number(this.stob),
+      yearlyFinancialId:
+        !!this.stob?.value && isNumber(this.stob?.value) ? Number(this.stob?.value) : null,
       yearlyFinancial: null,
-      chartOfAccountsId: this.serviceLine === '' ? null : Number(this.serviceLine),
+      chartOfAccountsId:
+        !!this.serviceLine?.value && isNumber(this.serviceLine?.value)
+          ? Number(this.serviceLine?.value)
+          : null,
       chartOfAccounts: null,
-      responsibilityId: this.responsibilityCentre === '' ? null : Number(this.responsibilityCentre),
+      responsibilityId:
+        !!this.responsibilityCentre?.value && isNumber(this.responsibilityCentre?.value)
+          ? Number(this.responsibilityCentre?.value)
+          : null,
       responsibility: null,
       agreementDate: stringToUndefined(this.agreementDateTime),
       finalizedDate: stringToUndefined(this.finalizedDate),
@@ -70,7 +80,13 @@ export class CompensationRequisitionFormModel {
     };
   }
 
-  static fromApi(apiModel: Api_CompensationRequisition): CompensationRequisitionFormModel {
+  static fromApi(
+    apiModel: Api_CompensationRequisition,
+    yearlyFinancialOptions: SelectOption[] = [],
+    chartOfAccountOptions: SelectOption[] = [],
+    responsibilityCentreOptions: SelectOption[] = [],
+    financialActivityOptions: SelectOption[] = [],
+  ): CompensationRequisitionFormModel {
     const compensation = new CompensationRequisitionFormModel(
       apiModel.id,
       apiModel.acquisitionFileId,
@@ -80,11 +96,21 @@ export class CompensationRequisitionFormModel {
     compensation.status =
       apiModel.isDraft === true ? 'draft' : apiModel.isDraft === null ? '' : 'final';
     compensation.fiscalYear = apiModel.fiscalYear || '';
-    compensation.stob = apiModel.yearlyFinancialId?.toString() || '';
+    compensation.stob =
+      !!apiModel.yearlyFinancialId && isNumber(apiModel.yearlyFinancialId)
+        ? yearlyFinancialOptions.find(c => +c.value === apiModel.yearlyFinancialId) ?? null
+        : null;
     compensation.yearlyFinancial = apiModel.yearlyFinancial;
-    compensation.serviceLine = apiModel.chartOfAccountsId?.toString() || '';
+    compensation.serviceLine =
+      !!apiModel.chartOfAccountsId && isNumber(apiModel.chartOfAccountsId)
+        ? chartOfAccountOptions.find(c => +c.value === apiModel.chartOfAccountsId) ?? null
+        : null;
     compensation.chartOfAccounts = apiModel.chartOfAccounts;
-    compensation.responsibilityCentre = apiModel.responsibilityId?.toString() || '';
+    compensation.responsibilityCentre =
+      !!apiModel.responsibilityId && isNumber(apiModel.responsibilityId)
+        ? responsibilityCentreOptions.find(c => +c.value === apiModel.responsibilityId) ?? null
+        : null;
+    compensation.responsibility = apiModel.responsibility;
     compensation.alternateProject =
       apiModel.alternateProject !== null
         ? {
@@ -92,7 +118,6 @@ export class CompensationRequisitionFormModel {
             text: apiModel.alternateProject?.description || '',
           }
         : null;
-    compensation.Responsibility = apiModel.responsibility;
     compensation.agreementDateTime = apiModel.agreementDate || '';
     compensation.expropriationNoticeServedDateTime = apiModel.expropriationNoticeServedDate || '';
     compensation.expropriationVestingDateTime = apiModel.expropriationVestingDate || '';
@@ -101,7 +126,9 @@ export class CompensationRequisitionFormModel {
     compensation.specialInstruction = apiModel.specialInstruction || '';
     compensation.detailedRemarks = apiModel.detailedRemarks || '';
     compensation.financials =
-      apiModel.financials?.map(x => FinancialActivityFormModel.fromApi(x)) || [];
+      apiModel.financials?.map(x =>
+        FinancialActivityFormModel.fromApi(x, financialActivityOptions),
+      ) || [];
 
     compensation.rowVersion = apiModel.rowVersion ?? null;
 
@@ -130,7 +157,7 @@ export class FinancialActivityFormModel {
   readonly _id: number | null = null;
   readonly _compensationRequisitionId: number;
 
-  financialActivityCodeId: string = '';
+  financialActivityCodeId: SelectOption | null = null;
   financialActivityCode: Api_FinancialCode | null = null;
   pretaxAmount: number = 0;
   isGstRequired: string = '';
@@ -152,10 +179,11 @@ export class FinancialActivityFormModel {
     return {
       id: this._id,
       compensationId: this._compensationRequisitionId,
-      financialActivityCodeId: +this.financialActivityCodeId,
-      financialActivityCode: this.financialActivityCode
-        ? toTypeCode<number>(+this.financialActivityCode) ?? null
-        : null,
+      financialActivityCodeId:
+        !!this.financialActivityCodeId?.value && isNumber(this.financialActivityCodeId?.value)
+          ? Number(this.financialActivityCodeId?.value)
+          : null,
+      financialActivityCode: null,
       pretaxAmount: this.pretaxAmount,
       isGstRequired: stringToBoolean(this.isGstRequired),
       taxAmount: this.taxAmount,
@@ -165,13 +193,19 @@ export class FinancialActivityFormModel {
     };
   }
 
-  static fromApi(model: Api_CompensationFinancial): FinancialActivityFormModel {
+  static fromApi(
+    model: Api_CompensationFinancial,
+    financialActivityOptions: SelectOption[] = [],
+  ): FinancialActivityFormModel {
     const newForm = new FinancialActivityFormModel(model.id, model.compensationId);
     newForm.pretaxAmount = model.pretaxAmount ?? 0;
     newForm.isGstRequired = booleanToString(model.isGstRequired);
     newForm.taxAmount = model.taxAmount ?? 0;
     newForm.totalAmount = model.totalAmount ?? 0;
-    newForm.financialActivityCodeId = model.financialActivityCodeId.toString() ?? '';
+    newForm.financialActivityCodeId =
+      !!model.financialActivityCodeId && isNumber(model.financialActivityCodeId)
+        ? financialActivityOptions.find(c => +c.value === model.financialActivityCodeId) ?? null
+        : null;
     newForm.financialActivityCode = model.financialActivityCode;
     newForm.rowVersion = model.rowVersion ?? null;
     newForm.isDisabled = booleanToString(model.isDisabled);

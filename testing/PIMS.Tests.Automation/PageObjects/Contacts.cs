@@ -7,7 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class Contacts : PageObjectBase
     {
         //Contact Menu Elements
-        private By menuContactsButton = By.XPath("//a/label[contains(text(),'Contacts')]/parent::a");
+        private By menuContactsButton = By.CssSelector("div[data-testid='nav-tooltip-contacts'] a");
         private By createContactButton = By.XPath("//a[contains(text(),'Add a Contact')]");
 
         //Contacts Create Elements

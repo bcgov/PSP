@@ -8,6 +8,9 @@
         <UseWinAuth>false</UseWinAuth>
         <WinAuthUserName />
         <WinAuthDomain />
+        <ServerName>ssistst.th.gov.bc.ca</ServerName>
+        <PathOnServer>/SSISDB/PIMS_DEV/LISDB_PIMS_MANAGEMENT</PathOnServer>
+        <StartObjectID>LIS_DB_to_PIMS_ACTIVITY_PSP_6943.dtsx</StartObjectID>
         <UserIDs />
         <UserPasswords />
         <OfflineMode>false</OfflineMode>

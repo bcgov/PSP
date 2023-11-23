@@ -5,7 +5,7 @@ import { Api_FinancialCode } from './FinancialCode';
 export interface Api_CompensationFinancial extends Api_ConcurrentVersion_Null, Api_AuditFields {
   id: number | null;
   compensationId: number;
-  financialActivityCodeId: number;
+  financialActivityCodeId: number | null;
   financialActivityCode: Api_FinancialCode | null;
   pretaxAmount: number | null;
   isGstRequired: boolean | null;

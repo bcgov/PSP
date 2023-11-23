@@ -39,6 +39,7 @@ namespace Pims.Dal.Repositories
             return Context.PimsAgreements
                 .Where(ci => ci.AcquisitionFileId == acquisitionFileId)
                 .Include(ci => ci.AgreementTypeCodeNavigation)
+                .Include(ci => ci.AgreementStatusTypeCodeNavigation)
                 .AsNoTracking()
                 .ToList();
         }
