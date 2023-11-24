@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 import { Api_File } from '@/models/api/File';
 import Api_TypeCode from '@/models/api/TypeCode';
 
