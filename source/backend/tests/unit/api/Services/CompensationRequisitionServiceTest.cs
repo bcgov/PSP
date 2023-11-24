@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
+using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
@@ -94,9 +95,14 @@ namespace Pims.Api.Test.Services
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
             var compensationRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
-            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(
+                new PimsAcquisitionFile()
+                {
+                    TotalAllowableCompensation = 100,
+                    AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+                });
 
             var currentCompensationStub = new PimsCompensationRequisition
             {
@@ -107,7 +113,6 @@ namespace Pims.Api.Test.Services
             };
 
             compensationRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(currentCompensationStub);
-
             compensationRepository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>())).Returns(new PimsCompensationRequisition
             {
                 Internal_Id = 1,
@@ -116,6 +121,9 @@ namespace Pims.Api.Test.Services
                 IsDraft = false,
                 FinalizedDate = DateTime.UtcNow,
             });
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             var result = service.Update(
@@ -142,14 +150,22 @@ namespace Pims.Api.Test.Services
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
             var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
-            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
+            {
+                TotalAllowableCompensation = 100,
+                AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+            });
 
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true });
             repository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true });
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
+
 
             // Act
             var result = service.Update(new PimsCompensationRequisition()
@@ -174,10 +190,20 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
 
-            repository.Setup(x => x.GetById(It.IsAny<long>()))
+            var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compRepository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = false });
+
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(
+              new PimsAcquisitionFile()
+              {
+                  AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+              });
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
             Action act = () => service.Update(new PimsCompensationRequisition()
@@ -189,7 +215,7 @@ namespace Pims.Api.Test.Services
             });
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<BusinessRuleViolationException>();
         }
 
         [Fact]
@@ -198,10 +224,20 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
 
-            repository.Setup(x => x.GetById(It.IsAny<long>()))
+            compRepository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = false });
+
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(
+              new PimsAcquisitionFile()
+              {
+                  AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+              });
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
             Action act = () => service.Update(new PimsCompensationRequisition()
@@ -213,7 +249,7 @@ namespace Pims.Api.Test.Services
             });
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<BusinessRuleViolationException>();
         }
 
         [Fact]
@@ -223,15 +259,22 @@ namespace Pims.Api.Test.Services
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit, Permissions.SystemAdmin);
             var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
             var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
-            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
+            {
+                TotalAllowableCompensation = 100,
+                AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+            });
 
             repository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = false });
 
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true });
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
             var result = service.Update(new PimsCompensationRequisition()
@@ -257,15 +300,22 @@ namespace Pims.Api.Test.Services
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit, Permissions.SystemAdmin);
             var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
             var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
-            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
+            {
+                TotalAllowableCompensation = 100,
+                AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+            });
 
             repository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = false });
 
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
             var result = service.Update(new PimsCompensationRequisition()
@@ -290,15 +340,22 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
+            {
+                TotalAllowableCompensation = 100,
+                AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+            });
 
-            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
-
-            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+            compRepository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
-            repository.Setup(x => x.GetById(It.IsAny<long>()))
+            compRepository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             var result = service.Update(new PimsCompensationRequisition()
@@ -312,7 +369,7 @@ namespace Pims.Api.Test.Services
             // Assert
             result.Should().NotBeNull();
             result.FinalizedDate.Should().BeNull();
-            repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
+            compRepository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
             noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'No Status' to 'Draft'"))), Times.Once);
         }
@@ -324,18 +381,25 @@ namespace Pims.Api.Test.Services
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var compReqH120Service = this._helper.GetService<Mock<ICompReqFinancialService>>();
             var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
-            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+            compRepository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
-            repository.Setup(x => x.GetById(It.IsAny<long>()))
+            compRepository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
 
             compReqH120Service.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true)).Returns(
                 new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } });
 
-            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
+            {
+                TotalAllowableCompensation = 100,
+                AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+            });
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             var result = service.Update(new PimsCompensationRequisition()
@@ -349,7 +413,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().NotBeNull();
-            repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
+            compRepository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
         }
 
         [Fact]
@@ -359,12 +423,12 @@ namespace Pims.Api.Test.Services
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var compReqH120Service = this._helper.GetService<Mock<ICompReqFinancialService>>();
             var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
-            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+            compRepository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
-            repository.Setup(x => x.GetById(It.IsAny<long>()))
+            compRepository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
 
             compReqH120Service.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true)).Returns(
@@ -375,7 +439,11 @@ namespace Pims.Api.Test.Services
                 TotalAllowableCompensation = 300,
                 PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { Internal_Id = 1,
                     PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
+                AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
             });
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             var result = service.Update(new PimsCompensationRequisition()
@@ -389,7 +457,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().NotBeNull();
-            repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
+            compRepository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
         }
 
         [Fact]
@@ -399,18 +467,25 @@ namespace Pims.Api.Test.Services
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var compReqH120Service = this._helper.GetService<Mock<ICompReqFinancialService>>();
             var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
-            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+            compRepository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
-            repository.Setup(x => x.GetById(It.IsAny<long>()))
+            compRepository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
 
             compReqH120Service.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true)).Returns(
                 new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } });
 
-            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { TotalAllowableCompensation = 100 });
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
+            {
+                TotalAllowableCompensation = 100,
+                AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+            });
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             var result = service.Update(new PimsCompensationRequisition()
@@ -424,7 +499,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().NotBeNull();
-            repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
+            compRepository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
         }
 
         [Fact]
@@ -434,12 +509,12 @@ namespace Pims.Api.Test.Services
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var compReqH120Service = this._helper.GetService<Mock<ICompReqFinancialService>>();
             var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
-            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+            compRepository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
-            repository.Setup(x => x.GetById(It.IsAny<long>()))
+            compRepository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
 
             compReqH120Service.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true)).Returns(new List<PimsCompReqFinancial>() { });
@@ -449,7 +524,12 @@ namespace Pims.Api.Test.Services
                 TotalAllowableCompensation = 99,
                 PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { Internal_Id = 1,
                     PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
+                AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
             });
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
+
 
             // Act
             // Assert
@@ -471,12 +551,12 @@ namespace Pims.Api.Test.Services
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var compReqH120Service = this._helper.GetService<Mock<ICompReqFinancialService>>();
             var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
-            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+            compRepository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
-            repository.Setup(x => x.GetById(It.IsAny<long>()))
+            compRepository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
 
             compReqH120Service.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true)).Returns(
@@ -488,7 +568,11 @@ namespace Pims.Api.Test.Services
                 TotalAllowableCompensation = 299,
                 PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { Internal_Id = 1,
                     PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
+                AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
             });
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             // Assert
@@ -521,14 +605,25 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionDelete);
-            var repo = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            repo.Setup(x => x.TryDelete(It.IsAny<long>()));
+            var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compRepository.Setup(x => x.TryDelete(It.IsAny<long>()));
+            compRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsCompensationRequisition { Internal_Id = 1 });
+
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(
+              new PimsAcquisitionFile()
+              {
+                  AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+              });
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             var result = service.DeleteCompensation(1);
 
             // Assert
-            repo.Verify(x => x.TryDelete(It.IsAny<long>()), Times.Once);
+            compRepository.Verify(x => x.TryDelete(It.IsAny<long>()), Times.Once);
         }
 
         private CompensationRequisitionService CreateCompRequisitionServiceWithPermissions(params Permissions[] permissions)

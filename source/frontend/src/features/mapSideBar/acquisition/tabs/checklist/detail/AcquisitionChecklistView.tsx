@@ -20,6 +20,7 @@ import {
 } from '@/models/api/AcquisitionFile';
 import { prettyFormatUTCDate } from '@/utils';
 
+import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 import { StyledChecklistItemStatus, StyledSectionCentered } from './styles';
 
 export interface IAcquisitionChecklistViewProps {
@@ -38,10 +39,12 @@ export const AcquisitionChecklistView: React.FC<IAcquisitionChecklistViewProps> 
   const checklist = acquisitionFile?.acquisitionFileChecklist || [];
   const lastUpdated = lastModifiedBy(checklist);
 
+  const statusSolver = new StatusUpdateSolver(acquisitionFile);
+
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
-        {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && acquisitionFile !== undefined ? (
+        {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && statusSolver.canEditChecklists() ? (
           <EditButton title="Edit acquisition checklist" onClick={onEdit} />
         ) : null}
       </StyledEditWrapper>

@@ -7,7 +7,8 @@ import EditButton from '@/components/common/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
-import { Claims } from '@/constants';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import { Claims, Roles } from '@/constants';
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -18,6 +19,7 @@ import { formatApiPersonNames } from '@/utils/personUtils';
 import AcquisitionOwnersSummaryContainer from './AcquisitionOwnersSummaryContainer';
 import AcquisitionOwnersSummaryView from './AcquisitionOwnersSummaryView';
 import { DetailAcquisitionFile } from './models';
+import StatusUpdateSolver from './statusUpdateSolver';
 
 export interface IAcquisitionSummaryViewProps {
   acquisitionFile?: Api_AcquisitionFile;
@@ -30,6 +32,8 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
 }) => {
   const keycloak = useKeycloakWrapper();
   const detail: DetailAcquisitionFile = DetailAcquisitionFile.fromApi(acquisitionFile);
+
+  const { hasRole } = useKeycloakWrapper();
 
   const projectName =
     acquisitionFile?.project !== undefined
@@ -59,13 +63,32 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
     x => x.interestHolderType?.id === InterestHolderType.OWNER_REPRESENTATIVE,
   );
 
+  const statusSolver = new StatusUpdateSolver(acquisitionFile);
+
+  const cannotEditMessage =
+    'The file you are viewing is in a non-editable state. Change the file status to active or draft to allow editing.';
+
+  const canEditDetails = () => {
+    if (hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditDetails()) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
-        {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && acquisitionFile !== undefined ? (
+        {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && canEditDetails() ? (
           <EditButton title="Edit acquisition file" onClick={onEdit} />
         ) : null}
+        {!canEditDetails() && (
+          <TooltipIcon
+            toolTipId={`${acquisitionFile?.id || 0}-summary-cannot-edit-tooltip`}
+            toolTip={cannotEditMessage}
+          />
+        )}
       </StyledEditWrapper>
+
       <Section header="Project">
         <SectionField label="Ministry project">{projectName}</SectionField>
         <SectionField label="Product">{productName}</SectionField>
