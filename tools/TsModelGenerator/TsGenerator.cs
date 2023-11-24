@@ -3,6 +3,7 @@ using Namotion.Reflection;
 using Pims.Tools.TsModelGenerator.Converter;
 using Pims.Tools.TsModelGenerator.Specifications;
 using TypeGen.Core;
+using TypeGen.Core.Converters;
 using TypeGen.Core.Extensions;
 using TypeGen.Core.Generator;
 
@@ -12,25 +13,26 @@ namespace Pims.Tools.TsModelGenerator
     {
         public void Generate()
         {
-            var a = new PimsGenerationSpec();
-            var b = new StripDtoConverter();
-            var c = new MemberConverter();
+            var generationSpec = new PimsGenerationSpec();
 
-            //Pims.Api.Concepts.dll
-            var options = new GeneratorOptions { BaseOutputDirectory = @"./GeneratedTS", }; // create the options object
-            options.TypeNameConverters.Add(b);
-            //options.CustomTypeMappings["System.DateTime"] = "dateISO";
-            options.TypeUnionsForTypes["Object"] = ["DDAATEISO"];
-            //options.PropertyNameConverters.Add(c);
-            options.CsNullableTranslation = StrictNullTypeUnionFlags.Null;
-            //options.CsAllowNullsForAllTypes = true;
+            var typeNameConverter = new TypeNameConverter();
+            var fileNameConverter = new FileNameConverter();
+
+            //var frontendApiPath = "../../source/frontend/src/models/api/generated";
+            var frontendApiPath = "./GeneratedTS";
+            var options = new GeneratorOptions();
+            //options.BaseOutputDirectory = $"{frontendApiPath}";
+            options.TypeNameConverters.Add(typeNameConverter);
+            options.FileNameConverters = [fileNameConverter, new PascalCaseToKebabCaseConverter()];
+            options.TabLength = 2;
+            options.FileHeading = "/*\n  Welcome, to the Construct. We can load anything...\n  Anything we need...\n  Welcome to the desert of the _real_.\n*/\n";
+
 
             var generator = new Generator(options); // create the generator instance
 
-
             var assembly = Assembly.GetCallingAssembly(); // get the assembly to generate files for
 
-            var result = generator.Generate(a);
+            var result = generator.Generate(generationSpec);
 
             Console.WriteLine("--- START ---");
             foreach (var line in result)
