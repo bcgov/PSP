@@ -32,7 +32,7 @@ namespace Pims.Dal.Repositories
 
         #region Methods
 
-        public List<PimsAgreement> GetAgreementsByAquisitionFile(long acquisitionFileId)
+        public List<PimsAgreement> GetAgreementsByAcquisitionFile(long acquisitionFileId)
         {
             using var scope = Logger.QueryScope();
 

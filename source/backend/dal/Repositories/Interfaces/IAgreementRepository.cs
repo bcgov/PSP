@@ -6,7 +6,7 @@ namespace Pims.Dal.Repositories
 {
     public interface IAgreementRepository : IRepository
     {
-        List<PimsAgreement> GetAgreementsByAquisitionFile(long acquisitionFileId);
+        List<PimsAgreement> GetAgreementsByAcquisitionFile(long acquisitionFileId);
 
         List<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter);
 

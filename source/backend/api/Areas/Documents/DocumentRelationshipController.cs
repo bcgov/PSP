@@ -93,8 +93,8 @@ namespace Pims.Api.Controllers
                     return new JsonResult(mappedResearchFileDocuments);
                 case DocumentRelationType.AcquisitionFiles:
                     var acquistionFileDocuments = _documentFileService.GetFileDocuments<PimsAcquisitionFileDocument>(FileType.Acquisition, long.Parse(parentId));
-                    var mappedAquisitionFileDocuments = _mapper.Map<List<DocumentRelationshipModel>>(acquistionFileDocuments);
-                    return new JsonResult(mappedAquisitionFileDocuments);
+                    var mappedAcquisitionFileDocuments = _mapper.Map<List<DocumentRelationshipModel>>(acquistionFileDocuments);
+                    return new JsonResult(mappedAcquisitionFileDocuments);
                 case DocumentRelationType.Templates:
                     var templateDocuments = _formDocumentService.GetFormDocumentTypes(parentId);
                     var mappedTemplateDocuments = _mapper.Map<List<DocumentRelationshipModel>>(templateDocuments);

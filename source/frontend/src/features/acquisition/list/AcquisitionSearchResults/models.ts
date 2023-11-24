@@ -21,7 +21,7 @@ export class AcquisitionSearchResultModel {
   fileProperties?: Api_AcquisitionFileProperty[];
   project?: Api_Project;
   alternateProject?: Api_Project;
-  aquisitionTeam?: Api_AcquisitionFileTeam[];
+  acquisitionTeam?: Api_AcquisitionFileTeam[];
   compensationRequisitions?: Api_CompensationRequisition[];
 
   static fromApi(base: Api_AcquisitionFile): AcquisitionSearchResultModel {
@@ -39,7 +39,7 @@ export class AcquisitionSearchResultModel {
     newModel.fileProperties = base.fileProperties;
     newModel.project = base.project;
     newModel.compensationRequisitions = base.compensationRequisitions;
-    newModel.aquisitionTeam = base.acquisitionTeam;
+    newModel.acquisitionTeam = base.acquisitionTeam;
     return newModel;
   }
 }
