@@ -8,12 +8,12 @@ import { InventoryTabNames, InventoryTabs } from '@/features/mapSideBar/property
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { Api_File } from '@/models/api/File';
 
-import { SideBarContext } from '../../context/sidebarContext';
-import { UpdatePropertyDetailsContainer } from '../../property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
-import UpdatePropertyResearchContainer from '../../property/tabs/propertyResearch/update/UpdatePropertyResearchContainer';
-import { TakesUpdateContainer } from '../../property/tabs/takes/update/TakesUpdateContainer';
-import { TakesUpdateForm } from '../../property/tabs/takes/update/TakesUpdateForm';
-import { PropertyFileContainer } from '../../shared/detail/PropertyFileContainer';
+import { SideBarContext } from '../context/sidebarContext';
+import { UpdatePropertyDetailsContainer } from '../property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
+import UpdatePropertyResearchContainer from '../property/tabs/propertyResearch/update/UpdatePropertyResearchContainer';
+import { TakesUpdateContainer } from '../property/tabs/takes/update/TakesUpdateContainer';
+import { TakesUpdateForm } from '../property/tabs/takes/update/TakesUpdateForm';
+import { PropertyFileContainer } from '../shared/detail/PropertyFileContainer';
 
 export interface IFilePropertyRouterProps {
   formikRef: React.Ref<FormikProps<any>>;

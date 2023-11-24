@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DocumentFormat.OpenXml.InkML;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
@@ -131,5 +132,19 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsPropMgmtActivityType> GetAllPropMgmtActivityTypes();
 
         IEnumerable<PimsAgreementStatusType> GetAllAgreementStatusTypes();
+
+        IEnumerable<PimsDispositionFileStatusType> GetAllDispositionFileStatusTypes();
+
+        IEnumerable<PimsDispositionFundingType> GetAllDispositionFileFundingTypes();
+
+        IEnumerable<PimsDispositionInitiatingDocType> GetAllDispositionInitiatingDocTypes();
+
+        IEnumerable<PimsDispositionType> GetAllDispositionTypes();
+
+        IEnumerable<PimsDspPhysFileStatusType> GetAllDispositionPhysFileStatusTypes();
+
+        IEnumerable<PimsDspInitiatingBranchType> GetAllDispositionInitiatingBranchTypes();
+
+        IEnumerable<PimsDspFlTeamProfileType> GetAllDispositionFlTeamProfileTypes();
     }
 }

@@ -4,19 +4,19 @@ import styled from 'styled-components';
 
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { Api_LastUpdatedBy } from '@/models/api/File';
-import { prettyFormatUTCDate } from '@/utils';
+import { prettyFormatUTCDate } from '@/utils/dateUtils';
 import { formatMinistryProject } from '@/utils/formUtils';
 
-export interface IAcquisitionHeaderProps {
-  acquisitionFile?: Api_AcquisitionFile;
+export interface IDispositionHeaderProps {
+  dispositionFile?: Api_DispositionFile;
   lastUpdatedBy: Api_LastUpdatedBy | null;
 }
 
-export const AcquisitionHeader: React.FunctionComponent<
-  React.PropsWithChildren<IAcquisitionHeaderProps>
-> = ({ acquisitionFile, lastUpdatedBy }) => {
+export const DispositionHeader: React.FunctionComponent<
+  React.PropsWithChildren<IDispositionHeaderProps>
+> = ({ dispositionFile, lastUpdatedBy }) => {
   const leftColumnWidth = '7';
   const leftColumnLabel = '3';
 
@@ -26,7 +26,7 @@ export const AcquisitionHeader: React.FunctionComponent<
         <Row className="no-gutters">
           <Col>
             <HeaderField label="File:" labelWidth={leftColumnLabel} contentWidth="9">
-              {acquisitionFile?.fileNumber} - {acquisitionFile?.fileName}
+              D-{dispositionFile?.fileNumber}
             </HeaderField>
           </Col>
         </Row>
@@ -34,8 +34,8 @@ export const AcquisitionHeader: React.FunctionComponent<
           <Col>
             <HeaderField label="Ministry project:" labelWidth={leftColumnLabel} contentWidth="9">
               {formatMinistryProject(
-                acquisitionFile?.project?.code,
-                acquisitionFile?.project?.description,
+                dispositionFile?.project?.code,
+                dispositionFile?.project?.description,
               )}
             </HeaderField>
           </Col>
@@ -45,12 +45,12 @@ export const AcquisitionHeader: React.FunctionComponent<
             <HeaderField
               label="Ministry product:"
               labelWidth={leftColumnLabel}
-              valueTestId={'acq-header-product-val'}
+              valueTestId={'disp-header-product-val'}
               contentWidth="9"
             >
-              {acquisitionFile?.product && (
+              {dispositionFile?.product && (
                 <>
-                  {acquisitionFile.product.code} - {acquisitionFile.product.description}
+                  {dispositionFile.product.code} - {dispositionFile.product.description}
                 </>
               )}
             </HeaderField>
@@ -61,11 +61,11 @@ export const AcquisitionHeader: React.FunctionComponent<
         <Row className="no-gutters">
           <Col className="text-right">
             <StyleSmallText>
-              Created: <strong>{prettyFormatUTCDate(acquisitionFile?.appCreateTimestamp)}</strong>{' '}
+              Created: <strong>{prettyFormatUTCDate(dispositionFile?.appCreateTimestamp)}</strong>{' '}
               by{' '}
               <UserNameTooltip
-                userName={acquisitionFile?.appCreateUserid}
-                userGuid={acquisitionFile?.appCreateUserGuid}
+                userName={dispositionFile?.appCreateUserid}
+                userGuid={dispositionFile?.appCreateUserGuid}
               />
             </StyleSmallText>
           </Col>
@@ -85,7 +85,7 @@ export const AcquisitionHeader: React.FunctionComponent<
         <Row className="no-gutters">
           <Col>
             <HeaderField className="justify-content-end" label="Status:">
-              {acquisitionFile?.fileStatusTypeCode?.description}
+              {dispositionFile?.fileStatusTypeCode?.description}
             </HeaderField>
           </Col>
         </Row>
@@ -94,7 +94,7 @@ export const AcquisitionHeader: React.FunctionComponent<
   );
 };
 
-export default AcquisitionHeader;
+export default DispositionHeader;
 
 const StyledRow = styled(Row)`
   margin-top: 0.5rem;

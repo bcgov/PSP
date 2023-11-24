@@ -13,6 +13,8 @@ import AppRoute from '@/utils/AppRoute';
 import AcquisitionContainer from '../acquisition/AcquisitionContainer';
 import AcquisitionView from '../acquisition/AcquisitionView';
 import AddAcquisitionContainer from '../acquisition/add/AddAcquisitionContainer';
+import DispositionContainer from '../disposition/DispositionContainer';
+import DispositionView from '../disposition/DispositionView';
 import LeaseContainer from '../lease/LeaseContainer';
 import AddProjectContainer from '../project/add/AddProjectContainer';
 import ProjectContainer from '../project/ProjectContainer';
@@ -161,6 +163,19 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         claim={Claims.ACQUISITION_VIEW}
         key={'Acquisition'}
         title={'Acquisition File'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/disposition/:id`}
+        customRender={({ match }) => (
+          <DispositionContainer
+            dispositionFileId={Number(match.params.id)}
+            onClose={onClose}
+            View={DispositionView}
+          />
+        )}
+        claim={Claims.DISPOSITION_VIEW}
+        key={'Disposition'}
+        title={'Disposition File'}
       />
       <AppRoute
         path={`/mapview/sidebar/property/:propertyId`}

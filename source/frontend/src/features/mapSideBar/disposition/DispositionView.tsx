@@ -17,42 +17,39 @@ import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { Api_File } from '@/models/api/File';
 import { stripTrailingSlash } from '@/utils';
 import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { InventoryTabNames } from '../property/InventoryTabs';
-import { FilePropertyRouter } from '../router/FilePropertyRouter';
+import FilePropertyRouter from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
 import SidebarFooter from '../shared/SidebarFooter';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
-import { AcquisitionContainerState } from './AcquisitionContainer';
-import AcquisitionHeader from './common/AcquisitionHeader';
-import AcquisitionMenu from './common/AcquisitionMenu';
-import { AcquisitionRouter } from './router/AcquisitionRouter';
+import { DispositionHeader } from './common/DispositionHeader';
+import DispositionMenu from './common/DispositionMenu';
+import DispositionRouter from './router/DispositionRouter';
 
-export interface IAcquisitionViewProps {
+export interface IDispositionViewProps {
   onClose: (() => void) | undefined;
   onSave: () => Promise<void>;
   onCancel: () => void;
   onMenuChange: (selectedIndex: number) => void;
   onShowPropertySelector: () => void;
   onSuccess: () => void;
-  onCancelConfirm: () => void;
   onUpdateProperties: (file: Api_File) => Promise<Api_File | undefined>;
   canRemove: (propertyId: number) => Promise<boolean>;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
-  containerState: AcquisitionContainerState;
-  setContainerState: React.Dispatch<Partial<AcquisitionContainerState>>;
   formikRef: React.RefObject<FormikProps<any>>;
   isFormValid: boolean;
   error: AxiosError<IApiError, any> | undefined;
+  dispositionFile?: Api_DispositionFile;
 }
 
-export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = ({
+export const DispositionView: React.FunctionComponent<IDispositionViewProps> = ({
   onClose,
   onSave,
   onCancel,
@@ -63,17 +60,16 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   canRemove,
   isEditing,
   setIsEditing,
-  containerState,
   formikRef,
   isFormValid,
   error,
+  dispositionFile,
 }) => {
   // match for the current route
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
-  const { file, lastUpdatedBy } = useContext(SideBarContext);
-  const acquisitionFile: Api_AcquisitionFile = file as Api_AcquisitionFile;
+  const { lastUpdatedBy } = useContext(SideBarContext);
 
   // match for property menu routes - eg /property/1/ltsa
   const fileMatch = matchPath<Record<string, string>>(location.pathname, `${match.path}/:tab`);
@@ -90,9 +86,9 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
 
   const formTitle = isEditing
     ? getEditTitle(fileMatch, propertySelectorMatch, propertiesMatch)
-    : 'Acquisition File';
+    : 'Disposition File';
 
-  const menuItems = file?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
+  const menuItems = dispositionFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('File Summary');
 
   const closePropertySelector = () => {
@@ -103,9 +99,9 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   return (
     <Switch>
       <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
-        {file && (
+        {dispositionFile && (
           <UpdateProperties
-            file={file}
+            file={dispositionFile}
             setIsShowingPropertySelector={closePropertySelector}
             onSuccess={onSuccess}
             updateFileProperties={onUpdateProperties}
@@ -121,7 +117,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
           title={formTitle}
           icon={
             <RealEstateAgent
-              title="Acquisition file Icon"
+              title="Disposition file Icon"
               width="2.6rem"
               height="2.6rem"
               fill="currentColor"
@@ -129,7 +125,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
             />
           }
           header={
-            <AcquisitionHeader acquisitionFile={acquisitionFile} lastUpdatedBy={lastUpdatedBy} />
+            <DispositionHeader dispositionFile={dispositionFile} lastUpdatedBy={lastUpdatedBy} />
           }
           footer={
             isEditing && (
@@ -145,8 +141,8 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
           <FileLayout
             leftComponent={
               <>
-                <AcquisitionMenu
-                  acquisitionFileId={file?.id || 0}
+                <DispositionMenu
+                  dispositionFileId={dispositionFile?.id || 0}
                   items={menuItems}
                   selectedIndex={selectedMenuIndex}
                   onChange={onMenuChange}
@@ -158,17 +154,17 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
               <StyledFormWrapper>
                 {error && (
                   <b>
-                    Failed to load Acquisition File. Check the detailed error in the top right for
+                    Failed to load Diposition File. Check the detailed error in the top right for
                     more details.
                   </b>
                 )}
-                <AcquisitionRouter
+                <DispositionRouter
                   formikRef={formikRef}
-                  acquisitionFile={acquisitionFile}
+                  dispositionFile={dispositionFile}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
-                  defaultFileTab={containerState.defaultFileTab}
-                  defaultPropertyTab={containerState.defaultPropertyTab}
+                  defaultFileTab={FileTabType.FILE_DETAILS}
+                  defaultPropertyTab={InventoryTabNames.property}
                   onSuccess={onSuccess}
                 />
                 <Route
@@ -177,12 +173,12 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                     <FilePropertyRouter
                       formikRef={formikRef}
                       selectedMenuIndex={Number(match.params.menuIndex)}
-                      file={acquisitionFile}
-                      fileType={FileTypes.Acquisition}
+                      file={dispositionFile}
+                      fileType={FileTypes.Disposition}
                       isEditing={isEditing}
                       setIsEditing={setIsEditing}
-                      defaultFileTab={containerState.defaultFileTab}
-                      defaultPropertyTab={containerState.defaultPropertyTab}
+                      defaultFileTab={FileTabType.FILE_DETAILS}
+                      defaultPropertyTab={InventoryTabNames.property}
                       onSuccess={onSuccess}
                     />
                   )}
@@ -206,18 +202,12 @@ const getEditTitle = (
     const fileTab = fileMatch.params.tab;
     switch (fileTab) {
       case FileTabType.FILE_DETAILS:
-        return 'Update Acquisition File';
-      case FileTabType.CHECKLIST:
-        return 'Update Checklist';
-      case FileTabType.AGREEMENTS:
-        return 'Update Agreements';
-      case FileTabType.STAKEHOLDERS:
-        return 'Update Stakeholders';
+        return 'Update Disposition File';
     }
   }
 
   if (propertySelectorMatch !== null) {
-    return 'Update Acquisition Properties';
+    return 'Update Disposition Properties';
   }
 
   if (propertiesMatch !== null) {
@@ -225,12 +215,10 @@ const getEditTitle = (
     switch (propertyTab) {
       case InventoryTabNames.property:
         return 'Update Property File Data';
-      case InventoryTabNames.takes:
-        return 'Update Takes';
     }
   }
 
-  return 'Acquisition File';
+  return 'Disposition File';
 };
 
 const StyledFormWrapper = styled.div`
@@ -244,4 +232,4 @@ const StyledFormWrapper = styled.div`
   padding-bottom: 1rem;
 `;
 
-export default AcquisitionView;
+export default DispositionView;

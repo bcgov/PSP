@@ -46,7 +46,7 @@ export const InventoryTabs: React.FunctionComponent<
       activeKey={activeTab}
       onSelect={(eventKey: string | null) => {
         const tab = Object.values(InventoryTabNames).find(value => value === eventKey);
-        if (match.path.includes('acquisition')) {
+        if (match.path.includes('acquisition') || match.path.includes('disposition')) {
           const path = generatePath(match.path, {
             menuIndex: match.params.menuIndex,
             id: match.params.id,
