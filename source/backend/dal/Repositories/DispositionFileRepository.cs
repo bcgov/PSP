@@ -57,7 +57,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(d => d.PrimaryContact)
                 .Include(d => d.PimsDispositionFileTeams)
                     .ThenInclude(d => d.DspFlTeamProfileTypeCodeNavigation)
-                .FirstOrDefault(d => d.DispositionFileId == id);
+                .FirstOrDefault(d => d.DispositionFileId == id) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
