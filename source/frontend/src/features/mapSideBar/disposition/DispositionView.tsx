@@ -154,7 +154,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
               <StyledFormWrapper>
                 {error && (
                   <b>
-                    Failed to load Diposition File. Check the detailed error in the top right for
+                    Failed to load Disposition File. Check the detailed error in the top right for
                     more details.
                   </b>
                 )}
