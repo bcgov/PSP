@@ -1,7 +1,7 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Concepts.Models.Concepts.AccessRequest;
+using Pims.Api.Models.Concepts.AccessRequest;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;

@@ -2,7 +2,7 @@ using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Concepts.Models.Concepts.User;
+using Pims.Api.Models.Concepts.User;
 using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Pims.Api.Concepts.Models.Concepts.Note;
+using Pims.Api.Models.Concepts.Note;
 using Pims.Api.Constants;
 using Pims.Dal.Entities;
 

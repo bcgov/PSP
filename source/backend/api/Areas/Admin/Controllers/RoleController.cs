@@ -1,7 +1,7 @@
 using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Concepts.Models.Concepts.Role;
+using Pims.Api.Models.Concepts.Role;
 using Pims.Api.Policies;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;

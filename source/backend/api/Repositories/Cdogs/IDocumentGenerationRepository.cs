@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Pims.Api.Concepts.Models.Concepts.Http;
+using Pims.Api.Models.Concepts.Http;
 using Pims.Api.Models.Cdogs;
 using Pims.Api.Models.Download;
 

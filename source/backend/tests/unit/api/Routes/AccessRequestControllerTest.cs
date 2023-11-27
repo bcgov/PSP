@@ -1,5 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using Pims.Api.Concepts.Models.Concepts.AccessRequest;
+using Pims.Api.Models.Concepts.AccessRequest;
 using Pims.Api.Controllers;
 using Pims.Core.Extensions;
 using Pims.Core.Test;

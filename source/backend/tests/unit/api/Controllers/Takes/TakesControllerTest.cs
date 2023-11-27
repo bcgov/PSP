@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Admin.Controllers;
 using Pims.Api.Areas.Takes.Controllers;
-using Pims.Api.Concepts.Models.Concepts.Take;
+using Pims.Api.Models.Concepts.Take;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;

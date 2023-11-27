@@ -1,6 +1,6 @@
 using System.Linq;
 using Mapster;
-using Pims.Api.Concepts.Models.Base;
+using Pims.Api.Models.Base;
 using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Reports.Models.User;

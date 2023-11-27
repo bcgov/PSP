@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Concepts.Models.Concepts.FinancialCode;
+using Pims.Api.Models.Concepts.FinancialCode;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Security;

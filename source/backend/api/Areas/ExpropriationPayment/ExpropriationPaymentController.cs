@@ -3,7 +3,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Concepts.Models.Concepts.ExpropriationPayment;
+using Pims.Api.Models.Concepts.ExpropriationPayment;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Policies;
 using Pims.Api.Services;

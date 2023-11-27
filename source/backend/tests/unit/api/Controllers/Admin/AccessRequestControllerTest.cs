@@ -4,7 +4,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Admin.Controllers;
-using Pims.Api.Concepts.Models.Concepts.AccessRequest;
+using Pims.Api.Models.Concepts.AccessRequest;
 using Pims.Api.Models;
 using Pims.Core.Test;
 using Pims.Dal;

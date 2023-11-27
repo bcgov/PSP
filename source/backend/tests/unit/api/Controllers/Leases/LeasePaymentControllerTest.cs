@@ -5,7 +5,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Lease.Controllers;
-using Pims.Api.Concepts.Models.Concepts.Lease;
+using Pims.Api.Models.Concepts.Lease;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Test;

@@ -1,4 +1,4 @@
-using Pims.Api.Concepts.Models.Mayan.Sync;
+using Pims.Api.Models.Mayan.Sync;
 
 namespace Pims.Api.Services
 {

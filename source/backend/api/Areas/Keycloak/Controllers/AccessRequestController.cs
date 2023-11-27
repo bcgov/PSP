@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Concepts.Models.Concepts.AccessRequest;
+using Pims.Api.Models.Concepts.AccessRequest;
 using Pims.Api.Policies;
 using Pims.Dal.Keycloak;
 using Pims.Dal.Security;

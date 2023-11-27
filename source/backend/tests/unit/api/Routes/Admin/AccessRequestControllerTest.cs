@@ -1,5 +1,5 @@
 using Pims.Api.Areas.Admin.Controllers;
-using Pims.Api.Concepts.Models.Concepts.AccessRequest;
+using Pims.Api.Models.Concepts.AccessRequest;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
 using Pims.Dal.Security;

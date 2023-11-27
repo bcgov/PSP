@@ -3,7 +3,7 @@ using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Concepts.Models.Concepts.ResearchFile;
+using Pims.Api.Models.Concepts.ResearchFile;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Policies;
 using Pims.Api.Services;

@@ -1,7 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Pims.Api.Concepts.Models.Concepts.Http;
+using Pims.Api.Models.Concepts.Http;
 
 namespace Pims.Api.Repositories.Rest
 {

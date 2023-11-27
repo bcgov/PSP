@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Areas.Lease.Controllers;
-using Pims.Api.Concepts.Models.Concepts.Lease;
+using Pims.Api.Models.Concepts.Lease;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal;

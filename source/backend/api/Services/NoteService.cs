@@ -4,7 +4,7 @@ using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Concepts.Models.Concepts.Note;
+using Pims.Api.Models.Concepts.Note;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Extensions;

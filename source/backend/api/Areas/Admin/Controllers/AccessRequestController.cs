@@ -1,6 +1,6 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Concepts.Models.Concepts.AccessRequest;
+using Pims.Api.Models.Concepts.AccessRequest;
 using Pims.Api.Models;
 using Pims.Api.Policies;
 using Pims.Dal.Repositories;

@@ -3,7 +3,7 @@ using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Pims.Api.Concepts.Models.Concepts.FinancialCode;
+using Pims.Api.Models.Concepts.FinancialCode;
 using Pims.Api.Controllers;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;

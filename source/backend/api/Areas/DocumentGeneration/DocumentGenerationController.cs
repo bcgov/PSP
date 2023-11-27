@@ -2,7 +2,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Concepts.Models.Concepts.Http;
+using Pims.Api.Models.Concepts.Http;
 using Pims.Api.Models.DocumentGeneration;
 using Pims.Api.Models.Download;
 using Pims.Api.Services;

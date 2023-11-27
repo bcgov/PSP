@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Concepts.Models.Mayan.Sync;
+using Pims.Api.Models.Mayan.Sync;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Entities;

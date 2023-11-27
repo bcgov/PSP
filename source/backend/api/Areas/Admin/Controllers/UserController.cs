@@ -2,7 +2,7 @@ using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Concepts.Models.Concepts.User;
+using Pims.Api.Models.Concepts.User;
 using Pims.Api.Policies;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;

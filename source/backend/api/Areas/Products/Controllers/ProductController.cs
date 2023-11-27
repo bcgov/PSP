@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Concepts.Models.Concepts.AcquisitionFile;
+using Pims.Api.Models.Concepts.AcquisitionFile;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Security;

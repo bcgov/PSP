@@ -3,7 +3,7 @@ using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Concepts.Models.Concepts.FinancialCode;
+using Pims.Api.Models.Concepts.FinancialCode;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;

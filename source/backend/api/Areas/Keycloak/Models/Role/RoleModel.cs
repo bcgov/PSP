@@ -1,5 +1,5 @@
 using System;
-using Pims.Api.Concepts.Models.Base;
+using Pims.Api.Models.Base;
 
 namespace Pims.Api.Areas.Keycloak.Models.Role
 {

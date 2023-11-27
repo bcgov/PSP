@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Concepts.Models.Concepts.Http;
-using Pims.Api.Concepts.Models.Mayan.Metadata;
+using Pims.Api.Models.Concepts.Http;
+using Pims.Api.Models.Mayan.Metadata;
 using Pims.Api.Models.Mayan;
 
 namespace Pims.Api.Repositories.Mayan

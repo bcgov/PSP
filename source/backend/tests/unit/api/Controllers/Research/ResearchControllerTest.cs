@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Research.Controllers;
 using Pims.Api.Areas.Research.Models.Search;
-using Pims.Api.Concepts.Models.Concepts.ResearchFile;
+using Pims.Api.Models.Concepts.ResearchFile;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;

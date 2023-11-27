@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Concepts.CodeTypes;
-using Pims.Api.Concepts.Models.Concepts.Http;
+using Pims.Api.Models.Concepts.Http;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Cdogs;
 

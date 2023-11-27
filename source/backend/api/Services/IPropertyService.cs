@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Pims.Api.Concepts.Models.Concepts.Property;
+using Pims.Api.Models.Concepts.Property;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services

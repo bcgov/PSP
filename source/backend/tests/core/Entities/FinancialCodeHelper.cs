@@ -1,5 +1,5 @@
 using System;
-using Pims.Api.Concepts.Models.Concepts.FinancialCode;
+using Pims.Api.Models.Concepts.FinancialCode;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test

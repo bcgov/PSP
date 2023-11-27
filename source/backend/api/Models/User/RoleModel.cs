@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Pims.Api.Concepts.Models.Base;
+using Pims.Api.Models.Base;
 
 namespace Pims.Api.Models.User
 {
