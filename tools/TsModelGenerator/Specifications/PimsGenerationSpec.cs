@@ -37,7 +37,7 @@ namespace Pims.Tools.TsModelGenerator.Specifications
             //   @backend\Base\{filename}           -> Pims.Api.Models.Base.{filename}
             //   @backend\Concepts\Lease\{filename} -> Pims.Api.Models.Concepts.Lease.{filename}
             var path = type.FullName.Replace("Pims.Api", "apimodels").Replace(".", "/");
-            var interfaceBuilder = AddInterface(type).CustomHeader($"// LINK: @backend/{path}.cs\n");
+            var interfaceBuilder = AddInterface(type).CustomHeader($"\n// LINK: @backend/{path}.cs\n");
 
             var members = type.GetProperties();
             foreach (var lel in members)
@@ -67,7 +67,9 @@ namespace Pims.Tools.TsModelGenerator.Specifications
             // Convert DateTime to custom date definition
             if (propertyInfo.PropertyType == typeof(System.DateTime?) || propertyInfo.PropertyType == typeof(System.DateTime))
             {
-                builder.Type("utcIsoDateTime", "@/models/api/UtcIsoDateTime");
+                //builder.Type("utcIsoDateTime", "@/models/api/UtcIsoDateTime"); Enable when the datetime front end type has been created.
+                builder.Type("string");
+
             }
 
             return builder;

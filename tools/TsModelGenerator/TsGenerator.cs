@@ -30,13 +30,13 @@ namespace Pims.Tools.TsModelGenerator
 
             var generator = new Generator(options);
 
-            /*var result = generator.Generate(generationSpec);
+            var result = generator.Generate(generationSpec);
 
             Console.WriteLine("Generated Files:");
             foreach (var line in result)
             {
                 Console.WriteLine($"\t{line}");
-            }*/
+            }
         }
     }
 }
