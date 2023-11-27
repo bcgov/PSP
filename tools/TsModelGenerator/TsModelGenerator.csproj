@@ -22,7 +22,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\source\backend\concepts\Pims.Api.Concepts.csproj" />    
+    <ProjectReference Include="..\..\source\backend\apimodels\Pims.Api.Models.csproj" />    
   </ItemGroup>
 
 </Project>
