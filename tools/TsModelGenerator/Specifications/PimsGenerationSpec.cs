@@ -14,11 +14,22 @@ namespace Pims.Tools.TsModelGenerator.Specifications
             ProcessInterface(typeof(BaseAuditModel));
             ProcessInterface(typeof(BaseConcurrentModel));
 
+            var genericTypeModel = typeof(TypeModel<string>).GetGenericTypeDefinition();
+            ProcessInterface(genericTypeModel);
+
             var modelsAssembly = Assembly.Load("Pims.Api.Models");
 
             // Get the types only from the specified namespace
             IEnumerable<Type> assemblyTypes = modelsAssembly.GetLoadableTypes()
                 .Where(x => x.FullName.StartsWith("Pims.Api.Models.Concepts"));
+
+            IEnumerable<Type> baseTypes = modelsAssembly.GetLoadableTypes()
+                .Where(x => x.FullName.StartsWith("Pims.Api.Models.Base."));
+
+            foreach (Type type in baseTypes)
+            {
+                System.Console.WriteLine(type.FullName);
+            }
 
             foreach (Type type in assemblyTypes)
             {
@@ -37,15 +48,26 @@ namespace Pims.Tools.TsModelGenerator.Specifications
             //   @backend\Base\{filename}           -> Pims.Api.Models.Base.{filename}
             //   @backend\Concepts\Lease\{filename} -> Pims.Api.Models.Concepts.Lease.{filename}
             var path = type.FullName.Replace("Pims.Api", "apimodels").Replace(".", "/");
-            var interfaceBuilder = AddInterface(type).CustomHeader($"\n// LINK: @backend/{path}.cs\n");
 
-            var members = type.GetProperties();
-            foreach (var lel in members)
+            // Generic types have a different namespace termination. Remove it if found.
+            int index = path.IndexOf("`");
+            if (index >= 0)
             {
-                var memberBuilder = interfaceBuilder.Member(lel.Name);
+                path = path.Substring(0, index);
+            }
 
-                memberBuilder = ProcessNullable(memberBuilder, lel);
-                memberBuilder = ProcessDateTime(memberBuilder, lel);
+            var linkHeader = $"\n// LINK: @backend/{path}.cs\n";
+            var interfaceBuilder = AddInterface(type).CustomHeader(linkHeader);
+
+            //System.Console.WriteLine(type.FullName);
+
+            var properties = type.GetProperties();
+            foreach (var property in properties)
+            {
+                var memberBuilder = interfaceBuilder.Member(property.Name);
+
+                memberBuilder = ProcessNullable(memberBuilder, property);
+                memberBuilder = ProcessDateTime(memberBuilder, property);
             }
 
             return interfaceBuilder;
