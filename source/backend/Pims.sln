@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pims.Api", "api\Pims.Api.cs
 		{1ED5DF03-7784-44EC-B02B-516167210CCF} = {1ED5DF03-7784-44EC-B02B-516167210CCF}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pims.Api.Concepts", "concepts\Pims.Api.Concepts.csproj", "{58C42283-68DA-477F-915D-C67597543546}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pims.Api.Models", "apimodels\Pims.Api.Models.csproj", "{58C42283-68DA-477F-915D-C67597543546}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pims.Dal", "dal\Pims.Dal.csproj", "{6DFFF5E1-1B87-403B-99D0-A9E03D8A8EB3}"
 EndProject
