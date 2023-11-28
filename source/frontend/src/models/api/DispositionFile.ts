@@ -19,7 +19,7 @@ export interface Api_DispositionFile extends Api_ConcurrentVersion, Api_AuditFie
   initiatingDocumentTypeOther: string | null;
   // Code Tables
   physicalFileStatusTypeCode?: Api_TypeCode<string> | null;
-  dispositionStatusTypeCode: Api_TypeCode<string>;
+  dispositionStatusTypeCode: Api_TypeCode<string> | null;
   initiatingBranchTypeCode?: Api_TypeCode<string> | null;
   fundingTypeCode?: Api_TypeCode<string> | null;
   initiatingDocumentTypeCode?: Api_TypeCode<string> | null;
