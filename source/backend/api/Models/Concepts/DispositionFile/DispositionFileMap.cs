@@ -19,6 +19,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.FileStatusTypeCode, src => src.DispositionFileStatusTypeCodeNavigation)
                 .Map(dest => dest.PhysicalFileStatusTypeCode, src => src.DspPhysFileStatusTypeCodeNavigation)
                 .Map(dest => dest.DispositionTypeCode, src => src.DispositionTypeCodeNavigation)
+                .Map(dest => dest.DispositionStatusTypeCode, src => src.DispositionStatusTypeCodeNavigation)
                 .Map(dest => dest.RegionCode, src => src.RegionCodeNavigation)
                 .Map(dest => dest.InitiatingBranchTypeCode, src => src.DspInitiatingBranchTypeCodeNavigation)
                 .Map(dest => dest.InitiatingDocumentTypeCode, src => src.DispositionInitiatingDocTypeCodeNavigation)
