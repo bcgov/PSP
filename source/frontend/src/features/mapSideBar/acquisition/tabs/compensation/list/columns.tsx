@@ -13,7 +13,10 @@ import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { formatMoney, prettyFormatDate, stringToFragment } from '@/utils';
 
+import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
+
 export function createCompensationTableColumns(
+  statusSolver: StatusUpdateSolver,
   onShow: (compensationId: number) => void,
   onDelete: (compensationId: number) => void,
 ) {
@@ -102,16 +105,16 @@ export function createCompensationTableColumns(
               </Col>
             )}
             {hasClaim(Claims.COMPENSATION_REQUISITION_DELETE) &&
-            cellProps.row.original.isDraft !== false ? (
-              <StyledRemoveIconButton
-                id={`compensation-delete-${cellProps.row.id}`}
-                data-testid={`compensation-delete-${cellProps.row.id}`}
-                onClick={() => cellProps.row.original.id && onDelete(cellProps.row.original.id)}
-                title="Delete Compensation"
-              >
-                <FaTrash size="2rem" />
-              </StyledRemoveIconButton>
-            ) : null}
+              statusSolver.canEditOrDeleteCompensation(cellProps.row.original.isDraft) && (
+                <StyledRemoveIconButton
+                  id={`compensation-delete-${cellProps.row.id}`}
+                  data-testid={`compensation-delete-${cellProps.row.id}`}
+                  onClick={() => cellProps.row.original.id && onDelete(cellProps.row.original.id)}
+                  title="Delete Compensation"
+                >
+                  <FaTrash size="2rem" />
+                </StyledRemoveIconButton>
+              )}
           </StyledDiv>
         );
       },

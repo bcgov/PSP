@@ -1,6 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Constants;
+using Pims.Core.Exceptions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -12,16 +16,22 @@ namespace Pims.Api.Services
     {
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
+        private readonly IAcquisitionFileRepository _acqFileRepository;
         private readonly ITakeRepository _takeRepository;
+        private readonly IAcquisitionStatusSolver _statusSolver;
 
         public TakeService(
             ClaimsPrincipal user,
             ILogger<AcquisitionFileService> logger,
-            ITakeRepository repository)
+            IAcquisitionFileRepository acqFileRepository,
+            ITakeRepository repository,
+            IAcquisitionStatusSolver statusSolver)
         {
             _user = user;
             _logger = logger;
+            _acqFileRepository = acqFileRepository;
             _takeRepository = repository;
+            _statusSolver = statusSolver;
         }
 
         public IEnumerable<PimsTake> GetByFileId(long fileId)
@@ -49,6 +59,14 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("updating takes with propertyFileId {propertyFileId}", acquisitionFilePropertyId);
             _user.ThrowIfNotAuthorized(Permissions.PropertyView, Permissions.AcquisitionFileView);
+
+            var currentAcquistionFile = _acqFileRepository.GetByAcquisitionFilePropertyId(acquisitionFilePropertyId);
+
+            var currentAcqusitionStatus = Enum.Parse<AcquisitionStatusTypes>(currentAcquistionFile.AcquisitionFileStatusTypeCode);
+            if (!_statusSolver.CanEditTakes(currentAcqusitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             _takeRepository.UpdateAcquisitionPropertyTakes(acquisitionFilePropertyId, takes);
             _takeRepository.CommitTransaction();
