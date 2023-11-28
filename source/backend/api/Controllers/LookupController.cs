@@ -134,6 +134,13 @@ namespace Pims.Api.Controllers
                 var mgmtActivityStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivityStatusTypes());
                 var mgmtActivitySubtypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivitySubtypes());
                 var mgmtActivityTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivityTypes());
+                var dispositionFileFundingTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionFileFundingTypes());
+                var dispositionFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionFileStatusTypes());
+                var dispositionFlTeamProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionFlTeamProfileTypes());
+                var dispositionInitiatingBranchTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionInitiatingBranchTypes());
+                var dispositionPhysFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionPhysFileStatusTypes());
+                var dispositionInitiatingDocTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionInitiatingDocTypes());
+                var dispositionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionTypes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -196,6 +203,13 @@ namespace Pims.Api.Controllers
                 codes.AddRange(mgmtActivityStatusTypes);
                 codes.AddRange(mgmtActivitySubtypes);
                 codes.AddRange(mgmtActivityTypes);
+                codes.AddRange(dispositionFileFundingTypes);
+                codes.AddRange(dispositionFileStatusTypes);
+                codes.AddRange(dispositionFlTeamProfileTypes);
+                codes.AddRange(dispositionInitiatingBranchTypes);
+                codes.AddRange(dispositionPhysFileStatusTypes);
+                codes.AddRange(dispositionInitiatingDocTypes);
+                codes.AddRange(dispositionTypes);
 
                 var response = new JsonResult(codes);
 

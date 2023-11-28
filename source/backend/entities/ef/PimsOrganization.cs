@@ -22,6 +22,7 @@ namespace Pims.Dal.Entities
             PimsAccessRequestOrganizations = new HashSet<PimsAccessRequestOrganization>();
             PimsAcquisitionFileTeams = new HashSet<PimsAcquisitionFileTeam>();
             PimsContactMethods = new HashSet<PimsContactMethod>();
+            PimsDispositionFileTeams = new HashSet<PimsDispositionFileTeam>();
             PimsExpropriationPayments = new HashSet<PimsExpropriationPayment>();
             PimsInterestHolders = new HashSet<PimsInterestHolder>();
             PimsLeaseTenants = new HashSet<PimsLeaseTenant>();
@@ -137,6 +138,8 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsAcquisitionFileTeam> PimsAcquisitionFileTeams { get; set; }
         [InverseProperty(nameof(PimsContactMethod.Organization))]
         public virtual ICollection<PimsContactMethod> PimsContactMethods { get; set; }
+        [InverseProperty(nameof(PimsDispositionFileTeam.Organization))]
+        public virtual ICollection<PimsDispositionFileTeam> PimsDispositionFileTeams { get; set; }
         [InverseProperty(nameof(PimsExpropriationPayment.ExpropriatingAuthorityNavigation))]
         public virtual ICollection<PimsExpropriationPayment> PimsExpropriationPayments { get; set; }
         [InverseProperty(nameof(PimsInterestHolder.Organization))]

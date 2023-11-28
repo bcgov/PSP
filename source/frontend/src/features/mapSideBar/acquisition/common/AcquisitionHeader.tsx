@@ -7,6 +7,7 @@ import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_LastUpdatedBy } from '@/models/api/File';
 import { prettyFormatUTCDate } from '@/utils';
+import { formatMinistryProject } from '@/utils/formUtils';
 
 export interface IAcquisitionHeaderProps {
   acquisitionFile?: Api_AcquisitionFile;
@@ -107,8 +108,3 @@ const StyleSmallText = styled.span`
   font-size: 0.87em;
   line-height: 1.9;
 `;
-
-function formatMinistryProject(projectNumber?: string | null, projectName?: string | null) {
-  const formattedValue = [projectNumber, projectName].filter(x => x).join(' - ');
-  return formattedValue;
-}
