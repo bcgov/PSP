@@ -1454,7 +1454,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                         class="c10 form-control date-picker"
                         id="datepicker-products.0.startDate"
                         name="products.0.startDate"
-                        placeholder="MTH DD, YYYY"
+                        placeholder="MMM DD, YYYY"
                         type="text"
                         value="Feb 01, 2023"
                       />
@@ -1545,7 +1545,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                             class="c10 form-control date-picker"
                             id="datepicker-products.0.costEstimateDate"
                             name="products.0.costEstimateDate"
-                            placeholder="MTH DD, YYYY"
+                            placeholder="MMM DD, YYYY"
                             type="text"
                             value="Feb 02, 2023"
                           />
@@ -1761,7 +1761,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                         class="c10 form-control date-picker"
                         id="datepicker-products.1.startDate"
                         name="products.1.startDate"
-                        placeholder="MTH DD, YYYY"
+                        placeholder="MMM DD, YYYY"
                         type="text"
                         value="Feb 03, 2023"
                       />
@@ -1852,7 +1852,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                             class="c10 form-control date-picker"
                             id="datepicker-products.1.costEstimateDate"
                             name="products.1.costEstimateDate"
-                            placeholder="MTH DD, YYYY"
+                            placeholder="MMM DD, YYYY"
                             type="text"
                             value="Feb 04, 2023"
                           />
