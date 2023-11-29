@@ -2,7 +2,11 @@ import queryString from 'query-string';
 import React from 'react';
 
 import { IPagedItems } from '@/interfaces';
-import { Api_DispositionFile, Api_DispositionFileProperty } from '@/models/api/DispositionFile';
+import {
+  Api_DispositionFile,
+  Api_DispositionFileProperty,
+  Api_DispositionFileTeam,
+} from '@/models/api/DispositionFile';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
 import { Api_LastUpdatedBy } from '@/models/api/File';
 
@@ -30,6 +34,8 @@ export const useApiDispositionFile = () => {
         api.get<Api_LastUpdatedBy>(`/dispositionfiles/${dispositionFileId}/updateInfo`),
       getDispositionFileProperties: (dispositionFileId: number) =>
         api.get<Api_DispositionFileProperty[]>(`/dispositionfiles/${dispositionFileId}/properties`),
+      getAllDispositionFileTeamMembers: () =>
+        api.get<Api_DispositionFileTeam[]>(`/dispositionfiles/team-members`),
     }),
     [api],
   );

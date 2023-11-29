@@ -116,6 +116,9 @@ export const PROP_MGMT_ACTIVITY_STATUS_TYPES = 'PimsPropMgmtActivityStatusType';
 export const PROP_MGMT_ACTIVITY_SUBTYPES_TYPES = 'PimsPropMgmtActivitySubtype';
 export const PROP_MGMT_ACTIVITY_TYPES = 'PimsPropMgmtActivityType';
 export const AGREEMENT_STATUS_TYPES = 'PimsAgreementStatusType';
+export const DISPOSITION_PHYSICAL_FILE_STATUS_TYPES = 'PimsDspPhysFileStatusType';
+export const DISPOSITION_FILE_STATUS_TYPES = 'PimsDispositionFileStatusType';
+export const DISPOSITION_TYPES = 'PimsDispositionType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service
