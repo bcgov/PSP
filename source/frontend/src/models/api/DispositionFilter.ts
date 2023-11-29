@@ -3,10 +3,10 @@ export interface Api_DispositionFilter {
   pin: string;
   pid: string;
   address: string;
-  teamMemberPersonId: number | null;
-  teamMemberOrganizationId: number | null;
   fileNameOrNumberOrReference: string;
   physicalFileStatusCode: string;
   dispositionStatusCode: string;
   dispositionTypeCode: string;
+  teamMemberPersonId: number | null;
+  teamMemberOrganizationId: number | null;
 }
