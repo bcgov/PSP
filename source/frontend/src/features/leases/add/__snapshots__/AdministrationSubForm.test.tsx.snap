@@ -941,7 +941,7 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
                       class="c6 form-control date-picker"
                       id="datepicker-responsibilityEffectiveDate"
                       name="responsibilityEffectiveDate"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       type="text"
                       value=""
                     />

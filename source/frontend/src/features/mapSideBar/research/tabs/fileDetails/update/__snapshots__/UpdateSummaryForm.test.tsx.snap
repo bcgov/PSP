@@ -774,7 +774,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                     class="c13 form-control date-picker"
                     id="datepicker-requestDate"
                     name="requestDate"
-                    placeholder="MTH DD, YYYY"
+                    placeholder="MMM DD, YYYY"
                     type="text"
                     value="Apr 14, 2022"
                   />
@@ -1070,7 +1070,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                     class="c13 form-control date-picker"
                     id="datepicker-researchCompletionDate"
                     name="researchCompletionDate"
-                    placeholder="MTH DD, YYYY"
+                    placeholder="MMM DD, YYYY"
                     type="text"
                     value="Mar 30, 2022"
                   />

@@ -548,7 +548,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                       class="c10 form-control date-picker"
                       id="datepicker-agreements.0.agreementDate"
                       name="agreements.0.agreementDate"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       type="text"
                       value=""
                     />
@@ -595,7 +595,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                       class="c10 form-control date-picker"
                       id="datepicker-agreements.0.commencementDate"
                       name="agreements.0.commencementDate"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       type="text"
                       value=""
                     />
@@ -642,7 +642,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                       class="c10 form-control date-picker"
                       id="datepicker-agreements.0.completionDate"
                       name="agreements.0.completionDate"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       type="text"
                       value=""
                     />
@@ -689,7 +689,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                       class="c10 form-control date-picker"
                       id="datepicker-agreements.0.terminationDate"
                       name="agreements.0.terminationDate"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       type="text"
                       value=""
                     />
@@ -736,7 +736,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                       class="c10 form-control date-picker"
                       id="datepicker-agreements.0.possessionDate"
                       name="agreements.0.possessionDate"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       type="text"
                       value=""
                     />
@@ -1138,7 +1138,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                       class="c10 form-control date-picker"
                       id="datepicker-agreements.1.agreementDate"
                       name="agreements.1.agreementDate"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       type="text"
                       value="Apr 05, 2023"
                     />
@@ -1185,7 +1185,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                       class="c10 form-control date-picker"
                       id="datepicker-agreements.1.completionDate"
                       name="agreements.1.completionDate"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       type="text"
                       value="Apr 05, 2023"
                     />
@@ -1232,7 +1232,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                       class="c10 form-control date-picker"
                       id="datepicker-agreements.1.terminationDate"
                       name="agreements.1.terminationDate"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       type="text"
                       value="Apr 05, 2023"
                     />
@@ -1279,7 +1279,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                       class="c10 form-control date-picker"
                       id="datepicker-agreements.1.possessionDate"
                       name="agreements.1.possessionDate"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       type="text"
                       value="Apr 05, 2023"
                     />
