@@ -14,6 +14,7 @@ import { IPagedItems } from '@/interfaces';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
 
+import DispositionFilter from './DispositionFilter/DispositionFilter';
 import { DispositionSearchResults } from './DispositionSearchResults/DispositionSearchResults';
 import { DispositionFilterModel, DispositionSearchResultModel } from './models';
 import * as S from './styles';
@@ -82,7 +83,16 @@ export const DispositionListView: React.FC<unknown> = () => {
         <S.PageHeader>Disposition Files</S.PageHeader>
         <S.PageToolbar>
           <Row>
-            <Col>{/* TODO: disposition filter goes here */}</Col>
+            <Col>
+              <DispositionFilter
+                filter={filter}
+                setFilter={changeFilter}
+                dispositionTeam={[]}
+                physicalFileStatusOptions={[]}
+                dispositionStatusOptions={[]}
+                dispositionTypeOptions={[]}
+              />
+            </Col>
           </Row>
         </S.PageToolbar>
         {hasClaim(Claims.DISPOSITION_ADD) && (
@@ -107,3 +117,5 @@ export const DispositionListView: React.FC<unknown> = () => {
     </S.ListPage>
   );
 };
+
+export default DispositionListView;
