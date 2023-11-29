@@ -438,7 +438,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                       class="c7 form-control date-picker"
                       id="datepicker-agreementDateTime"
                       name="agreementDateTime"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       type="text"
                       value=""
                     />
@@ -485,7 +485,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                       class="c7 form-control date-picker"
                       id="datepicker-expropriationNoticeServedDateTime"
                       name="expropriationNoticeServedDateTime"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       type="text"
                       value=""
                     />
@@ -532,7 +532,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                       class="c7 form-control date-picker"
                       id="datepicker-expropriationVestingDateTime"
                       name="expropriationVestingDateTime"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       type="text"
                       value=""
                     />
@@ -579,7 +579,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                       class="c7 form-control date-picker"
                       id="datepicker-advancedPaymentServedDate"
                       name="advancedPaymentServedDate"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       type="text"
                       value=""
                     />

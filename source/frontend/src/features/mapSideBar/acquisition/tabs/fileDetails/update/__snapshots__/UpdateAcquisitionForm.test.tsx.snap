@@ -774,7 +774,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="c7 form-control date-picker"
                     id="datepicker-assignedDate"
                     name="assignedDate"
-                    placeholder="MTH DD, YYYY"
+                    placeholder="MMM DD, YYYY"
                     type="text"
                     value="Jun 27, 2022"
                   />
@@ -845,7 +845,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="c7 form-control date-picker"
                     id="datepicker-deliveryDate"
                     name="deliveryDate"
-                    placeholder="MTH DD, YYYY"
+                    placeholder="MMM DD, YYYY"
                     type="text"
                     value="Jul 29, 2022"
                   />
@@ -917,7 +917,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     disabled=""
                     id="datepicker-completionDate"
                     name="completionDate"
-                    placeholder="MTH DD, YYYY"
+                    placeholder="MMM DD, YYYY"
                     type="text"
                     value=""
                   />
