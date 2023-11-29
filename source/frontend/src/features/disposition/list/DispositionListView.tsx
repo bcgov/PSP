@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
@@ -7,10 +6,9 @@ import { toast } from 'react-toastify';
 
 import { StyledAddButton } from '@/components/common/styles';
 import { Claims } from '@/constants';
-import { IPaginateRequest } from '@/hooks/pims-api/interfaces/IPaginateRequest';
+import { useApiDispositionFile } from '@/hooks/pims-api/useApiDispositionFile';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { useSearch } from '@/hooks/useSearch';
-import { IPagedItems } from '@/interfaces';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
 
@@ -23,24 +21,9 @@ import * as S from './styles';
  * Page that displays Disposition files information.
  */
 export const DispositionListView: React.FC<unknown> = () => {
-  const { hasClaim } = useKeycloakWrapper();
   const history = useHistory();
-
-  const searchDispositionFiles = async (
-    params: IPaginateRequest<Api_DispositionFilter>,
-  ): Promise<AxiosResponse<IPagedItems<Api_DispositionFile>, any>> => {
-    const mockResponse: any = {
-      data: {
-        items: [],
-        page: 1,
-        pageIndex: 0,
-        quantity: 0,
-        total: 0,
-      },
-    };
-
-    return mockResponse;
-  };
+  const { hasClaim } = useKeycloakWrapper();
+  const { getDispositionFilesPagedApi } = useApiDispositionFile();
 
   const {
     results,
@@ -58,7 +41,7 @@ export const DispositionListView: React.FC<unknown> = () => {
     loading,
   } = useSearch<Api_DispositionFile, Api_DispositionFilter>(
     new DispositionFilterModel().toApi(),
-    searchDispositionFiles,
+    getDispositionFilesPagedApi,
     'No matching results can be found. Try widening your search criteria.',
   );
 

@@ -1,12 +1,11 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
+import { useApiDispositionFile } from '@/hooks/pims-api/useApiDispositionFile';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_DispositionFile, Api_DispositionFileProperty } from '@/models/api/DispositionFile';
 import { Api_LastUpdatedBy } from '@/models/api/File';
 import { useAxiosErrorHandler, useAxiosErrorHandlerWithAuthorization } from '@/utils';
-
-import { useApiDispositionFile } from '../useApiDispositionFile';
 
 /**
  * hook that interacts with the Disposition File API.
