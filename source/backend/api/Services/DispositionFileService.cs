@@ -75,7 +75,7 @@ namespace Pims.Api.Services
         public IEnumerable<PimsDispositionFileTeam> GetTeamMembers()
         {
             _logger.LogInformation("Getting disposition team members");
-            _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionView, Permissions.ContactView);
 
             var teamMembers = _dispositionFileRepository.GetTeamMembers();
 

@@ -136,15 +136,13 @@ namespace Pims.Api.Areas.Disposition.Controllers
         public IActionResult GetDispositionTeamMembers()
         {
             _logger.LogInformation(
-           "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-           nameof(DispositionFileController),
-           nameof(GetDispositionTeamMembers),
-           User.GetUsername(),
-           DateTime.Now);
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(GetDispositionTeamMembers),
+                User.GetUsername(),
+                DateTime.Now);
 
-            // TODO: Remove this mock
-            // var team = _dispositionService.GetTeamMembers();
-            var team = new List<PimsDispositionFileTeam>();
+            var team = _dispositionService.GetTeamMembers();
 
             return new JsonResult(_mapper.Map<IEnumerable<DispositionFileTeamModel>>(team));
         }
