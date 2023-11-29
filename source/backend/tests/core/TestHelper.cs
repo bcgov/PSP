@@ -11,8 +11,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Moq;
+using Pims.Api.Services;
 using Pims.Dal;
 using Pims.Dal.Configuration.Generators;
+using Pims.Dal.Entities;
 
 namespace Pims.Core.Test
 {
@@ -236,6 +238,7 @@ namespace Pims.Core.Test
             IFormFile file = new FormFile(stream, 0, stream.Length, "id_from_form", fileName);
             return file;
         }
+
         #endregion
     }
 }

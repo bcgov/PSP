@@ -141,7 +141,7 @@ describe('Acquisition Search Results Table', () => {
     const { getByText } = setup({
       results: [
         {
-          aquisitionTeam: [
+          acquisitionTeam: [
             {
               id: 4,
               acquisitionFileId: 5,
