@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
@@ -149,6 +151,30 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Retrieves a page with an array of disposition files within the specified filters.
+        /// Note that the 'filter' will control the 'page' and 'quantity'.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public Paged<PimsDispositionFile> GetPageDeep(DispositionFilter filter)
+        {
+            using var scope = Logger.QueryScope();
+
+            filter.ThrowIfNull(nameof(filter));
+            if (!filter.IsValid())
+            {
+                throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            }
+
+            var query = GetCommonDispositionFileQueryDeep(filter);
+
+            var skip = (filter.Page - 1) * filter.Quantity;
+            var pageItems = query.Skip(skip).Take(filter.Quantity).ToList();
+
+            return new Paged<PimsDispositionFile>(pageItems, filter.Page, filter.Quantity, query.Count());
+        }
+
+        /// <summary>
         /// Retrieves the version of the disposition file with the specified id.
         /// </summary>
         /// <param name="id"></param>
@@ -161,6 +187,74 @@ namespace Pims.Dal.Repositories
                 .Where(p => p.DispositionFileId == id)?
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
             return result.ConcurrencyControlNumber;
+        }
+
+        public List<PimsDispositionFileTeam> GetTeamMembers()
+        {
+            var predicate = PredicateBuilder.New<PimsDispositionFileTeam>(disp => true);
+
+            return Context.PimsDispositionFileTeams.AsNoTracking()
+                .Include(x => x.DispositionFile)
+                .Include(x => x.Person)
+                .Include(x => x.Organization)
+                .Where(predicate)
+                .ToList();
+        }
+
+        /// <summary>
+        /// Generate a Common IQueryable for Disposition Files.
+        /// </summary>
+        /// <param name="filter">The filter to apply.</param>
+        /// <returns></returns>
+        private IQueryable<PimsDispositionFile> GetCommonDispositionFileQueryDeep(DispositionFilter filter)
+        {
+            var predicate = PredicateBuilder.New<PimsDispositionFile>(disp => true);
+            if (!string.IsNullOrWhiteSpace(filter.Pid))
+            {
+                var pidValue = filter.Pid.Replace("-", string.Empty).Trim().TrimStart('0');
+                predicate = predicate.And(disp => disp.PimsPropertyDispositionFiles.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pid.ToString(), $"%{pidValue}%")));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Pin))
+            {
+                var pinValue = filter.Pin.Replace("-", string.Empty).Trim().TrimStart('0');
+                predicate = predicate.And(acq => acq.PimsPropertyDispositionFiles.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pin.ToString(), $"%{pinValue}%")));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Address))
+            {
+                predicate = predicate.And(disp => disp.PimsPropertyDispositionFiles.Any(pd => pd != null &&
+                    (EF.Functions.Like(pd.Property.Address.StreetAddress1, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pd.Property.Address.StreetAddress2, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pd.Property.Address.StreetAddress3, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pd.Property.Address.MunicipalityName, $"%{filter.Address}%"))));
+            }
+
+            // TODO: implement remaining filters
+            var query = Context.PimsDispositionFiles.AsNoTracking()
+                .Include(d => d.RegionCodeNavigation)
+                .Include(d => d.DspPhysFileStatusTypeCodeNavigation)
+                .Include(d => d.DispositionFileStatusTypeCodeNavigation)
+                .Include(d => d.DispositionTypeCodeNavigation)
+                .Include(d => d.PimsDispositionFileTeams)
+                    .ThenInclude(c => c.Person)
+                .Include(d => d.PimsDispositionFileTeams)
+                    .ThenInclude(c => c.Organization)
+                .Include(tm => tm.PimsDispositionFileTeams)
+                    .ThenInclude(c => c.DspFlTeamProfileTypeCodeNavigation)
+                .Include(fp => fp.PimsPropertyDispositionFiles)
+                    .ThenInclude(prop => prop.Property)
+                    .ThenInclude(ad => ad.Address)
+                    .ThenInclude(x => x.ProvinceState)
+                .Include(fp => fp.PimsPropertyDispositionFiles)
+                    .ThenInclude(prop => prop.Property)
+                    .ThenInclude(ad => ad.Address)
+                    .ThenInclude(x => x.Country)
+                .Where(predicate);
+
+            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(filter.Sort) : query.OrderBy(disp => disp.DispositionFileId);
+
+            return query;
         }
         #endregion
     }

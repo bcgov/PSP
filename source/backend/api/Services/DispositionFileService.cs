@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Constants;
@@ -51,6 +52,15 @@ namespace Pims.Api.Services
             return _dispositionFileRepository.GetLastUpdateBy(dispositionFileId);
         }
 
+        public Paged<PimsDispositionFile> GetPage(DispositionFilter filter)
+        {
+            _logger.LogInformation("Searching for disposition files...");
+            _logger.LogDebug("Disposition file search with filter: {filter}", filter);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+
+            return _dispositionFileRepository.GetPageDeep(filter);
+        }
+
         public IEnumerable<PimsPropertyDispositionFile> GetProperties(long id)
         {
             _logger.LogInformation("Getting disposition file properties with id {id}", id);
@@ -60,6 +70,23 @@ namespace Pims.Api.Services
             var properties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(id);
             ReprojectPropertyLocationsToWgs84(properties);
             return properties;
+        }
+
+        public IEnumerable<PimsDispositionFileTeam> GetTeamMembers()
+        {
+            _logger.LogInformation("Getting disposition team members");
+            _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+
+            var teamMembers = _dispositionFileRepository.GetTeamMembers();
+
+            var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First());
+            var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First());
+
+            List<PimsDispositionFileTeam> teamFilterOptions = new();
+            teamFilterOptions.AddRange(persons);
+            teamFilterOptions.AddRange(organizations);
+
+            return teamFilterOptions;
         }
 
         private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyDispositionFile> dispositionPropertyFiles)
