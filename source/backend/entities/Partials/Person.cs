@@ -58,6 +58,10 @@ namespace Pims.Dal.Entities
             this.FirstName = firstname;
             this.PimsPersonAddresses = new List<PimsPersonAddress>() { new PimsPersonAddress() { Person = this, Address = address } };
         }
+
+        public PimsPerson()
+        {
+        }
         #endregion
     }
 }

@@ -60,6 +60,10 @@ namespace Pims.Dal.Entities
             this.DistrictCodeNavigation = address.DistrictCodeNavigation;
             this.DistrictCode = address.DistrictCode;
         }
+
+        public PimsOrganization()
+        {
+        }
         #endregion
     }
 }

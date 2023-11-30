@@ -66,9 +66,13 @@ namespace Pims.Dal.Entities
 
             this.PropertyDataSourceTypeCodeNavigation = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
             this.PropertyDataSourceTypeCode = dataSource.Id;
-            this.PropertyDataSourceEffectiveDate = dataSourceEffectiveDate;
+            this.PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(dataSourceEffectiveDate);
             this.PropertyStatusTypeCodeNavigation = status ?? throw new ArgumentNullException(nameof(status));
             this.PropertyStatusTypeCode = status.Id;
+        }
+
+        public PimsProperty()
+        {
         }
         #endregion
     }

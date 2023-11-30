@@ -62,7 +62,7 @@ namespace Pims.Dal.Extensions
         /// <param name="userDirectory"></param>
         public static void UpdateAppAuditProperties(this EntityEntry entry, string username, Guid userKey, string userDirectory)
         {
-            if (entry.Entity is IDisableBaseAppEntity disableEntity)
+            if (entry.Entity is IDisableBaseAppEntity<bool?> disableEntity)
             {
                 disableEntity.IsDisabled ??= false;
             }

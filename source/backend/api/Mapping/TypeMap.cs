@@ -14,7 +14,7 @@ namespace Pims.Api.Mapping
                 .Map("IsDisabled", "IsDisabled")
                 .Map("DisplayOrder", "DisplayOrder");
 
-            config.NewConfig<Entity.ICodeEntity<short>, Model.TypeModel<short>>()
+            config.NewConfig<Entity.ICodeEntity<short, bool>, Model.TypeModel<short>>()
                 .Map(dest => dest.Id, src => src.Code)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)

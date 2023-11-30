@@ -11,11 +11,11 @@ namespace Pims.Api.Areas.Keycloak.Mapping.AccessRequest
             config.NewConfig<Entity.PimsAccessRequestOrganization, Model.OrganizationModel>()
                 .Map(dest => dest.Id, src => src.OrganizationId)
                 .Map(dest => dest.Name, src => src.Organization == null ? null : src.Organization.OrganizationName)
-                .Inherits<Entity.IDisableBaseAppEntity, Api.Models.BaseAppModel>();
+                .Inherits<Entity.IDisableBaseAppEntity<bool?>, Api.Models.BaseAppModel>();
 
             config.NewConfig<Model.OrganizationModel, Entity.PimsAccessRequestOrganization>()
                 .Map(dest => dest.OrganizationId, src => src.Id)
-                .Inherits<Api.Models.BaseAppModel, Entity.IDisableBaseAppEntity>();
+                .Inherits<Api.Models.BaseAppModel, Entity.IDisableBaseAppEntity<bool?>>();
         }
     }
 }

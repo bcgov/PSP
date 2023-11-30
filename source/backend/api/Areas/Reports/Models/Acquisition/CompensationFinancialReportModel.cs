@@ -150,6 +150,11 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
             return dateTime.HasValue ? dateTime.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) : string.Empty;
         }
 
+        private static string GetNullableDate(DateOnly? dateTime)
+        {
+            return dateTime.HasValue ? dateTime.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) : string.Empty;
+        }
+
         private static string GetMinistryProjectName(PimsProject project)
         {
             if (project == null)

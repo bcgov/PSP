@@ -649,9 +649,9 @@ namespace Pims.Api.Test.Services
         public static object[] takesTestParameters = new List<object[]>() {
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true, false }, // core inventory takes priority over other interest
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActEndDt = DateTime.UtcNow.AddDays(-1) }, new PimsTake() { IsNewLicenseToConstruct = true } }, false, false }, // should ignore any expired takes
+            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActEndDt = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-1)) }, new PimsTake() { IsNewLicenseToConstruct = true } }, false, false }, // should ignore any expired takes
             new object[] { new List<PimsTake>(), false, true }, // No takes should be core inventory
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActEndDt = DateTime.UtcNow.AddDays(-1) } }, true, false }, // only expired takes is the same as no takes
+            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActEndDt = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-1)) } }, true, false }, // only expired takes is the same as no takes
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true, false },
@@ -924,7 +924,7 @@ namespace Pims.Api.Test.Services
             updatedProperty.PropertyTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyStatusTypeCode.Should().Be("UNKNOWN");
             updatedProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");
-            updatedProperty.PropertyDataSourceEffectiveDate.Should().BeCloseTo(System.DateTime.Now, 500);
+            updatedProperty.PropertyDataSourceEffectiveDate.Should().Be(DateOnly.FromDateTime(DateTime.Now));
             updatedProperty.PropertyDataSourceTypeCode.Should().Be("PMBC");
             updatedProperty.IsPropertyOfInterest.Should().Be(true);
 
@@ -1596,7 +1596,7 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
             var acquisitionRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsAcquisitionChecklistItem>());
-            repository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsAcqChklstItemType>() { new PimsAcqChklstItemType() { AcqChklstItemTypeCode = "TEST", EffectiveDate = new DateTime(2024, 1, 1) } });
+            repository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsAcqChklstItemType>() { new PimsAcqChklstItemType() { AcqChklstItemTypeCode = "TEST", EffectiveDate = new DateOnly(2024, 1, 1) } });
             acquisitionRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             // Act

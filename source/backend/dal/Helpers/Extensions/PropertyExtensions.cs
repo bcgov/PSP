@@ -62,7 +62,7 @@ namespace Pims.Dal.Helpers.Extensions
             // Users are not allowed to view sensitive properties outside of their organization or sub-organizations.
             if (!viewSensitive)
             {
-                query = query.Where(p => !(p.IsSensitive.HasValue && p.IsSensitive.Value));
+                query = query.Where(p => !p.IsSensitive);
             }
 
             if (!string.IsNullOrWhiteSpace(filter.PinOrPid))

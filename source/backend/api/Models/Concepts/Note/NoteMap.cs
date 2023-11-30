@@ -10,7 +10,7 @@ namespace Pims.Api.Models.Concepts
             config.NewConfig<Entity.PimsNote, NoteModel>()
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.Note, src => src.NoteTxt)
-                .Map(dest => dest.IsSystemGenerated, src => src.IsSystemGenerated ?? false)
+                .Map(dest => dest.IsSystemGenerated, src => src.IsSystemGenerated)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<NoteModel, Entity.PimsNote>()

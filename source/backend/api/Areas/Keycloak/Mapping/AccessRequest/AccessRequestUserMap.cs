@@ -15,7 +15,7 @@ namespace Pims.Api.Areas.Keycloak.Mapping.AccessRequest
                 .Map(dest => dest.Surname, src => src.Person.Surname)
                 .Map(dest => dest.Email, src => src.Person.GetWorkEmail())
                 .Map(dest => dest.UserTypeCode, src => src.UserTypeCode)
-                .Inherits<Entity.IDisableBaseAppEntity, Api.Models.BaseAppModel>();
+                .Inherits<Entity.IDisableBaseAppEntity<bool?>, Api.Models.BaseAppModel>();
         }
     }
 }

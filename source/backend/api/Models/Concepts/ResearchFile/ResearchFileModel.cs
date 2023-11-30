@@ -16,7 +16,7 @@ namespace Pims.Api.Models.Concepts
         /// </summary>
         public IList<ResearchFilePropertyModel> FileProperties { get; set; }
 
-        public DateTime? RequestDate { get; set; }
+        public DateOnly? RequestDate { get; set; }
 
         public string RequestDescription { get; set; }
 
@@ -24,7 +24,7 @@ namespace Pims.Api.Models.Concepts
 
         public string ResearchResult { get; set; }
 
-        public DateTime? ResearchCompletionDate { get; set; }
+        public DateOnly? ResearchCompletionDate { get; set; }
 
         public bool? IsExpropriation { get; set; }
 

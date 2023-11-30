@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -233,7 +234,7 @@ namespace Pims.Api.Services
             List<PimsPropertyLease> differenceSet = currentProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
-                if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
+                if (deletedProperty.Property.IsPropertyOfInterest)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
@@ -390,7 +391,7 @@ namespace Pims.Api.Services
         private void PopulateNewProperty(PimsProperty property)
         {
             property.PropertyClassificationTypeCode = "UNKNOWN";
-            property.PropertyDataSourceEffectiveDate = System.DateTime.Now;
+            property.PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now);
             property.PropertyDataSourceTypeCode = "PMBC";
 
             property.PropertyTypeCode = "UNKNOWN";
