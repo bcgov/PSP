@@ -17,12 +17,12 @@ export const DispositionTray = ({ onLinkClick }: ISideTrayPageProps) => {
     <>
       <HalfHeightDiv>
         <Styled.TrayHeader>Disposition Files</Styled.TrayHeader>
-        {hasClaim(Claims.RESEARCH_VIEW /*TODO: DISPOSITION_VIEW*/) && (
+        {hasClaim(Claims.DISPOSITION_VIEW) && (
           <Link onClick={onLinkClick} to="/disposition/list">
             Manage Disposition Files
           </Link>
         )}
-        {hasClaim(Claims.RESEARCH_ADD /*TODO: DISPOSITION_ADD*/) && (
+        {hasClaim(Claims.DISPOSITION_ADD) && (
           <Link onClick={onLinkClick} to="/mapview/sidebar/disposition/new">
             Create a Disposition File
           </Link>
