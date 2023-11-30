@@ -17,7 +17,7 @@ export interface IDispositionFilterProps {
   filter?: Api_DispositionFilter;
   setFilter: (filter: Api_DispositionFilter) => void;
   dispositionTeam: Api_DispositionFileTeam[];
-  physicalFileStatusOptions: SelectOption[];
+  fileStatusOptions: SelectOption[];
   dispositionStatusOptions: SelectOption[];
   dispositionTypeOptions: SelectOption[];
 }
@@ -26,7 +26,7 @@ export const DispositionFilter: React.FC<IDispositionFilterProps> = ({
   filter,
   setFilter,
   dispositionTeam,
-  physicalFileStatusOptions,
+  fileStatusOptions,
   dispositionStatusOptions,
   dispositionTypeOptions,
 }) => {
@@ -97,14 +97,11 @@ export const DispositionFilter: React.FC<IDispositionFilterProps> = ({
               </Row>
               <Row>
                 <Col xl="7">
-                  <TypeaheadSelect
-                    field="dispositionTeamMember"
-                    options={dispositionStatusOptions}
-                  />
+                  <TypeaheadSelect field="dispositionTeamMember" options={dispositionTeamOptions} />
                 </Col>
                 <Col xl="4">
                   <Select
-                    options={physicalFileStatusOptions}
+                    options={fileStatusOptions}
                     field="physicalFileStatusCode"
                     placeholder="All Status"
                   />

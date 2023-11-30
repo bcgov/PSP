@@ -15,7 +15,7 @@ export class DispositionFilterModel {
   address: string = '';
   dispositionTeamMember: SelectOption | null = null;
   fileNameOrNumberOrReference: string = '';
-  physicalFileStatusCode: string = '';
+  fileStatusCode: string = '';
   dispositionStatusCode: string = '';
   dispositionTypeCode: string = '';
 
@@ -35,7 +35,7 @@ export class DispositionFilterModel {
       pid: this.pid,
       address: this.address,
       fileNameOrNumberOrReference: this.fileNameOrNumberOrReference,
-      physicalFileStatusCode: this.physicalFileStatusCode,
+      fileStatusCode: this.fileStatusCode,
       dispositionStatusCode: this.dispositionStatusCode,
       dispositionTypeCode: this.dispositionTypeCode,
       // disposition team members
@@ -55,7 +55,7 @@ export class DispositionFilterModel {
     newModel.pid = base.pid ?? '';
     newModel.address = base.address ?? '';
     newModel.fileNameOrNumberOrReference = base.fileNameOrNumberOrReference ?? '';
-    newModel.physicalFileStatusCode = base.physicalFileStatusCode ?? '';
+    newModel.fileStatusCode = base.fileStatusCode ?? '';
     newModel.dispositionStatusCode = base.dispositionStatusCode ?? '';
     newModel.dispositionTypeCode = base.dispositionTypeCode ?? '';
     // disposition team members
@@ -77,7 +77,7 @@ export class DispositionSearchResultModel {
   region: string = '';
   dispositionType: string = '';
   dispositionStatus: string = '';
-  physicalFileStatus: string = '';
+  fileStatus: string = '';
   dispositionTeam: Api_DispositionFileTeam[] = [];
   fileProperties?: Api_DispositionFileProperty[] = [];
 
@@ -90,7 +90,7 @@ export class DispositionSearchResultModel {
     newModel.region = base.regionCode?.description ?? '';
     newModel.dispositionType = base.dispositionTypeCode?.description ?? '';
     newModel.dispositionStatus = base.dispositionStatusTypeCode?.description ?? '';
-    newModel.physicalFileStatus = base.physicalFileStatusTypeCode?.description ?? '';
+    newModel.fileStatus = base.fileStatusTypeCode?.description ?? '';
     newModel.dispositionTeam = base.dispositionTeam || [];
     newModel.fileProperties = base.fileProperties || [];
 

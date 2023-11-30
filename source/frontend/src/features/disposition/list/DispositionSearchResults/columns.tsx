@@ -168,7 +168,7 @@ export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
   },
   {
     Header: 'Status',
-    accessor: 'physicalFileStatus',
+    accessor: 'fileStatus',
     align: 'left',
     clickable: true,
     sortable: true,

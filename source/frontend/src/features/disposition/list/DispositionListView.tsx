@@ -8,7 +8,7 @@ import { StyledAddButton } from '@/components/common/styles';
 import { Claims } from '@/constants';
 import {
   DISPOSITION_FILE_STATUS_TYPES,
-  DISPOSITION_PHYSICAL_FILE_STATUS_TYPES,
+  DISPOSITION_STATUS_TYPES,
   DISPOSITION_TYPES,
 } from '@/constants/API';
 import { useApiDispositionFile } from '@/hooks/pims-api/useApiDispositionFile';
@@ -39,12 +39,12 @@ export const DispositionListView: React.FC<unknown> = () => {
   // lookup codes to filter disposition list
   const lookupCodes = useLookupCodeHelpers();
 
-  const dispositionPhysicalStatusOptions = lookupCodes
-    .getByType(DISPOSITION_PHYSICAL_FILE_STATUS_TYPES)
+  const dispositionFileStatusOptions = lookupCodes
+    .getByType(DISPOSITION_FILE_STATUS_TYPES)
     .map(c => mapLookupCode(c));
 
   const dispositionStatusOptions = lookupCodes
-    .getByType(DISPOSITION_FILE_STATUS_TYPES)
+    .getByType(DISPOSITION_STATUS_TYPES)
     .map(c => mapLookupCode(c));
 
   const dispositionTypeOptions = lookupCodes
@@ -101,7 +101,7 @@ export const DispositionListView: React.FC<unknown> = () => {
                 filter={filter}
                 setFilter={changeFilter}
                 dispositionTeam={team || []}
-                physicalFileStatusOptions={dispositionPhysicalStatusOptions}
+                fileStatusOptions={dispositionFileStatusOptions}
                 dispositionStatusOptions={dispositionStatusOptions}
                 dispositionTypeOptions={dispositionTypeOptions}
               />
