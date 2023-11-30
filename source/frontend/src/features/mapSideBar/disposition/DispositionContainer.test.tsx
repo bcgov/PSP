@@ -5,18 +5,17 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import {
-  mockAcquisitionFileOwnersResponse,
-  mockAcquisitionFileResponse,
-} from '@/mocks/acquisitionFiles.mock';
+  mockDispositionFilePropertyResponse,
+  mockDispositionFileResponse,
+} from '@/mocks/dispositionFiles.mock';
 import { mockLastUpdatedBy } from '@/mocks/lastUpdatedBy.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { mockNotesResponse } from '@/mocks/noteResponses.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
+  fireEvent,
   render,
   RenderOptions,
   screen,
@@ -25,20 +24,14 @@ import {
 } from '@/utils/test-utils';
 
 import { SideBarContextProvider } from '../context/sidebarContext';
-import { AcquisitionContainer, IAcquisitionContainerProps } from './AcquisitionContainer';
-import { IAcquisitionViewProps } from './AcquisitionView';
+import DispositionContainer, { IDispositionContainerProps } from './DispositionContainer';
+import { IDispositionViewProps } from './DispositionView';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
-const generateFn = jest.fn();
 
 // mock auth library
 jest.mock('@react-keycloak/web');
-jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
-(useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
-  generateDocumentDownloadWrappedRequest: generateFn,
-}));
-
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 const onClose = jest.fn();
@@ -53,8 +46,8 @@ jest.mock('react-visibility-sensor', () => {
   });
 });
 
-let viewProps: IAcquisitionViewProps = {} as any;
-const AcquisitionContainerView = (props: IAcquisitionViewProps) => {
+let viewProps: IDispositionViewProps = {} as any;
+const DispositionContainerView = (props: IDispositionViewProps) => {
   viewProps = props;
   return (
     <Formik innerRef={props.formikRef} onSubmit={noop} initialValues={{ value: 0 }}>
@@ -62,21 +55,21 @@ const AcquisitionContainerView = (props: IAcquisitionViewProps) => {
     </Formik>
   );
 };
-const DEFAULT_PROPS: IAcquisitionContainerProps = {
-  acquisitionFileId: 1,
+const DEFAULT_PROPS: IDispositionContainerProps = {
+  dispositionFileId: 1,
   onClose,
-  View: AcquisitionContainerView,
+  View: DispositionContainerView,
 };
 
-describe('AcquisitionContainer component', () => {
+describe('DispositionContainer component', () => {
   // render component under test
   const setup = (
-    props: IAcquisitionContainerProps = { ...DEFAULT_PROPS },
+    props: IDispositionContainerProps = { ...DEFAULT_PROPS },
     renderOptions: RenderOptions = {},
   ) => {
     const utils = render(
       <SideBarContextProvider>
-        <AcquisitionContainer {...props} View={AcquisitionContainerView} />
+        <DispositionContainer {...props} View={DispositionContainerView} />
       </SideBarContextProvider>,
       {
         store: {
@@ -100,14 +93,10 @@ describe('AcquisitionContainer component', () => {
 
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
     mockAxios
-      .onGet(new RegExp('acquisitionfiles/1/properties'))
-      .reply(200, mockAcquisitionFileResponse().fileProperties);
-    mockAxios.onGet(new RegExp('acquisitionfiles/1/updateInfo')).reply(200, mockLastUpdatedBy(1));
-    mockAxios
-      .onGet(new RegExp('acquisitionfiles/1/owners'))
-      .reply(200, mockAcquisitionFileOwnersResponse());
-    mockAxios.onGet(new RegExp('acquisitionfiles/*')).reply(200, mockAcquisitionFileResponse());
-    mockAxios.onGet(new RegExp('notes/*')).reply(200, mockNotesResponse());
+      .onGet(new RegExp('dispositionfiles/1/properties'))
+      .reply(200, mockDispositionFilePropertyResponse());
+    mockAxios.onGet(new RegExp('dispositionfiles/1/updateInfo')).reply(200, mockLastUpdatedBy(1));
+    mockAxios.onGet(new RegExp('dispositionfiles/1')).reply(200, mockDispositionFileResponse());
   });
 
   afterEach(() => {
@@ -139,30 +128,10 @@ describe('AcquisitionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    mockAxios.onGet(new RegExp('acquisitionfiles/1/properties')).timeout();
+    mockAxios.onGet(new RegExp('dispositionfiles/1/properties')).timeout();
     await act(async () => viewProps.onShowPropertySelector());
     await act(async () => viewProps.canRemove(1));
     expect(spinner).not.toBeVisible();
-  });
-
-  it('canRemove returns true if file property has no associated entities', async () => {
-    const { getByTestId } = setup(undefined, { claims: [] });
-
-    const spinner = getByTestId('filter-backdrop-loading');
-    await waitForElementToBeRemoved(spinner);
-
-    mockAxios.onGet(new RegExp('acquisitionfiles/1/properties')).reply(200, [
-      {
-        id: 1,
-        isDisabled: false,
-        property: {
-          id: 1,
-        },
-      },
-    ]);
-    await act(async () => viewProps.onShowPropertySelector());
-    const canRemoveResponse = await act(() => viewProps.canRemove(1));
-    expect(canRemoveResponse).toBe(true);
   });
 
   it('should change menu index when not editing', async () => {
@@ -176,7 +145,7 @@ describe('AcquisitionContainer component', () => {
   });
 
   it('displays a warning if form is dirty and menu index changes', async () => {
-    const { getByTestId } = setup(undefined, { claims: [] });
+    const { getByTestId, getByText } = setup(undefined, { claims: [] });
     jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
@@ -190,6 +159,28 @@ describe('AcquisitionContainer component', () => {
     expect(history.location.pathname).toBe('/property/1');
     const params = new URLSearchParams(history.location.search);
     expect(params.has('edit')).toBe(true);
+    const warning = getByText('Unsaved Changes');
+    expect(warning).toBeVisible();
+  });
+
+  it('Cancels edit if user confirms modal', async () => {
+    const { getByTestId, getByText } = setup(undefined, { claims: [] });
+    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    await act(async () => viewProps.setIsEditing(true));
+    await act(async () => (viewProps.formikRef.current as any).setFieldValue('value', 1));
+    await screen.findByText('1');
+    await act(async () => viewProps.onMenuChange(1));
+
+    expect(history.location.pathname).toBe('/property/1');
+
+    const yesButton = getByText('Yes');
+    await act(async () => fireEvent.click(yesButton));
+    const params = new URLSearchParams(history.location.search);
+    await waitFor(async () => expect(params.has('edit')).toBe(false));
   });
 
   it('cancels edit if form is not dirty and menu index changes', async () => {
@@ -206,7 +197,7 @@ describe('AcquisitionContainer component', () => {
     expect(params.has('edit')).toBe(false);
   });
 
-  it('on success function refetches acq file', async () => {
+  it('on success function refetches disposition file', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
     jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
@@ -215,7 +206,7 @@ describe('AcquisitionContainer component', () => {
 
     await act(async () => viewProps.onSuccess());
 
-    expect(mockAxios.history.get.filter(x => x.url === '/acquisitionfiles/1')).toHaveLength(2);
+    expect(mockAxios.history.get.filter(x => x.url === '/dispositionfiles/1')).toHaveLength(3);
   });
 
   it('on success function cancels edit', async () => {

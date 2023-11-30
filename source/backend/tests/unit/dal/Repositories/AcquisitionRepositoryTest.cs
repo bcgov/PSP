@@ -397,6 +397,31 @@ namespace Pims.Dal.Test.Repositories
 
         #endregion
 
+        #region GetLastUpdateBy
+        [Fact]
+        public void GetLastUpdateBy_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.AppLastUpdateUserid = "test";
+            acqFile.AppLastUpdateTimestamp = DateTime.Now;
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetLastUpdateBy(1);
+
+            // Assert
+            result.AppLastUpdateUserid.Should().Be("service");
+            result.AppLastUpdateTimestamp.Should().BeSameDateAs(acqFile.AppLastUpdateTimestamp);
+        }
+
+        #endregion
+
         #endregion
     }
 }

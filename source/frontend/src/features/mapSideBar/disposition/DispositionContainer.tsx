@@ -121,10 +121,10 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     if (isEditing) {
       if (formikRef?.current?.dirty) {
         handleCancelClick(() => navigateToMenuRoute(selectedIndex));
+        return;
       }
-    } else {
-      navigateToMenuRoute(selectedIndex);
     }
+    navigateToMenuRoute(selectedIndex);
   };
 
   const onShowPropertySelector = () => {
@@ -185,7 +185,6 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
   };
 
   // UI components
-
   var loading =
     loadingDispositionFile ||
     loadingGetLastUpdatedBy ||
