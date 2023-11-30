@@ -134,6 +134,8 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsDispositionFileStatusType> GetAllDispositionFileStatusTypes();
 
+        IEnumerable<PimsDispositionStatusType> GetAllDispositionStatusTypes();
+
         IEnumerable<PimsDispositionFundingType> GetAllDispositionFileFundingTypes();
 
         IEnumerable<PimsDispositionInitiatingDocType> GetAllDispositionInitiatingDocTypes();
