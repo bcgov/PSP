@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Core.Http.Configuration;
-using Pims.Tools.Core;
-using Pims.Tools.Core.Configuration;
-using Pims.Tools.Core.Keycloak.Configuration;
+using Pims.Keycloak.Configuration;
 using Pims.Tools.Keycloak.Sync.Configuration;
 
 namespace Pims.Tools.Keycloak.Sync

@@ -1,7 +1,6 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -9,11 +8,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Core.Exceptions;
 using Pims.Core.Http.Configuration;
-using Pims.Tools.Core.Configuration;
+using Pims.Tools.Keycloak.Sync.Configuration;
 using Polly;
 using Polly.Retry;
 
-namespace Pims.Tools.Core
+namespace Pims.Tools.Keycloak.Sync
 {
     /// <summary>
     /// RequestClient class, provides a way to make HTTP requests, handle errors and handle refresh tokens.
