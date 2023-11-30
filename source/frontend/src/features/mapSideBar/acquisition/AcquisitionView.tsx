@@ -13,7 +13,6 @@ import {
 import styled from 'styled-components';
 
 import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
-import GenericModal from '@/components/common/GenericModal';
 import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -25,6 +24,7 @@ import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { InventoryTabNames } from '../property/InventoryTabs';
+import { FilePropertyRouter } from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
 import SidebarFooter from '../shared/SidebarFooter';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
@@ -32,7 +32,6 @@ import { AcquisitionContainerState } from './AcquisitionContainer';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionMenu from './common/AcquisitionMenu';
 import { AcquisitionRouter } from './router/AcquisitionRouter';
-import { FilePropertyRouter } from './router/FilePropertyRouter';
 
 export interface IAcquisitionViewProps {
   onClose: (() => void) | undefined;
@@ -60,13 +59,11 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   onMenuChange,
   onShowPropertySelector,
   onSuccess,
-  onCancelConfirm,
   onUpdateProperties,
   canRemove,
   isEditing,
   setIsEditing,
   containerState,
-  setContainerState,
   formikRef,
   isFormValid,
   error,
@@ -189,24 +186,6 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                       onSuccess={onSuccess}
                     />
                   )}
-                />
-
-                <GenericModal
-                  className="info"
-                  display={containerState.showConfirmModal}
-                  title={'Confirm changes'}
-                  message={
-                    <>
-                      <div>If you cancel now, this form will not be saved.</div>
-                      <br />
-                      <strong>Are you sure you want to Cancel?</strong>
-                    </>
-                  }
-                  handleOk={onCancelConfirm}
-                  handleCancel={() => setContainerState({ showConfirmModal: false })}
-                  okButtonText="Ok"
-                  cancelButtonText="Resume editing"
-                  show
                 />
               </StyledFormWrapper>
             }

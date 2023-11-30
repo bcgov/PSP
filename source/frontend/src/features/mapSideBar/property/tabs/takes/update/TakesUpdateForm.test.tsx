@@ -83,8 +83,8 @@ describe('TakesUpdateForm component', () => {
     const deleteButton = getAllByTitle('delete take')[0];
     await act(async () => userEvent.click(deleteButton));
 
-    const continueButton = await screen.findByText('Continue');
-    await act(async () => userEvent.click(continueButton));
+    const continueButton = await screen.findAllByText('Yes');
+    await act(async () => userEvent.click(continueButton[continueButton.length - 1]));
 
     expect(queryByText('Take 1')).toBeNull();
   });

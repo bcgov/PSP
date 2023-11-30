@@ -28,13 +28,14 @@ export const useModalContext = (newModalContent?: ModalContent, isVisible?: bool
 export const getCancelModalProps = () => ({
   title: 'Unsaved Changes',
   message: 'You have made changes on this form. Do you wish to leave without saving?',
-  okButtonText: 'Confirm',
+  okButtonText: 'Yes',
   cancelButtonText: 'No',
+  className: 'info',
 });
 
 export const getDeleteModalProps = () => ({
   title: 'Confirm Delete',
   message: 'Are you sure you want to delete this item?',
-  okButtonText: 'Continue',
-  cancelButtonText: 'Cancel',
+  okButtonText: 'Yes',
+  cancelButtonText: 'No',
 });

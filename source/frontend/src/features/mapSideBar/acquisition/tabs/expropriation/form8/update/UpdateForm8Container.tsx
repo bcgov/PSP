@@ -46,8 +46,8 @@ export const UpdateForm8Container: React.FunctionComponent<
     },
   } = useInterestHolderRepository();
 
-  const aquisitionPath = location.pathname.split(`/${FileTabType.EXPROPRIATION}/${form8Id}`)[0];
-  const backUrl = `${aquisitionPath}/${FileTabType.EXPROPRIATION}`;
+  const acquisitionPath = location.pathname.split(`/${FileTabType.EXPROPRIATION}/${form8Id}`)[0];
+  const backUrl = `${acquisitionPath}/${FileTabType.EXPROPRIATION}`;
 
   const loadForm8Details = useCallback(async () => {
     const form8Api = await getForm8(form8Id);
