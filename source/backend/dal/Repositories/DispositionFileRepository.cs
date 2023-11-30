@@ -235,6 +235,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.RegionCodeNavigation)
                 .Include(d => d.DspPhysFileStatusTypeCodeNavigation)
                 .Include(d => d.DispositionFileStatusTypeCodeNavigation)
+                .Include(d => d.DispositionStatusTypeCodeNavigation)
                 .Include(d => d.DispositionTypeCodeNavigation)
                 .Include(d => d.PimsDispositionFileTeams)
                     .ThenInclude(c => c.Person)

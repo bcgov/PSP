@@ -17,6 +17,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.CompletionDate, src => src.CompletedDt)
                 .Map(dest => dest.FundingTypeCode, src => src.DispositionFundingTypeCodeNavigation)
                 .Map(dest => dest.FileStatusTypeCode, src => src.DispositionFileStatusTypeCodeNavigation)
+                .Map(dest => dest.DispositionStatusTypeCode, src => src.DispositionStatusTypeCodeNavigation)
                 .Map(dest => dest.PhysicalFileStatusTypeCode, src => src.DspPhysFileStatusTypeCodeNavigation)
                 .Map(dest => dest.DispositionTypeCode, src => src.DispositionTypeCodeNavigation)
                 .Map(dest => dest.DispositionStatusTypeCode, src => src.DispositionStatusTypeCodeNavigation)
@@ -25,6 +26,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.InitiatingDocumentTypeCode, src => src.DispositionInitiatingDocTypeCodeNavigation)
                 .Map(dest => dest.DispositionTypeOther, src => src.OtherDispositionType)
                 .Map(dest => dest.InitiatingDocumentTypeOther, src => src.OtherInitiatingDocType)
+                .Map(dest => dest.FileProperties, src => src.PimsPropertyDispositionFiles)
                 .Map(dest => dest.DispositionTeam, src => src.PimsDispositionFileTeams)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
@@ -39,12 +41,14 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.DispositionFundingTypeCode, src => src.FundingTypeCode.Id)
                 .Map(dest => dest.DispositionFileStatusTypeCode, src => src.FileStatusTypeCode.Id)
                 .Map(dest => dest.DspPhysFileStatusTypeCode, src => src.PhysicalFileStatusTypeCode.Id)
+                .Map(dest => dest.DispositionStatusTypeCode, src => src.DispositionStatusTypeCode.Id)
                 .Map(dest => dest.DispositionTypeCode, src => src.DispositionTypeCode.Id)
                 .Map(dest => dest.RegionCode, src => src.RegionCode.Id)
                 .Map(dest => dest.DspInitiatingBranchTypeCode, src => src.InitiatingBranchTypeCode.Id)
                 .Map(dest => dest.DispositionInitiatingDocTypeCode, src => src.InitiatingDocumentTypeCode.Id)
                 .Map(dest => dest.OtherDispositionType, src => src.DispositionTypeOther)
                 .Map(dest => dest.OtherInitiatingDocType, src => src.InitiatingDocumentTypeOther)
+                .Map(dest => dest.PimsPropertyDispositionFiles, src => src.FileProperties)
                 .Map(dest => dest.PimsDispositionFileTeams, src => src.DispositionTeam)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
