@@ -233,7 +233,6 @@ exports[`NoteContainer component renders as expected 1`] = `
 }
 
 .c0.warning-variant .modal-close-btn {
-  color: $text-color;
   cursor: pointer;
 }
 

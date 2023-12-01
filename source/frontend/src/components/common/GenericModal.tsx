@@ -265,8 +265,8 @@ const StyledModal = styled(Modal)`
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: ${props => props.theme.css.primaryBackgroundColor}; //$primary-background-color;
-    background-color: ${props => props.theme.css.primaryColor}; //$primary-color;
+    color: ${props => props.theme.css.primaryBackgroundColor};
+    background-color: ${props => props.theme.css.primaryColor};
 
     .modal-title {
       font-family: BcSans-Bold;
@@ -332,37 +332,36 @@ const StyledModal = styled(Modal)`
 
   &.info-variant {
     .modal-header {
-      color: ${props => props.theme.css.darkBlue}; //$dark-blue;
-      background-color: ${props => props.theme.css.filterBoxColor}; //$filter-box-color;
+      color: ${props => props.theme.css.darkBlue};
+      background-color: ${props => props.theme.css.filterBoxColor};
     }
 
     .modal-close-btn {
-      color: ${props => props.theme.css.textColor}; //$text-color;
+      color: ${props => props.theme.css.textColor};
       cursor: pointer;
     }
   }
 
   &.error-variant {
     .modal-header {
-      color: ${props => props.theme.css.fontDangerColor}; //$font-danger-color;
-      background-color: ${props =>
-        props.theme.css.dangerBackgroundColor}; //$danger-background-color;
+      color: ${props => props.theme.css.fontDangerColor};
+      background-color: ${props => props.theme.css.dangerBackgroundColor};
     }
 
     .modal-close-btn {
-      color: ${props => props.theme.css.textColor}; //$text-color;
+      color: ${props => props.theme.css.textColor};
       cursor: pointer;
     }
   }
 
   &.warning-variant {
     .modal-header {
-      color: ${props => props.theme.css.fontWarningColor}; //$font-warning-color;
-      background-color: ${props => props.theme.css.summaryColor}; //$summary-color;
+      color: ${props => props.theme.css.fontWarningColor};
+      background-color: ${props => props.theme.css.summaryColor};
     }
 
     .modal-close-btn {
-      color: $text-color;
+      color: ${props => props.theme.css.textColor};
       cursor: pointer;
     }
   }

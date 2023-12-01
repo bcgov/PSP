@@ -233,7 +233,6 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
 }
 
 .c0.warning-variant .modal-close-btn {
-  color: $text-color;
   cursor: pointer;
 }
 
