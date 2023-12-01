@@ -949,7 +949,7 @@ namespace Pims.Api.Services
             var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
             AcquisitionStatusTypes currentAcquisitionStatus;
 
-            if (Enum.TryParse(currentAcquisitionFile?.AcquisitionFileStatusTypeCode, out currentAcquisitionStatus))
+            if (Enum.TryParse(currentAcquisitionFile.AcquisitionFileStatusTypeCode, out currentAcquisitionStatus))
             {
                 return currentAcquisitionStatus;
             }
