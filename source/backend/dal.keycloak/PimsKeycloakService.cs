@@ -20,7 +20,7 @@ namespace Pims.Dal.Keycloak
     public class PimsKeycloakService : IPimsKeycloakService
     {
         #region Variable
-        private readonly IKeycloakService _keycloakService;
+        private readonly IKeycloakRepository _keycloakRepository;
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IAccessRequestRepository _accessRequestRepository;
@@ -33,19 +33,19 @@ namespace Pims.Dal.Keycloak
         /// <summary>
         /// Creates a new instance of a PimsKeycloakService object, initializes with the specified arguments.
         /// </summary>
-        /// <param name="keycloakService"></param>
+        /// <param name="keycloakRepository"></param>
         /// <param name="userRepository"></param>
         /// <param name="roleRepository"></param>
         /// <param name="accessRequestRepository"></param>
         /// <param name="user"></param>
         public PimsKeycloakService(
-            IKeycloakService keycloakService,
+            IKeycloakRepository keycloakRepository,
             IUserRepository userRepository,
             IRoleRepository roleRepository,
             IAccessRequestRepository accessRequestRepository,
             ClaimsPrincipal user)
         {
-            _keycloakService = keycloakService;
+            _keycloakRepository = keycloakRepository;
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _accessRequestRepository = accessRequestRepository;
@@ -63,7 +63,7 @@ namespace Pims.Dal.Keycloak
         /// <returns></returns>
         public async Task<Entity.PimsUser> UpdateUserAsync(Entity.PimsUser user)
         {
-            var kuser = await _keycloakService.GetUserAsync(user.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
+            var kuser = await _keycloakRepository.GetUserAsync(user.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
             var euser = _userRepository.GetTrackingById(user.Internal_Id);
 
             return await SaveUserChanges(user, euser, kuser, true);
@@ -77,7 +77,7 @@ namespace Pims.Dal.Keycloak
         /// <returns></returns>
         public async Task<Entity.PimsUser> AppendToUserAsync(Entity.PimsUser update)
         {
-            var kuser = await _keycloakService.GetUserAsync(update.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
+            var kuser = await _keycloakRepository.GetUserAsync(update.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
             var euser = _userRepository.GetTrackingById(update.Internal_Id);
 
             return await SaveUserChanges(update, euser, kuser, true);
@@ -165,13 +165,13 @@ namespace Pims.Dal.Keycloak
             var roles = update.IsDisabled.HasValue && update.IsDisabled.Value ? System.Array.Empty<PimsRole>() : euser.PimsUserRoles.Select(ur => _roleRepository.Find(ur.RoleId));
 
             // Now update keycloak
-            var keycloakUserGroups = await _keycloakService.GetUserGroupsAsync(euser.GuidIdentifierValue.Value);
+            var keycloakUserGroups = await _keycloakRepository.GetUserGroupsAsync(euser.GuidIdentifierValue.Value);
             var newRolesToAdd = roles.Where(r => keycloakUserGroups.All(crr => crr.Name != r.Name));
             var rolesToRemove = keycloakUserGroups.Where(r => roles.All(crr => crr.Name != r.Name));
             var addOperations = newRolesToAdd.Select(nr => new UserRoleOperation() { Operation = "add", RoleName = nr.Name, Username = update.GetIdirUsername() });
             var removeOperations = rolesToRemove.Select(rr => new UserRoleOperation() { Operation = "del", RoleName = rr.Name, Username = update.GetIdirUsername() });
 
-            await _keycloakService.ModifyUserRoleMappings(addOperations.Concat(removeOperations));
+            await _keycloakRepository.ModifyUserRoleMappings(addOperations.Concat(removeOperations));
             _userRepository.CommitTransaction();
 
             return _userRepository.GetById(euser.Internal_Id);

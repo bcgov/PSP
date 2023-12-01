@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Pims.Tools.Keycloak.Sync.Configuration.Realm;
 
 namespace Pims.Tools.Keycloak.Sync.Models.Keycloak
@@ -5,9 +6,35 @@ namespace Pims.Tools.Keycloak.Sync.Models.Keycloak
     /// <summary>
     /// ProtocolMapperModel class, provides a model to represent a keycloak protocol mapper.
     /// </summary>
-    public class ProtocolMapperModel : Core.Keycloak.Models.ProtocolMapperModel
+    public class ProtocolMapperModel
     {
         #region Properties
+
+        /// <summary>
+        /// get/set - A primary key for the protocol mapper.
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// get/set - A unique name to identify the protocol mapper.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// get/set - A protocol.
+        /// </summary>
+        public string Protocol { get; set; }
+
+        /// <summary>
+        /// get/set - The protocol mapper.
+        /// </summary>
+        public string ProtocolMapper { get; set; }
+
+        /// <summary>
+        /// get/set - The protocol mapper configuration.
+        /// </summary>
+        public Dictionary<string, string> Config { get; set; }
+
         #endregion
 
         #region Constructors
