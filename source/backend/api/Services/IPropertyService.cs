@@ -37,5 +37,7 @@ namespace Pims.Api.Services
         PimsPropertyActivity UpdateActivity(PimsPropertyActivity propertyActivity);
 
         bool DeleteActivity(long activityId);
+
+        PimsProperty PopulateNewProperty(PimsProperty property);
     }
 }

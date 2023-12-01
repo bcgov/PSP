@@ -28,6 +28,7 @@ namespace Pims.Api.Services
         private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
         private readonly IMapper _mapper;
+        private readonly ILookupRepository _lookupRepository;
 
         public PropertyService(
             ClaimsPrincipal user,
@@ -37,7 +38,8 @@ namespace Pims.Api.Services
             IPropertyActivityRepository propertyActivityRepository,
             ICoordinateTransformService coordinateService,
             IPropertyLeaseRepository propertyLeaseRepository,
-            IMapper mapper)
+            IMapper mapper,
+            ILookupRepository lookupRepository)
         {
             _user = user;
             _logger = logger;
@@ -47,6 +49,7 @@ namespace Pims.Api.Services
             _coordinateService = coordinateService;
             _propertyLeaseRepository = propertyLeaseRepository;
             _mapper = mapper;
+            _lookupRepository = lookupRepository;
         }
 
         public PimsProperty GetById(long id)
@@ -268,6 +271,49 @@ namespace Pims.Api.Services
             _propertyRepository.CommitTransaction();
 
             return success;
+        }
+
+        public PimsProperty PopulateNewProperty(PimsProperty property)
+        {
+            property.PropertyClassificationTypeCode = "UNKNOWN";
+            property.PropertyDataSourceEffectiveDate = System.DateTime.Now;
+            property.PropertyDataSourceTypeCode = "PMBC";
+
+            property.PropertyTypeCode = "UNKNOWN";
+
+            property.PropertyStatusTypeCode = "UNKNOWN";
+            property.SurplusDeclarationTypeCode = "UNKNOWN";
+
+            property.IsPropertyOfInterest = true;
+
+            if (property.Address != null)
+            {
+                var provinceId = _lookupRepository.GetAllProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
+                if (provinceId.HasValue)
+                {
+                    property.Address.ProvinceStateId = provinceId.Value;
+                }
+                property.Address.CountryId = _lookupRepository.GetAllCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
+            }
+
+            // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
+            var geom = property.Location;
+            if (geom.SRID != SpatialReference.BCALBERS)
+            {
+                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
+            }
+
+            // apply similar logic to the boundary
+            var boundaryGeom = property.Boundary;
+            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
+            {
+                var newCoords = property.Boundary.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
+                var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
+                property.Boundary = gf.CreatePolygon(newCoords.ToArray());
+            }
+
+            return property;
         }
 
         private Point TransformCoordinates(Geometry location)

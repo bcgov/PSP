@@ -3,7 +3,7 @@ import { MdAirlineStops } from 'react-icons/md';
 import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import MapSideBarLayout from '../../layout/MapSideBarLayout';
 import SidebarFooter from '../../shared/SidebarFooter';
@@ -15,8 +15,12 @@ export interface AddDispositionContainerViewProps {
   dispositionInitialValues: DispositionFormModel;
   loading: boolean;
   displayFormInvalid: boolean;
-  onSubmit: (dispositionFile: Api_DispositionFile) => Promise<Api_DispositionFile | undefined>;
-  onSuccess: (dispositionFile: Api_DispositionFile) => Promise<void>;
+  // onSubmit: (dispositionFile: Api_DispositionFile) => Promise<Api_DispositionFile | undefined>;
+  onSubmit: (
+    values: DispositionFormModel,
+    setSubmitting: (isSubmitting: boolean) => void,
+    userOverrides: UserOverrideCode[],
+  ) => void | Promise<any>;
   onCancel: () => void;
   onSave: () => void;
 }
@@ -29,7 +33,6 @@ const AddDispositionContainerView: React.FunctionComponent<
   loading,
   displayFormInvalid,
   onSubmit,
-  onSuccess,
   onSave,
   onCancel,
 }) => {
@@ -62,7 +65,6 @@ const AddDispositionContainerView: React.FunctionComponent<
           ref={formikRef}
           initialValues={dispositionInitialValues}
           onSubmit={onSubmit}
-          onSuccess={onSuccess}
         ></DispositionForm>
       </StyledFormWrapper>
     </MapSideBarLayout>

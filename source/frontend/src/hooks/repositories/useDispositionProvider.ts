@@ -4,6 +4,7 @@ import { useCallback, useMemo } from 'react';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_DispositionFile, Api_DispositionFileProperty } from '@/models/api/DispositionFile';
 import { Api_LastUpdatedBy } from '@/models/api/File';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandler, useAxiosErrorHandlerWithAuthorization } from '@/utils';
 
 import { useApiDispositionFile } from '../useApiDispositionFile';
@@ -20,10 +21,14 @@ export const useDispositionProvider = () => {
   } = useApiDispositionFile();
 
   const addDispositionFileApi = useApiRequestWrapper<
-    (dispositionFile: Api_DispositionFile) => Promise<AxiosResponse<Api_DispositionFile, any>>
+    (
+      dispositionFile: Api_DispositionFile,
+      userOverrideCodes: UserOverrideCode[],
+    ) => Promise<AxiosResponse<Api_DispositionFile, any>>
   >({
     requestFunction: useCallback(
-      async (dispositionFile: Api_DispositionFile) => await postDispositionFileApi(dispositionFile),
+      async (dispositionFile: Api_DispositionFile, useOverride: UserOverrideCode[] = []) =>
+        await postDispositionFileApi(dispositionFile, useOverride),
       [postDispositionFileApi],
     ),
     requestName: 'AddDispositionFile',

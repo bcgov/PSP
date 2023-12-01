@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Api_DispositionFile, Api_DispositionFileProperty } from '@/models/api/DispositionFile';
 import { Api_LastUpdatedBy } from '@/models/api/File';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import useAxiosApi from './pims-api/useApi';
 
@@ -14,8 +15,14 @@ export const useApiDispositionFile = () => {
 
   return React.useMemo(
     () => ({
-      postDispositionFileApi: (dispositionFile: Api_DispositionFile) =>
-        api.post<Api_DispositionFile>('/dispositionfiles', dispositionFile),
+      postDispositionFileApi: (
+        dispositionFile: Api_DispositionFile,
+        userOverrideCodes: UserOverrideCode[] = [],
+      ) =>
+        api.post<Api_DispositionFile>(
+          `/dispositionfiles?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
+          dispositionFile,
+        ),
       getDispositionFile: (dispositionFileId: number) =>
         api.get<Api_DispositionFile>(`/dispositionfiles/${dispositionFileId}`),
       getLastUpdatedByApi: (dispositionFileId: number) =>

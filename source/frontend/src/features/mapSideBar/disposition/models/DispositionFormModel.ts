@@ -1,6 +1,7 @@
 import { Api_DispositionFile, Api_DispositionFileTeam } from '@/models/api/DispositionFile';
 import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
+import { PropertyForm } from '../../shared/models';
 import { DispositionTeamSubFormModel, WithDispositionTeam } from './DispositionTeamSubFormModel';
 
 export class DispositionFormModel implements WithDispositionTeam {
@@ -19,6 +20,7 @@ export class DispositionFormModel implements WithDispositionTeam {
   initiatingDocumentTypeOther: string | null = '';
   initiatingDocumentDate: string | null = null;
   regionCode: string | null = '';
+  fileProperties: PropertyForm[] = [];
   team: DispositionTeamSubFormModel[] = [];
 
   constructor(

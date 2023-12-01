@@ -11,6 +11,7 @@ using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -82,11 +83,11 @@ namespace Pims.Api.Areas.Disposition.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        //[HasPermission(Permissions.DispositionAdd)]
+        [HasPermission(Permissions.DispositionAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(DispositionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
-        public IActionResult AddDispositionFile([FromBody] DispositionFileModel model)
+        public IActionResult AddDispositionFile([FromBody] DispositionFileModel model, [FromQuery] string[] userOverrideCodes)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -97,7 +98,8 @@ namespace Pims.Api.Areas.Disposition.Controllers
 
             _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
 
-            var dispositionFile = _dispositionService.Add(_mapper.Map<Dal.Entities.PimsDispositionFile>(model));
+            var dispositionFileEntity = _mapper.Map<Dal.Entities.PimsDispositionFile>(model);
+            var dispositionFile = _dispositionService.Add(dispositionFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
 
             return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
         }

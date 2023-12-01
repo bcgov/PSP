@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -19,28 +21,36 @@ namespace Pims.Api.Services
         private readonly IDispositionFileRepository _dispositionFileRepository;
         private readonly IDispositionFilePropertyRepository _dispositionFilePropertyRepository;
         private readonly ICoordinateTransformService _coordinateService;
+        private readonly IPropertyRepository _propertyRepository;
+        private readonly IPropertyService _propertyService;
 
         public DispositionFileService(
             ClaimsPrincipal user,
             ILogger<DispositionFileService> logger,
             IDispositionFileRepository dispositionFileRepository,
             IDispositionFilePropertyRepository dispositionFilePropertyRepository,
-            ICoordinateTransformService coordinateService)
+            ICoordinateTransformService coordinateService,
+            IPropertyRepository propertyRepository,
+            IPropertyService propertyService)
         {
             _user = user;
             _logger = logger;
             _dispositionFileRepository = dispositionFileRepository;
             _dispositionFilePropertyRepository = dispositionFilePropertyRepository;
             _coordinateService = coordinateService;
+            _propertyRepository = propertyRepository;
+            _propertyService = propertyService;
         }
 
-        public PimsDispositionFile Add(PimsDispositionFile dispositionFile)
+        public PimsDispositionFile Add(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
             _logger.LogInformation("Creating Disposition File {dispositionFile}", dispositionFile);
             _user.ThrowIfNotAuthorized(Permissions.DispositionAdd);
 
             dispositionFile.DispositionStatusTypeCode ??= EnumDispositionStatusTypeCode.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= EnumDispositionFileStatusTypeCode.ACTIVE.ToString();
+
+            MatchProperties(dispositionFile, userOverrides);
 
             _dispositionFileRepository.Add(dispositionFile);
             _dispositionFilePropertyRepository.CommitTransaction();
@@ -89,5 +99,69 @@ namespace Pims.Api.Services
                 }
             }
         }
+
+        private void MatchProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> overrideCodes)
+        {
+            foreach (var dispProperty in dispositionFile.PimsPropertyDispositionFiles)
+            {
+                if (dispProperty.Property.Pid.HasValue)
+                {
+                    var pid = dispProperty.Property.Pid.Value;
+                    try
+                    {
+                        var foundProperty = _propertyRepository.GetByPid(pid);
+                        dispProperty.PropertyId = foundProperty.Internal_Id;
+                        dispProperty.Property = foundProperty;
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        if (overrideCodes.Contains(UserOverrideCode.DisposingPropertyNotInventoried))
+                        {
+                            _logger.LogDebug("Adding new property with pid:{pid}", pid);
+                            dispProperty.Property = _propertyService.PopulateNewProperty(dispProperty.Property);
+                        }
+                        else
+                        {
+                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?");
+                        }
+                    }
+                }
+                else if (dispProperty.Property.Pin.HasValue)
+                {
+                    var pin = dispProperty.Property.Pin.Value;
+                    try
+                    {
+                        var foundProperty = _propertyRepository.GetByPin(pin);
+                        dispProperty.PropertyId = foundProperty.Internal_Id;
+                        dispProperty.Property = foundProperty;
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        if (overrideCodes.Contains(UserOverrideCode.DisposingPropertyNotInventoried))
+                        {
+                            _logger.LogDebug("Adding new property with pin:{pin}", pin);
+                            dispProperty.Property = _propertyService.PopulateNewProperty(dispProperty.Property);
+                        }
+                        else
+                        {
+                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?");
+                        }
+                    }
+                }
+                else
+                {
+                    if (overrideCodes.Contains(UserOverrideCode.DisposingPropertyNotInventoried))
+                    {
+                        _logger.LogDebug("Adding new property without a pid");
+                        dispProperty.Property = _propertyService.PopulateNewProperty(dispProperty.Property);
+                    }
+                    else
+                    {
+                        throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?");
+                    }
+                }
+            }
+        }
+
     }
 }

@@ -1,10 +1,12 @@
 import { FormikProps } from 'formik';
 import { useCallback, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
 
+import useAddDispositionFormManagement from '../hooks/useAddDispositionFormManagement';
 import { DispositionFormModel } from '../models/DispositionFormModel';
 import { AddDispositionContainerViewProps } from './AddDispositionContainerView';
 
@@ -17,11 +19,9 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
   const formikRef = useRef<FormikProps<DispositionFormModel>>(null);
 
+  const mapMachine = useMapStateMachine();
   const history = useHistory();
 
-  const {
-    addDispositionFileApi: { execute: addDispositionFileApi, loading },
-  } = useDispositionProvider();
   const initialValuesForm = new DispositionFormModel();
 
   const handleCancel = useCallback(() => onClose && onClose(), [onClose]);
@@ -38,25 +38,26 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
     formikRef.current?.submitForm();
   };
 
-  const handleSubmit = async (financialCode: Api_DispositionFile) => {
-    return addDispositionFileApi(financialCode);
+  const handleSuccesss = async (disposition: Api_DispositionFile) => {
+    toast.success(`Financial code saved`);
+    mapMachine.refreshMapProperties();
+    history.replace(`/mapview/sidebar/disposition/${disposition.id}`);
   };
 
-  const handleSuccesss = async (disposition: Api_DispositionFile) => {
-    // toast.success(`Financial code saved`);
-    history.replace(`/admin/financial-code/list`);
-  };
+  const helper = useAddDispositionFormManagement({
+    onSuccess: handleSuccesss,
+    formikRef,
+  });
 
   return (
     <View
       formikRef={formikRef}
       dispositionInitialValues={initialValuesForm}
-      loading={loading}
+      loading={helper.loading}
       displayFormInvalid={!isFormValid}
       onSave={handleSave}
       onCancel={handleCancel}
-      onSubmit={handleSubmit}
-      onSuccess={handleSuccesss}
+      onSubmit={helper.handleSubmit}
     ></View>
   );
 };

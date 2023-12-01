@@ -10,21 +10,25 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { AddDispositionFormYupSchema } from '../models/AddDispositionFormYupSchema';
 import { DispositionFormModel } from '../models/DispositionFormModel';
+import DispositionPropertiesSubForm from './DispositionPropertiesSubForm';
 import DispositionTeamSubForm from './DispositionTeamSubForm';
 
 export interface IDispositionFormProps {
   initialValues: DispositionFormModel;
-  onSubmit: (dispositionFile: Api_DispositionFile) => Promise<Api_DispositionFile | undefined>;
-  onSuccess: (dispositionFile: Api_DispositionFile) => Promise<void>;
+  onSubmit: (
+    values: DispositionFormModel,
+    setSubmitting: (isSubmitting: boolean) => void,
+    userOverrides: UserOverrideCode[],
+  ) => void | Promise<any>;
 }
 
 const DispositionForm = React.forwardRef<FormikProps<DispositionFormModel>, IDispositionFormProps>(
   (props, ref) => {
-    const { initialValues, onSubmit, onSuccess } = props;
+    const { initialValues, onSubmit } = props;
     const { getOptionsByType } = useLookupCodeHelpers();
 
     const dispositionFundingTypes = getOptionsByType(API.DISPOSITION_FUNDING_TYPES);
@@ -47,12 +51,7 @@ const DispositionForm = React.forwardRef<FormikProps<DispositionFormModel>, IDis
         initialValues={initialValues}
         validationSchema={AddDispositionFormYupSchema}
         onSubmit={async (values, formikHelpers) => {
-          const createdCode = await onSubmit(values.toApi());
-          if (!!createdCode?.id) {
-            await onSuccess(createdCode);
-          } else {
-            formikHelpers.setSubmitting(false);
-          }
+          onSubmit(values, formikHelpers.setSubmitting, []);
         }}
       >
         {formikProps => {
@@ -78,6 +77,10 @@ const DispositionForm = React.forwardRef<FormikProps<DispositionFormModel>, IDis
                   <SectionField label="Disposition completed date">
                     <FastDatePicker field="completionDate" formikProps={formikProps} />
                   </SectionField>
+                </Section>
+
+                <Section header="Properties to include in this file:">
+                  <DispositionPropertiesSubForm formikProps={formikProps} />
                 </Section>
 
                 <Section header="Disposition Details">
