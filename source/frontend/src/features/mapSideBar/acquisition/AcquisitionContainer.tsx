@@ -199,10 +199,10 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     if (isEditing) {
       if (formikRef?.current?.dirty) {
         handleCancelClick(() => navigateToMenuRoute(selectedIndex));
+        return;
       }
-    } else {
-      navigateToMenuRoute(selectedIndex);
     }
+    navigateToMenuRoute(selectedIndex);
   };
 
   const onShowPropertySelector = () => {

@@ -182,10 +182,10 @@ namespace Pims.Dal.Repositories
         {
             using var scope = Logger.QueryScope();
 
-            return this.Context.PimsDispositionFiles.AsNoTracking()
+            var result = this.Context.PimsDispositionFiles.AsNoTracking()
                 .Where(p => p.DispositionFileId == id)?
-                .Select(p => p.ConcurrencyControlNumber)?
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
+            return result.ConcurrencyControlNumber;
         }
 
         /// <summary>

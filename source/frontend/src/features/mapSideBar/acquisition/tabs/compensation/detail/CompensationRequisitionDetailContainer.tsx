@@ -91,11 +91,10 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
   return compensation ? (
     <View
       loading={loading || loadingPerson || loadingOrganization}
+      acquisitionFile={acquisitionFile}
       compensation={compensation}
       compensationContactPerson={payeePerson}
       compensationContactOrganization={payeeOrganization}
-      acqFileProject={acquisitionFile?.project}
-      acqFileProduct={acquisitionFile?.product}
       setEditMode={setEditMode}
       clientConstant={clientConstant}
       onGenerate={onGenerate}

@@ -418,6 +418,11 @@ namespace Pims.Dal.Repositories
             return Context.PimsDspFlTeamProfileTypes.AsNoTracking().ToArray();
         }
 
+        public IEnumerable<PimsDispositionStatusType> GetAllDispositionStatusTypes()
+        {
+            return Context.PimsDispositionStatusTypes.AsNoTracking().ToArray();
+        }
+
         #endregion
     }
 }

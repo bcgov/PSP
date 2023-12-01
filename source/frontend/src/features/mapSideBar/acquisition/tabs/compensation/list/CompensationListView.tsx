@@ -9,26 +9,28 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import Claims from '@/constants/claims';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { formatMoney } from '@/utils';
 
+import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 import { CompensationResults } from './CompensationResults';
 
 export interface ICompensationListViewProps {
+  acquisitionFile: Api_AcquisitionFile;
   compensations: Api_CompensationRequisition[];
   onAdd: () => void;
   onDelete: (compensationId: number) => void;
   onUpdateTotalCompensation: (totalAllowableCompensation: number | null) => Promise<number | null>;
-  totalAllowableCompensation?: number;
 }
 
 export const CompensationListView: React.FunctionComponent<ICompensationListViewProps> = ({
+  acquisitionFile,
   compensations,
   onAdd,
   onDelete,
   onUpdateTotalCompensation: onUpdateCompensation,
-  totalAllowableCompensation,
 }) => {
   const history = useHistory();
   const match = useRouteMatch();
@@ -59,13 +61,17 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
       return fileTotal + compensationTotal;
     }, 0);
 
+  const totalAllowableCompensation = acquisitionFile?.totalAllowableCompensation || 0;
+
+  const statusSolver = new StatusUpdateSolver(acquisitionFile);
+
   return (
     <>
       <StyledSection
         header={
           <SectionListHeader
             claims={[Claims.COMPENSATION_REQUISITION_ADD]}
-            title="Add Compensation"
+            title="Compensation Requisitions"
             addButtonText="Add a Requisition"
             addButtonIcon={<FaPlus size={'2rem'} />}
             onAdd={onAdd}
@@ -127,6 +133,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
       <Section header="Requisitions in this file (H120)" isCollapsable initiallyExpanded>
         <CompensationResults
           results={compensations}
+          statusSolver={statusSolver}
           onShow={(compensationId: number) => {
             history.push(`${match.url}/compensation-requisition/${compensationId}`);
           }}

@@ -104,7 +104,7 @@ export const AcquisitionListView: React.FunctionComponent<
               <AcquisitionFilter
                 filter={filter}
                 setFilter={changeFilter}
-                aquisitionTeam={team || []}
+                acquisitionTeam={team || []}
               />
             </Col>
             <Col md="auto" className="px-0">
