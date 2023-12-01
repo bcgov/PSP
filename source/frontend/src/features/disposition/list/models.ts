@@ -40,8 +40,8 @@ export class DispositionFilterModel {
       dispositionTypeCode: this.dispositionTypeCode,
       // disposition team members
       teamMemberPersonId:
-        personMemberId && isNumber(personMemberId) ? Number(personMemberId) : null,
-      teamMemberOrganizationId: orgMemberId && isNumber(orgMemberId) ? Number(orgMemberId) : null,
+        personMemberId && isNumber(+personMemberId) ? Number(personMemberId) : null,
+      teamMemberOrganizationId: orgMemberId && isNumber(+orgMemberId) ? Number(orgMemberId) : null,
     };
   }
 
