@@ -77,6 +77,8 @@ export interface ModalContent {
   closeButton?: boolean;
   /** provide the size of the modal, default width is 50.0rem */
   modalSize?: ModalSize;
+  variant: 'info' | 'warning' | 'error';
+  //variant?: string;
   className?: string;
   /** display this modal as a popup instead of as a modal, allowing the user to click on underlying elements */
   asPopup?: boolean;
@@ -106,6 +108,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     closeButton,
     hideFooter,
     modalSize,
+    variant,
     className,
     headerIcon,
     ...rest
@@ -144,7 +147,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
       return <>{headerIcon}</>;
     }
 
-    switch (className) {
+    switch (variant) {
       case 'info':
       case 'warning': {
         return <FaExclamationCircle size={22} />;
@@ -158,15 +161,36 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     }
   };
 
+  function getVariantClass() {
+    switch (variant) {
+      case 'info':
+        return 'info-variant';
+      case 'warning': {
+        return 'warning-variant';
+      }
+      case 'error': {
+        return 'error-variant';
+      }
+      default: {
+        return 'info-variant';
+      }
+    }
+  }
+
+  function getModalClass() {
+    return (className || '') + '  ' + getVariantClass();
+  }
+
   const headerIconValue = getHeaderIcon();
 
   return (
     <ModalContainer
       {...rest}
+      variant={variant}
       show={showState}
       modalSize={modalSize}
       onHide={noop}
-      className={className}
+      className={getModalClass()}
     >
       <Modal.Header closeButton={closeButton} onHide={close}>
         <Modal.Title>
@@ -236,6 +260,113 @@ const StyledModal = styled(Modal)`
       font-weight: 10;
       text-shadow: none;
       font-family: 'Helvetica Narrow';
+    }
+  }
+
+  .modal-header {
+    height: 4.8rem;
+    padding: 0 1.6rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: ${props => props.theme.css.primaryBackgroundColor};
+    background-color: ${props => props.theme.css.primaryColor};
+
+    .modal-title {
+      font-family: BcSans-Bold;
+      font-size: 2.2rem;
+      height: 2.75rem;
+      height: auto;
+    }
+
+    .header-icon {
+      margin-right: 8px;
+      display: inline-block;
+    }
+
+    .modal-close-btn {
+      cursor: pointer;
+    }
+  }
+
+  .modal-body {
+    padding: 2.4rem 1.8rem;
+    font-size: 1.8rem;
+  }
+
+  .modal-footer {
+    border-top: none;
+
+    hr {
+      width: 100%;
+    }
+
+    .button-wrap {
+      display: inline-flex;
+      margin-top: 2.4rem;
+      margin-bottom: 2.4rem;
+
+      button {
+        margin-right: 2.4rem;
+        min-width: 9.5rem;
+        height: 3.9rem;
+      }
+    }
+  }
+
+  .close {
+    color: black;
+  }
+
+  &.modal-xl {
+    max-width: 100rem;
+  }
+
+  &.modal-l {
+    max-width: 75rem;
+  }
+
+  &.modal-m {
+    max-width: 50rem;
+  }
+
+  &.modal-s {
+    max-width: 40rem;
+  }
+
+  &.info-variant {
+    .modal-header {
+      color: ${props => props.theme.css.darkBlue};
+      background-color: ${props => props.theme.css.filterBoxColor};
+    }
+
+    .modal-close-btn {
+      color: ${props => props.theme.css.textColor};
+      cursor: pointer;
+    }
+  }
+
+  &.error-variant {
+    .modal-header {
+      color: ${props => props.theme.css.fontDangerColor};
+      background-color: ${props => props.theme.css.dangerBackgroundColor};
+    }
+
+    .modal-close-btn {
+      color: ${props => props.theme.css.textColor};
+      cursor: pointer;
+    }
+  }
+
+  &.warning-variant {
+    .modal-header {
+      color: ${props => props.theme.css.fontWarningColor};
+      background-color: ${props => props.theme.css.summaryColor};
+    }
+
+    .modal-close-btn {
+      color: ${props => props.theme.css.textColor};
+      cursor: pointer;
     }
   }
 `;

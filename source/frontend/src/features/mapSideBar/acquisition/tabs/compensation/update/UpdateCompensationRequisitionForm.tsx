@@ -325,6 +325,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
             </StyledFooter>
 
             <GenericModal
+              variant="info"
               display={showModal}
               title="Confirm status change"
               message={[
@@ -346,14 +347,14 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
             />
 
             <GenericModal
+              variant="error"
               display={showAltProjectError}
               className="error"
               title="Alternate Project Error"
               message={[
-                <strong>Error: </strong>,
-                `You have selected an alternate project that is the same as the file project, please select a different project`,
+                `You have selected an alternate project that is the same as the file project, please select a different project.`,
               ]}
-              okButtonText="Ok"
+              okButtonText="Close"
               handleOk={() => {
                 setShowAltProjectError(false);
                 formikRef.current?.setFieldValue('alternateProject', '');

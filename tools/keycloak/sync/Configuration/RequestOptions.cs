@@ -1,4 +1,4 @@
-namespace Pims.Tools.Core.Configuration
+namespace Pims.Tools.Keycloak.Sync.Configuration
 {
     /// <summary>
     /// RequestOptions class, provides a way to configure requests.

@@ -42,7 +42,7 @@ export const NotesModal: React.FunctionComponent<React.PropsWithChildren<INotesM
         <FaRegFileAlt />
       </StyledIconButton>
       <GenericModal
-        className="info"
+        variant="info"
         display={showNotes}
         setDisplay={setShowNotes}
         title={title}

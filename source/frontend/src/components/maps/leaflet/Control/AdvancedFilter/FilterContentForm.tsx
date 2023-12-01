@@ -1,5 +1,3 @@
-//import './Legend.scss';
-
 import { Form, Formik, useFormikContext } from 'formik';
 import { noop } from 'lodash';
 import React, { useEffect, useMemo } from 'react';

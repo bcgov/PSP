@@ -173,6 +173,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
             </LinkButton>
 
             <GenericModal
+              variant="warning"
               display={showModal}
               title="Remove financial activity"
               message={'Are you sure you want to remove this financial activity?'}
