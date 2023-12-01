@@ -1,6 +1,8 @@
 using Mapster;
 using Pims.Api.Helpers.Extensions;
+using Pims.Core.Extensions;
 using Pims.Dal.Helpers.Extensions;
+using System;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts
@@ -19,8 +21,8 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.TfaFileNumber, src => src.TfaFileNumber)
                 .Map(dest => dest.PsFileNo, src => src.PsFileNo)
                 .Map(dest => dest.MotiName, src => src.GetMotiName())
-                .Map(dest => dest.ExpiryDate, src => src.GetExpiryDate())
-                .Map(dest => dest.StartDate, src => src.OrigStartDate)
+                .Map(dest => dest.ExpiryDate, src => src.GetExpiryDate().ToNullableDateOnly())
+                .Map(dest => dest.StartDate, src => DateOnly.FromDateTime(src.OrigStartDate))
                 .Map(dest => dest.ProgramName, src => src.GetProgramName())
                 .Map(dest => dest.OtherCategoryType, src => src.LeaseCategoryOtherDesc)
                 .Map(dest => dest.OtherProgramType, src => src.OtherLeaseProgramType)
@@ -35,7 +37,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PurposeType, src => src.LeasePurposeTypeCodeNavigation)
                 .Map(dest => dest.StatusType, src => src.LeaseStatusTypeCodeNavigation)
                 .Map(dest => dest.ResponsibilityType, src => src.LeaseResponsibilityTypeCodeNavigation)
-                .Map(dest => dest.ResponsibilityEffectiveDate, src => src.ResponsibilityEffectiveDate)
+                .Map(dest => dest.ResponsibilityEffectiveDate, src => src.ResponsibilityEffectiveDate.ToNullableDateOnly())
                 .Map(dest => dest.DocumentationReference, src => src.DocumentationReference)
                 .Map(dest => dest.Note, src => src.LeaseNotes)
                 .Map(dest => dest.Description, src => src.LeaseDescription)
@@ -66,8 +68,8 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.OtherLeasePurposeType, src => src.OtherPurposeType)
                 .Map(dest => dest.LeasePurposeOtherDesc, src => src.OtherPurposeType)
                 .Map(dest => dest.OtherLeaseLicenseType, src => src.OtherType)
-                .Map(dest => dest.OrigExpiryDate, src => src.ExpiryDate)
-                .Map(dest => dest.OrigStartDate, src => src.StartDate)
+                .Map(dest => dest.OrigExpiryDate, src => src.ExpiryDate.ToNullableDateTime())
+                .Map(dest => dest.OrigStartDate, src => src.StartDate.ToDateTime(TimeOnly.MinValue))
                 .Map(dest => dest.RegionCode, src => src.Region.Id)
                 .Map(dest => dest.LeaseProgramTypeCode, src => src.ProgramType.GetTypeId())
                 .Map(dest => dest.LeasePayRvblTypeCode, src => src.PaymentReceivableType.GetTypeId())
@@ -77,7 +79,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.LeasePurposeTypeCode, src => src.PurposeType.GetTypeId())
                 .Map(dest => dest.LeaseResponsibilityTypeCode, src => src.ResponsibilityType.GetTypeId())
                 .Map(dest => dest.LeaseStatusTypeCode, src => src.StatusType.GetTypeId())
-                .Map(dest => dest.ResponsibilityEffectiveDate, src => src.ResponsibilityEffectiveDate)
+                .Map(dest => dest.ResponsibilityEffectiveDate, src => src.ResponsibilityEffectiveDate.ToNullableDateTime())
                 .Map(dest => dest.DocumentationReference, src => src.DocumentationReference)
                 .Map(dest => dest.LeaseNotes, src => src.Note)
                 .Map(dest => dest.LeaseDescription, src => src.Description)

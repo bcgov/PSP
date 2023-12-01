@@ -151,6 +151,9 @@ namespace Pims.Dal.Helpers.Extensions
         {
             filter.ThrowIfNull(nameof(filter));
 
+            var filterExpiryStartDate = filter.ExpiryStartDate.ToNullableDateTime();
+            var filterExpiryEndDate = filter.ExpiryEndDate.ToNullableDateTime();
+
             query = query.Where(l => !l.RegionCode.HasValue || regions.Contains(l.RegionCode.Value));
 
             if (!string.IsNullOrWhiteSpace(filter.TenantName))
@@ -220,15 +223,15 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (filter.ExpiryStartDate != null && filter.ExpiryEndDate != null)
             {
-                query = query.Where(l => l.OrigExpiryDate >= filter.ExpiryStartDate && l.OrigExpiryDate <= filter.ExpiryEndDate);
+                query = query.Where(l => l.OrigExpiryDate >= filterExpiryStartDate && l.OrigExpiryDate <= filterExpiryEndDate);
             }
             else if (filter.ExpiryStartDate != null)
             {
-                query = query.Where(l => l.OrigExpiryDate >= filter.ExpiryStartDate);
+                query = query.Where(l => l.OrigExpiryDate >= filterExpiryStartDate);
             }
             else if (filter.ExpiryEndDate != null)
             {
-                query = query.Where(l => l.OrigExpiryDate <= filter.ExpiryEndDate);
+                query = query.Where(l => l.OrigExpiryDate <= filterExpiryEndDate);
             }
 
             if (filter.RegionType.HasValue)

@@ -262,6 +262,18 @@ namespace Pims.Core.Extensions
         }
 
         /// <summary>
+        /// Get the value from the dictionary for the specified 'key' and return it as an DateTime.
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <param name="key"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static DateOnly? GetDateOnlyNullValue(this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key, DateOnly? defaultValue = null)
+        {
+            return dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues dValue) && DateOnly.TryParse(dValue, out DateOnly value) ? value : defaultValue;
+        }
+
+        /// <summary>
         /// Get the value from the dictionary for the specified 'key' and return it as an Enum of type 'T'.
         /// </summary>
         /// <typeparam name="T"></typeparam>

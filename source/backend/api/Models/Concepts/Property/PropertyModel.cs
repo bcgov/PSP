@@ -238,7 +238,7 @@ namespace Pims.Api.Models.Concepts
 
         public string SurplusDeclarationComment { get; set; }
 
-        public DateTime SurplusDeclarationDate { get; set; }
+        public DateOnly SurplusDeclarationDate { get; set; }
         #endregion
 
         #endregion

@@ -8,6 +8,7 @@ import {
   PropertyTenureTypes,
 } from '@/constants/index';
 import { IAddress, IOrganization } from '@/interfaces';
+import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 
 import IPropertySurplus from './IPropertySurplus';
 import ITypeCode from './ITypeCode';
@@ -58,7 +59,7 @@ export interface IProperty {
   organizations?: IOrganization[];
   surplusDeclaration?: IPropertySurplus;
 
-  appCreateTimestamp?: Date | string | Moment;
+  appCreateTimestamp?: UtcIsoDateTime;
   updatedOn?: Date | string | Moment;
   updatedByEmail?: string;
   updatedByName?: string;

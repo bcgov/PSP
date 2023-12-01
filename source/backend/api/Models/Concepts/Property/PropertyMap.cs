@@ -1,4 +1,6 @@
 using Mapster;
+using Pims.Core.Extensions;
+using System;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts
@@ -22,7 +24,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.GeneralLocation, src => src.GeneralLocation)
 
                 .Map(dest => dest.DataSource, src => src.PropertyDataSourceTypeCodeNavigation)
-                .Map(dest => dest.DataSourceEffectiveDate, src => src.PropertyDataSourceEffectiveDate)
+                .Map(dest => dest.DataSourceEffectiveDate, src => DateOnly.FromDateTime(src.PropertyDataSourceEffectiveDate))
 
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
@@ -61,7 +63,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Longitude, src => src.Location.Coordinate.X)
 
                 .Map(dest => dest.SurplusDeclarationComment, src => src.SurplusDeclarationComment)
-                .Map(dest => dest.SurplusDeclarationDate, src => src.SurplusDeclarationDate)
+                .Map(dest => dest.SurplusDeclarationDate, src => src.SurplusDeclarationDate.ToNullableDateOnly())
                 .Map(dest => dest.SurplusDeclarationType, src => src.SurplusDeclarationTypeCodeNavigation)
 
                 .Inherits<Entity.IBaseEntity, Api.Models.BaseModel>();

@@ -42,6 +42,6 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The expiry date of the lease when there is only ONE lease for this property (regardless of status).
         /// This field is null when the lease does not expire.
         /// </summary>
-        public DateTime? LeaseExpiryDate { get; set; }
+        public DateOnly? LeaseExpiryDate { get; set; }
     }
 }

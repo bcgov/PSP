@@ -28,7 +28,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - Security deposit date.
         /// </summary>
-        public DateTime? DepositDate { get; set; }
+        public DateOnly? DepositDateOnly { get; set; }
 
         /// <summary>
         /// get/set - Security deposit type.

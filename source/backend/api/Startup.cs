@@ -46,6 +46,7 @@ using Pims.Av;
 using Pims.Core.Converters;
 using Pims.Core.Http;
 using Pims.Core.Http.Configuration;
+using Pims.Core.Json;
 using Pims.Dal;
 using Pims.Dal.Keycloak;
 using Pims.Geocoder;
@@ -138,6 +139,7 @@ namespace Pims.Api
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                     options.JsonSerializerOptions.Converters.Add(new Int32ToStringJsonConverter());
                     options.JsonSerializerOptions.Converters.Add(new GeometryJsonConverter());
+                    options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
                 });
 
             services.AddMvcCore()
@@ -150,6 +152,7 @@ namespace Pims.Api
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                     options.JsonSerializerOptions.Converters.Add(new Int32ToStringJsonConverter());
                     options.JsonSerializerOptions.Converters.Add(new GeometryJsonConverter());
+                    options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
                 });
 
             services.AddAuthentication(options =>

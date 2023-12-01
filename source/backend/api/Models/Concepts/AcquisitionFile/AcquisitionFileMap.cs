@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Core.Extensions;
 using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 
@@ -21,8 +22,8 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.FundingTypeCode, src => src.AcquisitionFundingTypeCodeNavigation)
                 .Map(dest => dest.FundingOther, src => src.FundingOther)
                 .Map(dest => dest.AssignedDate, src => src.AssignedDate)
-                .Map(dest => dest.DeliveryDate, src => src.DeliveryDate)
-                .Map(dest => dest.CompletionDate, src => src.CompletionDate)
+                .Map(dest => dest.DeliveryDate, src => src.DeliveryDate.ToNullableDateOnly())
+                .Map(dest => dest.CompletionDate, src => src.CompletionDate.ToNullableDateOnly())
                 .Map(dest => dest.TotalAllowableCompensation, src => src.TotalAllowableCompensation)
                 .Map(dest => dest.FileStatusTypeCode, src => src.AcquisitionFileStatusTypeCodeNavigation)
                 .Map(dest => dest.AcquisitionPhysFileStatusTypeCode, src => src.AcqPhysFileStatusTypeCodeNavigation)
@@ -48,8 +49,8 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.AcquisitionFundingTypeCode, src => src.FundingTypeCode.Id)
                 .Map(dest => dest.FundingOther, src => src.FundingOther)
                 .Map(dest => dest.AssignedDate, src => src.AssignedDate)
-                .Map(dest => dest.DeliveryDate, src => src.DeliveryDate)
-                .Map(dest => dest.CompletionDate, src => src.CompletionDate)
+                .Map(dest => dest.DeliveryDate, src => src.DeliveryDate.ToNullableDateTime())
+                .Map(dest => dest.CompletionDate, src => src.CompletionDate.ToNullableDateTime())
                 .Map(dest => dest.TotalAllowableCompensation, src => src.TotalAllowableCompensation)
                 .Map(dest => dest.AcquisitionFileStatusTypeCode, src => src.FileStatusTypeCode.Id)
                 .Map(dest => dest.AcqPhysFileStatusTypeCode, src => src.AcquisitionPhysFileStatusTypeCode.Id)

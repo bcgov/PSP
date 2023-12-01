@@ -70,4 +70,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Leases\Models\Lease\" />
+  </ItemGroup>
 </Project>

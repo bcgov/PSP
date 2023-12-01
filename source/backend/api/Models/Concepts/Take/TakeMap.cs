@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Core.Extensions;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts
@@ -19,9 +20,9 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.IsNewLandAct, src => src.IsNewLandAct)
                 .Map(dest => dest.IsNewInterestInSrw, src => src.IsNewInterestInSrw)
                 .Map(dest => dest.LicenseToConstructArea, src => src.LicenseToConstructArea)
-                .Map(dest => dest.LtcEndDt, src => src.LtcEndDt)
+                .Map(dest => dest.LtcEndDt, src => src.LtcEndDt.ToNullableDateOnly())
                 .Map(dest => dest.LandActArea, src => src.LandActArea)
-                .Map(dest => dest.LandActEndDt, src => src.LandActEndDt)
+                .Map(dest => dest.LandActEndDt, src => src.LandActEndDt.ToNullableDateOnly())
                 .Map(dest => dest.PropertyAcquisitionFile, src => src.PropertyAcquisitionFile)
                 .Map(dest => dest.PropertyAcquisitionFileId, src => src.PropertyAcquisitionFileId)
                 .Map(dest => dest.StatutoryRightOfWayArea, src => src.StatutoryRightOfWayArea)
@@ -45,9 +46,9 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.IsNewLandAct, src => src.IsNewLandAct)
                 .Map(dest => dest.IsNewInterestInSrw, src => src.IsNewInterestInSrw)
                 .Map(dest => dest.LicenseToConstructArea, src => src.LicenseToConstructArea)
-                .Map(dest => dest.LtcEndDt, src => src.LtcEndDt)
+                .Map(dest => dest.LtcEndDt, src => src.LtcEndDt.ToNullableDateTime())
                 .Map(dest => dest.LandActArea, src => src.LandActArea)
-                .Map(dest => dest.LandActEndDt, src => src.LandActEndDt)
+                .Map(dest => dest.LandActEndDt, src => src.LandActEndDt.ToNullableDateTime())
                 .Map(dest => dest.PropertyAcquisitionFile, src => src.PropertyAcquisitionFile)
                 .Map(dest => dest.PropertyAcquisitionFileId, src => src.PropertyAcquisitionFileId)
                 .Map(dest => dest.StatutoryRightOfWayArea, src => src.StatutoryRightOfWayArea)

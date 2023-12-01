@@ -66,5 +66,25 @@ namespace Pims.Core.Extensions
         {
             return date <= (DateTime)SqlDateTime.MinValue ? null : date;
         }
+
+        /// <summary>
+        /// Returns the date time with only the date portion.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static DateOnly? ToNullableDateOnly(this DateTime? date)
+        {
+            return date.HasValue ? DateOnly.FromDateTime(date.Value) : null;
+        }
+
+        /// <summary>
+        /// Returns the date time with only the date portion.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static DateTime? ToNullableDateTime(this DateOnly? date)
+        {
+            return date.HasValue ? date.Value.ToDateTime(TimeOnly.MinValue) : null;
+        }
     }
 }

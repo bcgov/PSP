@@ -185,7 +185,7 @@ namespace Pims.Api.Services
 
             var propertyManagement = _mapper.Map<PropertyManagementModel>(property);
             propertyManagement.RelatedLeases = leaseCount;
-            propertyManagement.LeaseExpiryDate = leaseExpiryDate;
+            propertyManagement.LeaseExpiryDate = leaseExpiryDate.HasValue ? DateOnly.FromDateTime(leaseExpiryDate.Value) : null;
 
             return propertyManagement;
         }

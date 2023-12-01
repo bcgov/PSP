@@ -13,6 +13,7 @@ import {
   Api_Storage_DocumentTypeMetadataType,
 } from '@/models/api/DocumentStorage';
 import Api_TypeCode from '@/models/api/TypeCode';
+import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 
 export interface ComposedDocument {
   mayanMetadata?: Api_Storage_DocumentMetadata[];
@@ -28,7 +29,7 @@ export class DocumentRow {
   statusTypeCode: Api_TypeCode<string> | undefined;
   fileName: string | undefined;
   isFileAvailable: boolean | undefined;
-  appCreateTimestamp?: string;
+  appCreateTimestamp?: UtcIsoDateTime;
   appCreateUserid?: string;
   relationshipId: number | undefined;
   relationshipType: DocumentRelationshipType | undefined;

@@ -40,7 +40,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The insurance's expiry date.
         /// </summary>
-        public DateTime? ExpiryDate { get; set; }
+        public DateOnly? ExpiryDate { get; set; }
 
         /// <summary>
         /// get/set - The insurance's is in place flag indicator.

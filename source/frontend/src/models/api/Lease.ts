@@ -4,6 +4,7 @@ import { prettyFormatDate } from '@/utils';
 
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import { DateOnly } from './DateOnly';
 import { Api_Insurance } from './Insurance';
 import { Api_LeaseTenant } from './LeaseTenant';
 import { Api_LeaseTerm } from './LeaseTerm';
@@ -17,9 +18,9 @@ export interface Api_Lease extends Api_ConcurrentVersion, Api_AuditFields {
   lFileNo?: string | null;
   psFileNo?: string | null;
   tfaFileNumber?: string | null;
-  expiryDate?: string | null;
-  startDate?: string;
-  responsibilityEffectiveDate?: string | null;
+  expiryDate?: DateOnly | null;
+  startDate?: DateOnly;
+  responsibilityEffectiveDate?: DateOnly | null;
   paymentReceivableType: Api_TypeCode<string> | null;
   categoryType: Api_TypeCode<string> | null;
   purposeType: Api_TypeCode<string> | null;

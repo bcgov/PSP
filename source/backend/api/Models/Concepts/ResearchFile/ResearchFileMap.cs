@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Core.Extensions;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts
@@ -15,11 +16,11 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.RoadName, src => src.RoadName)
                 .Map(dest => dest.FileStatusTypeCode, src => src.ResearchFileStatusTypeCodeNavigation)
                 .Map(dest => dest.FileProperties, src => src.PimsPropertyResearchFiles)
-                .Map(dest => dest.RequestDate, src => src.RequestDate)
+                .Map(dest => dest.RequestDate, src => src.RequestDate.ToNullableDateOnly())
                 .Map(dest => dest.RequestDescription, src => src.RequestDescription)
                 .Map(dest => dest.RequestSourceDescription, src => src.RequestSourceDescription)
                 .Map(dest => dest.ResearchResult, src => src.ResearchResult)
-                .Map(dest => dest.ResearchCompletionDate, src => src.ResearchCompletionDate)
+                .Map(dest => dest.ResearchCompletionDate, src => src.ResearchCompletionDate.ToNullableDateOnly())
                 .Map(dest => dest.IsExpropriation, src => src.IsExpropriation)
                 .Map(dest => dest.ExpropriationNotes, src => src.ExpropriationNotes)
                 .Map(dest => dest.RequestSourceType, src => src.RequestSourceTypeCodeNavigation)
@@ -37,11 +38,11 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.RoadName, src => src.RoadName)
                 .Map(dest => dest.ResearchFileStatusTypeCode, src => src.FileStatusTypeCode.Id)
                 .Map(dest => dest.PimsPropertyResearchFiles, src => src.FileProperties)
-                .Map(dest => dest.RequestDate, src => src.RequestDate)
+                .Map(dest => dest.RequestDate, src => src.RequestDate.ToNullableDateTime())
                 .Map(dest => dest.RequestDescription, src => src.RequestDescription)
                 .Map(dest => dest.RequestSourceDescription, src => src.RequestSourceDescription)
                 .Map(dest => dest.ResearchResult, src => src.ResearchResult)
-                .Map(dest => dest.ResearchCompletionDate, src => src.ResearchCompletionDate)
+                .Map(dest => dest.ResearchCompletionDate, src => src.ResearchCompletionDate.ToNullableDateTime())
                 .Map(dest => dest.IsExpropriation, src => src.IsExpropriation)
                 .Map(dest => dest.ExpropriationNotes, src => src.ExpropriationNotes)
                 .Map(dest => dest.RequestSourceTypeCode, src => src.RequestSourceType.Id)
