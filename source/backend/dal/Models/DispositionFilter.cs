@@ -25,17 +25,17 @@ namespace Pims.Dal.Entities.Models
         public string FileNameOrNumberOrReference { get; set; }
 
         /// <summary>
-        /// get/set - The physical file status of the disposition file.
+        /// get/set - The status of the disposition file.
         /// </summary>
-        public string PhysicalFileStatusCode { get; set; }
+        public string DispositionFileStatusCode { get; set; }
 
         /// <summary>
-        /// get/set - The disposition status of the disposition file.
+        /// get/set - The disposition status.
         /// </summary>
         public string DispositionStatusCode { get; set; }
 
         /// <summary>
-        /// get/set - The type of the disposition file.
+        /// get/set - The type of the disposition.
         /// </summary>
         public string DispositionTypeCode { get; set; }
 

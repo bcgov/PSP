@@ -15,7 +15,7 @@ export class DispositionFilterModel {
   address: string = '';
   dispositionTeamMember: SelectOption | null = null;
   fileNameOrNumberOrReference: string = '';
-  fileStatusCode: string = '';
+  dispositionFileStatusCode: string = '';
   dispositionStatusCode: string = '';
   dispositionTypeCode: string = '';
 
@@ -35,7 +35,7 @@ export class DispositionFilterModel {
       pid: this.pid,
       address: this.address,
       fileNameOrNumberOrReference: this.fileNameOrNumberOrReference,
-      fileStatusCode: this.fileStatusCode,
+      dispositionFileStatusCode: this.dispositionFileStatusCode,
       dispositionStatusCode: this.dispositionStatusCode,
       dispositionTypeCode: this.dispositionTypeCode,
       // disposition team members
@@ -55,7 +55,7 @@ export class DispositionFilterModel {
     newModel.pid = base.pid ?? '';
     newModel.address = base.address ?? '';
     newModel.fileNameOrNumberOrReference = base.fileNameOrNumberOrReference ?? '';
-    newModel.fileStatusCode = base.fileStatusCode ?? '';
+    newModel.dispositionFileStatusCode = base.dispositionFileStatusCode ?? '';
     newModel.dispositionStatusCode = base.dispositionStatusCode ?? '';
     newModel.dispositionTypeCode = base.dispositionTypeCode ?? '';
     // disposition team members

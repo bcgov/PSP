@@ -4,7 +4,7 @@ export interface Api_DispositionFilter {
   pid: string;
   address: string;
   fileNameOrNumberOrReference: string;
-  fileStatusCode: string;
+  dispositionFileStatusCode: string;
   dispositionStatusCode: string;
   dispositionTypeCode: string;
   teamMemberPersonId: number | null;

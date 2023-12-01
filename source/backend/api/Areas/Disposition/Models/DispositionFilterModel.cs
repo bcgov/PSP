@@ -30,17 +30,17 @@ namespace Pims.Api.Areas.Disposition.Models.Search
         public string FileNameOrNumberOrReference { get; set; }
 
         /// <summary>
-        /// get/set - The physical file status of the disposition file.
+        /// get/set - The status of the disposition file.
         /// </summary>
-        public string PhysicalFileStatusCode { get; set; }
+        public string DispositionFileStatusCode { get; set; }
 
         /// <summary>
-        /// get/set - The disposition status of the disposition file.
+        /// get/set - The disposition status.
         /// </summary>
         public string DispositionStatusCode { get; set; }
 
         /// <summary>
-        /// get/set - The type of the disposition file.
+        /// get/set - The type of the disposition.
         /// </summary>
         public string DispositionTypeCode { get; set; }
 
@@ -78,7 +78,7 @@ namespace Pims.Api.Areas.Disposition.Models.Search
             this.Pin = filter.GetStringValue(nameof(this.Pin));
             this.Address = filter.GetStringValue(nameof(this.Address));
             this.FileNameOrNumberOrReference = filter.GetStringValue(nameof(this.FileNameOrNumberOrReference));
-            this.PhysicalFileStatusCode = filter.GetStringValue(nameof(this.PhysicalFileStatusCode));
+            this.DispositionFileStatusCode = filter.GetStringValue(nameof(this.DispositionFileStatusCode));
             this.DispositionStatusCode = filter.GetStringValue(nameof(this.DispositionStatusCode));
             this.DispositionTypeCode = filter.GetStringValue(nameof(this.DispositionTypeCode));
             this.TeamMemberPersonId = filter.GetLongNullValue(nameof(this.TeamMemberPersonId));
@@ -105,7 +105,7 @@ namespace Pims.Api.Areas.Disposition.Models.Search
                 Pin = model.Pin,
                 Address = model.Address,
                 FileNameOrNumberOrReference = model.FileNameOrNumberOrReference,
-                PhysicalFileStatusCode = model.PhysicalFileStatusCode,
+                DispositionFileStatusCode = model.DispositionFileStatusCode,
                 DispositionStatusCode = model.DispositionStatusCode,
                 DispositionTypeCode = model.DispositionTypeCode,
                 TeamMemberPersonId = model.TeamMemberPersonId,

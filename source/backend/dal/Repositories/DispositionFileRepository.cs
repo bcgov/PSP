@@ -230,7 +230,40 @@ namespace Pims.Dal.Repositories
                     EF.Functions.Like(pd.Property.Address.MunicipalityName, $"%{filter.Address}%"))));
             }
 
-            // TODO: implement remaining filters
+            if (!string.IsNullOrWhiteSpace(filter.FileNameOrNumberOrReference))
+            {
+                predicate = predicate.And(r => EF.Functions.Like(r.FileName, $"%{filter.FileNameOrNumberOrReference}%")
+                || EF.Functions.Like(r.FileNumber, $"%{filter.FileNameOrNumberOrReference}%")
+                || EF.Functions.Like(r.FileReference, $"%{filter.FileNameOrNumberOrReference}%"));
+            }
+
+            // filter by various statuses
+            if (!string.IsNullOrWhiteSpace(filter.DispositionFileStatusCode))
+            {
+                predicate = predicate.And(disp => disp.DispositionFileStatusTypeCode == filter.DispositionFileStatusCode);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.DispositionStatusCode))
+            {
+                predicate = predicate.And(disp => disp.DispositionStatusTypeCode == filter.DispositionStatusCode);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.DispositionTypeCode))
+            {
+                predicate = predicate.And(disp => disp.DispositionTypeCode == filter.DispositionTypeCode);
+            }
+
+            // filter by team members
+            if (filter.TeamMemberPersonId.HasValue)
+            {
+                predicate = predicate.And(disp => disp.PimsDispositionFileTeams.Any(x => x.PersonId == filter.TeamMemberPersonId.Value));
+            }
+
+            if (filter.TeamMemberOrganizationId.HasValue)
+            {
+                predicate = predicate.And(disp => disp.PimsDispositionFileTeams.Any(x => x.OrganizationId == filter.TeamMemberOrganizationId.Value));
+            }
+
             var query = Context.PimsDispositionFiles.AsNoTracking()
                 .Include(d => d.RegionCodeNavigation)
                 .Include(d => d.DspPhysFileStatusTypeCodeNavigation)
