@@ -19,13 +19,13 @@ export interface Api_DispositionFile extends Api_ConcurrentVersion, Api_AuditFie
   initiatingDocumentTypeOther: string | null;
   // Code Tables
   physicalFileStatusTypeCode?: Api_TypeCode<string> | null;
-  dispositionStatusTypeCode: Api_TypeCode<string>;
+  dispositionStatusTypeCode: Api_TypeCode<string> | null;
   initiatingBranchTypeCode?: Api_TypeCode<string> | null;
   fundingTypeCode?: Api_TypeCode<string> | null;
   initiatingDocumentTypeCode?: Api_TypeCode<string> | null;
-  dispositionTypeCode: Api_TypeCode<string>;
+  dispositionTypeCode: Api_TypeCode<string> | null;
   // MOTI region
-  regionCode: Api_TypeCode<number>;
+  regionCode: Api_TypeCode<number> | null;
   dispositionTeam: Api_DispositionFileTeam[];
   project: Api_Project | null;
   projectId: number | null;

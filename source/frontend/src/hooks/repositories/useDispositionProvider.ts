@@ -12,8 +12,23 @@ import { useApiDispositionFile } from '../useApiDispositionFile';
  * hook that interacts with the Disposition File API.
  */
 export const useDispositionProvider = () => {
-  const { getDispositionFile, getDispositionFileProperties, getLastUpdatedByApi } =
-    useApiDispositionFile();
+  const {
+    postDispositionFileApi,
+    getDispositionFile,
+    getDispositionFileProperties,
+    getLastUpdatedByApi,
+  } = useApiDispositionFile();
+
+  const addDispositionFileApi = useApiRequestWrapper<
+    (dispositionFile: Api_DispositionFile) => Promise<AxiosResponse<Api_DispositionFile, any>>
+  >({
+    requestFunction: useCallback(
+      async (dispositionFile: Api_DispositionFile) => await postDispositionFileApi(dispositionFile),
+      [postDispositionFileApi],
+    ),
+    requestName: 'AddDispositionFile',
+    onError: useAxiosErrorHandlerWithAuthorization('Failed to create a Disposition File'),
+  });
 
   const getDispositionFileApi = useApiRequestWrapper<
     (dispositionFileId: number) => Promise<AxiosResponse<Api_DispositionFile, any>>
@@ -50,10 +65,11 @@ export const useDispositionProvider = () => {
 
   return useMemo(
     () => ({
+      addDispositionFileApi: addDispositionFileApi,
       getDispositionFile: getDispositionFileApi,
       getLastUpdatedBy,
       getDispositionProperties: getDispositionPropertiesApi,
     }),
-    [getLastUpdatedBy, getDispositionFileApi, getDispositionPropertiesApi],
+    [addDispositionFileApi, getDispositionFileApi, getLastUpdatedBy, getDispositionPropertiesApi],
   );
 };

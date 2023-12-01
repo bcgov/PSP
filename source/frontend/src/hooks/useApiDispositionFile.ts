@@ -14,6 +14,8 @@ export const useApiDispositionFile = () => {
 
   return React.useMemo(
     () => ({
+      postDispositionFileApi: (dispositionFile: Api_DispositionFile) =>
+        api.post<Api_DispositionFile>('/dispositionfiles', dispositionFile),
       getDispositionFile: (dispositionFileId: number) =>
         api.get<Api_DispositionFile>(`/dispositionfiles/${dispositionFileId}`),
       getLastUpdatedByApi: (dispositionFileId: number) =>

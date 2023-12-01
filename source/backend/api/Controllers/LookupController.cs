@@ -134,6 +134,7 @@ namespace Pims.Api.Controllers
                 var mgmtActivityStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivityStatusTypes());
                 var mgmtActivitySubtypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivitySubtypes());
                 var mgmtActivityTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivityTypes());
+                var dispositionStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionStatusTypes());
                 var dispositionFileFundingTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionFileFundingTypes());
                 var dispositionFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionFileStatusTypes());
                 var dispositionFlTeamProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionFlTeamProfileTypes());
@@ -210,6 +211,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(dispositionPhysFileStatusTypes);
                 codes.AddRange(dispositionInitiatingDocTypes);
                 codes.AddRange(dispositionTypes);
+                codes.AddRange(dispositionStatusTypes);
 
                 var response = new JsonResult(codes);
 

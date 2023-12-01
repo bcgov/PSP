@@ -4085,6 +4085,13 @@ export const mockLookups: ILookupCode[] = [
     displayOrder: 2,
     type: 'PimsAgreementStatusType',
   },
+  {
+    id: 'BCTFA',
+    name: 'BCTFA',
+    isDisabled: false,
+    displayOrder: 1,
+    type: 'PimsDspFlTeamProfileType',
+  },
 ];
 export const getMockLookUpsByType = (codeType: string): SelectOption[] => {
   let codes = mockLookups.reduce(function (filtered: SelectOption[], reg) {

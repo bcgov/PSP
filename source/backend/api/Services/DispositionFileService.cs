@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Constants;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -31,6 +32,20 @@ namespace Pims.Api.Services
             _dispositionFileRepository = dispositionFileRepository;
             _dispositionFilePropertyRepository = dispositionFilePropertyRepository;
             _coordinateService = coordinateService;
+        }
+
+        public PimsDispositionFile Add(PimsDispositionFile dispositionFile)
+        {
+            _logger.LogInformation("Creating Disposition File {dispositionFile}", dispositionFile);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionAdd);
+
+            dispositionFile.DispositionStatusTypeCode ??= EnumDispositionStatusTypeCode.UNKNOWN.ToString();
+            dispositionFile.DispositionFileStatusTypeCode ??= EnumDispositionFileStatusTypeCode.ACTIVE.ToString();
+
+            _dispositionFileRepository.Add(dispositionFile);
+            _dispositionFilePropertyRepository.CommitTransaction();
+
+            return dispositionFile;
         }
 
         public PimsDispositionFile GetById(long id)

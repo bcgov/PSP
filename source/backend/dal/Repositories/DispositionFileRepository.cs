@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
@@ -15,6 +16,11 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class DispositionFileRepository : BaseRepository<PimsDispositionFile>, IDispositionFileRepository
     {
+        private const string FILENUMBERPREFIX = "D";
+        private const string FILENUMBERSEQUENCETABLE = "dbo.PIMS_DISPOSITION_FILE_NO_SEQ";
+
+        private readonly ISequenceRepository _sequenceRepository;
+
         #region Constructors
 
         /// <summary>
@@ -23,10 +29,12 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public DispositionFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<DispositionFileRepository> logger)
+        public DispositionFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<DispositionFileRepository> logger, ISequenceRepository sequenceRepository)
             : base(dbContext, user, logger)
         {
+            _sequenceRepository = sequenceRepository;
         }
+
         #endregion
 
         #region Methods
@@ -58,6 +66,23 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.PimsDispositionFileTeams)
                     .ThenInclude(d => d.DspFlTeamProfileTypeCodeNavigation)
                 .FirstOrDefault(d => d.DispositionFileId == id) ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Add the new Disposition File to Context.
+        /// </summary>
+        /// <param name="disposition"></param>
+        /// <returns></returns>
+        public PimsDispositionFile Add(PimsDispositionFile disposition)
+        {
+            using var scope = Logger.QueryScope();
+            disposition.ThrowIfNull(nameof(disposition));
+
+            disposition.FileNumber = GeneratetDispositionFileNumber();
+
+            Context.PimsDispositionFiles.Add(disposition);
+
+            return disposition;
         }
 
         /// <summary>
@@ -161,6 +186,17 @@ namespace Pims.Dal.Repositories
                 .Where(p => p.DispositionFileId == id)?
                 .Select(p => p.ConcurrencyControlNumber)?
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Get the next available value from PIMS_DISPOSITION_FILE_NO_SEQ.
+        /// </summary>
+        /// <returns>The next value for the sequence.</returns>
+        private string GeneratetDispositionFileNumber()
+        {
+            int fileNumberSequence = (int)_sequenceRepository.GetNextSequenceValue(FILENUMBERSEQUENCETABLE);
+
+            return $"{FILENUMBERPREFIX}-{fileNumberSequence}";
         }
         #endregion
     }

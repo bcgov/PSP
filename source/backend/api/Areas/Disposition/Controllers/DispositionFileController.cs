@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -72,6 +74,31 @@ namespace Pims.Api.Areas.Disposition.Controllers
             _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
 
             var dispositionFile = _dispositionService.GetById(id);
+            return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
+        }
+
+        /// <summary>
+        /// Creates a new Disposition File entity.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        //[HasPermission(Permissions.DispositionAdd)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileModel), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        public IActionResult AddDispositionFile([FromBody] DispositionFileModel model)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(AcquisitionFileController),
+                nameof(AddDispositionFile),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            var dispositionFile = _dispositionService.Add(_mapper.Map<Dal.Entities.PimsDispositionFile>(model));
+
             return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
         }
 

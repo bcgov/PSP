@@ -398,6 +398,11 @@ namespace Pims.Dal.Repositories
             return Context.PimsDispositionTypes.AsNoTracking().ToArray();
         }
 
+        public IEnumerable<PimsDispositionStatusType> GetAllDispositionStatusTypes()
+        {
+            return Context.PimsDispositionStatusTypes.AsNoTracking().ToArray();
+        }
+
         public IEnumerable<PimsDspPhysFileStatusType> GetAllDispositionPhysFileStatusTypes()
         {
             return Context.PimsDspPhysFileStatusTypes.AsNoTracking().ToArray();
