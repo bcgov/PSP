@@ -147,7 +147,5 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsDspInitiatingBranchType> GetAllDispositionInitiatingBranchTypes();
 
         IEnumerable<PimsDspFlTeamProfileType> GetAllDispositionFlTeamProfileTypes();
-
-        IEnumerable<PimsDispositionStatusType> GetAllDispositionStatusTypes();
     }
 }
