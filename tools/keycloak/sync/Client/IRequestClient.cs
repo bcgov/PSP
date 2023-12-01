@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Pims.Core.Http;
 
-namespace Pims.Tools.Core
+namespace Pims.Tools.Keycloak.Sync
 {
     /// <summary>
     /// IRequestClient interface, provides an HTTP client to make requests and handle refresh token.
