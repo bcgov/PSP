@@ -1,5 +1,3 @@
-//import './Legend.scss';
-
 import React, { useCallback } from 'react';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';

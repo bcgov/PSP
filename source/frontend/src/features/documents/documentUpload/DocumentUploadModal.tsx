@@ -19,9 +19,9 @@ export const DocumentUploadModal: React.FunctionComponent<
 > = props => {
   return (
     <GenericModal
+      variant="info"
       display={props.display}
       setDisplay={props.setDisplay}
-      className="info"
       closeButton={false}
       headerIcon={<FaUpload size={22} />}
       title={'Add a Document'}

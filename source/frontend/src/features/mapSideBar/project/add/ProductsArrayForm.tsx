@@ -101,6 +101,7 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
       </Section>
 
       <GenericModal
+        variant="error"
         display={showFileModal}
         title="Remove Product with Files"
         message={
@@ -112,6 +113,7 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
         }}
       />
       <GenericModal
+        variant="warning"
         display={showModal}
         title="Remove Product"
         message={

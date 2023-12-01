@@ -181,6 +181,7 @@ exports[`App Header renders correctly 1`] = `
     <div
       class="other navbar-nav"
     />
+    <div />
   </nav>
 </DocumentFragment>
 `;

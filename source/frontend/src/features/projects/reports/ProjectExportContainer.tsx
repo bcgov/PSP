@@ -51,6 +51,7 @@ export const SideProjectContainer: React.FunctionComponent<ISideProjectContainer
   useEffect(() => {
     if (getAgreementsReport?.status === 204) {
       setModalContent({
+        variant: 'error',
         title: 'Warning',
         message: 'There is no data for the input parameters you entered.',
         okButtonText: 'Close',
@@ -70,6 +71,7 @@ export const SideProjectContainer: React.FunctionComponent<ISideProjectContainer
   React.useEffect(() => {
     if (statusCompensation === 204) {
       setModalContent({
+        variant: 'error',
         title: 'Warning',
         message: 'There is no data for the input parameters you entered.',
         okButtonText: 'Close',

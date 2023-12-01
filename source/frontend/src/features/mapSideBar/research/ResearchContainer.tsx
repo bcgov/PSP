@@ -268,6 +268,7 @@ export const ResearchContainer: React.FunctionComponent<
             <StyledFormWrapper>
               <>
                 <GenericModal
+                  variant="info"
                   display={showConfirmModal}
                   title={'Confirm changes'}
                   message={
