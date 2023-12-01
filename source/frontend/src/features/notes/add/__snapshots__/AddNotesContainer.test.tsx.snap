@@ -274,13 +274,13 @@ exports[`AddNotesContainer component renders as expected 1`] = `
   />
   <div
     aria-modal="true"
-    class="fade c0 c1 modal show"
+    class="fade c0 c1  info-variant modal show"
     role="dialog"
     style="display: block;"
     tabindex="-1"
   >
     <div
-      class="modal-dialog c1"
+      class="modal-dialog c1  info-variant"
     >
       <div
         class="modal-content"

@@ -161,7 +161,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     }
   };
 
-  const getVariantClass = () => {
+  function getVariantClass() {
     switch (variant) {
       case 'info':
         return 'info-variant';
@@ -172,10 +172,14 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
         return 'error-variant';
       }
       default: {
-        return '';
+        return 'info-variant';
       }
     }
-  };
+  }
+
+  function getModalClass() {
+    return (className || '') + '  ' + getVariantClass();
+  }
 
   const headerIconValue = getHeaderIcon();
 
@@ -186,7 +190,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
       show={showState}
       modalSize={modalSize}
       onHide={noop}
-      className={className ?? '' + getVariantClass()}
+      className={getModalClass()}
     >
       <Modal.Header closeButton={closeButton} onHide={close}>
         <Modal.Title>

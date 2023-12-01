@@ -58,7 +58,7 @@ export const ErrorModal = ({ errors, show, setShow }: IErrorModalProps) => {
       display={show}
       handleCancel={handleClose}
       title="Errors"
-      okButtonText="Close & Clear Errors"
+      okButtonText="Close"
       handleOk={handleClear}
       message={
         <ErrorWrapper>
