@@ -73,11 +73,11 @@ export class DispositionSearchResultModel {
   id: number | null = null;
   fileNumber: string = '';
   fileName: string = '';
-  referenceNumber: string = '';
+  fileReference: string = '';
   region: string = '';
-  dispositionType: string = '';
-  dispositionStatus: string = '';
-  fileStatus: string = '';
+  dispositionTypeCode: string = '';
+  dispositionStatusTypeCode: string = '';
+  dispositionFileStatusTypeCode: string = '';
   dispositionTeam: Api_DispositionFileTeam[] = [];
   fileProperties?: Api_DispositionFileProperty[] = [];
 
@@ -86,11 +86,11 @@ export class DispositionSearchResultModel {
     newModel.id = base.id ?? null;
     newModel.fileNumber = base.fileNumber ?? '';
     newModel.fileName = base.fileName ?? '';
-    newModel.referenceNumber = base.referenceNumber ?? '';
+    newModel.fileReference = base.fileReference ?? '';
     newModel.region = base.regionCode?.description ?? '';
-    newModel.dispositionType = base.dispositionTypeCode?.description ?? '';
-    newModel.dispositionStatus = base.dispositionStatusTypeCode?.description ?? '';
-    newModel.fileStatus = base.fileStatusTypeCode?.description ?? '';
+    newModel.dispositionTypeCode = base.dispositionTypeCode?.description ?? '';
+    newModel.dispositionStatusTypeCode = base.dispositionStatusTypeCode?.description ?? '';
+    newModel.dispositionFileStatusTypeCode = base.fileStatusTypeCode?.description ?? '';
     newModel.dispositionTeam = base.dispositionTeam || [];
     newModel.fileProperties = base.fileProperties || [];
 

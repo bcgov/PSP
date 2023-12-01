@@ -286,7 +286,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(x => x.Country)
                 .Where(predicate);
 
-            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(filter.Sort) : query.OrderBy(disp => disp.DispositionFileId);
+            // As per Confluence - default sort to show chronological, newest first; based upon File Assigned Date
+            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(filter.Sort) : query.OrderByDescending(disp => disp.AssignedDt ?? DateTime.MinValue);
 
             return query;
         }

@@ -46,7 +46,7 @@ export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
   },
   {
     Header: 'Reference #',
-    accessor: 'referenceNumber',
+    accessor: 'fileReference',
     align: 'right',
     clickable: true,
     sortable: true,
@@ -64,7 +64,7 @@ export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
   },
   {
     Header: 'Disposition type',
-    accessor: 'dispositionType',
+    accessor: 'dispositionTypeCode',
     align: 'left',
     clickable: true,
     sortable: true,
@@ -159,7 +159,7 @@ export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
   },
   {
     Header: 'Disposition status',
-    accessor: 'dispositionStatus',
+    accessor: 'dispositionStatusTypeCode',
     align: 'left',
     clickable: true,
     sortable: true,
@@ -168,7 +168,7 @@ export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
   },
   {
     Header: 'Status',
-    accessor: 'fileStatus',
+    accessor: 'dispositionFileStatusTypeCode',
     align: 'left',
     clickable: true,
     sortable: true,
