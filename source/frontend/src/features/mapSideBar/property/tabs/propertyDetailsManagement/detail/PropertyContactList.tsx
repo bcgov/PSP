@@ -145,6 +145,7 @@ const PropertyContactList: React.FunctionComponent<IPropertyContactListProps> = 
   const onDelete = useCallback(
     (id: number) => {
       setModalContent({
+        variant: 'info',
         title: 'Confirm delete',
         message: 'This contact will be removed from the Property contacts. Do you wish to proceed?',
         okButtonText: 'Confirm',

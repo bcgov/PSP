@@ -325,6 +325,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
             </StyledFooter>
 
             <GenericModal
+              variant="info"
               display={showModal}
               title="Confirm status change"
               message={[
@@ -346,6 +347,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
             />
 
             <GenericModal
+              variant="error"
               display={showAltProjectError}
               className="error"
               title="Alternate Project Error"

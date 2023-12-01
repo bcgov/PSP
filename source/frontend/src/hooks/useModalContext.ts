@@ -25,16 +25,18 @@ export const useModalContext = (newModalContent?: ModalContent, isVisible?: bool
   };
 };
 
-export const getCancelModalProps = () => ({
+export const getCancelModalProps = (): ModalContent => ({
   title: 'Unsaved Changes',
   message: 'You have made changes on this form. Do you wish to leave without saving?',
   okButtonText: 'Confirm',
   cancelButtonText: 'No',
+  variant: 'info',
 });
 
-export const getDeleteModalProps = () => ({
+export const getDeleteModalProps = (): ModalContent => ({
   title: 'Confirm Delete',
   message: 'Are you sure you want to delete this item?',
   okButtonText: 'Continue',
   cancelButtonText: 'Cancel',
+  variant: 'info',
 });

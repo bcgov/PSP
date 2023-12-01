@@ -82,6 +82,7 @@ export const CreateOrganizationForm: React.FunctionComponent<unknown> = () => {
         innerRef={formikRef}
       />
       <DuplicateContactModal
+        variant="warning"
         display={showDuplicateModal}
         handleOk={() => saveDuplicate()}
         handleCancel={() => {
@@ -136,6 +137,7 @@ const CreateOrganizationComponent: React.FC<FormikProps<IEditableOrganizationFor
 
       {/* Confirmation popup when Cancel button is clicked */}
       <CancelConfirmationModal
+        variant="info"
         display={showConfirmation}
         setDisplay={setShowConfirmation}
         handleOk={() => {
