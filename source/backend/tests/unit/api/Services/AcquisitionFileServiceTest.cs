@@ -459,6 +459,7 @@ namespace Pims.Api.Test.Services
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
             agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>() { new PimsAgreement() { AgreementStatusTypeCode = "DRAFT" } });
