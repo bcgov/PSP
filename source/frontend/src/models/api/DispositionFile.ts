@@ -11,7 +11,7 @@ import { Api_PropertyFile } from './PropertyFile';
 // LINK @backend/api/Models/Concepts/DispositionFile/DispositionFileModel.cs
 export interface Api_DispositionFile extends Api_ConcurrentVersion, Api_AuditFields, Api_File {
   id?: number;
-  referenceNumber: string | null;
+  fileReference: string | null;
   assignedDate: string | null;
   initiatingDocumentDate: string | null;
   completionDate: string | null;

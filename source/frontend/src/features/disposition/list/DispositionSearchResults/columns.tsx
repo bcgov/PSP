@@ -1,21 +1,20 @@
-import { chain, uniqBy } from 'lodash';
+import { chain } from 'lodash';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import ExpandableTextList from '@/components/common/ExpandableTextList';
 import ExpandableFileProperties from '@/components/common/List/ExpandableFileProperties';
-import { ColumnWithProps, renderTypeCode } from '@/components/Table';
+import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
-import { Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
+import { Api_DispositionFileTeam } from '@/models/api/DispositionFile';
 import { Api_Organization } from '@/models/api/Organization';
 import { Api_Person } from '@/models/api/Person';
-import { Api_Project } from '@/models/api/Project';
 import Api_TypeCode from '@/models/api/TypeCode';
 import { stringToFragment } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { AcquisitionSearchResultModel } from './models';
+import { DispositionSearchResultModel } from '../models';
 
 interface MemberRoleGroup {
   id: string;
@@ -24,20 +23,20 @@ interface MemberRoleGroup {
   roles: string[];
 }
 
-export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
+export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
   {
-    Header: 'Acquisition file #',
+    Header: 'Disposition file #',
     accessor: 'fileNumber',
     align: 'right',
     clickable: true,
     sortable: true,
     width: 10,
     maxWidth: 20,
-    Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
+    Cell: (props: CellProps<DispositionSearchResultModel>) => {
       const { hasClaim } = useKeycloakWrapper();
-      if (hasClaim(Claims.ACQUISITION_VIEW)) {
+      if (hasClaim(Claims.DISPOSITION_VIEW)) {
         return (
-          <Link to={`/mapview/sidebar/acquisition/${props.row.original.id}`}>
+          <Link to={`/mapview/sidebar/disposition/${props.row.original.id}`}>
             {props.row.original.fileNumber}
           </Link>
         );
@@ -46,8 +45,8 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     },
   },
   {
-    Header: 'Historical file #',
-    accessor: 'legacyFileNumber',
+    Header: 'Reference #',
+    accessor: 'fileReference',
     align: 'right',
     clickable: true,
     sortable: true,
@@ -55,7 +54,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     maxWidth: 20,
   },
   {
-    Header: 'Acquisition file name',
+    Header: 'Disposition file name',
     accessor: 'fileName',
     align: 'left',
     clickable: true,
@@ -64,58 +63,36 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     maxWidth: 40,
   },
   {
+    Header: 'Disposition type',
+    accessor: 'dispositionTypeCode',
+    align: 'left',
+    clickable: true,
+    sortable: true,
+    width: 20,
+    maxWidth: 40,
+  },
+  {
     Header: 'MOTI Region',
-    accessor: 'regionCode',
+    accessor: 'region',
     align: 'left',
     clickable: true,
     width: 10,
     maxWidth: 20,
-    Cell: (props: CellProps<AcquisitionSearchResultModel>) =>
-      stringToFragment(props.row.original.regionCode),
-  },
-  {
-    Header: 'Projects',
-    accessor: 'project',
-    align: 'left',
-    clickable: true,
-    width: 20,
-    maxWidth: 30,
-    Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
-      const project = props.row.original.project;
-      const altProjects = (props.row.original.compensationRequisitions ?? [])
-        .filter(cr => !!cr?.alternateProject)
-        .map(cr => cr.alternateProject) as Api_Project[];
-
-      return (
-        <>
-          {[project?.code, project?.description].filter(Boolean).join(' ')}
-          <ExpandableTextList<Api_Project | undefined>
-            keyFunction={p => p?.id?.toString() ?? '0'}
-            renderFunction={(p, index) => (
-              <>{['Alt Project:', p?.code, p?.description].filter(Boolean).join(' ')}</>
-            )}
-            items={uniqBy(altProjects, project => project?.code)}
-            delimiter={'; '}
-            maxCollapsedLength={project === undefined ? 1 : 0}
-          />
-        </>
-      );
-    },
   },
   {
     Header: 'Team member',
-    accessor: 'acquisitionTeam',
+    accessor: 'dispositionTeam',
     align: 'left',
     clickable: true,
     width: 40,
     maxWidth: 40,
-    Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
-      const acquisitionTeam = props.row.original.acquisitionTeam;
-      const personsInTeam = acquisitionTeam?.filter(x => x.personId !== undefined);
-      const organizationsInTeam = acquisitionTeam?.filter(x => x.organizationId !== undefined);
+    Cell: (props: CellProps<DispositionSearchResultModel>) => {
+      const team = props.row.original.dispositionTeam;
+      const personsInTeam = team?.filter(x => x.personId !== undefined);
+      const organizationsInTeam = team?.filter(x => x.organizationId !== undefined);
 
       const personsAsString: MemberRoleGroup[] = chain(personsInTeam)
-        .groupBy((groupedTeams: Api_AcquisitionFileTeam) => groupedTeams.personId)
+        .groupBy((groupedTeams: Api_DispositionFileTeam) => groupedTeams.personId)
         .map<MemberRoleGroup>(x => {
           return {
             id: x[0].id?.toString() || '',
@@ -130,7 +107,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
         .value();
 
       const organizationsAsString: MemberRoleGroup[] = chain(organizationsInTeam)
-        .groupBy((groupedTeams: Api_AcquisitionFileTeam) => groupedTeams.organizationId)
+        .groupBy((groupedTeams: Api_DispositionFileTeam) => groupedTeams.organizationId)
         .map<MemberRoleGroup>(x => {
           return {
             id: x[0].id?.toString() || '',
@@ -151,8 +128,8 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
           items={teamAsString ?? []}
           keyFunction={(item: MemberRoleGroup, index: number) =>
             item.person
-              ? `acquisition-team-${item.id}-person-${item.person.id ?? index}`
-              : `acquisition-team-${item.id}-org-${item.organization?.id ?? index}`
+              ? `disposition-team-${item.id}-person-${item.person.id ?? index}`
+              : `disposition-team-${item.id}-org-${item.organization?.id ?? index}`
           }
           renderFunction={(item: MemberRoleGroup) =>
             item.person ? (
@@ -171,7 +148,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     Header: 'Civic Address / PID / PIN',
     accessor: 'fileProperties',
     align: 'left',
-    Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
+    Cell: (props: CellProps<DispositionSearchResultModel>) => {
       return (
         <ExpandableFileProperties
           fileProperties={props.row.original.fileProperties}
@@ -181,13 +158,21 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     },
   },
   {
-    Header: 'Status',
-    accessor: 'acquisitionFileStatusTypeCode',
+    Header: 'Disposition status',
+    accessor: 'dispositionStatusTypeCode',
     align: 'left',
     clickable: true,
     sortable: true,
     width: 10,
     maxWidth: 20,
-    Cell: renderTypeCode,
+  },
+  {
+    Header: 'Status',
+    accessor: 'dispositionFileStatusTypeCode',
+    align: 'left',
+    clickable: true,
+    sortable: true,
+    width: 10,
+    maxWidth: 20,
   },
 ];

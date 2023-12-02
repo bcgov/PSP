@@ -14,7 +14,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - reference number for historic program or file number (e.g.  RAEG, Acquisition File, etc.).
         /// </summary>
-        public string ReferenceNumber { get; set; }
+        public string FileReference { get; set; }
 
         /// <summary>
         /// The initiating document date.
