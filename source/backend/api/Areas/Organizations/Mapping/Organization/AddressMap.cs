@@ -1,6 +1,6 @@
 using Mapster;
-using Pims.Api.Models.Base;
 using Pims.Api.Helpers.Extensions;
+using Pims.Api.Models.Base;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Organizations.Models.Organization;
 

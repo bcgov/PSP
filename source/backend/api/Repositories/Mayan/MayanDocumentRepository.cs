@@ -13,10 +13,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Concepts.CodeTypes;
 using Pims.Api.Models.Concepts.Http;
-using Pims.Api.Models.Mayan.Document;
-using Pims.Api.Models.Mayan.Metadata;
 using Pims.Api.Models.Download;
 using Pims.Api.Models.Mayan;
+using Pims.Api.Models.Mayan.Document;
+using Pims.Api.Models.Mayan.Metadata;
 
 namespace Pims.Api.Repositories.Mayan
 {

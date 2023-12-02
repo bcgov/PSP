@@ -1,6 +1,7 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.Claim;
 using Pims.Api.Policies;
 using Pims.Dal.Repositories;
@@ -51,7 +52,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <returns>Paged object with an array of claims.</returns>
         [HttpGet]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Api.Models.PageModel<ClaimModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<ClaimModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-claim" })]
         public IActionResult GetClaims(int page = 1, int quantity = 10, string name = null)
@@ -72,7 +73,7 @@ namespace Pims.Api.Areas.Admin.Controllers
             }
 
             var paged = _claimRepository.GetPage(page, quantity, name);
-            var result = _mapper.Map<Api.Models.PageModel<ClaimModel>>(paged);
+            var result = _mapper.Map<PageModel<ClaimModel>>(paged);
             return new JsonResult(result);
         }
         #endregion

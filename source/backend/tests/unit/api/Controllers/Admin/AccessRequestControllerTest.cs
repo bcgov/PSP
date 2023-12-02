@@ -14,6 +14,7 @@ using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
+using Pims.Api.Models.Base;
 
 namespace Pims.Api.Test.Admin.Controllers
 {

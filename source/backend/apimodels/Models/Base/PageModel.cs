@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Pims.Dal.Entities.Models;
 
-namespace Pims.Api.Models
+namespace Pims.Api.Models.Base
 {
     /// <summary>
     /// PageModel class, provides a model that represents a single page of items.
@@ -82,15 +81,6 @@ namespace Pims.Api.Models
             this.Page = page;
             this.Quantity = quantity;
             this.Total = total;
-        }
-
-        /// <summary>
-        /// Create a new instance of a PageModel of type 'T', initialize with specified arguments.
-        /// </summary>
-        /// <param name="page"></param>
-        public PageModel(Paged<T> page)
-            : this(page.Items, page.Page, page.Quantity, page.Total)
-        {
         }
         #endregion
     }

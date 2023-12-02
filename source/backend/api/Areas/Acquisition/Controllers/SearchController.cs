@@ -8,9 +8,10 @@ namespace Pims.Api.Areas.Acquisition.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using Pims.Api.Areas.Acquisition.Models.Search;
-    using Pims.Api.Models.Concepts.AcquisitionFile;
     using Pims.Api.Helpers.Exceptions;
     using Pims.Api.Helpers.Extensions;
+    using Pims.Api.Models.Base;
+    using Pims.Api.Models.Concepts.AcquisitionFile;
     using Pims.Api.Policies;
     using Pims.Api.Services;
     using Pims.Core.Extensions;
@@ -102,7 +103,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             _logger.LogInformation("Dispatching to service: {Service}", acquisitionService.GetType());
 
             var acquisitionFiles = acquisitionService.GetPage((AcquisitionFilter)filter);
-            return new JsonResult(mapper.Map<Api.Models.PageModel<AcquisitionFileModel>>(acquisitionFiles));
+            return new JsonResult(mapper.Map<PageModel<AcquisitionFileModel>>(acquisitionFiles));
         }
         #endregion
         #endregion

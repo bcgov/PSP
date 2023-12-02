@@ -1,6 +1,7 @@
 using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.Role;
 using Pims.Api.Policies;
 using Pims.Dal.Repositories;
@@ -51,7 +52,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <returns>Paged object with an array of roles.</returns>
         [HttpGet]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Api.Models.PageModel<RoleModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<RoleModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-role" })]
         public IActionResult GetRoles(int page = 1, int quantity = 10, string name = null)
@@ -72,7 +73,7 @@ namespace Pims.Api.Areas.Admin.Controllers
             }
 
             var paged = _roleRepository.GetPage(page, quantity, name);
-            var result = _mapper.Map<Api.Models.PageModel<RoleModel>>(paged);
+            var result = _mapper.Map<PageModel<RoleModel>>(paged);
             return new JsonResult(result);
         }
 

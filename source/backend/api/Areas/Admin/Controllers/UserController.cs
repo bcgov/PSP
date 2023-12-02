@@ -2,6 +2,7 @@ using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.User;
 using Pims.Api.Policies;
 using Pims.Dal.Entities;
@@ -50,7 +51,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <returns>Paged object with an array of users.</returns>
         [HttpGet]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Api.Models.PageModel<UserModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<UserModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-user" })]
         public IActionResult GetUsers()
@@ -67,13 +68,13 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <returns>Paged object with an array of users.</returns>
         [HttpPost("filter")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Api.Models.PageModel<UserModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<UserModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-user" })]
         public IActionResult GetUsers(UserFilter filter)
         {
             var page = _userRepository.GetAllByFilter(filter);
-            var result = _mapper.Map<Api.Models.PageModel<UserModel>>(page);
+            var result = _mapper.Map<PageModel<UserModel>>(page);
             return new JsonResult(result);
         }
 

@@ -7,10 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.Claim;
+using Pims.Api.Models.Concepts.Role;
+using Pims.Api.Models.Concepts.User;
 using Pims.Core.Exceptions;
 using Pims.Keycloak;
 using KModel = Pims.Keycloak.Models;
-using PModel = Pims.Api.Models.Concepts;
 
 namespace Pims.Tools.Keycloak.Sync
 {
@@ -95,12 +98,12 @@ namespace Pims.Tools.Keycloak.Sync
         /// <returns></returns>
         private async Task SyncClaimsAsync(StringBuilder log, StringBuilder errorLog)
         {
-            IEnumerable<PModel.ClaimModel> claims = new List<PModel.ClaimModel>();
-            Api.Models.PageModel<PModel.ClaimModel> claimsPage = null;
+            IEnumerable<ClaimModel> claims = new List<ClaimModel>();
+            PageModel<ClaimModel> claimsPage = null;
             int page = 1;
             do
             {
-                claimsPage = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.ClaimModel>>(HttpMethod.Get, $"admin/claims?page={page++}&quantity=50");
+                claimsPage = await _pimsClient.HandleRequestAsync<PageModel<ClaimModel>>(HttpMethod.Get, $"admin/claims?page={page++}&quantity=50");
                 claims = claims.Concat(claimsPage.Items);
             }
             while (claimsPage != null && claimsPage.Items.Any() && page < MAXPAGES);
@@ -114,7 +117,7 @@ namespace Pims.Tools.Keycloak.Sync
             await Task.WhenAll(addTask, removeTask);
         }
 
-        private async Task AddClaimsFromPims(IEnumerable<PModel.ClaimModel> claims, StringBuilder log, StringBuilder errorLog)
+        private async Task AddClaimsFromPims(IEnumerable<ClaimModel> claims, StringBuilder log, StringBuilder errorLog)
         {
             foreach (var claim in claims)
             {
@@ -136,7 +139,7 @@ namespace Pims.Tools.Keycloak.Sync
         /// </summary>
         /// <param name="claim"></param>
         /// <returns></returns>
-        private async Task AddKeycloakRoleAsync(PModel.ClaimModel claim)
+        private async Task AddKeycloakRoleAsync(ClaimModel claim)
         {
             var krole = new KModel.RoleModel()
             {
@@ -165,12 +168,12 @@ namespace Pims.Tools.Keycloak.Sync
         /// <returns></returns>
         private async Task SyncRolesAsync(StringBuilder log, StringBuilder errorLog)
         {
-            IEnumerable<PModel.RoleModel> roles = new List<PModel.RoleModel>();
-            Api.Models.PageModel<PModel.RoleModel> rolesPage = null;
+            IEnumerable<RoleModel> roles = new List<RoleModel>();
+            PageModel<RoleModel> rolesPage = null;
             int page = 1;
             do
             {
-                rolesPage = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.RoleModel>>(HttpMethod.Get, $"admin/roles?page={page++}&quantity=50");
+                rolesPage = await _pimsClient.HandleRequestAsync<PageModel<RoleModel>>(HttpMethod.Get, $"admin/roles?page={page++}&quantity=50");
                 roles = roles.Concat(rolesPage.Items);
             }
             while (rolesPage != null && rolesPage.Items.Any() && page < MAXPAGES);
@@ -184,14 +187,14 @@ namespace Pims.Tools.Keycloak.Sync
             await Task.WhenAll(addTask, removeTask);
         }
 
-        private async Task AddRolesFromPims(IEnumerable<PModel.RoleModel> roles, StringBuilder log, StringBuilder errorLog)
+        private async Task AddRolesFromPims(IEnumerable<RoleModel> roles, StringBuilder log, StringBuilder errorLog)
         {
             var keycloakRoles = await _keycloakRepository.GetAllRoles();
             foreach (var role in roles)
             {
                 try
                 {
-                    var prole = await _pimsClient.HandleRequestAsync<PModel.RoleModel>(HttpMethod.Get, $"admin/roles/{role.RoleUid}");
+                    var prole = await _pimsClient.HandleRequestAsync<RoleModel>(HttpMethod.Get, $"admin/roles/{role.RoleUid}");
                     if (prole.RoleClaims.Count() == 0)
                     {
                         continue;
@@ -240,7 +243,7 @@ namespace Pims.Tools.Keycloak.Sync
         /// </summary>
         /// <param name="role"></param>
         /// <returns></returns>
-        private async Task AddGroupToKeycloak(PModel.RoleModel role)
+        private async Task AddGroupToKeycloak(RoleModel role)
         {
             var krole = new KModel.RoleModel()
             {
@@ -265,7 +268,7 @@ namespace Pims.Tools.Keycloak.Sync
         /// <param name="group"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        private async Task SyncGroupInKeycloak(KModel.RoleModel group, PModel.RoleModel role)
+        private async Task SyncGroupInKeycloak(KModel.RoleModel group, RoleModel role)
         {
             await RemoveRolesFromGroupInKeycloak(group, role);
             await AddRolesToGroupInKeycloak(group, role);
@@ -277,7 +280,7 @@ namespace Pims.Tools.Keycloak.Sync
         /// <param name="group"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        private async Task AddRolesToGroupInKeycloak(KModel.RoleModel group, PModel.RoleModel role)
+        private async Task AddRolesToGroupInKeycloak(KModel.RoleModel group, RoleModel role)
         {
             var allPimsGroupRoles = role.RoleClaims.Select(c => new KModel.RoleModel()
             {
@@ -304,7 +307,7 @@ namespace Pims.Tools.Keycloak.Sync
         /// <param name="group"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        private async Task RemoveRolesFromGroupInKeycloak(KModel.RoleModel group, PModel.RoleModel role)
+        private async Task RemoveRolesFromGroupInKeycloak(KModel.RoleModel group, RoleModel role)
         {
             var allPimsGroupRoles = role.RoleClaims.Select(c => new KModel.RoleModel()
             {
@@ -339,14 +342,14 @@ namespace Pims.Tools.Keycloak.Sync
         {
             var page = 1;
             var quantity = 50;
-            var users = new List<PModel.UserModel>();
-            var pageOfUsers = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.UserModel>>(HttpMethod.Get, $"admin/users?page={page}&quantity={quantity}");
+            var users = new List<UserModel>();
+            var pageOfUsers = await _pimsClient.HandleRequestAsync<PageModel<UserModel>>(HttpMethod.Get, $"admin/users?page={page}&quantity={quantity}");
             users.AddRange(pageOfUsers.Items);
 
             // Keep asking for pages of users until we have them all.
             while (pageOfUsers.Items.Count() == quantity && page < MAXPAGES)
             {
-                pageOfUsers = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.UserModel>>(HttpMethod.Get, $"admin/users?page={++page}&quantity={quantity}");
+                pageOfUsers = await _pimsClient.HandleRequestAsync<PageModel<UserModel>>(HttpMethod.Get, $"admin/users?page={++page}&quantity={quantity}");
                 users.AddRange(pageOfUsers.Items);
             }
 
@@ -379,7 +382,7 @@ namespace Pims.Tools.Keycloak.Sync
         /// <param name="user">The pims user to sync.</param>
         /// <param name="log"></param>
         /// <returns></returns>
-        private async Task SyncUserRoles(PModel.UserModel user, StringBuilder log)
+        private async Task SyncUserRoles(UserModel user, StringBuilder log)
         {
             var username = user.GuidIdentifierValue.ToString().Replace("-", string.Empty) + "@idir";
             var response = await _keycloakRepository.GetUserRoles(username);
@@ -420,7 +423,7 @@ namespace Pims.Tools.Keycloak.Sync
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        private async Task<KModel.UserModel> GetUserAsync(PModel.UserModel user)
+        private async Task<KModel.UserModel> GetUserAsync(UserModel user)
         {
             try
             {

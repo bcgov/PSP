@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Concepts.Http;
-using Pims.Api.Models.Mayan.Metadata;
 using Pims.Api.Models.Mayan;
+using Pims.Api.Models.Mayan.Metadata;
 
 namespace Pims.Api.Repositories.Mayan
 {

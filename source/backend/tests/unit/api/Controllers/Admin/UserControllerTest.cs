@@ -6,6 +6,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Admin.Controllers;
+using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.User;
 using Pims.Core.Test;
 using Pims.Dal;
@@ -50,7 +51,7 @@ namespace Pims.Api.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<Pims.Api.Models.PageModel<UserModel>>(actionResult.Value);
+            var actualResult = Assert.IsType<PageModel<UserModel>>(actionResult.Value);
             mapper.Map<UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
             repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
@@ -75,7 +76,7 @@ namespace Pims.Api.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<Pims.Api.Models.PageModel<UserModel>>(actionResult.Value);
+            var actualResult = Assert.IsType<PageModel<UserModel>>(actionResult.Value);
             mapper.Map<UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
             repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
@@ -102,7 +103,7 @@ namespace Pims.Api.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<Pims.Api.Models.PageModel<UserModel>>(actionResult.Value);
+            var actualResult = Assert.IsType<PageModel<UserModel>>(actionResult.Value);
             mapper.Map<UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
             repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }

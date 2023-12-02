@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Pims.Api.Constants;
 using Pims.Api.Models.Concepts.Document.UpdateMetadata;
 using Pims.Api.Models.Concepts.Document.Upload;
 using Pims.Api.Models.Concepts.Http;
-using Pims.Api.Models.Mayan.Document;
-using Pims.Api.Constants;
 using Pims.Api.Models.Download;
 using Pims.Api.Models.Mayan;
+using Pims.Api.Models.Mayan.Document;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services

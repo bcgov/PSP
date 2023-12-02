@@ -4,6 +4,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Areas.Projects.Models;
+using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.Project;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -39,7 +40,7 @@ namespace Pims.Api.Areas.Projects.Controllers
         public async Task<IActionResult> GetProject([FromQuery] ProjectFilterModel filter)
         {
             var projects = await _projectService.GetPage((ProjectFilter)filter);
-            return Ok(_mapper.Map<Api.Models.PageModel<ProjectModel>>(projects));
+            return Ok(_mapper.Map<PageModel<ProjectModel>>(projects));
         }
     }
 }
