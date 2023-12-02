@@ -28,7 +28,9 @@ export const DispositionSearchResults: React.FC<IDispositionSearchResultsProps> 
 
   // This will get called when the table needs new data
   const updateCurrentPage = useCallback(
-    ({ pageIndex }: { pageIndex: number }) => setPageIndex && setPageIndex(pageIndex),
+    ({ pageIndex }: { pageIndex: number }) => {
+      setPageIndex && setPageIndex(pageIndex);
+    },
     [setPageIndex],
   );
 
@@ -42,6 +44,7 @@ export const DispositionSearchResults: React.FC<IDispositionSearchResultsProps> 
       onPageSizeChange={setPageSize}
       noRowsMessage="No matching results can be found. Try widening your search criteria."
       totalItems={totalItems}
+      manualPagination
       {...rest}
     ></Table>
   );

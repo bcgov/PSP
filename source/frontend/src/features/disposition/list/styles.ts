@@ -43,5 +43,5 @@ export const LongInlineInput = styled(InlineInput)`
 `;
 
 export const ColButtons = styled(Col)`
-  border-left: 2px solid white;
+  border-left: 0.2rem solid white;
 `;

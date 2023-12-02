@@ -191,13 +191,10 @@ namespace Pims.Dal.Repositories
 
         public List<PimsDispositionFileTeam> GetTeamMembers()
         {
-            var predicate = PredicateBuilder.New<PimsDispositionFileTeam>(disp => true);
-
             return Context.PimsDispositionFileTeams.AsNoTracking()
                 .Include(x => x.DispositionFile)
                 .Include(x => x.Person)
                 .Include(x => x.Organization)
-                .Where(predicate)
                 .ToList();
         }
 
@@ -280,10 +277,6 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(prop => prop.Property)
                     .ThenInclude(ad => ad.Address)
                     .ThenInclude(x => x.ProvinceState)
-                .Include(fp => fp.PimsPropertyDispositionFiles)
-                    .ThenInclude(prop => prop.Property)
-                    .ThenInclude(ad => ad.Address)
-                    .ThenInclude(x => x.Country)
                 .Where(predicate);
 
             // As per Confluence - default sort to show chronological, newest first; based upon File Assigned Date

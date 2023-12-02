@@ -97,13 +97,17 @@ export const DispositionFilter: React.FC<IDispositionFilterProps> = ({
               </Row>
               <Row>
                 <Col xl="7">
-                  <TypeaheadSelect field="dispositionTeamMember" options={dispositionTeamOptions} />
+                  <TypeaheadSelect
+                    field="dispositionTeamMember"
+                    options={dispositionTeamOptions}
+                    placeholder="Team Member"
+                  />
                 </Col>
                 <Col xl="4">
                   <Select
                     options={fileStatusOptions}
                     field="dispositionFileStatusCode"
-                    placeholder="All Status"
+                    placeholder="Select file status..."
                   />
                 </Col>
               </Row>
@@ -113,7 +117,7 @@ export const DispositionFilter: React.FC<IDispositionFilterProps> = ({
                 <Col xl="12">
                   <Input
                     field="fileNameOrNumberOrReference"
-                    placeholder="Disposition file number or name or historical file number"
+                    placeholder="Disposition file number or name or reference number"
                   />
                 </Col>
               </Row>
@@ -122,14 +126,14 @@ export const DispositionFilter: React.FC<IDispositionFilterProps> = ({
                   <Select
                     options={dispositionStatusOptions}
                     field="dispositionStatusCode"
-                    placeholder="All Status"
+                    placeholder="Select disposition status..."
                   />
                 </Col>
                 <Col xl="6">
                   <Select
                     options={dispositionTypeOptions}
                     field="dispositionTypeCode"
-                    placeholder="All Type"
+                    placeholder="Select disposition type..."
                   />
                 </Col>
               </Row>
