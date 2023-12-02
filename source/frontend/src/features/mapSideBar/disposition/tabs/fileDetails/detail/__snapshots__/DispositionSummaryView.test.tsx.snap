@@ -1,0 +1,475 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DispositionSummaryView component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c0 {
+  padding-top: 1rem;
+}
+
+.c1 {
+  text-align: right;
+}
+
+.c5 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c2 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 mr-3 my-1"
+    />
+    <div
+      class="c2 form-section"
+    >
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Status:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Cancelled
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c5"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Project
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Ministry project:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Product:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Funding:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c5"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Schedule
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Assigned date:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Apr 26, 2025
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Disposition completed date:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            May 28, 1956
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c5"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Disposition Details
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Disposition file name:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Test Disposition File
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Reference number:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            FILE_REFERENCE 8128827 3EAD56A
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Disposition status:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Disposition type:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Road Closure
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Initiating document:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Surplus Declaration
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Initiating document date:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Jun 29, 1917
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Physical file status:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Pending Litigation
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              initiating branch:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            PLMB
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Ministry region:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Cannot determine
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c5"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Disposition Team
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
