@@ -15,7 +15,6 @@ export interface AddDispositionContainerViewProps {
   dispositionInitialValues: DispositionFormModel;
   loading: boolean;
   displayFormInvalid: boolean;
-  // onSubmit: (dispositionFile: Api_DispositionFile) => Promise<Api_DispositionFile | undefined>;
   onSubmit: (
     values: DispositionFormModel,
     setSubmitting: (isSubmitting: boolean) => void,

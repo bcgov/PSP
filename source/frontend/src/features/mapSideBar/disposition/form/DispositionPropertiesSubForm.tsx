@@ -29,7 +29,7 @@ const DispositionPropertiesSubForm: React.FunctionComponent<
         location from the map, or search by other criteria.
       </div>
 
-      <FieldArray name="properties">
+      <FieldArray name="fileProperties">
         {({ push, remove }) => (
           <>
             <LoadingBackdrop show={bcaLoading} />

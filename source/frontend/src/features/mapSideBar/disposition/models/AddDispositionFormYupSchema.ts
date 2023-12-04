@@ -6,8 +6,8 @@ export const AddDispositionFormYupSchema = yup.object().shape({
   referenceNumber: yup
     .string()
     .max(200, 'Disposition reference number must be at most ${max} characters'),
-  dispositionStatusTypeCode: yup.string().required(),
-  dispositionTypeCode: yup.string().required(),
+  dispositionStatusTypeCode: yup.string().required('Disposition status is required'),
+  dispositionTypeCode: yup.string().nullable().required('Disposition type is required'),
   dispositionTypeOther: yup.string().when('dispositionTypeCode', {
     is: (dispositionTypeCode: string) => dispositionTypeCode && dispositionTypeCode === 'OTHER',
     then: yup
@@ -16,7 +16,7 @@ export const AddDispositionFormYupSchema = yup.object().shape({
       .max(200, 'Other Disposition type must be at most ${max} characters'),
     otherwise: yup.string().nullable(),
   }),
-  initiatingDocumentTypeCode: yup.string(),
+  initiatingDocumentTypeCode: yup.string().nullable(),
   initiatingDocumentTypeOther: yup.string().when('initiatingDocumentTypeCode', {
     is: (initiatingDocumentTypeCode: string) =>
       initiatingDocumentTypeCode && initiatingDocumentTypeCode === 'OTHER',

@@ -1,11 +1,8 @@
-import axios, { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import { useCallback } from 'react';
-import { toast } from 'react-toastify';
 
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { IApiError } from '@/interfaces/IApiError';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
@@ -28,21 +25,13 @@ const useAddDispositionFormManagement = (props: IUseAddDispositionFormmanagement
   const handleSubmit = useCallback(
     async (values: DispositionFormModel, setSubmitting: (isSubmitting: boolean) => void) => {
       return withUserOverride(async (userOverrideCodes: UserOverrideCode[]) => {
-        try {
-          const dispositionFile = values.toApi();
-          const response = await addDispositionFileApi.execute(dispositionFile, userOverrideCodes);
-          if (!!response?.id) {
-            if (typeof onSuccess === 'function') {
-              await onSuccess(response);
-            }
+        const dispositionFile = values.toApi();
+        const response = await addDispositionFileApi.execute(dispositionFile, userOverrideCodes);
+        if (!!response?.id) {
+          if (typeof onSuccess === 'function') {
+            await onSuccess(response);
+            setSubmitting(false);
           }
-        } catch (e) {
-          const axiosError = e as AxiosError<IApiError>;
-          if (axios.isAxiosError(e) && e.response?.status === 409) {
-            toast.error(axiosError?.response?.data.error);
-          }
-        } finally {
-          setSubmitting(false);
         }
       });
     },

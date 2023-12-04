@@ -16,7 +16,6 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class DispositionFileRepository : BaseRepository<PimsDispositionFile>, IDispositionFileRepository
     {
-        private const string FILENUMBERPREFIX = "D";
         private const string FILENUMBERSEQUENCETABLE = "dbo.PIMS_DISPOSITION_FILE_NO_SEQ";
 
         private readonly ISequenceRepository _sequenceRepository;
@@ -78,7 +77,7 @@ namespace Pims.Dal.Repositories
             using var scope = Logger.QueryScope();
             disposition.ThrowIfNull(nameof(disposition));
 
-            disposition.FileNumber = GeneratetDispositionFileNumber();
+            disposition.FileNumber = _sequenceRepository.GetNextSequenceValue(FILENUMBERSEQUENCETABLE).ToString();
 
             Context.PimsDispositionFiles.Add(disposition);
 
@@ -188,16 +187,6 @@ namespace Pims.Dal.Repositories
             return result.ConcurrencyControlNumber;
         }
 
-        /// <summary>
-        /// Get the next available value from PIMS_DISPOSITION_FILE_NO_SEQ.
-        /// </summary>
-        /// <returns>The next value for the sequence.</returns>
-        private string GeneratetDispositionFileNumber()
-        {
-            int fileNumberSequence = (int)_sequenceRepository.GetNextSequenceValue(FILENUMBERSEQUENCETABLE);
-
-            return $"{FILENUMBERPREFIX}-{fileNumberSequence}";
-        }
         #endregion
     }
 }

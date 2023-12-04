@@ -1,4 +1,8 @@
-import { Api_DispositionFile, Api_DispositionFileTeam } from '@/models/api/DispositionFile';
+import {
+  Api_DispositionFile,
+  Api_DispositionFileProperty,
+  Api_DispositionFileTeam,
+} from '@/models/api/DispositionFile';
 import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
@@ -60,6 +64,17 @@ export class DispositionFormModel implements WithDispositionTeam {
         .filter(x => !!x.contact && !!x.teamProfileTypeCode)
         .map(x => x.toApi(this.id || 0))
         .filter((x): x is Api_DispositionFileTeam => x !== null),
+      fileProperties: this.fileProperties.map<Api_DispositionFileProperty>(ap => {
+        return {
+          id: ap.id,
+          propertyName: ap.name,
+          displayOrder: ap.displayOrder,
+          rowVersion: ap.rowVersion,
+          property: ap.toApi(),
+          propertyId: ap.apiId,
+          acquisitionFile: { id: this.id },
+        };
+      }),
       project: null,
       projectId: null,
       product: null,

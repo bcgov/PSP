@@ -1,7 +1,6 @@
 import { FormikProps } from 'formik';
 import { useCallback, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
@@ -39,7 +38,6 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
   };
 
   const handleSuccesss = async (disposition: Api_DispositionFile) => {
-    toast.success(`Financial code saved`);
     mapMachine.refreshMapProperties();
     history.replace(`/mapview/sidebar/disposition/${disposition.id}`);
   };

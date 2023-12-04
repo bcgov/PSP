@@ -25,6 +25,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.DispositionTypeOther, src => src.OtherDispositionType)
                 .Map(dest => dest.InitiatingDocumentTypeOther, src => src.OtherInitiatingDocType)
                 .Map(dest => dest.DispositionTeam, src => src.PimsDispositionFileTeams)
+                .Map(dest => dest.FileProperties, src => src.PimsPropertyDispositionFiles)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<DispositionFileModel, Entity.PimsDispositionFile>()
@@ -45,6 +46,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.OtherDispositionType, src => src.DispositionTypeOther)
                 .Map(dest => dest.OtherInitiatingDocType, src => src.InitiatingDocumentTypeOther)
                 .Map(dest => dest.PimsDispositionFileTeams, src => src.DispositionTeam)
+                .Map(dest => dest.PimsPropertyDispositionFiles, src => src.FileProperties)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }

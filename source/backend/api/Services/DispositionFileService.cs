@@ -111,6 +111,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid);
                         dispProperty.PropertyId = foundProperty.Internal_Id;
+                        _propertyService.UpdateLocation(dispProperty.Property, ref foundProperty, overrideCodes);
                         dispProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -133,6 +134,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin);
                         dispProperty.PropertyId = foundProperty.Internal_Id;
+                        _propertyService.UpdateLocation(dispProperty.Property, ref foundProperty, overrideCodes);
                         dispProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)

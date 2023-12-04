@@ -5,9 +5,15 @@ import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_DispositionFile, Api_DispositionFileProperty } from '@/models/api/DispositionFile';
 import { Api_LastUpdatedBy } from '@/models/api/File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { useAxiosErrorHandler, useAxiosErrorHandlerWithAuthorization } from '@/utils';
+import {
+  useAxiosErrorHandler,
+  useAxiosErrorHandlerWithAuthorization,
+  useAxiosSuccessHandler,
+} from '@/utils';
 
 import { useApiDispositionFile } from '../useApiDispositionFile';
+
+const ignoreErrorCodes = [409];
 
 /**
  * hook that interacts with the Disposition File API.
@@ -32,7 +38,9 @@ export const useDispositionProvider = () => {
       [postDispositionFileApi],
     ),
     requestName: 'AddDispositionFile',
-    onError: useAxiosErrorHandlerWithAuthorization('Failed to create a Disposition File'),
+    onSuccess: useAxiosSuccessHandler('Disposition File saved'),
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
   });
 
   const getDispositionFileApi = useApiRequestWrapper<

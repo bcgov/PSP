@@ -83,6 +83,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         [HasPermission(Permissions.DispositionAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(DispositionFileModel), 200)]
