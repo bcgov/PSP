@@ -7,11 +7,11 @@ import { Api_DispositionFile } from '@/models/api/DispositionFile';
 
 import useAddDispositionFormManagement from '../hooks/useAddDispositionFormManagement';
 import { DispositionFormModel } from '../models/DispositionFormModel';
-import { AddDispositionContainerViewProps } from './AddDispositionContainerView';
+import { IAddDispositionContainerViewProps } from './AddDispositionContainerView';
 
 export interface IAddDispositionContainerProps {
   onClose?: () => void;
-  View: React.FunctionComponent<React.PropsWithChildren<AddDispositionContainerViewProps>>;
+  View: React.FunctionComponent<React.PropsWithChildren<IAddDispositionContainerViewProps>>;
 }
 
 const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onClose, View }) => {

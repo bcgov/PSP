@@ -239,6 +239,7 @@ exports[`PropertyContactListView component renders as expected when provided val
 
 .c6 {
   padding: 0 0.4rem;
+  display: block;
 }
 
 <div

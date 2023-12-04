@@ -10,7 +10,7 @@ import SidebarFooter from '../../shared/SidebarFooter';
 import DispositionForm from '../form/DispositionForm';
 import { DispositionFormModel } from '../models/DispositionFormModel';
 
-export interface AddDispositionContainerViewProps {
+export interface IAddDispositionContainerViewProps {
   formikRef: React.RefObject<FormikProps<DispositionFormModel>>;
   dispositionInitialValues: DispositionFormModel;
   loading: boolean;
@@ -25,7 +25,7 @@ export interface AddDispositionContainerViewProps {
 }
 
 const AddDispositionContainerView: React.FunctionComponent<
-  React.PropsWithChildren<AddDispositionContainerViewProps>
+  React.PropsWithChildren<IAddDispositionContainerViewProps>
 > = ({
   formikRef,
   dispositionInitialValues,
