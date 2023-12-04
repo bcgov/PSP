@@ -65,7 +65,7 @@ const DispositionForm = React.forwardRef<FormikProps<DispositionFormModel>, IDis
                     <Select
                       field="fundingTypeCode"
                       options={dispositionFundingTypes}
-                      placeholder="Select..."
+                      placeholder="Select funding..."
                     />
                   </SectionField>
                 </Section>
@@ -142,7 +142,7 @@ const DispositionForm = React.forwardRef<FormikProps<DispositionFormModel>, IDis
                     <Select
                       field="physicalFileStatusTypeCode"
                       options={dispositionPhysicalFileStatusOptions}
-                      placeholder="Select..."
+                      placeholder="Select file status..."
                     />
                   </SectionField>
                   <SectionField label="Initiating branch">
