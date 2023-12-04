@@ -5,7 +5,7 @@ export const mockDispositionFileResponse = (
   name = 'Test Disposition File',
   rowVersion = 1,
 ): Api_DispositionFile => ({
-  referenceNumber: 'FILE_REFERENCE 8128827 3EAD56A',
+  fileReference: 'FILE_REFERENCE 8128827 3EAD56A',
   initiatingDocumentDate: '1917-06-29T00:00:00',
   assignedDate: '2025-04-26T00:00:00',
   completionDate: '1956-05-28T00:00:00',

@@ -45,7 +45,7 @@ export class DispositionFormModel implements WithDispositionTeam {
       fileName: this.fileName ?? undefined,
       fileNumber: this.fileNumber ?? undefined,
       fileStatusTypeCode: toTypeCode(this.fileStatusTypeCode),
-      referenceNumber: this.referenceNumber,
+      fileReference: this.referenceNumber,
       assignedDate: this.assignedDate,
       completionDate: this.completionDate,
       dispositionTypeCode: toTypeCodeNullable(this.dispositionTypeCode),

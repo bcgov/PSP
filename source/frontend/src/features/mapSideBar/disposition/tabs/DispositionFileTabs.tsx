@@ -6,6 +6,8 @@ import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
 
+import DispositionSummaryView from './fileDetails/detail/DispositionSummaryView';
+
 export interface IDispositionFileTabsProps {
   dispositionFile?: Api_DispositionFile;
   defaultTab: FileTabType;
@@ -30,7 +32,9 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
   };
 
   tabViews.push({
-    content: <></>,
+    content: (
+      <DispositionSummaryView dispositionFile={dispositionFile} onEdit={() => setIsEditing(true)} />
+    ),
     key: FileTabType.FILE_DETAILS,
     name: 'File details',
   });

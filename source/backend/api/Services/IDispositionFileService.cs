@@ -7,6 +7,8 @@ namespace Pims.Api.Services
 {
     public interface IDispositionFileService
     {
+        Paged<PimsDispositionFile> GetPage(DispositionFilter filter);
+
         PimsDispositionFile GetById(long id);
 
         PimsDispositionFile Add(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides);
@@ -14,5 +16,7 @@ namespace Pims.Api.Services
         LastUpdatedByModel GetLastUpdateInformation(long dispositionFileId);
 
         IEnumerable<PimsPropertyDispositionFile> GetProperties(long id);
+
+        IEnumerable<PimsDispositionFileTeam> GetTeamMembers();
     }
 }

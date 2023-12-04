@@ -1,8 +1,13 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
+import { useApiDispositionFile } from '@/hooks/pims-api/useApiDispositionFile';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { Api_DispositionFile, Api_DispositionFileProperty } from '@/models/api/DispositionFile';
+import {
+  Api_DispositionFile,
+  Api_DispositionFileProperty,
+  Api_DispositionFileTeam,
+} from '@/models/api/DispositionFile';
 import { Api_LastUpdatedBy } from '@/models/api/File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import {
@@ -10,8 +15,6 @@ import {
   useAxiosErrorHandlerWithAuthorization,
   useAxiosSuccessHandler,
 } from '@/utils';
-
-import { useApiDispositionFile } from '../useApiDispositionFile';
 
 const ignoreErrorCodes = [409];
 
@@ -24,6 +27,7 @@ export const useDispositionProvider = () => {
     getDispositionFile,
     getDispositionFileProperties,
     getLastUpdatedByApi,
+    getAllDispositionFileTeamMembers,
   } = useApiDispositionFile();
 
   const addDispositionFileApi = useApiRequestWrapper<
@@ -76,13 +80,31 @@ export const useDispositionProvider = () => {
     onError: useAxiosErrorHandler('Failed to retrieve Disposition File Properties'),
   });
 
+  const getAllDispositionTeamMembersApi = useApiRequestWrapper<
+    () => Promise<AxiosResponse<Api_DispositionFileTeam[], any>>
+  >({
+    requestFunction: useCallback(
+      async () => await getAllDispositionFileTeamMembers(),
+      [getAllDispositionFileTeamMembers],
+    ),
+    requestName: 'GetAllDispositionTeamMembers',
+    onError: useAxiosErrorHandler('Failed to retrieve Disposition File Team Members'),
+  });
+
   return useMemo(
     () => ({
       addDispositionFileApi: addDispositionFileApi,
       getDispositionFile: getDispositionFileApi,
       getLastUpdatedBy,
       getDispositionProperties: getDispositionPropertiesApi,
+      getAllDispositionTeamMembers: getAllDispositionTeamMembersApi,
     }),
-    [addDispositionFileApi, getDispositionFileApi, getLastUpdatedBy, getDispositionPropertiesApi],
+    [
+      addDispositionFileApi,
+      getDispositionFileApi,
+      getLastUpdatedBy,
+      getDispositionPropertiesApi,
+      getAllDispositionTeamMembersApi,
+    ],
   );
 };

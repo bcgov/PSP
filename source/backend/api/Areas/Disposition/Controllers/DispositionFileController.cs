@@ -11,6 +11,7 @@ using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
+using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -150,6 +151,30 @@ namespace Pims.Api.Areas.Disposition.Controllers
             var dispositionfileProperties = _dispositionService.GetProperties(id);
 
             return new JsonResult(_mapper.Map<IEnumerable<DispositionFilePropertyModel>>(dispositionfileProperties));
+        }
+
+        /// <summary>
+        /// Get all unique persons that belong to at least one disposition file as a team member.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("team-members")]
+        [HasPermission(Permissions.DispositionView)]
+        [HasPermission(Permissions.ContactView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<DispositionFileTeamModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        public IActionResult GetDispositionTeamMembers()
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(GetDispositionTeamMembers),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var team = _dispositionService.GetTeamMembers();
+
+            return new JsonResult(_mapper.Map<IEnumerable<DispositionFileTeamModel>>(team));
         }
 
         #endregion

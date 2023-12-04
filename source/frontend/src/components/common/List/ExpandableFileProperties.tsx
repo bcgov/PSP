@@ -3,27 +3,25 @@ import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { LinkButton } from '@/components/common/buttons';
-import { Api_AcquisitionFileProperty } from '@/models/api/AcquisitionFile';
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
 import { formatApiAddress } from '@/utils';
 
-export interface IAcquisitionPropertiesProps {
-  acquisitionProperties?: Api_AcquisitionFileProperty[];
+export interface IExpandableFilePropertiesProps {
+  fileProperties?: Api_PropertyFile[];
   maxDisplayCount: number;
 }
 
-const AcquisitionProperties: React.FunctionComponent<
-  React.PropsWithChildren<IAcquisitionPropertiesProps>
-> = props => {
+const ExpandableFileProperties: React.FunctionComponent<IExpandableFilePropertiesProps> = props => {
   const [isExpanded, setExpanded] = useState(false);
 
-  const acquisitionProperties = props.acquisitionProperties || [];
+  const fileProperties = props.fileProperties || [];
   const maxDisplayCount = props.maxDisplayCount;
 
-  let displayProperties: Api_AcquisitionFileProperty[] = [];
+  let displayProperties: Api_PropertyFile[] = [];
   if (!isExpanded) {
-    displayProperties = acquisitionProperties.slice(0, maxDisplayCount);
+    displayProperties = fileProperties.slice(0, maxDisplayCount);
   } else {
-    displayProperties = acquisitionProperties;
+    displayProperties = fileProperties;
   }
 
   let rowItems = displayProperties.map((property, index) => {
@@ -51,13 +49,13 @@ const AcquisitionProperties: React.FunctionComponent<
     );
   });
 
-  if (acquisitionProperties.length > rowItems.length || isExpanded) {
+  if (fileProperties.length > rowItems.length || isExpanded) {
     rowItems.push(
       <Row key="showMoreKey">
         <Col />
         <Col md="auto">
           <LinkButton onClick={() => setExpanded(!isExpanded)}>
-            {isExpanded ? 'hide' : `[+${acquisitionProperties.length - rowItems.length} more...]`}
+            {isExpanded ? 'hide' : `[+${fileProperties.length - rowItems.length} more...]`}
           </LinkButton>
         </Col>
       </Row>,
@@ -67,7 +65,7 @@ const AcquisitionProperties: React.FunctionComponent<
   return <div className="w-100">{rowItems}</div>;
 };
 
-export default AcquisitionProperties;
+export default ExpandableFileProperties;
 
 const PropertyRow = styled(Row)`
   border-radius: 0.4rem;
