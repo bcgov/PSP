@@ -6,7 +6,6 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Disposition.Controllers;
-using Pims.Api.Areas.Disposition.Controllers;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
@@ -91,6 +90,22 @@ namespace Pims.Api.Test.Controllers
 
             // Assert
             this._service.Verify(m => m.GetLastUpdateInformation(It.IsAny<long>()), Times.Once());
+        }
+
+        /// <summary>
+        /// Make a successful request to get all unique persons and organizations that belong to at least one disposition file as a team member.
+        /// </summary>
+        [Fact]
+        public void GetDispositionTeamMembers_Success()
+        {
+            // Arrange
+            this._service.Setup(m => m.GetTeamMembers()).Returns(new List<PimsDispositionFileTeam>());
+
+            // Act
+            var result = this._controller.GetDispositionTeamMembers();
+
+            // Assert
+            this._service.Verify(m => m.GetTeamMembers(), Times.Once());
         }
         #endregion
     }
