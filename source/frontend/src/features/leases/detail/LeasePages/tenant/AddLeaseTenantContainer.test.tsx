@@ -9,6 +9,7 @@ import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
+import { IContactSearchResult } from '@/interfaces';
 import {
   getMockContactOrganizationWithMultiplePeople,
   getMockContactOrganizationWithOnePerson,
@@ -126,13 +127,19 @@ describe('AddLeaseTenantContainer component', () => {
   it('does not request previously requested data', async () => {
     await setup({});
 
+    var contact: IContactSearchResult = {
+      ...getMockContactOrganizationWithOnePerson(),
+      organization: { organizationPersons: [{ person: {} }] },
+
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
+    };
+
     await waitFor(() => {
-      viewProps.setSelectedTenants([
-        {
-          ...getMockContactOrganizationWithOnePerson(),
-          organization: { organizationPersons: [{ person: {} }] },
-        },
-      ]);
+      viewProps.setSelectedTenants([contact]);
       expect(getPersonConcept).not.toHaveBeenCalled();
     });
   });

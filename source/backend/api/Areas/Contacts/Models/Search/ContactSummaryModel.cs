@@ -16,6 +16,8 @@ namespace Pims.Api.Areas.Contact.Models.Search
         /// </summary>
         public long? PersonId { get; set; }
 
+        public PersonModel Person { get; set; }
+
         /// <summary>
         /// get/set - The primary key to identify the organization.
         /// </summary>

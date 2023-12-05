@@ -12,13 +12,13 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
-import { IContactSearchResult } from '@/interfaces';
+import { IContactSearchResult, isPersonResult } from '@/interfaces';
 import { stringToFragment } from '@/utils';
 
 const columns: ColumnWithProps<IContactSearchResult>[] = [
   {
     Header: '',
-    accessor: 'isDisabled',
+    id: 'isDisabled',
     align: 'right',
     width: 10,
     maxWidth: 10,
@@ -28,20 +28,16 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
   },
   {
     Header: '',
-    accessor: 'id',
+    id: 'id',
     align: 'right',
     width: 20,
     maxWidth: 20,
     Cell: (props: CellProps<IContactSearchResult>) =>
-      props.row.original.personId !== undefined ? (
-        <FaRegUser size={20} />
-      ) : (
-        <FaRegBuilding size={20} />
-      ),
+      isPersonResult(props.row.original) ? <FaRegUser size={20} /> : <FaRegBuilding size={20} />,
   },
   {
     Header: 'Summary',
-    accessor: 'summary',
+    id: 'summary',
     align: 'left',
     clickable: true,
     sortable: true,
@@ -73,11 +69,18 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
   },
   {
     Header: 'Organization',
-    accessor: 'organizationName',
+    id: 'organizationName',
     sortable: true,
     align: 'left',
     width: 80,
     maxWidth: 100,
+    Cell: (props: CellProps<IContactSearchResult>) => {
+      return !isPersonResult(props.row.original) ? (
+        <>{props.row.original.organizationName}</>
+      ) : (
+        <></>
+      );
+    },
   },
   {
     Header: 'E-mail',

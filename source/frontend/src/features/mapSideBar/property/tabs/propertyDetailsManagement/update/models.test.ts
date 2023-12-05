@@ -8,9 +8,14 @@ describe('Property Contact model tests', () => {
     stakeholderModel.contact = {
       id: '1',
       personId: 1,
-      person: { firstName: 'first' },
-      organizationId: 1,
-      organization: { name: 'org' },
+      person: {
+        firstName: 'first',
+        personOrganizations: [
+          {
+            organization: { id: 1, name: 'org' },
+          },
+        ],
+      },
     };
     const apiModel = stakeholderModel.toApi();
     expect(apiModel.organizationId).toBeNull();

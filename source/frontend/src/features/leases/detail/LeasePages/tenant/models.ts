@@ -60,27 +60,34 @@ export class FormTenant {
     if (!model.id) {
       throw Error('Invalid tenant id');
     }
-    return (
-      model.original ?? {
-        id: model.id,
-        personId: model.personId,
-        summary: model.summary,
-        tenantType: model.tenantType,
-        organization: !!model.organizationId
-          ? {
-              id: model.organizationId,
-              organizationPersons: model.organizationPersons,
-            }
-          : undefined,
-        mailingAddress: model.mailingAddress?.streetAddress1,
-        municipalityName: model.municipalityName,
-        note: model.note,
-        organizationId: model.organizationId,
-        mobile: model.mobile,
-        landline: model.landline,
-        provinceState: model.provinceState,
-      }
-    );
+
+    if (model.original) {
+      return model.original;
+    }
+    const contact: IContactSearchResult = {
+      id: model.id,
+      summary: model.summary,
+      tenantType: model.tenantType,
+
+      mailingAddress: model.mailingAddress?.streetAddress1,
+      municipalityName: model.municipalityName,
+      note: model.note,
+
+      mobile: model.mobile,
+      landline: model.landline,
+      provinceState: model.provinceState,
+    };
+
+    if (model.personId) {
+      contact.personId = model.personId;
+    } else if (model.organizationId) {
+      contact.organization = {
+        id: model.organizationId,
+        organizationPersons: model.organizationPersons,
+      };
+    }
+
+    return contact;
   };
 
   public static toApi(model: FormTenant): Api_LeaseTenant {
@@ -131,22 +138,32 @@ export class FormTenant {
       this.initialPrimaryContact = apiModel.primaryContact;
     } else if (!!selectedContactModel) {
       // In this case, construct a tenant using a contact.
-      const primaryContact = getDefaultContact(selectedContactModel.organization);
+
       this.id = selectedContactModel?.id;
-      this.personId = selectedContactModel.personId;
+
       this.summary = selectedContactModel.summary;
       this.email = selectedContactModel.email;
       this.mailingAddress = { streetAddress1: selectedContactModel.mailingAddress } as IAddress;
       this.municipalityName = selectedContactModel?.municipalityName;
       this.note = selectedContactModel.note;
-      this.organizationId = selectedContactModel.organizationId;
+
       this.landline = selectedContactModel.landline;
       this.mobile = selectedContactModel.mobile;
-      this.lessorTypeCode = !!this.personId ? { id: 'PER' } : { id: 'ORG' };
       this.tenantType = selectedContactModel.tenantType;
-      this.organizationPersons = selectedContactModel?.organization?.organizationPersons;
-      this.primaryContactId = primaryContact?.id;
-      this.initialPrimaryContact = primaryContact;
+
+      if (this.personId) {
+        this.lessorTypeCode = { id: 'PER' };
+        this.personId = selectedContactModel.personId;
+      } else {
+        this.lessorTypeCode = { id: 'ORG' };
+        this.organizationId = selectedContactModel.organizationId;
+        this.organizationPersons = selectedContactModel?.organization?.organizationPersons;
+
+        const primaryContact = getDefaultContact(selectedContactModel.organization);
+        this.primaryContactId = primaryContact?.id;
+        this.initialPrimaryContact = primaryContact;
+      }
+
       this.original = selectedContactModel;
       this.provinceState = selectedContactModel.provinceState;
     }

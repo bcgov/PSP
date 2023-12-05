@@ -3,19 +3,11 @@ import { Api_Organization } from '@/models/api/Organization';
 import { Api_Person } from '@/models/api/Person';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-export interface IContactSearchResult {
+interface BaseContactResult {
   id: string;
-  personId?: number;
-  person?: Api_Person;
-  organizationId?: number;
-  organization?: Api_Organization;
   leaseTenantId?: number;
   isDisabled?: boolean;
   summary?: string;
-  surname?: string;
-  firstName?: string;
-  middleNames?: string;
-  organizationName?: string;
   email?: string;
   mailingAddress?: string;
   municipalityName?: string;
@@ -27,47 +19,88 @@ export interface IContactSearchResult {
   tenantType?: string;
 }
 
-export function fromContact(baseModel: Api_Contact): IContactSearchResult {
-  return {
-    id: baseModel.id,
-    personId: baseModel.person?.id,
-    organizationId: baseModel.organization?.id,
+interface PersonContactResult extends BaseContactResult {
+  personId?: number;
+  person?: Api_Person;
 
-    isDisabled: baseModel.person?.isDisabled || baseModel.organization?.isDisabled || false,
-    summary: !!baseModel.person
-      ? formatApiPersonNames(baseModel.person)
-      : baseModel.organization?.name,
-    surname: baseModel.person?.surname,
-    firstName: baseModel.person?.firstName,
-    middleNames: baseModel.person?.middleNames,
-    organizationName: baseModel.organization?.name,
-    email: '',
-    mailingAddress: '',
-    municipalityName: '',
-    provinceState: '',
-    provinceStateId: 0,
-  };
+  surname?: string;
+  firstName?: string;
+  middleNames?: string;
+
+  organizationId?: never;
+  organization?: never;
+  primaryOrgContact?: never;
+  primaryOrgContactId?: never;
+}
+
+interface OrganizationContactResult extends BaseContactResult {
+  personId?: never;
+  person?: never;
+  surname?: never;
+  firstName?: never;
+  middleNames?: never;
+
+  organizationId?: number;
+  organization?: Api_Organization;
+  primaryOrgContact?: Api_Person;
+  primaryOrgContactId?: number;
+  organizationName?: string;
+}
+
+export function isPersonResult(
+  contactResult: IContactSearchResult,
+): contactResult is PersonContactResult {
+  return contactResult.id.startsWith('P') && contactResult.personId !== undefined;
+}
+
+export type IContactSearchResult = PersonContactResult | OrganizationContactResult;
+
+export function fromContact(baseModel: Api_Contact): IContactSearchResult {
+  // TODO: Api_Contact could contain valid organization even if its a person.
+  //       However, it does not contain valid person information.
+  if (baseModel.id.startsWith('P')) {
+    return {
+      id: baseModel.id,
+      person: baseModel.person,
+      personId: baseModel.person?.id,
+      isDisabled: baseModel.person?.isDisabled || false,
+      summary: formatApiPersonNames(baseModel.person),
+      surname: baseModel.person?.surname,
+      firstName: baseModel.person?.firstName,
+      middleNames: baseModel.person?.middleNames,
+      email: '',
+      mailingAddress: '',
+      municipalityName: '',
+      provinceState: '',
+      provinceStateId: 0,
+    };
+  } else {
+    return {
+      id: baseModel.id,
+      organization: baseModel.organization,
+      organizationId: baseModel.organization?.id,
+      isDisabled: baseModel.organization?.isDisabled || false,
+      summary: baseModel.organization?.name,
+      organizationName: baseModel.organization?.name,
+      email: '',
+      mailingAddress: '',
+      municipalityName: '',
+      provinceState: '',
+      provinceStateId: 0,
+    };
+  }
 }
 
 export function fromApiPerson(baseModel: Api_Person): IContactSearchResult {
-  var personOrganizations =
-    baseModel?.personOrganizations !== undefined ? baseModel.personOrganizations : undefined;
-
-  var organization =
-    personOrganizations !== undefined && personOrganizations.length > 0
-      ? personOrganizations[0].organization
-      : undefined;
-
   return {
     id: 'P' + baseModel?.id,
     personId: baseModel?.id,
-    organizationId: organization?.id,
+    person: baseModel,
     isDisabled: baseModel?.isDisabled,
     summary: baseModel?.firstName + ' ' + baseModel?.surname,
     surname: baseModel?.surname,
     firstName: baseModel?.firstName,
     middleNames: baseModel?.middleNames,
-    organizationName: organization?.name,
     email: '',
     mailingAddress: '',
     municipalityName: '',
@@ -80,6 +113,7 @@ export function fromApiOrganization(baseModel: Api_Organization): IContactSearch
   return {
     id: 'O' + baseModel.id,
     organizationId: baseModel.id,
+    organization: baseModel,
     isDisabled: baseModel.isDisabled,
     summary: baseModel.name || '',
     organizationName: baseModel.name,
@@ -92,7 +126,7 @@ export function fromApiOrganization(baseModel: Api_Organization): IContactSearch
 }
 
 export function toContact(baseModel: IContactSearchResult): Api_Contact {
-  if (baseModel.id.startsWith('P')) {
+  if (isPersonResult(baseModel)) {
     return {
       id: baseModel.id,
       person: baseModel.personId !== undefined ? toPerson(baseModel) : undefined,
@@ -106,7 +140,7 @@ export function toContact(baseModel: IContactSearchResult): Api_Contact {
 }
 
 export function toPerson(baseModel?: IContactSearchResult): Api_Person | undefined {
-  if (baseModel === undefined || baseModel.id.startsWith('O')) {
+  if (baseModel === undefined || !isPersonResult(baseModel)) {
     return undefined;
   }
   return {
@@ -122,7 +156,7 @@ export function toPerson(baseModel?: IContactSearchResult): Api_Person | undefin
 }
 
 export function toOrganization(baseModel?: IContactSearchResult): Api_Organization | undefined {
-  if (baseModel === undefined || baseModel.id.startsWith('P')) {
+  if (baseModel === undefined || isPersonResult(baseModel)) {
     return undefined;
   }
   return {

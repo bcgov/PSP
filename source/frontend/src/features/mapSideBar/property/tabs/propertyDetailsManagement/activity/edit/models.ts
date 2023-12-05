@@ -138,8 +138,10 @@ export class PropertyActivityFormModel {
       requestSource: this.requestedSource,
 
       isDisabled: false,
+
       serviceProviderOrgId: this.serviceProvider?.organizationId ?? null,
       serviceProviderOrg: null,
+
       serviceProviderPersonId: this.serviceProvider?.personId ?? null,
       serviceProviderPerson: null,
 

@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 
 import { Claims } from '@/constants/claims';
-import { IPagedItems } from '@/interfaces';
+import { IContactSearchResult, IPagedItems } from '@/interfaces';
 import {
   getMockContactOrganizationWithOnePerson,
   getMockContactPerson,
@@ -159,9 +159,14 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays no contacts available if organization has no contacts', async () => {
-    const organization = {
+    const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
       organization: { organizationPersons: [] },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -174,9 +179,14 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays no contacts available if organization has no contacts', async () => {
-    const organization = {
+    const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
       organization: { organizationPersons: [] },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -189,9 +199,14 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays no contacts available if organization has no contacts', async () => {
-    const organization = {
+    const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
       organization: { organizationPersons: [] },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -204,7 +219,7 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays the primary contact if there is only one', async () => {
-    const organization = {
+    const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
       organization: {
         organizationPersons: [
@@ -217,6 +232,11 @@ describe('AddLeaseTenantForm component', () => {
           },
         ],
       },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -229,7 +249,7 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays a list if there are multiple', async () => {
-    const organization = {
+    const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
       organization: {
         organizationPersons: [
@@ -249,6 +269,11 @@ describe('AddLeaseTenantForm component', () => {
           },
         ],
       },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({

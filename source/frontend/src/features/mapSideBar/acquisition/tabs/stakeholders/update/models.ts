@@ -139,28 +139,36 @@ export class InterestHolderForm {
   ): InterestHolderForm {
     const interestHolderForm = new InterestHolderForm(interestTypeCode);
     interestHolderForm.interestHolderId = apiModel.interestHolderId;
-    interestHolderForm.personId = apiModel.personId?.toString() || '';
-    interestHolderForm.organizationId = apiModel.organizationId?.toString() || '';
+
     interestHolderForm.impactedProperties = apiModel.interestHolderProperties.map(ihp =>
       InterestHolderPropertyForm.fromApi(ihp),
     );
-    interestHolderForm.primaryContactId = apiModel.primaryContactId;
+
     interestHolderForm.rowVersion = apiModel.rowVersion ?? null;
     interestHolderForm.isDisabled = apiModel.isDisabled;
     interestHolderForm.interestTypeCode = interestTypeCode ?? '';
 
-    interestHolderForm.contact = {
-      id: apiModel.personId ? `P${apiModel.personId}` : `O${apiModel.organizationId}`,
-      personId: apiModel.personId ?? undefined,
-      organizationId: apiModel.organizationId ?? undefined,
-      firstName: apiModel.person?.firstName ?? '',
-      surname: apiModel.person?.surname ?? '',
-      middleNames: apiModel.person?.middleNames ?? '',
-      organizationName: apiModel.organization?.name ?? '',
-    };
+    if (apiModel.personId) {
+      interestHolderForm.personId = apiModel.personId?.toString() || '';
+      interestHolderForm.contact = {
+        id: `P${apiModel.personId}`,
+        personId: apiModel.personId ?? undefined,
+        firstName: apiModel.person?.firstName ?? '',
+        surname: apiModel.person?.surname ?? '',
+        middleNames: apiModel.person?.middleNames ?? '',
+      };
+    } else {
+      interestHolderForm.organizationId = apiModel.organizationId?.toString() || '';
+      interestHolderForm.contact = {
+        id: `O${apiModel.organizationId}`,
+        organizationId: apiModel.organizationId ?? undefined,
+        organizationName: apiModel.organization?.name ?? '',
+      };
+      interestHolderForm.primaryContactId = apiModel.primaryContactId;
+    }
+
     interestHolderForm.acquisitionFileId = apiModel.acquisitionFileId;
     interestHolderForm.comment = apiModel.comment;
-    interestHolderForm.primaryContactId = apiModel.primaryContactId;
 
     return interestHolderForm;
   }
