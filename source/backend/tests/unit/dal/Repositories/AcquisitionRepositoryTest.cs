@@ -97,7 +97,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { AlternateProject = new PimsProject() { Code = "1", Description = "test" } } };
+            acqFile.PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { AlternateProject = new PimsProject() { Code = "1", Description = "test", ProjectStatusTypeCode = "draft" } } };
             var filter = new AcquisitionFilter() { ProjectNameOrNumber = "test" };
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);

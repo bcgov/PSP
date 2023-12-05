@@ -193,7 +193,7 @@ namespace Pims.Api.Test.Services
             updatedProperty.PropertyTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyStatusTypeCode.Should().Be("UNKNOWN");
             updatedProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");
-            updatedProperty.PropertyDataSourceEffectiveDate.Should().BeCloseTo(System.DateTime.Now, TimeSpan.FromMilliseconds(40));
+            updatedProperty.PropertyDataSourceEffectiveDate.Should().Be(DateOnly.FromDateTime(System.DateTime.Now));
             updatedProperty.PropertyDataSourceTypeCode.Should().Be("PMBC");
             updatedProperty.IsPropertyOfInterest.Should().Be(true);
 
@@ -238,7 +238,7 @@ namespace Pims.Api.Test.Services
             updatedProperty.PropertyTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyStatusTypeCode.Should().Be("UNKNOWN");
             updatedProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");
-            updatedProperty.PropertyDataSourceEffectiveDate.Should().BeCloseTo(System.DateTime.Now, precision: TimeSpan.FromMilliseconds(120000)); // should be within 2 minutes to account for slow test runs
+            updatedProperty.PropertyDataSourceEffectiveDate.Should().Be(DateOnly.FromDateTime(System.DateTime.Now));
             updatedProperty.PropertyDataSourceTypeCode.Should().Be("PMBC");
             updatedProperty.IsPropertyOfInterest.Should().Be(true);
 

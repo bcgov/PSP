@@ -31,7 +31,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.FormView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            var pimsAcquisitionFileForm = new PimsAcquisitionFileForm() { AcquisitionFileId = acqFile.AcquisitionFileId, FormTypeCodeNavigation = new PimsFormType() { Id = "H120" } };
+            var pimsAcquisitionFileForm = new PimsAcquisitionFileForm() { AcquisitionFileId = acqFile.AcquisitionFileId, FormTypeCodeNavigation = new PimsFormType() { Id = "H120", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "form type" } };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsAcquisitionFileForm);
             var repository = helper.CreateRepository<AcquisitionFileFormRepository>(user);
@@ -72,7 +72,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.FormView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            var pimsAcquisitionFileForm = new PimsAcquisitionFileForm() { AcquisitionFileId = acqFile.AcquisitionFileId, FormTypeCodeNavigation = new PimsFormType() { Id = "H120" }, AcquisitionFileFormId = 1 };
+            var pimsAcquisitionFileForm = new PimsAcquisitionFileForm() { AcquisitionFileId = acqFile.AcquisitionFileId, FormTypeCodeNavigation = new PimsFormType() { Id = "H120", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "form type" }, AcquisitionFileFormId = 1 };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsAcquisitionFileForm);
             var repository = helper.CreateRepository<AcquisitionFileFormRepository>(user);
@@ -111,7 +111,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.FormView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            var pimsAcquisitionFileForm = new PimsAcquisitionFileForm() { AcquisitionFileId = acqFile.AcquisitionFileId, FormTypeCodeNavigation = new PimsFormType() { Id = "H120" } };
+            var pimsAcquisitionFileForm = new PimsAcquisitionFileForm() { AcquisitionFileId = acqFile.AcquisitionFileId, FormTypeCodeNavigation = new PimsFormType() { Id = "H120", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "form type" } };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsAcquisitionFileForm);
             var repository = helper.CreateRepository<AcquisitionFileFormRepository>(user);
@@ -152,7 +152,7 @@ namespace Pims.Dal.Test.Repositories
             var context = helper.CreatePimsContext(user, true);
             var repository = helper.CreateRepository<AcquisitionFileFormRepository>(user);
 
-            var pimsAcquisitionFileForm = new PimsAcquisitionFileForm() { AcquisitionFileId = 1, FormTypeCodeNavigation = new PimsFormType() { Id = "H120" } };
+            var pimsAcquisitionFileForm = new PimsAcquisitionFileForm() { AcquisitionFileId = 1, FormTypeCodeNavigation = new PimsFormType() { Id = "H120", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "form type" } };
 
             // Act
             var result = repository.Add(pimsAcquisitionFileForm);
@@ -185,7 +185,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.FormDelete);
-            var pimsAcquisitionFileForm = new PimsAcquisitionFileForm() { AcquisitionFileId = 1, FormTypeCodeNavigation = new PimsFormType() { Id = "H120" } };
+            var pimsAcquisitionFileForm = new PimsAcquisitionFileForm() { AcquisitionFileId = 1, FormTypeCodeNavigation = new PimsFormType() { Id = "H120", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "form type" } };
 
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(pimsAcquisitionFileForm);
@@ -207,7 +207,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.FormDelete);
-            var pimsAcquisitionFileForm = new PimsAcquisitionFileForm() { AcquisitionFileId = 1, FormTypeCodeNavigation = new PimsFormType() { Id = "H120" } };
+            var pimsAcquisitionFileForm = new PimsAcquisitionFileForm() { AcquisitionFileId = 1, FormTypeCodeNavigation = new PimsFormType() { Id = "H120", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "form type" } };
 
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(pimsAcquisitionFileForm);

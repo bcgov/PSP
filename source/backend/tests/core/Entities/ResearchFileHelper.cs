@@ -23,7 +23,7 @@ namespace Pims.Core.Test
                 RfileNumber = rfileNumber ?? "100-000-000",
                 ConcurrencyControlNumber = 1,
             };
-            researchFile.ResearchFileStatusTypeCodeNavigation = statusType ?? new Entity.PimsResearchFileStatusType() { Id = "fileStatusType" };
+            researchFile.ResearchFileStatusTypeCodeNavigation = statusType ?? new Entity.PimsResearchFileStatusType() { Id = "fileStatusType", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" };
 
             return researchFile;
         }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Drawing.Spreadsheet;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
@@ -124,7 +125,11 @@ namespace Pims.Dal.Keycloak
         {
             if (resetRoles)
             {
-                euser.PimsUserRoles.ForEach(role => _userRepository.RemoveRole(euser, role.RoleId));
+                var roleIds = euser.PimsUserRoles.Select(ur => ur.RoleId).ToArray();
+                for(int i = 0; i < roleIds.Length; i++)
+                {
+                    _userRepository.RemoveRole(euser, roleIds[i]);
+                }
             }
 
             // Update PIMS

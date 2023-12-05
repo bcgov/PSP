@@ -21,7 +21,7 @@ namespace Pims.Core.Test
         public static Entity.PimsProvinceState CreateProvince(short id, string code, Entity.PimsCountry country = null)
         {
             country ??= EntityHelper.CreateCountry(1, "CAN");
-            return new Entity.PimsProvinceState(code, country) { ProvinceStateId = id, ConcurrencyControlNumber = 1 };
+            return new Entity.PimsProvinceState(code, country) { ProvinceStateId = id, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" };
         }
 
         /// <summary>
@@ -34,8 +34,8 @@ namespace Pims.Core.Test
             country ??= EntityHelper.CreateCountry(1, "CAN");
             return new List<Entity.PimsProvinceState>()
             {
-                new Entity.PimsProvinceState("ON", country) { ProvinceStateId = 1, ConcurrencyControlNumber = 1 },
-                new Entity.PimsProvinceState("BC", country) { ProvinceStateId = 2,  ConcurrencyControlNumber = 1 },
+                new Entity.PimsProvinceState("ON", country) { ProvinceStateId = 1, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
+                new Entity.PimsProvinceState("BC", country) { ProvinceStateId = 2,  ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
             };
         }
 
@@ -50,7 +50,7 @@ namespace Pims.Core.Test
         public static Entity.PimsProvinceState CreateProvince(this PimsContext context, short id, string code, Entity.PimsCountry country = null)
         {
             country ??= context.PimsCountries.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a country.");
-            return new Entity.PimsProvinceState(code, country) { ProvinceStateId = id, ConcurrencyControlNumber = 1 };
+            return new Entity.PimsProvinceState(code, country) { ProvinceStateId = id, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" };
         }
     }
 }
