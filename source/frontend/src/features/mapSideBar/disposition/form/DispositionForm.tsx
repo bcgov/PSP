@@ -142,7 +142,7 @@ const DispositionForm = React.forwardRef<FormikProps<DispositionFormModel>, IDis
                     <Select
                       field="physicalFileStatusTypeCode"
                       options={dispositionPhysicalFileStatusOptions}
-                      placeholder="Select file status..."
+                      placeholder="Select..."
                     />
                   </SectionField>
                   <SectionField label="Initiating branch">
