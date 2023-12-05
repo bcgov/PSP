@@ -52,10 +52,10 @@ namespace Pims.Api.Services
 
             MatchProperties(dispositionFile, userOverrides);
 
-            _dispositionFileRepository.Add(dispositionFile);
-            _dispositionFilePropertyRepository.CommitTransaction();
+            var newDispositionFile = _dispositionFileRepository.Add(dispositionFile);
+            _dispositionFileRepository.CommitTransaction();
 
-            return dispositionFile;
+            return newDispositionFile;
         }
 
         public PimsDispositionFile GetById(long id)
@@ -138,7 +138,7 @@ namespace Pims.Api.Services
                         var foundProperty = _propertyRepository.GetByPid(pid);
                         dispProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(dispProperty.Property, ref foundProperty, overrideCodes);
-                        dispProperty.Property = foundProperty;
+                        dispProperty.Property = null;
                     }
                     catch (KeyNotFoundException)
                     {
@@ -161,7 +161,7 @@ namespace Pims.Api.Services
                         var foundProperty = _propertyRepository.GetByPin(pin);
                         dispProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(dispProperty.Property, ref foundProperty, overrideCodes);
-                        dispProperty.Property = foundProperty;
+                        dispProperty.Property = null;
                     }
                     catch (KeyNotFoundException)
                     {
