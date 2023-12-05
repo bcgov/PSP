@@ -1,6 +1,6 @@
 using Mapster;
 using Pims.Api.Models.Base;
-using Entity = Pims.Dal.Entities;
+using Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.ResearchFile
 {
@@ -8,7 +8,7 @@ namespace Pims.Api.Models.Concepts.ResearchFile
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsResearchFile, ResearchFileModel>()
+            config.NewConfig<PimsResearchFile, ResearchFileModel>()
                 .Map(dest => dest.Id, src => src.ResearchFileId)
                 .Map(dest => dest.FileName, src => src.Name)
                 .Map(dest => dest.FileNumber, src => src.RfileNumber)
@@ -28,9 +28,9 @@ namespace Pims.Api.Models.Concepts.ResearchFile
                 .Map(dest => dest.RequestorOrganization, src => src.RequestorOrganizationNavigation)
                 .Map(dest => dest.ResearchFilePurposes, src => src.PimsResearchFilePurposes)
                 .Map(dest => dest.ResearchFileProjects, src => src.PimsResearchFileProjects)
-                .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
+                .Inherits<IBaseAppEntity, BaseAuditModel>();
 
-            config.NewConfig<ResearchFileModel, Entity.PimsResearchFile>()
+            config.NewConfig<ResearchFileModel, PimsResearchFile>()
                 .Map(dest => dest.ResearchFileId, src => src.Id)
                 .Map(dest => dest.Name, src => src.FileName)
                 .Map(dest => dest.RfileNumber, src => src.FileNumber)
@@ -50,7 +50,7 @@ namespace Pims.Api.Models.Concepts.ResearchFile
                 .Map(dest => dest.RequestorOrganization, src => src.RequestorOrganization.Id)
                 .Map(dest => dest.PimsResearchFilePurposes, src => src.ResearchFilePurposes)
                 .Map(dest => dest.PimsResearchFileProjects, src => src.ResearchFileProjects)
-                .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
+                .Inherits<BaseAuditModel, IBaseAppEntity>();
         }
     }
 }
