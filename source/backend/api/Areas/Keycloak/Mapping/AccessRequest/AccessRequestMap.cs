@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Api.Models.Base;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Keycloak.Models.AccessRequest;
 
@@ -14,7 +15,7 @@ namespace Pims.Api.Areas.Keycloak.Mapping.AccessRequest
                 .Map(dest => dest.Status, src => src.AccessRequestStatusTypeCode)
                 .Map(dest => dest.Role, src => src.Role)
                 .Map(dest => dest.Note, src => src.Note)
-                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
+                .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<Model.AccessRequestModel, Entity.PimsAccessRequest>()
                 .Map(dest => dest.AccessRequestId, src => src.Id)
@@ -22,7 +23,7 @@ namespace Pims.Api.Areas.Keycloak.Mapping.AccessRequest
                 .Map(dest => dest.UserId, src => src.User.Id)
                 .Map(dest => dest.RoleId, src => src.Role.Id)
                 .Map(dest => dest.Note, src => src.Note)
-                .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>();
+                .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }
     }
 }

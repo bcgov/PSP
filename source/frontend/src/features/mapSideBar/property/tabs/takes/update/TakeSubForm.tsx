@@ -53,6 +53,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
     return (e: React.ChangeEvent<any>) => {
       if (e.target.value === 'false') {
         setModalContent({
+          variant: 'info',
           title: 'Confirm change',
           message: 'The area, if provided, will be cleared. Do you wish to proceed?',
           okButtonText: 'Confirm',

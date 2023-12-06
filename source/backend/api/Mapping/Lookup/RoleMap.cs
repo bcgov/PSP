@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Api.Models.Base;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Lookup;
 
@@ -16,7 +17,7 @@ namespace Pims.Api.Mapping.Lookup
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Type, src => src.GetType().Name)
-                .Inherits<Entity.IBaseEntity, Models.BaseModel>();
+                .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
             config.NewConfig<Model.RoleModel, Entity.PimsRole>()
                 .Map(dest => dest.RoleId, src => src.Id)
@@ -25,7 +26,7 @@ namespace Pims.Api.Mapping.Lookup
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Inherits<Models.BaseModel, Entity.IBaseEntity>();
+                .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
         }
     }
 }

@@ -40,7 +40,7 @@ const MapSideBarLayout: React.FunctionComponent<
 
               {showCloseButton && (
                 <Col xs="auto">
-                  <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Form">
+                  <TooltipWrapper tooltipId="close-sidebar-tooltip" tooltip="Close Form">
                     <CloseIcon title="close" onClick={props.onClose} />
                   </TooltipWrapper>
                 </Col>

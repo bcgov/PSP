@@ -21,7 +21,7 @@ const AdvancedFilterButton: React.FC<IAdvanceFilterButtonProps> = ({ open, onTog
   return (
     <Control position="topright">
       <div className="w-100">
-        <TooltipWrapper toolTipId="advanced-filter-button-id" toolTip="Advanced Map Filters">
+        <TooltipWrapper tooltipId="advanced-filter-button-id" tooltip="Advanced Map Filters">
           <ControlButton
             title="advanced-filter-button"
             variant="outline-secondary"

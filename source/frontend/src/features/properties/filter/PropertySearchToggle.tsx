@@ -31,7 +31,7 @@ export const PropertySearchToggle: React.FunctionComponent<
     <StyledToggle toggle={toggle}>
       <StyledNav>
         <StyledLink>
-          <TooltipWrapper toolTipId={`${toolId}-map`} toolTip="Map View">
+          <TooltipWrapper tooltipId={`${toolId}-map`} tooltip="Map View">
             <MapSvg
               onClick={() => {
                 if (toggle !== SearchToggleOption.Map) {
@@ -44,7 +44,7 @@ export const PropertySearchToggle: React.FunctionComponent<
       </StyledNav>
       <StyledNav>
         <StyledLink>
-          <TooltipWrapper toolTipId={`${toolId}-list`} toolTip="List View">
+          <TooltipWrapper tooltipId={`${toolId}-list`} tooltip="List View">
             <TableSvg
               onClick={() => {
                 if (toggle !== SearchToggleOption.List) {

@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Pims.Api.Models;
+using Pims.Api.Models.Concepts.Http;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Metadata;
 

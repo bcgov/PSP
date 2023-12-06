@@ -115,7 +115,7 @@ function AsyncTypeaheadInner<T extends TypeaheadModel>(
     >
       {label && <Form.Label htmlFor={`typeahead-${field}`}>{label}</Form.Label>}
       {tooltip && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
-      <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
+      <TooltipWrapper tooltipId={`${field}-error-tooltip}`} tooltip={errorTooltip}>
         <BaseAsyncTypeahead<T>
           ref={ref} // forward the ref to the inner typeahead control to be able to call its methods; e.g. typeahead.clear(), .blur() etc
           id={`typeahead-${field}`}

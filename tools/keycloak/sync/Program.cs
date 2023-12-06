@@ -8,10 +8,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
+using Pims.Core.Http;
 using Pims.Core.Http.Configuration;
-using Pims.Tools.Core.Configuration;
-using Pims.Tools.Core.Keycloak;
-using Pims.Tools.Core.Keycloak.Configuration;
+using Pims.Keycloak;
+using Pims.Keycloak.Configuration;
 using Pims.Tools.Keycloak.Sync.Configuration;
 using Pims.Tools.Keycloak.Sync.Configuration.Realm;
 
@@ -40,7 +40,7 @@ namespace Pims.Tools.Keycloak.Sync
                 .Configure<ApiOptions>(config.GetSection("Api"))
                 .Configure<RealmOptions>(config.GetSection("Realm"))
                 .Configure<KeycloakOptions>(config.GetSection("Auth:Keycloak"))
-                .Configure<KeycloakManagementOptions>(config.GetSection("Auth:Keycloak:ServiceAccount"))
+                .Configure<KeycloakServiceAccountOptions>(config.GetSection("Auth:Keycloak:ServiceAccount"))
                 .Configure<OpenIdConnectOptions>(config.GetSection("Auth:OpenIdConnect"))
                 .Configure<JsonSerializerOptions>(options =>
                 {
@@ -78,8 +78,9 @@ namespace Pims.Tools.Keycloak.Sync
                 })
                 .AddTransient<Startup>()
                 .AddTransient<JwtSecurityTokenHandler>()
-                .AddScoped<IKeycloakRequestClient, KeycloakRequestClient>()
+                .AddScoped<IKeycloakRepository, KeycloakRepository>()
                 .AddScoped<IPimsRequestClient, PimsRequestClient>()
+                .AddScoped<IOpenIdConnectRequestClient, OpenIdConnectRequestClient>()
                 .AddTransient<ISyncFactory, SyncFactory>();
 
             services.AddHttpClient("Pims.Tools.Keycloak.Sync", client => { });

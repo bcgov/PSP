@@ -2,6 +2,7 @@ import { FormikProps } from 'formik';
 import React, { useEffect, useState } from 'react';
 
 import * as API from '@/constants/API';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 
@@ -27,6 +28,14 @@ export const UpdateAgreementsContainer: React.FC<IUpdateAgreementsContainerProps
     getAcquisitionAgreements: { execute: getAgreements, loading: loadingAgeements },
   } = useAgreementProvider();
 
+  const {
+    getAcquisitionFile: {
+      execute: getAcquisition,
+      loading: loadingAcquisition,
+      response: acquisitionFile,
+    },
+  } = useAcquisitionProvider();
+
   const sectionTypes = getByType(API.AGREEMENT_TYPES);
   const [initialValues, setInitialValues] = useState<AgreementsFormModel>(
     new AgreementsFormModel(acquisitionFileId),
@@ -34,11 +43,12 @@ export const UpdateAgreementsContainer: React.FC<IUpdateAgreementsContainerProps
 
   useEffect(() => {
     const fetchData = async () => {
+      getAcquisition(acquisitionFileId);
       const agreements = (await getAgreements(acquisitionFileId)) || [];
       setInitialValues(AgreementsFormModel.fromApi(acquisitionFileId, agreements));
     };
     fetchData();
-  }, [acquisitionFileId, getAgreements]);
+  }, [acquisitionFileId, getAcquisition, getAgreements]);
 
   const saveAgreements = async (apiAcquisitionFile: AgreementsFormModel) => {
     const result = await updateAcquisitionAgreements(acquisitionFileId, apiAcquisitionFile.toApi());
@@ -50,7 +60,8 @@ export const UpdateAgreementsContainer: React.FC<IUpdateAgreementsContainerProps
 
   return (
     <View
-      isLoading={isUpdating || loadingAgeements}
+      isLoading={isUpdating || loadingAgeements || loadingAcquisition}
+      acquistionFile={acquisitionFile}
       formikRef={formikRef}
       initialValues={initialValues}
       agreementTypes={sectionTypes}

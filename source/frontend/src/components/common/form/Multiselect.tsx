@@ -107,7 +107,7 @@ export function MultiselectInner<T, U>(
       {label && <Form.Label htmlFor={`multiselect-${field}_input`}>{label}</Form.Label>}
       {tooltip && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
 
-      <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
+      <TooltipWrapper tooltipId={`${field}-error-tooltip}`} tooltip={errorTooltip}>
         <MultiselectBase
           {...rest}
           ref={ref as any}

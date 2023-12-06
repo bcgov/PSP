@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Areas.Contact.Models.Search;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
+using Pims.Api.Models.Base;
 using Pims.Api.Policies;
 using Pims.Api.Services.Interfaces;
 using Pims.Dal.Entities.Models;
@@ -86,7 +87,7 @@ namespace Pims.Api.Areas.Contact.Controllers
             }
 
             Paged<Dal.Entities.PimsContactMgrVw> contacts = _contactService.GetPage((ContactFilter)filter);
-            return new JsonResult(_mapper.Map<Api.Models.PageModel<ContactSummaryModel>>(contacts));
+            return new JsonResult(_mapper.Map<PageModel<ContactSummaryModel>>(contacts));
         }
         #endregion
         #endregion

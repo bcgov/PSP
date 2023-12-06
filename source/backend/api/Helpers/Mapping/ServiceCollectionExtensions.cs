@@ -56,7 +56,10 @@ namespace Pims.Api.Helpers.Mapping
 
             var optionsSerializer = Options.Create(serializerOptions);
             var optionsPims = Options.Create(pimsOptions);
-            var assemblies = new[] { Assembly.GetAssembly(typeof(Startup)) };
+            var apiAssembly = Assembly.GetAssembly(typeof(Startup));
+            var modelsAssembly = Assembly.Load("Pims.Api.Models");
+            var assemblies = new[] { apiAssembly, modelsAssembly };
+
             var registers = assemblies.Select(assembly => assembly.GetTypes()
                 .Where(x => typeof(IRegister).GetTypeInfo().IsAssignableFrom(x.GetTypeInfo()) && x.GetTypeInfo().IsClass && !x.GetTypeInfo().IsAbstract))
                 .SelectMany(registerTypes =>

@@ -1,9 +1,11 @@
+using Pims.Api.Models.Base;
+
 namespace Pims.Api.Models.Tenant
 {
     /// <summary>
     /// TenantModel class, provides a model to represent a tenant.
     /// </summary>
-    public class TenantModel : BaseModel
+    public class TenantModel : BaseConcurrentModel
     {
         #region Properties
 

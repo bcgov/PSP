@@ -291,7 +291,7 @@ exports[`Edit Lease Insurance renders as expected 1`] = `
                   class="c4 form-control date-picker"
                   id="datepicker-insurances.0.expiryDate"
                   name="insurances.0.expiryDate"
-                  placeholder="MTH DD, YYYY"
+                  placeholder="MMM DD, YYYY"
                   type="text"
                   value="Jan 01, 2022"
                 />
