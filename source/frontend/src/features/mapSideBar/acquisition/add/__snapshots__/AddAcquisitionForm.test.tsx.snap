@@ -1467,6 +1467,13 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-HISTORY"
+                  value="HISTORY"
+                >
+                  Historical
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-SECTN3"
                   value="SECTN3"
                 >
