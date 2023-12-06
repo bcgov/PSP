@@ -4,6 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 
 import { Button } from '@/components/common/buttons/Button';
 import { Select, SelectOption } from '@/components/common/form';
+import FileDragAndDrop from '@/components/common/form/FileDragAndDrop';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipIcon from '@/components/common/TooltipIcon';
@@ -41,18 +42,6 @@ const DocumentUploadForm: React.FunctionComponent<
     return { label: x.documentTypeDescription || '', value: x.id?.toString() || '' };
   });
 
-  const handleFileInput = (changeEvent: ChangeEvent<HTMLInputElement>) => {
-    // handle validations
-    if (changeEvent.target !== null) {
-      var target = changeEvent.target;
-      if (target.files !== null) {
-        setSelectedFile(target.files[0]);
-        // forces formik to flag the change as dirty
-        props.formikRef.current?.setFieldValue('fileSet', true);
-      }
-    }
-  };
-
   const initialFormData = new DocumentUploadFormData(
     props.documentStatusOptions[0]?.value?.toString(),
     props.initialDocumentType,
@@ -68,7 +57,11 @@ const DocumentUploadForm: React.FunctionComponent<
     }
   }, [props.formikRef, props.documentTypes, props.initialDocumentType, props.mayanMetadataTypes]);
 
-  const validDocumentExtensions: string = ValidDocumentExtensions.map(x => `.${x}`).join(',');
+  const onSelectFile = (selectedFile: File | null) => {
+    setSelectedFile(selectedFile);
+    // forces formik to flag the change as dirty
+    props.formikRef.current?.setFieldValue('fileSet', true);
+  };
 
   return (
     <StyledContainer>
@@ -101,7 +94,7 @@ const DocumentUploadForm: React.FunctionComponent<
               Choose the document type and select "Browse" to choose the file to upload from your
               computer or network to PIMS.
             </div>
-            <SectionField label="Document type" labelWidth="3" className="pb-2">
+            <SectionField label="Document type" labelWidth="4" className="pb-2">
               <Select
                 data-testid="document-type"
                 placeholder={documentTypes.length > 1 ? 'Select Document type' : undefined}
@@ -112,16 +105,12 @@ const DocumentUploadForm: React.FunctionComponent<
               />
             </SectionField>
             <SectionField label="Choose document to upload" labelWidth="12" className="mb-4">
-              <div className="pt-2">
-                <input
-                  data-testid="upload-input"
-                  id="uploadInput"
-                  type="file"
-                  name="documentFile"
-                  accept={validDocumentExtensions}
-                  onChange={handleFileInput}
-                />
-              </div>
+              <div className="pt-2"></div>
+              <FileDragAndDrop
+                onSelectFile={onSelectFile}
+                selectedFile={selectedFile}
+                validExtensions={ValidDocumentExtensions}
+              />
             </SectionField>
             <StyledGreySection>
               <Row className="pb-3">
