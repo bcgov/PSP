@@ -678,7 +678,7 @@ namespace Pims.Api.Test.Services
             propertyRepository.Verify(x => x.TransferFileProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>()), Times.Once);
         }
 
-        public static object[] takesTestParameters = new List<object[]>() {
+        public static IEnumerable<object[]> takesTestParameters = new List<object[]>() {
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true, false }, // core inventory takes priority over other interest
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActEndDt = DateTime.UtcNow.AddDays(-1) }, new PimsTake() { IsNewLicenseToConstruct = true } }, false, false }, // should ignore any expired takes

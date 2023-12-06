@@ -16,6 +16,7 @@ using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
+using Pims.Api.Models.Concepts.Http;
 
 namespace Pims.Api.Test.Services
 {
