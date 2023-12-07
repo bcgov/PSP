@@ -36,7 +36,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         /// <summary>
         /// get/set - The relationship's disposition file.
         /// </summary>
-        public FileModel File { get; set; }
+        public DispositionFileModel File { get; set; }
 
         /// <summary>
         /// get/set - The relationship's disposition file id.
