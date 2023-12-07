@@ -52,10 +52,10 @@ export const AccessRequestFilter = (props: IProps) => {
           />
         </Col>
         <Col className="actions d-flex" md={1}>
-          <TooltipWrapper toolTipId="access-filter-search-tooltip" toolTip="Search">
+          <TooltipWrapper tooltipId="access-filter-search-tooltip" tooltip="Search">
             <SearchButton type="submit" onClick={search} />
           </TooltipWrapper>
-          <TooltipWrapper toolTipId="access-filter-reset-tooltip" toolTip="Reset Filter">
+          <TooltipWrapper tooltipId="access-filter-reset-tooltip" tooltip="Reset Filter">
             <Button
               title="reset"
               variant="info"

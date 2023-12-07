@@ -18,6 +18,7 @@ const PrimaryContactWarningModal: React.FunctionComponent<
   const warningOrgNames = warningOrgs.map(org => org.summary);
   return (
     <GenericModal
+      variant="warning"
       display={!!saveCallback}
       title="Confirm save"
       message={

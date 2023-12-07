@@ -4,9 +4,10 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Concepts.ResearchFile;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -103,7 +104,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [SwaggerOperation(Tags = new[] { "researchfile" })]
         public IActionResult AddResearchFile(ResearchFileModel researchFileModel, [FromQuery] string[] userOverrideCodes)
         {
-            var researchFileEntity = _mapper.Map<Dal.Entities.PimsResearchFile>(researchFileModel);
+            var researchFileEntity = _mapper.Map<PimsResearchFile>(researchFileModel);
             var researchFile = _researchFileService.Add(researchFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
 
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));

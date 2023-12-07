@@ -5,7 +5,6 @@ import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
 
 import ModalContainer from '@/components/common/ModalContainer';
-//import { MapStateContextProvider } from '@/components/maps/providers/MapStateContext_old';
 import { ModalContextProvider } from '@/contexts/modalContext';
 import { IOrganization } from '@/interfaces';
 import { TenantConsumer, TenantProvider } from '@/tenants';

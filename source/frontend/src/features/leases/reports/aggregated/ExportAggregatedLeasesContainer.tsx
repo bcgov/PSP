@@ -50,7 +50,7 @@ export const ExportAggregatedLeasesContainer: React.FunctionComponent<
                 field="fiscalYear"
                 options={fiscalYearOptions}
               ></InlineSelect>
-              <TooltipWrapper toolTipId="download-aggregated-lease-report" toolTip="Download">
+              <TooltipWrapper tooltipId="download-aggregated-lease-report" tooltip="Download">
                 <ClickableDownload title="Export Aggregated Report" onClick={() => submitForm()} />
               </TooltipWrapper>
             </FlexRowDiv>

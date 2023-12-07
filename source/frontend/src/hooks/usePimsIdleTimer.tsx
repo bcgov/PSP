@@ -17,7 +17,7 @@ const usePimsIdleTimer = () => {
   // when the prompt timer expires, display the idle prompt.
   const onPrompt = () => {
     setModalContent({
-      className: 'info',
+      variant: 'info',
       title: 'Still Working?',
       message: 'You have been idle for some time. Would you like to remain logged in?',
       okButtonText: 'Keep working',

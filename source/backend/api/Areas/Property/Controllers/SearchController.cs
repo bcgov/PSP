@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Areas.Property.Models.Search;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
+using Pims.Api.Models.Base;
 using Pims.Api.Policies;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using BModel = Pims.Api.Models;
 
 namespace Pims.Api.Areas.Property.Controllers
 {
@@ -57,7 +57,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpGet]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(BModel.PageModel<Models.Search.PropertyModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<Models.Search.PropertyModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetProperties()
         {
@@ -74,7 +74,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpPost("filter")]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(BModel.PageModel<Models.Search.PropertyModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<Models.Search.PropertyModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetProperties([FromBody] PropertyFilterModel filter)
         {
@@ -85,7 +85,7 @@ namespace Pims.Api.Areas.Property.Controllers
             }
 
             var page = _propertyRepository.GetPage((PropertyFilter)filter);
-            var result = _mapper.Map<BModel.PageModel<Models.Search.PropertyModel>>(page);
+            var result = _mapper.Map<PageModel<Models.Search.PropertyModel>>(page);
             return new JsonResult(result);
         }
 

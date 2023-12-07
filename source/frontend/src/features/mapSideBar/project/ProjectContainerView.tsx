@@ -96,6 +96,7 @@ const ProjectContainerView: React.FC<IProjectContainerViewProps> = ({
           onSuccess={onSuccess}
         />
         <GenericModal
+          variant="info"
           display={showConfirmModal}
           title={'Confirm changes'}
           message={

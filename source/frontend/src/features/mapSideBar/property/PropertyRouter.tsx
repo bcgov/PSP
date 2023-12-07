@@ -87,7 +87,6 @@ const PropertyRouter = React.forwardRef<FormikProps<any>, IPropertyRouterProps>(
             title="Update Contact"
           ></AppRoute>
           <AppRoute
-            exact
             path={`${stripTrailingSlash(path)}/${InventoryTabNames.management}`}
             customRender={({ match }) => (
               <PropertyManagementUpdateContainer

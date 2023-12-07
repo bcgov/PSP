@@ -30,7 +30,7 @@ export const ZoomOutButton: React.FC = () => {
   };
   return (
     <Control position="topleft">
-      <TooltipWrapper toolTipId="zoomout-id" toolTip="View entire province">
+      <TooltipWrapper tooltipId="zoomout-id" tooltip="View entire province">
         <ZoomButton onClick={zoomOut}>
           <FaExpandArrowsAlt />
         </ZoomButton>

@@ -10,7 +10,7 @@ import { Button, ButtonProps } from '.';
  */
 export const SearchButton: React.FC<React.PropsWithChildren<ButtonProps>> = ({ ...props }) => {
   return (
-    <TooltipWrapper toolTipId="map-filter-search-tooltip" toolTip="Search">
+    <TooltipWrapper tooltipId="map-filter-search-tooltip" tooltip="Search">
       <Button
         id="search-button"
         type={props.type ?? 'submit'}

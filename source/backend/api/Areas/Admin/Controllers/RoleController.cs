@@ -1,11 +1,12 @@
 using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.Role;
 using Pims.Api.Policies;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Areas.Admin.Controllers
 {
@@ -51,7 +52,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <returns>Paged object with an array of roles.</returns>
         [HttpGet]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Api.Models.PageModel<Model.RoleModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<RoleModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-role" })]
         public IActionResult GetRoles(int page = 1, int quantity = 10, string name = null)
@@ -72,7 +73,7 @@ namespace Pims.Api.Areas.Admin.Controllers
             }
 
             var paged = _roleRepository.GetPage(page, quantity, name);
-            var result = _mapper.Map<Api.Models.PageModel<Model.RoleModel>>(paged);
+            var result = _mapper.Map<PageModel<RoleModel>>(paged);
             return new JsonResult(result);
         }
 
@@ -83,13 +84,13 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <returns>The role requested.</returns>
         [HttpGet("{key}")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.RoleModel), 200)]
+        [ProducesResponseType(typeof(RoleModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-role" })]
         public IActionResult GetRole(Guid key)
         {
             var entity = _roleRepository.GetByKey(key);
-            var role = _mapper.Map<Model.RoleModel>(entity);
+            var role = _mapper.Map<RoleModel>(entity);
             return new JsonResult(role);
         }
         #endregion

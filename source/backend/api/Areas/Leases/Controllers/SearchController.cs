@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Pims.Api.Areas.Lease.Models.Search;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
+using Pims.Api.Models.Base;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
@@ -108,7 +109,7 @@ namespace Pims.Api.Areas.Lease.Controllers
             }
 
             var leases = _leaseService.GetPage((LeaseFilter)filter);
-            return new JsonResult(_mapper.Map<Api.Models.PageModel<LeaseModel>>(leases));
+            return new JsonResult(_mapper.Map<PageModel<LeaseModel>>(leases));
         }
         #endregion
         #endregion

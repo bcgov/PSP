@@ -1,4 +1,3 @@
-using Pims.Tools.Core.Configuration;
 using Pims.Tools.Keycloak.Sync.Configuration.Realm;
 
 namespace Pims.Tools.Keycloak.Sync.Configuration
