@@ -37,14 +37,15 @@ namespace Pims.Dal.Exceptions
 
         public string Code { get; private set; }
 
-        private static List<UserOverrideCode> UserOverrideCodes => new List<UserOverrideCode>() {
-                    UserOverrideCode.AddPropertyToInventory,
-                    UserOverrideCode.AddLocationToProperty,
-                    UserOverrideCode.UpdateRegion,
-                    UserOverrideCode.PoiToInventory,
-                    UserOverrideCode.ContractorSelfRemoved,
-                    UserOverrideCode.ProductReuse,
-                };
+        private static List<UserOverrideCode> UserOverrideCodes => new List<UserOverrideCode>()
+        {
+            UserOverrideCode.AddPropertyToInventory,
+            UserOverrideCode.AddLocationToProperty,
+            UserOverrideCode.UpdateRegion,
+            UserOverrideCode.PoiToInventory,
+            UserOverrideCode.ContractorSelfRemoved,
+            UserOverrideCode.ProductReuse,
+        };
 
         private UserOverrideCode(string code)
         {

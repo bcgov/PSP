@@ -28,6 +28,10 @@ using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Xunit;
+using Pims.Api.Concepts.CodeTypes;
+using Pims.Api.Models.Concepts.Http;
+using Pims.Api.Models.Concepts.Document.Upload;
+using Pims.Api.Models.Concepts.Document;
 
 namespace Pims.Api.Test.Services
 {

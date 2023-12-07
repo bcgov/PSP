@@ -1,9 +1,11 @@
+using Pims.Api.Models.Base;
+
 namespace Pims.Api.Models.Contact
 {
     /// <summary>
     /// Provides a contact-oriented contact method model.
     /// </summary>
-    public class ContactMethodModel : BaseAppModel
+    public class ContactMethodModel : BaseAuditModel
     {
         #region Properties
 

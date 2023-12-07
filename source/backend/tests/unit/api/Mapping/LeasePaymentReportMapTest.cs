@@ -10,6 +10,7 @@ using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Report.Lease;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
