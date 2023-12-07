@@ -12,9 +12,9 @@ namespace Pims.Keycloak
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddKeycloakService(this IServiceCollection services)
+        public static IServiceCollection AddKeycloakRepository(this IServiceCollection services)
         {
-            return services.AddScoped<IKeycloakService, KeycloakService>();
+            return services.AddScoped<IKeycloakRepository, KeycloakRepository>();
         }
     }
 }

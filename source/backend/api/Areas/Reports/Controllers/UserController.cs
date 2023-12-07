@@ -7,6 +7,7 @@ using Pims.Api.Helpers.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Helpers.Reporting;
+using Pims.Api.Models.Base;
 using Pims.Api.Policies;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -58,7 +59,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         [HttpGet]
         [HasPermission(Permissions.AdminUsers)]
         [Produces(ContentTypes.CONTENTTYPECSV, ContentTypes.CONTENTTYPEEXCELX)]
-        [ProducesResponseType(typeof(Api.Models.PageModel<Models.User.UserModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<Models.User.UserModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 403)]
         [SwaggerOperation(Tags = new[] { "user", "report" })]
@@ -80,7 +81,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         [HttpPost("filter")]
         [HasPermission(Permissions.AdminUsers)]
         [Produces(ContentTypes.CONTENTTYPECSV, ContentTypes.CONTENTTYPEEXCELX)]
-        [ProducesResponseType(typeof(Api.Models.PageModel<Models.User.UserModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<Models.User.UserModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 403)]
         [SwaggerOperation(Tags = new[] { "user", "report" })]
@@ -96,7 +97,7 @@ namespace Pims.Api.Areas.Reports.Controllers
 
             filter.Quantity = all ? _userRepository.Count() : filter.Quantity;
             var page = _userRepository.GetAllByFilter(filter);
-            var report = _mapper.Map<Api.Models.PageModel<Models.User.UserModel>>(page);
+            var report = _mapper.Map<PageModel<Models.User.UserModel>>(page);
 
             return acceptHeader.ToString() switch
             {

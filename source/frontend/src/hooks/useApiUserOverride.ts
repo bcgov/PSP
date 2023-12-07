@@ -75,7 +75,7 @@ export const useApiUserOverride = <
       state.userOverrideCode !== UserOverrideCode.CONTRACTOR_SELFREMOVED
     ) {
       setModalContent({
-        className: 'warning',
+        variant: 'warning',
         title: 'User Override Required',
         message: state?.message,
         handleOk: async () => {
@@ -111,6 +111,7 @@ export const useApiUserOverride = <
     ) {
       setModalContent({
         title: 'Note',
+        variant: 'info',
         message: RemoveSelfContractorContent(),
         handleOk: async () => {
           setState({

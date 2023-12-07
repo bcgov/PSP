@@ -165,6 +165,7 @@ export const TermPaymentsContainer: React.FunctionComponent<
         onSave={onSaveTerm}
       />
       <GenericModal
+        variant="warning"
         display={!!comfirmDeleteModalValues}
         title={comfirmDeleteModalValues?.title}
         message={comfirmDeleteModalValues?.message}
@@ -174,6 +175,7 @@ export const TermPaymentsContainer: React.FunctionComponent<
         handleCancel={() => setConfirmDeleteModalValues(undefined)}
       />
       <GenericModal
+        variant="info"
         display={!!deleteModalWarning}
         title={deleteModalWarning?.title}
         message={deleteModalWarning?.message}

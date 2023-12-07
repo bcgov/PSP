@@ -73,6 +73,7 @@ export const AddNotesContainer: React.FC<
       />
 
       <CancelConfirmationModal
+        variant="info"
         display={showConfirmModal}
         handleOk={handleCancelConfirm}
         handleCancel={closeConfirmModal}

@@ -459,6 +459,7 @@ namespace Pims.Api.Test.Services
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
             agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>() { new PimsAgreement() { AgreementStatusTypeCode = "DRAFT" } });
@@ -470,7 +471,35 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Update(acqFile, new List<UserOverrideCode>());
 
             // Assert
-            var ex = act.Should().Throw<BusinessRuleViolationException>();
+            act.Should().Throw<BusinessRuleViolationException>();
+        }
+
+        [Fact]
+        public void Update_DraftsNotComplete_NoViolation()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>() { new PimsAgreement() { AgreementStatusTypeCode = "DRAFT" } });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var statusSolver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            statusSolver.Setup(x => x.CanEditDetails(It.IsAny<AcquisitionStatusTypes>())).Returns(true);
+
+            // Act
+            Action act = () => service.Update(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().NotThrow<BusinessRuleViolationException>();
         }
 
         [Fact]
@@ -538,6 +567,9 @@ namespace Pims.Api.Test.Services
 
             var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
             agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+
+            var compensationRequisitionRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compensationRequisitionRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsCompensationRequisition>());
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditDetails(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
@@ -646,7 +678,7 @@ namespace Pims.Api.Test.Services
             propertyRepository.Verify(x => x.TransferFileProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>()), Times.Once);
         }
 
-        public static object[] takesTestParameters = new List<object[]>() {
+        public static IEnumerable<object[]> takesTestParameters = new List<object[]>() {
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true, false }, // core inventory takes priority over other interest
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActEndDt = DateTime.UtcNow.AddDays(-1) }, new PimsTake() { IsNewLicenseToConstruct = true } }, false, false }, // should ignore any expired takes

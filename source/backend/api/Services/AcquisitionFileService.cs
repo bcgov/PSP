@@ -245,7 +245,7 @@ namespace Pims.Api.Services
 
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
-            ValidateDrafts(acquisitionFile.Internal_Id);
+            ValidateDrafts(acquisitionFile);
 
             AcquisitionStatusTypes? currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
             if (!_statusSolver.CanEditDetails(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
@@ -666,11 +666,12 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ValidateDrafts(long acqFileId)
+        private void ValidateDrafts(PimsAcquisitionFile incomingFile)
         {
-            var agreements = _agreementRepository.GetAgreementsByAcquisitionFile(acqFileId);
-            var compensations = _compensationRequisitionRepository.GetAllByAcquisitionFileId(acqFileId);
-            if (agreements.Any(a => a?.AgreementStatusTypeCode == "DRAFT" || compensations.Any(c => c.IsDraft.HasValue && c.IsDraft.Value)))
+            var agreements = _agreementRepository.GetAgreementsByAcquisitionFile(incomingFile.AcquisitionFileId);
+            var compensations = _compensationRequisitionRepository.GetAllByAcquisitionFileId(incomingFile.AcquisitionFileId);
+            if (incomingFile.AcquisitionFileStatusTypeCode == nameof(AcquisitionStatusTypes.COMPLT) &&
+                (agreements.Any(a => a?.AgreementStatusTypeCode == "DRAFT") || compensations.Any(c => c.IsDraft.HasValue && c.IsDraft.Value)))
             {
                 throw new BusinessRuleViolationException("You cannot complete a file when there are one or more draft agreements, or one or more draft compensations requisitions." +
                     "\n\nRemove any draft compensations requisitions. Agreements should be set to final, cancelled, or removed.");

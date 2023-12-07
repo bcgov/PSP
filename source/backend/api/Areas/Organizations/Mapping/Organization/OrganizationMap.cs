@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Api.Models.Base;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Organizations.Models.Organization;
 
@@ -18,7 +19,7 @@ namespace Pims.Api.Areas.Organizations.Mapping.Organization
                 .Map(dest => dest.Addresses, src => src.PimsOrganizationAddresses)
                 .Map(dest => dest.ContactMethods, src => src.PimsContactMethods)
                 .Map(dest => dest.Persons, src => src.GetPersons())
-                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
+                .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<Model.OrganizationModel, Entity.PimsOrganization>()
                 .Map(dest => dest.OrganizationId, src => src.Id)
@@ -29,7 +30,7 @@ namespace Pims.Api.Areas.Organizations.Mapping.Organization
                 .Map(dest => dest.Comment, src => src.Comment)
                 .Map(dest => dest.PimsOrganizationAddresses, src => src.Addresses)
                 .Map(dest => dest.PimsContactMethods, src => src.ContactMethods)
-                .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>()
+                .Inherits<BaseAuditModel, Entity.IBaseAppEntity>()
                 .IgnoreNonMapped(true) // with this we explicitly ignore the persons list if it gets sent to the backend
                 .IgnoreNullValues(true)
                 .AfterMapping((src, dest) =>

@@ -195,12 +195,12 @@ describe('AcquisitionView component', () => {
 
   it(`should show a toast and redirect to the File Details page when accessing a non-existing property index`, async () => {
     history.replace(`/mapview/sidebar/acquisition/1/property/99999`);
-    const { getByRole, findByText } = await setup();
+    const { getByRole, findByText } = await act(() => setup());
     const tab = getByRole('tab', { name: /File details/i });
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
     // toast
-    expect(await findByText(/Could not find property in the file/)).toBeVisible();
+    expect(await findByText(/Could not find property in the file/i)).toBeVisible();
   });
 
   it('should display the Property Selector according to routing', async () => {

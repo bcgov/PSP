@@ -229,6 +229,7 @@ export const DepositsContainer: React.FunctionComponent<
             />
 
             <GenericModal
+              variant="warning"
               display={deleteModalWarning}
               title="Delete Deposit"
               message={`Are you sure you want to remove the deposit?`}
@@ -238,6 +239,7 @@ export const DepositsContainer: React.FunctionComponent<
               setDisplay={setDeleteModalWarning}
             />
             <GenericModal
+              variant="warning"
               display={deleteReturnModalWarning}
               title="Delete Deposit Return"
               message={`Are you sure you want to remove this deposit return?`}

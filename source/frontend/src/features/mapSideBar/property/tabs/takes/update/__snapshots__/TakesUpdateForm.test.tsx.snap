@@ -1170,7 +1170,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             class="c18 form-control date-picker"
                             id="datepicker-takes.0.srwEndDt"
                             name="takes.0.srwEndDt"
-                            placeholder="MTH DD, YYYY"
+                            placeholder="MMM DD, YYYY"
                             type="text"
                             value="Nov 20, 2022"
                           />
@@ -1483,7 +1483,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             class="c18 form-control date-picker"
                             id="datepicker-takes.0.landActEndDt"
                             name="takes.0.landActEndDt"
-                            placeholder="MTH DD, YYYY"
+                            placeholder="MMM DD, YYYY"
                             type="text"
                             value="Jan 01, 2020"
                           />
@@ -1729,7 +1729,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             class="c18 form-control date-picker"
                             id="datepicker-takes.0.ltcEndDt"
                             name="takes.0.ltcEndDt"
-                            placeholder="MTH DD, YYYY"
+                            placeholder="MMM DD, YYYY"
                             type="text"
                             value="Jan 01, 2020"
                           />

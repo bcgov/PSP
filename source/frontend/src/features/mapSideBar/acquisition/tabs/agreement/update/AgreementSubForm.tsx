@@ -50,6 +50,7 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
       !!agreement.cancellationNote
     ) {
       setModalContent({
+        variant: 'warning',
         okButtonText: 'Yes',
         cancelButtonText: 'No',
         message:

@@ -1,9 +1,11 @@
+using Pims.Api.Models.Base;
+
 namespace Pims.Api.Areas.Keycloak.Models.AccessRequest
 {
     /// <summary>
     /// RoleModel class, provides a model that represents a role attached to an access request.
     /// </summary>
-    public class RoleModel : Api.Models.BaseAppModel
+    public class RoleModel : BaseAuditModel
     {
         #region Properties
 

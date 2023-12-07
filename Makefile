@@ -312,5 +312,15 @@ mayan-up: ## Calls the docker compose up for the mayan images
 	@echo "$(P) Create or start mayan-edms system"
 	@cd tools/mayan-edms; docker-compose --profile all up -d
 
+generate-tsapi: ## Generates the pims API typescript files
+	@echo "$(P) Generating pims api Ts files..."
+	@cd tools/TsModelGenerator; dotnet build; dotnet run;
+	@make frontend-lint
+	
+
+frontend-lint:
+	@echo "$(P) Running lint:fix..."
+	@cd source/frontend; npm run lint:fix;
+
 .PHONY: logs start destroy local setup restart refresh up down stop build rebuild clean client-test server-test pause-30 server-run db-clean db-drop db-seed db-refresh db-script db-scaffold npm-clean npm-refresh keycloak-sync convert backend-coverage frontend-coverage backend-test frontend-test env mayan-up
 

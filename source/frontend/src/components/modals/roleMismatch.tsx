@@ -13,7 +13,7 @@ export const RoleMismatchModal: React.FunctionComponent<IRoleMismatchModalProps>
 
   return (
     <GenericModal
-      className="info"
+      variant="info"
       display={props.display}
       setDisplay={props.setDisplay}
       title="Role claims mismatch"

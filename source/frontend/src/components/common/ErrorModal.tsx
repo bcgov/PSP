@@ -15,6 +15,7 @@ const ErrorModal = (props: any) => {
   const history = useHistory();
   return (
     <GenericModal
+      variant="error"
       title="App Error"
       message={props.error.message}
       okButtonText="Retry"
