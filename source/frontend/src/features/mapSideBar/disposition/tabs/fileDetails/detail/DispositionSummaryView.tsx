@@ -59,7 +59,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
           tooltip="Provide available reference number for historic program or file number (e.g.  RAEG, Acquisition File, etc.)."
           labelWidth="5"
         >
-          {dispositionFile?.referenceNumber}
+          {dispositionFile?.fileReference}
         </SectionField>
         <SectionField label="Disposition status" labelWidth="5">
           {dispositionFile?.dispositionStatusTypeCode?.description}
