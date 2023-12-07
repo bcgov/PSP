@@ -62,7 +62,7 @@ export const ContactInput: React.FC<React.PropsWithChildren<ContactInputProps>> 
     >
       {!!label && <Form.Label>{label}</Form.Label>}
 
-      <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
+      <TooltipWrapper tooltipId={`${field}-error-tooltip}`} tooltip={errorTooltip}>
         <Row>
           <Col>
             <StyledDiv className={!!error ? 'is-invalid' : ''}>

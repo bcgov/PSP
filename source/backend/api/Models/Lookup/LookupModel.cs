@@ -1,3 +1,5 @@
+using Pims.Api.Models.Base;
+
 namespace Pims.Api.Models.Lookup
 {
     /// <summary>
@@ -21,7 +23,7 @@ namespace Pims.Api.Models.Lookup
         #endregion
     }
 
-    public class LookupModel : BaseModel
+    public class LookupModel : BaseConcurrentModel
     {
         #region Properties
 

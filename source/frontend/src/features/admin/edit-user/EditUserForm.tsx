@@ -105,8 +105,8 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
           <SectionField label="Role(s)" required labelWidth="2">
             <Multiselect placeholder="" field="roles" options={roles} displayValue="name" />
             <TooltipWrapper
-              toolTipId="role description tooltip icon"
-              toolTip={<RolesToolTip />}
+              tooltipId="role description tooltip icon"
+              tooltip={<RolesToolTip />}
               placement="auto"
               className="tooltip-light"
             >
@@ -140,8 +140,8 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
 
           <SectionField className="d-flex" label="Disable account?" labelWidth="2">
             <TooltipWrapper
-              toolTipId="is-disabled-tooltip"
-              toolTip={'Click to change account status then click Save.'}
+              tooltipId="is-disabled-tooltip"
+              tooltip={'Click to change account status then click Save.'}
             >
               <Check data-testid="isDisabled" field="isDisabled" />
             </TooltipWrapper>

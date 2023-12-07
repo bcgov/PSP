@@ -298,7 +298,7 @@ exports[`LeaseDetailSubForm component renders as expected 1`] = `
                       class="c5 form-control date-picker"
                       id="datepicker-startDate"
                       name="startDate"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       required=""
                       type="text"
                       value=""
@@ -350,7 +350,7 @@ exports[`LeaseDetailSubForm component renders as expected 1`] = `
                       class="c5 form-control date-picker"
                       id="datepicker-expiryDate"
                       name="expiryDate"
-                      placeholder="MTH DD, YYYY"
+                      placeholder="MMM DD, YYYY"
                       type="text"
                       value=""
                     />

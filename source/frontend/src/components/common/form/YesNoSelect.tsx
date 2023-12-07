@@ -57,7 +57,7 @@ export const YesNoSelect: React.FC<React.PropsWithChildren<IYesNoSelectProps>> =
       {label && <Form.Label>{label}</Form.Label>}
       {tooltip && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
 
-      <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
+      <TooltipWrapper tooltipId={`${field}-error-tooltip}`} tooltip={errorTooltip}>
         <Form.Control
           as="select"
           name={field}

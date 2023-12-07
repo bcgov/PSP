@@ -168,12 +168,12 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
         <Container fluid className="TableToolbar px-0">
           <h3>Property Information</h3>
           <div className="menu"></div>
-          <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
+          <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to Excel">
             <StyledIconButton onClick={() => fetch('excel')}>
               <FaFileExcel data-testid="excel-icon" size={36} />
             </StyledIconButton>
           </TooltipWrapper>
-          <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to CSV">
+          <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to CSV">
             <StyledIconButton onClick={() => fetch('csv')}>
               <FaFileAlt data-testid="csv-icon" size={36} />
             </StyledIconButton>

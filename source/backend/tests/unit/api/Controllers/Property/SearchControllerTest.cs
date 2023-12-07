@@ -9,6 +9,7 @@ using Moq;
 using Pims.Api.Areas.Property.Controllers;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
+using Pims.Api.Models.Base;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal;

@@ -32,7 +32,7 @@ export const NavIcon = ({ icon, text, showText, onClick, roles, claims }: INavIc
       data-testid={`nav-tooltip-${text.replaceAll(' ', '').toLowerCase()}`}
     >
       <StyledLink>
-        <TooltipWrapper toolTipId={`nav-tooltip-${text}`} toolTip={text}>
+        <TooltipWrapper tooltipId={`nav-tooltip-${text}`} tooltip={text}>
           {icon}
         </TooltipWrapper>
         <StyledLabel className={clsx({ show: showText })}>{text}</StyledLabel>

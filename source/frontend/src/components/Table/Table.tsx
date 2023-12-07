@@ -489,7 +489,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
         {props.canRowExpand ? <div className="th" style={{ width: '4.7rem' }}></div> : null}
         {filterable && (
           <div className={'th reset-filter svg-btn'}>
-            <TooltipWrapper toolTipId="properties-list-filter-reset-tooltip" toolTip="Reset Filter">
+            <TooltipWrapper tooltipId="properties-list-filter-reset-tooltip" tooltip="Reset Filter">
               <Button
                 onClick={() => {
                   const nextState: any = { ...props.filter };
@@ -568,8 +568,8 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
       return (
         props.detailsPanel && (
           <TooltipWrapper
-            toolTipId="expand-all-rows"
-            toolTip={open ? 'Collapse Row' : 'Expand Row'}
+            tooltipId="expand-all-rows"
+            tooltip={open ? 'Collapse Row' : 'Expand Row'}
           >
             <div className={className + ' svg-btn'} onClick={onClick}>
               {open ? detailsOpenedIcon : detailsClosedIcon}

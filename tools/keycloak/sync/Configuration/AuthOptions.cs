@@ -1,5 +1,5 @@
 using Pims.Core.Http.Configuration;
-using Pims.Tools.Core.Keycloak.Configuration;
+using Pims.Keycloak.Configuration;
 
 namespace Pims.Tools.Keycloak.Sync.Configuration
 {

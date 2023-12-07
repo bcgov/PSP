@@ -140,6 +140,7 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
 
       {/* Confirmation popup when Cancel button is clicked */}
       <CancelConfirmationModal
+        variant="info"
         display={showConfirmation}
         setDisplay={setShowConfirmation}
         handleOk={() => {

@@ -36,6 +36,7 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.1" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Text.Json" Version="5.0.2" />
+    <PackageReference Include="Polly" Version="7.2.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,8 +59,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\source\backend\api\Pims.Api.csproj" />
-    <ProjectReference Include="..\..\core\Pims.Tools.Core.csproj" />
+  <ProjectReference Include="..\..\..\source\backend\keycloak\Pims.Keycloak.csproj" />
+    <ProjectReference Include="..\..\..\source\backend\apimodels\Pims.Api.Models.csproj" />
   </ItemGroup>
 
 </Project>

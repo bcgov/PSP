@@ -41,7 +41,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             removeRole.RoleId = 1;
             removeRole.KeycloakGroupId = Guid.NewGuid();
 
-            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakRepository>();
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
                 Username = euser.BusinessIdentifierValue,
@@ -112,7 +112,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             removeRole.RoleId = 1;
             removeRole.KeycloakGroupId = Guid.NewGuid();
 
-            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakRepository>();
             var groups = new string[] { Guid.NewGuid().ToString() };
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
@@ -180,7 +180,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             var euser = EntityHelper.CreateUser("test");
 
-            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakRepository>();
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync((Pims.Keycloak.Models.UserModel)null);
 
             // Act
@@ -204,7 +204,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             removeRole.RoleId = 1;
             removeRole.KeycloakGroupId = Guid.NewGuid();
 
-            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakRepository>();
             var groups = new[] { euser.GuidIdentifierValue.Value.ToString() };
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
@@ -254,7 +254,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var removeRole = euser.GetRoles().First();
             removeRole.KeycloakGroupId = Guid.NewGuid();
 
-            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakRepository>();
             var groups = new string[] { removeRole.KeycloakGroupId.ToString() };
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
@@ -300,7 +300,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             removeRole.RoleId = 1;
             removeRole.KeycloakGroupId = Guid.NewGuid();
 
-            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakRepository>();
             var groups = new string[] { removeRole.KeycloakGroupId.ToString() };
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
@@ -346,7 +346,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             existingRole.RoleId = 1;
             existingRole.KeycloakGroupId = Guid.NewGuid();
 
-            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakRepository>();
             var groups = new string[] { existingRole.KeycloakGroupId.ToString() };
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
@@ -406,7 +406,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             existingRole.RoleId = 1;
             existingRole.KeycloakGroupId = Guid.NewGuid();
 
-            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakRepository>();
             var groups = new string[] { existingRole.KeycloakGroupId.ToString() };
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
@@ -453,7 +453,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             existingRole.RoleId = 1;
             existingRole.KeycloakGroupId = Guid.NewGuid();
 
-            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakRepository>();
             var groups = new string[] { existingRole.KeycloakGroupId.ToString() };
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
@@ -489,7 +489,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             existingRole.RoleId = 1;
             existingRole.KeycloakGroupId = Guid.NewGuid();
 
-            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakRepository>();
             var groups = new string[] { existingRole.KeycloakGroupId.ToString() };
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
@@ -525,7 +525,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var eRole = EntityHelper.CreateRole("test-role");
             eRole.KeycloakGroupId = Guid.NewGuid();
 
-            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakRepository>();
             var groups = new string[] { eRole.KeycloakGroupId.ToString() };
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
@@ -575,7 +575,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var eRole = EntityHelper.CreateRole("test-role");
             eRole.KeycloakGroupId = Guid.NewGuid();
 
-            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakRepository>();
             var groups = new string[] { eRole.KeycloakGroupId.ToString() };
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
@@ -628,7 +628,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var eRole = EntityHelper.CreateRole("test-role");
             eRole.KeycloakGroupId = Guid.NewGuid();
 
-            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakRepository>();
             var groups = new string[] { eRole.KeycloakGroupId.ToString() };
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
@@ -687,7 +687,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             var eAccessRequest = EntityHelper.CreateAccessRequest(1);
 
-            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakRepository>();
             var updatedAccessRequest = new Entity.PimsAccessRequest()
             {
                 AccessRequestId = eAccessRequest.AccessRequestId,

@@ -142,6 +142,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
           )}
 
           <GenericModal
+            variant="info"
             display={showDeleteConfirm}
             title="Delete Note"
             message={`Are you sure you want to delete this note?`}

@@ -123,7 +123,7 @@ export const Input: React.FC<React.PropsWithChildren<InputProps>> = ({
       )}
       {!!tooltip && !label && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
 
-      <TooltipWrapper toolTipId={`${field}-error-tooltip`} toolTip={errorTooltip}>
+      <TooltipWrapper tooltipId={`${field}-error-tooltip`} tooltip={errorTooltip}>
         <Form.Control
           className={innerClassName}
           as={asElement}
