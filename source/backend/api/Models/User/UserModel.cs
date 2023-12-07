@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Pims.Api.Models.Base;
 
 namespace Pims.Api.Models.User
 {
-    public class UserModel : BaseAppModel
+    public class UserModel : BaseAuditModel
     {
         #region Properties
 

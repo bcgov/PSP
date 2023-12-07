@@ -1,8 +1,9 @@
 using System;
+using Pims.Api.Models.Base;
 
 namespace Pims.Api.Models.Lookup
 {
-    public class RoleModel : BaseModel
+    public class RoleModel : BaseConcurrentModel
     {
         #region Properties
 

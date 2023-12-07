@@ -79,7 +79,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
 
   const addModalProps: ModalProps = useDeepCompareMemo(() => {
     return {
-      className: 'info',
+      variant: 'info',
       title: 'Not inventory property',
       message:
         'You have selected a property not previously in the inventory. Do you want to add this property to the lease?',
@@ -159,6 +159,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
 
   const removeModalProps: ModalProps = useDeepCompareMemo(() => {
     return {
+      variant: 'info',
       title: 'Removing Property from form',
       message: 'Are you sure you want to remove this property from this lease/license?',
       display: false,

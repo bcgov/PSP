@@ -14,6 +14,5 @@ namespace Pims.Api.Constants
 
         [EnumMember(Value = "FINAL")]
         FINAL,
-
     }
 }

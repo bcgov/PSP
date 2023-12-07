@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Concepts.FinancialCode;
 
 namespace Pims.Api.Services
 {

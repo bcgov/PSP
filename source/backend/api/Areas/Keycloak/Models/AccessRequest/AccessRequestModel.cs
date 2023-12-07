@@ -1,6 +1,8 @@
+using Pims.Api.Models.Base;
+
 namespace Pims.Api.Areas.Keycloak.Models.AccessRequest
 {
-    public class AccessRequestModel : Api.Models.BaseAppModel
+    public class AccessRequestModel : BaseAuditModel
     {
         #region Properties
         public long Id { get; set; }
