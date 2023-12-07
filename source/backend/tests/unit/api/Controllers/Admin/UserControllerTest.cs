@@ -6,13 +6,14 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Admin.Controllers;
+using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.User;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Test.Admin.Controllers
 {
@@ -50,8 +51,8 @@ namespace Pims.Api.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.UserModel>>(actionResult.Value);
-            mapper.Map<Model.UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
+            var actualResult = Assert.IsType<PageModel<UserModel>>(actionResult.Value);
+            mapper.Map<UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
             repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
@@ -75,8 +76,8 @@ namespace Pims.Api.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.UserModel>>(actionResult.Value);
-            mapper.Map<Model.UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
+            var actualResult = Assert.IsType<PageModel<UserModel>>(actionResult.Value);
+            mapper.Map<UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
             repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
         #endregion
@@ -102,8 +103,8 @@ namespace Pims.Api.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.UserModel>>(actionResult.Value);
-            mapper.Map<Model.UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
+            var actualResult = Assert.IsType<PageModel<UserModel>>(actionResult.Value);
+            mapper.Map<UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
             repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
         #endregion
@@ -127,8 +128,8 @@ namespace Pims.Api.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
-            mapper.Map<Model.UserModel>(user).Should().BeEquivalentTo(actualResult);
+            var actualResult = Assert.IsType<UserModel>(actionResult.Value);
+            mapper.Map<UserModel>(user).Should().BeEquivalentTo(actualResult);
             repository.Verify(m => m.GetByKeycloakUserId(user.GuidIdentifierValue.Value), Times.Once());
         }
         #endregion
@@ -146,7 +147,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var user = EntityHelper.CreateUser("user1");
             var organization = user.GetOrganizations().First();
             repository.Setup(m => m.Add(It.IsAny<Entity.PimsUser>())).Callback<Entity.PimsUser>(u => { });
-            var model = mapper.Map<Model.UserModel>(user);
+            var model = mapper.Map<UserModel>(user);
 
             // Act
             var result = controller.AddUser(model);
@@ -154,7 +155,7 @@ namespace Pims.Api.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<CreatedAtActionResult>(result);
             Assert.Equal(201, actionResult.StatusCode);
-            var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
+            var actualResult = Assert.IsType<UserModel>(actionResult.Value);
             actualResult.RowVersion.Should().Be(user.ConcurrencyControlNumber);
             repository.Verify(m => m.Add(It.IsAny<Entity.PimsUser>()), Times.Once());
         }
@@ -172,7 +173,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var repository = helper.GetService<Mock<IUserRepository>>();
             var user = EntityHelper.CreateUser("user1");
             repository.Setup(m => m.Update(It.IsAny<Entity.PimsUser>()));
-            var model = mapper.Map<Model.UserModel>(user);
+            var model = mapper.Map<UserModel>(user);
 
             // Act
             var result = controller.UpdateUser(user.GuidIdentifierValue.Value, model);
@@ -180,7 +181,7 @@ namespace Pims.Api.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
+            var actualResult = Assert.IsType<UserModel>(actionResult.Value);
             actualResult.RowVersion.Should().Be(user.ConcurrencyControlNumber);
             repository.Verify(m => m.Update(It.IsAny<Entity.PimsUser>()), Times.Once());
         }
@@ -198,7 +199,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var repository = helper.GetService<Mock<IUserRepository>>();
             var user = EntityHelper.CreateUser("user1");
             repository.Setup(m => m.GetById(It.IsAny<long>())).Returns(user);
-            var model = mapper.Map<Model.UserModel>(user);
+            var model = mapper.Map<UserModel>(user);
 
             // Act
             var result = controller.GetUser(user.Internal_Id);
@@ -206,7 +207,7 @@ namespace Pims.Api.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
+            var actualResult = Assert.IsType<UserModel>(actionResult.Value);
             actualResult.RowVersion.Should().Be(user.ConcurrencyControlNumber);
             actualResult.BusinessIdentifierValue.Should().Be(user.BusinessIdentifierValue);
             repository.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
@@ -225,7 +226,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var repository = helper.GetService<Mock<IUserRepository>>();
             var user = EntityHelper.CreateUser("user1");
             repository.Setup(m => m.Delete(It.IsAny<Entity.PimsUser>()));
-            var model = mapper.Map<Model.UserModel>(user);
+            var model = mapper.Map<UserModel>(user);
 
             // Act
             var result = controller.DeleteUser(user.GuidIdentifierValue.Value, model);
@@ -233,7 +234,7 @@ namespace Pims.Api.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
+            var actualResult = Assert.IsType<UserModel>(actionResult.Value);
             model.Should().BeEquivalentTo(actualResult);
             repository.Verify(m => m.Delete(It.IsAny<Entity.PimsUser>()), Times.Once());
         }

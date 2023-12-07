@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Areas.Leases.Models.Lease;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Concepts.Deposit;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
@@ -87,7 +87,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [ProducesResponseType(typeof(SecurityDepositModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult AddDeposit(long leaseId, [FromBody] Pims.Api.Models.Concepts.SecurityDepositModel addRequest)
+        public IActionResult AddDeposit(long leaseId, [FromBody] SecurityDepositModel addRequest)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -119,7 +119,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [ProducesResponseType(typeof(SecurityDepositModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateDeposit(long leaseId, long depositId, Pims.Api.Models.Concepts.SecurityDepositModel updateRequest)
+        public IActionResult UpdateDeposit(long leaseId, long depositId, SecurityDepositModel updateRequest)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -154,7 +154,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public bool DeleteDeposit(long leaseId, long depositId, [FromBody] Pims.Api.Models.Concepts.SecurityDepositModel deleteRequest)
+        public bool DeleteDeposit(long leaseId, long depositId, [FromBody] SecurityDepositModel deleteRequest)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",

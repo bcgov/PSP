@@ -167,6 +167,7 @@ const UpdatePersonComponent: React.FC<
 
       {/* Confirmation popup when Cancel button is clicked */}
       <CancelConfirmationModal
+        variant="info"
         display={showConfirmation}
         setDisplay={setShowConfirmation}
         handleOk={() => {

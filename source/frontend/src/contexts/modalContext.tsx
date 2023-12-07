@@ -4,13 +4,13 @@ import { useState } from 'react';
 import { ModalContent, ModalProps } from '@/components/common/GenericModal';
 
 export interface IModalContext {
-  modalProps?: ModalProps;
+  modalProps: ModalProps;
   setModalContent: (modalProps?: ModalContent) => void;
   setDisplayModal: (display: boolean) => void;
 }
 
 export const ModalContext = React.createContext<IModalContext>({
-  modalProps: undefined,
+  modalProps: { variant: 'info' },
   setDisplayModal: (display: boolean) => {
     throw Error('setDisplayModal function not defined');
   },
@@ -22,13 +22,14 @@ export const ModalContext = React.createContext<IModalContext>({
 export const ModalContextProvider = (props: {
   children: React.ReactChild | React.ReactChild[] | React.ReactNode;
 }) => {
-  const [modalProps, setModalProps] = useState<ModalProps | undefined>(undefined);
+  const [modalProps, setModalProps] = useState<ModalProps>({ variant: 'info' });
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const updateFunction = React.useCallback(
     (updatedModalContent?: ModalContent) => {
       setModalProps({
         ...updatedModalContent,
+        variant: updatedModalContent?.variant ?? 'info',
         display: showModal,
         setDisplay: setShowModal,
       });

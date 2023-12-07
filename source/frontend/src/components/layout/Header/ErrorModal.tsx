@@ -1,10 +1,10 @@
-import React from 'react';
-import Col from 'react-bootstrap/Col';
-import Modal from 'react-bootstrap/Modal';
-import Row from 'react-bootstrap/Row';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 
-import { Button } from '@/components/common/buttons/Button';
+import GenericModal from '@/components/common/GenericModal';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledGreySection } from '@/features/documents/commonStyles';
 import { IGenericNetworkAction } from '@/store/slices/network/interfaces';
 import { logClear } from '@/store/slices/network/networkSlice';
 
@@ -27,49 +27,91 @@ export interface IErrorModalProps {
  */
 export const ErrorModal = ({ errors, show, setShow }: IErrorModalProps) => {
   const dispatch = useDispatch();
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+  };
   const handleClear = () => {
     errors.forEach(error => dispatch(logClear(error.name)));
     setShow(false);
   };
 
+  const errorUrl = (error: IGenericNetworkAction): string => {
+    return error?.error?.response?.config?.url || '';
+  };
+
+  const errorShortUrl = (error: IGenericNetworkAction): string => {
+    var url = errorUrl(error);
+    if (url.length > 20) {
+      return error?.error?.response?.config?.url?.substr(0, 20) + '...';
+    } else {
+      return url;
+    }
+  };
+
+  const errorStatus = (error: IGenericNetworkAction): string => {
+    return error?.error?.response?.statusText || 'unknown';
+  };
+
   return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Errors</Modal.Title>
-      </Modal.Header>
-
-      <Modal.Body style={{ maxHeight: '50.0rem', overflowY: 'scroll' }}>
-        {errors.map((error: IGenericNetworkAction, index: number) => (
-          <Row key={index} style={{ wordBreak: 'break-all' }}>
-            {process.env.NODE_ENV === 'development' ? (
-              <Col>
-                <abbr title={error?.error?.response?.config?.url}>
-                  {error?.error?.response?.config?.url?.substr(0, 20)}
-                </abbr>
-                : {error?.error?.response?.statusText} data:{' '}
-                {JSON.stringify(error?.error?.response?.data)}
-              </Col>
-            ) : (
-              <Col>
-                <abbr title={error?.error?.response?.config?.url}>
-                  {error?.error?.response?.config?.url?.substr(0, 20)}
-                </abbr>
-                : ({error?.error?.response?.statusText ?? 'unknown'}){' '}
-                {(error?.error?.response?.data as unknown & { error: string })?.error ?? ''}
-              </Col>
-            )}
-          </Row>
-        ))}
-      </Modal.Body>
-
-      <Modal.Footer>
-        <Button variant="primary" onClick={handleClear}>
-          Close & Clear Errors
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    <GenericModal
+      variant="error"
+      display={show}
+      handleCancel={handleClose}
+      title="Errors"
+      okButtonText="Close"
+      handleOk={handleClear}
+      message={
+        <ErrorWrapper>
+          {errors.map((error: IGenericNetworkAction, index: number) => (
+            <ErrorEntry key={index}>
+              {process.env.NODE_ENV === 'development' ? (
+                <Section header={errorShortUrl(error)} isCollapsable>
+                  <SectionField label="Status" labelWidth="2">
+                    <ErrorDescription>{errorStatus(error)}</ErrorDescription>
+                  </SectionField>
+                  <SectionField label="Path" labelWidth="2">
+                    <ErrorDescription>{errorUrl(error)}</ErrorDescription>
+                  </SectionField>
+                  <SectionField label="Data" labelWidth="2">
+                    <ErrorDescription>
+                      {JSON.stringify(error?.error?.response?.data)}
+                    </ErrorDescription>
+                  </SectionField>
+                </Section>
+              ) : (
+                <Section header={errorShortUrl(error)} isCollapsable>
+                  <SectionField label="Status" labelWidth="3">
+                    <ErrorDescription>{errorStatus(error)}</ErrorDescription>
+                  </SectionField>
+                  <SectionField label="Path" labelWidth="3">
+                    <ErrorDescription>{errorUrl(error)}</ErrorDescription>
+                  </SectionField>
+                  <SectionField label="Data" labelWidth="12">
+                    <ErrorDescription>
+                      {(error?.error?.response?.data as unknown & { error: string })?.error ?? ''}
+                    </ErrorDescription>
+                  </SectionField>
+                </Section>
+              )}
+            </ErrorEntry>
+          ))}
+        </ErrorWrapper>
+      }
+    />
   );
 };
 
 export default ErrorModal;
+
+const ErrorWrapper = styled(StyledGreySection)`
+  max-height: 70rem;
+  overflow-y: scroll;
+  width: 100%;
+  padding: 0;
+`;
+
+const ErrorEntry = styled.div``;
+
+const ErrorDescription = styled.div`
+  word-break: break-all;
+`;

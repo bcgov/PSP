@@ -10,7 +10,8 @@ using System.Net.Mime;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Models;
+using Pims.Api.Concepts.CodeTypes;
+using Pims.Api.Models.Concepts.Http;
 using Pims.Api.Models.Download;
 
 namespace Pims.Api.Repositories.Rest

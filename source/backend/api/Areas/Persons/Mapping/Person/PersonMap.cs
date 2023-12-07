@@ -1,5 +1,6 @@
 using System.Linq;
 using Mapster;
+using Pims.Api.Models.Base;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Persons.Models.Person;
 
@@ -22,7 +23,7 @@ namespace Pims.Api.Areas.Persons.Mapping.Person
                 .Map(dest => dest.ContactMethods, src => src.PimsContactMethods)
                 .Map(dest => dest.PersonOrganizationId, src => src.GetPersonOrganizationId())
                 .Map(dest => dest.PersonOrganizationRowVersion, src => src.GetPersonOrganizationRowVersion())
-                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>()
+                .Inherits<Entity.IBaseAppEntity, BaseAuditModel>()
                 .AfterMapping((src, dest) =>
                 {
                     // The database supports many organizations for a person but the app currently supports only one linked organization per person.
@@ -45,7 +46,7 @@ namespace Pims.Api.Areas.Persons.Mapping.Person
                 .Map(dest => dest.PimsPersonAddresses, src => src.Addresses)
                 .Map(dest => dest.PimsContactMethods, src => src.ContactMethods)
                 .Map(dest => dest.PimsPersonOrganizations, src => src.Organization != null ? new[] { src } : null)
-                .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>()
+                .Inherits<BaseAuditModel, Entity.IBaseAppEntity>()
                 .IgnoreNullValues(true)
                 .AfterMapping((src, dest) =>
                 {

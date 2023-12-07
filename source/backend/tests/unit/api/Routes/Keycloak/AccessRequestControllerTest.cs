@@ -1,10 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using Pims.Api.Areas.Keycloak.Controllers;
+using Pims.Api.Models.Concepts.AccessRequest;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
 using Pims.Dal.Security;
 using Xunit;
-using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Test.Routes.Keycloak
 {
@@ -24,7 +24,7 @@ namespace Pims.Api.Test.Routes.Keycloak
         public void UpdateAccessRequestAsync_Route()
         {
             // Arrange
-            var endpoint = typeof(AccessRequestController).FindMethod(nameof(AccessRequestController.UpdateAccessRequestAsync), typeof(Model.AccessRequestModel));
+            var endpoint = typeof(AccessRequestController).FindMethod(nameof(AccessRequestController.UpdateAccessRequestAsync), typeof(AccessRequestModel));
 
             // Act
             // Assert

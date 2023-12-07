@@ -4,6 +4,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Admin.Controllers;
+using Pims.Api.Models.Concepts.AccessRequest;
 using Pims.Api.Models;
 using Pims.Core.Test;
 using Pims.Dal;
@@ -13,7 +14,7 @@ using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Models.Concepts;
+using Pims.Api.Models.Base;
 
 namespace Pims.Api.Test.Admin.Controllers
 {
@@ -52,7 +53,7 @@ namespace Pims.Api.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<PageModel<Model.AccessRequestModel>>(actionResult.Value);
+            var actualResult = Assert.IsType<PageModel<AccessRequestModel>>(actionResult.Value);
             repository.Verify(m => m.GetAll(It.IsAny<AccessRequestFilter>()), Times.Once());
         }
 
@@ -77,7 +78,7 @@ namespace Pims.Api.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<PageModel<Model.AccessRequestModel>>(actionResult.Value);
+            var actualResult = Assert.IsType<PageModel<AccessRequestModel>>(actionResult.Value);
             repository.Verify(m => m.GetAll(It.IsAny<AccessRequestFilter>()), Times.Once());
         }
 
@@ -102,7 +103,7 @@ namespace Pims.Api.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<PageModel<Pims.Api.Models.Concepts.AccessRequestModel>>(actionResult.Value);
+            var actualResult = Assert.IsType<PageModel<AccessRequestModel>>(actionResult.Value);
             repository.Verify(m => m.GetAll(It.IsAny<AccessRequestFilter>()), Times.Once());
         }
 
@@ -124,7 +125,7 @@ namespace Pims.Api.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<Pims.Api.Models.Concepts.AccessRequestModel>(actionResult.Value);
+            var actualResult = Assert.IsType<AccessRequestModel>(actionResult.Value);
             repository.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
         }
 
@@ -141,13 +142,13 @@ namespace Pims.Api.Test.Admin.Controllers
             repository.Setup(m => m.Delete(It.IsAny<Entity.PimsAccessRequest>())).Returns(accessRequest1);
 
             // Act
-            var result = controller.Delete(accessRequest1.AccessRequestId, mapper.Map<Model.AccessRequestModel>(accessRequest1));
+            var result = controller.Delete(accessRequest1.AccessRequestId, mapper.Map<AccessRequestModel>(accessRequest1));
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
-            mapper.Map<Model.AccessRequestModel>(accessRequest1).Should().BeEquivalentTo(actualResult);
+            var actualResult = Assert.IsType<AccessRequestModel>(actionResult.Value);
+            mapper.Map<AccessRequestModel>(accessRequest1).Should().BeEquivalentTo(actualResult);
             repository.Verify(m => m.Delete(It.IsAny<Entity.PimsAccessRequest>()), Times.Once());
         }
         #endregion

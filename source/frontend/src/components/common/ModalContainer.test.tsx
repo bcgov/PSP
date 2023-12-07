@@ -25,7 +25,7 @@ describe('ModalContainer component', () => {
     // render component under test
     const component = render(
       <>
-        <TestComponent {...renderOptions?.modalProps} />
+        <TestComponent {...(renderOptions?.modalProps ?? { variant: 'info' })} />
       </>,
       {
         ...renderOptions,
@@ -44,7 +44,7 @@ describe('ModalContainer component', () => {
   });
 
   it('displays a modal based on props', async () => {
-    setup({ modalProps: { title: 'test', message: 'test 2' }, isVisible: true });
+    setup({ modalProps: { variant: 'info', title: 'test', message: 'test 2' }, isVisible: true });
 
     expect(await screen.findByText('test')).toBeVisible();
     expect(await screen.findByText('test 2')).toBeVisible();
@@ -52,7 +52,7 @@ describe('ModalContainer component', () => {
 
   it('shows/hides modal', async () => {
     setup({
-      modalProps: { title: 'test', message: 'test 2', okButtonText: 'ok' },
+      modalProps: { variant: 'info', title: 'test', message: 'test 2', okButtonText: 'ok' },
       isVisible: true,
     });
 

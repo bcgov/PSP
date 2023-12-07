@@ -88,6 +88,7 @@ export const UpdateAcquisitionContainer = React.forwardRef<
             [],
             (axiosError: AxiosError<IApiError>) => {
               setModalContent({
+                variant: 'error',
                 title: 'Warning',
                 message: axiosError?.response?.data.error,
                 okButtonText: 'Close',
