@@ -77,8 +77,7 @@ export interface ModalContent {
   closeButton?: boolean;
   /** provide the size of the modal, default width is 50.0rem */
   modalSize?: ModalSize;
-  variant: 'info' | 'warning' | 'error';
-  //variant?: string;
+  variant?: 'info' | 'warning' | 'error';
   className?: string;
   /** display this modal as a popup instead of as a modal, allowing the user to click on underlying elements */
   asPopup?: boolean;
@@ -123,8 +122,10 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
   ) {
     throw Error('Modal has insufficient parameters');
   }
+
   const showState = display !== undefined ? display : show;
   const showControl = setDisplay !== undefined ? setDisplay : setShow;
+  const modalVariant = variant ?? 'info';
 
   const close = () => {
     if (handleCancel !== undefined) {
@@ -147,7 +148,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
       return <>{headerIcon}</>;
     }
 
-    switch (variant) {
+    switch (modalVariant) {
       case 'info':
       case 'warning': {
         return <FaExclamationCircle size={22} />;
@@ -161,25 +162,13 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     }
   };
 
-  function getVariantClass() {
-    switch (variant) {
-      case 'info':
-        return 'info-variant';
-      case 'warning': {
-        return 'warning-variant';
-      }
-      case 'error': {
-        return 'error-variant';
-      }
-      default: {
-        return 'info-variant';
-      }
+  const getMoldaClassName = (): string => {
+    if (className) {
+      return `${className} ${modalVariant}`;
     }
-  }
 
-  function getModalClass() {
-    return (className || '') + '  ' + getVariantClass();
-  }
+    return modalVariant ?? 'info';
+  };
 
   const headerIconValue = getHeaderIcon();
 
@@ -190,7 +179,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
       show={showState}
       modalSize={modalSize}
       onHide={noop}
-      className={getModalClass()}
+      className={getMoldaClassName()}
     >
       <Modal.Header closeButton={closeButton} onHide={close}>
         <Modal.Title>

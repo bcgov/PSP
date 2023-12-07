@@ -1,8 +1,9 @@
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import { useRef } from 'react';
+import { FaDollarSign } from 'react-icons/fa';
 
-import * as CommonStyled from '@/components/common/styles';
+import GenericModal, { ModalSize } from '@/components/common/GenericModal';
 
 import { FormLeaseDeposit } from '../../models/FormLeaseDeposit';
 import { ReceivedDepositForm } from './ReceivedDepositForm';
@@ -24,17 +25,25 @@ export const ReceivedDepositModal: React.FunctionComponent<
   const formikRef = useRef<FormikProps<FormLeaseDeposit>>(null);
   const modalTitle = initialValues.id === undefined ? 'Add a Deposit' : 'Edit Deposit';
   return (
-    <CommonStyled.PrimaryGenericModal
+    <GenericModal
+      modalSize={ModalSize.LARGE}
       title={modalTitle}
       display={display}
-      okButtonText="Save"
-      cancelButtonText="Cancel"
+      okButtonText="Yes"
+      cancelButtonText="No"
+      headerIcon={<FaDollarSign size={22} />}
       handleCancel={onCancel}
       handleOk={() => {
         formikRef?.current?.submitForm();
       }}
       message={
-        <ReceivedDepositForm formikRef={formikRef} initialValues={initialValues} onSave={onSave} />
+        <>
+          <ReceivedDepositForm
+            formikRef={formikRef}
+            initialValues={initialValues}
+            onSave={onSave}
+          />
+        </>
       }
     />
   );
