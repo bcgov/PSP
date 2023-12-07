@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Models;
+using Pims.Api.Models.Concepts.Http;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Metadata;
 

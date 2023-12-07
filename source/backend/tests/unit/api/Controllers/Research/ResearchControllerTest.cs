@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Research.Controllers;
 using Pims.Api.Areas.Research.Models.Search;
+using Pims.Api.Models.Concepts.ResearchFile;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
@@ -17,6 +18,7 @@ using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using SModel = Pims.Api.Areas.Research.Models.Search;
+using Pims.Api.Models.Base;
 
 namespace Pims.Api.Test.Controllers.Research
 {
@@ -73,8 +75,8 @@ namespace Pims.Api.Test.Controllers.Research
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Models.PageModel<ResearchFileModel>>(actionResult.Value);
-            var expectedResult = mapper.Map<Models.PageModel<ResearchFileModel>>(new Paged<Entity.PimsResearchFile>(researchFiles));
+            var actualResult = Assert.IsType<PageModel<ResearchFileModel>>(actionResult.Value);
+            var expectedResult = mapper.Map<PageModel<ResearchFileModel>>(new Paged<Entity.PimsResearchFile>(researchFiles));
             expectedResult.Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.GetPage(It.IsAny<ResearchFilter>()), Times.Once());
         }
@@ -101,8 +103,8 @@ namespace Pims.Api.Test.Controllers.Research
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Models.PageModel<ResearchFileModel>>(actionResult.Value);
-            var expectedResult = mapper.Map<Models.PageModel<ResearchFileModel>>(new Paged<Entity.PimsResearchFile>(researchFiles));
+            var actualResult = Assert.IsType<PageModel<ResearchFileModel>>(actionResult.Value);
+            var expectedResult = mapper.Map<PageModel<ResearchFileModel>>(new Paged<Entity.PimsResearchFile>(researchFiles));
             expectedResult.Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.GetPage(It.IsAny<ResearchFilter>()), Times.Once());
         }

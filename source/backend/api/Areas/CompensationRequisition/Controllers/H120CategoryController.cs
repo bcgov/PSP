@@ -4,7 +4,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Concepts.H120Category;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Swashbuckle.AspNetCore.Annotations;

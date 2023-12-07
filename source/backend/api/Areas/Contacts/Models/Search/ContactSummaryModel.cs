@@ -1,4 +1,4 @@
-using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Concepts.Organization;
 
 namespace Pims.Api.Areas.Contact.Models.Search
 {

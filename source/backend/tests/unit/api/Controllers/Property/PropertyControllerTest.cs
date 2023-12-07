@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Notes.Controllers;
 using Pims.Api.Areas.Property.Controllers;
+using Pims.Api.Models.Concepts.Property;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal.Security;
@@ -65,7 +66,7 @@ namespace Pims.Api.Test.Controllers.Property
             this._service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsProperty>())).Returns(property);
 
             // Act
-            var result = this._controller.UpdateConceptProperty(this._mapper.Map<Models.Concepts.PropertyModel>(property));
+            var result = this._controller.UpdateConceptProperty(this._mapper.Map<PropertyModel>(property));
 
             // Assert
             this._service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsProperty>()), Times.Once());
