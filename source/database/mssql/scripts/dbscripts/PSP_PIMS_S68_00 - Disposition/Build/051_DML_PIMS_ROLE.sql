@@ -17,3 +17,4 @@ VALUES
   (NEWID(), N'Management read-only',     N'Access to read Management information.',                  CONVERT([bit],(1)), CONVERT([bit],(0)), 0, CURRENT_TIMESTAMP, N'Seed Data', N'Seed Data', CURRENT_TIMESTAMP, N'Seed Data', N'Seed Data'),
   (NEWID(), N'Disposition functional',   N'Access to create, read, update Disposition files.',       CONVERT([bit],(1)), CONVERT([bit],(0)), 0, CURRENT_TIMESTAMP, N'Seed Data', N'Seed Data', CURRENT_TIMESTAMP, N'Seed Data', N'Seed Data'),
   (NEWID(), N'Disposition read-only',    N'Access to read Disposition files',                        CONVERT([bit],(1)), CONVERT([bit],(0)), 0, CURRENT_TIMESTAMP, N'Seed Data', N'Seed Data', CURRENT_TIMESTAMP, N'Seed Data', N'Seed Data');
+GO
