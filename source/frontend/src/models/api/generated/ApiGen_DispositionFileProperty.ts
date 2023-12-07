@@ -7,8 +7,8 @@ import { ApiGen_BaseConcurrent } from './ApiGen_BaseConcurrent';
 import { ApiGen_File } from './ApiGen_File';
 import { ApiGen_Property } from './ApiGen_Property';
 
-// LINK: @backend/apimodels/Models/Concepts/AcquisitionFile/AcquisitionFilePropertyModel.cs
-export interface ApiGen_AcquisitionFileProperty extends ApiGen_BaseConcurrent {
+// LINK: @backend/apimodels/Models/Concepts/DispositionFile/DispositionFilePropertyModel.cs
+export interface ApiGen_DispositionFileProperty extends ApiGen_BaseConcurrent {
   id: number;
   propertyName: string | null;
   displayOrder: number | null;

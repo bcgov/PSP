@@ -8,10 +8,10 @@ import { ApiGen_Organization } from './ApiGen_Organization';
 import { ApiGen_Person } from './ApiGen_Person';
 import { ApiGen_Type } from './ApiGen_Type';
 
-// LINK: @backend/apimodels/Models/Concepts/AcquisitionFile/AcquisitionFileTeamModel.cs
-export interface ApiGen_AcquisitionFileTeam extends ApiGen_BaseConcurrent {
+// LINK: @backend/apimodels/Models/Concepts/DispositionFile/DispositionFileTeamModel.cs
+export interface ApiGen_DispositionFileTeam extends ApiGen_BaseConcurrent {
   id: number;
-  acquisitionFileId: number;
+  dispositionFileId: number;
   personId: number | null;
   person: ApiGen_Person | null;
   organizationId: number | null;
