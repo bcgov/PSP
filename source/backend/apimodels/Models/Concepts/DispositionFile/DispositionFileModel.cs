@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.File;
 
 /*
 * Frontend model
 * LINK @frontend/src\models\api\DispositionFile.ts:14
 */
-namespace Pims.Api.Models.Concepts
+namespace Pims.Api.Models.Concepts.DispositionFile
 {
     public class DispositionFileModel : FileModel
     {

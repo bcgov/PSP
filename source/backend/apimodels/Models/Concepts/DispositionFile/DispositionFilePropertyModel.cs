@@ -1,6 +1,10 @@
-namespace Pims.Api.Models.Concepts
+using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.File;
+using Pims.Api.Models.Concepts.Property;
+
+namespace Pims.Api.Models.Concepts.DispositionFile
 {
-    public class DispositionFilePropertyModel : BaseModel
+    public class DispositionFilePropertyModel : BaseConcurrentModel
     {
         #region Properties
 

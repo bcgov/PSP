@@ -3,9 +3,13 @@
 * LINK @frontend/src\models\api\DispositionFile.ts:43
 */
 
-namespace Pims.Api.Models.Concepts
+using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.Organization;
+using Pims.Api.Models.Concepts.Person;
+
+namespace Pims.Api.Models.Concepts.DispositionFile
 {
-    public class DispositionFileTeamModel : BaseModel
+    public class DispositionFileTeamModel : BaseConcurrentModel
     {
         #region Properties
 

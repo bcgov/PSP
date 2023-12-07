@@ -1,7 +1,8 @@
 using Mapster;
+using Pims.Api.Models.Base;
 using Entity = Pims.Dal.Entities;
 
-namespace Pims.Api.Models.Concepts
+namespace Pims.Api.Models.Concepts.DispositionFile
 {
     public class DispositionFilePropertyMap : IRegister
     {
@@ -13,14 +14,14 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.File, src => src.DispositionFile)
                 .Map(dest => dest.FileId, src => src.DispositionFileId)
-                .Inherits<Entity.IBaseEntity, BaseModel>();
+                .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
             config.NewConfig<DispositionFilePropertyModel, Entity.PimsPropertyDispositionFile>()
                 .Map(dest => dest.PropertyDispositionFileId, src => src.Id)
                 .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.PropertyId, src => src.Property.Id)
                 .Map(dest => dest.DispositionFileId, src => src.FileId)
-                .Inherits<BaseModel, Entity.IBaseEntity>();
+                .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
         }
     }
 }

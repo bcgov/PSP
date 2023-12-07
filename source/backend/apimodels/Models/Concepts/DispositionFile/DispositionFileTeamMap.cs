@@ -1,7 +1,8 @@
 using Mapster;
+using Pims.Api.Models.Base;
 using Entity = Pims.Dal.Entities;
 
-namespace Pims.Api.Models.Concepts
+namespace Pims.Api.Models.Concepts.DispositionFile
 {
     public class DispositionFileTeamMap : IRegister
     {
@@ -18,7 +19,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
                 .Map(dest => dest.TeamProfileType, src => src.DspFlTeamProfileTypeCodeNavigation)
                 .Map(dest => dest.TeamProfileTypeCode, src => src.DspFlTeamProfileTypeCode)
-                .Inherits<Entity.IBaseEntity, BaseModel>();
+                .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
             config.NewConfig<DispositionFileTeamModel, Entity.PimsDispositionFileTeam>()
                 .Map(dest => dest.DispositionFileTeamId, src => src.Id)
@@ -27,7 +28,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)
                 .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
                 .Map(dest => dest.DspFlTeamProfileTypeCode, src => src.TeamProfileTypeCode)
-                .Inherits<BaseModel, Entity.IBaseEntity>();
+                .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
         }
     }
 }
