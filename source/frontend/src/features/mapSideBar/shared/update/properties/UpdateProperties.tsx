@@ -186,6 +186,7 @@ export const UpdateProperties: React.FunctionComponent<
         </Formik>
       </MapSideBarLayout>
       <GenericModal
+        variant="info"
         display={showSaveConfirmModal}
         title={'Confirm changes'}
         message={
@@ -202,6 +203,7 @@ export const UpdateProperties: React.FunctionComponent<
         show
       />
       <GenericModal
+        variant="info"
         display={showAssociatedEntityWarning}
         title={'Property with associations'}
         message={
@@ -219,6 +221,7 @@ export const UpdateProperties: React.FunctionComponent<
       />
 
       <GenericModal
+        variant="info"
         display={showCancelConfirmModal}
         title={'Confirm changes'}
         message={

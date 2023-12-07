@@ -53,7 +53,7 @@ const GenerateLetterRecipientsModal: React.FunctionComponent<
     >
       {formikProps => (
         <StyledModal
-          className="info"
+          variant="info"
           display={isOpened}
           title="Generate letter"
           message={
