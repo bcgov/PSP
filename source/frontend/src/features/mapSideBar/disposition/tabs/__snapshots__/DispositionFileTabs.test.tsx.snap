@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DispositionFileTabs component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c1 {
+  background-color: white;
+  font-size: 1.4rem;
+  border-color: transparent;
+}
+
+.c1 .nav-tabs {
+  height: auto;
+}
+
+.c1 .nav-item {
+  min-width: 5rem;
+  padding: 0.1rem 0.6rem;
+}
+
+.c1 .nav-item:hover {
+  border-color: transparent;
+}
+
+.c1 .nav-item.active {
+  font-family: 'BCSans-Bold';
+  border-color: transparent;
+}
+
+.c0 {
+  height: 100%;
+}
+
+.c0 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.5rem);
+  overflow-y: auto;
+}
+
+.c0 .tab-content .tab-pane {
+  position: relative;
+}
+
+<div
+    class="c0"
+  >
+    <nav
+      class="c1 nav nav-tabs"
+      role="tablist"
+    >
+      <a
+        aria-selected="true"
+        class="nav-item nav-link active"
+        data-rb-event-key="fileDetails"
+        href="#"
+        role="tab"
+      >
+        File details
+      </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
+        data-rb-event-key="offersAndSale"
+        href="#"
+        role="tab"
+      >
+        Offers & Sale
+      </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
+        data-rb-event-key="checklist"
+        href="#"
+        role="tab"
+      >
+        Checklist
+      </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
+        data-rb-event-key="documents"
+        href="#"
+        role="tab"
+      >
+        Documents
+      </a>
+    </nav>
+    <div
+      class="tab-content"
+    >
+      <div
+        aria-hidden="false"
+        class="fade tab-pane active show"
+        role="tabpanel"
+      />
+      <div
+        aria-hidden="true"
+        class="fade tab-pane"
+        role="tabpanel"
+      />
+      <div
+        aria-hidden="true"
+        class="fade tab-pane"
+        role="tabpanel"
+      />
+      <div
+        aria-hidden="true"
+        class="fade tab-pane"
+        role="tabpanel"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

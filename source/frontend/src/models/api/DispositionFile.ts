@@ -11,7 +11,7 @@ import { Api_PropertyFile } from './PropertyFile';
 // LINK @backend/api/Models/Concepts/DispositionFile/DispositionFileModel.cs
 export interface Api_DispositionFile extends Api_ConcurrentVersion, Api_AuditFields, Api_File {
   id?: number;
-  referenceNumber: string | null;
+  fileReference: string | null;
   assignedDate: string | null;
   initiatingDocumentDate: string | null;
   completionDate: string | null;
@@ -19,7 +19,7 @@ export interface Api_DispositionFile extends Api_ConcurrentVersion, Api_AuditFie
   initiatingDocumentTypeOther: string | null;
   // Code Tables
   physicalFileStatusTypeCode?: Api_TypeCode<string> | null;
-  dispositionStatusTypeCode: Api_TypeCode<string>;
+  dispositionStatusTypeCode: Api_TypeCode<string> | null;
   initiatingBranchTypeCode?: Api_TypeCode<string> | null;
   fundingTypeCode?: Api_TypeCode<string> | null;
   initiatingDocumentTypeCode?: Api_TypeCode<string> | null;
