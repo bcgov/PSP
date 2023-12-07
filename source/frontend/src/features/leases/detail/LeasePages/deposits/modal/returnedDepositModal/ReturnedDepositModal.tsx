@@ -25,6 +25,7 @@ export const ReturnedDepositModal: React.FunctionComponent<
   const modalTitle = initialValues?.id === undefined ? 'Return a Deposit' : 'Edit a Deposit Return';
   return (
     <GenericModal
+      variant="info"
       title={modalTitle}
       display={display}
       okButtonText="Save"

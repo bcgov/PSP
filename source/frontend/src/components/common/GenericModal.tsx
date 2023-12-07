@@ -77,7 +77,7 @@ export interface ModalContent {
   closeButton?: boolean;
   /** provide the size of the modal, default width is 50.0rem */
   modalSize?: ModalSize;
-  variant?: 'info' | 'warning' | 'error';
+  variant: 'info' | 'warning' | 'error';
   className?: string;
   /** display this modal as a popup instead of as a modal, allowing the user to click on underlying elements */
   asPopup?: boolean;
@@ -125,7 +125,6 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
 
   const showState = display !== undefined ? display : show;
   const showControl = setDisplay !== undefined ? setDisplay : setShow;
-  const modalVariant = variant ?? 'info';
 
   const close = () => {
     if (handleCancel !== undefined) {
@@ -148,7 +147,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
       return <>{headerIcon}</>;
     }
 
-    switch (modalVariant) {
+    switch (variant) {
       case 'info':
       case 'warning': {
         return <FaExclamationCircle size={22} />;
@@ -162,13 +161,25 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     }
   };
 
-  const getMoldaClassName = (): string => {
-    if (className) {
-      return `${className} ${modalVariant}`;
+  function getVariantClass() {
+    switch (variant) {
+      case 'info':
+        return 'info-variant';
+      case 'warning': {
+        return 'warning-variant';
+      }
+      case 'error': {
+        return 'error-variant';
+      }
+      default: {
+        return 'info-variant';
+      }
     }
+  }
 
-    return modalVariant ?? 'info';
-  };
+  function getModalClass() {
+    return (className || '') + '  ' + getVariantClass();
+  }
 
   const headerIconValue = getHeaderIcon();
 
@@ -179,7 +190,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
       show={showState}
       modalSize={modalSize}
       onHide={noop}
-      className={getMoldaClassName()}
+      className={getModalClass()}
     >
       <Modal.Header closeButton={closeButton} onHide={close}>
         <Modal.Title>

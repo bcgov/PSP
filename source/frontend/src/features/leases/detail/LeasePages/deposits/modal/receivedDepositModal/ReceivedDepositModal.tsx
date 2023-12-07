@@ -26,6 +26,7 @@ export const ReceivedDepositModal: React.FunctionComponent<
   const modalTitle = initialValues.id === undefined ? 'Add a Deposit' : 'Edit Deposit';
   return (
     <GenericModal
+      variant="info"
       modalSize={ModalSize.LARGE}
       title={modalTitle}
       display={display}

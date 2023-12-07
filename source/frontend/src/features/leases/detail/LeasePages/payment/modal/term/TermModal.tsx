@@ -27,6 +27,7 @@ export const TermModal: React.FunctionComponent<React.PropsWithChildren<ITermMod
   const formikRef = useRef<FormikProps<FormLeaseTerm>>(null);
   return (
     <GenericModal
+      variant="info"
       title="Add a Term"
       display={displayModal}
       okButtonText="Save term"

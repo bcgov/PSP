@@ -30,6 +30,7 @@ export const PaymentModal: React.FunctionComponent<React.PropsWithChildren<IPaym
   const formikRef = useRef<FormikProps<FormLeasePayment>>(null);
   return (
     <GenericModal
+      variant="info"
       title="Payment details"
       display={displayModal}
       okButtonText="Save payment"
