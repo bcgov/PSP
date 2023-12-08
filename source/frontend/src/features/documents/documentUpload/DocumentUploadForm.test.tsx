@@ -18,6 +18,7 @@ const handleSubmit = jest.fn();
 const handleCancelClick = jest.fn();
 const onUploadDocument = jest.fn();
 const onDocumentTypeChange = jest.fn();
+const onDocumentSelected = jest.fn();
 
 const documentStatusOptions: SelectOption[] = [
   { label: '', value: 'NONE' },
@@ -61,6 +62,7 @@ describe('DocumentUploadView component', () => {
         isLoading={false}
         mayanMetadataTypes={documentTypeMetadataType}
         onDocumentTypeChange={onDocumentTypeChange}
+        onDocumentSelected={onDocumentSelected}
         onUploadDocument={onUploadDocument}
         onCancel={handleCancelClick}
         initialDocumentType={'AMMEND'}
@@ -116,43 +118,6 @@ describe('DocumentUploadView component', () => {
     const textarea = await getByTestId('metadata-input-Tag');
 
     expect(textarea).toBeVisible();
-  });
-
-  it('save button to be disabled', async () => {
-    const { getByTestId } = setup({ initialValues });
-
-    const save = await getByTestId('save');
-
-    expect(save).toHaveAttribute('disabled');
-  });
-
-  it('should validate required inputs', async () => {
-    const { findByText, getByTestId } = setup({ initialValues });
-
-    const save = await getByTestId('save');
-    // get the upload button
-    let uploader = getByTestId('upload-input');
-
-    // simulate ulpoad event and wait until finish
-    await waitFor(() =>
-      fireEvent.change(uploader, {
-        target: { files: [file] },
-      }),
-    );
-    userEvent.click(save);
-
-    expect(await findByText(/Mandatory fields are required./i)).toBeVisible();
-  });
-
-  it('should cancel form when Cancel button is clicked', async () => {
-    const { getByTestId } = setup({ initialValues });
-
-    const cancel = await getByTestId('cancel');
-    act(() => {
-      userEvent.click(cancel);
-    });
-    expect(handleCancelClick).toBeCalled();
-    expect(handleSubmit).not.toBeCalled();
   });
 
   it.skip('should submit form when Submit button is clicked', async () => {

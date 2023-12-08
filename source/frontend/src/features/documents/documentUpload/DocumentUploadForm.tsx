@@ -1,22 +1,20 @@
 import { Formik, FormikProps } from 'formik';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
 
-import { Button } from '@/components/common/buttons/Button';
 import { Select, SelectOption } from '@/components/common/form';
 import FileDragAndDrop from '@/components/common/form/FileDragAndDrop';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import ValidDocumentExtensions from '@/constants/ValidDocumentExtensions';
 import { Api_DocumentType, Api_DocumentUploadRequest } from '@/models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
 
-import { StyledGreySection, StyledH2, StyledH3, StyledScrollable } from '../commonStyles';
+import { StyledH3, StyledScrollable } from '../commonStyles';
 import { DocumentUploadFormData } from '../ComposedDocument';
 import { DocumentMetadataView } from '../DocumentMetadataView';
 import { getDocumentMetadataYupSchema } from '../DocumentMetadataYupSchema';
-import { StyledContainer } from '../list/styles';
 
 interface IDocumentUploadFormProps {
   isLoading: boolean;
@@ -25,6 +23,7 @@ interface IDocumentUploadFormProps {
   documentTypes: Api_DocumentType[];
   documentStatusOptions: SelectOption[];
   mayanMetadataTypes: Api_Storage_DocumentTypeMetadataType[];
+  onDocumentSelected: () => void;
   onDocumentTypeChange: (changeEvent: ChangeEvent<HTMLInputElement>) => void;
   onUploadDocument: (uploadRequest: Api_DocumentUploadRequest) => void;
   onCancel: () => void;
@@ -60,11 +59,12 @@ const DocumentUploadForm: React.FunctionComponent<
   const onSelectFile = (selectedFile: File | null) => {
     setSelectedFile(selectedFile);
     // forces formik to flag the change as dirty
-    props.formikRef.current?.setFieldValue('fileSet', true);
+    props.formikRef.current?.setFieldValue('isSelectedFile', true);
+    props.onDocumentSelected();
   };
 
   return (
-    <StyledContainer>
+    <>
       <LoadingBackdrop show={props.isLoading} />
       <Formik<DocumentUploadFormData>
         innerRef={props.formikRef}
@@ -90,11 +90,7 @@ const DocumentUploadForm: React.FunctionComponent<
       >
         {formikProps => (
           <>
-            <div className="pb-4">
-              Choose the document type and select "Browse" to choose the file to upload from your
-              computer or network to PIMS.
-            </div>
-            <SectionField label="Document type" labelWidth="4" className="pb-2">
+            <SectionField label="Document type" labelWidth="4" className="pb-2" required>
               <Select
                 data-testid="document-type"
                 placeholder={documentTypes.length > 1 ? 'Select Document type' : undefined}
@@ -112,18 +108,18 @@ const DocumentUploadForm: React.FunctionComponent<
                 validExtensions={ValidDocumentExtensions}
               />
             </SectionField>
-            <StyledGreySection>
-              <Row className="pb-3">
-                <Col xs="auto">
-                  <StyledH2>Document information</StyledH2>
-                </Col>
-                <Col xs="auto">
+            <Section
+              header={
+                <>
+                  Document Information{' '}
                   <TooltipIcon
                     toolTipId="initiator-tooltip"
                     toolTip="Information you provide here will be searchable"
                   />
-                </Col>
-              </Row>
+                </>
+              }
+              noPadding
+            >
               <SectionField label="Status" labelWidth="4">
                 <Select
                   field="documentStatusCode"
@@ -131,7 +127,6 @@ const DocumentUploadForm: React.FunctionComponent<
                   disabled={props.documentStatusOptions.length === 1}
                 />
               </SectionField>
-
               <StyledH3>Details</StyledH3>
               <StyledScrollable>
                 <DocumentMetadataView
@@ -139,33 +134,14 @@ const DocumentUploadForm: React.FunctionComponent<
                   formikProps={formikProps}
                 ></DocumentMetadataView>
               </StyledScrollable>
-            </StyledGreySection>
-            <Row className="justify-content-end pt-4">
-              <Col xs="auto">
-                <Button
-                  data-testid="cancel"
-                  variant="secondary"
-                  type="button"
-                  onClick={props.onCancel}
-                >
-                  Cancel
-                </Button>
-              </Col>
-              <Col xs="auto">
-                <Button
-                  data-testid="save"
-                  type="submit"
-                  onClick={formikProps.submitForm}
-                  disabled={selectedFile === null}
-                >
-                  Save
-                </Button>
-              </Col>
-            </Row>
+              {formikProps.values.isSelectedFile && formikProps.isValid && (
+                <div className="pt-5 pb-0 mb-0">Do you want to proceed?</div>
+              )}
+            </Section>
           </>
         )}
       </Formik>
-    </StyledContainer>
+    </>
   );
 };
 
