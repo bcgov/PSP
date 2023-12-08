@@ -1,14 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -72,6 +75,33 @@ namespace Pims.Api.Areas.Disposition.Controllers
             _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
 
             var dispositionFile = _dispositionService.GetById(id);
+            return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
+        }
+
+        /// <summary>
+        /// Creates a new Disposition File entity.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        [HasPermission(Permissions.DispositionAdd)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileModel), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        public IActionResult AddDispositionFile([FromBody] DispositionFileModel model, [FromQuery] string[] userOverrideCodes)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(AcquisitionFileController),
+                nameof(AddDispositionFile),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            var dispositionFileEntity = _mapper.Map<Dal.Entities.PimsDispositionFile>(model);
+            var dispositionFile = _dispositionService.Add(dispositionFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
+
             return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
         }
 

@@ -13,6 +13,8 @@ import AppRoute from '@/utils/AppRoute';
 import AcquisitionContainer from '../acquisition/AcquisitionContainer';
 import AcquisitionView from '../acquisition/AcquisitionView';
 import AddAcquisitionContainer from '../acquisition/add/AddAcquisitionContainer';
+import AddDispositionContainer from '../disposition/add/AddDispositionContainer';
+import AddDispositionContainerView from '../disposition/add/AddDispositionContainerView';
 import DispositionContainer from '../disposition/DispositionContainer';
 import DispositionView from '../disposition/DispositionView';
 import LeaseContainer from '../lease/LeaseContainer';
@@ -90,6 +92,16 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
     [location],
   );
 
+  const isDisposition = useMemo(
+    () =>
+      matchPath(location.pathname, {
+        path: '/mapview/sidebar/disposition/*',
+        exact: true,
+        strict: true,
+      }),
+    [location],
+  );
+
   useEffect(() => {
     if (matched !== null) {
       let sidebarType: SideBarType = SideBarType.NOT_DEFINED;
@@ -103,6 +115,8 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         sidebarType = SideBarType.PROJECT;
       } else if (isProperty) {
         sidebarType = SideBarType.PROPERTY_INFORMATION;
+      } else if (isDisposition) {
+        sidebarType = SideBarType.DISPOSITION;
       }
 
       openSidebar(sidebarType);
@@ -118,6 +132,7 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
     matched,
     openSidebar,
     closeSidebar,
+    isDisposition,
   ]);
 
   const onClose = () => {
@@ -163,6 +178,15 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         claim={Claims.ACQUISITION_VIEW}
         key={'Acquisition'}
         title={'Acquisition File'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/disposition/new`}
+        customRender={() => (
+          <AddDispositionContainer onClose={onClose} View={AddDispositionContainerView} />
+        )}
+        claim={Claims.DISPOSITION_ADD}
+        key={'NewDisposition'}
+        title={'Create Disposition File'}
       />
       <AppRoute
         path={`/mapview/sidebar/disposition/:id`}

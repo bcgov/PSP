@@ -1,5 +1,4 @@
 using Mapster;
-using Pims.Api.Models.Base;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.DispositionFile
@@ -29,7 +28,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Map(dest => dest.InitiatingDocumentTypeOther, src => src.OtherInitiatingDocType)
                 .Map(dest => dest.FileProperties, src => src.PimsPropertyDispositionFiles)
                 .Map(dest => dest.DispositionTeam, src => src.PimsDispositionFileTeams)
-                .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
+                .Map(dest => dest.FileProperties, src => src.PimsPropertyDispositionFiles);
 
             config.NewConfig<DispositionFileModel, Entity.PimsDispositionFile>()
                 .Map(dest => dest.DispositionFileId, src => src.Id)
@@ -51,7 +50,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Map(dest => dest.OtherInitiatingDocType, src => src.InitiatingDocumentTypeOther)
                 .Map(dest => dest.PimsPropertyDispositionFiles, src => src.FileProperties)
                 .Map(dest => dest.PimsDispositionFileTeams, src => src.DispositionTeam)
-                .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
+                .Map(dest => dest.PimsPropertyDispositionFiles, src => src.FileProperties);
         }
     }
 }

@@ -10,6 +10,8 @@ namespace Pims.Dal.Repositories
 
         PimsDispositionFile GetById(long id);
 
+        PimsDispositionFile Add(PimsDispositionFile disposition);
+
         LastUpdatedByModel GetLastUpdateBy(long id);
 
         List<PimsDispositionFileTeam> GetTeamMembers();

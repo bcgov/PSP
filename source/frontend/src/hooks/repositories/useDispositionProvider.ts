@@ -9,18 +9,43 @@ import {
   Api_DispositionFileTeam,
 } from '@/models/api/DispositionFile';
 import { Api_LastUpdatedBy } from '@/models/api/File';
-import { useAxiosErrorHandler, useAxiosErrorHandlerWithAuthorization } from '@/utils';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import {
+  useAxiosErrorHandler,
+  useAxiosErrorHandlerWithAuthorization,
+  useAxiosSuccessHandler,
+} from '@/utils';
+
+const ignoreErrorCodes = [409];
 
 /**
  * hook that interacts with the Disposition File API.
  */
 export const useDispositionProvider = () => {
   const {
+    postDispositionFileApi,
     getDispositionFile,
     getDispositionFileProperties,
     getLastUpdatedByApi,
     getAllDispositionFileTeamMembers,
   } = useApiDispositionFile();
+
+  const addDispositionFileApi = useApiRequestWrapper<
+    (
+      dispositionFile: Api_DispositionFile,
+      userOverrideCodes: UserOverrideCode[],
+    ) => Promise<AxiosResponse<Api_DispositionFile, any>>
+  >({
+    requestFunction: useCallback(
+      async (dispositionFile: Api_DispositionFile, useOverride: UserOverrideCode[] = []) =>
+        await postDispositionFileApi(dispositionFile, useOverride),
+      [postDispositionFileApi],
+    ),
+    requestName: 'AddDispositionFile',
+    onSuccess: useAxiosSuccessHandler('Disposition File saved'),
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
+  });
 
   const getDispositionFileApi = useApiRequestWrapper<
     (dispositionFileId: number) => Promise<AxiosResponse<Api_DispositionFile, any>>
@@ -68,12 +93,14 @@ export const useDispositionProvider = () => {
 
   return useMemo(
     () => ({
+      addDispositionFileApi: addDispositionFileApi,
       getDispositionFile: getDispositionFileApi,
       getLastUpdatedBy,
       getDispositionProperties: getDispositionPropertiesApi,
       getAllDispositionTeamMembers: getAllDispositionTeamMembersApi,
     }),
     [
+      addDispositionFileApi,
       getDispositionFileApi,
       getLastUpdatedBy,
       getDispositionPropertiesApi,

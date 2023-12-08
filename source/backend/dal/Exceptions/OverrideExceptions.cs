@@ -35,17 +35,22 @@ namespace Pims.Dal.Exceptions
             get { return new UserOverrideCode("PRODUCT_REUSE"); }
         }
 
+        public static UserOverrideCode DisposingPropertyNotInventoried
+        {
+            get { return new UserOverrideCode("DISPOSING_PROPERTY_NOT_INVENTORIED"); }
+        }
+
         public string Code { get; private set; }
 
-        private static List<UserOverrideCode> UserOverrideCodes => new List<UserOverrideCode>()
-        {
-            UserOverrideCode.AddPropertyToInventory,
-            UserOverrideCode.AddLocationToProperty,
-            UserOverrideCode.UpdateRegion,
-            UserOverrideCode.PoiToInventory,
-            UserOverrideCode.ContractorSelfRemoved,
-            UserOverrideCode.ProductReuse,
-        };
+        private static List<UserOverrideCode> UserOverrideCodes => new List<UserOverrideCode>() {
+                    UserOverrideCode.AddPropertyToInventory,
+                    UserOverrideCode.AddLocationToProperty,
+                    UserOverrideCode.UpdateRegion,
+                    UserOverrideCode.PoiToInventory,
+                    UserOverrideCode.ContractorSelfRemoved,
+                    UserOverrideCode.ProductReuse,
+                    UserOverrideCode.DisposingPropertyNotInventoried,
+                };
 
         private UserOverrideCode(string code)
         {

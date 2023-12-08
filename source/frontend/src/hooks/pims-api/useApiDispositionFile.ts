@@ -9,6 +9,7 @@ import {
 } from '@/models/api/DispositionFile';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
 import { Api_LastUpdatedBy } from '@/models/api/File';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
 import useAxiosApi from './useApi';
@@ -27,6 +28,14 @@ export const useApiDispositionFile = () => {
       getDispositionFilesPagedApi: (params: IPaginateDisposition | null) =>
         api.get<IPagedItems<Api_DispositionFile>>(
           `/dispositionfiles/search?${params ? queryString.stringify(params) : ''}`,
+        ),
+      postDispositionFileApi: (
+        dispositionFile: Api_DispositionFile,
+        userOverrideCodes: UserOverrideCode[] = [],
+      ) =>
+        api.post<Api_DispositionFile>(
+          `/dispositionfiles?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
+          dispositionFile,
         ),
       getDispositionFile: (dispositionFileId: number) =>
         api.get<Api_DispositionFile>(`/dispositionfiles/${dispositionFileId}`),

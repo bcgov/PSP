@@ -42,6 +42,7 @@ namespace Pims.Api.Services
         private readonly IExpropriationPaymentRepository _expropriationPaymentRepository;
         private readonly ITakeRepository _takeRepository;
         private readonly IAcquisitionStatusSolver _statusSolver;
+        private readonly IPropertyService _propertyService;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -60,7 +61,8 @@ namespace Pims.Api.Services
             ICompReqFinancialService compReqFinancialService,
             IExpropriationPaymentRepository expropriationPaymentRepository,
             ITakeRepository takeRepository,
-            IAcquisitionStatusSolver statusSolver)
+            IAcquisitionStatusSolver statusSolver,
+            IPropertyService propertyService)
         {
             _user = user;
             _logger = logger;
@@ -79,6 +81,7 @@ namespace Pims.Api.Services
             _expropriationPaymentRepository = expropriationPaymentRepository;
             _takeRepository = takeRepository;
             _statusSolver = statusSolver;
+            _propertyService = propertyService;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -573,37 +576,6 @@ namespace Pims.Api.Services
             }
         }
 
-        private void UpdateLocation(PimsProperty acquisitionProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes)
-        {
-            if (propertyToUpdate.Location == null)
-            {
-                if (overrideCodes.Contains(UserOverrideCode.AddLocationToProperty))
-                {
-                    // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-                    var geom = acquisitionProperty.Location;
-                    if (geom.SRID != SpatialReference.BCALBERS)
-                    {
-                        var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
-                        propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
-                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
-                    }
-
-                    // apply similar logic to the boundary
-                    var boundaryGeom = acquisitionProperty.Boundary;
-                    if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
-                    {
-                        var newCoords = boundaryGeom.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
-                        var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
-                        acquisitionProperty.Boundary = gf.CreatePolygon(newCoords.ToArray());
-                    }
-                }
-                else
-                {
-                    throw new UserOverrideException(UserOverrideCode.AddLocationToProperty, "The selected property already exists in the system's inventory. However, the record is missing spatial details.\n\n To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.");
-                }
-            }
-        }
-
         private void MatchProperties(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrideCodes)
         {
             foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
@@ -615,13 +587,13 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid);
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;
-                        UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
+                        _propertyService.UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
                         acquisitionProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
                     {
                         _logger.LogDebug("Adding new property with pid:{pid}", pid);
-                        PopulateNewProperty(acquisitionProperty.Property);
+                        acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
                     }
                 }
                 else if (acquisitionProperty.Property.Pin.HasValue)
@@ -631,61 +603,20 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin);
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;
-                        UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
+                        _propertyService.UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
                         acquisitionProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
                     {
                         _logger.LogDebug("Adding new property with pin:{pin}", pin);
-                        PopulateNewProperty(acquisitionProperty.Property);
+                        acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
                     }
                 }
                 else
                 {
                     _logger.LogDebug("Adding new property without a pid");
-                    PopulateNewProperty(acquisitionProperty.Property);
+                    acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
                 }
-            }
-        }
-
-        private void PopulateNewProperty(PimsProperty property)
-        {
-            property.PropertyClassificationTypeCode = "UNKNOWN";
-            property.PropertyDataSourceEffectiveDate = System.DateTime.Now;
-            property.PropertyDataSourceTypeCode = "PMBC";
-
-            property.PropertyTypeCode = "UNKNOWN";
-
-            property.PropertyStatusTypeCode = "UNKNOWN";
-            property.SurplusDeclarationTypeCode = "UNKNOWN";
-
-            property.IsPropertyOfInterest = true;
-
-            if (property.Address != null)
-            {
-                var provinceId = _lookupRepository.GetAllProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
-                if (provinceId.HasValue)
-                {
-                    property.Address.ProvinceStateId = provinceId.Value;
-                }
-                property.Address.CountryId = _lookupRepository.GetAllCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
-            }
-
-            // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-            var geom = property.Location;
-            if (geom.SRID != SpatialReference.BCALBERS)
-            {
-                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
-            }
-
-            // apply similar logic to the boundary
-            var boundaryGeom = property.Boundary;
-            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
-            {
-                var newCoords = property.Boundary.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
-                var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
-                property.Boundary = gf.CreatePolygon(newCoords.ToArray());
             }
         }
 

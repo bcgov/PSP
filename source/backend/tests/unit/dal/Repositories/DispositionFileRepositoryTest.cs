@@ -26,6 +26,31 @@ namespace Pims.Dal.Test.Repositories
 
         #region Tests
 
+        [Fact]
+        public void Add_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DispositionAdd);
+            var dispositionFile = EntityHelper.CreateDispositionFile();
+
+            var repository = helper.CreateRepository<DispositionFileRepository>(user);
+
+            var mockSequenceRepo = new Mock<ISequenceRepository>();
+            mockSequenceRepo.Setup(x => x.GetNextSequenceValue(It.IsAny<string>())).Returns(100);
+
+            // Act
+            var result = repository.Add(dispositionFile);
+
+            // Assert
+
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionFile>();
+            result.DispositionFileId.Should().Be(1);
+            result.FileNumber.Equals("D-100");
+        }
+
+
         #region GetById
         [Fact]
         public void GetById_Success()
