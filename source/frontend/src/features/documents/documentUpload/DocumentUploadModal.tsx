@@ -1,4 +1,4 @@
-import { createRef, useRef, useState } from 'react';
+import { createRef, useState } from 'react';
 import { FaUpload } from 'react-icons/fa';
 
 import GenericModal, { ModalSize } from '@/components/common/GenericModal';
