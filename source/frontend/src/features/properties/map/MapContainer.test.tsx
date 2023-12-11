@@ -11,9 +11,9 @@ import {
   useMapStateMachine,
 } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
-  emptyFullyFeaturedFeatureCollection,
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
+  emptyPmbcFeatureCollection,
   FeatureSelected,
 } from '@/components/common/mapFSM/models';
 import {
@@ -215,7 +215,7 @@ describe('MapContainer', () => {
       mapFeatureData: {
         pimsLocationFeatures: createPimsFeatures(mockParcels),
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyFullyFeaturedFeatureCollection,
+        pmbcFeatures: emptyPmbcFeatureCollection,
       },
     });
 
@@ -285,7 +285,7 @@ describe('MapContainer', () => {
       mapFeatureData: {
         pimsLocationFeatures: createPimsFeatures(smallMockParcels),
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyFullyFeaturedFeatureCollection,
+        pmbcFeatures: emptyPmbcFeatureCollection,
       },
     });
 
@@ -307,7 +307,7 @@ describe('MapContainer', () => {
       mapFeatureData: {
         pimsLocationFeatures: emptyPimsLocationFeatureCollection,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyFullyFeaturedFeatureCollection,
+        pmbcFeatures: emptyPmbcFeatureCollection,
       },
     });
 
@@ -365,7 +365,7 @@ describe('MapContainer', () => {
       mapFeatureData: {
         pimsLocationFeatures: createPimsFeatures(largeMockParcels),
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyFullyFeaturedFeatureCollection,
+        pmbcFeatures: emptyPmbcFeatureCollection,
       },
     });
 
@@ -397,7 +397,7 @@ describe('MapContainer', () => {
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyFullyFeaturedFeatureCollection,
+        pmbcFeatures: emptyPmbcFeatureCollection,
       },
     };
     (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
@@ -435,7 +435,7 @@ describe('MapContainer', () => {
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyFullyFeaturedFeatureCollection,
+        pmbcFeatures: emptyPmbcFeatureCollection,
       },
     };
     (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
@@ -479,7 +479,7 @@ describe('MapContainer', () => {
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyFullyFeaturedFeatureCollection,
+        pmbcFeatures: emptyPmbcFeatureCollection,
       },
       isFiltering: false,
     };
@@ -516,7 +516,7 @@ describe('MapContainer', () => {
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyFullyFeaturedFeatureCollection,
+        pmbcFeatures: emptyPmbcFeatureCollection,
       },
       activePimsPropertyIds: activeIds,
       isFiltering: true,

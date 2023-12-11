@@ -1,8 +1,8 @@
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
-  emptyFullyFeaturedFeatureCollection,
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
+  emptyPmbcFeatureCollection,
 } from '@/components/common/mapFSM/models';
 import { defaultBounds } from '@/components/maps/constants';
 
@@ -11,7 +11,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   mapFeatureData: {
     pimsLocationFeatures: emptyPimsLocationFeatureCollection,
     pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-    pmbcFeatures: emptyFullyFeaturedFeatureCollection,
+    pmbcFeatures: emptyPmbcFeatureCollection,
   },
 
   isSidebarOpen: false,

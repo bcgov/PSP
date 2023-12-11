@@ -42,10 +42,7 @@ export const emptyPimsBoundaryFeatureCollection: FeatureCollection<
   features: [],
 };
 
-export const emptyFullyFeaturedFeatureCollection: FeatureCollection<
-  Geometry,
-  PMBC_Feature_Properties
-> = {
+export const emptyPmbcFeatureCollection: FeatureCollection<Geometry, PMBC_Feature_Properties> = {
   type: 'FeatureCollection',
   features: [],
 };
@@ -53,5 +50,5 @@ export const emptyFullyFeaturedFeatureCollection: FeatureCollection<
 export const emptyFeatureData: MapFeatureData = {
   pimsLocationFeatures: emptyPimsLocationFeatureCollection,
   pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-  pmbcFeatures: emptyFullyFeaturedFeatureCollection,
+  pmbcFeatures: emptyPmbcFeatureCollection,
 };

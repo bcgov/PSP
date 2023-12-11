@@ -12,9 +12,9 @@ import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocatio
 
 import {
   emptyFeatureData,
-  emptyFullyFeaturedFeatureCollection,
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
+  emptyPmbcFeatureCollection,
   MapFeatureData,
 } from './models';
 
@@ -146,7 +146,7 @@ export const useMapSearch = () => {
               features: validFeatures,
             },
             pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            pmbcFeatures: emptyFullyFeaturedFeatureCollection,
+            pmbcFeatures: emptyPmbcFeatureCollection,
           };
 
           if (validFeatures.length === 0) {
@@ -247,7 +247,7 @@ export const useMapSearch = () => {
               features: validFeatures,
             },
             pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            pmbcFeatures: emptyFullyFeaturedFeatureCollection,
+            pmbcFeatures: emptyPmbcFeatureCollection,
           };
 
           if (validFeatures.length === 0) {
