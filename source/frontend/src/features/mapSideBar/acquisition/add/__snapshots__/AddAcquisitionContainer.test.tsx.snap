@@ -312,6 +312,19 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   width: 100%;
 }
 
+.c26 {
+  background: none;
+  position: relative;
+  border-radius: 0.3rem;
+  padding: 0.6rem;
+  padding-right: 2.1rem;
+  border: solid 0.1rem;
+}
+
+.c26.is-invalid {
+  border: solid 0.1rem;
+}
+
 .c27.c27.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
@@ -331,19 +344,6 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
-}
-
-.c26 {
-  background: none;
-  position: relative;
-  border-radius: 0.3rem;
-  padding: 0.6rem;
-  padding-right: 2.1rem;
-  border: solid 0.1rem;
-}
-
-.c26.is-invalid {
-  border: solid 0.1rem;
 }
 
 .c5 {
@@ -402,7 +402,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
 
 .c11 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.4rem);
+  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
@@ -1590,6 +1590,13 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                       >
                         Section 6 Expropriation
                       </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-XFR"
+                        value="XFR"
+                      >
+                        Transferred
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -1673,7 +1680,6 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                   + Add another team member
                 </div>
               </button>
-              <div />
               <div />
             </div>
           </div>

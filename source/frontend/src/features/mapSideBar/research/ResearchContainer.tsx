@@ -2,6 +2,7 @@ import { FormikProps } from 'formik';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { MdTopic } from 'react-icons/md';
+import { matchPath, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import GenericModal from '@/components/common/GenericModal';
@@ -10,10 +11,13 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { FileTypes } from '@/constants/fileTypes';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { useResearchRepository } from '@/hooks/repositories/useResearchRepository';
+import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { Api_File } from '@/models/api/File';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { stripTrailingSlash } from '@/utils';
 import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 import { SideBarContext } from '../context/sidebarContext';
@@ -21,10 +25,9 @@ import SidebarFooter from '../shared/SidebarFooter';
 import { UpdateProperties } from '../shared/update/properties/UpdateProperties';
 import ResearchHeader from './common/ResearchHeader';
 import ResearchMenu from './common/ResearchMenu';
-import { FormKeys } from './FormKeys';
 import { useGetResearch } from './hooks/useGetResearch';
 import { useUpdateResearchProperties } from './hooks/useUpdateResearchProperties';
-import ViewSelector from './ViewSelector';
+import ResearchView from './ResearchView';
 
 export interface IResearchContainerProps {
   researchFileId: number;
@@ -43,19 +46,33 @@ export const ResearchContainer: React.FunctionComponent<
     },
   } = useGetResearch();
 
-  const mapMachine = useMapStateMachine();
-  const [researchFile, setResearchFile] = useState<Api_ResearchFile | undefined>(undefined);
-  const { setFile, setFileLoading, staleFile, setStaleFile } = React.useContext(SideBarContext);
+  const {
+    getLastUpdatedBy: { execute: getLastUpdatedBy, loading: loadingLastUpdatedBy },
+  } = useResearchRepository();
 
-  const [selectedMenuIndex, setSelectedMenuIndex] = useState<number>(0);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [editKey, setEditKey] = useState(FormKeys.none);
+  const mapMachine = useMapStateMachine();
+  const {
+    setFile,
+    file: researchFile,
+    setFileLoading,
+    staleFile,
+    setStaleFile,
+    lastUpdatedBy,
+    setLastUpdatedBy,
+    staleLastUpdatedBy,
+    setStaleLastUpdatedBy,
+  } = React.useContext(SideBarContext);
+
+  const [isValid, setIsValid] = useState<boolean>(true);
 
   const [isShowingPropertySelector, setIsShowingPropertySelector] = useState<boolean>(false);
 
   const formikRef = useRef<FormikProps<any>>(null);
 
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
+
+  const history = useHistory();
+  const match = useRouteMatch();
 
   const menuItems = researchFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('File Summary');
@@ -66,8 +83,9 @@ export const ResearchContainer: React.FunctionComponent<
   >('Failed to update Research File');
 
   useEffect(
-    () => setFileLoading(loadingResearchFile || loadingResearchFileProperties),
-    [loadingResearchFile, loadingResearchFileProperties, setFileLoading],
+    () =>
+      setFileLoading(loadingResearchFile || loadingResearchFileProperties || loadingLastUpdatedBy),
+    [loadingLastUpdatedBy, loadingResearchFile, loadingResearchFileProperties, setFileLoading],
   );
 
   const fetchResearchFile = React.useCallback(async () => {
@@ -76,10 +94,39 @@ export const ResearchContainer: React.FunctionComponent<
     retrieved?.fileProperties?.forEach(async fp => {
       fp.property = researchProperties?.find(ap => fp.id === ap.id)?.property;
     });
-    setResearchFile(retrieved);
     setFile({ ...retrieved, fileType: FileTypes.Research });
-    setStaleFile(false);
-  }, [getResearchFile, getResearchFileProperties, props.researchFileId, setFile, setStaleFile]);
+  }, [getResearchFile, getResearchFileProperties, props.researchFileId, setFile]);
+
+  const fetchLastUpdatedBy = React.useCallback(async () => {
+    var retrieved = await getLastUpdatedBy(props.researchFileId);
+    if (retrieved !== undefined) {
+      setLastUpdatedBy(retrieved);
+    } else {
+      setLastUpdatedBy(null);
+    }
+  }, [props.researchFileId, getLastUpdatedBy, setLastUpdatedBy]);
+
+  const push = history.push;
+  const query = useQuery();
+  const setIsEditing = React.useCallback(
+    (editing: boolean) => {
+      if (editing) {
+        query.set('edit', 'true');
+      } else {
+        query.delete('edit');
+      }
+
+      push({ search: query.toString() });
+    },
+    [push, query],
+  );
+
+  const onSuccess = React.useCallback(() => {
+    setStaleFile(true);
+    setStaleLastUpdatedBy(true);
+    mapMachine.refreshMapProperties();
+    setIsEditing(false);
+  }, [mapMachine, setIsEditing, setStaleFile, setStaleLastUpdatedBy]);
 
   React.useEffect(() => {
     if (researchFile === undefined || researchFileId !== researchFile?.id || staleFile) {
@@ -87,13 +134,27 @@ export const ResearchContainer: React.FunctionComponent<
     }
   }, [fetchResearchFile, researchFile, researchFileId, staleFile]);
 
-  if (researchFile === undefined && (loadingResearchFile || loadingResearchFileProperties)) {
-    return (
-      <>
-        <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>
-      </>
-    );
-  }
+  React.useEffect(() => {
+    if (
+      lastUpdatedBy === undefined ||
+      researchFileId !== lastUpdatedBy?.parentId ||
+      staleLastUpdatedBy
+    ) {
+      fetchLastUpdatedBy();
+    }
+  }, [fetchLastUpdatedBy, lastUpdatedBy, researchFileId, staleLastUpdatedBy]);
+
+  const isEditing = query.get('edit') === 'true';
+
+  const navigateToMenuRoute = (selectedIndex: number) => {
+    const route = selectedIndex === 0 ? '' : `/property/${selectedIndex}`;
+    history.push(`${stripTrailingSlash(match.url)}${route}`);
+  };
+  const propertiesMatch = matchPath<Record<string, string>>(
+    history.location.pathname,
+    `${stripTrailingSlash(match.path)}/property/:menuIndex/:tab?`,
+  );
+  const selectedMenuIndex = propertiesMatch !== null ? Number(propertiesMatch.params.menuIndex) : 0;
 
   const onMenuChange = (selectedIndex: number) => {
     if (isEditing) {
@@ -102,14 +163,14 @@ export const ResearchContainer: React.FunctionComponent<
           window.confirm('You have made changes on this form. Do you wish to leave without saving?')
         ) {
           handleCancelClick();
-          setSelectedMenuIndex(selectedIndex);
+          navigateToMenuRoute(selectedIndex);
         }
       } else {
         handleCancelClick();
-        setSelectedMenuIndex(selectedIndex);
+        navigateToMenuRoute(selectedIndex);
       }
     } else {
-      setSelectedMenuIndex(selectedIndex);
+      navigateToMenuRoute(selectedIndex);
     }
   };
 
@@ -117,6 +178,7 @@ export const ResearchContainer: React.FunctionComponent<
     if (formikRef !== undefined) {
       formikRef.current?.setSubmitting(true);
       formikRef.current?.submitForm();
+      setIsValid(formikRef.current?.isValid || false);
     }
   };
 
@@ -138,19 +200,20 @@ export const ResearchContainer: React.FunctionComponent<
     }
     setShowConfirmModal(false);
     setIsEditing(false);
-    setEditKey(FormKeys.none);
-  };
-
-  const onSuccess = () => {
-    fetchResearchFile();
-    mapMachine.refreshMapProperties();
-    setIsEditing(false);
-    setEditKey(FormKeys.none);
   };
 
   const showPropertiesSelector = () => {
     setIsShowingPropertySelector(true);
   };
+
+  if (
+    loadingResearchFile ||
+    (loadingResearchFileProperties && !isShowingPropertySelector) ||
+    researchFile?.fileType !== FileTypes.Research ||
+    researchFile?.id !== researchFileId
+  ) {
+    return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
+  }
 
   if (isShowingPropertySelector && researchFile) {
     return (
@@ -176,13 +239,14 @@ export const ResearchContainer: React.FunctionComponent<
       <MapSideBarLayout
         title={isEditing ? 'Update Research File' : 'Research File'}
         icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
-        header={<ResearchHeader researchFile={researchFile} />}
+        header={<ResearchHeader researchFile={researchFile} lastUpdatedBy={lastUpdatedBy} />}
         footer={
           isEditing && (
             <SidebarFooter
               isOkDisabled={formikRef?.current?.isSubmitting}
               onSave={handleSaveClick}
               onCancel={handleCancelClick}
+              displayRequiredFieldError={!isValid}
             />
           )
         }
@@ -219,15 +283,12 @@ export const ResearchContainer: React.FunctionComponent<
                   cancelButtonText="Resume editing"
                   show
                 />
-                <ViewSelector
+                <ResearchView
                   researchFile={researchFile}
-                  selectedIndex={selectedMenuIndex}
-                  isEditMode={isEditing}
-                  editKey={editKey}
                   onSuccess={onSuccess}
                   setEditMode={setIsEditing}
-                  setEditKey={setEditKey}
                   ref={formikRef}
+                  isEditing={isEditing}
                 />
               </>
             </StyledFormWrapper>

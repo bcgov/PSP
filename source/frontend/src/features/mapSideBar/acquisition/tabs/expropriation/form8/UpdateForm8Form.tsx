@@ -115,6 +115,9 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
                     onSave={() => formikProps.submitForm()}
                     isOkDisabled={formikProps.isSubmitting || !formikProps.dirty}
                     onCancel={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
+                    displayRequiredFieldError={
+                      formikProps.isValid === false && !!formikProps.submitCount
+                    }
                   />
                 </StyledFooter>
               </>

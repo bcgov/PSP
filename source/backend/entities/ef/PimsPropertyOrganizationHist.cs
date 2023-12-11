@@ -63,7 +63,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
     }
 }

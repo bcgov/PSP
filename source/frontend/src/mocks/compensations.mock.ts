@@ -5,6 +5,8 @@ export const emptyCompensationRequisition: Api_CompensationRequisition = {
   id: null,
   acquisitionFileId: 0,
   acquisitionFile: null,
+  alternateProjectId: null,
+  alternateProject: null,
   isDraft: null,
   fiscalYear: null,
   yearlyFinancialId: null,
@@ -17,20 +19,20 @@ export const emptyCompensationRequisition: Api_CompensationRequisition = {
   agreementDate: null,
   expropriationNoticeServedDate: null,
   expropriationVestingDate: null,
+  advancedPaymentServedDate: null,
   generationDate: null,
   financials: [],
   acquisitionOwnerId: null,
   acquisitionOwner: null,
   interestHolderId: null,
   interestHolder: null,
-  acquisitionFilePersonId: null,
-  acquisitionFilePerson: null,
+  acquisitionFileTeamId: null,
+  acquisitionFileTeam: null,
   legacyPayee: null,
   isPaymentInTrust: null,
   gstNumber: null,
   specialInstruction: null,
   detailedRemarks: null,
-  isDisabled: null,
 };
 
 export const emptyCompensationFinancial: Api_CompensationFinancial = {
@@ -50,7 +52,6 @@ export const getMockApiDefaultCompensation = (): Api_CompensationRequisition => 
   ...emptyCompensationRequisition,
   id: 1,
   acquisitionFileId: 2,
-  isDisabled: false,
   rowVersion: 1,
 });
 
@@ -62,7 +63,6 @@ export const getMockApiCompensationWithFinancials = (): Api_CompensationRequisit
   fiscalYear: '2023/2024',
   specialInstruction: 'SPECIAL INSTRUCTION',
   detailedRemarks: 'DETAILED REMARKS',
-  isDisabled: false,
   financials: [
     {
       id: 1,
@@ -126,7 +126,6 @@ export const getMockApiCompensationList = (): Api_CompensationRequisition[] => [
     id: 2,
     acquisitionFileId: 2,
     isDraft: false,
-    isDisabled: false,
     financials: [
       {
         id: 1,
@@ -199,7 +198,6 @@ export const getMockApiCompensationList = (): Api_CompensationRequisition[] => [
     acquisitionFileId: 2,
     isDraft: true,
     agreementDate: '2023-04-26T00:00:00',
-    isDisabled: false,
     financials: [
       {
         id: 5,

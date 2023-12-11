@@ -33,6 +33,17 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The MOTI project name or the project number, search for both simultaneously.
         /// </summary>
         public string ProjectNameOrNumber { get; set; }
+
+        /// <summary>
+        /// get/set - The MOTI person id to search by for acquisition team members.
+        /// </summary>
+        public string AcquisitionTeamMemberPersonId { get; set; }
+
+        /// <summary>
+        /// get/set - The MOTI Organization id to search by for acquisition team members.
+        /// </summary>
+        public string AcquisitionTeamMemberOrganizationId { get; set; }
+
         #endregion
 
         #region Constructors

@@ -47,9 +47,15 @@ const testResearchFile: Api_ResearchFile = {
 describe('ResearchHeader component', () => {
   const setup = (renderOptions: RenderOptions & IResearchHeaderProps) => {
     // render component under test
-    const component = render(<ResearchHeader researchFile={renderOptions.researchFile} />, {
-      ...renderOptions,
-    });
+    const component = render(
+      <ResearchHeader
+        researchFile={renderOptions.researchFile}
+        lastUpdatedBy={renderOptions.lastUpdatedBy}
+      />,
+      {
+        ...renderOptions,
+      },
+    );
 
     return {
       component,
@@ -61,19 +67,48 @@ describe('ResearchHeader component', () => {
   });
 
   it('renders as expected when provided no research file', () => {
-    const { component } = setup({});
+    const { component } = setup({ lastUpdatedBy: null });
     expect(component.asFragment()).toMatchSnapshot();
   });
 
   it('renders as expected when provided a list of properties', async () => {
     const {
       component: { getByText },
-    } = await setup({ researchFile: testResearchFile });
+    } = await setup({
+      researchFile: testResearchFile,
+      lastUpdatedBy: {
+        parentId: testResearchFile.id || 0,
+        appLastUpdateTimestamp: testResearchFile.appLastUpdateTimestamp || '',
+        appLastUpdateUserGuid: testResearchFile.appLastUpdateUserGuid || '',
+        appLastUpdateUserid: testResearchFile.appLastUpdateUserid || '',
+      },
+    });
 
     expect(getByText(testResearchFile.fileNumber as string)).toBeVisible();
     expect(getByText(testResearchFile.fileName as string)).toBeVisible();
 
     expect(getByText(prettyFormatUTCDate(testResearchFile.appCreateTimestamp))).toBeVisible();
     expect(getByText(prettyFormatUTCDate(testResearchFile.appLastUpdateTimestamp))).toBeVisible();
+  });
+
+  it('renders as expected when provided a different last-updated information', async () => {
+    const lastUpdateTimeStamp = new Date().toISOString();
+    const {
+      component: { getByText },
+    } = await setup({
+      researchFile: testResearchFile,
+      lastUpdatedBy: {
+        parentId: testResearchFile.id || 0,
+        appLastUpdateTimestamp: lastUpdateTimeStamp,
+        appLastUpdateUserGuid: 'Test GUID',
+        appLastUpdateUserid: testResearchFile.appLastUpdateUserid || '',
+      },
+    });
+
+    expect(getByText(testResearchFile.fileNumber as string)).toBeVisible();
+    expect(getByText(testResearchFile.fileName as string)).toBeVisible();
+
+    expect(getByText(prettyFormatUTCDate(testResearchFile.appCreateTimestamp))).toBeVisible();
+    expect(getByText(prettyFormatUTCDate(lastUpdateTimeStamp))).toBeVisible();
   });
 });

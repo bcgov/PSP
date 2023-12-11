@@ -18,6 +18,17 @@ export interface IUpdateAcquisitionContainerProps {
   View: React.FC<IUpdateAcquisitionFormProps>;
 }
 
+export const RemoveSelfContractorContent = (): React.ReactNode => {
+  return (
+    <>
+      <p>
+        Contractors cannot remove themselves from a file. Please contact the admin at{' '}
+        <a href="mailto: pims@gov.bc.ca">pims@gov.bc.ca</a>
+      </p>
+    </>
+  );
+};
+
 export const UpdateAcquisitionContainer = React.forwardRef<
   FormikProps<UpdateAcquisitionSummaryFormModel>,
   IUpdateAcquisitionContainerProps
@@ -57,6 +68,7 @@ export const UpdateAcquisitionContainer = React.forwardRef<
       formikHelpers?.setSubmitting(false);
     }
   };
+
   return (
     <StyledFormWrapper>
       <View

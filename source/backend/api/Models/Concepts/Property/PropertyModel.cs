@@ -213,9 +213,19 @@ namespace Pims.Api.Models.Concepts
         public GeometryModel Location { get; set; }
 
         /// <summary>
+        /// get/set - The boundary of the property.
+        /// </summary>
+        public PolygonModel Boundary { get; set; }
+
+        /// <summary>
         /// get/set - General location of the property.
         /// </summary>
         public string GeneralLocation { get; set; }
+
+        /// <summary>
+        /// get/set - Property contacts.
+        /// </summary>
+        public IList<PropertyContactModel> PropertyContacts { get; set; }
 
         /// <summary>
         /// get/set - The property notes.
@@ -230,6 +240,7 @@ namespace Pims.Api.Models.Concepts
 
         public DateTime SurplusDeclarationDate { get; set; }
         #endregion
+
         #endregion
     }
 }

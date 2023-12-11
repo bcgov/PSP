@@ -8,7 +8,13 @@ import { Claims } from '@/constants';
 import { LeaseTermStatusTypes } from '@/constants/leaseStatusTypes';
 import { LeaseFormModel } from '@/features/leases/models';
 import { IContactSearchResult } from '@/interfaces';
-import { getAllByRole as getAllByRoleBase, renderAsync, RenderOptions } from '@/utils/test-utils';
+import {
+  act,
+  getAllByRole as getAllByRoleBase,
+  renderAsync,
+  RenderOptions,
+  userEvent,
+} from '@/utils/test-utils';
 
 import { defaultFormLeaseTerm, FormLeasePayment } from '../../models';
 import TermsForm, { ITermsFormProps } from './TermsForm';
@@ -24,6 +30,7 @@ const defaultTestFormLeaseTerm = {
   expiryDate: '2020-12-15T18:00',
   paymentAmount: 1000,
 };
+const onGenerate = jest.fn();
 
 describe('TermsForm component', () => {
   const setup = async (
@@ -43,12 +50,13 @@ describe('TermsForm component', () => {
         onEditPayment={noop}
         onDeletePayment={noop}
         onSavePayment={noop}
+        onGenerate={onGenerate}
         formikRef={React.createRef()}
         lease={renderOptions.initialValues ?? ({} as any)}
       />,
       {
         ...renderOptions,
-        claims: [Claims.LEASE_EDIT, Claims.LEASE_DELETE],
+        claims: [Claims.LEASE_EDIT, Claims.LEASE_DELETE, Claims.LEASE_VIEW],
         history,
       },
     );
@@ -355,5 +363,92 @@ describe('TermsForm component', () => {
     expect(queryByTitle('delete term')).toBeNull();
     expect(tooltip).toBeVisible();
     expect(tooltip.id).toBe('no-delete-tooltip-term-1');
+  });
+
+  it('does not render generation button if missing permissions', async () => {
+    const {
+      component: { queryByTitle },
+    } = await setup({
+      initialValues: {
+        ...new LeaseFormModel(),
+        terms: [
+          {
+            ...defaultTestFormLeaseTerm,
+            isTermExercised: false,
+            payments: [{ amountTotal: 1, receivedDate: '2020-01-01T18:00' }] as FormLeasePayment[],
+          },
+        ],
+      },
+      claims: [],
+    });
+
+    expect(queryByTitle('Generate H1005(a)')).toBeNull();
+  });
+
+  it('does not render generation button if lease is not of expected type', async () => {
+    const {
+      component: { queryByTitle },
+    } = await setup({
+      initialValues: {
+        ...new LeaseFormModel(),
+        leaseTypeCode: 'OTHER',
+        terms: [
+          {
+            ...defaultTestFormLeaseTerm,
+            isTermExercised: false,
+            payments: [{ amountTotal: 1, receivedDate: '2020-01-01T18:00' }] as FormLeasePayment[],
+          },
+        ],
+      },
+    });
+
+    expect(queryByTitle('Generate H1005(a)')).toBeNull();
+  });
+
+  it('only renders generation button on first term', async () => {
+    const { findFirstRow, findCell } = await setup({
+      initialValues: {
+        ...new LeaseFormModel(),
+        leaseTypeCode: 'LIOCCUTIL',
+        terms: [
+          {
+            ...defaultTestFormLeaseTerm,
+            isTermExercised: false,
+          },
+          {
+            ...defaultTestFormLeaseTerm,
+            isTermExercised: false,
+          },
+        ],
+      },
+    });
+
+    const row = findFirstRow() as HTMLElement;
+    expect(row).not.toBeNull();
+    expect(findCell(row, 11)?.textContent).toContain('Generate H1005(a)');
+  });
+
+  it('calls onGenerate when generation button is clicked', async () => {
+    const {
+      component: { queryAllByTitle },
+    } = await setup({
+      initialValues: {
+        ...new LeaseFormModel(),
+        leaseTypeCode: 'LIOCCUTIL',
+        terms: [
+          {
+            ...defaultTestFormLeaseTerm,
+            isTermExercised: false,
+            payments: [{ amountTotal: 1, receivedDate: '2020-01-01T18:00' }] as FormLeasePayment[],
+          },
+        ],
+      },
+    });
+
+    const generateButton = queryAllByTitle('Generate H1005(a)')[0];
+    expect(generateButton).toBeVisible();
+
+    act(() => userEvent.click(generateButton));
+    expect(onGenerate).toHaveBeenCalled();
   });
 });

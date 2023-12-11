@@ -77,7 +77,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I review a Property's Information")]
         public void ReviewPropertyInformation()
         {
-            /* TEST COVERAGE: PSP-1558, PSP-3589, PSP-3184, PSP-5163,  */
+            /* TEST COVERAGE: PSP-1558, PSP-3153, PSP-3184, PSP-3589, PSP-4903, PSP-5163  */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -94,7 +94,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Validate Property Information Header
             propertyInformation.VerifyPropertyInformationHeader();
 
+            //Validate Title Tab
+            propertyInformation.NavigatePropertyTitleTab();
+            propertyInformation.VerifyTitleTab();
+
+            //Validate Tab
+            //propertyInformation.NavigatePropertyValueTab();
+            //propertyInformation.VerifyValueTab();
+
             //Validate the Property Details View
+            propertyInformation.NavigatePropertyDetailsTab();
             propertyInformation.VerifyPropertyDetailsView();
 
         }

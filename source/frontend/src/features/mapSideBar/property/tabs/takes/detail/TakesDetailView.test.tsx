@@ -64,18 +64,33 @@ describe('TakesDetailView component', () => {
     expect(onEdit).toHaveBeenCalled();
   });
 
+  it('displays the number of takes in other files', () => {
+    setup({
+      props: {
+        loading: false,
+        takes: [
+          { ...getMockApiTakes()[0], takeStatusTypeCode: { id: 'CANCELLED' }, id: 1 },
+          { ...getMockApiTakes()[0], takeStatusTypeCode: { id: 'INPROGRESS' } },
+        ],
+        allTakesCount: 10,
+      },
+    });
+    const takesNotInFile = screen.getByTestId('takes-in-other-files');
+    expect(takesNotInFile).toHaveTextContent('8');
+  });
+
   it('displays all non-cancelled takes and then cancelled takes', () => {
     setup({
       props: {
         loading: false,
         takes: [
-          { ...getMockApiTakes()[0], takeStatusTypeCode: 'CANCELLED', id: 1 },
-          { ...getMockApiTakes()[0], takeStatusTypeCode: 'INPROGRESS' },
+          { ...getMockApiTakes()[0], takeStatusTypeCode: { id: 'CANCELLED' }, id: 1 },
+          { ...getMockApiTakes()[0], takeStatusTypeCode: { id: 'INPROGRESS' } },
         ],
       },
     });
     const { getByText } = within(screen.getByTestId('take-0'));
-    expect(getByText('In-progress'));
+    expect(getByText('In-progress')).toBeVisible();
   });
 
   it('does not display an area fields if all is radio buttons are false', () => {
@@ -85,11 +100,11 @@ describe('TakesDetailView component', () => {
         takes: [
           {
             ...getMockApiTakes()[0],
-            isLicenseToConstruct: false,
-            isNewRightOfWay: false,
-            isLandAct: false,
-            isStatutoryRightOfWay: false,
-            isSurplus: false,
+            isNewLicenseToConstruct: false,
+            isNewHighwayDedication: false,
+            isNewLandAct: false,
+            isNewInterestInSrw: false,
+            isThereSurplus: false,
           },
         ],
       },
@@ -104,16 +119,33 @@ describe('TakesDetailView component', () => {
         takes: [
           {
             ...getMockApiTakes()[0],
-            isLicenseToConstruct: true,
-            isNewRightOfWay: true,
-            isLandAct: true,
-            isStatutoryRightOfWay: true,
-            isSurplus: true,
+            isNewLicenseToConstruct: true,
+            isNewHighwayDedication: true,
+            isNewLandAct: true,
+            isNewInterestInSrw: true,
+            isThereSurplus: true,
           },
         ],
       },
     });
     expect(getAllByText('Area:')).toHaveLength(5);
+  });
+
+  it('displays srwEndDt if specified', async () => {
+    const { findByText } = setup({
+      props: {
+        loading: false,
+        takes: [
+          {
+            ...getMockApiTakes()[0],
+            isNewInterestInSrw: true,
+            srwEndDt: '2020-01-01',
+          },
+        ],
+      },
+    });
+    const date = await findByText('SRW end date:');
+    expect(date).toBeVisible();
   });
 
   it('displays ltcEndDt if specified', async () => {
@@ -123,7 +155,7 @@ describe('TakesDetailView component', () => {
         takes: [
           {
             ...getMockApiTakes()[0],
-            isLicenseToConstruct: true,
+            isNewLicenseToConstruct: true,
             ltcEndDt: '2020-01-01',
           },
         ],
@@ -140,13 +172,13 @@ describe('TakesDetailView component', () => {
         takes: [
           {
             ...getMockApiTakes()[0],
-            isLandAct: true,
+            isNewLandAct: true,
             landActEndDt: '2020-01-01',
           },
         ],
       },
     });
-    const date = await findByText('Is there Land Act-Reserve(s)/Withdrawal(s)/Notation(s)', {
+    const date = await findByText('Is a there a new Land Act tenure', {
       exact: false,
     });
     expect(date).toBeVisible();
@@ -159,7 +191,7 @@ describe('TakesDetailView component', () => {
         takes: [
           {
             ...getMockApiTakes()[0],
-            isLicenseToConstruct: true,
+            isNewLicenseToConstruct: true,
             ltcEndDt: '2020-01-01',
           },
         ],

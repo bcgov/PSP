@@ -53,6 +53,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchProperties1stResultPropDiv = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
         private By searchProperties1stResultPropCheckbox = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(1) input");
 
+        private By searchPropertiesAddSelectionBttn = By.XPath("//button/div[contains(text(),'Add to selection')]");
+
         //Selected Properties Elements
         private By searchPropertiesSelectedPropertiesSubtitle = By.XPath("//div[contains(text(),'Selected properties')]");
         private By searchPropertiesSelectedIdentifierHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Identifier')]");
@@ -168,11 +170,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteProperty()
         {
+            Wait(2000);
             var PropertiesTotal = webDriver.FindElements(searchPropertiesSelectedPropertiesTotal).Count();
 
+            WaitUntilSpinnerDisappear();
             webDriver.FindElement(searchPropertiesDelete1stPropBttn).Click();
 
-            Wait(3000);
+            Wait(2000);
             if (webDriver.FindElements(searchPropertiesModal).Count > 0)
             {
                 Assert.True(sharedModals.ModalHeader() == "Removing Property from form");
@@ -181,9 +185,9 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedModals.ModalClickOKBttn();
             }
 
+            Wait(2000);
             var PropertiesLeft = webDriver.FindElements(searchPropertiesSelectedPropertiesTotal).Count();
 
-            Wait();
             Assert.True(PropertiesTotal - PropertiesLeft == 1);
         }
 
@@ -192,13 +196,12 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(searchProperties1stResultPropDiv);
             FocusAndClick(searchProperties1stResultPropCheckbox);
 
-            ButtonElement("Add to selection");
+            webDriver.FindElement(searchPropertiesAddSelectionBttn).Click();
 
             
             if (webDriver.FindElements(duplicatePropToast).Count() == 1)
             {
                 WaitUntilVisible(duplicatePropToast);
-                System.Diagnostics.Debug.WriteLine("HELLO: "+ webDriver.FindElement(duplicatePropToast).Text);
                 Assert.True(webDriver.FindElement(duplicatePropToast).Text == "A property that the user is trying to select has already been added to the selected properties list");
             }
 
@@ -213,7 +216,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string noRowsResultsMessage()
         {
-            WaitUntilVisible(searchPropertiesNoRowsResult);
+            WaitUntilDisappear(tableLoadingSpinner);
             return webDriver.FindElement(searchPropertiesNoRowsResult).Text;
         }
 
@@ -246,13 +249,14 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchPropertiesSelectedToolTipIcon).Displayed);
             if (webDriver.FindElements(searchPropertiesSelectedDefault).Count > 0)
             {
+                WaitUntilVisible(searchPropertiesSelectedDefault);
                 Assert.True(webDriver.FindElement(searchPropertiesSelectedDefault).Displayed);
             }
         }
 
         public void VerifySearchPropertiesFeature()
         {
-            WaitUntilVisible(searchByTab);
+            WaitUntilSpinnerDisappear();
 
             Assert.True(webDriver.FindElement(searchByTab).Displayed);
             Assert.True(webDriver.FindElement(searchBySubtitle).Displayed);

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using ExcelDataReader;
+﻿using ExcelDataReader;
 using System.Data;
-using PIMS.Tests.Automation.Classes;
+
 
 namespace PIMS.Tests.Automation.Data
 {
@@ -16,7 +14,7 @@ namespace PIMS.Tests.Automation.Data
 
         private ExcelDataContext()
         {
-            FileStream stream = File.Open(".\\Data\\PIMS_Testing_Data.xlsx", FileMode.Open, FileAccess.Read);
+            FileStream stream = File.Open(Path.Combine("Data", "PIMS_Testing_Data.xlsx"), FileMode.Open, FileAccess.Read);
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
 

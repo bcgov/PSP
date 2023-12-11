@@ -10,7 +10,6 @@ using Pims.Api.Helpers.Extensions;
 using Pims.Api.Policies;
 using Pims.Api.Services.Interfaces;
 using Pims.Dal.Entities.Models;
-using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 

@@ -16,7 +16,6 @@ namespace Pims.Dal.Entities
     {
         public PimsPropertyAcquisitionFile()
         {
-            PimsActInstPropAcqFiles = new HashSet<PimsActInstPropAcqFile>();
             PimsInthldrPropInterests = new HashSet<PimsInthldrPropInterest>();
             PimsTakes = new HashSet<PimsTake>();
         }
@@ -33,8 +32,6 @@ namespace Pims.Dal.Entities
         public string PropertyName { get; set; }
         [Column("DISPLAY_ORDER")]
         public int? DisplayOrder { get; set; }
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -80,8 +77,6 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(PropertyId))]
         [InverseProperty(nameof(PimsProperty.PimsPropertyAcquisitionFiles))]
         public virtual PimsProperty Property { get; set; }
-        [InverseProperty(nameof(PimsActInstPropAcqFile.PropertyAcquisitionFile))]
-        public virtual ICollection<PimsActInstPropAcqFile> PimsActInstPropAcqFiles { get; set; }
         [InverseProperty(nameof(PimsInthldrPropInterest.PropertyAcquisitionFile))]
         public virtual ICollection<PimsInthldrPropInterest> PimsInthldrPropInterests { get; set; }
         [InverseProperty(nameof(PimsTake.PropertyAcquisitionFile))]

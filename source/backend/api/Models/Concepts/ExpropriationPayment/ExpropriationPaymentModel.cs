@@ -26,6 +26,5 @@ namespace Pims.Api.Models.Concepts
         public bool? IsDisabled { get; set; }
 
         public List<ExpropriationPaymentItemModel> PaymentItems { get; set; }
-
     }
 }

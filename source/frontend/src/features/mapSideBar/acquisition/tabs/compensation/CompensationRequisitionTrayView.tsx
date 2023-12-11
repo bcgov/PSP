@@ -114,7 +114,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
             }}
           ></Styled.CloseButton>
         </Styled.TrayHeader>
-        <Styled.ActivityTrayPage>{trayContent}</Styled.ActivityTrayPage>
+        <Styled.TrayContent>{trayContent}</Styled.TrayContent>
       </Styled.PopupTray>
     </ReactVisibilitySensor>
   );

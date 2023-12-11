@@ -1,7 +1,14 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
+using MapsterMapper;
 using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
+using Pims.Api.Constants;
+using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Models.Concepts;
+using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers;
@@ -16,14 +23,30 @@ namespace Pims.Api.Services
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly IPropertyRepository _propertyRepository;
+        private readonly IPropertyContactRepository _propertyContactRepository;
+        private readonly IPropertyActivityRepository _propertyActivityRepository;
         private readonly ICoordinateTransformService _coordinateService;
+        private readonly IPropertyLeaseRepository _propertyLeaseRepository;
+        private readonly IMapper _mapper;
 
-        public PropertyService(ClaimsPrincipal user, ILogger<PropertyService> logger, IPropertyRepository propertyRepository, ICoordinateTransformService coordinateService)
+        public PropertyService(
+            ClaimsPrincipal user,
+            ILogger<PropertyService> logger,
+            IPropertyRepository propertyRepository,
+            IPropertyContactRepository propertyContactRepository,
+            IPropertyActivityRepository propertyActivityRepository,
+            ICoordinateTransformService coordinateService,
+            IPropertyLeaseRepository propertyLeaseRepository,
+            IMapper mapper)
         {
             _user = user;
             _logger = logger;
             _propertyRepository = propertyRepository;
+            _propertyContactRepository = propertyContactRepository;
+            _propertyActivityRepository = propertyActivityRepository;
             _coordinateService = coordinateService;
+            _propertyLeaseRepository = propertyLeaseRepository;
+            _mapper = mapper;
         }
 
         public PimsProperty GetById(long id)
@@ -34,14 +57,14 @@ namespace Pims.Api.Services
             var property = _propertyRepository.GetById(id);
             if (property?.Location != null)
             {
-                property.Location = TransformCoordiates(property.Location);
+                property.Location = TransformCoordinates(property.Location);
             }
             return property;
         }
 
         public List<PimsProperty> GetMultipleById(List<long> ids)
         {
-            _logger.LogInformation("Getting multiple properies by id");
+            _logger.LogInformation("Getting multiple properties by id");
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             List<PimsProperty> properties = _propertyRepository.GetAllByIds(ids);
@@ -49,7 +72,7 @@ namespace Pims.Api.Services
             {
                 if (property?.Location != null)
                 {
-                    property.Location = TransformCoordiates(property.Location);
+                    property.Location = TransformCoordinates(property.Location);
                 }
             }
 
@@ -90,7 +113,164 @@ namespace Pims.Api.Services
             return GetById(newProperty.Internal_Id);
         }
 
-        private Point TransformCoordiates(Geometry location)
+        public IList<PimsPropertyContact> GetContacts(long propertyId)
+        {
+            _logger.LogInformation("Retrieving property contacts...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            return _propertyContactRepository.GetContactsByProperty(propertyId);
+        }
+
+        public PimsPropertyContact GetContact(long propertyId, long contactId)
+        {
+            _logger.LogInformation("Retrieving single property contact...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            var propertyContact = _propertyContactRepository.GetContact(contactId);
+
+            if (propertyContact.PropertyId != propertyId)
+            {
+                throw new BadRequestException("Contact with the given id does not match the property id");
+            }
+
+            return propertyContact;
+        }
+
+        public PimsPropertyContact CreateContact(PimsPropertyContact propertyContact)
+        {
+            _logger.LogInformation("Creating property contact...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var propertyContactResult = _propertyContactRepository.Create(propertyContact);
+            _propertyContactRepository.CommitTransaction();
+
+            return propertyContactResult;
+        }
+
+        public PimsPropertyContact UpdateContact(PimsPropertyContact propertyContact)
+        {
+            _logger.LogInformation("Updating property contact...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var propertyContactResult = _propertyContactRepository.Update(propertyContact);
+            _propertyContactRepository.CommitTransaction();
+
+            return propertyContactResult;
+        }
+
+        public bool DeleteContact(long propertyContactId)
+        {
+            _logger.LogInformation("Deleting property contact...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            _propertyContactRepository.Delete(propertyContactId);
+
+            _propertyContactRepository.CommitTransaction();
+
+            return true;
+        }
+
+        public PropertyManagementModel GetPropertyManagement(long propertyId)
+        {
+            _logger.LogInformation("Getting property management information for property with id {propertyId}", propertyId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementView);
+
+            var property = GetById(propertyId);
+
+            var propertyLeases = _propertyLeaseRepository.GetAllByPropertyId(propertyId);
+            var leaseCount = propertyLeases.Count();
+            var firstLease = leaseCount == 1 ? propertyLeases.First().Lease : null;
+            var leaseExpiryDate = firstLease is not null ? firstLease.GetExpiryDate()?.FilterSqlMinDate() : null;
+
+            var propertyManagement = _mapper.Map<PropertyManagementModel>(property);
+            propertyManagement.RelatedLeases = leaseCount;
+            propertyManagement.LeaseExpiryDate = leaseExpiryDate;
+
+            return propertyManagement;
+        }
+
+        public PropertyManagementModel UpdatePropertyManagement(PimsProperty property)
+        {
+            _logger.LogInformation("Updating property management information...");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementEdit);
+
+            var newProperty = _propertyRepository.UpdatePropertyManagement(property);
+            _propertyRepository.CommitTransaction();
+
+            return GetPropertyManagement(newProperty.Internal_Id);
+        }
+
+        public IList<PimsPropertyActivity> GetActivities(long propertyId)
+        {
+            _logger.LogInformation("Getting property management activities for property with id {propertyId}", propertyId);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementView, Permissions.PropertyView);
+
+            return _propertyActivityRepository.GetActivitiesByProperty(propertyId);
+        }
+
+        public PimsPropertyActivity GetActivity(long propertyId, long activityId)
+        {
+            _logger.LogInformation("Retrieving single property Activity...");
+            _user.ThrowIfNotAuthorized(Permissions.ManagementView, Permissions.PropertyView);
+
+            var propertyActivity = _propertyActivityRepository.GetActivity(activityId);
+
+            if (propertyActivity.PimsPropPropActivities.Any(x => x.PropertyId == propertyId))
+            {
+                return propertyActivity;
+            }
+
+            throw new BadRequestException("Activity with the given id does not match the property id");
+        }
+
+        public PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity)
+        {
+            _logger.LogInformation("Creating property Activity...");
+            _user.ThrowIfNotAuthorized(Permissions.ManagementAdd, Permissions.PropertyEdit);
+
+            if (propertyActivity.PropMgmtActivityStatusTypeCode == null)
+            {
+                propertyActivity.PropMgmtActivityStatusTypeCode = "NOTSTARTED";
+            }
+
+            var propertyActivityResult = _propertyActivityRepository.Create(propertyActivity);
+            _propertyActivityRepository.CommitTransaction();
+
+            return propertyActivityResult;
+        }
+
+        public PimsPropertyActivity UpdateActivity(PimsPropertyActivity propertyActivity)
+        {
+            _logger.LogInformation("Updating property Activity...");
+            _user.ThrowIfNotAuthorized(Permissions.ManagementEdit, Permissions.PropertyEdit);
+
+            var propertyActivityResult = _propertyActivityRepository.Update(propertyActivity);
+            _propertyActivityRepository.CommitTransaction();
+
+            return propertyActivityResult;
+        }
+
+        public bool DeleteActivity(long activityId)
+        {
+            _logger.LogInformation("Deleting Management Activity with id {activityId}", activityId);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementDelete, Permissions.PropertyEdit);
+
+            var propertyManagementActivity = _propertyActivityRepository.GetActivity(activityId);
+
+            if (!propertyManagementActivity.PropMgmtActivityStatusTypeCode.Equals(PropertyActivityStatusTypeCode.NOTSTARTED.ToString()))
+            {
+                throw new BadRequestException($"PropertyManagementActivity can not be deleted since it has already started");
+            }
+
+            var success = _propertyActivityRepository.TryDelete(activityId);
+            _propertyRepository.CommitTransaction();
+
+            return success;
+        }
+
+        private Point TransformCoordinates(Geometry location)
         {
             // return property spatial location in lat/long (4326)
             var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, location.Coordinate);

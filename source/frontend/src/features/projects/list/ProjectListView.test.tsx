@@ -2,6 +2,8 @@ import userEvent from '@testing-library/user-event';
 
 import { Claims } from '@/constants/index';
 import { useApiProjects } from '@/hooks/pims-api/useApiProjects';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -21,6 +23,14 @@ const storeState = {
 };
 
 jest.mock('@react-keycloak/web');
+
+jest.mock('@/hooks/repositories/useUserInfoRepository');
+(useUserInfoRepository as jest.Mock).mockReturnValue({
+  retrieveUserInfo: jest.fn(),
+  retrieveUserInfoLoading: true,
+  retrieveUserInfoResponse: getUserMock(),
+});
+
 jest.mock('@/hooks/pims-api/useApiProjects');
 const searchProjects = jest.fn();
 (useApiProjects as jest.Mock).mockReturnValue({

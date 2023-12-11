@@ -1,6 +1,8 @@
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
+import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
 import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
@@ -13,6 +15,9 @@ import { LeaseStateContext } from './../context/LeaseContext';
 
 export function useLeaseDetail(leaseId?: number) {
   const { lease, setLease } = useContext(LeaseStateContext);
+  const { setLastUpdatedBy, lastUpdatedBy, setStaleLastUpdatedBy, staleLastUpdatedBy } =
+    useContext(SideBarContext);
+
   leaseId = leaseId ?? lease?.id ?? undefined;
   const { getApiLease } = useApiLeases();
   const {
@@ -24,6 +29,10 @@ export function useLeaseDetail(leaseId?: number) {
   const {
     getLeaseTerms: { execute: getLeaseTerms, loading: leaseTermsLoading },
   } = useLeaseTermRepository();
+
+  const {
+    getLastUpdatedBy: { execute: getLastUpdatedBy, loading: getLastUpdatedByLoading },
+  } = useLeaseRepository();
 
   const getApiLeaseById = useApiRequestWrapper({
     requestFunction: getApiLease,
@@ -59,8 +68,30 @@ export function useLeaseDetail(leaseId?: number) {
     }
   }, [leaseId, getApiLeaseByIdFunc, setLease, getLeaseTenants, getPropertyLeases, getLeaseTerms]);
 
+  const fetchLastUpdatedBy = useCallback(async () => {
+    if (leaseId) {
+      var retrieved = await getLastUpdatedBy(leaseId);
+      if (retrieved !== undefined) {
+        setLastUpdatedBy(retrieved);
+      } else {
+        setLastUpdatedBy(null);
+      }
+    }
+  }, [leaseId, getLastUpdatedBy, setLastUpdatedBy]);
+
+  useEffect(() => {
+    if (lastUpdatedBy === undefined || leaseId !== lastUpdatedBy?.parentId || staleLastUpdatedBy) {
+      fetchLastUpdatedBy();
+    }
+  }, [fetchLastUpdatedBy, lastUpdatedBy, leaseId, staleLastUpdatedBy]);
+
   const loading =
-    getApiLeaseById.loading || propertyLeasesLoading || leaseTenantsLoading || leaseTermsLoading;
+    getApiLeaseById.loading ||
+    propertyLeasesLoading ||
+    leaseTenantsLoading ||
+    leaseTermsLoading ||
+    getLastUpdatedByLoading;
+
   useDeepCompareEffect(() => {
     if (!lease) {
       getCompleteLease();
@@ -70,7 +101,10 @@ export function useLeaseDetail(leaseId?: number) {
   return {
     lease,
     setLease,
-    refresh: () => leaseId && getCompleteLease(),
+    refresh: async () => {
+      setStaleLastUpdatedBy(true);
+      await getCompleteLease();
+    },
     getCompleteLease,
     loading: loading,
   };

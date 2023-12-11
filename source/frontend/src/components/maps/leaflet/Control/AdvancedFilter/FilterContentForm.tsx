@@ -49,10 +49,28 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
   }, [initialFilter, onChange]);
 
   const { getByType } = useLookupCodeHelpers();
+
+  // Property options
   const anomalyOptions = getByType(API.PROPERTY_ANOMALY_TYPES).map<CodeTypeSelectOption>(x => {
     return { codeType: x.id.toString(), codeTypeDescription: x.name };
   });
 
+  // Tenure options
+  const tenureStatusOptions = getByType(API.PROPERTY_TENURE_TYPES).map<CodeTypeSelectOption>(x => {
+    return { codeType: x.id.toString(), codeTypeDescription: x.name };
+  });
+
+  const tenureProvincePublicHigwayTypeOptions = getByType(API.PPH_STATUS_TYPES).map<SelectOption>(
+    x => {
+      return { value: x.id.toString(), label: x.name };
+    },
+  );
+
+  const tenureRoadTypeOptions = getByType(API.PROPERTY_ROAD_TYPES).map<CodeTypeSelectOption>(x => {
+    return { codeType: x.id.toString(), codeTypeDescription: x.name };
+  });
+
+  // Lease options
   const leaseStatusOptions = getByType(API.LEASE_STATUS_TYPES).map<SelectOption>(x => {
     return { value: x.id.toString(), label: x.name };
   });
@@ -65,6 +83,13 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
     return { codeType: x.id.toString(), codeTypeDescription: x.name };
   });
 
+  const leasePaymentRcvblOptions = getByType(API.LEASE_PAYMENT_RECEIVABLE_TYPES).map<SelectOption>(
+    x => {
+      return { value: x.id.toString(), label: x.name };
+    },
+  );
+  leasePaymentRcvblOptions.push({ value: 'all', label: 'Payable and Receivable' });
+
   return (
     <Formik<PropertyFilterFormModel> initialValues={initialFilter} onSubmit={noop}>
       <Form>
@@ -75,7 +100,47 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
             <ProjectSelector field="projectPrediction" />
           </SectionField>
         </Section>
+        <Section header="Tenure" isCollapsable initiallyExpanded>
+          <SectionField label="Status" contentWidth="12">
+            <Multiselect
+              field="tenureStatuses"
+              displayValue="codeTypeDescription"
+              placeholder=""
+              hidePlaceholder
+              options={tenureStatusOptions}
+            />
+          </SectionField>
+          <SectionField label="Province Public Highway" labelWidth="12" contentWidth="12">
+            <Select
+              field="tenurePPH"
+              options={tenureProvincePublicHigwayTypeOptions}
+              placeholder="Select a highway"
+            />
+          </SectionField>
+
+          <SectionField label="Highway / Road Details" labelWidth="12" contentWidth="12">
+            <Multiselect
+              field="tenureRoadTypes"
+              displayValue="codeTypeDescription"
+              placeholder=""
+              hidePlaceholder
+              options={tenureRoadTypeOptions}
+            />
+          </SectionField>
+        </Section>
         <Section header="Lease / License" isCollapsable initiallyExpanded>
+          <SectionField
+            label="Lease Transaction"
+            contentWidth="12"
+            tooltip="Selecting the Payable and Receivable lease transaction option will display properties that have both a payable and a receivable lease on them."
+          >
+            <Select
+              field="leasePayRcvblType"
+              placeholder="Select Lease Transaction"
+              options={leasePaymentRcvblOptions}
+              data-testid="leasePayRcvblType"
+            />
+          </SectionField>
           <SectionField label="Status" contentWidth="12">
             <Select
               field="leaseStatus"

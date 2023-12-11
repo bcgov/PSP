@@ -20,11 +20,13 @@ import { FormLeaseDepositReturn } from './models/FormLeaseDepositReturn';
 import { LeaseDepositForm } from './models/LeaseDepositForm';
 import * as Styled from './styles';
 
-export interface IDepositsContainerProps {}
+export interface IDepositsContainerProps {
+  onSuccess: () => void;
+}
 
 export const DepositsContainer: React.FunctionComponent<
   React.PropsWithChildren<IDepositsContainerProps>
-> = () => {
+> = props => {
   const { lease } = useContext(LeaseStateContext);
   const {
     getSecurityDeposits: {
@@ -105,6 +107,7 @@ export const DepositsContainer: React.FunctionComponent<
       setDepositToDelete(undefined);
       setDeleteModalWarning(false);
       getSecurityDeposits(lease.id);
+      props.onSuccess();
     }
   };
 
@@ -114,6 +117,7 @@ export const DepositsContainer: React.FunctionComponent<
       setDepositReturnToDelete(undefined);
       setDeleteReturnModalWarning(false);
       getSecurityDeposits(lease.id);
+      props.onSuccess();
     }
   };
 
@@ -130,6 +134,7 @@ export const DepositsContainer: React.FunctionComponent<
         setEditDepositValue(FormLeaseDeposit.createEmpty(lease.id));
         setShowEditModal(false);
         getSecurityDeposits(lease.id);
+        props.onSuccess();
       }
     } else {
       console.error('Lease information incomplete');
@@ -179,6 +184,7 @@ export const DepositsContainer: React.FunctionComponent<
         setDepositReturnToDelete(undefined);
         setShowReturnEditModal(false);
         getSecurityDeposits(lease.id);
+        props.onSuccess();
       }
     } else {
       console.error('Lease information incomplete');
@@ -214,6 +220,7 @@ export const DepositsContainer: React.FunctionComponent<
               onSave={async (notes: string) => {
                 lease?.id && (await updateSecurityDepositNote(lease.id, notes));
                 setEditNotes(false);
+                props.onSuccess();
               }}
               onCancel={() => {
                 setEditNotes(false);

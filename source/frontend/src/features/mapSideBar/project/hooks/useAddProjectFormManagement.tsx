@@ -5,6 +5,7 @@ import * as API from '@/constants/API';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { Api_Project } from '@/models/api/Project';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { AddProjectYupSchema } from '../add/AddProjectFileYupSchema';
 import { ProjectForm } from '../models';
@@ -17,6 +18,7 @@ export interface IUseAddProjectFormProps {
 export function useAddProjectForm(props: IUseAddProjectFormProps) {
   const { onSuccess } = props;
   const { addProject } = useProjectProvider();
+
   const { getPublicByType } = useLookupCodeHelpers();
   const initialValues = props.initialForm ?? new ProjectForm();
   if (!initialValues.projectStatusType) {
@@ -28,9 +30,13 @@ export function useAddProjectForm(props: IUseAddProjectFormProps) {
 
   // save handler
   const handleSubmit = useCallback(
-    async (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
+    async (
+      values: ProjectForm,
+      formikHelpers: FormikHelpers<ProjectForm>,
+      userOverrideCodes: UserOverrideCode[],
+    ) => {
       const project = values.toApi();
-      const response = await addProject.execute(project);
+      const response = await addProject.execute(project, userOverrideCodes);
 
       if (!!response?.id) {
         formikHelpers.resetForm();

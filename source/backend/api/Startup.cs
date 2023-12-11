@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -383,10 +384,8 @@ namespace Pims.Api
         private static void AddPimsApiServices(IServiceCollection services)
         {
             services.AddScoped<IDocumentService, DocumentService>();
-            services.AddScoped<IDocumentActivityService, DocumentActivityService>();
             services.AddScoped<IDocumentSyncService, DocumentSyncService>();
             services.AddScoped<INoteService, NoteService>();
-            services.AddScoped<IActivityService, ActivityService>();
             services.AddScoped<IAcquisitionFileService, AcquisitionFileService>();
             services.AddScoped<ILeaseService, LeaseService>();
             services.AddScoped<ILeaseReportsService, LeaseReportsService>();

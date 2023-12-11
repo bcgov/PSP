@@ -16,11 +16,10 @@ namespace Pims.Dal.Entities
         public PimsDocument()
         {
             PimsAcquisitionFileDocuments = new HashSet<PimsAcquisitionFileDocument>();
-            PimsActivityInstanceDocuments = new HashSet<PimsActivityInstanceDocument>();
-            PimsActivityTemplateDocuments = new HashSet<PimsActivityTemplateDocument>();
             PimsFormTypes = new HashSet<PimsFormType>();
             PimsLeaseDocuments = new HashSet<PimsLeaseDocument>();
             PimsProjectDocuments = new HashSet<PimsProjectDocument>();
+            PimsPropertyActivityDocuments = new HashSet<PimsPropertyActivityDocument>();
             PimsResearchFileDocuments = new HashSet<PimsResearchFileDocument>();
         }
 
@@ -86,16 +85,14 @@ namespace Pims.Dal.Entities
         public virtual PimsDocumentTyp DocumentType { get; set; }
         [InverseProperty(nameof(PimsAcquisitionFileDocument.Document))]
         public virtual ICollection<PimsAcquisitionFileDocument> PimsAcquisitionFileDocuments { get; set; }
-        [InverseProperty(nameof(PimsActivityInstanceDocument.Document))]
-        public virtual ICollection<PimsActivityInstanceDocument> PimsActivityInstanceDocuments { get; set; }
-        [InverseProperty(nameof(PimsActivityTemplateDocument.Document))]
-        public virtual ICollection<PimsActivityTemplateDocument> PimsActivityTemplateDocuments { get; set; }
         [InverseProperty(nameof(PimsFormType.Document))]
         public virtual ICollection<PimsFormType> PimsFormTypes { get; set; }
         [InverseProperty(nameof(PimsLeaseDocument.Document))]
         public virtual ICollection<PimsLeaseDocument> PimsLeaseDocuments { get; set; }
         [InverseProperty(nameof(PimsProjectDocument.Document))]
         public virtual ICollection<PimsProjectDocument> PimsProjectDocuments { get; set; }
+        [InverseProperty(nameof(PimsPropertyActivityDocument.Document))]
+        public virtual ICollection<PimsPropertyActivityDocument> PimsPropertyActivityDocuments { get; set; }
         [InverseProperty(nameof(PimsResearchFileDocument.Document))]
         public virtual ICollection<PimsResearchFileDocument> PimsResearchFileDocuments { get; set; }
     }

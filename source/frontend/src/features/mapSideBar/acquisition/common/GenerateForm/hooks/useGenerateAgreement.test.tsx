@@ -17,8 +17,8 @@ import { useGenerateAgreement } from './useGenerateAgreement';
 const generateFn = jest.fn();
 const getAcquisitionFileFn = jest.fn<Api_AcquisitionFile | undefined, any[]>();
 const getAcquisitionFileProperties = jest.fn<Api_Property[] | undefined, any[]>();
-const getPersonConceptFn = jest.fn();
-const getOrganizationConceptFn = jest.fn();
+const getPersonConceptFn = jest.fn().mockResolvedValue({});
+const getOrganizationConceptFn = jest.fn().mockResolvedValue({});
 
 jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
 (useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
@@ -70,7 +70,7 @@ describe('useGenerateAgreement functions', () => {
       expect(generateFn).toHaveBeenCalled();
     });
   });
-  it('makes requests to expected api endpoints if a team member is a property coordinator', async () => {
+  it('makes requests to expected api endpoints if a team member is a property coordinator with person', async () => {
     const responseWithTeam: Api_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
@@ -78,8 +78,7 @@ describe('useGenerateAgreement functions', () => {
           id: 1,
           acquisitionFileId: 1,
           personId: 1,
-          personProfileTypeCode: 'PROPCOORD',
-          isDisabled: false,
+          teamProfileTypeCode: 'PROPCOORD',
           rowVersion: 2,
         },
       ],
@@ -89,7 +88,76 @@ describe('useGenerateAgreement functions', () => {
     await act(async () => {
       await generate(mockAgreementsResponse()[1]);
       expect(generateFn).toHaveBeenCalled();
-      expect(getPersonConceptFn).toHaveBeenCalled();
+      expect(getPersonConceptFn).toHaveBeenCalledWith(1);
+      expect(getAcquisitionFileProperties).toHaveBeenCalled();
+    });
+  });
+
+  it('makes requests to expected api endpoints if a team member is a negotiating agent with person', async () => {
+    const responseWithTeam: Api_AcquisitionFile = {
+      ...mockAcquisitionFileResponse(),
+      acquisitionTeam: [
+        {
+          id: 1,
+          acquisitionFileId: 1,
+          personId: 1,
+          teamProfileTypeCode: 'NEGOTAGENT',
+          rowVersion: 2,
+        },
+      ],
+    };
+    const generate = setup({ acquisitionResponse: responseWithTeam });
+
+    await act(async () => {
+      await generate(mockAgreementsResponse()[1]);
+      expect(generateFn).toHaveBeenCalled();
+      expect(getPersonConceptFn).toHaveBeenCalledWith(1);
+      expect(getAcquisitionFileProperties).toHaveBeenCalled();
+    });
+  });
+
+  it('makes requests to expected api endpoints if a team member is a property coordinator with org', async () => {
+    const responseWithTeam: Api_AcquisitionFile = {
+      ...mockAcquisitionFileResponse(),
+      acquisitionTeam: [
+        {
+          id: 1,
+          acquisitionFileId: 1,
+          organizationId: 1,
+          teamProfileTypeCode: 'PROPCOORD',
+          rowVersion: 2,
+        },
+      ],
+    };
+    const generate = setup({ acquisitionResponse: responseWithTeam });
+
+    await act(async () => {
+      await generate(mockAgreementsResponse()[1]);
+      expect(generateFn).toHaveBeenCalled();
+      expect(getOrganizationConceptFn).toHaveBeenCalledWith(1);
+      expect(getAcquisitionFileProperties).toHaveBeenCalled();
+    });
+  });
+
+  it('makes requests to expected api endpoints if a team member is a negotiating agent with organization', async () => {
+    const responseWithTeam: Api_AcquisitionFile = {
+      ...mockAcquisitionFileResponse(),
+      acquisitionTeam: [
+        {
+          id: 1,
+          acquisitionFileId: 1,
+          organizationId: 1,
+          teamProfileTypeCode: 'NEGOTAGENT',
+          rowVersion: 2,
+        },
+      ],
+    };
+    const generate = setup({ acquisitionResponse: responseWithTeam });
+
+    await act(async () => {
+      await generate(mockAgreementsResponse()[1]);
+      expect(generateFn).toHaveBeenCalled();
+      expect(getOrganizationConceptFn).toHaveBeenCalledWith(1);
       expect(getAcquisitionFileProperties).toHaveBeenCalled();
     });
   });

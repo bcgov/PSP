@@ -16,6 +16,7 @@ export class SingleAgreementFormModel {
   public completionDate: string = '';
   public terminationDate: string = '';
   public commencementDate: string = '';
+  public possessionDate: string = '';
   public depositAmount: string = '';
   public noLaterThanDays: string = '';
   public purchasePrice: string = '';
@@ -38,6 +39,7 @@ export class SingleAgreementFormModel {
     agreement.completionDate = apiModel.completionDate || '';
     agreement.terminationDate = apiModel.terminationDate || '';
     agreement.commencementDate = apiModel.commencementDate || '';
+    agreement.possessionDate = apiModel.possessionDate || '';
     agreement.depositAmount = apiModel.depositAmount?.toString() || '';
     agreement.noLaterThanDays = apiModel.noLaterThanDays?.toString() || '';
     agreement.purchasePrice = apiModel.purchasePrice?.toString() || '';
@@ -61,6 +63,7 @@ export class SingleAgreementFormModel {
       completionDate: stringToUndefined(this.completionDate),
       terminationDate: stringToUndefined(this.terminationDate),
       commencementDate: stringToUndefined(this.commencementDate),
+      possessionDate: stringToUndefined(this.possessionDate),
       depositAmount: this.depositAmount !== '' ? Number(this.depositAmount) : null,
       noLaterThanDays: stringToUndefined(this.noLaterThanDays),
       purchasePrice: stringToUndefined(this.purchasePrice),

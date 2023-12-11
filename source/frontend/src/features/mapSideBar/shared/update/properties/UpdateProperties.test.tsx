@@ -81,7 +81,6 @@ describe('UpdateProperties component', () => {
         fileProperties: [
           {
             id: 3,
-            isDisabled: false,
             propertyId: 443,
             property: {
               id: 443,

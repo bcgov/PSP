@@ -1,21 +1,24 @@
 import { FormikProps } from 'formik';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { FileTypes } from '@/constants';
 import { InventoryTabNames, InventoryTabs } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_File } from '@/models/api/File';
 
+import { SideBarContext } from '../../context/sidebarContext';
 import { UpdatePropertyDetailsContainer } from '../../property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
+import UpdatePropertyResearchContainer from '../../property/tabs/propertyResearch/update/UpdatePropertyResearchContainer';
 import { TakesUpdateContainer } from '../../property/tabs/takes/update/TakesUpdateContainer';
 import { TakesUpdateForm } from '../../property/tabs/takes/update/TakesUpdateForm';
 import { PropertyFileContainer } from '../../shared/detail/PropertyFileContainer';
 
 export interface IFilePropertyRouterProps {
   formikRef: React.Ref<FormikProps<any>>;
-  acquisitionFile?: Api_AcquisitionFile;
+  file?: Api_File;
+  fileType: FileTypes;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
   selectedMenuIndex: number;
@@ -27,17 +30,23 @@ export interface IFilePropertyRouterProps {
 export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
   const { path, url } = useRouteMatch();
 
-  if (props.acquisitionFile === undefined || props.acquisitionFile === null) {
+  const { setStaleLastUpdatedBy } = useContext(SideBarContext);
+
+  const onChildSuccess = () => {
+    props.setIsEditing(false);
+    setStaleLastUpdatedBy(true);
+  };
+
+  if (props.file === undefined || props.file === null) {
     return null;
   }
 
-  const fileProperty = getAcquisitionFileProperty(props.acquisitionFile, props.selectedMenuIndex);
-
+  const fileProperty = getFileProperty(props.file, props.selectedMenuIndex);
   if (fileProperty == null) {
     toast.warn('Could not find property in the file, showing file details instead', {
       autoClose: 15000,
     });
-    return <Redirect to={`/mapview/sidebar/acquisition/${props.acquisitionFile.id}`} />;
+    return <Redirect to={`/mapview/sidebar/${props.fileType}/${props.file.id}`} />;
   }
 
   // render edit forms
@@ -63,9 +72,17 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
             fileProperty={fileProperty}
             View={TakesUpdateForm}
             ref={props.formikRef}
-            onSuccess={() => props.setIsEditing(false)}
+            onSuccess={onChildSuccess}
           />
         </Route>
+        <Route exact path={`${path}/${InventoryTabNames.research}`}>
+          <UpdatePropertyResearchContainer
+            researchFileProperty={fileProperty}
+            onSuccess={props.onSuccess}
+            ref={props.formikRef}
+          />
+        </Route>
+
         <Redirect from={`${path}`} to={`${url}/${InventoryTabNames.property}?edit=true`} />
       </Switch>
     );
@@ -75,38 +92,36 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
       <Switch>
         <Route path={`${path}/:tab`}>
           <PropertyFileContainer
-            withRouter
-            setEditFileProperty={() => props.setIsEditing(true)}
-            setEditTakes={() => props.setIsEditing(true)}
+            setEditing={() => props.setIsEditing(true)}
             fileProperty={fileProperty}
             defaultTab={props.defaultPropertyTab}
             customTabs={[]}
             View={InventoryTabs}
-            fileContext={FileTypes.Acquisition}
+            fileContext={props.fileType}
           />
         </Route>
-        <Redirect from={`${path}`} to={`${url}/${InventoryTabNames.property}`} />
+        <Redirect
+          from={`${path}`}
+          to={`${url}/${props.defaultPropertyTab ?? InventoryTabNames.property}`}
+        />
       </Switch>
     );
   }
 };
 
-const getAcquisitionFileProperty = (
-  acquisitionFile: Api_AcquisitionFile,
-  selectedMenuIndex: number,
-) => {
-  const properties = acquisitionFile?.fileProperties || [];
+const getFileProperty = (file: Api_File, selectedMenuIndex: number) => {
+  const properties = file?.fileProperties || [];
   const selectedPropertyIndex = selectedMenuIndex - 1;
 
   if (selectedPropertyIndex < 0 || selectedPropertyIndex >= properties.length) {
     return null;
   }
 
-  const acquisitionFileProperty = properties[selectedPropertyIndex];
-  if (!!acquisitionFileProperty.file) {
-    acquisitionFileProperty.file = acquisitionFile;
+  const fileProperty = properties[selectedPropertyIndex];
+  if (!!fileProperty) {
+    fileProperty.file = file;
   }
-  return acquisitionFileProperty;
+  return fileProperty;
 };
 
 export default FilePropertyRouter;

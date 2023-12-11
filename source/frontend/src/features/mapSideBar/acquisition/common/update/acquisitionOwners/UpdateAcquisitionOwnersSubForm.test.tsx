@@ -75,6 +75,10 @@ describe('UpdateAcquisitionOwnersSubForm component', () => {
         utils.container.querySelector(
           `input[name="owners[${index}].contactPhoneNumber"]`,
         ) as HTMLInputElement,
+      getCountryNameTextbox: (index = 0) =>
+        utils.container.querySelector(
+          `input[name="owners[${index}].address.countryOther"]`,
+        ) as HTMLInputElement,
     };
   };
 
@@ -105,6 +109,31 @@ describe('UpdateAcquisitionOwnersSubForm component', () => {
       userEvent.click(addRow);
     });
     expect(getByTestId('owners[0]-remove-button')).toBeVisible();
+  });
+
+  it(`renders 'country name' text`, async () => {
+    const { getCountryNameTextbox } = setup({
+      initialForm: {
+        ...testForm,
+        owners: [
+          {
+            isPrimaryContact: '',
+            isOrganization: '',
+            lastNameAndCorpName: '',
+            otherName: '',
+            givenName: '',
+            incorporationNumber: '',
+            registrationNumber: '',
+            contactEmailAddress: '',
+            contactPhoneNumber: '',
+            isEmpty: noop as any,
+            toApi: noop as any,
+            address: { countryId: 4, countryOther: 'fake country' },
+          },
+        ],
+      },
+    });
+    expect(getCountryNameTextbox()).toHaveDisplayValue('fake country');
   });
 
   it(`renders owner row fields when 'Add owner' link is clicked`, async () => {

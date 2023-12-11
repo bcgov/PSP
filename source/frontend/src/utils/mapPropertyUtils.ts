@@ -185,6 +185,8 @@ export function featuresetToMapProperty(
     pin: pin ?? undefined,
     latitude: featureSet.location.lat,
     longitude: featureSet.location.lng,
+    polygon:
+      parcelFeature?.geometry.type === 'Polygon' ? (parcelFeature.geometry as Polygon) : undefined,
     planNumber: parcelFeature?.properties.PLAN_NUMBER?.toString() ?? undefined,
     address: address,
     legalDescription: parcelFeature?.properties.LEGAL_DESCRIPTION ?? undefined,

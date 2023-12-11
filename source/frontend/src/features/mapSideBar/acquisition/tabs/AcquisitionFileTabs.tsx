@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { Claims } from '@/constants/claims';
-import { FileTypes } from '@/constants/fileTypes';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { NoteTypes } from '@/constants/noteTypes';
 import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
 import NoteListView from '@/features/notes/list/NoteListView';
-import ActivityListView from '@/features/properties/map/activity/list/ActivityListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 
+import { SideBarContext } from '../../context/sidebarContext';
+import DocumentsTab from '../../shared/tabs/DocumentsTab';
 import AgreementContainer from './agreement/detail/AgreementContainer';
 import AgreementView from './agreement/detail/AgreementView';
 import { AcquisitionChecklistView } from './checklist/detail/AcquisitionChecklistView';
 import CompensationListContainer from './compensation/list/CompensationListContainer';
 import CompensationListView from './compensation/list/CompensationListView';
-import AcquisitionDocumentsTab from './documents/AcquisitionDocumentsTab';
 import ExpropriationTabContainer from './expropriation/ExpropriationTabContainer';
 import ExpropriationTabContainerView from './expropriation/ExpropriationTabContainerView';
 import AcquisitionSummaryView from './fileDetails/detail/AcquisitionSummaryView';
@@ -36,6 +36,8 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
 
+  const { setStaleLastUpdatedBy } = useContext(SideBarContext);
+
   const location = useLocation();
   const history = useHistory();
   const { tab } = useParams<{ tab?: string }>();
@@ -45,6 +47,10 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     if (activeTab !== tab) {
       history.push(`${tab}`);
     }
+  };
+
+  const onChildSuccess = () => {
+    setStaleLastUpdatedBy(true);
   };
 
   tabViews.push({
@@ -66,22 +72,15 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     name: 'Checklist',
   });
 
-  if (acquisitionFile?.id && hasClaim(Claims.ACTIVITY_VIEW)) {
-    tabViews.push({
-      content: (
-        <ActivityListView
-          fileId={acquisitionFile.id}
-          fileType={FileTypes.Acquisition}
-        ></ActivityListView>
-      ),
-      key: FileTabType.ACTIVITIES,
-      name: 'Activities',
-    });
-  }
-
   if (acquisitionFile?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
-      content: <AcquisitionDocumentsTab acquisitionFileId={acquisitionFile.id} />,
+      content: (
+        <DocumentsTab
+          fileId={acquisitionFile.id}
+          relationshipType={DocumentRelationshipType.ACQUISITION_FILES}
+          onSuccess={onChildSuccess}
+        />
+      ),
       key: FileTabType.DOCUMENTS,
       name: 'Documents',
     });
@@ -89,7 +88,13 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
 
   if (acquisitionFile?.id && hasClaim(Claims.NOTE_VIEW)) {
     tabViews.push({
-      content: <NoteListView type={NoteTypes.Acquisition_File} entityId={acquisitionFile?.id} />,
+      content: (
+        <NoteListView
+          type={NoteTypes.Acquisition_File}
+          entityId={acquisitionFile?.id}
+          onSuccess={onChildSuccess}
+        />
+      ),
       key: FileTabType.NOTES,
       name: 'Notes',
     });
@@ -102,7 +107,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           acquisitionFileId={acquisitionFile.id}
           View={AgreementView}
           onEdit={() => setIsEditing(true)}
-        ></AgreementContainer>
+        />
       ),
       key: FileTabType.AGREEMENTS,
       name: 'Agreements',
@@ -116,7 +121,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           View={StakeHolderView}
           onEdit={() => setIsEditing(true)}
           acquisitionFile={acquisitionFile}
-        ></StakeHolderContainer>
+        />
       ),
       key: FileTabType.STAKEHOLDERS,
       name: 'Stakeholders',
@@ -130,7 +135,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           fileId={acquisitionFile.id}
           file={acquisitionFile}
           View={CompensationListView}
-        ></CompensationListContainer>
+        />
       ),
       key: FileTabType.COMPENSATIONS,
       name: 'Compensation',
@@ -147,7 +152,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
         <ExpropriationTabContainer
           acquisitionFile={acquisitionFile}
           View={ExpropriationTabContainerView}
-        ></ExpropriationTabContainer>
+        />
       ),
       key: FileTabType.EXPROPRIATION,
       name: 'Expropriation',

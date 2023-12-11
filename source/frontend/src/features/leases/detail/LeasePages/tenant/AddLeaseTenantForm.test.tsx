@@ -3,6 +3,7 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 
 import { Claims } from '@/constants/claims';
+import { IPagedItems } from '@/interfaces';
 import {
   getMockContactOrganizationWithOnePerson,
   getMockContactPerson,
@@ -20,6 +21,14 @@ const storeState = {
 };
 
 jest.mock('@react-keycloak/web');
+jest.mock('@/hooks/pims-api/useApiContacts', () => ({
+  useApiContacts: () => {
+    return {
+      getContacts: jest.fn().mockResolvedValue({ data: {} as IPagedItems }),
+    };
+  },
+}));
+
 const setSelectedContacts = jest.fn();
 const setShowContactManager = jest.fn();
 const setSelectedTenants = jest.fn();

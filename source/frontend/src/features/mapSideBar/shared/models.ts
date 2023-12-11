@@ -1,3 +1,5 @@
+import { Polygon, Position } from 'geojson';
+
 import { IMapProperty } from '@/components/propertySelector/models';
 import { Api_Address } from '@/models/api/Address';
 import { Api_File } from '@/models/api/File';
@@ -55,6 +57,7 @@ export class PropertyForm {
   public pin?: string;
   public latitude?: number;
   public longitude?: number;
+  public polygon?: Polygon;
   public planNumber?: string;
   public name?: string;
   public region?: number;
@@ -66,7 +69,6 @@ export class PropertyForm {
   public legalDescription?: string;
   public formattedAddress?: string;
   public address?: AddressForm;
-  public isDisabled?: boolean;
   public displayOrder?: number;
   public isOwned?: boolean;
 
@@ -76,10 +78,12 @@ export class PropertyForm {
 
   public static fromMapProperty(model: IMapProperty): PropertyForm {
     return new PropertyForm({
+      apiId: model.propertyId,
       pid: model.pid,
       pin: model.pin,
       latitude: model.latitude,
       longitude: model.longitude,
+      polygon: model.polygon,
       planNumber: model.planNumber,
       region: model.region,
       regionName: model.regionName,
@@ -121,7 +125,6 @@ export class PropertyForm {
     newForm.district = model.property?.district?.id;
     newForm.rowVersion = model.rowVersion;
     newForm.propertyRowVersion = model.property?.rowVersion;
-    newForm.isDisabled = model.isDisabled;
     newForm.displayOrder = model.displayOrder;
     newForm.isOwned = model.property?.isOwned;
     newForm.formattedAddress = formatApiAddress(model.property?.address);
@@ -140,6 +143,13 @@ export class PropertyForm {
       pin: this.pin !== undefined ? Number(this.pin) : undefined,
       planNumber: this.planNumber,
       location: { coordinate: { x: this.longitude, y: this.latitude } },
+      boundary: this.polygon
+        ? {
+            coordinates: this.polygon.coordinates.flatMap(positions =>
+              positions.map((p: Position) => ({ x: p[0], y: p[1] })),
+            ),
+          }
+        : undefined,
       region: toTypeCode(this.region),
       district: toTypeCode(this.district),
       rowVersion: this.propertyRowVersion,

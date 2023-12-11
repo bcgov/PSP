@@ -6,6 +6,7 @@ import '@testing-library/jest-dom';
 import 'jest-styled-components';
 
 import moment from 'moment-timezone';
+import { MockedRequest } from 'msw';
 
 import { server } from '@/mocks/msw/server';
 
@@ -64,12 +65,30 @@ jest.setTimeout(10000);
 // Set default tenant for unit tests
 process.env.REACT_APP_TENANT = 'MOTI';
 
+const onUnhandledRequest = jest.fn();
+
 // Establish API mocking before all tests.
-beforeAll(() => server.listen());
+beforeAll(() => server.listen({ onUnhandledRequest }));
 
 // Reset any request handlers that we may add during the tests,
 // so they don't affect other tests.
-afterEach(() => server.resetHandlers());
+afterEach(() => {
+  server.resetHandlers();
+  try {
+    expect(onUnhandledRequest).not.toHaveBeenCalled();
+  } catch (e) {
+    const req = onUnhandledRequest.mock.calls[0][0] as MockedRequest;
+    const messageTemplate = [
+      `[MSW] Error: captured a request without a matching request handler:`,
+      `  \u2022 ${req.method} ${req.url.href}`,
+      `If you still wish to intercept this unhandled request, please create a request handler for it.`,
+    ];
+
+    throw new Error(messageTemplate.join('\n\n'));
+  } finally {
+    onUnhandledRequest.mockClear();
+  }
+});
 
 // Clean up after the tests are finished.
 afterAll(() => server.close());

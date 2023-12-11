@@ -15,7 +15,7 @@ Scenario: 03. CDOGS Templates
 	Given I create a CDOGS template
 	Then CDOGS rendered successfully
 
-Scenario: 04. Create and Edit Financial Codes
+Scenario: 04. Financial Codes
 	Given I create a Financial Code from row number 1
 	And I update a Financial Code from row number 2
 	Then Financial Codes rendered successfully

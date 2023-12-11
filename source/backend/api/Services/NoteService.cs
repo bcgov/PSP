@@ -58,14 +58,6 @@ namespace Pims.Api.Services
 
             switch (type)
             {
-                case NoteType.Activity:
-                    PimsActivityInstanceNote pimsEntity = _mapper.Map<PimsActivityInstanceNote>(model);
-
-                    PimsActivityInstanceNote createdEntity = _entityNoteRepository.Add<PimsActivityInstanceNote>(pimsEntity);
-                    _entityNoteRepository.CommitTransaction();
-
-                    result = _mapper.Map<EntityNoteModel>(createdEntity);
-                    break;
                 case NoteType.Acquisition_File:
                     PimsAcquisitionFileNote acqNoteEntity = _mapper.Map<PimsAcquisitionFileNote>(model);
 
@@ -136,7 +128,6 @@ namespace Pims.Api.Services
 
             deleted = type switch
             {
-                NoteType.Activity => _entityNoteRepository.DeleteActivityNotes(noteId),
                 NoteType.Acquisition_File => _entityNoteRepository.DeleteAcquisitionFileNotes(noteId),
                 NoteType.Project => _entityNoteRepository.DeleteProjectNotes(noteId),
                 NoteType.Lease_File => _entityNoteRepository.DeleteLeaseFileNotes(noteId),
@@ -165,7 +156,6 @@ namespace Pims.Api.Services
 
             List<PimsNote> notes = type switch
             {
-                NoteType.Activity => _entityNoteRepository.GetAllActivityNotesById(entityId).ToList(),
                 NoteType.Acquisition_File => _entityNoteRepository.GetAllAcquisitionNotesById(entityId).ToList(),
                 NoteType.Project => _entityNoteRepository.GetAllProjectNotesById(entityId).ToList(),
                 NoteType.Lease_File => _entityNoteRepository.GetAllLeaseNotesById(entityId).ToList(),

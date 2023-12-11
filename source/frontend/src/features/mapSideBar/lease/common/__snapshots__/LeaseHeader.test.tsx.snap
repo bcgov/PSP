@@ -322,9 +322,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
               class="c4"
             >
               Last updated: 
-              <strong>
-                Dec 31, 2021
-              </strong>
+              <strong />
                by 
               <span
                 class="tooltip-icon"
@@ -332,7 +330,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
                 id="userNameTooltip"
               >
                 <strong>
-                  USER_A
+                  USER
                 </strong>
               </span>
             </span>

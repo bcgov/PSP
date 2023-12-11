@@ -1,6 +1,6 @@
-using Pims.Dal.Entities;
 using System;
 using System.Collections.Generic;
+using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test

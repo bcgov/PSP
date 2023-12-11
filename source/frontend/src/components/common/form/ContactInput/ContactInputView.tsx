@@ -5,16 +5,15 @@ import { FaAddressBook } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 import styled from 'styled-components';
 
-import { Button } from '@/components/common/buttons';
+import { Button, LinkButton } from '@/components/common/buttons';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import {
   ContactManagerModal,
   IContactManagerModalProps,
 } from '@/components/contact/ContactManagerModal';
+import { formatContactSearchResult } from '@/features/contacts/contactUtils';
 import { IContactSearchResult } from '@/interfaces';
-import { formatNames } from '@/utils/personUtils';
 
-import { StyledRemoveLinkButton } from '../ContactInput';
 import { DisplayError } from '../DisplayError';
 import { Input } from '../Input';
 
@@ -50,11 +49,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
   var text = 'Select from contacts';
 
   if (contactInfo !== undefined) {
-    if (contactInfo?.personId !== undefined) {
-      text = formatNames([contactInfo.firstName, contactInfo.middleNames, contactInfo.surname]);
-    } else if (contactInfo?.organizationId !== undefined) {
-      text = contactInfo.organizationName || '';
-    }
+    text = formatContactSearchResult(contactInfo, 'Select from contacts');
   }
 
   return (
@@ -124,5 +119,26 @@ const StyledDiv = styled.div`
   border: ${props => props.theme.css.lightVariantColor} solid 0.1rem;
   &.is-invalid {
     border: ${props => props.theme.css.dangerColor} solid 0.1rem;
+  }
+`;
+
+const StyledRemoveLinkButton = styled(LinkButton)`
+  &&.btn {
+    position: absolute;
+    top: calc(50% - 1.4rem);
+    right: 0.4rem;
+    color: ${props => props.theme.css.primaryBorderColor};
+    text-decoration: none;
+    line-height: unset;
+    .text {
+      display: none;
+    }
+    &:hover,
+    &:active,
+    &:focus {
+      color: ${props => props.theme.css.dangerColor};
+      text-decoration: none;
+      opacity: unset;
+    }
   }
 `;

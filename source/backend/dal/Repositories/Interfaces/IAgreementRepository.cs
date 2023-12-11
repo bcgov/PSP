@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 
 namespace Pims.Dal.Repositories
 {
@@ -7,7 +8,7 @@ namespace Pims.Dal.Repositories
     {
         List<PimsAgreement> GetAgreementsByAquisitionFile(long acquisitionFileId);
 
-        PimsAgreement Update(PimsAgreement agreement);
+        List<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter);
 
         List<PimsAgreement> UpdateAllForAcquisition(long acquisitionFileId, List<PimsAgreement> agreements);
     }

@@ -166,14 +166,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Create and Edit Financial Codes")]
+        [Xunit.SkippableFactAttribute(DisplayName="04. Financial Codes")]
         [Xunit.TraitAttribute("FeatureTitle", "AdminTools")]
-        [Xunit.TraitAttribute("Description", "04. Create and Edit Financial Codes")]
-        public void _04_CreateAndEditFinancialCodes()
+        [Xunit.TraitAttribute("Description", "04. Financial Codes")]
+        public void _04_FinancialCodes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Create and Edit Financial Codes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Financial Codes", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 18
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

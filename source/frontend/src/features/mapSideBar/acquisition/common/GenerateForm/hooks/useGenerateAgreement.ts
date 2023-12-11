@@ -4,8 +4,10 @@ import { useDocumentGenerationRepository } from '@/features/documents/hooks/useD
 import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
 import { AgreementTypes, Api_Agreement } from '@/models/api/Agreement';
 import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { Api_Organization } from '@/models/api/Organization';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateAgreement } from '@/models/generate/GenerateAgreement';
 
@@ -25,27 +27,41 @@ export const useGenerateAgreement = () => {
     file.fileProperties = properties;
 
     const coordinator = file.acquisitionTeam?.find(
-      team => team.personProfileTypeCode === 'PROPCOORD',
+      team => team.teamProfileTypeCode === 'PROPCOORD',
     );
     const negotiatingAgent = file.acquisitionTeam?.find(
-      team => team.personProfileTypeCode === 'NEGOTAGENT',
+      team => team.teamProfileTypeCode === 'NEGOTAGENT',
     );
     const provincialSolicitor = file.acquisitionTeam?.find(
-      team => team.personProfileTypeCode === 'MOTILAWYER',
+      team => team.teamProfileTypeCode === 'MOTILAWYER',
     );
     const ownerSolicitor = file.acquisitionFileInterestHolders?.find(
       x => x.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR,
     );
 
     const coordinatorPromise = coordinator?.personId
-      ? getPersonConcept(coordinator?.personId)
-      : Promise.resolve(null);
+      ? getPersonConcept(coordinator?.personId).then(p => (coordinator.person = p?.data))
+      : coordinator?.organizationId
+      ? getOrganizationConcept(coordinator?.organizationId).then(o =>
+          !!coordinator ? setOrganization(coordinator, o?.data) : null,
+        )
+      : Promise.resolve();
     const negotiatingAgentPromise = negotiatingAgent?.personId
-      ? getPersonConcept(negotiatingAgent?.personId)
-      : Promise.resolve(null);
+      ? getPersonConcept(negotiatingAgent?.personId).then(p => (negotiatingAgent.person = p?.data))
+      : negotiatingAgent?.organizationId
+      ? getOrganizationConcept(negotiatingAgent?.organizationId).then(o =>
+          !!negotiatingAgent ? setOrganization(negotiatingAgent, o?.data) : null,
+        )
+      : Promise.resolve();
     const provincialSolicitorPromise = provincialSolicitor?.personId
-      ? getPersonConcept(provincialSolicitor?.personId)
-      : Promise.resolve(null);
+      ? getPersonConcept(provincialSolicitor?.personId).then(
+          p => (provincialSolicitor.person = p?.data),
+        )
+      : provincialSolicitor?.organizationId
+      ? getOrganizationConcept(provincialSolicitor?.organizationId).then(o =>
+          !!provincialSolicitor ? setOrganization(provincialSolicitor, o?.data) : null,
+        )
+      : Promise.resolve();
 
     // Owner solicitor can be either a Person or an Organization (with optional primary contact)
     const ownerSolicitorPersonPromise = ownerSolicitor?.personId
@@ -59,21 +75,10 @@ export const useGenerateAgreement = () => {
         ? getPersonConcept(ownerSolicitor?.primaryContactId)
         : Promise.resolve(null);
 
-    const [
-      coordinatorConcept,
-      negotiatingAgentConcept,
-      provincialSolicitorConcept,
-      ownerSolicitorPersonConcept,
-      ownerSolicitorOrganizationConcept,
-      ownerSolicitorPrimaryContactConcept,
-    ] = await Promise.all([
-      coordinatorPromise,
-      negotiatingAgentPromise,
-      provincialSolicitorPromise,
-      ownerSolicitorPersonPromise,
-      ownerSolicitorOrganizationPromise,
-      ownerSolicitorPrimaryContactPromise,
-    ]);
+    await Promise.all([coordinatorPromise, negotiatingAgentPromise, provincialSolicitorPromise]);
+    const ownerSolicitorPersonConcept = await ownerSolicitorPersonPromise;
+    const ownerSolicitorOrganizationConcept = await ownerSolicitorOrganizationPromise;
+    const ownerSolicitorPrimaryContactConcept = await ownerSolicitorPrimaryContactPromise;
 
     if (ownerSolicitor) {
       ownerSolicitor.person = ownerSolicitorPersonConcept?.data ?? null;
@@ -83,9 +88,9 @@ export const useGenerateAgreement = () => {
 
     const fileData = new Api_GenerateAcquisitionFile({
       file,
-      coordinatorContact: coordinatorConcept?.data ?? null,
-      negotiatingAgent: negotiatingAgentConcept?.data ?? null,
-      provincialSolicitor: provincialSolicitorConcept?.data ?? null,
+      coordinatorContact: coordinator ?? null,
+      negotiatingAgent: negotiatingAgent ?? null,
+      provincialSolicitor: provincialSolicitor ?? null,
       ownerSolicitor: ownerSolicitor ?? null,
       interestHolders: [],
     });
@@ -120,5 +125,14 @@ const getTemplateTypeFromAgreementType = (agreementType: string) => {
       return FormTemplateTypes.H0074;
     default:
       throw Error(`Unable to find form type for agreement type: ${agreementType}`);
+  }
+};
+
+const setOrganization = (team: Api_AcquisitionFileTeam, organization: Api_Organization) => {
+  if (!!team) {
+    team.organization = organization;
+    team.primaryContact =
+      organization?.organizationPersons?.find(op => op.personId === team.primaryContactId)
+        ?.person ?? team.primaryContact;
   }
 };

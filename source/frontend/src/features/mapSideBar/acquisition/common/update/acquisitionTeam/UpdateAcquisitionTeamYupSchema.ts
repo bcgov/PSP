@@ -32,10 +32,13 @@ export const UpdateAcquisitionTeamYupSchema = yup.object().shape({
             is: (contact: object) => !!contact,
             then: yup.string().required('Select a profile'),
           }),
-          contact: yup.object().when('contactTypeCode', {
-            is: (contactTypeCode: string) => !!contactTypeCode,
-            then: yup.object().required('Select a team member'),
-          }),
+          contact: yup
+            .object()
+            .nullable()
+            .when('contactTypeCode', {
+              is: (contactTypeCode: string) => !!contactTypeCode,
+              then: yup.object().required('Select a team member').nullable(),
+            }),
         },
         [
           ['contactTypeCode', 'contact'],

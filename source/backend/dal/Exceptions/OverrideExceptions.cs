@@ -25,12 +25,26 @@ namespace Pims.Dal.Exceptions
             get { return new UserOverrideCode("PROPERTY_OF_INTEREST_TO_INVENTORY"); }
         }
 
+        public static UserOverrideCode ContractorSelfRemoved
+        {
+            get { return new UserOverrideCode("CONTRACTOR_SELFREMOVED"); }
+        }
+
+        public static UserOverrideCode ProductReuse
+        {
+            get { return new UserOverrideCode("PRODUCT_REUSE"); }
+        }
+
         public string Code { get; private set; }
 
-        private static List<UserOverrideCode> UserOverrideCodes
-        {
-            get { return new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory, UserOverrideCode.AddLocationToProperty, UserOverrideCode.UpdateRegion, UserOverrideCode.PoiToInventory }; }
-        }
+        private static List<UserOverrideCode> UserOverrideCodes => new List<UserOverrideCode>() {
+                    UserOverrideCode.AddPropertyToInventory,
+                    UserOverrideCode.AddLocationToProperty,
+                    UserOverrideCode.UpdateRegion,
+                    UserOverrideCode.PoiToInventory,
+                    UserOverrideCode.ContractorSelfRemoved,
+                    UserOverrideCode.ProductReuse,
+                };
 
         private UserOverrideCode(string code)
         {

@@ -7,13 +7,15 @@ import { useApiProjects } from '@/hooks/pims-api/useApiProjects';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import { Api_Product, Api_Project } from '@/models/api/Project';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 /**
  * hook that retrieves Project information.
  */
 export const useProjectProvider = () => {
-  const { getProjectProducts, postProject, getProject, putProject } = useApiProjects();
+  const { getProjectProducts, postProject, getProject, getAllProjects, putProject } =
+    useApiProjects();
   const { project, setProject } = useContext(ProjectStateContext);
 
   const { execute: retrieveProjectProducts, loading: retrieveProjectProductsLoading } =
@@ -34,10 +36,14 @@ export const useProjectProvider = () => {
     });
 
   const addProjectApi = useApiRequestWrapper<
-    (project: Api_Project) => Promise<AxiosResponse<Api_Project, any>>
+    (
+      project: Api_Project,
+      userOverrideCodes: UserOverrideCode[],
+    ) => Promise<AxiosResponse<Api_Project, any>>
   >({
     requestFunction: useCallback(
-      async (project: Api_Project) => await postProject(project),
+      async (project: Api_Project, userOverrideCodes: UserOverrideCode[]) =>
+        await postProject(project, userOverrideCodes),
       [postProject],
     ),
     requestName: 'AddProject',
@@ -49,6 +55,7 @@ export const useProjectProvider = () => {
         toast.error('Failed to save project.');
       }
     }, []),
+    throwError: true,
   });
 
   const getProjectApi = useApiRequestWrapper<
@@ -62,11 +69,21 @@ export const useProjectProvider = () => {
     onError: useAxiosErrorHandler('Failed to load Project'),
   });
 
+  const getAllProjectsApi = useApiRequestWrapper<() => Promise<AxiosResponse<Api_Project[], any>>>({
+    requestFunction: useCallback(async () => await getAllProjects(), [getAllProjects]),
+    requestName: 'RetrieveAllProjects',
+    onError: useAxiosErrorHandler('Failed to load Projects'),
+  });
+
   const updateProject = useApiRequestWrapper<
-    (project: Api_Project) => Promise<AxiosResponse<Api_Project, any>>
+    (
+      project: Api_Project,
+      userOverrideCodes: UserOverrideCode[],
+    ) => Promise<AxiosResponse<Api_Project, any>>
   >({
     requestFunction: useCallback(
-      async (project: Api_Project) => await putProject(project),
+      async (project: Api_Project, userOverrideCodes: UserOverrideCode[]) =>
+        await putProject(project, userOverrideCodes),
       [putProject],
     ),
     requestName: 'UpdateProject',
@@ -82,6 +99,7 @@ export const useProjectProvider = () => {
       addProject: addProjectApi,
       getProject: getProjectApi,
       updateProject: updateProject,
+      getAllProjects: getAllProjectsApi,
     }),
     [
       project,
@@ -91,6 +109,7 @@ export const useProjectProvider = () => {
       addProjectApi,
       getProjectApi,
       updateProject,
+      getAllProjectsApi,
     ],
   );
 };

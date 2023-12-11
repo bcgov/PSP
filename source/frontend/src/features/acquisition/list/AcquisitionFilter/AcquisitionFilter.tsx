@@ -1,31 +1,24 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import { Form, Input, Select } from '@/components/common/form';
+import { Form, Input, Multiselect, Select } from '@/components/common/form';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { ACQUISITION_FILE_STATUS_TYPES } from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
 import { mapLookupCode } from '@/utils';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { IAcquisitionFilter } from '../interfaces';
+import { AcquisitionFilterModel, Api_AcquisitionFilter, MultiSelectOption } from '../interfaces';
 
 export interface IAcquisitionFilterProps {
-  filter?: IAcquisitionFilter;
-  setFilter: (filter: IAcquisitionFilter) => void;
+  filter?: Api_AcquisitionFilter;
+  setFilter: (filter: Api_AcquisitionFilter) => void;
+  aquisitionTeam: Api_AcquisitionFileTeam[];
 }
-
-export const defaultAcquisitionFilter: IAcquisitionFilter = {
-  acquisitionFileStatusTypeCode: 'ACTIVE',
-  acquisitionFileNameOrNumber: '',
-  projectNameOrNumber: '',
-  searchBy: 'address',
-  pin: '',
-  pid: '',
-  address: '',
-};
 
 /**
  * Filter bar for acquisition files.
@@ -34,23 +27,23 @@ export const defaultAcquisitionFilter: IAcquisitionFilter = {
 export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFilterProps>> = ({
   filter,
   setFilter,
+  aquisitionTeam,
 }) => {
   const onSearchSubmit = (
-    values: IAcquisitionFilter,
-    formikHelpers: FormikHelpers<IAcquisitionFilter>,
+    values: AcquisitionFilterModel,
+    formikHelpers: FormikHelpers<AcquisitionFilterModel>,
   ) => {
-    values = { ...values };
-    setFilter(values);
+    setFilter(values.toApi());
     formikHelpers.setSubmitting(false);
   };
 
   const resetFilter = () => {
-    setFilter(defaultAcquisitionFilter);
+    setFilter(new AcquisitionFilterModel().toApi());
   };
 
-  const onResetClick = (formikProps: FormikProps<IAcquisitionFilter>) => {
-    formikProps.resetForm();
+  const onResetClick = (formikProps: FormikProps<AcquisitionFilterModel>) => {
     resetFilter();
+    formikProps.resetForm();
   };
 
   const lookupCodes = useLookupCodeHelpers();
@@ -59,10 +52,25 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
     .getByType(ACQUISITION_FILE_STATUS_TYPES)
     .map(c => mapLookupCode(c));
 
+  const acquisitionTeamOptions = useMemo(() => {
+    if (aquisitionTeam !== undefined) {
+      return aquisitionTeam?.map<MultiSelectOption>(x => ({
+        id: x.personId ? `P-${x.personId}` : `O-${x.organizationId}`,
+        text: x.personId ? formatApiPersonNames(x.person) : x.organization?.name ?? '',
+      }));
+    } else {
+      return [];
+    }
+  }, [aquisitionTeam]);
+
   return (
-    <Formik<IAcquisitionFilter>
+    <Formik<AcquisitionFilterModel>
       enableReinitialize
-      initialValues={filter ?? defaultAcquisitionFilter}
+      initialValues={
+        filter
+          ? AcquisitionFilterModel.fromApi(filter, aquisitionTeam || [])
+          : new AcquisitionFilterModel()
+      }
       onSubmit={onSearchSubmit}
     >
       {formikProps => (
@@ -80,7 +88,7 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                       pin: string;
                       pid: string;
                     },
-                    IAcquisitionFilter
+                    Api_AcquisitionFilter
                   >
                     field="searchBy"
                     defaultKey="address"
@@ -102,6 +110,16 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                 </Col>
               </Row>
               <Row>
+                <Col xl="7">
+                  <Multiselect
+                    field="acquisitionTeamMembers"
+                    displayValue="text"
+                    placeholder="Team member"
+                    hidePlaceholder
+                    options={acquisitionTeamOptions}
+                    selectionLimit={1}
+                  />
+                </Col>
                 <Col xl="4">
                   <Select
                     options={acquisitionStatusOptions}
@@ -124,7 +142,7 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                 <Col xl="12">
                   <Input
                     field="projectNameOrNumber"
-                    placeholder="Ministry project name or number"
+                    placeholder="Ministry or alternate project name or number"
                   />
                 </Col>
               </Row>

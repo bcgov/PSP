@@ -33,6 +33,7 @@ jest.mock('@/hooks/repositories/useLeaseTenantRepository');
 const getPersonConcept = jest.fn();
 const updateTenants = jest.fn().mockResolvedValue({ ...defaultApiLease, id: 1 });
 const onEdit = jest.fn();
+const onSuccess = jest.fn();
 
 const history = createMemoryHistory();
 const storeState = {
@@ -69,6 +70,7 @@ describe('AddLeaseTenantContainer component', () => {
           View={View}
           onEdit={onEdit}
           tenants={renderOptions.tenants ?? []}
+          onSuccess={onSuccess}
         >
           <SaveButton />
         </AddLeaseTenantContainer>
@@ -197,6 +199,29 @@ describe('AddLeaseTenantContainer component', () => {
     await waitFor(() => {
       expect(updateTenants).toHaveBeenCalledTimes(1);
       expect(onEdit).toHaveBeenCalledWith(false);
+    });
+  });
+
+  it('onSubmit calls api with expected data when a person with organization is populated', async () => {
+    await setup({});
+    viewProps.onSubmit({
+      ...new LeaseFormModel(),
+      tenants: [{ personId: 1, organizationId: 2 }],
+      id: 1,
+    });
+    await waitFor(async () => {
+      expect(updateTenants).toHaveBeenCalledTimes(1);
+      expect(onEdit).toHaveBeenCalledWith(false);
+      expect(updateTenants.mock.calls[0][1][0]).toStrictEqual({
+        personId: 1,
+        organizationId: undefined,
+        lessorType: undefined,
+        tenantTypeCode: undefined,
+        primaryContactId: undefined,
+        note: undefined,
+        rowVersion: undefined,
+        leaseId: 0,
+      });
     });
   });
 

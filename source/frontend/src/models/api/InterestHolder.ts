@@ -26,5 +26,4 @@ export interface Api_InterestHolderProperty extends Api_ConcurrentVersion_Null, 
   acquisitionFileProperty: Api_AcquisitionFileProperty | null;
   acquisitionFilePropertyId: number | null;
   propertyInterestTypes: Api_TypeCode<string>[];
-  isDisabled: boolean;
 }

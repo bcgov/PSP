@@ -494,6 +494,20 @@ exports[`AccessRequestForm component renders as expected 1`] = `
             </option>
             <option
               class="option"
+              data-testid="select-option-10"
+              value="10"
+            >
+              Management functional
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-11"
+              value="11"
+            >
+              Management read-only
+            </option>
+            <option
+              class="option"
               data-testid="select-option-9"
               value="9"
             >

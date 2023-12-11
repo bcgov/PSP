@@ -9,7 +9,6 @@ namespace Pims.Api.Models.Concepts
         {
             config.NewConfig<Entity.PimsPersonAddress, PersonAddressModel>()
                 .Map(dest => dest.Id, src => src.PersonAddressId)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.Address, src => src.Address)
                 .Map(dest => dest.AddressUsageType, src => src.AddressUsageTypeCodeNavigation)
@@ -17,7 +16,6 @@ namespace Pims.Api.Models.Concepts
 
             config.NewConfig<PersonAddressModel, Entity.PimsPersonAddress>()
                 .Map(dest => dest.PersonAddressId, src => src.Id)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.AddressId, src => src.Address.Id)
                 .Map(dest => dest.AddressUsageTypeCode, src => src.AddressUsageType.Id)

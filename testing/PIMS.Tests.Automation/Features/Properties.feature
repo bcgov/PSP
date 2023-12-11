@@ -10,7 +10,7 @@ Scenario: Invalid Property Not Found
 	Given I search for an Invalid Property from row number 10
 	Then No Properties were found
 
-Scenario: Property Information Tab Details
+Scenario: Property Information Tabs
 	Given I review a Property's Information
 	When I update a Property details from row number 3
 	Then A Property Information is saved successfully

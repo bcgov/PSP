@@ -220,6 +220,55 @@ exports[`form list view renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-FORM1"
+                  value="FORM1"
+                >
+                  Notice of Expropriation (Form 1)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-FORM5"
+                  value="FORM5"
+                >
+                  Certificate of Approval of Expropriation (Form 5)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-FORM8"
+                  value="FORM8"
+                >
+                  Notice of Advance Payment (Form 8)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-FORM9"
+                  value="FORM9"
+                >
+                  Vesting Notice (Form 9)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-H0074"
+                  value="H0074"
+                >
+                  License of Occupation for Construction Access (H0074)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-H0443"
+                  value="H0443"
+                >
+                  Conditions of Entry (H0443)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-H1005A"
+                  value="H1005A"
+                >
+                  Licence of Occupation (BCTFA as licensor) (H1005 A)
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-H120"
                   value="H120"
                 >
@@ -245,6 +294,13 @@ exports[`form list view renders as expected 1`] = `
                   value="H179T"
                 >
                   Offer agreement - Total (H179 T)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-LETTER"
+                  value="LETTER"
+                >
+                  General Letter
                 </option>
               </select>
             </div>

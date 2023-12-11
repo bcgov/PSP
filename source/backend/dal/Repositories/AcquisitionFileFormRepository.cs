@@ -62,7 +62,6 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsAcquisitionFileForms.Include(af => af.FormTypeCodeNavigation).AsNoTracking().FirstOrDefault(af => af.AcquisitionFileFormId == acquisitionFileFormId)
                 ?? throw new KeyNotFoundException($"Failed to find acquisition file form with id ${acquisitionFileFormId}");
-            ;
         }
 
         public bool TryDelete(long acquisitionFileFormId)
@@ -74,19 +73,6 @@ namespace Pims.Dal.Repositories
                 return true;
             }
             return false;
-        }
-
-        /// <summary>
-        /// Retrieves the row version of the form with the specified id.
-        /// </summary>
-        /// <param name="fileFormId">The file form id.</param>
-        /// <returns>The row version.</returns>
-        public long GetRowVersion(long fileFormId)
-        {
-            return this.Context.PimsAcquisitionFileForms.AsNoTracking()
-                .Where(n => n.AcquisitionFileFormId == fileFormId)?
-                .Select(n => n.ConcurrencyControlNumber)?
-                .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
         #endregion

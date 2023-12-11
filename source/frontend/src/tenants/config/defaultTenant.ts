@@ -14,7 +14,7 @@ const MOTI_REGION_LAYER_URL =
 const HWY_DISTRICT_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.TADM_MOT_DISTRICT_BNDRY_POLY/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.TADM_MOT_DISTRICT_BNDRY_POLY';
 const ALR_LAYER_URL =
-  'https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_BOUNDARY_LINES_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_BOUNDARY_LINES_SVW';
+  'https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_POLYS/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_POLYS';
 const INDIAN_RESERVES_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP';
 const PIMS_BOUNDARY_LAYER_URL =
@@ -67,6 +67,8 @@ export const defaultTenant: ITenantConfig2 = {
   },
   idlePromptTimeout: 15,
   idleTimeout: 15,
+  pimsTrainingResourceUrl:
+    'https://sp.th.gov.bc.ca/sites/PropertiesServices/Project%20Management/03.%20Execution%20and%20Control/PIMS%20Training',
 };
 
 export default defaultTenant;

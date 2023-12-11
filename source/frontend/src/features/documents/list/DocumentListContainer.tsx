@@ -15,6 +15,7 @@ interface IDocumentListContainerProps {
   disableAdd?: boolean;
   addButtonText?: string;
   title?: string;
+  onSuccess?: () => void;
 }
 
 const DocumentListContainer: React.FunctionComponent<
@@ -23,11 +24,6 @@ const DocumentListContainer: React.FunctionComponent<
   const isMounted = useIsMounted();
 
   const [documentResults, setDocumentResults] = useState<DocumentRow[]>([]);
-
-  const [pageProps, setPageProps] = useState<{ pageIndex?: number; pageSize: number }>({
-    pageIndex: 0,
-    pageSize: 10,
-  });
 
   const {
     retrieveDocumentRelationship,
@@ -59,6 +55,7 @@ const DocumentListContainer: React.FunctionComponent<
         documentRelationship,
       );
       if (result && isMounted()) {
+        props.onSuccess?.();
         updateCallback();
       }
 
@@ -71,20 +68,13 @@ const DocumentListContainer: React.FunctionComponent<
   };
 
   const onSuccess = async () => {
+    props.onSuccess?.();
     updateCallback();
   };
 
   const updateCallback = useCallback(() => {
     retrieveDocuments();
   }, [retrieveDocuments]);
-
-  const currentPageIndex = pageProps.pageIndex;
-  const onPageChange = useCallback(
-    ({ pageIndex, pageSize }: { pageIndex?: number; pageSize: number }) => {
-      setPageProps({ pageIndex: pageIndex ?? currentPageIndex, pageSize });
-    },
-    [currentPageIndex],
-  );
 
   return (
     <DocumentListView
@@ -96,8 +86,6 @@ const DocumentListContainer: React.FunctionComponent<
       onDelete={onDelete}
       onSuccess={onSuccess}
       disableAdd={props.disableAdd}
-      onPageChange={onPageChange}
-      pageProps={pageProps}
       title={props.title}
     />
   );

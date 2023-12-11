@@ -7,8 +7,6 @@ namespace Pims.Dal.Repositories
     {
         List<PimsPropertyAcquisitionFile> GetPropertiesByAcquisitionFileId(long acquisitionFileId);
 
-        List<PimsAcquisitionOwner> GetOwnersByAcquisitionFileId(long acquisitionFileId);
-
         int GetAcquisitionFilePropertyRelatedCount(long propertyId);
 
         PimsPropertyAcquisitionFile Add(PimsPropertyAcquisitionFile propertyAcquisitionFile);
@@ -16,7 +14,5 @@ namespace Pims.Dal.Repositories
         PimsPropertyAcquisitionFile Update(PimsPropertyAcquisitionFile propertyAcquisitionFile);
 
         void Delete(PimsPropertyAcquisitionFile propertyAcquisitionFile);
-
-        List<PimsCompensationRequisition> GetCompensationRequisitionsByAcquisitionFileId(long acquisitionFileId);
     }
 }

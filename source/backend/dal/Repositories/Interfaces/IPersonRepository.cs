@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
@@ -8,8 +7,6 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IPersonRepository : IRepository<PimsPerson>
     {
-        IEnumerable<PimsPerson> GetAll();
-
         long GetRowVersion(long id);
 
         PimsPerson GetById(long id);

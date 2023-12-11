@@ -81,6 +81,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"Notes update have been done successfully")]
         public void NoteUpdateSuccess()
         {
+            
             Assert.True(notes.NotesTabCount() == notesCount -1);
         }
 

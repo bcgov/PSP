@@ -35,6 +35,8 @@ namespace Pims.Api.Models.Concepts
 
         public DateTime? ExpropriationVestingDate { get; set; }
 
+        public DateTime? AdvancedPaymentServedDate { get; set; }
+
         public DateTime? GenerationDate { get; set; }
 
         public List<CompensationFinancialModel> Financials { get; set; }
@@ -47,9 +49,9 @@ namespace Pims.Api.Models.Concepts
 
         public InterestHolderModel InterestHolder { get; set; }
 
-        public long? AcquisitionFilePersonId { get; set; }
+        public long? AcquisitionFileTeamId { get; set; }
 
-        public AcquisitionFilePersonModel AcquisitionFilePerson { get; set; }
+        public AcquisitionFileTeamModel AcquisitionFileTeam { get; set; }
 
         public string LegacyPayee { get; set; }
 
@@ -61,6 +63,8 @@ namespace Pims.Api.Models.Concepts
 
         public string DetailedRemarks { get; set; }
 
-        public bool? IsDisabled { get; set; }
+        public long? AlternateProjectId { get; set; }
+
+        public ProjectModel AlternateProject { get; set; }
     }
 }

@@ -1,34 +1,46 @@
+import { createMemoryHistory } from 'history';
 import { act } from 'react-test-renderer';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import Claims from '@/constants/claims';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
+import { SideBarContextProvider } from '../../context/sidebarContext';
 import ResearchTabsContainer, { IResearchTabsContainerProps } from './ResearchTabsContainer';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
 
-const setEditKey = jest.fn();
-const setEditMode = jest.fn();
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+
+const setIsEditing = jest.fn();
+const history = createMemoryHistory();
 
 describe('ResearchFileTabs component', () => {
   // render component under test
   const setup = (props: IResearchTabsContainerProps, renderOptions: RenderOptions = {}) => {
     const utils = render(
-      <ResearchTabsContainer
-        researchFile={props.researchFile}
-        setEditKey={setEditKey}
-        setEditMode={setEditMode}
-      />,
+      <SideBarContextProvider>
+        <ResearchTabsContainer
+          researchFile={props.researchFile}
+          setIsEditing={props.setIsEditing}
+        />
+      </SideBarContextProvider>,
       {
         useMockAuthentication: true,
+        history,
         ...renderOptions,
       },
     );
 
     return { ...utils };
   };
+
+  beforeEach(() => {
+    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+  });
 
   afterEach(() => {
     jest.resetAllMocks();
@@ -38,8 +50,7 @@ describe('ResearchFileTabs component', () => {
     const { asFragment } = setup(
       {
         researchFile: getMockResearchFile(),
-        setEditKey,
-        setEditMode,
+        setIsEditing,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
     );
@@ -50,8 +61,7 @@ describe('ResearchFileTabs component', () => {
     const { getByText } = setup(
       {
         researchFile: getMockResearchFile(),
-        setEditKey,
-        setEditMode,
+        setIsEditing,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
     );
@@ -64,8 +74,7 @@ describe('ResearchFileTabs component', () => {
     const { getByText } = setup(
       {
         researchFile: getMockResearchFile(),
-        setEditKey,
-        setEditMode,
+        setIsEditing,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
     );
@@ -75,7 +84,7 @@ describe('ResearchFileTabs component', () => {
       userEvent.click(editButton);
     });
     await waitFor(() => {
-      expect(getByText('Documents')).toHaveClass('active');
+      expect(history.location.pathname).toBe('/documents');
     });
   });
 
@@ -83,8 +92,7 @@ describe('ResearchFileTabs component', () => {
     const { getAllByText } = setup(
       {
         researchFile: getMockResearchFile(),
-        setEditKey,
-        setEditMode,
+        setIsEditing,
       },
       { claims: [Claims.NOTE_VIEW] },
     );
@@ -94,7 +102,7 @@ describe('ResearchFileTabs component', () => {
       userEvent.click(editButton);
     });
     await waitFor(() => {
-      expect(getAllByText('Notes')[0]).toHaveClass('active');
+      expect(history.location.pathname).toBe('/notes');
     });
   });
 });

@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using NetTopologySuite.Geometries;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -99,6 +98,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTypes)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.PimsPropPropPurposes)
+                    .ThenInclude(t => t.PropertyPurposeTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(p => p.VolumetricTypeCodeNavigation)
                 .Include(p => p.VolumeUnitTypeCodeNavigation)
@@ -250,16 +251,6 @@ namespace Pims.Dal.Repositories
             return property;
         }
 
-        public PimsProperty TryGetByLocation(Geometry location)
-        {
-            return this.Context.PimsProperties
-                    .AsNoTracking()
-                    .Include(p => p.PimsPropertyLeases)
-                    .Where(p => (p != null && p.Location.IsWithinDistance(location, 1)))
-                    .OrderBy(p => p.Location.Distance(location))
-                    .FirstOrDefault();
-        }
-
         /// <summary>
         /// Get the property for the specified id value.
         /// </summary>
@@ -352,6 +343,31 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Update the passed property management information in the database assuming the user has the required claims.
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public PimsProperty UpdatePropertyManagement(PimsProperty property)
+        {
+            property.ThrowIfNull(nameof(property));
+
+            var propertyId = property.Internal_Id;
+            var existingProperty = Context.PimsProperties
+                .FirstOrDefault(p => p.PropertyId == propertyId) ?? throw new KeyNotFoundException();
+
+            // update property management fields
+            existingProperty.AdditionalDetails = property.AdditionalDetails;
+            existingProperty.IsUtilitiesPayable = property.IsUtilitiesPayable;
+            existingProperty.IsTaxesPayable = property.IsTaxesPayable;
+            Context.Update(existingProperty);
+
+            // update direct relationships - Property Purposes
+            Context.UpdateChild<PimsProperty, long, PimsPropPropPurpose, long>(p => p.PimsPropPropPurposes, propertyId, property.PimsPropPropPurposes.ToArray());
+
+            return existingProperty;
+        }
+
+        /// <summary>
         /// Delete a property. Note that this method will fail unless all dependencies are removed first.
         /// </summary>
         /// <param name="property"></param>
@@ -365,15 +381,25 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="property">The property to update.</param>
         /// <returns>The updated property.</returns>
-        public PimsProperty TransferToCoreInventory(PimsProperty property)
+        public PimsProperty TransferFileProperty(PimsProperty property, bool isOwned, bool isPropertyOfInterest)
         {
             property.ThrowIfNull(nameof(property));
 
             var existingProperty = Context.PimsProperties
                 .FirstOrDefault(p => p.PropertyId == property.Internal_Id) ?? throw new KeyNotFoundException();
 
-            existingProperty.IsPropertyOfInterest = false;
-            existingProperty.IsOwned = true;
+            existingProperty.IsPropertyOfInterest = isPropertyOfInterest;
+            existingProperty.IsOwned = isOwned;
+
+            if (isOwned)
+            {
+                existingProperty.PropertyClassificationTypeCode = "COREOPER";
+            }
+            else
+            {
+                existingProperty.PropertyClassificationTypeCode = "OTHER";
+            }
+
             return existingProperty;
         }
 
@@ -388,6 +414,24 @@ namespace Pims.Dal.Repositories
                     p.PimsPropertyLeases.Any(pl => pl.Lease.ProjectId == filter.ProjectId) ||
                     p.PimsPropertyResearchFiles.Any(pr => pr.ResearchFile.PimsResearchFileProjects.Any(r => r.ProjectId == filter.ProjectId)) ||
                     p.PimsPropertyAcquisitionFiles.Any(pa => pa.AcquisitionFile.ProjectId == filter.ProjectId));
+            }
+
+            // Tenure Filters
+            if (filter.TenureStatuses != null && filter.TenureStatuses.Count > 0)
+            {
+                query = query.Where(p =>
+                    p.PimsPropPropTenureTypes.Any(pl => filter.TenureStatuses.Contains(pl.PropertyTenureTypeCode)));
+            }
+
+            if (!string.IsNullOrEmpty(filter.TenurePPH))
+            {
+                query = query.Where(p => p.PphStatusTypeCode == filter.TenurePPH);
+            }
+
+            if (filter.TenureRoadTypes != null && filter.TenureRoadTypes.Count > 0)
+            {
+                query = query.Where(p =>
+                    p.PimsPropPropRoadTypes.Any(pl => filter.TenureRoadTypes.Contains(pl.PropertyRoadTypeCode)));
             }
 
             // Lease filters
@@ -407,6 +451,12 @@ namespace Pims.Dal.Repositories
             {
                 query = query.Where(p =>
                     p.PimsPropertyLeases.Any(pl => filter.LeasePurposes.Contains(pl.Lease.LeasePurposeTypeCode)));
+            }
+
+            if (!string.IsNullOrEmpty(filter.LeasePayRcvblType))
+            {
+                query = query.Where(p =>
+                    p.PimsPropertyLeases.Any(pl => (pl.Lease.LeasePayRvblTypeCode == filter.LeasePayRcvblType || filter.LeasePayRcvblType == "all") && (pl.Lease.OrigExpiryDate >= DateTime.Now.Date || pl.Lease.PimsLeaseTerms.Any(t => t.TermExpiryDate == null || t.TermExpiryDate >= DateTime.Now.Date))));
             }
 
             // Anomalies

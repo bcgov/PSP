@@ -54,6 +54,8 @@ jobs:
 
       - run: npm run coverage -- --maxWorkers=2
         working-directory: ${{env.working-directory}}
+        env:
+          REACT_APP_TENANT: MOTI
 
       - name: Codecov
         uses: codecov/codecov-action@v3.1.1

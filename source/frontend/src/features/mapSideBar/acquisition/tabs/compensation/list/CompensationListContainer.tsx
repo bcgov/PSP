@@ -37,7 +37,7 @@ export const CompensationListContainer: React.FunctionComponent<
     deleteCompensation: { execute: deleteCompensation },
   } = useCompensationRequisitionRepository();
 
-  const { staleFile, setStaleFile, setFile } = useContext(SideBarContext);
+  const { staleFile, setStaleFile, setFile, setStaleLastUpdatedBy } = useContext(SideBarContext);
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const fetchData = useCallback(async () => {
@@ -60,6 +60,7 @@ export const CompensationListContainer: React.FunctionComponent<
             rowVersion: response.rowVersion,
             fileType: FileTypes.Acquisition,
           });
+          setStaleLastUpdatedBy(true);
           setStaleFile(true);
           return response.totalAllowableCompensation ?? null;
         }
@@ -78,6 +79,8 @@ export const CompensationListContainer: React.FunctionComponent<
     const defaultCompensationRequisition: Api_CompensationRequisition = {
       id: null,
       acquisitionFileId: fileId,
+      alternateProjectId: null,
+      alternateProject: null,
       isDraft: true,
       fiscalYear: null,
       yearlyFinancialId: null,
@@ -90,18 +93,18 @@ export const CompensationListContainer: React.FunctionComponent<
       agreementDate: null,
       expropriationNoticeServedDate: null,
       expropriationVestingDate: null,
+      advancedPaymentServedDate: null,
       generationDate: null,
       specialInstruction: null,
       detailedRemarks: null,
-      isDisabled: null,
       financials: [],
       acquisitionFile: null,
       acquisitionOwnerId: null,
       acquisitionOwner: null,
       interestHolderId: null,
       interestHolder: null,
-      acquisitionFilePersonId: null,
-      acquisitionFilePerson: null,
+      acquisitionFileTeamId: null,
+      acquisitionFileTeam: null,
       legacyPayee: null,
       isPaymentInTrust: null,
       gstNumber: null,
@@ -110,6 +113,7 @@ export const CompensationListContainer: React.FunctionComponent<
     postAcquisitionCompensationRequisition(fileId, defaultCompensationRequisition).then(
       async newCompensationReq => {
         if (newCompensationReq?.id) {
+          setStaleLastUpdatedBy(true);
           setStaleFile(true);
         }
       },
@@ -120,7 +124,7 @@ export const CompensationListContainer: React.FunctionComponent<
     if (compensations === undefined || staleFile) {
       fetchData();
     }
-  }, [fetchData, staleFile, setStaleFile, compensations]);
+  }, [fetchData, staleFile, compensations]);
 
   return (
     <View
@@ -133,6 +137,7 @@ export const CompensationListContainer: React.FunctionComponent<
           handleOk: async () => {
             const result = await deleteCompensation(compensationId);
             if (result === true) {
+              setStaleLastUpdatedBy(true);
               setStaleFile(true);
             }
             setDisplayModal(false);

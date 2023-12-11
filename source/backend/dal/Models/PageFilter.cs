@@ -78,7 +78,7 @@ namespace Pims.Dal.Entities.Models
         }
 
         /// <summary>
-        /// Convert a start index to a page for paging. 
+        /// Convert a start index to a page for paging.
         /// </summary>
         /// <param name="startIndex"></param>
         /// <param name="quantity"></param>

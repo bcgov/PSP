@@ -33,18 +33,6 @@ namespace Pims.Dal.Repositories
 
         #region Methods
 
-        /// <summary>
-        /// Get all organizations from the datasource.
-        /// </summary>
-        /// <param name="page"></param>
-        /// <param name="quantity"></param>
-        /// <param name="sort"></param>
-        /// <returns></returns>
-        public IEnumerable<PimsOrganization> GetAll()
-        {
-            return this.Context.PimsOrganizations.AsNoTracking().ToArray();
-        }
-
         public long GetRowVersion(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ContactView);
@@ -70,6 +58,8 @@ namespace Pims.Dal.Repositories
                    .ThenInclude(pa => pa.AddressUsageTypeCodeNavigation)
                .Include(o => o.PimsPersonOrganizations)
                    .ThenInclude(po => po.Person)
+                        .ThenInclude(o => o.PimsContactMethods)
+                            .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
                .Include(o => o.PimsContactMethods)
                    .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
                .Where(o => o.OrganizationId == id)

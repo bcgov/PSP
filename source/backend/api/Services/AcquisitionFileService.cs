@@ -37,6 +37,7 @@ namespace Pims.Api.Services
         private readonly IInterestHolderRepository _interestHolderRepository;
         private readonly ICompReqFinancialService _compReqFinancialService;
         private readonly IExpropriationPaymentRepository _expropriationPaymentRepository;
+        private readonly ITakeRepository _takeRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -53,7 +54,8 @@ namespace Pims.Api.Services
             ICompensationRequisitionRepository compensationRequisitionRepository,
             IInterestHolderRepository interestHolderRepository,
             ICompReqFinancialService compReqFinancialService,
-            IExpropriationPaymentRepository expropriationPaymentRepository)
+            IExpropriationPaymentRepository expropriationPaymentRepository,
+            ITakeRepository takeRepository)
         {
             _user = user;
             _logger = logger;
@@ -70,6 +72,7 @@ namespace Pims.Api.Services
             _interestHolderRepository = interestHolderRepository;
             _compReqFinancialService = compReqFinancialService;
             _expropriationPaymentRepository = expropriationPaymentRepository;
+            _takeRepository = takeRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -82,9 +85,45 @@ namespace Pims.Api.Services
             // Limit search results to user's assigned region(s)
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-            long? personId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            return _acqFileRepository.GetPage(filter, userRegions, personId);
+            return _acqFileRepository.GetPageDeep(filter, userRegions, contractorPersonId);
+        }
+
+        public List<AcquisitionFileExportModel> GetAcquisitionFileExport(AcquisitionFilter filter)
+        {
+            _logger.LogInformation("Searching all Acquisition Files matching the filter: {filter}", filter);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            // Limit search results to user's assigned region(s)
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            var acqFiles = _acqFileRepository.GetAcquisitionFileExportDeep(filter, userRegions, contractorPersonId);
+
+            return acqFiles.SelectMany(file => file.PimsPropertyAcquisitionFiles.Where(fp => fp.AcquisitionFileId.Equals(file.AcquisitionFileId)).DefaultIfEmpty(), (file, fp) => (file, fp))
+                .Select(fileProperty => new AcquisitionFileExportModel
+                {
+                    FileNumber = fileProperty.file.FileNumber ?? string.Empty,
+                    LegacyFileNumber = fileProperty.file.LegacyFileNumber ?? string.Empty,
+                    FileName = fileProperty.file.FileName ?? string.Empty,
+                    MotiRegion = fileProperty.file.RegionCodeNavigation?.Description ?? string.Empty,
+                    MinistryProject = fileProperty.file.Project is not null ? $"{fileProperty.file.Project.Code} {fileProperty.file.Project.Description}" : string.Empty,
+                    CivicAddress = (fileProperty.fp?.Property is not null && fileProperty.fp.Property.Address is not null) ? fileProperty.fp.Property.Address.FormatFullAddressString() : string.Empty,
+                    GeneralLocation = (fileProperty.fp?.Property is not null) ? fileProperty.fp.Property.GeneralLocation : string.Empty,
+                    Pid = fileProperty.fp is not null && fileProperty.fp.Property.Pid.HasValue ? fileProperty.fp.Property.Pid.ToString() : string.Empty,
+                    Pin = fileProperty.fp is not null && fileProperty.fp.Property.Pin.HasValue ? fileProperty.fp.Property.Pin.ToString() : string.Empty,
+                    AcquisitionFileStatusTypeCode = fileProperty.file.AcquisitionFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFileStatusTypeCodeNavigation.Description : string.Empty,
+                    FileFunding = fileProperty.file.AcquisitionFundingTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFundingTypeCodeNavigation.Description : string.Empty,
+                    FileAssignedDate = fileProperty.file.AssignedDate.HasValue ? fileProperty.file.AssignedDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    FileDeliveryDate = fileProperty.file.DeliveryDate.HasValue ? fileProperty.file.DeliveryDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    FileAcquisitionCompleted = fileProperty.file.CompletionDate.HasValue ? fileProperty.file.CompletionDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    FilePhysicalStatus = fileProperty.file.AcqPhysFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcqPhysFileStatusTypeCodeNavigation.Description : string.Empty,
+                    FileAcquisitionType = fileProperty.file.AcquisitionTypeCodeNavigation is not null ? fileProperty.file.AcquisitionTypeCodeNavigation.Description : string.Empty,
+                    FileAcquisitionTeam = string.Join(", ", fileProperty.file.PimsAcquisitionFileTeams.Select(x => x.PersonId.HasValue ? x.Person.GetFullName(true) : x.Organization.Name)),
+                    FileAcquisitionOwners = string.Join(", ", fileProperty.file.PimsAcquisitionOwners.Select(x => x.FormatOwnerName())),
+                }).ToList();
         }
 
         public PimsAcquisitionFile GetById(long id)
@@ -96,6 +135,14 @@ namespace Pims.Api.Services
             var acqFile = _acqFileRepository.GetById(id);
 
             return acqFile;
+        }
+
+        public LastUpdatedByModel GetLastUpdateInformation(long acquisitionFileId)
+        {
+            _logger.LogInformation("Retrieving last updated-by information...");
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            return _acqFileRepository.GetLastUpdateBy(acquisitionFileId);
         }
 
         public IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id)
@@ -116,7 +163,28 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
-            return _acquisitionFilePropertyRepository.GetOwnersByAcquisitionFileId(id);
+            return _acqFileRepository.GetOwnersByAcquisitionFileId(id);
+        }
+
+        public IEnumerable<PimsAcquisitionFileTeam> GetTeamMembers()
+        {
+            _logger.LogInformation("Getting acquisition team members");
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            var teamMembers = _acqFileRepository.GetTeamMembers(userRegions, contractorPersonId);
+
+            var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First()).ToList();
+            var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First()).ToList();
+
+            List<PimsAcquisitionFileTeam> teamFilterOptions = new();
+            teamFilterOptions.AddRange(persons);
+            teamFilterOptions.AddRange(organizations);
+
+            return teamFilterOptions;
         }
 
         public IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id)
@@ -148,6 +216,7 @@ namespace Pims.Api.Services
             }
 
             ValidateStaff(acquisitionFile);
+            ValidateOrganizationStaff(acquisitionFile);
 
             acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
             MatchProperties(acquisitionFile, userOverrides);
@@ -175,10 +244,13 @@ namespace Pims.Api.Services
 
             if (acquisitionFile.AcquisitionFileStatusTypeCode == "COMPLT")
             {
-                TransferPropertiesOfInterestToInventory(acquisitionFile, userOverrides.Contains(UserOverrideCode.PoiToInventory));
+                TransferPropertiesOfInterest(acquisitionFile, userOverrides.Contains(UserOverrideCode.PoiToInventory));
             }
 
             ValidateStaff(acquisitionFile);
+            ValidateOrganizationStaff(acquisitionFile);
+
+            acquisitionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
 
             ValidatePayeeDependency(acquisitionFile);
 
@@ -236,9 +308,9 @@ namespace Pims.Api.Services
             foreach (var deletedProperty in differenceSet)
             {
                 var acqFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id).FirstOrDefault(ap => ap.PropertyId == deletedProperty.PropertyId);
-                if (acqFileProperties.PimsActInstPropAcqFiles.Any() || acqFileProperties.PimsTakes.Any())
+                if (acqFileProperties.PimsTakes.Any() || acqFileProperties.PimsInthldrPropInterests.Any())
                 {
-                    throw new BusinessRuleViolationException();
+                    throw new BusinessRuleViolationException("You must remove all takes and interest holders from an acquisition file property before removing that property from an acquisition file");
                 }
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
                 if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
@@ -298,6 +370,20 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
             return _agreementRepository.GetAgreementsByAquisitionFile(id);
+        }
+
+        public IEnumerable<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter)
+        {
+            _logger.LogInformation("Searching all agreements matching the filter: {filter} ", filter);
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var allMatchingAgreements = _agreementRepository.SearchAgreements(filter);
+            if (pimsUser.IsContractor)
+            {
+                return allMatchingAgreements.Where(a => a.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId == pimsUser.PersonId));
+            }
+
+            return allMatchingAgreements.Where(a => pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == a.AcquisitionFile.RegionCode));
         }
 
         public IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements)
@@ -421,26 +507,44 @@ namespace Pims.Api.Services
 
         private static void ValidateStaff(PimsAcquisitionFile pimsAcquisitionFile)
         {
-            bool duplicate = pimsAcquisitionFile.PimsAcquisitionFilePeople.GroupBy(p => (p.AcqFlPersonProfileTypeCode, p.PersonId)).Any(g => g.Count() > 1);
+            bool duplicate = pimsAcquisitionFile.PimsAcquisitionFileTeams.GroupBy(p => (p.AcqFlTeamProfileTypeCode, p.PersonId)).Any(g => g.Count() > 1);
             if (duplicate)
             {
                 throw new BadRequestException("Invalid Acquisition team, each team member and role combination can only be added once.");
             }
         }
 
-        private void UpdateLocation(PimsProperty researchProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes)
+        private static void ValidateOrganizationStaff(PimsAcquisitionFile pimsAcquisitionFile)
+        {
+            bool duplicate = pimsAcquisitionFile.PimsAcquisitionFileTeams.GroupBy(p => (p.AcqFlTeamProfileTypeCode, p.OrganizationId)).Any(g => g.Count() > 1);
+            if (duplicate)
+            {
+                throw new BadRequestException("Invalid Acquisition team, each team member and role combination can only be added once.");
+            }
+        }
+
+        private void UpdateLocation(PimsProperty acquisitionProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes)
         {
             if (propertyToUpdate.Location == null)
             {
                 if (overrideCodes.Contains(UserOverrideCode.AddLocationToProperty))
                 {
                     // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-                    var geom = researchProperty.Location;
+                    var geom = acquisitionProperty.Location;
                     if (geom.SRID != SpatialReference.BCALBERS)
                     {
                         var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
                         propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
                         _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
+                    }
+
+                    // apply similar logic to the boundary
+                    var boundaryGeom = acquisitionProperty.Boundary;
+                    if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
+                    {
+                        var newCoords = boundaryGeom.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
+                        var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
+                        acquisitionProperty.Boundary = gf.CreatePolygon(newCoords.ToArray());
                     }
                 }
                 else
@@ -524,6 +628,15 @@ namespace Pims.Api.Services
                 var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
                 property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
             }
+
+            // apply similar logic to the boundary
+            var boundaryGeom = property.Boundary;
+            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
+            {
+                var newCoords = property.Boundary.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
+                var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
+                property.Boundary = gf.CreatePolygon(newCoords.ToArray());
+            }
         }
 
         private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyAcquisitionFile> propertyAcquisitionFiles)
@@ -579,7 +692,7 @@ namespace Pims.Api.Services
         /// </summary>
         /// <param name="acquisitionFile"></param>
         /// <param name="userOverride"></param>
-        private void TransferPropertiesOfInterestToInventory(PimsAcquisitionFile acquisitionFile, bool userOverride = false)
+        private void TransferPropertiesOfInterest(PimsAcquisitionFile acquisitionFile, bool userOverride = false)
         {
             // Get the current properties in the research file
             var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
@@ -593,7 +706,31 @@ namespace Pims.Api.Services
                 {
                     throw new UserOverrideException(UserOverrideCode.PoiToInventory, "The properties of interest will be added to the inventory as acquired properties.");
                 }
-                _propertyRepository.TransferToCoreInventory(property);
+                var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionProperty.Internal_Id);
+                var coreInventoryInterestCodes = new string[] { "Section 15", "Section 17", "NOI", "Section 66" };
+                var activeTakes = takes.Where(t =>
+                    !(t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && t.LandActEndDt.HasValue && t.LandActEndDt.Value.Date < DateTime.UtcNow.Date) &&
+                    !(t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value && t.LtcEndDt.HasValue && t.LtcEndDt.Value.Date < DateTime.UtcNow.Date) &&
+                    !(t.IsNewInterestInSrw.HasValue && t.IsNewInterestInSrw.Value && t.SrwEndDt.HasValue && t.SrwEndDt.Value.Date < DateTime.UtcNow.Date));
+
+                // see psp-6589 for business rules.
+                var isOwned = !(activeTakes.All(t => (t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && coreInventoryInterestCodes.Contains(t.LandActTypeCode))
+                    || (t.IsNewInterestInSrw.HasValue && t.IsNewInterestInSrw.Value)
+                    || (t.IsThereSurplus.HasValue && t.IsThereSurplus.Value)
+                    || (t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value)) && activeTakes.Any());
+                var isPropertyOfInterest = false;
+
+                // Override for dedication psp-7048.
+                var doNotAcquire = takes.All(t =>
+                    t.IsNewHighwayDedication.HasValue && t.IsNewHighwayDedication.Value && t.IsAcquiredForInventory.HasValue && !t.IsAcquiredForInventory.Value);
+
+                if (doNotAcquire)
+                {
+                    isOwned = false;
+                    isPropertyOfInterest = true;
+                }
+
+                _propertyRepository.TransferFileProperty(property, isOwned, isPropertyOfInterest);
             }
         }
 
@@ -698,9 +835,9 @@ namespace Pims.Api.Services
                 }
 
                 // Check for File Person
-                if (compReq.AcquisitionFilePersonId is not null
-                    && !acquisitionFile.PimsAcquisitionFilePeople.Any(x => x.Internal_Id.Equals(compReq.AcquisitionFilePersonId))
-                    && currentAquisitionFile.PimsAcquisitionFilePeople.Any(x => x.Internal_Id.Equals(compReq.AcquisitionFilePersonId)))
+                if (compReq.AcquisitionFileTeamId is not null
+                    && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.Internal_Id.Equals(compReq.AcquisitionFileTeamId))
+                    && currentAquisitionFile.PimsAcquisitionFileTeams.Any(x => x.Internal_Id.Equals(compReq.AcquisitionFileTeamId)))
                 {
                     throw new ForeignKeyDependencyException("Acquisition File team member can not be removed since it's assigned as a payee for a compensation requisition");
                 }

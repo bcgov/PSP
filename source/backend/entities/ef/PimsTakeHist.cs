@@ -43,28 +43,32 @@ namespace Pims.Dal.Entities
         [Column("DESCRIPTION")]
         [StringLength(4000)]
         public string Description { get; set; }
-        [Column("IS_NEW_RIGHT_OF_WAY")]
-        public bool IsNewRightOfWay { get; set; }
-        [Column("NEW_RIGHT_OF_WAY_AREA")]
-        public float? NewRightOfWayArea { get; set; }
-        [Column("IS_STATUTORY_RIGHT_OF_WAY")]
-        public bool IsStatutoryRightOfWay { get; set; }
+        [Column("IS_NEW_HIGHWAY_DEDICATION")]
+        public bool IsNewHighwayDedication { get; set; }
+        [Column("NEW_HIGHWAY_DEDICATION_AREA")]
+        public float? NewHighwayDedicationArea { get; set; }
+        [Column("IS_ACQUIRED_FOR_INVENTORY")]
+        public bool IsAcquiredForInventory { get; set; }
+        [Column("IS_NEW_INTEREST_IN_SRW")]
+        public bool IsNewInterestInSrw { get; set; }
         [Column("STATUTORY_RIGHT_OF_WAY_AREA")]
         public float? StatutoryRightOfWayArea { get; set; }
-        [Column("IS_LICENSE_TO_CONSTRUCT")]
-        public bool IsLicenseToConstruct { get; set; }
+        [Column("SRW_END_DT", TypeName = "date")]
+        public DateTime? SrwEndDt { get; set; }
+        [Column("IS_NEW_LICENSE_TO_CONSTRUCT")]
+        public bool IsNewLicenseToConstruct { get; set; }
         [Column("LICENSE_TO_CONSTRUCT_AREA")]
         public float? LicenseToConstructArea { get; set; }
         [Column("LTC_END_DT", TypeName = "date")]
         public DateTime? LtcEndDt { get; set; }
-        [Column("IS_LAND_ACT")]
-        public bool IsLandAct { get; set; }
+        [Column("IS_NEW_LAND_ACT")]
+        public bool IsNewLandAct { get; set; }
         [Column("LAND_ACT_AREA")]
         public float? LandActArea { get; set; }
         [Column("LAND_ACT_END_DT", TypeName = "date")]
         public DateTime? LandActEndDt { get; set; }
-        [Column("IS_SURPLUS")]
-        public bool IsSurplus { get; set; }
+        [Column("IS_THERE_SURPLUS")]
+        public bool IsThereSurplus { get; set; }
         [Column("SURPLUS_AREA")]
         public float? SurplusArea { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]

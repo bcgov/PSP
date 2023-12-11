@@ -57,7 +57,7 @@ namespace Pims.Api.Test.Controllers.Contact
 
         public SearchControllerTest()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         #region Tests
@@ -70,10 +70,10 @@ namespace Pims.Api.Test.Controllers.Contact
         public void GetProperties_All_Success(SModel.ContactFilterModel filter)
         {
             // Arrange
-            var controller = _helper.CreateController<SearchController>(Permissions.ContactView);
+            var controller = this._helper.CreateController<SearchController>(Permissions.ContactView);
 
-            var service = _helper.GetService<Mock<IContactService>>();
-            var mapper = _helper.GetService<IMapper>();
+            var service = this._helper.GetService<Mock<IContactService>>();
+            var mapper = this._helper.GetService<IMapper>();
 
             service.Setup(m => m.GetPage(It.IsAny<ContactFilter>())).Returns(new Paged<Entity.PimsContactMgrVw>());
 
@@ -92,10 +92,10 @@ namespace Pims.Api.Test.Controllers.Contact
         public void GetProperties_Query_Success(Uri uri)
         {
             // Arrange
-            var controller = _helper.CreateController<SearchController>(Permissions.ContactView, uri);
+            var controller = this._helper.CreateController<SearchController>(Permissions.ContactView, uri);
 
-            var service = _helper.GetService<Mock<IContactService>>();
-            var mapper = _helper.GetService<IMapper>();
+            var service = this._helper.GetService<Mock<IContactService>>();
+            var mapper = this._helper.GetService<IMapper>();
 
             service.Setup(m => m.GetPage(It.IsAny<ContactFilter>())).Returns(new Paged<Entity.PimsContactMgrVw>());
 
@@ -113,11 +113,11 @@ namespace Pims.Api.Test.Controllers.Contact
         public void GetProperties_Query_NoFilter_BadRequest()
         {
             // Arrange
-            var controller = _helper.CreateController<SearchController>(Permissions.ContactView);
-            var request = _helper.GetService<Mock<HttpRequest>>();
+            var controller = this._helper.CreateController<SearchController>(Permissions.ContactView);
+            var request = this._helper.GetService<Mock<HttpRequest>>();
             request.Setup(m => m.QueryString).Returns(new QueryString("?page=0"));
 
-            var service = _helper.GetService<Mock<IContactService>>();
+            var service = this._helper.GetService<Mock<IContactService>>();
 
             // Act
             // Assert
@@ -132,9 +132,9 @@ namespace Pims.Api.Test.Controllers.Contact
         public void GetProperties_NoFilter_BadRequest()
         {
             // Arrange
-            var controller = _helper.CreateController<SearchController>(Permissions.ContactView);
+            var controller = this._helper.CreateController<SearchController>(Permissions.ContactView);
 
-            var service = _helper.GetService<Mock<IContactService>>();
+            var service = this._helper.GetService<Mock<IContactService>>();
 
             // Act
             // Assert

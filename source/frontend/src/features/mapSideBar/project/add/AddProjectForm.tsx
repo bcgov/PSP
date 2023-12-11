@@ -39,8 +39,9 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
     } = props;
 
     const handleSubmit = async (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
-      await onSubmit(values, formikHelpers);
+      var result = await onSubmit(values, formikHelpers);
       formikHelpers.setSubmitting(false);
+      return result;
     };
 
     return (

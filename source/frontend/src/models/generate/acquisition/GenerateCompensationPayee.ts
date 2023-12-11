@@ -31,11 +31,15 @@ export class Api_GenerateCompensationPayee {
       } else {
         this.name = compensation.interestHolder.organization?.name ?? '';
       }
-    } else if (compensation?.acquisitionFilePerson) {
-      this.name = formatNames([
-        compensation.acquisitionFilePerson?.person?.firstName,
-        compensation.acquisitionFilePerson?.person?.surname,
-      ]);
+    } else if (compensation?.acquisitionFileTeam) {
+      if (compensation.acquisitionFileTeam.person) {
+        this.name = formatNames([
+          compensation.acquisitionFileTeam.person.firstName,
+          compensation.acquisitionFileTeam.person.surname,
+        ]);
+      } else {
+        this.name = compensation.acquisitionFileTeam.organization?.name ?? '';
+      }
     } else if (compensation?.legacyPayee) {
       this.name = compensation.legacyPayee ?? '';
     } else {

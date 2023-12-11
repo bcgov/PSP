@@ -28,14 +28,14 @@ namespace Pims.Api.Test.Services
 
         public LeaseServiceTest()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         private LeaseService CreateLeaseService(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
-            _helper.CreatePimsContext(user, true);
-            return _helper.Create<LeaseService>();
+            this._helper.CreatePimsContext(user, true);
+            return this._helper.Create<LeaseService>();
         }
 
         #region Tests
@@ -44,27 +44,27 @@ namespace Pims.Api.Test.Services
         public void Update_WithoutStatusNote()
         {
             // Arrange
-            var service = CreateLeaseService(Permissions.LeaseEdit);
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
 
             var currentLeaseEntity = new PimsLease()
             {
                 LeaseId = 1,
-                LeaseStatusTypeCode = "STATUS_A"
+                LeaseStatusTypeCode = "STATUS_A",
             };
 
             var leaseEntity = new PimsLease()
             {
                 LeaseId = 1,
-                LeaseStatusTypeCode = "STATUS_A"
+                LeaseStatusTypeCode = "STATUS_A",
             };
 
-            var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
-            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
 
-            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
 
             // Act
             var result = service.Update(leaseEntity, new List<UserOverrideCode>());
@@ -77,27 +77,27 @@ namespace Pims.Api.Test.Services
         public void Update_WithStatusNote()
         {
             // Arrange
-            var service = CreateLeaseService(Permissions.LeaseEdit);
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
 
             var currentLeaseEntity = new PimsLease()
             {
                 LeaseId = 1,
-                LeaseStatusTypeCode = "STATUS_A"
+                LeaseStatusTypeCode = "STATUS_A",
             };
 
             var leaseEntity = new PimsLease()
             {
                 LeaseId = 1,
-                LeaseStatusTypeCode = "STATUS_B"
+                LeaseStatusTypeCode = "STATUS_B",
             };
 
-            var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
-            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
 
-            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
 
             // Act
             var result = service.Update(leaseEntity, new List<UserOverrideCode>());
@@ -112,11 +112,11 @@ namespace Pims.Api.Test.Services
             // Arrange
             var lease = EntityHelper.CreateLease(1);
 
-            var service = CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
-            var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
-            var propertyLeaseRepository = _helper.GetService<Mock<IPropertyLeaseRepository>>();
-            var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
-            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
@@ -137,11 +137,11 @@ namespace Pims.Api.Test.Services
             var lease = EntityHelper.CreateLease(1);
             var updatedLease = EntityHelper.CreateLease(2, addProperty: false);
 
-            var service = CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
-            var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
-            var propertyLeaseRepository = _helper.GetService<Mock<IPropertyLeaseRepository>>();
-            var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
-            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
@@ -164,11 +164,11 @@ namespace Pims.Api.Test.Services
             deletedProperty.IsPropertyOfInterest = true;
             var updatedLease = EntityHelper.CreateLease(2, addProperty: false);
 
-            var service = CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
-            var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
-            var propertyLeaseRepository = _helper.GetService<Mock<IPropertyLeaseRepository>>();
-            var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
-            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
             propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(deletedProperty);

@@ -1,0 +1,786 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Activities list view renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c7.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c7.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c7.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c7.btn.btn-primary {
+  border: none;
+}
+
+.c7.btn.btn-secondary {
+  background: none;
+}
+
+.c7.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
+  background: none;
+}
+
+.c7.btn.btn-light {
+  border: none;
+}
+
+.c7.btn.btn-dark {
+  border: none;
+}
+
+.c7.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c7.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c7.Button--icon-only:focus {
+  outline: none;
+}
+
+.c7.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c3 {
+  float: right;
+  cursor: pointer;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+}
+
+.c6 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c5 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c8 {
+  margin-top: 0.3rem;
+}
+
+.c2 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c2 .btn {
+  margin: 0;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="c2 no-gutters row"
+          >
+            <div
+              class="px-2 my-1 col-auto"
+            >
+              Activities List
+            </div>
+            <div
+              class="my-1 col-auto"
+            />
+          </div>
+        </div>
+        <div
+          class="col-1"
+        >
+          <svg
+            class="c3"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>
+              collapse-section
+            </title>
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M7 14l5-5 5 5z"
+            />
+          </svg>
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="table"
+        data-testid="PropertyManagementActivitiesTable"
+        role="table"
+      >
+        <div
+          class="thead thead-light"
+        >
+          <div
+            class="tr"
+            role="row"
+            style="display: flex; flex: 1 0 auto; min-width: 195px;"
+          >
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 45 0 auto; min-width: 45px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Activity type
+                <div
+                  class="c4"
+                  data-testid="sort-column-activityType"
+                >
+                  <svg
+                    class="c5"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c6"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 45 0 auto; min-width: 45px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Activity sub-type
+                <div
+                  class="c4"
+                  data-testid="sort-column-activitySubType"
+                >
+                  <svg
+                    class="c5"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c6"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 35 0 auto; min-width: 35px; width: 35px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Activity status
+                <div
+                  class="c4"
+                  data-testid="sort-column-activityStatusType"
+                >
+                  <svg
+                    class="c5"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c6"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Request added date
+                <div
+                  class="c4"
+                  data-testid="sort-column-requestedAddedDate"
+                >
+                  <svg
+                    class="c5"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c6"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Actions
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="tbody"
+          role="rowgroup"
+        >
+          <div
+            class="tr-wrapper"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 195px;"
+            >
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 45 0 auto; min-width: 45px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Activity Type Description
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 45 0 auto; min-width: 45px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Activity Type Description
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 35 0 auto; min-width: 35px; width: 35px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Activity Type Description
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="col"
+                  >
+                    <button
+                      class="c7 Button Button--icon-only btn btn-link"
+                      data-testid="activity-view-1"
+                      type="button"
+                    >
+                      <div
+                        class="Button__icon"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="2rem"
+                          id="activity-view-0"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 576 512"
+                          width="2rem"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <title>
+                            property-activity view details
+                          </title>
+                          <path
+                            d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tr-wrapper"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 195px;"
+            >
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 45 0 auto; min-width: 45px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Activity Type Description
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 45 0 auto; min-width: 45px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Activity Type Description
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 35 0 auto; min-width: 35px; width: 35px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Activity Type Description
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="col"
+                  >
+                    <button
+                      class="c7 Button Button--icon-only btn btn-link"
+                      data-testid="activity-view-2"
+                      type="button"
+                    >
+                      <div
+                        class="Button__icon"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="2rem"
+                          id="activity-view-1"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 576 512"
+                          width="2rem"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <title>
+                            property-activity view details
+                          </title>
+                          <path
+                            d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="align-self-center col-auto"
+        >
+          <span>
+            1 - 2 of 2
+          </span>
+        </div>
+        <div
+          class="ml-auto align-self-center col-auto"
+        />
+        <div
+          class="align-self-center col-auto"
+        >
+          <div
+            class="Menu-root"
+          >
+            <div
+              class="Menu-button"
+            >
+              <div
+                style="display: flex;"
+              >
+                <span
+                  class="c8"
+                >
+                  Show
+                </span>
+                <input
+                  class="form-control form-control-sm"
+                  disabled=""
+                  style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
+                  type="number"
+                  value="10"
+                />
+                <span
+                  class="c8"
+                >
+                  Entries
+                </span>
+              </div>
+            </div>
+            <div
+              class="Menu-items"
+              style="width: 10.0rem;"
+            >
+              <div
+                class="Menu-options scrollable list-group"
+              >
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-5"
+                >
+                  5
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-10"
+                >
+                  10
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-20"
+                >
+                  20
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-50"
+                >
+                  50
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-100"
+                >
+                  100
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="align-self-center col-auto"
+        >
+          <ul
+            class="pagination"
+          >
+            <li
+              class="page-item disabled"
+            >
+              <a
+                aria-disabled="true"
+                aria-label="Previous page"
+                class="page-link "
+                rel="prev"
+                role="button"
+                tabindex="-1"
+              >
+                &lt;
+              </a>
+            </li>
+            <li
+              class="page-item active"
+            >
+              <a
+                aria-current="page"
+                aria-label="Page 1 is your current page"
+                class="page-link"
+                rel="canonical"
+                role="button"
+                tabindex="-1"
+              >
+                1
+              </a>
+            </li>
+            <li
+              class="page-item disabled"
+            >
+              <a
+                aria-disabled="true"
+                aria-label="Next page"
+                class="page-link "
+                rel="next"
+                role="button"
+                tabindex="-1"
+              >
+                &gt;
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
