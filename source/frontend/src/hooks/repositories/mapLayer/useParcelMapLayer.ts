@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 
 import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useWfsLayer } from '@/hooks/layer-api/useWfsLayer';
-import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { useTenant } from '@/tenants';
 
 /**
@@ -13,8 +13,8 @@ import { useTenant } from '@/tenants';
  * Note: according to https://catalogue.data.gov.bc.ca/dataset/parcelmap-bc-parcel-fabric-fully-attributed/resource/59d9964f-bc93-496f-8039-b83ab8f24a41
  */
 
-export const useFullyAttributedParcelMapLayer = () => {
-  const { parcelMapFullyAttributed, parcelsLayerUrl } = useTenant();
+export const useParcelMapLayer = () => {
+  const { parcelMap: parcelMapFullyAttributed, parcelsLayerUrl } = useTenant();
 
   const getAllFeaturesWrapper = useWfsLayer(parcelMapFullyAttributed.url, {
     name: parcelMapFullyAttributed.name,
@@ -23,18 +23,6 @@ export const useFullyAttributedParcelMapLayer = () => {
   const { findOneWhereContains } = useLayerQuery(parcelsLayerUrl);
 
   const { execute: getAllFeatures, loading: getAllFeaturesLoading } = getAllFeaturesWrapper;
-
-  const findByLegalDescription = useCallback(
-    async (legalDesc: string) => {
-      const data = await getAllFeatures({ LEGAL_DESCRIPTION: legalDesc }, { timeout: 40000 });
-
-      // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      return data as
-        | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
-        | undefined;
-    },
-    [getAllFeatures],
-  );
 
   const findByPid = useCallback(
     async (pid: string, forceExactMatch = false) => {
@@ -45,9 +33,7 @@ export const useFullyAttributedParcelMapLayer = () => {
         { forceExactMatch: forceExactMatch, timeout: 30000 },
       );
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      return data as
-        | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
-        | undefined;
+      return data as FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined;
     },
     [getAllFeatures],
   );
@@ -59,9 +45,7 @@ export const useFullyAttributedParcelMapLayer = () => {
         { forceExactMatch: forceExactMatch, timeout: 30000 },
       );
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      return data as
-        | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
-        | undefined;
+      return data as FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined;
     },
     [getAllFeatures],
   );
@@ -73,9 +57,7 @@ export const useFullyAttributedParcelMapLayer = () => {
         { forceExactMatch: forceExactMatch, timeout: 30000 },
       );
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      return data as
-        | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
-        | undefined;
+      return data as FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined;
     },
     [getAllFeatures],
   );
@@ -90,7 +72,7 @@ export const useFullyAttributedParcelMapLayer = () => {
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
       const forceCasted = featureCollection as
-        | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
+        | FeatureCollection<Geometry, PMBC_Feature_Properties>
         | undefined;
       return forceCasted !== undefined && forceCasted.features.length > 0
         ? forceCasted.features[0]
@@ -100,7 +82,6 @@ export const useFullyAttributedParcelMapLayer = () => {
   );
 
   return {
-    findByLegalDescription,
     findByPid,
     findByPin,
     findByPlanNumber,

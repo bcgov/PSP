@@ -48,11 +48,6 @@ describe('LayerFilter component', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders as expected - search by legal description', () => {
-    const { asFragment } = setup({ searchBy: 'legalDescription' });
-    expect(asFragment()).toMatchSnapshot();
-  });
-
   it('shall have an searchBy field', async () => {
     const { container } = setup({});
 
@@ -89,18 +84,5 @@ describe('LayerFilter component', () => {
 
     const option = getByText('1234 Fake St');
     expect(option).toBeInTheDocument();
-  });
-
-  it('shall have a legal description TEXTAREA field', async () => {
-    const { container, findByText } = setup({ searchBy: 'legalDescription' });
-
-    await act(async () => await fillInput(container, 'searchBy', 'legalDescription', 'select'));
-
-    expect(
-      await findByText(/Searching by Legal Description may result in a slower search/i),
-    ).toBeInTheDocument();
-
-    const textarea = container.querySelector('textarea[name="legalDescription"]');
-    expect(textarea).toBeInTheDocument();
   });
 });
