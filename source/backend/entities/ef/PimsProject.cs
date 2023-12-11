@@ -21,11 +21,12 @@ namespace Pims.Dal.Entities
         public PimsProject()
         {
             PimsAcquisitionFiles = new HashSet<PimsAcquisitionFile>();
+            PimsCompensationRequisitions = new HashSet<PimsCompensationRequisition>();
             PimsLeases = new HashSet<PimsLease>();
-            PimsProducts = new HashSet<PimsProduct>();
             PimsProjectDocuments = new HashSet<PimsProjectDocument>();
             PimsProjectNotes = new HashSet<PimsProjectNote>();
             PimsProjectPeople = new HashSet<PimsProjectPerson>();
+            PimsProjectProducts = new HashSet<PimsProjectProduct>();
             PimsResearchFileProjects = new HashSet<PimsResearchFileProject>();
         }
 
@@ -110,16 +111,18 @@ namespace Pims.Dal.Entities
         public virtual PimsWorkActivityCode WorkActivityCode { get; set; }
         [InverseProperty(nameof(PimsAcquisitionFile.Project))]
         public virtual ICollection<PimsAcquisitionFile> PimsAcquisitionFiles { get; set; }
+        [InverseProperty(nameof(PimsCompensationRequisition.AlternateProject))]
+        public virtual ICollection<PimsCompensationRequisition> PimsCompensationRequisitions { get; set; }
         [InverseProperty(nameof(PimsLease.Project))]
         public virtual ICollection<PimsLease> PimsLeases { get; set; }
-        [InverseProperty(nameof(PimsProduct.ParentProject))]
-        public virtual ICollection<PimsProduct> PimsProducts { get; set; }
         [InverseProperty(nameof(PimsProjectDocument.Project))]
         public virtual ICollection<PimsProjectDocument> PimsProjectDocuments { get; set; }
         [InverseProperty(nameof(PimsProjectNote.Project))]
         public virtual ICollection<PimsProjectNote> PimsProjectNotes { get; set; }
         [InverseProperty(nameof(PimsProjectPerson.Project))]
         public virtual ICollection<PimsProjectPerson> PimsProjectPeople { get; set; }
+        [InverseProperty(nameof(PimsProjectProduct.Project))]
+        public virtual ICollection<PimsProjectProduct> PimsProjectProducts { get; set; }
         [InverseProperty(nameof(PimsResearchFileProject.Project))]
         public virtual ICollection<PimsResearchFileProject> PimsResearchFileProjects { get; set; }
     }

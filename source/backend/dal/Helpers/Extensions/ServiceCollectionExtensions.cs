@@ -45,13 +45,9 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IDocumentTypeRepository, Repositories.DocumentTypeRepository>();
             repositories.AddScoped<Repositories.INoteRepository, Repositories.NoteRepository>();
             repositories.AddScoped<Repositories.IEntityNoteRepository, Repositories.EntityNoteRepository>();
-            repositories.AddScoped<Repositories.IDocumentActivityRepository, Repositories.DocumentActivityRepository>();
-            repositories.AddScoped<Repositories.IDocumentActivityTemplateRepository, Repositories.DocumentActivityTemplateRepository>();
             repositories.AddScoped<Repositories.IDocumentRepository, Repositories.DocumentRepository>();
             repositories.AddScoped<Repositories.IAcquisitionFileRepository, Repositories.AcquisitionFileRepository>();
             repositories.AddScoped<Repositories.IAcquisitionFilePropertyRepository, Repositories.AcquisitionFilePropertyRepository>();
-            repositories.AddScoped<Repositories.IActivityRepository, Repositories.ActivityRepository>();
-            repositories.AddScoped<Repositories.IActivityTemplateRepository, Repositories.ActivityTemplateRepository>();
             repositories.AddScoped<Repositories.ISequenceRepository, Repositories.SequenceRepository>();
             repositories.AddScoped<Repositories.IPropertyLeaseRepository, Repositories.PropertyLeaseRepository>();
             repositories.AddScoped<Repositories.IProjectRepository, Repositories.ProjectRepository>();
@@ -77,6 +73,9 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IPropertyImprovementRepository, Repositories.PropertyImprovementRepository>();
             repositories.AddScoped<Repositories.ILeaseTenantRepository, Repositories.LeaseTenantRepository>();
             repositories.AddScoped<Repositories.IExpropriationPaymentRepository, Repositories.ExpropriationPaymentRepository>();
+            repositories.AddScoped<Repositories.IPropertyContactRepository, Repositories.PropertyContactRepository>();
+            repositories.AddScoped<Repositories.IPropertyActivityRepository, Repositories.PropertyActivityRepository>();
+            repositories.AddScoped<Repositories.IPropertyActivityDocumentRepository, Repositories.PropertyActivityDocumentRepository>();
             return repositories; // TODO: PSP-4424 Use reflection to find all Repositories.
         }
 

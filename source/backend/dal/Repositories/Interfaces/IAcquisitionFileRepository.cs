@@ -6,9 +6,15 @@ namespace Pims.Dal.Repositories
 {
     public interface IAcquisitionFileRepository : IRepository
     {
-        Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter, HashSet<short> regions, long? filterPersonId = null);
+        Paged<PimsAcquisitionFile> GetPageDeep(AcquisitionFilter filter, HashSet<short> regions, long? contractorPersonId = null);
 
         PimsAcquisitionFile GetById(long id);
+
+        LastUpdatedByModel GetLastUpdateBy(long id);
+
+        List<PimsAcquisitionOwner> GetOwnersByAcquisitionFileId(long acquisitionFileId);
+
+        List<PimsAcquisitionFileTeam> GetTeamMembers(HashSet<short> regions, long? contractorPersonId = null);
 
         PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile);
 
@@ -19,5 +25,7 @@ namespace Pims.Dal.Repositories
         short GetRegion(long id);
 
         List<PimsAcquisitionFile> GetByProductId(long productId);
+
+        List<PimsAcquisitionFile> GetAcquisitionFileExportDeep(AcquisitionFilter filter, HashSet<short> regions, long? contractorPersonId = null);
     }
 }

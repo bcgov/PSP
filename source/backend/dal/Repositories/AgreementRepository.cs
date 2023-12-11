@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
@@ -42,13 +43,45 @@ namespace Pims.Dal.Repositories
                 .ToList();
         }
 
-        public PimsAgreement Update(PimsAgreement agreement)
+        public List<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter)
         {
-            agreement.ThrowIfNull(nameof(agreement));
+            using var scope = Logger.QueryScope();
 
-            Context.Entry(agreement).CurrentValues.SetValues(agreement);
-            Context.Entry(agreement).State = EntityState.Modified;
-            return agreement;
+            var predicate = PredicateBuilder.New<PimsAgreement>(ag => true);
+
+            if (filter.Projects != null && filter.Projects.Any())
+            {
+                predicate.And(a => a.AcquisitionFile.ProjectId.HasValue && filter.Projects.Contains(a.AcquisitionFile.ProjectId.Value));
+            }
+
+            if (filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
+            {
+                predicate.And(a => a.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId.HasValue && filter.AcquisitionTeamPersons.Contains((long)afp.PersonId)));
+            }
+
+            if (filter.AcquisitionTeamOrganizations != null && filter.AcquisitionTeamOrganizations.Any())
+            {
+                predicate.And(a => a.AcquisitionFile.PimsAcquisitionFileTeams.Any(o => o.OrganizationId.HasValue && filter.AcquisitionTeamOrganizations.Contains((long)o.OrganizationId)));
+            }
+
+            var query = Context.PimsAgreements
+                .Include(a => a.AgreementTypeCodeNavigation)
+                .Include(a => a.AcquisitionFile)
+                    .ThenInclude(a => a.PimsAcquisitionFileTeams)
+                    .ThenInclude(afp => afp.Person)
+                .Include(a => a.AcquisitionFile)
+                    .ThenInclude(a => a.PimsAcquisitionFileTeams)
+                    .ThenInclude(o => o.Organization)
+                .Include(a => a.AcquisitionFile)
+                    .ThenInclude(a => a.Project)
+                .Include(a => a.AcquisitionFile)
+                    .ThenInclude(a => a.Product)
+                .Include(a => a.AcquisitionFile)
+                    .ThenInclude(a => a.AcquisitionFileStatusTypeCodeNavigation)
+                .AsNoTracking()
+                .Where(predicate);
+
+            return query.ToList();
         }
 
         public List<PimsAgreement> UpdateAllForAcquisition(long acquisitionFileId, List<PimsAgreement> agreements)

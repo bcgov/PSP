@@ -68,7 +68,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Edit Tenant section
         public void EditTenant()
         {
-            WaitUntilClickable(tenantEditIcon);
+            Wait(2000);
             webDriver.FindElement(tenantEditIcon).Click();
         }
 
@@ -103,14 +103,15 @@ namespace PIMS.Tests.Automation.PageObjects
         public void AddOrganizationTenant(Tenant tenant)
         {
             WaitUntilClickable(tenantAddTenantsBttn);
-            webDriver.FindElement(tenantAddTenantsBttn).Click();
+            FocusAndClick(tenantAddTenantsBttn);
 
-            Wait(3000);
+            Wait(2000);
             webDriver.FindElement(tenantSearchInput).SendKeys(tenant.Summary);
             webDriver.FindElement(tenantOrganizationRadioBttn).Click();
             webDriver.FindElement(tenantSearchBttn).Click();
 
             ScrollToElement(tenantSearchInput);
+            WaitUntilClickable(tenantFirstResultRadioBttn);
             webDriver.FindElement(tenantFirstResultRadioBttn).Click();
 
             WaitUntilClickable(tenantsAddSelectedButton);
@@ -129,18 +130,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteLastTenant()
         {
-            WaitUntilClickable(tenantsTotalSelected);
+            Wait(2000);
 
             var totalTenantsSelected = webDriver.FindElements(tenantsTotalSelected).Count;
-            webDriver.FindElement(By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child("+ totalTenantsSelected +") svg:has(title)")).Click();
+            var deleteLastTenant = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child("+ totalTenantsSelected +") svg:has(title)");
+            webDriver.FindElement(deleteLastTenant).Click();
         }
 
         public void EditTenant(Tenant tenant)
         {
+            Wait(2000);
             var totalTenantsIndex = webDriver.FindElements(tenantsTotalSelected).Count -1;
             By lastTenantSelector = By.Id("input-tenants."+ totalTenantsIndex +".tenantType");
 
-            WaitUntilClickable(lastTenantSelector);
             ChooseSpecificSelectOption(lastTenantSelector, tenant.TenantType);
         }
 
@@ -161,42 +163,40 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int TotalTenants()
         {
-            WaitUntilVisible(tenantsTotalTenantsView);
+            Wait();
             return webDriver.FindElements(tenantsTotalTenantsView).Count;
             
         }
 
         public int TotalRepresentatives()
         {
-            WaitUntilVisible(tenantsTotalRepresentativeView);
+            Wait();
             return webDriver.FindElements(tenantsTotalRepresentativeView).Count;
         }
 
         public int TotalManagers()
         {
-            WaitUntilVisible(tenantsTotalManagerView);
+            Wait();
             return webDriver.FindElements(tenantsTotalManagerView).Count;
         }
 
         public int TotalUnknown()
         {
-            WaitUntilVisible(tenantsTotalUnknownView);
+            Wait();
             return webDriver.FindElements(tenantsTotalUnknownView).Count;
         }
 
         public void VerifyTenantsInitForm()
         {
-            WaitUntilVisible(tenantsSelectedTableSummaryColumn);
-
-            Assert.True(webDriver.FindElement(tenantsSubtittle).Displayed);
-            Assert.True(webDriver.FindElement(tenantsInstructions).Displayed);
-            Assert.True(webDriver.FindElement(tenantAddTenantsBttn).Displayed);
-            Assert.True(webDriver.FindElement(tenantsCounter).Displayed);
-            Assert.True(webDriver.FindElement(tenantsSelectedTableSummaryColumn).Displayed);
-            Assert.True(webDriver.FindElement(tenantsSelectedTablePrimaryContactColumn).Displayed);
-            Assert.True(webDriver.FindElement(tenantsSelectedTableContactInfoColumn).Displayed);
-            Assert.True(webDriver.FindElement(tenantsSelectedTableTypeColumn).Displayed);
-            Assert.True(webDriver.FindElement(tenantsSelectedNoRows).Displayed);
+            AssertTrueIsDisplayed(tenantsSubtittle);
+            AssertTrueIsDisplayed(tenantsInstructions);
+            AssertTrueIsDisplayed(tenantAddTenantsBttn);
+            AssertTrueIsDisplayed(tenantsCounter);
+            AssertTrueIsDisplayed(tenantsSelectedTableSummaryColumn);
+            AssertTrueIsDisplayed(tenantsSelectedTablePrimaryContactColumn);
+            AssertTrueIsDisplayed(tenantsSelectedTableContactInfoColumn);
+            AssertTrueIsDisplayed(tenantsSelectedTableTypeColumn);
+            AssertTrueIsDisplayed(tenantsSelectedNoRows);
         }
     }
 }

@@ -99,8 +99,8 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
       </StyledEditWrapper>
       <Section header="Project">
         <SectionField label="Ministry project">
-          {detail.researchFileProjects.map(formattedName => (
-            <div>{formattedName}</div>
+          {detail.researchFileProjects.map((formattedName, i) => (
+            <div key={`project-key-${i}`}>{formattedName}</div>
           ))}
         </SectionField>
       </Section>

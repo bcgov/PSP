@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
@@ -34,18 +33,6 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Methods
-
-        public int GetTotalRelationCount(long documentId)
-        {
-            var document = this.Context.PimsDocuments.AsNoTracking()
-                .Include(d => d.PimsActivityInstanceDocuments)
-                .Where(d => d.DocumentId == documentId)
-                .AsNoTracking()
-                .FirstOrDefault();
-
-            // Add all document relationships
-            return document.PimsActivityInstanceDocuments.Count;
-        }
 
         /// <summary>
         /// Get the document from the database based on document id.
@@ -102,13 +89,12 @@ namespace Pims.Dal.Repositories
 
             // Need to load required related entities otherwise the below foreach may fail.
             var documentToDelete = this.Context.PimsDocuments.AsNoTracking()
-                .Include(d => d.PimsActivityInstanceDocuments)
-                .Include(d => d.PimsActivityTemplateDocuments)
                 .Include(d => d.PimsResearchFileDocuments)
                 .Include(d => d.PimsAcquisitionFileDocuments)
                 .Include(d => d.PimsProjectDocuments)
                 .Include(d => d.PimsFormTypes)
                 .Include(d => d.PimsLeaseDocuments)
+                .Include(d => d.PimsPropertyActivityDocuments)
                 .Where(d => d.DocumentId == document.Internal_Id)
                 .AsNoTracking()
                 .FirstOrDefault();
@@ -133,14 +119,9 @@ namespace Pims.Dal.Repositories
                 this.Context.PimsLeaseDocuments.Remove(new PimsLeaseDocument() { Internal_Id = pimsLeaseDocument.Internal_Id });
             }
 
-            foreach (var pimsActivityInstanceDocument in documentToDelete.PimsActivityInstanceDocuments)
+            foreach (var pimsPropertyActivityDocument in documentToDelete.PimsPropertyActivityDocuments)
             {
-                this.Context.PimsActivityInstanceDocuments.Remove(new PimsActivityInstanceDocument() { Internal_Id = pimsActivityInstanceDocument.Internal_Id });
-            }
-
-            foreach (var pimsTemplateDocument in documentToDelete.PimsActivityTemplateDocuments)
-            {
-                this.Context.PimsActivityTemplateDocuments.Remove(new PimsActivityTemplateDocument() { Internal_Id = pimsTemplateDocument.Internal_Id });
+                this.Context.PimsPropertyActivityDocuments.Remove(new PimsPropertyActivityDocument() { Internal_Id = pimsPropertyActivityDocument.Internal_Id });
             }
 
             foreach (var pimsFormTypeDocument in documentToDelete.PimsFormTypes)
@@ -156,25 +137,15 @@ namespace Pims.Dal.Repositories
             return true;
         }
 
-        public List<PimsDocument> GetAllByDocumentType(string documentType)
-        {
-            return this.Context.PimsDocuments
-                .Include(d => d.DocumentType)
-                .Where(d => d.DocumentType.DocumentType == documentType)
-                .AsNoTracking()
-                .ToList();
-        }
-
         public int DocumentRelationshipCount(long documentId)
         {
             var documentRelationships = this.Context.PimsDocuments.AsNoTracking()
-                .Include(d => d.PimsActivityInstanceDocuments)
-                .Include(d => d.PimsActivityTemplateDocuments)
                 .Include(d => d.PimsResearchFileDocuments)
                 .Include(d => d.PimsAcquisitionFileDocuments)
                 .Include(d => d.PimsProjectDocuments)
                 .Include(d => d.PimsFormTypes)
                 .Include(d => d.PimsLeaseDocuments)
+                .Include(d => d.PimsPropertyActivityDocuments)
                 .Where(d => d.DocumentId == documentId)
                 .AsNoTracking()
                 .FirstOrDefault();
@@ -182,10 +153,9 @@ namespace Pims.Dal.Repositories
             return documentRelationships.PimsResearchFileDocuments.Count +
                     documentRelationships.PimsAcquisitionFileDocuments.Count +
                     documentRelationships.PimsProjectDocuments.Count +
-                    documentRelationships.PimsActivityInstanceDocuments.Count +
-                    documentRelationships.PimsActivityTemplateDocuments.Count +
                     documentRelationships.PimsFormTypes.Count +
-                    documentRelationships.PimsLeaseDocuments.Count;
+                    documentRelationships.PimsLeaseDocuments.Count +
+                    documentRelationships.PimsPropertyActivityDocuments.Count;
         }
 
         #endregion

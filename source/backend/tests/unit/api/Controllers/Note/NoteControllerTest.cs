@@ -42,10 +42,10 @@ namespace Pims.Api.Test.Controllers.Note
 
         public NoteControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<NoteController>(Permissions.NoteAdd, Permissions.NoteView, Permissions.NoteEdit);
-            _mapper = _helper.GetService<IMapper>();
-            _service = _helper.GetService<Mock<INoteService>>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<NoteController>(Permissions.NoteAdd, Permissions.NoteView, Permissions.NoteEdit);
+            this._mapper = this._helper.GetService<IMapper>();
+            this._service = this._helper.GetService<Mock<INoteService>>();
         }
 
         #region Tests
@@ -56,16 +56,16 @@ namespace Pims.Api.Test.Controllers.Note
         public void AddNote_Success()
         {
             // Arrange
-            var note = EntityHelper.CreateActivityNote();
-            var noteModel = _mapper.Map<EntityNoteModel>(note);
+            var note = EntityHelper.CreateProjectNote();
+            var noteModel = this._mapper.Map<EntityNoteModel>(note);
 
-            _service.Setup(m => m.Add(It.IsAny<NoteType>(), It.IsAny<EntityNoteModel>())).Returns(noteModel);
+            this._service.Setup(m => m.Add(It.IsAny<NoteType>(), It.IsAny<EntityNoteModel>())).Returns(noteModel);
 
             // Act
-            var result = _controller.AddNote(Constants.NoteType.Activity, noteModel);
+            var result = this._controller.AddNote(Constants.NoteType.Project, noteModel);
 
             // Assert
-            _service.Verify(m => m.Add(It.IsAny<NoteType>(), It.IsAny<EntityNoteModel>()), Times.Once());
+            this._service.Verify(m => m.Add(It.IsAny<NoteType>(), It.IsAny<EntityNoteModel>()), Times.Once());
         }
 
         /// <summary>
@@ -77,13 +77,13 @@ namespace Pims.Api.Test.Controllers.Note
             // Arrange
             var notes = new[] { EntityHelper.CreateNote("Note 1"), EntityHelper.CreateNote("Note 2") };
 
-            _service.Setup(m => m.GetNotes(It.IsAny<NoteType>(), It.IsAny<long>())).Returns(notes);
+            this._service.Setup(m => m.GetNotes(It.IsAny<NoteType>(), It.IsAny<long>())).Returns(notes);
 
             // Act
-            var result = _controller.GetNotes(Constants.NoteType.Activity, 1);
+            var result = this._controller.GetNotes(Constants.NoteType.Project, 1);
 
             // Assert
-            _service.Verify(m => m.GetNotes(It.IsAny<NoteType>(), It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.GetNotes(It.IsAny<NoteType>(), It.IsAny<long>()), Times.Once());
         }
 
         /// <summary>
@@ -94,15 +94,15 @@ namespace Pims.Api.Test.Controllers.Note
         {
             // Arrange
             var note = EntityHelper.CreateNote("Note 1");
-            var noteModel = _mapper.Map<NoteModel>(note);
+            var noteModel = this._mapper.Map<NoteModel>(note);
 
-            _service.Setup(m => m.GetById(It.IsAny<long>())).Returns(noteModel);
+            this._service.Setup(m => m.GetById(It.IsAny<long>())).Returns(noteModel);
 
             // Act
-            var result = _controller.GetNoteById(1);
+            var result = this._controller.GetNoteById(1);
 
             // Assert
-            _service.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
         }
 
         /// <summary>
@@ -113,28 +113,28 @@ namespace Pims.Api.Test.Controllers.Note
         {
             // Arrange
             var note = EntityHelper.CreateNote("Note 1");
-            var noteModel = _mapper.Map<NoteModel>(note);
+            var noteModel = this._mapper.Map<NoteModel>(note);
 
-            _service.Setup(m => m.Update(It.IsAny<NoteModel>())).Returns(noteModel);
+            this._service.Setup(m => m.Update(It.IsAny<NoteModel>())).Returns(noteModel);
 
             // Act
-            var result = _controller.UpdateNote(1, noteModel);
+            var result = this._controller.UpdateNote(1, noteModel);
 
             // Assert
-            _service.Verify(m => m.Update(It.IsAny<NoteModel>()), Times.Once());
+            this._service.Verify(m => m.Update(It.IsAny<NoteModel>()), Times.Once());
         }
 
         [Fact]
         public void Delete_Note_Success()
         {
             // Arrange
-            _service.Setup(m => m.DeleteNote(It.IsAny<NoteType>(), It.IsAny<long>(), true));
+            this._service.Setup(m => m.DeleteNote(It.IsAny<NoteType>(), It.IsAny<long>(), true));
 
             // Act
-            var result = _controller.DeleteNote(Constants.NoteType.Activity, 1);
+            var result = this._controller.DeleteNote(Constants.NoteType.Project, 1);
 
             // Assert
-            _service.Verify(m => m.DeleteNote(It.IsAny<NoteType>(), It.IsAny<long>(), true), Times.Once());
+            this._service.Verify(m => m.DeleteNote(It.IsAny<NoteType>(), It.IsAny<long>(), true), Times.Once());
         }
         #endregion
     }

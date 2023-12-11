@@ -5,8 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -36,8 +34,8 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsPropertyAcquisitionFiles
                 .Where(x => x.AcquisitionFileId == acquisitionFileId)
-                .Include(rp => rp.PimsActInstPropAcqFiles)
                 .Include(rp => rp.PimsTakes)
+                .Include(ap => ap.PimsInthldrPropInterests)
                 .Include(rp => rp.Property)
                     .ThenInclude(rp => rp.RegionCodeNavigation)
                 .Include(rp => rp.Property)
@@ -48,22 +46,6 @@ namespace Pims.Dal.Repositories
                 .Include(rp => rp.Property)
                     .ThenInclude(rp => rp.Address)
                     .ThenInclude(a => a.ProvinceState)
-                .AsNoTracking()
-                .ToList();
-        }
-
-        public List<PimsAcquisitionOwner> GetOwnersByAcquisitionFileId(long acquisitionFileId)
-        {
-            return Context.PimsAcquisitionOwners
-                .Where(x => x.AcquisitionFileId == acquisitionFileId)
-                .Include(x => x.Address)
-                    .ThenInclude(x => x.RegionCodeNavigation)
-                .Include(x => x.Address)
-                    .ThenInclude(x => x.Country)
-                .Include(x => x.Address)
-                    .ThenInclude(x => x.ProvinceState)
-                .Include(x => x.Address)
-                    .ThenInclude(x => x.DistrictCodeNavigation)
                 .AsNoTracking()
                 .ToList();
         }
@@ -96,10 +78,7 @@ namespace Pims.Dal.Repositories
 
             var propertyAcquisitionFileToDelete = Context.PimsPropertyAcquisitionFiles
                 .Where(x => x.PropertyAcquisitionFileId == propertyAcquisitionFile.Internal_Id)
-                .Include(rp => rp.PimsActInstPropAcqFiles)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
-
-            propertyAcquisitionFileToDelete.PimsActInstPropAcqFiles.ForEach(s => Context.PimsActInstPropAcqFiles.Remove(s));
 
             Context.PimsPropertyAcquisitionFiles.Remove(propertyAcquisitionFileToDelete);
         }
@@ -111,19 +90,6 @@ namespace Pims.Dal.Repositories
             Context.Entry(propertyAcquisitionFile).CurrentValues.SetValues(propertyAcquisitionFile);
             Context.Entry(propertyAcquisitionFile).State = EntityState.Modified;
             return propertyAcquisitionFile;
-        }
-
-        public List<PimsCompensationRequisition> GetCompensationRequisitionsByAcquisitionFileId(long acquisitionFileId)
-        {
-            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView, Permissions.AcquisitionFileView);
-
-            var acquisitionFile = Context.PimsAcquisitionFiles
-                .Where(x => x.Internal_Id == acquisitionFileId)
-                .Include(y => y.PimsCompensationRequisitions)
-                .AsNoTracking()
-                .FirstOrDefault() ?? throw new KeyNotFoundException();
-
-            return acquisitionFile.PimsCompensationRequisitions.ToList();
         }
 
         #endregion

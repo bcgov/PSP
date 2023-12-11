@@ -12,14 +12,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private By createLicenseButton = By.XPath("//a[contains(text(),'Create a Lease/License File')]");
 
         //File Details Edit Icon
-        private By licenseDetailsEditIcon = By.XPath("//div[@role='tabpanel'][1]/div/div/button");
+        private By licenseDetailsEditIcon = By.XPath("//div[@role='tabpanel']/div/div/button");
 
         //Lease Header Elements
         private By licenseHeaderNbrLabel = By.XPath("//label[contains(text(),'Lease/License #')]");
         private By licenseHeaderNbrContent = By.XPath("//label[contains(text(),'Lease/License #')]/parent::div/following-sibling::div/strong/div/span[1]");
         private By licenseHeaderAccountType = By.XPath("//label[contains(text(),'Lease/License #')]/parent::div/following-sibling::div/strong/div/span[2]");
         private By licenseHeaderProperty = By.XPath("//label[contains(text(),'Property')]");
-        private By licenseHeaderPropertyContent = By.XPath("//label[contains(text(),'Property')]/parent::div/following-sibling::div/strong");
+        private By licenseHeaderPropertyContent = By.XPath("//label[contains(text(),'Property')]/parent::div/following-sibling::div/strong/div");
         private By licenseHeaderTenantLabel = By.XPath("//label[contains(text(),'Tenant')]");
         private By licenseHeaderStartDateLabel = By.XPath("//div/div/div/div/div/div/div/div/div/div/div/div/label[contains(text(),'Start date')]");
         private By licenseHeaderStartDateContent = By.XPath("//div/div/div/div/div/div/div/div/div/div/div/div/label[contains(text(),'Start date')]/parent::div/following-sibling::div[1]");
@@ -56,7 +56,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDetailsProperty1AreaIncludedContent = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div/label[contains(text(),'Area included')]/parent::div/following-sibling::div");
         private By licenseDetailsProperty1AddressLabel = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div[1]/label[contains(text(),'Address')]");
         private By licenseDetailsProperty1AddressNoContent = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div[1]/label[contains(text(),'Address')]/parent::div/following-sibling::div/label");
-        private By licenseDetailsProperty1AddressContent = By.Id("input-properties.0.address.streetAddress1");
+        private By licenseDetailsProperty1AddressContent = By.Id("input-properties.0.property.address.streetAddress1");
         private By licenseDetailsProperty1LegalDescripLabel = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div/label[contains(text(),'Legal description')]");
         private By licenseDetailsProperty1LegalDescripContent = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div/label[contains(text(),'Legal description')]/parent::div/following-sibling::div");
 
@@ -178,6 +178,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Leases Modal Element
         private By licenseDetailsConfirmationModal = By.CssSelector("div[class='modal-content']");
+        //private By licenseDetailsAcknowledgeContinueBttn = By.XPath("//button/div[contains(text(),'Acknowledge & Continue')]");
 
         private SharedSearchProperties sharedSearchProperties;
         private SharedModals sharedModals;
@@ -198,47 +199,19 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(createLicenseButton);
         }
 
-        public void CreateLicenseDetails(Lease lease)
+        public void CreateMinimumLicenseDetails(Lease lease)
         {
+            Wait();
+
             //MAIN DETAILS
-            //Project
-            if (lease.MinistryProject != "")
-            {
-                webDriver.FindElement(licenseDetailsProjectInput).SendKeys(lease.MinistryProject);
-                FocusAndClick(licenseDetailsProject1stOption);
-            }
-
-            //Status
-            if (lease.LeaseStatus != "")
-                ChooseSpecificSelectOption(licenseDetailsStatusSelector, lease.LeaseStatus);
-
-            //Account Type
-            if (lease.AccountType != "")
-            {
-                webDriver.FindElement(licenseDetailsAccountTypeSelector).Click();
-                ChooseSpecificSelectOption(licenseDetailsAccountTypeSelector, lease.AccountType);
-            }
-
             //Start Date
             if (lease.LeaseStartDate != "")
             {
                 webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(lease.LeaseStartDate);
                 webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(Keys.Enter);
             }
-               
-            //Expiry Date
-            if (lease.LeaseExpiryDate != "")
-            {
-                webDriver.FindElement(licenseDetailsExpiryDateInput).Click();
-                webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(lease.LeaseExpiryDate);
-                webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(Keys.Enter);
-            }
 
             //Administration Details
-            //MOTI Contact
-            if (lease.MOTIContact != "")
-                webDriver.FindElement(licenseDetailsMotiContactInput).SendKeys(lease.MOTIContact);
-
             //MOTI Region
             if(lease.MOTIRegion != "")
                 ChooseSpecificSelectOption(licenseDetailsMotiRegionSelector, lease.MOTIRegion);
@@ -290,13 +263,56 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.True(webDriver.FindElement(licenseDetailsOtherPurposeLabel).Displayed);
                 webDriver.FindElement(licenseDetailsOtherPurposeInput).SendKeys(lease.PurposeOther);
             }
+        }
+
+        public void AddAdditionalLicenseDetailsInformation(Lease lease)
+        {
+            //MAIN DETAILS
+            //Project
+            if (lease.MinistryProject != "")
+            {
+                webDriver.FindElement(licenseDetailsProjectInput).SendKeys(lease.MinistryProject);
+
+                Wait();
+                webDriver.FindElement(licenseDetailsProjectInput).SendKeys(Keys.Space);
+
+                Wait();
+                webDriver.FindElement(licenseDetailsProjectInput).SendKeys(Keys.Backspace);
+
+                Wait(2000);
+                webDriver.FindElement(licenseDetailsProject1stOption).Click();
+            }
+
+            //Status
+            if (lease.LeaseStatus != "")
+                ChooseSpecificSelectOption(licenseDetailsStatusSelector, lease.LeaseStatus);
+
+            //Account Type
+            if (lease.AccountType != "")
+            {
+                webDriver.FindElement(licenseDetailsAccountTypeSelector).Click();
+                ChooseSpecificSelectOption(licenseDetailsAccountTypeSelector, lease.AccountType);
+            }
+
+            //Expiry Date
+            if (lease.LeaseExpiryDate != "")
+            {
+                webDriver.FindElement(licenseDetailsExpiryDateInput).Click();
+                webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(lease.LeaseExpiryDate);
+                webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(Keys.Enter);
+            }
+
+            //Administration Details
+            //MOTI Contact
+            if (lease.MOTIContact != "")
+                webDriver.FindElement(licenseDetailsMotiContactInput).SendKeys(lease.MOTIContact);
 
             //Initiator
             if (lease.Initiator != "")
                 ChooseSpecificSelectOption(licenseDetailsInitiatorSelector, lease.Initiator);
 
             //Responsibility
-            if(lease.Responsibility != "")
+            if (lease.Responsibility != "")
                 ChooseSpecificSelectOption(licenseDetailsResposibilitySelector, lease.Responsibility);
 
             //Effective date of responsibility
@@ -305,42 +321,42 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(licenseDetailsEffectiveDateInput).SendKeys(lease.EffectiveDate);
                 webDriver.FindElement(licenseDetailsEffectiveDateInput).SendKeys(Keys.Enter);
             }
-                
+
             //Intended use
             if (lease.IntendedUse != "")
                 webDriver.FindElement(licenseDetailsIntendedUseTextarea).SendKeys(lease.IntendedUse);
 
             //CONSULTATION DETAILS
             //First Nation
-            if(lease.FirstNation != "")
+            if (lease.FirstNation != "")
                 ChooseSpecificSelectOption(licenseDetailsFirstNationSelect, lease.FirstNation);
 
             //Startegic Real Estate
-            if(lease.StrategicRealEstate != "")
+            if (lease.StrategicRealEstate != "")
                 ChooseSpecificSelectOption(licenseDetailsSRESelect, lease.StrategicRealEstate);
 
             //Regional planning
-            if(lease.RegionalPlanning != "")
+            if (lease.RegionalPlanning != "")
                 ChooseSpecificSelectOption(licenseDetailsRegionalPlanningSelect, lease.RegionalPlanning);
 
             //Regional property services
-            if(lease.RegionalPropertyService != "")
+            if (lease.RegionalPropertyService != "")
                 ChooseSpecificSelectOption(licenseDetailsRegionalPropertyServicesSelect, lease.RegionalPropertyService);
 
             //District
-            if(lease.District != "")
+            if (lease.District != "")
                 ChooseSpecificSelectOption(licenseDetailsDistrictSelect, lease.District);
 
             //Headquarters
-            if(lease.Headquarter != "")
+            if (lease.Headquarter != "")
                 ChooseSpecificSelectOption(licenseDetailsHeadquarterSelect, lease.Headquarter);
 
             //Other
-            if(lease.ConsultationOther != "")
+            if (lease.ConsultationOther != "")
                 ChooseSpecificSelectOption(licenseDetailsOtherSelect, lease.ConsultationOther);
 
             //Describe other
-            if(lease.ConsultationOtherDetails != "")
+            if (lease.ConsultationOtherDetails != "")
                 webDriver.FindElement(licenseDetailsOtherDetailsInput).SendKeys(lease.ConsultationOtherDetails);
 
             //DOCUMENTATION
@@ -577,9 +593,10 @@ namespace PIMS.Tests.Automation.PageObjects
             //If PID is already associated with another license
             if (webDriver.FindElements(licenseDetailsModalPIDAttached).Count > 0)
             {
-                ButtonElement("Acknowledge & Continue");
-
                 Wait();
+                sharedModals.ModalClickOKBttn();
+
+                Wait(5000);
                 if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
                 {
                     Assert.True(sharedModals.ModalHeader().Equals("User Override Required"));
@@ -633,107 +650,105 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(licenseDetailsProjectLabel);
 
             //Create Title
-            Assert.True(webDriver.FindElement(licenseCreateTitle).Displayed);
+            AssertTrueIsDisplayed(licenseCreateTitle);
 
             //Details
-            Assert.True(webDriver.FindElement(licenseDetailsProjectLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsProjectInput).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsStatusLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsStatusSelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsAccountTypeLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsAccountTypeSelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsStartDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsStartDateInput).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsExpiryDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsExpiryDateInput).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsProjectLabel);
+            AssertTrueIsDisplayed(licenseDetailsProjectInput);
+            AssertTrueIsDisplayed(licenseDetailsStatusLabel);
+            AssertTrueIsDisplayed(licenseDetailsStatusSelector);
+            AssertTrueIsDisplayed(licenseDetailsAccountTypeLabel);
+            AssertTrueIsDisplayed(licenseDetailsAccountTypeSelector);
+            AssertTrueIsDisplayed(licenseDetailsStartDateLabel);
+            AssertTrueIsDisplayed(licenseDetailsStartDateInput);
+            AssertTrueIsDisplayed(licenseDetailsExpiryDateLabel);
+            AssertTrueIsDisplayed(licenseDetailsExpiryDateInput);
 
             //Properties to include in this file
             sharedSearchProperties.VerifyLocateOnMapFeature();
 
             //Administration
-            Assert.True(webDriver.FindElement(licenseDetailsAdmSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsMotiContactLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsMotiContactInput).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsMotiRegionLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsMotiRegionSelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsProgramLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsProgramSelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsTypeLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsTypeSelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsPurposeLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsPurposeSelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsInitiatorLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsInitiatorTooltip).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsInitiatorSelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsResponsibilityLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsResponsibilityTooltip).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsResposibilitySelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsEffectiveDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsEffectiveDateInput).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsIntendedUseLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsIntendedUseTextarea).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsAdmSubtitle);
+            AssertTrueIsDisplayed(licenseDetailsMotiContactLabel);
+            AssertTrueIsDisplayed(licenseDetailsMotiContactInput);
+            AssertTrueIsDisplayed(licenseDetailsMotiRegionLabel);
+            AssertTrueIsDisplayed(licenseDetailsMotiRegionSelector);
+            AssertTrueIsDisplayed(licenseDetailsProgramLabel);
+            AssertTrueIsDisplayed(licenseDetailsProgramSelector);
+            AssertTrueIsDisplayed(licenseDetailsTypeLabel);
+            AssertTrueIsDisplayed(licenseDetailsTypeSelector);
+            AssertTrueIsDisplayed(licenseDetailsPurposeLabel);
+            AssertTrueIsDisplayed(licenseDetailsPurposeSelector);
+            AssertTrueIsDisplayed(licenseDetailsInitiatorLabel);
+            AssertTrueIsDisplayed(licenseDetailsInitiatorTooltip);
+            AssertTrueIsDisplayed(licenseDetailsInitiatorSelector);
+            AssertTrueIsDisplayed(licenseDetailsResponsibilityLabel);
+            AssertTrueIsDisplayed(licenseDetailsResponsibilityTooltip);
+            AssertTrueIsDisplayed(licenseDetailsResposibilitySelector);
+            AssertTrueIsDisplayed(licenseDetailsEffectiveDateLabel);
+            AssertTrueIsDisplayed(licenseDetailsEffectiveDateInput);
+            AssertTrueIsDisplayed(licenseDetailsIntendedUseLabel);
+            AssertTrueIsDisplayed(licenseDetailsIntendedUseTextarea);
 
             //Consultation
-            Assert.True(webDriver.FindElement(licenseDetailsConsultationSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsFirstNationLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsFirstNationSelect).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsSRELabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsSRESelect).Displayed);
-            Assert.True(webDriver.FindElement(licenceDetailsRegionalPlanningLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsRegionalPlanningSelect).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsRegionalPropertyServicesLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsRegionalPropertyServicesSelect).Displayed);
-            Assert.True(webDriver.FindElement(licenceDetailsDistrictLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsDistrictSelect).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsHeadquarterLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsHeadquarterSelect).Displayed);
-            Assert.True(webDriver.FindElement(licenceDetailsOtherLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsOtherSelect).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsOtherDetailsInput).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsConsultationSubtitle);
+            AssertTrueIsDisplayed(licenseDetailsFirstNationLabel);
+            AssertTrueIsDisplayed(licenseDetailsFirstNationSelect);
+            AssertTrueIsDisplayed(licenseDetailsSRELabel);
+            AssertTrueIsDisplayed(licenseDetailsSRESelect);
+            AssertTrueIsDisplayed(licenceDetailsRegionalPlanningLabel);
+            AssertTrueIsDisplayed(licenseDetailsRegionalPlanningSelect);
+            AssertTrueIsDisplayed(licenseDetailsRegionalPropertyServicesLabel);
+            AssertTrueIsDisplayed(licenseDetailsRegionalPropertyServicesSelect);
+            AssertTrueIsDisplayed(licenceDetailsDistrictLabel);
+            AssertTrueIsDisplayed(licenseDetailsDistrictSelect);
+            AssertTrueIsDisplayed(licenseDetailsHeadquarterLabel);
+            AssertTrueIsDisplayed(licenseDetailsHeadquarterSelect);
+            AssertTrueIsDisplayed(licenceDetailsOtherLabel);
+            AssertTrueIsDisplayed(licenseDetailsOtherSelect);
+            AssertTrueIsDisplayed(licenseDetailsOtherDetailsInput);
 
             //Documentation
-            Assert.True(webDriver.FindElement(licenseDetailsDocsSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsPhysicalLeaseExistLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsPhysicalLeaseExistSelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsDigitalLeaseExistLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsDigitalLeaseExistSelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLocationDocsLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLocationDocsTooltip).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLocationDocsTextarea).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLISNbrLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLISNbrInput).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsPSNbrLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsPSNbrInput).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsNotesLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsNotesTextarea).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsDocsSubtitle);
+            AssertTrueIsDisplayed(licenseDetailsPhysicalLeaseExistLabel);
+            AssertTrueIsDisplayed(licenseDetailsPhysicalLeaseExistSelector);
+            AssertTrueIsDisplayed(licenseDetailsDigitalLeaseExistLabel);
+            AssertTrueIsDisplayed(licenseDetailsDigitalLeaseExistSelector);
+            AssertTrueIsDisplayed(licenseDetailsLocationDocsLabel);
+            AssertTrueIsDisplayed(licenseDetailsLocationDocsTooltip);
+            AssertTrueIsDisplayed(licenseDetailsLocationDocsTextarea);
+            AssertTrueIsDisplayed(licenseDetailsLISNbrLabel);
+            AssertTrueIsDisplayed(licenseDetailsLISNbrInput);
+            AssertTrueIsDisplayed(licenseDetailsPSNbrLabel);
+            AssertTrueIsDisplayed(licenseDetailsPSNbrInput);
+            AssertTrueIsDisplayed(licenseDetailsNotesLabel);
+            AssertTrueIsDisplayed(licenseDetailsNotesTextarea);
 
             //Buttons
-            Assert.True(webDriver.FindElement(licenseDetailsSaveButton).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsCancelButton).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsSaveButton);
+            AssertTrueIsDisplayed(licenseDetailsCancelButton);
         }
 
         public void VerifyLicenseHeader()
         {
-            WaitUntilVisible(licenseHeaderNbrContent);
-
-            Assert.True(webDriver.FindElement(licenseHeaderNbrLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderNbrContent).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderAccountType).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderProperty).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderPropertyContent).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderTenantLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderStartDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderStartDateContent).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderExpiryDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderExpiryDateContent).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderCreatedLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderCreatedContent).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderCreatedByContent).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderLastUpdatedLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderLastUpdatedContent).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderLastUpdatedByContent).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderStatusLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseHeaderStatusContent).Displayed);
+            AssertTrueIsDisplayed(licenseHeaderNbrLabel);
+            AssertTrueIsDisplayed(licenseHeaderNbrContent);
+            AssertTrueIsDisplayed(licenseHeaderAccountType);
+            AssertTrueIsDisplayed(licenseHeaderProperty);
+            AssertTrueIsDisplayed(licenseHeaderPropertyContent);
+            AssertTrueIsDisplayed(licenseHeaderTenantLabel);
+            AssertTrueIsDisplayed(licenseHeaderStartDateLabel);
+            AssertTrueIsDisplayed(licenseHeaderStartDateContent);
+            AssertTrueIsDisplayed(licenseHeaderExpiryDateLabel);
+            AssertTrueIsDisplayed(licenseHeaderExpiryDateContent);
+            AssertTrueIsDisplayed(licenseHeaderCreatedLabel);
+            AssertTrueIsDisplayed(licenseHeaderCreatedContent);
+            AssertTrueIsDisplayed(licenseHeaderCreatedByContent);
+            AssertTrueIsDisplayed(licenseHeaderLastUpdatedLabel);
+            AssertTrueIsDisplayed(licenseHeaderLastUpdatedContent);
+            AssertTrueIsDisplayed(licenseHeaderLastUpdatedByContent);
+            AssertTrueIsDisplayed(licenseHeaderStatusLabel);
+            AssertTrueIsDisplayed(licenseHeaderStatusContent);
 
             //Verify Expired Flag on Header
             if (webDriver.FindElement(licenseHeaderExpiryDateContent).Text != "")
@@ -741,203 +756,200 @@ namespace PIMS.Tests.Automation.PageObjects
                 var expiryDateInput = Convert.ToDateTime(webDriver.FindElement(licenseHeaderExpiryDateContent).Text);
                 if (expiryDateInput < DateTime.Now)
                 {
-                    Assert.True(webDriver.FindElement(licenseHeaderExpiredFlag).Displayed);
+                    AssertTrueIsDisplayed(licenseHeaderExpiredFlag);
                 }
             }  
         }
 
         public void VerifyLicenseDetailsViewForm(Lease lease)
         {
-            WaitUntilVisible(licenseDetailsEditIcon);
             VerifyLicenseHeader();
 
             //Edit Icon
-            Assert.True(webDriver.FindElement(licenseDetailsEditIcon).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsEditIcon);
 
             //Project
-            Assert.True(webDriver.FindElement(licenseDetailsProjectSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsProjectLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsProjectSubtitle);
+            AssertTrueIsDisplayed(licenseDetailsProjectLabel);
 
             if (lease.MinistryProject != "")
-                Assert.True(webDriver.FindElement(licenseDetailsProjectContent).Text == lease.MinistryProjectCode + " - " + lease.MinistryProject);
+                AssertTrueContentEquals(licenseDetailsProjectContent, lease.MinistryProjectCode + " - " + lease.MinistryProject);
 
             //Lease Start and End Date
             //To-Do - Calculate Start date and expiry date
-            Assert.True(webDriver.FindElement(licenseDetailsLeaseDateSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLeaseDateStartLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLeaseDateStartContent).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLeaseDateEndLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsLeaseDateSubtitle);
+            AssertTrueIsDisplayed(licenseDetailsLeaseDateStartLabel);
+            AssertTrueIsDisplayed(licenseDetailsLeaseDateStartContent);
+            AssertTrueIsDisplayed(licenseDetailsLeaseDateEndLabel);
 
             if(lease.LeaseExpiryDate != "")
-                Assert.True(webDriver.FindElement(licenseDetailsLeaseDateEndContent).Displayed);
+                AssertTrueIsDisplayed(licenseDetailsLeaseDateEndContent);
 
             //Lease Current Term
             //To-Do - Calculate Term Dates
-            Assert.True(webDriver.FindElement(licenseDetailsCurrentTermSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsCurrentTermStartLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsCurrentTermSubtitle);
+            AssertTrueIsDisplayed(licenseDetailsCurrentTermStartLabel);
             //Assert.True(webDriver.FindElement(licenseDetailsCurrentTermStartContent).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsCurrentTermEndLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsCurrentTermEndLabel);
             //Assert.True(webDriver.FindElement(licenseDetailsCurrentTermEndContent).Displayed);
 
             //Lease 1st Property Information
-            Assert.True(webDriver.FindElement(licenseDetailsPropertyInformationSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsProperty1DescriptiveNameLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsPropertyInformationSubtitle);
+            AssertTrueIsDisplayed(licenseDetailsProperty1DescriptiveNameLabel);
             //Assert.True(webDriver.FindElement(licenseDetailsProperty1DescriptiveNameContent).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsProperty1AreaIncludedLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsProperty1AreaIncludedContent).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsProperty1AddressLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsProperty1AreaIncludedLabel);
+            AssertTrueIsDisplayed(licenseDetailsProperty1AreaIncludedContent);
+            AssertTrueIsDisplayed(licenseDetailsProperty1AddressLabel);
 
             if (webDriver.FindElements(licenseDetailsProperty1AddressNoContent).Count() > 0)
-                Assert.True(webDriver.FindElement(licenseDetailsProperty1AddressNoContent).Displayed);
+                AssertTrueIsDisplayed(licenseDetailsProperty1AddressNoContent);
             else
-                Assert.True(webDriver.FindElement(licenseDetailsProperty1AddressContent).Displayed);
-        
-            
-            Assert.True(webDriver.FindElement(licenseDetailsProperty1LegalDescripLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsProperty1LegalDescripContent).Displayed);
+                AssertTrueIsDisplayed(licenseDetailsProperty1AddressContent);
+
+            AssertTrueIsDisplayed(licenseDetailsProperty1LegalDescripLabel);
+            AssertTrueIsDisplayed(licenseDetailsProperty1LegalDescripContent);
 
             //Lease Administration
-            Assert.True(webDriver.FindElement(licenseDetailsAdmSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsProgramViewLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsAdmSubtitle);
+            AssertTrueIsDisplayed(licenseDetailsProgramViewLabel);
 
             if(lease.Program != "")
-                Assert.True(webDriver.FindElement(licenseDetailsProgramContent).GetAttribute("value") == lease.Program);
+                AssertTrueElementValueEquals(licenseDetailsProgramContent, lease.Program);
 
             if (lease.ProgramOther != "")
-                Assert.True(webDriver.FindElement(licenseDetailsOtherProgramContent).GetAttribute("value") == lease.ProgramOther);
+                AssertTrueElementValueEquals(licenseDetailsOtherProgramContent, lease.ProgramOther);
 
-            Assert.True(webDriver.FindElement(licenseDetailsViewTypeLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsViewTypeLabel);
 
             if(lease.AdminType != "")
-                Assert.True(webDriver.FindElement(licenseDetailsTypeContent).GetAttribute("value") == lease.AdminType);
+                AssertTrueElementValueEquals(licenseDetailsTypeContent, lease.AdminType);
 
             if (lease.TypeOther != "")
-                Assert.True(webDriver.FindElement(licenseDetailsOtherTypeContent).GetAttribute("value") == lease.TypeOther);
+                AssertTrueElementValueEquals(licenseDetailsOtherTypeContent, lease.TypeOther);
 
-            Assert.True(webDriver.FindElement(licenseDetailsReceivableToLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsReceivableToLabel);
 
             if(lease.AccountType != "")
-                Assert.True(webDriver.FindElement(licenseDetailsReceivableToContent).GetAttribute("value") == lease.AccountType);
+                AssertTrueElementValueEquals(licenseDetailsReceivableToContent, lease.AccountType);
 
-            Assert.True(webDriver.FindElement(licenseDetailsCategoryLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsCategoryLabel);
 
             if(lease.Category != "")
-                Assert.True(webDriver.FindElement(licenseDetailsCategoryContent).GetAttribute("value") == lease.Category);
+                AssertTrueElementValueEquals(licenseDetailsCategoryContent, lease.Category);
 
             if (lease.CategoryOther != "")
-                Assert.True(webDriver.FindElement(licenseDetailsCategoryOtherContent).GetAttribute("value") == lease.CategoryOther);
+                AssertTrueElementValueEquals(licenseDetailsCategoryOtherContent, lease.CategoryOther);
 
-            Assert.True(webDriver.FindElement(licenseDetailsPurposeLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsPurposeLabel);
 
             if(lease.Purpose != "")
-                Assert.True(webDriver.FindElement(licenseDetailsPurposeContent).GetAttribute("value") == lease.Purpose);
+                AssertTrueElementValueEquals(licenseDetailsPurposeContent, lease.Purpose);
 
             if (lease.PurposeOther != "")
-                Assert.True(webDriver.FindElement(licenseDetailsOtherPurposeContent).GetAttribute("value") == lease.PurposeOther);
+                AssertTrueElementValueEquals(licenseDetailsOtherPurposeContent, lease.PurposeOther);
 
-            Assert.True(webDriver.FindElement(licenseDetailsInitiatorLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsInitiatorLabel);
 
             if (lease.Initiator != "")
-                Assert.True(webDriver.FindElement(licenseDetailsInitiatorContent).GetAttribute("value") == lease.Initiator);
+                AssertTrueElementValueEquals(licenseDetailsInitiatorContent, lease.Initiator);
 
-            Assert.True(webDriver.FindElement(licenseDetailsResponsibilityLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsResponsibilityLabel);
 
             if(lease.Responsibility != "")
-                Assert.True(webDriver.FindElement(licenseDetailsResponsibilityContent).GetAttribute("value") == lease.Responsibility);
+                AssertTrueElementValueEquals(licenseDetailsResponsibilityContent, lease.Responsibility);
 
-            Assert.True(webDriver.FindElement(licenseDetailsEffectiveDateLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsEffectiveDateLabel);
 
             if (lease.EffectiveDate != "")
-                Assert.True(webDriver.FindElement(licenseDetailsEffectiveDateContent).Text == TransformDateFormat(lease.EffectiveDate));
-                
+                AssertTrueContentEquals(licenseDetailsEffectiveDateContent, TransformDateFormat(lease.EffectiveDate));
 
-            Assert.True(webDriver.FindElement(licenseDetailsMotiContactViewLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsMotiContactViewLabel);
 
             if(lease.MOTIContact != "")
-                Assert.True(webDriver.FindElement(licenseDetailsMotiContactInput).GetAttribute("value") == lease.MOTIContact);
+                AssertTrueElementValueEquals(licenseDetailsMotiContactInput,lease.MOTIContact);
 
-            Assert.True(webDriver.FindElement(licenseDetailsIntendedUseLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsIntendedUseLabel);
 
             if(lease.IntendedUse != "")
-                Assert.True(webDriver.FindElement(licenseDetailsIntendedUseTextarea).GetAttribute("value") == lease.IntendedUse);
+                AssertTrueElementValueEquals(licenseDetailsIntendedUseTextarea, lease.IntendedUse);
 
             //Consultation
-            Assert.True(webDriver.FindElement(licenseDetailsConsultationSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsFirstNationLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsConsultationSubtitle);
+            AssertTrueIsDisplayed(licenseDetailsFirstNationLabel);
 
             if(lease.FirstNation != "")
-                Assert.True(webDriver.FindElement(licenseDetailsFirstNationContent).Text == lease.FirstNation);
+                AssertTrueContentEquals(licenseDetailsFirstNationContent, lease.FirstNation);
 
-            Assert.True(webDriver.FindElement(licenseDetailsSRELabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsSRELabel);
 
             if(lease.StrategicRealEstate != "")
-                Assert.True(webDriver.FindElement(licenseDetailsSREContent).Text == lease.StrategicRealEstate);
+                AssertTrueContentEquals(licenseDetailsSREContent, lease.StrategicRealEstate);
 
-            Assert.True(webDriver.FindElement(licenceDetailsRegionalPlanningLabel).Displayed);
+            AssertTrueIsDisplayed(licenceDetailsRegionalPlanningLabel);
 
             if(lease.RegionalPlanning != "")
-                Assert.True(webDriver.FindElement(licenceDetailsRegionalPlanningContent).Text == lease.RegionalPlanning);
+                AssertTrueContentEquals(licenceDetailsRegionalPlanningContent, lease.RegionalPlanning);
 
-            Assert.True(webDriver.FindElement(licenseDetailsRegionalPropertyServicesLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsRegionalPropertyServicesLabel);
 
             if(lease.RegionalPropertyService != "")
-                Assert.True(webDriver.FindElement(licenseDetailsRegionalPropertyServicesContent).Text == lease.RegionalPropertyService);
+                AssertTrueContentEquals(licenseDetailsRegionalPropertyServicesContent, lease.RegionalPropertyService);
 
-            Assert.True(webDriver.FindElement(licenceDetailsDistrictLabel).Displayed);
+            AssertTrueIsDisplayed(licenceDetailsDistrictLabel);
 
             if(lease.District != "")
-                Assert.True(webDriver.FindElement(licenceDetailsDistrictContent).Text == lease.District);
+                AssertTrueContentEquals(licenceDetailsDistrictContent, lease.District);
 
-            Assert.True(webDriver.FindElement(licenseDetailsHeadquarterLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsHeadquarterLabel);
 
             if(lease.Headquarter != "")
-                Assert.True(webDriver.FindElement(licenseDetailsHeadquarterContent).Text == lease.Headquarter);
+                AssertTrueContentEquals(licenseDetailsHeadquarterContent,lease.Headquarter);
 
-            Assert.True(webDriver.FindElement(licenceDetailsOtherLabel).Displayed);
+            AssertTrueIsDisplayed(licenceDetailsOtherLabel);
 
             if(lease.ConsultationOther != "")
-                Assert.True(webDriver.FindElement(licenceDetailsOtherContent).Text == lease.ConsultationOther);
+                AssertTrueContentEquals(licenceDetailsOtherContent, lease.ConsultationOther);
 
             //Documentation
-            Assert.True(webDriver.FindElement(licenseDetailsPhysicalLeaseExistViewLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsPhysicalLeaseExistViewLabel);
 
             if (lease.PhysicalLeaseExist != "")
             {
                 IWebElement physicalDocumentation = webDriver.FindElement(licenseDetailsPhysicalLeaseExistSelector);
                 SelectElement selectedValue = new SelectElement(physicalDocumentation);
                 string selectedText = selectedValue.SelectedOption.Text;
-                Assert.True(selectedText == lease.PhysicalLeaseExist);
+                Assert.True(selectedText.Equals(lease.PhysicalLeaseExist));
             }
 
-            Assert.True(webDriver.FindElement(licenseDetailsDigitalLeaseExistViewLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsDigitalLeaseExistViewLabel);
 
             if (lease.DigitalLeaseExist != "")
             {
                 IWebElement digitalDocumentation = webDriver.FindElement(licenseDetailsDigitalLeaseExistSelector);
                 SelectElement selectedValue = new SelectElement(digitalDocumentation);
                 string selectedText = selectedValue.SelectedOption.Text;
-                Assert.True(selectedText == lease.DigitalLeaseExist);
+                Assert.True(selectedText.Equals(lease.DigitalLeaseExist));
             }
                 
-            Assert.True(webDriver.FindElement(licenseDetailsLocationDocsLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsLocationDocsLabel);
 
             if (lease.DocumentLocation != "")
-                Assert.True(webDriver.FindElement(licenseDetailsLocationDocsContent).Text == lease.DocumentLocation);
+                AssertTrueContentEquals(licenseDetailsLocationDocsContent, lease.DocumentLocation);
 
-            Assert.True(webDriver.FindElement(licenseDetailsLISNbrLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsLISNbrLabel);
 
             if (lease.LISNumber != "")
-                Assert.True(webDriver.FindElement(licenseDetailsLISNbrInput).GetAttribute("value") == lease.LISNumber);
+                AssertTrueElementValueEquals(licenseDetailsLISNbrInput, lease.LISNumber);
 
-            Assert.True(webDriver.FindElement(licenseDetailsPSNbrLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsPSNbrLabel);
 
             if (lease.PSNumber != "")
-                Assert.True(webDriver.FindElement(licenseDetailsPSNbrInput).GetAttribute("value") == lease.PSNumber);
+                AssertTrueElementValueEquals(licenseDetailsPSNbrInput, lease.PSNumber);
 
-            Assert.True(webDriver.FindElement(licenseDetailsNotesLabel).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsNotesLabel);
 
             if (lease.LeaseNotes != "")
-                Assert.True(webDriver.FindElement(licenseDetailsNotesContent).Text == lease.LeaseNotes) ;
+                AssertTrueContentEquals(licenseDetailsNotesContent, lease.LeaseNotes) ;
         }
 
         public void VerifyLicenseDetailsUpdateForm()
@@ -946,62 +958,71 @@ namespace PIMS.Tests.Automation.PageObjects
             VerifyLicenseHeader();
 
             //Details
-            Assert.True(webDriver.FindElement(licenseDetailsStatusLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsStatusSelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsAccountTypeLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsAccountTypeSelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsStartDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsStartDateInput).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsExpiryDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsExpiryDateInput).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsStatusLabel);
+            AssertTrueIsDisplayed(licenseDetailsStatusSelector);
+            AssertTrueIsDisplayed(licenseDetailsAccountTypeLabel);
+            AssertTrueIsDisplayed(licenseDetailsAccountTypeSelector);
+            AssertTrueIsDisplayed(licenseDetailsStartDateLabel);
+            AssertTrueIsDisplayed(licenseDetailsStartDateInput);
+            AssertTrueIsDisplayed(licenseDetailsExpiryDateLabel);
+            AssertTrueIsDisplayed(licenseDetailsExpiryDateInput);
 
             //Administration
-            Assert.True(webDriver.FindElement(licenseDetailsAdmSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsMotiContactLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsMotiContactInput).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsMotiRegionLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsMotiRegionSelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsProgramLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsProgramSelector).Displayed);
-            if (webDriver.FindElements(licenseDetailsOtherProgramLabel).Count() > 0) { Assert.True(webDriver.FindElement(licenseDetailsOtherProgramInput).Displayed); }
+            AssertTrueIsDisplayed(licenseDetailsAdmSubtitle);
+            AssertTrueIsDisplayed(licenseDetailsMotiContactLabel);
+            AssertTrueIsDisplayed(licenseDetailsMotiContactInput);
+            AssertTrueIsDisplayed(licenseDetailsMotiRegionLabel);
+            AssertTrueIsDisplayed(licenseDetailsMotiRegionSelector);
+            AssertTrueIsDisplayed(licenseDetailsProgramLabel);
+            AssertTrueIsDisplayed(licenseDetailsProgramSelector);
 
-            Assert.True(webDriver.FindElement(licenseDetailsTypeLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsTypeSelector).Displayed);
-            if (webDriver.FindElements(licenseDetailsOtherTypeLabel).Count > 0) { Assert.True(webDriver.FindElement(licenseDetailsOtherTypeInput).Displayed); }
-            if (webDriver.FindElements(licenseDetailsCategoryLabel).Count > 0) { Assert.True(webDriver.FindElement(licenseDetailsCategorySelector).Displayed); }
-            if (webDriver.FindElements(licenseDetailsCategoryOtherLabel).Count > 0) { Assert.True(webDriver.FindElement(licenseDetailsCategoryOtherInput).Displayed); }
+            if (webDriver.FindElements(licenseDetailsOtherProgramLabel).Count() > 0)
+                AssertTrueIsDisplayed(licenseDetailsOtherProgramInput);
 
-            Assert.True(webDriver.FindElement(licenseDetailsPurposeLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsPurposeSelector).Displayed);
-            if (webDriver.FindElements(licenseDetailsOtherTypeLabel).Count > 0) { Assert.True(webDriver.FindElement(licenseDetailsOtherTypeInput).Displayed); }
+            AssertTrueIsDisplayed(licenseDetailsTypeLabel);
+            AssertTrueIsDisplayed(licenseDetailsTypeSelector);
 
-            Assert.True(webDriver.FindElement(licenseDetailsInitiatorLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsInitiatorTooltip).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsInitiatorSelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsResponsibilityLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsResponsibilityTooltip).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsResposibilitySelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsEffectiveDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsEffectiveDateInput).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsIntendedUseLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsIntendedUseTextarea).Displayed);
+            if (webDriver.FindElements(licenseDetailsOtherTypeLabel).Count > 0)
+                AssertTrueIsDisplayed(licenseDetailsOtherTypeInput);
+
+            if (webDriver.FindElements(licenseDetailsCategoryLabel).Count > 0)
+                AssertTrueIsDisplayed(licenseDetailsCategorySelector);
+
+            if (webDriver.FindElements(licenseDetailsCategoryOtherLabel).Count > 0)
+                AssertTrueIsDisplayed(licenseDetailsCategoryOtherInput);
+
+            AssertTrueIsDisplayed(licenseDetailsPurposeLabel);
+            AssertTrueIsDisplayed(licenseDetailsPurposeSelector);
+
+            if (webDriver.FindElements(licenseDetailsOtherTypeLabel).Count > 0)
+                AssertTrueIsDisplayed(licenseDetailsOtherTypeInput);
+
+            AssertTrueIsDisplayed(licenseDetailsInitiatorLabel);
+            AssertTrueIsDisplayed(licenseDetailsInitiatorTooltip);
+            AssertTrueIsDisplayed(licenseDetailsInitiatorSelector);
+            AssertTrueIsDisplayed(licenseDetailsResponsibilityLabel);
+            AssertTrueIsDisplayed(licenseDetailsResponsibilityTooltip);
+            AssertTrueIsDisplayed(licenseDetailsResposibilitySelector);
+            AssertTrueIsDisplayed(licenseDetailsEffectiveDateLabel);
+            AssertTrueIsDisplayed(licenseDetailsEffectiveDateInput);
+            AssertTrueIsDisplayed(licenseDetailsIntendedUseLabel);
+            AssertTrueIsDisplayed(licenseDetailsIntendedUseTextarea);
 
             //Documentation
-            Assert.True(webDriver.FindElement(licenseDetailsDocsSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsPhysicalLeaseExistLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsPhysicalLeaseExistSelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsDigitalLeaseExistLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsDigitalLeaseExistSelector).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLocationDocsLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLocationDocsTooltip).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLocationDocsTextarea).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLISNbrLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLISNbrInput).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsPSNbrLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsPSNbrInput).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsNotesLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsNotesTextarea).Displayed);
+            AssertTrueIsDisplayed(licenseDetailsDocsSubtitle);
+            AssertTrueIsDisplayed(licenseDetailsPhysicalLeaseExistLabel);
+            AssertTrueIsDisplayed(licenseDetailsPhysicalLeaseExistSelector);
+            AssertTrueIsDisplayed(licenseDetailsDigitalLeaseExistLabel);
+            AssertTrueIsDisplayed(licenseDetailsDigitalLeaseExistSelector);
+            AssertTrueIsDisplayed(licenseDetailsLocationDocsLabel);
+            AssertTrueIsDisplayed(licenseDetailsLocationDocsTooltip);
+            AssertTrueIsDisplayed(licenseDetailsLocationDocsTextarea);
+            AssertTrueIsDisplayed(licenseDetailsLISNbrLabel);
+            AssertTrueIsDisplayed(licenseDetailsLISNbrInput);
+            AssertTrueIsDisplayed(licenseDetailsPSNbrLabel);
+            AssertTrueIsDisplayed(licenseDetailsPSNbrInput);
+            AssertTrueIsDisplayed(licenseDetailsNotesLabel);
+            AssertTrueIsDisplayed(licenseDetailsNotesTextarea);
         }
-
     }
 }

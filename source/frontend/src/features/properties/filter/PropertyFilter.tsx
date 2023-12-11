@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, Select } from '@/components/common/form';
 import { TableSort } from '@/components/Table/TableSort';
+import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { useRouterFilter } from '@/hooks/useRouterFilter';
 import { FilterBarSchema } from '@/utils/YupSchema';
 
@@ -26,8 +27,6 @@ export interface IPropertyFilterProps {
   sort?: TableSort<any>;
   /** Event fire when sorting changes. */
   onSorting?: (sort: TableSort<any>) => void;
-  /** Override to trigger filterchanged in the parent */
-  searchButtonClicked?: () => void;
   /** Which toggle view is currently active */
   toggle?: SearchToggleOption;
   /** Which toggle view is currently active */
@@ -43,11 +42,12 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   onChange,
   sort,
   onSorting,
-  searchButtonClicked,
   toggle = SearchToggleOption.Map,
   useGeocoder,
 }) => {
   const [propertyFilter, setPropertyFilter] = useState<IPropertyFilter>(defaultFilter);
+
+  const { getSitePids } = useGeocoderRepository();
 
   useRouterFilter<IPropertyFilter>({
     filter: propertyFilter,
@@ -111,24 +111,34 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 ]}
                 className="idir-input-group"
                 onChange={() => {
-                  setFieldValue('pinOrPid', '');
                   setFieldValue('latitude', null);
                   setFieldValue('longitude', null);
+                  setFieldValue('pinOrPid', null);
+                  setFieldValue('planNumber', null);
                 }}
               />
             </NoRightPaddingColumn>
             <StyledCol xs="3" md="2" lg="4" xl="3">
               {values.searchBy === 'pinOrPid' && (
-                <Input field="pinOrPid" placeholder="Enter a PID or PIN"></Input>
+                <Input
+                  field="pinOrPid"
+                  placeholder="Enter a PID or PIN"
+                  displayErrorTooltips
+                ></Input>
               )}
               {values.searchBy === 'address' && useGeocoder && (
                 <GeocoderAutoComplete
                   data-testid="geocoder-mapview"
                   field="address"
                   placeholder="Enter an address"
-                  onSelectionChanged={val => {
-                    setFieldValue('latitude', val.latitude);
-                    setFieldValue('longitude', val.longitude);
+                  onSelectionChanged={async val => {
+                    const geocoderPidResponse = await getSitePids(val.siteId);
+                    if (geocoderPidResponse?.pids?.length === 1) {
+                      setFieldValue('pinOrPid', geocoderPidResponse?.pids[0]);
+                    } else {
+                      setFieldValue('latitude', val.latitude);
+                      setFieldValue('longitude', val.longitude);
+                    }
                   }}
                   value={values.address}
                   autoSetting="off"
@@ -143,8 +153,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
             </StyledCol>
             <Col xs="auto">
               <SearchButton
-                disabled={isSubmitting}
-                onClick={() => searchButtonClicked && searchButtonClicked()}
+                disabled={
+                  isSubmitting ||
+                  !(values.pinOrPid || values.latitude || values.longitude || values.planNumber)
+                }
               />
             </Col>
             <Col xs="auto">

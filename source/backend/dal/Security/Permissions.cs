@@ -171,10 +171,22 @@ namespace Pims.Dal.Security
         [Display(GroupName = "compensationRequisition", Name = "compensation-requisition-add", Description = "Ability to add new Acquisition File compensation requisitions.")]
         CompensationRequisitionAdd = 55,
 
-        [Display(GroupName = "compensationRequisition", Name = "compensation-requisition-edit", Description = "Ability to edit existing fAcquisition File compensation requisitions.")]
+        [Display(GroupName = "compensationRequisition", Name = "compensation-requisition-edit", Description = "Ability to edit existing Acquisition File compensation requisitions.")]
         CompensationRequisitionEdit = 56,
 
         [Display(GroupName = "compensationRequisition", Name = "compensation-requisition-delete", Description = "Ability to delete Acquisition File compensation requisitions.")]
         CompensationRequisitionDelete = 57,
+
+        [Display(GroupName = "management", Name = "management-view", Description = "Ability to view Management information.")]
+        ManagementView = 58,
+
+        [Display(GroupName = "management", Name = "management-add", Description = "Ability to add new Management information.")]
+        ManagementAdd = 59,
+
+        [Display(GroupName = "management", Name = "management-edit", Description = "Ability to edit existing Management information.")]
+        ManagementEdit = 60,
+
+        [Display(GroupName = "management", Name = "management-delete", Description = "Ability to delete Management information.")]
+        ManagementDelete = 61,
     }
 }

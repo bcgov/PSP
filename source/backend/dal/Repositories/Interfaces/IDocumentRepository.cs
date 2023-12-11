@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
@@ -8,13 +7,9 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IDocumentRepository : IRepository<PimsDocument>
     {
-        int GetTotalRelationCount(long documentId);
-
         PimsDocument Add(PimsDocument document);
 
         PimsDocument TryGet(long documentId);
-
-        List<PimsDocument> GetAllByDocumentType(string documentType);
 
         PimsDocument Update(PimsDocument document, bool commitTransaction = true);
 

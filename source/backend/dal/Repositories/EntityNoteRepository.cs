@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -45,25 +44,6 @@ namespace Pims.Dal.Repositories
             return entity;
         }
 
-        /// <summary>
-        /// Retrieves all notes associated with a parent entity.
-        /// </summary>
-        /// <typeparam name="T">The entity type - e.g. PimsActivityInstanceNote.</typeparam>
-        /// <param name="predicate">The predicate to filter all notes - e.g. where parentId == parent.Id.</param>
-        /// <returns>The entity-notes associations.</returns>
-        public IEnumerable<T> GetAll<T>(Func<T, bool> predicate)
-            where T : class
-        {
-            predicate.ThrowIfNull(nameof(predicate));
-            return this.Context.Set<T>().AsNoTracking().Where(predicate).ToArray();
-        }
-
-        public IEnumerable<PimsNote> GetAllActivityNotesById(long entityId)
-        {
-            return this.Context.PimsActivityInstanceNotes
-                .Where(x => x.ActivityInstanceId == entityId).Select(x => x.Note).ToList();
-        }
-
         public IEnumerable<PimsNote> GetAllAcquisitionNotesById(long acquisitionId)
         {
             return this.Context.PimsAcquisitionFileNotes
@@ -86,21 +66,6 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsResearchFileNotes
                 .Where(x => x.ResearchFileId == entityId).Select(x => x.Note).ToList();
-        }
-
-        public bool DeleteActivityNotes(long entityId)
-        {
-            var activityNotes = this.Context.PimsActivityInstanceNotes.Include(ai => ai.Note).Where(x => x.NoteId == entityId).ToList();
-            if (activityNotes.Any())
-            {
-                foreach (var activityNote in activityNotes)
-                {
-                    this.Context.PimsActivityInstanceNotes.Remove(activityNote);
-                    this.Context.PimsNotes.Remove(activityNote.Note);
-                }
-                return true;
-            }
-            return false;
         }
 
         public bool DeleteAcquisitionFileNotes(long noteId)

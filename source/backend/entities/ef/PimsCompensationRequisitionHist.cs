@@ -27,14 +27,16 @@ namespace Pims.Dal.Entities
         public long? AcquisitionOwnerId { get; set; }
         [Column("INTEREST_HOLDER_ID")]
         public long? InterestHolderId { get; set; }
-        [Column("ACQUISITION_FILE_PERSON_ID")]
-        public long? AcquisitionFilePersonId { get; set; }
+        [Column("ACQUISITION_FILE_TEAM_ID")]
+        public long? AcquisitionFileTeamId { get; set; }
         [Column("CHART_OF_ACCOUNTS_ID")]
         public long? ChartOfAccountsId { get; set; }
         [Column("RESPONSIBILITY_ID")]
         public long? ResponsibilityId { get; set; }
         [Column("YEARLY_FINANCIAL_ID")]
         public long? YearlyFinancialId { get; set; }
+        [Column("ALTERNATE_PROJECT_ID")]
+        public long? AlternateProjectId { get; set; }
         [Column("LEGACY_PAYEE")]
         [StringLength(1000)]
         public string LegacyPayee { get; set; }
@@ -58,6 +60,8 @@ namespace Pims.Dal.Entities
         public DateTime? GenerationDt { get; set; }
         [Column("FINALIZED_DATE", TypeName = "date")]
         public DateTime? FinalizedDate { get; set; }
+        [Column("ADV_PMT_SERVED_DT", TypeName = "date")]
+        public DateTime? AdvPmtServedDt { get; set; }
         [Column("SPECIAL_INSTRUCTION")]
         [StringLength(2000)]
         public string SpecialInstruction { get; set; }

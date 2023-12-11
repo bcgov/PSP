@@ -18,7 +18,7 @@ export interface ITakesUpdateFormProps {
   fileProperty: Api_PropertyFile;
   takes: TakeModel[];
   loading: boolean;
-  onSubmit: (model: TakesForm, formikHelpers: FormikHelpers<TakesForm>) => void;
+  onSubmit: (model: TakesForm, formikHelpers: FormikHelpers<TakesForm>) => Promise<void>;
 }
 
 export interface TakesForm {
@@ -97,25 +97,29 @@ const StyledStickyWrapper = styled.div`
 `;
 
 export const emptyTake: Api_Take = {
-  areaUnitTypeCode: AreaUnitTypes.SquareMeters.toString(),
+  id: 0,
   description: '',
-  isSurplus: false,
-  isLandAct: false,
-  isStatutoryRightOfWay: false,
-  isNewRightOfWay: false,
-  isLicenseToConstruct: false,
+  newHighwayDedicationArea: null,
+  areaUnitTypeCode: { id: AreaUnitTypes.SquareMeters.toString() },
+  isAcquiredForInventory: null,
+  isThereSurplus: null,
+  isNewLicenseToConstruct: null,
+  isNewHighwayDedication: null,
+  isNewLandAct: null,
+  isNewInterestInSrw: null,
   licenseToConstructArea: null,
   ltcEndDt: null,
-  newRightOfWayArea: null,
   landActArea: null,
   landActEndDt: null,
-  landActTypeCode: null,
+  propertyAcquisitionFile: null,
+  propertyAcquisitionFileId: 0,
   statutoryRightOfWayArea: null,
+  srwEndDt: null,
   surplusArea: null,
-  propertyAcquisitionFileId: null,
   takeSiteContamTypeCode: null,
   takeTypeCode: null,
-  takeStatusTypeCode: 'INPROGRESS',
+  takeStatusTypeCode: { id: 'INPROGRESS' },
+  landActTypeCode: null,
 };
 
 export default TakesUpdateForm;

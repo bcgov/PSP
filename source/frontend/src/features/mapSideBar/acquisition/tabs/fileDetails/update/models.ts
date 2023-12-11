@@ -3,7 +3,7 @@ import { IAutocompletePrediction } from '@/interfaces';
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFileOwner,
-  Api_AcquisitionFilePerson,
+  Api_AcquisitionFileTeam,
 } from '@/models/api/AcquisitionFile';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { fromTypeCode, stringToUndefined, toTypeCode } from '@/utils/formUtils';
@@ -73,7 +73,8 @@ export class UpdateAcquisitionSummaryFormModel
         .map<Api_AcquisitionFileOwner>(x => x.toApi()),
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
-        .map<Api_AcquisitionFilePerson>(x => x.toApi(this.id || 0)),
+        .map(x => x.toApi(this.id || 0))
+        .filter((x): x is Api_AcquisitionFileTeam => x !== null),
       acquisitionFileInterestHolders: [
         ...this.otherInterestHolders,
         InterestHolderForm.toApi(this.ownerSolicitor, []),

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Pims.Api.Models.Concepts
 {
     public class AcquisitionFilePropertyModel : BaseModel
@@ -15,11 +13,6 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The descriptive name of the property for this acquisition file.
         /// </summary>
         public string PropertyName { get; set; }
-
-        /// <summary>
-        /// get/set - The relationship's disabled status flag.
-        /// </summary>
-        public bool IsDisabled { get; set; }
 
         /// <summary>
         /// get/set - The order to display the relationship.
@@ -45,11 +38,6 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The relationship's acquisition file id.
         /// </summary>
         public long FileId { get; set; }
-
-        /// <summary>
-        /// get/set - A list of activity instance properties.
-        /// </summary>
-        public IList<ActivityInstancePropertyFileModel> ActivityInstanceProperties { get; set; }
 
         #endregion
     }

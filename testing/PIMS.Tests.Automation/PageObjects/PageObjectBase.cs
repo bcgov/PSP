@@ -3,6 +3,7 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System.IO;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -10,17 +11,18 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         protected readonly IWebDriver webDriver;
         private WebDriverWait wait;
-        private DefaultWait<IWebDriver> fluentWait;
 
-        private By loadingSpinner = By.CssSelector("div[data-testid='filter-backdrop-loading']");
+        protected By loadingSpinner = By.CssSelector("div[data-testid='filter-backdrop-loading']");
+        protected By tableLoadingSpinner = By.CssSelector("div[class='table-loading'] div[class='spinner-border']");
+        protected By saveButton = By.XPath("//button/div[contains(text(),'Save')]");
+        protected By cancelButton = By.XPath("//button/div[contains(text(),'Cancel')]");
 
         protected PageObjectBase(IWebDriver webDriver)
         {
             this.webDriver = webDriver;
-            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(60));
-            fluentWait = new DefaultWait<IWebDriver>(webDriver);
-            fluentWait.Timeout = TimeSpan.FromSeconds(60);
-            fluentWait.PollingInterval = TimeSpan.FromMilliseconds(100);
+            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
+            wait.PollingInterval = TimeSpan.FromMilliseconds(100);
+            wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
         }
 
         protected virtual void Wait(int milliseconds = 1000) => Thread.Sleep(milliseconds);
@@ -28,65 +30,76 @@ namespace PIMS.Tests.Automation.PageObjects
         protected void WaitUntilSpinnerDisappear()
         {
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(loadingSpinner));
+            Wait();
+        }
+
+        protected void WaitUntilTableSpinnerDisappear()
+        {
+            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(tableLoadingSpinner));
+            Wait();
         }
 
         protected void WaitUntilStale(By element)
         {
-            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
-            fluentWait.Until(ExpectedConditions.StalenessOf(webDriver.FindElement(element)));
+            wait.Until(ExpectedConditions.StalenessOf(webDriver.FindElement(element)));
+        }
+
+        protected void WaitUntilDisappear(By element)
+        {
+            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(element));
+            Wait();
         }
 
         protected void WaitUntilVisible(By element)
         {
-            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
-            fluentWait.Until(ExpectedConditions.ElementIsVisible(element));
+            wait.Until(ExpectedConditions.ElementIsVisible(element));
         }
 
         protected void WaitUntilClickable(By element)
         {
-            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             wait.Until(ExpectedConditions.ElementToBeClickable(element));
         }
 
         public void WaitUntilVisibleText(By element, string text)
         {
             var webElement = webDriver.FindElement(element);
-            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
-            fluentWait.Until(ExpectedConditions.TextToBePresentInElement(webElement, text));
+            wait.Until(ExpectedConditions.TextToBePresentInElement(webElement, text));
         }
 
-        protected void ButtonElement(string btnContent)
+        protected void ButtonElement(string buttonName)
         {
-            Wait(5000);
+            var js = (IJavaScriptExecutor)webDriver;
+
+            if (buttonName == "Save")
+            {
+                wait.Until(ExpectedConditions.ElementExists(saveButton));
+                FocusAndClick(saveButton);
+            }
+            else
+            {
+                wait.Until(ExpectedConditions.ElementExists(cancelButton));
+                FocusAndClick(cancelButton);
+            }
+        }
+
+        protected void ButtonElement(By button)
+        {
+            Wait();
 
             var js = (IJavaScriptExecutor)webDriver;
 
-            var buttons = webDriver.FindElements(By.TagName("button"));
-
-            var selectedBtn = buttons.Should().ContainSingle(b => b.Text.Contains(btnContent)).Subject;
-            selectedBtn.Click();
-
-            //try
-            //{
-            //    var selectedBtn = buttons.Should().ContainSingle(b => b.Text.Contains(btnContent)).Subject;
-            //    selectedBtn.Click();
-            //}
-            //catch(Exception e)
-            //{
-            //    var selectedBtn = buttons.Should().ContainSingle(b => b.Text.Contains(btnContent)).Subject;
-            //    selectedBtn.Click();
-            //}
+            wait.Until(ExpectedConditions.ElementExists(button));
+            webDriver.FindElement(button).Click();
         }
 
         protected void FocusAndClick(By element)
         {
-            Wait();
+            wait.Until(ExpectedConditions.ElementExists(element));
 
             var js = (IJavaScriptExecutor)webDriver;
             var selectedElement = webDriver.FindElement(element);
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedElement);
-
             js.ExecuteScript("arguments[0].click();", selectedElement);
         }
 
@@ -97,21 +110,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilClickable(element);
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedElement);
-        }
-
-        protected void ChooseRandomSelectOption(By parentElementBy, int fromOption)
-        {
-            Random random = new Random();
-            var js = (IJavaScriptExecutor)webDriver;
-
-            var parentElement = webDriver.FindElement(parentElementBy);
-            var childrenElements = parentElement.FindElements(By.TagName("option"));
-            int index = random.Next(fromOption, childrenElements.Count);
-
-            var selectedRadioBttn = childrenElements[index];
-
-            js.ExecuteScript("arguments[0].scrollIntoView();", selectedRadioBttn);
-            selectedRadioBttn.Click();
         }
 
         protected void ChooseSpecificSelectOption(By parentElement, string option)
@@ -137,8 +135,7 @@ namespace PIMS.Tests.Automation.PageObjects
             var selectedOption = childrenElements.Should().ContainSingle(o => o.GetAttribute("value").Equals(option)).Subject;
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
-
-            selectedOption.Click();
+            js.ExecuteScript("arguments[0].click();", selectedOption);
         }
 
         protected void ChooseMultiSelectSpecificOption(By element, string option)
@@ -151,24 +148,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
             selectedOption.Click();
-        }
-
-        protected void ChooseMultiSelectRandomOptions(By element, int options)
-        {
-            Random random = new Random();
-            var js = (IJavaScriptExecutor)webDriver;
-
-            for (int i = 0; i < options; i++)
-            {
-                var parentElement = webDriver.FindElement(element);
-                var childrenElements = parentElement.FindElements(By.TagName("li"));
-
-                int index = random.Next(0, childrenElements.Count);
-                var selectedOption = childrenElements[index];
-
-                js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
-                selectedOption.Click();
-            } 
         }
 
         protected void ClearInput(By elementBy)
@@ -200,6 +179,45 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 element.FindElement(By.TagName("i")).Click();
             }
+        }
+
+        protected void AssertTrueIsDisplayed(By elementBy)
+        {
+            WaitUntilVisible(elementBy);
+            Assert.True(webDriver.FindElement(elementBy).Displayed);
+        }
+
+        protected void AssertTrueContentEquals(By elementBy, string text)
+        {
+            WaitUntilVisible(elementBy);
+            Assert.True(webDriver.FindElement(elementBy).Text.Equals(text));
+        }
+
+        protected void AssertTrueElementValueEquals(By elementBy, string text)
+        {
+            WaitUntilVisible(elementBy);
+            Assert.True(webDriver.FindElement(elementBy).GetAttribute("Value").Equals(text));
+        }
+
+        protected void AssertTrueDoublesEquals(By elementBy, double number2)
+        {
+            WaitUntilVisible(elementBy);
+            var numberFromElement = webDriver.FindElement(elementBy).GetAttribute("Value");
+            var number1 = double.Parse(numberFromElement);
+
+            Assert.True(number1.Equals(number2));
+        }
+
+        protected void AssertTrueContentNotEquals(By elementBy, string text)
+        {
+            WaitUntilVisible(elementBy);
+            Assert.True(webDriver.FindElement(elementBy).Text != text);
+        }
+
+        protected void AssertTrueElementContains(By elementBy, string text)
+        {
+            WaitUntilVisible(elementBy);
+            Assert.True(webDriver.FindElement(elementBy).Text.Contains(text));
         }
 
         protected string TransformDateFormat(string date)
@@ -239,6 +257,11 @@ namespace PIMS.Tests.Automation.PageObjects
                 { return "Y"; }
             else
                 { return "N"; }
+        }
+
+        protected double TransformStringToDouble(string elementValue)
+        {
+            return double.Parse(elementValue, System.Globalization.CultureInfo.InvariantCulture);
         }
 
         protected List<string> GetViewFieldListContent(By element)

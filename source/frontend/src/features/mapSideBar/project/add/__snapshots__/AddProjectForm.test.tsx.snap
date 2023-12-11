@@ -1238,6 +1238,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     >
                       <input
                         class="form-control"
+                        disabled=""
                         id="input-products.0.code"
                         name="products.0.code"
                         title="70"
@@ -1270,6 +1271,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     >
                       <input
                         class="form-control"
+                        disabled=""
                         id="input-products.0.description"
                         name="products.0.description"
                         title="Product A"
@@ -1543,6 +1545,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     >
                       <input
                         class="form-control"
+                        disabled=""
                         id="input-products.1.code"
                         name="products.1.code"
                         title="71"
@@ -1575,6 +1578,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     >
                       <input
                         class="form-control"
+                        disabled=""
                         id="input-products.1.description"
                         name="products.1.description"
                         title="Product B"

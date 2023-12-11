@@ -43,19 +43,6 @@ namespace Pims.Api.Test.Routes.Project
             Assert.NotNull(endpoint);
             endpoint.HasGet();
         }
-
-        [Fact]
-        public void UpdateTenant_Route()
-        {
-            // Arrange
-            var endpoint = typeof(TenantController).FindMethod(nameof(TenantController.UpdateTenant), typeof(string), typeof(Model.TenantModel));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasPut("{code}");
-            endpoint.HasPermissions(Permissions.SystemAdmin);
-        }
         #endregion
     }
 }

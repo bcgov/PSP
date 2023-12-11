@@ -102,7 +102,7 @@ describe('TakesUpdateForm component', () => {
 
   it('displays a warning if radio button toggled from yes to no', async () => {
     const { getByTestId } = setup({});
-    const noButton = getByTestId('radio-takes.0.isnewrightofway-no');
+    const noButton = getByTestId('radio-takes.0.isnewhighwaydedication-no');
 
     await act(async () => userEvent.click(noButton));
 
@@ -110,9 +110,9 @@ describe('TakesUpdateForm component', () => {
     expect(confirmModal).toBeVisible();
   });
 
-  it('resets is new rightofway values if radio button toggled from yes to no', async () => {
+  it('resets is new isNewHighwayDedication values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
-    const noButton = getByTestId('radio-takes.0.isnewrightofway-no');
+    const noButton = getByTestId('radio-takes.0.isnewhighwaydedication-no');
     await act(async () => userEvent.click(noButton));
 
     expect(queryByDisplayValue('4046.86')).not.toBeNull();
@@ -122,21 +122,23 @@ describe('TakesUpdateForm component', () => {
     expect(queryByDisplayValue('4046.86')).toBeNull();
   });
 
-  it('resets isstatutoryrightofway values if radio button toggled from yes to no', async () => {
+  it('resets isNewInterestInSrw values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
-    const noButton = getByTestId('radio-takes.0.isstatutoryrightofway-no');
+    const noButton = getByTestId('radio-takes.0.isnewinterestinsrw-no');
     await act(async () => userEvent.click(noButton));
 
     expect(queryByDisplayValue('8093.71')).not.toBeNull();
+    expect(queryByDisplayValue('Nov 20, 2022')).not.toBeNull();
     const confirmButton = await screen.findByText('Confirm');
     await act(async () => userEvent.click(confirmButton));
 
     expect(queryByDisplayValue('8093.71')).toBeNull();
+    expect(queryByDisplayValue('Nov 20, 2022')).toBeNull();
   });
 
-  it('resets islandAct values if radio button toggled from yes to no', async () => {
+  it('resets isNewlandAct values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
-    const noButton = getByTestId('radio-takes.0.islandact-no');
+    const noButton = getByTestId('radio-takes.0.isnewlandact-no');
     await act(async () => userEvent.click(noButton));
 
     expect(queryByDisplayValue('12140.57')).not.toBeNull();
@@ -146,9 +148,9 @@ describe('TakesUpdateForm component', () => {
     expect(queryByDisplayValue('12140.57')).toBeNull();
   });
 
-  it('resets isLicenseToConstruct values if radio button toggled from yes to no', async () => {
+  it('resets isNewLicenseToConstruct values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
-    const noButton = getByTestId('radio-takes.0.islicensetoconstruct-no');
+    const noButton = getByTestId('radio-takes.0.isnewlicensetoconstruct-no');
     await act(async () => userEvent.click(noButton));
 
     expect(queryByDisplayValue('16187.43')).not.toBeNull();
@@ -158,9 +160,9 @@ describe('TakesUpdateForm component', () => {
     expect(queryByDisplayValue('16187.43')).toBeNull();
   });
 
-  it('resets isSurplus values if radio button toggled from yes to no', async () => {
+  it('resets isThereSurplus values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
-    const noButton = getByTestId('radio-takes.0.issurplus-no');
+    const noButton = getByTestId('radio-takes.0.istheresurplus-no');
     await act(async () => userEvent.click(noButton));
 
     expect(queryByDisplayValue('20234.28')).not.toBeNull();

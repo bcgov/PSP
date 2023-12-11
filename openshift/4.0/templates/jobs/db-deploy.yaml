@@ -1,0 +1,73 @@
+kind: Template
+apiVersion: template.openshift.io/v1
+metadata:
+  name: db-deploy
+  annotations:
+    description: "This template deploys a job to upgrade the database."
+    tags: "database,upgrade"
+objects:
+  - kind: Job
+    apiVersion: batch/v1
+    metadata:
+      generateName: db-deploy-
+      namespace: ${NAMESPACE}
+    spec:
+      parallelism: 1
+      backoffLimit: 6
+      selector:
+      template:
+        metadata:
+          name: upgrade
+        spec:
+          containers:
+            - name: sqlcmd
+              image: >-
+                image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/sqlcmd-mssql:latest
+              command:
+                - /bin/bash
+                - "-c"
+                - >-
+                  touch /usr/config/psp/source/database/mssql/.env;
+                  PATH="/opt/mssql-tools/bin:$PATH"; cd
+                  /usr/config/psp;
+                  git fetch origin ${GIT_BRANCH};
+                  git reset --h origin/${GIT_BRANCH};
+                  cd /usr/config/psp/source/database/mssql/scripts/dbscripts;
+                  chmod 777 db-upgrade.sh;
+                  ./db-upgrade.sh;
+              env:
+                - name: SERVER_NAME
+                  value: ${SERVER_NAME}
+                - name: DB_NAME
+                  value: ${DB_NAME}
+                - name: DB_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: ${DB_SECRET_NAME}
+                      key: DB_USER
+                - name: DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: ${DB_SECRET_NAME}
+                      key: DB_PASSWORD
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              imagePullPolicy: Always
+          restartPolicy: Never
+parameters:
+  - name: SERVER_NAME
+    description: The name of the database server
+    required: true
+  - name: DB_NAME
+    description: The name of the database
+    required: true
+  - name: NAMESPACE
+    description: the openshift namespace to run this job in.
+    required: true
+  - name: GIT_BRANCH
+    description: the git branch to pull the database scripts from.
+    required: true
+  - name: DB_SECRET_NAME
+    description: the git branch to pull the database scripts from.
+    required: true

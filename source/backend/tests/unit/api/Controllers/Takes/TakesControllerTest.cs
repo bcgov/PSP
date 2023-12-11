@@ -31,66 +31,66 @@ namespace Pims.Api.Test.Controllers
 
         public TakesControllerTest()
         {
-            _helper = new TestHelper();
-            _controller = _helper.CreateController<TakeController>(Permissions.PropertyView, Permissions.AcquisitionFileView);
-            _service = _helper.GetService<Mock<ITakeService>>();
-            _mapper = _helper.GetService<IMapper>();
+            this._helper = new TestHelper();
+            this._controller = this._helper.CreateController<TakeController>(Permissions.PropertyView, Permissions.AcquisitionFileView);
+            this._service = this._helper.GetService<Mock<ITakeService>>();
+            this._mapper = this._helper.GetService<IMapper>();
         }
 
         [Fact]
         public void GetTakesByAcquisitionFileId_Success()
         {
             // Arrange
-            _service.Setup(m => m.GetByFileId(It.IsAny<long>()));
+            this._service.Setup(m => m.GetByFileId(It.IsAny<long>()));
 
             // Act
-            var result = _controller.GetTakesByAcquisitionFileId(1);
+            var result = this._controller.GetTakesByAcquisitionFileId(1);
 
             // Assert
             result.Should().BeOfType<JsonResult>();
-            _service.Verify(m => m.GetByFileId(It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.GetByFileId(It.IsAny<long>()), Times.Once());
         }
 
         [Fact]
         public void GetTakesByPropertyId_Success()
         {
             // Arrange
-            _service.Setup(m => m.GetByPropertyId(It.IsAny<long>(), It.IsAny<long>()));
+            this._service.Setup(m => m.GetByPropertyId(It.IsAny<long>(), It.IsAny<long>()));
 
             // Act
-            var result = _controller.GetTakesByPropertyId(1, 2);
+            var result = this._controller.GetTakesByPropertyId(1, 2);
 
             // Assert
             result.Should().BeOfType<JsonResult>();
-            _service.Verify(m => m.GetByPropertyId(It.IsAny<long>(), It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.GetByPropertyId(It.IsAny<long>(), It.IsAny<long>()), Times.Once());
         }
 
         [Fact]
         public void GetTakesCountByPropertyId_Success()
         {
             // Arrange
-            _service.Setup(m => m.GetCountByPropertyId(It.IsAny<long>()));
+            this._service.Setup(m => m.GetCountByPropertyId(It.IsAny<long>()));
 
             // Act
-            var result = _controller.GetTakesCountByPropertyId(1);
+            var result = this._controller.GetTakesCountByPropertyId(1);
 
             // Assert
             result.Should().BeOfType<JsonResult>();
-            _service.Verify(m => m.GetCountByPropertyId(It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.GetCountByPropertyId(It.IsAny<long>()), Times.Once());
         }
 
         [Fact]
         public void UpdateAcquisitionPropertyTakes_Success()
         {
             // Arrange
-            _service.Setup(m => m.UpdateAcquisitionPropertyTakes(It.IsAny<long>(), It.IsAny<IEnumerable<PimsTake>>()));
+            this._service.Setup(m => m.UpdateAcquisitionPropertyTakes(It.IsAny<long>(), It.IsAny<IEnumerable<PimsTake>>()));
 
             // Act
-            var result = _controller.UpdateAcquisitionPropertyTakes(1, new List<TakeModel>());
+            var result = this._controller.UpdateAcquisitionPropertyTakes(1, new List<TakeModel>());
 
             // Assert
             result.Should().BeOfType<JsonResult>();
-            _service.Verify(m => m.UpdateAcquisitionPropertyTakes(It.IsAny<long>(), It.IsAny<IEnumerable<PimsTake>>()));
+            this._service.Verify(m => m.UpdateAcquisitionPropertyTakes(It.IsAny<long>(), It.IsAny<IEnumerable<PimsTake>>()));
         }
     }
 }

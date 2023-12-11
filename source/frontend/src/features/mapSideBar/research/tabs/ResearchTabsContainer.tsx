@@ -1,27 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { Claims } from '@/constants/claims';
-import { FileTypes } from '@/constants/fileTypes';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { NoteTypes } from '@/constants/noteTypes';
 import NoteListView from '@/features/notes/list/NoteListView';
-import ActivityListView from '@/features/properties/map/activity/list/ActivityListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 
+import { SideBarContext } from '../../context/sidebarContext';
 import { FileTabs, FileTabType, TabFileView } from '../../shared/detail/FileTabs';
-import { FormKeys } from '../FormKeys';
-import ResearchDocumentsTab from './documents/ResearchDocumentsTab';
+import DocumentsTab from '../../shared/tabs/DocumentsTab';
 import ResearchSummaryView from './fileDetails/details/ResearchSummaryView';
 
 export interface IResearchTabsContainerProps {
   researchFile?: Api_ResearchFile;
-  // The "edit key" identifies which form is currently being edited: e.g.
-  //  - property details info,
-  //  - research summary,
-  //  - research property info
-  //  - 'none' means no form is being edited.
-  setEditKey: (editKey: FormKeys) => void;
-  setEditMode: (isEditing: boolean) => void;
+  setIsEditing: (value: boolean) => void;
 }
 
 /**
@@ -29,37 +23,41 @@ export interface IResearchTabsContainerProps {
  */
 export const ResearchTabsContainer: React.FunctionComponent<
   React.PropsWithChildren<IResearchTabsContainerProps>
-> = ({ researchFile, setEditMode, setEditKey }) => {
+> = ({ researchFile, setIsEditing }) => {
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
 
+  const { setStaleLastUpdatedBy } = React.useContext(SideBarContext);
+
+  const history = useHistory();
+  const defaultTab = FileTabType.FILE_DETAILS;
+  const { tab } = useParams<{ tab?: string }>();
+  const activeTab = Object.values(FileTabType).find(value => value === tab) ?? defaultTab;
+
+  const setActiveTab = (tab: FileTabType) => {
+    if (activeTab !== tab) {
+      history.push(`${tab}`);
+    }
+  };
+
+  const onChildEntityUpdate = () => {
+    setStaleLastUpdatedBy(true);
+  };
   tabViews.push({
-    content: (
-      <ResearchSummaryView
-        researchFile={researchFile}
-        setEditMode={editable => {
-          setEditMode(editable);
-          setEditKey(FormKeys.researchSummary);
-        }}
-      />
-    ),
+    content: <ResearchSummaryView researchFile={researchFile} setEditMode={setIsEditing} />,
     key: FileTabType.FILE_DETAILS,
     name: 'File Details',
   });
 
-  if (researchFile?.id && hasClaim(Claims.ACTIVITY_VIEW)) {
-    tabViews.push({
-      content: (
-        <ActivityListView fileId={researchFile.id} fileType={FileTypes.Research}></ActivityListView>
-      ),
-      key: FileTabType.ACTIVITIES,
-      name: 'Activities',
-    });
-  }
-
   if (researchFile?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
-      content: <ResearchDocumentsTab researchFileId={researchFile.id} />,
+      content: (
+        <DocumentsTab
+          fileId={researchFile.id}
+          relationshipType={DocumentRelationshipType.RESEARCH_FILES}
+          onSuccess={onChildEntityUpdate}
+        />
+      ),
       key: FileTabType.DOCUMENTS,
       name: 'Documents',
     });
@@ -67,15 +65,17 @@ export const ResearchTabsContainer: React.FunctionComponent<
 
   if (researchFile?.id && hasClaim(Claims.NOTE_VIEW)) {
     tabViews.push({
-      content: <NoteListView type={NoteTypes.Research_File} entityId={researchFile?.id} />,
+      content: (
+        <NoteListView
+          type={NoteTypes.Research_File}
+          entityId={researchFile?.id}
+          onSuccess={onChildEntityUpdate}
+        />
+      ),
       key: FileTabType.NOTES,
       name: 'Notes',
     });
   }
-
-  var defaultTab = FileTabType.FILE_DETAILS;
-
-  const [activeTab, setActiveTab] = useState<FileTabType>(defaultTab);
 
   return (
     <FileTabs

@@ -21,8 +21,6 @@ namespace Pims.Dal.Entities
         public DateTime? EndDateHist { get; set; }
         [Column("ID")]
         public long Id { get; set; }
-        [Column("PARENT_PROJECT_ID")]
-        public long ParentProjectId { get; set; }
         [Required]
         [Column("CODE")]
         [StringLength(20)]
@@ -81,8 +79,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("CODE_DESC_UPPER")]
-        [StringLength(220)]
-        public string CodeDescUpper { get; set; }
     }
 }

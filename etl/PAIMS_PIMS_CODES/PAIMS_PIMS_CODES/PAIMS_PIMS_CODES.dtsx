@@ -14,8 +14,8 @@
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
   DTS:TransactionOption="0"
-  DTS:VersionBuild="1419"
-  DTS:VersionGUID="{E2885DCC-9E49-47D6-B0EA-E54C130B1497}">
+  DTS:VersionBuild="1428"
+  DTS:VersionGUID="{151201AC-537D-4765-A789-0CE74AC9DE83}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -28,7 +28,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=musket.th.gov.bc.ca:20208/prd11;User ID=desmith;Provider=OraOLEDB.Oracle.1;" />
+          DTS:ConnectionString="Data Source=lizzard.th.gov.bc.ca:20208/tst11;User ID=desmith;Provider=OraOLEDB.Oracle.1;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -40,7 +40,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLNCLI11.1;Auto Translate=False;Application Name=SSIS-Package2-{397DB851-677E-4A08-84AE-EE76A4654BC7}PIMS;" />
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_DEV;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package2-{397DB851-677E-4A08-84AE-EE76A4654BC7}PIMS;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -400,7 +400,7 @@
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      length="5"
+                      length="7"
                       lineageId="Package\Load Account Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of NO]"
                       name="Copy of NO"
                       truncationRowDisposition="FailComponent">
@@ -480,7 +480,7 @@
                     <inputColumn
                       refId="Package\Load Account Codes\Derived Column.Inputs[Derived Column Input].Columns[Copy of NO]"
                       cachedDataType="wstr"
-                      cachedLength="5"
+                      cachedLength="7"
                       cachedName="Copy of NO"
                       lineageId="Package\Load Account Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of NO]" />
                     <inputColumn
@@ -713,7 +713,7 @@
                     <inputColumn
                       refId="Package\Load Account Codes\Derived Column 1.Inputs[Derived Column Input].Columns[Copy of NO]"
                       cachedDataType="wstr"
-                      cachedLength="5"
+                      cachedLength="7"
                       cachedName="Copy of NO"
                       lineageId="Package\Load Account Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of NO]" />
                     <inputColumn
@@ -1373,7 +1373,7 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
                     <inputColumn
                       refId="Package\Load Account Codes\Existing PIMS_Chart_of_Accounts_Code records.Inputs[Lookup Input].Columns[Copy of NO]"
                       cachedDataType="wstr"
-                      cachedLength="5"
+                      cachedLength="7"
                       cachedName="Copy of NO"
                       lineageId="Package\Load Account Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of NO]">
                       <properties>
@@ -1797,7 +1797,7 @@ FROM   APP_HWY.HWY_GL_ACCOUNT</property>
                     <inputColumn
                       refId="Package\Load Account Codes\Insert PIMS_Chart_of_Accounts_Codes.Inputs[OLE DB Destination Input].Columns[Copy of NO]"
                       cachedDataType="wstr"
-                      cachedLength="5"
+                      cachedLength="7"
                       cachedName="Copy of NO"
                       externalMetadataColumnId="Package\Load Account Codes\Insert PIMS_Chart_of_Accounts_Codes.Inputs[OLE DB Destination Input].ExternalColumns[CODE]"
                       lineageId="Package\Load Account Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of NO]" />
@@ -1999,7 +1999,7 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
                     <inputColumn
                       refId="Package\Load Account Codes\PIMS_Chart_of_Accounts_Code records to be updated.Inputs[Lookup Input].Columns[Copy of NO]"
                       cachedDataType="wstr"
-                      cachedLength="5"
+                      cachedLength="7"
                       cachedName="Copy of NO"
                       lineageId="Package\Load Account Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of NO]">
                       <properties>
@@ -2184,7 +2184,7 @@ WHERE CODE = @CODE AND EFFECTIVE_DATE = @EFFECTIVE_DATE AND (EXPIRY_DATE = @EXPI
                     <inputColumn
                       refId="Package\Load Account Codes\UPDATE PIMS.Inputs[OLE DB Command Input].Columns[Copy of NO]"
                       cachedDataType="wstr"
-                      cachedLength="5"
+                      cachedLength="7"
                       cachedName="Copy of NO"
                       externalMetadataColumnId="Package\Load Account Codes\UPDATE PIMS.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
                       lineageId="Package\Load Account Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of NO]" />
@@ -14552,13 +14552,13 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
                       </properties>
                     </outputColumn>
                     <outputColumn
-                      refId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CODE]"
+                      refId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[&quot;55&quot; + Copy of CODE]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      length="3"
-                      lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CODE]"
-                      name="Copy of CODE"
+                      length="5"
+                      lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[&quot;55&quot; + Copy of CODE]"
+                      name="&quot;55&quot; + Copy of CODE"
                       truncationRowDisposition="FailComponent">
                       <properties>
                         <property
@@ -14619,11 +14619,11 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
                       cachedName="Copy of DESCRIPTION"
                       lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DESCRIPTION]" />
                     <inputColumn
-                      refId="Package\Load Responsibility Codes\Derived Column.Inputs[Derived Column Input].Columns[Copy of CODE]"
+                      refId="Package\Load Responsibility Codes\Derived Column.Inputs[Derived Column Input].Columns[&quot;55&quot; + Copy of CODE]"
                       cachedDataType="wstr"
-                      cachedLength="3"
-                      cachedName="Copy of CODE"
-                      lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CODE]" />
+                      cachedLength="5"
+                      cachedName="&quot;55&quot; + Copy of CODE"
+                      lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[&quot;55&quot; + Copy of CODE]" />
                     <inputColumn
                       refId="Package\Load Responsibility Codes\Derived Column.Inputs[Derived Column Input].Columns[ErrorCode]"
                       cachedDataType="i4"
@@ -14795,7 +14795,7 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">"Responsibility_Code:" + (DT_WSTR,5)#{Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CODE]} + " Description: " + #{Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DESCRIPTION]}</property>
+                          name="Expression">"Responsibility_Code:" + (DT_WSTR,5)#{Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns["55" + Copy of CODE]} + " Description: " + #{Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DESCRIPTION]}</property>
                         <property
                           containsID="true"
                           dataType="System.String"
@@ -14852,11 +14852,11 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
                       cachedName="Copy of DESCRIPTION"
                       lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DESCRIPTION]" />
                     <inputColumn
-                      refId="Package\Load Responsibility Codes\Derived Column 1.Inputs[Derived Column Input].Columns[Copy of CODE]"
+                      refId="Package\Load Responsibility Codes\Derived Column 1.Inputs[Derived Column Input].Columns[&quot;55&quot; + Copy of CODE]"
                       cachedDataType="wstr"
-                      cachedLength="3"
-                      cachedName="Copy of CODE"
-                      lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CODE]" />
+                      cachedLength="5"
+                      cachedName="&quot;55&quot; + Copy of CODE"
+                      lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[&quot;55&quot; + Copy of CODE]" />
                     <inputColumn
                       refId="Package\Load Responsibility Codes\Derived Column 1.Inputs[Derived Column Input].Columns[ErrorCode]"
                       cachedDataType="i4"
@@ -15028,7 +15028,7 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">"Responsibility_Code:" + (DT_WSTR,5)#{Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CODE]} + " Description: " + #{Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DESCRIPTION]}</property>
+                          name="Expression">"Responsibility_Code:" + (DT_WSTR,5)#{Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns["55" + Copy of CODE]} + " Description: " + #{Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DESCRIPTION]}</property>
                         <property
                           containsID="true"
                           dataType="System.String"
@@ -15482,7 +15482,7 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
                   containsID="true"
                   dataType="System.String"
                   description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
-                  name="ParameterMap">#{Package\Load Responsibility Codes\HWY_Responsibility_Centre.Outputs[OLE DB Source Output].Columns[EFFECTIVE_DATE]};#{Package\Load Responsibility Codes\HWY_Responsibility_Centre.Outputs[OLE DB Source Output].Columns[EXPIRY_DATE]};#{Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CODE]};</property>
+                  name="ParameterMap">#{Package\Load Responsibility Codes\HWY_Responsibility_Centre.Outputs[OLE DB Source Output].Columns[EFFECTIVE_DATE]};#{Package\Load Responsibility Codes\HWY_Responsibility_Centre.Outputs[OLE DB Source Output].Columns[EXPIRY_DATE]};#{Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns["55" + Copy of CODE]};</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -15538,11 +15538,11 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
                       </properties>
                     </inputColumn>
                     <inputColumn
-                      refId="Package\Load Responsibility Codes\Existing PIMS_Responsibility_Code records.Inputs[Lookup Input].Columns[Copy of CODE]"
+                      refId="Package\Load Responsibility Codes\Existing PIMS_Responsibility_Code records.Inputs[Lookup Input].Columns[&quot;55&quot; + Copy of CODE]"
                       cachedDataType="wstr"
-                      cachedLength="3"
-                      cachedName="Copy of CODE"
-                      lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CODE]">
+                      cachedLength="5"
+                      cachedName="&quot;55&quot; + Copy of CODE"
+                      lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[&quot;55&quot; + Copy of CODE]">
                       <properties>
                         <property
                           dataType="System.String"
@@ -15933,12 +15933,12 @@ FROM   APP_HWY.HWY_RESPONSIBILITY_CENTRE</property>
                       externalMetadataColumnId="Package\Load Responsibility Codes\Insert PIMS_Responsibility_Code.Inputs[OLE DB Destination Input].ExternalColumns[DESCRIPTION]"
                       lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DESCRIPTION]" />
                     <inputColumn
-                      refId="Package\Load Responsibility Codes\Insert PIMS_Responsibility_Code.Inputs[OLE DB Destination Input].Columns[Copy of CODE]"
+                      refId="Package\Load Responsibility Codes\Insert PIMS_Responsibility_Code.Inputs[OLE DB Destination Input].Columns[&quot;55&quot; + Copy of CODE]"
                       cachedDataType="wstr"
-                      cachedLength="3"
-                      cachedName="Copy of CODE"
+                      cachedLength="5"
+                      cachedName="&quot;55&quot; + Copy of CODE"
                       externalMetadataColumnId="Package\Load Responsibility Codes\Insert PIMS_Responsibility_Code.Inputs[OLE DB Destination Input].ExternalColumns[CODE]"
-                      lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CODE]" />
+                      lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[&quot;55&quot; + Copy of CODE]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -16112,12 +16112,12 @@ WHERE CODE = @CODE AND EFFECTIVE_DATE = @EFFECTIVE_DATE AND (EXPIRY_DATE = @EXPI
                   name="OLE DB Command Input">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\Load Responsibility Codes\PIMS UPDATE.Inputs[OLE DB Command Input].Columns[Copy of CODE]"
+                      refId="Package\Load Responsibility Codes\PIMS UPDATE.Inputs[OLE DB Command Input].Columns[&quot;55&quot; + Copy of CODE]"
                       cachedDataType="wstr"
-                      cachedLength="3"
-                      cachedName="Copy of CODE"
+                      cachedLength="5"
+                      cachedName="&quot;55&quot; + Copy of CODE"
                       externalMetadataColumnId="Package\Load Responsibility Codes\PIMS UPDATE.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
-                      lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CODE]" />
+                      lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[&quot;55&quot; + Copy of CODE]" />
                     <inputColumn
                       refId="Package\Load Responsibility Codes\PIMS UPDATE.Inputs[OLE DB Command Input].Columns[Copy of DESCRIPTION]"
                       cachedDataType="wstr"
@@ -16314,7 +16314,7 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
                   containsID="true"
                   dataType="System.String"
                   description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
-                  name="ParameterMap">#{Package\Load Responsibility Codes\HWY_Responsibility_Centre.Outputs[OLE DB Source Output].Columns[EFFECTIVE_DATE]};#{Package\Load Responsibility Codes\HWY_Responsibility_Centre.Outputs[OLE DB Source Output].Columns[EXPIRY_DATE]};#{Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DESCRIPTION]};#{Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CODE]};#{Package\Load Responsibility Codes\Audit Trail.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]};</property>
+                  name="ParameterMap">#{Package\Load Responsibility Codes\HWY_Responsibility_Centre.Outputs[OLE DB Source Output].Columns[EFFECTIVE_DATE]};#{Package\Load Responsibility Codes\HWY_Responsibility_Centre.Outputs[OLE DB Source Output].Columns[EXPIRY_DATE]};#{Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DESCRIPTION]};#{Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns["55" + Copy of CODE]};#{Package\Load Responsibility Codes\Audit Trail.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]};</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -16370,11 +16370,11 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
                       </properties>
                     </inputColumn>
                     <inputColumn
-                      refId="Package\Load Responsibility Codes\PIMS_Responsibility_Code records to be updated.Inputs[Lookup Input].Columns[Copy of CODE]"
+                      refId="Package\Load Responsibility Codes\PIMS_Responsibility_Code records to be updated.Inputs[Lookup Input].Columns[&quot;55&quot; + Copy of CODE]"
                       cachedDataType="wstr"
-                      cachedLength="3"
-                      cachedName="Copy of CODE"
-                      lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CODE]">
+                      cachedLength="5"
+                      cachedName="&quot;55&quot; + Copy of CODE"
+                      lineageId="Package\Load Responsibility Codes\Data Conversion.Outputs[Data Conversion Output].Columns[&quot;55&quot; + Copy of CODE]">
                       <properties>
                         <property
                           dataType="System.String"
@@ -19351,9 +19351,7 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -19375,9 +19373,7 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -19399,9 +19395,7 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -19423,9 +19417,7 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -19447,9 +19439,7 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -19684,7 +19674,9 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -19706,7 +19698,9 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -19728,7 +19722,9 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -19750,7 +19746,9 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -19772,7 +19770,9 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -21269,285 +21269,299 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
         <NodeLayout
           Size="166,42"
           Id="Package\Load Responsibility Codes\ETL ERROR LOG"
-          TopLeft="328.22437035331,470.703220506331" />
+          TopLeft="42.0000000000001,617.5" />
         <NodeLayout
           Size="239,42"
           Id="Package\Load Responsibility Codes\Insert PIMS_Responsibility_Code"
-          TopLeft="279.81538405108,312.696774161296" />
+          TopLeft="5.50000000000006,413.5" />
         <NodeLayout
           Size="153,42"
           Id="Package\Load Responsibility Codes\PIMS UPDATE"
-          TopLeft="726,304" />
+          TopLeft="387.5,515.5" />
         <NodeLayout
           Size="166,42"
           Id="Package\Load Responsibility Codes\ETL ERROR LOG 1"
-          TopLeft="729.516690798896,467.81290228834" />
+          TopLeft="381,719.5" />
         <NodeLayout
           Size="294,42"
           Id="Package\Load Responsibility Codes\Existing PIMS_Responsibility_Code records"
-          TopLeft="256.86154317348,233.264512974762" />
+          TopLeft="317,311.5" />
         <NodeLayout
           Size="159,42"
           Id="Package\Load Responsibility Codes\Data Conversion"
-          TopLeft="324,89" />
+          TopLeft="384.5,107.5" />
         <NodeLayout
           Size="317,42"
           Id="Package\Load Responsibility Codes\PIMS_Responsibility_Code records to be updated"
-          TopLeft="645.884633188418,232.85483645847" />
+          TopLeft="305.5,413.5" />
         <NodeLayout
           Size="215,42"
           Id="Package\Load Responsibility Codes\HWY_Responsibility_Centre"
-          TopLeft="296.092317511203,20.2774191290729" />
+          TopLeft="356.5,5.5" />
         <NodeLayout
           Size="156,42"
           Id="Package\Load Responsibility Codes\Derived Column"
-          TopLeft="329.11539597201,394.145154543151" />
+          TopLeft="47.0000000000001,515.5" />
         <NodeLayout
           Size="127,42"
           Id="Package\Load Responsibility Codes\Audit Trail"
-          TopLeft="341.19231971199,159.935480826355" />
+          TopLeft="400.5,209.5" />
         <NodeLayout
           Size="156,42"
           Id="Package\Load Responsibility Codes\Derived Column 1"
-          TopLeft="731.200024025258,392.229029815494" />
+          TopLeft="386,617.5" />
         <EdgeLayout
           Id="Package\Load Responsibility Codes.Paths[OLE DB Destination Error Output]"
-          TopLeft="403.265390011545,354.296774161296">
+          TopLeft="125,455.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,39.8483803818551"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,32.3483803818551">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,32.3483803818551" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-73.20890625,10.4573933159275,146.4178125,11.43359375"
+              BoundingBox="-73.20890625,20.533203125,146.4178125,11.43359375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Responsibility Codes.Paths[OLE DB Command Error Output]"
-          TopLeft="805.850012012629,346">
+          TopLeft="464,557.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,46.229029815494"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,38.729029815494">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,38.729029815494" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-70.70890625,13.559827407747,141.4178125,11.609375"
+              BoundingBox="-70.70890625,20.4453125,141.4178125,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Responsibility Codes.Paths[Lookup No Match Output1]"
-          TopLeft="803.442316594209,274.85483645847">
+          TopLeft="464,455.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,29.14516354153"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,21.64516354153">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,21.64516354153" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,5.017894270765,111.6127734375,11.609375"
+              BoundingBox="-55.80638671875,20.4453125,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Responsibility Codes.Paths[Lookup No Match Output]"
-          TopLeft="401.58846361228,275.264512974762">
+          TopLeft="416.333333333333,353.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,37.432261186534"
+              EndConnector="-291.333333333333,60"
               Start="0,0"
-              End="0,29.932261186534">
+              End="-291.333333333333,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,29.932261186534" />
+                    End="0,20.1948579161028" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.1948579161028"
+                    Point2="0,24.1948579161028"
+                    Point3="-4,24.1948579161028" />
+                  <mssgle:LineSegment
+                    End="-287.333333333333,24.1948579161028" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-287.333333333333,24.1948579161028"
+                    Point2="-291.333333333333,24.1948579161028"
+                    Point3="-291.333333333333,28.1948579161028" />
+                  <mssgle:LineSegment
+                    End="-291.333333333333,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,9.161443093267,111.6127734375,11.609375"
+              BoundingBox="-201.473053385417,29.1948579161028,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Responsibility Codes.Paths[Lookup Match Output]"
-          TopLeft="550.86154317348,254.059674716616">
+          TopLeft="511.666666666667,353.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="95.023090014938,0"
+              EndConnector="-47.6666666666667,60"
               Start="0,0"
-              End="87.523090014938,0">
+              End="-47.6666666666667,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="87.523090014938,0" />
+                    End="0,20.1948579161028" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.1948579161028"
+                    Point2="0,24.1948579161028"
+                    Point3="-4,24.1948579161028" />
+                  <mssgle:LineSegment
+                    End="-43.6666666666667,24.1948579161028" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-43.6666666666667,24.1948579161028"
+                    Point2="-47.6666666666667,24.1948579161028"
+                    Point3="-47.6666666666667,28.1948579161028" />
+                  <mssgle:LineSegment
+                    End="-47.6666666666667,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-4.429841711281,5,96.3827734375,11.609375"
+              BoundingBox="-72.0247200520834,29.1948579161028,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Responsibility Codes.Paths[Derived Column Output2]"
-          TopLeft="409.06988316266,435.745154543151">
+          TopLeft="125,557.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,34.9580659631799"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,27.4580659631799">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,27.4580659631799" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Responsibility Codes.Paths[Derived Column Output1]"
-          TopLeft="810.758357412077,433.829029815494">
+          TopLeft="464,659.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,33.9838724728457"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,26.4838724728457">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,26.4838724728457" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Responsibility Codes.Paths[Derived Column Output]"
-          TopLeft="404.276931442735,201.935480826355">
+          TopLeft="464,251.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,31.329032148407"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,23.829032148407">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,23.829032148407" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Responsibility Codes.Paths[Data Conversion Output]"
-          TopLeft="404.196159855995,130.6">
+          TopLeft="464,149.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,29.3354808263549"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,21.8354808263549">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,21.8354808263549" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Responsibility Codes.Paths[OLE DB Source Output]"
-          TopLeft="403.646158755602,61.8774191290729">
+          TopLeft="464,47.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,27.1225808709271"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,19.6225808709271">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,19.6225808709271" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -21654,61 +21668,61 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
         <NodeLayout
           Size="166,42"
           Id="Package\Load Work Activity Codes\ETL ERROR LOG 1"
-          TopLeft="729.516690798896,467.81290228834" />
+          TopLeft="381.5,719.5" />
         <NodeLayout
           Size="127,42"
           Id="Package\Load Work Activity Codes\Audit Trail"
-          TopLeft="341.19231971199,159.935480826355" />
+          TopLeft="401,209.5" />
         <NodeLayout
           Size="174,42"
           Id="Package\Load Work Activity Codes\PAM_Work_Activity"
-          TopLeft="310.092317511203,20.2774191290729" />
+          TopLeft="377.5,5.5" />
         <NodeLayout
           Size="156,42"
           Id="Package\Load Work Activity Codes\Derived Column"
-          TopLeft="329.11539597201,394.145154543151" />
+          TopLeft="46.5000000000001,515.5" />
         <NodeLayout
           Size="159,42"
           Id="Package\Load Work Activity Codes\Data Conversion"
-          TopLeft="324,89" />
+          TopLeft="385,107.5" />
         <NodeLayout
           Size="321,42"
           Id="Package\Load Work Activity Codes\PIMS_Work_Activity_Code records to eb updated"
-          TopLeft="645.884633188418,232.85483645847" />
+          TopLeft="304,413.5" />
         <NodeLayout
           Size="156,42"
           Id="Package\Load Work Activity Codes\Derived Column 1"
-          TopLeft="731.200024025258,392.229029815494" />
+          TopLeft="386.5,617.5" />
         <NodeLayout
           Size="153,42"
           Id="Package\Load Work Activity Codes\PIMS UPDATE"
-          TopLeft="721,313" />
+          TopLeft="388,515.5" />
         <NodeLayout
           Size="166,42"
           Id="Package\Load Work Activity Codes\ETL ERROR LOG"
-          TopLeft="328.22437035331,470.703220506331" />
+          TopLeft="41.5000000000001,617.5" />
         <NodeLayout
           Size="238,42"
           Id="Package\Load Work Activity Codes\Insert PIMS_Work_Activity_Code"
-          TopLeft="283.41538405108,322.296774161296" />
+          TopLeft="5.50000000000006,413.5" />
         <NodeLayout
           Size="288,42"
           Id="Package\Load Work Activity Codes\Existing PIMS_Work_Activity_Code records"
-          TopLeft="256.86154317348,233.264512974762" />
+          TopLeft="320.5,311.5" />
         <EdgeLayout
           Id="Package\Load Work Activity Codes.Paths[OLE DB Source Output]"
-          TopLeft="400.246158755602,61.8774191290729">
+          TopLeft="464.5,47.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,27.1225808709271"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,19.6225808709271">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,19.6225808709271" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -21719,162 +21733,162 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Work Activity Codes.Paths[OLE DB Destination Error Output]"
-          TopLeft="404.865390011545,363.896774161296">
+          TopLeft="124.5,455.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,30.248380381855"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,22.748380381855">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,22.748380381855" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-73.20890625,5.6573933159275,146.4178125,11.43359375"
+              BoundingBox="-73.20890625,20.533203125,146.4178125,11.43359375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Work Activity Codes.Paths[OLE DB Command Error Output]"
-          TopLeft="797.5,355">
+          TopLeft="464.5,557.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="11.700024025258,37.229029815494"
+              EndConnector="0,60"
               Start="0,0"
-              End="11.700024025258,29.729029815494">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,14.614514907747" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,14.614514907747"
-                    Point2="0,18.614514907747"
-                    Point3="4,18.614514907747" />
-                  <mssgle:LineSegment
-                    End="7.70002402525802,18.614514907747" />
-                  <mssgle:CubicBezierSegment
-                    Point1="7.70002402525802,18.614514907747"
-                    Point2="11.700024025258,18.614514907747"
-                    Point3="11.700024025258,22.614514907747" />
-                  <mssgle:LineSegment
-                    End="11.700024025258,29.729029815494" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-64.858894237371,23.614514907747,141.4178125,11.609375"
+              BoundingBox="-70.70890625,20.4453125,141.4178125,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Work Activity Codes.Paths[Lookup No Match Output1]"
-          TopLeft="806.384633188418,274.85483645847">
+          TopLeft="464.5,455.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-8.88463318841798,38.14516354153"
+              EndConnector="0,60"
               Start="0,0"
-              End="-8.88463318841798,30.64516354153">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,15.072581770765" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,15.072581770765"
-                    Point2="0,19.072581770765"
-                    Point3="-4,19.072581770765" />
-                  <mssgle:LineSegment
-                    End="-4.88463318841798,19.072581770765" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-4.88463318841798,19.072581770765"
-                    Point2="-8.88463318841798,19.072581770765"
-                    Point3="-8.88463318841798,23.072581770765" />
-                  <mssgle:LineSegment
-                    End="-8.88463318841798,30.64516354153" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-60.248703312959,24.072581770765,111.6127734375,11.609375"
+              BoundingBox="-55.80638671875,20.4453125,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Work Activity Codes.Paths[Lookup No Match Output]"
-          TopLeft="401.73846361228,274.864512974762">
+          TopLeft="417.833333333333,353.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,47.4322611865339"
+              EndConnector="-293.333333333333,60"
               Start="0,0"
-              End="0,39.9322611865339">
+              End="-293.333333333333,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,39.9322611865339" />
+                    End="0,20.1988950276243" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.1988950276243"
+                    Point2="0,24.1988950276243"
+                    Point3="-4,24.1988950276243" />
+                  <mssgle:LineSegment
+                    End="-289.333333333333,24.1988950276243" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-289.333333333333,24.1988950276243"
+                    Point2="-293.333333333333,24.1988950276243"
+                    Point3="-293.333333333333,28.1988950276243" />
+                  <mssgle:LineSegment
+                    End="-293.333333333333,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,14.1614430932669,111.6127734375,11.609375"
+              BoundingBox="-202.473053385417,29.1988950276243,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Work Activity Codes.Paths[Lookup Match Output]"
-          TopLeft="544.86154317348,254.059674716616">
+          TopLeft="511.166666666667,353.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="101.023090014938,0"
+              EndConnector="-46.6666666666667,60"
               Start="0,0"
-              End="93.523090014938,0">
+              End="-46.6666666666667,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="93.523090014938,0" />
+                    End="0,20.1988950276243" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.1988950276243"
+                    Point2="0,24.1988950276243"
+                    Point3="-4,24.1988950276243" />
+                  <mssgle:LineSegment
+                    End="-42.6666666666667,24.1988950276243" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-42.6666666666667,24.1988950276243"
+                    Point2="-46.6666666666667,24.1988950276243"
+                    Point3="-46.6666666666667,28.1988950276243" />
+                  <mssgle:LineSegment
+                    End="-46.6666666666667,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-1.429841711281,5,96.3827734375,11.609375"
+              BoundingBox="-71.5247200520834,29.1988950276243,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Work Activity Codes.Paths[Derived Column Output2]"
-          TopLeft="409.06988316266,435.745154543151">
+          TopLeft="124.5,557.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,34.9580659631799"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,27.4580659631799">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,27.4580659631799" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -21885,18 +21899,18 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Work Activity Codes.Paths[Derived Column Output1]"
-          TopLeft="810.758357412077,433.829029815494">
+          TopLeft="464.5,659.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,33.9838724728457"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,26.4838724728457">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,26.4838724728457" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -21907,18 +21921,18 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Work Activity Codes.Paths[Derived Column Output]"
-          TopLeft="402.826931442735,201.535480826355">
+          TopLeft="464.5,251.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,31.729032148407"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,24.229032148407">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,24.229032148407" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -21929,18 +21943,18 @@ where [refTable].[EFFECTIVE_DATE] = ? and [refTable].[EXPIRY_DATE] = ? and [refT
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Work Activity Codes.Paths[Data Conversion Output]"
-          TopLeft="404.196159855995,130.6">
+          TopLeft="464.5,149.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,29.3354808263549"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,21.8354808263549">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,21.8354808263549" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

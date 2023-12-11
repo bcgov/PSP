@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace Pims.Api.Models.Concepts
 {
+    /*
+    * Front end model
+    * LINK @frontend/src\models\api\Project.ts
+    */
     public class ProductModel : BaseAppModel
     {
         #region Properties
@@ -13,14 +17,9 @@ namespace Pims.Api.Models.Concepts
         public long? Id { get; set; }
 
         /// <summary>
-        /// get/set - The project associated to this product.
+        /// get/set - The project associations to this product.
         /// </summary>
-        public virtual ProjectModel ParentProject { get; set; }
-
-        /// <summary>
-        /// get/set - The project's id.
-        /// </summary>
-        public long? ParentProjectId { get; set; }
+        public List<ProjectProductModel> ProjectProducts { get; set; }
 
         /// <summary>
         /// get/set - The product associated files.

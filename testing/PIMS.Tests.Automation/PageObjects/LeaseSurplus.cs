@@ -27,14 +27,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifySurplusForm()
         {
-            WaitUntilVisible(licenseSurplusTableBody);
-            Assert.True(webDriver.FindElement(licenseSurplusInstructions).Displayed);
-
-            Assert.True(webDriver.FindElement(licenseSurplusTableBody).Displayed);
-            Assert.True(webDriver.FindElement(licenceSurplusPIDColumn).Displayed);
-            Assert.True(webDriver.FindElement(licenseSurplusDeclarationColumn).Displayed);
-            Assert.True(webDriver.FindElement(licenseSurplusDeclarationDateColumn).Displayed);
-            Assert.True(webDriver.FindElement(licenseSurplusDeclarationCommentsColumn).Displayed);
+            AssertTrueIsDisplayed(licenseSurplusInstructions);
+            AssertTrueIsDisplayed(licenseSurplusTableBody);
+            AssertTrueIsDisplayed(licenceSurplusPIDColumn);
+            AssertTrueIsDisplayed(licenseSurplusDeclarationColumn);
+            AssertTrueIsDisplayed(licenseSurplusDeclarationDateColumn);
+            AssertTrueIsDisplayed(licenseSurplusDeclarationCommentsColumn);
         }
     }
 }

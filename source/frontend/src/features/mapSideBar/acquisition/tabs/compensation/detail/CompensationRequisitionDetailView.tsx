@@ -58,6 +58,11 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   const { hasClaim, hasRole } = useKeycloakWrapper();
   const [payeeDetails, setPayeeDetails] = useState<PayeeViewDetails | null>(null);
 
+  const projectName =
+    compensation?.alternateProject !== undefined
+      ? compensation?.alternateProject?.code + ' - ' + compensation?.alternateProject?.description
+      : '';
+
   useEffect(() => {
     if (!compensation) {
       setPayeeDetails(null);
@@ -85,10 +90,16 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         payeeDetail.contactString = 'O' + compensationContactOrganization.id;
         payeeDetail.contactEnabled = true;
       }
-    } else if (compensation.acquisitionFilePersonId) {
-      payeeDetail.displayName = formatApiPersonNames(compensationContactPerson);
-      payeeDetail.contactString = 'P' + compensationContactPerson?.id;
-      payeeDetail.contactEnabled = true;
+    } else if (compensation.acquisitionFileTeamId) {
+      if (compensationContactPerson) {
+        payeeDetail.displayName = formatApiPersonNames(compensationContactPerson);
+        payeeDetail.contactString = 'P' + compensationContactPerson?.id;
+        payeeDetail.contactEnabled = true;
+      } else if (compensationContactOrganization) {
+        payeeDetail.displayName = compensationContactOrganization?.name ?? '';
+        payeeDetail.contactString = 'O' + compensationContactOrganization.id;
+        payeeDetail.contactEnabled = true;
+      }
     } else if (!!compensation.legacyPayee) {
       payeeDetail.displayName = `${compensation.legacyPayee}`;
     }
@@ -201,10 +212,13 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           </FlexDiv>
         }
       >
-        <SectionField label="Status" labelWidth="4" data-testid="compensation-status">
+        <SectionField label="Status" labelWidth="4" valueTestId="compensation-status">
           {compensation.isDraft ? 'Draft' : 'Final'}
         </SectionField>
-        <SectionField label="Final date" labelWidth="4" data-testid="compensation-finalized">
+        <SectionField label="Alternate project" labelWidth="4">
+          {projectName}
+        </SectionField>
+        <SectionField label="Final date" labelWidth="4" valueTestId="compensation-finalized-date">
           {prettyFormatDate(compensation.finalizedDate)}
         </SectionField>
         <SectionField label="Agreement date" labelWidth="4">
@@ -215,6 +229,13 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         </SectionField>
         <SectionField label="Expropriation vesting date" labelWidth="4">
           {prettyFormatDate(compensation.expropriationVestingDate)}
+        </SectionField>
+        <SectionField
+          label="Advanced payment served date"
+          labelWidth="4"
+          valueTestId="advanced-payment-served-date"
+        >
+          {prettyFormatDate(compensation.advancedPaymentServedDate)}
         </SectionField>
         <SectionField label="Special instructions" labelWidth={'12'}>
           {compensation.specialInstruction}

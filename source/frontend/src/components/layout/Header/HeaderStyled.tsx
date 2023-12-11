@@ -20,16 +20,16 @@ export const HeaderStyled = styled(Navbar)`
 
   .brand-box {
     padding: 1rem 0;
+    align-items: center;
     flex-grow: 1;
-    .pims-logo {
-      margin: 0 1rem;
-    }
   }
 
   .title {
-    flex-grow: 2;
-    h1 {
-      margin-top: 1rem;
+    margin-left: 8px;
+    display: inline-block;
+    label {
+      margin: 0;
+      color: #ffffff;
       padding-left: 0px;
       text-align: center;
       font-size: 2.4rem;

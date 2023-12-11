@@ -32,6 +32,7 @@ const defaultRepositoryResponse = {
   execute: jest.fn(),
   response: {} as any,
   error: undefined,
+  status: undefined,
   loading: false,
 };
 
@@ -39,6 +40,7 @@ const mockGetLeaseTerms = {
   execute: jest.fn(),
   response: [FormLeaseTerm.toApi({ ...defaultFormLeaseTerm, payments: [] })],
   error: undefined,
+  status: undefined,
   loading: false,
 };
 
@@ -69,6 +71,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 const setLease = jest.fn();
+const onSuccessMock = jest.fn();
 
 describe('TermsPaymentsContainer component', () => {
   const setup = async (
@@ -91,7 +94,11 @@ describe('TermsPaymentsContainer component', () => {
         }}
       >
         <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-          <TermPaymentsContainer formikRef={React.createRef()} isEditing={false} />
+          <TermPaymentsContainer
+            formikRef={React.createRef()}
+            isEditing={false}
+            onSuccess={onSuccessMock}
+          />
         </Formik>
       </LeaseStateContext.Provider>,
       {

@@ -2,9 +2,9 @@
 
 exports[`Empty Header renders 1`] = `
 .c1 {
-  border-left: 0.2rem solid white;
+  border-left: 1px solid white;
   font-size: 3.4rem;
-  margin: 0 1.5rem 0 2.5rem;
+  margin: 0 36px 0 36px;
   vertical-align: top;
 }
 
@@ -24,25 +24,24 @@ exports[`Empty Header renders 1`] = `
 
 .c0 .brand-box {
   padding: 1rem 0;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
 }
 
-.c0 .brand-box .pims-logo {
-  margin: 0 1rem;
-}
-
 .c0 .title {
-  -webkit-box-flex: 2;
-  -webkit-flex-grow: 2;
-  -ms-flex-positive: 2;
-  flex-grow: 2;
+  margin-left: 8px;
+  display: inline-block;
 }
 
-.c0 .title h1 {
-  margin-top: 1rem;
+.c0 .title label {
+  margin: 0;
+  color: #ffffff;
   padding-left: 0px;
   text-align: center;
   font-size: 2.4rem;

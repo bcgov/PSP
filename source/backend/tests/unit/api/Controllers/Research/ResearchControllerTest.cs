@@ -46,7 +46,7 @@ namespace Pims.Api.Test.Controllers.Research
 
         public SearchControllerTest()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         #region Tests
@@ -59,12 +59,12 @@ namespace Pims.Api.Test.Controllers.Research
         public void GetResearchFiles_All_Success(SModel.ResearchFilterModel filter)
         {
             // Arrange
-            var controller = _helper.CreateController<SearchController>(Permissions.ResearchFileView);
+            var controller = this._helper.CreateController<SearchController>(Permissions.ResearchFileView);
 
             var researchFiles = new[] { EntityHelper.CreateResearchFile(1) };
 
-            var service = _helper.GetService<Mock<IResearchFileService>>();
-            var mapper = _helper.GetService<IMapper>();
+            var service = this._helper.GetService<Mock<IResearchFileService>>();
+            var mapper = this._helper.GetService<IMapper>();
 
             service.Setup(m => m.GetPage(It.IsAny<ResearchFilter>())).Returns(new Paged<Entity.PimsResearchFile>(researchFiles));
 
@@ -87,12 +87,12 @@ namespace Pims.Api.Test.Controllers.Research
         public void GetResearchFiles_Query_Success(Uri uri)
         {
             // Arrange
-            var controller = _helper.CreateController<SearchController>(Permissions.ResearchFileView, uri);
+            var controller = this._helper.CreateController<SearchController>(Permissions.ResearchFileView, uri);
 
             var researchFiles = new[] { EntityHelper.CreateResearchFile(1) };
 
-            var service = _helper.GetService<Mock<IResearchFileService>>();
-            var mapper = _helper.GetService<IMapper>();
+            var service = this._helper.GetService<Mock<IResearchFileService>>();
+            var mapper = this._helper.GetService<IMapper>();
 
             service.Setup(m => m.GetPage(It.IsAny<ResearchFilter>())).Returns(new Paged<Entity.PimsResearchFile>(researchFiles));
 
@@ -114,11 +114,11 @@ namespace Pims.Api.Test.Controllers.Research
         public void GetResearchFiles_Query_NoFilter_BadRequest()
         {
             // Arrange
-            var controller = _helper.CreateController<SearchController>(Permissions.ResearchFileView);
-            var request = _helper.GetService<Mock<HttpRequest>>();
+            var controller = this._helper.CreateController<SearchController>(Permissions.ResearchFileView);
+            var request = this._helper.GetService<Mock<HttpRequest>>();
             request.Setup(m => m.QueryString).Returns(new QueryString("?page=0"));
 
-            var service = _helper.GetService<Mock<IResearchFileService>>();
+            var service = this._helper.GetService<Mock<IResearchFileService>>();
 
             // Act
             // Assert
@@ -133,9 +133,9 @@ namespace Pims.Api.Test.Controllers.Research
         public void GetResearchFiles_NoFilter_BadRequest()
         {
             // Arrange
-            var controller = _helper.CreateController<SearchController>(Permissions.ResearchFileView);
+            var controller = this._helper.CreateController<SearchController>(Permissions.ResearchFileView);
 
-            var service = _helper.GetService<Mock<IResearchFileService>>();
+            var service = this._helper.GetService<Mock<IResearchFileService>>();
 
             // Act
             // Assert
@@ -150,9 +150,9 @@ namespace Pims.Api.Test.Controllers.Research
         public void GetResearchFiles_InvalidFilter_BadRequest()
         {
             // Arrange
-            var controller = _helper.CreateController<SearchController>(Permissions.ResearchFileView);
+            var controller = this._helper.CreateController<SearchController>(Permissions.ResearchFileView);
 
-            var service = _helper.GetService<Mock<IResearchFileService>>();
+            var service = this._helper.GetService<Mock<IResearchFileService>>();
             var filter = new ResearchFilterModel() { CreatedOnStartDate = DateTime.Now, CreatedOnEndDate = DateTime.Now.AddDays(-1) };
 
             // Act

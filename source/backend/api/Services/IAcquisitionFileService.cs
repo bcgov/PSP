@@ -11,6 +11,8 @@ namespace Pims.Api.Services
 
         PimsAcquisitionFile GetById(long id);
 
+        LastUpdatedByModel GetLastUpdateInformation(long acquisitionFileId);
+
         PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides);
 
         PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides);
@@ -21,11 +23,15 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsAcquisitionOwner> GetOwners(long id);
 
+        IEnumerable<PimsAcquisitionFileTeam> GetTeamMembers();
+
         IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id);
 
         PimsAcquisitionFile UpdateChecklistItems(PimsAcquisitionFile acquisitionFile);
 
         IEnumerable<PimsAgreement> GetAgreements(long id);
+
+        IEnumerable<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter);
 
         IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements);
 
@@ -40,5 +46,7 @@ namespace Pims.Api.Services
         PimsExpropriationPayment AddExpropriationPayment(long acquisitionFileId, PimsExpropriationPayment expPayment);
 
         IList<PimsExpropriationPayment> GetAcquisitionExpropriationPayments(long acquisitionFileId);
+
+        List<AcquisitionFileExportModel> GetAcquisitionFileExport(AcquisitionFilter filter);
     }
 }

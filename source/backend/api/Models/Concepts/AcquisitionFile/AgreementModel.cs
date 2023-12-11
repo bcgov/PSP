@@ -20,6 +20,8 @@ namespace Pims.Api.Models.Concepts
 
         public DateTime? CommencementDate { get; set; }
 
+        public DateTime? PossessionDate { get; set; }
+
         public decimal? DepositAmount { get; set; }
 
         public int? NoLaterThanDays { get; set; }

@@ -27,14 +27,7 @@ export const UserUpdateSchema = Yup.object().shape({
 });
 
 export const FilterBarSchema = Yup.object().shape({
-  minLotSize: Yup.number()
-    .typeError('Invalid')
-    .positive('Must be greater than 0')
-    .max(200000, 'Invalid'),
-  maxLotSize: Yup.number()
-    .typeError('Invalid')
-    .positive('Must be greater than 0')
-    .max(200000, 'Invalid')
-    /* Reference minLotSize field in validating maxLotSize value */
-    .moreThan(Yup.ref('minLotSize'), 'Must be greater than Min Lot Size'),
+  pinOrPid: Yup.string()
+    .nullable()
+    .matches(/^\d{0,3}-\d{3}-\d{3}$|^\d{0,9}$/, 'Invalid PIN or PID'),
 });

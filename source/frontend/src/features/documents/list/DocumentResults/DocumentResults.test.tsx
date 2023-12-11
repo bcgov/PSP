@@ -3,7 +3,7 @@ import { noop } from 'lodash';
 
 import { Claims } from '@/constants/claims';
 import { DocumentRow } from '@/features/documents/ComposedDocument';
-import { mockDocumentsResponse } from '@/mocks/documents.mock';
+import { mockDocumentResponse, mockDocumentsResponse } from '@/mocks/documents.mock';
 import { cleanup, mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
 import { DocumentResults, IDocumentResultProps } from './DocumentResults';
@@ -33,8 +33,6 @@ const setup = (renderOptions: RenderOptions & Partial<IDocumentResultProps> = { 
       setSort={setSort}
       onViewDetails={noop}
       onDelete={noop}
-      onPageChange={noop}
-      pageProps={{ pageSize: 10, pageIndex: 0 }}
     />,
     {
       ...rest,
@@ -123,13 +121,12 @@ describe('Document Results Table', () => {
     expect(deleteButtons[0]).toBeVisible();
   });
 
-  it('displays document delete button', async () => {
-    mockKeycloak({ claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE] });
-    const { getAllByTestId } = setup({
-      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
-    });
-
-    const deleteButtons = await getAllByTestId('document-delete-button');
-    expect(deleteButtons[0]).toBeVisible();
+  it('displays default number of entries of 10', async () => {
+    mockKeycloak({ claims: [Claims.DOCUMENT_VIEW] });
+    const largeDataset = Array.from({ length: 15 }, (id: number) =>
+      DocumentRow.fromApi(mockDocumentResponse(id)),
+    );
+    const { findByText } = setup({ results: largeDataset });
+    expect(await findByText('1 - 10 of 15')).toBeVisible();
   });
 });

@@ -479,7 +479,7 @@ exports[`EditUserForm component renders as expected 1`] = `
               >
                 <span
                   class="chip  false false"
-                  style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                  style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
                 >
                   Functional
                   <i
@@ -503,7 +503,7 @@ exports[`EditUserForm component renders as expected 1`] = `
                 </span>
                 <span
                   class="chip  false false"
-                  style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                  style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
                 >
                   System Administrator
                   <i
@@ -550,6 +550,16 @@ exports[`EditUserForm component renders as expected 1`] = `
                     class="option    "
                   >
                     Functional (Restricted)
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Management functional
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Management read-only
                   </li>
                   <li
                     class="option    "
@@ -607,7 +617,7 @@ exports[`EditUserForm component renders as expected 1`] = `
               >
                 <span
                   class="chip  false false"
-                  style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                  style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
                 >
                   South Coast Region
                   <i

@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using Moq;
+using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -41,7 +42,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPage(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
 
             // Assert
             result.Should().HaveCount(1);
@@ -62,7 +63,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPage(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
 
             // Assert
             result.Should().HaveCount(1);
@@ -83,7 +84,28 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPage(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetPage_AlternateProject()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { AlternateProject = new PimsProject() { Code = "1", Description = "test" } } };
+            var filter = new AcquisitionFilter() { ProjectNameOrNumber = "test" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
 
             // Assert
             result.Should().HaveCount(1);
@@ -219,8 +241,7 @@ namespace Pims.Dal.Test.Repositories
             // Act
             var acquisitionUpdated = EntityHelper.CreateAcquisitionFile(acqFileId: 1, region: context.PimsRegions.FirstOrDefault());
             acquisitionUpdated.PimsInterestHolders.Add(
-                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" }
-            );
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" });
 
             var result = repository.Update(acquisitionUpdated);
 
@@ -247,8 +268,7 @@ namespace Pims.Dal.Test.Repositories
 
             var acqFile = EntityHelper.CreateAcquisitionFile(region: context.PimsRegions.FirstOrDefault());
             acqFile.PimsInterestHolders.Add(
-                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" }
-            );
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" });
             context.AddAndSaveChanges(acqFile);
 
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
@@ -256,8 +276,7 @@ namespace Pims.Dal.Test.Repositories
             // Act
             var acquisitionUpdated = EntityHelper.CreateAcquisitionFile(acqFileId: 1, region: context.PimsRegions.FirstOrDefault());
             acquisitionUpdated.PimsInterestHolders.Add(
-                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = updatePerson.Internal_Id, Comment = "updated comment", InterestHolderTypeCode = "AOREP" }
-            );
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = updatePerson.Internal_Id, Comment = "updated comment", InterestHolderTypeCode = "AOREP" });
 
             var result = repository.Update(acquisitionUpdated);
 
@@ -282,8 +301,7 @@ namespace Pims.Dal.Test.Repositories
 
             var acqFile = EntityHelper.CreateAcquisitionFile(region: context.PimsRegions.FirstOrDefault());
             acqFile.PimsInterestHolders.Add(
-                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" }
-            );
+                new PimsInterestHolder() { AcquisitionFileId = acqFile.Internal_Id, PersonId = person.Internal_Id, Comment = "blah blah", InterestHolderTypeCode = "AOREP" });
             context.AddAndSaveChanges(acqFile);
 
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
@@ -331,6 +349,52 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             act.Should().Throw<KeyNotFoundException>();
         }
+        #endregion
+
+        #region Export
+
+        [Fact]
+        public void GetAcquisitionFileExport_Filter_AcquisitionName()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.FileName = "fileName";
+            var filter = new AcquisitionFilter() { AcquisitionFileNameOrNumber = "fileName" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetAcquisitionFileExportDeep(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetAcquisitionFileExport_Filter_AcquisitionNumber()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.FileNumber = "fileNumber";
+            var filter = new AcquisitionFilter() { AcquisitionFileNameOrNumber = "fileNumber" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetAcquisitionFileExportDeep(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
         #endregion
 
         #endregion

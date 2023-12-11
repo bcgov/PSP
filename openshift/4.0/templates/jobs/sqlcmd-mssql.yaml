@@ -1,0 +1,69 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: sqlcmd-mssql
+  namespace: 3cd915-tools
+  uid: 01fddef5-0169-4d6f-aac8-86aa55bc9cf5
+  resourceVersion: "7983267520"
+  generation: 73
+  creationTimestamp: "2023-09-14T00:08:01Z"
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: build.openshift.io/v1
+      time: "2023-10-18T23:35:41Z"
+      fieldsType: FieldsV1
+      fieldsV1:
+        "f:spec":
+          "f:output":
+            "f:to": {}
+          "f:runPolicy": {}
+          "f:source":
+            "f:dockerfile": {}
+            "f:type": {}
+          "f:strategy":
+            "f:dockerStrategy": {}
+            "f:type": {}
+    - manager: openshift-apiserver
+      operation: Update
+      apiVersion: build.openshift.io/v1
+      time: "2023-10-18T23:35:43Z"
+      fieldsType: FieldsV1
+      fieldsV1:
+        "f:status":
+          "f:lastVersion": {}
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: "sqlcmd-mssql:latest"
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Docker
+    dockerStrategy: {}
+  postCommit: {}
+  source:
+    type: Dockerfile
+    dockerfile: >
+      FROM
+      image-registry.openshift-image-registry.svc:5000/3cd915-tools/mssql-rhel-server:2019-latest
+
+
+      USER root
+
+
+      RUN yum install -y git;
+
+
+      RUN mkdir /usr/config && cd /usr/config && git clone
+      https://github.com/bcgov/PSP.git psp && git config --system --add
+      safe.directory '*';
+
+
+      RUN chmod -R 777 /usr/config/psp;
+  runPolicy: Serial
+status:
+  lastVersion: 35

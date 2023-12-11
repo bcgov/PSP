@@ -83,7 +83,7 @@ export const AddResearchContainer: React.FunctionComponent<
   };
 
   const handleSave = () => {
-    formikRef.current?.submitForm();
+    return formikRef.current?.submitForm() ?? Promise.resolve();
   };
 
   const handleCancel = () => {
@@ -111,6 +111,7 @@ export const AddResearchContainer: React.FunctionComponent<
               isOkDisabled={formikProps?.isSubmitting || bcaLoading}
               onSave={handleSave}
               onCancel={handleCancel}
+              displayRequiredFieldError={!formikProps.isValid && !!formikProps.submitCount}
             />
           }
           showCloseButton

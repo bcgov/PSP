@@ -1,6 +1,9 @@
 import { IAddress } from '@/interfaces';
 import { Api_Address } from '@/models/api/Address';
+import { Api_PropertyManagement } from '@/models/api/Property';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
+
+import { prettyFormatDate } from './dateUtils';
 
 /**
  * The pidFormatter is used to format the specified PID value
@@ -92,3 +95,18 @@ export const formatBcaAddress = (address?: IBcAssessmentSummary['ADDRESSES'][0])
   ]
     .filter(a => !!a)
     .join(' ');
+
+export function formatApiPropertyManagementLease(base?: Api_PropertyManagement | null): string {
+  const count = base?.relatedLeases || 0;
+  switch (count) {
+    case 0:
+      return 'No active Lease/License';
+
+    case 1:
+      const expiryDate = base?.leaseExpiryDate ? `(${prettyFormatDate(base.leaseExpiryDate)})` : '';
+      return `Yes ${expiryDate}`.trim();
+
+    default:
+      return 'Multiple';
+  }
+}

@@ -21,6 +21,7 @@ import * as Styled from './styles';
 export interface INoteListViewProps {
   type: NoteTypes;
   entityId: number;
+  onSuccess?: () => void;
 }
 /**
  * Page that displays notes information.
@@ -28,7 +29,7 @@ export interface INoteListViewProps {
 export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INoteListViewProps>> = (
   props: INoteListViewProps,
 ) => {
-  const { type, entityId } = props;
+  const { type, entityId, onSuccess } = props;
   const isMounted = useIsMounted();
   const { getNotes, deleteNote } = useApiNotes();
 
@@ -78,9 +79,15 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
       setShowDeleteConfirm(false);
       toast.success('Deleted successfully.');
       fetchNotes();
+      onSuccess?.();
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const onChildSuccess = () => {
+    fetchNotes();
+    onSuccess?.();
   };
 
   return (
@@ -120,7 +127,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
             isOpened={isAddNotesOpened}
             openModal={openAddNotes}
             closeModal={closeAddNotes}
-            onSuccess={fetchNotes}
+            onSuccess={onChildSuccess}
           />
 
           {currentNote && (
@@ -130,7 +137,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
               isOpened={isViewNotesOpened}
               openModal={openViewNotes}
               closeModal={closeViewNotes}
-              onSuccess={fetchNotes}
+              onSuccess={onChildSuccess}
             ></NoteContainer>
           )}
 

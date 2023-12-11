@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FileTypes } from '@/constants/fileTypes';
-import { Api_File } from '@/models/api/File';
+import { Api_File, Api_LastUpdatedBy } from '@/models/api/File';
 import { Api_Project } from '@/models/api/Project';
 import { getLatLng } from '@/utils/mapPropertyUtils';
 
@@ -30,6 +30,11 @@ export interface ISideBarContext {
   getFilePropertyIndexById: (filePropertyId: number) => number;
   fullWidth: boolean;
   setFullWidth: (fullWidth: boolean) => void;
+
+  lastUpdatedBy: Api_LastUpdatedBy | null;
+  setLastUpdatedBy: (lastUpdatedBy: Api_LastUpdatedBy | null) => void;
+  staleLastUpdatedBy: boolean;
+  setStaleLastUpdatedBy: (stale: boolean) => void;
 }
 
 export const SideBarContext = React.createContext<ISideBarContext>({
@@ -62,16 +67,29 @@ export const SideBarContext = React.createContext<ISideBarContext>({
   setProjectLoading: (loading: boolean) => {
     throw Error('setProjectLoading function not defined');
   },
+  lastUpdatedBy: null,
+  setLastUpdatedBy: (lastUpdatedBy: Api_LastUpdatedBy | null) => {
+    throw Error('setLastUpdatedBy function not defined');
+  },
+  staleLastUpdatedBy: false,
+  setStaleLastUpdatedBy: (loading: boolean) => {
+    throw Error('setStaleLastUpdatedBy function not defined');
+  },
 });
 
 export const SideBarContextProvider = (props: {
   children: React.ReactChild | React.ReactChild[] | React.ReactNode;
   file?: TypedFile;
   project?: Api_Project;
+  lastUpdatedBy?: Api_LastUpdatedBy;
 }) => {
   const [file, setFile] = useState<TypedFile | undefined>(props.file);
   const [project, setProject] = useState<Api_Project | undefined>(props.project);
   const [staleFile, setStaleFile] = useState<boolean>(false);
+  const [lastUpdatedBy, setLastUpdatedBy] = useState<Api_LastUpdatedBy | null>(
+    props.lastUpdatedBy ?? null,
+  );
+  const [staleLastUpdatedBy, setStaleLastUpdatedBy] = useState<boolean>(false);
   const [fileLoading, setFileLoading] = useState<boolean>(false);
   const [projectLoading, setProjectLoading] = useState<boolean>(false);
   const [fullWidth, setFullWidth] = useState<boolean>(false);
@@ -82,6 +100,14 @@ export const SideBarContextProvider = (props: {
       setStaleFile(false);
     },
     [setFile, setStaleFile],
+  );
+
+  const setLastUpdatedByAndStale = useCallback(
+    (lastUpdatedBy: Api_LastUpdatedBy | null) => {
+      setLastUpdatedBy(lastUpdatedBy);
+      setStaleLastUpdatedBy(false);
+    },
+    [setLastUpdatedBy, setStaleLastUpdatedBy],
   );
 
   const setProjectInstance = useCallback(
@@ -114,6 +140,12 @@ export const SideBarContextProvider = (props: {
     resetFilePropertyLocations();
   }, [resetFilePropertyLocations]);
 
+  useEffect(() => {
+    if (staleLastUpdatedBy) {
+      setLastUpdatedByAndStale(lastUpdatedBy);
+    }
+  }, [lastUpdatedBy, setLastUpdatedByAndStale, staleLastUpdatedBy]);
+
   return (
     <SideBarContext.Provider
       value={{
@@ -131,6 +163,10 @@ export const SideBarContextProvider = (props: {
         setProject: setProjectInstance,
         setProjectLoading: setProjectLoading,
         project: project,
+        lastUpdatedBy,
+        setLastUpdatedBy: setLastUpdatedByAndStale,
+        staleLastUpdatedBy,
+        setStaleLastUpdatedBy,
       }}
     >
       {props.children}

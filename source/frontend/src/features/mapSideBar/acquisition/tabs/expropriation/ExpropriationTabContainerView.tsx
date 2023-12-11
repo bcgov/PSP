@@ -1,3 +1,4 @@
+import { FaPlus } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -85,7 +86,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
             claims={[Claims.ACQUISITION_EDIT]}
             title="Form 8 - Notice of Advance Payment"
             addButtonText="Add Form 8"
-            addButtonIcon={'add'}
+            addButtonIcon={<FaPlus size={'2rem'} />}
             onAdd={() => {
               history.push(`${match.url}/add`);
             }}

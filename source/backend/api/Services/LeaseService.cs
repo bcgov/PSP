@@ -32,7 +32,7 @@ namespace Pims.Api.Services
 
         public LeaseService(
             ClaimsPrincipal user,
-            ILogger<ActivityService> logger,
+            ILogger<LeaseService> logger,
             ILeaseRepository leaseRepository,
             ICoordinateTransformService coordinateTransformService,
             IPropertyRepository propertyRepository,
@@ -83,6 +83,14 @@ namespace Pims.Api.Services
                 }
             }
             return lease;
+        }
+
+        public LastUpdatedByModel GetLastUpdateInformation(long leaseId)
+        {
+            _logger.LogInformation("Retrieving last updated-by information...");
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            return _leaseRepository.GetLastUpdateBy(leaseId);
         }
 
         public Paged<PimsLease> GetPage(LeaseFilter filter, bool? all = false)
@@ -289,8 +297,9 @@ namespace Pims.Api.Services
                     {
                         throw new UserOverrideException(UserOverrideCode.AddPropertyToInventory, $"PID {propertyLease?.Property?.Pid.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
                     }
-                    throw new UserOverrideException(UserOverrideCode.AddPropertyToInventory, $"Lng/Lat {propertyLease?.Property?.Location.Coordinate.X.ToString(CultureInfo.CurrentCulture) ?? string.Empty}, " +
-                        $"{propertyLease?.Property?.Location.Coordinate.Y.ToString(CultureInfo.CurrentCulture) ?? string.Empty} {genericOverrideErrorMsg}");
+                    string overrideError = $"Lng/Lat {propertyLease?.Property?.Location.Coordinate.X.ToString(CultureInfo.CurrentCulture) ?? string.Empty}, " +
+                        $"{propertyLease?.Property?.Location.Coordinate.Y.ToString(CultureInfo.CurrentCulture) ?? string.Empty} {genericOverrideErrorMsg}";
+                    throw new UserOverrideException(UserOverrideCode.AddPropertyToInventory, overrideError);
                 }
 
                 // If the property exist dont update it, just refer to it by id.
@@ -317,6 +326,14 @@ namespace Pims.Api.Services
                         var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
                         propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
                         _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
+                    }
+
+                    var boundaryGeom = leaseProperty.Boundary;
+                    if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
+                    {
+                        var newCoords = boundaryGeom.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
+                        var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
+                        leaseProperty.Boundary = gf.CreatePolygon(newCoords.ToArray());
                     }
                 }
                 else
@@ -399,6 +416,15 @@ namespace Pims.Api.Services
             {
                 var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
                 property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
+            }
+
+            // apply similar logic to the boundary
+            var boundaryGeom = property.Boundary;
+            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
+            {
+                var newCoords = property.Boundary.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
+                var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
+                property.Boundary = gf.CreatePolygon(newCoords.ToArray());
             }
         }
     }

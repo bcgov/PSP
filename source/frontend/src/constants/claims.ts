@@ -35,10 +35,6 @@ export enum Claims {
   DOCUMENT_ADD = 'document-add',
   DOCUMENT_DELETE = 'document-delete',
   DOCUMENT_ADMIN = 'document-admin',
-  ACTIVITY_EDIT = 'activity-edit',
-  ACTIVITY_VIEW = 'activity-view',
-  ACTIVITY_ADD = 'activity-add',
-  ACTIVITY_DELETE = 'activity-delete',
   GENERATE_DOCUMENTS = 'generate-documents',
   PROJECT_EDIT = 'project-edit',
   PROJECT_VIEW = 'project-view',
@@ -53,6 +49,10 @@ export enum Claims {
   COMPENSATION_REQUISITION_ADD = 'compensation-requisition-add',
   COMPENSATION_REQUISITION_EDIT = 'compensation-requisition-edit',
   COMPENSATION_REQUISITION_DELETE = 'compensation-requisition-delete',
+  MANAGEMENT_VIEW = 'management-view',
+  MANAGEMENT_ADD = 'management-add',
+  MANAGEMENT_EDIT = 'management-edit',
+  MANAGEMENT_DELETE = 'management-delete',
 }
 
 export default Claims;

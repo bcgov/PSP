@@ -1,14 +1,14 @@
-using FluentAssertions;
-using Pims.Api.Services;
-using Pims.Core.Test;
-using Pims.Dal.Exceptions;
-using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Pims.Api.Services;
+using Pims.Core.Test;
+using Pims.Dal.Exceptions;
+using Pims.Dal.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Services
@@ -23,13 +23,13 @@ namespace Pims.Api.Test.Services
 
         public ExpropriationPaymentServiceTest()
         {
-            _helper = new TestHelper();
+            this._helper = new TestHelper();
         }
 
         [Fact]
         public void GetById_NoPermission()
         {
-            var service = CreateServiceWithPermissions();
+            var service = this.CreateServiceWithPermissions();
 
             // Act
             Action act = () => service.GetById(1);
@@ -41,8 +41,8 @@ namespace Pims.Api.Test.Services
         private ExpropriationPaymentService CreateServiceWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
-            _helper.CreatePimsContext(user, true);
-            return _helper.Create<ExpropriationPaymentService>(user);
+            this._helper.CreatePimsContext(user, true);
+            return this._helper.Create<ExpropriationPaymentService>(user);
         }
     }
 }

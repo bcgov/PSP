@@ -9,7 +9,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAreaUnitType',
-    rowVersion: 0,
   },
   {
     id: 'FEET2',
@@ -17,7 +16,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAreaUnitType',
-    rowVersion: 0,
   },
   {
     id: 'HA',
@@ -25,7 +23,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAreaUnitType',
-    rowVersion: 0,
   },
   {
     id: 'M2',
@@ -33,7 +30,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAreaUnitType',
-    rowVersion: 0,
   },
   {
     id: 'COREOPER',
@@ -41,7 +37,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 1,
     type: 'PimsPropertyClassificationType',
-    rowVersion: 0,
   },
   {
     id: 'CORESTRAT',
@@ -49,7 +44,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 2,
     type: 'PimsPropertyClassificationType',
-    rowVersion: 0,
   },
   {
     id: 'SURPACTIVE',
@@ -57,7 +51,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 3,
     type: 'PimsPropertyClassificationType',
-    rowVersion: 0,
   },
   {
     id: 'SURPENCUM',
@@ -65,7 +58,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 4,
     type: 'PimsPropertyClassificationType',
-    rowVersion: 0,
   },
   {
     id: 'DISPOSED',
@@ -73,7 +65,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 5,
     type: 'PimsPropertyClassificationType',
-    rowVersion: 0,
   },
   {
     id: 'DEMOLISHED',
@@ -81,7 +72,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 6,
     type: 'PimsPropertyClassificationType',
-    rowVersion: 0,
   },
   {
     id: 'SUBDIVIDED',
@@ -89,7 +79,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 7,
     type: 'PimsPropertyClassificationType',
-    rowVersion: 0,
   },
   {
     id: 'UNKNOWN',
@@ -97,7 +86,13 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 8,
     type: 'PimsPropertyClassificationType',
-    rowVersion: 0,
+  },
+  {
+    id: 'OTHER',
+    name: 'Other Interest',
+    isDisabled: false,
+    displayOrder: 9,
+    type: 'PimsPropertyClassificationType',
   },
   {
     id: 'FAX',
@@ -105,7 +100,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsContactMethodType',
-    rowVersion: 0,
   },
   {
     id: 'PERSEMAIL',
@@ -113,7 +107,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsContactMethodType',
-    rowVersion: 0,
   },
   {
     id: 'PERSMOBIL',
@@ -121,7 +114,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsContactMethodType',
-    rowVersion: 0,
   },
   {
     id: 'PERSPHONE',
@@ -129,7 +121,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsContactMethodType',
-    rowVersion: 0,
   },
   {
     id: 'WORKEMAIL',
@@ -137,7 +128,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsContactMethodType',
-    rowVersion: 0,
   },
   {
     id: 'WORKMOBIL',
@@ -145,7 +135,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsContactMethodType',
-    rowVersion: 0,
   },
   {
     id: 'WORKPHONE',
@@ -153,7 +142,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsContactMethodType',
-    rowVersion: 0,
   },
   {
     id: '1',
@@ -198,7 +186,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsDistrict',
-    rowVersion: 0,
   },
   {
     id: '2',
@@ -207,7 +194,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsDistrict',
-    rowVersion: 0,
   },
   {
     id: '3',
@@ -216,7 +202,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsDistrict',
-    rowVersion: 0,
   },
   {
     id: '4',
@@ -225,7 +210,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsDistrict',
-    rowVersion: 0,
   },
   {
     id: '5',
@@ -234,7 +218,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsDistrict',
-    rowVersion: 0,
   },
   {
     id: '6',
@@ -243,7 +226,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsDistrict',
-    rowVersion: 0,
   },
   {
     id: '7',
@@ -252,7 +234,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsDistrict',
-    rowVersion: 0,
   },
   {
     id: '8',
@@ -261,7 +242,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsDistrict',
-    rowVersion: 0,
   },
   {
     id: '9',
@@ -270,7 +250,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsDistrict',
-    rowVersion: 0,
   },
   {
     id: '10',
@@ -279,7 +258,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsDistrict',
-    rowVersion: 0,
   },
   {
     id: '11',
@@ -288,7 +266,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsDistrict',
-    rowVersion: 0,
   },
   {
     id: '12',
@@ -297,7 +274,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsDistrict',
-    rowVersion: 0,
   },
   {
     id: 'AIRCRAFT',
@@ -305,7 +281,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 1,
     type: 'PimsInsuranceType',
-    rowVersion: 0,
   },
   {
     id: 'GENERAL',
@@ -313,7 +288,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 2,
     type: 'PimsInsuranceType',
-    rowVersion: 0,
   },
   {
     id: 'MARINE',
@@ -321,7 +295,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 3,
     type: 'PimsInsuranceType',
-    rowVersion: 0,
   },
   {
     id: 'VEHICLE',
@@ -329,7 +302,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 4,
     type: 'PimsInsuranceType',
-    rowVersion: 0,
   },
   {
     id: 'OTHER',
@@ -337,7 +309,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 99,
     type: 'PimsInsuranceType',
-    rowVersion: 0,
   },
   {
     id: 'AGRIC',
@@ -345,7 +316,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseCategoryType',
-    rowVersion: 0,
   },
   {
     id: 'COMM',
@@ -353,7 +323,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseCategoryType',
-    rowVersion: 0,
   },
   {
     id: 'GOVGOV',
@@ -361,7 +330,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseCategoryType',
-    rowVersion: 0,
   },
   {
     id: 'INDUS',
@@ -369,7 +337,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseCategoryType',
-    rowVersion: 0,
   },
   {
     id: 'OTHER',
@@ -377,7 +344,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseCategoryType',
-    rowVersion: 0,
   },
   {
     id: 'RESID',
@@ -385,7 +351,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseCategoryType',
-    rowVersion: 0,
   },
   {
     id: 'HQ',
@@ -393,7 +358,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseInitiatorType',
-    rowVersion: 0,
   },
   {
     id: 'PROJECT',
@@ -401,7 +365,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseInitiatorType',
-    rowVersion: 0,
   },
   {
     id: 'REGION',
@@ -409,7 +372,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseInitiatorType',
-    rowVersion: 0,
   },
   {
     id: 'ANNUAL',
@@ -417,7 +379,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePmtFreqType',
-    rowVersion: 0,
   },
   {
     id: 'BIMONTH',
@@ -425,7 +386,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePmtFreqType',
-    rowVersion: 0,
   },
   {
     id: 'BIWEEK',
@@ -433,7 +393,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePmtFreqType',
-    rowVersion: 0,
   },
   {
     id: 'DAILY',
@@ -441,7 +400,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePmtFreqType',
-    rowVersion: 0,
   },
   {
     id: 'MONTHLY',
@@ -449,7 +407,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePmtFreqType',
-    rowVersion: 0,
   },
   {
     id: 'NOMINAL',
@@ -457,7 +414,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePmtFreqType',
-    rowVersion: 0,
   },
   {
     id: 'PREPAID',
@@ -465,7 +421,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePmtFreqType',
-    rowVersion: 0,
   },
   {
     id: 'QUARTER',
@@ -473,7 +428,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePmtFreqType',
-    rowVersion: 0,
   },
   {
     id: 'SEMIANN',
@@ -481,7 +435,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePmtFreqType',
-    rowVersion: 0,
   },
   {
     id: 'WEEKLY',
@@ -489,7 +442,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePmtFreqType',
-    rowVersion: 0,
   },
   {
     id: 'CASH',
@@ -497,7 +449,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePaymentMethodType',
-    rowVersion: 0,
   },
   {
     id: 'CHEQ',
@@ -505,7 +456,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePaymentMethodType',
-    rowVersion: 0,
   },
   {
     id: 'CRDR',
@@ -513,7 +463,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePaymentMethodType',
-    rowVersion: 0,
   },
   {
     id: 'EFT',
@@ -521,7 +470,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePaymentMethodType',
-    rowVersion: 0,
   },
   {
     id: 'H120',
@@ -529,7 +477,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePaymentMethodType',
-    rowVersion: 0,
   },
   {
     id: 'OTHR',
@@ -537,7 +484,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePaymentMethodType',
-    rowVersion: 0,
   },
   {
     id: 'POST',
@@ -545,7 +491,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePaymentMethodType',
-    rowVersion: 0,
   },
   {
     id: 'PYBLBCTFA',
@@ -553,7 +498,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePayRvblType',
-    rowVersion: 0,
   },
   {
     id: 'PYBLMOTI',
@@ -561,7 +505,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePayRvblType',
-    rowVersion: 0,
   },
   {
     id: 'RCVBL',
@@ -569,7 +512,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePayRvblType',
-    rowVersion: 0,
   },
   {
     id: 'OVERPAID',
@@ -577,7 +519,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePaymentStatusType',
-    rowVersion: 0,
   },
   {
     id: 'PAID',
@@ -585,7 +526,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePaymentStatusType',
-    rowVersion: 0,
   },
   {
     id: 'PARTIAL',
@@ -593,7 +533,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePaymentStatusType',
-    rowVersion: 0,
   },
   {
     id: 'UNPAID',
@@ -601,7 +540,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePaymentStatusType',
-    rowVersion: 0,
   },
   {
     id: 'BCFERRIES',
@@ -609,7 +547,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseProgramType',
-    rowVersion: 0,
   },
   {
     id: 'BCTRANSIT',
@@ -617,7 +554,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseProgramType',
-    rowVersion: 0,
   },
   {
     id: 'BELLETERM',
@@ -625,7 +561,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseProgramType',
-    rowVersion: 0,
   },
   {
     id: 'COMMBLDG',
@@ -633,7 +568,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseProgramType',
-    rowVersion: 0,
   },
   {
     id: 'LCLGOVT',
@@ -641,7 +575,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseProgramType',
-    rowVersion: 0,
   },
   {
     id: 'OTHER',
@@ -649,7 +582,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseProgramType',
-    rowVersion: 0,
   },
   {
     id: 'RAILTRAIL',
@@ -657,7 +589,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseProgramType',
-    rowVersion: 0,
   },
   {
     id: 'RESRENTAL',
@@ -665,7 +596,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseProgramType',
-    rowVersion: 0,
   },
   {
     id: 'TMEP',
@@ -673,7 +603,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseProgramType',
-    rowVersion: 0,
   },
   {
     id: 'TRANSLINK',
@@ -681,7 +610,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseProgramType',
-    rowVersion: 0,
   },
   {
     id: 'UTILITY',
@@ -689,7 +617,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseProgramType',
-    rowVersion: 0,
   },
   {
     id: 'ACCCCOM',
@@ -697,7 +624,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'ACCRES',
@@ -705,7 +631,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'AGRIC',
@@ -713,7 +638,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'BCFERRIES',
@@ -721,7 +645,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'CAMPING',
@@ -729,7 +652,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'COMMBLDG',
@@ -737,7 +659,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'EMERGSVCS',
@@ -745,7 +666,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'ENCROACH',
@@ -753,7 +673,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'FENCEGATE',
@@ -761,7 +680,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'GARDENING',
@@ -769,7 +687,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'GRAVEL',
@@ -777,7 +694,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'GRAZING',
@@ -785,7 +701,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'LOGGING',
@@ -793,7 +708,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'MARINEFAC',
@@ -801,7 +715,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'MOBILEHM',
@@ -809,7 +722,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'MTCYARD',
@@ -817,7 +729,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'OTHER',
@@ -825,7 +736,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'PARK',
@@ -833,7 +743,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'PARKING',
@@ -841,7 +750,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'PARKNRID',
@@ -849,7 +757,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'PIPELINE',
@@ -857,7 +764,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'PRELOAD',
@@ -865,7 +771,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'PRVTRANS',
@@ -873,7 +778,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'RAILWAY',
@@ -881,7 +785,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'RESTAREA',
@@ -889,7 +792,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'SIDEWALK',
@@ -897,7 +799,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'SIGNAGE',
@@ -905,7 +806,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'SPCLEVNT',
@@ -913,7 +813,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'STGNGAREA',
@@ -921,7 +820,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'STKPILING',
@@ -929,7 +827,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'STORAGE',
@@ -937,7 +834,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'TOURINFO',
@@ -945,7 +841,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'TRAIL',
@@ -953,7 +848,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'UTILINFRA',
@@ -961,7 +855,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'UTILOHDXG',
@@ -969,7 +862,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'UTILUGDXG',
@@ -977,7 +869,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'WATERRES',
@@ -985,7 +876,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'WEIGHSCL',
@@ -993,7 +883,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'XING',
@@ -1001,7 +890,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeasePurposeType',
-    rowVersion: 0,
   },
   {
     id: 'HQ',
@@ -1009,7 +897,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseResponsibilityType',
-    rowVersion: 0,
   },
   {
     id: 'PROJECT',
@@ -1017,7 +904,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseResponsibilityType',
-    rowVersion: 0,
   },
   {
     id: 'REGION',
@@ -1025,7 +911,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseResponsibilityType',
-    rowVersion: 0,
   },
   {
     id: 'ACTIVE',
@@ -1033,7 +918,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseStatusType',
-    rowVersion: 0,
   },
   {
     id: 'DISCARD',
@@ -1041,7 +925,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseStatusType',
-    rowVersion: 0,
   },
   {
     id: 'DRAFT',
@@ -1049,7 +932,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseStatusType',
-    rowVersion: 0,
   },
   {
     id: 'DUPLICATE',
@@ -1057,7 +939,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseStatusType',
-    rowVersion: 0,
   },
   {
     id: 'EXPIRED',
@@ -1065,7 +946,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: true,
     displayOrder: 0,
     type: 'PimsLeaseStatusType',
-    rowVersion: 0,
   },
   {
     id: 'INACTIVE',
@@ -1073,7 +953,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseStatusType',
-    rowVersion: 0,
   },
   {
     id: 'TERMINATED',
@@ -1081,7 +960,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseStatusType',
-    rowVersion: 0,
   },
   {
     id: 'EXER',
@@ -1089,7 +967,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseTermStatusType',
-    rowVersion: 0,
   },
   {
     id: 'NEXER',
@@ -1097,15 +974,13 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseTermStatusType',
-    rowVersion: 0,
   },
   {
     id: 'LICONSTRC',
     name: 'License to Construct',
-    isDisabled: false,
+    isDisabled: true,
     displayOrder: 0,
     type: 'PimsLeaseLicenseType',
-    rowVersion: 0,
   },
   {
     id: 'LIMOTIPRJ',
@@ -1113,7 +988,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseLicenseType',
-    rowVersion: 0,
   },
   {
     id: 'LIOCCACCS',
@@ -1121,7 +995,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseLicenseType',
-    rowVersion: 0,
   },
   {
     id: 'LIOCCTTLD',
@@ -1129,7 +1002,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseLicenseType',
-    rowVersion: 0,
   },
   {
     id: 'LIOCCUSE',
@@ -1137,7 +1009,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseLicenseType',
-    rowVersion: 0,
   },
   {
     id: 'LIOCCUTIL',
@@ -1145,7 +1016,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseLicenseType',
-    rowVersion: 0,
   },
   {
     id: 'LIPPUBHWY',
@@ -1153,7 +1023,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseLicenseType',
-    rowVersion: 0,
   },
   {
     id: 'LSGRND',
@@ -1161,7 +1030,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseLicenseType',
-    rowVersion: 0,
   },
   {
     id: 'LSREG',
@@ -1169,7 +1037,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseLicenseType',
-    rowVersion: 0,
   },
   {
     id: 'LSUNREG',
@@ -1177,7 +1044,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseLicenseType',
-    rowVersion: 0,
   },
   {
     id: 'MANUFHOME',
@@ -1185,7 +1051,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseLicenseType',
-    rowVersion: 0,
   },
   {
     id: 'OTHER',
@@ -1193,7 +1058,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseLicenseType',
-    rowVersion: 0,
   },
   {
     id: 'RESLNDTEN',
@@ -1201,7 +1065,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseLicenseType',
-    rowVersion: 0,
   },
   {
     id: 'ROADXING',
@@ -1209,7 +1072,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsLeaseLicenseType',
-    rowVersion: 0,
   },
   {
     id: 'BCDIST',
@@ -1217,7 +1079,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsOrganizationType',
-    rowVersion: 0,
   },
   {
     id: 'BCMIN',
@@ -1225,7 +1086,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsOrganizationType',
-    rowVersion: 0,
   },
   {
     id: 'BCREG',
@@ -1233,7 +1093,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsOrganizationType',
-    rowVersion: 0,
   },
   {
     id: 'FIRSTNAT',
@@ -1241,7 +1100,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsOrganizationType',
-    rowVersion: 0,
   },
   {
     id: 'OTHER',
@@ -1249,7 +1107,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsOrganizationType',
-    rowVersion: 0,
   },
   {
     id: 'PARTNER',
@@ -1257,7 +1114,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsOrganizationType',
-    rowVersion: 0,
   },
   {
     id: 'PRIVATE',
@@ -1265,7 +1121,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsOrganizationType',
-    rowVersion: 0,
   },
   {
     id: 'RAILWAY',
@@ -1273,7 +1128,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsOrganizationType',
-    rowVersion: 0,
   },
   {
     id: 'REALTOR',
@@ -1281,7 +1135,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsOrganizationType',
-    rowVersion: 0,
   },
   {
     id: 'COMMBLDG',
@@ -1289,7 +1142,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 1,
     type: 'PimsPropertyImprovementType',
-    rowVersion: 0,
   },
   {
     id: 'RTA',
@@ -1297,7 +1149,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 2,
     type: 'PimsPropertyImprovementType',
-    rowVersion: 0,
   },
   {
     id: 'OTHER',
@@ -1305,7 +1156,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 99,
     type: 'PimsPropertyImprovementType',
-    rowVersion: 0,
   },
   {
     id: 'BUILD',
@@ -1313,7 +1163,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: true,
     displayOrder: 0,
     type: 'PimsPropertyType',
-    rowVersion: 0,
   },
   {
     id: 'CROWNFSRVD',
@@ -1321,7 +1170,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyType',
-    rowVersion: 0,
   },
   {
     id: 'CROWNFUSRVD',
@@ -1329,7 +1177,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyType',
-    rowVersion: 0,
   },
   {
     id: 'CROWNPSRVD',
@@ -1337,7 +1184,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyType',
-    rowVersion: 0,
   },
   {
     id: 'CROWNPUSRVD',
@@ -1345,7 +1191,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyType',
-    rowVersion: 0,
   },
   {
     id: 'HWYROAD',
@@ -1353,7 +1198,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyType',
-    rowVersion: 0,
   },
   {
     id: 'LAND',
@@ -1361,7 +1205,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: true,
     displayOrder: 0,
     type: 'PimsPropertyType',
-    rowVersion: 0,
   },
   {
     id: 'PARKS',
@@ -1369,7 +1212,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyType',
-    rowVersion: 0,
   },
   {
     id: 'RESERVE',
@@ -1377,7 +1219,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyType',
-    rowVersion: 0,
   },
   {
     id: 'STRATACP',
@@ -1385,7 +1226,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyType',
-    rowVersion: 0,
   },
   {
     id: 'SUBDIV',
@@ -1393,7 +1233,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: true,
     displayOrder: 0,
     type: 'PimsPropertyType',
-    rowVersion: 0,
   },
   {
     id: 'TITLED',
@@ -1401,7 +1240,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyType',
-    rowVersion: 0,
   },
   {
     id: 'UNKNOWN',
@@ -1409,7 +1247,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyType',
-    rowVersion: 0,
   },
   {
     id: '1',
@@ -1419,7 +1256,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 10,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '2',
@@ -1429,7 +1265,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 20,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '3',
@@ -1439,7 +1274,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 30,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '4',
@@ -1449,7 +1283,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 40,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '5',
@@ -1459,7 +1292,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 50,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '6',
@@ -1469,7 +1301,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 60,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '7',
@@ -1479,7 +1310,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 70,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '8',
@@ -1489,7 +1319,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 80,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '9',
@@ -1499,7 +1328,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 90,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '10',
@@ -1509,7 +1337,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 100,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '11',
@@ -1519,7 +1346,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 110,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '12',
@@ -1529,7 +1355,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 120,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '13',
@@ -1539,7 +1364,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 130,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '14',
@@ -1549,7 +1373,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 140,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '15',
@@ -1559,7 +1382,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 150,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '16',
@@ -1569,7 +1391,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 160,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '17',
@@ -1579,7 +1400,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 170,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '18',
@@ -1589,7 +1409,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 180,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '19',
@@ -1599,7 +1418,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 190,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '20',
@@ -1609,7 +1427,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 200,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '21',
@@ -1619,7 +1436,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 210,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '22',
@@ -1629,7 +1445,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 220,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '23',
@@ -1639,7 +1454,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 230,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '24',
@@ -1649,7 +1463,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 240,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '25',
@@ -1659,7 +1472,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 250,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '26',
@@ -1669,7 +1481,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 260,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '27',
@@ -1679,7 +1490,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 270,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '28',
@@ -1689,7 +1499,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 280,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '29',
@@ -1699,7 +1508,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 290,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '30',
@@ -1709,7 +1517,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 300,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '31',
@@ -1719,7 +1526,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 310,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '32',
@@ -1729,7 +1535,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 320,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '33',
@@ -1739,7 +1544,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 330,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '34',
@@ -1749,7 +1553,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 340,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '35',
@@ -1759,7 +1562,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 350,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '36',
@@ -1769,7 +1571,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 360,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '37',
@@ -1779,7 +1580,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 370,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '38',
@@ -1789,7 +1589,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 380,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '39',
@@ -1799,7 +1598,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 390,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '40',
@@ -1809,7 +1607,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 400,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '41',
@@ -1819,7 +1616,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 410,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '42',
@@ -1829,7 +1625,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 420,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '43',
@@ -1839,7 +1634,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 430,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '44',
@@ -1849,7 +1643,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 440,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '45',
@@ -1859,7 +1652,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 450,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '46',
@@ -1869,7 +1661,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 460,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '47',
@@ -1879,7 +1670,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 470,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '48',
@@ -1889,7 +1679,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 480,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '49',
@@ -1899,7 +1688,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 490,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '50',
@@ -1909,7 +1697,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 500,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '51',
@@ -1919,7 +1706,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 510,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '52',
@@ -1929,7 +1715,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 520,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '53',
@@ -1939,7 +1724,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 530,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '54',
@@ -1949,7 +1733,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 540,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '55',
@@ -1959,7 +1742,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 550,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '56',
@@ -1969,7 +1751,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 560,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '57',
@@ -1979,7 +1760,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 570,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '58',
@@ -1989,7 +1769,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 580,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '59',
@@ -1999,7 +1778,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 590,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '60',
@@ -2009,7 +1787,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 600,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '61',
@@ -2019,7 +1796,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 610,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '62',
@@ -2029,7 +1805,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 620,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '63',
@@ -2039,7 +1814,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 630,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '64',
@@ -2049,7 +1823,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 640,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '65',
@@ -2059,7 +1832,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 900,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '78',
@@ -2069,7 +1841,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 99995,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: '79',
@@ -2079,7 +1850,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 99999,
     type: 'PimsProvinceState',
-    rowVersion: 0,
   },
   {
     id: 1,
@@ -2089,7 +1859,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsRegion',
-    rowVersion: 0,
   },
   {
     id: 2,
@@ -2099,7 +1868,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsRegion',
-    rowVersion: 0,
   },
   {
     id: 3,
@@ -2109,7 +1877,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsRegion',
-    rowVersion: 0,
   },
   {
     id: 4,
@@ -2119,11 +1886,10 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsRegion',
-    rowVersion: 0,
   },
   {
     id: 6,
-    key: '2d098937-aad4-480b-a092-7923aba45a4e',
+    key: '4b9312b7-1b6d-48d5-88aa-e5edc09d0e93',
     name: 'Finance',
     description: 'Finance team members.',
     isDisabled: false,
@@ -2134,7 +1900,7 @@ export const mockLookups: ILookupCode[] = [
   },
   {
     id: 7,
-    key: '1e47d281-eba3-447f-b967-236ae053df34',
+    key: '5ec2c81b-50d6-4b95-b2b4-5f1103441790',
     name: 'Functional',
     description: 'PLMB staff (includes team members from HQ, regions and districts).',
     isDisabled: false,
@@ -2145,7 +1911,7 @@ export const mockLookups: ILookupCode[] = [
   },
   {
     id: 8,
-    key: '04e9e670-61a0-4b99-9142-980032bf0ced',
+    key: 'a4c35ad8-b639-4ad3-bbc4-8a6f065a5498',
     name: 'Functional (Restricted)',
     description: 'Contractors, Internal ministry staff.',
     isDisabled: false,
@@ -2155,8 +1921,30 @@ export const mockLookups: ILookupCode[] = [
     rowVersion: 1,
   },
   {
+    id: 10,
+    key: '2bbe0aed-3549-43a1-b12d-647d536b4fb0',
+    name: 'Management functional',
+    description: 'Access to create, read, update Management information.',
+    isDisabled: false,
+    isPublic: true,
+    displayOrder: 0,
+    type: 'PimsRole',
+    rowVersion: 1,
+  },
+  {
+    id: 11,
+    key: '1551803e-6f17-40aa-9aaa-422a12d76ef9',
+    name: 'Management read-only',
+    description: 'Access to read Management information.',
+    isDisabled: false,
+    isPublic: true,
+    displayOrder: 0,
+    type: 'PimsRole',
+    rowVersion: 1,
+  },
+  {
     id: 2,
-    key: 'a9a8c78f-551c-4d70-a8dd-f8a55e4acfa9',
+    key: '5aad7879-06f3-49e0-9eed-d1c89b5b4aca',
     name: 'Organization Administrator',
     description: "Administrator of the user's organization.",
     isDisabled: true,
@@ -2167,7 +1955,7 @@ export const mockLookups: ILookupCode[] = [
   },
   {
     id: 9,
-    key: '041c49bb-eb77-4904-b5a2-3fbf4f7d1c24',
+    key: '4b4bc0c5-7114-45d7-a5f1-29120e3f203d',
     name: 'Read Only',
     description: 'Other ministries (e.g. Attorney General).',
     isDisabled: false,
@@ -2178,7 +1966,7 @@ export const mockLookups: ILookupCode[] = [
   },
   {
     id: 5,
-    key: 'e141ba9e-b00a-4af4-b56a-05956a443955',
+    key: '5f1a696e-f203-44f1-8125-0657a5a8ed24',
     name: 'Real Estate Analyst',
     description: 'Real Estate Analyst can manage properties within their organization.',
     isDisabled: true,
@@ -2189,7 +1977,7 @@ export const mockLookups: ILookupCode[] = [
   },
   {
     id: 4,
-    key: 'fdba3768-8f34-4467-9815-3be9258d7487',
+    key: '429b5a1d-5691-4790-ac90-ad2840b02ba6',
     name: 'Real Estate Manager',
     description: 'Real Estate Manager can manage properties within their agency.',
     isDisabled: true,
@@ -2200,7 +1988,7 @@ export const mockLookups: ILookupCode[] = [
   },
   {
     id: 1,
-    key: '7dfd7a98-4043-4ff8-8d2c-b1bb92c09d95',
+    key: 'e48dca44-f025-4074-8663-c1c3c5c6dd02',
     name: 'System Administrator',
     description: 'System Administrator of the PIMS solution.',
     isDisabled: false,
@@ -2211,7 +1999,7 @@ export const mockLookups: ILookupCode[] = [
   },
   {
     id: 3,
-    key: 'aabcb931-6585-428d-af12-349bcbdb5ae2',
+    key: '02d7ac5d-e45a-464c-8b51-531fa4d9e1f3',
     name: 'Undetermined',
     description: 'The user has an undetermined role with their organization.',
     isDisabled: true,
@@ -2226,7 +2014,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsSecurityDepositType',
-    rowVersion: 0,
   },
   {
     id: 'PET',
@@ -2234,7 +2021,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsSecurityDepositType',
-    rowVersion: 0,
   },
   {
     id: 'SECURITY',
@@ -2242,15 +2028,13 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsSecurityDepositType',
-    rowVersion: 0,
   },
   {
     id: 'ADJLAND',
     name: 'Adjacent Land',
-    isDisabled: false,
+    isDisabled: true,
     displayOrder: 0,
     type: 'PimsPropertyTenureType',
-    rowVersion: 0,
   },
   {
     id: 'CL',
@@ -2258,7 +2042,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: true,
     displayOrder: 0,
     type: 'PimsPropertyTenureType',
-    rowVersion: 0,
   },
   {
     id: 'CLOSEDRD',
@@ -2266,7 +2049,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyTenureType',
-    rowVersion: 0,
   },
   {
     id: 'CR',
@@ -2274,7 +2056,34 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: true,
     displayOrder: 0,
     type: 'PimsPropertyTenureType',
-    rowVersion: 0,
+  },
+  {
+    id: 'FSBCTFA',
+    name: 'Fee Simple - BCTFA',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyTenureType',
+  },
+  {
+    id: 'FSCROWN',
+    name: 'Fee Simple - Crown (Non-MoTI)',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyTenureType',
+  },
+  {
+    id: 'FSMOTI',
+    name: 'Fee Simple - MoTI',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyTenureType',
+  },
+  {
+    id: 'FSPRIVAT',
+    name: 'Fee Simple - Private',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyTenureType',
   },
   {
     id: 'HWYROAD',
@@ -2282,7 +2091,41 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyTenureType',
-    rowVersion: 0,
+  },
+  {
+    id: 'IRESERVE',
+    name: 'Indian Reserve (IR)',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyTenureType',
+  },
+  {
+    id: 'LEASELIC',
+    name: 'Leased/Licensed',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyTenureType',
+  },
+  {
+    id: 'LNDACTR',
+    name: 'Land Act Reserve (Section 16/17/12/14',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyTenureType',
+  },
+  {
+    id: 'NSRWBCTFA',
+    name: 'Non-SRW Interests - BCTFA',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyTenureType',
+  },
+  {
+    id: 'NSRWMOTI',
+    name: 'Non-SRW Interests - MoTI',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyTenureType',
   },
   {
     id: 'PL',
@@ -2290,7 +2133,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: true,
     displayOrder: 0,
     type: 'PimsPropertyTenureType',
-    rowVersion: 0,
   },
   {
     id: 'RW',
@@ -2298,7 +2140,34 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: true,
     displayOrder: 0,
     type: 'PimsPropertyTenureType',
-    rowVersion: 0,
+  },
+  {
+    id: 'SPECUPMT',
+    name: 'Special Use Permit (SUP)',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyTenureType',
+  },
+  {
+    id: 'SRWBCTFA',
+    name: 'Statutory Right of Way (SRW) - BCTFA',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyTenureType',
+  },
+  {
+    id: 'SRWMOTI',
+    name: 'Statutory Right of Way (SRW) - MoTI',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyTenureType',
+  },
+  {
+    id: 'SRWOTHER',
+    name: 'Statutory Right of Way (SRW) - Other',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyTenureType',
   },
   {
     id: 'TM',
@@ -2306,7 +2175,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: true,
     displayOrder: 0,
     type: 'PimsPropertyTenureType',
-    rowVersion: 0,
   },
   {
     id: 'TT',
@@ -2314,7 +2182,13 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: true,
     displayOrder: 0,
     type: 'PimsPropertyTenureType',
-    rowVersion: 0,
+  },
+  {
+    id: 'UNCRWNLMD',
+    name: 'Unsurveyed Crown Land',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyTenureType',
   },
   {
     id: 'UNKNOWN',
@@ -2322,7 +2196,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyTenureType',
-    rowVersion: 0,
   },
   {
     id: 'ACTIVE',
@@ -2330,7 +2203,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsResearchFileStatusType',
-    rowVersion: 0,
   },
   {
     id: 'ARCHIVED',
@@ -2338,7 +2210,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsResearchFileStatusType',
-    rowVersion: 0,
   },
   {
     id: 'CLOSED',
@@ -2346,7 +2217,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsResearchFileStatusType',
-    rowVersion: 0,
   },
   {
     id: 'INACTIVE',
@@ -2354,7 +2224,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsResearchFileStatusType',
-    rowVersion: 0,
   },
   {
     id: 'DISTRICT',
@@ -2362,7 +2231,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsRequestSourceType',
-    rowVersion: 0,
   },
   {
     id: 'EXTRQST',
@@ -2370,7 +2238,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsRequestSourceType',
-    rowVersion: 0,
   },
   {
     id: 'FOI',
@@ -2378,7 +2245,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsRequestSourceType',
-    rowVersion: 0,
   },
   {
     id: 'HQ',
@@ -2386,7 +2252,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsRequestSourceType',
-    rowVersion: 0,
   },
   {
     id: 'INTLGL',
@@ -2394,7 +2259,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsRequestSourceType',
-    rowVersion: 0,
   },
   {
     id: 'NONFOI',
@@ -2402,7 +2266,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsRequestSourceType',
-    rowVersion: 0,
   },
   {
     id: 'OTHERMIN',
@@ -2410,7 +2273,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsRequestSourceType',
-    rowVersion: 0,
   },
   {
     id: 'PROJECT',
@@ -2418,7 +2280,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsRequestSourceType',
-    rowVersion: 0,
   },
   {
     id: 'REGION',
@@ -2426,7 +2287,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsRequestSourceType',
-    rowVersion: 0,
   },
   {
     id: 'SURVEYOR',
@@ -2434,7 +2294,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsRequestSourceType',
-    rowVersion: 0,
   },
   {
     id: 'ACQUIRE',
@@ -2442,7 +2301,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'DISPOSE',
@@ -2450,7 +2308,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'GENENQ',
@@ -2458,7 +2315,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'MGMT',
@@ -2466,7 +2322,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'TENCLEAN',
@@ -2474,7 +2329,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'ACQUIRE',
@@ -2482,7 +2336,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'CLASS',
@@ -2490,7 +2343,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'DISPOSE',
@@ -2498,7 +2350,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'DOTHER',
@@ -2506,7 +2357,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'FNTREATY',
@@ -2514,7 +2364,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'FOI',
@@ -2522,7 +2371,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'FORM12',
@@ -2530,7 +2378,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'HWY',
@@ -2538,7 +2385,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'INQUIRY',
@@ -2546,7 +2392,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'ISSUE',
@@ -2554,7 +2399,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'LEGAL',
@@ -2562,7 +2406,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'LICLEASE',
@@ -2570,7 +2413,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'LISSUE',
@@ -2578,7 +2420,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'LNDXCHG',
@@ -2586,7 +2427,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'MOTIOWND',
@@ -2594,7 +2434,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'OTHER',
@@ -2602,7 +2441,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'RDCLOSE',
@@ -2610,7 +2448,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'REGINT',
@@ -2618,7 +2455,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'RESEARCH',
@@ -2626,7 +2462,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'TAC',
@@ -2634,7 +2469,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'UNKNOWN',
@@ -2642,7 +2476,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'UNREGINT',
@@ -2650,7 +2483,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropResearchPurposeType',
-    rowVersion: 0,
   },
   {
     id: 'ACCESS',
@@ -2658,7 +2490,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyAnomalyType',
-    rowVersion: 0,
   },
   {
     id: 'ASSGNRENT',
@@ -2666,7 +2497,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyAnomalyType',
-    rowVersion: 0,
   },
   {
     id: 'BIZLOSS',
@@ -2674,7 +2504,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyAnomalyType',
-    rowVersion: 0,
   },
   {
     id: 'BLDGLIENS',
@@ -2682,7 +2511,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyAnomalyType',
-    rowVersion: 0,
   },
   {
     id: 'CERTPNDLIT',
@@ -2690,7 +2518,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyAnomalyType',
-    rowVersion: 0,
   },
   {
     id: 'CHGHOLDGEN',
@@ -2698,7 +2525,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyAnomalyType',
-    rowVersion: 0,
   },
   {
     id: 'CHRGCROWN',
@@ -2706,7 +2532,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyAnomalyType',
-    rowVersion: 0,
   },
   {
     id: 'DISTURB',
@@ -2714,7 +2539,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyAnomalyType',
-    rowVersion: 0,
   },
   {
     id: 'DUPTITLE',
@@ -2722,7 +2546,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyAnomalyType',
-    rowVersion: 0,
   },
   {
     id: 'EFCLAUSE',
@@ -2730,7 +2553,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyAnomalyType',
-    rowVersion: 0,
   },
   {
     id: 'LGLNOT',
@@ -2738,7 +2560,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyAnomalyType',
-    rowVersion: 0,
   },
   {
     id: 'MORTSECINT',
@@ -2746,7 +2567,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyAnomalyType',
-    rowVersion: 0,
   },
   {
     id: 'OTHER',
@@ -2754,23 +2574,20 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyAnomalyType',
-    rowVersion: 0,
   },
   {
     id: '107EXP',
     name: '107 Explanatory Plan',
-    isDisabled: false,
+    isDisabled: true,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: '107REF',
     name: '107 Reference Plan',
-    isDisabled: false,
+    isDisabled: true,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: 'ARTERIAL',
@@ -2778,7 +2595,20 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
+  },
+  {
+    id: 'BYLAW',
+    name: 'Bylaw',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyRoadType',
+  },
+  {
+    id: 'CMMNLAW',
+    name: 'Common law dedication',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyRoadType',
   },
   {
     id: 'CRWNDEL',
@@ -2786,7 +2616,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: 'CTRLACC',
@@ -2794,7 +2623,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: 'FEDERAL',
@@ -2802,7 +2630,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: 'FSR',
@@ -2810,31 +2637,27 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: 'GAZMOTI',
-    name: 'Gazetted (MoTI Plan)',
+    name: 'Gazetted',
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: 'GAZSURVD',
     name: 'Gazetted (Surveyed)',
-    isDisabled: false,
+    isDisabled: true,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: 'GAZUNSURVD',
     name: 'Gazetted (Unsurveyed)',
-    isDisabled: false,
+    isDisabled: true,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: 'MUNI',
@@ -2842,7 +2665,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: 'OIC',
@@ -2850,7 +2672,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: 'OTHER',
@@ -2858,7 +2679,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: 'PUBRD',
@@ -2866,7 +2686,13 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
+  },
+  {
+    id: 'S107PLN',
+    name: 'Section 107 Plan',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyRoadType',
   },
   {
     id: 'S42',
@@ -2874,7 +2700,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: 'S56',
@@ -2882,7 +2707,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: 'SRWPLAN',
@@ -2890,7 +2714,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: 'SUBDIV',
@@ -2898,7 +2721,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
   },
   {
     id: 'UNTEN',
@@ -2906,87 +2728,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyRoadType',
-    rowVersion: 0,
-  },
-  {
-    id: 'CROWN',
-    name: 'Crown',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsPropertyAdjacentLandType',
-    rowVersion: 0,
-  },
-  {
-    id: 'INDIANR',
-    name: 'Indian Reserve (IR)',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsPropertyAdjacentLandType',
-    rowVersion: 0,
-  },
-  {
-    id: 'LANDACTR',
-    name: 'Land Act Reserve (Section 16/17/12/14)',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsPropertyAdjacentLandType',
-    rowVersion: 0,
-  },
-  {
-    id: 'MOLBCTFA',
-    name: 'Ministry owned and leased - BCTFA',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsPropertyAdjacentLandType',
-    rowVersion: 0,
-  },
-  {
-    id: 'MOLHMQ',
-    name: 'Ministry owned and leased - HMQ',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsPropertyAdjacentLandType',
-    rowVersion: 0,
-  },
-  {
-    id: 'MONLBCTFA',
-    name: 'Ministry owned not leases - BCTFA',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsPropertyAdjacentLandType',
-    rowVersion: 0,
-  },
-  {
-    id: 'MONLHMQ',
-    name: 'Ministry owned not leases - HMQ',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsPropertyAdjacentLandType',
-    rowVersion: 0,
-  },
-  {
-    id: 'PRIVATE',
-    name: 'Private (Fee Simple)',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsPropertyAdjacentLandType',
-    rowVersion: 0,
-  },
-  {
-    id: 'SPECUSE',
-    name: 'Special Use Permit (SUP)',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsPropertyAdjacentLandType',
-    rowVersion: 0,
-  },
-  {
-    id: 'STATROW',
-    name: 'Statutory Right of Way (SRW)',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsPropertyAdjacentLandType',
-    rowVersion: 0,
   },
   {
     id: 'F3',
@@ -2994,7 +2735,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsVolumeUnitType',
-    rowVersion: 0,
   },
   {
     id: 'M3',
@@ -3002,7 +2742,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsVolumeUnitType',
-    rowVersion: 0,
   },
   {
     id: 'AIRSPACE',
@@ -3010,7 +2749,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsVolumetricType',
-    rowVersion: 0,
   },
   {
     id: 'SUBSURF',
@@ -3018,7 +2756,195 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsVolumetricType',
-    rowVersion: 0,
+  },
+  {
+    id: 'ACTVTRANCORR',
+    name: 'Active Transportation Corridor',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'BCFERRIES',
+    name: 'BC Ferries',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'BRIDGETRESTLE',
+    name: 'Bridges/Trestles',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'ENVIROFFSET',
+    name: 'Environmental Offsetting',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'ENVIRPROTECT',
+    name: 'Environmental Protection',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'FNACCOMRECON',
+    name: 'FN Accommodation/Reconciliation',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'FUTUREHWYPROJ',
+    name: 'Future Highway Project',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'GRAVELPIT',
+    name: 'Gravel Pit',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'GUIDEWAY',
+    name: 'Guideway (Perm SRW)',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'HMYMTCYARD',
+    name: 'Highway Maintenance Yard',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'HOUSINGDEV',
+    name: 'Housing Development',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'LANDXCHNG',
+    name: 'Land Exchange',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'LEASELIC',
+    name: 'Lease/License',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'MAPRESERVE',
+    name: 'Map Reserve',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'OTHER',
+    name: 'Other',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'PARKNRIDE',
+    name: 'Park n Ride',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'PROJCONSTRUCT',
+    name: 'Project Construction (Temp SRW)',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'PROJLAYDOWN',
+    name: 'Project Laydown (Temporary)',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'ROADHWY',
+    name: 'Road/Highway',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'SKYTRAIN',
+    name: 'Skytrain',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'SLOPESTABILTY',
+    name: 'Slope Stability',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'STATIONSITE',
+    name: 'Station Site (Fee Simple)',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'SURPLUSCONSOL',
+    name: 'Surplus, Consolidation Only',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'SURPLUSDISPO',
+    name: 'Surplus Disposition',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'SURPLUSENCUMB',
+    name: 'Surplus Encumbered',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'TRANSITORDEV',
+    name: 'Transit Oriented Development',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPropertyPurposeType',
+  },
+  {
+    id: 'ARTERY',
+    name: 'Arterial Hwy',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsPphStatusType',
   },
   {
     id: 'COMBO',
@@ -3026,7 +2952,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPphStatusType',
-    rowVersion: 0,
   },
   {
     id: 'NONPPH',
@@ -3034,7 +2959,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPphStatusType',
-    rowVersion: 0,
   },
   {
     id: 'PPH',
@@ -3042,7 +2966,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPphStatusType',
-    rowVersion: 0,
   },
   {
     id: 'UNKNOWN',
@@ -3050,7 +2973,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPphStatusType',
-    rowVersion: 0,
   },
   {
     id: 'NONE',
@@ -3058,7 +2980,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 1,
     type: 'PimsDocumentStatusType',
-    rowVersion: 0,
   },
   {
     id: 'DRAFT',
@@ -3066,7 +2987,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 2,
     type: 'PimsDocumentStatusType',
-    rowVersion: 0,
   },
   {
     id: 'APPROVD',
@@ -3074,7 +2994,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 3,
     type: 'PimsDocumentStatusType',
-    rowVersion: 0,
   },
   {
     id: 'SIGND',
@@ -3082,7 +3001,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 4,
     type: 'PimsDocumentStatusType',
-    rowVersion: 0,
   },
   {
     id: 'FINAL',
@@ -3090,7 +3008,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 5,
     type: 'PimsDocumentStatusType',
-    rowVersion: 0,
   },
   {
     id: 'AMENDD',
@@ -3098,7 +3015,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 6,
     type: 'PimsDocumentStatusType',
-    rowVersion: 0,
   },
   {
     id: 'CNCLD',
@@ -3106,7 +3022,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 7,
     type: 'PimsDocumentStatusType',
-    rowVersion: 0,
   },
   {
     id: 'UNREGD',
@@ -3114,7 +3029,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: true,
     displayOrder: 999,
     type: 'PimsDocumentStatusType',
-    rowVersion: 0,
   },
   {
     id: 'RGSTRD',
@@ -3122,7 +3036,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: true,
     displayOrder: 999,
     type: 'PimsDocumentStatusType',
-    rowVersion: 0,
   },
   {
     id: 'SENT',
@@ -3130,7 +3043,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: true,
     displayOrder: 999,
     type: 'PimsDocumentStatusType',
-    rowVersion: 0,
   },
   {
     id: 'ACTIVE',
@@ -3138,7 +3050,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFileStatusType',
-    rowVersion: 0,
   },
   {
     id: 'ARCHIV',
@@ -3146,7 +3057,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFileStatusType',
-    rowVersion: 0,
   },
   {
     id: 'CANCEL',
@@ -3154,7 +3064,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFileStatusType',
-    rowVersion: 0,
   },
   {
     id: 'CLOSED',
@@ -3162,7 +3071,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: true,
     displayOrder: 0,
     type: 'PimsAcquisitionFileStatusType',
-    rowVersion: 0,
   },
   {
     id: 'COMPLT',
@@ -3170,7 +3078,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFileStatusType',
-    rowVersion: 0,
   },
   {
     id: 'DRAFT',
@@ -3178,7 +3085,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFileStatusType',
-    rowVersion: 0,
   },
   {
     id: 'HOLD',
@@ -3186,7 +3092,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFileStatusType',
-    rowVersion: 0,
   },
   {
     id: 'ACTIVE',
@@ -3194,7 +3099,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcqPhysFileStatusType',
-    rowVersion: 0,
   },
   {
     id: 'ARCHIVE',
@@ -3202,7 +3106,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcqPhysFileStatusType',
-    rowVersion: 0,
   },
   {
     id: 'PENDING',
@@ -3210,7 +3113,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcqPhysFileStatusType',
-    rowVersion: 0,
   },
   {
     id: 'CONSEN',
@@ -3218,7 +3120,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionType',
-    rowVersion: 0,
   },
   {
     id: 'SECTN3',
@@ -3226,7 +3127,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionType',
-    rowVersion: 0,
   },
   {
     id: 'SECTN6',
@@ -3234,183 +3134,62 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionType',
-    rowVersion: 0,
   },
   {
-    id: 'COMPREQ',
-    name: 'Compensation requisition (H120)',
+    id: 'XFR',
+    name: 'Transferred',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsActivityTemplateType',
-    rowVersion: 0,
-  },
-  {
-    id: 'CONDENTRY',
-    name: 'Condition of entry (H0443)',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsActivityTemplateType',
-    rowVersion: 0,
-  },
-  {
-    id: 'CONSULT',
-    name: 'Consultation',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsActivityTemplateType',
-    rowVersion: 0,
-  },
-  {
-    id: 'FILEDOC',
-    name: 'File Document',
-    isDisabled: true,
-    displayOrder: 0,
-    type: 'PimsActivityTemplateType',
-    rowVersion: 0,
-  },
-  {
-    id: 'GENERAL',
-    name: 'General',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsActivityTemplateType',
-    rowVersion: 0,
-  },
-  {
-    id: 'GENLTR',
-    name: 'Generate Letter',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsActivityTemplateType',
-    rowVersion: 0,
-  },
-  {
-    id: 'NOTENTRY',
-    name: 'Notice of possible entry (H0224)',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsActivityTemplateType',
-    rowVersion: 0,
-  },
-  {
-    id: 'OFFAGREE',
-    name: 'Offer agreement (H179x)',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsActivityTemplateType',
-    rowVersion: 0,
-  },
-  {
-    id: 'RECNEGOT',
-    name: 'Record of negotiation',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsActivityTemplateType',
-    rowVersion: 0,
-  },
-  {
-    id: 'RECTAKES',
-    name: 'Record takes',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsActivityTemplateType',
-    rowVersion: 0,
-  },
-  {
-    id: 'SITEVIS',
-    name: 'Site Visit',
-    isDisabled: false,
-    displayOrder: 0,
-    type: 'PimsActivityTemplateType',
-    rowVersion: 0,
-  },
-  {
-    id: 'SURVEY',
-    name: 'Survey',
-    isDisabled: true,
-    displayOrder: 0,
-    type: 'PimsActivityTemplateType',
-    rowVersion: 0,
-  },
-  {
-    id: 'NOSTART',
-    name: 'Not Started',
-    isDisabled: false,
-    displayOrder: 1,
-    type: 'PimsActivityInstanceStatusType',
-    rowVersion: 0,
-  },
-  {
-    id: 'INPROG',
-    name: 'In Progress',
-    isDisabled: false,
-    displayOrder: 2,
-    type: 'PimsActivityInstanceStatusType',
-    rowVersion: 0,
-  },
-  {
-    id: 'COMPLETE',
-    name: 'Completed',
-    isDisabled: false,
-    displayOrder: 3,
-    type: 'PimsActivityInstanceStatusType',
-    rowVersion: 0,
-  },
-  {
-    id: 'CANCELLED',
-    name: 'Cancelled',
-    isDisabled: false,
-    displayOrder: 4,
-    type: 'PimsActivityInstanceStatusType',
-    rowVersion: 0,
+    type: 'PimsAcquisitionType',
   },
   {
     id: 'EXPRAGENT',
     name: 'Expropriation agent',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsAcqFlPersonProfileType',
-    rowVersion: 0,
+    type: 'PimsAcqFlTeamProfileType',
   },
   {
     id: 'MOTILAWYER',
     name: 'MoTI Solicitor',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsAcqFlPersonProfileType',
-    rowVersion: 0,
+    type: 'PimsAcqFlTeamProfileType',
   },
   {
     id: 'NEGOTAGENT',
     name: 'Negotiation agent',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsAcqFlPersonProfileType',
-    rowVersion: 0,
+    type: 'PimsAcqFlTeamProfileType',
   },
   {
     id: 'PROPAGENT',
     name: 'Property agent',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsAcqFlPersonProfileType',
-    rowVersion: 0,
+    type: 'PimsAcqFlTeamProfileType',
   },
   {
     id: 'PROPANLYS',
     name: 'Property analyst',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsAcqFlPersonProfileType',
-    rowVersion: 0,
+    type: 'PimsAcqFlTeamProfileType',
   },
   {
     id: 'PROPCOORD',
     name: 'Property coordinator',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsAcqFlPersonProfileType',
-    rowVersion: 0,
+    type: 'PimsAcqFlTeamProfileType',
+  },
+  {
+    id: 'ASGN',
+    name: 'Assignee',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsTenantType',
   },
   {
     id: 'PMGR',
@@ -3418,7 +3197,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsTenantType',
-    rowVersion: 0,
   },
   {
     id: 'REP',
@@ -3426,7 +3204,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsTenantType',
-    rowVersion: 0,
   },
   {
     id: 'TEN',
@@ -3434,7 +3211,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsTenantType',
-    rowVersion: 0,
   },
   {
     id: 'UNK',
@@ -3442,7 +3218,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsTenantType',
-    rowVersion: 0,
   },
   {
     id: 'BCTFA',
@@ -3450,7 +3225,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFundingType',
-    rowVersion: 0,
   },
   {
     id: 'CAPITAL',
@@ -3458,7 +3232,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFundingType',
-    rowVersion: 0,
   },
   {
     id: 'DFAA',
@@ -3466,7 +3239,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFundingType',
-    rowVersion: 0,
   },
   {
     id: 'EVERGRN',
@@ -3474,7 +3246,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFundingType',
-    rowVersion: 0,
   },
   {
     id: 'FEDERAL',
@@ -3482,7 +3253,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFundingType',
-    rowVersion: 0,
   },
   {
     id: 'MAJORPR',
@@ -3490,7 +3260,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFundingType',
-    rowVersion: 0,
   },
   {
     id: 'MOTIDST',
@@ -3498,7 +3267,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFundingType',
-    rowVersion: 0,
   },
   {
     id: 'MOTIREG',
@@ -3506,7 +3274,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFundingType',
-    rowVersion: 0,
   },
   {
     id: 'OTHER',
@@ -3514,7 +3281,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFundingType',
-    rowVersion: 0,
   },
   {
     id: 'REHAB',
@@ -3522,7 +3288,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFundingType',
-    rowVersion: 0,
   },
   {
     id: 'TICORP',
@@ -3530,7 +3295,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFundingType',
-    rowVersion: 0,
   },
   {
     id: 'AC',
@@ -3538,7 +3302,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsProjectStatusType',
-    rowVersion: 0,
   },
   {
     id: 'CA',
@@ -3546,7 +3309,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsProjectStatusType',
-    rowVersion: 0,
   },
   {
     id: 'CNCN',
@@ -3554,7 +3316,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsProjectStatusType',
-    rowVersion: 0,
   },
   {
     id: 'CO',
@@ -3562,7 +3323,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsProjectStatusType',
-    rowVersion: 0,
   },
   {
     id: 'HO',
@@ -3570,7 +3330,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsProjectStatusType',
-    rowVersion: 0,
   },
   {
     id: 'PL',
@@ -3578,7 +3337,62 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsProjectStatusType',
-    rowVersion: 0,
+  },
+  {
+    id: 'FORM1',
+    name: 'Notice of Expropriation (Form 1)',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsFormType',
+    rowVersion: 1,
+  },
+  {
+    id: 'FORM5',
+    name: 'Certificate of Approval of Expropriation (Form 5)',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsFormType',
+    rowVersion: 1,
+  },
+  {
+    id: 'FORM8',
+    name: 'Notice of Advance Payment (Form 8)',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsFormType',
+    rowVersion: 1,
+  },
+  {
+    id: 'FORM9',
+    name: 'Vesting Notice (Form 9)',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsFormType',
+    rowVersion: 1,
+  },
+  {
+    id: 'H0074',
+    name: 'License of Occupation for Construction Access (H0074)',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsFormType',
+    rowVersion: 1,
+  },
+  {
+    id: 'H0443',
+    name: 'Conditions of Entry (H0443)',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsFormType',
+    rowVersion: 1,
+  },
+  {
+    id: 'H1005A',
+    name: 'Licence of Occupation (BCTFA as licensor) (H1005 A)',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsFormType',
+    rowVersion: 1,
   },
   {
     id: 'H120',
@@ -3613,12 +3427,19 @@ export const mockLookups: ILookupCode[] = [
     rowVersion: 1,
   },
   {
+    id: 'LETTER',
+    name: 'General Letter',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsFormType',
+    rowVersion: 1,
+  },
+  {
     id: '1STNATION',
     name: 'First nation',
     isDisabled: false,
     displayOrder: 1,
     type: 'PimsConsultationType',
-    rowVersion: 0,
   },
   {
     id: 'STRATRE',
@@ -3626,7 +3447,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 2,
     type: 'PimsConsultationType',
-    rowVersion: 0,
   },
   {
     id: 'REGPLANG',
@@ -3634,7 +3454,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 3,
     type: 'PimsConsultationType',
-    rowVersion: 0,
   },
   {
     id: 'REGPRPSVC',
@@ -3642,7 +3461,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 4,
     type: 'PimsConsultationType',
-    rowVersion: 0,
   },
   {
     id: 'DISTRICT',
@@ -3650,7 +3468,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 5,
     type: 'PimsConsultationType',
-    rowVersion: 0,
   },
   {
     id: 'HQ',
@@ -3658,7 +3475,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 6,
     type: 'PimsConsultationType',
-    rowVersion: 0,
   },
   {
     id: 'OTHER',
@@ -3666,7 +3482,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 7,
     type: 'PimsConsultationType',
-    rowVersion: 0,
   },
   {
     id: 'UNKNOWN',
@@ -3674,7 +3489,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 1,
     type: 'PimsConsultationStatusType',
-    rowVersion: 0,
   },
   {
     id: 'REQNTCOM',
@@ -3682,7 +3496,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 2,
     type: 'PimsConsultationStatusType',
-    rowVersion: 0,
   },
   {
     id: 'REQCOMP',
@@ -3690,7 +3503,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 3,
     type: 'PimsConsultationStatusType',
-    rowVersion: 0,
   },
   {
     id: 'NOTREQD',
@@ -3698,7 +3510,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 4,
     type: 'PimsConsultationStatusType',
-    rowVersion: 0,
   },
   {
     id: 'PARTIAL',
@@ -3706,7 +3517,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsTakeType',
-    rowVersion: 0,
   },
   {
     id: 'TOTAL',
@@ -3714,7 +3524,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsTakeType',
-    rowVersion: 0,
   },
   {
     id: 'CANCELLED',
@@ -3722,7 +3531,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsTakeStatusType',
-    rowVersion: 0,
   },
   {
     id: 'COMPLETE',
@@ -3730,7 +3538,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsTakeStatusType',
-    rowVersion: 0,
   },
   {
     id: 'INPROGRESS',
@@ -3738,7 +3545,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsTakeStatusType',
-    rowVersion: 0,
   },
   {
     id: 'NO',
@@ -3746,7 +3552,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsTakeSiteContamType',
-    rowVersion: 0,
   },
   {
     id: 'UNK',
@@ -3754,7 +3559,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsTakeSiteContamType',
-    rowVersion: 0,
   },
   {
     id: 'YES',
@@ -3762,7 +3566,41 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsTakeSiteContamType',
-    rowVersion: 0,
+  },
+  {
+    id: 'NOI',
+    name: 'Notation of Interest',
+    isDisabled: false,
+    displayOrder: 4,
+    type: 'PimsLandActType',
+  },
+  {
+    id: 'Section 15',
+    name: 'Order in Council Reserve',
+    isDisabled: false,
+    displayOrder: 1,
+    type: 'PimsLandActType',
+  },
+  {
+    id: 'Section 16',
+    name: 'Map Reserve / Withdrawal',
+    isDisabled: false,
+    displayOrder: 2,
+    type: 'PimsLandActType',
+  },
+  {
+    id: 'Section 17',
+    name: 'Conditional Withdrawal / Designated Use Area',
+    isDisabled: false,
+    displayOrder: 3,
+    type: 'PimsLandActType',
+  },
+  {
+    id: 'Section 66',
+    name: 'Prohibited Use Area',
+    isDisabled: false,
+    displayOrder: 5,
+    type: 'PimsLandActType',
   },
   {
     id: 'FILEINIT',
@@ -3770,7 +3608,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 1,
     type: 'PimsAcqChklstSectionType',
-    rowVersion: 0,
   },
   {
     id: 'FILEMGMT',
@@ -3778,31 +3615,34 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 2,
     type: 'PimsAcqChklstSectionType',
-    rowVersion: 0,
+  },
+  {
+    id: 'CROWNLND',
+    name: 'Crown Land',
+    isDisabled: false,
+    displayOrder: 3,
+    type: 'PimsAcqChklstSectionType',
   },
   {
     id: 'SCTN3AGR',
     name: 'Section 3 - Agreement',
     isDisabled: false,
-    displayOrder: 3,
+    displayOrder: 4,
     type: 'PimsAcqChklstSectionType',
-    rowVersion: 0,
   },
   {
     id: 'SCTN6XPRP',
     name: 'Section 6 - Expropriation',
     isDisabled: false,
-    displayOrder: 4,
+    displayOrder: 5,
     type: 'PimsAcqChklstSectionType',
-    rowVersion: 0,
   },
   {
     id: 'ACQCOMPAC',
     name: 'Acquisition Completion',
     isDisabled: false,
-    displayOrder: 5,
+    displayOrder: 6,
     type: 'PimsAcqChklstSectionType',
-    rowVersion: 0,
   },
   {
     id: 'INCOMP',
@@ -3810,7 +3650,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 1,
     type: 'PimsAcqChklstItemStatusType',
-    rowVersion: 0,
   },
   {
     id: 'COMPLT',
@@ -3818,7 +3657,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 2,
     type: 'PimsAcqChklstItemStatusType',
-    rowVersion: 0,
   },
   {
     id: 'NOTAPP',
@@ -3826,7 +3664,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 3,
     type: 'PimsAcqChklstItemStatusType',
-    rowVersion: 0,
   },
   {
     id: 'H179T',
@@ -3834,7 +3671,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 1,
     type: 'PimsAgreementType',
-    rowVersion: 0,
   },
   {
     id: 'H179P',
@@ -3842,7 +3678,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 2,
     type: 'PimsAgreementType',
-    rowVersion: 0,
   },
   {
     id: 'H179A',
@@ -3850,7 +3685,6 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 3,
     type: 'PimsAgreementType',
-    rowVersion: 0,
   },
   {
     id: 'H0074',
@@ -3858,7 +3692,300 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 4,
     type: 'PimsAgreementType',
-    rowVersion: 0,
+  },
+  {
+    id: 'AC',
+    name: 'Agriculture Credit Act',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'AD',
+    name: 'Agriculture Land Develop Act',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'AL',
+    name: 'Assignment of Leases',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'AR',
+    name: 'Assignment of Rents',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'CPL',
+    name: 'Certificate of Pending Litigation',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'CV',
+    name: 'Covenant',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'DA',
+    name: 'Drainage Agreement',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'DT',
+    name: 'Duplicate Title',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'EA',
+    name: 'Easement',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'EA-S',
+    name: 'Easement Security',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'EC',
+    name: 'Equitable Charge',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'EI',
+    name: 'Equitable Interest',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'ER',
+    name: 'Exceptions and Reservations',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'JD',
+    name: 'Judgement',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'L',
+    name: 'Lease',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'LE',
+    name: 'Life Estate',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'LN',
+    name: 'Lien',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'LP',
+    name: 'Lis Pendens',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'LT',
+    name: 'Logging Tax Act',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'LUC',
+    name: 'Land Use Contract',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'M',
+    name: 'Mortgage',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'MC',
+    name: 'Mineral Claim',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'MOD',
+    name: 'Modification',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'NIP',
+    name: 'Non-Interest Payee',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'OL',
+    name: 'Options to Lease',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'OP',
+    name: 'Option to Purchase',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'PA',
+    name: 'Priority Agreement',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'PP',
+    name: 'Profit a Prendre',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'PW',
+    name: 'Party Wall Agreement',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'RA',
+    name: 'Right to Acquire SRW',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'RAE',
+    name: 'Right to Acquire Easement',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'RC',
+    name: 'Restrictive Covenant',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'RE',
+    name: 'Conditional Right of Entry',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'RF',
+    name: 'Right of First Refusal',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'RP',
+    name: 'Right of Purchase',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'RT',
+    name: 'Residential Tenancy',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'RW',
+    name: 'Right of Way',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'SL',
+    name: 'Sub Lease',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'SR',
+    name: 'Sub Right of Purchase',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'ST',
+    name: 'Statutory Charge',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'SW',
+    name: 'Statutory Right of Way',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
+  },
+  {
+    id: 'US',
+    name: 'Under Surface Rights',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsInterestHolderInterestType',
   },
   {
     id: 'ADVNCTAKNGTTL',

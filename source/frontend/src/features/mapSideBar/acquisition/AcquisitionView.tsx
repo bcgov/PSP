@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import React, { useContext } from 'react';
 import {
@@ -16,6 +17,7 @@ import GenericModal from '@/components/common/GenericModal';
 import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { IApiError } from '@/interfaces/IApiError';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_File } from '@/models/api/File';
 import { stripTrailingSlash } from '@/utils';
@@ -34,7 +36,7 @@ import { FilePropertyRouter } from './router/FilePropertyRouter';
 
 export interface IAcquisitionViewProps {
   onClose: (() => void) | undefined;
-  onSave: () => void;
+  onSave: () => Promise<void>;
   onCancel: () => void;
   onMenuChange: (selectedIndex: number) => void;
   onShowPropertySelector: () => void;
@@ -48,6 +50,7 @@ export interface IAcquisitionViewProps {
   setContainerState: React.Dispatch<Partial<AcquisitionContainerState>>;
   formikRef: React.RefObject<FormikProps<any>>;
   isFormValid: boolean;
+  error: AxiosError<IApiError, any> | undefined;
 }
 
 export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = ({
@@ -66,15 +69,13 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   setContainerState,
   formikRef,
   isFormValid,
+  error,
 }) => {
   // match for the current route
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
-  const { file } = useContext(SideBarContext);
-  if (!!file && file?.fileType !== FileTypes.Acquisition) {
-    throw Error('Context file is not an acquisition file');
-  }
+  const { file, lastUpdatedBy } = useContext(SideBarContext);
   const acquisitionFile: Api_AcquisitionFile = file as Api_AcquisitionFile;
 
   // match for property menu routes - eg /property/1/ltsa
@@ -130,14 +131,16 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
               className="mr-2"
             />
           }
-          header={<AcquisitionHeader acquisitionFile={acquisitionFile} />}
+          header={
+            <AcquisitionHeader acquisitionFile={acquisitionFile} lastUpdatedBy={lastUpdatedBy} />
+          }
           footer={
             isEditing && (
               <SidebarFooter
                 isOkDisabled={formikRef?.current?.isSubmitting}
                 onSave={onSave}
                 onCancel={onCancel}
-                isValid={isFormValid}
+                displayRequiredFieldError={isFormValid === false}
               />
             )
           }
@@ -156,6 +159,12 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
             }
             bodyComponent={
               <StyledFormWrapper>
+                {error && (
+                  <b>
+                    Failed to load Acquisition File. Check the detailed error in the top right for
+                    more details.
+                  </b>
+                )}
                 <AcquisitionRouter
                   formikRef={formikRef}
                   acquisitionFile={acquisitionFile}
@@ -171,7 +180,8 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                     <FilePropertyRouter
                       formikRef={formikRef}
                       selectedMenuIndex={Number(match.params.menuIndex)}
-                      acquisitionFile={acquisitionFile}
+                      file={acquisitionFile}
+                      fileType={FileTypes.Acquisition}
                       isEditing={isEditing}
                       setIsEditing={setIsEditing}
                       defaultFileTab={containerState.defaultFileTab}

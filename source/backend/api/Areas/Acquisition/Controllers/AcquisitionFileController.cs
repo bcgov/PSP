@@ -84,6 +84,21 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         }
 
         /// <summary>
+        /// Gets the specified acquisition file last updated-by information.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/updateInfo")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Dal.Entities.Models.LastUpdatedByModel), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetLastUpdatedBy(long id)
+        {
+            var lastUpdated = _acquisitionService.GetLastUpdateInformation(id);
+            return new JsonResult(lastUpdated);
+        }
+
+        /// <summary>
         /// Adds the specified acquisition file.
         /// </summary>
         /// <returns></returns>
@@ -181,6 +196,23 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             var owners = _acquisitionService.GetOwners(id);
 
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerModel>>(owners));
+        }
+
+        /// <summary>
+        /// Get all unique persons that belong to at least one acquisition file as a team member.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("team-members")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [HasPermission(Permissions.ContactView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<AcquisitionFileTeamModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetAcquisitionTeamMembers()
+        {
+            var team = _acquisitionService.GetTeamMembers();
+
+            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileTeamModel>>(team));
         }
 
         /// <summary>

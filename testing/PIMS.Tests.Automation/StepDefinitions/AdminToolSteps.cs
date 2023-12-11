@@ -9,6 +9,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     public class AdminToolSteps
     {
         private readonly LoginSteps loginSteps;
+        private readonly DigitalDocumentSteps digitalDocumentSteps;
         private readonly HelpDesk helpDesk;
         private readonly ManageUsers manageUsers;
         private readonly DigitalDocuments digitalDocuments;
@@ -17,19 +18,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly IEnumerable<DocumentFile> documentFiles;
 
         private readonly string userName = "TRANPSP1";
-        //private readonly string userName = "sutairak";
 
         private FinancialCode financialCode;
 
         public AdminToolSteps(BrowserDriver driver)
         {
             loginSteps = new LoginSteps(driver);
+            digitalDocumentSteps = new DigitalDocumentSteps(driver);
             helpDesk = new HelpDesk(driver.Current);
             manageUsers = new ManageUsers(driver.Current);
             digitalDocuments = new DigitalDocuments(driver.Current);
             financialCodes = new FinancialCodes(driver.Current);
             cdogsTemplates = new CDOGSTemplates(driver.Current);
-            documentFiles = driver.Configuration.GetSection("UploadDocuments").Get<IEnumerable<DocumentFile>>();
+            documentFiles = digitalDocumentSteps.UploadFileDocuments();
             financialCode = new FinancialCode();
         }
 
@@ -44,29 +45,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to Help Desk Section
             helpDesk.NavigateToHelpDesk();
 
-            //Verify Header
-            helpDesk.VerifyHelpDeskHeader();
-
-            //Verify Map Section
-            helpDesk.VerifyMapHelpDesk();
-
-            //Verify Filter Section
-            helpDesk.VerifyFilterHelpDesk();
-
-            //Verify Navigation Section
-            helpDesk.VerifyNavigationHelpDesk();
-
-            //Verify Question Form
-            helpDesk.VerifyQuestionForm();
-
-            //Verify Bug Form
-            helpDesk.VerifyBugForm();
-
-            //Verify Feature Form
-            helpDesk.VerifyFeatureForm();
-
-            //Verify Buttons
-            helpDesk.VerifyButtons();
+            //Verify Help Desk Modal
+            helpDesk.VerifyHelpDeskModal();
         }
 
         [StepDefinition(@"I enter to the User Management List View")]
@@ -114,7 +94,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocuments.UploadDocument(template.Url);
 
             //Save new template
-            digitalDocuments.SaveDigitalDocument();
+            digitalDocuments.SaveCDOGTemplate();
 
             //Verify Document List
             digitalDocuments.VerifyDocumentsListView("CDOGS Templates");

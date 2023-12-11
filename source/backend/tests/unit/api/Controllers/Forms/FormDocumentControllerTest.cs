@@ -32,8 +32,8 @@ namespace Pims.Api.Test.Controllers
         public FormDocumentControllerTest()
         {
             var helper = new TestHelper();
-            _controller = helper.CreateController<FormDocumentController>(Permissions.AcquisitionFileView);
-            _service = helper.GetService<Mock<IFormDocumentService>>();
+            this._controller = helper.CreateController<FormDocumentController>(Permissions.AcquisitionFileView);
+            this._service = helper.GetService<Mock<IFormDocumentService>>();
         }
 
         #region Tests
@@ -46,13 +46,13 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var acquisitionFileForm = new PimsAcquisitionFileForm();
 
-            _service.Setup(m => m.AddAcquisitionForm(It.IsAny<PimsFormType>(), It.IsAny<long>())).Returns(acquisitionFileForm);
+            this._service.Setup(m => m.AddAcquisitionForm(It.IsAny<PimsFormType>(), It.IsAny<long>())).Returns(acquisitionFileForm);
 
             // Act
-            var result = _controller.AddFormDocumentFile(FileType.Acquisition, new FormDocumentFileModel() { FormDocumentType = new FormDocumentTypeModel() { FormTypeCode = "H120" }, FileId = 1 });
+            var result = this._controller.AddFormDocumentFile(FileType.Acquisition, new FormDocumentFileModel() { FormDocumentType = new FormDocumentTypeModel() { FormTypeCode = "H120" }, FileId = 1 });
 
             // Assert
-            _service.Verify(m => m.AddAcquisitionForm(It.IsAny<PimsFormType>(), It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.AddAcquisitionForm(It.IsAny<PimsFormType>(), It.IsAny<long>()), Times.Once());
         }
 
         /// <summary>
@@ -64,14 +64,14 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var acquisitionFileForm = new PimsAcquisitionFileForm();
 
-            _service.Setup(m => m.AddAcquisitionForm(It.IsAny<PimsFormType>(), It.IsAny<long>())).Returns(acquisitionFileForm);
+            this._service.Setup(m => m.AddAcquisitionForm(It.IsAny<PimsFormType>(), It.IsAny<long>())).Returns(acquisitionFileForm);
 
             // Act
-            Action act = () => _controller.AddFormDocumentFile(FileType.Unknown, new FormDocumentFileModel() { FormDocumentType = new FormDocumentTypeModel() { FormTypeCode = "H120" }, FileId = 1 });
+            Action act = () => this._controller.AddFormDocumentFile(FileType.Unknown, new FormDocumentFileModel() { FormDocumentType = new FormDocumentTypeModel() { FormTypeCode = "H120" }, FileId = 1 });
 
             // Assert
             act.Should().Throw<BadRequestException>();
-            _service.Verify(m => m.AddAcquisitionForm(It.IsAny<PimsFormType>(), It.IsAny<long>()), Times.Never());
+            this._service.Verify(m => m.AddAcquisitionForm(It.IsAny<PimsFormType>(), It.IsAny<long>()), Times.Never());
         }
 
         /// <summary>
@@ -83,13 +83,13 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var acquisitionFileForm = new PimsAcquisitionFileForm();
 
-            _service.Setup(m => m.GetAcquisitionForm(It.IsAny<long>())).Returns(acquisitionFileForm);
+            this._service.Setup(m => m.GetAcquisitionForm(It.IsAny<long>())).Returns(acquisitionFileForm);
 
             // Act
-            var result = _controller.GetFileForm(FileType.Acquisition, 1);
+            var result = this._controller.GetFileForm(FileType.Acquisition, 1);
 
             // Assert
-            _service.Verify(m => m.GetAcquisitionForm(It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.GetAcquisitionForm(It.IsAny<long>()), Times.Once());
         }
 
         /// <summary>
@@ -101,14 +101,14 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var acquisitionFileForm = new PimsAcquisitionFileForm();
 
-            _service.Setup(m => m.GetAcquisitionForm(It.IsAny<long>())).Returns(acquisitionFileForm);
+            this._service.Setup(m => m.GetAcquisitionForm(It.IsAny<long>())).Returns(acquisitionFileForm);
 
             // Act
-            Action act = () => _controller.GetFileForm(FileType.Unknown, 1);
+            Action act = () => this._controller.GetFileForm(FileType.Unknown, 1);
 
             // Assert
             act.Should().Throw<BadRequestException>();
-            _service.Verify(m => m.GetAcquisitionForm(It.IsAny<long>()), Times.Never());
+            this._service.Verify(m => m.GetAcquisitionForm(It.IsAny<long>()), Times.Never());
         }
 
         /// <summary>
@@ -120,13 +120,13 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var acquisitionFileForm = new PimsAcquisitionFileForm();
 
-            _service.Setup(m => m.GetAcquisitionForms(It.IsAny<long>())).Returns(new List<PimsAcquisitionFileForm>() { acquisitionFileForm });
+            this._service.Setup(m => m.GetAcquisitionForms(It.IsAny<long>())).Returns(new List<PimsAcquisitionFileForm>() { acquisitionFileForm });
 
             // Act
-            var result = _controller.GetFileForms(FileType.Acquisition, 1);
+            var result = this._controller.GetFileForms(FileType.Acquisition, 1);
 
             // Assert
-            _service.Verify(m => m.GetAcquisitionForms(It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.GetAcquisitionForms(It.IsAny<long>()), Times.Once());
         }
 
         /// <summary>
@@ -138,14 +138,14 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var acquisitionFileForm = new PimsAcquisitionFileForm();
 
-            _service.Setup(m => m.AddAcquisitionForm(It.IsAny<PimsFormType>(), It.IsAny<long>())).Returns(acquisitionFileForm);
+            this._service.Setup(m => m.AddAcquisitionForm(It.IsAny<PimsFormType>(), It.IsAny<long>())).Returns(acquisitionFileForm);
 
             // Act
-            Action act = () => _controller.AddFormDocumentFile(FileType.Unknown, new FormDocumentFileModel() { FormDocumentType = new FormDocumentTypeModel() { FormTypeCode = "H120" }, FileId = 1 });
+            Action act = () => this._controller.AddFormDocumentFile(FileType.Unknown, new FormDocumentFileModel() { FormDocumentType = new FormDocumentTypeModel() { FormTypeCode = "H120" }, FileId = 1 });
 
             // Assert
             act.Should().Throw<BadRequestException>();
-            _service.Verify(m => m.AddAcquisitionForm(It.IsAny<PimsFormType>(), It.IsAny<long>()), Times.Never());
+            this._service.Verify(m => m.AddAcquisitionForm(It.IsAny<PimsFormType>(), It.IsAny<long>()), Times.Never());
         }
 
         /// <summary>
@@ -157,13 +157,13 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var acquisitionFileForm = new PimsAcquisitionFileForm();
 
-            _service.Setup(m => m.DeleteAcquisitionFileForm(It.IsAny<long>())).Returns(true);
+            this._service.Setup(m => m.DeleteAcquisitionFileForm(It.IsAny<long>())).Returns(true);
 
             // Act
-            var result = _controller.DeleteFileForm(FileType.Acquisition, 1);
+            var result = this._controller.DeleteFileForm(FileType.Acquisition, 1);
 
             // Assert
-            _service.Verify(m => m.DeleteAcquisitionFileForm(It.IsAny<long>()), Times.Once());
+            this._service.Verify(m => m.DeleteAcquisitionFileForm(It.IsAny<long>()), Times.Once());
         }
 
         /// <summary>
@@ -175,14 +175,14 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var acquisitionFileForm = new PimsAcquisitionFileForm();
 
-            _service.Setup(m => m.DeleteAcquisitionFileForm(It.IsAny<long>())).Returns(true);
+            this._service.Setup(m => m.DeleteAcquisitionFileForm(It.IsAny<long>())).Returns(true);
 
             // Act
-            Action act = () => _controller.DeleteFileForm(FileType.Unknown, 1);
+            Action act = () => this._controller.DeleteFileForm(FileType.Unknown, 1);
 
             // Assert
             act.Should().Throw<BadRequestException>();
-            _service.Verify(m => m.DeleteAcquisitionFileForm(It.IsAny<long>()), Times.Never());
+            this._service.Verify(m => m.DeleteAcquisitionFileForm(It.IsAny<long>()), Times.Never());
         }
         #endregion
     }

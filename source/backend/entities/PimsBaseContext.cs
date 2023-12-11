@@ -26,10 +26,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsAcqChklstItemStatusType> PimsAcqChklstItemStatusTypes { get; set; }
         public virtual DbSet<PimsAcqChklstItemType> PimsAcqChklstItemTypes { get; set; }
         public virtual DbSet<PimsAcqChklstSectionType> PimsAcqChklstSectionTypes { get; set; }
-        public virtual DbSet<PimsAcqFlPersonProfileType> PimsAcqFlPersonProfileTypes { get; set; }
+        public virtual DbSet<PimsAcqFlTeamProfileType> PimsAcqFlTeamProfileTypes { get; set; }
         public virtual DbSet<PimsAcqPhysFileStatusType> PimsAcqPhysFileStatusTypes { get; set; }
-        public virtual DbSet<PimsAcquisitionActivityInstance> PimsAcquisitionActivityInstances { get; set; }
-        public virtual DbSet<PimsAcquisitionActivityInstanceHist> PimsAcquisitionActivityInstanceHists { get; set; }
         public virtual DbSet<PimsAcquisitionChecklistItem> PimsAcquisitionChecklistItems { get; set; }
         public virtual DbSet<PimsAcquisitionChecklistItemHist> PimsAcquisitionChecklistItemHists { get; set; }
         public virtual DbSet<PimsAcquisitionFile> PimsAcquisitionFiles { get; set; }
@@ -40,29 +38,13 @@ namespace Pims.Dal
         public virtual DbSet<PimsAcquisitionFileHist> PimsAcquisitionFileHists { get; set; }
         public virtual DbSet<PimsAcquisitionFileNote> PimsAcquisitionFileNotes { get; set; }
         public virtual DbSet<PimsAcquisitionFileNoteHist> PimsAcquisitionFileNoteHists { get; set; }
-        public virtual DbSet<PimsAcquisitionFilePerson> PimsAcquisitionFilePeople { get; set; }
-        public virtual DbSet<PimsAcquisitionFilePersonHist> PimsAcquisitionFilePersonHists { get; set; }
         public virtual DbSet<PimsAcquisitionFileStatusType> PimsAcquisitionFileStatusTypes { get; set; }
+        public virtual DbSet<PimsAcquisitionFileTeam> PimsAcquisitionFileTeams { get; set; }
+        public virtual DbSet<PimsAcquisitionFileTeamHist> PimsAcquisitionFileTeamHists { get; set; }
         public virtual DbSet<PimsAcquisitionFundingType> PimsAcquisitionFundingTypes { get; set; }
         public virtual DbSet<PimsAcquisitionOwner> PimsAcquisitionOwners { get; set; }
         public virtual DbSet<PimsAcquisitionOwnerHist> PimsAcquisitionOwnerHists { get; set; }
         public virtual DbSet<PimsAcquisitionType> PimsAcquisitionTypes { get; set; }
-        public virtual DbSet<PimsActInstPropAcqFile> PimsActInstPropAcqFiles { get; set; }
-        public virtual DbSet<PimsActInstPropAcqFileHist> PimsActInstPropAcqFileHists { get; set; }
-        public virtual DbSet<PimsActInstPropRsrchFile> PimsActInstPropRsrchFiles { get; set; }
-        public virtual DbSet<PimsActInstPropRsrchFileHist> PimsActInstPropRsrchFileHists { get; set; }
-        public virtual DbSet<PimsActivityInstance> PimsActivityInstances { get; set; }
-        public virtual DbSet<PimsActivityInstanceDocument> PimsActivityInstanceDocuments { get; set; }
-        public virtual DbSet<PimsActivityInstanceDocumentHist> PimsActivityInstanceDocumentHists { get; set; }
-        public virtual DbSet<PimsActivityInstanceHist> PimsActivityInstanceHists { get; set; }
-        public virtual DbSet<PimsActivityInstanceNote> PimsActivityInstanceNotes { get; set; }
-        public virtual DbSet<PimsActivityInstanceNoteHist> PimsActivityInstanceNoteHists { get; set; }
-        public virtual DbSet<PimsActivityInstanceStatusType> PimsActivityInstanceStatusTypes { get; set; }
-        public virtual DbSet<PimsActivityTemplate> PimsActivityTemplates { get; set; }
-        public virtual DbSet<PimsActivityTemplateDocument> PimsActivityTemplateDocuments { get; set; }
-        public virtual DbSet<PimsActivityTemplateDocumentHist> PimsActivityTemplateDocumentHists { get; set; }
-        public virtual DbSet<PimsActivityTemplateHist> PimsActivityTemplateHists { get; set; }
-        public virtual DbSet<PimsActivityTemplateType> PimsActivityTemplateTypes { get; set; }
         public virtual DbSet<PimsAddress> PimsAddresses { get; set; }
         public virtual DbSet<PimsAddressHist> PimsAddressHists { get; set; }
         public virtual DbSet<PimsAddressUsageType> PimsAddressUsageTypes { get; set; }
@@ -121,8 +103,6 @@ namespace Pims.Dal
         public virtual DbSet<PimsLandActType> PimsLandActTypes { get; set; }
         public virtual DbSet<PimsLandSurveyorType> PimsLandSurveyorTypes { get; set; }
         public virtual DbSet<PimsLease> PimsLeases { get; set; }
-        public virtual DbSet<PimsLeaseActivityInstance> PimsLeaseActivityInstances { get; set; }
-        public virtual DbSet<PimsLeaseActivityInstanceHist> PimsLeaseActivityInstanceHists { get; set; }
         public virtual DbSet<PimsLeaseCategoryType> PimsLeaseCategoryTypes { get; set; }
         public virtual DbSet<PimsLeaseConsultation> PimsLeaseConsultations { get; set; }
         public virtual DbSet<PimsLeaseConsultationHist> PimsLeaseConsultationHists { get; set; }
@@ -179,20 +159,39 @@ namespace Pims.Dal
         public virtual DbSet<PimsProjectPerson> PimsProjectPeople { get; set; }
         public virtual DbSet<PimsProjectPersonHist> PimsProjectPersonHists { get; set; }
         public virtual DbSet<PimsProjectPersonRoleType> PimsProjectPersonRoleTypes { get; set; }
+        public virtual DbSet<PimsProjectProduct> PimsProjectProducts { get; set; }
+        public virtual DbSet<PimsProjectProductHist> PimsProjectProductHists { get; set; }
         public virtual DbSet<PimsProjectStatusType> PimsProjectStatusTypes { get; set; }
+        public virtual DbSet<PimsPropActInvolvedParty> PimsPropActInvolvedParties { get; set; }
+        public virtual DbSet<PimsPropActInvolvedPartyHist> PimsPropActInvolvedPartyHists { get; set; }
+        public virtual DbSet<PimsPropActMinContact> PimsPropActMinContacts { get; set; }
+        public virtual DbSet<PimsPropActMinContactHist> PimsPropActMinContactHists { get; set; }
         public virtual DbSet<PimsPropInthldrInterestType> PimsPropInthldrInterestTypes { get; set; }
+        public virtual DbSet<PimsPropMgmtActivityStatusType> PimsPropMgmtActivityStatusTypes { get; set; }
+        public virtual DbSet<PimsPropMgmtActivitySubtype> PimsPropMgmtActivitySubtypes { get; set; }
+        public virtual DbSet<PimsPropMgmtActivityType> PimsPropMgmtActivityTypes { get; set; }
+        public virtual DbSet<PimsPropPropActivity> PimsPropPropActivities { get; set; }
+        public virtual DbSet<PimsPropPropActivityHist> PimsPropPropActivityHists { get; set; }
         public virtual DbSet<PimsPropPropAnomalyType> PimsPropPropAnomalyTypes { get; set; }
+        public virtual DbSet<PimsPropPropPurpose> PimsPropPropPurposes { get; set; }
+        public virtual DbSet<PimsPropPropPurposeHist> PimsPropPropPurposeHists { get; set; }
         public virtual DbSet<PimsPropPropRoadType> PimsPropPropRoadTypes { get; set; }
         public virtual DbSet<PimsPropPropTenureType> PimsPropPropTenureTypes { get; set; }
         public virtual DbSet<PimsPropResearchPurposeType> PimsPropResearchPurposeTypes { get; set; }
         public virtual DbSet<PimsProperty> PimsProperties { get; set; }
         public virtual DbSet<PimsPropertyAcquisitionFile> PimsPropertyAcquisitionFiles { get; set; }
         public virtual DbSet<PimsPropertyAcquisitionFileHist> PimsPropertyAcquisitionFileHists { get; set; }
+        public virtual DbSet<PimsPropertyActivity> PimsPropertyActivities { get; set; }
+        public virtual DbSet<PimsPropertyActivityDocument> PimsPropertyActivityDocuments { get; set; }
+        public virtual DbSet<PimsPropertyActivityDocumentHist> PimsPropertyActivityDocumentHists { get; set; }
+        public virtual DbSet<PimsPropertyActivityHist> PimsPropertyActivityHists { get; set; }
+        public virtual DbSet<PimsPropertyActivityInvoice> PimsPropertyActivityInvoices { get; set; }
+        public virtual DbSet<PimsPropertyActivityInvoiceHist> PimsPropertyActivityInvoiceHists { get; set; }
         public virtual DbSet<PimsPropertyAnomalyType> PimsPropertyAnomalyTypes { get; set; }
         public virtual DbSet<PimsPropertyBoundaryVw> PimsPropertyBoundaryVws { get; set; }
         public virtual DbSet<PimsPropertyClassificationType> PimsPropertyClassificationTypes { get; set; }
-        public virtual DbSet<PimsPropertyEvaluation> PimsPropertyEvaluations { get; set; }
-        public virtual DbSet<PimsPropertyEvaluationHist> PimsPropertyEvaluationHists { get; set; }
+        public virtual DbSet<PimsPropertyContact> PimsPropertyContacts { get; set; }
+        public virtual DbSet<PimsPropertyContactHist> PimsPropertyContactHists { get; set; }
         public virtual DbSet<PimsPropertyHist> PimsPropertyHists { get; set; }
         public virtual DbSet<PimsPropertyImprovement> PimsPropertyImprovements { get; set; }
         public virtual DbSet<PimsPropertyImprovementHist> PimsPropertyImprovementHists { get; set; }
@@ -202,18 +201,11 @@ namespace Pims.Dal
         public virtual DbSet<PimsPropertyLocationVw> PimsPropertyLocationVws { get; set; }
         public virtual DbSet<PimsPropertyOrganization> PimsPropertyOrganizations { get; set; }
         public virtual DbSet<PimsPropertyOrganizationHist> PimsPropertyOrganizationHists { get; set; }
-        public virtual DbSet<PimsPropertyPropertyServiceFile> PimsPropertyPropertyServiceFiles { get; set; }
-        public virtual DbSet<PimsPropertyPropertyServiceFileHist> PimsPropertyPropertyServiceFileHists { get; set; }
+        public virtual DbSet<PimsPropertyPurposeType> PimsPropertyPurposeTypes { get; set; }
         public virtual DbSet<PimsPropertyResearchFile> PimsPropertyResearchFiles { get; set; }
         public virtual DbSet<PimsPropertyResearchFileHist> PimsPropertyResearchFileHists { get; set; }
         public virtual DbSet<PimsPropertyRoadType> PimsPropertyRoadTypes { get; set; }
-        public virtual DbSet<PimsPropertyServiceFile> PimsPropertyServiceFiles { get; set; }
-        public virtual DbSet<PimsPropertyServiceFileHist> PimsPropertyServiceFileHists { get; set; }
-        public virtual DbSet<PimsPropertyServiceFileType> PimsPropertyServiceFileTypes { get; set; }
         public virtual DbSet<PimsPropertyStatusType> PimsPropertyStatusTypes { get; set; }
-        public virtual DbSet<PimsPropertyTax> PimsPropertyTaxes { get; set; }
-        public virtual DbSet<PimsPropertyTaxHist> PimsPropertyTaxHists { get; set; }
-        public virtual DbSet<PimsPropertyTaxRemitType> PimsPropertyTaxRemitTypes { get; set; }
         public virtual DbSet<PimsPropertyTenureType> PimsPropertyTenureTypes { get; set; }
         public virtual DbSet<PimsPropertyType> PimsPropertyTypes { get; set; }
         public virtual DbSet<PimsProvinceState> PimsProvinceStates { get; set; }
@@ -221,8 +213,6 @@ namespace Pims.Dal
         public virtual DbSet<PimsRegionUser> PimsRegionUsers { get; set; }
         public virtual DbSet<PimsRegionUserHist> PimsRegionUserHists { get; set; }
         public virtual DbSet<PimsRequestSourceType> PimsRequestSourceTypes { get; set; }
-        public virtual DbSet<PimsResearchActivityInstance> PimsResearchActivityInstances { get; set; }
-        public virtual DbSet<PimsResearchActivityInstanceHist> PimsResearchActivityInstanceHists { get; set; }
         public virtual DbSet<PimsResearchFile> PimsResearchFiles { get; set; }
         public virtual DbSet<PimsResearchFileDocument> PimsResearchFileDocuments { get; set; }
         public virtual DbSet<PimsResearchFileDocumentHist> PimsResearchFileDocumentHists { get; set; }
@@ -275,7 +265,6 @@ namespace Pims.Dal
         public virtual DbSet<PimsYearlyFinancialCode> PimsYearlyFinancialCodes { get; set; }
         public virtual DbSet<PimsYearlyFinancialCodeHist> PimsYearlyFinancialCodeHists { get; set; }
         public virtual DbSet<PimsxTableDefinition> PimsxTableDefinitions { get; set; }
-        public virtual DbSet<TmpPimsPropPropAdjacentLandType> TmpPimsPropPropAdjacentLandTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -510,14 +499,14 @@ namespace Pims.Dal
                 entity.Property(e => e.ExpiryDate).HasComment("Date the checklist section is removed from the input form.");
             });
 
-            modelBuilder.Entity<PimsAcqFlPersonProfileType>(entity =>
+            modelBuilder.Entity<PimsAcqFlTeamProfileType>(entity =>
             {
-                entity.HasKey(e => e.AcqFlPersonProfileTypeCode)
-                    .HasName("AQFPPT_PK");
+                entity.HasKey(e => e.AcqFlTeamProfileTypeCode)
+                    .HasName("AQTPPT_PK");
 
                 entity.HasComment("Codified values for the acquistion file staff profile (role).");
 
-                entity.Property(e => e.AcqFlPersonProfileTypeCode).HasComment("Code value for the acquistion file staff profile (role).");
+                entity.Property(e => e.AcqFlTeamProfileTypeCode).HasComment("Code value for the acquistion file staff/org profile (role).");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
@@ -529,7 +518,7 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Description).HasComment("Description of the acquistion file staff profile (role).");
+                entity.Property(e => e.Description).HasComment("Description of the acquistion file staff/org profile (role).");
 
                 entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
 
@@ -564,60 +553,6 @@ namespace Pims.Dal
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the code value is inactive.");
-            });
-
-            modelBuilder.Entity<PimsAcquisitionActivityInstance>(entity =>
-            {
-                entity.HasKey(e => e.AcquisitionActivityInstanceId)
-                    .HasName("ACQAIN_PK");
-
-                entity.Property(e => e.AcquisitionActivityInstanceId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_ACTIVITY_INSTANCE_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship is active.");
-
-                entity.HasOne(d => d.AcquisitionFile)
-                    .WithMany(p => p.PimsAcquisitionActivityInstances)
-                    .HasForeignKey(d => d.AcquisitionFileId)
-                    .HasConstraintName("PIM_ACQNFL_PIM_ACQAIN_FK");
-
-                entity.HasOne(d => d.ActivityInstance)
-                    .WithMany(p => p.PimsAcquisitionActivityInstances)
-                    .HasForeignKey(d => d.ActivityInstanceId)
-                    .HasConstraintName("PIM_ACTINS_PIM_ACQAIN_FK");
-            });
-
-            modelBuilder.Entity<PimsAcquisitionActivityInstanceHist>(entity =>
-            {
-                entity.HasKey(e => e.AcquisitionActivityInstanceHistId)
-                    .HasName("PIMS_ACQAIN_H_PK");
-
-                entity.Property(e => e.AcquisitionActivityInstanceHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_ACTIVITY_INSTANCE_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsAcquisitionChecklistItem>(entity =>
@@ -685,8 +620,6 @@ namespace Pims.Dal
                 entity.HasComment("Entity containing information regarding an acquisition file.");
 
                 entity.Property(e => e.AcquisitionFileId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_ID_SEQ])");
-
-                entity.Property(e => e.AlternateProject).HasComment("Link a file to an \"Alternate Project\", so the user can make alternate payments that may be due after the original file's project closes.");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -812,10 +745,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship has been disabled.");
-
                 entity.HasOne(d => d.AcquisitionFile)
                     .WithMany(p => p.PimsAcquisitionFileDocuments)
                     .HasForeignKey(d => d.AcquisitionFileId)
@@ -869,10 +798,6 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship is active.");
 
                 entity.HasOne(d => d.AcquisitionFile)
                     .WithMany(p => p.PimsAcquisitionFileForms)
@@ -938,10 +863,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship has been disabled.");
-
                 entity.HasOne(d => d.AcquisitionFile)
                     .WithMany(p => p.PimsAcquisitionFileNotes)
                     .HasForeignKey(d => d.AcquisitionFileId)
@@ -961,68 +882,6 @@ namespace Pims.Dal
                     .HasName("PIMS_ACQNOT_H_PK");
 
                 entity.Property(e => e.AcquisitionFileNoteHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_NOTE_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-            });
-
-            modelBuilder.Entity<PimsAcquisitionFilePerson>(entity =>
-            {
-                entity.HasKey(e => e.AcquisitionFilePersonId)
-                    .HasName("ACQPER_PK");
-
-                entity.HasComment("Table to associate an acquisition file to a person.");
-
-                entity.Property(e => e.AcquisitionFilePersonId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_PERSON_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship is active.");
-
-                entity.HasOne(d => d.AcqFlPersonProfileTypeCodeNavigation)
-                    .WithMany(p => p.PimsAcquisitionFilePeople)
-                    .HasForeignKey(d => d.AcqFlPersonProfileTypeCode)
-                    .HasConstraintName("PIM_AQFPPT_PIM_ACQPER_FK");
-
-                entity.HasOne(d => d.AcquisitionFile)
-                    .WithMany(p => p.PimsAcquisitionFilePeople)
-                    .HasForeignKey(d => d.AcquisitionFileId)
-                    .HasConstraintName("PIM_ACQNFL_PIM_ACQPER_FK");
-
-                entity.HasOne(d => d.Person)
-                    .WithMany(p => p.PimsAcquisitionFilePeople)
-                    .HasForeignKey(d => d.PersonId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PERSON_PIM_ACQPER_FK");
-            });
-
-            modelBuilder.Entity<PimsAcquisitionFilePersonHist>(entity =>
-            {
-                entity.HasKey(e => e.AcquisitionFilePersonHistId)
-                    .HasName("PIMS_ACQPER_H_PK");
-
-                entity.Property(e => e.AcquisitionFilePersonHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_PERSON_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
@@ -1053,6 +912,79 @@ namespace Pims.Dal
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the code value is inactive.");
+            });
+
+            modelBuilder.Entity<PimsAcquisitionFileTeam>(entity =>
+            {
+                entity.HasKey(e => e.AcquisitionFileTeamId)
+                    .HasName("ACQNTM_PK");
+
+                entity.HasComment("Table to associate an acquisition file to a person.");
+
+                entity.Property(e => e.AcquisitionFileTeamId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_TEAM_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.OrganizationId).HasComment("Foreign key to the team member's organization");
+
+                entity.Property(e => e.PersonId).HasComment("Foreign key to the team member");
+
+                entity.Property(e => e.PrimaryContactId).HasComment("Primary contact for the organization");
+
+                entity.HasOne(d => d.AcqFlTeamProfileTypeCodeNavigation)
+                    .WithMany(p => p.PimsAcquisitionFileTeams)
+                    .HasForeignKey(d => d.AcqFlTeamProfileTypeCode)
+                    .HasConstraintName("PIM_AQFPPT_PIM_ACQPER_FK");
+
+                entity.HasOne(d => d.AcquisitionFile)
+                    .WithMany(p => p.PimsAcquisitionFileTeams)
+                    .HasForeignKey(d => d.AcquisitionFileId)
+                    .HasConstraintName("PIM_ACQNFL_PIM_ACQPER_FK");
+
+                entity.HasOne(d => d.Organization)
+                    .WithMany(p => p.PimsAcquisitionFileTeams)
+                    .HasForeignKey(d => d.OrganizationId)
+                    .HasConstraintName("PIM_ORG_PIM_ACQNTM_FK");
+
+                entity.HasOne(d => d.Person)
+                    .WithMany(p => p.PimsAcquisitionFileTeamPeople)
+                    .HasForeignKey(d => d.PersonId)
+                    .HasConstraintName("PIM_PERSON_PIM_ACQPER_FK");
+
+                entity.HasOne(d => d.PrimaryContact)
+                    .WithMany(p => p.PimsAcquisitionFileTeamPrimaryContacts)
+                    .HasForeignKey(d => d.PrimaryContactId)
+                    .HasConstraintName("PIM_PERSON_PIM_ACQNTM_FK");
+            });
+
+            modelBuilder.Entity<PimsAcquisitionFileTeamHist>(entity =>
+            {
+                entity.HasKey(e => e.AcquisitionFileTeamHistId)
+                    .HasName("PIMS_ACQNTM_H_PK");
+
+                entity.Property(e => e.AcquisitionFileTeamHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_TEAM_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsAcquisitionFundingType>(entity =>
@@ -1184,465 +1116,6 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.Property(e => e.Description).HasComment("Description of the acquistion type.");
-
-                entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the code value is inactive.");
-            });
-
-            modelBuilder.Entity<PimsActInstPropAcqFile>(entity =>
-            {
-                entity.HasKey(e => e.ActInstPropAcqFileId)
-                    .HasName("AIPAFL_PK");
-
-                entity.HasComment("File to associate an activity instance with a subset of properties associated with the superset of acquisition file properties.");
-
-                entity.Property(e => e.ActInstPropAcqFileId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACT_INST_PROP_ACQ_FILE_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship has been disabled.");
-
-                entity.HasOne(d => d.ActivityInstance)
-                    .WithMany(p => p.PimsActInstPropAcqFiles)
-                    .HasForeignKey(d => d.ActivityInstanceId)
-                    .HasConstraintName("PIM_ACTINS_PIM_AIPAFL_FK");
-
-                entity.HasOne(d => d.PropertyAcquisitionFile)
-                    .WithMany(p => p.PimsActInstPropAcqFiles)
-                    .HasForeignKey(d => d.PropertyAcquisitionFileId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PRACQF_PIM_AIPAFL_FK");
-            });
-
-            modelBuilder.Entity<PimsActInstPropAcqFileHist>(entity =>
-            {
-                entity.HasKey(e => e.ActInstPropAcqFileHistId)
-                    .HasName("PIMS_AIPAFL_H_PK");
-
-                entity.Property(e => e.ActInstPropAcqFileHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACT_INST_PROP_ACQ_FILE_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-            });
-
-            modelBuilder.Entity<PimsActInstPropRsrchFile>(entity =>
-            {
-                entity.HasKey(e => e.ActInstPropRsrchFileId)
-                    .HasName("AIPRFL_PK");
-
-                entity.HasComment("File to associate an activity instance with a subset of properties associated with the superset of research file properties.");
-
-                entity.Property(e => e.ActInstPropRsrchFileId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACT_INST_PROP_RSRCH_FILE_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship has been disabled.");
-
-                entity.HasOne(d => d.ActivityInstance)
-                    .WithMany(p => p.PimsActInstPropRsrchFiles)
-                    .HasForeignKey(d => d.ActivityInstanceId)
-                    .HasConstraintName("PIM_ACTINS_PIM_AIPRFL_FK");
-
-                entity.HasOne(d => d.PropertyResearchFile)
-                    .WithMany(p => p.PimsActInstPropRsrchFiles)
-                    .HasForeignKey(d => d.PropertyResearchFileId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PRSCRC_PIM_AIPRFL_FK");
-            });
-
-            modelBuilder.Entity<PimsActInstPropRsrchFileHist>(entity =>
-            {
-                entity.HasKey(e => e.ActInstPropRsrchFileHistId)
-                    .HasName("PIMS_AIPRFL_H_PK");
-
-                entity.Property(e => e.ActInstPropRsrchFileHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACT_INST_PROP_RSRCH_FILE_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-            });
-
-            modelBuilder.Entity<PimsActivityInstance>(entity =>
-            {
-                entity.HasKey(e => e.ActivityInstanceId)
-                    .HasName("ACTINS_PK");
-
-                entity.HasComment("Table to contain all applicable activity instances for the PIMS PSP system.");
-
-                entity.Property(e => e.ActivityInstanceId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_INSTANCE_ID_SEQ])");
-
-                entity.Property(e => e.ActivityDataJson)
-                    .HasDefaultValueSql("('<Empty>')")
-                    .HasComment("JSON structure containing data specific to an activity instance.");
-
-                entity.Property(e => e.ActivityInstanceStatusTypeCode).HasDefaultValueSql("('NOSTART')");
-
-                entity.Property(e => e.ActivityTemplateId).HasDefaultValueSql("((-1))");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description).HasComment("Description of the activity instance.");
-
-                entity.HasOne(d => d.ActivityInstanceStatusTypeCodeNavigation)
-                    .WithMany(p => p.PimsActivityInstances)
-                    .HasForeignKey(d => d.ActivityInstanceStatusTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_ACTIST_PIM_ACTINS_FK");
-
-                entity.HasOne(d => d.ActivityTemplate)
-                    .WithMany(p => p.PimsActivityInstances)
-                    .HasForeignKey(d => d.ActivityTemplateId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_ACTTMP_PIM_ACTINS_FK");
-            });
-
-            modelBuilder.Entity<PimsActivityInstanceDocument>(entity =>
-            {
-                entity.HasKey(e => e.ActivityInstanceDocumentId)
-                    .HasName("ACTDOC_PK");
-
-                entity.HasComment("Relates a document object to an activity instance.");
-
-                entity.Property(e => e.ActivityInstanceDocumentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_INSTANCE_DOCUMENT_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship has been disabled.");
-
-                entity.HasOne(d => d.ActivityInstance)
-                    .WithMany(p => p.PimsActivityInstanceDocuments)
-                    .HasForeignKey(d => d.ActivityInstanceId)
-                    .HasConstraintName("PIM_ACTINS_PIM_ACTDOC_FK");
-
-                entity.HasOne(d => d.Document)
-                    .WithMany(p => p.PimsActivityInstanceDocuments)
-                    .HasForeignKey(d => d.DocumentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_DOCMNT_PIM_ACTDOC_FK");
-            });
-
-            modelBuilder.Entity<PimsActivityInstanceDocumentHist>(entity =>
-            {
-                entity.HasKey(e => e.ActivityInstanceDocumentHistId)
-                    .HasName("PIMS_ACTDOC_H_PK");
-
-                entity.Property(e => e.ActivityInstanceDocumentHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_INSTANCE_DOCUMENT_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-            });
-
-            modelBuilder.Entity<PimsActivityInstanceHist>(entity =>
-            {
-                entity.HasKey(e => e.ActivityInstanceHistId)
-                    .HasName("PIMS_ACTINS_H_PK");
-
-                entity.Property(e => e.ActivityInstanceHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_INSTANCE_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-            });
-
-            modelBuilder.Entity<PimsActivityInstanceNote>(entity =>
-            {
-                entity.HasComment("Relates a note object to an activity instance.");
-
-                entity.Property(e => e.PimsActivityInstanceNoteId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_INSTANCE_NOTE_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship has been disabled.");
-
-                entity.HasOne(d => d.ActivityInstance)
-                    .WithMany(p => p.PimsActivityInstanceNotes)
-                    .HasForeignKey(d => d.ActivityInstanceId)
-                    .HasConstraintName("PIM_ACTINS_PIM_ACTINN_FK");
-
-                entity.HasOne(d => d.Note)
-                    .WithMany(p => p.PimsActivityInstanceNotes)
-                    .HasForeignKey(d => d.NoteId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_NOTE_PIM_ACTINN_FK");
-            });
-
-            modelBuilder.Entity<PimsActivityInstanceNoteHist>(entity =>
-            {
-                entity.HasKey(e => e.ActivityInstanceNoteHistId)
-                    .HasName("PIMS_ACTINN_H_PK");
-
-                entity.Property(e => e.ActivityInstanceNoteHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_INSTANCE_NOTE_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-            });
-
-            modelBuilder.Entity<PimsActivityInstanceStatusType>(entity =>
-            {
-                entity.HasKey(e => e.ActivityInstanceStatusTypeCode)
-                    .HasName("ACTIST_PK");
-
-                entity.HasComment("Codified values for the activity instance status type.");
-
-                entity.Property(e => e.ActivityInstanceStatusTypeCode).HasComment("Code value for the activity instance status type.");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description).HasComment("Description of the activity instance status type.");
-
-                entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the code value is inactive.");
-            });
-
-            modelBuilder.Entity<PimsActivityTemplate>(entity =>
-            {
-                entity.HasKey(e => e.ActivityTemplateId)
-                    .HasName("ACTTMP_PK");
-
-                entity.Property(e => e.ActivityTemplateId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_TEMPLATE_ID_SEQ])");
-
-                entity.Property(e => e.ActivityTemplateJson)
-                    .HasDefaultValueSql("('<Empty>')")
-                    .HasComment("JSON structure desribing how to construct the activity UI.");
-
-                entity.Property(e => e.ActivityTemplateTypeCode).HasDefaultValueSql("('GENERAL')");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the code value is inactive.");
-
-                entity.HasOne(d => d.ActivityTemplateTypeCodeNavigation)
-                    .WithMany(p => p.PimsActivityTemplates)
-                    .HasForeignKey(d => d.ActivityTemplateTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_ACTTTY_PIM_ACTTMP_FK");
-            });
-
-            modelBuilder.Entity<PimsActivityTemplateDocument>(entity =>
-            {
-                entity.HasKey(e => e.ActivityTemplateDocumentId)
-                    .HasName("ACTMDO_PK");
-
-                entity.HasComment("Associative relationship between an activity template and a document.  Useful in determining with templates reference a document and conversely, which documents reference an activity template.");
-
-                entity.Property(e => e.ActivityTemplateDocumentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_TEMPLATE_DOCUMENT_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship has been disabled.");
-
-                entity.HasOne(d => d.ActivityTemplate)
-                    .WithMany(p => p.PimsActivityTemplateDocuments)
-                    .HasForeignKey(d => d.ActivityTemplateId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_ACTTMP_PIM_ACTMDO_FK");
-
-                entity.HasOne(d => d.Document)
-                    .WithMany(p => p.PimsActivityTemplateDocuments)
-                    .HasForeignKey(d => d.DocumentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_DOCMNT_PIM_ACTMDO_FK");
-            });
-
-            modelBuilder.Entity<PimsActivityTemplateDocumentHist>(entity =>
-            {
-                entity.HasKey(e => e.ActivityTemplateDocumentHistId)
-                    .HasName("PIMS_ACTMDO_H_PK");
-
-                entity.Property(e => e.ActivityTemplateDocumentHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_TEMPLATE_DOCUMENT_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-            });
-
-            modelBuilder.Entity<PimsActivityTemplateHist>(entity =>
-            {
-                entity.HasKey(e => e.ActivityTemplateHistId)
-                    .HasName("PIMS_ACTTMP_H_PK");
-
-                entity.Property(e => e.ActivityTemplateHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_TEMPLATE_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-            });
-
-            modelBuilder.Entity<PimsActivityTemplateType>(entity =>
-            {
-                entity.HasKey(e => e.ActivityTemplateTypeCode)
-                    .HasName("ACTTTY_PK");
-
-                entity.HasComment("Codified values for the activity type.");
-
-                entity.Property(e => e.ActivityTemplateTypeCode).HasComment("Code value for the activity type.");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description).HasComment("Description of the activity type.");
 
                 entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
 
@@ -2086,7 +1559,11 @@ namespace Pims.Dal
 
                 entity.Property(e => e.CompensationRequisitionId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMPENSATION_REQUISITION_ID_SEQ])");
 
+                entity.Property(e => e.AdvPmtServedDt).HasComment("Date that the advanced payment was made.");
+
                 entity.Property(e => e.AgreementDt).HasComment("Agreement date.");
+
+                entity.Property(e => e.AlternateProjectId).HasComment("Link a file to an \"Alternate Project\", so the user can make alternate payments that may be due after the original file's project closes.");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -2146,15 +1623,20 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACQNFL_PIM_CMPREQ_FK");
 
-                entity.HasOne(d => d.AcquisitionFilePerson)
+                entity.HasOne(d => d.AcquisitionFileTeam)
                     .WithMany(p => p.PimsCompensationRequisitions)
-                    .HasForeignKey(d => d.AcquisitionFilePersonId)
+                    .HasForeignKey(d => d.AcquisitionFileTeamId)
                     .HasConstraintName("PIM_ACQPER_PIM_CMPREQ_FK");
 
                 entity.HasOne(d => d.AcquisitionOwner)
                     .WithMany(p => p.PimsCompensationRequisitions)
                     .HasForeignKey(d => d.AcquisitionOwnerId)
                     .HasConstraintName("PIM_ACQOWN_PIM_CMPREQ_FK");
+
+                entity.HasOne(d => d.AlternateProject)
+                    .WithMany(p => p.PimsCompensationRequisitions)
+                    .HasForeignKey(d => d.AlternateProjectId)
+                    .HasConstraintName("PIM_PROJCT_PIM_CMPREQ_FK");
 
                 entity.HasOne(d => d.ChartOfAccounts)
                     .WithMany(p => p.PimsCompensationRequisitions)
@@ -3147,7 +2629,7 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.InterestHolderTypeCode).HasDefaultValueSql("(N'INTHLDR')");
+                entity.Property(e => e.InterestHolderTypeCode).HasDefaultValueSql("('INTHLDR')");
 
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
@@ -3191,8 +2673,6 @@ namespace Pims.Dal
                 entity.Property(e => e.InterestHolderHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INTEREST_HOLDER_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.InterestHolderTypeCode).HasDefaultValueSql("(N'INTHLDR')");
             });
 
             modelBuilder.Entity<PimsInterestHolderInterestType>(entity =>
@@ -3276,10 +2756,6 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the code value is inactive.");
 
                 entity.HasOne(d => d.InterestHolder)
                     .WithMany(p => p.PimsInthldrPropInterests)
@@ -3513,59 +2989,6 @@ namespace Pims.Dal
                     .HasConstraintName("PIM_REGION_PIM_LEASE_FK");
             });
 
-            modelBuilder.Entity<PimsLeaseActivityInstance>(entity =>
-            {
-                entity.HasKey(e => e.LeaseActivityInstanceId)
-                    .HasName("LSACIN_PK");
-
-                entity.HasComment("Associative entity between leases/licenses and activity instances.");
-
-                entity.Property(e => e.LeaseActivityInstanceId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_ACTIVITY_INSTANCE_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.HasOne(d => d.ActivityInstance)
-                    .WithMany(p => p.PimsLeaseActivityInstances)
-                    .HasForeignKey(d => d.ActivityInstanceId)
-                    .HasConstraintName("PIM_ACTINS_PIM_LSACIN_FK");
-
-                entity.HasOne(d => d.Lease)
-                    .WithMany(p => p.PimsLeaseActivityInstances)
-                    .HasForeignKey(d => d.LeaseId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_LEASE_PIM_LSACIN_FK");
-            });
-
-            modelBuilder.Entity<PimsLeaseActivityInstanceHist>(entity =>
-            {
-                entity.HasKey(e => e.LeaseActivityInstanceHistId)
-                    .HasName("PIMS_LSACIN_H_PK");
-
-                entity.Property(e => e.LeaseActivityInstanceHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_ACTIVITY_INSTANCE_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-            });
-
             modelBuilder.Entity<PimsLeaseCategoryType>(entity =>
             {
                 entity.HasKey(e => e.LeaseCategoryTypeCode)
@@ -3681,10 +3104,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship has been disabled.");
-
                 entity.HasOne(d => d.Document)
                     .WithMany(p => p.PimsLeaseDocuments)
                     .HasForeignKey(d => d.DocumentId)
@@ -3790,10 +3209,6 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship has been disabled.");
 
                 entity.HasOne(d => d.Lease)
                     .WithMany(p => p.PimsLeaseNotes)
@@ -4462,8 +3877,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
-
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.PimsOrganizationAddresses)
                     .HasForeignKey(d => d.AddressId)
@@ -4598,8 +4011,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
-
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.PimsPersonAddresses)
                     .HasForeignKey(d => d.AddressId)
@@ -4664,8 +4075,6 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.Organization)
                     .WithMany(p => p.PimsPersonOrganizations)
@@ -4779,8 +4188,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.Code).HasComment("Product number.");
 
-                entity.Property(e => e.CodeDescUpper).HasComputedColumnSql("(upper(Trim([CODE])+Trim([DESCRIPTION])))", false);
-
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.CostEstimate).HasComment("Estimate cost of the product.");
@@ -4802,12 +4209,6 @@ namespace Pims.Dal
                 entity.Property(e => e.Scope).HasComment("Product scope.");
 
                 entity.Property(e => e.StartDate).HasComment("Product start date.");
-
-                entity.HasOne(d => d.ParentProject)
-                    .WithMany(p => p.PimsProducts)
-                    .HasForeignKey(d => d.ParentProjectId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PROJCT_PIM_PRODCT_FK");
             });
 
             modelBuilder.Entity<PimsProductHist>(entity =>
@@ -4919,10 +4320,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship has been disabled.");
-
                 entity.HasOne(d => d.Document)
                     .WithMany(p => p.PimsProjectDocuments)
                     .HasForeignKey(d => d.DocumentId)
@@ -4984,10 +4381,6 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship has been disabled.");
 
                 entity.HasOne(d => d.Note)
                     .WithMany(p => p.PimsProjectNotes)
@@ -5104,6 +4497,58 @@ namespace Pims.Dal
                     .HasComment("Indicates if the code value is inactive.");
             });
 
+            modelBuilder.Entity<PimsProjectProduct>(entity =>
+            {
+                entity.HasKey(e => e.ProjectProductId)
+                    .HasName("PRJPRD_PK");
+
+                entity.Property(e => e.ProjectProductId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_PRODUCT_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.PimsProjectProducts)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRODCT_PIM_PRJPRD_FK");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.PimsProjectProducts)
+                    .HasForeignKey(d => d.ProjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PROJCT_PIM_PRJPRD_FK");
+            });
+
+            modelBuilder.Entity<PimsProjectProductHist>(entity =>
+            {
+                entity.HasKey(e => e.ProjectProductHistId)
+                    .HasName("PIMS_PRJPRD_H_PK");
+
+                entity.Property(e => e.ProjectProductHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_PRODUCT_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
             modelBuilder.Entity<PimsProjectStatusType>(entity =>
             {
                 entity.HasKey(e => e.ProjectStatusTypeCode)
@@ -5130,6 +4575,116 @@ namespace Pims.Dal
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the code value is inactive.");
+            });
+
+            modelBuilder.Entity<PimsPropActInvolvedParty>(entity =>
+            {
+                entity.HasKey(e => e.PropActInvolvedPartyId)
+                    .HasName("PAINVP_PK");
+
+                entity.HasComment("Associates a property management activity to a vendor (many-to-many).");
+
+                entity.Property(e => e.PropActInvolvedPartyId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_ACT_INVOLVED_PARTY_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.HasOne(d => d.Organization)
+                    .WithMany(p => p.PimsPropActInvolvedParties)
+                    .HasForeignKey(d => d.OrganizationId)
+                    .HasConstraintName("PIM_ORG_PIM_PAINVP_FK");
+
+                entity.HasOne(d => d.Person)
+                    .WithMany(p => p.PimsPropActInvolvedParties)
+                    .HasForeignKey(d => d.PersonId)
+                    .HasConstraintName("PIM_PERSON_PIM_PAINVP_FK");
+
+                entity.HasOne(d => d.PimsPropertyActivity)
+                    .WithMany(p => p.PimsPropActInvolvedParties)
+                    .HasForeignKey(d => d.PimsPropertyActivityId)
+                    .HasConstraintName("PIM_PRPACT_PIM_PAINVP_FK");
+            });
+
+            modelBuilder.Entity<PimsPropActInvolvedPartyHist>(entity =>
+            {
+                entity.HasKey(e => e.PropActInvolvedPartyHistId)
+                    .HasName("PIMS_PAINVP_H_PK");
+
+                entity.Property(e => e.PropActInvolvedPartyHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_ACT_INVOLVED_PARTY_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsPropActMinContact>(entity =>
+            {
+                entity.HasKey(e => e.PropActMinContactId)
+                    .HasName("PRACMC_PK");
+
+                entity.HasComment("Associates a property management activity to a Ministry contact (many-to-many).");
+
+                entity.Property(e => e.PropActMinContactId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_ACT_MIN_CONTACT_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.HasOne(d => d.Person)
+                    .WithMany(p => p.PimsPropActMinContacts)
+                    .HasForeignKey(d => d.PersonId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PERSON_PIM_PRACMC_FK");
+
+                entity.HasOne(d => d.PimsPropertyActivity)
+                    .WithMany(p => p.PimsPropActMinContacts)
+                    .HasForeignKey(d => d.PimsPropertyActivityId)
+                    .HasConstraintName("PIM_PRPACT_PIM_PRACMC_FK");
+            });
+
+            modelBuilder.Entity<PimsPropActMinContactHist>(entity =>
+            {
+                entity.HasKey(e => e.PropActMinContactHistId)
+                    .HasName("PIMS_PRACMC_H_PK");
+
+                entity.Property(e => e.PropActMinContactHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_ACT_MIN_CONTACT_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsPropInthldrInterestType>(entity =>
@@ -5161,10 +4716,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the code value is inactive.");
-
                 entity.HasOne(d => d.InterestHolderInterestTypeCodeNavigation)
                     .WithMany(p => p.PimsPropInthldrInterestTypes)
                     .HasForeignKey(d => d.InterestHolderInterestTypeCode)
@@ -5175,6 +4726,152 @@ namespace Pims.Dal
                     .WithMany(p => p.PimsPropInthldrInterestTypes)
                     .HasForeignKey(d => d.PimsInthldrPropInterestId)
                     .HasConstraintName("PIM_IHPRIN_PIM_PIHITY_FK");
+            });
+
+            modelBuilder.Entity<PimsPropMgmtActivityStatusType>(entity =>
+            {
+                entity.HasKey(e => e.PropMgmtActivityStatusTypeCode)
+                    .HasName("PACSTY_PK");
+
+                entity.HasComment("Code table to describe the status of the property management activity.");
+
+                entity.Property(e => e.PropMgmtActivityStatusTypeCode).HasComment("Code representing the status of the property management activity.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the status of the property management status.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
+            });
+
+            modelBuilder.Entity<PimsPropMgmtActivitySubtype>(entity =>
+            {
+                entity.HasKey(e => e.PropMgmtActivitySubtypeCode)
+                    .HasName("PRACST_PK");
+
+                entity.HasComment("Code table to describe the subtype of property management.");
+
+                entity.Property(e => e.PropMgmtActivitySubtypeCode).HasComment("Code representing the subtype of property management.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the subtype of property management.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
+
+                entity.Property(e => e.PropMgmtActivityTypeCode).HasComment("Code representing the type of property management.");
+
+                entity.HasOne(d => d.PropMgmtActivityTypeCodeNavigation)
+                    .WithMany(p => p.PimsPropMgmtActivitySubtypes)
+                    .HasForeignKey(d => d.PropMgmtActivityTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRACTY_PIM_PRACST_FK");
+            });
+
+            modelBuilder.Entity<PimsPropMgmtActivityType>(entity =>
+            {
+                entity.HasKey(e => e.PropMgmtActivityTypeCode)
+                    .HasName("PRACTY_PK");
+
+                entity.HasComment("Code table to describe the type of property management.");
+
+                entity.Property(e => e.PropMgmtActivityTypeCode).HasComment("Code representing the type of property management.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the type of property management.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
+            });
+
+            modelBuilder.Entity<PimsPropPropActivity>(entity =>
+            {
+                entity.HasKey(e => e.PropPropActivityId)
+                    .HasName("PRPRAC_PK");
+
+                entity.HasComment("Associates a property to a property management actity (many-to-many).");
+
+                entity.Property(e => e.PropPropActivityId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_ACTIVITY_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.HasOne(d => d.PimsPropertyActivity)
+                    .WithMany(p => p.PimsPropPropActivities)
+                    .HasForeignKey(d => d.PimsPropertyActivityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRPACT_PIM_PRPRAC_FK");
+
+                entity.HasOne(d => d.Property)
+                    .WithMany(p => p.PimsPropPropActivities)
+                    .HasForeignKey(d => d.PropertyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRPRTY_PIM_PRPRAC_FK");
+            });
+
+            modelBuilder.Entity<PimsPropPropActivityHist>(entity =>
+            {
+                entity.HasKey(e => e.PropPropActivityHistId)
+                    .HasName("PIMS_PRPRAC_H_PK");
+
+                entity.Property(e => e.PropPropActivityHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_ACTIVITY_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsPropPropAnomalyType>(entity =>
@@ -5217,8 +4914,64 @@ namespace Pims.Dal
                 entity.HasOne(d => d.Property)
                     .WithMany(p => p.PimsPropPropAnomalyTypes)
                     .HasForeignKey(d => d.PropertyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_PRPRTY_PIM_PRPRAT_FK");
+            });
+
+            modelBuilder.Entity<PimsPropPropPurpose>(entity =>
+            {
+                entity.HasKey(e => e.PropPropPurposeId)
+                    .HasName("PRPRPU_PK");
+
+                entity.HasComment("Defines the contacts that are associated with this property.");
+
+                entity.Property(e => e.PropPropPurposeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_PURPOSE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.PropertyId).HasComment("Primary key of the associated property.");
+
+                entity.Property(e => e.PropertyPurposeTypeCode).HasComment("Primary key of the associated property purpose.");
+
+                entity.HasOne(d => d.Property)
+                    .WithMany(p => p.PimsPropPropPurposes)
+                    .HasForeignKey(d => d.PropertyId)
+                    .HasConstraintName("PIM_PRPRTY_PIM_PRPRPU_FK");
+
+                entity.HasOne(d => d.PropertyPurposeTypeCodeNavigation)
+                    .WithMany(p => p.PimsPropPropPurposes)
+                    .HasForeignKey(d => d.PropertyPurposeTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRPPUR_PIM_PRPRPU_FK");
+            });
+
+            modelBuilder.Entity<PimsPropPropPurposeHist>(entity =>
+            {
+                entity.HasKey(e => e.PropPropPurposeHistId)
+                    .HasName("PIMS_PRPRPU_H_PK");
+
+                entity.Property(e => e.PropPropPurposeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_PURPOSE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsPropPropRoadType>(entity =>
@@ -5255,7 +5008,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.Property)
                     .WithMany(p => p.PimsPropPropRoadTypes)
                     .HasForeignKey(d => d.PropertyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_PRPRTY_PIM_PRPRRT_FK");
 
                 entity.HasOne(d => d.PropertyRoadTypeCodeNavigation)
@@ -5301,7 +5053,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.Property)
                     .WithMany(p => p.PimsPropPropTenureTypes)
                     .HasForeignKey(d => d.PropertyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_PRPRTY_PIM_PRPRTT_FK");
 
                 entity.HasOne(d => d.PropertyTenureTypeCodeNavigation)
@@ -5348,9 +5099,13 @@ namespace Pims.Dal
 
                 entity.Property(e => e.PropertyId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ID_SEQ])");
 
+                entity.Property(e => e.AdditionalDetails).HasComment("Additional details about the property.");
+
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.BandName).HasComment("Name of the Indian band.");
 
                 entity.Property(e => e.Boundary).HasComment("Spatial bundary of land");
 
@@ -5392,6 +5147,10 @@ namespace Pims.Dal
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is this a sensitive property?");
 
+                entity.Property(e => e.IsTaxesPayable).HasComment("Indicates if the property taxes are being paid.");
+
+                entity.Property(e => e.IsUtilitiesPayable).HasComment("Indicates if the utilities are being paid.");
+
                 entity.Property(e => e.IsVisibleToOtherAgencies)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is the property visible to other agencies?");
@@ -5422,7 +5181,11 @@ namespace Pims.Dal
 
                 entity.Property(e => e.PphStatusUpdateUserid).HasComment("Userid that updated the Provincial Public Highway status.");
 
+                entity.Property(e => e.PropertyClassificationTypeCode).HasDefaultValueSql("('UNKNOWN')");
+
                 entity.Property(e => e.PropertyDataSourceEffectiveDate).HasComment("Date the property was officially registered");
+
+                entity.Property(e => e.ReserveName).HasComment("Name of the Indian reserve.");
 
                 entity.Property(e => e.SurplusDeclarationComment).HasComment("Comment regarding the surplus declaration");
 
@@ -5547,10 +5310,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
 
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship is active.");
-
                 entity.Property(e => e.PropertyName).HasComment("Descriptive reference for the property associated with the acquisition file.");
 
                 entity.HasOne(d => d.AcquisitionFile)
@@ -5571,6 +5330,233 @@ namespace Pims.Dal
                     .HasName("PIMS_PRACQF_H_PK");
 
                 entity.Property(e => e.PropertyAcquisitionFileHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ACQUISITION_FILE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsPropertyActivity>(entity =>
+            {
+                entity.HasComment("Defines the activities that are associated with this property.");
+
+                entity.Property(e => e.PimsPropertyActivityId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ACTIVITY_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.CompletionDt).HasComment("Date the property management activity was completed.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the property management activity.");
+
+                entity.Property(e => e.GstAmt).HasComment("GST on the management activity.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
+
+                entity.Property(e => e.PretaxAmt).HasComment("Subtotal of the management activity cost.");
+
+                entity.Property(e => e.PropMgmtActivityStatusTypeCode)
+                    .HasDefaultValueSql("('NOTSTARTED')")
+                    .HasComment("Status of the property management activity.");
+
+                entity.Property(e => e.PropMgmtActivitySubtypeCode)
+                    .HasDefaultValueSql("('UNKNOWN')")
+                    .HasComment("Subtype of property management activity.");
+
+                entity.Property(e => e.PropMgmtActivityTypeCode)
+                    .HasDefaultValueSql("('UNKNOWN')")
+                    .HasComment("Type of property management activity.");
+
+                entity.Property(e => e.PstAmt).HasComment("PST on the management activity.");
+
+                entity.Property(e => e.RequestAddedDt).HasComment("Date the request for a property management activity was added");
+
+                entity.Property(e => e.RequestSource).HasComment("Source of the management activity request.");
+
+                entity.Property(e => e.ServiceProviderOrgId).HasComment("Foreign key of the organization as a service provider.");
+
+                entity.Property(e => e.ServiceProviderPersonId).HasComment("Foreign key of the person as a service provider.");
+
+                entity.Property(e => e.TotalAmt).HasComment("Total cost of the management activity.");
+
+                entity.HasOne(d => d.PropMgmtActivityStatusTypeCodeNavigation)
+                    .WithMany(p => p.PimsPropertyActivities)
+                    .HasForeignKey(d => d.PropMgmtActivityStatusTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PACSTY_PIM_PRPACT_FK");
+
+                entity.HasOne(d => d.PropMgmtActivitySubtypeCodeNavigation)
+                    .WithMany(p => p.PimsPropertyActivities)
+                    .HasForeignKey(d => d.PropMgmtActivitySubtypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRACST_PIM_PRPACT_FK");
+
+                entity.HasOne(d => d.PropMgmtActivityTypeCodeNavigation)
+                    .WithMany(p => p.PimsPropertyActivities)
+                    .HasForeignKey(d => d.PropMgmtActivityTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRACTY_PIM_PRPACT_FK");
+
+                entity.HasOne(d => d.ServiceProviderOrg)
+                    .WithMany(p => p.PimsPropertyActivities)
+                    .HasForeignKey(d => d.ServiceProviderOrgId)
+                    .HasConstraintName("PIM_ORG_PIM_PRPACT_FK");
+
+                entity.HasOne(d => d.ServiceProviderPerson)
+                    .WithMany(p => p.PimsPropertyActivities)
+                    .HasForeignKey(d => d.ServiceProviderPersonId)
+                    .HasConstraintName("PIM_PERSON_PIM_PRPACT_FK");
+            });
+
+            modelBuilder.Entity<PimsPropertyActivityDocument>(entity =>
+            {
+                entity.HasKey(e => e.PropertyActivityDocumentId)
+                    .HasName("PRACDO_PK");
+
+                entity.Property(e => e.PropertyActivityDocumentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ACTIVITY_DOCUMENT_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.HasOne(d => d.Document)
+                    .WithMany(p => p.PimsPropertyActivityDocuments)
+                    .HasForeignKey(d => d.DocumentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_DOCMNT_PIM_PRACDO_FK");
+
+                entity.HasOne(d => d.PimsPropertyActivity)
+                    .WithMany(p => p.PimsPropertyActivityDocuments)
+                    .HasForeignKey(d => d.PimsPropertyActivityId)
+                    .HasConstraintName("PIM_PRPACT_PIM_PRACDO_FK");
+            });
+
+            modelBuilder.Entity<PimsPropertyActivityDocumentHist>(entity =>
+            {
+                entity.HasKey(e => e.PropertyActivityDocumentHistId)
+                    .HasName("PIMS_PRACDO_H_PK");
+
+                entity.Property(e => e.PropertyActivityDocumentHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ACTIVITY_DOCUMENT_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsPropertyActivityHist>(entity =>
+            {
+                entity.HasKey(e => e.PropertyActivityHistId)
+                    .HasName("PIMS_PRPACT_H_PK");
+
+                entity.Property(e => e.PropertyActivityHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ACTIVITY_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsPropertyActivityInvoice>(entity =>
+            {
+                entity.HasKey(e => e.PropertyActivityInvoiceId)
+                    .HasName("PRACIN_PK");
+
+                entity.HasComment("Defines the activities that are associated with this property.");
+
+                entity.Property(e => e.PropertyActivityInvoiceId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ACTIVITY_INVOICE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description)
+                    .HasDefaultValueSql("('Unknown')")
+                    .HasComment("Description of the invoice.");
+
+                entity.Property(e => e.GstAmt).HasComment("GST on the invoice.");
+
+                entity.Property(e => e.InvoiceDt)
+                    .HasDefaultValueSql("(getutcdate())")
+                    .HasComment("Date of the invoice");
+
+                entity.Property(e => e.InvoiceNum).HasComment("Number assigned to the invoice.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the invoice is disabled.");
+
+                entity.Property(e => e.IsPstRequired)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the invoice requires PST.");
+
+                entity.Property(e => e.PretaxAmt).HasComment("Subtotal of the invoice,");
+
+                entity.Property(e => e.PstAmt).HasComment("PST on the invoice.");
+
+                entity.Property(e => e.TotalAmt).HasComment("Total cost of the invoice.");
+
+                entity.HasOne(d => d.PimsPropertyActivity)
+                    .WithMany(p => p.PimsPropertyActivityInvoices)
+                    .HasForeignKey(d => d.PimsPropertyActivityId)
+                    .HasConstraintName("PIM_PRPACT_PIM_PRACIN_FK");
+            });
+
+            modelBuilder.Entity<PimsPropertyActivityInvoiceHist>(entity =>
+            {
+                entity.HasKey(e => e.PropertyActivityInvoiceHistId)
+                    .HasName("PIMS_PRACIN_H_PK");
+
+                entity.Property(e => e.PropertyActivityInvoiceHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ACTIVITY_INVOICE_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
@@ -5628,16 +5614,26 @@ namespace Pims.Dal
                 entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
-            modelBuilder.Entity<PimsPropertyEvaluation>(entity =>
+            modelBuilder.Entity<PimsPropertyContact>(entity =>
             {
-                entity.HasKey(e => e.PropertyEvaluationId)
-                    .HasName("PRPEVL_PK");
+                entity.HasKey(e => e.PropertyContactId)
+                    .HasName("PRPCNT_PK");
 
-                entity.Property(e => e.PropertyEvaluationId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_EVALUATION_ID_SEQ])");
+                entity.HasComment("Defines the contacts that are associated with this property.");
+
+                entity.Property(e => e.PropertyContactId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_CONTACT_ID_SEQ])");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
                 entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
@@ -5649,19 +5645,45 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.OrganizationId).HasComment("Organization ID of the property contact.");
+
+                entity.Property(e => e.PersonId).HasComment("Person ID of the property contact.");
+
+                entity.Property(e => e.PrimaryContactId).HasComment("Primary contact for the organization");
+
+                entity.Property(e => e.PropertyId).HasComment("Primary key of the associated property.");
+
+                entity.Property(e => e.Purpose)
+                    .HasDefaultValueSql("('Unknown')")
+                    .HasComment("Purpose of property contact");
+
+                entity.HasOne(d => d.Organization)
+                    .WithMany(p => p.PimsPropertyContacts)
+                    .HasForeignKey(d => d.OrganizationId)
+                    .HasConstraintName("PIM_ORG_PIM_PRPCNT_FK");
+
+                entity.HasOne(d => d.Person)
+                    .WithMany(p => p.PimsPropertyContactPeople)
+                    .HasForeignKey(d => d.PersonId)
+                    .HasConstraintName("PIM_PERSON_PIM_PRPCNT_FK");
+
+                entity.HasOne(d => d.PrimaryContact)
+                    .WithMany(p => p.PimsPropertyContactPrimaryContacts)
+                    .HasForeignKey(d => d.PrimaryContactId)
+                    .HasConstraintName("PIM_PERSON_PIM_PRM_PRPCNT_FK");
+
                 entity.HasOne(d => d.Property)
-                    .WithMany(p => p.PimsPropertyEvaluations)
+                    .WithMany(p => p.PimsPropertyContacts)
                     .HasForeignKey(d => d.PropertyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PRPRTY_PIM_PRPEVL_FK");
+                    .HasConstraintName("PIM_PRPRTY_PIM_PRPCNT_FK");
             });
 
-            modelBuilder.Entity<PimsPropertyEvaluationHist>(entity =>
+            modelBuilder.Entity<PimsPropertyContactHist>(entity =>
             {
-                entity.HasKey(e => e.PropertyEvaluationHistId)
-                    .HasName("PIMS_PRPEVL_H_PK");
+                entity.HasKey(e => e.PropertyContactHistId)
+                    .HasName("PIMS_PRPCNT_H_PK");
 
-                entity.Property(e => e.PropertyEvaluationHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_EVALUATION_H_ID_SEQ])");
+                entity.Property(e => e.PropertyContactHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_CONTACT_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
@@ -5851,8 +5873,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
-
                 entity.HasOne(d => d.Organization)
                     .WithMany(p => p.PimsPropertyOrganizations)
                     .HasForeignKey(d => d.OrganizationId)
@@ -5862,7 +5882,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.Property)
                     .WithMany(p => p.PimsPropertyOrganizations)
                     .HasForeignKey(d => d.PropertyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_PRPRTY_PIM_PRPORG_FK");
             });
 
@@ -5876,16 +5895,14 @@ namespace Pims.Dal
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
-            modelBuilder.Entity<PimsPropertyPropertyServiceFile>(entity =>
+            modelBuilder.Entity<PimsPropertyPurposeType>(entity =>
             {
-                entity.HasKey(e => e.PropertyPropertyServiceFileId)
-                    .HasName("PRPRSF_PK");
+                entity.HasKey(e => e.PropertyPurposeTypeCode)
+                    .HasName("PRPPUR_PK");
 
-                entity.Property(e => e.PropertyPropertyServiceFileId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_PROPERTY_SERVICE_FILE_ID_SEQ])");
+                entity.HasComment("Code table to describe the property purpose type.");
 
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.PropertyPurposeTypeCode).HasComment("Code representing the purpose of the property.");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
@@ -5897,29 +5914,13 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.Description).HasComment("Description of the purpose of the property.");
 
-                entity.HasOne(d => d.Property)
-                    .WithMany(p => p.PimsPropertyPropertyServiceFiles)
-                    .HasForeignKey(d => d.PropertyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PRPRTY_PIM_PRPRSF_FK");
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
 
-                entity.HasOne(d => d.PropertyServiceFile)
-                    .WithMany(p => p.PimsPropertyPropertyServiceFiles)
-                    .HasForeignKey(d => d.PropertyServiceFileId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PRPSVC_PIM_PRPRSF_FK");
-            });
-
-            modelBuilder.Entity<PimsPropertyPropertyServiceFileHist>(entity =>
-            {
-                entity.HasKey(e => e.PropertyPropertyServiceFileHistId)
-                    .HasName("PIMS_PRPRSF_H_PK");
-
-                entity.Property(e => e.PropertyPropertyServiceFileHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_PROPERTY_SERVICE_FILE_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
             });
 
             modelBuilder.Entity<PimsPropertyResearchFile>(entity =>
@@ -5956,10 +5957,6 @@ namespace Pims.Dal
                 entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
 
                 entity.Property(e => e.DocumentReference).HasComment("URL / reference to a LAN Drive");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the code is disabled.");
 
                 entity.Property(e => e.IsLegalOpinionObtained).HasComment("Indicates whether a legal opinion was obtained (0 = No, 1 = Yes, null = Unknown)");
 
@@ -6020,62 +6017,6 @@ namespace Pims.Dal
                     .HasComment("Indicates if the code is disabled.");
             });
 
-            modelBuilder.Entity<PimsPropertyServiceFile>(entity =>
-            {
-                entity.HasKey(e => e.PropertyServiceFileId)
-                    .HasName("PRPSVC_PK");
-
-                entity.Property(e => e.PropertyServiceFileId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_SERVICE_FILE_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.HasOne(d => d.PropertyServiceFileTypeCodeNavigation)
-                    .WithMany(p => p.PimsPropertyServiceFiles)
-                    .HasForeignKey(d => d.PropertyServiceFileTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PRSVFT_PIM_PRPSVC_FK");
-            });
-
-            modelBuilder.Entity<PimsPropertyServiceFileHist>(entity =>
-            {
-                entity.HasKey(e => e.PropertyServiceFileHistId)
-                    .HasName("PIMS_PRPSVC_H_PK");
-
-                entity.Property(e => e.PropertyServiceFileHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_SERVICE_FILE_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-            });
-
-            modelBuilder.Entity<PimsPropertyServiceFileType>(entity =>
-            {
-                entity.HasKey(e => e.PropertyServiceFileTypeCode)
-                    .HasName("PRSVFT_PK");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
-            });
-
             modelBuilder.Entity<PimsPropertyStatusType>(entity =>
             {
                 entity.HasKey(e => e.PropertyStatusTypeCode)
@@ -6102,86 +6043,6 @@ namespace Pims.Dal
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the code is disabled.");
-            });
-
-            modelBuilder.Entity<PimsPropertyTax>(entity =>
-            {
-                entity.HasKey(e => e.PropertyTaxId)
-                    .HasName("PRPTAX_PK");
-
-                entity.Property(e => e.PropertyTaxId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_TAX_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.TaxFolioNo).HasComment("Property tax folio number");
-
-                entity.HasOne(d => d.Property)
-                    .WithMany(p => p.PimsPropertyTaxes)
-                    .HasForeignKey(d => d.PropertyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PRPRTY_PIM_PRPTAX_FK");
-
-                entity.HasOne(d => d.PropertyTaxRemitTypeCodeNavigation)
-                    .WithMany(p => p.PimsPropertyTaxes)
-                    .HasForeignKey(d => d.PropertyTaxRemitTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PTRMTT_PIM_PRPTAX_FK");
-            });
-
-            modelBuilder.Entity<PimsPropertyTaxHist>(entity =>
-            {
-                entity.HasKey(e => e.PropertyTaxHistId)
-                    .HasName("PIMS_PRPTAX_H_PK");
-
-                entity.Property(e => e.PropertyTaxHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_TAX_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-            });
-
-            modelBuilder.Entity<PimsPropertyTaxRemitType>(entity =>
-            {
-                entity.HasKey(e => e.PropertyTaxRemitTypeCode)
-                    .HasName("PTRMTT_PK");
-
-                entity.HasComment("Description of property tax remittance types");
-
-                entity.Property(e => e.PropertyTaxRemitTypeCode).HasComment("Code value of property tax remittance types");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description).HasComment("Code description of property tax remittance types");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Is this code value disabled?");
             });
 
             modelBuilder.Entity<PimsPropertyTenureType>(entity =>
@@ -6307,8 +6168,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
-
                 entity.Property(e => e.RegionCode).HasDefaultValueSql("((4))");
 
                 entity.HasOne(d => d.RegionCodeNavigation)
@@ -6360,63 +6219,6 @@ namespace Pims.Dal
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the code is disabled.");
-            });
-
-            modelBuilder.Entity<PimsResearchActivityInstance>(entity =>
-            {
-                entity.HasKey(e => e.ResearchActivityInstanceId)
-                    .HasName("RSCHAI_PK");
-
-                entity.HasComment("Relates a research file to an activity instance.");
-
-                entity.Property(e => e.ResearchActivityInstanceId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_ACTIVITY_INSTANCE_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship has been disabled.");
-
-                entity.HasOne(d => d.ActivityInstance)
-                    .WithMany(p => p.PimsResearchActivityInstances)
-                    .HasForeignKey(d => d.ActivityInstanceId)
-                    .HasConstraintName("PIM_ACTINS_PIM_RSCHAI_FK");
-
-                entity.HasOne(d => d.ResearchFile)
-                    .WithMany(p => p.PimsResearchActivityInstances)
-                    .HasForeignKey(d => d.ResearchFileId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_RESRCH_PIM_RSCHAI_FK");
-            });
-
-            modelBuilder.Entity<PimsResearchActivityInstanceHist>(entity =>
-            {
-                entity.HasKey(e => e.ResearchActivityInstanceHistId)
-                    .HasName("PIMS_RSCHAI_H_PK");
-
-                entity.Property(e => e.ResearchActivityInstanceHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_ACTIVITY_INSTANCE_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsResearchFile>(entity =>
@@ -6531,10 +6333,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship has been disabled.");
-
                 entity.HasOne(d => d.Document)
                     .WithMany(p => p.PimsResearchFileDocuments)
                     .HasForeignKey(d => d.DocumentId)
@@ -6599,10 +6397,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship has been disabled.");
-
                 entity.HasOne(d => d.Note)
                     .WithMany(p => p.PimsResearchFileNotes)
                     .HasForeignKey(d => d.NoteId)
@@ -6656,10 +6450,6 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if the relationship has been disabled.");
 
                 entity.HasOne(d => d.Project)
                     .WithMany(p => p.PimsResearchFileProjects)
@@ -7306,23 +7096,27 @@ namespace Pims.Dal
 
                 entity.Property(e => e.Description).HasComment("Description of the property take.");
 
-                entity.Property(e => e.IsLandAct)
+                entity.Property(e => e.IsAcquiredForInventory)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Is there a Section 16? (default = FALSE)");
+                    .HasComment("Is this being acquired for inventory? (default = TRUE)");
 
-                entity.Property(e => e.IsLicenseToConstruct)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Is there a license to construct? (default = FALSE)");
-
-                entity.Property(e => e.IsNewRightOfWay)
+                entity.Property(e => e.IsNewHighwayDedication)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is there a new right of way? (default = FALSE)");
 
-                entity.Property(e => e.IsStatutoryRightOfWay)
+                entity.Property(e => e.IsNewInterestInSrw)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is there a statutory right of way? (default = FALSE)");
 
-                entity.Property(e => e.IsSurplus)
+                entity.Property(e => e.IsNewLandAct)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Is there a Section 16? (default = FALSE)");
+
+                entity.Property(e => e.IsNewLicenseToConstruct)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Is there a license to construct? (default = FALSE)");
+
+                entity.Property(e => e.IsThereSurplus)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is there a surplus or severance? (default = FALSE)");
 
@@ -7334,7 +7128,9 @@ namespace Pims.Dal
 
                 entity.Property(e => e.LtcEndDt).HasComment("End date of the license to construct.");
 
-                entity.Property(e => e.NewRightOfWayArea).HasComment("Area of the new right-of-way.");
+                entity.Property(e => e.NewHighwayDedicationArea).HasComment("Area of the new right-of-way.");
+
+                entity.Property(e => e.SrwEndDt).HasComment("End date of the statutory right-of-way.");
 
                 entity.Property(e => e.StatutoryRightOfWayArea).HasComment("Area of the statutory right-of-way.");
 
@@ -7621,10 +7417,6 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates if this association is disabled.");
 
                 entity.HasOne(d => d.Organization)
                     .WithMany(p => p.PimsUserOrganizations)
@@ -7923,10 +7715,6 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_ACQUISITION_ACTIVITY_INSTANCE_H_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
             modelBuilder.HasSequence("PIMS_ACQUISITION_ACTIVITY_INSTANCE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -7973,11 +7761,15 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_ACQUISITION_FILE_PERSON_H_ID_SEQ")
+            modelBuilder.HasSequence("PIMS_ACQUISITION_FILE_PERSON_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_ACQUISITION_FILE_PERSON_ID_SEQ")
+            modelBuilder.HasSequence("PIMS_ACQUISITION_FILE_TEAM_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_ACQUISITION_FILE_TEAM_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -7993,15 +7785,7 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_ACT_INST_PROP_ACQ_FILE_H_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
             modelBuilder.HasSequence("PIMS_ACT_INST_PROP_ACQ_FILE_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("PIMS_ACT_INST_PROP_RSRCH_FILE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8009,23 +7793,11 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_ACTIVITY_INSTANCE_DOCUMENT_H_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
             modelBuilder.HasSequence("PIMS_ACTIVITY_INSTANCE_DOCUMENT_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_ACTIVITY_INSTANCE_H_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
             modelBuilder.HasSequence("PIMS_ACTIVITY_INSTANCE_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("PIMS_ACTIVITY_INSTANCE_NOTE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8049,15 +7821,7 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_ACTIVITY_TEMPLATE_DOCUMENT_H_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
             modelBuilder.HasSequence("PIMS_ACTIVITY_TEMPLATE_DOCUMENT_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("PIMS_ACTIVITY_TEMPLATE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8261,10 +8025,6 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_LEASE_ACTIVITY_INSTANCE_H_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
             modelBuilder.HasSequence("PIMS_LEASE_ACTIVITY_INSTANCE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -8457,6 +8217,14 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_PROJECT_PRODUCT_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROJECT_PRODUCT_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_PROJECT_PROPERTY_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -8465,7 +8233,31 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_PROP_ACT_INVOLVED_PARTY_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROP_ACT_INVOLVED_PARTY_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROP_ACT_MIN_CONTACT_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROP_ACT_MIN_CONTACT_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_PROP_INTHLDR_INTEREST_TYPE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROP_PROP_ACTIVITY_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROP_PROP_ACTIVITY_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8474,6 +8266,22 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_PROP_PROP_ANOMALY_TYPE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROP_PROP_CLASSIFICATION_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROP_PROP_CLASSIFICATION_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROP_PROP_PURPOSE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROP_PROP_PURPOSE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8493,11 +8301,35 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_PROPERTY_ACTIVITY_DOCUMENT_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROPERTY_ACTIVITY_DOCUMENT_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROPERTY_ACTIVITY_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_PROPERTY_ACTIVITY_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_PROPERTY_EVALUATION_H_ID_SEQ")
+            modelBuilder.HasSequence("PIMS_PROPERTY_ACTIVITY_INVOICE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROPERTY_ACTIVITY_INVOICE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROPERTY_CONTACT_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROPERTY_CONTACT_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8537,10 +8369,6 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_PROPERTY_PROPERTY_SERVICE_FILE_H_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
             modelBuilder.HasSequence("PIMS_PROPERTY_PROPERTY_SERVICE_FILE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -8553,19 +8381,11 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_PROPERTY_SERVICE_FILE_H_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
             modelBuilder.HasSequence("PIMS_PROPERTY_SERVICE_FILE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_PROPERTY_STRUCTURE_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("PIMS_PROPERTY_TAX_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8578,10 +8398,6 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_REGION_USER_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("PIMS_RESEARCH_ACTIVITY_INSTANCE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8638,6 +8454,7 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_RESPONSIBILITY_CODE_SEQ")
+                .StartsAt(991)
                 .HasMin(1)
                 .HasMax(2147483647);
 

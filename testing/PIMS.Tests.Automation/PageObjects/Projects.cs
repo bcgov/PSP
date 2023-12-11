@@ -89,7 +89,6 @@ namespace PIMS.Tests.Automation.PageObjects
             sharedModals = new SharedModals(webDriver);
         }
 
-        //Navigates to Create a new Project
         public void NavigateToCreateNewProject()
         {
             Wait(3000);
@@ -135,8 +134,11 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseSpecificSelectOption(projectBusinessFunctionSelect, project.BusinessFunction);
             }
         }
+
         public void CreateProduct(Product product, int index)
         {
+            Wait(2000);
+
             By productCodeDynamicInput = By.Id("input-products."+ index +".code");
             By productNameDynamicInput = By.Id("input-products."+ index +".description");
             By productStartDateDynamicInput = By.Id("datepicker-products."+ index +".startDate");
@@ -146,9 +148,8 @@ namespace PIMS.Tests.Automation.PageObjects
             By productScopeDynamicInput = By.Id("input-products."+ index +".scope");
 
             WaitUntilClickable(projectAddProductButton);
-            webDriver.FindElement(projectAddProductButton).Click();
+            FocusAndClick(projectAddProductButton);
 
-            WaitUntilVisible(productCodeDynamicInput);
             webDriver.FindElement(productCodeDynamicInput).SendKeys(product.ProductCode);
             webDriver.FindElement(productNameDynamicInput).SendKeys(product.ProductName);
             if (product.StartDate != "")
@@ -162,6 +163,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (product.EstimateDate != "")
             {
+                WaitUntilClickable(productEstimateDateDynamicInput);
                 webDriver.FindElement(productEstimateDateDynamicInput).SendKeys(product.EstimateDate);
                 webDriver.FindElement(productEstimateDateDynamicInput).SendKeys(Keys.Enter);
             }
@@ -174,6 +176,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(productScopeDynamicInput).SendKeys(product.Scope);
             }
         }
+
         public void UpdateProject(Project project)
         {
             WaitUntilClickable(projectEditButton);
@@ -212,6 +215,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseSpecificSelectOption(projectBusinessFunctionSelect, project.BusinessFunction);
             }
         }
+
         public void UpdateProduct(Product product, int index)
         {
             By productCodeDynamicInput = By.Id("input-products."+ index +".code");
@@ -264,6 +268,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(productScopeDynamicInput).SendKeys(product.Scope);
             }
         }
+
         public void DeleteProduct(int productIndex)
         {
             By deleteButtonElement = By.XPath("//div[@class='collapse show']/div["+ productIndex +"]/div/div/button[@title='Delete Project']");
@@ -274,19 +279,22 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 Assert.True(sharedModals.ModalHeader().Equals("Remove Product"));
                 Assert.True(sharedModals.ModalContent().Equals("Deleting this product will remove it from all \"Product\" dropdowns. Are you certain you wish to proceed?"));
-                ButtonElement("Remove");
+                sharedModals.ModalClickOKBttn();
             }
         }
+
         public void SaveProject()
         {
             WaitUntilClickable(projectSaveButton);
             FocusAndClick(projectSaveButton);
         }
+
         public void CancelProject()
         {
             WaitUntilClickable(projectCancelButton);
             FocusAndClick(projectCancelButton);
         }
+
         public void VerifyCreateProjectForm()
         {
             WaitUntilVisible(projectNameLabel);
@@ -317,6 +325,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(projectCancelButton).Displayed);
             Assert.True(webDriver.FindElement(projectSaveButton).Displayed);
         }
+
         public void VerifyCreateProductForm()
         {
             WaitUntilClickable(projectAddProductButton);
@@ -339,6 +348,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             DeleteProduct(1);
         }
+
         public void VerifyProjectViewForm(Project project)
         {
             DateTime thisDay = DateTime.Today;
@@ -378,6 +388,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(projectBusinessFunctionLabel).Displayed);
             Assert.True(webDriver.FindElement(projectCodesBusinessFunctionContent).Displayed);
         }
+
         public void VerifyProductViewForm(Product product, int index, string validationType)
         {
             DateTime thisDay = DateTime.Today;
@@ -470,8 +481,10 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
             }
         }
+
         public Boolean duplicateProject()
         {
+            Wait();
             return webDriver.FindElements(duplicateProjectToast).Count > 0;
         }
     }

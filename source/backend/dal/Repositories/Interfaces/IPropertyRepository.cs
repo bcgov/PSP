@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using NetTopologySuite.Geometries;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 
@@ -11,6 +10,7 @@ namespace Pims.Dal.Repositories
     public interface IPropertyRepository : IRepository<PimsProperty>
     {
         int Count();
+
         Paged<PimsProperty> GetPage(PropertyFilter filter);
 
         PimsProperty GetById(long id);
@@ -23,15 +23,15 @@ namespace Pims.Dal.Repositories
 
         PimsProperty GetByPin(int pin);
 
-        PimsProperty TryGetByLocation(Geometry location);
-
         PimsProperty GetAllAssociationsById(long id);
 
         PimsProperty Update(PimsProperty property, bool overrideLocation = false);
 
+        PimsProperty UpdatePropertyManagement(PimsProperty property);
+
         void Delete(PimsProperty property);
 
-        PimsProperty TransferToCoreInventory(PimsProperty property);
+        PimsProperty TransferFileProperty(PimsProperty property, bool isOwned, bool isPropertyOfInterest);
 
         HashSet<long> GetMatchingIds(PropertyFilterCriteria filter);
     }

@@ -32,16 +32,16 @@ namespace Pims.Dal.Entities
     {
         public PimsProperty()
         {
+            PimsPropPropActivities = new HashSet<PimsPropPropActivity>();
             PimsPropPropAnomalyTypes = new HashSet<PimsPropPropAnomalyType>();
+            PimsPropPropPurposes = new HashSet<PimsPropPropPurpose>();
             PimsPropPropRoadTypes = new HashSet<PimsPropPropRoadType>();
             PimsPropPropTenureTypes = new HashSet<PimsPropPropTenureType>();
             PimsPropertyAcquisitionFiles = new HashSet<PimsPropertyAcquisitionFile>();
-            PimsPropertyEvaluations = new HashSet<PimsPropertyEvaluation>();
+            PimsPropertyContacts = new HashSet<PimsPropertyContact>();
             PimsPropertyLeases = new HashSet<PimsPropertyLease>();
             PimsPropertyOrganizations = new HashSet<PimsPropertyOrganization>();
-            PimsPropertyPropertyServiceFiles = new HashSet<PimsPropertyPropertyServiceFile>();
             PimsPropertyResearchFiles = new HashSet<PimsPropertyResearchFile>();
-            PimsPropertyTaxes = new HashSet<PimsPropertyTax>();
         }
 
         [Key]
@@ -55,10 +55,6 @@ namespace Pims.Dal.Entities
         [Column("PROPERTY_TYPE_CODE")]
         [StringLength(20)]
         public string PropertyTypeCode { get; set; }
-        [Required]
-        [Column("PROPERTY_CLASSIFICATION_TYPE_CODE")]
-        [StringLength(20)]
-        public string PropertyClassificationTypeCode { get; set; }
         [Column("ADDRESS_ID")]
         public long? AddressId { get; set; }
         [Column("REGION_CODE")]
@@ -89,6 +85,10 @@ namespace Pims.Dal.Entities
         [Column("PPH_STATUS_TYPE_CODE")]
         [StringLength(20)]
         public string PphStatusTypeCode { get; set; }
+        [Required]
+        [Column("PROPERTY_CLASSIFICATION_TYPE_CODE")]
+        [StringLength(20)]
+        public string PropertyClassificationTypeCode { get; set; }
         [Column("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE", TypeName = "date")]
         public DateTime PropertyDataSourceEffectiveDate { get; set; }
         [Column("NAME")]
@@ -166,6 +166,19 @@ namespace Pims.Dal.Entities
         [Column("ZONING_POTENTIAL")]
         [StringLength(50)]
         public string ZoningPotential { get; set; }
+        [Column("ADDITIONAL_DETAILS")]
+        [StringLength(4000)]
+        public string AdditionalDetails { get; set; }
+        [Column("IS_UTILITIES_PAYABLE")]
+        public bool? IsUtilitiesPayable { get; set; }
+        [Column("IS_TAXES_PAYABLE")]
+        public bool? IsTaxesPayable { get; set; }
+        [Column("BAND_NAME")]
+        [StringLength(80)]
+        public string BandName { get; set; }
+        [Column("RESERVE_NAME")]
+        [StringLength(100)]
+        public string ReserveName { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -247,25 +260,25 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(VolumetricTypeCode))]
         [InverseProperty(nameof(PimsVolumetricType.PimsProperties))]
         public virtual PimsVolumetricType VolumetricTypeCodeNavigation { get; set; }
+        [InverseProperty(nameof(PimsPropPropActivity.Property))]
+        public virtual ICollection<PimsPropPropActivity> PimsPropPropActivities { get; set; }
         [InverseProperty(nameof(PimsPropPropAnomalyType.Property))]
         public virtual ICollection<PimsPropPropAnomalyType> PimsPropPropAnomalyTypes { get; set; }
+        [InverseProperty(nameof(PimsPropPropPurpose.Property))]
+        public virtual ICollection<PimsPropPropPurpose> PimsPropPropPurposes { get; set; }
         [InverseProperty(nameof(PimsPropPropRoadType.Property))]
         public virtual ICollection<PimsPropPropRoadType> PimsPropPropRoadTypes { get; set; }
         [InverseProperty(nameof(PimsPropPropTenureType.Property))]
         public virtual ICollection<PimsPropPropTenureType> PimsPropPropTenureTypes { get; set; }
         [InverseProperty(nameof(PimsPropertyAcquisitionFile.Property))]
         public virtual ICollection<PimsPropertyAcquisitionFile> PimsPropertyAcquisitionFiles { get; set; }
-        [InverseProperty(nameof(PimsPropertyEvaluation.Property))]
-        public virtual ICollection<PimsPropertyEvaluation> PimsPropertyEvaluations { get; set; }
+        [InverseProperty(nameof(PimsPropertyContact.Property))]
+        public virtual ICollection<PimsPropertyContact> PimsPropertyContacts { get; set; }
         [InverseProperty(nameof(PimsPropertyLease.Property))]
         public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; }
         [InverseProperty(nameof(PimsPropertyOrganization.Property))]
         public virtual ICollection<PimsPropertyOrganization> PimsPropertyOrganizations { get; set; }
-        [InverseProperty(nameof(PimsPropertyPropertyServiceFile.Property))]
-        public virtual ICollection<PimsPropertyPropertyServiceFile> PimsPropertyPropertyServiceFiles { get; set; }
         [InverseProperty(nameof(PimsPropertyResearchFile.Property))]
         public virtual ICollection<PimsPropertyResearchFile> PimsPropertyResearchFiles { get; set; }
-        [InverseProperty(nameof(PimsPropertyTax.Property))]
-        public virtual ICollection<PimsPropertyTax> PimsPropertyTaxes { get; set; }
     }
 }

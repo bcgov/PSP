@@ -3,6 +3,8 @@ import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { FaBomb } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { BCGovLogo } from '@/components/common/BCGovLogo';
 import { VerticalBar } from '@/components/common/VerticalBar';
@@ -43,19 +45,31 @@ export const Header = () => {
   return (
     <HeaderStyled expand className="App-header">
       <Navbar.Brand className="brand-box">
-        <a target="_blank" rel="noopener noreferrer" href="https://www2.gov.bc.ca/gov/content/home">
-          <BCGovLogo />
-        </a>
-        <VerticalBar />
-        <Logo height={50} />
+        <StyledContainer>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www2.gov.bc.ca/gov/content/home"
+          >
+            <BCGovLogo />
+          </a>
+          <div>
+            <VerticalBar />
+          </div>
+          <Link to="/mapview">
+            <Logo height={50} />
+          </Link>
+          <div className="title">
+            <label className="longAppName">{tenant.title}</label>
+            <label className="shortAppName">{tenant.shortName}</label>
+          </div>
+        </StyledContainer>
       </Navbar.Brand>
-      <Nav className="title mr-auto">
-        <Nav.Item>
-          <h1 className="longAppName">{tenant.title}</h1>
-          <h1 className="shortAppName">{tenant.shortName}</h1>
-        </Nav.Item>
-      </Nav>
+
       <HelpContainer />
+      <div>
+        <VerticalBar />
+      </div>
       {keycloak.obj.authenticated && <UserProfile />}
       <Nav className="other">
         {errors && errors.length ? (
@@ -74,5 +88,12 @@ export const Header = () => {
  */
 const isNetworkError = (action: any): action is IGenericNetworkAction =>
   (action as IGenericNetworkAction).type === 'ERROR';
+
+const StyledContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-left: 36px;
+`;
 
 export default Header;

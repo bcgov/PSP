@@ -43,6 +43,7 @@ namespace Pims.Api.Areas.Admin.Controllers
 
         /// <summary>
         /// GET - Returns a paged array of roles from the datasource.
+        /// Used by Keycloak Sync.
         /// </summary>
         /// <param name="page"></param>
         /// <param name="quantity"></param>

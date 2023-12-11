@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using DocumentFormat.OpenXml.Drawing.Diagrams;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
@@ -31,10 +32,34 @@ namespace Pims.Dal.Repositories
         public IList<PimsProduct> GetByProject(long projectId)
         {
             return this.Context.PimsProducts.AsNoTracking()
-                .Where(p => p.ParentProjectId == projectId)
+                .Where(p => p.PimsProjectProducts.All(x => x.ProjectId == projectId))
                 .Include(p => p.PimsAcquisitionFiles)
                 .OrderBy(p => p.Code)
                 .ToArray();
+        }
+
+        /// <summary>
+        /// Retrieves the products for the project with the given id.
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
+        public IList<PimsProjectProduct> GetProjectProductsByProject(long projectId)
+        {
+            return this.Context.PimsProjectProducts.AsNoTracking()
+                .Where(p => p.ProjectId == projectId)
+                .Include(p => p.Product)
+                .ToList();
+        }
+
+        /// <summary>
+        /// Using a list of products, find a matching list of products with the same code and description.
+        /// </summary>
+        /// <param name="incomingProducts"></param>
+        /// <returns></returns>
+        public IEnumerable<PimsProduct> GetProducts(IEnumerable<PimsProduct> incomingProducts)
+        {
+            var incomingCodes = incomingProducts.Select(ip => ip.Code);
+            return this.Context.PimsProducts.AsNoTracking().Where(p => incomingCodes.Contains(p.Code)).ToArray();
         }
 
         /// <summary>
@@ -45,8 +70,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public IEnumerable<PimsProduct> GetByProductBatch(IEnumerable<PimsProduct> incomingProducts, long projectId)
         {
-            var incomingCodes = incomingProducts.Select(ip => ip.Code);
-            var matchingProductCodes = this.Context.PimsProducts.AsNoTracking().Where(databaseProduct => incomingCodes.Contains(databaseProduct.Code)).ToArray();
+            var matchingProductCodes = this.GetProducts(incomingProducts);
             var ignoreProductCodeIds = GetByProject(projectId).Where(p => !incomingProducts.Any(ip => p.Id == ip.Id)).Select(p => p.Id); // These codes are being removed, so should not be treated as duplicates.
             return matchingProductCodes.Where(mc => incomingProducts.Any(ip => ip.Id != mc.Id && ip.Description == mc.Description && ip.Code == mc.Code) && !ignoreProductCodeIds.Contains(mc.Id));
         }

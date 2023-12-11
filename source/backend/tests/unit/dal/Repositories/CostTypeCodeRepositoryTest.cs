@@ -25,8 +25,8 @@ namespace Pims.Dal.Test.Repositories
         private CostTypeCodeRepository CreateWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
-            _helper.CreatePimsContext(user, true);
-            return _helper.CreateRepository<CostTypeCodeRepository>(user);
+            this._helper.CreatePimsContext(user, true);
+            return this._helper.CreateRepository<CostTypeCodeRepository>(user);
         }
 
         [Fact]
@@ -37,10 +37,10 @@ namespace Pims.Dal.Test.Repositories
             {
                 Code = "FOO",
                 Description = "Bar",
-                EffectiveDate = new DateTime(1995, 07, 20)
+                EffectiveDate = new DateTime(1995, 07, 20),
             };
 
-            var repository = CreateWithPermissions(Permissions.SystemAdmin);
+            var repository = this.CreateWithPermissions(Permissions.SystemAdmin);
 
             // Act
             var result = repository.Add(codeToAdd);
@@ -56,7 +56,7 @@ namespace Pims.Dal.Test.Repositories
         public void Add_ThrowIfNull()
         {
             // Arrange
-            var repository = CreateWithPermissions(Permissions.SystemAdmin);
+            var repository = this.CreateWithPermissions(Permissions.SystemAdmin);
 
             // Act
             Action act = () => repository.Add(null);

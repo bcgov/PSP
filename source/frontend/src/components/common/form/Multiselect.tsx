@@ -139,6 +139,7 @@ const defaultStyle = {
     color: 'black',
     fontSize: '16px',
     marginRight: '1em',
+    whiteSpace: 'normal',
   },
   multiselectContainer: {
     width: 'auto',

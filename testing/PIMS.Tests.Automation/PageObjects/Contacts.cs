@@ -17,7 +17,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactIndFirstNameInput = By.Id("input-firstName");
         private By contactIndMiddleNameInput = By.Id("input-middleNames");
         private By contactIndLastNameInput = By.Id("input-surname");
-        private By contactIndPrefNameInput = By.Id("input-preferredName");
+        private By contactIndPrefNameInput = By.CssSelector("input[id='input-preferredName']");
         private By contactIndOrgInput = By.Id("typeahead-organization");
         private By contactIndOrgListOptions = By.CssSelector("div[id='typeahead-organization']");
         private By contactOrgNameSelect = By.Id("typeahead-organization-item-0");
@@ -87,7 +87,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactOrgStatusSpan = By.CssSelector("span[data-testid='contact-organization-status']");
         private By contactOrgIncorpNbrLabel = By.XPath("//strong[contains(text(),'Incorporation Number')]");
         private By contactOrgIncorpNbrContent = By.CssSelector("span[data-testid='contact-organization-incorporationNumber']");
-
 
         private By contactInfoSubtitle = By.XPath("//h2[contains(text(),'Contact info')]");
         private By contactEmailLabel = By.XPath("//strong[contains(text(),'Email')]");
@@ -167,6 +166,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactDuplicateModal = By.CssSelector("div[class='modal-dialog']");
 
         private By contactsSearchTable = By.CssSelector("div[data-testid='contactsTable']");
+        private By contactModalContinueSaveBttn = By.XPath("//button/div[contains(text(),'Continue Save')]");
+        private By contactConfirmCancelBttn = By.XPath("//button/div[contains(text(),'Confirm')]");
 
         private SharedModals sharedModals;
 
@@ -183,6 +184,13 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(menuContactsButton);
             FocusAndClick(menuContactsButton);
 
+            WaitUntilClickable(createContactButton);
+            FocusAndClick(createContactButton);
+        }
+
+        //Create new Contact Button
+        public void CreateNewContactBttn()
+        {
             WaitUntilClickable(createContactButton);
             FocusAndClick(createContactButton);
         }
@@ -208,114 +216,114 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(contactOrgNameSelect).Click();
             }
             //Inserting contact info
-            if (contact.Email1 != "" && contact.EmailType1 != "")
+            if (contact.IndEmail1 != "" && contact.IndEmailType1 != "")
             {
-                webDriver.FindElement(contactEmailInput1).SendKeys(contact.Email1);
-                ChooseSpecificSelectOption(contactEmailSelect1, contact.EmailType1);
+                webDriver.FindElement(contactEmailInput1).SendKeys(contact.IndEmail1);
+                ChooseSpecificSelectOption(contactEmailSelect1, contact.IndEmailType1);
             }
-            if (contact.Email2 != "")
+            if (contact.IndEmail2 != "")
             {
                 webDriver.FindElement(contactEmailAddBttn).Click();
-                webDriver.FindElement(contactEmailInput2).SendKeys(contact.Email2);
-                ChooseSpecificSelectOption(contactEmailSelect2, contact.EmailType2);
+                webDriver.FindElement(contactEmailInput2).SendKeys(contact.IndEmail2);
+                ChooseSpecificSelectOption(contactEmailSelect2, contact.IndEmailType2);
             }
-            if (contact.Phone1 != "")
+            if (contact.IndPhone1 != "")
             {
-                webDriver.FindElement(contactPhoneInput1).SendKeys(contact.Phone1);
-                ChooseSpecificSelectOption(contactPhoneSelect1, contact.PhoneType1);
+                webDriver.FindElement(contactPhoneInput1).SendKeys(contact.IndPhone1);
+                ChooseSpecificSelectOption(contactPhoneSelect1, contact.IndPhoneType1);
             }
-            if (contact.Phone2 != "")
+            if (contact.IndPhone2 != "")
             {
                 webDriver.FindElement(contactPhoneAddBttn).Click();
-                webDriver.FindElement(contactPhoneInput2).SendKeys(contact.Phone2);
-                ChooseSpecificSelectOption(contactPhoneSelect2, contact.PhoneType2);
+                webDriver.FindElement(contactPhoneInput2).SendKeys(contact.IndPhone2);
+                ChooseSpecificSelectOption(contactPhoneSelect2, contact.IndPhoneType2);
             }
 
             //Inserting contact mail address
-            if (contact.MailAddressLine1 != "")
+            if (contact.IndMailAddressLine1 != "")
             {
-                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.MailAddressLine1);
-                if (contact.MailAddressLine2 != "")
+                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.IndMailAddressLine1);
+                if (contact.IndMailAddressLine2 != "")
                 {
                     webDriver.FindElement(contactMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.MailAddressLine2);
+                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.IndMailAddressLine2);
                 }
-                if (contact.MailAddressLine3 != "")
+                if (contact.IndMailAddressLine3 != "")
                 {
                     webDriver.FindElement(contactMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.MailAddressLine3);
+                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.IndMailAddressLine3);
                 }
 
-                ChooseSpecificSelectOption(contactMailCountrySelect, contact.MailCountry);
-                if (contact.MailCountry == "Other")
+                ChooseSpecificSelectOption(contactMailCountrySelect, contact.IndMailCountry);
+                if (contact.IndMailCountry == "Other")
                 {
-                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.MailOtherCountry);
+                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.IndMailOtherCountry);
                 }
                 else
                 {
-                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.MailProvince);
+                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.IndMailProvince);
                 }
-                webDriver.FindElement(contactMailCityInput).SendKeys(contact.MailCity);
-                webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.MailPostalCode);
+                webDriver.FindElement(contactMailCityInput).SendKeys(contact.IndMailCity);
+                webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.IndMailPostalCode);
             }
 
             //Inserting contact property address
-            if (contact.PropertyAddressLine1 != "")
+            if (contact.IndPropertyAddressLine1 != "")
             {
-                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.PropertyAddressLine1);
-                if (contact.PropertyAddressLine2 != "")
+                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.IndPropertyAddressLine1);
+                if (contact.IndPropertyAddressLine2 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.PropertyAddressLine2);
+                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.IndPropertyAddressLine2);
                 }
-                if (contact.PropertyAddressLine3 != "")
+                if (contact.IndPropertyAddressLine3 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.PropertyAddressLine3);
+                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.IndPropertyAddressLine3);
                 }
 
-                ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.PropertyCountry);
-                if (contact.PropertyCountry == "Other")
+                ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.IndPropertyCountry);
+                if (contact.IndPropertyCountry == "Other")
                 {
-                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.PropertyOtherCountry);
+                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.IndPropertyOtherCountry);
                 }
                 else
                 {
-                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.PropertyProvince);
+                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.IndPropertyProvince);
                 }
-                webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.PropertyCity);
-                webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.PropertyPostalCode);
+                webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.IndPropertyCity);
+                webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.IndPropertyPostalCode);
             }
 
             //Inserting contact billing address
-            if (contact.BillingAddressLine1 != "")
+            if (contact.IndBillingAddressLine1 != "")
             {
-                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.BillingAddressLine1);
-                if (contact.BillingAddressLine2 != "")
+                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.IndBillingAddressLine1);
+                if (contact.IndBillingAddressLine2 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.BillingAddressLine2);
+                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.IndBillingAddressLine2);
                 }
-                if (contact.BillingAddressLine3 != "")
+                if (contact.IndBillingAddressLine3 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.BillingAddressLine3);
+                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.IndBillingAddressLine3);
                 }
-                ChooseSpecificSelectOption(contactBillingCountrySelect, contact.BillingCountry);
-                if (contact.BillingCountry == "Other")
+                ChooseSpecificSelectOption(contactBillingCountrySelect, contact.IndBillingCountry);
+                if (contact.IndBillingCountry == "Other")
                 {
-                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.BillingOtherCountry);
+                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.IndBillingOtherCountry);
                 }
                 else
                 {
-                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.BillingProvince);
+                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.IndBillingProvince);
                 }
-                webDriver.FindElement(contactBillingCityInput).SendKeys(contact.BillingCity);
-                webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.BillingPostalCode);
+                webDriver.FindElement(contactBillingCityInput).SendKeys(contact.IndBillingCity);
+                webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.IndBillingPostalCode);
             }
 
             //Inserting comments
-            webDriver.FindElement(contactCommentTextarea).SendKeys(contact.Comments);
+            webDriver.FindElement(contactCommentTextarea).SendKeys(contact.IndComments);
         }
 
         //Creates Organization Contact with all fields
@@ -338,114 +346,114 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Inserting contact info
-            if (contact.Email1 != "")
+            if (contact.OrgEmail1 != "")
             {
-                webDriver.FindElement(contactEmailInput1).SendKeys(contact.Email1);
-                ChooseSpecificSelectOption(contactEmailSelect1, contact.EmailType1);
+                webDriver.FindElement(contactEmailInput1).SendKeys(contact.OrgEmail1);
+                ChooseSpecificSelectOption(contactEmailSelect1, contact.OrgEmailType1);
             }
-            if (contact.Email2 != "")
+            if (contact.OrgEmail2 != "")
             {
                 webDriver.FindElement(contactEmailAddBttn).Click();
-                webDriver.FindElement(contactEmailInput2).SendKeys(contact.Email2);
-                ChooseSpecificSelectOption(contactEmailSelect2, contact.EmailType2);
+                webDriver.FindElement(contactEmailInput2).SendKeys(contact.OrgEmail2);
+                ChooseSpecificSelectOption(contactEmailSelect2, contact.OrgEmailType2);
             }
-            if (contact.Phone1 != "")
+            if (contact.OrgPhone1 != "")
             {
-                webDriver.FindElement(contactPhoneInput1).SendKeys(contact.Phone1);
-                ChooseSpecificSelectOption(contactPhoneSelect1, contact.PhoneType1);
+                webDriver.FindElement(contactPhoneInput1).SendKeys(contact.OrgPhone1);
+                ChooseSpecificSelectOption(contactPhoneSelect1, contact.OrgPhoneType1);
             }
-            if (contact.Phone2 != "")
+            if (contact.OrgPhone2 != "")
             {
                 webDriver.FindElement(contactPhoneAddBttn).Click();
-                webDriver.FindElement(contactPhoneInput2).SendKeys(contact.Phone2);
-                ChooseSpecificSelectOption(contactPhoneSelect2, contact.PhoneType2);
+                webDriver.FindElement(contactPhoneInput2).SendKeys(contact.OrgPhone2);
+                ChooseSpecificSelectOption(contactPhoneSelect2, contact.OrgPhoneType2);
             }
 
             //Inserting contact mail address
-            if (contact.MailAddressLine1 != "")
+            if (contact.OrgMailAddressLine1 != "")
             {
-                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.MailAddressLine1);
-                if (contact.MailAddressLine2 != "")
+                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.OrgMailAddressLine1);
+                if (contact.OrgMailAddressLine2 != "")
                 {
                     webDriver.FindElement(contactMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.MailAddressLine2);
+                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.OrgMailAddressLine2);
                 }
-                if (contact.MailAddressLine3 != "")
+                if (contact.OrgMailAddressLine3 != "")
                 {
                     webDriver.FindElement(contactMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.MailAddressLine3);
+                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.OrgMailAddressLine3);
                 }
 
-                ChooseSpecificSelectOption(contactMailCountrySelect, contact.MailCountry);
-                if (contact.MailCountry == "Other")
+                ChooseSpecificSelectOption(contactMailCountrySelect, contact.OrgMailCountry);
+                if (contact.OrgMailCountry == "Other")
                 {
-                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.MailOtherCountry);
+                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.OrgMailOtherCountry);
                 }
                 else
                 {
-                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.MailProvince);
+                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.OrgMailProvince);
                 }
-                webDriver.FindElement(contactMailCityInput).SendKeys(contact.MailCity);
-                webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.MailPostalCode);
+                webDriver.FindElement(contactMailCityInput).SendKeys(contact.OrgMailCity);
+                webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.OrgMailPostalCode);
             }
 
             //Inserting contact property address
-            if (contact.PropertyAddressLine1 != "")
+            if (contact.OrgPropertyAddressLine1 != "")
             {
-                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.PropertyAddressLine1);
-                if (contact.PropertyAddressLine2 != "")
+                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.OrgPropertyAddressLine1);
+                if (contact.OrgPropertyAddressLine2 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.PropertyAddressLine2);
+                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.OrgPropertyAddressLine2);
                 }
-                if (contact.PropertyAddressLine3 != "")
+                if (contact.OrgPropertyAddressLine3 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.PropertyAddressLine3);
+                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.OrgPropertyAddressLine3);
                 }
 
-                ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.PropertyCountry);
-                if (contact.PropertyCountry == "Other")
+                ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.OrgPropertyCountry);
+                if (contact.OrgPropertyCountry == "Other")
                 {
-                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.PropertyOtherCountry);
+                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.OrgPropertyOtherCountry);
                 }
                 else
                 {
-                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.PropertyProvince);
+                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.OrgPropertyProvince);
                 }
-                webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.PropertyCity);
-                webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.PropertyPostalCode);
+                webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.OrgPropertyCity);
+                webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.OrgPropertyPostalCode);
             }
 
             //Inserting contact billing address
-            if (contact.BillingAddressLine1 != "")
+            if (contact.OrgBillingAddressLine1 != "")
             {
-                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.BillingAddressLine1);
-                if (contact.BillingAddressLine2 != "")
+                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.OrgBillingAddressLine1);
+                if (contact.OrgBillingAddressLine2 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.BillingAddressLine2);
+                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.OrgBillingAddressLine2);
                 }
-                if (contact.BillingAddressLine3 != "")
+                if (contact.OrgBillingAddressLine3 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.BillingAddressLine3);
+                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.OrgBillingAddressLine3);
                 }
-                ChooseSpecificSelectOption(contactBillingCountrySelect, contact.BillingCountry);
-                if (contact.BillingCountry == "Other")
+                ChooseSpecificSelectOption(contactBillingCountrySelect, contact.OrgBillingCountry);
+                if (contact.OrgBillingCountry == "Other")
                 {
-                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.BillingOtherCountry);
+                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.OrgBillingOtherCountry);
                 }
                 else
                 {
-                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.BillingProvince);
+                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.OrgBillingProvince);
                 }
-                webDriver.FindElement(contactBillingCityInput).SendKeys(contact.BillingCity);
-                webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.BillingPostalCode);
+                webDriver.FindElement(contactBillingCityInput).SendKeys(contact.OrgBillingCity);
+                webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.OrgBillingPostalCode);
             }
 
             //Inserting comments
-            webDriver.FindElement(contactCommentTextarea).SendKeys(contact.Comments);
+            webDriver.FindElement(contactCommentTextarea).SendKeys(contact.OrgComments);
         }
 
         //Update Organization Contact
@@ -469,82 +477,81 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Updating contact info
-            if (contact.Email1 != "")
+            if (contact.OrgEmail1 != "")
             {
                 WaitUntilClickable(contactEmailInput1);
                 ClearInput(contactEmailInput1);
-                webDriver.FindElement(contactEmailInput1).SendKeys(contact.Email1);
-                ChooseSpecificSelectOption(contactEmailSelect1, contact.EmailType1);
+                webDriver.FindElement(contactEmailInput1).SendKeys(contact.OrgEmail1);
+                ChooseSpecificSelectOption(contactEmailSelect1, contact.OrgEmailType1);
             }
-            if (contact.Email2 != "" && webDriver.FindElement(contactEmailInput2).Displayed)
+            if (contact.OrgEmail2 != "")
             {
                 WaitUntilClickable(contactEmailInput2);
                 ClearInput(contactEmailInput2);
-                webDriver.FindElement(contactEmailInput2).SendKeys(contact.Email2);
-                ChooseSpecificSelectOption(contactEmailSelect2, contact.EmailType2);
+                webDriver.FindElement(contactEmailInput2).SendKeys(contact.OrgEmail2);
+                ChooseSpecificSelectOption(contactEmailSelect2, contact.OrgEmailType2);
             }
-            if (contact.Phone1 != "")
+            if (contact.OrgPhone1 != "")
             {
                 WaitUntilClickable(contactPhoneInput1);
                 ClearInput(contactPhoneInput1);
-                webDriver.FindElement(contactPhoneInput1).SendKeys(contact.Phone1);
-                ChooseSpecificSelectOption(contactPhoneSelect1, contact.PhoneType1);
+                webDriver.FindElement(contactPhoneInput1).SendKeys(contact.OrgPhone1);
+                ChooseSpecificSelectOption(contactPhoneSelect1, contact.OrgPhoneType1);
             }
-            if (contact.Phone2 != "" && webDriver.FindElement(contactPhoneInput2).Displayed)
+            if (contact.OrgPhone2 != "")
             {
                 WaitUntilClickable(contactPhoneInput2);
                 ClearInput(contactPhoneInput2);
-                webDriver.FindElement(contactPhoneInput2).SendKeys(contact.Phone2);
-                ChooseSpecificSelectOption(contactPhoneSelect2, contact.PhoneType2);
+                webDriver.FindElement(contactPhoneInput2).SendKeys(contact.OrgPhone2);
+                ChooseSpecificSelectOption(contactPhoneSelect2, contact.OrgPhoneType2);
             }
 
             //Updating contact mail address
-            if (contact.MailAddressLine1 != "")
+            if (contact.OrgMailAddressLine1 != "")
             {
-                
                 while (webDriver.FindElements(contactAddressMailAddressRemoveBttn).Count > 0)
                 {
                     FocusAndClick(contactAddressMailAddressRemoveBttn);
                 }
                 ClearInput(contactMailAddressLine1Input);
 
-                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.MailAddressLine1);
+                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.OrgMailAddressLine1);
 
-                if (contact.MailAddressLine2 != "")
+                if (contact.OrgMailAddressLine2 != "")
                 {
                     webDriver.FindElement(contactMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.MailAddressLine2);
+                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.OrgMailAddressLine2);
                 }
-                if (contact.MailAddressLine3 != "")
+                if (contact.OrgMailAddressLine3 != "")
                 {
                     webDriver.FindElement(contactMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.MailAddressLine3);
+                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.OrgMailAddressLine3);
                 }
-                if(contact.MailCountry != "")
-                    ChooseSpecificSelectOption(contactMailCountrySelect, contact.MailCountry);
-                if (contact.MailCountry == "Other")
+                if(contact.OrgMailCountry != "")
+                    ChooseSpecificSelectOption(contactMailCountrySelect, contact.OrgMailCountry);
+                if (contact.OrgMailCountry == "Other")
                 {
                     ClearInput(contactMailOtherCountryInput);
-                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.MailOtherCountry);
+                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.OrgMailOtherCountry);
                 }
-                if(contact.MailProvince != "")
+                if(contact.OrgMailProvince != "")
                 {
-                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.MailProvince);
+                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.OrgMailProvince);
                 }
-                if (contact.MailCity != "")
+                if (contact.OrgMailCity != "")
                 {
                     ClearInput(contactMailCityInput);
-                    webDriver.FindElement(contactMailCityInput).SendKeys(contact.MailCity);
+                    webDriver.FindElement(contactMailCityInput).SendKeys(contact.OrgMailCity);
                 }
-                if (contact.MailPostalCode != "")
+                if (contact.OrgMailPostalCode != "")
                 {
                     ClearInput(contactMailPostalCodeInput);
-                    webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.MailPostalCode);
+                    webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.OrgMailPostalCode);
                 }
             }
 
             //Updating contact property address
-            if (contact.PropertyAddressLine1 != "")
+            if (contact.OrgPropertyAddressLine1 != "")
             {
                 while (webDriver.FindElements(contactAddressPropertyAddressRemoveBttn).Count > 0)
                 {
@@ -552,40 +559,41 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
                 ClearInput(contactPropertyAddressLine1Input);
 
-                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.PropertyAddressLine1);
-                if (contact.PropertyAddressLine2 != "")
+                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.OrgPropertyAddressLine1);
+                if (contact.OrgPropertyAddressLine2 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.PropertyAddressLine2);
+                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.OrgPropertyAddressLine2);
                 }
-                if (contact.PropertyAddressLine3 != "")
+                if (contact.OrgPropertyAddressLine3 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.PropertyAddressLine3);
+                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.OrgPropertyAddressLine3);
                 }
-                if(contact.PropertyCountry != "")
-                    ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.PropertyCountry);
-                if (contact.PropertyCountry == "Other")
+                if(contact.OrgPropertyCountry != "")
+                    ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.OrgPropertyCountry);
+                if (contact.OrgPropertyCountry == "Other")
                 {
                     ClearInput(contactPropertyOtherCountryInput);
-                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.PropertyOtherCountry);
+                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.OrgPropertyOtherCountry);
                 }
-                if(contact.PropertyProvince != "")
-                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.PropertyProvince);
-                if (contact.PropertyCity != "")
+                if(contact.OrgPropertyProvince != "")
+                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.OrgPropertyProvince);
+
+                if (contact.OrgPropertyCity != "")
                 {
                     ClearInput(contactPropertyCityInput);
-                    webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.PropertyCity);
+                    webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.OrgPropertyCity);
                 }
-                if (contact.PropertyPostalCode != "")
+                if (contact.OrgPropertyPostalCode != "")
                 {
                     ClearInput(contactPropertyPostalCodeInput);
-                    webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.PropertyPostalCode);
+                    webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.OrgPropertyPostalCode);
                 }
             }
 
             //Updating contact billing address
-            if (contact.BillingAddressLine1 != "")
+            if (contact.OrgBillingAddressLine1 != "")
             {
                 while (webDriver.FindElements(contactAddressBillingAddressRemoveBttn).Count > 0)
                 {
@@ -593,43 +601,45 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
                 ClearInput(contactBillingAddressLine1Input);
 
-                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.BillingAddressLine1);
-                if (contact.BillingAddressLine2 != "")
+                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.OrgBillingAddressLine1);
+                if (contact.OrgBillingAddressLine2 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.BillingAddressLine2);
+                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.OrgBillingAddressLine2);
                 }
-                if (contact.BillingAddressLine3 != "")
+                if (contact.OrgBillingAddressLine3 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.BillingAddressLine3);
+                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.OrgBillingAddressLine3);
                 }
-                if(contact.BillingCountry != "")
-                    ChooseSpecificSelectOption(contactBillingCountrySelect, contact.BillingCountry);
-                if (contact.BillingCountry == "Other")
+                if(contact.OrgBillingCountry != "")
+                    ChooseSpecificSelectOption(contactBillingCountrySelect, contact.OrgBillingCountry);
+                if (contact.OrgBillingCountry == "Other")
                 {
                     ClearInput(contactBillingOtherCountryInput);
-                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.BillingOtherCountry);
+                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.OrgBillingOtherCountry);
                 }
-                if(contact.BillingProvince != "")
+                if(contact.OrgBillingProvince != "")
                 {
-                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.BillingProvince);
+                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.OrgBillingProvince);
                 }
-                if (contact.BillingCity != "")
+                if (contact.OrgBillingCity != "")
                 {
+                    Wait();
                     ClearInput(contactBillingCityInput);
-                    webDriver.FindElement(contactBillingCityInput).SendKeys(contact.BillingCity);
+                    webDriver.FindElement(contactBillingCityInput).SendKeys(contact.OrgBillingCity);
                 }
-                if (contact.BillingPostalCode != "")
+                if (contact.OrgBillingPostalCode != "")
                 {
+                    Wait();
                     ClearInput(contactBillingPostalCodeInput);
-                    webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.BillingPostalCode);
+                    webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.OrgBillingPostalCode);
                 }
             }
 
             //Inserting comments
             ClearInput(contactCommentTextarea);
-            webDriver.FindElement(contactCommentTextarea).SendKeys(contact.Comments);
+            webDriver.FindElement(contactCommentTextarea).SendKeys(contact.OrgComments);
         }
 
         //Update Individual Contact
@@ -663,33 +673,33 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Updating contact info
-            if (contact.Email1 != "")
+            if (contact.IndEmail1 != "")
             {
                 ClearInput(contactEmailInput1);
-                webDriver.FindElement(contactEmailInput1).SendKeys(contact.Email1);
-                ChooseSpecificSelectOption(contactEmailSelect1, contact.EmailType1);
+                webDriver.FindElement(contactEmailInput1).SendKeys(contact.IndEmail1);
+                ChooseSpecificSelectOption(contactEmailSelect1, contact.IndEmailType1);
             }
-            if (contact.Email2 != "" && webDriver.FindElement(contactEmailInput2).Displayed)
+            if (contact.IndEmail2 != "" && webDriver.FindElement(contactEmailInput2).Displayed)
             {
                 ClearInput(contactEmailInput2);
-                webDriver.FindElement(contactEmailInput2).SendKeys(contact.Email2);
-                ChooseSpecificSelectOption(contactEmailSelect2, contact.EmailType2);
+                webDriver.FindElement(contactEmailInput2).SendKeys(contact.IndEmail2);
+                ChooseSpecificSelectOption(contactEmailSelect2, contact.IndEmailType2);
             }
-            if (contact.Phone1 != "")
+            if (contact.IndPhone1 != "")
             {
                 ClearInput(contactPhoneInput1);
-                webDriver.FindElement(contactPhoneInput1).SendKeys(contact.Phone1);
-                ChooseSpecificSelectOption(contactPhoneSelect1, contact.PhoneType1);
+                webDriver.FindElement(contactPhoneInput1).SendKeys(contact.IndPhone1);
+                ChooseSpecificSelectOption(contactPhoneSelect1, contact.IndPhoneType1);
             }
-            if (contact.Phone2 != "" && webDriver.FindElement(contactPhoneInput2).Displayed)
+            if (contact.IndPhone2 != "" && webDriver.FindElement(contactPhoneInput2).Displayed)
             {
                 ClearInput(contactPhoneInput2);
-                webDriver.FindElement(contactPhoneInput2).SendKeys(contact.Phone2);
-                ChooseSpecificSelectOption(contactPhoneSelect2, contact.PhoneType2);
+                webDriver.FindElement(contactPhoneInput2).SendKeys(contact.IndPhone2);
+                ChooseSpecificSelectOption(contactPhoneSelect2, contact.IndPhoneType2);
             }
 
             //Updating contact mail address
-            if (contact.MailAddressLine1 != "")
+            if (contact.IndMailAddressLine1 != "")
             {
                 while (webDriver.FindElements(contactAddressMailAddressRemoveBttn).Count > 0)
                 {
@@ -697,43 +707,43 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
                 ClearInput(contactMailAddressLine1Input);
 
-                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.MailAddressLine1);
+                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.IndMailAddressLine1);
 
-                if (contact.MailAddressLine2 != "")
+                if (contact.IndMailAddressLine2 != "")
                 {
                     webDriver.FindElement(contactMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.MailAddressLine2);
+                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.IndMailAddressLine2);
                 }
-                if (contact.MailAddressLine3 != "")
+                if (contact.IndMailAddressLine3 != "")
                 {
                     webDriver.FindElement(contactMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.MailAddressLine3);
+                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.IndMailAddressLine3);
                 }
-                if (contact.MailCountry != "")
-                    ChooseSpecificSelectOption(contactMailCountrySelect, contact.MailCountry);
-                if (contact.MailCountry == "Other")
+                if (contact.IndMailCountry != "")
+                    ChooseSpecificSelectOption(contactMailCountrySelect, contact.IndMailCountry);
+                if (contact.IndMailCountry == "Other")
                 {
                     ClearInput(contactMailOtherCountryInput);
-                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.MailOtherCountry);
+                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.IndMailOtherCountry);
                 }
-                if (contact.MailProvince != "")
+                if (contact.IndMailProvince != "")
                 {
-                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.MailProvince);
+                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.IndMailProvince);
                 }
-                if (contact.MailCity != "")
+                if (contact.IndMailCity != "")
                 {
                     ClearInput(contactMailCityInput);
-                    webDriver.FindElement(contactMailCityInput).SendKeys(contact.MailCity);
+                    webDriver.FindElement(contactMailCityInput).SendKeys(contact.IndMailCity);
                 }
-                if (contact.MailPostalCode != "")
+                if (contact.IndMailPostalCode != "")
                 {
                     ClearInput(contactMailPostalCodeInput);
-                    webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.MailPostalCode);
+                    webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.IndMailPostalCode);
                 }
             }
 
             //Updating contact property address
-            if (contact.PropertyAddressLine1 != "")
+            if (contact.IndPropertyAddressLine1 != "")
             {
                 while (webDriver.FindElements(contactAddressPropertyAddressRemoveBttn).Count > 0)
                 {
@@ -741,40 +751,40 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
                 ClearInput(contactPropertyAddressLine1Input);
 
-                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.PropertyAddressLine1);
-                if (contact.PropertyAddressLine2 != "")
+                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.IndPropertyAddressLine1);
+                if (contact.IndPropertyAddressLine2 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.PropertyAddressLine2);
+                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.IndPropertyAddressLine2);
                 }
-                if (contact.PropertyAddressLine3 != "")
+                if (contact.IndPropertyAddressLine3 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.PropertyAddressLine3);
+                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.IndPropertyAddressLine3);
                 }
-                if (contact.PropertyCountry != "")
-                    ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.PropertyCountry);
-                if (contact.PropertyCountry == "Other")
+                if (contact.IndPropertyCountry != "")
+                    ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.IndPropertyCountry);
+                if (contact.IndPropertyCountry == "Other")
                 {
                     ClearInput(contactPropertyOtherCountryInput);
-                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.PropertyOtherCountry);
+                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.IndPropertyOtherCountry);
                 }
-                if (contact.PropertyProvince != "")
-                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.PropertyProvince);
-                if (contact.PropertyCity != "")
+                if (contact.IndPropertyProvince != "")
+                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.IndPropertyProvince);
+                if (contact.IndPropertyCity != "")
                 {
                     ClearInput(contactPropertyCityInput);
-                    webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.PropertyCity);
+                    webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.IndPropertyCity);
                 }
-                if (contact.PropertyPostalCode != "")
+                if (contact.IndPropertyPostalCode != "")
                 {
                     ClearInput(contactPropertyPostalCodeInput);
-                    webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.PropertyPostalCode);
+                    webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.IndPropertyPostalCode);
                 }
             }
 
             //Updating contact billing address
-            if (contact.BillingAddressLine1 != "")
+            if (contact.IndBillingAddressLine1 != "")
             {
                 while (webDriver.FindElements(contactAddressBillingAddressRemoveBttn).Count > 0)
                 {
@@ -782,43 +792,43 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
                 ClearInput(contactBillingAddressLine1Input);
 
-                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.BillingAddressLine1);
-                if (contact.BillingAddressLine2 != "")
+                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.IndBillingAddressLine1);
+                if (contact.IndBillingAddressLine2 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.BillingAddressLine2);
+                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.IndBillingAddressLine2);
                 }
-                if (contact.BillingAddressLine3 != "")
+                if (contact.IndBillingAddressLine3 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.BillingAddressLine3);
+                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.IndBillingAddressLine3);
                 }
-                if (contact.BillingCountry != "")
-                    ChooseSpecificSelectOption(contactBillingCountrySelect, contact.BillingCountry);
-                if (contact.BillingCountry == "Other")
+                if (contact.IndBillingCountry != "")
+                    ChooseSpecificSelectOption(contactBillingCountrySelect, contact.IndBillingCountry);
+                if (contact.IndBillingCountry == "Other")
                 {
                     ClearInput(contactBillingOtherCountryInput);
-                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.BillingOtherCountry);
+                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.IndBillingOtherCountry);
                 }
-                if (contact.BillingProvince != "")
+                if (contact.IndBillingProvince != "")
                 {
-                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.BillingProvince);
+                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.IndBillingProvince);
                 }
-                if (contact.BillingCity != "")
+                if (contact.IndBillingCity != "")
                 {
                     ClearInput(contactBillingCityInput);
-                    webDriver.FindElement(contactBillingCityInput).SendKeys(contact.BillingCity);
+                    webDriver.FindElement(contactBillingCityInput).SendKeys(contact.IndBillingCity);
                 }
-                if (contact.BillingPostalCode != "")
+                if (contact.IndBillingPostalCode != "")
                 {
                     ClearInput(contactBillingPostalCodeInput);
-                    webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.BillingPostalCode);
+                    webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.IndBillingPostalCode);
                 }
             }
 
             //Inserting comments
             ClearInput(contactCommentTextarea);
-            webDriver.FindElement(contactCommentTextarea).SendKeys(contact.Comments);
+            webDriver.FindElement(contactCommentTextarea).SendKeys(contact.IndComments);
         }
 
         //Saves Contact
@@ -833,13 +843,11 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 Assert.True(sharedModals.ModalHeader().Equals("Duplicate Contact"));
                 Assert.True(sharedModals.ModalContent().Equals("A contact matching this information already exists in the system."));
-                ButtonElement("Continue Save");
+                webDriver.FindElement(contactModalContinueSaveBttn).Click();
             }
-            
-            var editButtonElement = webDriver.FindElement(contactEditButton);
 
             WaitUntilVisible(contactEditButton);
-            Assert.True(editButtonElement.Displayed);
+            Assert.True(webDriver.FindElement(contactEditButton).Displayed);
 
         }
 
@@ -849,7 +857,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             ButtonElement("Cancel");
 
-            ButtonElement("Confirm");
+            ButtonElement(contactConfirmCancelBttn);
 
             WaitUntilVisible(contactsSearchTable);
             var contactTableElement = webDriver.FindElement(contactsSearchTable);
@@ -859,404 +867,372 @@ namespace PIMS.Tests.Automation.PageObjects
         // ASSERT FUNCTIONS
         public void VerifyIndividualContactView(IndividualContact contact)
         {
-            WaitUntilVisible(contactIndFullName);
-            Assert.True(webDriver.FindElement(contactTitle).Displayed);
-            Assert.True(webDriver.FindElement(contactEditButton).Displayed);
+            Wait(2000);
 
-            Assert.True(webDriver.FindElement(contactIndFullName).Text.Equals(contact.FullName));
-            Assert.True(webDriver.FindElement(contactIndPrefNameLabel).Displayed);
-            Assert.True(webDriver.FindElement(contactIndPrefNameContent).Text.Equals(contact.PreferableName));
-            Assert.True(webDriver.FindElement(contactIndStatusSpan).Text.Equals(contact.ContactStatus));
+            AssertTrueIsDisplayed(contactTitle);
+            AssertTrueIsDisplayed(contactEditButton);
 
-            Assert.True(webDriver.FindElement(contactIndOrganizationLabel).Displayed);
+            if(contact.FullName != "")
+                AssertTrueContentEquals(contactIndFullName, contact.FullName);
+            AssertTrueIsDisplayed(contactIndPrefNameLabel);
+
+            if(contact.PreferableName != "")
+                AssertTrueContentEquals(contactIndPrefNameContent, contact.PreferableName);
+
+            if(contact.ContactStatus != "")
+                AssertTrueContentEquals(contactIndStatusSpan, contact.ContactStatus);
+
+            AssertTrueIsDisplayed(contactIndOrganizationLabel);
+
             if (contact.Organization != "")
-            {
-                Assert.True(webDriver.FindElement(contactIndOrganizationContent).Text.Equals(contact.Organization));
-            }
- 
-            Assert.True(webDriver.FindElement(contactInfoSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(contactEmailLabel).Displayed);           
-            if (contact.Email1 != "")
-            {
-                Assert.True(webDriver.FindElement(contactEmail1Content).Text.Equals(contact.Email1));
-                Assert.True(webDriver.FindElement(contactEmailType1Content).Text.Equals(contact.EmailTypeDisplay1));
-            }
-            if (contact.Email2 != "")
-            {
-                Assert.True(webDriver.FindElement(contactEmail2Content).Text.Equals(contact.Email2));
-                Assert.True(webDriver.FindElement(contactEmailType2Content).Text.Equals(contact.EmailTypeDisplay2));
-            }
-            Assert.True(webDriver.FindElement(contactPhoneLabel).Displayed);
+                AssertTrueContentEquals(contactIndOrganizationContent, contact.Organization);
+
+            AssertTrueIsDisplayed(contactInfoSubtitle);
+            AssertTrueIsDisplayed(contactEmailLabel);
             
-            if (contact.Phone1 != "")
+            if (contact.IndEmail1 != "")
             {
-                Assert.True(webDriver.FindElement(contactPhone1Content).Text.Equals(contact.Phone1));
-                Assert.True(webDriver.FindElement(contactPhoneType1Content).Text.Equals(contact.PhoneTypeDisplay1));
+                AssertTrueContentEquals(contactEmail1Content, contact.IndEmail1);
+                AssertTrueContentEquals(contactEmailType1Content, contact.IndEmailTypeDisplay1);
             }
-            if (contact.Phone2 != "")
+            if (contact.IndEmail2 != "")
             {
-                Assert.True(webDriver.FindElement(contactPhone2Content).Text.Equals(contact.Phone2));
-                Assert.True(webDriver.FindElement(contactPhoneType2Content).Text.Equals(contact.PhoneTypeDisplay2));
+                AssertTrueContentEquals(contactEmail2Content, contact.IndEmail2);
+                AssertTrueContentEquals(contactEmailType2Content, contact.IndEmailTypeDisplay2);
+            }
+            AssertTrueIsDisplayed(contactPhoneLabel);
+            
+            if (contact.IndPhone1 != "")
+            {
+                AssertTrueContentEquals(contactPhone1Content, contact.IndPhone1);
+                AssertTrueContentEquals(contactPhoneType1Content, contact.IndPhoneTypeDisplay1);
+            }
+            if (contact.IndPhone2 != "")
+            {
+                AssertTrueContentEquals(contactPhone2Content, contact.IndPhone2);
+                AssertTrueContentEquals(contactPhoneType2Content, contact.IndPhoneTypeDisplay2);
             }
 
-            Assert.True(webDriver.FindElement(contactAddressSubtitle).Displayed);
-            if (contact.MailAddressLine1 != "")
+            AssertTrueIsDisplayed(contactAddressSubtitle);
+
+            if (contact.IndMailAddressLine1 != "")
             {
-                Assert.True(webDriver.FindElement(contactAddressMailSubtitle).Displayed);
+                AssertTrueIsDisplayed(contactAddressMailSubtitle);
 
                 var mailAddressTotalLines = webDriver.FindElements(contactAddressIndMailCounter).Count;
                 switch (mailAddressTotalLines)
                 {
                     case 4:
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine1).Text.Equals(contact.MailAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine2).Text.Equals(contact.MailCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine3).Text.Equals(contact.MailPostalCode));
-                        if (contact.MailCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine4).Text.Equals(contact.MailOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine1, contact.IndMailAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine2, contact.IndMailCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine3, contact.IndMailPostalCode);
+
+                        if (contact.IndMailCountry == "Other")
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine4, contact.IndMailOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine4).Text.Equals(contact.MailCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine4, contact.IndMailCountry);
                         break;
+
                     case 5:
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine1).Text.Equals(contact.MailAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine2).Text.Equals(contact.MailAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine3).Text.Equals(contact.MailCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine4).Text.Equals(contact.MailPostalCode));
-                        if (contact.MailCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine5).Text.Equals(contact.MailOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine1, contact.IndMailAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine2, contact.IndMailAddressLine2);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine3, contact.IndMailCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine4, contact.IndMailPostalCode);
+
+                        if (contact.IndMailCountry == "Other")
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine5, contact.IndMailOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine5).Text.Equals(contact.MailCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine5, contact.IndMailCountry);
                         break;
+
                     case 6:
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine1).Text.Equals(contact.MailAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine2).Text.Equals(contact.MailAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine3).Text.Equals(contact.MailAddressLine3));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine4).Text.Equals(contact.MailCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine5).Text.Equals(contact.MailPostalCode));
-                        if (contact.MailCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine6).Text.Equals(contact.MailOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine1,contact.IndMailAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine2,contact.IndMailAddressLine2);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine3,contact.IndMailAddressLine3);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine4,contact.IndMailCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine5,contact.IndMailPostalCode);
+
+                        if (contact.IndMailCountry == "Other")
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine6,contact.IndMailOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine6).Text.Equals(contact.MailCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine6,contact.IndMailCountry);
                         break;
                 }
             }
-            if (contact.PropertyAddressLine1 != "")
+            if (contact.IndPropertyAddressLine1 != "")
             {
-                Assert.True(webDriver.FindElement(contactAddressPropertySubtitle).Displayed);
+                AssertTrueIsDisplayed(contactAddressPropertySubtitle);
 
                 var propertyAddressTotalLines = webDriver.FindElements(contactAddressIndPropertyCounter).Count;
                 switch (propertyAddressTotalLines)
                 {
                     case 4:
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine1).Text.Equals(contact.PropertyAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine2).Text.Equals(contact.PropertyCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine3).Text.Equals(contact.PropertyPostalCode));
-                        if (contact.PropertyCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine4).Text.Equals(contact.PropertyOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine1,contact.IndPropertyAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine2,contact.IndPropertyCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine3,contact.IndPropertyPostalCode);
+
+                        if (contact.IndPropertyCountry == "Other")
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndMailAddressLine4).Text.Equals(contact.PropertyCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyCountry);
                         break;
+
                     case 5:
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine1).Text.Equals(contact.PropertyAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine2).Text.Equals(contact.PropertyAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine3).Text.Equals(contact.PropertyCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine4).Text.Equals(contact.PropertyPostalCode));
-                        if (contact.PropertyCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine5).Text.Equals(contact.PropertyOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine1, contact.IndPropertyAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine2, contact.IndPropertyAddressLine2);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine3, contact.IndPropertyCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyPostalCode);
+
+                        if (contact.IndPropertyCountry == "Other")
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine5, contact.IndPropertyOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine5).Text.Equals(contact.PropertyCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine5, contact.IndPropertyCountry);
                         break;
+
                     case 6:
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine1).Text.Equals(contact.PropertyAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine2).Text.Equals(contact.PropertyAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine3).Text.Equals(contact.PropertyAddressLine3));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine4).Text.Equals(contact.PropertyCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine5).Text.Equals(contact.PropertyPostalCode));
-                        if (contact.PropertyCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine6).Text.Equals(contact.PropertyOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine1, contact.IndPropertyAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine2, contact.IndPropertyAddressLine2);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine3, contact.IndPropertyAddressLine3);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine5, contact.IndPropertyPostalCode);
+
+                        if (contact.IndPropertyCountry == "Other")
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine6, contact.IndPropertyOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndPropertyAddressLine6).Text.Equals(contact.PropertyCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine6, contact.IndPropertyCountry);
                         break;
                 }
             }
-            if (contact.BillingAddressLine1 != "")
+            if (contact.IndBillingAddressLine1 != "")
             {
-                Assert.True(webDriver.FindElement(contactAddressBillingSubtitle).Displayed);
+                AssertTrueIsDisplayed(contactAddressBillingSubtitle);
 
                 var propertyAddressTotalLines = webDriver.FindElements(contactAddressIndBillingCounter).Count;
                 switch (propertyAddressTotalLines)
                 {
                     case 4:
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine1).Text.Equals(contact.BillingAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine2).Text.Equals(contact.BillingCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine3).Text.Equals(contact.BillingPostalCode));
-                        if (contact.BillingCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine4).Text.Equals(contact.BillingOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine1, contact.IndBillingAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine2, contact.IndBillingCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine3, contact.IndBillingPostalCode);
+
+                        if (contact.IndBillingCountry == "Other")
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine4).Text.Equals(contact.BillingCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingCountry);
                         break;
+
                     case 5:
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine1).Text.Equals(contact.BillingAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine2).Text.Equals(contact.BillingAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine3).Text.Equals(contact.BillingCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine4).Text.Equals(contact.BillingPostalCode));
-                        if (contact.BillingCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine5).Text.Equals(contact.BillingOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine1, contact.IndBillingAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine2, contact.IndBillingAddressLine2);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine3, contact.IndBillingCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingPostalCode);
+
+                        if (contact.IndBillingCountry == "Other")
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine5, contact.IndBillingOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine5).Text.Equals(contact.BillingCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine5, contact.IndBillingCountry);
                         break;
+
                     case 6:
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine1).Text.Equals(contact.BillingAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine2).Text.Equals(contact.BillingAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine3).Text.Equals(contact.BillingAddressLine3));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine4).Text.Equals(contact.BillingCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine5).Text.Equals(contact.BillingPostalCode));
-                        if (contact.BillingCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine6).Text.Equals(contact.BillingOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine1, contact.IndBillingAddressLine1);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine2, contact.IndBillingAddressLine2);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine3, contact.IndBillingAddressLine3);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingCityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine5, contact.IndBillingPostalCode);
+
+                        if (contact.IndBillingCountry == "Other")
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine6, contact.IndBillingOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressIndBillingAddressLine6).Text.Equals(contact.BillingCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine6, contact.IndBillingCountry);
                         break;
                 }
             }
-            Assert.True(webDriver.FindElement(commentsSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(commentsIndividualContent).Text.Equals(contact.Comments));
+            AssertTrueIsDisplayed(commentsSubtitle);
+            AssertTrueContentEquals(commentsIndividualContent, contact.IndComments);
         }
 
         public void VerifyOrganizationContactView(OrganizationContact contact)
         {
-            WaitUntilVisible(contactOrgName);
-            Assert.True(webDriver.FindElement(contactTitle).Displayed);
-            Assert.True(webDriver.FindElement(contactEditButton).Displayed);
+            AssertTrueIsDisplayed(contactTitle);
+            AssertTrueIsDisplayed(contactEditButton);
 
-            Assert.True(webDriver.FindElement(contactOrgName).Text.Equals(contact.OrganizationName));
-            Assert.True(webDriver.FindElement(contactOrgAliasLabel).Displayed);
+            if(contact.OrganizationName != "")
+                AssertTrueContentEquals(contactOrgName, contact.OrganizationName);
+            AssertTrueIsDisplayed(contactOrgAliasLabel);
 
             if(contact.Alias != "")
-                Assert.True(webDriver.FindElement(contactOrgAliasContent).Text.Equals(contact.Alias));
+                AssertTrueContentEquals(contactOrgAliasContent, contact.Alias);
 
-            Assert.True(webDriver.FindElement(contactOrgStatusSpan).Text.Equals(contact.ContactStatus));
-
-            Assert.True(webDriver.FindElement(contactOrgIncorpNbrLabel).Displayed);
+            AssertTrueContentEquals(contactOrgStatusSpan, contact.ContactStatus);
+            AssertTrueIsDisplayed(contactOrgIncorpNbrLabel);
 
             if(contact.IncorporationNumber != "")
-                Assert.True(webDriver.FindElement(contactOrgIncorpNbrContent).Text.Equals(contact.IncorporationNumber));
+                AssertTrueContentEquals(contactOrgIncorpNbrContent,contact.IncorporationNumber);
 
-            Assert.True(webDriver.FindElement(contactInfoSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(contactEmailLabel).Displayed);
-            if (contact.Email1 != "")
-            {
-                Assert.True(webDriver.FindElement(contactEmail1Content).Text.Equals(contact.Email1));
-                Assert.True(webDriver.FindElement(contactEmailType1Content).Text.Equals(contact.EmailTypeDisplay1));
-            }
-            if (contact.Email2 != "")
-            {
-                Assert.True(webDriver.FindElement(contactEmail2Content).Text.Equals(contact.Email2));
-                Assert.True(webDriver.FindElement(contactEmailType2Content).Text.Equals(contact.EmailTypeDisplay2));
-            }
+            AssertTrueIsDisplayed(contactInfoSubtitle);
+            AssertTrueIsDisplayed(contactEmailLabel);
 
-            Assert.True(webDriver.FindElement(contactPhoneLabel).Displayed);
-            if (contact.Phone1 != "")
+            if (contact.OrgEmail1 != "")
             {
-                Assert.True(webDriver.FindElement(contactPhone1Content).Text.Equals(contact.Phone1));
-                Assert.True(webDriver.FindElement(contactPhoneType1Content).Text.Equals(contact.PhoneTypeDisplay1));
+                AssertTrueContentEquals(contactEmail1Content, contact.OrgEmail1);
+                AssertTrueContentEquals(contactEmailType1Content, contact.OrgEmailTypeDisplay1);
             }
-            if (contact.Phone2 != "")
+            if (contact.OrgEmail2 != "")
             {
-                Assert.True(webDriver.FindElement(contactPhone2Content).Text.Equals(contact.Phone2));
-                Assert.True(webDriver.FindElement(contactPhoneType2Content).Text.Equals(contact.PhoneTypeDisplay2));
+                AssertTrueContentEquals(contactEmail2Content, contact.OrgEmail2);
+                AssertTrueContentEquals(contactEmailType2Content, contact.OrgEmailTypeDisplay2);
             }
 
-            Assert.True(webDriver.FindElement(contactAddressSubtitle).Displayed);
-            if (contact.MailAddressLine1 != "")
+            AssertTrueIsDisplayed(contactPhoneLabel);
+            if (contact.OrgPhone1 != "")
             {
-                Assert.True(webDriver.FindElement(contactAddressMailSubtitle).Displayed);
+                AssertTrueContentEquals(contactPhone1Content, contact.OrgPhone1);
+                AssertTrueContentEquals(contactPhoneType1Content, contact.OrgPhoneTypeDisplay1);
+            }
+            if (contact.OrgPhone2 != "")
+            {
+                AssertTrueContentEquals(contactPhone2Content, contact.OrgPhone2);
+                AssertTrueContentEquals(contactPhoneType2Content, contact.OrgPhoneTypeDisplay2);
+            }
+
+            AssertTrueIsDisplayed(contactAddressSubtitle);
+            if (contact.OrgMailAddressLine1 != "")
+            {
+                AssertTrueIsDisplayed(contactAddressMailSubtitle);
 
                 var mailAddressTotalLines = webDriver.FindElements(contactAddressOrgMailCounter).Count;
                 switch (mailAddressTotalLines)
                 {
                     case 4:
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine1).Text.Equals(contact.MailAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine2).Text.Equals(contact.MailCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine3).Text.Equals(contact.MailPostalCode));
-                        if (contact.MailCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine4).Text.Equals(contact.MailOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine1, contact.OrgMailAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine2, contact.OrgMailCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine3, contact.OrgMailPostalCode);
+
+                        if (contact.OrgMailCountry == "Other")
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine4).Text.Equals(contact.MailCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailCountry);
                         break;
+
                     case 5:
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine1).Text.Equals(contact.MailAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine2).Text.Equals(contact.MailAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine3).Text.Equals(contact.MailCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine4).Text.Equals(contact.MailPostalCode));
-                        if (contact.MailCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine5).Text.Equals(contact.MailOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine1, contact.OrgMailAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine2, contact.OrgMailAddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine3, contact.OrgMailCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailPostalCode);
+
+                        if (contact.OrgMailCountry == "Other")
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine5, contact.OrgMailOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine5).Text.Equals(contact.MailCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine5, contact.OrgMailCountry);
                         break;
+
                     case 6:
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine1).Text.Equals(contact.MailAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine2).Text.Equals(contact.MailAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine3).Text.Equals(contact.MailAddressLine3));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine4).Text.Equals(contact.MailCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine5).Text.Equals(contact.MailPostalCode));
-                        if (contact.MailCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine6).Text.Equals(contact.MailOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine1, contact.OrgMailAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine2, contact.OrgMailAddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine3, contact.OrgMailAddressLine3);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine5, contact.OrgMailPostalCode);
+
+                        if (contact.OrgMailCountry == "Other")
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine6, contact.OrgMailOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgMailAddressLine6).Text.Equals(contact.MailCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine6, contact.OrgMailCountry);
                         break;
                 }
             }
-            if (contact.PropertyAddressLine1 != "")
+            if (contact.OrgPropertyAddressLine1 != "")
             {
-                Assert.True(webDriver.FindElement(contactAddressPropertySubtitle).Displayed);
+                AssertTrueIsDisplayed(contactAddressPropertySubtitle);
 
                 var propertyAddressTotalLines = webDriver.FindElements(contactAddressOrgPropertyCounter).Count;
                 switch (propertyAddressTotalLines)
                 {
                     case 4:
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine1).Text.Equals(contact.PropertyAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine2).Text.Equals(contact.PropertyCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine3).Text.Equals(contact.PropertyPostalCode));
-                        if (contact.PropertyCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine4).Text.Equals(contact.PropertyOtherCountry));
-                        }
-                        else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine4).Text.Equals(contact.PropertyCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine1, contact.OrgPropertyAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine2, contact.OrgPropertyCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine3, contact.OrgPropertyPostalCode);
+
+                        if (contact.OrgPropertyCountry == "Other")
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4, contact.OrgPropertyOtherCountry);
+                        else  
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4, contact.OrgPropertyCountry);
                         break;
+
                     case 5:
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine1).Text.Equals(contact.PropertyAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine2).Text.Equals(contact.PropertyAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine3).Text.Equals(contact.PropertyCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine4).Text.Equals(contact.PropertyPostalCode));
-                        if (contact.PropertyCountry == "Other")
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine1,contact.OrgPropertyAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine2,contact.OrgPropertyAddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine3,contact.OrgPropertyCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4,contact.OrgPropertyPostalCode);
+
+                        if (contact.OrgPropertyCountry == "Other")
                         {
-                            Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine5).Text.Equals(contact.PropertyOtherCountry));
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine5,contact.OrgPropertyOtherCountry);
                         }
                         else
                         {
-                            Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine5).Text.Equals(contact.PropertyCountry));
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine5,contact.OrgPropertyCountry);
                         }
                         break;
+
                     case 6:
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine1).Text.Equals(contact.PropertyAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine2).Text.Equals(contact.PropertyAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine3).Text.Equals(contact.PropertyAddressLine3));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine4).Text.Equals(contact.PropertyCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine5).Text.Equals(contact.PropertyPostalCode));
-                        if (contact.PropertyCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine6).Text.Equals(contact.PropertyOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine1,contact.OrgPropertyAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine2,contact.OrgPropertyAddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine3,contact.OrgPropertyAddressLine3);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4,contact.OrgPropertyCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine5,contact.OrgPropertyPostalCode);
+
+                        if (contact.OrgPropertyCountry == "Other")
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine6,contact.OrgPropertyOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgPropertyAddressLine6).Text.Equals(contact.PropertyCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine6,contact.OrgPropertyCountry);
                         break;
                 }
             }
-            if (contact.BillingAddressLine1 != "")
+            if (contact.OrgBillingAddressLine1 != "")
             {
-                Assert.True(webDriver.FindElement(contactAddressBillingSubtitle).Displayed);
+                AssertTrueIsDisplayed(contactAddressBillingSubtitle);
 
                 var propertyAddressTotalLines = webDriver.FindElements(contactAddressOrgBillingCounter).Count;
                 switch (propertyAddressTotalLines)
                 {
                     case 4:
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine1).Text.Equals(contact.BillingAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine2).Text.Equals(contact.BillingCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine3).Text.Equals(contact.BillingPostalCode));
-                        if (contact.BillingCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine4).Text.Equals(contact.BillingOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine1,contact.OrgBillingAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine2,contact.OrgBillingCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine3,contact.OrgBillingPostalCode);
+                        if (contact.OrgBillingCountry == "Other")
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine4).Text.Equals(contact.BillingCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingCountry);
                         break;
+
                     case 5:
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine1).Text.Equals(contact.BillingAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine2).Text.Equals(contact.BillingAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine3).Text.Equals(contact.BillingCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine4).Text.Equals(contact.BillingPostalCode));
-                        if (contact.BillingCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine5).Text.Equals(contact.BillingOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine1,contact.OrgBillingAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine2,contact.OrgBillingAddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine3,contact.OrgBillingCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingPostalCode);
+
+                        if (contact.OrgBillingCountry == "Other")
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine5,contact.OrgBillingOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine5).Text.Equals(contact.BillingCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine5,contact.OrgBillingCountry);
                         break;
+
                     case 6:
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine1).Text.Equals(contact.BillingAddressLine1));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine2).Text.Equals(contact.BillingAddressLine2));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine3).Text.Equals(contact.BillingAddressLine3));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine4).Text.Equals(contact.BillingCityProvinceView));
-                        Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine5).Text.Equals(contact.BillingPostalCode));
-                        if (contact.BillingCountry == "Other")
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine6).Text.Equals(contact.BillingOtherCountry));
-                        }
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine1,contact.OrgBillingAddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine2,contact.OrgBillingAddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine3,contact.OrgBillingAddressLine3);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingCityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine5,contact.OrgBillingPostalCode);
+
+                        if (contact.OrgBillingCountry == "Other")
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine6,contact.OrgBillingOtherCountry);
                         else
-                        {
-                            Assert.True(webDriver.FindElement(contactAddressOrgBillingAddressLine6).Text.Equals(contact.BillingCountry));
-                        }
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine6,contact.OrgBillingCountry);
                         break;
                 }
             }
-            Assert.True(webDriver.FindElement(commentsSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(commentsOrganizationContent).Text.Equals(contact.Comments));
+            AssertTrueIsDisplayed(commentsSubtitle);
+            AssertTrueContentEquals(commentsOrganizationContent,contact.OrgComments);
         }
 
     }

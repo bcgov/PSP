@@ -73,13 +73,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateNotesTab()
         {
+            Wait(2000);
+
             WaitUntilClickable(notesTabLink);
             webDriver.FindElement(notesTabLink).Click();
         }
 
         public void CreateNotesTabButton()
         {
-            WaitUntilClickable(notesTabAddBttn);
+            Wait(2000);
             webDriver.FindElement(notesTabAddBttn).Click();
         }
 
@@ -126,7 +128,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteLastSecondNote()
         {
-            WaitUntilClickable(note2ndDeleteNoteBttn);
+            Wait(2000);
             webDriver.FindElement(note2ndDeleteNoteBttn).Click();
 
             WaitUntilVisible(notesDeletePopupHeader);
@@ -164,7 +166,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyNotesTabListView()
         {
-            WaitUntilVisible(notesTabTableHeaderNoteColumn);
+            Wait(3000);
 
             Assert.True(webDriver.FindElement(notesTabTitle).Displayed);
             Assert.True(webDriver.FindElement(notesTabAddBttn).Displayed);
@@ -184,7 +186,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int NotesTabCount()
         {
-            WaitUntilVisible(notesTabTableContentTotal);
+            Wait();
             return webDriver.FindElements(notesTabTableContentTotal).Count();
         }
 
@@ -192,6 +194,12 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisibleText(note1stNoteContent, webDriver.FindElement(note1stNoteContent).Text);
             Assert.True(webDriver.FindElement(note1stNoteContent).Text == fileType + " status changed from "+ fromStatus +" to " + toStatus);
+        }
+
+        public void VerifyAutomaticNotesCompensation(string CompensationNbr, string fromStatus, string toStatus)
+        {
+            WaitUntilVisibleText(note1stNoteContent, webDriver.FindElement(note1stNoteContent).Text);
+            Assert.True(webDriver.FindElement(note1stNoteContent).Text == "Compensation Requisition with # " + CompensationNbr + ", changed status from '"+ fromStatus +"' to '" + toStatus + "'");
         }
     }
 }

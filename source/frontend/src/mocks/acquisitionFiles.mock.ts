@@ -3,6 +3,7 @@ import {
   Api_AcquisitionFile,
   Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
+  Api_AcquisitionFileTeam,
   EnumAcquisitionFileType,
 } from '@/models/api/AcquisitionFile';
 
@@ -25,18 +26,17 @@ export const mockAcquisitionFileResponse = (
     workActivityCode: null,
     regionCode: null,
     note: null,
-    products: [],
+    projectProducts: [],
     rowVersion: null,
   },
   projectId: null,
   product: {
     id: 1,
     acquisitionFiles: [],
+    projectProducts: [],
     code: '00048',
     description: 'MISCELLANEOUS CLAIMS',
     rowVersion: 1,
-    parentProject: null,
-    parentProjectId: null,
     startDate: '2022-06-27T00:00:00',
     costEstimate: 10000,
     costEstimateDate: null,
@@ -65,7 +65,6 @@ export const mockAcquisitionFileResponse = (
   fileProperties: [
     {
       id: 1,
-      isDisabled: false,
       propertyId: 442,
       property: {
         id: 442,
@@ -103,7 +102,6 @@ export const mockAcquisitionFileResponse = (
     },
     {
       id: 2,
-      isDisabled: false,
       propertyId: 443,
       property: {
         id: 443,
@@ -144,6 +142,7 @@ export const mockAcquisitionFileResponse = (
     {
       id: 1,
       acquisitionFileId: 1,
+      personId: 1,
       person: {
         id: 1,
         isDisabled: false,
@@ -157,17 +156,17 @@ export const mockAcquisitionFileResponse = (
         comment: 'This is a test comment.',
         rowVersion: 2,
       },
-      personProfileType: {
+      teamProfileType: {
         id: 'NEGOTAGENT',
         description: 'Negotiation agent',
         isDisabled: false,
       },
-      isDisabled: false,
       rowVersion: 2,
     },
     {
       id: 2,
       acquisitionFileId: 1,
+      personId: 3,
       person: {
         id: 3,
         isDisabled: false,
@@ -179,12 +178,11 @@ export const mockAcquisitionFileResponse = (
         contactMethods: [],
         rowVersion: 1,
       },
-      personProfileType: {
+      teamProfileType: {
         id: 'MOTILAWYER',
         description: 'Negotiation agent',
         isDisabled: false,
       },
-      isDisabled: false,
       rowVersion: 2,
     },
   ],
@@ -375,6 +373,49 @@ export const mockAcquisitionFileOwnersResponse = (
     appLastUpdateTimestamp: '0001-01-01T00:00:00',
   },
 ];
+
+export const mockApiAcquisitionFileTeamPerson = (): Api_AcquisitionFileTeam => ({
+  id: 1,
+  acquisitionFileId: 1,
+  personId: 1,
+  person: {
+    id: 1,
+    isDisabled: false,
+    surname: 'last',
+    firstName: 'first',
+    personOrganizations: [],
+    personAddresses: [],
+    contactMethods: [],
+    rowVersion: 2,
+  },
+  teamProfileType: {
+    id: 'NEGOTAGENT',
+    description: 'Negotiation agent',
+    isDisabled: false,
+  },
+  rowVersion: 2,
+});
+
+export const mockApiAcquisitionFileTeamOrganization = (): Api_AcquisitionFileTeam => ({
+  id: 1,
+  acquisitionFileId: 1,
+  organizationId: 2,
+  organization: {
+    id: 2,
+    isDisabled: false,
+    name: 'ABC Inc',
+    organizationPersons: [],
+    organizationAddresses: [],
+    contactMethods: [],
+    rowVersion: 2,
+  },
+  teamProfileType: {
+    id: 'MOTILAWYER',
+    description: 'MoTI Solicitor',
+    isDisabled: false,
+  },
+  rowVersion: 2,
+});
 
 export const mockAcquisitionFileChecklistResponse = (
   acquisitionFileId: number = 1,
