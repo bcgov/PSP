@@ -1,7 +1,7 @@
 export type stringDate = string;
 
-// ParcelMap BC Parcel Fabric - Fully Attributed
-// Source : https://catalogue.data.gov.bc.ca/dataset/parcelmap-bc-parcel-fabric-fully-attributed
+// ParcelMap BC Parcel Fabric
+// Source : https://catalogue.data.gov.bc.ca/dataset/parcelmap-bc-parcel-fabric
 // Api: WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW
 export interface PMBC_Feature_Properties {
   readonly PARCEL_FABRIC_POLY_ID: number | null;
