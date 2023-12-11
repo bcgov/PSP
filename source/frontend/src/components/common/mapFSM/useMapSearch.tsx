@@ -19,7 +19,7 @@ import {
 } from './models';
 
 export const useMapSearch = () => {
-  const fullyAttributedService = useParcelMapLayer();
+  const pmbcService = useParcelMapLayer();
   const pimsPropertyLayerService = usePimsPropertyLayer();
 
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -27,18 +27,18 @@ export const useMapSearch = () => {
   const logout = keycloak.obj.logout;
 
   const loadPimsProperties = pimsPropertyLayerService.loadPropertyLayer.execute;
-  const fullyAttributedServiceFindByPin = fullyAttributedService.findByPin;
-  const fullyAttributedServiceFindByPid = fullyAttributedService.findByPid;
-  const fullyAttributedServiceFindByPlanNumber = fullyAttributedService.findByPlanNumber;
+  const pmbcServiceFindByPin = pmbcService.findByPin;
+  const pmbcServiceFindByPid = pmbcService.findByPid;
+  const pmbcServiceFindByPlanNumber = pmbcService.findByPlanNumber;
 
-  const fullyAttributedServiceFindOne = fullyAttributedService.findOne;
+  const pmbcServiceFindOne = pmbcService.findOne;
   const pimsPropertyLayerServiceFindOne = pimsPropertyLayerService.findOneByBoundary;
 
   const searchOneLocation = useCallback(
     async (latitude: number, longitude: number) => {
       let result: MapFeatureData = { ...emptyFeatureData };
       try {
-        const findOneParcelTask = fullyAttributedServiceFindOne({
+        const findOneParcelTask = pmbcServiceFindOne({
           lat: latitude,
           lng: longitude,
         });
@@ -84,7 +84,7 @@ export const useMapSearch = () => {
       }
       return result;
     },
-    [fullyAttributedServiceFindOne, pimsPropertyLayerServiceFindOne],
+    [pmbcServiceFindOne, pimsPropertyLayerServiceFindOne],
   );
 
   const searchByPlanNumber = useCallback(
@@ -104,7 +104,7 @@ export const useMapSearch = () => {
         const forceExactMatch = true;
 
         if (filter?.SURVEY_PLAN_NUMBER) {
-          findByPlanNumberTask = fullyAttributedServiceFindByPlanNumber(
+          findByPlanNumberTask = pmbcServiceFindByPlanNumber(
             filter?.SURVEY_PLAN_NUMBER,
             forceExactMatch,
           );
@@ -131,7 +131,7 @@ export const useMapSearch = () => {
           });
           setDisplayModal(true);
         }
-        const planNumberFullyAttributedData = await findByPlanNumberTask;
+        const planNumberPmbcData = await findByPlanNumberTask;
 
         // If the property was found on the pims inventory, use that.
         if (planNumberInventoryData?.features && planNumberInventoryData?.features?.length > 0) {
@@ -157,8 +157,8 @@ export const useMapSearch = () => {
         } else {
           const attributedFeatures: FeatureCollection<Geometry, PMBC_Feature_Properties> = {
             type: 'FeatureCollection',
-            features: [...(planNumberFullyAttributedData?.features || [])],
-            bbox: planNumberFullyAttributedData?.bbox,
+            features: [...(planNumberPmbcData?.features || [])],
+            bbox: planNumberPmbcData?.bbox,
           };
           const validFeatures = attributedFeatures.features.filter(feature => !!feature?.geometry);
           result = {
@@ -184,13 +184,7 @@ export const useMapSearch = () => {
 
       return result;
     },
-    [
-      fullyAttributedServiceFindByPlanNumber,
-      loadPimsProperties,
-      logout,
-      setDisplayModal,
-      setModalContent,
-    ],
+    [pmbcServiceFindByPlanNumber, loadPimsProperties, logout, setDisplayModal, setModalContent],
   );
 
   const searchMany = useCallback(
@@ -212,10 +206,10 @@ export const useMapSearch = () => {
 
         loadPropertiesTask = loadPimsProperties(filter);
         if (filter?.PIN) {
-          findByPinTask = fullyAttributedServiceFindByPin(filter?.PIN);
+          findByPinTask = pmbcServiceFindByPin(filter?.PIN);
         }
         if (filter?.PID) {
-          findByPidTask = fullyAttributedServiceFindByPid(filter?.PID);
+          findByPidTask = pmbcServiceFindByPid(filter?.PID);
         }
 
         let pidPinInventoryData:
@@ -240,10 +234,7 @@ export const useMapSearch = () => {
           setDisplayModal(true);
         }
 
-        const [pinFullyAttributedData, pidFullyAttributedData] = await Promise.all([
-          findByPinTask,
-          findByPidTask,
-        ]);
+        const [pinPmbcData, pidPmbcData] = await Promise.all([findByPinTask, findByPidTask]);
 
         // If the property was found on the pims inventory, use that.
         if (pidPinInventoryData?.features && pidPinInventoryData?.features?.length > 0) {
@@ -267,11 +258,8 @@ export const useMapSearch = () => {
         } else {
           const attributedFeatures: FeatureCollection<Geometry, PMBC_Feature_Properties> = {
             type: 'FeatureCollection',
-            features: [
-              ...(pinFullyAttributedData?.features || []),
-              ...(pidFullyAttributedData?.features || []),
-            ],
-            bbox: pinFullyAttributedData?.bbox || pidFullyAttributedData?.bbox,
+            features: [...(pinPmbcData?.features || []), ...(pidPmbcData?.features || [])],
+            bbox: pinPmbcData?.bbox || pidPmbcData?.bbox,
           };
 
           const validFeatures = attributedFeatures.features.filter(feature => !!feature?.geometry);
@@ -304,8 +292,8 @@ export const useMapSearch = () => {
       setDisplayModal,
       setModalContent,
       loadPimsProperties,
-      fullyAttributedServiceFindByPin,
-      fullyAttributedServiceFindByPid,
+      pmbcServiceFindByPin,
+      pmbcServiceFindByPid,
     ],
   );
 

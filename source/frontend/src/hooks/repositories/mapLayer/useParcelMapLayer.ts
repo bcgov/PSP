@@ -14,10 +14,10 @@ import { useTenant } from '@/tenants';
  */
 
 export const useParcelMapLayer = () => {
-  const { parcelMap: parcelMapFullyAttributed, parcelsLayerUrl } = useTenant();
+  const { parcelMap, parcelsLayerUrl } = useTenant();
 
-  const getAllFeaturesWrapper = useWfsLayer(parcelMapFullyAttributed.url, {
-    name: parcelMapFullyAttributed.name,
+  const getAllFeaturesWrapper = useWfsLayer(parcelMap.url, {
+    name: parcelMap.name,
   });
 
   const { findOneWhereContains } = useLayerQuery(parcelsLayerUrl);
