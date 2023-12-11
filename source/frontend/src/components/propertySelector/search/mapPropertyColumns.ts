@@ -33,13 +33,6 @@ const columns: ColumnWithProps<SearchResultProperty>[] = [
     width: 20,
     maxWidth: 20,
   },
-  {
-    Header: 'Legal Description',
-    accessor: 'legalDescription',
-    align: 'left',
-    width: 30,
-    maxWidth: 30,
-  },
 ];
 
 export default columns;

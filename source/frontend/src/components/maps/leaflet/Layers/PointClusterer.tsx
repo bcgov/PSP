@@ -12,7 +12,7 @@ import useSupercluster from '@/components/maps/hooks/useSupercluster';
 import { useFilterContext } from '@/components/maps/providers/FIlterProvider';
 import { ICluster } from '@/components/maps/types';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
   PIMS_Property_Location_View,
@@ -52,9 +52,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   const spiderfierRef =
     useRef<
       Spiderfier<
-        | PIMS_Property_Location_View
-        | PIMS_Property_Boundary_View
-        | PMBC_FullyAttributed_Feature_Properties
+        PIMS_Property_Location_View | PIMS_Property_Boundary_View | PMBC_Feature_Properties
       >
     >();
   const featureGroupRef = useRef<L.FeatureGroup>(null);
@@ -79,11 +77,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   const maxZoom = maxZoomProps ?? 18;
 
   const [spider, setSpider] = useState<
-    SpiderSet<
-      | PIMS_Property_Location_View
-      | PIMS_Property_Boundary_View
-      | PMBC_FullyAttributed_Feature_Properties
-    >
+    SpiderSet<PIMS_Property_Location_View | PIMS_Property_Boundary_View | PMBC_Feature_Properties>
   >({});
 
   const draftPoints = useMemo(() => {
@@ -117,23 +111,19 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
   const pimsBoundaryFeatures = mapMachine.mapFeatureData.pimsBoundaryFeatures;
 
-  const fullyAttributedFeatures = mapMachine.mapFeatureData.fullyAttributedFeatures;
+  const pmbcFeatures = mapMachine.mapFeatureData.pmbcFeatures;
 
   const featurePoints: Supercluster.PointFeature<
-    | PIMS_Property_Location_View
-    | PIMS_Property_Boundary_View
-    | PMBC_FullyAttributed_Feature_Properties
+    PIMS_Property_Location_View | PIMS_Property_Boundary_View | PMBC_Feature_Properties
   >[] = useMemo(() => {
     const pimsLocationPoints =
       featureCollectionResponseToPointFeature<PIMS_Property_Location_View>(pimsLocationFeatures);
     const pimsBoundaryPoints =
       featureCollectionResponseToPointFeature<PIMS_Property_Boundary_View>(pimsBoundaryFeatures);
-    const fullyAttributedPoints =
-      featureCollectionResponseToPointFeature<PMBC_FullyAttributed_Feature_Properties>(
-        fullyAttributedFeatures,
-      );
-    return [...pimsLocationPoints, ...pimsBoundaryPoints, ...fullyAttributedPoints];
-  }, [pimsLocationFeatures, pimsBoundaryFeatures, fullyAttributedFeatures]);
+    const pmbcPoints =
+      featureCollectionResponseToPointFeature<PMBC_Feature_Properties>(pmbcFeatures);
+    return [...pimsLocationPoints, ...pimsBoundaryPoints, ...pmbcPoints];
+  }, [pimsLocationFeatures, pimsBoundaryFeatures, pmbcFeatures]);
 
   // get clusters
   // clusters are an array of GeoJSON Feature objects, but some of them
@@ -279,9 +269,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
             );
           } else {
             const clusterFeature = cluster as PointFeature<
-              | PIMS_Property_Location_View
-              | PIMS_Property_Boundary_View
-              | PMBC_FullyAttributed_Feature_Properties
+              PIMS_Property_Location_View | PIMS_Property_Boundary_View | PMBC_Feature_Properties
             >;
 
             const isSelected =
@@ -304,9 +292,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
          */}
         {spider.markers?.map((m, index: number) => {
           const clusterFeature = m as PointFeature<
-            | PIMS_Property_Location_View
-            | PIMS_Property_Boundary_View
-            | PMBC_FullyAttributed_Feature_Properties
+            PIMS_Property_Location_View | PIMS_Property_Boundary_View | PMBC_Feature_Properties
           >;
 
           return (
