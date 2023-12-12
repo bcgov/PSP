@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33027.164
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "PAIMS_PIMS_ACQUISITION_PROJECT", "PAIMS_PIMS_ACQUISITION_PROJECT\PAIMS_PIMS_ACQUISITION_PROJECT.dtproj", "{FFB4319E-731E-4A34-95B7-E7BAABE0D007}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FFB4319E-731E-4A34-95B7-E7BAABE0D007}.Development|Default.ActiveCfg = Development
+		{FFB4319E-731E-4A34-95B7-E7BAABE0D007}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7FA745E7-ECBD-43B2-8912-7B10C509198B}
+	EndGlobalSection
+EndGlobal
