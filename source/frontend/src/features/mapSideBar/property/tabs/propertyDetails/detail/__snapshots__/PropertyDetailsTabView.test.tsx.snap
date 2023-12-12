@@ -252,6 +252,22 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             <label
               class="c5"
             >
+              Legal Description:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
               MOTI region:
             </label>
           </div>

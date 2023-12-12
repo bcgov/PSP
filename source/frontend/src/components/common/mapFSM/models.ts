@@ -1,7 +1,7 @@
 import { FeatureCollection, Geometry } from 'geojson';
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 
-import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
   PIMS_Property_Location_View,
@@ -11,17 +11,14 @@ export interface FeatureSelected {
   readonly clusterId: string;
   readonly pimsLocationFeature: PIMS_Property_Location_View | null;
   readonly pimsBoundaryFeature: PIMS_Property_Boundary_View | null;
-  readonly fullyAttributedFeature: PMBC_FullyAttributed_Feature_Properties | null;
+  readonly pmbcFeature: PMBC_Feature_Properties | null;
   readonly latlng: LatLngLiteral;
 }
 
 export interface MapFeatureData {
   readonly pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_View>;
   readonly pimsBoundaryFeatures: FeatureCollection<Geometry, PIMS_Property_Boundary_View>;
-  readonly fullyAttributedFeatures: FeatureCollection<
-    Geometry,
-    PMBC_FullyAttributed_Feature_Properties
-  >;
+  readonly pmbcFeatures: FeatureCollection<Geometry, PMBC_Feature_Properties>;
 }
 
 export interface RequestedFlyTo {
@@ -45,10 +42,7 @@ export const emptyPimsBoundaryFeatureCollection: FeatureCollection<
   features: [],
 };
 
-export const emptyFullyFeaturedFeatureCollection: FeatureCollection<
-  Geometry,
-  PMBC_FullyAttributed_Feature_Properties
-> = {
+export const emptyPmbcFeatureCollection: FeatureCollection<Geometry, PMBC_Feature_Properties> = {
   type: 'FeatureCollection',
   features: [],
 };
@@ -56,5 +50,5 @@ export const emptyFullyFeaturedFeatureCollection: FeatureCollection<
 export const emptyFeatureData: MapFeatureData = {
   pimsLocationFeatures: emptyPimsLocationFeatureCollection,
   pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-  fullyAttributedFeatures: emptyFullyFeaturedFeatureCollection,
+  pmbcFeatures: emptyPmbcFeatureCollection,
 };
