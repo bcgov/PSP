@@ -6,7 +6,7 @@ import Supercluster from 'supercluster';
 import { ICluster, PointFeature } from '@/components/maps/types';
 import { DraftCircleNumber } from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { IProperty } from '@/interfaces';
-import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
   PIMS_Property_Location_View,
@@ -127,7 +127,7 @@ export const createPoints = (properties: IProperty[], type: string = 'Point') =>
 type MarkerFeature =
   | PIMS_Property_Location_View
   | PIMS_Property_Boundary_View
-  | PMBC_FullyAttributed_Feature_Properties;
+  | PMBC_Feature_Properties;
 
 /**
  * This function defines how GeoJSON points spawn Leaflet layers on the map.
@@ -239,10 +239,10 @@ export const isPimsBoundary = (
   return feature.id?.toString().startsWith('PIMS_PROPERTY_BOUNDARY_VW') ?? false;
 };
 
-export const isFullyAttributed = (
+export const isParcelMap = (
   feature: Supercluster.PointFeature<MarkerFeature>,
-): feature is Supercluster.PointFeature<PMBC_FullyAttributed_Feature_Properties> => {
-  return feature.id?.toString().startsWith('WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW') ?? false;
+): feature is Supercluster.PointFeature<PMBC_Feature_Properties> => {
+  return feature.id?.toString().startsWith('WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW') ?? false;
 };
 
 // Internal cache of cluster icons to avoid re-creating the same icon over and over again.
