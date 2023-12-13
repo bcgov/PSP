@@ -61,7 +61,7 @@ namespace Pims.Api.Test.Services
             var result = service.GetById(1);
 
             // Assert
-            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Exactly(1));
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -127,9 +127,9 @@ namespace Pims.Api.Test.Services
             var dispFile = EntityHelper.CreateDispositionFile();
 
             var repository = this._helper.GetService<Mock<IDispositionFilePropertyRepository>>();
-            repository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyDispositionFile>() { new PimsPropertyDispositionFile() { Property = new PimsProperty() { Location = new Point(1,1) } } });
+            repository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyDispositionFile>() { new PimsPropertyDispositionFile() { Property = new PimsProperty() { Location = new Point(1, 1) } } });
             var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
-            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(1,1));
+            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(1, 1));
             // Act
             var properties = service.GetProperties(1);
 
@@ -176,6 +176,84 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.GetLastUpdateBy(It.IsAny<long>()), Times.Once);
+        }
+        #endregion
+
+        #region GetPage
+        [Fact]
+        public void GetPage_Success()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+
+            var dispFile = EntityHelper.CreateDispositionFile();
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.GetPageDeep(It.IsAny<DispositionFilter>())).Returns(new Paged<PimsDispositionFile>(new[] { dispFile }));
+
+            // Act
+            var result = service.GetPage(new DispositionFilter());
+
+            // Assert
+            repository.Verify(x => x.GetPageDeep(It.IsAny<DispositionFilter>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetPage_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions();
+
+            var dispFile = EntityHelper.CreateDispositionFile();
+
+            // Act
+            Action act = () => service.GetPage(new DispositionFilter());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+        #endregion
+
+        #region GetTeamMembers
+        [Fact]
+        public void GetTeamMembers_Success()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView, Permissions.ContactView);
+
+            var dispFile = EntityHelper.CreateDispositionFile();
+            var person = EntityHelper.CreatePerson(1, "tester", "chester");
+            var org = EntityHelper.CreateOrganization(1, "tester org");
+            List<PimsDispositionFileTeam> allTeamMembers = new()
+            {
+                new() { DispositionFileId = dispFile.Internal_Id, PersonId = person.Internal_Id, Person = person },
+                new() { DispositionFileId = dispFile.Internal_Id, OrganizationId = org.Internal_Id, Organization = org }
+            };
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.GetTeamMembers()).Returns(allTeamMembers);
+
+            // Act
+            var result = service.GetTeamMembers();
+
+            // Assert
+            repository.Verify(x => x.GetTeamMembers(), Times.Once);
+            result.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public void GetTeamMembers_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions();
+
+            var dispFile = EntityHelper.CreateDispositionFile();
+
+            // Act
+            Action act = () => service.GetTeamMembers();
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
         }
         #endregion
 

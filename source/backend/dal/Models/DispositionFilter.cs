@@ -57,6 +57,7 @@ namespace Pims.Dal.Entities.Models
         /// Creates a new instance of a AcquisitionFilter class.
         /// </summary>
         public DispositionFilter()
+            : base()
         {
         }
 

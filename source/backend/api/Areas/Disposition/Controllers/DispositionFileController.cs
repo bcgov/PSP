@@ -153,7 +153,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         }
 
         /// <summary>
-        /// Get all unique persons that belong to at least one disposition file as a team member.
+        /// Get all unique persons and organizations that belong to at least one disposition file as a team member.
         /// </summary>
         /// <returns></returns>
         [HttpGet("team-members")]
