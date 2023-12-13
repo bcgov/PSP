@@ -3,27 +3,27 @@ import { LatLngLiteral } from 'leaflet';
 import { useCallback } from 'react';
 
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
-import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
 import { useLegalAdminBoundariesMapLayer } from '@/hooks/repositories/mapLayer/useLegalAdminBoundariesMapLayer';
+import { useParcelMapLayer } from '@/hooks/repositories/mapLayer/useParcelMapLayer';
 import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
 import { useMapProperties } from '@/hooks/repositories/useMapProperties';
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { WHSE_Municipalities_Feature_Properties } from '@/models/layers/municipalities';
-import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 
 export interface LocationFeatureDataset {
   location: LatLngLiteral;
   pimsFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
-  parcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null;
+  parcelFeature: Feature<Geometry, PMBC_Feature_Properties> | null;
   regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
   districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
   municipalityFeature: Feature<Geometry, WHSE_Municipalities_Feature_Properties> | null;
 }
 
 const useLocationFeatureLoader = () => {
-  const fullyAttributedService = useFullyAttributedParcelMapLayer();
+  const pmbcService = useParcelMapLayer();
   const adminBoundaryLayerService = useAdminBoundaryMapLayer();
   const adminLegalBoundaryLayerService = useLegalAdminBoundariesMapLayer();
 
@@ -32,7 +32,7 @@ const useLocationFeatureLoader = () => {
   } = useMapProperties();
   const { findOneByBoundary } = usePimsPropertyLayer();
 
-  const fullyAttributedServiceFindOne = fullyAttributedService.findOne;
+  const pmbcServiceFindOne = pmbcService.findOne;
   const adminBoundaryLayerServiceFindRegion = adminBoundaryLayerService.findRegion;
   const adminBoundaryLayerServiceFindDistrict = adminBoundaryLayerService.findDistrict;
   const adminLegalBoundaryLayerServiceFindOneMunicipality =
@@ -50,12 +50,12 @@ const useLocationFeatureLoader = () => {
       };
       try {
         // call these APIs in parallel - notice there is no "await"
-        const fullyAttributedTask = fullyAttributedServiceFindOne(latLng);
+        const pmbcTask = pmbcServiceFindOne(latLng);
         const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'GEOMETRY');
         const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'GEOMETRY');
 
         const [parcelFeature, regionFeature, districtFeature] = await Promise.all([
-          fullyAttributedTask,
+          pmbcTask,
           regionTask,
           districtTask,
         ]);
@@ -97,7 +97,7 @@ const useLocationFeatureLoader = () => {
       return result;
     },
     [
-      fullyAttributedServiceFindOne,
+      pmbcServiceFindOne,
       adminBoundaryLayerServiceFindRegion,
       adminBoundaryLayerServiceFindDistrict,
       adminLegalBoundaryLayerServiceFindOneMunicipality,
