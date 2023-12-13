@@ -161,7 +161,6 @@ const DocumentUploadContainer = forwardRef<
   }));
 
   const onDocumentSelected = () => {
-    debugger;
     props.setCanUpload(true);
   };
 
