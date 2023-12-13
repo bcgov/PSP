@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Col, Form as BsForm, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { SelectProperty } from '@/components/common/mapping/SelectProperty';
@@ -18,7 +18,6 @@ export const PropertyMapSelectorSubForm: React.FunctionComponent<
   const pid = selectedProperty?.pid;
   const planNumber = selectedProperty?.planNumber;
   const address = selectedProperty?.address;
-  const legalDescription = selectedProperty?.legalDescription;
   const region = selectedProperty?.region;
   const regionName = selectedProperty?.regionName;
   const district = selectedProperty?.district;
@@ -41,12 +40,6 @@ export const PropertyMapSelectorSubForm: React.FunctionComponent<
         <SectionField label="District">
           {[district, districtName].filter(Boolean).join(' - ')}
         </SectionField>
-        <Row>
-          <Col md={12}>
-            <BsForm.Label>Legal Description:</BsForm.Label>
-          </Col>
-          <Col md={12}>{legalDescription}</Col>
-        </Row>
       </Col>
     </StyledFormRow>
   );

@@ -10,8 +10,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By compensationLinkTab = By.XPath("//a[contains(text(),'Compensation')]");
 
         //Add Compensation Elements
-        private By compensationAddSubtitle = By.XPath("//div[contains(text(),'Add Compensation')]");
-        private By compensationAddBttn = By.XPath("//div[contains(text(),'Add Compensation')]/following-sibling::div/button");
+        private By compensationAddSubtitle = By.XPath("//div[contains(text(),'Compensation Requisitions')]");
+        private By compensationAddBttn = By.XPath("//div[contains(text(),'Compensation Requisitions')]/following-sibling::div/button");
 
         private By compensationTotalAllowableLabel = By.XPath("//label[contains(text(),'Total allowable compensation')]");
         private By compensationTotalAllowableContent = By.XPath("//label[contains(text(),'Total allowable compensation')]/parent::div/following-sibling::div");
@@ -25,7 +25,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By compensationDraftsTotalLabel = By.XPath("//label[contains(text(),'Drafts')]");
         private By compensationDraftsTotalContent = By.XPath("//label[contains(text(),'Drafts')]/parent::div/following-sibling::div");
 
-        private By compensationAddCompensationTooltips = By.XPath("//div[contains(text(),'Add Compensation')]/parent::div/parent::div/parent::div/parent::h2/parent::div/div/div/div/label/span");
+        private By compensationAddCompensationTooltips = By.XPath("//div[contains(text(),'Compensation Requisitions')]/parent::div/parent::div/parent::div/parent::h2/parent::div/div/div/div/label/span");
 
         //Requisition in this file (H120) Elements
         private By compensationH120Subtitle = By.XPath("//div[contains(text(),'Requisitions in this file (H120)')]");
