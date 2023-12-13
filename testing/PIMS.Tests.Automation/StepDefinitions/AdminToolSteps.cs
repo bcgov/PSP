@@ -68,6 +68,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Filters
             manageUsers.FilterUsers("TRANPSP1", "Cannot determine");
+            Assert.Equal(0, manageUsers.TotalUsersResult());
+
+            manageUsers.FilterUsers("TRANPSP1", "");
+            Assert.Equal(1, manageUsers.TotalUsersResult());
+
+            manageUsers.ResetDefaultListView();
         }
 
         [StepDefinition(@"I create a CDOGS template")]
