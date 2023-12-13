@@ -1,4 +1,3 @@
-using System.Data.Entity.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +10,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Pims.Dal.Repositories
 {

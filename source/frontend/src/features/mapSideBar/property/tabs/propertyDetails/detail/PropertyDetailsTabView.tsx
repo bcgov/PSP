@@ -97,6 +97,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
       </Section>
 
       <Section header="Property Attributes">
+        <SectionField label="Legal Description">{property?.landLegalDescription}</SectionField>
         <SectionField label="MOTI region">{property?.region?.description}</SectionField>
         <SectionField label="Highways district">
           <InlineContainer>

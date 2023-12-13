@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
+using Pims.Core.Helpers;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
@@ -172,7 +173,7 @@ namespace Pims.Dal.Repositories
         public PimsProperty GetByPid(string pid)
         {
             this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
-            var parsedPid = pid.ConvertPID();
+            var parsedPid = PidTranslator.ConvertPID(pid);
 
             return GetByPid(parsedPid);
         }

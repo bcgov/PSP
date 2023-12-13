@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using MapsterMapper;
 using Moq;
+using Pims.Api.Models.Concepts.Note;
 using Pims.Api.Constants;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;

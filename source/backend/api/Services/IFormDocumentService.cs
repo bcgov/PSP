@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Concepts.Document.Upload;
+using Pims.Api.Models.Concepts.Http;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services

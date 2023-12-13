@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Areas.Lease.Controllers;
+using Pims.Api.Models.Concepts.Lease;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal;
@@ -75,7 +76,7 @@ namespace Pims.Api.Test.Controllers.Lease
             this._service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>())).Returns(lease);
 
             // Act
-            var result = this._controller.UpdateLease(this._mapper.Map<Api.Models.Concepts.LeaseModel>(lease), Array.Empty<string>());
+            var result = this._controller.UpdateLease(this._mapper.Map<LeaseModel>(lease), Array.Empty<string>());
 
             // Assert
             this._service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>()), Times.Once());
@@ -90,7 +91,7 @@ namespace Pims.Api.Test.Controllers.Lease
             this._service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>())).Returns(lease);
 
             // Act
-            var result = this._controller.UpdateLease(this._mapper.Map<Api.Models.Concepts.LeaseModel>(lease), Array.Empty<string>());
+            var result = this._controller.UpdateLease(this._mapper.Map<LeaseModel>(lease), Array.Empty<string>());
 
             // Assert
             this._service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>()), Times.Once());
