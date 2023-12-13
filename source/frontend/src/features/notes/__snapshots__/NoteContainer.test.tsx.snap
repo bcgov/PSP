@@ -438,7 +438,7 @@ exports[`NoteContainer component renders as expected 1`] = `
           >
             <button
               class="c3 Button btn btn-primary"
-              test-id="ok-modal-button"
+              data-testid="ok-modal-button"
               title="ok-modal"
               type="button"
             >

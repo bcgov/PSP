@@ -217,7 +217,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
                 title="cancel-modal"
                 variant={cancelButtonVariant ?? 'secondary'}
                 onClick={close}
-                test-id="cancel-modal-button"
+                data-testid="cancel-modal-button"
               >
                 {cancelButtonText}
               </Button>
@@ -228,7 +228,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
               variant={okButtonVariant ?? 'primary'}
               onClick={ok}
               disabled={handleOkDisabled}
-              test-id="ok-modal-button"
+              data-testid="ok-modal-button"
             >
               {okButtonText ?? 'Ok'}
             </Button>
