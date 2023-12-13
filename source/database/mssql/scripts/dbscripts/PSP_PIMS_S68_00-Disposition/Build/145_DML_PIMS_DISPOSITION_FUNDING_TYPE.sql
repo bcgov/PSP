@@ -17,9 +17,9 @@ VALUES
   (N'EVERGREEN', N'Evergreen'),
   (N'FEDERAL',   N'Federal'),
   (N'MAJORPRJ',  N'Major Projects'),
-  (N'MoTIDis',   N'MoTI District'),
-  (N'MoTIReg',   N'MoTI Region'),
-  (N'Other',     N'Other'),
-  (N'Rehab',     N'Rehab & Maintenance'),
-  (N'TICorp',    N'TI Corp');
+  (N'MOTIDIS',   N'MoTI District'),
+  (N'MOTIREG',   N'MoTI Region'),
+  (N'OTHER',     N'Other'),
+  (N'REHAB',     N'Rehab & Maintenance'),
+  (N'TICORP',    N'TI Corp');
 GO
