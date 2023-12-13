@@ -182,6 +182,9 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         </SectionField>
       </Section>
       <Section header="Property Attributes">
+        <SectionField label="Legal Description">
+          <TextArea field="landLegalDescription" />
+        </SectionField>
         <SectionField label="MOTI region">
           <Select
             field="regionTypeCode"

@@ -32,14 +32,14 @@ describe('GenerateCompensation tests', () => {
     );
     expect(compensation.summary_financial_activities).toHaveLength(2);
     expect(compensation.summary_financial_activities[0]).toEqual({
-      file_total: '$0.00',
+      file_pretax_total: '$0.00',
       h120_category_name: 'Market',
-      total: '$7.00',
+      pretax_total: '$5.00',
     });
     expect(compensation.summary_financial_activities[1]).toEqual({
-      file_total: '$0.00',
+      file_pretax_total: '$0.00',
       h120_category_name: 'Land',
-      total: '$15.00',
+      pretax_total: '$10.00',
     });
   });
 
@@ -52,14 +52,14 @@ describe('GenerateCompensation tests', () => {
     );
     expect(compensation.summary_financial_activities).toHaveLength(2);
     expect(compensation.summary_financial_activities[0]).toEqual({
-      file_total: '$200.00',
+      file_pretax_total: '$100.00',
       h120_category_name: 'Land',
-      total: '$0.00',
+      pretax_total: '$0.00',
     });
     expect(compensation.summary_financial_activities[1]).toEqual({
-      file_total: '$1,000.00',
+      file_pretax_total: '$999.00',
       h120_category_name: 'Relocation Costs (REL COST)',
-      total: '$0.00',
+      pretax_total: '$0.00',
     });
   });
 
@@ -71,20 +71,20 @@ describe('GenerateCompensation tests', () => {
       mockCompReqH120s(),
     );
 
-    expect(compensation.financial_total).toBe('$35.00');
+    expect(compensation.financial_pretax_total).toBe('$25.00');
   });
 
-  it('adds file financial totals', () => {
+  it('adds file financial pre-tax totals', () => {
     const compensation = new Api_GenerateCompensation(
       {} as any,
       {} as any,
       getMockH120Categories(),
       mockCompReqH120s(),
     );
-    expect(compensation.file_financial_total).toBe('$1,200.00');
+    expect(compensation.file_financial_pretax_total).toBe('$1,099.00');
   });
 
-  it('adds h120 financial totals', () => {
+  it('adds h120 financial pre-tax totals', () => {
     const compensation = new Api_GenerateCompensation(
       getMockApiCompensationList()[1],
       {} as any,
@@ -92,7 +92,7 @@ describe('GenerateCompensation tests', () => {
       [],
     );
 
-    expect(compensation.financial_total).toBe('$35.00');
+    expect(compensation.financial_pretax_total).toBe('$25.00');
   });
 
   it('generates with a payee', () => {

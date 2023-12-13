@@ -3,8 +3,8 @@ import { Api_H120Category } from '@/models/api/H120Category';
 import { formatMoney } from '@/utils';
 
 export class Api_GenerateCompensationFinancialSummary {
-  total: string;
-  file_total: string;
+  pretax_total: string;
+  file_pretax_total: string;
   h120_category_name: string;
 
   constructor(
@@ -13,15 +13,15 @@ export class Api_GenerateCompensationFinancialSummary {
     finalFileFinancials: Api_CompensationFinancial[],
   ) {
     this.h120_category_name = h120Category?.description ?? '';
-    this.total = formatMoney(
+    this.pretax_total = formatMoney(
       h120Financials
         .filter(f => f.financialActivityCode?.id === h120Category?.financialActivityId)
-        .reduce((acc, curr) => acc + (curr?.totalAmount ?? 0), 0),
+        .reduce((acc, curr) => acc + (curr?.pretaxAmount ?? 0), 0),
     );
-    this.file_total = formatMoney(
+    this.file_pretax_total = formatMoney(
       finalFileFinancials
         .filter(f => f.financialActivityCodeId === h120Category?.financialActivityId)
-        .reduce((acc, curr) => acc + (curr?.totalAmount ?? 0), 0),
+        .reduce((acc, curr) => acc + (curr?.pretaxAmount ?? 0), 0),
     );
   }
 }
