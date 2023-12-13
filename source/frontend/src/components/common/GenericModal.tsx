@@ -178,7 +178,11 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
   }
 
   function getModalClass() {
-    return (className || '') + '  ' + getVariantClass();
+    if (className) {
+      return className + ' ' + getVariantClass();
+    }
+
+    return getVariantClass();
   }
 
   const headerIconValue = getHeaderIcon();
@@ -318,19 +322,19 @@ const StyledModal = styled(Modal)`
     color: black;
   }
 
-  &.modal-xl {
+  .modal-xl {
     max-width: 100rem;
   }
 
-  &.modal-l {
+  .modal-l {
     max-width: 75rem;
   }
 
-  &.modal-m {
+  .modal-m {
     max-width: 50rem;
   }
 
-  &.modal-s {
+  .modal-s {
     max-width: 40rem;
   }
 

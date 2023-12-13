@@ -208,19 +208,19 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
   color: black;
 }
 
-.c0.modal-xl {
+.c0 .modal-xl {
   max-width: 100rem;
 }
 
-.c0.modal-l {
+.c0 .modal-l {
   max-width: 75rem;
 }
 
-.c0.modal-m {
+.c0 .modal-m {
   max-width: 50rem;
 }
 
-.c0.modal-s {
+.c0 .modal-s {
   max-width: 40rem;
 }
 
@@ -274,13 +274,13 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
   />
   <div
     aria-modal="true"
-    class="fade c0 c1  info-variant modal show"
+    class="fade c0 c1 info-variant modal show"
     role="dialog"
     style="display: block;"
     tabindex="-1"
   >
     <div
-      class="modal-dialog c1  info-variant"
+      class="modal-dialog c1 info-variant"
     >
       <div
         class="modal-content"

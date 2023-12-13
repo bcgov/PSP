@@ -75,7 +75,7 @@ export const ReceivedDepositForm: React.FunctionComponent<
             <Col md="6">
               <FastCurrencyInput
                 formikProps={formikProps}
-                label="Deposit Amount:"
+                label="Deposit amount:"
                 field="amountPaid"
                 required
               />
@@ -92,7 +92,7 @@ export const ReceivedDepositForm: React.FunctionComponent<
           <Row>
             <Col md="9">
               <ContactInput
-                label="Deposit Holder:"
+                label="Deposit holder:"
                 field="contactHolder"
                 setShowContactManager={setShowContactManager}
                 onClear={() => {

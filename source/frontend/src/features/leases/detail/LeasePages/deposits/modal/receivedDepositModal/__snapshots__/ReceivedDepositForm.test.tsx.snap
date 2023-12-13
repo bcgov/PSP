@@ -343,7 +343,7 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
             class="form-label"
             for="input-amountPaid"
           >
-            Deposit Amount: 
+            Deposit amount: 
           </label>
           <div
             class="input-tooltip-wrapper"
@@ -416,7 +416,7 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
             class="form-label"
             for="input-contactHolder"
           >
-            Deposit Holder:
+            Deposit holder:
           </label>
           <div
             class="row"
@@ -864,7 +864,7 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
             class="form-label"
             for="input-amountPaid"
           >
-            Deposit Amount: 
+            Deposit amount: 
           </label>
           <div
             class="input-tooltip-wrapper"
@@ -937,7 +937,7 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
             class="form-label"
             for="input-contactHolder"
           >
-            Deposit Holder:
+            Deposit holder:
           </label>
           <div
             class="row"
