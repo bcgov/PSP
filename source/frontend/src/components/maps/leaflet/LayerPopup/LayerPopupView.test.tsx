@@ -5,7 +5,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import Claims from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { emptyFullyAttributed } from '@/models/layers/parcelMapBC';
+import { emptyPmbcParcel } from '@/models/layers/parcelMapBC';
 import { EmptyPropertyLocation } from '@/models/layers/pimsPropertyLocationView';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { pidParser } from '@/utils/propertyUtils';
@@ -114,7 +114,7 @@ describe('LayerPopupView component', () => {
         featureDataset: {
           parcelFeature: {
             type: 'Feature',
-            properties: { ...emptyFullyAttributed, PID: pid },
+            properties: { ...emptyPmbcParcel, PID: pid },
             geometry: { type: 'Point', coordinates: [] },
           },
           location: { lat: 0, lng: 0 },

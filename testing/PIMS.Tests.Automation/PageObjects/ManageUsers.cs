@@ -55,23 +55,30 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(adminSubmenuManageUserLink);
         }
 
+        public void ResetDefaultListView()
+        {
+            WaitUntilVisible(userManagementResetButton);
+            webDriver.FindElement(userManagementResetButton).Click();
+        }
+
         public void FilterUsers(string idir, string region)
         {
-            WaitUntilVisible(userManagementIdirInput);
-            webDriver.FindElement(userManagementIdirInput).SendKeys(idir);
-            webDriver.FindElement(userManagementSearchButton).Click();
-
-            WaitUntilVisible(userManagerTableResults);
-            Assert.True(webDriver.FindElements(userManagerTableResults).Count() > 0);
+            WaitUntilVisible(userManagementResetButton);
             webDriver.FindElement(userManagementResetButton).Click();
 
-            WaitUntilClickable(userManagementRegionSelect);
-            ChooseSpecificSelectOption(userManagementRegionSelect, region);
+            if (idir != "")
+            {
+                webDriver.FindElement(userManagementIdirInput).SendKeys(idir);
+                webDriver.FindElement(userManagementSearchButton).Click();
+            }
+
+            if (region != "")
+            {
+                WaitUntilClickable(userManagementRegionSelect);
+                ChooseSpecificSelectOption(userManagementRegionSelect, region);
+            }
+            
             webDriver.FindElement(userManagementSearchButton).Click();
-
-            Assert.True(webDriver.FindElements(userManagerTableResults).Count() == 0);
-            webDriver.FindElement(userManagementResetButton).Click();
-
         }
 
         public void VerifyManageUserListView()
@@ -101,6 +108,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Assert.True(webDriver.FindElement(userManagerEntriesByPage).Displayed);
             Assert.True(webDriver.FindElement(userManagerPagination).Displayed);
+        }
+
+        public int TotalUsersResult()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElements(userManagerTableResults).Count();
         }
     }
 }
