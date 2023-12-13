@@ -50,15 +50,19 @@ namespace PIMS.Tests.Automation.PageObjects
         private By notesCancelPopupContent = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/parent::div");
         private By notesCancelPopupHeader = By.XPath("//div[contains(text(),'Unsaved Changes')]");
         private By notesCancelPopupBody = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/following-sibling::div[@class='modal-body']");
-        private By notesCancelOkBttn = By.CssSelector("div[class='modal-dialog'] button[title='ok-modal']");
+        private By notesCancelOkBttn = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/parent::div/div/div[@class='button-wrap']/button[@title='ok-modal']");
 
         //Notes Delete pop-up Elements
         private By notesDeletePopupHeader = By.CssSelector("div[class='modal-header'] div");
         private By notesDeletePopupBody = By.CssSelector("div[class='modal-body']");
-        private By notesDeleteOkBttn = By.CssSelector("div[class='modal-dialog'] button[title='ok-modal']");
+        private By notesDeleteOkBttn = By.XPath("//div[contains(text(),'Delete Note')]/parent::div/parent::div/div/div[@class='button-wrap']/button[@title='ok-modal']");
+
+        SharedModals sharedModals;
 
         public Notes(IWebDriver webDriver) : base(webDriver)
-        {}
+        {
+            sharedModals = new SharedModals(webDriver);
+        }
 
         public void NavigateNotesTab()
         {
@@ -109,8 +113,10 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             if (webDriver.FindElements(notesCancelPopupContent).Count() > 0)
             {
-                Assert.True(webDriver.FindElement(notesCancelPopupHeader).Displayed);
-                Assert.True(webDriver.FindElement(notesCancelPopupBody).Text.Equals("You have made changes on this form. Do you wish to leave without saving?"));
+                AssertTrueIsDisplayed(notesCancelPopupHeader);
+                Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", webDriver.FindElement(notesCancelPopupBody).Text);
+
+                Wait(2000);
                 webDriver.FindElement(notesCancelOkBttn).Click();
             }
         }

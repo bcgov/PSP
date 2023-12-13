@@ -254,8 +254,8 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Purpose
-            if(lease.Purpose != "")
-                ChooseSpecificSelectOption(licenseDetailsPurposeSelector, lease.Purpose);
+            if(lease.LeasePurpose != "")
+                ChooseSpecificSelectOption(licenseDetailsPurposeSelector, lease.LeasePurpose);
 
             //If other Purpose is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0 && lease.PurposeOther != "")
@@ -475,8 +475,8 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Purpose
-            if (lease.Purpose != "")
-                ChooseSpecificSelectOption(licenseDetailsPurposeSelector, lease.Purpose);
+            if (lease.LeasePurpose != "")
+                ChooseSpecificSelectOption(licenseDetailsPurposeSelector, lease.LeasePurpose);
 
             //If other Purpose is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0 && lease.PurposeOther != "")
@@ -842,8 +842,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(licenseDetailsPurposeLabel);
 
-            if(lease.Purpose != "")
-                AssertTrueElementValueEquals(licenseDetailsPurposeContent, lease.Purpose);
+            if(lease.LeasePurpose != "")
+                AssertTrueElementValueEquals(licenseDetailsPurposeContent, lease.LeasePurpose);
 
             if (lease.PurposeOther != "")
                 AssertTrueElementValueEquals(licenseDetailsOtherPurposeContent, lease.PurposeOther);

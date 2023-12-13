@@ -18,7 +18,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropertyListViewIcon = By.CssSelector("div[class='bar-item col-auto'] div div:nth-child(2)");
 
         //Map Pin element
-        private By searchPropertyFoundPin = By.CssSelector("div[class='leaflet-pane leaflet-marker-pane'] img");
+        private By searchPropertyFoundPin = By.XPath("//div[@class='leaflet-pane leaflet-marker-pane']/img[1]");
+        private By searchPropertyFoundCluster = By.CssSelector("div[class='leaflet-marker-icon marker-cluster marker-cluster-small leaflet-zoom-animated leaflet-interactive']");
 
         //Properties List View Elements
         private By searchPropertyListViewTitle = By.XPath("//h3[contains(text(),'Property Information')]");
@@ -78,10 +79,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFoundPin()
         {
-            Wait(5000);
-            FocusAndClick(searchPropertyFoundPin);
+            WaitUntilSpinnerDisappear();
 
-            //sharedModals.SiteMinderModal();
+            while (webDriver.FindElements(searchPropertyFoundPin).Count.Equals(0))
+                FocusAndClick(searchPropertyFoundCluster);
+
+            FocusAndClick(searchPropertyFoundPin);
         }
 
         public void NavigatePropertyListView()
