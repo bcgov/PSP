@@ -109,6 +109,7 @@ const DocumentUploadForm: React.FunctionComponent<
               />
             </SectionField>
             <Section
+              className="pt-4"
               header={
                 <>
                   Document Information{' '}
@@ -134,9 +135,7 @@ const DocumentUploadForm: React.FunctionComponent<
                   formikProps={formikProps}
                 ></DocumentMetadataView>
               </StyledScrollable>
-              {formikProps.values.isSelectedFile && formikProps.isValid && (
-                <div className="pt-5 pb-0 mb-0">Do you want to proceed?</div>
-              )}
+              <div className="pt-5 pb-0 mb-0">Do you want to proceed?</div>
             </Section>
           </>
         )}
