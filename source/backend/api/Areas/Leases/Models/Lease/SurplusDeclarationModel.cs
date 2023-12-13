@@ -18,7 +18,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// <summary>
         /// get/set - Surplus declaration type.
         /// </summary>
-        public TypeModel<string> Type { get; set; }
+        public CodeTypeModel<string> Type { get; set; }
 
         /// <summary>
         /// get/set - Surplus declaration comment.

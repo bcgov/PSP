@@ -11,7 +11,7 @@ import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHol
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getMockContactOrganizationWithOnePerson } from '@/mocks/contacts.mock';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { Api_Property } from '@/models/api/Property';
 
 import { ExpropriationForm1Model } from '../../../tabs/expropriation/models';
@@ -19,7 +19,7 @@ import { useGenerateExpropriationForm1 } from './useGenerateExpropriationForm1';
 
 const generateFn = jest
   .fn()
-  .mockResolvedValue({ status: ExternalResultStatus.Success, payload: {} });
+  .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
 const getAcquisitionFileFn = jest.fn<Promise<Api_AcquisitionFile | undefined>, any[]>();
 const getAcquisitionFilePropertiesFn = jest.fn<Promise<Api_Property[] | undefined>, any[]>();
 const getPersonConceptFn = jest.fn();
@@ -117,7 +117,10 @@ describe('useGenerateExpropriationForm1 functions', () => {
   });
 
   it('throws an error if generation api call is unsuccessful', async () => {
-    generateFn.mockResolvedValue({ status: ExternalResultStatus.Error, payload: null });
+    generateFn.mockResolvedValue({
+      status: ApiGen_CodeTypes_ExternalResponseStatus.Error,
+      payload: null,
+    });
     const generate = setup();
     await expect(generate(1, new ExpropriationForm1Model())).rejects.toThrow(
       'Failed to generate file',

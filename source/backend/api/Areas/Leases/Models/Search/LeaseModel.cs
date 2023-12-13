@@ -41,7 +41,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// <summary>
         /// get/set - The status of this lease.
         /// </summary>
-        public TypeModel<string> StatusType { get; set; }
+        public CodeTypeModel<string> StatusType { get; set; }
         #endregion
     }
 }

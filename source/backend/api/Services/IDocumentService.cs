@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Pims.Api.Constants;
-using Pims.Api.Models.Concepts.Document.UpdateMetadata;
-using Pims.Api.Models.Concepts.Document.Upload;
-using Pims.Api.Models.Concepts.Http;
-using Pims.Api.Models.Download;
+using Pims.Api.Models.CodeTypes;
+
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
+using Pims.Api.Models.Requests.Document.UpdateMetadata;
+using Pims.Api.Models.Requests.Document.Upload;
+using Pims.Api.Models.Requests.Http;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
@@ -16,17 +16,17 @@ namespace Pims.Api.Services
     /// </summary>
     public interface IDocumentService
     {
-        Task<ExternalResult<QueryResult<DocumentType>>> GetStorageDocumentTypes(string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResponse<QueryResponse<DocumentTypeModel>>> GetStorageDocumentTypes(string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> GetDocumentTypeMetadataType(long mayanDocumentTypeId, string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResponse<QueryResponse<DocumentTypeMetadataTypeModel>>> GetDocumentTypeMetadataType(long mayanDocumentTypeId, string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<QueryResult<DocumentDetail>>> GetStorageDocumentList(string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResponse<QueryResponse<DocumentDetailModel>>> GetStorageDocumentList(string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<QueryResult<DocumentMetadata>>> GetStorageDocumentMetadata(long mayanDocumentId, string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResponse<QueryResponse<DocumentMetadataModel>>> GetStorageDocumentMetadata(long mayanDocumentId, string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<FileDownload>> DownloadFileAsync(long mayanDocumentId, long mayanFileId);
+        Task<ExternalResponse<FileDownloadResponse>> DownloadFileAsync(long mayanDocumentId, long mayanFileId);
 
-        Task<ExternalResult<FileDownload>> DownloadFileLatestAsync(long mayanDocumentId);
+        Task<ExternalResponse<FileDownloadResponse>> DownloadFileLatestAsync(long mayanDocumentId);
 
         IList<PimsDocumentTyp> GetPimsDocumentTypes();
 
@@ -36,8 +36,8 @@ namespace Pims.Api.Services
 
         Task<DocumentUpdateResponse> UpdateDocumentAsync(DocumentUpdateRequest updateRequest);
 
-        Task<ExternalResult<string>> DeleteDocumentAsync(PimsDocument document);
+        Task<ExternalResponse<string>> DeleteDocumentAsync(PimsDocument document);
 
-        Task<ExternalResult<DocumentDetail>> GetStorageDocumentDetail(long mayanDocumentId);
+        Task<ExternalResponse<DocumentDetailModel>> GetStorageDocumentDetail(long mayanDocumentId);
     }
 }

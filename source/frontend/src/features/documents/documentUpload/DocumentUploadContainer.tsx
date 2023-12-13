@@ -11,15 +11,16 @@ import {
 
 import { SelectOption } from '@/components/common/form';
 import * as API from '@/constants/API';
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { DocumentStatusType } from '@/constants/documentStatusType';
 import { DocumentTypeName } from '@/constants/documentType';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
-import { Api_DocumentType, Api_DocumentUploadRequest } from '@/models/api/Document';
-import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
-import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
+import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
+import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
 
 import { DocumentUploadFormData } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
@@ -31,7 +32,7 @@ export interface IDocumentUploadContainerProps {
     React.FunctionComponent<React.PropsWithChildren<IDocumentUploadContainerProps>>
   >;
   parentId: string;
-  relationshipType: DocumentRelationshipType;
+  relationshipType: ApiGen_CodeTypes_DocumentRelationType;
   onUploadSuccess: () => void;
   onCancel: () => void;
   setCanUpload: (canUpload: boolean) => void;
@@ -83,13 +84,13 @@ const DocumentUploadContainer = forwardRef<
 
   const { uploadDocument, uploadDocumentLoading } = useDocumentRelationshipProvider();
 
-  const [documentTypes, setDocumentTypes] = useState<Api_DocumentType[]>([]);
+  const [documentTypes, setDocumentTypes] = useState<ApiGen_Concepts_DocumentType[]>([]);
   const [documentType, setDocumentType] = useState<string>('');
 
   const [documentStatusOptions, setDocumentStatusOptions] = useState<SelectOption[]>([]);
 
   const [documentTypeMetadataTypes, setDocumentTypeMetadataTypes] = useState<
-    Api_Storage_DocumentTypeMetadataType[]
+    ApiGen_Mayan_DocumentTypeMetadataType[]
   >([]);
 
   const onDocumentTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
@@ -98,7 +99,7 @@ const DocumentUploadContainer = forwardRef<
   };
 
   const updateDocumentType = useCallback(
-    async (documentType?: Api_DocumentType) => {
+    async (documentType?: ApiGen_Concepts_DocumentType) => {
       if (documentType === undefined) {
         return;
       }
@@ -106,8 +107,8 @@ const DocumentUploadContainer = forwardRef<
       setDocumentType(documentType.id?.toString() || '');
       if (documentType.mayanId) {
         const results = await retrieveDocumentTypeMetadata(documentType.mayanId);
-        if (results?.status === ExternalResultStatus.Success) {
-          setDocumentTypeMetadataTypes(results?.payload?.results);
+        if (results?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success) {
+          setDocumentTypeMetadataTypes(results?.payload?.results || []);
         }
       } else {
         setDocumentTypeMetadataTypes([]);
@@ -119,7 +120,7 @@ const DocumentUploadContainer = forwardRef<
   useEffect(() => {
     const retrievedDocumentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
     const fetch = async () => {
-      if (props.relationshipType === DocumentRelationshipType.TEMPLATES) {
+      if (props.relationshipType === ApiGen_CodeTypes_DocumentRelationType.Templates) {
         const axiosResponse = await getDocumentTypes();
         if (axiosResponse && isMounted()) {
           setDocumentTypes(axiosResponse.filter(x => x.documentType === DocumentTypeName.CDOGS));
@@ -147,7 +148,7 @@ const DocumentUploadContainer = forwardRef<
     getOptionsByType,
   ]);
 
-  const onUploadDocument = async (uploadRequest: Api_DocumentUploadRequest) => {
+  const onUploadDocument = async (uploadRequest: ApiGen_Requests_DocumentUploadRequest) => {
     var result = await uploadDocument(props.relationshipType, props.parentId, uploadRequest);
     if (result !== undefined) {
       props.onUploadSuccess();
@@ -161,7 +162,6 @@ const DocumentUploadContainer = forwardRef<
   }));
 
   const onDocumentSelected = () => {
-    debugger;
     props.setCanUpload(true);
   };
 

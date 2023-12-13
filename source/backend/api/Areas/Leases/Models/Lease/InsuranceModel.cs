@@ -16,7 +16,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// <summary>
         /// get/set - The insurance's type.
         /// </summary>
-        public TypeModel<string> InsuranceType { get; set; }
+        public CodeTypeModel<string> InsuranceType { get; set; }
 
         /// <summary>
         /// get/set - The insurance's other insurance type.

@@ -1,7 +1,7 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace Pims.Api.Constants
+namespace Pims.Api.Models.CodeTypes
 {
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum DocumentRelationType

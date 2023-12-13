@@ -1,13 +1,13 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace Pims.Api.Concepts.CodeTypes
+namespace Pims.Api.Models.CodeTypes
 {
     /// <summary>
     /// Status of an external call.
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
-    public enum ExternalResultStatus
+    public enum ExternalResponseStatus
     {
         /// <summary>
         /// The call was successful.

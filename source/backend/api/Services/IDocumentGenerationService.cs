@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Pims.Api.Constants;
 using Pims.Api.Models.Cdogs;
-using Pims.Api.Models.Concepts.Http;
-using Pims.Api.Models.Download;
+
+using Pims.Api.Models.Requests.Http;
 
 namespace Pims.Api.Services
 {
@@ -13,10 +13,10 @@ namespace Pims.Api.Services
     /// </summary>
     public interface IDocumentGenerationService
     {
-        Task<ExternalResult<FileTypes>> GetSupportedFileTypes();
+        Task<ExternalResponse<FileTypes>> GetSupportedFileTypes();
 
-        Task<ExternalResult<string>> UploadFileTemplate(IFormFile fileRaw);
+        Task<ExternalResponse<string>> UploadFileTemplate(IFormFile fileRaw);
 
-        Task<ExternalResult<FileDownload>> GenerateDocument(FormDocumentType templateType, JsonElement templateData, ConvertToTypes? convertTo);
+        Task<ExternalResponse<FileDownloadResponse>> GenerateDocument(FormDocumentType templateType, JsonElement templateData, ConvertToTypes? convertTo);
     }
 }

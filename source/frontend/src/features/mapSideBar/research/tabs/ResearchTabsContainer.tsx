@@ -2,10 +2,10 @@ import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { Claims } from '@/constants/claims';
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { NoteTypes } from '@/constants/noteTypes';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 
 import { SideBarContext } from '../../context/sidebarContext';
@@ -54,7 +54,7 @@ export const ResearchTabsContainer: React.FunctionComponent<
       content: (
         <DocumentsTab
           fileId={researchFile.id}
-          relationshipType={DocumentRelationshipType.RESEARCH_FILES}
+          relationshipType={ApiGen_CodeTypes_DocumentRelationType.ResearchFiles}
           onSuccess={onChildEntityUpdate}
         />
       ),

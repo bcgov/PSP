@@ -4,12 +4,12 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Concepts.CodeTypes;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Document;
-using Pims.Api.Models.Concepts.Document.Upload;
-using Pims.Api.Models.Concepts.Http;
+using Pims.Api.Models.Requests.Document.Upload;
+using Pims.Api.Models.Requests.Http;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -224,7 +224,7 @@ namespace Pims.Api.Services
             return relationshipResponse;
         }
 
-        public async Task<ExternalResult<string>> DeleteResearchDocumentAsync(PimsResearchFileDocument researchFileDocument)
+        public async Task<ExternalResponse<string>> DeleteResearchDocumentAsync(PimsResearchFileDocument researchFileDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single research file");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
@@ -238,11 +238,11 @@ namespace Pims.Api.Services
             {
                 researchFileDocumentRepository.DeleteResearch(researchFileDocument);
                 researchFileDocumentRepository.CommitTransaction();
-                return new ExternalResult<string>() { Status = ExternalResultStatus.NotExecuted };
+                return new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
             }
         }
 
-        public async Task<ExternalResult<string>> DeleteProjectDocumentAsync(PimsProjectDocument projectDocument)
+        public async Task<ExternalResponse<string>> DeleteProjectDocumentAsync(PimsProjectDocument projectDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single Project");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
@@ -256,11 +256,11 @@ namespace Pims.Api.Services
             {
                 _projectRepository.DeleteProjectDocument(projectDocument.ProjectDocumentId);
                 _projectRepository.CommitTransaction();
-                return new ExternalResult<string>() { Status = ExternalResultStatus.NotExecuted };
+                return new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
             }
         }
 
-        public async Task<ExternalResult<string>> DeleteAcquisitionDocumentAsync(PimsAcquisitionFileDocument acquisitionFileDocument)
+        public async Task<ExternalResponse<string>> DeleteAcquisitionDocumentAsync(PimsAcquisitionFileDocument acquisitionFileDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single acquisition file");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
@@ -274,11 +274,11 @@ namespace Pims.Api.Services
             {
                 acquisitionFileDocumentRepository.DeleteAcquisition(acquisitionFileDocument);
                 acquisitionFileDocumentRepository.CommitTransaction();
-                return new ExternalResult<string>() { Status = ExternalResultStatus.NotExecuted };
+                return new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
             }
         }
 
-        public async Task<ExternalResult<string>> DeleteLeaseDocumentAsync(PimsLeaseDocument leaseDocument)
+        public async Task<ExternalResponse<string>> DeleteLeaseDocumentAsync(PimsLeaseDocument leaseDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single lease");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
@@ -292,11 +292,11 @@ namespace Pims.Api.Services
             {
                 _leaseRepository.DeleteLeaseDocument(leaseDocument.LeaseDocumentId);
                 _leaseRepository.CommitTransaction();
-                return new ExternalResult<string>() { Status = ExternalResultStatus.NotExecuted };
+                return new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
             }
         }
 
-        public async Task<ExternalResult<string>> DeletePropertyActivityDocumentAsync(PimsPropertyActivityDocument propertyActivityDocument)
+        public async Task<ExternalResponse<string>> DeletePropertyActivityDocumentAsync(PimsPropertyActivityDocument propertyActivityDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single Property Activity");
             this.User.ThrowIfNotAuthorized(Permissions.ManagementDelete);
@@ -310,7 +310,7 @@ namespace Pims.Api.Services
             {
                 _propertyActivityDocumentRepository.DeletePropertyActivityDocument(propertyActivityDocument);
                 _propertyActivityDocumentRepository.CommitTransaction();
-                return new ExternalResult<string>() { Status = ExternalResultStatus.NotExecuted };
+                return new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
             }
         }
     }

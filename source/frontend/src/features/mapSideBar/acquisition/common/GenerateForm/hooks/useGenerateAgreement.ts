@@ -6,7 +6,7 @@ import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
 import { AgreementTypes, Api_Agreement } from '@/models/api/Agreement';
-import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { Api_Organization } from '@/models/api/Organization';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateAgreement } from '@/models/generate/GenerateAgreement';
@@ -100,7 +100,7 @@ export const useGenerateAgreement = () => {
       templateData: agreementData,
       convertToType: null,
     });
-    generatedFile?.status === ExternalResultStatus.Success!! &&
+    generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success!! &&
       generatedFile?.payload &&
       showFile(generatedFile?.payload);
   };

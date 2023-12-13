@@ -8,7 +8,7 @@ import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermReposit
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { Api_Lease } from '@/models/api/Lease';
 import { Api_GenerateLease } from '@/models/generate/lease/GenerateLease';
 import { useAxiosErrorHandler } from '@/utils';
@@ -75,7 +75,10 @@ export const useGenerateH1005a = (lease?: Api_Lease) => {
         templateData: leaseData,
         convertToType: null,
       });
-      if (generatedFile?.status === ExternalResultStatus.Success!! && generatedFile?.payload) {
+      if (
+        generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success!! &&
+        generatedFile?.payload
+      ) {
         showFile(generatedFile?.payload);
       } else {
         throw Error('Failed to generate file');

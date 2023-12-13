@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
-using Pims.Api.Models.Concepts.Http;
+
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Metadata;
+using Pims.Api.Models.Requests.Http;
 
 namespace Pims.Api.Repositories.Mayan
 {
@@ -10,12 +11,12 @@ namespace Pims.Api.Repositories.Mayan
     /// </summary>
     public interface IEdmsMetadataRepository
     {
-        Task<ExternalResult<MetadataType>> TryCreateMetadataTypeAsync(MetadataType metadataType);
+        Task<ExternalResponse<MetadataTypeModel>> TryCreateMetadataTypeAsync(MetadataTypeModel metadataType);
 
-        Task<ExternalResult<MetadataType>> TryUpdateMetadataTypeAsync(MetadataType metadataType);
+        Task<ExternalResponse<MetadataTypeModel>> TryUpdateMetadataTypeAsync(MetadataTypeModel metadataType);
 
-        Task<ExternalResult<string>> TryDeleteMetadataTypeAsync(long metadataTypeId);
+        Task<ExternalResponse<string>> TryDeleteMetadataTypeAsync(long metadataTypeId);
 
-        Task<ExternalResult<QueryResult<MetadataType>>> TryGetMetadataTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResponse<QueryResponse<MetadataTypeModel>>> TryGetMetadataTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
     }
 }

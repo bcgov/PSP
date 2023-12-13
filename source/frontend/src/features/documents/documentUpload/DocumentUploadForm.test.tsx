@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { SelectOption } from '@/components/common/form';
 import { mockDocumentTypesResponse } from '@/mocks/documents.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
+import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fireEvent, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
@@ -30,12 +30,16 @@ const documentStatusOptions: SelectOption[] = [
   { label: '', value: 'CNCLD' },
 ];
 
-const documentTypeMetadataType: Api_Storage_DocumentTypeMetadataType[] = [
+const documentTypeMetadataType: ApiGen_Mayan_DocumentTypeMetadataType[] = [
   {
     id: 1,
     document_type: {
       id: 1,
       label: 'BC Assessment Search',
+      delete_time_period: null,
+      delete_time_unit: null,
+      trash_time_period: null,
+      trash_time_unit: null,
     },
     metadata_type: {
       default: '',
@@ -50,6 +54,7 @@ const documentTypeMetadataType: Api_Storage_DocumentTypeMetadataType[] = [
       validation_arguments: '',
     },
     required: true,
+    url: null,
   },
 ];
 

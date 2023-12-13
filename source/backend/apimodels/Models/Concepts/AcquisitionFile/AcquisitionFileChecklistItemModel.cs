@@ -22,6 +22,6 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// <summary>
         /// get/set - Checklist item status type code.
         /// </summary>
-        public TypeModel<string> StatusTypeCode { get; set; }
+        public CodeTypeModel<string> StatusTypeCode { get; set; }
     }
 }

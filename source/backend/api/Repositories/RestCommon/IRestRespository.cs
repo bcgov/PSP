@@ -1,7 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Pims.Api.Models.Concepts.Http;
+using Pims.Api.Models.Requests.Http;
 
 namespace Pims.Api.Repositories.Rest
 {
@@ -10,13 +10,13 @@ namespace Pims.Api.Repositories.Rest
     /// </summary>
     public interface IRestRespository
     {
-        Task<ExternalResult<T>> GetAsync<T>(Uri endpoint, string authenticationToken);
+        Task<ExternalResponse<T>> GetAsync<T>(Uri endpoint, string authenticationToken);
 
-        Task<ExternalResult<T>> PostAsync<T>(Uri endpoint, HttpContent content, string authenticationToken = null);
+        Task<ExternalResponse<T>> PostAsync<T>(Uri endpoint, HttpContent content, string authenticationToken = null);
 
-        Task<ExternalResult<T>> PutAsync<T>(Uri endpoint, HttpContent content, string authenticationToken = null);
+        Task<ExternalResponse<T>> PutAsync<T>(Uri endpoint, HttpContent content, string authenticationToken = null);
 
-        Task<ExternalResult<string>> DeleteAsync(Uri endpoint, string authenticationToken = null);
+        Task<ExternalResponse<string>> DeleteAsync(Uri endpoint, string authenticationToken = null);
 
         void AddAuthentication(HttpClient client, string authenticationToken = null);
     }

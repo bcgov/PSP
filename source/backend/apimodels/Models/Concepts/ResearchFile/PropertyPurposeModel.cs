@@ -14,7 +14,7 @@ namespace Pims.Api.Models.Concepts.ResearchFile
         /// <summary>
         /// get/set - The property purpose type code.
         /// </summary>
-        public TypeModel<string> PropertyPurposeType { get; set; }
+        public CodeTypeModel<string> PropertyPurposeType { get; set; }
 
         /// <summary>
         /// get/set - The research file property id.

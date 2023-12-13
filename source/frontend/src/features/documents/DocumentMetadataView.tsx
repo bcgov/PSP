@@ -2,13 +2,13 @@ import { FieldArray, FormikProps } from 'formik';
 
 import { Input } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
+import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 
 import { StyledNoData } from './commonStyles';
 import { DocumentUpdateFormData, DocumentUploadFormData } from './ComposedDocument';
 
 export interface IDocumentMetadataViewProps {
-  mayanMetadata: Api_Storage_DocumentTypeMetadataType[];
+  mayanMetadata: ApiGen_Mayan_DocumentTypeMetadataType[];
   formikProps: FormikProps<DocumentUploadFormData> | FormikProps<DocumentUpdateFormData>;
 }
 

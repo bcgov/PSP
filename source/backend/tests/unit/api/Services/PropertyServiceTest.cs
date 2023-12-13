@@ -5,6 +5,7 @@ using FluentAssertions;
 using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Test;

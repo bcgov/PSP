@@ -1,5 +1,9 @@
 using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http;
 using Pims.Api.Models.Base;
+using Pims.Api.Models.Mayan;
 using TypeGen.Core.Extensions;
 using TypeGen.Core.SpecGeneration;
 using TypeGen.Core.SpecGeneration.Builders;
@@ -14,28 +18,63 @@ namespace Pims.Tools.TsModelGenerator.Specifications
             ProcessInterface(typeof(BaseAuditModel));
             ProcessInterface(typeof(BaseConcurrentModel));
 
-            var genericTypeModel = typeof(TypeModel<string>).GetGenericTypeDefinition();
+            var genericTypeModel = typeof(CodeTypeModel<string>).GetGenericTypeDefinition();
             ProcessInterface(genericTypeModel);
 
             var modelsAssembly = Assembly.Load("Pims.Api.Models");
 
             // Get the types only from the specified namespace
-            IEnumerable<Type> assemblyTypes = modelsAssembly.GetLoadableTypes()
+            IEnumerable<Type> conceptTypes = modelsAssembly.GetLoadableTypes()
                 .Where(x => x.FullName.StartsWith("Pims.Api.Models.Concepts"));
 
+            IEnumerable<Type> requestTypes = modelsAssembly.GetLoadableTypes()
+                .Where(x => x.FullName.StartsWith("Pims.Api.Models.Request"));
+
             IEnumerable<Type> baseTypes = modelsAssembly.GetLoadableTypes()
-                .Where(x => x.FullName.StartsWith("Pims.Api.Models.Base."));
+                .Where(x => x.FullName.StartsWith("Pims.Api.Models.Base"));
+
+            IEnumerable<Type> mayanTypes = modelsAssembly.GetLoadableTypes()
+                .Where(x => x.FullName.StartsWith("Pims.Api.Models.Mayan"));
+
+            var genericMayanResponseTypeModel = typeof(QueryResponse<string>).GetGenericTypeDefinition();
+            ProcessInterface(genericMayanResponseTypeModel);
+
+            IEnumerable<Type> codeTypes = modelsAssembly.GetLoadableTypes()
+                .Where(x => x.FullName.StartsWith("Pims.Api.Models.CodeTypes"));
+
 
             foreach (Type type in baseTypes)
             {
                 System.Console.WriteLine(type.FullName);
             }
 
-            foreach (Type type in assemblyTypes)
+            foreach (Type type in requestTypes)
+            {
+                //System.Console.WriteLine(type.FullName);
+                ProcessInterface(type);
+            }
+
+            foreach (Type type in conceptTypes)
             {
                 if (type.FullName.EndsWith("Model"))
                 {
                     ProcessInterface(type);
+                }
+            }
+
+            foreach (Type type in mayanTypes)
+            {
+                if (type.FullName.EndsWith("Model"))
+                {
+                    ProcessInterface(type);
+                }
+            }
+
+            foreach (Type type in codeTypes)
+            {
+                if (type.BaseType == typeof(System.Enum))
+                {
+                    ProcessEnum(type);
                 }
             }
         }
@@ -66,11 +105,32 @@ namespace Pims.Tools.TsModelGenerator.Specifications
             {
                 var memberBuilder = interfaceBuilder.Member(property.Name);
 
+                memberBuilder = ProcessJsonAttributes(memberBuilder, property);
                 memberBuilder = ProcessNullable(memberBuilder, property);
                 memberBuilder = ProcessDateTime(memberBuilder, property);
+                memberBuilder = ProcessFile(memberBuilder, property);
             }
 
             return interfaceBuilder;
+        }
+
+        private EnumSpecBuilder ProcessEnum(Type type)
+        {
+            var enumBuilder = AddEnum(type).StringInitializers(true);
+
+            var properties = type.GetFields();
+            foreach (var property in properties)
+            {
+                var enumAttribute = (EnumMemberAttribute?)property.GetCustomAttributes(typeof(EnumMemberAttribute), false).FirstOrDefault();
+
+                if (enumAttribute != null)
+                {
+                    enumBuilder.Member(enumAttribute.Value);
+                }
+
+            }
+
+            return enumBuilder;
         }
 
         private InterfaceSpecBuilder ProcessNullable(InterfaceSpecBuilder builder, PropertyInfo propertyInfo)
@@ -97,9 +157,31 @@ namespace Pims.Tools.TsModelGenerator.Specifications
             return builder;
         }
 
+        private InterfaceSpecBuilder ProcessFile(InterfaceSpecBuilder builder, PropertyInfo propertyInfo)
+        {
+            // Convert IFormFile to File(Blob) type for TS
+            if (propertyInfo.PropertyType == typeof(IFormFile))
+            {
+                builder.NotNull().Type("File");
+            }
+
+            return builder;
+        }
+
+        private InterfaceSpecBuilder ProcessJsonAttributes(InterfaceSpecBuilder builder, PropertyInfo propertyInfo)
+        {
+            var jsonPropertyAttribute = (JsonPropertyNameAttribute?)propertyInfo.GetCustomAttributes(typeof(JsonPropertyNameAttribute), false).FirstOrDefault();
+
+            if (jsonPropertyAttribute != null)
+            {
+                builder.MemberName(jsonPropertyAttribute.Name);
+            }
+            return builder;
+        }
+
         public override void OnBeforeBarrelGeneration(OnBeforeBarrelGenerationArgs args)
         {
-            AddBarrel(".", BarrelScope.Files); // adds one barrel file in the global TypeScript output directory containing only files from that directory
+            //AddBarrel(".", BarrelScope.Files); // adds one barrel file in the global TypeScript output directory containing only files from that directory
         }
     }
 }
