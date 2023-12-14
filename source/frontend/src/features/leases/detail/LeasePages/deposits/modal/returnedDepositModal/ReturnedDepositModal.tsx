@@ -2,7 +2,7 @@ import { FormikProps } from 'formik';
 import * as React from 'react';
 import { useRef } from 'react';
 
-import * as CommonStyled from '@/components/common/styles';
+import GenericModal from '@/components/common/GenericModal';
 
 import { FormLeaseDepositReturn } from '../../models/FormLeaseDepositReturn';
 import { ReturnDepositForm } from './ReturnDepositForm';
@@ -24,7 +24,8 @@ export const ReturnedDepositModal: React.FunctionComponent<
   const formikRef = useRef<FormikProps<FormLeaseDepositReturn>>(null);
   const modalTitle = initialValues?.id === undefined ? 'Return a Deposit' : 'Edit a Deposit Return';
   return (
-    <CommonStyled.PrimaryGenericModal
+    <GenericModal
+      variant="info"
       title={modalTitle}
       display={display}
       okButtonText="Save"
