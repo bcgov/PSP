@@ -376,6 +376,7 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
           >
             <button
               class="c3 Button btn btn-secondary"
+              data-testid="cancel-modal-button"
               title="cancel-modal"
               type="button"
             >
@@ -387,6 +388,7 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
             </button>
             <button
               class="c3 Button btn btn-primary"
+              data-testid="ok-modal-button"
               title="ok-modal"
               type="button"
             >
