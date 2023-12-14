@@ -27,6 +27,7 @@ export interface ModalContent {
   handleCancel?: Function;
   /** Optional function to control behaviour of ok button. Default is to reload the app. */
   handleOk?: Function;
+  handleOkDisabled?: boolean;
   /** Optional text to display on the cancel button. Default is Cancel. */
   cancelButtonText?: string;
   /** Optional variant that will override the default variant of warning. */
@@ -98,6 +99,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     display,
     setDisplay,
     handleOk,
+    handleOkDisabled,
     handleCancel,
     title,
     message,
@@ -215,12 +217,19 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
                 title="cancel-modal"
                 variant={cancelButtonVariant ?? 'secondary'}
                 onClick={close}
+                data-testid="cancel-modal-button"
               >
                 {cancelButtonText}
               </Button>
             )}
 
-            <Button title="ok-modal" variant={okButtonVariant ?? 'primary'} onClick={ok}>
+            <Button
+              title="ok-modal"
+              variant={okButtonVariant ?? 'primary'}
+              onClick={ok}
+              disabled={handleOkDisabled}
+              data-testid="ok-modal-button"
+            >
               {okButtonText ?? 'Ok'}
             </Button>
           </div>
