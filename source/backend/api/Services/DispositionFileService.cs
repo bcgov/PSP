@@ -85,7 +85,7 @@ namespace Pims.Api.Services
             return _dispositionFileRepository.GetPageDeep(filter);
         }
 
-        public IEnumerable<PimsPropertyDispositionFile> GetProperties(long id)
+        public IEnumerable<PimsDispositionFileProperty> GetProperties(long id)
         {
             _logger.LogInformation("Getting disposition file properties with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
@@ -114,7 +114,7 @@ namespace Pims.Api.Services
             return teamFilterOptions;
         }
 
-        private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyDispositionFile> dispositionPropertyFiles)
+        private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsDispositionFileProperty> dispositionPropertyFiles)
         {
             foreach (var dispositionProperty in dispositionPropertyFiles)
             {
@@ -129,7 +129,7 @@ namespace Pims.Api.Services
 
         private void MatchProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> overrideCodes)
         {
-            foreach (var dispProperty in dispositionFile.PimsPropertyDispositionFiles)
+            foreach (var dispProperty in dispositionFile.PimsDispositionFileProperties)
             {
                 if (dispProperty.Property.Pid.HasValue)
                 {

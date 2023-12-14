@@ -5,7 +5,7 @@ namespace Pims.Dal.Repositories
 {
     public interface IDispositionFilePropertyRepository : IRepository
     {
-        List<PimsPropertyDispositionFile> GetPropertiesByDispositionFileId(long dispositionFileId);
+        List<PimsDispositionFileProperty> GetPropertiesByDispositionFileId(long dispositionFileId);
 
         int GetDispositionFilePropertyRelatedCount(long propertyId);
     }

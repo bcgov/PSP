@@ -26,9 +26,8 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Map(dest => dest.InitiatingDocumentTypeCode, src => src.DispositionInitiatingDocTypeCodeNavigation)
                 .Map(dest => dest.DispositionTypeOther, src => src.OtherDispositionType)
                 .Map(dest => dest.InitiatingDocumentTypeOther, src => src.OtherInitiatingDocType)
-                .Map(dest => dest.FileProperties, src => src.PimsPropertyDispositionFiles)
                 .Map(dest => dest.DispositionTeam, src => src.PimsDispositionFileTeams)
-                .Map(dest => dest.FileProperties, src => src.PimsPropertyDispositionFiles);
+                .Map(dest => dest.FileProperties, src => src.PimsDispositionFileProperties);
 
             config.NewConfig<DispositionFileModel, Entity.PimsDispositionFile>()
                 .Map(dest => dest.DispositionFileId, src => src.Id)
@@ -48,9 +47,8 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Map(dest => dest.DispositionInitiatingDocTypeCode, src => src.InitiatingDocumentTypeCode.Id)
                 .Map(dest => dest.OtherDispositionType, src => src.DispositionTypeOther)
                 .Map(dest => dest.OtherInitiatingDocType, src => src.InitiatingDocumentTypeOther)
-                .Map(dest => dest.PimsPropertyDispositionFiles, src => src.FileProperties)
                 .Map(dest => dest.PimsDispositionFileTeams, src => src.DispositionTeam)
-                .Map(dest => dest.PimsPropertyDispositionFiles, src => src.FileProperties);
+                .Map(dest => dest.PimsDispositionFileProperties, src => src.FileProperties);
         }
     }
 }

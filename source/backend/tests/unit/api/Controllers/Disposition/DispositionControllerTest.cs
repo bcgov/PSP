@@ -65,7 +65,7 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var dispFile = new PimsDispositionFile();
 
-            this._service.Setup(m => m.GetProperties(It.IsAny<long>())).Returns(new List<PimsPropertyDispositionFile>());
+            this._service.Setup(m => m.GetProperties(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>());
 
             // Act
             var result = this._controller.GetDispositionFileProperties(1);

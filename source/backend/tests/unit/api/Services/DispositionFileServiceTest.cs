@@ -91,7 +91,7 @@ namespace Pims.Api.Test.Services
             var dispFile = EntityHelper.CreateDispositionFile();
 
             var repository = this._helper.GetService<Mock<IDispositionFilePropertyRepository>>();
-            repository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyDispositionFile>());
+            repository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>());
 
             // Act
             Action act = () => service.GetProperties(1);
@@ -109,7 +109,7 @@ namespace Pims.Api.Test.Services
             var dispFile = EntityHelper.CreateDispositionFile();
 
             var repository = this._helper.GetService<Mock<IDispositionFilePropertyRepository>>();
-            repository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyDispositionFile>());
+            repository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>());
 
             // Act
             var properties = service.GetProperties(1);
@@ -127,7 +127,7 @@ namespace Pims.Api.Test.Services
             var dispFile = EntityHelper.CreateDispositionFile();
 
             var repository = this._helper.GetService<Mock<IDispositionFilePropertyRepository>>();
-            repository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyDispositionFile>() { new PimsPropertyDispositionFile() { Property = new PimsProperty() { Location = new Point(1, 1) } } });
+            repository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = new PimsProperty() { Location = new Point(1, 1) } } });
             var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(1, 1));
             // Act
