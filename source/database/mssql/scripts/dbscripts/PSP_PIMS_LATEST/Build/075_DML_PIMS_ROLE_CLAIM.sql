@@ -156,7 +156,6 @@ SELECT @managementAdd = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'management-add';
 SELECT @managementEdit = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'management-edit';
 SELECT @managementDelete = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'management-delete';
 
-
 DECLARE @dispositionView BIGINT;
 DECLARE @dispositionAdd BIGINT;
 DECLARE @dispositionEdit BIGINT;
