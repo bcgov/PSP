@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DocumentDetailForm component renders as expected 1`] = `
-.c9.btn {
+.c8.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -31,49 +31,49 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c9.btn:hover {
+.c8.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c9.btn:focus {
+.c8.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c9.btn.btn-primary {
+.c8.btn.btn-primary {
   border: none;
 }
 
-.c9.btn.btn-secondary {
+.c8.btn.btn-secondary {
   background: none;
 }
 
-.c9.btn.btn-info {
+.c8.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c9.btn.btn-info:hover,
-.c9.btn.btn-info:active,
-.c9.btn.btn-info:focus {
+.c8.btn.btn-info:hover,
+.c8.btn.btn-info:active,
+.c8.btn.btn-info:focus {
   background: none;
 }
 
-.c9.btn.btn-light {
+.c8.btn.btn-light {
   border: none;
 }
 
-.c9.btn.btn-dark {
+.c8.btn.btn-dark {
   border: none;
 }
 
-.c9.btn.btn-link {
+.c8.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -94,9 +94,9 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
   padding: 0;
 }
 
-.c9.btn.btn-link:hover,
-.c9.btn.btn-link:active,
-.c9.btn.btn-link:focus {
+.c8.btn.btn-link:hover,
+.c8.btn.btn-link:active,
+.c8.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -105,14 +105,14 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
   outline: none;
 }
 
-.c9.btn.btn-link:disabled,
-.c9.btn.btn-link.disabled {
+.c8.btn.btn-link:disabled,
+.c8.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c9.btn:disabled,
-.c9.btn:disabled:hover {
+.c8.btn:disabled,
+.c8.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -123,16 +123,28 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c9.Button .Button__icon {
+.c8.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c9.Button--icon-only:focus {
+.c8.Button--icon-only:focus {
   outline: none;
 }
 
-.c9.Button--icon-only .Button__icon {
+.c8.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c4 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c3 {
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c2.required::before {
@@ -146,7 +158,7 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c6 {
+.c5 {
   width: 100%;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
@@ -155,15 +167,7 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c3 {
-  padding: 1rem;
-}
-
-.c5 {
-  font-weight: 700;
-}
-
-.c8 {
+.c7 {
   font-weight: 700;
   font-size: 1.7rem;
   margin-bottom: 1rem;
@@ -172,15 +176,7 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
   border-bottom: solid 0.1rem;
 }
 
-.c4 {
-  text-align: left !important;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c7 {
+.c6 {
   overflow-x: hidden;
   max-height: 50rem;
 }
@@ -199,92 +195,92 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
       class="c0"
     >
       <div
-        class="pb-2 row"
+        class="pb-4"
       >
         <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c1"
-          >
-            Document type
-            :
-          </label>
-        </div>
-        <div
-          class="c2 text-left col"
-        >
-          Survey
-        </div>
-      </div>
-      <div
-        class="pb-3 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c1"
-          >
-            File name
-            :
-          </label>
-        </div>
-        <div
-          class="c2 text-left col"
+          class="pb-2 row"
         >
           <div
-            class="row"
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c1"
+            >
+              Document type
+              :
+            </label>
+          </div>
+          <div
+            class="c2 text-left col"
+          >
+            Survey
+          </div>
+        </div>
+        <div
+          class="pb-3 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c1"
+            >
+              File name
+              :
+            </label>
+          </div>
+          <div
+            class="c2 text-left col"
           >
             <div
-              class="col-auto"
+              class="row"
             >
-              NewFile.doc
-            </div>
-            <div
-              class="col-auto"
-            >
-              <span
-                class="tooltip-icon"
-                data-testid="tooltip-icon-document-not-available-tooltip"
-                id="document-not-available-tooltip"
+              <div
+                class="col-auto"
               >
-                <svg
+                NewFile.doc
+              </div>
+              <div
+                class="col-auto"
+              >
+                <span
                   class="tooltip-icon"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                  data-testid="tooltip-icon-document-not-available-tooltip"
+                  id="document-not-available-tooltip"
                 >
-                  <path
-                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                  />
-                </svg>
-              </span>
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div
-        class="c3"
+        class="c3 form-section"
       >
-        <div
-          class="pb-3 row"
+        <h2
+          class="c4"
         >
           <div
-            class="text-left col"
+            class="no-gutters row"
           >
             <div
-              class="c4"
+              class="col"
             >
-              <h2
-                class="c5"
-              >
-                Document information
-              </h2>
+              Document information
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon-documentInfoToolTip"
@@ -305,157 +301,168 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
                   />
                 </svg>
               </span>
+               
             </div>
           </div>
-        </div>
+        </h2>
         <div
-          class="c6 c7"
+          class="collapse show"
         >
           <div
-            class="pb-2 row"
+            class="c5 c6"
           >
             <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c1"
-              >
-                Status
-                :
-              </label>
-            </div>
-            <div
-              class="c2 text-left col"
+              class="pb-2 row"
             >
               <div
-                class="form-group"
+                class="pr-0 text-left col-4"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-documentStatusCode"
-                  name="documentStatusCode"
+                <label
+                  class="c1"
                 >
-                  <option
-                    class="option"
-                    data-testid="select-option-NONE"
-                    value="NONE"
+                  Status
+                  :
+                </label>
+              </div>
+              <div
+                class="c2 text-left col"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-documentStatusCode"
+                    name="documentStatusCode"
                   >
-                    None
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-DRAFT"
-                    value="DRAFT"
-                  >
-                    Draft
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-APPROVD"
-                    value="APPROVD"
-                  >
-                    Approved
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-SIGND"
-                    value="SIGND"
-                  >
-                    Signed
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-FINAL"
-                    value="FINAL"
-                  >
-                    Final
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-AMENDD"
-                    value="AMENDD"
-                  >
-                    Amended
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-CNCLD"
-                    value="CNCLD"
-                  >
-                    Cancelled
-                  </option>
-                </select>
+                    <option
+                      class="option"
+                      data-testid="select-option-NONE"
+                      value="NONE"
+                    >
+                      None
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-DRAFT"
+                      value="DRAFT"
+                    >
+                      Draft
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-APPROVD"
+                      value="APPROVD"
+                    >
+                      Approved
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-SIGND"
+                      value="SIGND"
+                    >
+                      Signed
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-FINAL"
+                      value="FINAL"
+                    >
+                      Final
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-AMENDD"
+                      value="AMENDD"
+                    >
+                      Amended
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-CNCLD"
+                      value="CNCLD"
+                    >
+                      Cancelled
+                    </option>
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
-          <h3
-            class="c8"
-          >
-            Details
-          </h3>
-          <div
-            class="pb-2 row"
-          >
-            <div
-              class="pr-0 text-left col-4"
+            <h3
+              class="c7"
             >
-              <label
-                class="c1"
-              >
-                Tag Foo
-                :
-              </label>
-            </div>
+              Details
+            </h3>
             <div
-              class="c2 text-left col"
+              class="pb-2 row"
             >
               <div
-                class="input form-group"
+                class="pr-0 text-left col-4"
               >
-                <input
-                  class="form-control"
-                  data-testid="metadata-input-tag-foo"
-                  id="input-documentMetadata.1"
-                  name="documentMetadata.1"
-                  title="Tag1234"
-                  value="Tag1234"
-                />
+                <label
+                  class="c1"
+                >
+                  Tag Foo
+                  :
+                </label>
+              </div>
+              <div
+                class="c2 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    data-testid="metadata-input-tag-foo"
+                    id="input-documentMetadata.1"
+                    name="documentMetadata.1"
+                    title="Tag1234"
+                    value="Tag1234"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            style="color: red;"
-          />
-          <div
-            class="justify-content-end pt-4 row"
-          >
             <div
-              class="col-auto"
+              style="color: red;"
+            />
+            <div
+              class="pt-5"
             >
-              <button
-                class="c9 Button btn btn-secondary"
-                type="button"
-              >
-                <div
-                  class="Button__value"
-                >
-                  Cancel
-                </div>
-              </button>
+              Do you want to proceed?
             </div>
+            <hr />
             <div
-              class="col-auto"
+              class="justify-content-end pt-4 row"
             >
-              <button
-                class="c9 Button btn btn-primary"
-                type="submit"
+              <div
+                class="col-auto"
               >
-                <div
-                  class="Button__value"
+                <button
+                  class="c8 Button px-5 btn btn-secondary"
+                  type="button"
                 >
-                  Save
-                </div>
-              </button>
+                  <div
+                    class="Button__value"
+                  >
+                    No
+                  </div>
+                </button>
+              </div>
+              <div
+                class="col-auto"
+              >
+                <button
+                  class="c8 Button px-5 btn btn-primary"
+                  type="submit"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    Yes
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
