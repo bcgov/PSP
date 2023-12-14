@@ -8,30 +8,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_DISPOSITION_FILE_TEAM")]
-    [Index(nameof(DispositionFileId), nameof(DspFlTeamProfileTypeCode), Name = "DSPFTM_%column%_TUC", IsUnique = true)]
-    [Index(nameof(DispositionFileId), Name = "DSPFTM_DISPOSITION_FILE_ID_IDX")]
-    [Index(nameof(DspFlTeamProfileTypeCode), Name = "DSPFTM_DSP_FL_TEAM_PROFILE_TYPE_CODE_IDX")]
-    [Index(nameof(OrganizationId), Name = "DSPFTM_ORGANIZATION_ID_IDX")]
-    [Index(nameof(PersonId), Name = "DSPFTM_PERSON_ID_IDX")]
-    [Index(nameof(PrimaryContactId), Name = "DSPFTM_PRIMARY_CONTACT_ID_IDX")]
-    public partial class PimsDispositionFileTeam
+    [Table("PIMS_DISPOSITION_CHECKLIST_ITEM_HIST")]
+    [Index(nameof(DispositionChecklistItemHistId), nameof(EndDateHist), Name = "PIMS_DSPCKI_H_UK", IsUnique = true)]
+    public partial class PimsDispositionChecklistItemHist
     {
         [Key]
-        [Column("DISPOSITION_FILE_TEAM_ID")]
-        public long DispositionFileTeamId { get; set; }
+        [Column("_DISPOSITION_CHECKLIST_ITEM_HIST_ID")]
+        public long DispositionChecklistItemHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Column("DISPOSITION_CHECKLIST_ITEM_ID")]
+        public long DispositionChecklistItemId { get; set; }
         [Column("DISPOSITION_FILE_ID")]
         public long DispositionFileId { get; set; }
-        [Column("PERSON_ID")]
-        public long? PersonId { get; set; }
-        [Column("ORGANIZATION_ID")]
-        public long? OrganizationId { get; set; }
-        [Column("PRIMARY_CONTACT_ID")]
-        public long? PrimaryContactId { get; set; }
-        [Required]
-        [Column("DSP_FL_TEAM_PROFILE_TYPE_CODE")]
+        [Column("DSP_CHKLST_ITEM_TYPE_CODE")]
         [StringLength(20)]
-        public string DspFlTeamProfileTypeCode { get; set; }
+        public string DspChklstItemTypeCode { get; set; }
+        [Required]
+        [Column("DSP_CHKLST_ITEM_STATUS_TYPE_CODE")]
+        [StringLength(20)]
+        public string DspChklstItemStatusTypeCode { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -70,21 +68,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [ForeignKey(nameof(DispositionFileId))]
-        [InverseProperty(nameof(PimsDispositionFile.PimsDispositionFileTeams))]
-        public virtual PimsDispositionFile DispositionFile { get; set; }
-        [ForeignKey(nameof(DspFlTeamProfileTypeCode))]
-        [InverseProperty(nameof(PimsDspFlTeamProfileType.PimsDispositionFileTeams))]
-        public virtual PimsDspFlTeamProfileType DspFlTeamProfileTypeCodeNavigation { get; set; }
-        [ForeignKey(nameof(OrganizationId))]
-        [InverseProperty(nameof(PimsOrganization.PimsDispositionFileTeams))]
-        public virtual PimsOrganization Organization { get; set; }
-        [ForeignKey(nameof(PersonId))]
-        [InverseProperty(nameof(PimsPerson.PimsDispositionFileTeamPeople))]
-        public virtual PimsPerson Person { get; set; }
-        [ForeignKey(nameof(PrimaryContactId))]
-        [InverseProperty(nameof(PimsPerson.PimsDispositionFileTeamPrimaryContacts))]
-        public virtual PimsPerson PrimaryContact { get; set; }
     }
 }

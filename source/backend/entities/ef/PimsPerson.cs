@@ -18,6 +18,12 @@ namespace Pims.Dal.Entities
             PimsContactMethods = new HashSet<PimsContactMethod>();
             PimsDispositionFileTeamPeople = new HashSet<PimsDispositionFileTeam>();
             PimsDispositionFileTeamPrimaryContacts = new HashSet<PimsDispositionFileTeam>();
+            PimsDispositionPurchaserPeople = new HashSet<PimsDispositionPurchaser>();
+            PimsDispositionPurchaserPrimaryContacts = new HashSet<PimsDispositionPurchaser>();
+            PimsDspPurchAgentPeople = new HashSet<PimsDspPurchAgent>();
+            PimsDspPurchAgentPrimaryContacts = new HashSet<PimsDspPurchAgent>();
+            PimsDspPurchSolicitorPeople = new HashSet<PimsDspPurchSolicitor>();
+            PimsDspPurchSolicitorPrimaryContacts = new HashSet<PimsDspPurchSolicitor>();
             PimsInterestHolderPeople = new HashSet<PimsInterestHolder>();
             PimsInterestHolderPrimaryContacts = new HashSet<PimsInterestHolder>();
             PimsLeaseTenantPeople = new HashSet<PimsLeaseTenant>();
@@ -121,6 +127,18 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsDispositionFileTeam> PimsDispositionFileTeamPeople { get; set; }
         [InverseProperty(nameof(PimsDispositionFileTeam.PrimaryContact))]
         public virtual ICollection<PimsDispositionFileTeam> PimsDispositionFileTeamPrimaryContacts { get; set; }
+        [InverseProperty(nameof(PimsDispositionPurchaser.Person))]
+        public virtual ICollection<PimsDispositionPurchaser> PimsDispositionPurchaserPeople { get; set; }
+        [InverseProperty(nameof(PimsDispositionPurchaser.PrimaryContact))]
+        public virtual ICollection<PimsDispositionPurchaser> PimsDispositionPurchaserPrimaryContacts { get; set; }
+        [InverseProperty(nameof(PimsDspPurchAgent.Person))]
+        public virtual ICollection<PimsDspPurchAgent> PimsDspPurchAgentPeople { get; set; }
+        [InverseProperty(nameof(PimsDspPurchAgent.PrimaryContact))]
+        public virtual ICollection<PimsDspPurchAgent> PimsDspPurchAgentPrimaryContacts { get; set; }
+        [InverseProperty(nameof(PimsDspPurchSolicitor.Person))]
+        public virtual ICollection<PimsDspPurchSolicitor> PimsDspPurchSolicitorPeople { get; set; }
+        [InverseProperty(nameof(PimsDspPurchSolicitor.PrimaryContact))]
+        public virtual ICollection<PimsDspPurchSolicitor> PimsDspPurchSolicitorPrimaryContacts { get; set; }
         [InverseProperty(nameof(PimsInterestHolder.Person))]
         public virtual ICollection<PimsInterestHolder> PimsInterestHolderPeople { get; set; }
         [InverseProperty(nameof(PimsInterestHolder.PrimaryContact))]

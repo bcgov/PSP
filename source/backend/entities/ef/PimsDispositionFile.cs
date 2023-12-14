@@ -21,8 +21,13 @@ namespace Pims.Dal.Entities
     {
         public PimsDispositionFile()
         {
+            PimsDispositionChecklistItems = new HashSet<PimsDispositionChecklistItem>();
+            PimsDispositionFileDocuments = new HashSet<PimsDispositionFileDocument>();
+            PimsDispositionFileNotes = new HashSet<PimsDispositionFileNote>();
+            PimsDispositionFileProperties = new HashSet<PimsDispositionFileProperty>();
             PimsDispositionFileTeams = new HashSet<PimsDispositionFileTeam>();
-            PimsPropertyDispositionFiles = new HashSet<PimsPropertyDispositionFile>();
+            PimsDispositionOffers = new HashSet<PimsDispositionOffer>();
+            PimsDispositionSales = new HashSet<PimsDispositionSale>();
         }
 
         [Key]
@@ -75,6 +80,17 @@ namespace Pims.Dal.Entities
         public DateTime? CompletedDt { get; set; }
         [Column("INITIATING_DOCUMENT_DT", TypeName = "date")]
         public DateTime? InitiatingDocumentDt { get; set; }
+        [Column("APPAISED_VALUE", TypeName = "money")]
+        public decimal? AppaisedValue { get; set; }
+        [Column("APPRAISAL_DT", TypeName = "date")]
+        public DateTime? AppraisalDt { get; set; }
+        [Column("BCA_VALUE_AMT", TypeName = "money")]
+        public decimal? BcaValueAmt { get; set; }
+        [Column("BCA_ROLL_YEAR")]
+        [StringLength(4)]
+        public string BcaRollYear { get; set; }
+        [Column("LIST_PRICE_AMT", TypeName = "money")]
+        public decimal? ListPriceAmt { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -138,9 +154,19 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(RegionCode))]
         [InverseProperty(nameof(PimsRegion.PimsDispositionFiles))]
         public virtual PimsRegion RegionCodeNavigation { get; set; }
+        [InverseProperty(nameof(PimsDispositionChecklistItem.DispositionFile))]
+        public virtual ICollection<PimsDispositionChecklistItem> PimsDispositionChecklistItems { get; set; }
+        [InverseProperty(nameof(PimsDispositionFileDocument.DispositionFile))]
+        public virtual ICollection<PimsDispositionFileDocument> PimsDispositionFileDocuments { get; set; }
+        [InverseProperty(nameof(PimsDispositionFileNote.DispositionFile))]
+        public virtual ICollection<PimsDispositionFileNote> PimsDispositionFileNotes { get; set; }
+        [InverseProperty(nameof(PimsDispositionFileProperty.DispositionFile))]
+        public virtual ICollection<PimsDispositionFileProperty> PimsDispositionFileProperties { get; set; }
         [InverseProperty(nameof(PimsDispositionFileTeam.DispositionFile))]
         public virtual ICollection<PimsDispositionFileTeam> PimsDispositionFileTeams { get; set; }
-        [InverseProperty(nameof(PimsPropertyDispositionFile.DispositionFile))]
-        public virtual ICollection<PimsPropertyDispositionFile> PimsPropertyDispositionFiles { get; set; }
+        [InverseProperty(nameof(PimsDispositionOffer.DispositionFile))]
+        public virtual ICollection<PimsDispositionOffer> PimsDispositionOffers { get; set; }
+        [InverseProperty(nameof(PimsDispositionSale.DispositionFile))]
+        public virtual ICollection<PimsDispositionSale> PimsDispositionSales { get; set; }
     }
 }
