@@ -15,7 +15,7 @@ namespace Pims.Api.Services
 
         LastUpdatedByModel GetLastUpdateInformation(long dispositionFileId);
 
-        IEnumerable<PimsPropertyDispositionFile> GetProperties(long id);
+        IEnumerable<PimsDispositionFileProperty> GetProperties(long id);
 
         IEnumerable<PimsDispositionFileTeam> GetTeamMembers();
     }

@@ -140,7 +140,7 @@ namespace Pims.Dal.Repositories
             lastUpdatedByAggregate.AddRange(teamHistLastUpdatedBy);
 
             // Disposition Properties
-            var propertiesLastUpdatedBy = this.Context.PimsPropertyDispositionFiles.AsNoTracking()
+            var propertiesLastUpdatedBy = this.Context.PimsDispositionFileProperties.AsNoTracking()
                 .Where(dp => dp.DispositionFileId == id)
                 .Select(dp => new LastUpdatedByModel()
                 {
@@ -156,7 +156,7 @@ namespace Pims.Dal.Repositories
 
             // Disposition Deleted Properties
             // This is needed to get the notes last-updated-by from the notes that where deleted
-            var propertiesHistoryLastUpdatedBy = this.Context.PimsPropertyDispositionFileHists.AsNoTracking()
+            var propertiesHistoryLastUpdatedBy = Context.PimsDispositionFilePropertyHists.AsNoTracking()
             .Where(dph => dph.DispositionFileId == id)
             .Select(dph => new LastUpdatedByModel()
             {
@@ -232,18 +232,18 @@ namespace Pims.Dal.Repositories
             if (!string.IsNullOrWhiteSpace(filter.Pid))
             {
                 var pidValue = filter.Pid.Replace("-", string.Empty).Trim().TrimStart('0');
-                predicate = predicate.And(disp => disp.PimsPropertyDispositionFiles.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pid.ToString(), $"%{pidValue}%")));
+                predicate = predicate.And(disp => disp.PimsDispositionFileProperties.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pid.ToString(), $"%{pidValue}%")));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Pin))
             {
                 var pinValue = filter.Pin.Replace("-", string.Empty).Trim().TrimStart('0');
-                predicate = predicate.And(acq => acq.PimsPropertyDispositionFiles.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pin.ToString(), $"%{pinValue}%")));
+                predicate = predicate.And(acq => acq.PimsDispositionFileProperties.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pin.ToString(), $"%{pinValue}%")));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Address))
             {
-                predicate = predicate.And(disp => disp.PimsPropertyDispositionFiles.Any(pd => pd != null &&
+                predicate = predicate.And(disp => disp.PimsDispositionFileProperties.Any(pd => pd != null &&
                     (EF.Functions.Like(pd.Property.Address.StreetAddress1, $"%{filter.Address}%") ||
                     EF.Functions.Like(pd.Property.Address.StreetAddress2, $"%{filter.Address}%") ||
                     EF.Functions.Like(pd.Property.Address.StreetAddress3, $"%{filter.Address}%") ||
@@ -296,7 +296,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(c => c.Organization)
                 .Include(tm => tm.PimsDispositionFileTeams)
                     .ThenInclude(c => c.DspFlTeamProfileTypeCodeNavigation)
-                .Include(fp => fp.PimsPropertyDispositionFiles)
+                .Include(fp => fp.PimsDispositionFileProperties)
                     .ThenInclude(prop => prop.Property)
                     .ThenInclude(ad => ad.Address)
                     .ThenInclude(x => x.ProvinceState)

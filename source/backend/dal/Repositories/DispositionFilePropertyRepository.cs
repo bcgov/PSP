@@ -10,7 +10,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// Provides a repository to interact with disposition file properties within the datasource.
     /// </summary>
-    public class DispositionFilePropertyRepository : BaseRepository<PimsPropertyDispositionFile>, IDispositionFilePropertyRepository
+    public class DispositionFilePropertyRepository : BaseRepository<PimsDispositionFileProperty>, IDispositionFilePropertyRepository
     {
         #region Constructors
 
@@ -29,9 +29,9 @@ namespace Pims.Dal.Repositories
 
         #region Methods
 
-        public List<PimsPropertyDispositionFile> GetPropertiesByDispositionFileId(long dispositionFileId)
+        public List<PimsDispositionFileProperty> GetPropertiesByDispositionFileId(long dispositionFileId)
         {
-            return this.Context.PimsPropertyDispositionFiles
+            return Context.PimsDispositionFileProperties
                 .AsNoTracking()
                 .Include(rp => rp.Property)
                     .ThenInclude(rp => rp.RegionCodeNavigation)
@@ -49,7 +49,7 @@ namespace Pims.Dal.Repositories
 
         public int GetDispositionFilePropertyRelatedCount(long propertyId)
         {
-            return Context.PimsPropertyDispositionFiles
+            return Context.PimsDispositionFileProperties
                 .Where(x => x.PropertyId == propertyId)
                 .AsNoTracking()
                 .Count();
