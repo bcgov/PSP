@@ -8,30 +8,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_DISPOSITION_FILE_TEAM")]
-    [Index(nameof(DispositionFileId), nameof(DspFlTeamProfileTypeCode), Name = "DSPFTM_%column%_TUC", IsUnique = true)]
-    [Index(nameof(DispositionFileId), Name = "DSPFTM_DISPOSITION_FILE_ID_IDX")]
-    [Index(nameof(DspFlTeamProfileTypeCode), Name = "DSPFTM_DSP_FL_TEAM_PROFILE_TYPE_CODE_IDX")]
-    [Index(nameof(OrganizationId), Name = "DSPFTM_ORGANIZATION_ID_IDX")]
-    [Index(nameof(PersonId), Name = "DSPFTM_PERSON_ID_IDX")]
-    [Index(nameof(PrimaryContactId), Name = "DSPFTM_PRIMARY_CONTACT_ID_IDX")]
-    public partial class PimsDispositionFileTeam
+    [Table("PIMS_DISPOSITION_PURCHASER")]
+    [Index(nameof(DispositionSaleId), Name = "DSPPUR_DISPOSITION_SALE_ID_IDX")]
+    [Index(nameof(OrganizationId), Name = "DSPPUR_ORGANIZATION_ID_IDX")]
+    [Index(nameof(PersonId), Name = "DSPPUR_PERSON_ID_IDX")]
+    [Index(nameof(PrimaryContactId), Name = "DSPPUR_PRIMARY_CONTACT_ID_IDX")]
+    public partial class PimsDispositionPurchaser
     {
         [Key]
-        [Column("DISPOSITION_FILE_TEAM_ID")]
-        public long DispositionFileTeamId { get; set; }
-        [Column("DISPOSITION_FILE_ID")]
-        public long DispositionFileId { get; set; }
+        [Column("DISPOSITION_PURCHASER_ID")]
+        public long DispositionPurchaserId { get; set; }
+        [Column("DISPOSITION_SALE_ID")]
+        public long DispositionSaleId { get; set; }
         [Column("PERSON_ID")]
         public long? PersonId { get; set; }
         [Column("ORGANIZATION_ID")]
         public long? OrganizationId { get; set; }
         [Column("PRIMARY_CONTACT_ID")]
         public long? PrimaryContactId { get; set; }
-        [Required]
-        [Column("DSP_FL_TEAM_PROFILE_TYPE_CODE")]
-        [StringLength(20)]
-        public string DspFlTeamProfileTypeCode { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -71,20 +67,17 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [ForeignKey(nameof(DispositionFileId))]
-        [InverseProperty(nameof(PimsDispositionFile.PimsDispositionFileTeams))]
-        public virtual PimsDispositionFile DispositionFile { get; set; }
-        [ForeignKey(nameof(DspFlTeamProfileTypeCode))]
-        [InverseProperty(nameof(PimsDspFlTeamProfileType.PimsDispositionFileTeams))]
-        public virtual PimsDspFlTeamProfileType DspFlTeamProfileTypeCodeNavigation { get; set; }
+        [ForeignKey(nameof(DispositionSaleId))]
+        [InverseProperty(nameof(PimsDispositionSale.PimsDispositionPurchasers))]
+        public virtual PimsDispositionSale DispositionSale { get; set; }
         [ForeignKey(nameof(OrganizationId))]
-        [InverseProperty(nameof(PimsOrganization.PimsDispositionFileTeams))]
+        [InverseProperty(nameof(PimsOrganization.PimsDispositionPurchasers))]
         public virtual PimsOrganization Organization { get; set; }
         [ForeignKey(nameof(PersonId))]
-        [InverseProperty(nameof(PimsPerson.PimsDispositionFileTeamPeople))]
+        [InverseProperty(nameof(PimsPerson.PimsDispositionPurchaserPeople))]
         public virtual PimsPerson Person { get; set; }
         [ForeignKey(nameof(PrimaryContactId))]
-        [InverseProperty(nameof(PimsPerson.PimsDispositionFileTeamPrimaryContacts))]
+        [InverseProperty(nameof(PimsPerson.PimsDispositionPurchaserPrimaryContacts))]
         public virtual PimsPerson PrimaryContact { get; set; }
     }
 }

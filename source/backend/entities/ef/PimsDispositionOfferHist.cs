@@ -8,27 +8,37 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_NOTE")]
-    public partial class PimsNote
+    [Table("PIMS_DISPOSITION_OFFER_HIST")]
+    [Index(nameof(DispositionOfferHistId), nameof(EndDateHist), Name = "PIMS_DSPOFR_H_UK", IsUnique = true)]
+    public partial class PimsDispositionOfferHist
     {
-        public PimsNote()
-        {
-            PimsDispositionFileNotes = new HashSet<PimsDispositionFileNote>();
-            PimsLeaseNotes = new HashSet<PimsLeaseNote>();
-            PimsProjectNotes = new HashSet<PimsProjectNote>();
-            PimsResearchFileNotes = new HashSet<PimsResearchFileNote>();
-        }
-
         [Key]
-        [Column("NOTE_ID")]
-        public long NoteId { get; set; }
+        [Column("_DISPOSITION_OFFER_HIST_ID")]
+        public long DispositionOfferHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Column("DISPOSITION_OFFER_ID")]
+        public long DispositionOfferId { get; set; }
+        [Column("DISPOSITION_FILE_ID")]
+        public long DispositionFileId { get; set; }
+        [Column("DISPOSITION_OFFER_STATUS_TYPE_CODE")]
+        [StringLength(20)]
+        public string DispositionOfferStatusTypeCode { get; set; }
         [Required]
-        [Column("NOTE_TXT")]
-        [StringLength(4000)]
-        public string NoteTxt { get; set; }
-        [Required]
-        [Column("IS_SYSTEM_GENERATED")]
-        public bool? IsSystemGenerated { get; set; }
+        [Column("OFFER_NAME")]
+        [StringLength(1000)]
+        public string OfferName { get; set; }
+        [Column("OFFER_DT", TypeName = "date")]
+        public DateTime OfferDt { get; set; }
+        [Column("OFFER_EXPIRY_DT", TypeName = "date")]
+        public DateTime? OfferExpiryDt { get; set; }
+        [Column("OFFER_AMT", TypeName = "money")]
+        public decimal OfferAmt { get; set; }
+        [Column("OFFER_NOTE")]
+        [StringLength(2000)]
+        public string OfferNote { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -67,16 +77,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [InverseProperty("Note")]
-        public virtual PimsAcquisitionFileNote PimsAcquisitionFileNote { get; set; }
-        [InverseProperty(nameof(PimsDispositionFileNote.Note))]
-        public virtual ICollection<PimsDispositionFileNote> PimsDispositionFileNotes { get; set; }
-        [InverseProperty(nameof(PimsLeaseNote.Note))]
-        public virtual ICollection<PimsLeaseNote> PimsLeaseNotes { get; set; }
-        [InverseProperty(nameof(PimsProjectNote.Note))]
-        public virtual ICollection<PimsProjectNote> PimsProjectNotes { get; set; }
-        [InverseProperty(nameof(PimsResearchFileNote.Note))]
-        public virtual ICollection<PimsResearchFileNote> PimsResearchFileNotes { get; set; }
     }
 }

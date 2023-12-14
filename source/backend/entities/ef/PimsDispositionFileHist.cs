@@ -68,6 +68,17 @@ namespace Pims.Dal.Entities
         public DateTime? CompletedDt { get; set; }
         [Column("INITIATING_DOCUMENT_DT", TypeName = "date")]
         public DateTime? InitiatingDocumentDt { get; set; }
+        [Column("APPAISED_VALUE", TypeName = "money")]
+        public decimal? AppaisedValue { get; set; }
+        [Column("APPRAISAL_DT", TypeName = "date")]
+        public DateTime? AppraisalDt { get; set; }
+        [Column("BCA_VALUE_AMT", TypeName = "money")]
+        public decimal? BcaValueAmt { get; set; }
+        [Column("BCA_ROLL_YEAR")]
+        [StringLength(4)]
+        public string BcaRollYear { get; set; }
+        [Column("LIST_PRICE_AMT", TypeName = "money")]
+        public decimal? ListPriceAmt { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

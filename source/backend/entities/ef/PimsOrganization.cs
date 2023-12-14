@@ -23,6 +23,9 @@ namespace Pims.Dal.Entities
             PimsAcquisitionFileTeams = new HashSet<PimsAcquisitionFileTeam>();
             PimsContactMethods = new HashSet<PimsContactMethod>();
             PimsDispositionFileTeams = new HashSet<PimsDispositionFileTeam>();
+            PimsDispositionPurchasers = new HashSet<PimsDispositionPurchaser>();
+            PimsDspPurchAgents = new HashSet<PimsDspPurchAgent>();
+            PimsDspPurchSolicitors = new HashSet<PimsDspPurchSolicitor>();
             PimsExpropriationPayments = new HashSet<PimsExpropriationPayment>();
             PimsInterestHolders = new HashSet<PimsInterestHolder>();
             PimsLeaseTenants = new HashSet<PimsLeaseTenant>();
@@ -140,6 +143,12 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsContactMethod> PimsContactMethods { get; set; }
         [InverseProperty(nameof(PimsDispositionFileTeam.Organization))]
         public virtual ICollection<PimsDispositionFileTeam> PimsDispositionFileTeams { get; set; }
+        [InverseProperty(nameof(PimsDispositionPurchaser.Organization))]
+        public virtual ICollection<PimsDispositionPurchaser> PimsDispositionPurchasers { get; set; }
+        [InverseProperty(nameof(PimsDspPurchAgent.Organization))]
+        public virtual ICollection<PimsDspPurchAgent> PimsDspPurchAgents { get; set; }
+        [InverseProperty(nameof(PimsDspPurchSolicitor.Organization))]
+        public virtual ICollection<PimsDspPurchSolicitor> PimsDspPurchSolicitors { get; set; }
         [InverseProperty(nameof(PimsExpropriationPayment.ExpropriatingAuthorityNavigation))]
         public virtual ICollection<PimsExpropriationPayment> PimsExpropriationPayments { get; set; }
         [InverseProperty(nameof(PimsInterestHolder.Organization))]

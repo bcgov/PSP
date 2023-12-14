@@ -32,6 +32,7 @@ namespace Pims.Dal.Entities
     {
         public PimsProperty()
         {
+            PimsDispositionFileProperties = new HashSet<PimsDispositionFileProperty>();
             PimsPropPropActivities = new HashSet<PimsPropPropActivity>();
             PimsPropPropAnomalyTypes = new HashSet<PimsPropPropAnomalyType>();
             PimsPropPropPurposes = new HashSet<PimsPropPropPurpose>();
@@ -39,7 +40,6 @@ namespace Pims.Dal.Entities
             PimsPropPropTenureTypes = new HashSet<PimsPropPropTenureType>();
             PimsPropertyAcquisitionFiles = new HashSet<PimsPropertyAcquisitionFile>();
             PimsPropertyContacts = new HashSet<PimsPropertyContact>();
-            PimsPropertyDispositionFiles = new HashSet<PimsPropertyDispositionFile>();
             PimsPropertyLeases = new HashSet<PimsPropertyLease>();
             PimsPropertyOrganizations = new HashSet<PimsPropertyOrganization>();
             PimsPropertyResearchFiles = new HashSet<PimsPropertyResearchFile>();
@@ -261,6 +261,8 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(VolumetricTypeCode))]
         [InverseProperty(nameof(PimsVolumetricType.PimsProperties))]
         public virtual PimsVolumetricType VolumetricTypeCodeNavigation { get; set; }
+        [InverseProperty(nameof(PimsDispositionFileProperty.Property))]
+        public virtual ICollection<PimsDispositionFileProperty> PimsDispositionFileProperties { get; set; }
         [InverseProperty(nameof(PimsPropPropActivity.Property))]
         public virtual ICollection<PimsPropPropActivity> PimsPropPropActivities { get; set; }
         [InverseProperty(nameof(PimsPropPropAnomalyType.Property))]
@@ -275,8 +277,6 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsPropertyAcquisitionFile> PimsPropertyAcquisitionFiles { get; set; }
         [InverseProperty(nameof(PimsPropertyContact.Property))]
         public virtual ICollection<PimsPropertyContact> PimsPropertyContacts { get; set; }
-        [InverseProperty(nameof(PimsPropertyDispositionFile.Property))]
-        public virtual ICollection<PimsPropertyDispositionFile> PimsPropertyDispositionFiles { get; set; }
         [InverseProperty(nameof(PimsPropertyLease.Property))]
         public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; }
         [InverseProperty(nameof(PimsPropertyOrganization.Property))]

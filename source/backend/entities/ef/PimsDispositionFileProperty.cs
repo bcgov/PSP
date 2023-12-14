@@ -8,30 +8,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_DISPOSITION_FILE_TEAM")]
-    [Index(nameof(DispositionFileId), nameof(DspFlTeamProfileTypeCode), Name = "DSPFTM_%column%_TUC", IsUnique = true)]
-    [Index(nameof(DispositionFileId), Name = "DSPFTM_DISPOSITION_FILE_ID_IDX")]
-    [Index(nameof(DspFlTeamProfileTypeCode), Name = "DSPFTM_DSP_FL_TEAM_PROFILE_TYPE_CODE_IDX")]
-    [Index(nameof(OrganizationId), Name = "DSPFTM_ORGANIZATION_ID_IDX")]
-    [Index(nameof(PersonId), Name = "DSPFTM_PERSON_ID_IDX")]
-    [Index(nameof(PrimaryContactId), Name = "DSPFTM_PRIMARY_CONTACT_ID_IDX")]
-    public partial class PimsDispositionFileTeam
+    [Table("PIMS_DISPOSITION_FILE_PROPERTY")]
+    [Index(nameof(DispositionFileId), Name = "DSPPRP_DISPOSITION_FILE_ID_IDX")]
+    [Index(nameof(PropertyId), nameof(DispositionFileId), Name = "DSPPRP_DISPOSITION_PROPERTY_TUC", IsUnique = true)]
+    [Index(nameof(PropertyId), Name = "DSPPRP_PROPERTY_ID_IDX")]
+    public partial class PimsDispositionFileProperty
     {
         [Key]
-        [Column("DISPOSITION_FILE_TEAM_ID")]
-        public long DispositionFileTeamId { get; set; }
+        [Column("DISPOSITION_FILE_PROPERTY_ID")]
+        public long DispositionFilePropertyId { get; set; }
         [Column("DISPOSITION_FILE_ID")]
         public long DispositionFileId { get; set; }
-        [Column("PERSON_ID")]
-        public long? PersonId { get; set; }
-        [Column("ORGANIZATION_ID")]
-        public long? OrganizationId { get; set; }
-        [Column("PRIMARY_CONTACT_ID")]
-        public long? PrimaryContactId { get; set; }
-        [Required]
-        [Column("DSP_FL_TEAM_PROFILE_TYPE_CODE")]
-        [StringLength(20)]
-        public string DspFlTeamProfileTypeCode { get; set; }
+        [Column("PROPERTY_ID")]
+        public long PropertyId { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -72,19 +61,10 @@ namespace Pims.Dal.Entities
         public string DbLastUpdateUserid { get; set; }
 
         [ForeignKey(nameof(DispositionFileId))]
-        [InverseProperty(nameof(PimsDispositionFile.PimsDispositionFileTeams))]
+        [InverseProperty(nameof(PimsDispositionFile.PimsDispositionFileProperties))]
         public virtual PimsDispositionFile DispositionFile { get; set; }
-        [ForeignKey(nameof(DspFlTeamProfileTypeCode))]
-        [InverseProperty(nameof(PimsDspFlTeamProfileType.PimsDispositionFileTeams))]
-        public virtual PimsDspFlTeamProfileType DspFlTeamProfileTypeCodeNavigation { get; set; }
-        [ForeignKey(nameof(OrganizationId))]
-        [InverseProperty(nameof(PimsOrganization.PimsDispositionFileTeams))]
-        public virtual PimsOrganization Organization { get; set; }
-        [ForeignKey(nameof(PersonId))]
-        [InverseProperty(nameof(PimsPerson.PimsDispositionFileTeamPeople))]
-        public virtual PimsPerson Person { get; set; }
-        [ForeignKey(nameof(PrimaryContactId))]
-        [InverseProperty(nameof(PimsPerson.PimsDispositionFileTeamPrimaryContacts))]
-        public virtual PimsPerson PrimaryContact { get; set; }
+        [ForeignKey(nameof(PropertyId))]
+        [InverseProperty(nameof(PimsProperty.PimsDispositionFileProperties))]
+        public virtual PimsProperty Property { get; set; }
     }
 }
