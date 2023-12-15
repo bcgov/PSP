@@ -1,4 +1,4 @@
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { Api_DispositionFile, Api_DispositionFileOffer } from '@/models/api/DispositionFile';
 
 export const mockDispositionFileResponse = (
   id = 1,
@@ -52,6 +52,13 @@ export const mockDispositionFileResponse = (
     description: 'Cancelled',
     isDisabled: false,
   },
+  appraisedValueAmount: 550000,
+  appraisalDate: '2023-12-25T00:00:00',
+  bcaValueAmount: 600000,
+  bcaRollYear: '2023',
+  listPriceAmount: 590000,
+  offers: [],
+  sales: [],
   appCreateTimestamp: '2023-11-25T20:48:26.693',
   appLastUpdateTimestamp: '2023-11-24T20:48:26.693',
   appLastUpdateUserid: 'FOUGSTER',
@@ -183,3 +190,22 @@ export const mockDispositionFilePropertyResponse = () => [
     rowVersion: 1,
   },
 ];
+
+export const mockDispositionFileOfferApi = (
+  id: number = 0,
+  dispositionFileId: number = 1,
+): Api_DispositionFileOffer => ({
+  id: id,
+  dispositionFileId: dispositionFileId,
+  dispositionOfferStatusTypeCode: 'OPEN',
+  dispositionOfferStatusType: {
+    id: 'OPEN',
+    description: 'Open',
+    isDisabled: false,
+  },
+  offerName: 'TEST OFFER NAME',
+  offerDate: '2023-12-25T00:00:00',
+  offerExpiryDate: '2024-12-25T00:00:00',
+  offerAmount: 1500000.99,
+  offerNote: 'MY OFFER NOTES',
+});

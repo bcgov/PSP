@@ -4,7 +4,9 @@ import React from 'react';
 import { IPagedItems } from '@/interfaces';
 import {
   Api_DispositionFile,
+  Api_DispositionFileOffer,
   Api_DispositionFileProperty,
+  Api_DispositionFileSale,
   Api_DispositionFileTeam,
 } from '@/models/api/DispositionFile';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
@@ -45,6 +47,10 @@ export const useApiDispositionFile = () => {
         api.get<Api_DispositionFileProperty[]>(`/dispositionfiles/${dispositionFileId}/properties`),
       getAllDispositionFileTeamMembers: () =>
         api.get<Api_DispositionFileTeam[]>(`/dispositionfiles/team-members`),
+      getDispositionFileOffers: (dispositionFileId: number) =>
+        api.get<Api_DispositionFileOffer[]>(`/dispositionfiles/${dispositionFileId}/offers`),
+      getDispositionFileSales: (dispositionFileId: number) =>
+        api.get<Api_DispositionFileSale[]>(`/dispositionfiles/${dispositionFileId}/sales`),
     }),
     [api],
   );

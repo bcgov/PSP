@@ -18,5 +18,9 @@ namespace Pims.Api.Services
         IEnumerable<PimsDispositionFileProperty> GetProperties(long id);
 
         IEnumerable<PimsDispositionFileTeam> GetTeamMembers();
+
+        IEnumerable<PimsDispositionOffer> GetOffers(long dispositionFileId);
+
+        IEnumerable<PimsDispositionSale> GetSales(long dispositionFileId);
     }
 }

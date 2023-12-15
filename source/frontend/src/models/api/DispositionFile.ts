@@ -31,6 +31,16 @@ export interface Api_DispositionFile extends Api_ConcurrentVersion, Api_AuditFie
   projectId: number | null;
   product: Api_Product | null;
   productId: number | null;
+  // Appraisal
+  appraisedValueAmount: number | null;
+  appraisalDate: string | null;
+  bcaValueAmount: number | null;
+  bcaRollYear: string | null;
+  listPriceAmount: number | null;
+  // Offers
+  offers: Api_DispositionFileOffer[];
+  // Sale
+  sales: Api_DispositionFileSale[];
 }
 
 export interface Api_DispositionFileProperty
@@ -49,4 +59,34 @@ export interface Api_DispositionFileTeam extends Api_ConcurrentVersion, Api_Audi
   primaryContact?: Api_Person;
   teamProfileTypeCode?: string;
   teamProfileType?: Api_TypeCode<string>;
+}
+
+export interface Api_DispositionFileOffer {
+  id: number | null;
+  dispositionFileId: number;
+  dispositionOfferStatusTypeCode: string | null;
+  dispositionOfferStatusType: Api_TypeCode<string> | null;
+  offerName: string | null;
+  offerDate: string | null;
+  offerExpiryDate: string | null;
+  offerAmount: number | null;
+  offerNote: string | null;
+}
+
+export interface Api_DispositionFileSale {
+  id: number | null;
+  dispositionFileId: number;
+  finalConditionRemovalDate: string | null;
+  saleCompletionDate: string | null;
+  saleFiscalYear: string | null;
+  finalSaleAmount: number | null;
+  realtorCommissionAmount: number | null;
+  isGstRequired: boolean | null;
+  gstCollectedAmount: number | null;
+  netBookAmount: number | null;
+  totalCostAmount: number | null;
+  netProceedsBeforeSppAmount: number | null;
+  sppAmount: number | null;
+  netProceedsAfterSppAmount: number | null;
+  remediationAmount: number | null;
 }

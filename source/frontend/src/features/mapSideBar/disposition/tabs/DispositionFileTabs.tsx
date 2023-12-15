@@ -7,6 +7,8 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
 
 import DispositionSummaryView from './fileDetails/detail/DispositionSummaryView';
+import OffersAndSaleContainer from './offersAndSale/OffersAndSaleContainer';
+import OffersAndSaleContainerView from './offersAndSale/OffersAndSaleContainerView';
 
 export interface IDispositionFileTabsProps {
   dispositionFile?: Api_DispositionFile;
@@ -39,11 +41,18 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
     name: 'File details',
   });
 
-  tabViews.push({
-    content: <></>,
-    key: FileTabType.OFFERS_AND_SALE,
-    name: 'Offers & Sale',
-  });
+  if (dispositionFile?.id) {
+    tabViews.push({
+      content: (
+        <OffersAndSaleContainer
+          dispositionFile={dispositionFile}
+          View={OffersAndSaleContainerView}
+        ></OffersAndSaleContainer>
+      ),
+      key: FileTabType.OFFERS_AND_SALE,
+      name: 'Offers & Sale',
+    });
+  }
 
   tabViews.push({
     content: <></>,

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Models.Concepts.DispositionFile;
+using Pims.Api.Models.Models.Concepts.DispositionFile;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
@@ -174,6 +175,48 @@ namespace Pims.Api.Areas.Disposition.Controllers
             var team = _dispositionService.GetTeamMembers();
 
             return new JsonResult(_mapper.Map<IEnumerable<DispositionFileTeamModel>>(team));
+        }
+
+        [HttpGet("{id:long}/offers")]
+        [HasPermission(Permissions.DispositionView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<DispositionFileOfferModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetDispositionFileOffers(long dispositionFileId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(GetDispositionFileOffers),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            var dispositionOffers = _dispositionService.GetOffers(dispositionFileId);
+            return new JsonResult(_mapper.Map<IEnumerable<DispositionFileOfferModel>>(dispositionOffers));
+        }
+
+        [HttpGet("{id:long}/sales")]
+        [HasPermission(Permissions.DispositionView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<DispositionFileOfferModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetDispositionFileSales(long dispositionFileId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(GetDispositionFileOffers),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            var dispositionSales = _dispositionService.GetSales(dispositionFileId);
+            return new JsonResult(_mapper.Map<IEnumerable<DispositionFileSaleModel>>(dispositionSales));
         }
 
         #endregion

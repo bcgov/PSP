@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
 using Pims.Dal.Constants;
@@ -112,6 +113,22 @@ namespace Pims.Api.Services
             teamFilterOptions.AddRange(organizations);
 
             return teamFilterOptions;
+        }
+
+        public IEnumerable<PimsDispositionOffer> GetOffers(long dispositionFileId)
+        {
+            _logger.LogInformation("Getting disposition file offers with DispositionFileId: {id}", dispositionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+
+            return _dispositionFileRepository.GetDispositionOffers(dispositionFileId);
+        }
+
+        public IEnumerable<PimsDispositionSale> GetSales(long dispositionFileId)
+        {
+            _logger.LogInformation("Getting disposition file sales with DispositionFileId: {id}", dispositionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+
+            return _dispositionFileRepository.GetDispositionSales(dispositionFileId);
         }
 
         private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsDispositionFileProperty> dispositionPropertyFiles)

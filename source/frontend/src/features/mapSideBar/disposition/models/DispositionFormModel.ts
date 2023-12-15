@@ -6,6 +6,8 @@ import {
 import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
+import { DispositionOfferFormModel } from './DispositionOfferFormModel';
+import { DispositionSaleFormModel } from './DispositionSaleFormModel';
 import { DispositionTeamSubFormModel, WithDispositionTeam } from './DispositionTeamSubFormModel';
 
 export class DispositionFormModel implements WithDispositionTeam {
@@ -26,6 +28,8 @@ export class DispositionFormModel implements WithDispositionTeam {
   regionCode: string | null = '';
   fileProperties: PropertyForm[] = [];
   team: DispositionTeamSubFormModel[] = [];
+  offers: DispositionOfferFormModel[] = [];
+  sales: DispositionSaleFormModel[] = [];
 
   constructor(
     readonly id: number | null = null,
@@ -75,6 +79,13 @@ export class DispositionFormModel implements WithDispositionTeam {
           acquisitionFile: { id: this.id },
         };
       }),
+      appraisedValueAmount: 550000,
+      appraisalDate: '2023-12-25T00:00:00',
+      bcaValueAmount: 600000,
+      bcaRollYear: '2023',
+      listPriceAmount: 590000,
+      offers: this.offers.map(x => x.toApi()),
+      sales: this.sales.map(x => x.toApi()),
       project: null,
       projectId: null,
       product: null,

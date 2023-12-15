@@ -5,7 +5,9 @@ import { useApiDispositionFile } from '@/hooks/pims-api/useApiDispositionFile';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import {
   Api_DispositionFile,
+  Api_DispositionFileOffer,
   Api_DispositionFileProperty,
+  Api_DispositionFileSale,
   Api_DispositionFileTeam,
 } from '@/models/api/DispositionFile';
 import { Api_LastUpdatedBy } from '@/models/api/File';
@@ -28,6 +30,8 @@ export const useDispositionProvider = () => {
     getDispositionFileProperties,
     getLastUpdatedByApi,
     getAllDispositionFileTeamMembers,
+    getDispositionFileOffers,
+    getDispositionFileSales,
   } = useApiDispositionFile();
 
   const addDispositionFileApi = useApiRequestWrapper<
@@ -91,6 +95,28 @@ export const useDispositionProvider = () => {
     onError: useAxiosErrorHandler('Failed to retrieve Disposition File Team Members'),
   });
 
+  const getAllDispositionOffersApi = useApiRequestWrapper<
+    (dispositionFileId: number) => Promise<AxiosResponse<Api_DispositionFileOffer[], any>>
+  >({
+    requestFunction: useCallback(
+      async (dispositionFileId: number) => await getDispositionFileOffers(dispositionFileId),
+      [getDispositionFileOffers],
+    ),
+    requestName: 'GetAllDispositionOffers',
+    onError: useAxiosErrorHandler('Failed to retrieve Disposition File Offers'),
+  });
+
+  const getAllDispositionSalesApi = useApiRequestWrapper<
+    (dispositionFileId: number) => Promise<AxiosResponse<Api_DispositionFileSale[], any>>
+  >({
+    requestFunction: useCallback(
+      async (dispositionFileId: number) => await getDispositionFileSales(dispositionFileId),
+      [getDispositionFileSales],
+    ),
+    requestName: 'GetAllDispositionSales',
+    onError: useAxiosErrorHandler('Failed to retrieve Disposition File Sales'),
+  });
+
   return useMemo(
     () => ({
       addDispositionFileApi: addDispositionFileApi,
@@ -98,6 +124,8 @@ export const useDispositionProvider = () => {
       getLastUpdatedBy,
       getDispositionProperties: getDispositionPropertiesApi,
       getAllDispositionTeamMembers: getAllDispositionTeamMembersApi,
+      getDispositionFileOffers: getAllDispositionOffersApi,
+      getDispositionFileSales: getAllDispositionSalesApi,
     }),
     [
       addDispositionFileApi,
@@ -105,6 +133,8 @@ export const useDispositionProvider = () => {
       getLastUpdatedBy,
       getDispositionPropertiesApi,
       getAllDispositionTeamMembersApi,
+      getAllDispositionOffersApi,
+      getAllDispositionSalesApi,
     ],
   );
 };

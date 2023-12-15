@@ -16,6 +16,10 @@ namespace Pims.Dal.Repositories
 
         List<PimsDispositionFileTeam> GetTeamMembers();
 
+        List<PimsDispositionOffer> GetDispositionOffers(long dispositionId);
+
+        List<PimsDispositionSale> GetDispositionSales(long dispositionId);
+
         long GetRowVersion(long id);
     }
 }
