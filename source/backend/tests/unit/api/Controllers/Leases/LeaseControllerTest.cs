@@ -17,7 +17,6 @@ using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
-using Model = Pims.Api.Areas.Lease.Models.Lease;
 
 namespace Pims.Api.Test.Controllers.Lease
 {
@@ -43,6 +42,23 @@ namespace Pims.Api.Test.Controllers.Lease
         }
 
         #region Tests
+        /// <summary>
+        /// Make a successful request to add a lease file to the datastore.
+        /// </summary>
+        [Fact]
+        public void AddLeaseFile_Success()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            this._service.Setup(m => m.Add(It.IsAny<PimsLease>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(lease);
+
+            // Act
+            var result = this._controller.AddLease(this._mapper.Map<LeaseModel>(lease), Array.Empty<string>());
+
+            // Assert
+            this._service.Verify(m => m.Add(It.IsAny<PimsLease>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
+        }
+
         #region GetLeases
         /// <summary>
         /// Make a successful request.

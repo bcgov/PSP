@@ -19,16 +19,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private Property property;
         private SearchProperty searchProperty;
-
+        private PropertyManagement propertyManagement;
+        private PropertyManagementTab propertyManagementTab;
 
         public PropertiesSteps(BrowserDriver driver)
         {
             loginSteps = new LoginSteps(driver);
             searchProperties = new SearchProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
+            propertyManagementTab = new PropertyManagementTab(driver.Current);
             genericSteps = new GenericSteps(driver);
-            property = new Property();
-            searchProperty = new SearchProperty();
         }
 
         [StepDefinition(@"I search for a Property in the Inventory by different filters from row number (.*)")]
@@ -127,6 +127,20 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SelectFoundPin();
         }
 
+        [StepDefinition(@"I search for a property in the inventory by PID from row number (.*)")]
+        public void InventoryProperty(int rowNumber)
+        {
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Look for a non-inventory property
+            PopulateSearchProperty(rowNumber);
+            searchProperties.SearchPropertyByPINPID(searchProperty.PID);
+
+            //Click on the found property
+            searchProperties.SelectFoundPin();
+        }
+
         [StepDefinition(@"I update a Property details from row number (.*)")]
         public void EditPropertyInformationDetails(int rowNumber)
         {
@@ -158,6 +172,101 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.NavigatePropertyDetailsTab();
             propertyInformation.VerifyPropertyDetailsView();
 
+        }
+
+        [StepDefinition(@"I insert information in the Property Management Tab from row number (.*)")]
+        public void InsertManagementPropertyTab(int rowNumber)
+        {
+            //Grab data from excel
+            PopulateManagementProperty(rowNumber);
+
+            //Go to the Property Management Tab
+            propertyManagementTab.NavigateManagementTab();
+            //propertyManagementTab.VerifyInitManagementTabView();
+
+            //Click on Edit Summary
+            propertyManagementTab.UpdateManagementSummaryButton();
+
+            //Insert Summary Information
+            propertyManagementTab.VerifyCreateSummaryInitForm();
+            propertyManagementTab.InsertManagementSummaryInformation(propertyManagement);
+            propertyManagementTab.SavePropertyManagement();
+            propertyManagementTab.VerifyInsertedSummaryForm(propertyManagement);
+
+            //Insert Contacts
+            for (int i = 0; i < propertyManagement.ManagementPropertyContacts.Count; i++)
+            {
+                propertyManagementTab.AddNewPropertyContactButton();
+                propertyManagementTab.VerifyCreateContactsInitForm();
+                propertyManagementTab.InsertNewPropertyContact(propertyManagement.ManagementPropertyContacts[i]);
+                propertyManagementTab.SavePropertyManagement();
+                propertyManagementTab.VerifyLastInsertedPropertyContactTable(propertyManagement.ManagementPropertyContacts[i]);
+            }
+
+            for (int j = 0; j < propertyManagement.ManagementPropertyActivities.Count; j++)
+            {
+                propertyManagementTab.AddNewPropertyActivityButton();
+                propertyManagementTab.VerifyCreateActivityInitForm();
+                propertyManagementTab.InsertNewPropertyActivity(propertyManagement.ManagementPropertyActivities[j]);
+                propertyManagementTab.SavePropertyManagement();
+                propertyManagementTab.VerifyInsertedActivity(propertyManagement.ManagementPropertyActivities[j]);
+                propertyManagementTab.ViewLastActivityFromList();
+                propertyManagementTab.VerifyLastInsertedActivityTable(propertyManagement.ManagementPropertyActivities[j]);
+            }
+        }
+
+        [StepDefinition(@"I update information in the Property Management Tab from row number (.*)")]
+        public void UpdateManagementPropertyTab(int rowNumber)
+        {
+            //Grab data from excel
+            PopulateManagementProperty(rowNumber);
+
+            //Close Activity Tray
+            propertyManagementTab.CloseActivityTray();
+
+            //Update Summary section
+            propertyManagementTab.UpdateManagementSummaryButton();
+            propertyManagementTab.InsertManagementSummaryInformation(propertyManagement);
+            propertyManagementTab.SavePropertyManagement();
+            propertyManagementTab.VerifyInsertedSummaryForm(propertyManagement);
+
+            //Update a Contact
+            propertyManagementTab.UpdateLastContactButton();
+            propertyManagementTab.UpdatePropertyContact(propertyManagement.ManagementPropertyContacts[0]);
+            propertyManagementTab.SavePropertyManagement();
+            propertyManagementTab.VerifyLastInsertedPropertyContactTable(propertyManagement.ManagementPropertyContacts[0]);
+
+            //Update an activity
+            propertyManagementTab.ViewLastActivityFromList();
+            propertyManagementTab.ViewLastActivityButton();
+            propertyManagementTab.UpdateSelectedActivity();
+            propertyManagementTab.InsertNewPropertyActivity(propertyManagement.ManagementPropertyActivities[0]);
+            propertyManagementTab.SavePropertyManagement();
+            propertyManagementTab.VerifyInsertedActivity(propertyManagement.ManagementPropertyActivities[0]);
+            propertyManagementTab.ViewLastActivityFromList();
+            propertyManagementTab.VerifyLastInsertedActivityTable(propertyManagement.ManagementPropertyActivities[0]);
+
+        }
+
+        [StepDefinition(@"I clean up the Property Management Tab from row number (.*)")]
+        public void CleanUpManagementPropertyTab(int rowNumber)
+        {
+            //Grab data from excel
+            PopulateManagementProperty(rowNumber);
+
+            //Close Activity Tray
+            propertyManagementTab.CloseActivityTray();
+
+            //Clean up Summary section
+            propertyManagementTab.UpdateManagementSummaryButton();
+            propertyManagementTab.InsertManagementSummaryInformation(propertyManagement);
+            propertyManagementTab.SavePropertyManagement();
+
+            //Delete all Contacts
+            propertyManagementTab.DeleteAllContacts();
+
+            //Delete all Activities
+            propertyManagementTab.DeleteAllActivities();
         }
 
         [StepDefinition(@"LTSA Pop-up Information validation is successful")]
@@ -207,10 +316,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.VerifyNonInventoryPropertyTabs();
         }
 
+        [StepDefinition(@"Property Management Tab has been updated successfully")]
+        public void PropertyManagementSuccess()
+        {
+            propertyManagementTab.VerifyInitManagementTabView();
+        }
+
         private void PopulateProperty(int rowNumber)
         {
             DataTable propertiesSheet = ExcelDataContext.GetInstance().Sheets["Properties"];
             ExcelDataContext.PopulateInCollection(propertiesSheet);
+
+            property = new Property();
 
             property.PropertyName = ExcelDataContext.ReadData(rowNumber, "PropertyName");
             property.Address.AddressLine1 = ExcelDataContext.ReadData(rowNumber, "AddressLine1");
@@ -244,11 +361,107 @@ namespace PIMS.Tests.Automation.StepDefinitions
             DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"];
             ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
 
+            searchProperty = new SearchProperty();
+
             searchProperty.PID = ExcelDataContext.ReadData(rowNumber, "PID");
             searchProperty.PIN = ExcelDataContext.ReadData(rowNumber, "PIN");
             searchProperty.Address = ExcelDataContext.ReadData(rowNumber, "Address");
             searchProperty.PlanNumber = ExcelDataContext.ReadData(rowNumber, "PlanNumber");
             searchProperty.LegalDescription = ExcelDataContext.ReadData(rowNumber, "LegalDescription");
+        }
+
+        private void PopulateManagementProperty(int rowNumber)
+        {
+            DataTable propertyManagementSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagement"];
+            ExcelDataContext.PopulateInCollection(propertyManagementSheet);
+
+            propertyManagement = new PropertyManagement();
+
+            propertyManagement.ManagementPropertyPurpose = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "ManagementPropertyPurpose"));
+            propertyManagement.ManagementUtilitiesPayable = ExcelDataContext.ReadData(rowNumber, "ManagementUtilitiesPayable");
+            propertyManagement.ManagementTaxesPayable = ExcelDataContext.ReadData(rowNumber, "ManagementTaxesPayable");
+            propertyManagement.ManagementPropertyAdditionalDetails = ExcelDataContext.ReadData(rowNumber, "ManagementPropertyAdditionalDetails");
+            propertyManagement.ManagementPropertyContactsStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementPropertyContactsStartRow"));
+            propertyManagement.ManagementPropertyContactsStartCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementPropertyContactsStartCount"));
+            propertyManagement.ManagementPropertyActivitiesStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementPropertyActivitiesStartRow"));
+            propertyManagement.ManagementPropertyActivitiesCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementPropertyActivitiesCount"));
+
+            if (propertyManagement.ManagementPropertyContactsStartRow != 0 && propertyManagement.ManagementPropertyContactsStartCount != 0)
+                PopulateManagementContactsCollection(propertyManagement.ManagementPropertyContactsStartRow, propertyManagement.ManagementPropertyContactsStartCount);
+
+            if (propertyManagement.ManagementPropertyActivitiesStartRow != 0 && propertyManagement.ManagementPropertyActivitiesCount != 0)
+                PopulateManagementActivitiesCollection(propertyManagement.ManagementPropertyActivitiesStartRow, propertyManagement.ManagementPropertyActivitiesCount);
+        }
+
+        private void PopulateManagementContactsCollection(int startRow, int rowsCount)
+        {
+            DataTable managementContactsSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagementContact"];
+            ExcelDataContext.PopulateInCollection(managementContactsSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                PropertyContact propertyContact = new PropertyContact();
+                propertyContact.PropertyContactFullName = ExcelDataContext.ReadData(i, "PropertyContactFullName");
+                propertyContact.PropertyContactType = ExcelDataContext.ReadData(i, "PropertyContactType");
+                propertyContact.PropertyPrimaryContact = ExcelDataContext.ReadData(i, "PropertyPrimaryContact");
+                propertyContact.PropertyContactPurposeDescription = ExcelDataContext.ReadData(i, "PropertyContactPurposeDescription");
+
+                propertyManagement.ManagementPropertyContacts.Add(propertyContact);
+            }
+        }
+
+        private void PopulateManagementActivitiesCollection(int startRow, int rowsCount)
+        {
+            DataTable managementActivitesSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagementActivity"];
+            ExcelDataContext.PopulateInCollection(managementActivitesSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                PropertyActivity propertyActivity = new PropertyActivity();
+               
+                propertyActivity.PropertyActivityType = ExcelDataContext.ReadData(i, "PropertyActivityType");
+                propertyActivity.PropertyActivitySubType = ExcelDataContext.ReadData(i, "PropertyActivitySubType");
+                propertyActivity.PropertyActivityStatus = ExcelDataContext.ReadData(i, "PropertyActivityStatus");
+                propertyActivity.PropertyActivityRequestedDate = ExcelDataContext.ReadData(i, "PropertyActivityRequestedDate");
+                propertyActivity.PropertyActivityDescription = ExcelDataContext.ReadData(i, "PropertyActivityDescription");
+                propertyActivity.PropertyActivityMinistryContact = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityMinistryContact"));
+                propertyActivity.PropertyActivityRequestedSource = ExcelDataContext.ReadData(i, "PropertyActivityRequestedSource");
+                propertyActivity.PropertyActivityInvolvedParties = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityInvolvedParties"));
+                propertyActivity.PropertyActivityServiceProvider = ExcelDataContext.ReadData(i, "PropertyActivityServiceProvider");
+                propertyActivity.ManagementPropertyActivityInvoicesStartRow = int.Parse(ExcelDataContext.ReadData(i, "ManagementPropertyActivityInvoicesStartRow"));
+                propertyActivity.ManagementPropertyActivityInvoicesCount = int.Parse(ExcelDataContext.ReadData(i, "ManagementPropertyActivityInvoicesCount"));
+                propertyActivity.ManagementPropertyActivityTotalPreTax = ExcelDataContext.ReadData(i, "ManagementPropertyActivityTotalPreTax");
+                propertyActivity.ManagementPropertyActivityTotalGST = ExcelDataContext.ReadData(i, "ManagementPropertyActivityTotalGST");
+                propertyActivity.ManagementPropertyActivityTotalPST = ExcelDataContext.ReadData(i, "ManagementPropertyActivityTotalPST");
+                propertyActivity.ManagementPropertyActivityGrandTotal = ExcelDataContext.ReadData(i, "ManagementPropertyActivityGrandTotal");
+
+                //if (propertyManagement.ManagementPropertyActivitiesStartRow != 0 && propertyManagement.ManagementPropertyActivitiesCount != 0)
+                //    PopulateManagementActivitiesInvoiceCollection(propertyManagement.ManagementPropertyActivitiesStartRow, propertyManagement.ManagementPropertyActivitiesCount, propertyActivity.ManagementPropertyActivityInvoices);
+
+                propertyManagement.ManagementPropertyActivities.Add(propertyActivity);
+            }
+        }
+
+        private void PopulateManagementActivitiesInvoiceCollection(int startRow, int rowsCount, List<ManagementPropertyActivityInvoice> invoices)
+        {
+            DataTable invoicesSheet = ExcelDataContext.GetInstance().Sheets["ManagementPropActivityInvoice"];
+            ExcelDataContext.PopulateInCollection(invoicesSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                ManagementPropertyActivityInvoice invoice = new ManagementPropertyActivityInvoice();
+
+                invoice.PropertyActivityInvoiceNumber = ExcelDataContext.ReadData(i, "PropertyActivityInvoiceNumber");
+                invoice.PropertyActivityInvoiceDate = ExcelDataContext.ReadData(i, "PropertyActivityInvoiceDate");
+                invoice.PropertyActivityInvoiceDescription = ExcelDataContext.ReadData(i, "PropertyActivityInvoiceDescription");
+                invoice.PropertyActivityInvoicePretaxAmount = ExcelDataContext.ReadData(i, "PropertyActivityInvoicePretaxAmount");
+                invoice.PropertyActivityInvoiceGSTAmount = ExcelDataContext.ReadData(i, "PropertyActivityInvoiceGSTAmount");
+                invoice.PropertyActivityInvoicePSTApplicable = ExcelDataContext.ReadData(i, "PropertyActivityInvoicePSTApplicable");
+                invoice.PropertyActivityInvoicePSTAmount = ExcelDataContext.ReadData(i, "PropertyActivityInvoicePSTAmount");
+                invoice.PropertyActivityInvoiceTotalAmount = ExcelDataContext.ReadData(i, "PropertyActivityInvoiceTotalAmount");
+
+                invoices.Add(invoice);
+            }
         }
     }
 }

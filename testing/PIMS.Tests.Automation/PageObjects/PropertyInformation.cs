@@ -323,7 +323,6 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             ButtonElement("Save");
 
-            //sharedModals.SiteMinderModal();
         }
 
         public void CancelPropertyDetails()
