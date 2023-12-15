@@ -462,11 +462,11 @@ namespace Pims.Dal.Repositories
                 // Check not expired
                 predicate.And(p => p.PimsPropertyLeases.Any(pl => (pl.Lease.PimsLeaseTerms.Any(t => !t.TermExpiryDate.HasValue) // any term expiry is null
                                         || (!pl.Lease.PimsLeaseTerms.Any() && !pl.Lease.OrigExpiryDate.HasValue) // no terms and orig is null
-                                        || (!pl.Lease.PimsLeaseTerms.Any() && pl.Lease.OrigExpiryDate.HasValue && pl.Lease.OrigExpiryDate.Value.Date >= DateTime.Now.Date) // no terms and orig not expired
+                                        || (!pl.Lease.PimsLeaseTerms.Any() && pl.Lease.OrigExpiryDate.HasValue && pl.Lease.OrigExpiryDate.Value.Date >= DateTime.UtcNow.Date) // no terms and orig not expired
                                         || (pl.Lease.OrigExpiryDate.HasValue // has terms and term expired is bigger than Lease expiry is not expired
-                                            && pl.Lease.PimsLeaseTerms.Any(lt => lt.TermExpiryDate.HasValue && lt.TermExpiryDate.Value.Date > pl.Lease.OrigExpiryDate.Value.Date && lt.TermExpiryDate.Value.Date >= DateTime.Now.Date))
+                                            && pl.Lease.PimsLeaseTerms.Any(lt => lt.TermExpiryDate.HasValue && lt.TermExpiryDate.Value.Date > pl.Lease.OrigExpiryDate.Value.Date && lt.TermExpiryDate.Value.Date >= DateTime.UtcNow.Date))
                                         || (pl.Lease.OrigExpiryDate.HasValue // has terms and term expired is lower than Lease expiry
-                                            && (!pl.Lease.PimsLeaseTerms.Any(lt => lt.TermExpiryDate.HasValue && lt.TermExpiryDate.Value.Date > pl.Lease.OrigExpiryDate.Value.Date) && pl.Lease.OrigExpiryDate.Value.Date >= DateTime.Now.Date)))));
+                                            && (!pl.Lease.PimsLeaseTerms.Any(lt => lt.TermExpiryDate.HasValue && lt.TermExpiryDate.Value.Date > pl.Lease.OrigExpiryDate.Value.Date) && pl.Lease.OrigExpiryDate.Value.Date >= DateTime.UtcNow.Date)))));
             }
 
             // Anomalies
