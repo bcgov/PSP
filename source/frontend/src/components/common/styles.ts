@@ -7,7 +7,6 @@ import { LoadingBackdropProps } from '@/components/common/LoadingBackdrop';
 
 import { Button } from './buttons';
 import { Form } from './form';
-import GenericModal from './GenericModal';
 
 export const LeftAlignDiv = styled.div`
   text-align: left;
@@ -38,18 +37,6 @@ export const Breadcrumb = styled(BsBreadcrumb)`
 export const SelectedText = styled.p`
   font-size: 1.4rem;
   color: ${props => props.theme.css.completedColor};
-`;
-
-export const PrimaryGenericModal = styled(GenericModal)`
-  .modal-header {
-    background-color: ${({ theme }) => theme.css.primaryColor};
-    .h4 {
-      color: white;
-      font-family: BcSans-Bold;
-      font-size: 2.2rem;
-      height: 2.75rem;
-    }
-  }
 `;
 
 /**
