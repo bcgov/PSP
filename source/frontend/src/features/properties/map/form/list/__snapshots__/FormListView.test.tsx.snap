@@ -367,7 +367,7 @@ exports[`form list view renders as expected 1`] = `
       </form>
       <div
         class="table"
-        data-testid="AcqusitionFormTable"
+        data-testid="AcquisitionFormTable"
         role="table"
       >
         <div
