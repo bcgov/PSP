@@ -63,5 +63,7 @@ export default DispositionOfferDetails;
 
 const StyledOfferBorder = styled.div`
   border: solid 0.2rem ${props => props.theme.css.discardedColor};
-  margin-bottom: 0.5rem;
+  padding: 0.75rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
 `;

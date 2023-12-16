@@ -1,4 +1,8 @@
-import { Api_DispositionFile, Api_DispositionFileOffer } from '@/models/api/DispositionFile';
+import {
+  Api_DispositionFile,
+  Api_DispositionFileOffer,
+  Api_DispositionFileSale,
+} from '@/models/api/DispositionFile';
 
 export const mockDispositionFileResponse = (
   id = 1,
@@ -53,7 +57,7 @@ export const mockDispositionFileResponse = (
     isDisabled: false,
   },
   appraisedValueAmount: 550000,
-  appraisalDate: '2023-12-25T00:00:00',
+  appraisalDate: '2023-12-28T00:00:00',
   bcaValueAmount: 600000,
   bcaRollYear: '2023',
   listPriceAmount: 590000,
@@ -208,4 +212,25 @@ export const mockDispositionFileOfferApi = (
   offerExpiryDate: '2024-12-25T00:00:00',
   offerAmount: 1500000.99,
   offerNote: 'MY OFFER NOTES',
+});
+
+export const mockDispositionFileSaleApi = (
+  id: number = 0,
+  dispositionFileId: number = 1,
+): Api_DispositionFileSale => ({
+  id: id,
+  dispositionFileId: dispositionFileId,
+  finalConditionRemovalDate: '2022-01-30T00:00:00',
+  saleCompletionDate: '2024-01-30T00:00:00',
+  saleFiscalYear: '2023',
+  finalSaleAmount: 746325.23,
+  realtorCommissionAmount: 12500.27,
+  isGstRequired: true,
+  gstCollectedAmount: 36489.36,
+  netBookAmount: 246.2,
+  totalCostAmount: 856320.36,
+  netProceedsBeforeSppAmount: 2500.0,
+  sppAmount: 1000.0,
+  netProceedsAfterSppAmount: 20.0,
+  remediationAmount: 1.0,
 });

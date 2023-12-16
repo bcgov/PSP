@@ -1,0 +1,512 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Disposition Offer Detail View component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c3.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c2 {
+  font-weight: bold;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          Appraisal and Assessment
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            Appraisal value ($):
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-file.appraisedValueAmount"
+        >
+          $550,000.00
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            Appraisal date:
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-file.appraisalDate"
+        >
+          Dec 28, 2023
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            BC assessment value ($):
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-file.bcaValueAmount"
+        >
+          $600,000.00
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            BC assessment roll year:
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-file.bcaAssessmentRollYear"
+        >
+          2023
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            List price ($):
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-file.listPriceAmount"
+        >
+          $590,000.00
+        </div>
+      </div>
+    </div>
+  </div>
+  .c2 {
+  float: right;
+  cursor: pointer;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          Offers
+        </div>
+        <div
+          class="col-1"
+        >
+          <svg
+            class="c2"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>
+              collapse-section
+            </title>
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M7 14l5-5 5 5z"
+            />
+          </svg>
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <p>
+        There are no offers indicated with this disposition file.
+      </p>
+    </div>
+  </div>
+  .c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c3.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c2 {
+  font-weight: bold;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          Sales Details
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            Last condition removal date:
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-sale.finalConditionRemovalDate"
+        >
+          Jan 30, 2022
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            Sale completion date:
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-sale.saleCompletionDate"
+        >
+          Jan 30, 2024
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            Fiscal year of sale:
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-sale.saleFiscalYear"
+        >
+          2023
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            Final sale price ($):
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-sale.finalSaleAmount"
+        >
+          $746,325.23
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            Realtor commission ($):
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-sale.realtorCommissionAmount"
+        >
+          $12,500.27
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            GST required:
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-sale.isGstRequired"
+        >
+          Yes
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            GST collected ($):
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-sale.gstCollectedAmount"
+        >
+          $36,489.36
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            Net Book Value ($):
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-sale.netBookAmount"
+        >
+          $246.20
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            Total cost of sales ($):
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-sale.totalCostAmount"
+        >
+          $856,320.36
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            Net proceeds before SPP cost ($):
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-sale.netProceedsBeforeSppAmount"
+        >
+          $2,500.00
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            SPP Amount ($):
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-sale.sppAmount"
+        >
+          $1,000.00
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            Net proceeds after SPP cost ($):
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-sale.netProceedsAfterSppAmount"
+        >
+          $20.00
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-5"
+        >
+          <label
+            class="c2"
+          >
+            Remediation cost ($):
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+          data-testid="disposition-sale.remediationAmount"
+        >
+          $1.00
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

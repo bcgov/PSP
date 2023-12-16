@@ -44,35 +44,35 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
           <>
             <SectionField
               label="Appraisal value ($)"
-              labelWidth="4"
-              valueTestId="disposition-file.appraisedAmount"
+              labelWidth="5"
+              valueTestId="disposition-file.appraisedValueAmount"
             >
               {formatMoney(dispositionFile.appraisedValueAmount)}
             </SectionField>
             <SectionField
               label="Appraisal date"
-              labelWidth="4"
+              labelWidth="5"
               valueTestId="disposition-file.appraisalDate"
             >
               {prettyFormatDate(dispositionFile.appraisalDate)}
             </SectionField>
             <SectionField
               label="BC assessment value ($)"
-              labelWidth="4"
+              labelWidth="5"
               valueTestId="disposition-file.bcaValueAmount"
             >
               {formatMoney(dispositionFile.bcaValueAmount)}
             </SectionField>
             <SectionField
               label="BC assessment roll year"
-              labelWidth="4"
+              labelWidth="5"
               valueTestId="disposition-file.bcaAssessmentRollYear"
             >
               {dispositionFile.bcaRollYear ?? ''}
             </SectionField>
             <SectionField
               label="List price ($)"
-              labelWidth="4"
+              labelWidth="5"
               valueTestId="disposition-file.listPriceAmount"
             >
               {formatMoney(dispositionFile.listPriceAmount)}
@@ -99,43 +99,95 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
       <Section header="Sales Details">
         {(dispositionSale && (
           <>
-            <SectionField label="Last condition removal date">
+            <SectionField
+              label="Last condition removal date"
+              labelWidth="5"
+              valueTestId="disposition-sale.finalConditionRemovalDate"
+            >
               {prettyFormatDate(dispositionSale.finalConditionRemovalDate)}
             </SectionField>
-            <SectionField label="Sale completion date">
+            <SectionField
+              label="Sale completion date"
+              labelWidth="5"
+              valueTestId="disposition-sale.saleCompletionDate"
+            >
               {prettyFormatDate(dispositionSale.saleCompletionDate)}
             </SectionField>
-            <SectionField label="Fiscal year of sale">
+            <SectionField
+              label="Fiscal year of sale"
+              labelWidth="5"
+              valueTestId="disposition-sale.saleFiscalYear"
+            >
               {dispositionSale.saleFiscalYear}
             </SectionField>
-            <SectionField label="Final sale price ($)">
+            <SectionField
+              label="Final sale price ($)"
+              labelWidth="5"
+              valueTestId="disposition-sale.finalSaleAmount"
+            >
               {formatMoney(dispositionSale.finalSaleAmount)}
             </SectionField>
-            <SectionField label="Realtor commission ($)">
+            <SectionField
+              label="Realtor commission ($)"
+              labelWidth="5"
+              valueTestId="disposition-sale.realtorCommissionAmount"
+            >
               {formatMoney(dispositionSale.realtorCommissionAmount)}
             </SectionField>
-            <SectionField label="GST required">
+            <SectionField
+              label="GST required"
+              labelWidth="5"
+              valueTestId="disposition-sale.isGstRequired"
+            >
               {dispositionSale?.isGstRequired ? 'Yes' : 'No'}
             </SectionField>
-            <SectionField label="GST collected ($)">
+            <SectionField
+              label="GST collected ($)"
+              labelWidth="5"
+              valueTestId="disposition-sale.gstCollectedAmount"
+            >
               {formatMoney(dispositionSale.gstCollectedAmount)}
             </SectionField>
-            <SectionField label="Net Book Value ($)">
+            <SectionField
+              label="Net Book Value ($)"
+              labelWidth="5"
+              valueTestId="disposition-sale.netBookAmount"
+            >
               {formatMoney(dispositionSale.netBookAmount)}
             </SectionField>
-            <SectionField label="Total cost of sales ($)">
+            <SectionField
+              label="Total cost of sales ($)"
+              labelWidth="5"
+              valueTestId="disposition-sale.totalCostAmount"
+            >
               {formatMoney(dispositionSale.totalCostAmount)}
             </SectionField>
-            <SectionField label="Net proceeds before SPP cost ($)">
+            <SectionField
+              label="Net proceeds before SPP cost ($)"
+              labelWidth="5"
+              valueTestId="disposition-sale.netProceedsBeforeSppAmount"
+            >
               {formatMoney(dispositionSale.netProceedsBeforeSppAmount)}
             </SectionField>
-            <SectionField label="SPP Amount ($)">
+            <SectionField
+              label="SPP Amount ($)"
+              labelWidth="5"
+              valueTestId="disposition-sale.sppAmount"
+            >
               {formatMoney(dispositionSale.sppAmount)}
             </SectionField>
-            <SectionField label="Net proceeds after SPP cost ($)">
+            <SectionField
+              label="Net proceeds after SPP cost ($)"
+              labelWidth="5"
+              valueTestId="disposition-sale.netProceedsAfterSppAmount"
+            >
               {formatMoney(dispositionSale.netProceedsAfterSppAmount)}
             </SectionField>
-            <SectionField label="Remediation cost ($)">
+            <SectionField
+              label="Remediation cost ($)"
+              labelWidth="5"
+              valueTestId="disposition-sale.remediationAmount"
+            >
               {formatMoney(dispositionSale.remediationAmount)}
             </SectionField>
           </>

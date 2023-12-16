@@ -3,7 +3,7 @@ import {
   Api_DispositionFileProperty,
   Api_DispositionFileTeam,
 } from '@/models/api/DispositionFile';
-import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
+import { emptyStringtoNullable, toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
 import { DispositionOfferFormModel } from './DispositionOfferFormModel';
@@ -30,6 +30,12 @@ export class DispositionFormModel implements WithDispositionTeam {
   team: DispositionTeamSubFormModel[] = [];
   offers: DispositionOfferFormModel[] = [];
   sales: DispositionSaleFormModel[] = [];
+  // Appraisal and Value
+  appraisedValueAmount: number | null = null;
+  appraisalDate: string | null = null;
+  bcaValueAmount: number | null = null;
+  bcaRollYear: string | null = null;
+  listPriceAmount: number | null = null;
 
   constructor(
     readonly id: number | null = null,
@@ -49,7 +55,7 @@ export class DispositionFormModel implements WithDispositionTeam {
       fileName: this.fileName ?? undefined,
       fileNumber: this.fileNumber ?? undefined,
       fileStatusTypeCode: toTypeCode(this.fileStatusTypeCode),
-      fileReference: this.referenceNumber,
+      fileReference: emptyStringtoNullable(this.referenceNumber),
       assignedDate: this.assignedDate,
       completionDate: this.completionDate,
       dispositionTypeCode: toTypeCodeNullable(this.dispositionTypeCode),
@@ -79,17 +85,19 @@ export class DispositionFormModel implements WithDispositionTeam {
           acquisitionFile: { id: this.id },
         };
       }),
-      appraisedValueAmount: 550000,
-      appraisalDate: '2023-12-25T00:00:00',
-      bcaValueAmount: 600000,
-      bcaRollYear: '2023',
-      listPriceAmount: 590000,
+
       offers: this.offers.map(x => x.toApi()),
       sales: this.sales.map(x => x.toApi()),
       project: null,
       projectId: null,
       product: null,
       productId: null,
+      // Appraisal and Value
+      appraisedValueAmount: this.appraisedValueAmount,
+      appraisalDate: this.appraisalDate,
+      bcaValueAmount: this.bcaValueAmount,
+      bcaRollYear: this.bcaRollYear,
+      listPriceAmount: this.listPriceAmount,
     };
   }
 }

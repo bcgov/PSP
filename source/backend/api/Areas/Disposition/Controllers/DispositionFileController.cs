@@ -183,7 +183,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [ProducesResponseType(typeof(IEnumerable<DispositionFileOfferModel>), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetDispositionFileOffers(long dispositionFileId)
+        public IActionResult GetDispositionFileOffers([FromRoute]long id)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -194,28 +194,28 @@ namespace Pims.Api.Areas.Disposition.Controllers
 
             _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
 
-            var dispositionOffers = _dispositionService.GetOffers(dispositionFileId);
+            var dispositionOffers = _dispositionService.GetOffers(id);
             return new JsonResult(_mapper.Map<IEnumerable<DispositionFileOfferModel>>(dispositionOffers));
         }
 
         [HttpGet("{id:long}/sales")]
         [HasPermission(Permissions.DispositionView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<DispositionFileOfferModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<DispositionFileSaleModel>), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetDispositionFileSales(long dispositionFileId)
+        public IActionResult GetDispositionFileSales([FromRoute]long id)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
                 nameof(DispositionFileController),
-                nameof(GetDispositionFileOffers),
+                nameof(GetDispositionFileSales),
                 User.GetUsername(),
                 DateTime.Now);
 
             _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
 
-            var dispositionSales = _dispositionService.GetSales(dispositionFileId);
+            var dispositionSales = _dispositionService.GetSales(id);
             return new JsonResult(_mapper.Map<IEnumerable<DispositionFileSaleModel>>(dispositionSales));
         }
 
