@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { IoMdPersonAdd } from 'react-icons/io';
 import { useHistory } from 'react-router';
