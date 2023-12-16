@@ -30,6 +30,32 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   border-color: transparent;
 }
 
+.c8 {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
 .c0 {
   height: 100%;
 }
@@ -42,6 +68,11 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
 
 .c0 .tab-content .tab-pane {
   position: relative;
+}
+
+.c9 {
+  float: right;
+  cursor: pointer;
 }
 
 .c2 {
@@ -566,7 +597,205 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
         aria-hidden="true"
         class="fade tab-pane"
         role="tabpanel"
-      />
+      >
+        <div
+          class="c8"
+        >
+          <div
+            class="spinner-border text-warning"
+            data-testid="filter-backdrop-loading"
+          />
+        </div>
+        <div
+          class="c4 form-section"
+        >
+          <h2
+            class="c7"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                Appraisal and Assessment
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-5"
+              >
+                <label
+                  class="c5"
+                >
+                  Appraisal value ($):
+                </label>
+              </div>
+              <div
+                class="c6 text-left col"
+                data-testid="disposition-file.appraisedValueAmount"
+              >
+                $550,000.00
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-5"
+              >
+                <label
+                  class="c5"
+                >
+                  Appraisal date:
+                </label>
+              </div>
+              <div
+                class="c6 text-left col"
+                data-testid="disposition-file.appraisalDate"
+              >
+                Dec 28, 2023
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-5"
+              >
+                <label
+                  class="c5"
+                >
+                  BC assessment value ($):
+                </label>
+              </div>
+              <div
+                class="c6 text-left col"
+                data-testid="disposition-file.bcaValueAmount"
+              >
+                $600,000.00
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-5"
+              >
+                <label
+                  class="c5"
+                >
+                  BC assessment roll year:
+                </label>
+              </div>
+              <div
+                class="c6 text-left col"
+                data-testid="disposition-file.bcaAssessmentRollYear"
+              >
+                2023
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-5"
+              >
+                <label
+                  class="c5"
+                >
+                  List price ($):
+                </label>
+              </div>
+              <div
+                class="c6 text-left col"
+                data-testid="disposition-file.listPriceAmount"
+              >
+                $590,000.00
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c4 form-section"
+        >
+          <h2
+            class="c7"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                Offers
+              </div>
+              <div
+                class="col-1"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    collapse-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M7 14l5-5 5 5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <p>
+              There are no offers indicated with this disposition file.
+            </p>
+          </div>
+        </div>
+        <div
+          class="c4 form-section"
+        >
+          <h2
+            class="c7"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                Sales Details
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <p>
+              There are no sale details indicated with this disposition file.
+            </p>
+          </div>
+        </div>
+      </div>
       <div
         aria-hidden="true"
         class="fade tab-pane"
