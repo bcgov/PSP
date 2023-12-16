@@ -79,15 +79,6 @@ const ContactManagerView = ({
     isSummary ? 5 : 10,
   );
 
-  // update internal state whenever the filter bar changes
-  const changeFilter = useCallback(
-    (filter: IContactFilter) => {
-      setFilter(filter);
-      setCurrentPage(0);
-    },
-    [setFilter, setCurrentPage],
-  );
-
   useEffect(() => {
     if (error) {
       toast.error(error?.message);
@@ -100,7 +91,7 @@ const ContactManagerView = ({
         <Col>
           <ContactFilterComponent
             filter={filter}
-            setFilter={changeFilter}
+            setFilter={setFilter}
             showActiveSelector={showActiveSelector}
             restrictContactType={restrictContactType}
           />

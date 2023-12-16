@@ -19,12 +19,12 @@ const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
-
+const getContacts = jest.fn().mockResolvedValue({ data: {} as IPagedItems });
 jest.mock('@react-keycloak/web');
 jest.mock('@/hooks/pims-api/useApiContacts', () => ({
   useApiContacts: () => {
     return {
-      getContacts: jest.fn().mockResolvedValue({ data: {} as IPagedItems }),
+      getContacts,
     };
   },
 }));
