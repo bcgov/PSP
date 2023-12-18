@@ -301,12 +301,15 @@ namespace PIMS.Tests.Automation.PageObjects
                 WaitUntilClickable(researchPropertyNameInput);
                 webDriver.FindElement(researchPropertyNameInput).SendKeys(propertyResearch.DescriptiveName);
             }
-            if (propertyResearch.Purpose != "")
+            if (propertyResearch.PropertyResearchPurpose.Count > 0)
             {
-                webDriver.FindElement(researchPropertyPurposeSelect).Click();
+                for (int i = 0; i < propertyResearch.PropertyResearchPurpose.Count; i++)
+                {
+                    webDriver.FindElement(researchPropertyPurposeSelect).Click();
 
-                WaitUntilVisible(researchPropertyPurposeOptions);
-                ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, propertyResearch.Purpose);
+                    WaitUntilVisible(researchPropertyPurposeOptions);
+                    ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, propertyResearch.PropertyResearchPurpose[i]);
+                }
             }
             if (propertyResearch.LegalOpinionRequest != "")
             {
@@ -466,11 +469,14 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearInput(researchPropertyNameInput);
                 webDriver.FindElement(researchPropertyNameInput).SendKeys(propertyResearch.DescriptiveName);
             }
-            if (propertyResearch.Purpose != "")
+            if (propertyResearch.PropertyResearchPurpose.Count > 0)
             {
-                ClearMultiSelectInput(researchPropertyPurposeDiv);
-                webDriver.FindElement(researchPropertyPurposeSelect).Click();
-                ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, propertyResearch.Purpose);
+                for (int i = 0; i < propertyResearch.PropertyResearchPurpose.Count; i++)
+                {
+                    ClearMultiSelectInput(researchPropertyPurposeDiv);
+                    webDriver.FindElement(researchPropertyPurposeSelect).Click();
+                    ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, propertyResearch.PropertyResearchPurpose[i]);
+                }
             }
             if (propertyResearch.LegalOpinionRequest != "")
             {
@@ -719,7 +725,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(researchPropertyNameViewInput, propertyResearch.DescriptiveName);
 
             AssertTrueIsDisplayed(researchPropertyPurposeLabel);
-            AssertTrueContentEquals(researchPropertyPurposeViewInput,propertyResearch.Purpose);
+            AssertTrueContentEquals(researchPropertyPurposeViewInput, TransformListToText(propertyResearch.PropertyResearchPurpose));
             AssertTrueIsDisplayed(researchPropertyLegalReqLabel);
 
             if (propertyResearch.LegalOpinionRequest == "Unknown")

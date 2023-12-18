@@ -9,18 +9,29 @@ interface SectionProps {
   header?: React.ReactNode;
   isCollapsable?: boolean;
   initiallyExpanded?: boolean;
+  noPadding?: boolean;
 }
 
 export const Section: React.FC<
   React.PropsWithChildren<SectionProps & React.HTMLAttributes<HTMLDivElement>> & {
     'data-testid'?: string;
   }
-> = ({ header, children, title, isCollapsable, initiallyExpanded, className, ...rest }) => {
+> = ({
+  header,
+  children,
+  title,
+  isCollapsable,
+  initiallyExpanded,
+  noPadding,
+  className,
+  ...rest
+}) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(!initiallyExpanded && true);
   return (
     <StyledFormSection
       className={clsx('form-section', className)}
       data-testid={rest['data-testid']}
+      noPadding={noPadding}
     >
       {header && (
         <StyledSectionHeader>
@@ -66,9 +77,9 @@ const StyledSectionHeader = styled.h2`
   margin-bottom: 2rem;
 `;
 
-const StyledFormSection = styled.div`
-  margin: 1.5rem;
-  padding: 1.5rem;
+const StyledFormSection = styled.div<{ noPadding?: boolean }>`
+  margin: ${props => (props.noPadding === true ? '' : '1.5rem')};
+  padding: ${props => (props.noPadding === true ? '' : '1.5rem')};
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;

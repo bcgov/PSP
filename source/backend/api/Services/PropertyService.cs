@@ -244,10 +244,16 @@ namespace Pims.Api.Services
             return propertyActivityResult;
         }
 
-        public PimsPropertyActivity UpdateActivity(PimsPropertyActivity propertyActivity)
+        public PimsPropertyActivity UpdateActivity(long propertyId, long activityId, PimsPropertyActivity propertyActivity)
         {
             _logger.LogInformation("Updating property Activity...");
             _user.ThrowIfNotAuthorized(Permissions.ManagementEdit, Permissions.PropertyEdit);
+
+            if (!propertyActivity.PimsPropPropActivities.Any(x => x.PropertyId == propertyId && x.PimsPropertyActivityId == activityId)
+                || propertyActivity.PimsPropertyActivityId != activityId)
+            {
+                throw new BadRequestException("Invalid activity identifiers.");
+            }
 
             var propertyActivityResult = _propertyActivityRepository.Update(propertyActivity);
             _propertyActivityRepository.CommitTransaction();

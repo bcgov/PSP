@@ -27,6 +27,7 @@ export interface ModalContent {
   handleCancel?: Function;
   /** Optional function to control behaviour of ok button. Default is to reload the app. */
   handleOk?: Function;
+  handleOkDisabled?: boolean;
   /** Optional text to display on the cancel button. Default is Cancel. */
   cancelButtonText?: string;
   /** Optional variant that will override the default variant of warning. */
@@ -78,7 +79,6 @@ export interface ModalContent {
   /** provide the size of the modal, default width is 50.0rem */
   modalSize?: ModalSize;
   variant: 'info' | 'warning' | 'error';
-  //variant?: string;
   className?: string;
   /** display this modal as a popup instead of as a modal, allowing the user to click on underlying elements */
   asPopup?: boolean;
@@ -98,6 +98,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     display,
     setDisplay,
     handleOk,
+    handleOkDisabled,
     handleCancel,
     title,
     message,
@@ -123,6 +124,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
   ) {
     throw Error('Modal has insufficient parameters');
   }
+
   const showState = display !== undefined ? display : show;
   const showControl = setDisplay !== undefined ? setDisplay : setShow;
 
@@ -178,7 +180,11 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
   }
 
   function getModalClass() {
-    return (className || '') + '  ' + getVariantClass();
+    if (className) {
+      return className + ' ' + getVariantClass();
+    }
+
+    return getVariantClass();
   }
 
   const headerIconValue = getHeaderIcon();
@@ -215,12 +221,19 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
                 title="cancel-modal"
                 variant={cancelButtonVariant ?? 'secondary'}
                 onClick={close}
+                data-testid="cancel-modal-button"
               >
                 {cancelButtonText}
               </Button>
             )}
 
-            <Button title="ok-modal" variant={okButtonVariant ?? 'primary'} onClick={ok}>
+            <Button
+              title="ok-modal"
+              variant={okButtonVariant ?? 'primary'}
+              onClick={ok}
+              disabled={handleOkDisabled}
+              data-testid="ok-modal-button"
+            >
               {okButtonText ?? 'Ok'}
             </Button>
           </div>
@@ -318,19 +331,19 @@ const StyledModal = styled(Modal)`
     color: black;
   }
 
-  &.modal-xl {
+  .modal-xl {
     max-width: 100rem;
   }
 
-  &.modal-l {
+  .modal-l {
     max-width: 75rem;
   }
 
-  &.modal-m {
+  .modal-m {
     max-width: 50rem;
   }
 
-  &.modal-s {
+  .modal-s {
     max-width: 40rem;
   }
 

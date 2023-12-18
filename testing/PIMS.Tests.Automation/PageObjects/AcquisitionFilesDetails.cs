@@ -185,7 +185,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(acquisitionFileProjectInput).SendKeys(Keys.Backspace);
 
                 Wait(2000);
-                webDriver.FindElement(acquisitionFileProject1stOption).Click(); 
+                FocusAndClick(acquisitionFileProject1stOption); 
             }
 
             if (acquisition.AcquisitionProjProduct != "")
@@ -255,6 +255,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.OwnerComment != "")
             {
                 Wait(2000);
+                webDriver.FindElement(acquisitionFileOwnerCommentTextArea).Click();
                 webDriver.FindElement(acquisitionFileOwnerCommentTextArea).SendKeys(acquisition.OwnerComment);
             }
         }
