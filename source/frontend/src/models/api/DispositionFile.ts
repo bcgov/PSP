@@ -94,37 +94,35 @@ export interface Api_DispositionFileSale {
   dispositionPurchaserSolicitors: Api_DispositionSalePurchaserSolicitor[];
 }
 
-export interface Api_DispositionSalePurchaser extends Api_ConcurrentVersion, Api_AuditFields {
-  id?: number;
-  dispositionFileId: number;
-  personId?: number;
-  person?: Api_Person;
-  organizationId?: number;
-  organization?: Api_Organization;
-  primaryContactId?: number;
-  primaryContact?: Api_Person;
+export interface ContactInformation {
+  personId: number | null;
+  person: Api_Person | null;
+  organizationId: number | null;
+  organization: Api_Organization | null;
+  primaryContactId: number | null;
+  primaryContact: Api_Person | null;
 }
 
-export interface Api_DispositionSalePurchaserAgent extends Api_ConcurrentVersion, Api_AuditFields {
+export interface Api_DispositionSalePurchaser
+  extends ContactInformation,
+    Api_ConcurrentVersion,
+    Api_AuditFields {
   id?: number;
-  dispositionFileId: number;
-  personId?: number;
-  person?: Api_Person;
-  organizationId?: number;
-  organization?: Api_Organization;
-  primaryContactId?: number;
-  primaryContact?: Api_Person;
+  dispositionSaleId: number;
+}
+
+export interface Api_DispositionSalePurchaserAgent
+  extends ContactInformation,
+    Api_ConcurrentVersion,
+    Api_AuditFields {
+  id?: number;
+  dispositionSaleId: number;
 }
 
 export interface Api_DispositionSalePurchaserSolicitor
-  extends Api_ConcurrentVersion,
+  extends ContactInformation,
+    Api_ConcurrentVersion,
     Api_AuditFields {
   id?: number;
-  dispositionFileId: number;
-  personId?: number;
-  person?: Api_Person;
-  organizationId?: number;
-  organization?: Api_Organization;
-  primaryContactId?: number;
-  primaryContact?: Api_Person;
+  dispositionSaleId: number;
 }

@@ -112,7 +112,7 @@ describe('Disposition Offer Detail View component', () => {
   });
 
   it('displays the Disposition Sale information when available', async () => {
-    const { queryByTestId } = await setup({
+    const { queryByTestId, getByText } = await setup({
       props: {
         dispositionFile: mockDispositionFileApi,
         dispositionOffers: [],
@@ -139,5 +139,17 @@ describe('Disposition Offer Detail View component', () => {
     expect(queryByTestId('disposition-sale.sppAmount')).toHaveTextContent('$1,000.00');
     expect(queryByTestId('disposition-sale.netProceedsAfterSppAmount')).toHaveTextContent('$20.00');
     expect(queryByTestId('disposition-sale.remediationAmount')).toHaveTextContent('$1.00');
+
+    // Purchasers
+    expect(getByText(`Stinky Cheese`)).toBeInTheDocument();
+    expect(getByText(`Alejandro Sanchez`)).toBeInTheDocument();
+    expect(getByText(`Ministry of Transportation and Infrastructure`)).toBeInTheDocument();
+    expect(getByText(`Manuel Rodriguez`)).toBeInTheDocument();
+
+    // Agent
+    expect(getByText(`JOHN DOE`)).toBeInTheDocument();
+
+    // Solicitor
+    expect(getByText(`JANE DOE`)).toBeInTheDocument();
   });
 });
