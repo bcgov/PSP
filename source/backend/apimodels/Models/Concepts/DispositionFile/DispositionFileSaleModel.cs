@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Pims.Api.Models.Base;
 
 namespace Pims.Api.Models.Models.Concepts.DispositionFile
@@ -79,5 +80,20 @@ namespace Pims.Api.Models.Models.Concepts.DispositionFile
         /// Disposition Sale Remediation Amount.
         /// </summary>
         public decimal? RemediationAmount { get; set; }
+
+        /// <summary>
+        /// get/set - A list of disposition Sale Purchaser(s).
+        /// </summary>
+        public IList<DispositionSalePurchaserModel> DispositionPurchasers { get; set; }
+
+        /// <summary>
+        /// get/set - A list of disposition Sale Purchaser(s) Agents.
+        /// </summary>
+        public IList<DispositionSalePurchaserAgentModel> DispositionPurchaserAgents { get; set; }
+
+        /// <summary>
+        /// get/set - A list of disposition Sale Purchaser(s) Solicitors.
+        /// </summary>
+        public IList<DispositionSalePurchaserSolicitorModel> DispositionPurchaserSolicitors { get; set; }
     }
 }

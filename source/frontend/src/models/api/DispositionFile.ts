@@ -89,4 +89,42 @@ export interface Api_DispositionFileSale {
   sppAmount: number | null;
   netProceedsAfterSppAmount: number | null;
   remediationAmount: number | null;
+  dispositionPurchasers: Api_DispositionSalePurchaser[];
+  dispositionPurchaserAgents: Api_DispositionSalePurchaserAgent[];
+  dispositionPurchaserSolicitors: Api_DispositionSalePurchaserSolicitor[];
+}
+
+export interface Api_DispositionSalePurchaser extends Api_ConcurrentVersion, Api_AuditFields {
+  id?: number;
+  dispositionFileId: number;
+  personId?: number;
+  person?: Api_Person;
+  organizationId?: number;
+  organization?: Api_Organization;
+  primaryContactId?: number;
+  primaryContact?: Api_Person;
+}
+
+export interface Api_DispositionSalePurchaserAgent extends Api_ConcurrentVersion, Api_AuditFields {
+  id?: number;
+  dispositionFileId: number;
+  personId?: number;
+  person?: Api_Person;
+  organizationId?: number;
+  organization?: Api_Organization;
+  primaryContactId?: number;
+  primaryContact?: Api_Person;
+}
+
+export interface Api_DispositionSalePurchaserSolicitor
+  extends Api_ConcurrentVersion,
+    Api_AuditFields {
+  id?: number;
+  dispositionFileId: number;
+  personId?: number;
+  person?: Api_Person;
+  organizationId?: number;
+  organization?: Api_Organization;
+  primaryContactId?: number;
+  primaryContact?: Api_Person;
 }

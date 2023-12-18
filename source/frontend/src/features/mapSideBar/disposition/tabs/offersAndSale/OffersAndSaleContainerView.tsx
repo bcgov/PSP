@@ -1,3 +1,6 @@
+import React from 'react';
+import styled from 'styled-components';
+
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -10,6 +13,7 @@ import { prettyFormatDate } from '@/utils/dateUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
 
 import DispositionOfferDetails from './dispositionOffer/dispositionOfferDetails/DispositionOfferDetails';
+import DispositionSaleContactDetails from './dispositionOffer/dispositionSaleContactDetails/DispositionSaleContactDetails';
 
 export interface IOffersAndSaleContainerViewProps {
   loading: boolean;
@@ -35,6 +39,9 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
   };
 
   const appraisalHasData = getAppraisalHasData();
+
+  const purchaserAgent = dispositionSale?.dispositionPurchaserAgents[0] ?? null;
+  const purchaserAgentSolicitor = dispositionSale?.dispositionPurchaserSolicitors[0] ?? null;
 
   return (
     <>
@@ -190,6 +197,44 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
             >
               {formatMoney(dispositionSale.remediationAmount)}
             </SectionField>
+            <SectionField
+              label="Purchaser name(s)"
+              labelWidth="5"
+              valueTestId="disposition-sale.purchasers"
+            >
+              {dispositionSale.dispositionPurchasers.map((purchaser, index) => (
+                <React.Fragment key={`purchaser-${index}`}>
+                  <DispositionSaleContactDetails
+                    contactInformation={purchaser}
+                  ></DispositionSaleContactDetails>
+                  {index !== dispositionSale.dispositionPurchasers.length - 1 && (
+                    <StyledSpacer className="my-3" />
+                  )}
+                </React.Fragment>
+              ))}
+            </SectionField>
+            <SectionField
+              label="Purchaser agent"
+              labelWidth="5"
+              valueTestId="disposition-sale.purchaser-agent"
+            >
+              {purchaserAgent && (
+                <DispositionSaleContactDetails
+                  contactInformation={purchaserAgent}
+                ></DispositionSaleContactDetails>
+              )}
+            </SectionField>
+            <SectionField
+              label="Purchaser solicitor"
+              labelWidth="5"
+              valueTestId="disposition-sale.purchaser-solicitor"
+            >
+              {purchaserAgentSolicitor && (
+                <DispositionSaleContactDetails
+                  contactInformation={purchaserAgentSolicitor}
+                ></DispositionSaleContactDetails>
+              )}
+            </SectionField>
           </>
         )) ?? <p>There are no sale details indicated with this disposition file.</p>}
       </Section>
@@ -198,3 +243,7 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
 };
 
 export default OffersAndSaleContainerView;
+
+const StyledSpacer = styled.div`
+  border-bottom: 0.1rem solid ${props => props.theme.css.tableHoverColor};
+`;

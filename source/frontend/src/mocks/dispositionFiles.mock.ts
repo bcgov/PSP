@@ -233,4 +233,7 @@ export const mockDispositionFileSaleApi = (
   sppAmount: 1000.0,
   netProceedsAfterSppAmount: 20.0,
   remediationAmount: 1.0,
+  dispositionPurchaserAgents: [],
+  dispositionPurchasers: [],
+  dispositionPurchaserSolicitors: [],
 });

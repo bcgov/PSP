@@ -238,14 +238,20 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(y => y.Person)
                 .Include(x => x.PimsDispositionPurchasers)
                     .ThenInclude(y => y.Organization)
+                .Include(x => x.PimsDispositionPurchasers)
+                    .ThenInclude(y => y.PrimaryContact)
                 .Include(x => x.PimsDspPurchAgents)
                     .ThenInclude(y => y.Person)
                 .Include(x => x.PimsDspPurchAgents)
                     .ThenInclude(y => y.Organization)
+                .Include(x => x.PimsDspPurchAgents)
+                    .ThenInclude(y => y.PrimaryContact)
                 .Include(x => x.PimsDspPurchSolicitors)
                     .ThenInclude(y => y.Person)
                 .Include(x => x.PimsDspPurchSolicitors)
                     .ThenInclude(y => y.Organization)
+                .Include(x => x.PimsDspPurchSolicitors)
+                    .ThenInclude(y => y.PrimaryContact)
                 .Where(x => x.DispositionFileId == dispositionId).ToList();
         }
 

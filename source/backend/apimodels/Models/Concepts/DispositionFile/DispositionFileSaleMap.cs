@@ -22,7 +22,10 @@ namespace Pims.Api.Models.Models.Concepts.DispositionFile
                 .Map(dest => dest.NetProceedsBeforeSppAmount, src => src.NetProceedsBeforeSppAmt)
                 .Map(dest => dest.NetProceedsAfterSppAmount, src => src.NetProceedsAfterSppAmt)
                 .Map(dest => dest.SppAmount, src => src.SppAmt)
-                .Map(dest => dest.RemediationAmount, src => src.RemediationAmt);
+                .Map(dest => dest.RemediationAmount, src => src.RemediationAmt)
+                .Map(dest => dest.DispositionPurchasers, src => src.PimsDispositionPurchasers)
+                .Map(dest => dest.DispositionPurchaserAgents, src => src.PimsDspPurchAgents)
+                .Map(dest => dest.DispositionPurchaserSolicitors, src => src.PimsDspPurchSolicitors);
 
             config.NewConfig<DispositionFileSaleModel, Entity.PimsDispositionSale>()
                 .Map(dest => dest.DispositionSaleId, src => src.Id)
@@ -39,7 +42,10 @@ namespace Pims.Api.Models.Models.Concepts.DispositionFile
                 .Map(dest => dest.NetProceedsBeforeSppAmt, src => src.NetProceedsBeforeSppAmount)
                 .Map(dest => dest.NetProceedsAfterSppAmt, src => src.NetProceedsAfterSppAmount)
                 .Map(dest => dest.SppAmt, src => src.SppAmount)
-                .Map(dest => dest.RemediationAmt, src => src.RemediationAmount);
+                .Map(dest => dest.RemediationAmt, src => src.RemediationAmount)
+                .Map(dest => dest.PimsDispositionPurchasers, src => src.DispositionPurchasers)
+                .Map(dest => dest.PimsDspPurchAgents, src => src.DispositionPurchaserAgents)
+                .Map(dest => dest.PimsDspPurchSolicitors, src => src.DispositionPurchaserSolicitors);
         }
     }
 }

@@ -56,6 +56,9 @@ export class DispositionSaleFormModel {
       sppAmount: this.sppAmount,
       netProceedsAfterSppAmount: this.netProceedsAfterSppAmount,
       remediationAmount: this.remediationAmount,
+      dispositionPurchasers: [],
+      dispositionPurchaserAgents: [],
+      dispositionPurchaserSolicitors: [],
     };
   }
 }
