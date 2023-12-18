@@ -75,9 +75,8 @@ export const AcquisitionListView: React.FunctionComponent<
   const changeFilter = useCallback(
     (filter: Api_AcquisitionFilter) => {
       setFilter(filter);
-      setCurrentPage(0);
     },
-    [setFilter, setCurrentPage],
+    [setFilter],
   );
 
   useEffect(() => {

@@ -47,9 +47,8 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   const changeFilter = useCallback(
     (filter: IProjectFilter) => {
       setFilter(filter);
-      setCurrentPage(0);
     },
-    [setFilter, setCurrentPage],
+    [setFilter],
   );
 
   return (
