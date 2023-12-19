@@ -14,6 +14,7 @@ jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
 const setIsEditing = jest.fn();
+const onChildSuccess = jest.fn();
 
 describe('DispositionFileTabs component', () => {
   // render component under test
@@ -27,6 +28,7 @@ describe('DispositionFileTabs component', () => {
           dispositionFile={props.dispositionFile}
           defaultTab={props.defaultTab}
           setIsEditing={setIsEditing}
+          onChildSuccess={onChildSuccess}
         />
       </Route>,
       {
@@ -52,6 +54,7 @@ describe('DispositionFileTabs component', () => {
       {
         dispositionFile: mockDispositionFileResponse(),
         defaultTab: FileTabType.FILE_DETAILS,
+        onChildSuccess,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
     );
@@ -63,6 +66,7 @@ describe('DispositionFileTabs component', () => {
       {
         dispositionFile: mockDispositionFileResponse(),
         defaultTab: FileTabType.FILE_DETAILS,
+        onChildSuccess,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
     );
@@ -76,6 +80,7 @@ describe('DispositionFileTabs component', () => {
       {
         dispositionFile: mockDispositionFileResponse(),
         defaultTab: FileTabType.FILE_DETAILS,
+        onChildSuccess,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
     );
@@ -92,6 +97,7 @@ describe('DispositionFileTabs component', () => {
       {
         dispositionFile: mockDispositionFileResponse(),
         defaultTab: FileTabType.OFFERS_AND_SALE,
+        onChildSuccess,
       },
       { claims: [] },
     );
@@ -105,6 +111,7 @@ describe('DispositionFileTabs component', () => {
       {
         dispositionFile: mockDispositionFileResponse(),
         defaultTab: FileTabType.OFFERS_AND_SALE,
+        onChildSuccess,
       },
       { claims: [] },
     );
@@ -121,6 +128,7 @@ describe('DispositionFileTabs component', () => {
       {
         dispositionFile: mockDispositionFileResponse(),
         defaultTab: FileTabType.FILE_DETAILS,
+        onChildSuccess,
       },
       { claims: [Claims.NOTE_VIEW] },
     );
@@ -134,6 +142,7 @@ describe('DispositionFileTabs component', () => {
       {
         dispositionFile: mockDispositionFileResponse(),
         defaultTab: FileTabType.FILE_DETAILS,
+        onChildSuccess,
       },
       { claims: [Claims.NOTE_VIEW] },
     );
@@ -150,6 +159,7 @@ describe('DispositionFileTabs component', () => {
       {
         dispositionFile: mockDispositionFileResponse(),
         defaultTab: FileTabType.FILE_DETAILS,
+        onChildSuccess,
       },
       { claims: [] },
     );
@@ -163,6 +173,7 @@ describe('DispositionFileTabs component', () => {
       {
         dispositionFile: mockDispositionFileResponse(),
         defaultTab: FileTabType.FILE_DETAILS,
+        onChildSuccess,
       },
       { claims: [] },
     );
