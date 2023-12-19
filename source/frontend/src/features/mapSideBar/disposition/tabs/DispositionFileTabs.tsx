@@ -64,7 +64,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
       content: (
         <DocumentsTab
           fileId={dispositionFile.id}
-          relationshipType={DocumentRelationshipType.ACQUISITION_FILES}
+          relationshipType={DocumentRelationshipType.DISPOSITION_FILES}
           onSuccess={onChildSuccess}
         />
       ),
