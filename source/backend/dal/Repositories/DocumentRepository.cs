@@ -88,40 +88,46 @@ namespace Pims.Dal.Repositories
             document.ThrowIfNull(nameof(document));
 
             // Need to load required related entities otherwise the below foreach may fail.
-            var documentToDelete = this.Context.PimsDocuments.AsNoTracking()
+            var documentToDelete = Context.PimsDocuments.AsNoTracking()
                 .Include(d => d.PimsResearchFileDocuments)
                 .Include(d => d.PimsAcquisitionFileDocuments)
                 .Include(d => d.PimsProjectDocuments)
                 .Include(d => d.PimsFormTypes)
                 .Include(d => d.PimsLeaseDocuments)
                 .Include(d => d.PimsPropertyActivityDocuments)
+                .Include(d => d.PimsDispositionFileDocuments)
                 .Where(d => d.DocumentId == document.Internal_Id)
                 .AsNoTracking()
                 .FirstOrDefault();
 
             foreach (var pimsResearchFileDocument in documentToDelete.PimsResearchFileDocuments)
             {
-                this.Context.PimsResearchFileDocuments.Remove(new PimsResearchFileDocument() { Internal_Id = pimsResearchFileDocument.Internal_Id });
+                Context.PimsResearchFileDocuments.Remove(new PimsResearchFileDocument() { Internal_Id = pimsResearchFileDocument.Internal_Id });
             }
 
             foreach (var pimsAcquisitionFileDocument in documentToDelete.PimsAcquisitionFileDocuments)
             {
-                this.Context.PimsAcquisitionFileDocuments.Remove(new PimsAcquisitionFileDocument() { Internal_Id = pimsAcquisitionFileDocument.Internal_Id });
+                Context.PimsAcquisitionFileDocuments.Remove(new PimsAcquisitionFileDocument() { Internal_Id = pimsAcquisitionFileDocument.Internal_Id });
             }
 
             foreach (var pimsProjectDocument in documentToDelete.PimsProjectDocuments)
             {
-                this.Context.PimsProjectDocuments.Remove(new PimsProjectDocument() { Internal_Id = pimsProjectDocument.Internal_Id });
+                Context.PimsProjectDocuments.Remove(new PimsProjectDocument() { Internal_Id = pimsProjectDocument.Internal_Id });
             }
 
             foreach (var pimsLeaseDocument in documentToDelete.PimsLeaseDocuments)
             {
-                this.Context.PimsLeaseDocuments.Remove(new PimsLeaseDocument() { Internal_Id = pimsLeaseDocument.Internal_Id });
+                Context.PimsLeaseDocuments.Remove(new PimsLeaseDocument() { Internal_Id = pimsLeaseDocument.Internal_Id });
             }
 
             foreach (var pimsPropertyActivityDocument in documentToDelete.PimsPropertyActivityDocuments)
             {
-                this.Context.PimsPropertyActivityDocuments.Remove(new PimsPropertyActivityDocument() { Internal_Id = pimsPropertyActivityDocument.Internal_Id });
+                Context.PimsPropertyActivityDocuments.Remove(new PimsPropertyActivityDocument() { Internal_Id = pimsPropertyActivityDocument.Internal_Id });
+            }
+
+            foreach (var pimsDispositionFileDocument in documentToDelete.PimsDispositionFileDocuments)
+            {
+                Context.PimsDispositionFileDocuments.Remove(new PimsDispositionFileDocument() { Internal_Id = pimsDispositionFileDocument.Internal_Id });
             }
 
             foreach (var pimsFormTypeDocument in documentToDelete.PimsFormTypes)
@@ -131,21 +137,22 @@ namespace Pims.Dal.Repositories
                 Context.Entry(pimsFormTypeDocument).Property(x => x.DocumentId).IsModified = true;
             }
 
-            this.Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
+            Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
 
-            this.Context.PimsDocuments.Remove(new PimsDocument() { Internal_Id = document.Internal_Id });
+            Context.PimsDocuments.Remove(new PimsDocument() { Internal_Id = document.Internal_Id });
             return true;
         }
 
         public int DocumentRelationshipCount(long documentId)
         {
-            var documentRelationships = this.Context.PimsDocuments.AsNoTracking()
+            var documentRelationships = Context.PimsDocuments.AsNoTracking()
                 .Include(d => d.PimsResearchFileDocuments)
                 .Include(d => d.PimsAcquisitionFileDocuments)
                 .Include(d => d.PimsProjectDocuments)
                 .Include(d => d.PimsFormTypes)
                 .Include(d => d.PimsLeaseDocuments)
                 .Include(d => d.PimsPropertyActivityDocuments)
+                .Include(d => d.PimsDispositionFileDocuments)
                 .Where(d => d.DocumentId == documentId)
                 .AsNoTracking()
                 .FirstOrDefault();
@@ -155,7 +162,8 @@ namespace Pims.Dal.Repositories
                     documentRelationships.PimsProjectDocuments.Count +
                     documentRelationships.PimsFormTypes.Count +
                     documentRelationships.PimsLeaseDocuments.Count +
-                    documentRelationships.PimsPropertyActivityDocuments.Count;
+                    documentRelationships.PimsPropertyActivityDocuments.Count +
+                    documentRelationships.PimsDispositionFileDocuments.Count;
         }
 
         #endregion
