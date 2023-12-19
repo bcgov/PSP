@@ -222,7 +222,7 @@ namespace Pims.Api.Services
                     DocumentId = uploadResult.Document.Id,
                 };
                 newDocument = _propertyActivityDocumentRepository.AddPropertyActivityDocument(newDocument);
-                _leaseRepository.CommitTransaction();
+                _propertyActivityDocumentRepository.CommitTransaction();
 
                 relationshipResponse.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newDocument);
             }
@@ -250,7 +250,7 @@ namespace Pims.Api.Services
                     DocumentId = uploadResult.Document.Id,
                 };
                 newDocument = _dispositionFileDocumentRepository.AddDispositionDocument(newDocument);
-                _leaseRepository.CommitTransaction();
+                _dispositionFileDocumentRepository.CommitTransaction();
 
                 relationshipResponse.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newDocument);
             }
