@@ -261,7 +261,7 @@ namespace Pims.Api.Services
         public async Task<ExternalResult<string>> DeleteResearchDocumentAsync(PimsResearchFileDocument researchFileDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single research file");
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
+            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.ResearchFileEdit);
 
             var relationshipCount = _documentRepository.DocumentRelationshipCount(researchFileDocument.DocumentId);
             if (relationshipCount == 1)
@@ -279,7 +279,7 @@ namespace Pims.Api.Services
         public async Task<ExternalResult<string>> DeleteProjectDocumentAsync(PimsProjectDocument projectDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single Project");
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
+            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.ProjectEdit);
 
             var relationshipCount = _documentRepository.DocumentRelationshipCount(projectDocument.DocumentId);
             if (relationshipCount == 1)
@@ -297,7 +297,7 @@ namespace Pims.Api.Services
         public async Task<ExternalResult<string>> DeleteAcquisitionDocumentAsync(PimsAcquisitionFileDocument acquisitionFileDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single acquisition file");
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
+            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.AcquisitionFileEdit);
 
             var relationshipCount = _documentRepository.DocumentRelationshipCount(acquisitionFileDocument.DocumentId);
             if (relationshipCount == 1)
@@ -315,7 +315,7 @@ namespace Pims.Api.Services
         public async Task<ExternalResult<string>> DeleteLeaseDocumentAsync(PimsLeaseDocument leaseDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single lease");
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
+            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.LeaseEdit);
 
             var relationshipCount = _documentRepository.DocumentRelationshipCount(leaseDocument.DocumentId);
             if (relationshipCount == 1)
@@ -333,7 +333,7 @@ namespace Pims.Api.Services
         public async Task<ExternalResult<string>> DeletePropertyActivityDocumentAsync(PimsPropertyActivityDocument propertyActivityDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single Property Activity");
-            this.User.ThrowIfNotAuthorized(Permissions.ManagementDelete);
+            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.ManagementEdit);
 
             var relationshipCount = _documentRepository.DocumentRelationshipCount(propertyActivityDocument.DocumentId);
             if (relationshipCount == 1)
@@ -351,7 +351,7 @@ namespace Pims.Api.Services
         public async Task<ExternalResult<string>> DeleteDispositionDocumentAsync(PimsDispositionFileDocument dispositionFileDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single disposition file");
-            this.User.ThrowIfNotAuthorized(Permissions.DispositionDelete);
+            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.DispositionEdit);
 
             var relationshipCount = _documentRepository.DocumentRelationshipCount(dispositionFileDocument.DocumentId);
             if (relationshipCount == 1)
