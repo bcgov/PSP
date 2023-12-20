@@ -4,6 +4,8 @@ import { act } from 'react-test-renderer';
 
 import Claims from '@/constants/claims';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
+import { useApiNotes } from '@/hooks/pims-api/useApiNotes';
+import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
@@ -11,6 +13,19 @@ import DispositionFileTabs, { IDispositionFileTabsProps } from './DispositionFil
 
 // mock auth library
 jest.mock('@react-keycloak/web');
+jest.mock('@/hooks/repositories/useNoteRepository');
+jest.mock('@/hooks/pims-api/useApiNotes');
+
+const getNotes = jest.fn().mockResolvedValue([]);
+
+(useNoteRepository as jest.Mock).mockImplementation(() => ({
+  addNote: { execute: jest.fn() },
+  getNote: { execute: jest.fn() },
+  updateNote: { execute: jest.fn() },
+}));
+(useApiNotes as jest.Mock).mockImplementation(() => ({
+  getNotes,
+}));
 
 const history = createMemoryHistory();
 const setIsEditing = jest.fn();
@@ -43,10 +58,6 @@ describe('DispositionFileTabs component', () => {
 
   beforeEach(() => {
     history.replace(`/blah/${FileTabType.FILE_DETAILS}`);
-  });
-
-  afterEach(() => {
-    jest.resetAllMocks();
   });
 
   it('matches snapshot', () => {
@@ -124,7 +135,7 @@ describe('DispositionFileTabs component', () => {
   });
 
   it('has a notes tab', () => {
-    const { getByText } = setup(
+    const { getAllByText } = setup(
       {
         dispositionFile: mockDispositionFileResponse(),
         defaultTab: FileTabType.FILE_DETAILS,
@@ -133,12 +144,12 @@ describe('DispositionFileTabs component', () => {
       { claims: [Claims.NOTE_VIEW] },
     );
 
-    const tab = getByText('Notes');
+    const tab = getAllByText('Notes')[0];
     expect(tab).toBeVisible();
   });
 
   it('notes tab can be changed to', async () => {
-    const { getByText } = setup(
+    const { getAllByText } = setup(
       {
         dispositionFile: mockDispositionFileResponse(),
         defaultTab: FileTabType.FILE_DETAILS,
@@ -147,10 +158,10 @@ describe('DispositionFileTabs component', () => {
       { claims: [Claims.NOTE_VIEW] },
     );
 
-    const tab = getByText('Notes');
+    const tab = getAllByText('Notes')[0];
     await act(async () => userEvent.click(tab));
 
-    expect(getByText('Notes')).toHaveClass('active');
+    expect(tab).toHaveClass('active');
     expect(history.location.pathname).toBe(`/blah/${FileTabType.NOTES}`);
   });
 
