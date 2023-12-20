@@ -38,9 +38,9 @@ export interface Api_DispositionFile extends Api_ConcurrentVersion, Api_AuditFie
   bcaRollYear: string | null;
   listPriceAmount: number | null;
   // Offers
-  offers: Api_DispositionFileOffer[];
+  dispositionOffers: Api_DispositionFileOffer[];
   // Sale
-  sales: Api_DispositionFileSale[];
+  dispositionSales: Api_DispositionFileSale[];
 }
 
 export interface Api_DispositionFileProperty

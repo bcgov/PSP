@@ -86,8 +86,8 @@ export class DispositionFormModel implements WithDispositionTeam {
         };
       }),
 
-      offers: this.offers.map(x => x.toApi()),
-      sales: this.sales.map(x => x.toApi()),
+      dispositionOffers: this.offers.map(x => x.toApi()),
+      dispositionSales: this.sales.map(x => x.toApi()),
       project: null,
       projectId: null,
       product: null,

@@ -22,7 +22,7 @@ const DispositionSaleContactDetails: React.FunctionComponent<IDispositionSaleCon
   contactInformation,
   primaryContactLabel,
 }) => {
-  const labelValue = primaryContactLabel ? primaryContactLabel : 'Primary Contact';
+  const labelValue = primaryContactLabel ? primaryContactLabel : 'Primary contact';
   const primaryContact = contactInformation.primaryContact ?? null;
 
   return (

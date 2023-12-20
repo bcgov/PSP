@@ -107,6 +107,44 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
         {(dispositionSale && (
           <>
             <SectionField
+              label="Purchaser name(s)"
+              labelWidth="5"
+              valueTestId="disposition-sale.purchasers"
+            >
+              {dispositionSale.dispositionPurchasers.map((purchaser, index) => (
+                <React.Fragment key={`purchaser-${index}`}>
+                  <DispositionSaleContactDetails
+                    contactInformation={purchaser}
+                  ></DispositionSaleContactDetails>
+                  {index !== dispositionSale.dispositionPurchasers.length - 1 && (
+                    <StyledSpacer className="my-3" />
+                  )}
+                </React.Fragment>
+              ))}
+            </SectionField>
+            <SectionField
+              label="Purchaser agent"
+              labelWidth="5"
+              valueTestId="disposition-sale.purchaser-agent"
+            >
+              {purchaserAgent && (
+                <DispositionSaleContactDetails
+                  contactInformation={purchaserAgent}
+                ></DispositionSaleContactDetails>
+              )}
+            </SectionField>
+            <SectionField
+              label="Purchaser solicitor"
+              labelWidth="5"
+              valueTestId="disposition-sale.purchaser-solicitor"
+            >
+              {purchaserAgentSolicitor && (
+                <DispositionSaleContactDetails
+                  contactInformation={purchaserAgentSolicitor}
+                ></DispositionSaleContactDetails>
+              )}
+            </SectionField>
+            <SectionField
               label="Last condition removal date"
               labelWidth="5"
               tooltip="For general sales, provide the date when the last condition(s) are to be removed. For road closures enter the condition precedent date."
@@ -202,44 +240,6 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
               valueTestId="disposition-sale.remediationAmount"
             >
               {formatMoney(dispositionSale.remediationAmount)}
-            </SectionField>
-            <SectionField
-              label="Purchaser name(s)"
-              labelWidth="5"
-              valueTestId="disposition-sale.purchasers"
-            >
-              {dispositionSale.dispositionPurchasers.map((purchaser, index) => (
-                <React.Fragment key={`purchaser-${index}`}>
-                  <DispositionSaleContactDetails
-                    contactInformation={purchaser}
-                  ></DispositionSaleContactDetails>
-                  {index !== dispositionSale.dispositionPurchasers.length - 1 && (
-                    <StyledSpacer className="my-3" />
-                  )}
-                </React.Fragment>
-              ))}
-            </SectionField>
-            <SectionField
-              label="Purchaser agent"
-              labelWidth="5"
-              valueTestId="disposition-sale.purchaser-agent"
-            >
-              {purchaserAgent && (
-                <DispositionSaleContactDetails
-                  contactInformation={purchaserAgent}
-                ></DispositionSaleContactDetails>
-              )}
-            </SectionField>
-            <SectionField
-              label="Purchaser solicitor"
-              labelWidth="5"
-              valueTestId="disposition-sale.purchaser-solicitor"
-            >
-              {purchaserAgentSolicitor && (
-                <DispositionSaleContactDetails
-                  contactInformation={purchaserAgentSolicitor}
-                ></DispositionSaleContactDetails>
-              )}
             </SectionField>
           </>
         )) ?? <p>There are no sale details indicated with this disposition file.</p>}

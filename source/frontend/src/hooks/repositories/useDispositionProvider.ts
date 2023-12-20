@@ -31,7 +31,7 @@ export const useDispositionProvider = () => {
     getLastUpdatedByApi,
     getAllDispositionFileTeamMembers,
     getDispositionFileOffers,
-    getDispositionFileSales,
+    getDispositionFileSale,
   } = useApiDispositionFile();
 
   const addDispositionFileApi = useApiRequestWrapper<
@@ -106,15 +106,15 @@ export const useDispositionProvider = () => {
     onError: useAxiosErrorHandler('Failed to retrieve Disposition File Offers'),
   });
 
-  const getAllDispositionSalesApi = useApiRequestWrapper<
-    (dispositionFileId: number) => Promise<AxiosResponse<Api_DispositionFileSale[], any>>
+  const getDispositionFileSaleApi = useApiRequestWrapper<
+    (dispositionFileId: number) => Promise<AxiosResponse<Api_DispositionFileSale, any>>
   >({
     requestFunction: useCallback(
-      async (dispositionFileId: number) => await getDispositionFileSales(dispositionFileId),
-      [getDispositionFileSales],
+      async (dispositionFileId: number) => await getDispositionFileSale(dispositionFileId),
+      [getDispositionFileSale],
     ),
     requestName: 'GetAllDispositionSales',
-    onError: useAxiosErrorHandler('Failed to retrieve Disposition File Sales'),
+    onError: useAxiosErrorHandler('Failed to retrieve Disposition File Sale'),
   });
 
   return useMemo(
@@ -125,7 +125,7 @@ export const useDispositionProvider = () => {
       getDispositionProperties: getDispositionPropertiesApi,
       getAllDispositionTeamMembers: getAllDispositionTeamMembersApi,
       getDispositionFileOffers: getAllDispositionOffersApi,
-      getDispositionFileSales: getAllDispositionSalesApi,
+      getDispositionFileSale: getDispositionFileSaleApi,
     }),
     [
       addDispositionFileApi,
@@ -134,7 +134,7 @@ export const useDispositionProvider = () => {
       getDispositionPropertiesApi,
       getAllDispositionTeamMembersApi,
       getAllDispositionOffersApi,
-      getAllDispositionSalesApi,
+      getDispositionFileSaleApi,
     ],
   );
 };

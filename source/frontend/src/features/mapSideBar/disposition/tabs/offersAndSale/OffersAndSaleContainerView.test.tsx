@@ -60,7 +60,7 @@ describe('Disposition Offer Detail View component', () => {
 
   it('displays a message when Disposition has no Appraisal', async () => {
     const mockDisposition = mockDispositionFileApi;
-    mockDisposition.sales = [];
+    mockDisposition.dispositionSales = [];
     mockDisposition.appraisedValueAmount = null;
     mockDisposition.appraisalDate = null;
     mockDisposition.bcaValueAmount = null;
@@ -77,7 +77,7 @@ describe('Disposition Offer Detail View component', () => {
 
   it('displays a message when Disposition has no offers', async () => {
     const mockDisposition = mockDispositionFileApi;
-    mockDisposition.sales = [];
+    mockDisposition.dispositionSales = [];
 
     const { getByText } = await setup({
       props: { dispositionFile: mockDisposition, dispositionOffers: [] },

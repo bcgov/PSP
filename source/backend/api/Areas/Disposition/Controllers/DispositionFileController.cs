@@ -198,10 +198,10 @@ namespace Pims.Api.Areas.Disposition.Controllers
             return new JsonResult(_mapper.Map<IEnumerable<DispositionFileOfferModel>>(dispositionOffers));
         }
 
-        [HttpGet("{id:long}/sales")]
+        [HttpGet("{id:long}/sale")]
         [HasPermission(Permissions.DispositionView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<DispositionFileSaleModel>), 200)]
+        [ProducesResponseType(typeof(DispositionFileSaleModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetDispositionFileSales([FromRoute]long id)
@@ -215,8 +215,8 @@ namespace Pims.Api.Areas.Disposition.Controllers
 
             _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
 
-            var dispositionSales = _dispositionService.GetSales(id);
-            return new JsonResult(_mapper.Map<IEnumerable<DispositionFileSaleModel>>(dispositionSales));
+            var dispositionSale = _dispositionService.GetDispositionFileSale(id);
+            return new JsonResult(_mapper.Map<DispositionFileSaleModel>(dispositionSale));
         }
 
         #endregion

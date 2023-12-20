@@ -21,6 +21,6 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsDispositionOffer> GetOffers(long dispositionFileId);
 
-        IEnumerable<PimsDispositionSale> GetSales(long dispositionFileId);
+        PimsDispositionSale GetDispositionFileSale(long dispositionFileId);
     }
 }

@@ -231,7 +231,7 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.DispositionFileId == dispositionId).ToList();
         }
 
-        public List<PimsDispositionSale> GetDispositionSales(long dispositionId)
+        public PimsDispositionSale GetDispositionFileSale(long dispositionId)
         {
             return Context.PimsDispositionSales.AsNoTracking()
                 .Include(x => x.PimsDispositionPurchasers)
@@ -252,7 +252,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(y => y.Organization)
                 .Include(x => x.PimsDspPurchSolicitors)
                     .ThenInclude(y => y.PrimaryContact)
-                .Where(x => x.DispositionFileId == dispositionId).ToList();
+                .Where(x => x.DispositionFileId == dispositionId).FirstOrDefault();
         }
 
         /// <summary>

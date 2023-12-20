@@ -20,7 +20,7 @@ const OffersAndSaleContainer: React.FunctionComponent<IOffersAndSaleContainerPro
 }) => {
   const {
     getDispositionFileOffers: { execute: getDispositionFileOffers, loading: loadingOffers },
-    getDispositionFileSales: { execute: getDispositionFileSales, loading: loadingSales },
+    getDispositionFileSale: { execute: getDispositionFileSale, loading: loadingSale },
   } = useDispositionProvider();
   const [dispositionOffers, setDispositionOffers] = useState<Api_DispositionFileOffer[]>([]);
   const [dispositionSale, setDispositionSale] = useState<Api_DispositionFileSale | null>(null);
@@ -28,22 +28,22 @@ const OffersAndSaleContainer: React.FunctionComponent<IOffersAndSaleContainerPro
   const fetchDispositionInformation = useCallback(async () => {
     if (dispositionFile?.id) {
       const dispositionOffersPromise = getDispositionFileOffers(dispositionFile?.id);
-      const dispositionSalesPromise = getDispositionFileSales(dispositionFile?.id);
+      const dispositionSalePromise = getDispositionFileSale(dispositionFile?.id);
 
-      const [offersResponse, salesResponse] = await Promise.all([
+      const [offersResponse, saleResponse] = await Promise.all([
         dispositionOffersPromise,
-        dispositionSalesPromise,
+        dispositionSalePromise,
       ]);
 
       if (offersResponse) {
         setDispositionOffers(offersResponse);
       }
 
-      if (salesResponse) {
-        setDispositionSale(salesResponse[0] ?? null);
+      if (saleResponse) {
+        setDispositionSale(saleResponse ?? null);
       }
     }
-  }, [dispositionFile?.id, getDispositionFileOffers, getDispositionFileSales]);
+  }, [dispositionFile?.id, getDispositionFileOffers, getDispositionFileSale]);
 
   useEffect(() => {
     fetchDispositionInformation();
@@ -51,7 +51,7 @@ const OffersAndSaleContainer: React.FunctionComponent<IOffersAndSaleContainerPro
 
   return dispositionFile ? (
     <View
-      loading={loadingOffers || loadingSales}
+      loading={loadingOffers || loadingSale}
       dispositionFile={dispositionFile}
       dispositionOffers={dispositionOffers}
       dispositionSale={dispositionSale}
