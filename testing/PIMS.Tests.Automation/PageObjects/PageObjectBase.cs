@@ -1,9 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using System.IO;
-using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -237,6 +234,22 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             decimal value = decimal.Parse(amount);
             return "$" + value.ToString("#,##0.00");
+        }
+
+        protected string TransformListToText(List<string> list)
+        {
+            string result = "";
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if(i == list.Count -1)
+                    result = result + list[i];
+                else
+                    result = result + list[i] + ", ";
+
+            }
+
+            return result;
         }
 
         protected List<string> GetProjects(By element)

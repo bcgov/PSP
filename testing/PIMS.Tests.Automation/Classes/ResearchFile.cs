@@ -28,7 +28,7 @@ namespace PIMS.Tests.Automation.Classes
     public class PropertyResearch
     {
         public string? DescriptiveName { get; set; } = String.Empty;
-        public string? Purpose { get; set; } = String.Empty;
+        public List<string>? PropertyResearchPurpose { get; set; } = new List<string>();
         public string? LegalOpinionRequest { get; set; } = String.Empty;
         public string? LegalOpinionObtained { get; set; } = String.Empty;
         public string? DocumentReference { get; set; } = String.Empty;

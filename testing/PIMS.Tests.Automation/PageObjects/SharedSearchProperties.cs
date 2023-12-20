@@ -193,22 +193,23 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFirstOption()
         {
-            WaitUntilVisible(searchProperties1stResultPropDiv);
+            Wait(2000);
             FocusAndClick(searchProperties1stResultPropCheckbox);
 
             webDriver.FindElement(searchPropertiesAddSelectionBttn).Click();
 
-            
+
+            Wait(2000);
             if (webDriver.FindElements(duplicatePropToast).Count() == 1)
             {
                 WaitUntilVisible(duplicatePropToast);
-                Assert.True(webDriver.FindElement(duplicatePropToast).Text == "A property that the user is trying to select has already been added to the selected properties list");
+                Assert.Equal("A property that the user is trying to select has already been added to the selected properties list", webDriver.FindElement(duplicatePropToast).Text);
             }
 
             if (webDriver.FindElements(searchPropertiesModal).Count > 0)
             {
-                Assert.True(sharedModals.ModalHeader() == "Not inventory property");
-                Assert.True(sharedModals.ModalContent() == "You have selected a property not previously in the inventory. Do you want to add this property to the lease?");
+                Assert.Equal("Not inventory property", sharedModals.ModalHeader());
+                Assert.Equal("You have selected a property not previously in the inventory. Do you want to add this property to the lease?", sharedModals.ModalContent());
 
                 sharedModals.ModalClickOKBttn();
             }

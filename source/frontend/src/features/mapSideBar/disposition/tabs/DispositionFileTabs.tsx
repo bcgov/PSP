@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { Claims } from '@/constants/claims';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
+import DocumentsTab from '@/features/mapSideBar/shared/tabs/DocumentsTab';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
 
+import { SideBarContext } from '../../context/sidebarContext';
 import DispositionSummaryView from './fileDetails/detail/DispositionSummaryView';
 import OffersAndSaleContainer from './offersAndSale/OffersAndSaleContainer';
 import OffersAndSaleContainerView from './offersAndSale/OffersAndSaleContainerView';
@@ -23,6 +26,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
 }) => {
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
+  const { setStaleLastUpdatedBy } = useContext(SideBarContext);
   const history = useHistory();
   const { tab } = useParams<{ tab?: string }>();
   const activeTab = Object.values(FileTabType).find(value => value === tab) ?? defaultTab;
@@ -31,6 +35,10 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
     if (activeTab !== tab) {
       history.push(`${tab}`);
     }
+  };
+
+  const onChildSuccess = () => {
+    setStaleLastUpdatedBy(true);
   };
 
   tabViews.push({
@@ -62,7 +70,13 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
 
   if (dispositionFile?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
-      content: <></>,
+      content: (
+        <DocumentsTab
+          fileId={dispositionFile.id}
+          relationshipType={DocumentRelationshipType.DISPOSITION_FILES}
+          onSuccess={onChildSuccess}
+        />
+      ),
       key: FileTabType.DOCUMENTS,
       name: 'Documents',
     });

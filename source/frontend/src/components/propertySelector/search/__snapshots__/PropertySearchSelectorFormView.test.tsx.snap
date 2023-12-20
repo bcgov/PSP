@@ -254,13 +254,6 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
                       >
                         Plan #
                       </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-legalDescription"
-                        value="legalDescription"
-                      >
-                        Legal Description
-                      </option>
                     </select>
                   </div>
                 </div>
@@ -383,7 +376,7 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 150px;"
+            style="display: flex; flex: 1 0 auto; min-width: 120px;"
           >
             <div
               class="th"
@@ -451,18 +444,6 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
                 class="sortable-column"
               >
                 Address
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Legal Description
               </div>
             </div>
           </div>

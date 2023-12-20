@@ -18,5 +18,7 @@ namespace Pims.Api.Constants
         Projects,
         [EnumMember(Value = "managementfiles")]
         ManagementFiles,
+        [EnumMember(Value = "dispositionfiles")]
+        DispositionFiles,
     }
 }

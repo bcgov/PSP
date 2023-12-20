@@ -166,7 +166,6 @@ function toMapProperty(
     longitude: longitude,
     planNumber: feature?.properties?.PLAN_NUMBER?.toString() ?? undefined,
     address: address,
-    legalDescription: feature?.properties?.LEGAL_DESCRIPTION,
     region: feature?.properties?.REGION_NUMBER,
     regionName: feature?.properties?.REGION_NAME,
     district: feature?.properties?.DISTRICT_NUMBER,
@@ -197,7 +196,6 @@ export function featuresetToMapProperty(
       parcelFeature?.geometry.type === 'Polygon' ? (parcelFeature.geometry as Polygon) : undefined,
     planNumber: parcelFeature?.properties.PLAN_NUMBER?.toString() ?? undefined,
     address: address,
-    legalDescription: parcelFeature?.properties.LEGAL_DESCRIPTION ?? undefined,
     region: isNumber(regionFeature?.properties.REGION_NUMBER)
       ? regionFeature?.properties.REGION_NUMBER
       : RegionCodes.Unknown,

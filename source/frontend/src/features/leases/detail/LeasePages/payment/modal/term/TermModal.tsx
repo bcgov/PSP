@@ -2,7 +2,7 @@ import { FormikProps } from 'formik';
 import * as React from 'react';
 import { useRef } from 'react';
 
-import * as CommonStyled from '@/components/common/styles';
+import GenericModal from '@/components/common/GenericModal';
 
 import { FormLeaseTerm } from '../../models';
 import { TermForm } from './TermForm';
@@ -26,7 +26,8 @@ export const TermModal: React.FunctionComponent<React.PropsWithChildren<ITermMod
 }) => {
   const formikRef = useRef<FormikProps<FormLeaseTerm>>(null);
   return (
-    <CommonStyled.PrimaryGenericModal
+    <GenericModal
+      variant="info"
       title="Add a Term"
       display={displayModal}
       okButtonText="Save term"
