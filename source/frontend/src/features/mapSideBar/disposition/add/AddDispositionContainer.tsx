@@ -1,10 +1,13 @@
 import { FormikProps } from 'formik';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { featuresetToMapProperty } from '@/utils';
 
+import { PropertyForm } from '../../shared/models';
 import useAddDispositionFormManagement from '../hooks/useAddDispositionFormManagement';
 import { DispositionFormModel } from '../models/DispositionFormModel';
 import { IAddDispositionContainerViewProps } from './AddDispositionContainerView';
@@ -17,11 +20,32 @@ export interface IAddDispositionContainerProps {
 const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onClose, View }) => {
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
   const formikRef = useRef<FormikProps<DispositionFormModel>>(null);
-
-  const mapMachine = useMapStateMachine();
   const history = useHistory();
+  const mapMachine = useMapStateMachine();
+  const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
 
-  const initialValuesForm = new DispositionFormModel();
+  const initialForm = useMemo(() => {
+    const dispositionForm = new DispositionFormModel();
+    // support creating a new disposition file from the map popup
+    if (selectedFeatureDataset !== null) {
+      dispositionForm.fileProperties = [
+        PropertyForm.fromMapProperty(featuresetToMapProperty(selectedFeatureDataset)),
+      ];
+    }
+    return dispositionForm;
+  }, [selectedFeatureDataset]);
+
+  const { bcaLoading, initialProperty } = useInitialMapSelectorProperties(selectedFeatureDataset);
+  if (initialForm?.fileProperties.length && initialProperty) {
+    initialForm.fileProperties[0].address = initialProperty.address;
+  }
+
+  useEffect(() => {
+    if (!!initialForm && !!formikRef.current) {
+      formikRef.current.resetForm();
+      formikRef.current?.setFieldValue('fileProperties', initialForm.fileProperties);
+    }
+  }, [initialForm]);
 
   const handleCancel = useCallback(() => onClose && onClose(), [onClose]);
 
@@ -37,21 +61,21 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
     formikRef.current?.submitForm();
   };
 
-  const handleSuccesss = async (disposition: Api_DispositionFile) => {
+  const handleSuccess = async (disposition: Api_DispositionFile) => {
     mapMachine.refreshMapProperties();
     history.replace(`/mapview/sidebar/disposition/${disposition.id}`);
   };
 
   const helper = useAddDispositionFormManagement({
-    onSuccess: handleSuccesss,
+    onSuccess: handleSuccess,
     formikRef,
   });
 
   return (
     <View
       formikRef={formikRef}
-      dispositionInitialValues={initialValuesForm}
-      loading={helper.loading}
+      dispositionInitialValues={initialForm}
+      loading={helper.loading || bcaLoading}
       displayFormInvalid={!isFormValid}
       onSave={handleSave}
       onCancel={handleCancel}

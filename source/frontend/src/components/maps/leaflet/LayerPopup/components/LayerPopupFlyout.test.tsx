@@ -18,6 +18,7 @@ const onViewPropertyInfo = jest.fn();
 const onCreateResearchFile = jest.fn();
 const onCreateAcquisitionFile = jest.fn();
 const onCreateLeaseLicense = jest.fn();
+const onCreateDispositionFile = jest.fn();
 
 describe('LayerPopupFlyout component', () => {
   const setup = (renderOptions?: RenderOptions & Partial<ILayerPopupFlyoutProps>) => {
@@ -28,6 +29,7 @@ describe('LayerPopupFlyout component', () => {
         onCreateAcquisitionFile={onCreateAcquisitionFile}
         onCreateResearchFile={onCreateResearchFile}
         onCreateLeaseLicense={onCreateLeaseLicense}
+        onCreateDispositionFile={onCreateDispositionFile}
       />,
       {
         ...renderOptions,
