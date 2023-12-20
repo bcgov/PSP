@@ -17,14 +17,12 @@ export interface IDispositionFileTabsProps {
   dispositionFile?: Api_DispositionFile;
   defaultTab: FileTabType;
   setIsEditing: (value: boolean) => void;
-  onChildSuccess: () => void;
 }
 
 export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
   dispositionFile,
   defaultTab,
   setIsEditing,
-  onChildSuccess,
 }) => {
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();

@@ -53,7 +53,6 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
             dispositionFile={props.dispositionFile}
             defaultTab={props.defaultFileTab}
             setIsEditing={props.setIsEditing}
-            onChildSuccess={props.onSuccess}
           />
         </Route>
         <Redirect from={`${path}`} to={`${stripTrailingSlash(url)}/${FileTabType.FILE_DETAILS}`} />
