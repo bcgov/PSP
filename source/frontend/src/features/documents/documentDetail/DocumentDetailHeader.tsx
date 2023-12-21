@@ -18,7 +18,7 @@ const DocumentDetailHeader: React.FunctionComponent<
   const mayanDocumentId = props.document.pimsDocumentRelationship?.document?.mayanDocumentId || -1;
 
   return (
-    <>
+    <div className="pb-4">
       <SectionField
         data-testid="document-type"
         label="Document type"
@@ -39,7 +39,7 @@ const DocumentDetailHeader: React.FunctionComponent<
           </Col>
         </Row>
       </SectionField>
-    </>
+    </div>
   );
 };
 

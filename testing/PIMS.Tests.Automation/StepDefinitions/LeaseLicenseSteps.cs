@@ -24,7 +24,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SharedSearchProperties sharedSearchProperties;
 
         private readonly string userName = "TRANPSP1";
-        //private readonly string userName = "sutairak";
 
         private Lease lease;
         protected string leaseCode = "";
@@ -43,7 +42,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties = new SearchProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
             sharedSearchProperties = new SharedSearchProperties(driver.Current);
-            lease = new Lease();
         }
 
         [StepDefinition(@"I create a new minimum Lease from row number (.*)")]
@@ -687,6 +685,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             DataTable leaseSheet = ExcelDataContext.GetInstance().Sheets["Leases"];
             ExcelDataContext.PopulateInCollection(leaseSheet);
 
+            lease = new Lease();
+
             //Lease Details
             lease.MinistryProjectCode = ExcelDataContext.ReadData(rowNumber, "MinistryProjectCode");
             lease.MinistryProject = ExcelDataContext.ReadData(rowNumber, "MinistryProject");
@@ -703,7 +703,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.TypeOther = ExcelDataContext.ReadData(rowNumber, "TypeOther");
             lease.Category = ExcelDataContext.ReadData(rowNumber, "Category");
             lease.CategoryOther = ExcelDataContext.ReadData(rowNumber, "CategoryOther");
-            lease.Purpose = ExcelDataContext.ReadData(rowNumber, "Purpose");
+            lease.LeasePurpose = ExcelDataContext.ReadData(rowNumber, "LeasePurpose");
             lease.PurposeOther = ExcelDataContext.ReadData(rowNumber, "PurposeOther");
             lease.Initiator = ExcelDataContext.ReadData(rowNumber, "Initiator");
             lease.Responsibility = ExcelDataContext.ReadData(rowNumber, "Responsibility");
@@ -718,16 +718,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.Headquarter = ExcelDataContext.ReadData(rowNumber, "Headquarter");
             lease.ConsultationOther = ExcelDataContext.ReadData(rowNumber, "ConsultationOther");
             lease.ConsultationOtherDetails = ExcelDataContext.ReadData(rowNumber, "ConsultationOtherDetails");
-
-            lease.ProgramOther = ExcelDataContext.ReadData(rowNumber, "ProgramOther");
-            lease.AdminType = ExcelDataContext.ReadData(rowNumber, "AdminType");
-            lease.TypeOther = ExcelDataContext.ReadData(rowNumber, "TypeOther");
-            lease.Purpose = ExcelDataContext.ReadData(rowNumber, "Purpose");
-            lease.PurposeOther = ExcelDataContext.ReadData(rowNumber, "PurposeOther");
-            lease.Initiator = ExcelDataContext.ReadData(rowNumber, "Initiator");
-            lease.Responsibility = ExcelDataContext.ReadData(rowNumber, "Responsibility");
-            lease.EffectiveDate = ExcelDataContext.ReadData(rowNumber, "EffectiveDate");
-            lease.IntendedUse = ExcelDataContext.ReadData(rowNumber, "IntendedUse");
 
             lease.PhysicalLeaseExist = ExcelDataContext.ReadData(rowNumber, "PhysicalLeaseExist");
             lease.DigitalLeaseExist = ExcelDataContext.ReadData(rowNumber, "DigitalLeaseExist");

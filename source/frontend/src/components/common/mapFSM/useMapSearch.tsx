@@ -79,8 +79,6 @@ export const useMapSearch = () => {
         }
       } catch (error) {
         toast.error((error as Error).message, { autoClose: 7000 });
-      } finally {
-        // TODO: Remove once try above is no longer necessary
       }
       return result;
     },
@@ -283,8 +281,6 @@ export const useMapSearch = () => {
         }
       } catch (error) {
         toast.error((error as Error).message, { autoClose: 7000 });
-      } finally {
-        // TODO: Remove once try above is no longer necessary
       }
 
       return result;

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -19,6 +18,7 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class LeaseRepository : BaseRepository<PimsLease>, ILeaseRepository
     {
+        private readonly ISequenceRepository _sequenceRepository;
         #region Constructors
 
         /// <summary>
@@ -27,9 +27,10 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger)
+        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger, ISequenceRepository sequenceRepository)
             : base(dbContext, user, logger)
         {
+            _sequenceRepository = sequenceRepository;
         }
         #endregion
 
@@ -701,12 +702,12 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentNullException(nameof(lease), "lease cannot be null.");
             }
 
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseAdd);
+            User.ThrowIfNotAuthorized(Permissions.LeaseAdd);
 
             lease = GenerateLFileNo(lease);
 
-            this.Context.PimsLeases.Add(lease);
-            this.Context.CommitTransaction();
+            Context.PimsLeases.Add(lease);
+            Context.CommitTransaction();
             return Get(lease.LeaseId);
         }
 
@@ -793,8 +794,9 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Generate a query for the specified 'filter'.
         /// </summary>
-        /// <param name="context"></param>
         /// <param name="filter"></param>
+        /// <param name="regionCodes"></param>
+        /// <param name="loadPayments"></param>
         /// <returns></returns>
         public IQueryable<Entities.PimsLease> GenerateLeaseQuery(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false)
         {
@@ -810,22 +812,15 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get the next available id from the PIMS_LEASE_ID_SEQ.
         /// </summary>
-        /// <param name="context"></param>
         public long GetNextLeaseSequenceValue()
         {
-            SqlParameter result = new SqlParameter("@result", System.Data.SqlDbType.BigInt)
-            {
-                Direction = System.Data.ParameterDirection.Output,
-            };
-            this.Context.Database.ExecuteSqlRaw("set @result = next value for dbo.PIMS_LEASE_ID_SEQ;", result);
-
-            return (long)result.Value;
+            return _sequenceRepository.GetNextSequenceValue("dbo.PIMS_LEASE_ID_SEQ");
         }
 
         /// <summary>
         /// Generate a new L File in format L-XXX-YYY using the lease id. Add the lease id and lfileno to the passed lease.
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="lease">The lease file entity.</param>
         public PimsLease GenerateLFileNo(PimsLease lease)
         {
             long leaseId = GetNextLeaseSequenceValue();

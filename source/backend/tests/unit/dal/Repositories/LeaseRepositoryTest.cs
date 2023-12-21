@@ -136,6 +136,49 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
+        #region Add Lease
+        [Fact]
+        public void Add_Lease_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseAdd, Permissions.LeaseView);
+            var lease = EntityHelper.CreateLease(1);
+            helper.CreatePimsContext(user, true);
+
+            var mockSequenceRepo = new Mock<ISequenceRepository>();
+            mockSequenceRepo.Setup(x => x.GetNextSequenceValue(It.IsAny<string>())).Returns(50);
+            helper.AddSingleton(mockSequenceRepo.Object);
+
+            var repository = helper.CreateRepository<LeaseRepository>(user);
+
+            // Act
+            var result = repository.Add(lease);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsLease>();
+            result.LeaseId.Should().Be(50);
+            result.LFileNo.Should().Be("L-000-050");
+        }
+
+        [Fact]
+        public void Add_Lease_ThrowIfNull()
+        {
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseAdd, Permissions.LeaseView);
+            helper.CreatePimsContext(user, true);
+
+            var repository = helper.CreateRepository<LeaseRepository>(user);
+
+            // Act
+            Action act = () => repository.Add(null);
+
+            // Assert
+            act.Should().Throw<ArgumentNullException>();
+        }
+        #endregion
+
         #region Update Tenant
         [Fact]
         public void Update_Lease_Tenants_Add()
@@ -208,15 +251,15 @@ namespace Pims.Dal.Test.Repositories
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseTenantRepository>(user);
+            var repository = helper.CreateRepository<LeaseTenantRepository>(user);
 
             // Act
             var deleteTenant = lease.PimsLeaseTenants.FirstOrDefault();
             lease.PimsLeaseTenants.Remove(deleteTenant);
             context.ChangeTracker.Clear();
-            service.Update(1, lease.PimsLeaseTenants);
-            service.SaveChanges();
-            var updatedLeaseTenants = service.GetByLeaseId(lease.LeaseId);
+            repository.Update(1, lease.PimsLeaseTenants);
+            repository.SaveChanges();
+            var updatedLeaseTenants = repository.GetByLeaseId(lease.LeaseId);
 
             // Assert
             updatedLeaseTenants.Should().BeEmpty();
