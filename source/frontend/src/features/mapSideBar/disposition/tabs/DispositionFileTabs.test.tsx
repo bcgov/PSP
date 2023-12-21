@@ -29,7 +29,6 @@ const getNotes = jest.fn().mockResolvedValue([]);
 
 const history = createMemoryHistory();
 const setIsEditing = jest.fn();
-const onChildSuccess = jest.fn();
 
 describe('DispositionFileTabs component', () => {
   // render component under test
