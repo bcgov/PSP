@@ -18,18 +18,41 @@ jest.mock('@/hooks/pims-api/useApiNotes');
 
 const getNotes = jest.fn().mockResolvedValue([]);
 
+const mockGetDispositionFileOffersApi = {
+  error: undefined,
+  response: undefined,
+  execute: jest.fn(),
+  loading: false,
+};
+
+const mockGetDispositionFileSalesApi = {
+  error: undefined,
+  response: undefined,
+  execute: jest.fn(),
+  loading: false,
+};
+
 (useNoteRepository as jest.Mock).mockImplementation(() => ({
   addNote: { execute: jest.fn() },
   getNote: { execute: jest.fn() },
   updateNote: { execute: jest.fn() },
 }));
+
 (useApiNotes as jest.Mock).mockImplementation(() => ({
   getNotes,
 }));
 
+jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
+  useDispositionProvider: () => {
+    return {
+      getDispositionFileOffers: mockGetDispositionFileOffersApi,
+      getDispositionFileSales: mockGetDispositionFileSalesApi,
+    };
+  },
+}));
+
 const history = createMemoryHistory();
 const setIsEditing = jest.fn();
-const onChildSuccess = jest.fn();
 
 describe('DispositionFileTabs component', () => {
   // render component under test

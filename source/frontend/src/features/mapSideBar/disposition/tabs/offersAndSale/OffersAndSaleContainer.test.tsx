@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { Claims } from '@/constants';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import OffersAndSaleContainer, { IOffersAndSaleContainerProps } from './OffersAndSaleContainer';
