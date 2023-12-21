@@ -4,6 +4,8 @@ import { Route } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims } from '@/constants/claims';
+import { useApiNotes } from '@/hooks/pims-api/useApiNotes';
+import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
 import {
   mockDispositionFilePropertyResponse,
   mockDispositionFileResponse,
@@ -20,9 +22,11 @@ import DispositionView, { IDispositionViewProps } from './DispositionView';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
-
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+jest.mock('@/hooks/repositories/useNoteRepository');
+jest.mock('@/hooks/pims-api/useApiNotes');
 
+const getNotes = jest.fn().mockResolvedValue([]);
 const onClose = jest.fn();
 const onSave = jest.fn();
 const onCancel = jest.fn();
@@ -103,6 +107,15 @@ describe('DispositionView component', () => {
         res(ctx.delay(500), ctx.status(200), ctx.json(getUserMock())),
       ),
     );
+
+    (useNoteRepository as jest.Mock).mockImplementation(() => ({
+      addNote: { execute: jest.fn() },
+      getNote: { execute: jest.fn() },
+      updateNote: { execute: jest.fn() },
+    }));
+    (useApiNotes as jest.Mock).mockImplementation(() => ({
+      getNotes,
+    }));
 
     history.replace(`/mapview/sidebar/disposition/1`);
   });

@@ -35,6 +35,58 @@ namespace Pims.Core.Test
         }
 
         /// <summary>
+        /// Create a new instance of DispositionFileNote.
+        /// </summary>
+        /// <param name="dispositionFile"></param>
+        /// <param name="note"></param>
+        /// <returns></returns>
+        public static Entity.PimsDispositionFileNote CreateDispositionFileNote(Entity.PimsDispositionFile dispositionFile = null, Entity.PimsNote note = null)
+        {
+            note ??= EntityHelper.CreateNote("Test Note");
+            dispositionFile ??= EntityHelper.CreateDispositionFile(1);
+
+            return new Entity.PimsDispositionFileNote()
+            {
+                Note = note,
+                DispositionFile = dispositionFile,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = "admin",
+                AppCreateUserDirectory = string.Empty,
+                AppLastUpdateUserDirectory = string.Empty,
+                AppLastUpdateUserid = string.Empty,
+                DbCreateUserid = string.Empty,
+                DbLastUpdateUserid = string.Empty,
+                ConcurrencyControlNumber = 1,
+            };
+        }
+
+        /// <summary>
+        /// Create a new instance of LeaseNote.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <param name="note"></param>
+        /// <returns></returns>
+        public static Entity.PimsLeaseNote CreateLeaseNote(Entity.PimsLease lease = null, Entity.PimsNote note = null)
+        {
+            note ??= EntityHelper.CreateNote("Test Note");
+            lease ??= EntityHelper.CreateLease(1);
+
+            return new Entity.PimsLeaseNote()
+            {
+                Note = note,
+                Lease = lease,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = "admin",
+                AppCreateUserDirectory = string.Empty,
+                AppLastUpdateUserDirectory = string.Empty,
+                AppLastUpdateUserid = string.Empty,
+                DbCreateUserid = string.Empty,
+                DbLastUpdateUserid = string.Empty,
+                ConcurrencyControlNumber = 1,
+            };
+        }
+
+        /// <summary>
         /// Create a new instance of ProjectFileNote.
         /// </summary>
         /// <param name="project"></param>
