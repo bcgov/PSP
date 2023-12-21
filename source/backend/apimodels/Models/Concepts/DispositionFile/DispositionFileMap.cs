@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Mapster;
 using Entity = Pims.Dal.Entities;
 
@@ -33,7 +35,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Map(dest => dest.ListPriceAmount, src => src.ListPriceAmt)
                 .Map(dest => dest.DispositionTeam, src => src.PimsDispositionFileTeams)
                 .Map(dest => dest.DispositionOffers, src => src.PimsDispositionOffers)
-                .Map(dest => dest.DispositionSales, src => src.PimsDispositionSales)
+                .Map(dest => dest.DispositionSale, src => src.PimsDispositionSales.FirstOrDefault())
                 .Map(dest => dest.FileProperties, src => src.PimsDispositionFileProperties);
 
             config.NewConfig<DispositionFileModel, Entity.PimsDispositionFile>()
@@ -61,7 +63,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Map(dest => dest.ListPriceAmt, src => src.ListPriceAmount)
                 .Map(dest => dest.PimsDispositionFileTeams, src => src.DispositionTeam)
                 .Map(dest => dest.PimsDispositionOffers, src => src.DispositionOffers)
-                .Map(dest => dest.PimsDispositionSales, src => src.DispositionSales)
+                .Map(dest => dest.PimsDispositionSales, src => new List<DispositionFileModel> { src }, srcCond => srcCond == null)
                 .Map(dest => dest.PimsDispositionFileProperties, src => src.FileProperties);
         }
     }

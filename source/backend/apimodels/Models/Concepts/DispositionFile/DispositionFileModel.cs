@@ -122,7 +122,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         /// <summary>
         /// get/set - A list of disposition file sales.
         /// </summary>
-        public IList<DispositionFileSaleModel> DispositionSales { get; set; }
+        public DispositionFileSaleModel DispositionSale { get; set; }
         #endregion
     }
 }

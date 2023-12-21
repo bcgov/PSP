@@ -29,7 +29,7 @@ export class DispositionFormModel implements WithDispositionTeam {
   fileProperties: PropertyForm[] = [];
   team: DispositionTeamSubFormModel[] = [];
   offers: DispositionOfferFormModel[] = [];
-  sales: DispositionSaleFormModel[] = [];
+  sale: DispositionSaleFormModel | null = null;
   // Appraisal and Value
   appraisedValueAmount: number | null = null;
   appraisalDate: string | null = null;
@@ -87,7 +87,7 @@ export class DispositionFormModel implements WithDispositionTeam {
       }),
 
       dispositionOffers: this.offers.map(x => x.toApi()),
-      dispositionSales: this.sales.map(x => x.toApi()),
+      dispositionSale: this.sale ? this.sale.toApi() : null,
       project: null,
       projectId: null,
       product: null,

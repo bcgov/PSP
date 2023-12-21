@@ -40,7 +40,7 @@ export interface Api_DispositionFile extends Api_ConcurrentVersion, Api_AuditFie
   // Offers
   dispositionOffers: Api_DispositionFileOffer[];
   // Sale
-  dispositionSales: Api_DispositionFileSale[];
+  dispositionSale: Api_DispositionFileSale | null;
 }
 
 export interface Api_DispositionFileProperty
