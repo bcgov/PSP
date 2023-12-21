@@ -17,7 +17,7 @@ GO
 
 -- Update the database version number.
 DECLARE @CurrVer NVARCHAR(100)
-SET @CurrVer = N'66.00'
+SET @CurrVer = N'67.00'
 
 UPDATE PIMS_STATIC_VARIABLE
 WITH   (UPDLOCK, SERIALIZABLE) 
