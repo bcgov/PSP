@@ -345,6 +345,148 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Update_PropertyManagement_Activity_NoPermission()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions();
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+
+            // Act
+            Action act = () => service.UpdateActivity(1, 100, new PimsPropertyActivity());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsPropertyActivity>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_PropertyManagement_Activity_InvalidIdentifiers_Wrong_PropertyId()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementEdit, Permissions.PropertyEdit);
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+
+            // Act
+            Action act = () => service.UpdateActivity(1, 10, new PimsPropertyActivity()
+            {
+                PimsPropertyActivityId = 10,
+                PimsPropPropActivities = new List<PimsPropPropActivity>()
+                {
+                    new PimsPropPropActivity()
+                    {
+                        PropPropActivityId = 100,
+                        PropertyId = 2,
+                        PimsPropertyActivityId = 10,
+                    },
+                    new PimsPropPropActivity()
+                    {
+                        PropPropActivityId = 101,
+                        PropertyId = 2,
+                        PimsPropertyActivityId = 11,
+                    }
+                }
+            }); ;
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsPropertyActivity>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_PropertyManagement_Activity_InvalidIdentifiers_Wrong_ActivityId()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementEdit, Permissions.PropertyEdit);
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+
+            // Act
+            Action act = () => service.UpdateActivity(1, 20, new PimsPropertyActivity()
+            {
+                PimsPropertyActivityId = 10,
+                PimsPropPropActivities = new List<PimsPropPropActivity>()
+                {
+                    new PimsPropPropActivity()
+                    {
+                        PropPropActivityId = 100,
+                        PropertyId = 1,
+                        PimsPropertyActivityId = 10,
+                    },
+                    new PimsPropPropActivity()
+                    {
+                        PropPropActivityId = 101,
+                        PropertyId = 1,
+                        PimsPropertyActivityId = 30,
+                    }
+                }
+            }); ;
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsPropertyActivity>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_PropertyManagement_Activity_InvalidIdentifiers_Wrong_Model_ActivityId()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementEdit, Permissions.PropertyEdit);
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+
+            // Act
+            Action act = () => service.UpdateActivity(1, 20, new PimsPropertyActivity()
+            {
+                PimsPropertyActivityId = 500,
+                PimsPropPropActivities = new List<PimsPropPropActivity>()
+                {
+                    new PimsPropPropActivity()
+                    {
+                        PropPropActivityId = 100,
+                        PropertyId = 1,
+                        PimsPropertyActivityId = 20,
+                    }
+                }
+            }); ;
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsPropertyActivity>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_PropertyManagement_Activity_Success()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementEdit, Permissions.PropertyEdit);
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+            repository.Setup(x => x.Update(It.IsAny<PimsPropertyActivity>())).Returns(new PimsPropertyActivity());
+
+            // Act
+            var result = service.UpdateActivity(1, 10, new PimsPropertyActivity()
+            {
+                PimsPropertyActivityId = 10,
+                PimsPropPropActivities = new List<PimsPropPropActivity>()
+                {
+                    new PimsPropPropActivity()
+                    {
+                        PropPropActivityId = 100,
+                        PropertyId = 1,
+                        PimsPropertyActivityId = 10,
+                    },
+                    new PimsPropPropActivity()
+                    {
+                        PropPropActivityId = 101,
+                        PropertyId = 1,
+                        PimsPropertyActivityId = 11,
+                    }
+                }
+            });
+
+            // Assert
+            Assert.NotNull(result);
+            repository.Verify(x => x.Update(It.IsAny<PimsPropertyActivity>()), Times.Once);
+        }
+
+        [Fact]
         public void Delete_PropertyManagementActivity_NoPermission()
         {
             // Arrange

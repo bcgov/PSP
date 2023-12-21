@@ -52,9 +52,8 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
   const changeFilter = useCallback(
     (filter: IResearchFilter) => {
       setFilter(filter);
-      setCurrentPage(0);
     },
-    [setFilter, setCurrentPage],
+    [setFilter],
   );
 
   useEffect(() => {

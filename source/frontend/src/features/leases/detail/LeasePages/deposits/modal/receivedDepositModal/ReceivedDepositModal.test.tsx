@@ -73,7 +73,7 @@ describe('ReceivedDepositModal component', () => {
     await fillInput(document.body, 'amountPaid', '1235');
     await fillInput(document.body, 'depositDate', '2020-01-02', 'datepicker');
     await fillInput(document.body, 'contactHolder.id', 'p1');
-    const saveButton = getByText('Save');
+    const saveButton = getByText('Yes');
     userEvent.click(saveButton);
     await waitFor(() => expect(onSave).toHaveBeenCalled());
     expect(onSave).toHaveBeenCalledWith({
@@ -93,7 +93,7 @@ describe('ReceivedDepositModal component', () => {
     const {
       component: { getByText },
     } = await setup({});
-    const cancelButton = getByText('Cancel');
+    const cancelButton = getByText('No');
     userEvent.click(cancelButton);
     expect(onCancel).toHaveBeenCalled();
   });

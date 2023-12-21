@@ -16,7 +16,9 @@ namespace Pims.Dal.Repositories
 
         PimsProject Add(PimsProject project);
 
-        PimsProject Get(long id);
+        PimsProject TryGet(long id);
+
+        IEnumerable<PimsProject> GetAllByName(string name);
 
         PimsProject Update(PimsProject project);
 

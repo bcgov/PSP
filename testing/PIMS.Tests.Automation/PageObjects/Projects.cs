@@ -86,7 +86,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By projectSaveButton = By.XPath("//div[contains(text(),'Save')]/parent::button");
 
         //Modals Elements
-        private By productDeleteModal = By.CssSelector("div[class='modal-dialog']");
+        private By productDeleteModal = By.CssSelector("div[class='modal-content']");
         private By projectDuplicateToast = By.CssSelector("div[class='Toastify__toast-body']");
         private By projectOverrideConfirmationModal = By.CssSelector("div[class='modal-content']");
 

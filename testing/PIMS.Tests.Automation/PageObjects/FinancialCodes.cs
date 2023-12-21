@@ -74,7 +74,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By financialCodeFormSaveBttn = By.XPath("//div[contains(text(),'Save')]/parent::button");
 
         //Financial Code Confirmation Modal
-        private By financialCodeModal = By.CssSelector("div[class='modal-dialog']");
+        private By financialCodeModal = By.CssSelector("div[class='modal-content']");
 
         //Financial Code Error Message
         private By financialCodeDuplicateErrorMessage = By.XPath("//div[contains(text(),'Cannot create duplicate financial code')]");

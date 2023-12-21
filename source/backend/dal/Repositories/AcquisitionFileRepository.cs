@@ -734,7 +734,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Generate a Commeon IQueryable for Acquisition Files.
+        /// Generate a common IQueryable for Acquisition Files.
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="regions"></param>
