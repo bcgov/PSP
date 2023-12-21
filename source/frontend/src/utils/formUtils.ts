@@ -32,7 +32,7 @@ export const phoneFormatter = (phoneNumber?: string) => {
   return '';
 };
 
-export function emptyStringtoNullable(value: string): string | null {
+export function emptyStringtoNullable(value: string | null): string | null {
   if (typeof value === 'string' && value === '') {
     return null;
   }

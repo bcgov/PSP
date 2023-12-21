@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.File;
+using Pims.Api.Models.Models.Concepts.DispositionFile;
 
 /*
 * Frontend model
@@ -79,6 +80,31 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         public TypeModel<short> RegionCode { get; set; }
 
         /// <summary>
+        /// PIMS_DISPOSITION_SALE => get/set - The Disposition Apprasided Value amount.
+        /// </summary>
+        public decimal? AppraisedValueAmount { get; set; }
+
+        /// <summary>
+        /// PIMS_DISPOSITION_SALE => get/set - The Date the disposition was appraised.
+        /// </summary>
+        public DateTime? AppraisalDate { get; set; }
+
+        /// <summary>
+        /// PIMS_DISPOSITION_SALE => get/set - BCA value amount.
+        /// </summary>
+        public decimal? BcaValueAmount { get; set; }
+
+        /// <summary>
+        /// PIMS_DISPOSITION_SALE => get/set - BCA roll year.
+        /// </summary>
+        public string BcaRollYear { get; set; }
+
+        /// <summary>
+        /// PIMS_DISPOSITION_SALE => get/set - BCA list price amount.
+        /// </summary>
+        public decimal? ListPriceAmount { get; set; }
+
+        /// <summary>
         /// get/set - A list of disposition property relationships.
         /// </summary>
         public IList<DispositionFilePropertyModel> FileProperties { get; set; }
@@ -87,6 +113,16 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         /// get/set - A list of disposition file team relationships.
         /// </summary>
         public IList<DispositionFileTeamModel> DispositionTeam { get; set; }
+
+        /// <summary>
+        /// get/set - A list of disposition file offers.
+        /// </summary>
+        public IList<DispositionFileOfferModel> DispositionOffers { get; set; }
+
+        /// <summary>
+        /// get/set - A list of disposition file sales.
+        /// </summary>
+        public DispositionFileSaleModel DispositionSale { get; set; }
         #endregion
     }
 }

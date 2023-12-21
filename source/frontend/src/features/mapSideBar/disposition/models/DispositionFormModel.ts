@@ -3,9 +3,11 @@ import {
   Api_DispositionFileProperty,
   Api_DispositionFileTeam,
 } from '@/models/api/DispositionFile';
-import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
+import { emptyStringtoNullable, toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
+import { DispositionOfferFormModel } from './DispositionOfferFormModel';
+import { DispositionSaleFormModel } from './DispositionSaleFormModel';
 import { DispositionTeamSubFormModel, WithDispositionTeam } from './DispositionTeamSubFormModel';
 
 export class DispositionFormModel implements WithDispositionTeam {
@@ -26,6 +28,14 @@ export class DispositionFormModel implements WithDispositionTeam {
   regionCode: string | null = '';
   fileProperties: PropertyForm[] = [];
   team: DispositionTeamSubFormModel[] = [];
+  offers: DispositionOfferFormModel[] = [];
+  sale: DispositionSaleFormModel | null = null;
+  // Appraisal and Value
+  appraisedValueAmount: number | null = null;
+  appraisalDate: string | null = null;
+  bcaValueAmount: number | null = null;
+  bcaRollYear: string | null = null;
+  listPriceAmount: number | null = null;
 
   constructor(
     readonly id: number | null = null,
@@ -45,7 +55,7 @@ export class DispositionFormModel implements WithDispositionTeam {
       fileName: this.fileName ?? undefined,
       fileNumber: this.fileNumber ?? undefined,
       fileStatusTypeCode: toTypeCode(this.fileStatusTypeCode),
-      fileReference: this.referenceNumber,
+      fileReference: emptyStringtoNullable(this.referenceNumber),
       assignedDate: this.assignedDate,
       completionDate: this.completionDate,
       dispositionTypeCode: toTypeCodeNullable(this.dispositionTypeCode),
@@ -75,10 +85,19 @@ export class DispositionFormModel implements WithDispositionTeam {
           acquisitionFile: { id: this.id },
         };
       }),
+
+      dispositionOffers: this.offers.map(x => x.toApi()),
+      dispositionSale: this.sale ? this.sale.toApi() : null,
       project: null,
       projectId: null,
       product: null,
       productId: null,
+      // Appraisal and Value
+      appraisedValueAmount: this.appraisedValueAmount,
+      appraisalDate: this.appraisalDate,
+      bcaValueAmount: this.bcaValueAmount,
+      bcaRollYear: this.bcaRollYear,
+      listPriceAmount: this.listPriceAmount,
     };
   }
 }

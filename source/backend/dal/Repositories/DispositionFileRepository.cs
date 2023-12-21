@@ -57,6 +57,9 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.DspInitiatingBranchTypeCodeNavigation)
                 .Include(d => d.RegionCodeNavigation)
                 .Include(d => d.DspPhysFileStatusTypeCodeNavigation)
+                .Include(d => d.PimsDispositionSales)
+                .Include(d => d.PimsDispositionOffers)
+                    .ThenInclude(o => o.DispositionOfferStatusTypeCodeNavigation)
                 .Include(d => d.PimsDispositionFileTeams)
                     .ThenInclude(d => d.Organization)
                 .Include(d => d.PimsDispositionFileTeams)
@@ -221,6 +224,37 @@ namespace Pims.Dal.Repositories
                 .ToList();
         }
 
+        public List<PimsDispositionOffer> GetDispositionOffers(long dispositionId)
+        {
+            return Context.PimsDispositionOffers.AsNoTracking()
+                .Include(x => x.DispositionOfferStatusTypeCodeNavigation)
+                .Where(x => x.DispositionFileId == dispositionId).ToList();
+        }
+
+        public PimsDispositionSale GetDispositionFileSale(long dispositionId)
+        {
+            return Context.PimsDispositionSales.AsNoTracking()
+                .Include(x => x.PimsDispositionPurchasers)
+                    .ThenInclude(y => y.Person)
+                .Include(x => x.PimsDispositionPurchasers)
+                    .ThenInclude(y => y.Organization)
+                .Include(x => x.PimsDispositionPurchasers)
+                    .ThenInclude(y => y.PrimaryContact)
+                .Include(x => x.PimsDspPurchAgents)
+                    .ThenInclude(y => y.Person)
+                .Include(x => x.PimsDspPurchAgents)
+                    .ThenInclude(y => y.Organization)
+                .Include(x => x.PimsDspPurchAgents)
+                    .ThenInclude(y => y.PrimaryContact)
+                .Include(x => x.PimsDspPurchSolicitors)
+                    .ThenInclude(y => y.Person)
+                .Include(x => x.PimsDspPurchSolicitors)
+                    .ThenInclude(y => y.Organization)
+                .Include(x => x.PimsDspPurchSolicitors)
+                    .ThenInclude(y => y.PrimaryContact)
+                .Where(x => x.DispositionFileId == dispositionId).FirstOrDefault();
+        }
+
         /// <summary>
         /// Generate a Common IQueryable for Disposition Files.
         /// </summary>
@@ -307,6 +341,7 @@ namespace Pims.Dal.Repositories
 
             return query;
         }
+
         #endregion
     }
 }

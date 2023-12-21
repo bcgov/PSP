@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Mapster;
 using Entity = Pims.Dal.Entities;
 
@@ -26,7 +28,14 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Map(dest => dest.InitiatingDocumentTypeCode, src => src.DispositionInitiatingDocTypeCodeNavigation)
                 .Map(dest => dest.DispositionTypeOther, src => src.OtherDispositionType)
                 .Map(dest => dest.InitiatingDocumentTypeOther, src => src.OtherInitiatingDocType)
+                .Map(dest => dest.AppraisedValueAmount, src => src.AppaisedValue)
+                .Map(dest => dest.AppraisalDate, src => src.AppraisalDt)
+                .Map(dest => dest.BcaValueAmount, src => src.BcaValueAmt)
+                .Map(dest => dest.BcaRollYear, src => src.BcaRollYear)
+                .Map(dest => dest.ListPriceAmount, src => src.ListPriceAmt)
                 .Map(dest => dest.DispositionTeam, src => src.PimsDispositionFileTeams)
+                .Map(dest => dest.DispositionOffers, src => src.PimsDispositionOffers)
+                .Map(dest => dest.DispositionSale, src => src.PimsDispositionSales.FirstOrDefault())
                 .Map(dest => dest.FileProperties, src => src.PimsDispositionFileProperties);
 
             config.NewConfig<DispositionFileModel, Entity.PimsDispositionFile>()
@@ -47,7 +56,14 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Map(dest => dest.DispositionInitiatingDocTypeCode, src => src.InitiatingDocumentTypeCode.Id)
                 .Map(dest => dest.OtherDispositionType, src => src.DispositionTypeOther)
                 .Map(dest => dest.OtherInitiatingDocType, src => src.InitiatingDocumentTypeOther)
+                .Map(dest => dest.AppaisedValue, src => src.AppraisedValueAmount)
+                .Map(dest => dest.AppraisalDt, src => src.AppraisalDate)
+                .Map(dest => dest.BcaValueAmt, src => src.BcaValueAmount)
+                .Map(dest => dest.BcaRollYear, src => src.BcaRollYear)
+                .Map(dest => dest.ListPriceAmt, src => src.ListPriceAmount)
                 .Map(dest => dest.PimsDispositionFileTeams, src => src.DispositionTeam)
+                .Map(dest => dest.PimsDispositionOffers, src => src.DispositionOffers)
+                .Map(dest => dest.PimsDispositionSales, src => new List<DispositionFileModel> { src }, srcCond => srcCond == null)
                 .Map(dest => dest.PimsDispositionFileProperties, src => src.FileProperties);
         }
     }

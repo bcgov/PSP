@@ -31,6 +31,16 @@ export interface Api_DispositionFile extends Api_ConcurrentVersion, Api_AuditFie
   projectId: number | null;
   product: Api_Product | null;
   productId: number | null;
+  // Appraisal
+  appraisedValueAmount: number | null;
+  appraisalDate: string | null;
+  bcaValueAmount: number | null;
+  bcaRollYear: string | null;
+  listPriceAmount: number | null;
+  // Offers
+  dispositionOffers: Api_DispositionFileOffer[];
+  // Sale
+  dispositionSale: Api_DispositionFileSale | null;
 }
 
 export interface Api_DispositionFileProperty
@@ -49,4 +59,70 @@ export interface Api_DispositionFileTeam extends Api_ConcurrentVersion, Api_Audi
   primaryContact?: Api_Person;
   teamProfileTypeCode?: string;
   teamProfileType?: Api_TypeCode<string>;
+}
+
+export interface Api_DispositionFileOffer {
+  id: number | null;
+  dispositionFileId: number;
+  dispositionOfferStatusTypeCode: string | null;
+  dispositionOfferStatusType: Api_TypeCode<string> | null;
+  offerName: string | null;
+  offerDate: string | null;
+  offerExpiryDate: string | null;
+  offerAmount: number | null;
+  offerNote: string | null;
+}
+
+export interface Api_DispositionFileSale {
+  id: number | null;
+  dispositionFileId: number;
+  finalConditionRemovalDate: string | null;
+  saleCompletionDate: string | null;
+  saleFiscalYear: string | null;
+  finalSaleAmount: number | null;
+  realtorCommissionAmount: number | null;
+  isGstRequired: boolean | null;
+  gstCollectedAmount: number | null;
+  netBookAmount: number | null;
+  totalCostAmount: number | null;
+  netProceedsBeforeSppAmount: number | null;
+  sppAmount: number | null;
+  netProceedsAfterSppAmount: number | null;
+  remediationAmount: number | null;
+  dispositionPurchasers: Api_DispositionSalePurchaser[];
+  dispositionPurchaserAgents: Api_DispositionSalePurchaserAgent[];
+  dispositionPurchaserSolicitors: Api_DispositionSalePurchaserSolicitor[];
+}
+
+export interface ContactInformation {
+  personId: number | null;
+  person: Api_Person | null;
+  organizationId: number | null;
+  organization: Api_Organization | null;
+  primaryContactId: number | null;
+  primaryContact: Api_Person | null;
+}
+
+export interface Api_DispositionSalePurchaser
+  extends ContactInformation,
+    Api_ConcurrentVersion,
+    Api_AuditFields {
+  id?: number;
+  dispositionSaleId: number;
+}
+
+export interface Api_DispositionSalePurchaserAgent
+  extends ContactInformation,
+    Api_ConcurrentVersion,
+    Api_AuditFields {
+  id?: number;
+  dispositionSaleId: number;
+}
+
+export interface Api_DispositionSalePurchaserSolicitor
+  extends ContactInformation,
+    Api_ConcurrentVersion,
+    Api_AuditFields {
+  id?: number;
+  dispositionSaleId: number;
 }

@@ -114,6 +114,22 @@ namespace Pims.Api.Services
             return teamFilterOptions;
         }
 
+        public IEnumerable<PimsDispositionOffer> GetOffers(long dispositionFileId)
+        {
+            _logger.LogInformation("Getting disposition file offers with DispositionFileId: {id}", dispositionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+
+            return _dispositionFileRepository.GetDispositionOffers(dispositionFileId);
+        }
+
+        public PimsDispositionSale GetDispositionFileSale(long dispositionFileId)
+        {
+            _logger.LogInformation("Getting disposition file sales with DispositionFileId: {id}", dispositionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+
+            return _dispositionFileRepository.GetDispositionFileSale(dispositionFileId);
+        }
+
         private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsDispositionFileProperty> dispositionPropertyFiles)
         {
             foreach (var dispositionProperty in dispositionPropertyFiles)

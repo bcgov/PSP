@@ -6,7 +6,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c12.btn {
+  .c13.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c12.btn:hover {
+.c13.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c12.btn:focus {
+.c13.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c12.btn.btn-primary {
+.c13.btn.btn-primary {
   border: none;
 }
 
-.c12.btn.btn-secondary {
+.c13.btn.btn-secondary {
   background: none;
 }
 
-.c12.btn.btn-info {
+.c13.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c12.btn.btn-info:hover,
-.c12.btn.btn-info:active,
-.c12.btn.btn-info:focus {
+.c13.btn.btn-info:hover,
+.c13.btn.btn-info:active,
+.c13.btn.btn-info:focus {
   background: none;
 }
 
-.c12.btn.btn-light {
+.c13.btn.btn-light {
   border: none;
 }
 
-.c12.btn.btn-dark {
+.c13.btn.btn-dark {
   border: none;
 }
 
-.c12.btn.btn-link {
+.c13.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   padding: 0;
 }
 
-.c12.btn.btn-link:hover,
-.c12.btn.btn-link:active,
-.c12.btn.btn-link:focus {
+.c13.btn.btn-link:hover,
+.c13.btn.btn-link:active,
+.c13.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   outline: none;
 }
 
-.c12.btn.btn-link:disabled,
-.c12.btn.btn-link.disabled {
+.c13.btn.btn-link:disabled,
+.c13.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c12.btn:disabled,
-.c12.btn:disabled:hover {
+.c13.btn:disabled,
+.c13.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,19 +128,19 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   opacity: 0.65;
 }
 
-.c12.Button .Button__icon {
+.c13.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c12.Button--icon-only:focus {
+.c13.Button--icon-only:focus {
   outline: none;
 }
 
-.c12.Button--icon-only .Button__icon {
+.c13.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c13 {
+.c14 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -159,12 +159,12 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   margin-left: 0.5rem;
 }
 
-.c15 {
+.c16 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c14 {
+.c15 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -191,6 +191,32 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
 .c1 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
+}
+
+.c8 {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .c0 {
@@ -234,7 +260,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
-.c8 {
+.c10 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -246,7 +272,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   min-height: 4.5rem;
 }
 
-.c8 .btn {
+.c10 .btn {
   margin: 0;
 }
 
@@ -261,11 +287,11 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   font-weight: bold;
 }
 
-.c10 {
+.c11 {
   border-radius: 0.5rem 0.5rem 0rem 0rem;
 }
 
-.c11 {
+.c12 {
   border-left: 0.2rem solid white;
 }
 
@@ -758,7 +784,205 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
         aria-hidden="true"
         class="fade tab-pane"
         role="tabpanel"
-      />
+      >
+        <div
+          class="c8"
+        >
+          <div
+            class="spinner-border text-warning"
+            data-testid="filter-backdrop-loading"
+          />
+        </div>
+        <div
+          class="c4 form-section"
+        >
+          <h2
+            class="c7"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                Appraisal and Assessment
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-5"
+              >
+                <label
+                  class="c5"
+                >
+                  Appraisal value ($):
+                </label>
+              </div>
+              <div
+                class="c6 text-left col"
+                data-testid="disposition-file.appraisedValueAmount"
+              >
+                $550,000.00
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-5"
+              >
+                <label
+                  class="c5"
+                >
+                  Appraisal date:
+                </label>
+              </div>
+              <div
+                class="c6 text-left col"
+                data-testid="disposition-file.appraisalDate"
+              >
+                Dec 28, 2023
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-5"
+              >
+                <label
+                  class="c5"
+                >
+                  BC assessment value ($):
+                </label>
+              </div>
+              <div
+                class="c6 text-left col"
+                data-testid="disposition-file.bcaValueAmount"
+              >
+                $600,000.00
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-5"
+              >
+                <label
+                  class="c5"
+                >
+                  BC assessment roll year:
+                </label>
+              </div>
+              <div
+                class="c6 text-left col"
+                data-testid="disposition-file.bcaAssessmentRollYear"
+              >
+                2023
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-5"
+              >
+                <label
+                  class="c5"
+                >
+                  List price ($):
+                </label>
+              </div>
+              <div
+                class="c6 text-left col"
+                data-testid="disposition-file.listPriceAmount"
+              >
+                $590,000.00
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c4 form-section"
+        >
+          <h2
+            class="c7"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                Offers
+              </div>
+              <div
+                class="col-1"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    collapse-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M7 14l5-5 5 5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <p>
+              There are no offers indicated with this disposition file.
+            </p>
+          </div>
+        </div>
+        <div
+          class="c4 form-section"
+        >
+          <h2
+            class="c7"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                Sales Details
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <p>
+              There are no sale details indicated with this disposition file.
+            </p>
+          </div>
+        </div>
+      </div>
       <div
         aria-hidden="true"
         class="fade tab-pane"
@@ -782,7 +1006,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                 class="col"
               >
                 <div
-                  class="c8 no-gutters row"
+                  class="c10 no-gutters row"
                 >
                   <div
                     class="px-2 my-1 col-auto"
@@ -825,7 +1049,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
             class="collapse show"
           >
             <form
-              class="c10 p-3"
+              class="c11 p-3"
               novalidate=""
             >
               <div
@@ -907,13 +1131,13 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                   class="col-lg-auto"
                 >
                   <div
-                    class="c11 no-gutters pl-2 row"
+                    class="c12 no-gutters pl-2 row"
                   >
                     <div
                       class="col"
                     >
                       <button
-                        class="c12 Button Button--icon-only primary btn btn-primary"
+                        class="c13 Button Button--icon-only primary btn btn-primary"
                         data-testid="search"
                         id="search-button"
                         title="search"
@@ -942,7 +1166,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                       class="col"
                     >
                       <button
-                        class="c12 Button Button--icon-only btn btn-info"
+                        class="c13 Button Button--icon-only btn btn-info"
                         data-testid="reset-button"
                         id="reset-button"
                         title="reset-button"
@@ -995,11 +1219,11 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                     >
                       Document type
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-documentType"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1014,7 +1238,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1041,11 +1265,11 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                     >
                       File name
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-fileName"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1060,7 +1284,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1087,11 +1311,11 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                     >
                       Uploaded
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-appCreateTimestamp"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1106,7 +1330,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1133,11 +1357,11 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                     >
                       Status
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-statusTypeCode"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1152,7 +1376,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
