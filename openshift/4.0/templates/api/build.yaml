@@ -38,11 +38,11 @@ parameters:
   - name: BUILDIMAGE_NAME
     displayName: "Source Image Name"
     description: "The image to use as the Builder Image."
-    value: "dotnet-60"
+    value: "dotnet-80"
   - name: BUILDIMAGE_TAG
     displayName: "Source Image Tag"
     description: "The s2i image tag which is used to build the code."
-    value: "6.0"
+    value: "8.0"
 
   - name: GIT_URL
     displayName: Git Repository URL
