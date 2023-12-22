@@ -18,12 +18,13 @@ namespace Pims.Dal.Entities
 
         #region Constructors
 
+        public PimsDispositionType() { }
+
         /// <summary>
         /// Create a new instance of a PimsDispositionType class.
         /// </summary>
         /// <param name="id"></param>
         public PimsDispositionType(string id)
-            : this()
         {
             Id = id;
         }

@@ -18,12 +18,13 @@ namespace Pims.Dal.Entities
 
         #region Constructors
 
+        public PimsDispositionInitiatingDocType() { }
+
         /// <summary>
         /// Create a new instance of a PimsDispositionInitiatingDocType class.
         /// </summary>
         /// <param name="id"></param>
         public PimsDispositionInitiatingDocType(string id)
-            : this()
         {
             Id = id;
         }

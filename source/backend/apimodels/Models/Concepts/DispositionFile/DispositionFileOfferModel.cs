@@ -33,12 +33,12 @@ namespace Pims.Api.Models.Models.Concepts.DispositionFile
         /// <summary>
         /// Disposition Offer Date.
         /// </summary>
-        public DateTime OfferDate { get; set; }
+        public DateOnly OfferDate { get; set; }
 
         /// <summary>
         /// Disposition Offer Expiration Date.
         /// </summary>
-        public DateTime? OfferExpiryDate { get; set; }
+        public DateOnly? OfferExpiryDate { get; set; }
 
         /// <summary>
         /// Disposition Offer Amount.

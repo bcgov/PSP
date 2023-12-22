@@ -17,10 +17,6 @@ namespace Pims.Dal.Entities;
 [Index("RegionCode", Name = "ORG_REGION_CODE_IDX")]
 public partial class PimsOrganization
 {
-            PimsDispositionFileTeams = new HashSet<PimsDispositionFileTeam>();
-            PimsDispositionPurchasers = new HashSet<PimsDispositionPurchaser>();
-            PimsDspPurchAgents = new HashSet<PimsDspPurchAgent>();
-            PimsDspPurchSolicitors = new HashSet<PimsDspPurchSolicitor>();
     [Key]
     [Column("ORGANIZATION_ID")]
     public long OrganizationId { get; set; }
@@ -209,12 +205,4 @@ public partial class PimsOrganization
     [ForeignKey("RegionCode")]
     [InverseProperty("PimsOrganizations")]
     public virtual PimsRegion RegionCodeNavigation { get; set; }
-        [InverseProperty(nameof(PimsDispositionFileTeam.Organization))]
-        public virtual ICollection<PimsDispositionFileTeam> PimsDispositionFileTeams { get; set; }
-        [InverseProperty(nameof(PimsDispositionPurchaser.Organization))]
-        public virtual ICollection<PimsDispositionPurchaser> PimsDispositionPurchasers { get; set; }
-        [InverseProperty(nameof(PimsDspPurchAgent.Organization))]
-        public virtual ICollection<PimsDspPurchAgent> PimsDspPurchAgents { get; set; }
-        [InverseProperty(nameof(PimsDspPurchSolicitor.Organization))]
-        public virtual ICollection<PimsDspPurchSolicitor> PimsDspPurchSolicitors { get; set; }
 }

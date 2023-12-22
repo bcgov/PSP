@@ -119,7 +119,7 @@ namespace Pims.Api.Test.Services
                 AcquisitionFileId = 7,
                 ConcurrencyControlNumber = 2,
                 IsDraft = false,
-                FinalizedDate = DateTime.UtcNow,
+                FinalizedDate = DateOnly.FromDateTime(DateTime.UtcNow),
             });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();

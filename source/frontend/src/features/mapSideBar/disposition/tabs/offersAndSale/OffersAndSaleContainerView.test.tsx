@@ -61,11 +61,13 @@ describe('Disposition Offer Detail View component', () => {
   it('displays a message when Disposition has no Appraisal', async () => {
     const mockDisposition = mockDispositionFileApi;
     mockDisposition.dispositionSale = null;
-    mockDisposition.appraisedValueAmount = null;
-    mockDisposition.appraisalDate = null;
-    mockDisposition.bcaValueAmount = null;
-    mockDisposition.bcaRollYear = null;
-    mockDisposition.listPriceAmount = null;
+    if (mockDisposition.dispositionAppraisal != null) {
+      mockDisposition.dispositionAppraisal.appraisedAmount = null;
+      mockDisposition.dispositionAppraisal.appraisalDate = null;
+      mockDisposition.dispositionAppraisal.bcaValueAmount = null;
+      mockDisposition.dispositionAppraisal.bcaRollYear = null;
+      mockDisposition.dispositionAppraisal.listPriceAmount = null;
+    }
 
     const { getByText } = await setup({
       props: { dispositionFile: mockDisposition, dispositionOffers: [] },

@@ -19,12 +19,12 @@ namespace Pims.Api.Models.Models.Concepts.DispositionFile
         /// <summary>
         /// Disposition Sale Removal Date.
         /// </summary>
-        public DateTime? FinalConditionRemovalDate { get; set; }
+        public DateOnly? FinalConditionRemovalDate { get; set; }
 
         /// <summary>
         /// Disposition Sale Completion Date.
         /// </summary>
-        public DateTime? SaleCompletionDate { get; set; }
+        public DateOnly? SaleCompletionDate { get; set; }
 
         /// <summary>
         /// Disposition Sale Fiscal Year.

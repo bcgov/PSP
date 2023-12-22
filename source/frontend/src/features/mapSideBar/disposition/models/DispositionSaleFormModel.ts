@@ -33,10 +33,11 @@ export class DispositionSaleFormModel {
     model.gstCollectedAmount = entity.gstCollectedAmount;
     model.netBookAmount = entity.netBookAmount;
     model.totalCostAmount = entity.totalCostAmount;
-    model.netProceedsBeforeSppAmount = entity.netProceedsBeforeSppAmount;
     model.sppAmount = entity.sppAmount;
-    model.netProceedsAfterSppAmount = entity.netProceedsAfterSppAmount;
     model.remediationAmount = entity.remediationAmount;
+
+    model.netProceedsBeforeSppAmount = calculateNetProceedsBeforeSppAmount(entity);
+    model.netProceedsAfterSppAmount = calculateNetProceedsAfterSppAmount(entity);
   }
 
   toApi(): Api_DispositionFileSale {
@@ -52,9 +53,7 @@ export class DispositionSaleFormModel {
       gstCollectedAmount: this.gstCollectedAmount,
       netBookAmount: this.netBookAmount,
       totalCostAmount: this.totalCostAmount,
-      netProceedsBeforeSppAmount: this.netProceedsBeforeSppAmount,
       sppAmount: this.sppAmount,
-      netProceedsAfterSppAmount: this.netProceedsAfterSppAmount,
       remediationAmount: this.remediationAmount,
       dispositionPurchasers: [],
       dispositionPurchaserAgents: [],
@@ -62,3 +61,24 @@ export class DispositionSaleFormModel {
     };
   }
 }
+
+export const calculateNetProceedsBeforeSppAmount = (apiModel: Api_DispositionFileSale | null) => {
+  return apiModel == null
+    ? 0
+    : (apiModel.finalSaleAmount ?? 0) -
+        ((apiModel.realtorCommissionAmount ?? 0) +
+          (apiModel.gstCollectedAmount ?? 0) +
+          (apiModel.totalCostAmount ?? 0) +
+          (apiModel.netBookAmount ?? 0));
+};
+
+export const calculateNetProceedsAfterSppAmount = (apiModel: Api_DispositionFileSale | null) => {
+  return apiModel == null
+    ? 0
+    : (apiModel.finalSaleAmount ?? 0) -
+        ((apiModel.realtorCommissionAmount ?? 0) +
+          (apiModel.gstCollectedAmount ?? 0) +
+          (apiModel.totalCostAmount ?? 0) +
+          (apiModel.netBookAmount ?? 0) +
+          (apiModel.sppAmount ?? 0));
+};

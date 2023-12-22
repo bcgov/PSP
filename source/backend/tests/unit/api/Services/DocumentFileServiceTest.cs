@@ -306,7 +306,7 @@ namespace Pims.Api.Test.Services
             Func<Task> action = async () => await service.UploadDispositionDocumentAsync(1, uploadRequest);
 
             // Assert
-            action.Should().Throw<NotAuthorizedException>();
+            action.Should().ThrowExactlyAsync<NotAuthorizedException>();
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
         }
 
@@ -995,7 +995,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.DeleteDispositionDocumentAsync(doc);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowExactlyAsync<NotAuthorizedException>();
         }
 
         [Fact]

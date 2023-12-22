@@ -133,7 +133,7 @@ namespace Pims.Api.Services
             foreach (var deletedProperty in differenceSet)
             {
                 _researchFilePropertyRepository.Delete(deletedProperty);
-                if (deletedProperty.Property.IsPropertyOfInterest)
+                if (deletedProperty.Property.IsPropertyOfInterest == true)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;

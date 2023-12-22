@@ -12,6 +12,10 @@ import {
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
 
+import {
+  calculateNetProceedsAfterSppAmount,
+  calculateNetProceedsBeforeSppAmount,
+} from '../../models/DispositionSaleFormModel';
 import DispositionOfferDetails from './dispositionOffer/dispositionOfferDetails/DispositionOfferDetails';
 import DispositionSaleContactDetails from './dispositionOffer/dispositionSaleContactDetails/DispositionSaleContactDetails';
 
@@ -29,13 +33,7 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
   dispositionSale,
 }) => {
   const getAppraisalHasData = (): boolean => {
-    return (
-      dispositionFile.appraisedValueAmount !== null ||
-      dispositionFile.appraisalDate !== null ||
-      dispositionFile.bcaValueAmount !== null ||
-      dispositionFile.bcaRollYear !== null ||
-      dispositionFile.listPriceAmount !== null
-    );
+    return dispositionFile.dispositionAppraisal !== null;
   };
 
   const appraisalHasData = getAppraisalHasData();
@@ -54,35 +52,35 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
               labelWidth="5"
               valueTestId="disposition-file.appraisedValueAmount"
             >
-              {formatMoney(dispositionFile.appraisedValueAmount)}
+              {formatMoney(dispositionFile.dispositionAppraisal?.appraisedAmount)}
             </SectionField>
             <SectionField
               label="Appraisal date"
               labelWidth="5"
               valueTestId="disposition-file.appraisalDate"
             >
-              {prettyFormatDate(dispositionFile.appraisalDate)}
+              {prettyFormatDate(dispositionFile.dispositionAppraisal?.appraisalDate)}
             </SectionField>
             <SectionField
               label="BC assessment value ($)"
               labelWidth="5"
               valueTestId="disposition-file.bcaValueAmount"
             >
-              {formatMoney(dispositionFile.bcaValueAmount)}
+              {formatMoney(dispositionFile.dispositionAppraisal?.bcaValueAmount)}
             </SectionField>
             <SectionField
               label="BC assessment roll year"
               labelWidth="5"
               valueTestId="disposition-file.bcaAssessmentRollYear"
             >
-              {dispositionFile.bcaRollYear ?? ''}
+              {dispositionFile.dispositionAppraisal?.bcaRollYear ?? ''}
             </SectionField>
             <SectionField
               label="List price ($)"
               labelWidth="5"
               valueTestId="disposition-file.listPriceAmount"
             >
-              {formatMoney(dispositionFile.listPriceAmount)}
+              {formatMoney(dispositionFile.dispositionAppraisal?.listPriceAmount)}
             </SectionField>
           </>
         ) : (
@@ -216,7 +214,7 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
               tooltip="Surplus Property Program (SPP)."
               valueTestId="disposition-sale.netProceedsBeforeSppAmount"
             >
-              {formatMoney(dispositionSale.netProceedsBeforeSppAmount)}
+              {formatMoney(calculateNetProceedsBeforeSppAmount(dispositionSale))}
             </SectionField>
             <SectionField
               label="SPP Amount ($)"
@@ -232,7 +230,7 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
               tooltip="Net Proceeds after SPP Cost = Final Sales price, less Commissions, GST, Net Book Value, Total Cost of Sales,  and SPP Amount."
               valueTestId="disposition-sale.netProceedsAfterSppAmount"
             >
-              {formatMoney(dispositionSale.netProceedsAfterSppAmount)}
+              {formatMoney(calculateNetProceedsAfterSppAmount(dispositionSale))}
             </SectionField>
             <SectionField
               label="Remediation cost ($)"

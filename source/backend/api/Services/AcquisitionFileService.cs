@@ -329,7 +329,7 @@ namespace Pims.Api.Services
                     throw new BusinessRuleViolationException("You must remove all takes and interest holders from an acquisition file property before removing that property from an acquisition file");
                 }
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
-                if (deletedProperty.Property.IsPropertyOfInterest)
+                if (deletedProperty.Property.IsPropertyOfInterest == true)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
@@ -690,8 +690,8 @@ namespace Pims.Api.Services
             // Get the current properties in the research file
             var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
             var propertiesOfInterest = currentProperties.Where(p => p.Property.IsPropertyOfInterest);
-            var propertiesAccounted = currentProperties.Where(x => !x.Property.IsPropertyOfInterest
-                                            && !x.Property.IsOwned);
+            var propertiesAccounted = currentProperties.Where(x => x.Property.IsPropertyOfInterest
+                                            && x.Property.IsOwned);
 
             // PSP-6111 Business rule: Transfer properties of interest to core inventory when acquisition file is completed
             foreach (var acquisitionProperty in propertiesOfInterest)

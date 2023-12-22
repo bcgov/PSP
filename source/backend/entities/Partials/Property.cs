@@ -31,6 +31,8 @@ namespace Pims.Dal.Entities
 
         #region Constructors
 
+        public PimsProperty() { }
+
         /// <summary>
         /// Create a new instance of a Property class.
         /// </summary>
@@ -43,7 +45,6 @@ namespace Pims.Dal.Entities
         /// <param name="dataSource"></param>
         /// <param name="dataSourceEffectiveDate"></param>
         public PimsProperty(int pid, PimsPropertyType type, PimsPropertyClassificationType classification, PimsAddress address, PimsPropPropTenureType tenure, PimsAreaUnitType areaUnit, PimsDataSourceType dataSource, DateTime dataSourceEffectiveDate, PimsPropertyStatusType status)
-            : this()
         {
             this.Pid = pid;
             this.PropertyTypeCodeNavigation = type ?? throw new ArgumentNullException(nameof(type));
@@ -69,10 +70,6 @@ namespace Pims.Dal.Entities
             this.PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(dataSourceEffectiveDate);
             this.PropertyStatusTypeCodeNavigation = status ?? throw new ArgumentNullException(nameof(status));
             this.PropertyStatusTypeCode = status.Id;
-        }
-
-        public PimsProperty()
-        {
         }
         #endregion
     }

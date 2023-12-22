@@ -23,10 +23,7 @@ namespace Pims.Core.Extensions
             where T_Source : class
             where T_Destination : class
         {
-            if (destination == null)
-            {
-                throw new ArgumentNullException(nameof(destination));
-            }
+            ArgumentNullException.ThrowIfNull(destination, nameof(destination));
 
             var type = typeof(T_Destination);
             var sProps = typeof(T_Source)

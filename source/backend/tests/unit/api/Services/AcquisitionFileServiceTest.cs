@@ -947,7 +947,7 @@ namespace Pims.Api.Test.Services
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>())).Returns(new PimsProperty()
             {
                 PropertyClassificationTypeCode = "UNKNOWN",
-                PropertyDataSourceEffectiveDate = System.DateTime.Now,
+                PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now),
                 PropertyDataSourceTypeCode = "PMBC",
                 PropertyTypeCode = "UNKNOWN",
                 PropertyStatusTypeCode = "UNKNOWN",
@@ -2605,7 +2605,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(1, result.Count);
+            Assert.Equal(1, result.Count());
             acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
         }
 
@@ -2657,7 +2657,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(2, result.Count);
+            Assert.Equal(2, result.Count());
             Assert.Equal("10-25-2023", result[0].FileNumber);
             Assert.Equal("10-25-2023", result[1].FileNumber);
             Assert.Equal("8000", result[0].Pid);
