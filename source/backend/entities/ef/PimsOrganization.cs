@@ -147,6 +147,15 @@ public partial class PimsOrganization
     [InverseProperty("Organization")]
     public virtual ICollection<PimsDispositionFileTeam> PimsDispositionFileTeams { get; set; } = new List<PimsDispositionFileTeam>();
 
+    [InverseProperty("Organization")]
+    public virtual ICollection<PimsDispositionPurchaser> PimsDispositionPurchasers { get; set; } = new List<PimsDispositionPurchaser>();
+
+    [InverseProperty("Organization")]
+    public virtual ICollection<PimsDspPurchAgent> PimsDspPurchAgents { get; set; } = new List<PimsDspPurchAgent>();
+
+    [InverseProperty("Organization")]
+    public virtual ICollection<PimsDspPurchSolicitor> PimsDspPurchSolicitors { get; set; } = new List<PimsDspPurchSolicitor>();
+
     [InverseProperty("ExpropriatingAuthorityNavigation")]
     public virtual ICollection<PimsExpropriationPayment> PimsExpropriationPayments { get; set; } = new List<PimsExpropriationPayment>();
 

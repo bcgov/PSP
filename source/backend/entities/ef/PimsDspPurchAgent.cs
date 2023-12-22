@@ -7,55 +7,51 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Table to associate an acquisition file to a person.
+/// Describes the agent associated with the sale of the disposition.  The agent may be an organizations or an individual.  If an organization is the agent, a primary contact person must be provided.
 /// </summary>
-[Table("PIMS_DISPOSITION_FILE_TEAM")]
-[Index("DispositionFileId", Name = "DSPFTM_DISPOSITION_FILE_ID_IDX")]
-[Index("DispositionFileId", "DspFlTeamProfileTypeCode", Name = "DSPFTM_DSP_FILE_PROFILE_TUC", IsUnique = true)]
-[Index("DspFlTeamProfileTypeCode", Name = "DSPFTM_DSP_FL_TEAM_PROFILE_TYPE_CODE_IDX")]
-[Index("OrganizationId", Name = "DSPFTM_ORGANIZATION_ID_IDX")]
-[Index("PersonId", Name = "DSPFTM_PERSON_ID_IDX")]
-[Index("PrimaryContactId", Name = "DSPFTM_PRIMARY_CONTACT_ID_IDX")]
-public partial class PimsDispositionFileTeam
+[Table("PIMS_DSP_PURCH_AGENT")]
+[Index("DispositionSaleId", Name = "DSPPAG_DISPOSITION_SALE_ID_IDX")]
+[Index("OrganizationId", Name = "DSPPAG_ORGANIZATION_ID_IDX")]
+[Index("PersonId", Name = "DSPPAG_PERSON_ID_IDX")]
+[Index("PrimaryContactId", Name = "DSPPAG_PRIMARY_CONTACT_ID_IDX")]
+public partial class PimsDspPurchAgent
 {
     /// <summary>
     /// Unique auto-generated surrogate primary key
     /// </summary>
     [Key]
-    [Column("DISPOSITION_FILE_TEAM_ID")]
-    public long DispositionFileTeamId { get; set; }
+    [Column("DSP_PURCH_AGENT_ID")]
+    public long DspPurchAgentId { get; set; }
 
     /// <summary>
-    /// Foreign key value for the dispostion file
+    /// Foreign key of the dispostion sale.
     /// </summary>
-    [Column("DISPOSITION_FILE_ID")]
-    public long DispositionFileId { get; set; }
+    [Column("DISPOSITION_SALE_ID")]
+    public long DispositionSaleId { get; set; }
 
     /// <summary>
-    /// Foreign key value for the person.
+    /// Foreign key of the individual agent for the disposition file.
     /// </summary>
     [Column("PERSON_ID")]
     public long? PersonId { get; set; }
 
     /// <summary>
-    /// Foreign key value for the organization.
+    /// Foreign key of the organization agent for the disposition file.
     /// </summary>
     [Column("ORGANIZATION_ID")]
     public long? OrganizationId { get; set; }
 
     /// <summary>
-    /// Foreign key value for the primary contact person.
+    /// Primary contact person for the organization.
     /// </summary>
     [Column("PRIMARY_CONTACT_ID")]
     public long? PrimaryContactId { get; set; }
 
     /// <summary>
-    /// Code value for the disposition file profile type.
+    /// Indicates if the code value is inactive.
     /// </summary>
-    [Required]
-    [Column("DSP_FL_TEAM_PROFILE_TYPE_CODE")]
-    [StringLength(20)]
-    public string DspFlTeamProfileTypeCode { get; set; }
+    [Column("IS_DISABLED")]
+    public bool? IsDisabled { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any
@@ -147,23 +143,19 @@ public partial class PimsDispositionFileTeam
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("DispositionFileId")]
-    [InverseProperty("PimsDispositionFileTeams")]
-    public virtual PimsDispositionFile DispositionFile { get; set; }
-
-    [ForeignKey("DspFlTeamProfileTypeCode")]
-    [InverseProperty("PimsDispositionFileTeams")]
-    public virtual PimsDspFlTeamProfileType DspFlTeamProfileTypeCodeNavigation { get; set; }
+    [ForeignKey("DispositionSaleId")]
+    [InverseProperty("PimsDspPurchAgents")]
+    public virtual PimsDispositionSale DispositionSale { get; set; }
 
     [ForeignKey("OrganizationId")]
-    [InverseProperty("PimsDispositionFileTeams")]
+    [InverseProperty("PimsDspPurchAgents")]
     public virtual PimsOrganization Organization { get; set; }
 
     [ForeignKey("PersonId")]
-    [InverseProperty("PimsDispositionFileTeamPeople")]
+    [InverseProperty("PimsDspPurchAgentPeople")]
     public virtual PimsPerson Person { get; set; }
 
     [ForeignKey("PrimaryContactId")]
-    [InverseProperty("PimsDispositionFileTeamPrimaryContacts")]
+    [InverseProperty("PimsDspPurchAgentPrimaryContacts")]
     public virtual PimsPerson PrimaryContact { get; set; }
 }

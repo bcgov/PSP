@@ -7,55 +7,54 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Table to associate an acquisition file to a person.
+/// Entity containing the appraisal and assessment information about the disposition.
 /// </summary>
-[Table("PIMS_DISPOSITION_FILE_TEAM")]
-[Index("DispositionFileId", Name = "DSPFTM_DISPOSITION_FILE_ID_IDX")]
-[Index("DispositionFileId", "DspFlTeamProfileTypeCode", Name = "DSPFTM_DSP_FILE_PROFILE_TUC", IsUnique = true)]
-[Index("DspFlTeamProfileTypeCode", Name = "DSPFTM_DSP_FL_TEAM_PROFILE_TYPE_CODE_IDX")]
-[Index("OrganizationId", Name = "DSPFTM_ORGANIZATION_ID_IDX")]
-[Index("PersonId", Name = "DSPFTM_PERSON_ID_IDX")]
-[Index("PrimaryContactId", Name = "DSPFTM_PRIMARY_CONTACT_ID_IDX")]
-public partial class PimsDispositionFileTeam
+[Table("PIMS_DISPOSITION_APPRAISAL")]
+[Index("DispositionFileId", Name = "DSPAPP_DISPOSITION_FILE_ID_IDX")]
+public partial class PimsDispositionAppraisal
 {
     /// <summary>
     /// Unique auto-generated surrogate primary key
     /// </summary>
     [Key]
-    [Column("DISPOSITION_FILE_TEAM_ID")]
-    public long DispositionFileTeamId { get; set; }
+    [Column("DISPOSITION_APPRAISAL_ID")]
+    public long DispositionAppraisalId { get; set; }
 
     /// <summary>
-    /// Foreign key value for the dispostion file
+    /// Foreign key to the disposition file.
     /// </summary>
     [Column("DISPOSITION_FILE_ID")]
     public long DispositionFileId { get; set; }
 
     /// <summary>
-    /// Foreign key value for the person.
+    /// Appraised value of the disposition file.
     /// </summary>
-    [Column("PERSON_ID")]
-    public long? PersonId { get; set; }
+    [Column("APPRAISED_AMT", TypeName = "money")]
+    public decimal? AppraisedAmt { get; set; }
 
     /// <summary>
-    /// Foreign key value for the organization.
+    /// Date of the disposition file appraisal.
     /// </summary>
-    [Column("ORGANIZATION_ID")]
-    public long? OrganizationId { get; set; }
+    [Column("APPRAISAL_DT")]
+    public DateOnly? AppraisalDt { get; set; }
 
     /// <summary>
-    /// Foreign key value for the primary contact person.
+    /// BC Assessment value of the disposition file.
     /// </summary>
-    [Column("PRIMARY_CONTACT_ID")]
-    public long? PrimaryContactId { get; set; }
+    [Column("BCA_VALUE_AMT", TypeName = "money")]
+    public decimal? BcaValueAmt { get; set; }
 
     /// <summary>
-    /// Code value for the disposition file profile type.
+    /// BC Assessment roll year for the disposition file appraisal.
     /// </summary>
-    [Required]
-    [Column("DSP_FL_TEAM_PROFILE_TYPE_CODE")]
-    [StringLength(20)]
-    public string DspFlTeamProfileTypeCode { get; set; }
+    [Column("BCA_ROLL_YEAR")]
+    public short? BcaRollYear { get; set; }
+
+    /// <summary>
+    /// Listed disposition file selling price.
+    /// </summary>
+    [Column("LIST_PRICE_AMT", TypeName = "money")]
+    public decimal? ListPriceAmt { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any
@@ -148,22 +147,6 @@ public partial class PimsDispositionFileTeam
     public string DbLastUpdateUserid { get; set; }
 
     [ForeignKey("DispositionFileId")]
-    [InverseProperty("PimsDispositionFileTeams")]
+    [InverseProperty("PimsDispositionAppraisals")]
     public virtual PimsDispositionFile DispositionFile { get; set; }
-
-    [ForeignKey("DspFlTeamProfileTypeCode")]
-    [InverseProperty("PimsDispositionFileTeams")]
-    public virtual PimsDspFlTeamProfileType DspFlTeamProfileTypeCodeNavigation { get; set; }
-
-    [ForeignKey("OrganizationId")]
-    [InverseProperty("PimsDispositionFileTeams")]
-    public virtual PimsOrganization Organization { get; set; }
-
-    [ForeignKey("PersonId")]
-    [InverseProperty("PimsDispositionFileTeamPeople")]
-    public virtual PimsPerson Person { get; set; }
-
-    [ForeignKey("PrimaryContactId")]
-    [InverseProperty("PimsDispositionFileTeamPrimaryContacts")]
-    public virtual PimsPerson PrimaryContact { get; set; }
 }

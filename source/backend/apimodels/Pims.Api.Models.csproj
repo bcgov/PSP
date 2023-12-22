@@ -14,10 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\core\Pims.Core.csproj" />
     <ProjectReference Include="..\entities\Pims.Dal.Entities.csproj" />
   </ItemGroup>
 

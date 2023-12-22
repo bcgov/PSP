@@ -7,23 +7,18 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Table to associate an acquisition file to a person.
+/// Entity containing information regarding an disposition sale.
 /// </summary>
-[Table("PIMS_DISPOSITION_FILE_TEAM")]
-[Index("DispositionFileId", Name = "DSPFTM_DISPOSITION_FILE_ID_IDX")]
-[Index("DispositionFileId", "DspFlTeamProfileTypeCode", Name = "DSPFTM_DSP_FILE_PROFILE_TUC", IsUnique = true)]
-[Index("DspFlTeamProfileTypeCode", Name = "DSPFTM_DSP_FL_TEAM_PROFILE_TYPE_CODE_IDX")]
-[Index("OrganizationId", Name = "DSPFTM_ORGANIZATION_ID_IDX")]
-[Index("PersonId", Name = "DSPFTM_PERSON_ID_IDX")]
-[Index("PrimaryContactId", Name = "DSPFTM_PRIMARY_CONTACT_ID_IDX")]
-public partial class PimsDispositionFileTeam
+[Table("PIMS_DISPOSITION_SALE")]
+[Index("DispositionFileId", Name = "DSPSAL_DISPOSITION_FILE_ID_IDX")]
+public partial class PimsDispositionSale
 {
     /// <summary>
     /// Unique auto-generated surrogate primary key
     /// </summary>
     [Key]
-    [Column("DISPOSITION_FILE_TEAM_ID")]
-    public long DispositionFileTeamId { get; set; }
+    [Column("DISPOSITION_SALE_ID")]
+    public long DispositionSaleId { get; set; }
 
     /// <summary>
     /// Foreign key value for the dispostion file
@@ -32,30 +27,70 @@ public partial class PimsDispositionFileTeam
     public long DispositionFileId { get; set; }
 
     /// <summary>
-    /// Foreign key value for the person.
+    /// For general sales, provide the date when the last condition(s) are to be removed. For road closures enter the condition precedent date.
     /// </summary>
-    [Column("PERSON_ID")]
-    public long? PersonId { get; set; }
+    [Column("FINAL_CONDITION_REMOVAL_DT")]
+    public DateOnly? FinalConditionRemovalDt { get; set; }
 
     /// <summary>
-    /// Foreign key value for the organization.
+    /// The date the disposition was completed.
     /// </summary>
-    [Column("ORGANIZATION_ID")]
-    public long? OrganizationId { get; set; }
+    [Column("SALE_COMPLETION_DT")]
+    public DateOnly? SaleCompletionDt { get; set; }
 
     /// <summary>
-    /// Foreign key value for the primary contact person.
+    /// The fiscal year in which the sale was completed.
     /// </summary>
-    [Column("PRIMARY_CONTACT_ID")]
-    public long? PrimaryContactId { get; set; }
+    [Column("SALE_FISCAL_YEAR")]
+    public short? SaleFiscalYear { get; set; }
 
     /// <summary>
-    /// Code value for the disposition file profile type.
+    /// Value of the final sale.
     /// </summary>
-    [Required]
-    [Column("DSP_FL_TEAM_PROFILE_TYPE_CODE")]
-    [StringLength(20)]
-    public string DspFlTeamProfileTypeCode { get; set; }
+    [Column("SALE_FINAL_AMT", TypeName = "money")]
+    public decimal? SaleFinalAmt { get; set; }
+
+    /// <summary>
+    /// Amount paid to the realtor managing the sale.
+    /// </summary>
+    [Column("REALTOR_COMMISSION_AMT", TypeName = "money")]
+    public decimal? RealtorCommissionAmt { get; set; }
+
+    /// <summary>
+    /// Is GST required for this sale?
+    /// </summary>
+    [Column("IS_GST_REQUIRED")]
+    public bool IsGstRequired { get; set; }
+
+    /// <summary>
+    /// GST collected is calculated based upon Final Sales Price.
+    /// </summary>
+    [Column("GST_COLLECTED_AMT", TypeName = "money")]
+    public decimal? GstCollectedAmt { get; set; }
+
+    /// <summary>
+    /// The net book value of the disposition sale.
+    /// </summary>
+    [Column("NET_BOOK_AMT", TypeName = "money")]
+    public decimal? NetBookAmt { get; set; }
+
+    /// <summary>
+    /// The sum of all costs incurred to prepare property for sale (e.g., appraisal, environmental and other consultants, legal fees, First Nations accommodation, etc.).
+    /// </summary>
+    [Column("TOTAL_COST_AMT", TypeName = "money")]
+    public decimal? TotalCostAmt { get; set; }
+
+    /// <summary>
+    /// Surplus Property Program (SPP) fee to be paid to CITZ.
+    /// </summary>
+    [Column("SPP_AMT", TypeName = "money")]
+    public decimal? SppAmt { get; set; }
+
+    /// <summary>
+    /// Cost of propery remediation.
+    /// </summary>
+    [Column("REMEDIATION_AMT", TypeName = "money")]
+    public decimal? RemediationAmt { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any
@@ -148,22 +183,15 @@ public partial class PimsDispositionFileTeam
     public string DbLastUpdateUserid { get; set; }
 
     [ForeignKey("DispositionFileId")]
-    [InverseProperty("PimsDispositionFileTeams")]
+    [InverseProperty("PimsDispositionSales")]
     public virtual PimsDispositionFile DispositionFile { get; set; }
 
-    [ForeignKey("DspFlTeamProfileTypeCode")]
-    [InverseProperty("PimsDispositionFileTeams")]
-    public virtual PimsDspFlTeamProfileType DspFlTeamProfileTypeCodeNavigation { get; set; }
+    [InverseProperty("DispositionSale")]
+    public virtual ICollection<PimsDispositionPurchaser> PimsDispositionPurchasers { get; set; } = new List<PimsDispositionPurchaser>();
 
-    [ForeignKey("OrganizationId")]
-    [InverseProperty("PimsDispositionFileTeams")]
-    public virtual PimsOrganization Organization { get; set; }
+    [InverseProperty("DispositionSale")]
+    public virtual ICollection<PimsDspPurchAgent> PimsDspPurchAgents { get; set; } = new List<PimsDspPurchAgent>();
 
-    [ForeignKey("PersonId")]
-    [InverseProperty("PimsDispositionFileTeamPeople")]
-    public virtual PimsPerson Person { get; set; }
-
-    [ForeignKey("PrimaryContactId")]
-    [InverseProperty("PimsDispositionFileTeamPrimaryContacts")]
-    public virtual PimsPerson PrimaryContact { get; set; }
+    [InverseProperty("DispositionSale")]
+    public virtual ICollection<PimsDspPurchSolicitor> PimsDspPurchSolicitors { get; set; } = new List<PimsDspPurchSolicitor>();
 }

@@ -122,6 +122,24 @@ public partial class PimsPerson
     public virtual ICollection<PimsDispositionFileTeam> PimsDispositionFileTeamPrimaryContacts { get; set; } = new List<PimsDispositionFileTeam>();
 
     [InverseProperty("Person")]
+    public virtual ICollection<PimsDispositionPurchaser> PimsDispositionPurchaserPeople { get; set; } = new List<PimsDispositionPurchaser>();
+
+    [InverseProperty("PrimaryContact")]
+    public virtual ICollection<PimsDispositionPurchaser> PimsDispositionPurchaserPrimaryContacts { get; set; } = new List<PimsDispositionPurchaser>();
+
+    [InverseProperty("Person")]
+    public virtual ICollection<PimsDspPurchAgent> PimsDspPurchAgentPeople { get; set; } = new List<PimsDspPurchAgent>();
+
+    [InverseProperty("PrimaryContact")]
+    public virtual ICollection<PimsDspPurchAgent> PimsDspPurchAgentPrimaryContacts { get; set; } = new List<PimsDspPurchAgent>();
+
+    [InverseProperty("Person")]
+    public virtual ICollection<PimsDspPurchSolicitor> PimsDspPurchSolicitorPeople { get; set; } = new List<PimsDspPurchSolicitor>();
+
+    [InverseProperty("PrimaryContact")]
+    public virtual ICollection<PimsDspPurchSolicitor> PimsDspPurchSolicitorPrimaryContacts { get; set; } = new List<PimsDspPurchSolicitor>();
+
+    [InverseProperty("Person")]
     public virtual ICollection<PimsInterestHolder> PimsInterestHolderPeople { get; set; } = new List<PimsInterestHolder>();
 
     [InverseProperty("PrimaryContact")]

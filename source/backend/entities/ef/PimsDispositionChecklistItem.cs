@@ -6,56 +6,40 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-/// <summary>
-/// Table to associate an acquisition file to a person.
-/// </summary>
-[Table("PIMS_DISPOSITION_FILE_TEAM")]
-[Index("DispositionFileId", Name = "DSPFTM_DISPOSITION_FILE_ID_IDX")]
-[Index("DispositionFileId", "DspFlTeamProfileTypeCode", Name = "DSPFTM_DSP_FILE_PROFILE_TUC", IsUnique = true)]
-[Index("DspFlTeamProfileTypeCode", Name = "DSPFTM_DSP_FL_TEAM_PROFILE_TYPE_CODE_IDX")]
-[Index("OrganizationId", Name = "DSPFTM_ORGANIZATION_ID_IDX")]
-[Index("PersonId", Name = "DSPFTM_PERSON_ID_IDX")]
-[Index("PrimaryContactId", Name = "DSPFTM_PRIMARY_CONTACT_ID_IDX")]
-public partial class PimsDispositionFileTeam
+[Table("PIMS_DISPOSITION_CHECKLIST_ITEM")]
+[Index("DispositionFileId", Name = "DSPCKI_DISPOSITION_FILE_ID_IDX")]
+[Index("DispositionFileId", "DspChklstItemTypeCode", Name = "DSPCKI_DISPOSITION_FILE_ID_UK_IDX", IsUnique = true)]
+[Index("DspChklstItemStatusTypeCode", Name = "DSPCKI_DSP_CHKLST_ITEM_STATUS_TYPE_CODE_IDX")]
+[Index("DspChklstItemTypeCode", Name = "DSPCKI_DSP_CHKLST_ITEM_TYPE_CODE_IDX")]
+public partial class PimsDispositionChecklistItem
 {
     /// <summary>
     /// Unique auto-generated surrogate primary key
     /// </summary>
     [Key]
-    [Column("DISPOSITION_FILE_TEAM_ID")]
-    public long DispositionFileTeamId { get; set; }
+    [Column("DISPOSITION_CHECKLIST_ITEM_ID")]
+    public long DispositionChecklistItemId { get; set; }
 
     /// <summary>
-    /// Foreign key value for the dispostion file
+    /// Foreign key of the disposition file.
     /// </summary>
     [Column("DISPOSITION_FILE_ID")]
     public long DispositionFileId { get; set; }
 
     /// <summary>
-    /// Foreign key value for the person.
+    /// Code value for the checklist item.
     /// </summary>
-    [Column("PERSON_ID")]
-    public long? PersonId { get; set; }
+    [Column("DSP_CHKLST_ITEM_TYPE_CODE")]
+    [StringLength(20)]
+    public string DspChklstItemTypeCode { get; set; }
 
     /// <summary>
-    /// Foreign key value for the organization.
-    /// </summary>
-    [Column("ORGANIZATION_ID")]
-    public long? OrganizationId { get; set; }
-
-    /// <summary>
-    /// Foreign key value for the primary contact person.
-    /// </summary>
-    [Column("PRIMARY_CONTACT_ID")]
-    public long? PrimaryContactId { get; set; }
-
-    /// <summary>
-    /// Code value for the disposition file profile type.
+    /// Code value for the checklist item status.
     /// </summary>
     [Required]
-    [Column("DSP_FL_TEAM_PROFILE_TYPE_CODE")]
+    [Column("DSP_CHKLST_ITEM_STATUS_TYPE_CODE")]
     [StringLength(20)]
-    public string DspFlTeamProfileTypeCode { get; set; }
+    public string DspChklstItemStatusTypeCode { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any
@@ -148,22 +132,14 @@ public partial class PimsDispositionFileTeam
     public string DbLastUpdateUserid { get; set; }
 
     [ForeignKey("DispositionFileId")]
-    [InverseProperty("PimsDispositionFileTeams")]
+    [InverseProperty("PimsDispositionChecklistItems")]
     public virtual PimsDispositionFile DispositionFile { get; set; }
 
-    [ForeignKey("DspFlTeamProfileTypeCode")]
-    [InverseProperty("PimsDispositionFileTeams")]
-    public virtual PimsDspFlTeamProfileType DspFlTeamProfileTypeCodeNavigation { get; set; }
+    [ForeignKey("DspChklstItemStatusTypeCode")]
+    [InverseProperty("PimsDispositionChecklistItems")]
+    public virtual PimsDspChklstItemStatusType DspChklstItemStatusTypeCodeNavigation { get; set; }
 
-    [ForeignKey("OrganizationId")]
-    [InverseProperty("PimsDispositionFileTeams")]
-    public virtual PimsOrganization Organization { get; set; }
-
-    [ForeignKey("PersonId")]
-    [InverseProperty("PimsDispositionFileTeamPeople")]
-    public virtual PimsPerson Person { get; set; }
-
-    [ForeignKey("PrimaryContactId")]
-    [InverseProperty("PimsDispositionFileTeamPrimaryContacts")]
-    public virtual PimsPerson PrimaryContact { get; set; }
+    [ForeignKey("DspChklstItemTypeCode")]
+    [InverseProperty("PimsDispositionChecklistItems")]
+    public virtual PimsDspChklstItemType DspChklstItemTypeCodeNavigation { get; set; }
 }

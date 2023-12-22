@@ -6,29 +6,47 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-/// <summary>
-/// Table to contain all applicable notes for the PIMS PSP system.
-/// </summary>
-[Table("PIMS_NOTE")]
-public partial class PimsNote
+[Table("PIMS_DISPOSITION_OFFER_HIST")]
+[Index("DispositionOfferHistId", "EndDateHist", Name = "PIMS_DSPOFR_H_UK", IsUnique = true)]
+public partial class PimsDispositionOfferHist
 {
     [Key]
-    [Column("NOTE_ID")]
-    public long NoteId { get; set; }
+    [Column("_DISPOSITION_OFFER_HIST_ID")]
+    public long DispositionOfferHistId { get; set; }
 
-    /// <summary>
-    /// Contents of the note.
-    /// </summary>
+    [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+    public DateTime EffectiveDateHist { get; set; }
+
+    [Column("END_DATE_HIST", TypeName = "datetime")]
+    public DateTime? EndDateHist { get; set; }
+
+    [Column("DISPOSITION_OFFER_ID")]
+    public long DispositionOfferId { get; set; }
+
+    [Column("DISPOSITION_FILE_ID")]
+    public long DispositionFileId { get; set; }
+
+    [Column("DISPOSITION_OFFER_STATUS_TYPE_CODE")]
+    [StringLength(20)]
+    public string DispositionOfferStatusTypeCode { get; set; }
+
     [Required]
-    [Column("NOTE_TXT")]
-    [StringLength(4000)]
-    public string NoteTxt { get; set; }
+    [Column("OFFER_NAME")]
+    [StringLength(1000)]
+    public string OfferName { get; set; }
 
-    /// <summary>
-    /// Indicatesd if this note is system-generated.
-    /// </summary>
-    [Column("IS_SYSTEM_GENERATED")]
-    public bool IsSystemGenerated { get; set; }
+    [Column("OFFER_DT")]
+    public DateOnly OfferDt { get; set; }
+
+    [Column("OFFER_EXPIRY_DT")]
+    public DateOnly? OfferExpiryDt { get; set; }
+
+    [Column("OFFER_AMT", TypeName = "money")]
+    public decimal OfferAmt { get; set; }
+
+    [Column("OFFER_NOTE")]
+    [StringLength(2000)]
+    public string OfferNote { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -80,19 +98,4 @@ public partial class PimsNote
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [InverseProperty("Note")]
-    public virtual PimsAcquisitionFileNote PimsAcquisitionFileNote { get; set; }
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsDispositionFileNote> PimsDispositionFileNotes { get; set; } = new List<PimsDispositionFileNote>();
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsLeaseNote> PimsLeaseNotes { get; set; } = new List<PimsLeaseNote>();
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsProjectNote> PimsProjectNotes { get; set; } = new List<PimsProjectNote>();
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsResearchFileNote> PimsResearchFileNotes { get; set; } = new List<PimsResearchFileNote>();
 }

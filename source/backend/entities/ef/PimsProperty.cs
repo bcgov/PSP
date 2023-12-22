@@ -381,6 +381,9 @@ public partial class PimsProperty
     public virtual PimsDistrict DistrictCodeNavigation { get; set; }
 
     [InverseProperty("Property")]
+    public virtual ICollection<PimsDispositionFileProperty> PimsDispositionFileProperties { get; set; } = new List<PimsDispositionFileProperty>();
+
+    [InverseProperty("Property")]
     public virtual ICollection<PimsPropPropActivity> PimsPropPropActivities { get; set; } = new List<PimsPropPropActivity>();
 
     [InverseProperty("Property")]
@@ -400,9 +403,6 @@ public partial class PimsProperty
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsPropertyContact> PimsPropertyContacts { get; set; } = new List<PimsPropertyContact>();
-
-    [InverseProperty("Property")]
-    public virtual ICollection<PimsPropertyDispositionFile> PimsPropertyDispositionFiles { get; set; } = new List<PimsPropertyDispositionFile>();
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; } = new List<PimsPropertyLease>();

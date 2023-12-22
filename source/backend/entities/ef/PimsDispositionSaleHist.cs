@@ -6,29 +6,58 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-/// <summary>
-/// Table to contain all applicable notes for the PIMS PSP system.
-/// </summary>
-[Table("PIMS_NOTE")]
-public partial class PimsNote
+[Table("PIMS_DISPOSITION_SALE_HIST")]
+[Index("DispositionSaleHistId", "EndDateHist", Name = "PIMS_DSPSAL_H_UK", IsUnique = true)]
+public partial class PimsDispositionSaleHist
 {
     [Key]
-    [Column("NOTE_ID")]
-    public long NoteId { get; set; }
+    [Column("_DISPOSITION_SALE_HIST_ID")]
+    public long DispositionSaleHistId { get; set; }
 
-    /// <summary>
-    /// Contents of the note.
-    /// </summary>
-    [Required]
-    [Column("NOTE_TXT")]
-    [StringLength(4000)]
-    public string NoteTxt { get; set; }
+    [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+    public DateTime EffectiveDateHist { get; set; }
 
-    /// <summary>
-    /// Indicatesd if this note is system-generated.
-    /// </summary>
-    [Column("IS_SYSTEM_GENERATED")]
-    public bool IsSystemGenerated { get; set; }
+    [Column("END_DATE_HIST", TypeName = "datetime")]
+    public DateTime? EndDateHist { get; set; }
+
+    [Column("DISPOSITION_SALE_ID")]
+    public long DispositionSaleId { get; set; }
+
+    [Column("DISPOSITION_FILE_ID")]
+    public long DispositionFileId { get; set; }
+
+    [Column("FINAL_CONDITION_REMOVAL_DT")]
+    public DateOnly? FinalConditionRemovalDt { get; set; }
+
+    [Column("SALE_COMPLETION_DT")]
+    public DateOnly? SaleCompletionDt { get; set; }
+
+    [Column("SALE_FISCAL_YEAR")]
+    public short? SaleFiscalYear { get; set; }
+
+    [Column("SALE_FINAL_AMT", TypeName = "money")]
+    public decimal? SaleFinalAmt { get; set; }
+
+    [Column("REALTOR_COMMISSION_AMT", TypeName = "money")]
+    public decimal? RealtorCommissionAmt { get; set; }
+
+    [Column("IS_GST_REQUIRED")]
+    public bool IsGstRequired { get; set; }
+
+    [Column("GST_COLLECTED_AMT", TypeName = "money")]
+    public decimal? GstCollectedAmt { get; set; }
+
+    [Column("NET_BOOK_AMT", TypeName = "money")]
+    public decimal? NetBookAmt { get; set; }
+
+    [Column("TOTAL_COST_AMT", TypeName = "money")]
+    public decimal? TotalCostAmt { get; set; }
+
+    [Column("SPP_AMT", TypeName = "money")]
+    public decimal? SppAmt { get; set; }
+
+    [Column("REMEDIATION_AMT", TypeName = "money")]
+    public decimal? RemediationAmt { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -80,19 +109,4 @@ public partial class PimsNote
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [InverseProperty("Note")]
-    public virtual PimsAcquisitionFileNote PimsAcquisitionFileNote { get; set; }
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsDispositionFileNote> PimsDispositionFileNotes { get; set; } = new List<PimsDispositionFileNote>();
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsLeaseNote> PimsLeaseNotes { get; set; } = new List<PimsLeaseNote>();
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsProjectNote> PimsProjectNotes { get; set; } = new List<PimsProjectNote>();
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsResearchFileNote> PimsResearchFileNotes { get; set; } = new List<PimsResearchFileNote>();
 }

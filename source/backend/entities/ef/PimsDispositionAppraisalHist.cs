@@ -6,29 +6,40 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-/// <summary>
-/// Table to contain all applicable notes for the PIMS PSP system.
-/// </summary>
-[Table("PIMS_NOTE")]
-public partial class PimsNote
+[Table("PIMS_DISPOSITION_APPRAISAL_HIST")]
+[Index("DispositionAppraisalHistId", "EndDateHist", Name = "PIMS_DSPAPP_H_UK", IsUnique = true)]
+public partial class PimsDispositionAppraisalHist
 {
     [Key]
-    [Column("NOTE_ID")]
-    public long NoteId { get; set; }
+    [Column("_DISPOSITION_APPRAISAL_HIST_ID")]
+    public long DispositionAppraisalHistId { get; set; }
 
-    /// <summary>
-    /// Contents of the note.
-    /// </summary>
-    [Required]
-    [Column("NOTE_TXT")]
-    [StringLength(4000)]
-    public string NoteTxt { get; set; }
+    [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+    public DateTime EffectiveDateHist { get; set; }
 
-    /// <summary>
-    /// Indicatesd if this note is system-generated.
-    /// </summary>
-    [Column("IS_SYSTEM_GENERATED")]
-    public bool IsSystemGenerated { get; set; }
+    [Column("END_DATE_HIST", TypeName = "datetime")]
+    public DateTime? EndDateHist { get; set; }
+
+    [Column("DISPOSITION_APPRAISAL_ID")]
+    public long DispositionAppraisalId { get; set; }
+
+    [Column("DISPOSITION_FILE_ID")]
+    public long DispositionFileId { get; set; }
+
+    [Column("APPRAISED_AMT", TypeName = "money")]
+    public decimal? AppraisedAmt { get; set; }
+
+    [Column("APPRAISAL_DT")]
+    public DateOnly? AppraisalDt { get; set; }
+
+    [Column("BCA_VALUE_AMT", TypeName = "money")]
+    public decimal? BcaValueAmt { get; set; }
+
+    [Column("BCA_ROLL_YEAR")]
+    public short? BcaRollYear { get; set; }
+
+    [Column("LIST_PRICE_AMT", TypeName = "money")]
+    public decimal? ListPriceAmt { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -80,19 +91,4 @@ public partial class PimsNote
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [InverseProperty("Note")]
-    public virtual PimsAcquisitionFileNote PimsAcquisitionFileNote { get; set; }
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsDispositionFileNote> PimsDispositionFileNotes { get; set; } = new List<PimsDispositionFileNote>();
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsLeaseNote> PimsLeaseNotes { get; set; } = new List<PimsLeaseNote>();
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsProjectNote> PimsProjectNotes { get; set; } = new List<PimsProjectNote>();
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsResearchFileNote> PimsResearchFileNotes { get; set; } = new List<PimsResearchFileNote>();
 }

@@ -257,10 +257,28 @@ public partial class PimsDispositionFile
     public virtual PimsDspPhysFileStatusType DspPhysFileStatusTypeCodeNavigation { get; set; }
 
     [InverseProperty("DispositionFile")]
+    public virtual ICollection<PimsDispositionAppraisal> PimsDispositionAppraisals { get; set; } = new List<PimsDispositionAppraisal>();
+
+    [InverseProperty("DispositionFile")]
+    public virtual ICollection<PimsDispositionChecklistItem> PimsDispositionChecklistItems { get; set; } = new List<PimsDispositionChecklistItem>();
+
+    [InverseProperty("DispositionFile")]
+    public virtual ICollection<PimsDispositionFileDocument> PimsDispositionFileDocuments { get; set; } = new List<PimsDispositionFileDocument>();
+
+    [InverseProperty("DispositionFile")]
+    public virtual ICollection<PimsDispositionFileNote> PimsDispositionFileNotes { get; set; } = new List<PimsDispositionFileNote>();
+
+    [InverseProperty("DispositionFile")]
+    public virtual ICollection<PimsDispositionFileProperty> PimsDispositionFileProperties { get; set; } = new List<PimsDispositionFileProperty>();
+
+    [InverseProperty("DispositionFile")]
     public virtual ICollection<PimsDispositionFileTeam> PimsDispositionFileTeams { get; set; } = new List<PimsDispositionFileTeam>();
 
     [InverseProperty("DispositionFile")]
-    public virtual ICollection<PimsPropertyDispositionFile> PimsPropertyDispositionFiles { get; set; } = new List<PimsPropertyDispositionFile>();
+    public virtual ICollection<PimsDispositionOffer> PimsDispositionOffers { get; set; } = new List<PimsDispositionOffer>();
+
+    [InverseProperty("DispositionFile")]
+    public virtual ICollection<PimsDispositionSale> PimsDispositionSales { get; set; } = new List<PimsDispositionSale>();
 
     [ForeignKey("RegionCode")]
     [InverseProperty("PimsDispositionFiles")]

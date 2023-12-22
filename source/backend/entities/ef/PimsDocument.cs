@@ -103,6 +103,9 @@ public partial class PimsDocument
     public virtual ICollection<PimsAcquisitionFileDocument> PimsAcquisitionFileDocuments { get; set; } = new List<PimsAcquisitionFileDocument>();
 
     [InverseProperty("Document")]
+    public virtual ICollection<PimsDispositionFileDocument> PimsDispositionFileDocuments { get; set; } = new List<PimsDispositionFileDocument>();
+
+    [InverseProperty("Document")]
     public virtual ICollection<PimsFormType> PimsFormTypes { get; set; } = new List<PimsFormType>();
 
     [InverseProperty("Document")]

@@ -7,23 +7,19 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Table to associate an acquisition file to a person.
+/// Entity containing information regarding an disposition offer.
 /// </summary>
-[Table("PIMS_DISPOSITION_FILE_TEAM")]
-[Index("DispositionFileId", Name = "DSPFTM_DISPOSITION_FILE_ID_IDX")]
-[Index("DispositionFileId", "DspFlTeamProfileTypeCode", Name = "DSPFTM_DSP_FILE_PROFILE_TUC", IsUnique = true)]
-[Index("DspFlTeamProfileTypeCode", Name = "DSPFTM_DSP_FL_TEAM_PROFILE_TYPE_CODE_IDX")]
-[Index("OrganizationId", Name = "DSPFTM_ORGANIZATION_ID_IDX")]
-[Index("PersonId", Name = "DSPFTM_PERSON_ID_IDX")]
-[Index("PrimaryContactId", Name = "DSPFTM_PRIMARY_CONTACT_ID_IDX")]
-public partial class PimsDispositionFileTeam
+[Table("PIMS_DISPOSITION_OFFER")]
+[Index("DispositionFileId", Name = "DSPOFR_DISPOSITION_FILE_ID_IDX")]
+[Index("DispositionOfferStatusTypeCode", Name = "DSPOFR_DISPOSITION_OFFER_STATUS_TYPE_CODE_IDX")]
+public partial class PimsDispositionOffer
 {
     /// <summary>
     /// Unique auto-generated surrogate primary key
     /// </summary>
     [Key]
-    [Column("DISPOSITION_FILE_TEAM_ID")]
-    public long DispositionFileTeamId { get; set; }
+    [Column("DISPOSITION_OFFER_ID")]
+    public long DispositionOfferId { get; set; }
 
     /// <summary>
     /// Foreign key value for the dispostion file
@@ -32,30 +28,44 @@ public partial class PimsDispositionFileTeam
     public long DispositionFileId { get; set; }
 
     /// <summary>
-    /// Foreign key value for the person.
+    /// Code value for the dispostion offer status.
     /// </summary>
-    [Column("PERSON_ID")]
-    public long? PersonId { get; set; }
+    [Column("DISPOSITION_OFFER_STATUS_TYPE_CODE")]
+    [StringLength(20)]
+    public string DispositionOfferStatusTypeCode { get; set; }
 
     /// <summary>
-    /// Foreign key value for the organization.
-    /// </summary>
-    [Column("ORGANIZATION_ID")]
-    public long? OrganizationId { get; set; }
-
-    /// <summary>
-    /// Foreign key value for the primary contact person.
-    /// </summary>
-    [Column("PRIMARY_CONTACT_ID")]
-    public long? PrimaryContactId { get; set; }
-
-    /// <summary>
-    /// Code value for the disposition file profile type.
+    /// The name(s) associated with this disposition offer.
     /// </summary>
     [Required]
-    [Column("DSP_FL_TEAM_PROFILE_TYPE_CODE")]
-    [StringLength(20)]
-    public string DspFlTeamProfileTypeCode { get; set; }
+    [Column("OFFER_NAME")]
+    [StringLength(1000)]
+    public string OfferName { get; set; }
+
+    /// <summary>
+    /// The date the disposition offer was made.
+    /// </summary>
+    [Column("OFFER_DT")]
+    public DateOnly OfferDt { get; set; }
+
+    /// <summary>
+    /// The date the disposition offer expires.
+    /// </summary>
+    [Column("OFFER_EXPIRY_DT")]
+    public DateOnly? OfferExpiryDt { get; set; }
+
+    /// <summary>
+    /// The monetary value of the disposition offer.
+    /// </summary>
+    [Column("OFFER_AMT", TypeName = "money")]
+    public decimal OfferAmt { get; set; }
+
+    /// <summary>
+    /// Provide any additional details such as offer terms or conditions, and any commentary on why the offer was accepted/countered/rejected.
+    /// </summary>
+    [Column("OFFER_NOTE")]
+    [StringLength(2000)]
+    public string OfferNote { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any
@@ -148,22 +158,10 @@ public partial class PimsDispositionFileTeam
     public string DbLastUpdateUserid { get; set; }
 
     [ForeignKey("DispositionFileId")]
-    [InverseProperty("PimsDispositionFileTeams")]
+    [InverseProperty("PimsDispositionOffers")]
     public virtual PimsDispositionFile DispositionFile { get; set; }
 
-    [ForeignKey("DspFlTeamProfileTypeCode")]
-    [InverseProperty("PimsDispositionFileTeams")]
-    public virtual PimsDspFlTeamProfileType DspFlTeamProfileTypeCodeNavigation { get; set; }
-
-    [ForeignKey("OrganizationId")]
-    [InverseProperty("PimsDispositionFileTeams")]
-    public virtual PimsOrganization Organization { get; set; }
-
-    [ForeignKey("PersonId")]
-    [InverseProperty("PimsDispositionFileTeamPeople")]
-    public virtual PimsPerson Person { get; set; }
-
-    [ForeignKey("PrimaryContactId")]
-    [InverseProperty("PimsDispositionFileTeamPrimaryContacts")]
-    public virtual PimsPerson PrimaryContact { get; set; }
+    [ForeignKey("DispositionOfferStatusTypeCode")]
+    [InverseProperty("PimsDispositionOffers")]
+    public virtual PimsDispositionOfferStatusType DispositionOfferStatusTypeCodeNavigation { get; set; }
 }
