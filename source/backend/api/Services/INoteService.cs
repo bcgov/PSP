@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Pims.Api.Constants;
-using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Concepts.Note;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
-using Pims.Dal.Entities;
+using Pims.Core.Helpers;
 using Pims.Dal.Security;
 using Pims.Ltsa;
 using Swashbuckle.AspNetCore.Annotations;
@@ -54,7 +54,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyEdit)]
         public async Task<IActionResult> FindTitleSummariesAsync(string pid)
         {
-            var result = await _ltsaService.GetTitleSummariesAsync(pid.ConvertPID());
+            var result = await _ltsaService.GetTitleSummariesAsync(PidTranslator.ConvertPID(pid));
             return new JsonResult(result.TitleSummaries);
         }
 
@@ -91,7 +91,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         {
             if (!string.IsNullOrEmpty(pid))
             {
-                var result = await _ltsaService.PostParcelInfoOrder(pid.ConvertPIDToDash());
+                var result = await _ltsaService.PostParcelInfoOrder(PidTranslator.ConvertPIDToDash(pid));
                 return new JsonResult(result?.Order);
             }
             throw new BadHttpRequestException("The pid of the desired property must be specified");

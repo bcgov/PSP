@@ -139,7 +139,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var property = EntityHelper.CreateProperty(100);
-            var lease = EntityHelper.CreateLease(1, addProperty:false);
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
             lease.OrigExpiryDate = DateTime.Now.AddDays(1);
             property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
             _helper.AddAndSaveChanges(property);
@@ -151,6 +151,97 @@ namespace Pims.Dal.Test.Repositories
             result.Should().NotBeNull();
             result.Should().HaveCount(1);
         }
+
+        [Fact]
+        public void GetMatchingIds_LeaseRcbvl_NoTerms_ExpiryDate_Null()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+            lease.OrigExpiryDate = null;
+            property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { LeasePayRcvblType = "all" });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetMatchingIds_LeaseRcbvl_NoTerms_ExpiryDate_Past()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+            lease.OrigExpiryDate = DateTime.Now.AddDays(-10);
+            property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { LeasePayRcvblType = "all" });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void GetMatchingIds_LeaseRcbvl_All_Success_HasTerms_Term_ExpiryDate_Null()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+            lease.OrigExpiryDate = DateTime.Now.AddDays(10);
+            lease.PimsLeaseTerms = new List<PimsLeaseTerm>()
+            {
+                new PimsLeaseTerm()
+                {
+                    TermExpiryDate= null,
+                }
+            };
+            property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { LeasePayRcvblType = "all" });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetMatchingIds_LeaseRcbvl_All_Success_HasTerms_Term_ExpiryDate_Future()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+            lease.OrigExpiryDate = DateTime.Now.AddDays(10);
+            lease.PimsLeaseTerms = new List<PimsLeaseTerm>()
+            {
+                new PimsLeaseTerm()
+                {
+                    TermExpiryDate= DateTime.Now.AddDays(10),
+                }
+            };
+            property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { LeasePayRcvblType = "all" });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(1);
+        }
+
 
         [Fact]
         public void GetMatchingIds_LeaseStatus_Success()

@@ -20,6 +20,12 @@ using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
+using Pims.Api.Models.Concepts.Http;
+using Pims.Api.Concepts.CodeTypes;
+using Pims.Api.Models.Concepts.Document.UpdateMetadata;
+using Pims.Api.Models.Concepts.Document;
+using Pims.Api.Models.Concepts.Document.Upload;
+using Pims.Api.Models.Mayan.Metadata;
 
 namespace Pims.Api.Test.Services
 {
@@ -240,7 +246,7 @@ namespace Pims.Api.Test.Services
                             {
                                 new() {
                                     Id = 1,
-                                    MetadataType= new Models.Mayan.Metadata.MetadataType()
+                                    MetadataType= new MetadataType()
                                     {
                                         Id= 100,
                                     },
@@ -312,7 +318,7 @@ namespace Pims.Api.Test.Services
                     {
                         Id = 1,
                         Value = "test_value",
-                        MetadataType = new Models.Mayan.Metadata.MetadataType()
+                        MetadataType = new MetadataType()
                         {
                             Id = 1,
                         },
@@ -364,7 +370,7 @@ namespace Pims.Api.Test.Services
                             {
                                 new() {
                                     Id = 1,
-                                    MetadataType= new Models.Mayan.Metadata.MetadataType()
+                                    MetadataType= new MetadataType()
                                     {
                                         Id= 100,
                                     },

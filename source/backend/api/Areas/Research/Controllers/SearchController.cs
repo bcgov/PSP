@@ -9,7 +9,8 @@ namespace Pims.Api.Areas.Research.Controllers
     using Pims.Api.Areas.Research.Models.Search;
     using Pims.Api.Helpers.Exceptions;
     using Pims.Api.Helpers.Extensions;
-    using Pims.Api.Models.Concepts;
+    using Pims.Api.Models.Base;
+    using Pims.Api.Models.Concepts.ResearchFile;
     using Pims.Api.Policies;
     using Pims.Api.Services;
     using Pims.Dal.Entities.Models;
@@ -87,7 +88,7 @@ namespace Pims.Api.Areas.Research.Controllers
             }
 
             var researchFiles = _researchFileService.GetPage((ResearchFilter)filter);
-            return new JsonResult(_mapper.Map<Api.Models.PageModel<ResearchFileModel>>(researchFiles));
+            return new JsonResult(_mapper.Map<PageModel<ResearchFileModel>>(researchFiles));
         }
         #endregion
         #endregion

@@ -1,11 +1,11 @@
-using Pims.Api.Models;
+using Pims.Api.Models.Base;
 
 namespace Pims.Api.Areas.Keycloak.Models.User
 {
     /// <summary>
     /// OrganizationModel class, provides a model to represent the organization.
     /// </summary>
-    public class OrganizationModel : BaseAppModel
+    public class OrganizationModel : BaseAuditModel
     {
         #region Properties
 

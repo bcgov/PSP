@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -7,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Concepts.Property;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
@@ -241,10 +240,16 @@ namespace Pims.Api.Services
             return propertyActivityResult;
         }
 
-        public PimsPropertyActivity UpdateActivity(PimsPropertyActivity propertyActivity)
+        public PimsPropertyActivity UpdateActivity(long propertyId, long activityId, PimsPropertyActivity propertyActivity)
         {
             _logger.LogInformation("Updating property Activity...");
             _user.ThrowIfNotAuthorized(Permissions.ManagementEdit, Permissions.PropertyEdit);
+
+            if (!propertyActivity.PimsPropPropActivities.Any(x => x.PropertyId == propertyId && x.PimsPropertyActivityId == activityId)
+                || propertyActivity.PimsPropertyActivityId != activityId)
+            {
+                throw new BadRequestException("Invalid activity identifiers.");
+            }
 
             var propertyActivityResult = _propertyActivityRepository.Update(propertyActivity);
             _propertyActivityRepository.CommitTransaction();

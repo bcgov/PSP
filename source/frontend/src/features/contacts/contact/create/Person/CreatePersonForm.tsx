@@ -81,6 +81,7 @@ export const CreatePersonForm: React.FunctionComponent<React.PropsWithChildren<u
         innerRef={formikRef}
       />
       <DuplicateContactModal
+        variant="warning"
         display={showDuplicateModal}
         handleOk={() => saveDuplicate()}
         handleCancel={() => {
@@ -164,6 +165,7 @@ const CreatePersonComponent: React.FC<
 
       {/* Confirmation popup when Cancel button is clicked */}
       <CancelConfirmationModal
+        variant="info"
         display={showConfirmation}
         setDisplay={setShowConfirmation}
         handleOk={() => {

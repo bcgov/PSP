@@ -1,5 +1,6 @@
 using System.Linq;
 using Mapster;
+using Pims.Api.Models.Base;
 using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 using KModel = Pims.Keycloak.Models;
@@ -22,7 +23,7 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
                 .Map(dest => dest.Email, src => src.Person.GetWorkEmail())
                 .Map(dest => dest.Organizations, src => src.PimsUserOrganizations.OrderBy(o => o.Organization != null ? o.Organization.PrntOrganizationId : null))
                 .Map(dest => dest.Roles, src => src.PimsUserRoles)
-                .Inherits<Entity.IDisableBaseAppEntity<bool?>, Api.Models.BaseAppModel>();
+                .Inherits<Entity.IDisableBaseAppEntity<bool?>, BaseAuditModel>();
 
             config.NewConfig<Model.UserModel, Entity.PimsUser>()
                 .Map(dest => dest.Internal_Id, src => src.Id)
@@ -34,7 +35,7 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
                 .Map(dest => dest.Person.Surname, src => src.Surname)
                 .Map(dest => dest.PimsUserOrganizations, src => src.Organizations)
                 .Map(dest => dest.PimsUserRoles, src => src.Roles)
-                .Inherits<Api.Models.BaseAppModel, Entity.IDisableBaseAppEntity<bool?>>();
+                .Inherits<BaseAuditModel, Entity.IDisableBaseAppEntity<bool?>>();
 
             config.NewConfig<Entity.PimsUser, KModel.UserModel>()
                 .Map(dest => dest.Username, src => src.BusinessIdentifierValue)

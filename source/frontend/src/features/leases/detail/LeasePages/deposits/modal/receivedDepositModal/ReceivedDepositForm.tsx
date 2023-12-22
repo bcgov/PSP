@@ -4,9 +4,10 @@ import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import { FastCurrencyInput, TextArea } from '@/components/common/form';
+import { FastCurrencyInput, Select, TextArea } from '@/components/common/form';
 import { ContactInput } from '@/components/common/form/ContactInput';
-import { InlineFastDatePicker, InlineInput, InlineSelect } from '@/components/common/form/styles';
+import { InlineFastDatePicker, InlineInput } from '@/components/common/form/styles';
+import { SectionField } from '@/components/common/Section/SectionField';
 import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
@@ -46,20 +47,20 @@ export const ReceivedDepositForm: React.FunctionComponent<
       {formikProps => (
         <StyledFormBody className="px-4">
           <Row>
-            <Col md="8">
-              <InlineSelect
-                label="Deposit type:"
-                required
-                field="depositTypeCode"
-                options={depositTypeOptions}
-                placeholder="Select"
-                onChange={() => {
-                  let depositTypeCode = formikProps.values?.depositTypeCode;
-                  if (!!depositTypeCode && depositTypeCode !== 'OTHER') {
-                    formikProps.setFieldValue('otherTypeDescription', '');
-                  }
-                }}
-              />
+            <Col>
+              <SectionField label="Deposit type" labelWidth="4" contentWidth="5" required>
+                <Select
+                  field="depositTypeCode"
+                  placeholder="Select..."
+                  options={depositTypeOptions}
+                  onChange={() => {
+                    let depositTypeCode = formikProps.values?.depositTypeCode;
+                    if (!!depositTypeCode && depositTypeCode !== 'OTHER') {
+                      formikProps.setFieldValue('otherTypeDescription', '');
+                    }
+                  }}
+                ></Select>
+              </SectionField>
               {formikProps.values?.depositTypeCode === 'OTHER' && (
                 <InlineInput label="Describe other:" field="otherTypeDescription" required />
               )}
@@ -71,15 +72,15 @@ export const ReceivedDepositForm: React.FunctionComponent<
             </Col>
           </Row>
           <Row>
-            <Col>
+            <Col md="6">
               <FastCurrencyInput
                 formikProps={formikProps}
-                label="Deposit Amount:"
+                label="Deposit amount:"
                 field="amountPaid"
                 required
               />
             </Col>
-            <Col>
+            <Col md="6">
               <InlineFastDatePicker
                 formikProps={formikProps}
                 label="Paid date:"
@@ -89,9 +90,9 @@ export const ReceivedDepositForm: React.FunctionComponent<
             </Col>
           </Row>
           <Row>
-            <Col>
+            <Col md="9">
               <ContactInput
-                label="Deposit Holder:"
+                label="Deposit holder:"
                 field="contactHolder"
                 setShowContactManager={setShowContactManager}
                 onClear={() => {
@@ -100,6 +101,13 @@ export const ReceivedDepositForm: React.FunctionComponent<
                 }}
                 required
               />
+            </Col>
+          </Row>
+          <Row>
+            <Col md="12">
+              <div style={{ marginTop: 24 }}>
+                <p>Do you want to save it?</p>
+              </div>
             </Col>
           </Row>
           <ContactManagerModal

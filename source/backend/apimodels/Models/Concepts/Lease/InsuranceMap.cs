@@ -1,0 +1,35 @@
+using Mapster;
+using Pims.Api.Models.Base;
+using Pims.Core.Extensions;
+using Entity = Pims.Dal.Entities;
+
+namespace Pims.Api.Models.Concepts.Lease
+{
+    public class InsuranceMap : IRegister
+    {
+        public void Register(TypeAdapterConfig config)
+        {
+            config.NewConfig<Entity.PimsInsurance, InsuranceModel>()
+                .Map(dest => dest.Id, src => src.InsuranceId)
+                .Map(dest => dest.LeaseId, src => src.LeaseId)
+                .Map(dest => dest.InsuranceType, src => src.InsuranceTypeCodeNavigation)
+                .Map(dest => dest.OtherInsuranceType, src => src.OtherInsuranceType)
+                .Map(dest => dest.CoverageDescription, src => src.CoverageDescription)
+                .Map(dest => dest.CoverageLimit, src => src.CoverageLimit)
+                .Map(dest => dest.ExpiryDate, src => src.ExpiryDate)
+                .Map(dest => dest.IsInsuranceInPlace, src => src.IsInsuranceInPlace)
+                .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
+
+            config.NewConfig<InsuranceModel, Entity.PimsInsurance>()
+                .Map(dest => dest.InsuranceId, src => src.Id)
+                .Map(dest => dest.LeaseId, src => src.LeaseId)
+                .Map(dest => dest.InsuranceTypeCode, src => src.InsuranceType.Id)
+                .Map(dest => dest.OtherInsuranceType, src => src.OtherInsuranceType)
+                .Map(dest => dest.CoverageDescription, src => src.CoverageDescription)
+                .Map(dest => dest.CoverageLimit, src => src.CoverageLimit)
+                .Map(dest => dest.ExpiryDate, src => src.ExpiryDate)
+                .Map(dest => dest.IsInsuranceInPlace, src => src.IsInsuranceInPlace)
+                .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
+        }
+    }
+}

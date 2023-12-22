@@ -87,6 +87,8 @@ export class DocumentUploadFormData {
   public documentTypeId: string;
   public documentStatusCode: string;
   public documentMetadata: Record<string, string>;
+  public isDocumentTypeChanged: boolean = false;
+  public isSelectedFile: boolean = false;
 
   public constructor(
     initialStatus: string,
@@ -126,6 +128,7 @@ export class DocumentUpdateFormData {
   public mayanDocumentId: number;
   public documentStatusCode: string;
   public documentMetadata: Record<string, string>;
+  public documentTypeId: string = '';
 
   public static fromApi(
     composedDocument: ComposedDocument,
@@ -145,6 +148,9 @@ export class DocumentUpdateFormData {
       model.documentMetadata[metaType.metadata_type?.id?.toString() || '-'] =
         foundMetadata?.value ?? '';
     });
+    const documentTypeLabel = composedDocument.pimsDocumentRelationship?.document?.documentType?.id;
+
+    model.documentTypeId = documentTypeLabel?.toString() || '';
     return model;
   }
 

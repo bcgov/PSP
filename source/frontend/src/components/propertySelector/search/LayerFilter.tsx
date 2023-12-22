@@ -17,7 +17,6 @@ export const defaultLayerFilter: ILayerSearchCriteria = {
   pid: '',
   pin: '',
   planNumber: '',
-  legalDescription: '',
   searchBy: 'pid',
 };
 
@@ -79,7 +78,6 @@ export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayer
 
   const internalFilter = filter ?? { ...defaultLayerFilter };
   const isSearchByAddress = internalFilter?.searchBy === 'address';
-  const isSearchByLegalDescription = internalFilter?.searchBy === 'legalDescription';
 
   return (
     <Formik
@@ -91,16 +89,10 @@ export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayer
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col xl={isSearchByLegalDescription ? 10 : 6}>
+            <Col xl={6}>
               <SelectInput<ILayerSearchCriteria, IResearchFilterProps>
                 field="searchBy"
                 defaultKey="pid"
-                as={isSearchByLegalDescription ? 'textarea' : 'input'}
-                helpText={
-                  isSearchByLegalDescription
-                    ? 'Searching by Legal Description may result in a slower search.'
-                    : ''
-                }
                 onSelectItemChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                   setFilter({ ...internalFilter, searchBy: e.target.value });
                 }}
@@ -129,11 +121,6 @@ export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayer
                     key: 'planNumber',
                     placeholder: `Enter a Plan #`,
                     label: 'Plan #',
-                  },
-                  {
-                    key: 'legalDescription',
-                    placeholder: '',
-                    label: 'Legal Description',
                   },
                 ]}
                 autoSetting="off"

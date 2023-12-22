@@ -299,7 +299,10 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(By.CssSelector("button[data-testid='form8["+ index +"].delete-form8']"));
 
             AssertTrueIsDisplayed(By.XPath("//button[@data-testid='form8["+ index +"].generate-form8']/parent::div/following-sibling::div/div/label[contains(text(),'Payee')]"));
-            AssertTrueContentEquals(By.CssSelector("div[data-testid='form8["+ index +"].payee-name'] div a span"), expropriation.Form8PayeeDisplay);
+            if(webDriver.FindElements(By.CssSelector("div[data-testid='form8["+ index +"].payee-name'] div a span")).Count > 0)
+                AssertTrueContentEquals(By.CssSelector("div[data-testid='form8["+ index +"].payee-name'] div a span"), expropriation.Form8PayeeDisplay);
+            else
+                AssertTrueContentEquals(By.CssSelector("div[data-testid='form8["+ index +"].payee-name'] div label"), expropriation.Form8PayeeDisplay);
 
             AssertTrueIsDisplayed(By.XPath("//button[@data-testid='form8["+ index +"].generate-form8']/parent::div/following-sibling::div/div/label[contains(text(),'Expropriation Authority')]"));
             AssertTrueContentEquals(By.CssSelector("div[data-testid='form8["+ index +"].exp-authority'] a span"), expropriation.Form8ExpropriationAuthority);

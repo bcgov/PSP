@@ -1,9 +1,10 @@
+import { createRef, useState } from 'react';
 import { FaUpload } from 'react-icons/fa';
 
 import GenericModal, { ModalSize } from '@/components/common/GenericModal';
 import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 
-import { DocumentUploadContainer } from './DocumentUploadContainer';
+import DocumentUploadContainer, { IDocumentUploadContainerRef } from './DocumentUploadContainer';
 
 export interface IDocumentUploadModalProps {
   parentId: string;
@@ -17,24 +18,44 @@ export interface IDocumentUploadModalProps {
 export const DocumentUploadModal: React.FunctionComponent<
   React.PropsWithChildren<IDocumentUploadModalProps>
 > = props => {
+  const [canUpload, setCanUpload] = useState(false);
+
+  const uploadContainerRef = createRef<IDocumentUploadContainerRef>();
+
+  const onSaveClick = () => {
+    uploadContainerRef.current?.uploadDocument();
+  };
+  const onSuccess = () => {
+    setCanUpload(false);
+    props.onUploadSuccess();
+  };
   return (
     <GenericModal
+      variant="info"
+      className=""
       display={props.display}
       setDisplay={props.setDisplay}
-      className="info"
       closeButton={false}
       headerIcon={<FaUpload size={22} />}
       title={'Add a Document'}
       message={
         <DocumentUploadContainer
+          ref={uploadContainerRef}
           parentId={props.parentId}
           relationshipType={props.relationshipType}
-          onUploadSuccess={props.onUploadSuccess}
+          onUploadSuccess={onSuccess}
           onCancel={props.onClose}
+          setCanUpload={setCanUpload}
         />
       }
       modalSize={ModalSize.LARGE}
-      hideFooter
+      handleOk={() => onSaveClick()}
+      handleOkDisabled={!canUpload}
+      handleCancel={() => {
+        props.onClose();
+      }}
+      cancelButtonText="No"
+      okButtonText="Yes"
     ></GenericModal>
   );
 };

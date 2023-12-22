@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Areas.Lease.Controllers;
+using Pims.Api.Models.Concepts.Lease;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal;
@@ -51,7 +52,7 @@ namespace Pims.Api.Test.Controllers.Lease
             this._repository.Setup(m => m.UpdateImprovementsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>())).Returns(lease.PimsPropertyImprovements);
 
             // Act
-            var result = this._controller.UpdateImprovements(lease.Internal_Id, this._mapper.Map<IEnumerable<Models.Concepts.PropertyImprovementModel>>(lease.PimsPropertyImprovements));
+            var result = this._controller.UpdateImprovements(lease.Internal_Id, this._mapper.Map<IEnumerable<PropertyImprovementModel>>(lease.PimsPropertyImprovements));
 
             // Assert
             this._repository.Verify(m => m.UpdateImprovementsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>()), Times.Once());

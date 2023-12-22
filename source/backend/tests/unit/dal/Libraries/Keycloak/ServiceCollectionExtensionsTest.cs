@@ -51,9 +51,9 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             services.AddScoped((s) => mockOpenIdConnectRequestClient.Object);
 
             // Act
-            var result = services.AddKeycloakService();
+            var result = services.AddKeycloakRepository();
             var provider = result.BuildServiceProvider();
-            var service = provider.GetService<IKeycloakService>();
+            var service = provider.GetService<IKeycloakRepository>();
 
             // Assert
             result.Should().NotBeNull();
@@ -63,7 +63,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
         }
 
         [Fact]
-        public void AddPimsKeycloakService_Success()
+        public void AddPimsKeycloakRepository_Success()
         {
             // Arrange
             var services = new ServiceCollection();

@@ -3,7 +3,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Concepts.Property;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Json;
@@ -132,12 +132,8 @@ namespace Pims.Api.Areas.Property.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdatePropertyActivity(long propertyId, long activityId, [FromBody] PropertyActivityModel activityModel)
         {
-            if (propertyId != activityModel.ActivityProperties[0].PropertyId || activityId != activityModel.Id)
-            {
-                throw new BadRequestException("Invalid activity identifiers.");
-            }
             var activityEntity = _mapper.Map<PimsPropertyActivity>(activityModel);
-            var updatedProperty = _propertyService.UpdateActivity(activityEntity);
+            var updatedProperty = _propertyService.UpdateActivity(propertyId, activityId, activityEntity);
 
             return new JsonResult(_mapper.Map<PropertyActivityModel>(updatedProperty));
         }

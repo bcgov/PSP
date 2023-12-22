@@ -49,6 +49,7 @@ const ErrorTabs: React.FunctionComponent<React.PropsWithChildren<IErrorTabsProps
       </Tabs>
       {showTabErrorModal && (
         <GenericModal
+          variant="error"
           display={showTabErrorModal}
           setDisplay={setShowTabErrorModal}
           okButtonText="Ok"

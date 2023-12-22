@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
+using Pims.Core.Helpers;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
@@ -172,7 +174,7 @@ namespace Pims.Dal.Repositories
         public PimsProperty GetByPid(string pid)
         {
             this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
-            var parsedPid = pid.ConvertPID();
+            var parsedPid = PidTranslator.ConvertPID(pid);
 
             return GetByPid(parsedPid);
         }
@@ -405,13 +407,12 @@ namespace Pims.Dal.Repositories
 
         public HashSet<long> GetMatchingIds(PropertyFilterCriteria filter)
         {
-            var query = Context.PimsProperties.AsNoTracking();
+            var predicate = PredicateBuilder.New<PimsProperty>(acq => true);
 
             // Project filters
             if (filter.ProjectId.HasValue)
             {
-                query = query.Where(p =>
-                    p.PimsPropertyLeases.Any(pl => pl.Lease.ProjectId == filter.ProjectId) ||
+                predicate.And(p => p.PimsPropertyLeases.Any(pl => pl.Lease.ProjectId == filter.ProjectId) ||
                     p.PimsPropertyResearchFiles.Any(pr => pr.ResearchFile.PimsResearchFileProjects.Any(r => r.ProjectId == filter.ProjectId)) ||
                     p.PimsPropertyAcquisitionFiles.Any(pa => pa.AcquisitionFile.ProjectId == filter.ProjectId));
             }
@@ -419,54 +420,66 @@ namespace Pims.Dal.Repositories
             // Tenure Filters
             if (filter.TenureStatuses != null && filter.TenureStatuses.Count > 0)
             {
-                query = query.Where(p =>
+                predicate.And(p =>
                     p.PimsPropPropTenureTypes.Any(pl => filter.TenureStatuses.Contains(pl.PropertyTenureTypeCode)));
             }
 
             if (!string.IsNullOrEmpty(filter.TenurePPH))
             {
-                query = query.Where(p => p.PphStatusTypeCode == filter.TenurePPH);
+                predicate.And(p => p.PphStatusTypeCode == filter.TenurePPH);
             }
 
             if (filter.TenureRoadTypes != null && filter.TenureRoadTypes.Count > 0)
             {
-                query = query.Where(p =>
+                predicate.And(p =>
                     p.PimsPropPropRoadTypes.Any(pl => filter.TenureRoadTypes.Contains(pl.PropertyRoadTypeCode)));
             }
 
             // Lease filters
             if (!string.IsNullOrEmpty(filter.LeaseStatus))
             {
-                query = query.Where(p =>
+                predicate.And(p =>
                     p.PimsPropertyLeases.Any(pl => pl.Lease.LeaseStatusTypeCode == filter.LeaseStatus));
             }
 
             if (filter.LeaseTypes != null && filter.LeaseTypes.Count > 0)
             {
-                query = query.Where(p =>
+                predicate.And(p =>
                     p.PimsPropertyLeases.Any(pl => filter.LeaseTypes.Contains(pl.Lease.LeaseLicenseTypeCode)));
             }
 
             if (filter.LeasePurposes != null && filter.LeasePurposes.Count > 0)
             {
-                query = query.Where(p =>
+                predicate.And(p =>
                     p.PimsPropertyLeases.Any(pl => filter.LeasePurposes.Contains(pl.Lease.LeasePurposeTypeCode)));
             }
 
             if (!string.IsNullOrEmpty(filter.LeasePayRcvblType))
             {
-                query = query.Where(p =>
-                    p.PimsPropertyLeases.Any(pl => (pl.Lease.LeasePayRvblTypeCode == filter.LeasePayRcvblType || filter.LeasePayRcvblType == "all") && (pl.Lease.OrigExpiryDate >= DateTime.Now.Date || pl.Lease.PimsLeaseTerms.Any(t => t.TermExpiryDate == null || t.TermExpiryDate >= DateTime.Now.Date))));
+                // Check the status
+                predicate.And(p => p.PimsPropertyLeases.Any(pl => pl.Lease.LeasePayRvblTypeCode == filter.LeasePayRcvblType || filter.LeasePayRcvblType == "all"));
+
+                // Check not expired
+                predicate.And(p => p.PimsPropertyLeases.Any(pl => (pl.Lease.PimsLeaseTerms.Any(t => !t.TermExpiryDate.HasValue) // any term expiry is null
+                                        || (!pl.Lease.PimsLeaseTerms.Any() && !pl.Lease.OrigExpiryDate.HasValue) // no terms and orig is null
+                                        || (!pl.Lease.PimsLeaseTerms.Any() && pl.Lease.OrigExpiryDate.HasValue && pl.Lease.OrigExpiryDate.Value.Date >= DateTime.UtcNow.Date) // no terms and orig not expired
+                                        || (pl.Lease.OrigExpiryDate.HasValue // has terms and term expired is bigger than Lease expiry is not expired
+                                            && pl.Lease.PimsLeaseTerms.Any(lt => lt.TermExpiryDate.HasValue && lt.TermExpiryDate.Value.Date > pl.Lease.OrigExpiryDate.Value.Date && lt.TermExpiryDate.Value.Date >= DateTime.UtcNow.Date))
+                                        || (pl.Lease.OrigExpiryDate.HasValue // has terms and term expired is lower than Lease expiry
+                                            && (!pl.Lease.PimsLeaseTerms.Any(lt => lt.TermExpiryDate.HasValue && lt.TermExpiryDate.Value.Date > pl.Lease.OrigExpiryDate.Value.Date) && pl.Lease.OrigExpiryDate.Value.Date >= DateTime.UtcNow.Date)))));
             }
 
             // Anomalies
             if (filter.AnomalyIds != null && filter.AnomalyIds.Count > 0)
             {
-                query = query.Where(p =>
+                predicate.And(p =>
                     p.PimsPropPropAnomalyTypes.Any(at => filter.AnomalyIds.Contains(at.PropertyAnomalyTypeCode)));
             }
 
-            return query.Select(p => p.PropertyId).ToHashSet();
+            return Context.PimsProperties.AsNoTracking()
+                .Where(predicate)
+                .Select(x => x.PropertyId)
+                .ToHashSet();
         }
 
         #endregion

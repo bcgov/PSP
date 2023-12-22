@@ -67,9 +67,8 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
   const changeFilter = useCallback(
     (filter: ILeaseFilter) => {
       setFilter(filter);
-      setCurrentPage(0);
     },
-    [setFilter, setCurrentPage],
+    [setFilter],
   );
 
   useEffect(() => {
