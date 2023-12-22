@@ -49,6 +49,8 @@ export const useApiDispositionFile = () => {
         api.get<Api_DispositionFileTeam[]>(`/dispositionfiles/team-members`),
       getDispositionFileOffers: (dispositionFileId: number) =>
         api.get<Api_DispositionFileOffer[]>(`/dispositionfiles/${dispositionFileId}/offers`),
+      postDispositionFileOffer: (dispositionFileId: number, offer: Api_DispositionFileOffer) =>
+        api.post<Api_DispositionFileOffer>(`/dispositionfiles/${dispositionFileId}/offers`, offer),
       getDispositionFileSale: (dispositionFileId: number) =>
         api.get<Api_DispositionFileSale>(`/dispositionfiles/${dispositionFileId}/sale`),
     }),

@@ -231,6 +231,20 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.DispositionFileId == dispositionId).ToList();
         }
 
+        public PimsDispositionOffer GetDispositionOfferById(long dispositionId, long dispositionOfferId)
+        {
+            return Context.PimsDispositionOffers.AsNoTracking()
+                .Where(x => x.DispositionOfferId == dispositionOfferId && x.DispositionFileId == dispositionId)
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
+        public PimsDispositionOffer AddDispositionOffer(PimsDispositionOffer dispositionOffer)
+        {
+            Context.PimsDispositionOffers.Add(dispositionOffer);
+
+            return dispositionOffer;
+        }
+
         public PimsDispositionSale GetDispositionFileSale(long dispositionId)
         {
             return Context.PimsDispositionSales.AsNoTracking()

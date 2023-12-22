@@ -1,11 +1,65 @@
+import { AxiosError } from 'axios';
+import { useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
+import { IApiError } from '@/interfaces/IApiError';
+import { Api_DispositionFileOffer } from '@/models/api/DispositionFile';
+
+import { IDispositionOfferFormProps } from '../form/DispositionOfferForm';
+import { DispositionOfferFormModel } from '../models/DispositionOfferFormModel';
+
 export interface IAddDispositionOfferContainerProps {
   dispositionFileId: number;
+  View: React.FC<IDispositionOfferFormProps>;
 }
 
 const AddDispositionOfferContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddDispositionOfferContainerProps>
-> = ({ dispositionFileId }) => {
-  return <p>Add Disposition Offer Works!</p>;
+> = ({ dispositionFileId, View }) => {
+  const history = useHistory();
+  const location = useLocation();
+
+  const [offerStatusError, setOfferStatusError] = useState(false);
+
+  const backUrl = location.pathname.split('/offers/new')[0];
+  const {
+    postDispositionFileOffer: { execute: postDispositionOffer },
+  } = useDispositionProvider();
+  const initialValues = new DispositionOfferFormModel(null, dispositionFileId);
+
+  const handleSave = async (newOffer: Api_DispositionFileOffer) => {
+    setOfferStatusError(false);
+    return postDispositionOffer(dispositionFileId, newOffer);
+  };
+
+  const handleSucces = async () => {
+    history.push(backUrl);
+  };
+
+  const onCreateError = (e: AxiosError<IApiError>) => {
+    if (e?.response?.status === 409) {
+      setOfferStatusError(true);
+    } else {
+      if (e?.response?.status === 400) {
+        toast.error(e?.response.data.error);
+      } else {
+        toast.error('Unable to save. Please try again.');
+      }
+    }
+  };
+
+  return (
+    <View
+      initialValues={initialValues}
+      showOfferStatusError={offerStatusError}
+      onSave={handleSave}
+      onSuccess={handleSucces}
+      onCancel={() => history.push(backUrl)}
+      onError={onCreateError}
+    ></View>
+  );
 };
 
 export default AddDispositionOfferContainer;

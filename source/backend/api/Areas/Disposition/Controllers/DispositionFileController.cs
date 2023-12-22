@@ -10,6 +10,7 @@ using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Models.Models.Concepts.DispositionFile;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Dal.Exceptions;
@@ -196,6 +197,58 @@ namespace Pims.Api.Areas.Disposition.Controllers
 
             var dispositionOffers = _dispositionService.GetOffers(id);
             return new JsonResult(_mapper.Map<IEnumerable<DispositionFileOfferModel>>(dispositionOffers));
+        }
+
+        [HttpGet("{id:long}/offers/{offerId:long}")]
+        [HasPermission(Permissions.DispositionView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileOfferModel), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetDispositionFileOfferById([FromRoute]long id, [FromRoute]long offerId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(GetDispositionFileOfferById),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            var dispositionOffer = _dispositionService.GetDispositionOfferById(id, offerId);
+
+            return new JsonResult(_mapper.Map<DispositionFileOfferModel>(dispositionOffer));
+        }
+
+        [HttpPost("{id:long}/offers")]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileOfferModel), 201)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult AddDispositionFileOffer([FromRoute]long id, [FromBody]DispositionFileOfferModel dispositionFileOffer)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(AddDispositionFileOffer),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            try
+            {
+                var dispositionOfferEntity = _mapper.Map<Dal.Entities.PimsDispositionOffer>(dispositionFileOffer);
+                var newDispositionOffer = _dispositionService.AddDispositionFileOffer(id, dispositionOfferEntity);
+
+                return new JsonResult(_mapper.Map<DispositionFileOfferModel>(newDispositionOffer));
+            }
+            catch (DuplicateEntityException e)
+            {
+                return Conflict(e.Message);
+            }
         }
 
         [HttpGet("{id:long}/sale")]
