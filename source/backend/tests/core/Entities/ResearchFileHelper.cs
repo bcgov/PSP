@@ -22,6 +22,7 @@ namespace Pims.Core.Test
                 ResearchFileId = researchFileId ?? 1,
                 RfileNumber = rfileNumber ?? "100-000-000",
                 ConcurrencyControlNumber = 1,
+                Name = "Test Research File"
             };
             researchFile.ResearchFileStatusTypeCodeNavigation = statusType ?? new Entity.PimsResearchFileStatusType() { Id = "fileStatusType", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" };
 
