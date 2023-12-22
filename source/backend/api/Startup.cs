@@ -412,6 +412,7 @@ namespace Pims.Api
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IExpropriationPaymentService, ExpropriationPaymentService>();
             services.AddScoped<IAcquisitionStatusSolver, AcquisitionStatusSolver>();
+            services.AddScoped<IDispositionFileService, DispositionFileService>();
         }
 
         /// <summary>

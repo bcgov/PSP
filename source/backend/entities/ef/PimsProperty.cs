@@ -31,6 +31,7 @@ namespace Pims.Dal.Entities;
 [Index("VolumeUnitTypeCode", Name = "PRPRTY_VOLUME_UNIT_TYPE_CODE_IDX")]
 public partial class PimsProperty
 {
+            PimsDispositionFileProperties = new HashSet<PimsDispositionFileProperty>();
     [Key]
     [Column("PROPERTY_ID")]
     public long PropertyId { get; set; }
@@ -460,4 +461,6 @@ public partial class PimsProperty
     [ForeignKey("VolumetricTypeCode")]
     [InverseProperty("PimsProperties")]
     public virtual PimsVolumetricType VolumetricTypeCodeNavigation { get; set; }
+        [InverseProperty(nameof(PimsDispositionFileProperty.Property))]
+        public virtual ICollection<PimsDispositionFileProperty> PimsDispositionFileProperties { get; set; }
 }

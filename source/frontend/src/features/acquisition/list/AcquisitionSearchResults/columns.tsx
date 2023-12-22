@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import ExpandableTextList from '@/components/common/ExpandableTextList';
+import ExpandableFileProperties from '@/components/common/List/ExpandableFileProperties';
 import { ColumnWithProps, renderTypeCode } from '@/components/Table';
 import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
@@ -14,7 +15,6 @@ import Api_TypeCode from '@/models/api/TypeCode';
 import { stringToFragment } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import AcquisitionProperties from './AcquisitionProperties';
 import { AcquisitionSearchResultModel } from './models';
 
 interface MemberRoleGroup {
@@ -173,10 +173,10 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     align: 'left',
     Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
       return (
-        <AcquisitionProperties
-          acquisitionProperties={props.row.original.fileProperties}
+        <ExpandableFileProperties
+          fileProperties={props.row.original.fileProperties}
           maxDisplayCount={2}
-        ></AcquisitionProperties>
+        ></ExpandableFileProperties>
       );
     },
   },

@@ -47,7 +47,6 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
     setIsLoading(true);
     try {
       const { data } = await getNotes(type, entityId);
-      setNoteResult(data);
       if (data && isMounted()) {
         setNoteResult(data);
       }

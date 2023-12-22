@@ -14,7 +14,8 @@ namespace Pims.Api.Areas.Property.Mapping.Property
                 .Map(dest => dest.Pid, src => src.Pid)
                 .Map(dest => dest.LeaseAssociations, src => src.PimsPropertyLeases)
                 .Map(dest => dest.ResearchAssociations, src => src.PimsPropertyResearchFiles)
-                .Map(dest => dest.AcquisitionAssociations, src => src.PimsPropertyAcquisitionFiles);
+                .Map(dest => dest.AcquisitionAssociations, src => src.PimsPropertyAcquisitionFiles)
+                .Map(dest => dest.DispositionAssociations, src => src.PimsDispositionFileProperties);
 
             config.NewConfig<Entity.PimsPropertyLease, Model.AssociationModel>()
                 .Map(dest => dest.Id, src => src.LeaseId)
@@ -42,6 +43,15 @@ namespace Pims.Api.Areas.Property.Mapping.Property
                .Map(dest => dest.CreatedByGuid, src => src.AcquisitionFile.AppCreateUserGuid)
                .Map(dest => dest.CreatedDateTime, src => src.AcquisitionFile.AppCreateTimestamp)
                .Map(dest => dest.Status, src => src.AcquisitionFile.AcquisitionFileStatusTypeCodeNavigation.Description);
+
+            config.NewConfig<Entity.PimsDispositionFileProperty, Model.AssociationModel>()
+               .Map(dest => dest.Id, src => src.DispositionFileId)
+               .Map(dest => dest.FileNumber, src => "D-" + src.DispositionFile.FileNumber)
+               .Map(dest => dest.FileName, src => src.DispositionFile.FileName)
+               .Map(dest => dest.CreatedBy, src => src.DispositionFile.AppCreateUserid)
+               .Map(dest => dest.CreatedByGuid, src => src.DispositionFile.AppCreateUserGuid)
+               .Map(dest => dest.CreatedDateTime, src => src.DispositionFile.AppCreateTimestamp)
+               .Map(dest => dest.Status, src => src.DispositionFile.DispositionFileStatusTypeCodeNavigation.Description);
         }
     }
 }

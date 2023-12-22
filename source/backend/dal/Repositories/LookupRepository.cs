@@ -378,6 +378,46 @@ namespace Pims.Dal.Repositories
             return Context.PimsAgreementStatusTypes.AsNoTracking().ToArray();
         }
 
+        public IEnumerable<PimsDispositionFileStatusType> GetAllDispositionFileStatusTypes()
+        {
+            return Context.PimsDispositionFileStatusTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsDispositionFundingType> GetAllDispositionFileFundingTypes()
+        {
+            return Context.PimsDispositionFundingTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsDispositionInitiatingDocType> GetAllDispositionInitiatingDocTypes()
+        {
+            return Context.PimsDispositionInitiatingDocTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsDispositionType> GetAllDispositionTypes()
+        {
+            return Context.PimsDispositionTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsDispositionStatusType> GetAllDispositionStatusTypes()
+        {
+            return Context.PimsDispositionStatusTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsDspPhysFileStatusType> GetAllDispositionPhysFileStatusTypes()
+        {
+            return Context.PimsDspPhysFileStatusTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsDspInitiatingBranchType> GetAllDispositionInitiatingBranchTypes()
+        {
+            return Context.PimsDspInitiatingBranchTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsDspFlTeamProfileType> GetAllDispositionFlTeamProfileTypes()
+        {
+            return Context.PimsDspFlTeamProfileTypes.AsNoTracking().ToArray();
+        }
+
         #endregion
     }
 }

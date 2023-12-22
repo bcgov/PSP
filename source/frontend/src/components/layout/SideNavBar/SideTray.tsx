@@ -6,6 +6,7 @@ import { AdminTools, LeaseAndLicenses, ResearchTray } from '@/components/layout'
 
 import { AcquisitionTray } from './AcquisitionTray';
 import { ContactTray } from './ContactTray';
+import { DispositionTray } from './DispositionTray';
 import { ProjectTray } from './ProjectTray';
 import * as Styled from './styles';
 
@@ -16,6 +17,7 @@ export enum SidebarContextType {
   RESEARCH = 'research',
   CONTACT = 'contact',
   ACQUISITION = 'acquisition',
+  DISPOSITION = 'disposition',
 }
 
 interface ISideTrayProps {
@@ -44,6 +46,7 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
     [SidebarContextType.CONTACT, <ContactTray onLinkClick={handleFileSet} />],
     [SidebarContextType.ACQUISITION, <AcquisitionTray onLinkClick={handleFileSet} />],
     [SidebarContextType.PROJECT, <ProjectTray onLinkClick={() => setShow(false)} />],
+    [SidebarContextType.DISPOSITION, <DispositionTray onLinkClick={handleFileSet} />],
   ]);
 
   useEffect(() => {

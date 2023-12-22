@@ -92,7 +92,7 @@ describe('AddFinancialCode form', () => {
     await act(async () => userEvent.paste(description, `another description`));
     await act(async () => userEvent.click(cancelButton));
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
-    const confirmButton = screen.getByText('Confirm');
+    const confirmButton = screen.getByText('Yes');
     await act(async () => userEvent.click(confirmButton));
 
     expect(mockProps.onCancel).toHaveBeenCalled();
