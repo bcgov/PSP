@@ -42,11 +42,31 @@ const mockGetDispositionFileSalesApi = {
   getNotes,
 }));
 
+jest.mock('@/features/documents/hooks/useDocumentRelationshipProvider', () => ({
+  useDocumentRelationshipProvider: () => {
+    return {
+      retrieveDocumentRelationship: jest.fn(),
+      retrieveDocumentRelationshipLoading: false,
+    };
+  },
+}));
+
+jest.mock('@/features/documents/hooks/useDocumentProvider', () => ({
+  useDocumentProvider: () => {
+    return {
+      getDocumentRelationshipTypes: jest.fn(),
+      getDocumentRelationshipTypesLoading: false,
+      getDocumentTypes: jest.fn(),
+      getDocumentTypesLoading: false,
+    };
+  },
+}));
+
 jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
     return {
       getDispositionFileOffers: mockGetDispositionFileOffersApi,
-      getDispositionFileSales: mockGetDispositionFileSalesApi,
+      getDispositionFileSale: mockGetDispositionFileSalesApi,
     };
   },
 }));

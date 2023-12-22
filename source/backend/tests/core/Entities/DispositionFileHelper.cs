@@ -24,15 +24,15 @@ namespace Pims.Core.Test
                 ConcurrencyControlNumber = 1,
             };
             dispositionFile.DispositionFileStatusTypeCode = "ACTIVE";
-            dispositionFile.DispositionFileStatusTypeCodeNavigation = statusType ?? new Entity.PimsDispositionFileStatusType() { Id = "ACTIVE", Description = "Active" };
-            dispositionFile.DispositionTypeCodeNavigation = dispositionType ?? new Entity.PimsDispositionType() { Id = "SECTN3" };
-            dispositionFile.RegionCodeNavigation = region ?? new Entity.PimsRegion("Northern") { RegionCode = 1, ConcurrencyControlNumber = 1 };
+            dispositionFile.DispositionFileStatusTypeCodeNavigation = statusType ?? new Entity.PimsDispositionFileStatusType() { Id = "ACTIVE", Description = "Active", DbCreateUserid = "create user", DbLastUpdateUserid = "last user" };
+            dispositionFile.DispositionTypeCodeNavigation = dispositionType ?? new Entity.PimsDispositionType() { Id = "SECTN3", Description = "Section 3", DbCreateUserid = "create user", DbLastUpdateUserid = "last user" };
+            dispositionFile.RegionCodeNavigation = region ?? new Entity.PimsRegion("Northern") { RegionCode = 1, ConcurrencyControlNumber = 1, Description = "Northern", DbCreateUserid = "create user", DbLastUpdateUserid = "last user" };
             dispositionFile.RegionCode = dispositionFile.RegionCodeNavigation.RegionCode;
-            dispositionFile.DspInitiatingBranchTypeCodeNavigation = new PimsDspInitiatingBranchType() { Id = "Northern" };
-            dispositionFile.DspPhysFileStatusTypeCodeNavigation = new PimsDspPhysFileStatusType() { Id = "Terminated" };
-            dispositionFile.DispositionFundingTypeCodeNavigation = new PimsDispositionFundingType() { Id = "Funded" };
-            dispositionFile.DispositionInitiatingDocTypeCodeNavigation = new PimsDispositionInitiatingDocType() { Id = "Doc" };
-            dispositionFile.DispositionStatusTypeCodeNavigation = new PimsDispositionStatusType() { Id = "DRAFT" };
+            dispositionFile.DspInitiatingBranchTypeCodeNavigation = new PimsDspInitiatingBranchType() { Id = "Northern", DbCreateUserid = "create user", DbLastUpdateUserid = "last user", Description = "description" };
+            dispositionFile.DspPhysFileStatusTypeCodeNavigation = new PimsDspPhysFileStatusType() { Id = "Terminated", DbCreateUserid = "create user", DbLastUpdateUserid = "last user", Description = "description" };
+            dispositionFile.DispositionFundingTypeCodeNavigation = new PimsDispositionFundingType() { Id = "Funded", DbCreateUserid = "create user", DbLastUpdateUserid = "last user", Description = "description" };
+            dispositionFile.DispositionInitiatingDocTypeCodeNavigation = new PimsDispositionInitiatingDocType() { Id = "Doc", DbCreateUserid = "create user", DbLastUpdateUserid = "last user", Description = "description" };
+            dispositionFile.DispositionStatusTypeCodeNavigation = new PimsDispositionStatusType() { Id = "DRAFT", DbCreateUserid = "create user", DbLastUpdateUserid = "last user", Description = "description" };
 
             return dispositionFile;
         }

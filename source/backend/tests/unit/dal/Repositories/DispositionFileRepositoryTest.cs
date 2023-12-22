@@ -235,7 +235,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
             var dispFile = EntityHelper.CreateDispositionFile();
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
-            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { DispositionFileId = dispFile.Internal_Id, PersonId = person.Internal_Id, Person = person });
+            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { DispositionFileId = dispFile.Internal_Id, PersonId = person.Internal_Id, Person = person, DspFlTeamProfileTypeCode = "COORD" });
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
@@ -252,7 +252,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
             var dispFile = EntityHelper.CreateDispositionFile();
             var org = EntityHelper.CreateOrganization(1, "tester org");
-            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { DispositionFileId = dispFile.Internal_Id, OrganizationId = org.Internal_Id, Organization = org });
+            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { DispositionFileId = dispFile.Internal_Id, OrganizationId = org.Internal_Id, Organization = org, DspFlTeamProfileTypeCode = "COORD" });
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
@@ -269,7 +269,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
             var dispFile = EntityHelper.CreateDispositionFile();
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
-            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { DispositionFileId = dispFile.Internal_Id, PersonId = person.Internal_Id, Person = person });
+            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { DispositionFileId = dispFile.Internal_Id, PersonId = person.Internal_Id, Person = person, DspFlTeamProfileTypeCode = "COORD" });
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
