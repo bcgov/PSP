@@ -88,6 +88,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
     ? getEditTitle(fileMatch, propertySelectorMatch, propertiesMatch)
     : 'Disposition File';
 
+  console.log(dispositionFile?.fileProperties);
   const menuItems = dispositionFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('File Summary');
 
