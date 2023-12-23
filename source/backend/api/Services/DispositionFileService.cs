@@ -130,7 +130,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
 
             var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
-            if (dispositionFileParent is not null && !dispositionFileParent.PimsDispositionOffers.Any(x => x.Equals(dispositionOfferId)))
+            if (dispositionFileParent is not null && !dispositionFileParent.PimsDispositionOffers.Any(x => x.DispositionOfferId.Equals(dispositionOfferId)))
             {
                 throw new BadRequestException("Invalid dispositionFileId.");
             }
@@ -141,7 +141,7 @@ namespace Pims.Api.Services
         public PimsDispositionOffer AddDispositionFileOffer(long dispositionFileId, PimsDispositionOffer dispositionOffer)
         {
             _logger.LogInformation("Getting disposition file offers with DispositionFileId: {id}", dispositionFileId);
-            _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
             if (dispositionFileId != dispositionOffer.DispositionFileId || dispositionFileParent is null)
@@ -157,6 +157,25 @@ namespace Pims.Api.Services
             return newOffer;
         }
 
+        public PimsDispositionOffer UpdateDispositionFileOffer(long dispositionFileId, long offerId, PimsDispositionOffer dispositionOffer)
+        {
+            _logger.LogInformation("Getting disposition file offers with DispositionFileId: {id}", dispositionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+
+            var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
+            if (dispositionFileId != dispositionOffer.DispositionFileId || dispositionOffer.DispositionOfferId != offerId || dispositionFileParent is null)
+            {
+                throw new BadRequestException("Invalid dispositionFileId.");
+            }
+
+            ValidateDispositionOfferStatus(dispositionFileParent, dispositionOffer);
+
+            var updatedOffer = _dispositionFileRepository.UpdateDispositionOffer(dispositionOffer);
+            _dispositionFileRepository.CommitTransaction();
+
+            return updatedOffer;
+        }
+
         public PimsDispositionSale GetDispositionFileSale(long dispositionFileId)
         {
             _logger.LogInformation("Getting disposition file sales with DispositionFileId: {id}", dispositionFileId);
@@ -167,7 +186,7 @@ namespace Pims.Api.Services
 
         private static void ValidateDispositionOfferStatus(PimsDispositionFile dispositionFile, PimsDispositionOffer newOffer)
         {
-            bool offerAlreadyAccepted = dispositionFile.PimsDispositionOffers.Any(x => x.DispositionOfferStatusTypeCode == "ACCCEPTED");
+            bool offerAlreadyAccepted = dispositionFile.PimsDispositionOffers.Any(x => x.DispositionOfferStatusTypeCode == "ACCCEPTED" && x.DispositionOfferId != newOffer.DispositionOfferId);
             if (offerAlreadyAccepted && !string.IsNullOrEmpty(newOffer.DispositionOfferStatusTypeCode) && newOffer.DispositionOfferStatusTypeCode == "ACCCEPTED")
             {
                 throw new DuplicateEntityException("Invalid Disposition Offer, an Offer has been already accepted for this Disposition File");

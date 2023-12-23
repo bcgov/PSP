@@ -251,6 +251,36 @@ namespace Pims.Api.Areas.Disposition.Controllers
             }
         }
 
+        [HttpPut("{id:long}/offers/{offerId:long}")]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileOfferModel), 201)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateDispositionFileOffer([FromRoute]long id, [FromRoute]long offerId, [FromBody]DispositionFileOfferModel dispositionFileOffer)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(UpdateDispositionFileOffer),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            try
+            {
+                var dispositionOfferEntity = _mapper.Map<Dal.Entities.PimsDispositionOffer>(dispositionFileOffer);
+                var updatedOffer = _dispositionService.UpdateDispositionFileOffer(id, offerId, dispositionOfferEntity);
+
+                return new JsonResult(_mapper.Map<DispositionFileOfferModel>(updatedOffer));
+            }
+            catch (DuplicateEntityException e)
+            {
+                return Conflict(e.Message);
+            }
+        }
+
         [HttpGet("{id:long}/sale")]
         [HasPermission(Permissions.DispositionView)]
         [Produces("application/json")]

@@ -245,6 +245,16 @@ namespace Pims.Dal.Repositories
             return dispositionOffer;
         }
 
+        public PimsDispositionOffer UpdateDispositionOffer(PimsDispositionOffer dispositionOffer)
+        {
+            var existingOffer = Context.PimsDispositionOffers
+                .FirstOrDefault(x => x.DispositionOfferId.Equals(dispositionOffer.DispositionOfferId)) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingOffer).CurrentValues.SetValues(dispositionOffer);
+
+            return existingOffer;
+        }
+
         public PimsDispositionSale GetDispositionFileSale(long dispositionId)
         {
             return Context.PimsDispositionSales.AsNoTracking()

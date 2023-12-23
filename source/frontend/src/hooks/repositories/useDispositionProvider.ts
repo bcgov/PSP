@@ -33,6 +33,8 @@ export const useDispositionProvider = () => {
     getDispositionFileOffers,
     postDispositionFileOffer,
     getDispositionFileSale,
+    getDispositionFileOffer,
+    putDispositionFileOffer,
   } = useApiDispositionFile();
 
   const addDispositionFileApi = useApiRequestWrapper<
@@ -134,6 +136,41 @@ export const useDispositionProvider = () => {
     onError: useAxiosErrorHandler('Failed to retrieve Disposition File Sale'),
   });
 
+  const getDispositionOfferApi = useApiRequestWrapper<
+    (
+      dispositionFileId: number,
+      offerId: number,
+    ) => Promise<AxiosResponse<Api_DispositionFileOffer, any>>
+  >({
+    requestFunction: useCallback(
+      async (dispositionFileId: number, offerId: number) =>
+        await getDispositionFileOffer(dispositionFileId, offerId),
+      [getDispositionFileOffer],
+    ),
+    requestName: 'GetDispositionOffer',
+    onError: useAxiosErrorHandler('Failed to retrieve Disposition File Offer'),
+  });
+
+  const putDispositionOfferApi = useApiRequestWrapper<
+    (
+      dispositionFileId: number,
+      offerId: number,
+      dispositionOffer: Api_DispositionFileOffer,
+    ) => Promise<AxiosResponse<Api_DispositionFileOffer, any>>
+  >({
+    requestFunction: useCallback(
+      async (
+        dispositionFileId: number,
+        offerId: number,
+        dispositionOffer: Api_DispositionFileOffer,
+      ) => await putDispositionFileOffer(dispositionFileId, offerId, dispositionOffer),
+      [putDispositionFileOffer],
+    ),
+    requestName: 'PutDispositionOffer',
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
+  });
+
   return useMemo(
     () => ({
       addDispositionFileApi: addDispositionFileApi,
@@ -144,6 +181,8 @@ export const useDispositionProvider = () => {
       getDispositionFileOffers: getAllDispositionOffersApi,
       postDispositionFileOffer: postDispositionOfferApi,
       getDispositionFileSale: getDispositionFileSaleApi,
+      getDispositionOffer: getDispositionOfferApi,
+      putDispositionOffer: putDispositionOfferApi,
     }),
     [
       addDispositionFileApi,
@@ -154,6 +193,8 @@ export const useDispositionProvider = () => {
       getAllDispositionOffersApi,
       postDispositionOfferApi,
       getDispositionFileSaleApi,
+      getDispositionOfferApi,
+      putDispositionOfferApi,
     ],
   );
 };

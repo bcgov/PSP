@@ -25,6 +25,7 @@ import { DispositionOfferFormYupSchema } from '../models/DispositionOfferFormYup
 export interface IDispositionOfferFormProps {
   initialValues: DispositionOfferFormModel | null;
   showOfferStatusError: boolean;
+  loading: boolean;
   onSave: (offer: Api_DispositionFileOffer) => Promise<Api_DispositionFileOffer | undefined>;
   onCancel: () => void;
   onSuccess: () => void;
@@ -34,6 +35,7 @@ export interface IDispositionOfferFormProps {
 const DispositionOfferForm: React.FC<IDispositionOfferFormProps> = ({
   initialValues,
   showOfferStatusError,
+  loading,
   onSave,
   onCancel,
   onSuccess,
@@ -88,7 +90,7 @@ const DispositionOfferForm: React.FC<IDispositionOfferFormProps> = ({
             return (
               <>
                 <LoadingBackdrop
-                  show={formikProps.isSubmitting}
+                  show={formikProps.isSubmitting || loading}
                   parentScreen={true}
                 ></LoadingBackdrop>
                 <StyledContent>

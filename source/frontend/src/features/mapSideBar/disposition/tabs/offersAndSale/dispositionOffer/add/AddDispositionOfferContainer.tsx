@@ -25,7 +25,7 @@ const AddDispositionOfferContainer: React.FunctionComponent<
 
   const backUrl = location.pathname.split('/offers/new')[0];
   const {
-    postDispositionFileOffer: { execute: postDispositionOffer },
+    postDispositionFileOffer: { execute: postDispositionOffer, loading },
   } = useDispositionProvider();
   const initialValues = new DispositionOfferFormModel(null, dispositionFileId);
 
@@ -54,6 +54,7 @@ const AddDispositionOfferContainer: React.FunctionComponent<
     <View
       initialValues={initialValues}
       showOfferStatusError={offerStatusError}
+      loading={loading}
       onSave={handleSave}
       onSuccess={handleSucces}
       onCancel={() => history.push(backUrl)}

@@ -22,6 +22,8 @@ namespace Pims.Dal.Repositories
 
         PimsDispositionOffer AddDispositionOffer(PimsDispositionOffer dispositionOffer);
 
+        PimsDispositionOffer UpdateDispositionOffer(PimsDispositionOffer dispositionOffer);
+
         PimsDispositionSale GetDispositionFileSale(long dispositionId);
 
         long GetRowVersion(long id);

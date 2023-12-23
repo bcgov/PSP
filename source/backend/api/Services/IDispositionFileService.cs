@@ -25,6 +25,8 @@ namespace Pims.Api.Services
 
         PimsDispositionOffer AddDispositionFileOffer(long dispositionFileId, PimsDispositionOffer dispositionOffer);
 
+        PimsDispositionOffer UpdateDispositionFileOffer(long dispositionFileId, long offerId, PimsDispositionOffer dispositionOffer);
+
         PimsDispositionSale GetDispositionFileSale(long dispositionFileId);
     }
 }
