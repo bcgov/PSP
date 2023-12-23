@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mapster;
+using Pims.Api.Models.Models.Concepts.DispositionFile;
+using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.DispositionFile
@@ -52,10 +54,10 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Map(dest => dest.DispositionInitiatingDocTypeCode, src => src.InitiatingDocumentTypeCode.Id)
                 .Map(dest => dest.OtherDispositionType, src => src.DispositionTypeOther)
                 .Map(dest => dest.OtherInitiatingDocType, src => src.InitiatingDocumentTypeOther)
-                .Map(dest => dest.PimsDispositionAppraisals, src => new List<DispositionFileAppraisalModel> { src.DispositionAppraisal }, srcCond => srcCond.DispositionAppraisal == null)
+                .Map(dest => dest.PimsDispositionAppraisals, src => src.DispositionAppraisal == null ? null : new List<DispositionFileAppraisalModel> { src.DispositionAppraisal })
                 .Map(dest => dest.PimsDispositionFileTeams, src => src.DispositionTeam)
                 .Map(dest => dest.PimsDispositionOffers, src => src.DispositionOffers)
-                .Map(dest => dest.PimsDispositionSales, src => new List<DispositionFileModel> { src }, srcCond => srcCond == null)
+                .Map(dest => dest.PimsDispositionSales, src => src.DispositionSale == null ? null : new List<DispositionFileSaleModel> { src.DispositionSale })
                 .Map(dest => dest.PimsDispositionFileProperties, src => src.FileProperties);
         }
     }
