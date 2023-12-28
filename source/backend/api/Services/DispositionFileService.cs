@@ -130,7 +130,8 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
 
             var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
-            if (dispositionFileParent is not null && !dispositionFileParent.PimsDispositionOffers.Any(x => x.DispositionOfferId.Equals(dispositionOfferId)))
+            if (dispositionFileParent is null
+                || (dispositionFileParent is not null && !dispositionFileParent.PimsDispositionOffers.Any(x => x.DispositionOfferId.Equals(dispositionOfferId))))
             {
                 throw new BadRequestException("Invalid dispositionFileId.");
             }
@@ -186,8 +187,8 @@ namespace Pims.Api.Services
 
         private static void ValidateDispositionOfferStatus(PimsDispositionFile dispositionFile, PimsDispositionOffer newOffer)
         {
-            bool offerAlreadyAccepted = dispositionFile.PimsDispositionOffers.Any(x => x.DispositionOfferStatusTypeCode == "ACCCEPTED" && x.DispositionOfferId != newOffer.DispositionOfferId);
-            if (offerAlreadyAccepted && !string.IsNullOrEmpty(newOffer.DispositionOfferStatusTypeCode) && newOffer.DispositionOfferStatusTypeCode == "ACCCEPTED")
+            bool offerAlreadyAccepted = dispositionFile.PimsDispositionOffers.Any(x => x.DispositionOfferStatusTypeCode == EnumDispositionOfferStatusTypeCode.ACCCEPTED.ToString() && x.DispositionOfferId != newOffer.DispositionOfferId);
+            if (offerAlreadyAccepted && !string.IsNullOrEmpty(newOffer.DispositionOfferStatusTypeCode) && newOffer.DispositionOfferStatusTypeCode == EnumDispositionOfferStatusTypeCode.ACCCEPTED.ToString())
             {
                 throw new DuplicateEntityException("Invalid Disposition Offer, an Offer has been already accepted for this Disposition File");
             }

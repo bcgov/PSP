@@ -6,26 +6,36 @@ import { mockDispositionFileOfferApi } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { Api_DispositionFileOffer } from '@/models/api/DispositionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, createAxiosError, render, RenderOptions } from '@/utils/test-utils';
+import { act, createAxiosError, render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import { IDispositionOfferFormProps } from '../form/DispositionOfferForm';
-import AddDispositionOfferContainer, {
-  IAddDispositionOfferContainerProps,
-} from './AddDispositionOfferContainer';
+import { DispositionOfferFormModel } from '../models/DispositionOfferFormModel';
+import UpdateDispositionOfferContainer, {
+  IUpdateDispositionOfferContainerProps,
+} from './UpdateDispositionOfferContainer';
 
 const history = createMemoryHistory();
+const mockDispositionOfferApi = mockDispositionFileOfferApi(10, 1);
 
-const mockPostApi = {
+const mockPutOfferApi = {
   error: undefined,
   response: undefined,
   execute: jest.fn(),
   loading: false,
 };
 
+const mockGetOfferApi = {
+  error: undefined,
+  response: undefined,
+  execute: jest.fn().mockResolvedValue(mockDispositionOfferApi),
+  loading: false,
+};
+
 jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
     return {
-      postDispositionFileOffer: mockPostApi,
+      getDispositionOffer: mockGetOfferApi,
+      putDispositionOffer: mockPutOfferApi,
     };
   },
 }));
@@ -37,14 +47,18 @@ const TestView: React.FC<IDispositionOfferFormProps> = props => {
   return <span>Content Rendered</span>;
 };
 
-describe('Add Disposition Offer Container component', () => {
+describe('Update Disposition Offer Container component', () => {
   const setup = async (
     renderOptions: RenderOptions & {
-      props?: Partial<IAddDispositionOfferContainerProps>;
+      props?: Partial<IUpdateDispositionOfferContainerProps>;
     } = {},
   ) => {
     const component = render(
-      <AddDispositionOfferContainer dispositionFileId={1} View={TestView} />,
+      <UpdateDispositionOfferContainer
+        dispositionFileId={1}
+        dispositionOfferId={10}
+        View={TestView}
+      />,
       {
         history,
         store: {
@@ -69,34 +83,33 @@ describe('Add Disposition Offer Container component', () => {
   it('Renders the underlying form', async () => {
     const { getByText } = await setup();
     expect(getByText(/Content Rendered/)).toBeVisible();
+    expect(mockGetOfferApi.execute).toHaveBeenCalled();
   });
 
   it('Loads props with the initial values', async () => {
-    await setup({ props: { dispositionFileId: 1 } });
+    mockGetOfferApi.execute.mockResolvedValue(mockDispositionOfferApi);
+    await setup();
+    await waitForEffects();
 
-    expect(viewProps?.initialValues?.id).toBe(null);
-    expect(viewProps?.initialValues?.dispositionFileId).toBe(1);
-    expect(viewProps?.initialValues?.dispositionOfferStatusTypeCode).toBe(null);
-    expect(viewProps?.initialValues?.offerName).toBe(null);
-    expect(viewProps?.initialValues?.offerDate).toBe(null);
-    expect(viewProps?.initialValues?.offerExpiryDate).toBe(null);
-    expect(viewProps?.initialValues?.offerAmount).toBe(null);
-    expect(viewProps?.initialValues?.offerNote).toBe(null);
+    expect(mockGetOfferApi.execute).toHaveBeenCalled();
+    const formModel = DispositionOfferFormModel.fromApi(mockDispositionOfferApi);
+
+    expect(viewProps?.initialValues).toStrictEqual(formModel);
   });
 
   it('makes request to create a new Offer and returns the response', async () => {
+    mockGetOfferApi.execute.mockResolvedValue(mockDispositionOfferApi);
+    mockPutOfferApi.execute.mockReturnValue(mockDispositionOfferApi);
+
     await setup();
-    const offerMock = mockDispositionFileOfferApi();
-    mockPostApi.execute.mockReturnValue(offerMock);
 
     let createdOffer: Api_DispositionFileOffer | undefined;
     await act(async () => {
       createdOffer = await viewProps?.onSave({} as Api_DispositionFileOffer);
     });
 
-    expect(mockPostApi.execute).toHaveBeenCalled();
-    expect(createdOffer).toStrictEqual({ ...offerMock });
-
+    expect(mockPutOfferApi.execute).toHaveBeenCalled();
+    expect(createdOffer).toStrictEqual({ ...mockDispositionOfferApi });
     expect(history.location.pathname).toBe('/');
   });
 
@@ -107,11 +120,12 @@ describe('Add Disposition Offer Container component', () => {
     });
 
     expect(history.location.pathname).toBe('/');
-    expect(mockPostApi.execute).not.toHaveBeenCalled();
+    expect(mockPutOfferApi.execute).not.toHaveBeenCalled();
   });
 
   it('displays error message for duplicate accepted status', async () => {
-    await setup();
+    await setup({ props: { dispositionFileId: 1, dispositionOfferId: 10 } });
+    await waitForEffects();
 
     await act(async () => {
       const error409 = createAxiosError(409, 'Duplicate');

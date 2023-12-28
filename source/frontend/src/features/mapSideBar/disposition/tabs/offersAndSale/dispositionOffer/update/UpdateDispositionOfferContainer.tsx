@@ -65,19 +65,15 @@ const UpdateDispositionOfferContainer: React.FunctionComponent<
   }, [fetchOfferInformation]);
 
   return (
-    dispositionOffer &&
-    ((
-      <View
-        initialValues={dispositionOffer}
-        showOfferStatusError={offerStatusError}
-        loading={loadingOffer || updatingOffer}
-        onSave={handleSave}
-        onSuccess={handleSucces}
-        onCancel={() => history.push(backUrl)}
-        onError={onUpdateError}
-      ></View>
-    ) ??
-      null)
+    <View
+      initialValues={dispositionOffer}
+      showOfferStatusError={offerStatusError}
+      loading={loadingOffer || updatingOffer}
+      onSave={handleSave}
+      onSuccess={handleSucces}
+      onCancel={() => history.push(backUrl)}
+      onError={onUpdateError}
+    ></View>
   );
 };
 

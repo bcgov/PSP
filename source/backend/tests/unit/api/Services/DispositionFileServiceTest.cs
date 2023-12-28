@@ -257,6 +257,345 @@ namespace Pims.Api.Test.Services
         }
         #endregion
 
+        #region Offers
+
+        [Fact]
+        public void GetDispositionOfferById_Should_Fail_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.GetDispositionOfferById(1, 100);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetDispositionOfferById_Should_Fail_Invalid_DispositionFileId()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile(1);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            repository.Setup(x => x.GetById(1)).Returns((PimsDispositionFile)null);
+
+            // Act
+            Action act = () => service.GetDispositionOfferById(1, 100);
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void GetDispositionOfferById_Should_Fail_Invalid_OfferFileId()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            var dispFile = EntityHelper.CreateDispositionFile(1);
+            dispFile.PimsDispositionOffers = new List<PimsDispositionOffer>()
+            {
+                new PimsDispositionOffer()
+                {
+                    DispositionOfferId = 10,
+                    DispositionFileId = 1,
+                },
+            };
+
+            repository.Setup(x => x.GetById(1)).Returns(dispFile);
+
+            // Act
+            Action act = () => service.GetDispositionOfferById(1, 100);
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void AddDispositionFileOffer_Should_Fail_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.AddDispositionFileOffer(1, new()
+            {
+                DispositionFileId = 1,
+                DispositionOfferId = 0,
+            });
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void AddDispositionFileOffer_Should_Fail_Invalid_DispositionFileId()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            repository.Setup(x => x.GetById(1)).Returns((PimsDispositionFile)null);
+
+
+            // Act
+            Action act = () => service.AddDispositionFileOffer(1, new()
+            {
+                DispositionFileId = 1,
+                DispositionOfferId = 0,
+            });
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void AddDispositionFileOffer_Should_Fail_Invalid_OfferId()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
+            {
+                DispositionFileId = 1,
+            });
+
+
+            // Act
+            Action act = () => service.AddDispositionFileOffer(1, new()
+            {
+                DispositionFileId = 10,
+                DispositionOfferId = 0,
+            });
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void AddDispositionFileOffer_Should_Fail_Invalid_Accepted_Exists()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
+            {
+                DispositionFileId= 1,
+                PimsDispositionOffers = new List<PimsDispositionOffer>()
+                {
+                    new PimsDispositionOffer()
+                    {
+                        DispositionOfferId = 10,
+                        DispositionFileId = 1,
+                        DispositionOfferStatusTypeCode = EnumDispositionOfferStatusTypeCode.ACCCEPTED.ToString(),
+                    }
+                }
+            });
+
+            // Act
+            Action act = () => service.AddDispositionFileOffer(1, new()
+            {
+                DispositionFileId = 1,
+                DispositionOfferId = 0,
+                DispositionOfferStatusTypeCode = "ACCCEPTED"
+            });
+
+            // Assert
+            act.Should().Throw<DuplicateEntityException>();
+        }
+
+        [Fact]
+        public void AddDispositionFileOffer_Success()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
+            {
+                DispositionFileId = 1,
+                PimsDispositionOffers = new List<PimsDispositionOffer>()
+                {
+                    new PimsDispositionOffer()
+                    {
+                        DispositionOfferId = 10,
+                        DispositionFileId = 1,
+                        DispositionOfferStatusTypeCode = EnumDispositionOfferStatusTypeCode.REJECTED.ToString(),
+                    }
+                }
+            });
+            repository.Setup(x => x.AddDispositionOffer(It.IsAny<PimsDispositionOffer>())).Returns(new PimsDispositionOffer()
+            {
+                DispositionFileId = 1,
+                DispositionOfferId = 11
+            });
+
+            // Act
+            var result = service.AddDispositionFileOffer(1, new()
+            {
+                DispositionFileId = 1,
+                DispositionOfferId = 0,
+                DispositionOfferStatusTypeCode = "OPEN"
+            });
+
+            // Assert
+            Assert.NotNull(result);
+            repository.Verify(x => x.AddDispositionOffer(It.IsAny<PimsDispositionOffer>()), Times.Once);
+        }
+
+        [Fact]
+        public void UpdateDispositionFileOffer_Should_Fail_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.UpdateDispositionFileOffer(1, 10, new()
+            {
+                DispositionFileId = 1,
+                DispositionOfferId = 10,
+            });
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void UpdateDispositionFileOffer_Should_Fail_Invalid_DispositionFileId()
+        {
+           // Arrange
+           var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+           var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+           repository.Setup(x => x.GetById(1)).Returns((PimsDispositionFile)null);
+
+           // Act
+           Action act = () => service.UpdateDispositionFileOffer(1, 10, new()
+           {
+               DispositionFileId = 1,
+               DispositionOfferId = 0,
+           });
+
+           // Assert
+           act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void UpdateDispositionFileOffer_Should_Fail_Invalid_OfferId()
+        {
+           // Arrange
+           var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+           var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+           repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
+           {
+               DispositionFileId = 1,
+           });
+
+
+            // Act
+            Action act = () => service.AddDispositionFileOffer(1, new()
+           {
+               DispositionFileId = 10,
+               DispositionOfferId = 0,
+           });
+
+           // Assert
+           act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void UpdateDispositionFileOffer_Should_Fail_Invalid_Accepted_Exists()
+        {
+           // Arrange
+           var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+           var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+           repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
+            {
+                DispositionFileId = 1,
+                PimsDispositionOffers = new List<PimsDispositionOffer>()
+                {
+                    new PimsDispositionOffer()
+                    {
+                        DispositionOfferId = 10,
+                        DispositionFileId = 1,
+                        DispositionOfferStatusTypeCode = EnumDispositionOfferStatusTypeCode.ACCCEPTED.ToString(),
+                    },
+                    new PimsDispositionOffer()
+                    {
+                        DispositionOfferId = 11,
+                        DispositionFileId = 1,
+                        DispositionOfferStatusTypeCode = EnumDispositionOfferStatusTypeCode.OPEN.ToString(),
+                    }
+                }
+            });
+
+           // Act
+           Action act = () => service.UpdateDispositionFileOffer(1, 11, new()
+           {
+               DispositionFileId = 1,
+               DispositionOfferId = 11,
+               DispositionOfferStatusTypeCode = "ACCCEPTED"
+           });
+
+           // Assert
+           act.Should().Throw<DuplicateEntityException>();
+        }
+
+        [Fact]
+        public void UpdateDispositionFileOffer_Success()
+        {
+           // Arrange
+           var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+           var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+           repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
+            {
+                DispositionFileId = 1,
+                PimsDispositionOffers = new List<PimsDispositionOffer>()
+                {
+                    new PimsDispositionOffer()
+                    {
+                        DispositionOfferId = 10,
+                        DispositionFileId = 1,
+                        DispositionOfferStatusTypeCode = EnumDispositionOfferStatusTypeCode.COLLAPSED.ToString(),
+                    },
+                    new PimsDispositionOffer()
+                    {
+                        DispositionOfferId = 11,
+                        DispositionFileId = 1,
+                        DispositionOfferStatusTypeCode = EnumDispositionOfferStatusTypeCode.OPEN.ToString(),
+                    }
+                }
+            });
+            repository.Setup(x => x.UpdateDispositionOffer(It.IsAny<PimsDispositionOffer>())).Returns(new PimsDispositionOffer()
+            {
+                DispositionFileId = 1,
+                DispositionOfferId = 11
+            });
+
+           // Act
+           var result = service.UpdateDispositionFileOffer(1, 11, new()
+           {
+               DispositionFileId = 1,
+               DispositionOfferId = 11,
+               DispositionOfferStatusTypeCode = "OPEN"
+           });
+
+           // Assert
+           Assert.NotNull(result);
+           repository.Verify(x => x.UpdateDispositionOffer(It.IsAny<PimsDispositionOffer>()), Times.Once);
+        }
+
+        #endregion
+
         #endregion
     }
 }
