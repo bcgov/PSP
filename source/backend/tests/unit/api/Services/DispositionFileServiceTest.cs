@@ -386,7 +386,7 @@ namespace Pims.Api.Test.Services
 
             repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
             {
-                DispositionFileId= 1,
+                DispositionFileId = 1,
                 PimsDispositionOffers = new List<PimsDispositionOffer>()
                 {
                     new PimsDispositionOffer()
@@ -469,55 +469,55 @@ namespace Pims.Api.Test.Services
         [Fact]
         public void UpdateDispositionFileOffer_Should_Fail_Invalid_DispositionFileId()
         {
-           // Arrange
-           var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
-           var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
 
-           repository.Setup(x => x.GetById(1)).Returns((PimsDispositionFile)null);
+            repository.Setup(x => x.GetById(1)).Returns((PimsDispositionFile)null);
 
-           // Act
-           Action act = () => service.UpdateDispositionFileOffer(1, 10, new()
-           {
-               DispositionFileId = 1,
-               DispositionOfferId = 0,
-           });
+            // Act
+            Action act = () => service.UpdateDispositionFileOffer(1, 10, new()
+            {
+                DispositionFileId = 1,
+                DispositionOfferId = 0,
+            });
 
-           // Assert
-           act.Should().Throw<BadRequestException>();
+            // Assert
+            act.Should().Throw<BadRequestException>();
         }
 
         [Fact]
         public void UpdateDispositionFileOffer_Should_Fail_Invalid_OfferId()
         {
-           // Arrange
-           var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
-           var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
 
-           repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
-           {
-               DispositionFileId = 1,
-           });
+            repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
+            {
+                DispositionFileId = 1,
+            });
 
 
             // Act
             Action act = () => service.AddDispositionFileOffer(1, new()
-           {
-               DispositionFileId = 10,
-               DispositionOfferId = 0,
-           });
+            {
+                DispositionFileId = 10,
+                DispositionOfferId = 0,
+            });
 
-           // Assert
-           act.Should().Throw<BadRequestException>();
+            // Assert
+            act.Should().Throw<BadRequestException>();
         }
 
         [Fact]
         public void UpdateDispositionFileOffer_Should_Fail_Invalid_Accepted_Exists()
         {
-           // Arrange
-           var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
-           var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
 
-           repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
+            repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
             {
                 DispositionFileId = 1,
                 PimsDispositionOffers = new List<PimsDispositionOffer>()
@@ -537,26 +537,26 @@ namespace Pims.Api.Test.Services
                 }
             });
 
-           // Act
-           Action act = () => service.UpdateDispositionFileOffer(1, 11, new()
-           {
-               DispositionFileId = 1,
-               DispositionOfferId = 11,
-               DispositionOfferStatusTypeCode = "ACCCEPTED"
-           });
+            // Act
+            Action act = () => service.UpdateDispositionFileOffer(1, 11, new()
+            {
+                DispositionFileId = 1,
+                DispositionOfferId = 11,
+                DispositionOfferStatusTypeCode = "ACCCEPTED"
+            });
 
-           // Assert
-           act.Should().Throw<DuplicateEntityException>();
+            // Assert
+            act.Should().Throw<DuplicateEntityException>();
         }
 
         [Fact]
         public void UpdateDispositionFileOffer_Success()
         {
-           // Arrange
-           var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
-           var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
 
-           repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
+            repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
             {
                 DispositionFileId = 1,
                 PimsDispositionOffers = new List<PimsDispositionOffer>()
@@ -581,17 +581,17 @@ namespace Pims.Api.Test.Services
                 DispositionOfferId = 11
             });
 
-           // Act
-           var result = service.UpdateDispositionFileOffer(1, 11, new()
-           {
-               DispositionFileId = 1,
-               DispositionOfferId = 11,
-               DispositionOfferStatusTypeCode = "OPEN"
-           });
+            // Act
+            var result = service.UpdateDispositionFileOffer(1, 11, new()
+            {
+                DispositionFileId = 1,
+                DispositionOfferId = 11,
+                DispositionOfferStatusTypeCode = "OPEN"
+            });
 
-           // Assert
-           Assert.NotNull(result);
-           repository.Verify(x => x.UpdateDispositionOffer(It.IsAny<PimsDispositionOffer>()), Times.Once);
+            // Assert
+            Assert.NotNull(result);
+            repository.Verify(x => x.UpdateDispositionOffer(It.IsAny<PimsDispositionOffer>()), Times.Once);
         }
 
         #endregion
