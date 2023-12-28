@@ -10,17 +10,10 @@ import {
   RenderOptions,
   selectOptions,
   userEvent,
-  waitFor,
 } from '@/utils/test-utils';
 
-import {
-  DispositionTeamSubFormModel,
-  WithDispositionTeam,
-} from '../models/DispositionTeamSubFormModel';
-import { DispositionTeamYupSchema } from '../models/DispositionTeamSubFormYupSchema';
+import { WithDispositionTeam } from '../models/DispositionTeamSubFormModel';
 import DispositionTeamSubForm from './DispositionTeamSubForm';
-
-const validationSchema = jest.fn().mockReturnValue(DispositionTeamYupSchema);
 
 describe('DispositionTeamSubForm component', () => {
   // render component under test
