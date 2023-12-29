@@ -4,6 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
+import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { Api_DispositionFileOffer } from '@/models/api/DispositionFile';
 
@@ -21,6 +22,7 @@ const AddDispositionOfferContainer: React.FunctionComponent<
   const history = useHistory();
   const location = useLocation();
 
+  const { setModalContent, setDisplayModal } = useModalContext();
   const [offerStatusError, setOfferStatusError] = useState(false);
 
   const backUrl = location.pathname.split('/offers/new')[0];
@@ -41,6 +43,14 @@ const AddDispositionOfferContainer: React.FunctionComponent<
   const onCreateError = (e: AxiosError<IApiError>) => {
     if (e?.response?.status === 409) {
       setOfferStatusError(true);
+      setModalContent({
+        variant: 'error',
+        title: 'Error',
+        message: 'You can only have one offer with status of "Accepted".',
+        okButtonText: 'Close',
+        handleOk: () => setDisplayModal(false),
+      });
+      setDisplayModal(true);
     } else {
       if (e?.response?.status === 400) {
         toast.error(e?.response.data.error);

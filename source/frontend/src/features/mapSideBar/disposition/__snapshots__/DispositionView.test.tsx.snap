@@ -353,7 +353,7 @@ exports[`DispositionView component renders as expected 1`] = `
   position: relative;
 }
 
-.c20 {
+.c21 {
   float: right;
   cursor: pointer;
 }
@@ -449,6 +449,22 @@ exports[`DispositionView component renders as expected 1`] = `
 .c7 {
   font-size: 1.4rem;
   line-height: 2.2rem;
+}
+
+.c20 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c20 .btn {
+  margin: 0;
 }
 
 .c10 {
@@ -1166,13 +1182,24 @@ exports[`DispositionView component renders as expected 1`] = `
                         <div
                           class="col"
                         >
-                          Offers
+                          <div
+                            class="c20 no-gutters row"
+                          >
+                            <div
+                              class="px-2 my-1 col-auto"
+                            >
+                              Offers
+                            </div>
+                            <div
+                              class="my-1 col-auto"
+                            />
+                          </div>
                         </div>
                         <div
                           class="col-1"
                         >
                           <svg
-                            class="c20"
+                            class="c21"
                             fill="currentColor"
                             height="1em"
                             stroke="currentColor"
