@@ -95,7 +95,14 @@ const DispositionOfferForm: React.FC<IDispositionOfferFormProps> = ({
                 ></LoadingBackdrop>
                 <StyledContent>
                   <Section header="Offer">
-                    <SectionField label="Funding">
+                    <SectionField
+                      label="Offer status"
+                      tooltip="Open = Offer has been received.
+                    Rejected, = Offer was not responded to (due to receiving a better competing offer or the offer was just highly undesirable).
+                    Countered, = Offer was responded to with a counteroffer. If counteroffer is accepted, new terms should be recorded in Notes.
+                    Accepted= Offer was accepted as-is.
+                    Collapsed= Offer was cancelled or abandoned."
+                    >
                       <Select
                         field="dispositionOfferStatusTypeCode"
                         options={offerStatusTypes}
