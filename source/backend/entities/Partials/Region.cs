@@ -6,7 +6,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// Region class, provides an entity for the datamodel to manage regions.
     /// </summary>
-    public partial class PimsRegion : ICodeEntity<short>
+    public partial class PimsRegion : ICodeEntity<short, bool>
     {
         #region Properties
 
@@ -38,6 +38,10 @@ namespace Pims.Dal.Entities
             }
 
             this.RegionName = name;
+        }
+
+        public PimsRegion()
+        {
         }
         #endregion
     }

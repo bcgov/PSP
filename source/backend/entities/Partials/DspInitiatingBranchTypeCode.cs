@@ -17,13 +17,13 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+        public PimsDspInitiatingBranchType() { }
 
         /// <summary>
         /// Create a new instance of a PimsDspInitiatingBranchType class.
         /// </summary>
         /// <param name="id"></param>
         public PimsDspInitiatingBranchType(string id)
-            : this()
         {
             Id = id;
         }

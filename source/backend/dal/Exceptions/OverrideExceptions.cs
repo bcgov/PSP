@@ -50,6 +50,7 @@ namespace Pims.Dal.Exceptions
             UserOverrideCode.PoiToInventory,
             UserOverrideCode.ContractorSelfRemoved,
             UserOverrideCode.ProductReuse,
+            UserOverrideCode.DisposingPropertyNotInventoried,
         };
 
         private UserOverrideCode(string code)

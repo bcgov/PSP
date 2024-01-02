@@ -23,10 +23,11 @@ namespace Pims.Core.Test
                 FileName = name ?? "Test Acquisition File",
                 ConcurrencyControlNumber = 1,
             };
+            acquisitionFile.FileNumber = "12345";
             acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
-            acquisitionFile.AcquisitionFileStatusTypeCodeNavigation = statusType ?? new Entity.PimsAcquisitionFileStatusType() { Id = "ACTIVE", Description = "Active" };
-            acquisitionFile.AcquisitionTypeCodeNavigation = acquisitionType ?? new Entity.PimsAcquisitionType() { Id = "SECTN3" };
-            acquisitionFile.RegionCodeNavigation = region ?? new Entity.PimsRegion("Northern") { RegionCode = 1, ConcurrencyControlNumber = 1 };
+            acquisitionFile.AcquisitionFileStatusTypeCodeNavigation = statusType ?? new Entity.PimsAcquisitionFileStatusType() { Id = "ACTIVE", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" };
+            acquisitionFile.AcquisitionTypeCodeNavigation = acquisitionType ?? new Entity.PimsAcquisitionType() { Id = "SECTN3", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "test" };
+            acquisitionFile.RegionCodeNavigation = region ?? new Entity.PimsRegion("Northern") { RegionCode = 1, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test" };
             acquisitionFile.RegionCode = acquisitionFile.RegionCodeNavigation.RegionCode;
 
             return acquisitionFile;

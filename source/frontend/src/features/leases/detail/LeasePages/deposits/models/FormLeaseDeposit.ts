@@ -34,7 +34,7 @@ export class FormLeaseDeposit {
     model.id = baseModel.id ?? undefined;
     model.description = baseModel.description;
     model.amountPaid = baseModel.amountPaid;
-    model.depositDate = baseModel.depositDate || '';
+    model.depositDate = baseModel.depositDateOnly || '';
     model.depositTypeCode = baseModel.depositType.id;
     model.otherTypeDescription = baseModel.otherTypeDescription || '';
     model.contactHolder =
@@ -50,7 +50,7 @@ export class FormLeaseDeposit {
       leaseId: this.leaseId ?? null,
       description: this.description,
       amountPaid: this.amountPaid === '' ? 0 : this.amountPaid,
-      depositDate: this.depositDate,
+      depositDateOnly: this.depositDate,
       depositType: { id: this.depositTypeCode },
       otherTypeDescription: this.otherTypeDescription === '' ? null : this.otherTypeDescription,
       contactHolder: this.contactHolder !== undefined ? toContact(this.contactHolder) : null,

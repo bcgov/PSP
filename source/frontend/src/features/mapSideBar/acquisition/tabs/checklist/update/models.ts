@@ -6,6 +6,7 @@ import {
   sortByDisplayOrder,
 } from '@/models/api/AcquisitionFile';
 import { Api_AuditFields } from '@/models/api/AuditFields';
+import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { fromTypeCode, toTypeCode } from '@/utils/formUtils';
 
@@ -83,8 +84,8 @@ export class AcquisitionChecklistItemFormModel implements Api_AuditFields {
   itemType?: Api_AcquisitionFileChecklistItemType;
   statusType?: string;
   rowVersion?: number;
-  appCreateTimestamp?: string;
-  appLastUpdateTimestamp?: string;
+  appCreateTimestamp?: UtcIsoDateTime;
+  appLastUpdateTimestamp?: UtcIsoDateTime;
   appLastUpdateUserid?: string;
   appCreateUserid?: string;
   appLastUpdateUserGuid?: string;

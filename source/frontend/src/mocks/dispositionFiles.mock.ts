@@ -101,11 +101,13 @@ export const mockDispositionFileResponse = (
     description: 'Cancelled',
     isDisabled: false,
   },
-  appraisedValueAmount: 550000,
-  appraisalDate: '2023-12-28T00:00:00',
-  bcaValueAmount: 600000,
-  bcaRollYear: '2023',
-  listPriceAmount: 590000,
+  dispositionAppraisal: {
+    appraisedAmount: 550000,
+    appraisalDate: '2023-12-28T00:00:00',
+    bcaValueAmount: 600000,
+    bcaRollYear: '2023',
+    listPriceAmount: 590000,
+  },
   dispositionOffers: [],
   dispositionSale: null,
   appCreateTimestamp: '2023-11-25T20:48:26.693',
@@ -274,9 +276,7 @@ export const mockDispositionFileSaleApi = (
   gstCollectedAmount: 36489.36,
   netBookAmount: 246.2,
   totalCostAmount: 856320.36,
-  netProceedsBeforeSppAmount: 2500.0,
   sppAmount: 1000.0,
-  netProceedsAfterSppAmount: 20.0,
   remediationAmount: 1.0,
   dispositionPurchaserAgents: [
     {

@@ -2,13 +2,14 @@ import Api_TypeCode from '@/interfaces/ITypeCode';
 import { Api_Contact } from '@/models/api/Contact';
 
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import { DateOnly } from './DateOnly';
 
 export interface Api_SecurityDeposit extends Api_ConcurrentVersion {
   id: number | null;
   leaseId: number | null;
   description: string;
   amountPaid: number;
-  depositDate: string;
+  depositDateOnly: DateOnly;
   depositType: Api_TypeCode<string>;
   otherTypeDescription: string | null;
   contactHolder: Api_Contact | null;
@@ -22,6 +23,6 @@ export interface Api_SecurityDepositReturn extends Api_ConcurrentVersion {
   claimsAgainst: number | null;
   returnAmount: number;
   interestPaid: number | null;
-  returnDate: string;
+  returnDate: DateOnly;
   contactHolder: Api_Contact | null;
 }

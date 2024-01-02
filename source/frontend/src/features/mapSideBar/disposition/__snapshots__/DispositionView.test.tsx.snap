@@ -555,7 +555,9 @@ exports[`DispositionView component renders as expected 1`] = `
               </div>
               <div
                 class="col"
-              />
+              >
+                013-852-752
+              </div>
             </div>
           </div>
         </div>

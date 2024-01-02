@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// ResearchFileStatusType class, provides an entity for the datamodel to manage research status types.
     /// </summary>
-    public partial class PimsResearchFileStatusType : ITypeEntity<string>
+    public partial class PimsResearchFileStatusType : ITypeEntity<string, bool?>
     {
         #region Properties
 
@@ -26,6 +26,10 @@ namespace Pims.Dal.Entities
             : this()
         {
             Id = id;
+        }
+
+        public PimsResearchFileStatusType()
+        {
         }
         #endregion
     }

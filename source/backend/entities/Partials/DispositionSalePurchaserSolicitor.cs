@@ -8,6 +8,6 @@ namespace Pims.Dal.Entities
     public partial class PimsDspPurchSolicitor : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         [NotMapped]
-        public override long Internal_Id { get => this.DspPurchAgentId; set => this.DspPurchAgentId = value; }
+        public override long Internal_Id { get => this.DspPurchSolicitorId; set => this.DspPurchSolicitorId = value; }
     }
 }

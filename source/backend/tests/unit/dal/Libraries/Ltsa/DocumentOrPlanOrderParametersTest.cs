@@ -33,7 +33,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             obj.DocOrPlanNumber.Should().Be("docOrPlanNumber");
             obj.OrderRemarks.Should().Be("orderRemarks");
             obj.IncludePlanCertificationPage.Should().Be(true);
-            obj.DocumentDistrictCode.Should().BeEquivalentTo(landTitleDistrictCode);
+            obj.DocumentDistrictCode.Should().Be(landTitleDistrictCode);
         }
     }
 }

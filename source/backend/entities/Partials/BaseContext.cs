@@ -7,6 +7,9 @@ namespace Pims.Dal
     /// </summary>
     public partial class PimsBaseContext : DbContext
     {
+        public PimsBaseContext()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PimsBaseContext"/> class.

@@ -16,7 +16,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.PimsRegion CreateRegion(short id, string code)
         {
-            return new Entity.PimsRegion(code) { RegionCode = id, ConcurrencyControlNumber = 1 };
+            return new Entity.PimsRegion(code) { RegionCode = id, RegionName = code, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now };
         }
 
         /// <summary>
@@ -27,9 +27,9 @@ namespace Pims.Core.Test
         {
             return new List<Entity.PimsRegion>()
             {
-                new Entity.PimsRegion("Northern") { RegionCode = 1, ConcurrencyControlNumber = 1 },
-                new Entity.PimsRegion("Southern Interior") { RegionCode = 2,  ConcurrencyControlNumber = 1 },
-                new Entity.PimsRegion("South Coast") { RegionCode = 3,  ConcurrencyControlNumber = 1 },
+                new Entity.PimsRegion("Northern") { RegionCode = 1, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+                new Entity.PimsRegion("Southern Interior") { RegionCode = 2,  ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+                new Entity.PimsRegion("South Coast") { RegionCode = 3,  ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
             };
         }
     }

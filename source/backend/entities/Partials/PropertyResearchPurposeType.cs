@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsPropResearchPurposeType class, provides an entity for the datamodel to manage property research purpose types.
     /// </summary>
-    public partial class PimsPropResearchPurposeType : ITypeEntity<string>
+    public partial class PimsPropResearchPurposeType : ITypeEntity<string, bool?>
     {
         #region Properties
 
@@ -26,6 +26,10 @@ namespace Pims.Dal.Entities
             : this()
         {
             Id = id;
+        }
+
+        public PimsPropResearchPurposeType()
+        {
         }
         #endregion
     }

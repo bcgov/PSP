@@ -17,13 +17,13 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+        public PimsDspFlTeamProfileType() { }
 
         /// <summary>
         /// Create a new instance of a PimsDspFlTeamProfileType class.
         /// </summary>
         /// <param name="id"></param>
         public PimsDspFlTeamProfileType(string id)
-            : this()
         {
             Id = id;
         }

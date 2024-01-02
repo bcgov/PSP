@@ -31,16 +31,11 @@ export interface Api_DispositionFile extends Api_ConcurrentVersion, Api_AuditFie
   projectId: number | null;
   product: Api_Product | null;
   productId: number | null;
-  // Appraisal
-  appraisedValueAmount: number | null;
-  appraisalDate: string | null;
-  bcaValueAmount: number | null;
-  bcaRollYear: string | null;
-  listPriceAmount: number | null;
   // Offers
   dispositionOffers: Api_DispositionFileOffer[];
   // Sale
   dispositionSale: Api_DispositionFileSale | null;
+  dispositionAppraisal: Api_DispositionFileAppraisal | null;
 }
 
 export interface Api_DispositionFileProperty
@@ -85,13 +80,19 @@ export interface Api_DispositionFileSale {
   gstCollectedAmount: number | null;
   netBookAmount: number | null;
   totalCostAmount: number | null;
-  netProceedsBeforeSppAmount: number | null;
   sppAmount: number | null;
-  netProceedsAfterSppAmount: number | null;
   remediationAmount: number | null;
   dispositionPurchasers: Api_DispositionSalePurchaser[];
   dispositionPurchaserAgents: Api_DispositionSalePurchaserAgent[];
   dispositionPurchaserSolicitors: Api_DispositionSalePurchaserSolicitor[];
+}
+
+export interface Api_DispositionFileAppraisal {
+  appraisedAmount: number | null;
+  appraisalDate: string | null;
+  bcaValueAmount: number | null;
+  bcaRollYear: string | null;
+  listPriceAmount: number | null;
 }
 
 export interface ContactInformation {

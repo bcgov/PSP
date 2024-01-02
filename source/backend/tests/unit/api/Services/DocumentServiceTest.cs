@@ -119,7 +119,7 @@ namespace Pims.Api.Test.Services
             Func<Task> sut = async () => await service.UploadDocumentAsync(uploadRequest);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            sut.Should().ThrowAsync<NotAuthorizedException>();
             documentTypeRepository.Verify(x => x.GetAll(), Times.Never);
         }
 
@@ -218,7 +218,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.UpdateDocumentAsync(updateRequest);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentRepository.Verify(x => x.Add(It.IsAny<PimsDocument>()), Times.Never);
         }
 
@@ -244,7 +244,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.UpdateDocumentAsync(updateRequest);
 
             // Assert
-            act.Should().Throw<BadRequestException>();
+            act.Should().ThrowAsync<BadRequestException>();
             documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Once);
         }
 
@@ -457,7 +457,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.DeleteDocumentAsync(doc);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Never);
         }
 
@@ -524,7 +524,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.GetStorageDocumentTypes(null, page: 1, pageSize: 10);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentStorageRepository.Verify(x => x.TryDeleteDocument(It.IsAny<long>()), Times.Never);
         }
 
@@ -564,7 +564,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.GetStorageDocumentList(null, page: 1, pageSize: 10);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
         }
 
         [Fact]
@@ -624,7 +624,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.GetStorageDocumentMetadata(1, string.Empty, 1, 10);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
         }
 
         [Fact]
@@ -663,7 +663,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.DownloadFileAsync(1, 2);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
         }
 
         [Fact]
@@ -701,7 +701,7 @@ namespace Pims.Api.Test.Services
             Func<Task> sut = async () => await service.DownloadFileLatestAsync(1);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            sut.Should().ThrowAsync<NotAuthorizedException>();
         }
 
         [Fact]

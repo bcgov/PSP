@@ -41,7 +41,7 @@ namespace Pims.Dal.Test.Repositories
             var role = EntityHelper.CreateRole("test role");
             var eUser = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", organization: organization, role: role);
             var eSecondUser = EntityHelper.CreateUser(2, Guid.NewGuid(), "username", organization: organization, role: role);
-            var region = new PimsRegion() { Code = 2 };
+            var region = new PimsRegion() { Code = 2, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" };
 
             var eAccessRequest = EntityHelper.CreateAccessRequest(1, organization: organization, role: role, user: eUser, region: region);
             eAccessRequest.User.Person.Surname = "test";
@@ -51,7 +51,7 @@ namespace Pims.Dal.Test.Repositories
             secondAccessRequest.User.UserId = 2;
             secondAccessRequest.User.Person.Surname = "Other";
             secondAccessRequest.User.BusinessIdentifierValue = "oDisabled";
-            secondAccessRequest.AccessRequestStatusTypeCodeNavigation = new PimsAccessRequestStatusType() { Id = "fake" };
+            secondAccessRequest.AccessRequestStatusTypeCodeNavigation = new PimsAccessRequestStatusType() { Id = "fake", DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" };
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(eAccessRequest, secondAccessRequest);
 
@@ -183,7 +183,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
             var eUser = EntityHelper.CreateUser(1, new Guid(user.FindFirstValue("idir_user_guid")), "test user");
-            var accessRequest = EntityHelper.CreateAccessRequest(1, user: eUser, region: new PimsRegion() { Id = 2 });
+            var accessRequest = EntityHelper.CreateAccessRequest(1, user: eUser, region: new PimsRegion() { Id = 2, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" });
             helper.CreatePimsContext(user, true).AddAndSaveChanges(eUser);
 
             var service = helper.CreateRepository<AccessRequestRepository>(user);
@@ -208,7 +208,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
             var eUser = EntityHelper.CreateUser("test user 2");
-            var accessRequest = EntityHelper.CreateAccessRequest(1, user: eUser, region: new PimsRegion() { Id = 2 });
+            var accessRequest = EntityHelper.CreateAccessRequest(1, user: eUser, region: new PimsRegion() { Id = 2, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" });
             helper.CreatePimsContext(user, true).AddAndSaveChanges(accessRequest);
 
             var service = helper.CreateRepository<AccessRequestRepository>(user);
@@ -227,7 +227,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminUsers);
             var eUser = EntityHelper.CreateUser("test user 2");
-            var accessRequest = EntityHelper.CreateAccessRequest(1, user: eUser, region: new PimsRegion() { Id = 2 });
+            var accessRequest = EntityHelper.CreateAccessRequest(1, user: eUser, region: new PimsRegion() { Id = 2, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" });
             helper.CreatePimsContext(user, true).AddAndSaveChanges(eUser);
 
             var service = helper.CreateRepository<AccessRequestRepository>(user);
@@ -246,7 +246,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
             var eUser = EntityHelper.CreateUser(1, new Guid(user.FindFirstValue("idir_user_guid")), "test user");
-            var accessRequest = EntityHelper.CreateAccessRequest(1, user: eUser, region: new PimsRegion() { Id = 2 });
+            var accessRequest = EntityHelper.CreateAccessRequest(1, user: eUser, region: new PimsRegion() { Id = 2, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" });
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(accessRequest);
 
             var service = helper.CreateRepository<AccessRequestRepository>(user);
@@ -324,9 +324,9 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
             var eUser = EntityHelper.CreateUser(1, new Guid(user.FindFirstValue("idir_user_guid")), "test user");
-            var accessRequest = EntityHelper.CreateAccessRequest(1, user: eUser, region: new PimsRegion() { Id = 2 });
-            var region = new PimsRegion() { Id = 3 };
-            var status = new PimsAccessRequestStatusType() { Id = "updated" };
+            var accessRequest = EntityHelper.CreateAccessRequest(1, user: eUser, region: new PimsRegion() { Id = 2, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" });
+            var region = new PimsRegion() { Id = 3, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" };
+            var status = new PimsAccessRequestStatusType() { Id = "updated", DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" };
             var role = EntityHelper.CreateRole(2, "updated role");
             var context = helper.CreatePimsContext(user, true);
             context.Add(region);

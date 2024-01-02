@@ -6,7 +6,8 @@ import {
 import { emptyStringtoNullable, toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
-import { DispositionOfferFormModel } from '../tabs/offersAndSale/dispositionOffer/models/DispositionOfferFormModel';
+import { DispositionAppraisalFormModel } from './DispositionAppraisalFormModel';
+import { DispositionOfferFormModel } from './DispositionOfferFormModel';
 import { DispositionSaleFormModel } from './DispositionSaleFormModel';
 import { DispositionTeamSubFormModel, WithDispositionTeam } from './DispositionTeamSubFormModel';
 
@@ -30,12 +31,7 @@ export class DispositionFormModel implements WithDispositionTeam {
   team: DispositionTeamSubFormModel[] = [];
   offers: DispositionOfferFormModel[] = [];
   sale: DispositionSaleFormModel | null = null;
-  // Appraisal and Value
-  appraisedValueAmount: number | null = null;
-  appraisalDate: string | null = null;
-  bcaValueAmount: number | null = null;
-  bcaRollYear: string | null = null;
-  listPriceAmount: number | null = null;
+  appraisal: DispositionAppraisalFormModel | null = null;
 
   constructor(
     readonly id: number | null = null,
@@ -92,12 +88,7 @@ export class DispositionFormModel implements WithDispositionTeam {
       projectId: null,
       product: null,
       productId: null,
-      // Appraisal and Value
-      appraisedValueAmount: this.appraisedValueAmount,
-      appraisalDate: this.appraisalDate,
-      bcaValueAmount: this.bcaValueAmount,
-      bcaRollYear: this.bcaRollYear,
-      listPriceAmount: this.listPriceAmount,
+      dispositionAppraisal: this.appraisal ? this.appraisal.toApi() : null,
     };
   }
 }

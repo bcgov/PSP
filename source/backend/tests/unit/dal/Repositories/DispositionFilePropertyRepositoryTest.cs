@@ -74,8 +74,8 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.DispositionView);
 
             var acqFile = EntityHelper.CreateDispositionFile();
-            var pimsPropertyDispositionFile = new PimsDispositionFileProperty() { DispositionFileId = acqFile.DispositionFileId, Property = new PimsProperty() { RegionCode = 1, PropertyId = 1 } };
-            var pimsPropertyDispositionFile2 = new PimsDispositionFileProperty() { DispositionFileId = acqFile.DispositionFileId, Property = new PimsProperty() { RegionCode = 1, PropertyId = 2 } };
+            var pimsPropertyDispositionFile = new PimsDispositionFileProperty() { DispositionFileId = acqFile.DispositionFileId, Property = EntityHelper.CreateProperty(1) };
+            var pimsPropertyDispositionFile2 = new PimsDispositionFileProperty() { DispositionFileId = acqFile.DispositionFileId, Property = EntityHelper.CreateProperty(2) };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsPropertyDispositionFile);
             var repository = helper.CreateRepository<DispositionFilePropertyRepository>(user);

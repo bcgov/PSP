@@ -31,7 +31,7 @@ jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
     return {
       getDispositionFileOffers: mockGetDispositionFileOffersApi,
-      getDispositionFileSales: mockGetDispositionFileSalesApi,
+      getDispositionFileSale: mockGetDispositionFileSalesApi,
     };
   },
 }));

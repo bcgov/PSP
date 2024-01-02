@@ -21,6 +21,9 @@ namespace Pims.Core.Test
                 Code = code,
                 Name = name,
                 TenantId = id,
+                DbCreateUserid = "test",
+                DbLastUpdateUserid = "test",
+                Settings = "{}",
             };
 
             return tenant;

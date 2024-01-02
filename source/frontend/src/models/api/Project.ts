@@ -2,6 +2,7 @@ import { Api_AcquisitionFile } from './AcquisitionFile';
 import { Api_AuditFields } from './AuditFields';
 import { Api_CodeType } from './CodeType';
 import { Api_ConcurrentVersion_Null } from './ConcurrentVersion';
+import { DateOnly } from './DateOnly';
 import { Api_FinancialCode } from './FinancialCode';
 import Api_TypeCode from './TypeCode';
 
@@ -26,9 +27,9 @@ export interface Api_Product extends Api_ConcurrentVersion_Null, Api_AuditFields
   acquisitionFiles: Api_AcquisitionFile[];
   code: string;
   description: string;
-  startDate: string | null;
+  startDate: DateOnly | null;
   costEstimate: number | null;
-  costEstimateDate: string | null;
+  costEstimateDate: DateOnly | null;
   objective: string;
   scope: string | null;
 }

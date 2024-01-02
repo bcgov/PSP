@@ -58,6 +58,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.RegionCodeNavigation)
                 .Include(d => d.DspPhysFileStatusTypeCodeNavigation)
                 .Include(d => d.PimsDispositionSales)
+                .Include(d => d.PimsDispositionAppraisals)
                 .Include(d => d.PimsDispositionOffers)
                     .ThenInclude(o => o.DispositionOfferStatusTypeCodeNavigation)
                 .Include(d => d.PimsDispositionFileTeams)
@@ -375,7 +376,7 @@ namespace Pims.Dal.Repositories
                 .Where(predicate);
 
             // As per Confluence - default sort to show chronological, newest first; based upon File Assigned Date
-            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(filter.Sort) : query.OrderByDescending(disp => disp.AssignedDt ?? DateTime.MinValue);
+            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(filter.Sort) : query.OrderByDescending(disp => disp.AssignedDt ?? DateOnly.FromDateTime(DateTime.MinValue));
 
             return query;
         }

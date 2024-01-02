@@ -36,13 +36,13 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     getDispositionProperties: {
       execute: retrieveDispositionFileProperties,
       loading: loadingDispositionFileProperties,
+      response: dispositionFileProperties,
     },
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: loadingGetLastUpdatedBy },
   } = useDispositionProvider();
 
   const { setModalContent, setDisplayModal } = useModalContext();
   const mapMachine = useMapStateMachine();
-
   const formikRef = useRef<FormikProps<any>>(null);
 
   const location = useLocation();
@@ -78,11 +78,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
     // retrieve related entities (ie properties items) in parallel
     const dispositionPropertiesTask = retrieveDispositionFileProperties(dispositionFileId);
-    const dispositionProperties = await dispositionPropertiesTask;
-
-    if (retrieved) {
-      retrieved.fileProperties = dispositionProperties;
-    }
+    await dispositionPropertiesTask;
   }, [dispositionFileId, retrieveDispositionFileProperties, retrieveDispositionFile]);
 
   const fetchLastUpdatedBy = React.useCallback(async () => {
@@ -207,7 +203,11 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
         formikRef={formikRef}
         isFormValid={isValid}
         error={error}
-        dispositionFile={!loading ? dispositionFile : undefined}
+        dispositionFile={
+          !loading && !!dispositionFile
+            ? { ...dispositionFile, fileProperties: dispositionFileProperties }
+            : undefined
+        }
         isEditing={isEditing}
       ></View>
     </>

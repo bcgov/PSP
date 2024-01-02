@@ -18,9 +18,9 @@ namespace Pims.Api.Models.Concepts.Property
 
         public TypeModel<string> ActivityStatusTypeCode { get; set; }
 
-        public DateTime RequestAddedDateTime { get; set; }
+        public DateOnly RequestAddedDateTime { get; set; }
 
-        public DateTime? CompletionDateTime { get; set; }
+        public DateOnly? CompletionDateTime { get; set; }
 
         public string Description { get; set; }
 

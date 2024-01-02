@@ -64,11 +64,7 @@ describe('Disposition Offer Detail View component', () => {
   it('displays a message when Disposition has no Appraisal', async () => {
     const mockDisposition = mockDispositionFileApi;
     mockDisposition.dispositionSale = null;
-    mockDisposition.appraisedValueAmount = null;
-    mockDisposition.appraisalDate = null;
-    mockDisposition.bcaValueAmount = null;
-    mockDisposition.bcaRollYear = null;
-    mockDisposition.listPriceAmount = null;
+    mockDisposition.dispositionAppraisal = null;
 
     const { getByText } = await setup({
       props: { dispositionFile: mockDisposition, dispositionOffers: [] },
@@ -137,10 +133,12 @@ describe('Disposition Offer Detail View component', () => {
     expect(queryByTestId('disposition-sale.netBookAmount')).toHaveTextContent('$246.2');
     expect(queryByTestId('disposition-sale.totalCostAmount')).toHaveTextContent('$856,320.36');
     expect(queryByTestId('disposition-sale.netProceedsBeforeSppAmount')).toHaveTextContent(
-      '$2,500.00',
+      '-$159,230.96',
     );
     expect(queryByTestId('disposition-sale.sppAmount')).toHaveTextContent('$1,000.00');
-    expect(queryByTestId('disposition-sale.netProceedsAfterSppAmount')).toHaveTextContent('$20.00');
+    expect(queryByTestId('disposition-sale.netProceedsAfterSppAmount')).toHaveTextContent(
+      '-$160,230.96',
+    );
     expect(queryByTestId('disposition-sale.remediationAmount')).toHaveTextContent('$1.00');
 
     // Purchasers

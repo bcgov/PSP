@@ -17,13 +17,13 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+        public PimsDspPhysFileStatusType() { }
 
         /// <summary>
         /// Create a new instance of a PimsDspPhysFileStatusType class.
         /// </summary>
         /// <param name="id"></param>
         public PimsDspPhysFileStatusType(string id)
-            : this()
         {
             Id = id;
         }

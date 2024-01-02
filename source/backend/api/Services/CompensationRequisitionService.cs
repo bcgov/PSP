@@ -79,7 +79,7 @@ namespace Pims.Api.Services
 
             return updatedEntity;
 
-            DateTime? CheckFinalizedDate(bool? currentStatusIsDraft, bool? newStatusIsDraft, DateTime? currentValue)
+            DateOnly? CheckFinalizedDate(bool? currentStatusIsDraft, bool? newStatusIsDraft, DateOnly? currentValue)
             {
                 if (currentStatusIsDraft.Equals(newStatusIsDraft))
                 {
@@ -88,7 +88,7 @@ namespace Pims.Api.Services
 
                 if (newStatusIsDraft.HasValue)
                 {
-                    return newStatusIsDraft.Value ? null : DateTime.UtcNow;
+                    return newStatusIsDraft.Value ? null : DateOnly.FromDateTime(DateTime.UtcNow);
                 }
 
                 return null;

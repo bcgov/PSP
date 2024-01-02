@@ -10,7 +10,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsDspPurchSolicitor, DispositionSalePurchaserSolicitorModel>()
-                .Map(dest => dest.Id, src => src.DspPurchAgentId)
+                .Map(dest => dest.Id, src => src.DspPurchSolicitorId)
                 .Map(dest => dest.DispositionSaleId, src => src.DispositionSaleId)
                 .Map(dest => dest.Person, src => src.Person)
                 .Map(dest => dest.PersonId, src => src.PersonId)
@@ -21,7 +21,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
             config.NewConfig<DispositionSalePurchaserSolicitorModel, Entity.PimsDspPurchSolicitor>()
-                .Map(dest => dest.DspPurchAgentId, src => src.Id)
+                .Map(dest => dest.DspPurchSolicitorId, src => src.Id)
                 .Map(dest => dest.DispositionSaleId, src => src.DispositionSaleId)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)

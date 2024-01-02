@@ -15,7 +15,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.PimsDataSourceType CreateDataSourceType(string id)
         {
-            return new Entity.PimsDataSourceType(id) { ConcurrencyControlNumber = 1 };
+            return new Entity.PimsDataSourceType(id) { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" };
         }
 
         /// <summary>
@@ -26,8 +26,8 @@ namespace Pims.Core.Test
         {
             return new List<Entity.PimsDataSourceType>()
             {
-                new Entity.PimsDataSourceType("LIS") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsDataSourceType("PAIMS") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsDataSourceType("LIS") { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
+                new Entity.PimsDataSourceType("PAIMS") { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
             };
         }
     }

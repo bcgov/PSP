@@ -132,8 +132,8 @@ export class PropertyActivityFormModel {
       activityTypeCode: toTypeCode(this.activityTypeCode) || {},
       activitySubtypeCode: toTypeCode(this.activitySubtypeCode) || {},
       activityStatusTypeCode: toTypeCode(this.activityStatusCode) || {},
-      requestAddedDateTime: this.requestedDate,
-      completionDateTime: emptyStringtoNullable(this.completionDate),
+      requestAddedDateOnly: this.requestedDate,
+      completionDateOnly: emptyStringtoNullable(this.completionDate),
       description: this.description,
       requestSource: this.requestedSource,
 
@@ -200,8 +200,8 @@ export class PropertyActivityFormModel {
       formModel.activityTypeCode = model.activityTypeCode.id || '';
       formModel.activitySubtypeCode = model.activitySubtypeCode.id || '';
       formModel.activityStatusCode = model.activityStatusTypeCode.id || '';
-      formModel.requestedDate = model.requestAddedDateTime;
-      formModel.completionDate = model.completionDateTime || '';
+      formModel.requestedDate = model.requestAddedDateOnly;
+      formModel.completionDate = model.completionDateOnly || '';
       formModel.description = model.description;
 
       if (model.ministryContacts.length > 0) {

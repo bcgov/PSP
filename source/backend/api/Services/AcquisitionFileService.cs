@@ -329,7 +329,7 @@ namespace Pims.Api.Services
                     throw new BusinessRuleViolationException("You must remove all takes and interest holders from an acquisition file property before removing that property from an acquisition file");
                 }
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
-                if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
+                if (deletedProperty.Property.IsPropertyOfInterest == true)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
@@ -689,9 +689,9 @@ namespace Pims.Api.Services
         {
             // Get the current properties in the research file
             var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
-            var propertiesOfInterest = currentProperties.Where(p => p.Property.IsPropertyOfInterest.HasValue && p.Property.IsPropertyOfInterest.Value);
-            var propertiesAccounted = currentProperties.Where(x => x.Property.IsPropertyOfInterest.HasValue && !x.Property.IsPropertyOfInterest.Value
-                                            && x.Property.IsOwned.HasValue && !x.Property.IsOwned.Value);
+            var propertiesOfInterest = currentProperties.Where(p => p.Property.IsPropertyOfInterest);
+            var propertiesAccounted = currentProperties.Where(x => x.Property.IsPropertyOfInterest
+                                            && x.Property.IsOwned);
 
             // PSP-6111 Business rule: Transfer properties of interest to core inventory when acquisition file is completed
             foreach (var acquisitionProperty in propertiesOfInterest)
@@ -700,19 +700,19 @@ namespace Pims.Api.Services
                 var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionProperty.Internal_Id);
 
                 var activeTakes = takes.Where(t =>
-                    !(t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && t.LandActEndDt.HasValue && t.LandActEndDt.Value.Date < DateTime.UtcNow.Date) &&
-                    !(t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value && t.LtcEndDt.HasValue && t.LtcEndDt.Value.Date < DateTime.UtcNow.Date) &&
-                    !(t.IsNewInterestInSrw.HasValue && t.IsNewInterestInSrw.Value && t.SrwEndDt.HasValue && t.SrwEndDt.Value.Date < DateTime.UtcNow.Date));
+                    !(t.IsNewLandAct && t.LandActEndDt.HasValue && t.LandActEndDt.Value < DateOnly.FromDateTime(DateTime.Now)) &&
+                    !(t.IsNewLicenseToConstruct && t.LtcEndDt.HasValue && t.LtcEndDt.Value < DateOnly.FromDateTime(DateTime.Now)) &&
+                    !(t.IsNewInterestInSrw && t.SrwEndDt.HasValue && t.SrwEndDt.Value < DateOnly.FromDateTime(DateTime.Now)));
 
                 // see psp-6589 for business rules.
-                var isOwned = !(activeTakes.All(t => (t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && COREINVENTORYINTERESTCODES.Contains(t.LandActTypeCode))
-                    || (t.IsNewInterestInSrw.HasValue && t.IsNewInterestInSrw.Value)
-                    || (t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value)) && activeTakes.Any());
+                var isOwned = !(activeTakes.All(t => (t.IsNewLandAct && COREINVENTORYINTERESTCODES.Contains(t.LandActTypeCode))
+                    || t.IsNewInterestInSrw
+                    || t.IsNewLicenseToConstruct) && activeTakes.Any());
                 var isPropertyOfInterest = false;
 
                 // Override for dedication psp-7048.
                 var doNotAcquire = takes.All(t =>
-                    t.IsNewHighwayDedication.HasValue && t.IsNewHighwayDedication.Value && t.IsAcquiredForInventory.HasValue && !t.IsAcquiredForInventory.Value);
+                    t.IsNewHighwayDedication && !t.IsAcquiredForInventory);
 
                 if (doNotAcquire)
                 {
@@ -737,7 +737,7 @@ namespace Pims.Api.Services
                 }
 
                 var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acqFileProperty.Internal_Id);
-                var isOwned = takes.Any(x => x.IsThereSurplus.HasValue && x.IsThereSurplus.Value);
+                var isOwned = takes.Any(x => x.IsThereSurplus);
 
                 _propertyRepository.TransferFileProperty(property, isOwned);
             }
@@ -799,7 +799,7 @@ namespace Pims.Api.Services
             var checklistStatusTypes = _lookupRepository.GetAllAcquisitionChecklistItemStatusTypes();
             foreach (var itemType in _checklistRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType()))
             {
-                if (!pimsAcquisitionChecklistItems.Any(cli => cli.AcqChklstItemTypeCode == itemType.AcqChklstItemTypeCode) && acquisitionFile.AppCreateTimestamp >= itemType.EffectiveDate)
+                if (!pimsAcquisitionChecklistItems.Any(cli => cli.AcqChklstItemTypeCode == itemType.AcqChklstItemTypeCode) && DateOnly.FromDateTime(acquisitionFile.AppCreateTimestamp) >= itemType.EffectiveDate)
                 {
                     var checklistItem = new PimsAcquisitionChecklistItem
                     {

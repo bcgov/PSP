@@ -797,7 +797,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="c3 text-left col"
           data-testid="disposition-sale.netProceedsBeforeSppAmount"
         >
-          $2,500.00
+          -$159,230.96
         </div>
       </div>
       <div
@@ -883,7 +883,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="c3 text-left col"
           data-testid="disposition-sale.netProceedsAfterSppAmount"
         >
-          $20.00
+          -$160,230.96
         </div>
       </div>
       <div
