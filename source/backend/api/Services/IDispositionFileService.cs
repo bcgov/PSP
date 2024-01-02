@@ -27,6 +27,8 @@ namespace Pims.Api.Services
 
         PimsDispositionOffer UpdateDispositionFileOffer(long dispositionFileId, long offerId, PimsDispositionOffer dispositionOffer);
 
+        bool DeleteDispositionFileOffer(long dispositionFileId, long offerId);
+
         PimsDispositionSale GetDispositionFileSale(long dispositionFileId);
     }
 }

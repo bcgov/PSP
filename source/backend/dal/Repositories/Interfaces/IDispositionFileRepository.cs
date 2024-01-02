@@ -24,6 +24,8 @@ namespace Pims.Dal.Repositories
 
         PimsDispositionOffer UpdateDispositionOffer(PimsDispositionOffer dispositionOffer);
 
+        bool TryDeleteDispositionOffer(long dispositionId, long dispositionOfferId);
+
         PimsDispositionSale GetDispositionFileSale(long dispositionId);
 
         long GetRowVersion(long id);

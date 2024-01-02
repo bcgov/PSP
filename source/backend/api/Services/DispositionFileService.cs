@@ -179,6 +179,17 @@ namespace Pims.Api.Services
             return updatedOffer;
         }
 
+        public bool DeleteDispositionFileOffer(long dispositionFileId, long offerId)
+        {
+            _logger.LogInformation("Deleting Disposition Offer with id ...", offerId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+
+            var deleteResult = _dispositionFileRepository.TryDeleteDispositionOffer(dispositionFileId, offerId);
+            _dispositionFileRepository.CommitTransaction();
+
+            return deleteResult;
+        }
+
         public PimsDispositionSale GetDispositionFileSale(long dispositionFileId)
         {
             _logger.LogInformation("Getting disposition file sales with DispositionFileId: {id}", dispositionFileId);

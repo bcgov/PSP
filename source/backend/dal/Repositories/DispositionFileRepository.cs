@@ -255,6 +255,20 @@ namespace Pims.Dal.Repositories
             return existingOffer;
         }
 
+        public bool TryDeleteDispositionOffer(long dispositionId, long dispositionOfferId)
+        {
+            var deletedEntity = Context.PimsDispositionOffers.Where(x => x.DispositionFileId == dispositionId && x.DispositionOfferId == dispositionOfferId).FirstOrDefault();
+
+            if (deletedEntity is not null)
+            {
+                Context.PimsDispositionOffers.Remove(deletedEntity);
+
+                return true;
+            }
+
+            return false;
+        }
+
         public PimsDispositionSale GetDispositionFileSale(long dispositionId)
         {
             return Context.PimsDispositionSales.AsNoTracking()

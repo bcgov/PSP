@@ -66,6 +66,8 @@ export const useApiDispositionFile = () => {
           `/dispositionfiles/${dispositionFileId}/offers/${offferId}`,
           offer,
         ),
+      deleteDispositionFileOffer: (dispositionFileId: number, offferId: number) =>
+        api.delete<boolean>(`/dispositionfiles/${dispositionFileId}/offers/${offferId}`),
     }),
     [api],
   );
