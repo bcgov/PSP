@@ -29,5 +29,7 @@ namespace Pims.Dal.Repositories
         PimsDispositionSale GetDispositionFileSale(long dispositionId);
 
         long GetRowVersion(long id);
+
+        List<PimsDispositionFile> GetDispositionFileExportDeep(DispositionFilter filter);
     }
 }

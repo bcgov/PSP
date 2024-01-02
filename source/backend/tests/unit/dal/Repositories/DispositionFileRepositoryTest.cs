@@ -280,6 +280,52 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
+        #region Export
+
+        [Fact]
+        public void GetDispositionFileExport_Filter_DispositionName()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DispositionAdd, Permissions.DispositionView);
+            var dspFile = EntityHelper.CreateDispositionFile();
+            dspFile.FileName = "fileName";
+            var filter = new DispositionFilter() { FileNameOrNumberOrReference = "fileName" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(dspFile);
+
+            var repository = helper.CreateRepository<DispositionFileRepository>(user);
+
+            // Act
+            var result = repository.GetDispositionFileExportDeep(filter);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetDispositionFileExport_Filter_DispositionNumber()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DispositionAdd);
+            var dspFile = EntityHelper.CreateDispositionFile();
+            dspFile.FileNumber = "fileNumber";
+            var filter = new DispositionFilter() { FileNameOrNumberOrReference = "fileNumber" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(dspFile);
+
+            var repository = helper.CreateRepository<DispositionFileRepository>(user);
+
+            // Act
+            var result = repository.GetDispositionFileExportDeep(filter);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        #endregion
+
         #endregion
     }
 }

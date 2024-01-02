@@ -34,6 +34,8 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsDispositionChecklistItem> GetChecklistItems(long id);
 
+        List<DispositionFileExportModel> GetDispositionFileExport(DispositionFilter filter);
+
         PimsDispositionFile UpdateChecklistItems(PimsDispositionFile dispositionFile);
     }
 }
