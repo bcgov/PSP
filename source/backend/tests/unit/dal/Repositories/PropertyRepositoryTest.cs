@@ -29,7 +29,7 @@ namespace Pims.Dal.Test.Repositories
             {
                 new object[] { new PropertyFilter() { PinOrPid = "111-111-111" }, 1 },
                 new object[] { new PropertyFilter() { PinOrPid = "111" }, 2 },
-                new object[] { new PropertyFilter() { Address = "12342 Test Street" }, 5 },
+                new object[] { new PropertyFilter() { Address = "12342 Test Street" }, 6 },
                 new object[] { new PropertyFilter() { Page = 1, Quantity = 10 }, 6 },
                 new object[] { new PropertyFilter(), 6 },
             };
@@ -95,8 +95,8 @@ namespace Pims.Dal.Test.Repositories
             init.CreateProperty(2);
             init.CreateProperty(3, pin: 111);
             init.CreateProperty(4, address: init.PimsAddresses.FirstOrDefault());
-            init.Add(new Entity.PimsProperty() { Location = new NetTopologySuite.Geometries.Point(-123.720810, 48.529338) });
             init.CreateProperty(5, classification: init.PimsPropertyClassificationTypes.FirstOrDefault(c => c.PropertyClassificationTypeCode == "Core Operational"));
+            init.CreateProperty(6, location: new NetTopologySuite.Geometries.Point(-123.720810, 48.529338));
             init.CreateProperty(111111111);
 
             init.SaveChanges();
@@ -249,7 +249,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var property = EntityHelper.CreateProperty(100);
-            var lease = EntityHelper.CreateLease(1, pimsLeaseStatusType: new PimsLeaseStatusType() { Id = "test2" }, addProperty: false);
+            var lease = EntityHelper.CreateLease(1, pimsLeaseStatusType: new PimsLeaseStatusType() { Id = "test2", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, addProperty: false);
             property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
             _helper.AddAndSaveChanges(property);
 
@@ -267,7 +267,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var property = EntityHelper.CreateProperty(100);
-            var lease = EntityHelper.CreateLease(1, pimsLeaseLicenseType: new PimsLeaseLicenseType() { Id = "test" }, addProperty: false);
+            var lease = EntityHelper.CreateLease(1, pimsLeaseLicenseType: new PimsLeaseLicenseType() { Id = "test", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, addProperty: false);
             property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
             _helper.AddAndSaveChanges(property);
 
@@ -285,7 +285,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var property = EntityHelper.CreateProperty(100);
-            var lease = EntityHelper.CreateLease(1, pimsLeasePurposeType: new PimsLeasePurposeType() { Id = "test" }, addProperty: false);
+            var lease = EntityHelper.CreateLease(1, pimsLeasePurposeType: new PimsLeasePurposeType() { Id = "test", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, addProperty: false);
             property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
             _helper.AddAndSaveChanges(property);
 
@@ -320,7 +320,9 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var property = EntityHelper.CreateProperty(100);
-            property.PimsPropertyAcquisitionFiles.Add(new PimsPropertyAcquisitionFile() { AcquisitionFile = new PimsAcquisitionFile() { ProjectId = 1 } });
+            var file = EntityHelper.CreateAcquisitionFile(1);
+            file.ProjectId = 1;
+            property.PimsPropertyAcquisitionFiles.Add(new PimsPropertyAcquisitionFile() { AcquisitionFile = file });
             _helper.AddAndSaveChanges(property);
 
             // Act

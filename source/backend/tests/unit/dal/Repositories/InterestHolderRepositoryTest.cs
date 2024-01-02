@@ -59,6 +59,9 @@ namespace Pims.Dal.Test.Repositories
                 InterestHolderTypeCodeNavigation = new PimsInterestHolderType()
                 {
                     InterestHolderTypeCode = "test",
+                    Description = "Active",
+                    DbCreateUserid = "test",
+                    DbLastUpdateUserid = "test"
                 },
             };
             helper.AddAndSaveChanges(interestHolder);
@@ -82,7 +85,7 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true);
             var repository = helper.CreateRepository<InterestHolderRepository>(user);
-            var interestHolder = new PimsInterestHolder() { AcquisitionFileId = 1, InterestHolderId = 1, PersonId = 1, PimsInthldrPropInterests = new List<PimsInthldrPropInterest>() };
+            var interestHolder = new PimsInterestHolder() { AcquisitionFileId = 1, InterestHolderId = 1, PersonId = 1, PimsInthldrPropInterests = new List<PimsInthldrPropInterest>(), InterestHolderTypeCode = "INTHLDR" };
             interestHolder.AcquisitionFile = EntityHelper.CreateAcquisitionFile(1);
             helper.AddAndSaveChanges(interestHolder);
 
@@ -169,6 +172,7 @@ namespace Pims.Dal.Test.Repositories
                 AcquisitionFileId = 1,
                 PersonId = 1,
                 InterestHolderId = 1,
+                InterestHolderTypeCode = "INTHLDR",
                 PimsInthldrPropInterests = new List<PimsInthldrPropInterest>() {
                 new PimsInthldrPropInterest() { PimsInthldrPropInterestId = 1, PropertyAcquisitionFileId = 1, PimsPropInthldrInterestTypes = new List<PimsPropInthldrInterestType>() {new PimsPropInthldrInterestType() {InterestHolderInterestTypeCode="TEST_PimsPropInthldrInterestType"}} }, },
             };
@@ -243,6 +247,7 @@ namespace Pims.Dal.Test.Repositories
                 PersonId = 1,
                 InterestHolderId = 1,
                 PimsInthldrPropInterests = new List<PimsInthldrPropInterest>(),
+                InterestHolderTypeCode = "INTHLDR"
             };
             var interestHolderPropertyInterest = new PimsInthldrPropInterest()
             {
@@ -251,7 +256,7 @@ namespace Pims.Dal.Test.Repositories
                 InterestHolderId = 1,
                 InterestHolder = interestHolder,
                 PimsPropInthldrInterestTypes = new List<PimsPropInthldrInterestType>() {
-                    new PimsPropInthldrInterestType() { InterestHolderInterestTypeCode = "test" },
+                    new PimsPropInthldrInterestType() { InterestHolderInterestTypeCode = "test", DbCreateUserid = "test", DbLastUpdateUserid = "test" },
                     },
             };
             interestHolder.PimsInthldrPropInterests.Add(interestHolderPropertyInterest);

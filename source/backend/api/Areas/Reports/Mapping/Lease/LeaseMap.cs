@@ -22,10 +22,10 @@ namespace Pims.Api.Areas.Reports.Mapping.Lease
         {
             dest.LFileNo = src.lease.LFileNo;
             dest.MotiRegion = src.lease.RegionCodeNavigation?.RegionName;
-            dest.StartDate = src.lease.OrigStartDate.FilterSqlMinDate();
-            dest.EndDate = src.lease.OrigExpiryDate?.FilterSqlMinDate();
-            dest.CurrentTermStartDate = src.lease.GetCurrentTermStartDate()?.FilterSqlMinDate();
-            dest.CurrentTermEndDate = src.lease.GetCurrentTermEndDate()?.FilterSqlMinDate();
+            dest.StartDate = src.lease.OrigStartDate.FilterSqlMinDate().ToNullableDateOnly();
+            dest.EndDate = src.lease.OrigExpiryDate?.FilterSqlMinDate().ToNullableDateOnly();
+            dest.CurrentTermStartDate = src.lease.GetCurrentTermStartDate()?.FilterSqlMinDate().ToNullableDateOnly();
+            dest.CurrentTermEndDate = src.lease.GetCurrentTermEndDate()?.FilterSqlMinDate().ToNullableDateOnly();
             dest.ProgramName = src.lease.LeaseProgramTypeCodeNavigation?.GetTypeDescriptionOther(src.lease.OtherLeaseProgramType);
             dest.PurposeType = src.lease.LeasePurposeTypeCodeNavigation?.GetTypeDescriptionOther(src.lease.OtherLeasePurposeType);
             dest.StatusType = src.lease.LeaseStatusTypeCodeNavigation?.Description;
@@ -38,9 +38,9 @@ namespace Pims.Api.Areas.Reports.Mapping.Lease
             dest.LeaseNotes = src.lease.LeaseNotes;
             dest.IsExpired = (src.lease.GetExpiryDate() < DateTime.Now).BoolToYesNo();
             dest.LeaseAmount = src.term?.PaymentAmount;
-            dest.TermStartDate = src.term?.TermStartDate.FilterSqlMinDate();
-            dest.TermExpiryDate = src.term?.TermExpiryDate?.FilterSqlMinDate();
-            dest.TermRenewalDate = src.term?.TermRenewalDate?.FilterSqlMinDate();
+            dest.TermStartDate = src.term?.TermStartDate.FilterSqlMinDate().ToNullableDateOnly();
+            dest.TermExpiryDate = src.term?.TermExpiryDate?.FilterSqlMinDate().ToNullableDateOnly();
+            dest.TermRenewalDate = src.term?.TermRenewalDate?.FilterSqlMinDate().ToNullableDateOnly();
             dest.LeasePaymentFrequencyType = src.term?.LeasePmtFreqTypeCodeNavigation?.Description;
             dest.CivicAddress = src.property?.Property?.Address?.FormatAddress(true);
             dest.Pid = src.property?.Property?.Pid;

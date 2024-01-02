@@ -50,7 +50,7 @@ namespace Pims.Core.Http
         /// <returns></returns>
         public virtual Task<HttpResponseMessage> ProxySendAsync(HttpRequest request, string url, HttpMethod method = null, HttpContent content = null)
         {
-            if (request == null) { throw new ArgumentNullException(nameof(request)); }
+            ArgumentNullException.ThrowIfNull(request, nameof(request));
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL."); }
 
             return this.ProxySendInternalAsync(request, url, method, content);

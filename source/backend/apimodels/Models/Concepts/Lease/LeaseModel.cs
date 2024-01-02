@@ -96,17 +96,17 @@ namespace Pims.Api.Models.Concepts.Lease
         /// <summary>
         /// get/set - The calculated expiry date of the lease.
         /// </summary>
-        public DateTime? ExpiryDate { get; set; }
+        public DateOnly? ExpiryDate { get; set; }
 
         /// <summary>
         /// get/set - The original start date of the lease.
         /// </summary>
-        public DateTime? StartDate { get; set; }
+        public DateOnly StartDate { get; set; }
 
         /// <summary>
         /// get/set - The most recent renewal date on the lease.
         /// </summary>
-        public DateTime? RenewalDate { get; set; }
+        public DateOnly? RenewalDate { get; set; }
 
         /// <summary>
         /// get/set - The lease renewal count.
@@ -166,7 +166,7 @@ namespace Pims.Api.Models.Concepts.Lease
         /// <summary>
         /// get/set - The date this entity assumed responsibility for this lease.
         /// </summary>
-        public DateTime? ResponsibilityEffectiveDate { get; set; }
+        public DateOnly? ResponsibilityEffectiveDate { get; set; }
 
         /// <summary>
         /// get/set - A list of properties associated with this lease.

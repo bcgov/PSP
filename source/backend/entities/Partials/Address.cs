@@ -45,6 +45,10 @@ namespace Pims.Dal.Entities
             this.RegionCode = district?.RegionCode;
             this.PostalCode = postal;
         }
+
+        public PimsAddress()
+        {
+        }
         #endregion
 
         #region Methods

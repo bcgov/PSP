@@ -47,12 +47,12 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// <summary>
         /// get/set - The expiry filter start date.
         /// </summary>
-        public DateTime? ExpiryStartDate { get; set; }
+        public DateOnly? ExpiryStartDate { get; set; }
 
         /// <summary>
         /// get/set - The expiry filter end date.
         /// </summary>
-        public DateTime? ExpiryEndDate { get; set; }
+        public DateOnly? ExpiryEndDate { get; set; }
 
         /// <summary>
         /// get/set - The region type.
@@ -91,8 +91,8 @@ namespace Pims.Api.Areas.Lease.Models.Search
             this.LeaseStatusTypes = filter.GetStringArrayValue(nameof(this.LeaseStatusTypes));
             this.TenantName = filter.GetStringValue(nameof(this.TenantName));
             this.Programs = filter.GetStringArrayValue(nameof(this.Programs));
-            this.ExpiryStartDate = filter.GetDateTimeNullValue(nameof(this.ExpiryStartDate));
-            this.ExpiryEndDate = filter.GetDateTimeNullValue(nameof(this.ExpiryEndDate));
+            this.ExpiryStartDate = filter.GetDateOnlyNullValue(nameof(this.ExpiryStartDate));
+            this.ExpiryEndDate = filter.GetDateOnlyNullValue(nameof(this.ExpiryEndDate));
             this.RegionType = filter.GetIntNullValue(nameof(this.RegionType));
             this.Details = filter.GetStringValue(nameof(this.Details));
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));

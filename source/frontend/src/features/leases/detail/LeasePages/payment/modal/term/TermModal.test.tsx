@@ -68,7 +68,7 @@ describe('TermModal component', () => {
     await fillInput(document.body, 'expiryDate', '2020-01-02', 'datepicker');
     await fillInput(document.body, 'leasePmyFreqTypeCode.id', 'ANNUAL', 'select');
     await fillInput(document.body, 'paymentAmount', '1,000.00');
-    await fillInput(document.body, 'paymentDueDate', 'A due date');
+    await fillInput(document.body, 'paymentDueDateStr', 'A due date');
     await fillInput(document.body, 'statusTypeCode.id', 'NEXER', 'select');
     const saveButton = getByText('Save term');
     act(() => userEvent.click(saveButton));
@@ -88,7 +88,7 @@ describe('TermModal component', () => {
         isDisabled: false,
       },
       paymentAmount: 1000,
-      paymentDueDate: 'A due date',
+      paymentDueDateStr: 'A due date',
       paymentNote: '',
       payments: [],
       renewalDate: '',

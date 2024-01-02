@@ -74,8 +74,8 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = acqFile.AcquisitionFileId, Property = new PimsProperty() { RegionCode = 1, PropertyId = 1 } };
-            var pimsPropertyAcquisitionFile2 = new PimsPropertyAcquisitionFile() { AcquisitionFileId = acqFile.AcquisitionFileId, Property = new PimsProperty() { RegionCode = 1, PropertyId = 2 } };
+            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = acqFile.AcquisitionFileId, Property = EntityHelper.CreateProperty(1) };
+            var pimsPropertyAcquisitionFile2 = new PimsPropertyAcquisitionFile() { AcquisitionFileId = acqFile.AcquisitionFileId, Property = EntityHelper.CreateProperty(2) };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsPropertyAcquisitionFile);
             var repository = helper.CreateRepository<AcquisitionFilePropertyRepository>(user);
@@ -150,7 +150,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
 
-            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = 1, Property = new PimsProperty() { RegionCode = 1, PropertyId = 1 } };
+            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = 1, Property = EntityHelper.CreateProperty(1) };
 
             var context = helper.CreatePimsContext(user, true);
             var repository = helper.CreateRepository<AcquisitionFilePropertyRepository>(user);
@@ -189,7 +189,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileDelete);
-            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { Property = new PimsProperty() { RegionCode = 1 } };
+            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { Property = EntityHelper.CreateProperty(1) };
 
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(pimsPropertyAcquisitionFile);

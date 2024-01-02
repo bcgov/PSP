@@ -31,12 +31,12 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// <summary>
         /// The date for delivery of the property to the project.
         /// </summary>
-        public DateTime? DeliveryDate { get; set; }
+        public DateOnly? DeliveryDate { get; set; }
 
         /// <summary>
         /// The date of acquisition file completion.
         /// </summary>
-        public DateTime? CompletionDate { get; set; }
+        public DateOnly? CompletionDate { get; set; }
 
         /// <summary>
         /// get/set - The acquisition physical file status type.

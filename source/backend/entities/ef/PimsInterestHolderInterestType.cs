@@ -4,46 +4,61 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-#nullable disable
+namespace Pims.Dal.Entities;
 
-namespace Pims.Dal.Entities
+/// <summary>
+/// Tables that contains the codes and associated descriptions of the interest holder interest types.
+/// </summary>
+[Table("PIMS_INTEREST_HOLDER_INTEREST_TYPE")]
+public partial class PimsInterestHolderInterestType
 {
-    [Table("PIMS_INTEREST_HOLDER_INTEREST_TYPE")]
-    public partial class PimsInterestHolderInterestType
-    {
-        public PimsInterestHolderInterestType()
-        {
-            PimsPropInthldrInterestTypes = new HashSet<PimsPropInthldrInterestType>();
-        }
+    /// <summary>
+    /// Codified version of the interest holder interest type.
+    /// </summary>
+    [Key]
+    [Column("INTEREST_HOLDER_INTEREST_TYPE_CODE")]
+    [StringLength(20)]
+    public string InterestHolderInterestTypeCode { get; set; }
 
-        [Key]
-        [Column("INTEREST_HOLDER_INTEREST_TYPE_CODE")]
-        [StringLength(20)]
-        public string InterestHolderInterestTypeCode { get; set; }
-        [Required]
-        [Column("DESCRIPTION")]
-        [StringLength(200)]
-        public string Description { get; set; }
-        [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
-        [Column("CONCURRENCY_CONTROL_NUMBER")]
-        public long ConcurrencyControlNumber { get; set; }
-        [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
-        public DateTime DbCreateTimestamp { get; set; }
-        [Required]
-        [Column("DB_CREATE_USERID")]
-        [StringLength(30)]
-        public string DbCreateUserid { get; set; }
-        [Column("DB_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
-        public DateTime DbLastUpdateTimestamp { get; set; }
-        [Required]
-        [Column("DB_LAST_UPDATE_USERID")]
-        [StringLength(30)]
-        public string DbLastUpdateUserid { get; set; }
+    /// <summary>
+    /// Description of the interest holder interest type.
+    /// </summary>
+    [Required]
+    [Column("DESCRIPTION")]
+    [StringLength(200)]
+    public string Description { get; set; }
 
-        [InverseProperty(nameof(PimsPropInthldrInterestType.InterestHolderInterestTypeCodeNavigation))]
-        public virtual ICollection<PimsPropInthldrInterestType> PimsPropInthldrInterestTypes { get; set; }
-    }
+    /// <summary>
+    /// Display order of the codes.
+    /// </summary>
+    [Column("DISPLAY_ORDER")]
+    public int? DisplayOrder { get; set; }
+
+    /// <summary>
+    /// Indicates if the code value is inactive.
+    /// </summary>
+    [Column("IS_DISABLED")]
+    public bool? IsDisabled { get; set; }
+
+    [Column("CONCURRENCY_CONTROL_NUMBER")]
+    public long ConcurrencyControlNumber { get; set; }
+
+    [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
+    public DateTime DbCreateTimestamp { get; set; }
+
+    [Required]
+    [Column("DB_CREATE_USERID")]
+    [StringLength(30)]
+    public string DbCreateUserid { get; set; }
+
+    [Column("DB_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
+    public DateTime DbLastUpdateTimestamp { get; set; }
+
+    [Required]
+    [Column("DB_LAST_UPDATE_USERID")]
+    [StringLength(30)]
+    public string DbLastUpdateUserid { get; set; }
+
+    [InverseProperty("InterestHolderInterestTypeCodeNavigation")]
+    public virtual ICollection<PimsPropInthldrInterestType> PimsPropInthldrInterestTypes { get; set; } = new List<PimsPropInthldrInterestType>();
 }

@@ -50,6 +50,7 @@ namespace Pims.Api.Models.Health
             this.Version = this.GetType().Assembly.GetName().Version.ToString();
             this.FileVersion = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
             this.InformationalVersion = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+            this.InformationalVersion = this.InformationalVersion.Remove(this.InformationalVersion.IndexOf('+'));
         }
         #endregion
     }

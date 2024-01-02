@@ -248,6 +248,7 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
 
 .c3 {
   padding: 0 0.4rem;
+  display: block;
 }
 
 <div

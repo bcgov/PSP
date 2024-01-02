@@ -131,5 +131,21 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsPropMgmtActivityType> GetAllPropMgmtActivityTypes();
 
         IEnumerable<PimsAgreementStatusType> GetAllAgreementStatusTypes();
+
+        IEnumerable<PimsDispositionFileStatusType> GetAllDispositionFileStatusTypes();
+
+        IEnumerable<PimsDispositionFundingType> GetAllDispositionFileFundingTypes();
+
+        IEnumerable<PimsDispositionInitiatingDocType> GetAllDispositionInitiatingDocTypes();
+
+        IEnumerable<PimsDispositionType> GetAllDispositionTypes();
+
+        IEnumerable<PimsDispositionStatusType> GetAllDispositionStatusTypes();
+
+        IEnumerable<PimsDspPhysFileStatusType> GetAllDispositionPhysFileStatusTypes();
+
+        IEnumerable<PimsDspInitiatingBranchType> GetAllDispositionInitiatingBranchTypes();
+
+        IEnumerable<PimsDspFlTeamProfileType> GetAllDispositionFlTeamProfileTypes();
     }
 }

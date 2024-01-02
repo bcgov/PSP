@@ -42,6 +42,10 @@ namespace Pims.Dal.Entities
             this.RegionCodeNavigation = region ?? throw new ArgumentNullException(nameof(region));
             this.RegionCode = region.RegionCode;
         }
+
+        public PimsDistrict()
+        {
+        }
         #endregion
     }
 }

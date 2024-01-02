@@ -906,17 +906,19 @@ namespace Pims.Dal.Repositories
                 query = query.Where(l => filter.LeaseStatusTypes.Any(p => p == l.LeaseStatusTypeCode));
             }
 
+            var expiryStartDate = filter.ExpiryStartDate.ToNullableDateTime();
+            var expiryEndDate = filter.ExpiryEndDate.ToNullableDateTime();
             if (filter.ExpiryStartDate != null && filter.ExpiryEndDate != null)
             {
-                query = query.Where(l => l.OrigExpiryDate >= filter.ExpiryStartDate && l.OrigExpiryDate <= filter.ExpiryEndDate);
+                query = query.Where(l => l.OrigExpiryDate >= expiryStartDate && l.OrigExpiryDate <= expiryEndDate);
             }
             else if (filter.ExpiryStartDate != null)
             {
-                query = query.Where(l => l.OrigExpiryDate >= filter.ExpiryStartDate);
+                query = query.Where(l => l.OrigExpiryDate >= expiryStartDate);
             }
             else if (filter.ExpiryEndDate != null)
             {
-                query = query.Where(l => l.OrigExpiryDate <= filter.ExpiryEndDate);
+                query = query.Where(l => l.OrigExpiryDate <= expiryEndDate);
             }
 
             if (filter.RegionType.HasValue)

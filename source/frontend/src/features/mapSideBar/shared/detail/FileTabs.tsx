@@ -18,6 +18,7 @@ interface IFileTabsProps {
 
 export enum FileTabType {
   FILE_DETAILS = 'fileDetails',
+  OFFERS_AND_SALE = 'offersAndSale',
   CHECKLIST = 'checklist',
   DOCUMENTS = 'documents',
   NOTES = 'notes',

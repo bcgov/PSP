@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsAgreementType class, provides an entity for the datamodel to manage acquisition types.
     /// </summary>
-    public partial class PimsAgreementType : ITypeEntity<string>
+    public partial class PimsAgreementType : ITypeEntity<string, bool?>
     {
         #region Properties
 

@@ -87,7 +87,7 @@ describe('DepositsReceivedContainer component', () => {
     expect(findCell(dataRow, 0)?.textContent).toBe(deposit.depositType.description ?? '');
     expect(findCell(dataRow, 1)?.textContent).toBe(deposit.description);
     expect(findCell(dataRow, 2)?.textContent).toBe(formatMoney(deposit.amountPaid));
-    expect(findCell(dataRow, 3)?.textContent).toBe(prettyFormatDate(deposit.depositDate));
+    expect(findCell(dataRow, 3)?.textContent).toBe(prettyFormatDate(deposit.depositDateOnly));
     expect(findCell(dataRow, 4)?.textContent).toBe('test person');
   });
 
