@@ -111,7 +111,7 @@ const DispositionOfferForm: React.FC<IDispositionOfferFormProps> = ({
                       />
                       {showOfferStatusError && (
                         <div className="invalid-feedback" data-testid="team-profile-dup-error">
-                          An Offer with 'Accepted' status already exist.
+                          An Offer with 'Accepted' status already exists.
                         </div>
                       )}
                     </SectionField>

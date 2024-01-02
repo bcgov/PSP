@@ -141,7 +141,7 @@ namespace Pims.Api.Services
 
         public PimsDispositionOffer AddDispositionFileOffer(long dispositionFileId, PimsDispositionOffer dispositionOffer)
         {
-            _logger.LogInformation("Getting disposition file offers with DispositionFileId: {id}", dispositionFileId);
+            _logger.LogInformation("Adding disposition file offer to Disposition File with Id: {id}", dispositionFileId);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);

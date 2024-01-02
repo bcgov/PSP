@@ -36,7 +36,7 @@ const AddDispositionOfferContainer: React.FunctionComponent<
     return postDispositionOffer(dispositionFileId, newOffer);
   };
 
-  const handleSucces = async () => {
+  const handleSuccess = async () => {
     history.push(backUrl);
   };
 
@@ -66,7 +66,7 @@ const AddDispositionOfferContainer: React.FunctionComponent<
       showOfferStatusError={offerStatusError}
       loading={loading}
       onSave={handleSave}
-      onSuccess={handleSucces}
+      onSuccess={handleSuccess}
       onCancel={() => history.push(backUrl)}
       onError={onCreateError}
     ></View>
