@@ -610,6 +610,19 @@ namespace Pims.Api.Test.Services
             repository.Verify(x => x.UpdateDispositionOffer(It.IsAny<PimsDispositionOffer>()), Times.Once);
         }
 
+        [Fact]
+        public void DeleteDispositionFileOffer_Fail_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.DeleteDispositionFileOffer(1, 10);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
         #endregion
     }
 }

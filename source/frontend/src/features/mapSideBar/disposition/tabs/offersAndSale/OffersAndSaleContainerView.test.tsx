@@ -17,6 +17,8 @@ jest.mock('@react-keycloak/web');
 const mockDispositionFileApi = mockDispositionFileResponse(1);
 const mockDispositionSaleApi = mockDispositionFileSaleApi(1);
 
+const onDelete = jest.fn();
+
 describe('Disposition Offer Detail View component', () => {
   const setup = async (
     renderOptions: RenderOptions & { props?: Partial<IOffersAndSaleContainerViewProps> },
@@ -28,6 +30,7 @@ describe('Disposition Offer Detail View component', () => {
         dispositionFile={renderOptions.props?.dispositionFile ?? mockDispositionFileApi}
         dispositionOffers={[]}
         dispositionSale={renderOptions.props?.dispositionSale ?? null}
+        onDispositionOfferDeleted={onDelete}
       />,
       {
         ...renderOptions,

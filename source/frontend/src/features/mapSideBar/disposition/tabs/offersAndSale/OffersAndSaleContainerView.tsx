@@ -24,6 +24,7 @@ export interface IOffersAndSaleContainerViewProps {
   dispositionFile: Api_DispositionFile;
   dispositionOffers: Api_DispositionFileOffer[];
   dispositionSale: Api_DispositionFileSale | null;
+  onDispositionOfferDeleted: (offerId: number) => void;
 }
 
 const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContainerViewProps> = ({
@@ -31,6 +32,7 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
   dispositionFile,
   dispositionOffers,
   dispositionSale,
+  onDispositionOfferDeleted,
 }) => {
   const history = useHistory();
   const match = useRouteMatch();
@@ -117,6 +119,7 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
             key={index}
             dispositionOffer={offer}
             index={index}
+            onDelete={onDispositionOfferDeleted}
           ></DispositionOfferDetails>
         ))}
         {dispositionOffers.length === 0 && (

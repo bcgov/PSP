@@ -1,10 +1,13 @@
+import { FaTrash } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { StyledRemoveLinkButton } from '@/components/common/buttons/RemoveButton';
 import EditButton from '@/components/common/EditButton';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { Claims } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { Api_DispositionFileOffer } from '@/models/api/DispositionFile';
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
@@ -12,25 +15,57 @@ import { formatMoney } from '@/utils/numberFormatUtils';
 export interface IDispositionOfferDetailsProps {
   index: number;
   dispositionOffer: Api_DispositionFileOffer;
+  onDelete: (offerId: number) => void;
 }
 
 const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsProps> = ({
   index,
   dispositionOffer,
+  onDelete,
 }) => {
   const keycloak = useKeycloakWrapper();
   const history = useHistory();
   const match = useRouteMatch();
 
+  const { setModalContent, setDisplayModal } = useModalContext();
+
   return (
     <StyledOfferBorder>
       <StyledSubHeader>
         {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && (
-          <EditButton
-            title="Edit Offer"
-            dataTestId={`Offer[${index}].edit-btn`}
-            onClick={() => history.push(`${match.url}/offers/${dispositionOffer.id}/update`)}
-          />
+          <>
+            <EditButton
+              title="Edit Offer"
+              dataTestId={`Offer[${index}].edit-btn`}
+              onClick={() => history.push(`${match.url}/offers/${dispositionOffer.id}/update`)}
+            />
+            <StyledRemoveLinkButton
+              title="Delete Form 8"
+              data-testid={`Offer[${index}].delete-btn`}
+              variant="light"
+              onClick={() => {
+                setModalContent({
+                  ...getDeleteModalProps(),
+                  variant: 'error',
+                  title: 'Delete Offer',
+                  message: `You have selected to delete this offer.
+                  Do you want to proceed?`,
+                  okButtonText: 'Yes',
+                  cancelButtonText: 'No',
+                  handleOk: async () => {
+                    onDelete(dispositionOffer.id!);
+                    setDisplayModal(false);
+                  },
+                  handleCancel: () => {
+                    setDisplayModal(false);
+                  },
+                });
+                setDisplayModal(true);
+              }}
+            >
+              <FaTrash size="2rem" />
+            </StyledRemoveLinkButton>
+          </>
         )}
       </StyledSubHeader>
       <SectionField

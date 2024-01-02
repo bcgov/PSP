@@ -254,7 +254,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [HttpPut("{id:long}/offers/{offerId:long}")]
         [HasPermission(Permissions.DispositionEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(DispositionFileOfferModel), 201)]
+        [ProducesResponseType(typeof(DispositionFileOfferModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateDispositionFileOffer([FromRoute]long id, [FromRoute]long offerId, [FromBody]DispositionFileOfferModel dispositionFileOffer)
@@ -279,6 +279,27 @@ namespace Pims.Api.Areas.Disposition.Controllers
             {
                 return Conflict(e.Message);
             }
+        }
+
+        [HttpDelete("{id:long}/offers/{offerId:long}")]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(bool), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult DeleteDispositionFileOffer([FromRoute] long id, [FromRoute] long offerId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(DeleteDispositionFileOffer),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            var result = _dispositionService.DeleteDispositionFileOffer(id, offerId);
+            return new JsonResult(result);
         }
 
         [HttpGet("{id:long}/sale")]

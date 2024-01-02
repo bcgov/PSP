@@ -35,6 +35,7 @@ export const useDispositionProvider = () => {
     getDispositionFileSale,
     getDispositionFileOffer,
     putDispositionFileOffer,
+    deleteDispositionFileOffer,
   } = useApiDispositionFile();
 
   const addDispositionFileApi = useApiRequestWrapper<
@@ -171,6 +172,18 @@ export const useDispositionProvider = () => {
     throwError: true,
   });
 
+  const deleteDispositionOfferApi = useApiRequestWrapper<
+    (dispositionFileId: number, offerId: number) => Promise<AxiosResponse<boolean, any>>
+  >({
+    requestFunction: useCallback(
+      async (dispositionFileId: number, offerId: number) =>
+        await deleteDispositionFileOffer(dispositionFileId, offerId),
+      [deleteDispositionFileOffer],
+    ),
+    requestName: 'DeleteDispositionOffer',
+    onError: useAxiosErrorHandler('Failed to Delete Disposition File Offer'),
+  });
+
   return useMemo(
     () => ({
       addDispositionFileApi: addDispositionFileApi,
@@ -183,6 +196,7 @@ export const useDispositionProvider = () => {
       getDispositionFileSale: getDispositionFileSaleApi,
       getDispositionOffer: getDispositionOfferApi,
       putDispositionOffer: putDispositionOfferApi,
+      deleteDispositionOffer: deleteDispositionOfferApi,
     }),
     [
       addDispositionFileApi,
@@ -195,6 +209,7 @@ export const useDispositionProvider = () => {
       getDispositionFileSaleApi,
       getDispositionOfferApi,
       putDispositionOfferApi,
+      deleteDispositionOfferApi,
     ],
   );
 };
