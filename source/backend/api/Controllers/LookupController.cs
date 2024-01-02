@@ -142,6 +142,7 @@ namespace Pims.Api.Controllers
                 var dispositionPhysFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionPhysFileStatusTypes());
                 var dispositionInitiatingDocTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionInitiatingDocTypes());
                 var dispositionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionTypes());
+                var dispositionOfferStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionOfferStatusTypes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -212,6 +213,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(dispositionInitiatingDocTypes);
                 codes.AddRange(dispositionTypes);
                 codes.AddRange(dispositionStatusTypes);
+                codes.AddRange(dispositionOfferStatusTypes);
 
                 var response = new JsonResult(codes);
 

@@ -6,14 +6,14 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c2.required::before {
+  .c3.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c1 {
+.c2 {
   font-weight: bold;
 }
 
@@ -24,9 +24,43 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: solid 0.2rem;
+  margin-bottom: 2rem;
+}
+
+.c1 label {
+  font-family: 'BCSans-Bold';
+  font-size: 1.75rem;
+  width: 100%;
+  text-align: left;
+}
+
+.c1 button {
+  margin-bottom: 1rem;
+}
+
 <div
     class="c0"
   >
+    <div
+      class="c1"
+    />
     <div
       class="pb-2 row"
     >
@@ -34,7 +68,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
         class="pr-0 text-left col-4"
       >
         <label
-          class="c1"
+          class="c2"
         >
           Offer status:
           <span
@@ -64,7 +98,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
         </label>
       </div>
       <div
-        class="c2 text-left col"
+        class="c3 text-left col"
         data-testid="offer[0].offerStatusTypeCode"
       >
         Open
@@ -77,13 +111,13 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
         class="pr-0 text-left col-4"
       >
         <label
-          class="c1"
+          class="c2"
         >
           Offer name(s):
         </label>
       </div>
       <div
-        class="c2 text-left col"
+        class="c3 text-left col"
         data-testid="offer[0].offerName"
       >
         TEST OFFER NAME
@@ -96,13 +130,13 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
         class="pr-0 text-left col-4"
       >
         <label
-          class="c1"
+          class="c2"
         >
           Offer date:
         </label>
       </div>
       <div
-        class="c2 text-left col"
+        class="c3 text-left col"
         data-testid="offer[0].offerDate"
       >
         Dec 25, 2023
@@ -115,13 +149,13 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
         class="pr-0 text-left col-4"
       >
         <label
-          class="c1"
+          class="c2"
         >
           Offer expiry date:
         </label>
       </div>
       <div
-        class="c2 text-left col"
+        class="c3 text-left col"
         data-testid="offer[0].offerExpiryDate"
       >
         Dec 25, 2024
@@ -134,13 +168,13 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
         class="pr-0 text-left col-4"
       >
         <label
-          class="c1"
+          class="c2"
         >
           Offer price ($):
         </label>
       </div>
       <div
-        class="c2 text-left col"
+        class="c3 text-left col"
         data-testid="offer[0].offerPrice"
       >
         $1,500,000.99
@@ -153,7 +187,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
         class="pr-0 text-left col-4"
       >
         <label
-          class="c1"
+          class="c2"
         >
           Notes:
           <span
@@ -183,7 +217,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
         </label>
       </div>
       <div
-        class="c2 text-left col"
+        class="c3 text-left col"
         data-testid="offer[0].notes"
       >
         MY OFFER NOTES

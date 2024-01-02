@@ -18,6 +18,12 @@ namespace Pims.Dal.Repositories
 
         List<PimsDispositionOffer> GetDispositionOffers(long dispositionId);
 
+        PimsDispositionOffer GetDispositionOfferById(long dispositionId, long dispositionOfferId);
+
+        PimsDispositionOffer AddDispositionOffer(PimsDispositionOffer dispositionOffer);
+
+        PimsDispositionOffer UpdateDispositionOffer(PimsDispositionOffer dispositionOffer);
+
         PimsDispositionSale GetDispositionFileSale(long dispositionId);
 
         long GetRowVersion(long id);

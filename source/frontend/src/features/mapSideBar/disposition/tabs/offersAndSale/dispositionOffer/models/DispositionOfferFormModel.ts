@@ -8,13 +8,14 @@ export class DispositionOfferFormModel {
   offerExpiryDate: string | null = null;
   offerAmount: number | null = null;
   offerNote: string | null = null;
+  rowVersion: number | null = null;
 
   constructor(readonly id: number | null = null, readonly dispositionFileId: number) {
     this.id = id;
     this.dispositionFileId = dispositionFileId;
   }
 
-  static fromApi(entity: Api_DispositionFileOffer) {
+  static fromApi(entity: Api_DispositionFileOffer): DispositionOfferFormModel {
     const model = new DispositionOfferFormModel(entity.id, entity.dispositionFileId);
 
     model.dispositionOfferStatusTypeCode = entity.dispositionOfferStatusTypeCode;
@@ -23,6 +24,9 @@ export class DispositionOfferFormModel {
     model.offerExpiryDate = entity.offerExpiryDate;
     model.offerAmount = entity.offerAmount;
     model.offerNote = entity.offerNote;
+    model.rowVersion = entity.rowVersion ?? null;
+
+    return model;
   }
 
   toApi(): Api_DispositionFileOffer {
@@ -36,6 +40,7 @@ export class DispositionOfferFormModel {
       offerExpiryDate: emptyStringtoNullable(this.offerExpiryDate),
       offerAmount: this.offerAmount,
       offerNote: emptyStringtoNullable(this.offerNote),
+      rowVersion: this.rowVersion ?? 0,
     };
   }
 }

@@ -61,7 +61,7 @@ export interface Api_DispositionFileTeam extends Api_ConcurrentVersion, Api_Audi
   teamProfileType?: Api_TypeCode<string>;
 }
 
-export interface Api_DispositionFileOffer {
+export interface Api_DispositionFileOffer extends Api_ConcurrentVersion {
   id: number | null;
   dispositionFileId: number;
   dispositionOfferStatusTypeCode: string | null;

@@ -6,7 +6,7 @@ import {
 import { emptyStringtoNullable, toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
-import { DispositionOfferFormModel } from './DispositionOfferFormModel';
+import { DispositionOfferFormModel } from '../tabs/offersAndSale/dispositionOffer/models/DispositionOfferFormModel';
 import { DispositionSaleFormModel } from './DispositionSaleFormModel';
 import { DispositionTeamSubFormModel, WithDispositionTeam } from './DispositionTeamSubFormModel';
 
