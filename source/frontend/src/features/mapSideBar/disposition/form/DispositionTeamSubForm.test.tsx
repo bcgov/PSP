@@ -35,6 +35,10 @@ describe('DispositionTeamSubForm component', () => {
     return {
       ...utils,
       getFormikRef: () => ref,
+      getTeamMemberProfileDropDownList: (index: number = 0) =>
+        utils.container.querySelector(
+          `select[name="team.${index}.teamProfileTypeCode"]`,
+        ) as HTMLSelectElement,
     };
   };
 
@@ -95,7 +99,7 @@ describe('DispositionTeamSubForm component', () => {
     expect(getByName('team.0.teamProfileTypeCode')).toBeNull();
   });
 
-  it(`does not remove the owner when confirmation popup is cancelled`, async () => {
+  it(`does not remove the member when confirmation popup is cancelled`, async () => {
     const { getByTestId, getByText, getByTitle } = setup({
       initialForm: testForm,
     });
@@ -115,7 +119,7 @@ describe('DispositionTeamSubForm component', () => {
     });
     const addRow = getByTestId('add-team-member');
     await act(async () => userEvent.click(addRow));
-    await act(async () => selectOptions('team.0.teamProfileTypeCode', 'BCTFA'));
+    await act(async () => selectOptions('team.0.teamProfileTypeCode', 'NEGOTAGENT'));
     expect(getIn(getFormikRef().current?.touched, 'team.0.contact')).toBe(true);
   });
 });

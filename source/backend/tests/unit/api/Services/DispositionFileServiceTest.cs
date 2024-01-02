@@ -31,7 +31,6 @@ namespace Pims.Api.Test.Services
     [ExcludeFromCodeCoverage]
     public class DispositionFileServiceTest
     {
-        #region Tests
         private readonly TestHelper _helper;
 
         public DispositionFileServiceTest()
@@ -255,6 +254,23 @@ namespace Pims.Api.Test.Services
             // Assert
             act.Should().Throw<NotAuthorizedException>();
         }
+
+        [Fact]
+        public void Add_Fails_Duplicate_Team()
+        {
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionAdd);
+            var dispFile = EntityHelper.CreateDispositionFile();
+
+            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { PersonId = 1, DspFlTeamProfileTypeCode = "LISTAGENT" });
+            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { PersonId = 2, DspFlTeamProfileTypeCode = "LISTAGENT" });
+
+            // Act
+            Action act = () => service.Add(dispFile, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory });
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
         #endregion
 
         #region Offers
@@ -593,8 +609,6 @@ namespace Pims.Api.Test.Services
             Assert.NotNull(result);
             repository.Verify(x => x.UpdateDispositionOffer(It.IsAny<PimsDispositionOffer>()), Times.Once);
         }
-
-        #endregion
 
         #endregion
     }

@@ -52,6 +52,8 @@ namespace Pims.Api.Services
             dispositionFile.DispositionStatusTypeCode ??= EnumDispositionStatusTypeCode.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= EnumDispositionFileStatusTypeCode.ACTIVE.ToString();
 
+            ValidateStaff(dispositionFile);
+
             MatchProperties(dispositionFile, userOverrides);
 
             var newDispositionFile = _dispositionFileRepository.Add(dispositionFile);
@@ -185,6 +187,15 @@ namespace Pims.Api.Services
             return _dispositionFileRepository.GetDispositionFileSale(dispositionFileId);
         }
 
+        private static void ValidateStaff(PimsDispositionFile dispositionFile)
+        {
+            bool duplicate = dispositionFile.PimsDispositionFileTeams.GroupBy(p => p.DspFlTeamProfileTypeCode).Any(g => g.Count() > 1);
+            if (duplicate)
+            {
+                throw new BadRequestException("Invalid Disposition team, each team member and role combination can only be added once.");    
+            }
+        }
+        
         private static void ValidateDispositionOfferStatus(PimsDispositionFile dispositionFile, PimsDispositionOffer newOffer)
         {
             bool offerAlreadyAccepted = dispositionFile.PimsDispositionOffers.Any(x => x.DispositionOfferStatusTypeCode == EnumDispositionOfferStatusTypeCode.ACCCEPTED.ToString() && x.DispositionOfferId != newOffer.DispositionOfferId);
