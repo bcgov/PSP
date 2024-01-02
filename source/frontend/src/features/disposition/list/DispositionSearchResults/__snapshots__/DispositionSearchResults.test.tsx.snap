@@ -424,7 +424,14 @@ exports[`Disposition search results table matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <div />
+            <div>
+              <span>
+                Alejandro Sanchez (MoTI Solicitor), 
+              </span>
+              <span>
+                Aman Monga (Negotiation agent)
+              </span>
+            </div>
           </div>
           <div
             class="td"
