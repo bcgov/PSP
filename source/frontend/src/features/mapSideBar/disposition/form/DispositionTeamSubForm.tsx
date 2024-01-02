@@ -22,7 +22,7 @@ interface IDispositionTeamSubForm {}
 const DispositionTeamSubForm: React.FunctionComponent<
   React.PropsWithChildren<IDispositionTeamSubForm>
 > = () => {
-  const { values, setFieldTouched } = useFormikContext<WithDispositionTeam>();
+  const { values, setFieldTouched, errors } = useFormikContext<WithDispositionTeam>();
   const { getOptionsByType } = useLookupCodeHelpers();
   const { setModalContent, setDisplayModal } = useModalContext();
 
@@ -87,6 +87,13 @@ const DispositionTeamSubForm: React.FunctionComponent<
               )}
             </React.Fragment>
           ))}
+
+          {errors?.team && typeof errors?.team === 'string' && (
+            <div className="invalid-feedback" data-testid="team-profile-dup-error">
+              {errors.team.toString()}
+            </div>
+          )}
+
           <LinkButton
             data-testid="add-team-member"
             onClick={() => {

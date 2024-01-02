@@ -19,8 +19,8 @@ export class DispositionTeamSubFormModel {
     contact: IContactSearchResult | null = null,
   ) {
     this.id = id;
-    this.contact = contact;
     this.rowVersion = rowVersion;
+    this.contact = contact;
   }
 
   toApi(dispositionFileId: number): Api_DispositionFileTeam | null {

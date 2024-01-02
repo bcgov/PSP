@@ -257,6 +257,22 @@ namespace Pims.Api.Test.Services
         }
         #endregion
 
+        [Fact]
+        public void Add_Fails_Duplicate_Team()
+        {
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionAdd);
+            var dispFile = EntityHelper.CreateDispositionFile();
+
+            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { PersonId = 1, DspFlTeamProfileTypeCode = "LISTAGENT" });
+            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { PersonId = 2, DspFlTeamProfileTypeCode = "LISTAGENT" });
+
+            // Act
+            Action act = () => service.Add(dispFile, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory });
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
         #endregion
     }
 }

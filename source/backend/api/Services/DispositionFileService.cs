@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -49,6 +50,8 @@ namespace Pims.Api.Services
 
             dispositionFile.DispositionStatusTypeCode ??= EnumDispositionStatusTypeCode.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= EnumDispositionFileStatusTypeCode.ACTIVE.ToString();
+
+            ValidateStaff(dispositionFile);
 
             MatchProperties(dispositionFile, userOverrides);
 
@@ -130,6 +133,15 @@ namespace Pims.Api.Services
             return _dispositionFileRepository.GetDispositionFileSale(dispositionFileId);
         }
 
+        private static void ValidateStaff(PimsDispositionFile dispositionFile)
+        {
+            bool duplicate = dispositionFile.PimsDispositionFileTeams.GroupBy(p => p.DspFlTeamProfileTypeCode).Any(g => g.Count() > 1);
+            if (duplicate)
+            {
+                throw new BadRequestException("Invalid Disposition team, each team member and role combination can only be added once.");
+            }
+        }
+
         private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsDispositionFileProperty> dispositionPropertyFiles)
         {
             foreach (var dispositionProperty in dispositionPropertyFiles)
@@ -207,6 +219,5 @@ namespace Pims.Api.Services
                 }
             }
         }
-
     }
 }
