@@ -31,7 +31,11 @@ export const useDispositionProvider = () => {
     getLastUpdatedByApi,
     getAllDispositionFileTeamMembers,
     getDispositionFileOffers,
+    postDispositionFileOffer,
     getDispositionFileSale,
+    getDispositionFileOffer,
+    putDispositionFileOffer,
+    deleteDispositionFileOffer,
   } = useApiDispositionFile();
 
   const addDispositionFileApi = useApiRequestWrapper<
@@ -106,6 +110,22 @@ export const useDispositionProvider = () => {
     onError: useAxiosErrorHandler('Failed to retrieve Disposition File Offers'),
   });
 
+  const postDispositionOfferApi = useApiRequestWrapper<
+    (
+      dispositionFileId: number,
+      dispositionOffer: Api_DispositionFileOffer,
+    ) => Promise<AxiosResponse<Api_DispositionFileOffer, any>>
+  >({
+    requestFunction: useCallback(
+      async (dispositionFileId: number, dispositionOffer: Api_DispositionFileOffer) =>
+        await postDispositionFileOffer(dispositionFileId, dispositionOffer),
+      [postDispositionFileOffer],
+    ),
+    requestName: 'PostDispositionOffer',
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
+  });
+
   const getDispositionFileSaleApi = useApiRequestWrapper<
     (dispositionFileId: number) => Promise<AxiosResponse<Api_DispositionFileSale, any>>
   >({
@@ -117,6 +137,53 @@ export const useDispositionProvider = () => {
     onError: useAxiosErrorHandler('Failed to retrieve Disposition File Sale'),
   });
 
+  const getDispositionOfferApi = useApiRequestWrapper<
+    (
+      dispositionFileId: number,
+      offerId: number,
+    ) => Promise<AxiosResponse<Api_DispositionFileOffer, any>>
+  >({
+    requestFunction: useCallback(
+      async (dispositionFileId: number, offerId: number) =>
+        await getDispositionFileOffer(dispositionFileId, offerId),
+      [getDispositionFileOffer],
+    ),
+    requestName: 'GetDispositionOffer',
+    onError: useAxiosErrorHandler('Failed to retrieve Disposition File Offer'),
+  });
+
+  const putDispositionOfferApi = useApiRequestWrapper<
+    (
+      dispositionFileId: number,
+      offerId: number,
+      dispositionOffer: Api_DispositionFileOffer,
+    ) => Promise<AxiosResponse<Api_DispositionFileOffer, any>>
+  >({
+    requestFunction: useCallback(
+      async (
+        dispositionFileId: number,
+        offerId: number,
+        dispositionOffer: Api_DispositionFileOffer,
+      ) => await putDispositionFileOffer(dispositionFileId, offerId, dispositionOffer),
+      [putDispositionFileOffer],
+    ),
+    requestName: 'PutDispositionOffer',
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
+  });
+
+  const deleteDispositionOfferApi = useApiRequestWrapper<
+    (dispositionFileId: number, offerId: number) => Promise<AxiosResponse<boolean, any>>
+  >({
+    requestFunction: useCallback(
+      async (dispositionFileId: number, offerId: number) =>
+        await deleteDispositionFileOffer(dispositionFileId, offerId),
+      [deleteDispositionFileOffer],
+    ),
+    requestName: 'DeleteDispositionOffer',
+    onError: useAxiosErrorHandler('Failed to Delete Disposition File Offer'),
+  });
+
   return useMemo(
     () => ({
       addDispositionFileApi: addDispositionFileApi,
@@ -125,7 +192,11 @@ export const useDispositionProvider = () => {
       getDispositionProperties: getDispositionPropertiesApi,
       getAllDispositionTeamMembers: getAllDispositionTeamMembersApi,
       getDispositionFileOffers: getAllDispositionOffersApi,
+      postDispositionFileOffer: postDispositionOfferApi,
       getDispositionFileSale: getDispositionFileSaleApi,
+      getDispositionOffer: getDispositionOfferApi,
+      putDispositionOffer: putDispositionOfferApi,
+      deleteDispositionOffer: deleteDispositionOfferApi,
     }),
     [
       addDispositionFileApi,
@@ -134,7 +205,11 @@ export const useDispositionProvider = () => {
       getDispositionPropertiesApi,
       getAllDispositionTeamMembersApi,
       getAllDispositionOffersApi,
+      postDispositionOfferApi,
       getDispositionFileSaleApi,
+      getDispositionOfferApi,
+      putDispositionOfferApi,
+      deleteDispositionOfferApi,
     ],
   );
 };

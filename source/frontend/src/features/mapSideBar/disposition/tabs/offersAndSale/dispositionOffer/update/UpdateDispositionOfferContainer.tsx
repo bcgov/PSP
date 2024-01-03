@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -11,36 +11,46 @@ import { Api_DispositionFileOffer } from '@/models/api/DispositionFile';
 import { IDispositionOfferFormProps } from '../form/DispositionOfferForm';
 import { DispositionOfferFormModel } from '../models/DispositionOfferFormModel';
 
-export interface IAddDispositionOfferContainerProps {
+export interface IUpdateDispositionOfferContainerProps {
   dispositionFileId: number;
+  dispositionOfferId: number;
   View: React.FC<IDispositionOfferFormProps>;
 }
 
-const AddDispositionOfferContainer: React.FunctionComponent<
-  React.PropsWithChildren<IAddDispositionOfferContainerProps>
-> = ({ dispositionFileId, View }) => {
+const UpdateDispositionOfferContainer: React.FunctionComponent<
+  React.PropsWithChildren<IUpdateDispositionOfferContainerProps>
+> = ({ dispositionFileId, dispositionOfferId, View }) => {
   const history = useHistory();
   const location = useLocation();
+  const backUrl = location.pathname.split(`/offers/${dispositionOfferId}/update`)[0];
 
-  const { setModalContent, setDisplayModal } = useModalContext();
   const [offerStatusError, setOfferStatusError] = useState(false);
-
-  const backUrl = location.pathname.split('/offers/new')[0];
+  const { setModalContent, setDisplayModal } = useModalContext();
+  const [dispositionOffer, setDispositionOffer] = useState<DispositionOfferFormModel | null>(null);
   const {
-    postDispositionFileOffer: { execute: postDispositionOffer, loading },
+    getDispositionOffer: { execute: getDispositionOffer, loading: loadingOffer },
+    putDispositionOffer: { execute: putDispositionOffer, loading: updatingOffer },
   } = useDispositionProvider();
-  const initialValues = new DispositionOfferFormModel(null, dispositionFileId);
+
+  const fetchOfferInformation = useCallback(async () => {
+    const dispositionOffer = await getDispositionOffer(dispositionFileId, dispositionOfferId);
+
+    if (dispositionOffer) {
+      const offerModel = DispositionOfferFormModel.fromApi(dispositionOffer);
+      setDispositionOffer(offerModel);
+    }
+  }, [dispositionFileId, dispositionOfferId, getDispositionOffer]);
 
   const handleSave = async (newOffer: Api_DispositionFileOffer) => {
     setOfferStatusError(false);
-    return postDispositionOffer(dispositionFileId, newOffer);
+    return putDispositionOffer(dispositionFileId, dispositionOfferId, newOffer);
   };
 
-  const handleSuccess = async () => {
+  const handleSucces = async () => {
     history.push(backUrl);
   };
 
-  const onCreateError = (e: AxiosError<IApiError>) => {
+  const onUpdateError = (e: AxiosError<IApiError>) => {
     if (e?.response?.status === 409) {
       setOfferStatusError(true);
       setModalContent({
@@ -60,17 +70,21 @@ const AddDispositionOfferContainer: React.FunctionComponent<
     }
   };
 
+  useEffect(() => {
+    fetchOfferInformation();
+  }, [fetchOfferInformation]);
+
   return (
     <View
-      initialValues={initialValues}
+      initialValues={dispositionOffer}
       showOfferStatusError={offerStatusError}
-      loading={loading}
+      loading={loadingOffer || updatingOffer}
       onSave={handleSave}
-      onSuccess={handleSuccess}
+      onSuccess={handleSucces}
       onCancel={() => history.push(backUrl)}
-      onError={onCreateError}
+      onError={onUpdateError}
     ></View>
   );
 };
 
-export default AddDispositionOfferContainer;
+export default UpdateDispositionOfferContainer;

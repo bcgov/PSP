@@ -3,6 +3,8 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
+using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Exceptions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -49,6 +51,8 @@ namespace Pims.Api.Services
 
             dispositionFile.DispositionStatusTypeCode ??= EnumDispositionStatusTypeCode.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= EnumDispositionFileStatusTypeCode.ACTIVE.ToString();
+
+            ValidateStaff(dispositionFile);
 
             MatchProperties(dispositionFile, userOverrides);
 
@@ -122,12 +126,94 @@ namespace Pims.Api.Services
             return _dispositionFileRepository.GetDispositionOffers(dispositionFileId);
         }
 
+        public PimsDispositionOffer GetDispositionOfferById(long dispositionFileId, long dispositionOfferId)
+        {
+            _logger.LogInformation("Getting disposition file offers with Id: {id}", dispositionOfferId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+
+            var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
+            if (dispositionFileParent is null
+                || (dispositionFileParent is not null && !dispositionFileParent.PimsDispositionOffers.Any(x => x.DispositionOfferId.Equals(dispositionOfferId))))
+            {
+                throw new BadRequestException("Invalid dispositionFileId.");
+            }
+
+            return _dispositionFileRepository.GetDispositionOfferById(dispositionFileId, dispositionOfferId);
+        }
+
+        public PimsDispositionOffer AddDispositionFileOffer(long dispositionFileId, PimsDispositionOffer dispositionOffer)
+        {
+            _logger.LogInformation("Adding disposition file offer to Disposition File with Id: {id}", dispositionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+
+            var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
+            if (dispositionFileId != dispositionOffer.DispositionFileId || dispositionFileParent is null)
+            {
+                throw new BadRequestException("Invalid dispositionFileId.");
+            }
+
+            ValidateDispositionOfferStatus(dispositionFileParent, dispositionOffer);
+
+            var newOffer = _dispositionFileRepository.AddDispositionOffer(dispositionOffer);
+            _dispositionFileRepository.CommitTransaction();
+
+            return newOffer;
+        }
+
+        public PimsDispositionOffer UpdateDispositionFileOffer(long dispositionFileId, long offerId, PimsDispositionOffer dispositionOffer)
+        {
+            _logger.LogInformation("Getting disposition file offers with DispositionFileId: {id}", dispositionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+
+            var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
+            if (dispositionFileId != dispositionOffer.DispositionFileId || dispositionOffer.DispositionOfferId != offerId || dispositionFileParent is null)
+            {
+                throw new BadRequestException("Invalid dispositionFileId.");
+            }
+
+            ValidateDispositionOfferStatus(dispositionFileParent, dispositionOffer);
+
+            var updatedOffer = _dispositionFileRepository.UpdateDispositionOffer(dispositionOffer);
+            _dispositionFileRepository.CommitTransaction();
+
+            return updatedOffer;
+        }
+
+        public bool DeleteDispositionFileOffer(long dispositionFileId, long offerId)
+        {
+            _logger.LogInformation("Deleting Disposition Offer with id ...", offerId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+
+            var deleteResult = _dispositionFileRepository.TryDeleteDispositionOffer(dispositionFileId, offerId);
+            _dispositionFileRepository.CommitTransaction();
+
+            return deleteResult;
+        }
+
         public PimsDispositionSale GetDispositionFileSale(long dispositionFileId)
         {
             _logger.LogInformation("Getting disposition file sales with DispositionFileId: {id}", dispositionFileId);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
 
             return _dispositionFileRepository.GetDispositionFileSale(dispositionFileId);
+        }
+
+        private static void ValidateStaff(PimsDispositionFile dispositionFile)
+        {
+            bool duplicate = dispositionFile.PimsDispositionFileTeams.GroupBy(p => p.DspFlTeamProfileTypeCode).Any(g => g.Count() > 1);
+            if (duplicate)
+            {
+                throw new BadRequestException("Invalid Disposition team, each team member and role combination can only be added once.");    
+            }
+        }
+        
+        private static void ValidateDispositionOfferStatus(PimsDispositionFile dispositionFile, PimsDispositionOffer newOffer)
+        {
+            bool offerAlreadyAccepted = dispositionFile.PimsDispositionOffers.Any(x => x.DispositionOfferStatusTypeCode == EnumDispositionOfferStatusTypeCode.ACCCEPTED.ToString() && x.DispositionOfferId != newOffer.DispositionOfferId);
+            if (offerAlreadyAccepted && !string.IsNullOrEmpty(newOffer.DispositionOfferStatusTypeCode) && newOffer.DispositionOfferStatusTypeCode == EnumDispositionOfferStatusTypeCode.ACCCEPTED.ToString())
+            {
+                throw new DuplicateEntityException("Invalid Disposition Offer, an Offer has been already accepted for this Disposition File");
+            }
         }
 
         private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsDispositionFileProperty> dispositionPropertyFiles)
@@ -207,6 +293,5 @@ namespace Pims.Api.Services
                 }
             }
         }
-
     }
 }

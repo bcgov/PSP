@@ -28,6 +28,7 @@ namespace Pims.Api.Models.Models.Concepts.DispositionFile
                 .Map(dest => dest.OfferDt, src => src.OfferDate)
                 .Map(dest => dest.OfferExpiryDt, src => src.OfferExpiryDate)
                 .Map(dest => dest.OfferAmt, src => src.OfferAmount)
+                .Map(dest => dest.OfferNote, src => src.OfferNote)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
         }
     }

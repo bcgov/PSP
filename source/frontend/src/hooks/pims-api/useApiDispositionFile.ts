@@ -49,8 +49,25 @@ export const useApiDispositionFile = () => {
         api.get<Api_DispositionFileTeam[]>(`/dispositionfiles/team-members`),
       getDispositionFileOffers: (dispositionFileId: number) =>
         api.get<Api_DispositionFileOffer[]>(`/dispositionfiles/${dispositionFileId}/offers`),
+      postDispositionFileOffer: (dispositionFileId: number, offer: Api_DispositionFileOffer) =>
+        api.post<Api_DispositionFileOffer>(`/dispositionfiles/${dispositionFileId}/offers`, offer),
       getDispositionFileSale: (dispositionFileId: number) =>
         api.get<Api_DispositionFileSale>(`/dispositionfiles/${dispositionFileId}/sale`),
+      getDispositionFileOffer: (dispositionFileId: number, offferId: number) =>
+        api.get<Api_DispositionFileOffer>(
+          `/dispositionfiles/${dispositionFileId}/offers/${offferId}`,
+        ),
+      putDispositionFileOffer: (
+        dispositionFileId: number,
+        offferId: number,
+        offer: Api_DispositionFileOffer,
+      ) =>
+        api.put<Api_DispositionFileOffer>(
+          `/dispositionfiles/${dispositionFileId}/offers/${offferId}`,
+          offer,
+        ),
+      deleteDispositionFileOffer: (dispositionFileId: number, offferId: number) =>
+        api.delete<boolean>(`/dispositionfiles/${dispositionFileId}/offers/${offferId}`),
     }),
     [api],
   );

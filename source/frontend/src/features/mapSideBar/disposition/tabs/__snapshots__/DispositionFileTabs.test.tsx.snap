@@ -6,7 +6,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c12.btn {
+  .c13.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c12.btn:hover {
+.c13.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c12.btn:focus {
+.c13.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c12.btn.btn-primary {
+.c13.btn.btn-primary {
   border: none;
 }
 
-.c12.btn.btn-secondary {
+.c13.btn.btn-secondary {
   background: none;
 }
 
-.c12.btn.btn-info {
+.c13.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c12.btn.btn-info:hover,
-.c12.btn.btn-info:active,
-.c12.btn.btn-info:focus {
+.c13.btn.btn-info:hover,
+.c13.btn.btn-info:active,
+.c13.btn.btn-info:focus {
   background: none;
 }
 
-.c12.btn.btn-light {
+.c13.btn.btn-light {
   border: none;
 }
 
-.c12.btn.btn-dark {
+.c13.btn.btn-dark {
   border: none;
 }
 
-.c12.btn.btn-link {
+.c13.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   padding: 0;
 }
 
-.c12.btn.btn-link:hover,
-.c12.btn.btn-link:active,
-.c12.btn.btn-link:focus {
+.c13.btn.btn-link:hover,
+.c13.btn.btn-link:active,
+.c13.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   outline: none;
 }
 
-.c12.btn.btn-link:disabled,
-.c12.btn.btn-link.disabled {
+.c13.btn.btn-link:disabled,
+.c13.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c12.btn:disabled,
-.c12.btn:disabled:hover {
+.c13.btn:disabled,
+.c13.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,19 +128,19 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   opacity: 0.65;
 }
 
-.c12.Button .Button__icon {
+.c13.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c12.Button--icon-only:focus {
+.c13.Button--icon-only:focus {
   outline: none;
 }
 
-.c12.Button--icon-only .Button__icon {
+.c13.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c13 {
+.c14 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -159,12 +159,12 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   margin-left: 0.5rem;
 }
 
-.c15 {
+.c16 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c14 {
+.c15 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -207,7 +207,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   position: relative;
 }
 
-.c8 {
+.c10 {
   float: right;
   cursor: pointer;
 }
@@ -261,12 +261,17 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   font-weight: bold;
 }
 
-.c10 {
+.c11 {
   border-radius: 0.5rem 0.5rem 0rem 0rem;
 }
 
-.c11 {
+.c12 {
   border-left: 0.2rem solid white;
+}
+
+.c8 {
+  padding: 0 0.4rem;
+  display: block;
 }
 
 <div
@@ -750,7 +755,90 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
             </h2>
             <div
               class="collapse show"
-            />
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-5"
+                >
+                  <label
+                    class="c5"
+                  >
+                    MoTI Solicitor:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                >
+                  <a
+                    class="c8"
+                    href="/contact/P6"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    <span>
+                      Alejandro Sanchez
+                    </span>
+                    <svg
+                      class="ml-2"
+                      fill="currentColor"
+                      height="1rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-5"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Negotiation agent:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                >
+                  <a
+                    class="c8"
+                    href="/contact/P9"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    <span>
+                      Aman Monga
+                    </span>
+                    <svg
+                      class="ml-2"
+                      fill="currentColor"
+                      height="1rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -887,13 +975,24 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
               <div
                 class="col"
               >
-                Offers
+                <div
+                  class="c9 no-gutters row"
+                >
+                  <div
+                    class="px-2 my-1 col-auto"
+                  >
+                    Offers
+                  </div>
+                  <div
+                    class="my-1 col-auto"
+                  />
+                </div>
               </div>
               <div
                 class="col-1"
               >
                 <svg
-                  class="c8"
+                  class="c10"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -988,7 +1087,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c8"
+                  class="c10"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -1015,7 +1114,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
             class="collapse show"
           >
             <form
-              class="c10 p-3"
+              class="c11 p-3"
               novalidate=""
             >
               <div
@@ -1097,13 +1196,13 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                   class="col-lg-auto"
                 >
                   <div
-                    class="c11 no-gutters pl-2 row"
+                    class="c12 no-gutters pl-2 row"
                   >
                     <div
                       class="col"
                     >
                       <button
-                        class="c12 Button Button--icon-only primary btn btn-primary"
+                        class="c13 Button Button--icon-only primary btn btn-primary"
                         data-testid="search"
                         id="search-button"
                         title="search"
@@ -1132,7 +1231,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                       class="col"
                     >
                       <button
-                        class="c12 Button Button--icon-only btn btn-info"
+                        class="c13 Button Button--icon-only btn btn-info"
                         data-testid="reset-button"
                         id="reset-button"
                         title="reset-button"
@@ -1185,11 +1284,11 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                     >
                       Document type
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-documentType"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1204,7 +1303,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1231,11 +1330,11 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                     >
                       File name
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-fileName"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1250,7 +1349,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1277,11 +1376,11 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                     >
                       Uploaded
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-appCreateTimestamp"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1296,7 +1395,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1323,11 +1422,11 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                     >
                       Status
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-statusTypeCode"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1342,7 +1441,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"

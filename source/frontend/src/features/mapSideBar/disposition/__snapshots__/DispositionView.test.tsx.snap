@@ -299,7 +299,7 @@ exports[`DispositionView component renders as expected 1`] = `
   border-color: transparent;
 }
 
-.c19 {
+.c20 {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -353,7 +353,7 @@ exports[`DispositionView component renders as expected 1`] = `
   position: relative;
 }
 
-.c20 {
+.c22 {
   float: right;
   cursor: pointer;
 }
@@ -449,6 +449,27 @@ exports[`DispositionView component renders as expected 1`] = `
 .c7 {
   font-size: 1.4rem;
   line-height: 2.2rem;
+}
+
+.c21 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c21 .btn {
+  margin: 0;
+}
+
+.c19 {
+  padding: 0 0.4rem;
+  display: block;
 }
 
 .c10 {
@@ -1023,7 +1044,90 @@ exports[`DispositionView component renders as expected 1`] = `
                       </h2>
                       <div
                         class="collapse show"
-                      />
+                      >
+                        <div
+                          class="pb-2 row"
+                        >
+                          <div
+                            class="pr-0 text-left col-5"
+                          >
+                            <label
+                              class="c16"
+                            >
+                              MoTI Solicitor:
+                            </label>
+                          </div>
+                          <div
+                            class="c17 text-left col"
+                          >
+                            <a
+                              class="c19"
+                              href="/contact/P6"
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              <span>
+                                Alejandro Sanchez
+                              </span>
+                              <svg
+                                class="ml-2"
+                                fill="currentColor"
+                                height="1rem"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                width="1rem"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                                />
+                              </svg>
+                            </a>
+                          </div>
+                        </div>
+                        <div
+                          class="pb-2 row"
+                        >
+                          <div
+                            class="pr-0 text-left col-5"
+                          >
+                            <label
+                              class="c16"
+                            >
+                              Negotiation agent:
+                            </label>
+                          </div>
+                          <div
+                            class="c17 text-left col"
+                          >
+                            <a
+                              class="c19"
+                              href="/contact/P9"
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              <span>
+                                Aman Monga
+                              </span>
+                              <svg
+                                class="ml-2"
+                                fill="currentColor"
+                                height="1rem"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                width="1rem"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                                />
+                              </svg>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1033,7 +1137,7 @@ exports[`DispositionView component renders as expected 1`] = `
                   role="tabpanel"
                 >
                   <div
-                    class="c19"
+                    class="c20"
                   >
                     <div
                       class="spinner-border text-warning"
@@ -1168,13 +1272,24 @@ exports[`DispositionView component renders as expected 1`] = `
                         <div
                           class="col"
                         >
-                          Offers
+                          <div
+                            class="c21 no-gutters row"
+                          >
+                            <div
+                              class="px-2 my-1 col-auto"
+                            >
+                              Offers
+                            </div>
+                            <div
+                              class="my-1 col-auto"
+                            />
+                          </div>
                         </div>
                         <div
                           class="col-1"
                         >
                           <svg
-                            class="c20"
+                            class="c22"
                             fill="currentColor"
                             height="1em"
                             stroke="currentColor"

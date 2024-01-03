@@ -8,7 +8,7 @@ namespace Pims.Api.Models.Models.Concepts.DispositionFile
         /// <summary>
         /// get/set - The relationship id.
         /// </summary>
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         /// Parent Disposition File.
