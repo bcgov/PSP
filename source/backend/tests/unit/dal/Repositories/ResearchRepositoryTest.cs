@@ -62,8 +62,8 @@ namespace Pims.Dal.Test.Repositories
             eResearch.RoadAlias = "a road name or alias";
             eResearch.RoadName = "a road name or alias";
             eResearch.Name = "research file name";
-            eResearch.ResearchFileStatusTypeCodeNavigation = new Entity.PimsResearchFileStatusType() { Id = "Active" };
-            eResearch.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = new PimsProperty() { RegionCode = 1 } } };
+            eResearch.ResearchFileStatusTypeCodeNavigation = new Entity.PimsResearchFileStatusType() { Id = "Active", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" };
+            eResearch.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = EntityHelper.CreateProperty(1) } };
 
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(eResearch);
@@ -123,8 +123,8 @@ namespace Pims.Dal.Test.Repositories
             eResearch.RoadAlias = "a road name or alias";
             eResearch.RoadName = "a road name or alias";
             eResearch.Name = "research file name";
-            eResearch.ResearchFileStatusTypeCodeNavigation = new Entity.PimsResearchFileStatusType() { Id = "Active" };
-            eResearch.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = new PimsProperty() { RegionCode = 1 } } };
+            eResearch.ResearchFileStatusTypeCodeNavigation = new Entity.PimsResearchFileStatusType() { Id = "Active", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" };
+            eResearch.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = EntityHelper.CreateProperty(1) } };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(eResearch);
             var repository = helper.CreateRepository<ResearchFileRepository>(user);

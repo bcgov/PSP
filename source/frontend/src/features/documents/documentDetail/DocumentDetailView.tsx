@@ -1,21 +1,15 @@
-import { Col, Row } from 'react-bootstrap';
 import { FaEdit } from 'react-icons/fa';
+import styled from 'styled-components';
 
 import { LinkButton } from '@/components/common/buttons';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
-import {
-  StyledGreySection,
-  StyledH2,
-  StyledH3,
-  StyledHeader,
-  StyledNoData,
-  StyledScrollable,
-} from '../commonStyles';
+import { StyledH3, StyledNoData, StyledScrollable } from '../commonStyles';
 import { ComposedDocument } from '../ComposedDocument';
 import { StyledContainer } from '../list/styles';
 import DocumentDetailHeader from './DocumentDetailHeader';
@@ -40,31 +34,32 @@ export const DocumentDetailView: React.FunctionComponent<
       {hasClaim(Claims.DOCUMENT_VIEW) && (
         <>
           <DocumentDetailHeader document={props.document} />
-          <StyledGreySection>
-            <Row className="pb-3">
-              <Col className="text-left">
-                <StyledHeader>
-                  <StyledH2>Document information</StyledH2>
-                  <TooltipIcon
-                    toolTipId="documentInfoToolTip"
-                    innerClassName="documentInfoToolTip"
-                    toolTip="Information you provided here will be searchable"
-                  ></TooltipIcon>
-                </StyledHeader>
-              </Col>
-              {hasClaim(Claims.DOCUMENT_EDIT) && (
-                <Col xs="2">
-                  {' '}
-                  <LinkButton
-                    onClick={() => {
-                      props.setIsEditable(true);
-                    }}
-                  >
-                    <FaEdit />
-                  </LinkButton>
-                </Col>
-              )}
-            </Row>
+
+          <Section
+            noPadding
+            header={
+              <>
+                Document information
+                <TooltipIcon
+                  toolTipId="documentInfoToolTip"
+                  innerClassName="documentInfoToolTip"
+                  toolTip="Information you provided here will be searchable"
+                />{' '}
+              </>
+            }
+          >
+            {hasClaim(Claims.DOCUMENT_EDIT) && (
+              <RightFlexDiv>
+                <LinkButton
+                  className="d-inline-block"
+                  onClick={() => {
+                    props.setIsEditable(true);
+                  }}
+                >
+                  <FaEdit />
+                </LinkButton>
+              </RightFlexDiv>
+            )}
             <SectionField label="Status" labelWidth="4">
               {props.document.pimsDocumentRelationship?.document?.statusTypeCode?.description}
             </SectionField>
@@ -83,9 +78,14 @@ export const DocumentDetailView: React.FunctionComponent<
                 </SectionField>
               ))}
             </StyledScrollable>
-          </StyledGreySection>
+          </Section>
         </>
       )}
     </StyledContainer>
   );
 };
+
+const RightFlexDiv = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+`;

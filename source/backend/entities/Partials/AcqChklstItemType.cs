@@ -1,12 +1,13 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using Pims.Dal.Entities.Extensions;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// PimsAcqChklstItemType class, provides an entity for the datamodel to manage a list of acquisition checklist item types.
     /// </summary>
-    public partial class PimsAcqChklstItemType : IBaseEntity, IExpiringTypeEntity
+    public partial class PimsAcqChklstItemType : IBaseEntity, IExpiringTypeEntity<DateOnly, DateOnly?>
     {
         #region Properties
 
@@ -40,6 +41,10 @@ namespace Pims.Dal.Entities
             : this()
         {
             Id = id;
+        }
+
+        public PimsAcqChklstItemType()
+        {
         }
         #endregion
     }

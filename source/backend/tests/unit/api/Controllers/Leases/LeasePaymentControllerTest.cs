@@ -14,7 +14,6 @@ using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Xunit;
-using Model = Pims.Api.Areas.Lease.Models.Lease;
 
 namespace Pims.Api.Test.Controllers.Lease
 {

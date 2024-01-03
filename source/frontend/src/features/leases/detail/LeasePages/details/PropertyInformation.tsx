@@ -28,7 +28,7 @@ export const PropertyInformation: React.FunctionComponent<
   const areaUnitType = getIn(formikProps.values, withNameSpace(nameSpace, 'areaUnitType'));
   const legalDescription = getIn(
     formikProps.values,
-    withNameSpace(nameSpace, 'property.legalDescription'),
+    withNameSpace(nameSpace, 'property.landLegalDescription'),
   );
   const pid = getIn(formikProps.values, withNameSpace(nameSpace, 'property.pid'));
   const pidText = pid ? `PID: ${pidFormatter(pid)}` : '';

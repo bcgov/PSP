@@ -196,7 +196,7 @@ export const getLeaseTermColumns = ({
     },
     {
       Header: 'Payment due',
-      accessor: 'paymentDueDate',
+      accessor: 'paymentDueDateStr',
       align: 'left',
       maxWidth: 50,
     },

@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsAgreementStatusType class, provides an entity for the datamodel to manage agreement status types.
     /// </summary>
-    public partial class PimsAgreementStatusType : ITypeEntity<string>
+    public partial class PimsAgreementStatusType : ITypeEntity<string, bool?>
     {
         #region Properties
 

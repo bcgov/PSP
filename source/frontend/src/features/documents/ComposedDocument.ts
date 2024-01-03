@@ -13,6 +13,7 @@ import {
   Api_Storage_DocumentTypeMetadataType,
 } from '@/models/api/DocumentStorage';
 import Api_TypeCode from '@/models/api/TypeCode';
+import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 
 export interface ComposedDocument {
   mayanMetadata?: Api_Storage_DocumentMetadata[];
@@ -28,7 +29,7 @@ export class DocumentRow {
   statusTypeCode: Api_TypeCode<string> | undefined;
   fileName: string | undefined;
   isFileAvailable: boolean | undefined;
-  appCreateTimestamp?: string;
+  appCreateTimestamp?: UtcIsoDateTime;
   appCreateUserid?: string;
   relationshipId: number | undefined;
   relationshipType: DocumentRelationshipType | undefined;
@@ -86,6 +87,8 @@ export class DocumentUploadFormData {
   public documentTypeId: string;
   public documentStatusCode: string;
   public documentMetadata: Record<string, string>;
+  public isDocumentTypeChanged: boolean = false;
+  public isSelectedFile: boolean = false;
 
   public constructor(
     initialStatus: string,
@@ -125,6 +128,7 @@ export class DocumentUpdateFormData {
   public mayanDocumentId: number;
   public documentStatusCode: string;
   public documentMetadata: Record<string, string>;
+  public documentTypeId: string = '';
 
   public static fromApi(
     composedDocument: ComposedDocument,
@@ -144,6 +148,9 @@ export class DocumentUpdateFormData {
       model.documentMetadata[metaType.metadata_type?.id?.toString() || '-'] =
         foundMetadata?.value ?? '';
     });
+    const documentTypeLabel = composedDocument.pimsDocumentRelationship?.document?.documentType?.id;
+
+    model.documentTypeId = documentTypeLabel?.toString() || '';
     return model;
   }
 

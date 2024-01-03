@@ -104,11 +104,11 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.Project = new PimsProject() { Id = 1 };
+            acqFile.Project = EntityHelper.CreateProject(1, "test", "description");
             acqFile.ProjectId = 1;
             var financial = new PimsCompReqFinancial
             {
-                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test" },
+                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test", Description = "" },
                 CompensationRequisitionId = 1,
                 CompensationRequisition = new PimsCompensationRequisition
                 {
@@ -135,13 +135,13 @@ namespace Pims.Dal.Test.Repositories
             var acqFile = EntityHelper.CreateAcquisitionFile();
             var financial = new PimsCompReqFinancial
             {
-                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test" },
+                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test", Description = "" },
                 CompensationRequisitionId = 1,
                 CompensationRequisition = new PimsCompensationRequisition
                 {
                     AcquisitionFileId = acqFile.Internal_Id,
                     AcquisitionFile = acqFile,
-                    AlternateProject = new PimsProject() { Id = 1 },
+                    AlternateProject = EntityHelper.CreateProject(1, "test", "description"),
                     AlternateProjectId = 1,
                 },
             };
@@ -165,7 +165,7 @@ namespace Pims.Dal.Test.Repositories
             acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { PersonId = 1 } };
             var financial = new PimsCompReqFinancial
             {
-                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test" },
+                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test", Description = "" },
                 CompensationRequisitionId = 1,
                 CompensationRequisition = new PimsCompensationRequisition
                 {
@@ -193,7 +193,7 @@ namespace Pims.Dal.Test.Repositories
             acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { OrganizationId = 100 } };
             var financial = new PimsCompReqFinancial
             {
-                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test" },
+                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test", Description = "" },
                 CompensationRequisitionId = 1,
                 CompensationRequisition = new PimsCompensationRequisition
                 {

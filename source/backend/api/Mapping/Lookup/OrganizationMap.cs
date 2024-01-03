@@ -15,13 +15,13 @@ namespace Pims.Api.Mapping.Lookup
                 .Map(dest => dest.Code, src => src.OrganizationIdentifier)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Type, src => src.GetType().Name)
-                .Inherits<Entity.IDisableBaseAppEntity, BaseAuditModel>();
+                .Inherits<Entity.IDisableBaseAppEntity<bool>, BaseAuditModel>();
 
             config.NewConfig<Model.OrganizationModel, Entity.PimsOrganization>()
                 .Map(dest => dest.Internal_Id, src => src.Id)
                 .Map(dest => dest.OrganizationName, src => src.Name)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Inherits<BaseAuditModel, Entity.IDisableBaseAppEntity>();
+                .Inherits<BaseAuditModel, Entity.IDisableBaseAppEntity<bool>>();
         }
     }
 }

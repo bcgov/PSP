@@ -53,7 +53,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - The data source effective date.
         /// </summary>
-        public DateTime DataSourceEffectiveDate { get; set; }
+        public DateOnly DataSourceEffectiveDate { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the classification type.

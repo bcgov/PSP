@@ -61,7 +61,7 @@ namespace Pims.Api.Models.Concepts.Property
         /// <summary>
         /// get/set - The data source effective date.
         /// </summary>
-        public DateTime DataSourceEffectiveDate { get; set; }
+        public DateOnly DataSourceEffectiveDate { get; set; }
 
         /// <summary>
         /// get/set - The GIS latitude location of the property.
@@ -240,7 +240,7 @@ namespace Pims.Api.Models.Concepts.Property
 
         public string SurplusDeclarationComment { get; set; }
 
-        public DateTime SurplusDeclarationDate { get; set; }
+        public DateOnly SurplusDeclarationDate { get; set; }
         #endregion
 
         #endregion

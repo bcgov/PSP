@@ -14,5 +14,8 @@ export const getDocumentMetadataYupSchema = (
     }
   }
 
-  return Yup.object().shape({ documentMetadata: Yup.object().shape(metadataSchema) });
+  return Yup.object().shape({
+    documentMetadata: Yup.object().shape(metadataSchema),
+    documentTypeId: Yup.string().required('Document type is required'),
+  });
 };

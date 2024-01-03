@@ -13,5 +13,7 @@ namespace Pims.Api.Areas.Property.Models.Property
         public IList<AssociationModel> ResearchAssociations { get; set; }
 
         public IList<AssociationModel> AcquisitionAssociations { get; set; }
+
+        public IList<AssociationModel> DispositionAssociations { get; set; }
     }
 }

@@ -4,46 +4,61 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-#nullable disable
+namespace Pims.Dal.Entities;
 
-namespace Pims.Dal.Entities
+/// <summary>
+/// Code table to describe the purpose ot the research request
+/// </summary>
+[Table("PIMS_RESEARCH_PURPOSE_TYPE")]
+public partial class PimsResearchPurposeType
 {
-    [Table("PIMS_RESEARCH_PURPOSE_TYPE")]
-    public partial class PimsResearchPurposeType
-    {
-        public PimsResearchPurposeType()
-        {
-            PimsResearchFilePurposes = new HashSet<PimsResearchFilePurpose>();
-        }
+    /// <summary>
+    /// Code indicating the purpose of the research request.
+    /// </summary>
+    [Key]
+    [Column("RESEARCH_PURPOSE_TYPE_CODE")]
+    [StringLength(20)]
+    public string ResearchPurposeTypeCode { get; set; }
 
-        [Key]
-        [Column("RESEARCH_PURPOSE_TYPE_CODE")]
-        [StringLength(20)]
-        public string ResearchPurposeTypeCode { get; set; }
-        [Required]
-        [Column("DESCRIPTION")]
-        [StringLength(200)]
-        public string Description { get; set; }
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
-        [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
-        [Column("CONCURRENCY_CONTROL_NUMBER")]
-        public long ConcurrencyControlNumber { get; set; }
-        [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
-        public DateTime DbCreateTimestamp { get; set; }
-        [Required]
-        [Column("DB_CREATE_USERID")]
-        [StringLength(30)]
-        public string DbCreateUserid { get; set; }
-        [Column("DB_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
-        public DateTime DbLastUpdateTimestamp { get; set; }
-        [Required]
-        [Column("DB_LAST_UPDATE_USERID")]
-        [StringLength(30)]
-        public string DbLastUpdateUserid { get; set; }
+    /// <summary>
+    /// Description of the code indicating the purpose of the research request.
+    /// </summary>
+    [Required]
+    [Column("DESCRIPTION")]
+    [StringLength(200)]
+    public string Description { get; set; }
 
-        [InverseProperty(nameof(PimsResearchFilePurpose.ResearchPurposeTypeCodeNavigation))]
-        public virtual ICollection<PimsResearchFilePurpose> PimsResearchFilePurposes { get; set; }
-    }
+    /// <summary>
+    /// Indicates if the code is disabled.
+    /// </summary>
+    [Column("IS_DISABLED")]
+    public bool? IsDisabled { get; set; }
+
+    /// <summary>
+    /// Force the display order of the codes.
+    /// </summary>
+    [Column("DISPLAY_ORDER")]
+    public int? DisplayOrder { get; set; }
+
+    [Column("CONCURRENCY_CONTROL_NUMBER")]
+    public long ConcurrencyControlNumber { get; set; }
+
+    [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
+    public DateTime DbCreateTimestamp { get; set; }
+
+    [Required]
+    [Column("DB_CREATE_USERID")]
+    [StringLength(30)]
+    public string DbCreateUserid { get; set; }
+
+    [Column("DB_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
+    public DateTime DbLastUpdateTimestamp { get; set; }
+
+    [Required]
+    [Column("DB_LAST_UPDATE_USERID")]
+    [StringLength(30)]
+    public string DbLastUpdateUserid { get; set; }
+
+    [InverseProperty("ResearchPurposeTypeCodeNavigation")]
+    public virtual ICollection<PimsResearchFilePurpose> PimsResearchFilePurposes { get; set; } = new List<PimsResearchFilePurpose>();
 }

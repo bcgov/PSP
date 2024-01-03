@@ -15,7 +15,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.PimsPropertyType CreatePropertyType(string id)
         {
-            return new Entity.PimsPropertyType(id) { ConcurrencyControlNumber = 1 };
+            return new Entity.PimsPropertyType(id) { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" };
         }
 
         /// <summary>
@@ -26,8 +26,8 @@ namespace Pims.Core.Test
         {
             return new List<Entity.PimsPropertyType>()
             {
-                new Entity.PimsPropertyType("Land") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsPropertyType("Building") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsPropertyType("Land") { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
+                new Entity.PimsPropertyType("Building") { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
             };
         }
     }

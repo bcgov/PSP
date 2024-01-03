@@ -67,6 +67,7 @@ export const useWfsLayer = (
       },
       [layerOptions, url],
     ),
+    throwError: true,
     requestName: requestWrapperOptions?.requestName ?? 'getAllFeatures',
   });
 

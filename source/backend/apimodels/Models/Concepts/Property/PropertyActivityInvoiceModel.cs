@@ -8,7 +8,7 @@ namespace Pims.Api.Models.Concepts.Property
         #region Properties
         public long Id { get; set; }
 
-        public DateTime InvoiceDateTime { get; set; }
+        public DateOnly InvoiceDateTime { get; set; }
 
         public string InvoiceNum { get; set; }
 

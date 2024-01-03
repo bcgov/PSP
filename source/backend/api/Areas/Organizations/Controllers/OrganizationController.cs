@@ -2,7 +2,7 @@ using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Areas.Contact.Models.Contact;
+using Pims.Api.Models.Concepts.Organization;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;

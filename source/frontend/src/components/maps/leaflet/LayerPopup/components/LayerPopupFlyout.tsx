@@ -10,6 +10,7 @@ export interface ILayerPopupFlyoutProps {
   onCreateResearchFile: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateAcquisitionFile: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateLeaseLicense: (event: React.MouseEvent<HTMLElement>) => void;
+  onCreateDispositionFile: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyoutProps>> = ({
@@ -17,6 +18,7 @@ export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyou
   onCreateResearchFile,
   onCreateAcquisitionFile,
   onCreateLeaseLicense,
+  onCreateDispositionFile,
 }) => {
   const keycloak = useKeycloakWrapper();
 
@@ -38,6 +40,11 @@ export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyou
       {keycloak.hasClaim(Claims.LEASE_ADD) && (
         <ListGroup.Item>
           <LinkButton onClick={onCreateLeaseLicense}>Lease/License - Create new</LinkButton>
+        </ListGroup.Item>
+      )}
+      {keycloak.hasClaim(Claims.DISPOSITION_ADD) && (
+        <ListGroup.Item>
+          <LinkButton onClick={onCreateDispositionFile}>Disposition File - Create new</LinkButton>
         </ListGroup.Item>
       )}
     </ListGroup>
