@@ -30,6 +30,7 @@ let mockViewProps: IUpdateChecklistFormProps = {
   onSuccess: jest.fn(),
   sectionTypeName: API.ACQUISITION_CHECKLIST_SECTION_TYPES,
   statusTypeName: API.ACQUISITION_CHECKLIST_ITEM_STATUS_TYPES,
+  prefix: 'acq',
 };
 
 describe('UpdateChecklist form', () => {
@@ -44,6 +45,7 @@ describe('UpdateChecklist form', () => {
         onError={mockViewProps.onError}
         sectionTypeName={mockViewProps.sectionTypeName}
         statusTypeName={mockViewProps.statusTypeName}
+        prefix={mockViewProps.prefix}
       />,
       {
         store: {
