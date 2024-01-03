@@ -43,6 +43,12 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(generalModalOkBttn).Click();
         }
 
+        public void ModalClickCancelBttn()
+        {
+            Wait(2000);
+            webDriver.FindElement(generalModalCancelBttn).Click();
+        }
+
         public string SecondaryModalHeader()
         {
             WaitUntilVisible(secondaryModal);

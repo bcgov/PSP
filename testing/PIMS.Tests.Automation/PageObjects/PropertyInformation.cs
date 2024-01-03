@@ -410,7 +410,6 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (property.Anomalies.First() != "")
             {
-                ClearMultiSelectInput(propertyDetailsAnomaliesInput);
                 foreach (string anomaly in property.Anomalies)
                 {
                     FocusAndClick(propertyDetailsAnomaliesInput);
@@ -431,8 +430,6 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (property.TenureStatus.First() != "")
             {
-                Wait();
-                ClearMultiSelectInput(propertyDetailsTenureStatusInput);
                 foreach (string status in property.TenureStatus)
                 {
                     FocusAndClick(propertyDetailsTenureStatusInput);

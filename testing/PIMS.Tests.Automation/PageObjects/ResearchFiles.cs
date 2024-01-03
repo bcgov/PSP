@@ -115,6 +115,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchPropertyResearchEditBttn = By.XPath("(//button[@class='btn btn-link'])[2]");
         private By researchPropertyNameInput = By.Id("input-propertyName");
         private By researchPropertyPurposeSelect = By.Id("purpose-selector_input");
+        private By researchPropertyPurposeInput = By.XPath("//input[@id='purpose-selector_input']/parent::div");
         private By researchPropertyPurposeDiv = By.XPath("//input[@id='purpose-selector_input']/parent::div");
         private By researchPropertyPurposeOptions = By.CssSelector("ul[class='optionContainer']");
         private By researchPropertyLegalOpinionReqSelect = By.Id("input-isLegalOpinionRequired");
@@ -132,6 +133,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchPropertyPurposeLabel = By.XPath("//label[contains(text(),'Purpose')]");
         private By researchPropertyPurposeViewInput = By.XPath("//label[contains(text(),'Purpose')]/parent::div/following-sibling::div");
         private By researchProperty1stPurposeDeleteLink = By.CssSelector("div[id='purpose-selector'] div span:nth-child(1) i");
+        private By researchPropertyPurposeDeleteLinks = By.CssSelector("div[id='purpose-selector'] div span i");
         private By researchPropertyLegalReqLabel = By.XPath("//label[contains(text(),'Legal opinion req')]");
         private By researchPropertyLegalReqViewInput = By.XPath("//label[contains(text(),'Legal opinion req')]/parent::div/following-sibling::div");
         private By researchPropertyLegalObtLabel = By.XPath("//label[contains(text(),'Legal opinion obtained')]");
@@ -469,13 +471,23 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearInput(researchPropertyNameInput);
                 webDriver.FindElement(researchPropertyNameInput).SendKeys(propertyResearch.DescriptiveName);
             }
-            if (propertyResearch.PropertyResearchPurpose.Count > 0)
+            if (propertyResearch.PropertyResearchPurpose.First() != "")
             {
-                for (int i = 0; i < propertyResearch.PropertyResearchPurpose.Count; i++)
+                //Delete Purposes previously selected if any
+                if (webDriver.FindElements(researchPropertyPurposeDeleteLinks).Count > 0)
                 {
-                    ClearMultiSelectInput(researchPropertyPurposeDiv);
-                    webDriver.FindElement(researchPropertyPurposeSelect).Click();
-                    ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, propertyResearch.PropertyResearchPurpose[i]);
+                    FocusAndClick(researchPropertyPurposeDiv);
+                    while (webDriver.FindElements(researchPropertyPurposeDeleteLinks).Count > 0)
+                    {
+                        webDriver.FindElements(researchPropertyPurposeDeleteLinks)[0].Click();
+                    }
+                }
+                foreach (string purpose in propertyResearch.PropertyResearchPurpose)
+                {
+                    FocusAndClick(researchPropertyPurposeInput);
+
+                    WaitUntilClickable(researchPropertyPurposeOptions);
+                    ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, purpose);
                 }
             }
             if (propertyResearch.LegalOpinionRequest != "")

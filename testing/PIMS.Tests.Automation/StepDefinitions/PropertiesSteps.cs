@@ -203,6 +203,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 propertyManagementTab.VerifyLastInsertedPropertyContactTable(propertyManagement.ManagementPropertyContacts[i]);
             }
 
+            //Insert Activities
             for (int j = 0; j < propertyManagement.ManagementPropertyActivities.Count; j++)
             {
                 propertyManagementTab.AddNewPropertyActivityButton();
@@ -213,6 +214,30 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 propertyManagementTab.ViewLastActivityFromList();
                 propertyManagementTab.VerifyLastInsertedActivityTable(propertyManagement.ManagementPropertyActivities[j]);
             }
+        }
+
+        [StepDefinition(@"I insert activities to the Property Management Tab from row number (.*)")]
+        public void InsertActivityManagementPropertyTab(int rowNumber)
+        {
+            //Grab data from excel
+            PopulateManagementProperty(rowNumber);
+
+            //Go to the Property Management Tab
+            propertyManagementTab.NavigateManagementTab();
+            //propertyManagementTab.VerifyInitManagementTabView();
+
+            //Insert Activities
+            for (int j = 0; j < propertyManagement.ManagementPropertyActivities.Count; j++)
+            {
+                propertyManagementTab.AddNewPropertyActivityButton();
+                propertyManagementTab.VerifyCreateActivityInitForm();
+                propertyManagementTab.InsertNewPropertyActivity(propertyManagement.ManagementPropertyActivities[j]);
+                propertyManagementTab.SavePropertyManagement();
+                propertyManagementTab.VerifyInsertedActivity(propertyManagement.ManagementPropertyActivities[j]);
+                propertyManagementTab.ViewLastActivityFromList();
+                propertyManagementTab.VerifyLastInsertedActivityTable(propertyManagement.ManagementPropertyActivities[j]);
+            }
+
         }
 
         [StepDefinition(@"I update information in the Property Management Tab from row number (.*)")]
@@ -264,6 +289,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Delete all Contacts
             propertyManagementTab.DeleteAllContacts();
+
+            //Delete all Activities
+            propertyManagementTab.DeleteAllActivities();
+        }
+
+        [StepDefinition(@"I delete all activities from the Property Management Tab")]
+        public void DeleteActivitiesManagementPropertyTab()
+        {
+            //Close Activity Tray
+            propertyManagementTab.CloseActivityTray();
 
             //Delete all Activities
             propertyManagementTab.DeleteAllActivities();
