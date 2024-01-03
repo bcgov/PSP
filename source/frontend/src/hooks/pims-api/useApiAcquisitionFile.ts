@@ -5,7 +5,6 @@ import { Api_AcquisitionFilter } from '@/features/acquisition/list/interfaces';
 import { IPagedItems } from '@/interfaces';
 import {
   Api_AcquisitionFile,
-  Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
   Api_AcquisitionFileTeam,
@@ -13,7 +12,7 @@ import {
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
-import { Api_LastUpdatedBy } from '@/models/api/File';
+import { Api_FileChecklistItem, Api_FileWithChecklist, Api_LastUpdatedBy } from '@/models/api/File';
 import { Api_Product, Api_Project } from '@/models/api/Project';
 import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -101,8 +100,8 @@ export const useApiAcquisitionFile = () => {
       getAcquisitionFileProduct: (acqFileId: number) =>
         api.get<Api_Product>(`/acquisitionfiles/${acqFileId}/product`),
       getAcquisitionFileChecklist: (acqFileId: number) =>
-        api.get<Api_AcquisitionFileChecklistItem[]>(`/acquisitionfiles/${acqFileId}/checklist`),
-      putAcquisitionFileChecklist: (acqFile: Api_AcquisitionFile) =>
+        api.get<Api_FileChecklistItem[]>(`/acquisitionfiles/${acqFileId}/checklist`),
+      putAcquisitionFileChecklist: (acqFile: Api_FileWithChecklist) =>
         api.put<Api_AcquisitionFile>(`/acquisitionfiles/${acqFile?.id}/checklist`, acqFile),
       getFileCompensationRequisitions: (acqFileId: number) =>
         api.get<Api_CompensationRequisition[]>(

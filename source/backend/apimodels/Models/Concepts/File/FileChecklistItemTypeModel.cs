@@ -1,8 +1,8 @@
 using Pims.Api.Models.Base;
 
-namespace Pims.Api.Models.Concepts.AcquisitionFile
+namespace Pims.Api.Models.Models.Concepts.File
 {
-    public class AcquisitionFileChecklistItemTypeModel : BaseConcurrentModel
+    public class FileChecklistItemTypeModel : BaseConcurrentModel
     {
         /// <summary>
         /// get/set - Checklist item code value.

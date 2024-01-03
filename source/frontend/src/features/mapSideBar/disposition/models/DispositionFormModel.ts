@@ -6,6 +6,7 @@ import {
 import { emptyStringtoNullable, toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
+import { ChecklistItemFormModel } from '../../shared/tabs/checklist/update/models';
 import { DispositionOfferFormModel } from '../tabs/offersAndSale/dispositionOffer/models/DispositionOfferFormModel';
 import { DispositionAppraisalFormModel } from './DispositionAppraisalFormModel';
 import { DispositionSaleFormModel } from './DispositionSaleFormModel';
@@ -30,6 +31,7 @@ export class DispositionFormModel implements WithDispositionTeam {
   fileProperties: PropertyForm[] = [];
   team: DispositionTeamSubFormModel[] = [];
   offers: DispositionOfferFormModel[] = [];
+  fileChecklist: ChecklistItemFormModel[] = [];
   sale: DispositionSaleFormModel | null = null;
   appraisal: DispositionAppraisalFormModel | null = null;
 
@@ -89,6 +91,7 @@ export class DispositionFormModel implements WithDispositionTeam {
       product: null,
       productId: null,
       dispositionAppraisal: this.appraisal ? this.appraisal.toApi() : null,
+      fileChecklistItems: this.fileChecklist.map(x => x.toApi()),
     };
   }
 }

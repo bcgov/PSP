@@ -792,7 +792,7 @@ namespace Pims.Api.Services
         private void AppendToAcquisitionChecklist(PimsAcquisitionFile acquisitionFile, ref List<PimsAcquisitionChecklistItem> pimsAcquisitionChecklistItems)
         {
             var doNotAddToStatuses = new List<string>() { "COMPLT", "CANCEL", "ARCHIV" };
-            if (doNotAddToStatuses.Contains(acquisitionFile.AcqPhysFileStatusTypeCode))
+            if (doNotAddToStatuses.Contains(acquisitionFile.AcquisitionFileStatusTypeCode))
             {
                 return;
             }

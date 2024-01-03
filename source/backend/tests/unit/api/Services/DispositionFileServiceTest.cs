@@ -273,6 +273,184 @@ namespace Pims.Api.Test.Services
 
         #endregion
 
+        #region Checklist
+        [Fact]
+        public void GetChecklist_Success()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+
+            var acqFile = EntityHelper.CreateDispositionFile();
+
+            var repository = this._helper.GetService<Mock<IDispositionFileChecklistRepository>>();
+            var acquisitionRepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>())).Returns(acqFile.PimsDispositionChecklistItems.ToList());
+            acquisitionRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            // Act
+            var result = service.GetChecklistItems(1);
+
+            // Assert
+            repository.Verify(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetChecklist_Append_Success()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+
+            var acqFile = EntityHelper.CreateDispositionFile();
+
+            var repository = this._helper.GetService<Mock<IDispositionFileChecklistRepository>>();
+            var acquisitionRepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionChecklistItem>());
+            repository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsDspChklstItemType>() { new PimsDspChklstItemType() { DspChklstItemTypeCode = "TEST" } });
+            acquisitionRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            // Act
+            var result = service.GetChecklistItems(1);
+
+            // Assert
+            repository.Verify(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()), Times.Once);
+            result.Count().Should().Be(1);
+            result.FirstOrDefault().DspChklstItemTypeCode.Should().Be("TEST");
+            result.FirstOrDefault().DspChklstItemStatusTypeCode.Should().Be("INCOMP");
+        }
+
+        [Fact]
+        public void GetChecklist_Append_IgnoreDspFileByStatus()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+
+            var acqFile = EntityHelper.CreateDispositionFile(1);
+            acqFile.DispositionFileStatusTypeCode = "COMPLT";
+
+            var repository = this._helper.GetService<Mock<IDispositionFileChecklistRepository>>();
+            var acquisitionRepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionChecklistItem>());
+            repository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsDspChklstItemType>() { new PimsDspChklstItemType() { DspChklstItemTypeCode = "TEST" } });
+            acquisitionRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            // Act
+            var result = service.GetChecklistItems(1);
+
+            // Assert
+            repository.Verify(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()), Times.Once);
+            result.Count().Should().Be(0);
+        }
+
+        [Fact]
+        public void GetChecklist_Append_IgnoreItemByDate()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+
+            var acqFile = EntityHelper.CreateDispositionFile(1);
+            acqFile.AppCreateTimestamp = new DateTime(2023, 1, 1);
+
+            var repository = this._helper.GetService<Mock<IDispositionFileChecklistRepository>>();
+            var acquisitionRepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionChecklistItem>());
+            repository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsDspChklstItemType>() { new PimsDspChklstItemType() { DspChklstItemTypeCode = "TEST", EffectiveDate = new DateOnly(2024, 1, 1) } });
+            acquisitionRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            // Act
+            var result = service.GetChecklistItems(1);
+
+            // Assert
+            repository.Verify(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()), Times.Once);
+            result.Count().Should().Be(0);
+        }
+
+        [Fact]
+        public void GetChecklist_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions();
+
+            var acqFile = EntityHelper.CreateDispositionFile();
+
+            // Act
+            Action act = () => service.GetChecklistItems(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void UpdateChecklist_Success()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+
+            var acqFile = EntityHelper.CreateDispositionFile();
+            acqFile.PimsDispositionChecklistItems = new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, DspChklstItemStatusTypeCode = "COMPLT" } };
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var fileChecklistRepository = this._helper.GetService<Mock<IDispositionFileChecklistRepository>>();
+            fileChecklistRepository.Setup(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, DspChklstItemStatusTypeCode = "INCOMP" } });
+
+            // Act
+            service.UpdateChecklistItems(acqFile);
+
+            // Assert
+            fileChecklistRepository.Verify(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()), Times.Once);
+            fileChecklistRepository.Verify(x => x.Update(It.IsAny<PimsDispositionChecklistItem>()), Times.Once);
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Exactly(1));
+        }
+
+        [Fact]
+        public void UpdateChecklist_ItemNotFound()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+
+            var acqFile = EntityHelper.CreateDispositionFile();
+            acqFile.PimsDispositionChecklistItems = new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 999, DspChklstItemStatusTypeCode = "COMPLT" } };
+            acqFile.DispositionFileStatusTypeCode = "ACTIV";
+
+            var acqRepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            acqRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var fileChecklistRepository = this._helper.GetService<Mock<IDispositionFileChecklistRepository>>();
+            fileChecklistRepository.Setup(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, DspChklstItemStatusTypeCode = "INCOMP" } });
+
+            // Act
+            Action act = () => service.UpdateChecklistItems(acqFile);
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+
+            fileChecklistRepository.Verify(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()), Times.Once);
+            fileChecklistRepository.Verify(x => x.Update(It.IsAny<PimsDispositionChecklistItem>()), Times.Never);
+        }
+
+        [Fact]
+        public void UpdateChecklist_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions();
+
+            var acqFile = EntityHelper.CreateDispositionFile();
+
+            var repository = this._helper.GetService<Mock<IDispositionFileChecklistRepository>>();
+            repository.Setup(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>())).Returns(acqFile.PimsDispositionChecklistItems.ToList());
+
+            // Act
+            Action act = () => service.UpdateChecklistItems(acqFile);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()), Times.Never);
+        }
+        #endregion
+
         #region Offers
 
         [Fact]

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
+using Pims.Dal.Security;
 
 namespace Pims.Api.Services
 {
@@ -30,5 +31,9 @@ namespace Pims.Api.Services
         bool DeleteDispositionFileOffer(long dispositionFileId, long offerId);
 
         PimsDispositionSale GetDispositionFileSale(long dispositionFileId);
+
+        IEnumerable<PimsDispositionChecklistItem> GetChecklistItems(long id);
+
+        PimsDispositionFile UpdateChecklistItems(PimsDispositionFile dispositionFile);
     }
 }

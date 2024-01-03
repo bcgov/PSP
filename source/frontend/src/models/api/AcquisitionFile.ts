@@ -1,6 +1,4 @@
-import moment from 'moment';
-
-import { Api_File } from '@/models/api/File';
+import { Api_FileWithChecklist } from '@/models/api/File';
 import Api_TypeCode from '@/models/api/TypeCode';
 
 import { Api_Address } from './Address';
@@ -22,7 +20,10 @@ export enum EnumAcquisitionFileType {
 }
 
 // LINK @backend/api/Models/Concepts/AcquisitionFile/AcquisitionFileModel.cs
-export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFields, Api_File {
+export interface Api_AcquisitionFile
+  extends Api_ConcurrentVersion,
+    Api_AuditFields,
+    Api_FileWithChecklist {
   id?: number;
   fileNo?: number;
   legacyFileNumber?: string;
@@ -37,7 +38,6 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   acquisitionTeam?: Api_AcquisitionFileTeam[];
   acquisitionFileOwners?: Api_AcquisitionFileOwner[];
   acquisitionFileInterestHolders?: Api_InterestHolder[];
-  acquisitionFileChecklist?: Api_AcquisitionFileChecklistItem[];
   compensationRequisitions?: Api_CompensationRequisition[];
   project?: Api_Project;
   projectId: number | null;
@@ -80,56 +80,4 @@ export interface Api_AcquisitionFileOwner extends Api_ConcurrentVersion, Api_Aud
   contactEmailAddr: string | null;
   contactPhoneNum: string | null;
   address: Api_Address | null;
-}
-
-export interface Api_AcquisitionFileChecklistItem extends Api_ConcurrentVersion, Api_AuditFields {
-  id?: number;
-  acquisitionFileId?: number;
-  itemType?: Api_AcquisitionFileChecklistItemType;
-  statusTypeCode?: Api_TypeCode<string>;
-}
-
-export interface Api_AcquisitionFileChecklistItemType extends Api_ConcurrentVersion {
-  code?: string;
-  sectionCode?: string;
-  description?: string;
-  hint?: string;
-  isDisabled?: boolean;
-  displayOrder?: number;
-}
-
-export function sortByDisplayOrder(
-  a: Api_AcquisitionFileChecklistItem,
-  b: Api_AcquisitionFileChecklistItem,
-) {
-  return (a.itemType?.displayOrder ?? 0) - (b.itemType?.displayOrder ?? 0);
-}
-
-export function lastModifiedBy(array: Api_AuditFields[] = []): Api_AuditFields | undefined {
-  let lastModified: Api_AuditFields | undefined = undefined;
-
-  for (const item of array) {
-    if (moment(item.appLastUpdateTimestamp).isBefore(moment('1900-01-01T00:00:00.000Z'))) {
-      continue;
-    }
-    if (lastModified === undefined) {
-      lastModified = item;
-      continue;
-    }
-    if (moment(item.appLastUpdateTimestamp).isAfter(moment(lastModified.appLastUpdateTimestamp))) {
-      lastModified = item;
-    }
-  }
-
-  return lastModified;
-}
-
-export function isDefaultState(checklistItem: Api_AcquisitionFileChecklistItem): boolean {
-  return (
-    checklistItem.statusTypeCode?.id === 'INCOMP' &&
-    moment(checklistItem.appCreateTimestamp).isSame(
-      moment(checklistItem.appLastUpdateTimestamp),
-      'second',
-    )
-  );
 }

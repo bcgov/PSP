@@ -1,11 +1,11 @@
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import {
   Api_AcquisitionFile,
-  Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileTeam,
   EnumAcquisitionFileType,
 } from '@/models/api/AcquisitionFile';
+import { Api_FileChecklistItem } from '@/models/api/File';
 
 export const mockAcquisitionFileResponse = (
   id = 1,
@@ -290,7 +290,7 @@ export const mockAcquisitionFileResponse = (
       isDisabled: false,
     },
   ],
-  acquisitionFileChecklist: [],
+  fileChecklistItems: [],
   totalAllowableCompensation: 0,
   legacyStakeholders: [],
   appCreateTimestamp: '2022-05-28T00:57:37.42',
@@ -417,12 +417,10 @@ export const mockApiAcquisitionFileTeamOrganization = (): Api_AcquisitionFileTea
   rowVersion: 2,
 });
 
-export const mockAcquisitionFileChecklistResponse = (
-  acquisitionFileId: number = 1,
-): Api_AcquisitionFileChecklistItem[] => [
+export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklistItem[] => [
   {
     id: 51,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'PREACQTTL',
       sectionCode: 'FILEINIT',
@@ -447,7 +445,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 52,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'SVCAFFADAV',
       sectionCode: 'SCTN6XPRP',
@@ -472,7 +470,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 53,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'VESTNOTICE',
       sectionCode: 'SCTN6XPRP',
@@ -498,7 +496,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 54,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'EXPROPFORM5',
       sectionCode: 'SCTN6XPRP',
@@ -524,7 +522,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 55,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'EXPROPFORM1',
       sectionCode: 'SCTN6XPRP',
@@ -550,7 +548,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 56,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'ALCORDER',
       sectionCode: 'SCTN3AGR',
@@ -576,7 +574,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 57,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'EXPROPAPPRV',
       sectionCode: 'SCTN6XPRP',
@@ -602,7 +600,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 58,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'CURRYRASSMN',
       sectionCode: 'SCTN3AGR',
@@ -627,7 +625,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 59,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'TTLCHRGS',
       sectionCode: 'SCTN3AGR',
@@ -652,7 +650,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 60,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'SGNDAGRMNT',
       sectionCode: 'SCTN3AGR',
@@ -677,7 +675,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 61,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'CONVEYLTR',
       sectionCode: 'SCTN3AGR',
@@ -702,7 +700,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 62,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'CLAIMRELSS3',
       sectionCode: 'SCTN3AGR',
@@ -727,7 +725,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 63,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'AVNCDPMTNTY',
       sectionCode: 'SCTN3AGR',
@@ -753,7 +751,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 64,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'BCTFANOTIF',
       sectionCode: 'FILEMGMT',
@@ -778,7 +776,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 65,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'NEWTTLACOMP',
       sectionCode: 'FILEMGMT',
@@ -804,7 +802,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 66,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'REGSTRDPLAN',
       sectionCode: 'FILEMGMT',
@@ -830,7 +828,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 67,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'CONVEYCLOS',
       sectionCode: 'FILEMGMT',
@@ -855,7 +853,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 68,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'ENTRYCOND',
       sectionCode: 'FILEMGMT',
@@ -880,7 +878,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 69,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'BCASSESS',
       sectionCode: 'FILEINIT',
@@ -905,7 +903,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 70,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'COMPSRCH',
       sectionCode: 'FILEINIT',
@@ -930,7 +928,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 71,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'LANDTTL',
       sectionCode: 'FILEINIT',
@@ -955,7 +953,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 72,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'SGNPAPLAN',
       sectionCode: 'FILEINIT',
@@ -981,7 +979,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 73,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'PHOTOS',
       sectionCode: 'FILEMGMT',
@@ -1006,7 +1004,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 74,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'APPRAISE',
       sectionCode: 'FILEMGMT',
@@ -1031,7 +1029,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 75,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'CLAIMRELSS6',
       sectionCode: 'SCTN6XPRP',
@@ -1056,7 +1054,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 76,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'OTHERRPTS',
       sectionCode: 'FILEMGMT',
@@ -1082,7 +1080,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 77,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'CORRESCPY',
       sectionCode: 'FILEMGMT',
@@ -1107,7 +1105,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 78,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'SAASIGNED',
       sectionCode: 'FILEMGMT',
@@ -1133,7 +1131,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 79,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'FINALAGRM',
       sectionCode: 'FILEMGMT',
@@ -1159,7 +1157,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 80,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'H120COMPREQ',
       sectionCode: 'FILEMGMT',
@@ -1184,7 +1182,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 81,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'LEGALDOCS',
       sectionCode: 'FILEMGMT',
@@ -1209,7 +1207,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 82,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'OWNERCOMP',
       sectionCode: 'FILEMGMT',
@@ -1234,7 +1232,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 83,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'RECNEGOT',
       sectionCode: 'FILEMGMT',
@@ -1259,7 +1257,7 @@ export const mockAcquisitionFileChecklistResponse = (
   },
   {
     id: 84,
-    acquisitionFileId,
+    fileId,
     itemType: {
       code: 'PIMSUPDTFIL',
       sectionCode: 'ACQCOMPAC',

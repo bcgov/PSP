@@ -40,6 +40,8 @@ export const FileTabs: React.FunctionComponent<React.PropsWithChildren<IFileTabs
 }) => {
   return (
     <TabView
+      unmountOnExit
+      mountOnEnter
       defaultActiveKey={defaultTabKey}
       activeKey={activeTab}
       onSelect={(eventKey: string | null) => {

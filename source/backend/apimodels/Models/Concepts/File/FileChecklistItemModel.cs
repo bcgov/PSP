@@ -1,8 +1,8 @@
 using Pims.Api.Models.Base;
 
-namespace Pims.Api.Models.Concepts.AcquisitionFile
+namespace Pims.Api.Models.Models.Concepts.File
 {
-    public class AcquisitionFileChecklistItemModel : BaseAuditModel
+    public class FileChecklistItemModel : BaseAuditModel
     {
         /// <summary>
         /// get/set - Checklist item id.
@@ -10,14 +10,14 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - Acquisition file id.
+        /// get/set - File id.
         /// </summary>
-        public long AcquisitionFileId { get; set; }
+        public long FileId { get; set; }
 
         /// <summary>
         /// get/set - Checklist item type.
         /// </summary>
-        public AcquisitionFileChecklistItemTypeModel ItemType { get; set; }
+        public FileChecklistItemTypeModel ItemType { get; set; }
 
         /// <summary>
         /// get/set - Checklist item status type code.

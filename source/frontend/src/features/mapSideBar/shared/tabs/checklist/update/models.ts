@@ -1,30 +1,27 @@
+import { Api_AuditFields } from '@/models/api/AuditFields';
+import { Api_FileWithChecklist } from '@/models/api/File';
 import {
-  Api_AcquisitionFile,
-  Api_AcquisitionFileChecklistItem,
-  Api_AcquisitionFileChecklistItemType,
+  Api_FileChecklistItem,
+  Api_FileChecklistItemType,
   lastModifiedBy,
   sortByDisplayOrder,
-} from '@/models/api/AcquisitionFile';
-import { Api_AuditFields } from '@/models/api/AuditFields';
+} from '@/models/api/File';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { fromTypeCode, toTypeCode } from '@/utils/formUtils';
 
-export class AcquisitionChecklistFormModel {
+export class ChecklistFormModel {
   id?: number;
   rowVersion?: number;
-  checklistSections: AcquisitionChecklistSectionFormModel[] = [];
+  checklistSections: ChecklistSectionFormModel[] = [];
 
-  static fromApi(
-    apiAcquisitionFile: Api_AcquisitionFile,
-    sectionTypes: ILookupCode[],
-  ): AcquisitionChecklistFormModel {
-    const checklist = apiAcquisitionFile.acquisitionFileChecklist || [];
-    const model = new AcquisitionChecklistFormModel();
-    model.id = apiAcquisitionFile.id;
-    model.rowVersion = apiAcquisitionFile.rowVersion;
+  static fromApi(apiFile: Api_FileWithChecklist, sectionTypes: ILookupCode[]): ChecklistFormModel {
+    const checklist = apiFile.fileChecklistItems || [];
+    const model = new ChecklistFormModel();
+    model.id = apiFile.id;
+    model.rowVersion = apiFile.rowVersion;
     model.checklistSections = sectionTypes.map(section =>
-      AcquisitionChecklistSectionFormModel.fromApi(
+      ChecklistSectionFormModel.fromApi(
         section,
         checklist.filter(c => c.itemType?.sectionCode === section.id).sort(sortByDisplayOrder),
       ),
@@ -33,9 +30,9 @@ export class AcquisitionChecklistFormModel {
     return model;
   }
 
-  toApi(): Api_AcquisitionFile {
+  toApi(): Api_FileWithChecklist {
     const allChecklistItems = this.checklistSections.reduce(
-      (acc: AcquisitionChecklistItemFormModel[], section) => {
+      (acc: ChecklistItemFormModel[], section) => {
         return acc.concat(section.items);
       },
       [],
@@ -44,9 +41,7 @@ export class AcquisitionChecklistFormModel {
     return {
       id: this.id,
       rowVersion: this.rowVersion,
-      acquisitionFileChecklist: allChecklistItems.map(c => c.toApi()),
-      projectId: null,
-      productId: null,
+      fileChecklistItems: allChecklistItems.map(c => c.toApi()),
     };
   }
 
@@ -59,29 +54,29 @@ export class AcquisitionChecklistFormModel {
   }
 }
 
-export class AcquisitionChecklistSectionFormModel {
+export class ChecklistSectionFormModel {
   id?: string;
   name?: string;
   displayOrder?: number;
-  items: AcquisitionChecklistItemFormModel[] = [];
+  items: ChecklistItemFormModel[] = [];
 
   static fromApi(
     apiLookup: ILookupCode,
-    apiChecklistItems: Api_AcquisitionFileChecklistItem[],
-  ): AcquisitionChecklistSectionFormModel {
-    const model = new AcquisitionChecklistSectionFormModel();
+    apiChecklistItems: Api_FileChecklistItem[],
+  ): ChecklistSectionFormModel {
+    const model = new ChecklistSectionFormModel();
     model.id = apiLookup.id as string;
     model.name = apiLookup.name;
     model.displayOrder = apiLookup.displayOrder;
-    model.items = apiChecklistItems.map(c => AcquisitionChecklistItemFormModel.fromApi(c));
+    model.items = apiChecklistItems.map(c => ChecklistItemFormModel.fromApi(c));
     return model;
   }
 }
 
-export class AcquisitionChecklistItemFormModel implements Api_AuditFields {
+export class ChecklistItemFormModel implements Api_AuditFields {
   id?: number;
-  acquisitionFileId?: number;
-  itemType?: Api_AcquisitionFileChecklistItemType;
+  fileId?: number;
+  itemType?: Api_FileChecklistItemType;
   statusType?: string;
   rowVersion?: number;
   appCreateTimestamp?: UtcIsoDateTime;
@@ -91,12 +86,10 @@ export class AcquisitionChecklistItemFormModel implements Api_AuditFields {
   appLastUpdateUserGuid?: string;
   appCreateUserGuid?: string;
 
-  static fromApi(
-    apiChecklistItem: Api_AcquisitionFileChecklistItem,
-  ): AcquisitionChecklistItemFormModel {
-    const model = new AcquisitionChecklistItemFormModel();
+  static fromApi(apiChecklistItem: Api_FileChecklistItem): ChecklistItemFormModel {
+    const model = new ChecklistItemFormModel();
     model.id = apiChecklistItem.id;
-    model.acquisitionFileId = apiChecklistItem.acquisitionFileId;
+    model.fileId = apiChecklistItem.fileId;
     model.itemType = apiChecklistItem.itemType;
     model.statusType = fromTypeCode(apiChecklistItem.statusTypeCode);
     model.rowVersion = apiChecklistItem.rowVersion;
@@ -109,10 +102,10 @@ export class AcquisitionChecklistItemFormModel implements Api_AuditFields {
     return model;
   }
 
-  toApi(): Api_AcquisitionFileChecklistItem {
+  toApi(): Api_FileChecklistItem {
     return {
       id: this.id,
-      acquisitionFileId: this.acquisitionFileId,
+      fileId: this.fileId,
       itemType: this.itemType,
       statusTypeCode: toTypeCode(this.statusType),
       rowVersion: this.rowVersion,

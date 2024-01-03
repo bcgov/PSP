@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DocumentFormat.OpenXml.InkML;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
@@ -149,5 +150,11 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsDspFlTeamProfileType> GetAllDispositionFlTeamProfileTypes();
 
         IEnumerable<PimsDispositionOfferStatusType> GetAllDispositionOfferStatusTypes();
+
+        IEnumerable<PimsDspChklstItemStatusType> GetAllDispositionChecklistItemStatusTypes();
+
+        IEnumerable<PimsDspChklstItemType> GetAllDispositionChecklistItemTypes();
+
+        IEnumerable<PimsDspChklstSectionType> GetAllDispositionChecklistSectionTypes();
     }
 }
