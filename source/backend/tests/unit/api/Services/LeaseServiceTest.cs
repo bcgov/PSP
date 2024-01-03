@@ -39,7 +39,83 @@ namespace Pims.Api.Test.Services
         }
 
         #region Tests
+
         #region Add
+        [Fact]
+        public void Add_Success()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var user = new PimsUser();
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var service = this.CreateLeaseService(Permissions.LeaseAdd);
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.Add(It.IsAny<PimsLease>())).Returns(lease);
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            // Act
+            var result = service.Add(lease, new List<UserOverrideCode>());
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsLease>();
+            result.LeaseId.Should().Be(1);
+            leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Once);
+        }
+
+        [Fact]
+        public void Add_NoPermission()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+
+            var service = this.CreateLeaseService();
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.Add(It.IsAny<PimsLease>())).Returns(lease);
+
+            // Act
+            Action act = () => service.Add(lease, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Never);
+        }
+
+        [Fact]
+        public void Add_InvalidAccessToLeaseFile()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var user = new PimsUser();
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = 2 });
+
+            var service = this.CreateLeaseService(Permissions.LeaseAdd);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            leaseRepository.Setup(x => x.Add(It.IsAny<PimsLease>())).Returns(lease);
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            // Act
+            Action act = () => service.Add(lease, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Never);
+        }
+
+        #endregion
+
+        #region Update
         [Fact]
         public void Update_WithoutStatusNote()
         {

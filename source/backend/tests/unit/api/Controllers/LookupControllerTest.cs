@@ -140,7 +140,7 @@ namespace Pims.Api.Test.Controllers
             var result = controller.GetAll();
 
             // Assert
-            result.IsSameOrEqualTo(cachedResult);
+            result.Should().BeEquivalentTo(cachedResult);
         }
         #endregion
     }

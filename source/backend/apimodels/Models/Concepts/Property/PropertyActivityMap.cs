@@ -1,5 +1,7 @@
+using System;
 using Mapster;
 using Pims.Api.Models.Base;
+using Pims.Core.Extensions;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Property

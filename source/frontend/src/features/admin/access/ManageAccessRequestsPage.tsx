@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
@@ -34,6 +34,12 @@ const ManageAccessRequestsPage = () => {
   );
   const columnDefinitions = getAccessRequestColumns(execute);
 
+  // This will get called when the table needs new data
+  const updateCurrentPage = useCallback(
+    ({ pageIndex }: { pageIndex: number }) => setCurrentPage && setCurrentPage(pageIndex),
+    [setCurrentPage],
+  );
+
   useEffect(() => {
     if (error) {
       toast.error(error?.message);
@@ -57,7 +63,7 @@ const ManageAccessRequestsPage = () => {
         onPageSizeChange={setPageSize}
         pageSize={pageSize}
         loading={loading}
-        onRequestData={req => setCurrentPage(req.pageIndex)}
+        onRequestData={updateCurrentPage}
         totalItems={totalItems}
       />
     </StyledContainer>

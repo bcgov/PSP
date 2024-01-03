@@ -135,6 +135,18 @@ exports[`DocumentDetailView component renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c4 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c3 {
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
 .c2.required::before {
   content: '*';
   position: absolute;
@@ -155,14 +167,6 @@ exports[`DocumentDetailView component renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c3 {
-  padding: 1rem;
-}
-
-.c5 {
-  font-weight: 700;
-}
-
 .c7 {
   font-weight: 700;
   font-size: 1.7rem;
@@ -172,14 +176,6 @@ exports[`DocumentDetailView component renders as expected 1`] = `
   border-bottom: solid 0.1rem;
 }
 
-.c4 {
-  text-align: left !important;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
 .c9 {
   overflow-x: hidden;
   max-height: 50rem;
@@ -187,6 +183,16 @@ exports[`DocumentDetailView component renders as expected 1`] = `
 
 .c0 {
   padding: 1rem;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
 }
 
 <body>
@@ -199,92 +205,92 @@ exports[`DocumentDetailView component renders as expected 1`] = `
       class="c0"
     >
       <div
-        class="pb-2 row"
+        class="pb-4"
       >
         <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c1"
-          >
-            Document type
-            :
-          </label>
-        </div>
-        <div
-          class="c2 text-left col"
-        >
-          Survey
-        </div>
-      </div>
-      <div
-        class="pb-3 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c1"
-          >
-            File name
-            :
-          </label>
-        </div>
-        <div
-          class="c2 text-left col"
+          class="pb-2 row"
         >
           <div
-            class="row"
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c1"
+            >
+              Document type
+              :
+            </label>
+          </div>
+          <div
+            class="c2 text-left col"
+          >
+            Survey
+          </div>
+        </div>
+        <div
+          class="pb-3 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c1"
+            >
+              File name
+              :
+            </label>
+          </div>
+          <div
+            class="c2 text-left col"
           >
             <div
-              class="col-auto"
+              class="row"
             >
-              NewFile.doc
-            </div>
-            <div
-              class="col-auto"
-            >
-              <span
-                class="tooltip-icon"
-                data-testid="tooltip-icon-document-not-available-tooltip"
-                id="document-not-available-tooltip"
+              <div
+                class="col-auto"
               >
-                <svg
+                NewFile.doc
+              </div>
+              <div
+                class="col-auto"
+              >
+                <span
                   class="tooltip-icon"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                  data-testid="tooltip-icon-document-not-available-tooltip"
+                  id="document-not-available-tooltip"
                 >
-                  <path
-                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                  />
-                </svg>
-              </span>
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div
-        class="c3"
+        class="c3 form-section"
       >
-        <div
-          class="pb-3 row"
+        <h2
+          class="c4"
         >
           <div
-            class="text-left col"
+            class="no-gutters row"
           >
             <div
-              class="c4"
+              class="col"
             >
-              <h2
-                class="c5"
-              >
-                Document information
-              </h2>
+              Document information
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon-documentInfoToolTip"
@@ -305,14 +311,18 @@ exports[`DocumentDetailView component renders as expected 1`] = `
                   />
                 </svg>
               </span>
+               
             </div>
           </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
           <div
-            class="col-2"
+            class="c5"
           >
-             
             <button
-              class="c6 Button btn btn-link"
+              class="c6 Button d-inline-block btn btn-link"
               type="button"
             >
               <div
@@ -334,34 +344,6 @@ exports[`DocumentDetailView component renders as expected 1`] = `
               </div>
             </button>
           </div>
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-4"
-          >
-            <label
-              class="c1"
-            >
-              Status
-              :
-            </label>
-          </div>
-          <div
-            class="c2 text-left col"
-          >
-            Amended
-          </div>
-        </div>
-        <h3
-          class="c7"
-        >
-          Details
-        </h3>
-        <div
-          class="c8 c9"
-        >
           <div
             class="pb-2 row"
           >
@@ -371,14 +353,42 @@ exports[`DocumentDetailView component renders as expected 1`] = `
               <label
                 class="c1"
               >
-                Tag Foo
+                Status
                 :
               </label>
             </div>
             <div
               class="c2 text-left col"
             >
-              Tag1234
+              Amended
+            </div>
+          </div>
+          <h3
+            class="c7"
+          >
+            Details
+          </h3>
+          <div
+            class="c8 c9"
+          >
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c1"
+                >
+                  Tag Foo
+                  :
+                </label>
+              </div>
+              <div
+                class="c2 text-left col"
+              >
+                Tag1234
+              </div>
             </div>
           </div>
         </div>

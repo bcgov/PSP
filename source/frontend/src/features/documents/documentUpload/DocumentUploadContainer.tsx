@@ -1,5 +1,13 @@
 import { FormikProps } from 'formik';
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 
 import { SelectOption } from '@/components/common/form';
 import * as API from '@/constants/API';
@@ -19,15 +27,24 @@ import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshi
 import DocumentUploadForm from './DocumentUploadForm';
 
 export interface IDocumentUploadContainerProps {
+  ref: React.RefObject<
+    React.FunctionComponent<React.PropsWithChildren<IDocumentUploadContainerProps>>
+  >;
   parentId: string;
   relationshipType: DocumentRelationshipType;
   onUploadSuccess: () => void;
   onCancel: () => void;
+  setCanUpload: (canUpload: boolean) => void;
 }
 
-export const DocumentUploadContainer: React.FunctionComponent<
-  React.PropsWithChildren<IDocumentUploadContainerProps>
-> = props => {
+export interface IDocumentUploadContainerRef {
+  uploadDocument: () => void;
+}
+
+const DocumentUploadContainer = forwardRef<
+  IDocumentUploadContainerRef,
+  IDocumentUploadContainerProps
+>((props, ref) => {
   const deleteModalProps = getCancelModalProps();
 
   const { getOptionsByType } = useLookupCodeHelpers();
@@ -131,8 +148,20 @@ export const DocumentUploadContainer: React.FunctionComponent<
   ]);
 
   const onUploadDocument = async (uploadRequest: Api_DocumentUploadRequest) => {
-    await uploadDocument(props.relationshipType, props.parentId, uploadRequest);
-    props.onUploadSuccess();
+    var result = await uploadDocument(props.relationshipType, props.parentId, uploadRequest);
+    if (result !== undefined) {
+      props.onUploadSuccess();
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    uploadDocument() {
+      formikRef.current?.submitForm();
+    },
+  }));
+
+  const onDocumentSelected = () => {
+    props.setCanUpload(true);
   };
 
   return (
@@ -144,8 +173,11 @@ export const DocumentUploadContainer: React.FunctionComponent<
       documentStatusOptions={documentStatusOptions}
       mayanMetadataTypes={documentTypeMetadataTypes}
       onDocumentTypeChange={onDocumentTypeChange}
+      onDocumentSelected={onDocumentSelected}
       onUploadDocument={onUploadDocument}
       onCancel={handleCancelClick}
     />
   );
-};
+});
+
+export default DocumentUploadContainer;

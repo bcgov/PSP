@@ -14,5 +14,7 @@ namespace Pims.Api.Constants
         Project,
         [EnumMember(Value = "research_file")]
         Research_File,
+        [EnumMember(Value = "disposition_file")]
+        Disposition_File,
     }
 }

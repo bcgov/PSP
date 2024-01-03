@@ -14,3 +14,4 @@ export * from './Select';
 export * from './TableSelect';
 export * from './Text';
 export * from './TextArea';
+export * from './TypeaheadSelect';

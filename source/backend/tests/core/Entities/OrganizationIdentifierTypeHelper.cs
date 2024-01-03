@@ -15,7 +15,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.PimsOrgIdentifierType CreateOrganizationIdentifierType(string id)
         {
-            return new Entity.PimsOrgIdentifierType(id) { ConcurrencyControlNumber = 1 };
+            return new Entity.PimsOrgIdentifierType(id) { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "org description" };
         }
 
         /// <summary>
@@ -26,8 +26,8 @@ namespace Pims.Core.Test
         {
             return new List<Entity.PimsOrgIdentifierType>()
             {
-                new Entity.PimsOrgIdentifierType("IdentifierType 1") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsOrgIdentifierType("IdentifierType 2") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsOrgIdentifierType("IdentifierType 1") { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "org description" },
+                new Entity.PimsOrgIdentifierType("IdentifierType 2") { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "org description" },
             };
         }
     }

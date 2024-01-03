@@ -1,6 +1,8 @@
+using System;
+
 namespace Pims.Dal.Entities
 {
-    public interface IBaseTypeEntity<T_Id, T_DisplayOrder>
+    public interface IBaseTypeEntity<T_Id, T_DisplayOrder, T_IsDisabled>
     {
         #region Properties
 
@@ -17,7 +19,7 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - Whether this code is disabled.
         /// </summary>
-        bool? IsDisabled { get; set; }
+        T_IsDisabled IsDisabled { get; set; }
 
         /// <summary>
         /// get/set - The sort order of the lookup item.
@@ -26,7 +28,11 @@ namespace Pims.Dal.Entities
         #endregion
     }
 
-    public interface ITypeEntity<T_Id> : IBaseTypeEntity<T_Id, int?>
+    public interface ITypeEntity<T_Id, T_IsDisabled> : IBaseTypeEntity<T_Id, int?, T_IsDisabled>
+    {
+    }
+
+    public interface ITypeEntity<T_Id> : ITypeEntity<T_Id, bool>
     {
     }
 }

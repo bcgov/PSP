@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsVolumetricType class, provides an entity for the datamodel to manage a list of volumetric types.
     /// </summary>
-    public partial class PimsPphStatusType : ITypeEntity<string>
+    public partial class PimsPphStatusType : ITypeEntity<string, bool?>
     {
         #region Properties
 
@@ -26,6 +26,10 @@ namespace Pims.Dal.Entities
             : this()
         {
             Id = id;
+        }
+
+        public PimsPphStatusType()
+        {
         }
         #endregion
     }

@@ -73,7 +73,7 @@ export const TermForm: React.FunctionComponent<React.PropsWithChildren<ITermForm
           />
           <Input
             label="Payments due"
-            field="paymentDueDate"
+            field="paymentDueDateStr"
             tooltip={`Arrangement for payments, such as "1st of each month" or "1st & 15th" etc`}
           />
           <Check

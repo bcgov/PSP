@@ -26,6 +26,10 @@ namespace Pims.Dal.Entities
             : this()
         {
         }
+
+        public PimsLeaseInitiatorType()
+        {
+        }
         #endregion
     }
 }

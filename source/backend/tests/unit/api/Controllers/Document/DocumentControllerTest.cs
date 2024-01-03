@@ -84,7 +84,7 @@ namespace Pims.Api.Test.Controllers
             Func<Task> act = async () => await this._controller.UpdateDocumentMetadata(1, updateRequest);
 
             // Assert
-            act.Should().Throw<BadRequestException>();
+            act.Should().ThrowAsync<BadRequestException>();
         }
 
         [Fact]
