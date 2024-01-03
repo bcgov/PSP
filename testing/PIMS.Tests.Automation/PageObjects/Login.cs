@@ -7,7 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
 {
     public class Login: PageObjectBase
     {
-        private By signInButton = By.XPath("//button/div[contains(text(), 'Sign In')]");
+        private By signInButton = By.XPath("//div[contains(text(), 'Sign In')]/parent::button");
 
         private By userIdirInput = By.Name("user");
         private By userPasswordInput = By.Name("password");
@@ -25,8 +25,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void LoginToPIMS()
         {
-            WaitUntilStale(signInButton);
-            webDriver.FindElement(signInButton).Click();
+            WaitUntilSpinnerDisappear();
+            WaitUntilVisible(signInButton);
+            
+            FocusAndClick(signInButton);
         }
 
         public void LoginUsingIDIR(string user, string password)
@@ -41,7 +43,8 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(submitUserBttn);
             webDriver.FindElement(submitUserBttn).Click();
 
-            WaitUntilVisible(initToastBody);
+            //WaitUntilVisible(initToastBody);
+            WaitUntilSpinnerDisappear();
 
         }
     }

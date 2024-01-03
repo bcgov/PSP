@@ -77,9 +77,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By managementActCompletionDateLabel = By.XPath("//label[contains(text(),'Completion date')]");
         private By managementActCompletionDateInput = By.Id("datepicker-completionDate");
         private By managementActCompletionDateContent = By.XPath("//label[contains(text(),'Completion date')]/parent::div/following-sibling::div");
-        private By managementActDescriptionLabel = By.XPath("//label[contains(text(),'Description')]");
+        private By managementActDescriptionLabel = By.XPath("//div[contains(text(),'Activity Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]");
         private By managementActDescriptionInput = By.Id("input-description");
-        private By managementActDescriptionContent = By.XPath("//label[contains(text(),'Description')]/parent::div/following-sibling::div");
+        private By managementActDescriptionContent = By.XPath("//div[contains(text(),'Activity Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]/parent::div/following-sibling::div");
         private By managementActMinistryContactLabel = By.XPath("//label[contains(text(),'Ministry contacts')]");
         private By managementActMinistryContactInput = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/div/div/div/div//div[contains(text(),'Select from contacts')]");
         private By managementActMinistryContactBttn = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/div/div/div/div/button");
@@ -377,7 +377,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             while (webDriver.FindElements(managementContactsDeleteBttns).Count > 0)
             {
-                Wait();
+                Wait(2000);
                 webDriver.FindElement(managementContactsFirstDeleteBttn).Click();
 
                 Assert.Equal("Confirm delete", sharedModals.ModalHeader());
@@ -578,7 +578,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(managementActDescriptionContent, activity.PropertyActivityDescription);
 
             AssertTrueIsDisplayed(managementActMinistryContactLabel);
-            if (activity.PropertyActivityMinistryContact.Count > 0)
+            if (activity.PropertyActivityMinistryContact.First() != "")
                 for(int i = 0; i < activity.PropertyActivityMinistryContact.Count; i++)
                     Assert.Equal(webDriver.FindElements(managementActMinistryContactContent)[i].Text, activity.PropertyActivityMinistryContact[i]);
 
@@ -587,7 +587,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(managementActRequestedSourceContent, activity.PropertyActivityRequestedSource);
 
             AssertTrueIsDisplayed(managementActInvolvedPartiesLabel);
-            if (activity.PropertyActivityInvolvedParties.Count > 0)
+            if (activity.PropertyActivityInvolvedParties.First() != "")
                 for (int i = 0; i < activity.PropertyActivityInvolvedParties.Count; i++)
                     Assert.Equal(webDriver.FindElements(managementActInvolvedPartiesContent)[i].Text, activity.PropertyActivityInvolvedParties[i]);
 
