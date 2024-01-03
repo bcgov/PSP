@@ -161,9 +161,9 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     }
   }, [staleFile, refresh, setStaleFile]);
 
-  const onChildSucess = () => {
+  const onChildSucess = useCallback(() => {
     setStaleLastUpdatedBy(true);
-  };
+  }, [setStaleLastUpdatedBy]);
 
   const handleCancelConfirm = () => {
     if (formikRef !== undefined) {
