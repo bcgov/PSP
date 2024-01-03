@@ -287,7 +287,7 @@ const LayersMenu: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Formik initialValues={{ layers }} onSubmit={noop}>
       {({ values }) => (
-        <FormikForm>
+        <FormikForm placeholder={undefined}>
           <LeafletListenerComp />
           <TreeMenu hasSearch={false} data={layers}>
             {({ items }) => {

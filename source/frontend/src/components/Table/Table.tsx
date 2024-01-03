@@ -751,7 +751,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                   innerRef={filterFormRef as any}
                 >
                   {actions => (
-                    <Form style={{ display: 'flex', width: '100%' }}>
+                    <Form style={{ display: 'flex', width: '100%' }} placeholder={undefined}>
                       {renderTableHeader(headerGroup, actions)}
                     </Form>
                   )}

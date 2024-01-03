@@ -91,6 +91,7 @@
     "@types/styled-components": "5.1.9",
     "@types/supercluster": "5.0.2",
     "@types/yup": "0.26.32",
+    "@vitejs/plugin-react": "^4.2.1",
     "axios-mock-adapter": "1.19.0",
     "compression-webpack-plugin": "7.1.1",
     "cross-env": "7.0.3",
@@ -112,12 +113,14 @@
     "react-app-polyfill": "3.0.0",
     "react-app-rewired": "2.2.1",
     "react-docgen-typescript": "1.22.0",
-    "react-scripts": "5.0.1",
     "react-styleguidist": "13.0.0",
     "react-test-renderer": "18.2.0",
     "redux-mock-store": "1.5.4",
     "sass": "1.43.2",
-    "typescript": "4.8.4"
+    "typescript": "4.8.4",
+    "vite": "^5.0.10",
+    "vite-plugin-svgr": "^4.2.0",
+    "vite-tsconfig-paths": "^4.2.3"
   },
   "overrides": {
     "loader-utils": "2.0.4",
@@ -128,8 +131,9 @@
     "word-wrap": "@aashutoshrathi/word-wrap"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "cross-env CI=true GENERATE_SOURCEMAP=false INLINE_RUNTIME_CHUNK=false react-app-rewired build",
+    "start": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview",
     "test": "tsc && react-app-rewired test --ci --watchAll=false",
     "test-u": "tsc && react-app-rewired test --ci --watchAll=false -u",
     "test:watch": "react-app-rewired test --watchAll",

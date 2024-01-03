@@ -152,7 +152,7 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
       />
 
       <Styled.ScrollingFormLayout>
-        <Styled.Form id="updateForm">
+        <Styled.Form id="updateForm" placeholder={undefined}>
           <FlexBox column gap="1.6rem">
             <FormSection className="py-2">
               <Styled.RowAligned className="align-items-center">

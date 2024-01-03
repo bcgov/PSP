@@ -59,7 +59,7 @@ const HelpModal: FunctionComponent<React.PropsWithChildren<IModalProps>> = ({
   return (
     <Container>
       <ModalStyled dialogAs={DraggableModalDialog} show={show} onHide={handleCancel}>
-        <ModalHeader>
+        <ModalHeader placeholder={undefined}>
           <DraggableTitle>
             <FaQuestionCircle size={24} />
             <DraggableTitleText>Help Desk</DraggableTitleText>

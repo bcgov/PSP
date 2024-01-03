@@ -60,7 +60,7 @@ export const UpdateAgreementsForm: React.FC<IUpdateAgreementsFormProps> = ({
         validationSchema={UpdateAgreementsYupSchema}
       >
         {formikProps => (
-          <Form>
+          <Form placeholder={undefined}>
             <LoadingBackdrop show={isLoading}></LoadingBackdrop>
 
             <FieldArray

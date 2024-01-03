@@ -20,7 +20,7 @@ export const AccessRequestDetails: React.FC<React.PropsWithChildren<IProps>> = (
   return (
     <Container>
       <Modal show={!!request} onHide={onClose}>
-        <Modal.Header>
+        <Modal.Header placeholder={undefined}>
           <Modal.Title>Access Request Details</Modal.Title>
         </Modal.Header>
 

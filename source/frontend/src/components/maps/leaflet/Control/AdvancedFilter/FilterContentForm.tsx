@@ -90,7 +90,7 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
 
   return (
     <Formik<PropertyFilterFormModel> initialValues={initialFilter} onSubmit={noop}>
-      <Form>
+      <Form placeholder={undefined}>
         <FormObserver onChange={onChange} />
         <LoadingBackdrop show={isLoading} parentScreen />
         <Section header="Project" isCollapsable initiallyExpanded>

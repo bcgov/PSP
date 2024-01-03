@@ -2,8 +2,8 @@ import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
-import { ReactComponent as Active } from '@/assets/images/active.svg';
-import { ReactComponent as Inactive } from '@/assets/images/inactive.svg';
+import Active from '@/assets/images/active.svg?react';
+import Inactive from '@/assets/images/inactive.svg?react';
 import { Select, SelectOption } from '@/components/common/form';
 import { ColumnWithProps } from '@/components/Table';
 import { getPrimaryContact } from '@/features/contacts/contactUtils';

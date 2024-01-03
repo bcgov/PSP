@@ -177,7 +177,7 @@ const CreatePersonComponent: React.FC<
       />
 
       <Styled.CreateFormLayout>
-        <Styled.Form id="createForm">
+        <Styled.Form id="createForm" placeholder={undefined}>
           <FlexBox column gap="1.6rem">
             <PersonSubForm isContactMethodInvalid={isContactMethodInvalid} />
           </FlexBox>

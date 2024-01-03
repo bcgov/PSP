@@ -149,7 +149,7 @@ const CreateOrganizationComponent: React.FC<FormikProps<IEditableOrganizationFor
       />
 
       <Styled.CreateFormLayout>
-        <Styled.Form id="createForm">
+        <Styled.Form id="createForm" placeholder={undefined}>
           <FlexBox column gap="1.6rem">
             <OrganizationSubForm isContactMethodInvalid={isContactMethodInvalid} />
 
