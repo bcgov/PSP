@@ -15,7 +15,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.PimsAcquisitionFileStatusType CreateAcquisitionFileStatusType(string id)
         {
-            return new Entity.PimsAcquisitionFileStatusType(id) { ConcurrencyControlNumber = 1 };
+            return new Entity.PimsAcquisitionFileStatusType(id) { ConcurrencyControlNumber = 1, Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" };
         }
 
         /// <summary>
@@ -26,9 +26,9 @@ namespace Pims.Core.Test
         {
             return new List<Entity.PimsAcquisitionFileStatusType>()
             {
-                new Entity.PimsAcquisitionFileStatusType("ACTIVE") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsAcquisitionFileStatusType("ARCHIV") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsAcquisitionFileStatusType("CLOSED") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsAcquisitionFileStatusType("ACTIVE") { ConcurrencyControlNumber = 1, Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" },
+                new Entity.PimsAcquisitionFileStatusType("ARCHIV") { ConcurrencyControlNumber = 1, Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" },
+                new Entity.PimsAcquisitionFileStatusType("CLOSED") { ConcurrencyControlNumber = 1, Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" },
             };
         }
     }

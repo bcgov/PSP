@@ -60,6 +60,10 @@ const FinancialCodesListView = lazy(() =>
   componentLoader(import('@/features/admin/financial-codes/list/FinancialCodeListView'), 2),
 );
 
+const DispositionListView = lazy(() =>
+  componentLoader(import('@/features/disposition/list/DispositionListView'), 2),
+);
+
 const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
   const location = useLocation();
   useLayoutEffect(() => {
@@ -274,6 +278,15 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             layout={AuthLayout}
             claim={Claims.PROJECT_VIEW}
             title={getTitle('View Projects')}
+          />
+          <AppRoute
+            protected
+            exact
+            path="/disposition/list"
+            customComponent={DispositionListView}
+            layout={AuthLayout}
+            claim={Claims.DISPOSITION_VIEW}
+            title={getTitle('View Disposition Files')}
           />
           <AppRoute
             protected

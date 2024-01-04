@@ -270,6 +270,9 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PimsPropertyAcquisitionFiles)
                     .ThenInclude(pa => pa.AcquisitionFile)
                     .ThenInclude(a => a.AcquisitionFileStatusTypeCodeNavigation)
+                .Include(p => p.PimsDispositionFileProperties)
+                    .ThenInclude(pa => pa.DispositionFile)
+                    .ThenInclude(a => a.DispositionFileStatusTypeCodeNavigation)
                 .FirstOrDefault(p => p.PropertyId == id);
 
             return property;

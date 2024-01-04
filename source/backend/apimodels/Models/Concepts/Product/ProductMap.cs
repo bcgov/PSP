@@ -1,5 +1,6 @@
 using Mapster;
 using Pims.Api.Models.Base;
+using Pims.Core.Extensions;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Product
@@ -14,9 +15,9 @@ namespace Pims.Api.Models.Concepts.Product
                 .Map(dest => dest.AcquisitionFiles, src => src.PimsAcquisitionFiles)
                 .Map(dest => dest.Code, src => src.Code)
                 .Map(dest => dest.Description, src => src.Description)
-                .Map(dest => dest.StartDate, src => src.StartDate)
+                .Map(dest => dest.StartDate, src => src.StartDate.ToNullableDateOnly())
                 .Map(dest => dest.CostEstimate, src => src.CostEstimate)
-                .Map(dest => dest.CostEstimateDate, src => src.CostEstimateDate)
+                .Map(dest => dest.CostEstimateDate, src => src.CostEstimateDate.ToNullableDateOnly())
                 .Map(dest => dest.Objective, src => src.Objective)
                 .Map(dest => dest.Scope, src => src.Scope)
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
@@ -27,9 +28,9 @@ namespace Pims.Api.Models.Concepts.Product
                 .Map(dest => dest.PimsAcquisitionFiles, src => src.AcquisitionFiles)
                 .Map(dest => dest.Code, src => src.Code)
                 .Map(dest => dest.Description, src => src.Description)
-                .Map(dest => dest.StartDate, src => src.StartDate)
+                .Map(dest => dest.StartDate, src => src.StartDate.ToNullableDateTime())
                 .Map(dest => dest.CostEstimate, src => src.CostEstimate)
-                .Map(dest => dest.CostEstimateDate, src => src.CostEstimateDate)
+                .Map(dest => dest.CostEstimateDate, src => src.CostEstimateDate.ToNullableDateTime())
                 .Map(dest => dest.Objective, src => src.Objective)
                 .Map(dest => dest.Scope, src => src.Scope)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();

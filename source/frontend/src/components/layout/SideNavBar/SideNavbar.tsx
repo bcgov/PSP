@@ -2,6 +2,7 @@ import clsx from 'classnames';
 import { useContext, useState } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
 import { MdChevronLeft, MdChevronRight, MdContactMail, MdHome } from 'react-icons/md';
+import { TbArrowBounce } from 'react-icons/tb';
 import { useHistory } from 'react-router-dom';
 
 import { ReactComponent as AdminPanelSettings } from '@/assets/images/admin-panel-settings.svg';
@@ -55,6 +56,12 @@ export const SideNavBar = () => {
           onClick={() => setTrayPage(SidebarContextType.LEASE)}
           icon={<Fence />}
           text="Leases & Licenses"
+          showText={expanded}
+        />
+        <NavIcon
+          onClick={() => setTrayPage(SidebarContextType.DISPOSITION)}
+          icon={<TbArrowBounce size={24} color="white" fillOpacity={0} />}
+          text="Disposition"
           showText={expanded}
         />
         <NavIcon

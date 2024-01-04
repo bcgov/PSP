@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -10,6 +11,7 @@ using Pims.Api.Models.Concepts.Property;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -27,6 +29,7 @@ namespace Pims.Api.Services
         private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
         private readonly IMapper _mapper;
+        private readonly ILookupRepository _lookupRepository;
 
         public PropertyService(
             ClaimsPrincipal user,
@@ -36,7 +39,8 @@ namespace Pims.Api.Services
             IPropertyActivityRepository propertyActivityRepository,
             ICoordinateTransformService coordinateService,
             IPropertyLeaseRepository propertyLeaseRepository,
-            IMapper mapper)
+            IMapper mapper,
+            ILookupRepository lookupRepository)
         {
             _user = user;
             _logger = logger;
@@ -46,6 +50,7 @@ namespace Pims.Api.Services
             _coordinateService = coordinateService;
             _propertyLeaseRepository = propertyLeaseRepository;
             _mapper = mapper;
+            _lookupRepository = lookupRepository;
         }
 
         public PimsProperty GetById(long id)
@@ -184,7 +189,7 @@ namespace Pims.Api.Services
 
             var propertyManagement = _mapper.Map<PropertyManagementModel>(property);
             propertyManagement.RelatedLeases = leaseCount;
-            propertyManagement.LeaseExpiryDate = leaseExpiryDate;
+            propertyManagement.LeaseExpiryDate = leaseExpiryDate.HasValue ? DateOnly.FromDateTime(leaseExpiryDate.Value) : null;
 
             return propertyManagement;
         }
@@ -273,6 +278,80 @@ namespace Pims.Api.Services
             _propertyRepository.CommitTransaction();
 
             return success;
+        }
+
+        public PimsProperty PopulateNewProperty(PimsProperty property)
+        {
+            property.PropertyClassificationTypeCode = "UNKNOWN";
+            property.PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now);
+            property.PropertyDataSourceTypeCode = "PMBC";
+
+            property.PropertyTypeCode = "UNKNOWN";
+
+            property.PropertyStatusTypeCode = "UNKNOWN";
+            property.SurplusDeclarationTypeCode = "UNKNOWN";
+
+            property.IsPropertyOfInterest = true;
+
+            if (property.Address != null)
+            {
+                var provinceId = _lookupRepository.GetAllProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
+                if (provinceId.HasValue)
+                {
+                    property.Address.ProvinceStateId = provinceId.Value;
+                }
+                property.Address.CountryId = _lookupRepository.GetAllCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
+            }
+
+            // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
+            var geom = property.Location;
+            if (geom.SRID != SpatialReference.BCALBERS)
+            {
+                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
+            }
+
+            // apply similar logic to the boundary
+            var boundaryGeom = property.Boundary;
+            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
+            {
+                var newCoords = property.Boundary.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
+                var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
+                property.Boundary = gf.CreatePolygon(newCoords.ToArray());
+            }
+
+            return property;
+        }
+
+        public void UpdateLocation(PimsProperty acquisitionProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes)
+        {
+            if (propertyToUpdate.Location == null)
+            {
+                if (overrideCodes.Contains(UserOverrideCode.AddLocationToProperty))
+                {
+                    // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
+                    var geom = acquisitionProperty.Location;
+                    if (geom.SRID != SpatialReference.BCALBERS)
+                    {
+                        var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                        propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
+                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
+                    }
+
+                    // apply similar logic to the boundary
+                    var boundaryGeom = acquisitionProperty.Boundary;
+                    if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
+                    {
+                        var newCoords = boundaryGeom.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
+                        var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
+                        acquisitionProperty.Boundary = gf.CreatePolygon(newCoords.ToArray());
+                    }
+                }
+                else
+                {
+                    throw new UserOverrideException(UserOverrideCode.AddLocationToProperty, "The selected property already exists in the system's inventory. However, the record is missing spatial details.\n\n To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.");
+                }
+            }
         }
 
         private Point TransformCoordinates(Geometry location)

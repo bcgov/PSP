@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsRequestSourceType class, provides an entity for the datamodel to manage request sorce types.
     /// </summary>
-    public partial class PimsRequestSourceType : ITypeEntity<string>
+    public partial class PimsRequestSourceType : ITypeEntity<string, bool?>
     {
         #region Properties
 
@@ -26,6 +26,10 @@ namespace Pims.Dal.Entities
             : this()
         {
             Id = id;
+        }
+
+        public PimsRequestSourceType()
+        {
         }
         #endregion
     }

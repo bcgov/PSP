@@ -30,9 +30,9 @@ namespace Pims.Core.Test
                 DbLastUpdateUserid = string.Empty,
                 ConcurrencyControlNumber = 1,
             };
-            checklistItem.AcqChklstItemStatusTypeCodeNavigation = statusType ?? new Entity.PimsAcqChklstItemStatusType() { Id = "INCOMP", Description = "Incomplete" };
+            checklistItem.AcqChklstItemStatusTypeCodeNavigation = statusType ?? new Entity.PimsAcqChklstItemStatusType() { Id = "INCOMP", Description = "Incomplete", DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now };
             checklistItem.AcqChklstItemStatusTypeCode = checklistItem.AcqChklstItemStatusTypeCodeNavigation.Id;
-            checklistItem.AcqChklstItemTypeCodeNavigation = itemType ?? new Entity.PimsAcqChklstItemType() { Id = "APPRAISE", Description = "Appraisals and reviews" };
+            checklistItem.AcqChklstItemTypeCodeNavigation = itemType ?? new Entity.PimsAcqChklstItemType() { Id = "APPRAISE", Description = "Appraisals and reviews", DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, AcqChklstSectionTypeCode = "section" };
             checklistItem.AcqChklstItemTypeCode = checklistItem.AcqChklstItemTypeCodeNavigation.Id;
 
             return checklistItem;

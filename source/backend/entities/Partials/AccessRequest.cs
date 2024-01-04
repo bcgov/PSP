@@ -30,6 +30,10 @@ namespace Pims.Dal.Entities
             this.AccessRequestStatusTypeCodeNavigation = status ?? throw new ArgumentNullException(nameof(status));
             this.AccessRequestStatusTypeCode = status.Id;
         }
+
+        public PimsAccessRequest()
+        {
+        }
         #endregion
     }
 }

@@ -1,6 +1,6 @@
 namespace Pims.Dal.Entities
 {
-    public interface ICodeEntity<T_Code>
+    public interface ICodeEntity<T_Code, T_IsDisabled>
     {
         #region Properties
 
@@ -11,9 +11,13 @@ namespace Pims.Dal.Entities
 
         string Description { get; set; }
 
-        public bool? IsDisabled { get; set; }
+        public T_IsDisabled IsDisabled { get; set; }
 
         public int? DisplayOrder { get; set; }
         #endregion
+    }
+
+    public interface ICodeEntity<T_Code> : ICodeEntity<T_Code, bool>
+    {
     }
 }

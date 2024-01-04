@@ -7,6 +7,10 @@ namespace Pims.Dal.Entities
     /// </summary>
     public partial class PimsUserType : ITypeEntity<string>
     {
+        public PimsUserType()
+        {
+        }
+
         public PimsUserType(string id)
             : this()
         {

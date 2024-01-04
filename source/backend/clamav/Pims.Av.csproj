@@ -4,11 +4,12 @@
         <OutputType>Library</OutputType>
         <Version>1.0.0.0</Version>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <TargetFramework>net8.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
-      <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
+      <FrameworkReference Include="Microsoft.AspNetCore.App" />
+      <PackageReference Include="Microsoft.Extensions.Features" Version="8.0.0" />
       <PackageReference Include="nClam" Version="7.0.0" />
     </ItemGroup>
 </Project>

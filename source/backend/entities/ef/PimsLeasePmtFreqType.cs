@@ -4,47 +4,55 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-#nullable disable
+namespace Pims.Dal.Entities;
 
-namespace Pims.Dal.Entities
+/// <summary>
+/// Describes the frequency of payments for a lease.
+/// </summary>
+[Table("PIMS_LEASE_PMT_FREQ_TYPE")]
+public partial class PimsLeasePmtFreqType
 {
-    [Table("PIMS_LEASE_PMT_FREQ_TYPE")]
-    public partial class PimsLeasePmtFreqType
-    {
-        public PimsLeasePmtFreqType()
-        {
-            PimsLeaseTerms = new HashSet<PimsLeaseTerm>();
-        }
+    /// <summary>
+    /// Payment frequency type code
+    /// </summary>
+    [Key]
+    [Column("LEASE_PMT_FREQ_TYPE_CODE")]
+    [StringLength(20)]
+    public string LeasePmtFreqTypeCode { get; set; }
 
-        [Key]
-        [Column("LEASE_PMT_FREQ_TYPE_CODE")]
-        [StringLength(20)]
-        public string LeasePmtFreqTypeCode { get; set; }
-        [Required]
-        [Column("DESCRIPTION")]
-        [StringLength(200)]
-        public string Description { get; set; }
-        [Required]
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
-        [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
-        [Column("CONCURRENCY_CONTROL_NUMBER")]
-        public long ConcurrencyControlNumber { get; set; }
-        [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
-        public DateTime DbCreateTimestamp { get; set; }
-        [Required]
-        [Column("DB_CREATE_USERID")]
-        [StringLength(30)]
-        public string DbCreateUserid { get; set; }
-        [Column("DB_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
-        public DateTime DbLastUpdateTimestamp { get; set; }
-        [Required]
-        [Column("DB_LAST_UPDATE_USERID")]
-        [StringLength(30)]
-        public string DbLastUpdateUserid { get; set; }
+    /// <summary>
+    /// Payment frequency type code description
+    /// </summary>
+    [Required]
+    [Column("DESCRIPTION")]
+    [StringLength(200)]
+    public string Description { get; set; }
 
-        [InverseProperty(nameof(PimsLeaseTerm.LeasePmtFreqTypeCodeNavigation))]
-        public virtual ICollection<PimsLeaseTerm> PimsLeaseTerms { get; set; }
-    }
+    [Column("IS_DISABLED")]
+    public bool IsDisabled { get; set; }
+
+    [Column("DISPLAY_ORDER")]
+    public int? DisplayOrder { get; set; }
+
+    [Column("CONCURRENCY_CONTROL_NUMBER")]
+    public long ConcurrencyControlNumber { get; set; }
+
+    [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
+    public DateTime DbCreateTimestamp { get; set; }
+
+    [Required]
+    [Column("DB_CREATE_USERID")]
+    [StringLength(30)]
+    public string DbCreateUserid { get; set; }
+
+    [Column("DB_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
+    public DateTime DbLastUpdateTimestamp { get; set; }
+
+    [Required]
+    [Column("DB_LAST_UPDATE_USERID")]
+    [StringLength(30)]
+    public string DbLastUpdateUserid { get; set; }
+
+    [InverseProperty("LeasePmtFreqTypeCodeNavigation")]
+    public virtual ICollection<PimsLeaseTerm> PimsLeaseTerms { get; set; } = new List<PimsLeaseTerm>();
 }

@@ -50,6 +50,12 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.AcquisitionFileId == acquisitionId).Select(x => x.Note).ToList();
         }
 
+        public IEnumerable<PimsNote> GetAllDispositionNotesById(long dispositionId)
+        {
+            return this.Context.PimsDispositionFileNotes
+                .Where(x => x.DispositionFileId == dispositionId).Select(x => x.Note).ToList();
+        }
+
         public IEnumerable<PimsNote> GetAllLeaseNotesById(long leaseId)
         {
             return this.Context.PimsLeaseNotes
@@ -80,6 +86,24 @@ namespace Pims.Dal.Repositories
                 {
                     this.Context.PimsAcquisitionFileNotes.Remove(acquisitionFileNote);
                     this.Context.PimsNotes.Remove(acquisitionFileNote.Note);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteDispositionFileNotes(long noteId)
+        {
+            var dispositionFileNotes = this.Context.PimsDispositionFileNotes.
+                                        Include(an => an.Note).
+                                        Where(x => x.NoteId == noteId).ToList();
+
+            if (dispositionFileNotes.Any())
+            {
+                foreach (var dispositionFileNote in dispositionFileNotes)
+                {
+                    this.Context.PimsDispositionFileNotes.Remove(dispositionFileNote);
+                    this.Context.PimsNotes.Remove(dispositionFileNote.Note);
                 }
                 return true;
             }

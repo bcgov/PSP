@@ -15,7 +15,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.PimsPropertyTenureType CreatePropertyTenureType(string id)
         {
-            return new Entity.PimsPropertyTenureType(id) { ConcurrencyControlNumber = 1 };
+            return new Entity.PimsPropertyTenureType(id) { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" };
         }
 
         /// <summary>
@@ -26,8 +26,8 @@ namespace Pims.Core.Test
         {
             return new List<Entity.PimsPropertyTenureType>()
             {
-                new Entity.PimsPropertyTenureType("HWYROAD") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsPropertyTenureType("ADJLAND") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsPropertyTenureType("HWYROAD") { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
+                new Entity.PimsPropertyTenureType("ADJLAND") { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
             };
         }
     }

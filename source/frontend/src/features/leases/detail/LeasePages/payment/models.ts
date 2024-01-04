@@ -17,7 +17,7 @@ export class FormLeaseTerm {
   endDateHist: string = '';
   paymentAmount: NumberFieldValue = '';
   gstAmount: NumberFieldValue = '';
-  paymentDueDate: string = '';
+  paymentDueDateStr: string = '';
   paymentNote: string = '';
   isGstEligible?: boolean;
   isTermExercised?: boolean;
@@ -55,7 +55,7 @@ export class FormLeaseTerm {
       endDateHist: apiLeaseTerm.endDateHist ?? '',
       paymentAmount: apiLeaseTerm.paymentAmount ?? '',
       gstAmount: apiLeaseTerm.gstAmount ?? '',
-      paymentDueDate: apiLeaseTerm.paymentDueDate ?? '',
+      paymentDueDateStr: apiLeaseTerm.paymentDueDateStr ?? '',
       paymentNote: apiLeaseTerm.paymentNote ?? '',
       payments: apiLeaseTerm.payments.map((payment: Api_LeasePayment) =>
         FormLeasePayment.fromApi(payment),
@@ -75,7 +75,7 @@ export const defaultFormLeaseTerm: FormLeaseTerm = {
   endDateHist: '',
   paymentAmount: '',
   gstAmount: '',
-  paymentDueDate: '',
+  paymentDueDateStr: '',
   paymentNote: '',
   isGstEligible: false,
   isTermExercised: false,

@@ -138,7 +138,7 @@ const fakeProperty: Api_Property = {
     description: 'Lower Mainland District',
     isDisabled: false,
   },
-  dataSourceEffectiveDate: '2021-08-31T00:00:00',
+  dataSourceEffectiveDateOnly: '2021-08-31T00:00:00',
   latitude: 925866.6022023489,
   longitude: 1406876.1727310908,
   isSensitive: false,
