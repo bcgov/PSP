@@ -1614,7 +1614,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile(1);
-            acqFile.AcqPhysFileStatusTypeCode = "COMPLT";
+            acqFile.AcquisitionFileStatusTypeCode = "COMPLT";
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
             var acquisitionRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();

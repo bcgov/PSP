@@ -1,17 +1,13 @@
+import * as API from '@/constants/API';
 import { Claims } from '@/constants/index';
 import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
-import {
-  mockAcquisitionFileChecklistResponse,
-  mockAcquisitionFileResponse,
-} from '@/mocks/acquisitionFiles.mock';
+import { mockFileChecklistResponse } from '@/mocks/acquisitionFiles.mock';
+import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import {
-  AcquisitionChecklistView,
-  IAcquisitionChecklistViewProps,
-} from './AcquisitionChecklistView';
+import { ChecklistView, IChecklistViewProps } from './ChecklistView';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
@@ -23,17 +19,21 @@ jest.mock('@/hooks/pims-api/useApiUsers');
   getUserInfo: jest.fn().mockResolvedValue({}),
 } as any);
 
-const mockViewProps: IAcquisitionChecklistViewProps = {
-  acquisitionFile: undefined,
+const mockViewProps: IChecklistViewProps = {
+  apiFile: undefined,
   onEdit: jest.fn(),
+  sectionTypeName: API.ACQUISITION_CHECKLIST_SECTION_TYPES,
+  editClaim: Claims.ACQUISITION_EDIT,
 };
 
-describe('AcquisitionChecklistView component', () => {
+describe('ChecklistView component', () => {
   const setup = (renderOptions: RenderOptions = {}) => {
     const utils = render(
-      <AcquisitionChecklistView
-        acquisitionFile={mockViewProps.acquisitionFile}
+      <ChecklistView
+        apiFile={mockViewProps.apiFile}
         onEdit={mockViewProps.onEdit}
+        sectionTypeName={API.ACQUISITION_CHECKLIST_SECTION_TYPES}
+        editClaim={Claims.ACQUISITION_EDIT}
       />,
       {
         store: {
@@ -51,8 +51,8 @@ describe('AcquisitionChecklistView component', () => {
   };
 
   beforeEach(() => {
-    mockViewProps.acquisitionFile = mockAcquisitionFileResponse();
-    mockViewProps.acquisitionFile.acquisitionFileChecklist = mockAcquisitionFileChecklistResponse();
+    mockViewProps.apiFile = mockDispositionFileResponse();
+    mockViewProps.apiFile.fileChecklistItems = mockFileChecklistResponse();
   });
 
   afterEach(() => {
@@ -66,7 +66,7 @@ describe('AcquisitionChecklistView component', () => {
 
   it('renders the edit button for users with acquisition edit permissions', () => {
     const { getByTitle } = setup({ claims: [Claims.ACQUISITION_EDIT] });
-    const editButton = getByTitle('Edit acquisition checklist');
+    const editButton = getByTitle('Edit checklist');
     expect(editButton).toBeVisible();
     userEvent.click(editButton);
     expect(mockViewProps.onEdit).toHaveBeenCalled();
@@ -74,7 +74,7 @@ describe('AcquisitionChecklistView component', () => {
 
   it('does not render the edit button for users that do not have acquisition edit permissions', () => {
     const { queryByTitle } = setup({ claims: [] });
-    const editResearchFile = queryByTitle('Edit acquisition checklist');
+    const editResearchFile = queryByTitle('Edit checklist');
     expect(editResearchFile).toBeNull();
   });
 

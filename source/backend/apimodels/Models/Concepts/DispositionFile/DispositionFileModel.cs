@@ -10,7 +10,7 @@ using Pims.Api.Models.Models.Concepts.DispositionFile;
 */
 namespace Pims.Api.Models.Concepts.DispositionFile
 {
-    public class DispositionFileModel : FileModel
+    public class DispositionFileModel : FileWithChecklistModel
     {
         #region Properties
 

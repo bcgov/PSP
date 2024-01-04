@@ -3,19 +3,13 @@ import { createRef } from 'react';
 
 import * as API from '@/constants/API';
 import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
-import {
-  mockAcquisitionFileChecklistResponse,
-  mockAcquisitionFileResponse,
-} from '@/mocks/acquisitionFiles.mock';
-import { mockLookups } from '@/mocks/index.mock';
+import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
+import { mockFileChecklistResponse, mockLookups } from '@/mocks/index.mock';
 import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, createAxiosError, render, RenderOptions } from '@/utils/test-utils';
 
-import { AcquisitionChecklistFormModel } from './models';
-import {
-  IUpdateAcquisitionChecklistFormProps,
-  UpdateAcquisitionChecklistForm,
-} from './UpdateAcquisitionChecklistForm';
+import { ChecklistFormModel } from './models';
+import { IUpdateChecklistFormProps, UpdateChecklistForm } from './UpdateChecklistForm';
 
 // mock API service calls
 jest.mock('@/hooks/pims-api/useApiUsers');
@@ -28,24 +22,30 @@ const sectionTypes = mockLookups.filter(
   c => c.type === API.ACQUISITION_CHECKLIST_SECTION_TYPES && c.isDisabled !== true,
 ) as ILookupCode[];
 
-let mockViewProps: IUpdateAcquisitionChecklistFormProps = {
+let mockViewProps: IUpdateChecklistFormProps = {
   formikRef: null as any,
-  initialValues: new AcquisitionChecklistFormModel(),
+  initialValues: new ChecklistFormModel(),
   onSave: jest.fn(),
   onError: jest.fn(),
   onSuccess: jest.fn(),
+  sectionTypeName: API.ACQUISITION_CHECKLIST_SECTION_TYPES,
+  statusTypeName: API.ACQUISITION_CHECKLIST_ITEM_STATUS_TYPES,
+  prefix: 'acq',
 };
 
-describe('UpdateAcquisitionChecklist form', () => {
+describe('UpdateChecklist form', () => {
   const setup = (renderOptions: RenderOptions = {}) => {
-    const formikRef = createRef<FormikProps<AcquisitionChecklistFormModel>>();
+    const formikRef = createRef<FormikProps<ChecklistFormModel>>();
     const utils = render(
-      <UpdateAcquisitionChecklistForm
+      <UpdateChecklistForm
         formikRef={formikRef}
         initialValues={mockViewProps.initialValues}
         onSave={mockViewProps.onSave}
         onSuccess={mockViewProps.onSuccess}
         onError={mockViewProps.onError}
+        sectionTypeName={mockViewProps.sectionTypeName}
+        statusTypeName={mockViewProps.statusTypeName}
+        prefix={mockViewProps.prefix}
       />,
       {
         store: {
@@ -64,13 +64,10 @@ describe('UpdateAcquisitionChecklist form', () => {
   };
 
   beforeEach(() => {
-    const apiAcquisitionFile = mockAcquisitionFileResponse();
-    apiAcquisitionFile.acquisitionFileChecklist = mockAcquisitionFileChecklistResponse();
+    const apiDispositionFile = mockDispositionFileResponse();
+    apiDispositionFile.fileChecklistItems = mockFileChecklistResponse();
 
-    mockViewProps.initialValues = AcquisitionChecklistFormModel.fromApi(
-      apiAcquisitionFile,
-      sectionTypes,
-    );
+    mockViewProps.initialValues = ChecklistFormModel.fromApi(apiDispositionFile, sectionTypes);
   });
 
   afterEach(() => {
@@ -89,7 +86,7 @@ describe('UpdateAcquisitionChecklist form', () => {
 
   it('saves the form with minimal data', async () => {
     const { formikRef } = setup();
-    (mockViewProps.onSave as jest.Mock).mockResolvedValue(mockAcquisitionFileResponse());
+    (mockViewProps.onSave as jest.Mock).mockResolvedValue(mockDispositionFileResponse());
 
     await act(async () => {
       formikRef.current?.submitForm();
@@ -99,7 +96,7 @@ describe('UpdateAcquisitionChecklist form', () => {
 
   it('saves the form with updated values', async () => {
     const { formikRef } = setup();
-    (mockViewProps.onSave as jest.Mock).mockResolvedValue(mockAcquisitionFileResponse());
+    (mockViewProps.onSave as jest.Mock).mockResolvedValue(mockDispositionFileResponse());
 
     await act(async () => {
       formikRef.current?.submitForm();
@@ -107,9 +104,9 @@ describe('UpdateAcquisitionChecklist form', () => {
     expect(mockViewProps.onSave).toHaveBeenCalled();
   });
 
-  it('calls onSuccess when the acquisition checklist is saved successfully', async () => {
+  it('calls onSuccess when the disposition checklist is saved successfully', async () => {
     const { formikRef } = setup();
-    (mockViewProps.onSave as jest.Mock).mockResolvedValue(mockAcquisitionFileResponse());
+    (mockViewProps.onSave as jest.Mock).mockResolvedValue(mockDispositionFileResponse());
 
     await act(async () => {
       formikRef.current?.submitForm();
