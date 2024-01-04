@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Extensions;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
@@ -250,6 +251,54 @@ namespace Pims.Api.Services
             return _dispositionFileRepository.GetById(dispositionFile.Internal_Id);
         }
 
+        public List<DispositionFileExportModel> GetDispositionFileExport(DispositionFilter filter)
+        {
+            _logger.LogInformation("Searching all Disposition Files matching the filter: {filter}", filter);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+
+            var dispositionFiles = _dispositionFileRepository.GetDispositionFileExportDeep(filter);
+
+            return dispositionFiles
+                .Select(file => new DispositionFileExportModel
+                {
+                    FileNumber = file.FileNumber ?? string.Empty,
+                    ReferenceNumber = file.FileReference ?? string.Empty,
+                    FileName = file.FileName ?? string.Empty,
+                    DispositionType = file.DispositionTypeCodeNavigation?.Description ?? string.Empty,
+                    MotiRegion = file.RegionCodeNavigation?.Description ?? string.Empty,
+                    TeamMembers = string.Join("|", file.PimsDispositionFileTeams.Select(x => (x.PersonId.HasValue ? x.Person.GetFullName(true) + $" ({x.DspFlTeamProfileTypeCodeNavigation?.Description})" : x.Organization.Name + $" (Role: {x.DspFlTeamProfileTypeCodeNavigation?.Description}, Primary: {x.PrimaryContact?.GetFullName(true) ?? "N/A"})")) ?? Array.Empty<string>()),
+                    CivicAddress = string.Join("|", file.PimsDispositionFileProperties.Select(x => x.Property?.Address?.FormatFullAddressString()).Where(x => x != null)),
+                    Pid = string.Join("|", file.PimsDispositionFileProperties.Select(x => x.Property?.Pid).Where(x => x != null)),
+                    Pin = string.Join("|", file.PimsDispositionFileProperties.Select(x => x.Property?.Pin).Where(x => x != null)),
+                    GeneralLocation = string.Join("|", file.PimsDispositionFileProperties.Select(x => x.Property?.GeneralLocation).Where(x => x != null)),
+                    DispositionStatusTypeCode = file.DispositionStatusTypeCodeNavigation?.Description ?? string.Empty,
+                    DispositionFileStatusTypeCode = file.DispositionFileStatusTypeCodeNavigation?.Description ?? string.Empty,
+                    FileFunding = file.DispositionFundingTypeCodeNavigation is not null ? file.DispositionFundingTypeCodeNavigation.Description : string.Empty,
+                    FileAssignedDate = file.AssignedDt.HasValue ? file.AssignedDt.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    DispositionCompleted = file.CompletedDt.HasValue ? file.CompletedDt.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    InitiatingDocument = file.DispositionInitiatingDocTypeCode == "OTHER" ? $"Other - {file.OtherInitiatingDocType ?? string.Empty}" : file.DispositionInitiatingDocTypeCodeNavigation?.Description ?? string.Empty,
+                    InitiatingDocumentDate = file.InitiatingDocumentDt.HasValue ? file.InitiatingDocumentDt.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    PhysicalFileStatus = file.DspPhysFileStatusTypeCodeNavigation?.Description ?? string.Empty,
+                    AppraisalValue = file.PimsDispositionAppraisals?.FirstOrDefault()?.AppraisedAmt ?? 0,
+                    AppraisalDate = file.PimsDispositionAppraisals?.FirstOrDefault()?.AppraisalDt != null ? file.PimsDispositionAppraisals?.FirstOrDefault()?.AppraisalDt.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    AssessmentValue = file.PimsDispositionAppraisals?.FirstOrDefault()?.BcaValueAmt ?? 0,
+                    RollYear = file.PimsDispositionAppraisals?.FirstOrDefault()?.BcaRollYear?.ToString() ?? string.Empty,
+                    ListPrice = file.PimsDispositionAppraisals?.FirstOrDefault()?.ListPriceAmt ?? 0,
+                    PurchaserNames = string.Join("|", file.PimsDispositionSales?.FirstOrDefault()?.PimsDispositionPurchasers.Select(x => (x.PersonId.HasValue ? x.Person.GetFullName(true) : x.Organization.Name + $" (Primary: {x.PrimaryContact?.GetFullName(true) ?? "N/A"})")) ?? Array.Empty<string>()),
+                    SaleCompletionDate = file.PimsDispositionSales?.FirstOrDefault()?.SaleCompletionDt != null ? file.PimsDispositionSales?.FirstOrDefault()?.SaleCompletionDt.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    FiscalYearOfSale = file.PimsDispositionSales?.FirstOrDefault()?.SaleFiscalYear?.ToString() ?? string.Empty,
+                    FinalSalePrice = file.PimsDispositionSales?.FirstOrDefault()?.SaleFinalAmt ?? 0,
+                    RealtorCommission = file.PimsDispositionSales?.FirstOrDefault()?.RealtorCommissionAmt ?? 0,
+                    GstCollected = file.PimsDispositionSales?.FirstOrDefault()?.GstCollectedAmt ?? 0,
+                    NetBookValue = file.PimsDispositionSales?.FirstOrDefault()?.NetBookAmt ?? 0,
+                    TotalCostOfSale = file.PimsDispositionSales?.FirstOrDefault()?.TotalCostAmt ?? 0,
+                    SppAmount = file.PimsDispositionSales?.FirstOrDefault()?.SppAmt ?? 0,
+                    RemediationCost = file.PimsDispositionSales?.FirstOrDefault()?.RemediationAmt ?? 0,
+                    NetBeforeSpp = CalculateNetProceedsBeforeSpp(file.PimsDispositionSales?.FirstOrDefault()),
+                    NetAfterSpp = CalculateNetProceedsAfterSpp(file.PimsDispositionSales?.FirstOrDefault()),
+                }).ToList();
+        }
+
         private static void ValidateStaff(PimsDispositionFile dispositionFile)
         {
             bool duplicate = dispositionFile.PimsDispositionFileTeams.GroupBy(p => p.DspFlTeamProfileTypeCode).Any(g => g.Count() > 1);
@@ -370,6 +419,24 @@ namespace Pims.Api.Services
                     pimsDispositionChecklistItems.Add(checklistItem);
                 }
             }
+        }
+
+        private static decimal CalculateNetProceedsBeforeSpp(PimsDispositionSale sale)
+        {
+            if (sale != null)
+            {
+                return (sale?.SaleFinalAmt ?? 0) - ((sale?.RealtorCommissionAmt ?? 0) + (sale.GstCollectedAmt ?? 0) + (sale.NetBookAmt ?? 0) + (sale.TotalCostAmt ?? 0));
+            }
+            return 0;
+        }
+
+        private static decimal CalculateNetProceedsAfterSpp(PimsDispositionSale sale)
+        {
+            if (sale != null)
+            {
+                return (sale?.SaleFinalAmt ?? 0) - ((sale?.RealtorCommissionAmt ?? 0) + (sale.GstCollectedAmt ?? 0) + (sale.NetBookAmt ?? 0) + (sale.TotalCostAmt ?? 0) + (sale.SppAmt ?? 0));
+            }
+            return 0;
         }
     }
 }

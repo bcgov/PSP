@@ -1,10 +1,13 @@
+import isEmpty from 'lodash/isEmpty';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaPlus } from 'react-icons/fa';
+import { FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import { StyledIconButton } from '@/components/common/buttons';
 import { StyledAddButton } from '@/components/common/styles';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { Claims } from '@/constants';
 import {
   DISPOSITION_FILE_STATUS_TYPES,
@@ -18,8 +21,10 @@ import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useSearch } from '@/hooks/useSearch';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
-import { mapLookupCode } from '@/utils';
+import { generateMultiSortCriteria, mapLookupCode } from '@/utils';
+import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
 
+import { useDispositionFileExport } from '../hooks/useDispositionFileExport';
 import DispositionFilter from './DispositionFilter/DispositionFilter';
 import { DispositionSearchResults } from './DispositionSearchResults/DispositionSearchResults';
 import { DispositionFilterModel, DispositionSearchResultModel } from './models';
@@ -71,6 +76,23 @@ export const DispositionListView: React.FC<unknown> = () => {
     'No matching results can be found. Try widening your search criteria.',
   );
 
+  const { exportDispositionFiles } = useDispositionFileExport();
+
+  /**
+   * @param {'excel'} accept fetch is for type of EXCEL
+   */
+  const fetch = (accept: 'excel') => {
+    // Call API with appropriate search parameters
+    const query = toFilteredApiPaginateParams<Api_DispositionFilter>(
+      currentPage,
+      pageSize,
+      sort && !isEmpty(sort) ? generateMultiSortCriteria(sort) : undefined,
+      filter,
+    );
+
+    exportDispositionFiles(query, accept);
+  };
+
   React.useEffect(() => {
     if (error) {
       toast.error(error?.message);
@@ -105,6 +127,13 @@ export const DispositionListView: React.FC<unknown> = () => {
                 dispositionStatusOptions={dispositionStatusOptions}
                 dispositionTypeOptions={dispositionTypeOptions}
               />
+            </Col>
+            <Col md="auto" className="px-0">
+              <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to Excel">
+                <StyledIconButton onClick={() => fetch('excel')}>
+                  <FaFileExcel data-testid="excel-icon" size={36} />
+                </StyledIconButton>
+              </TooltipWrapper>
             </Col>
           </Row>
         </S.PageToolbar>

@@ -801,6 +801,343 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<NotAuthorizedException>();
         }
 
+        #region Export
+
+        [Fact]
+        public void GetDispositionFileExport_NoPermissions()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions();
+            var filter = new DispositionFilter();
+
+            // Act
+            Action act = () => service.GetDispositionFileExport(filter);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetDispositionFileExport_Success()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            var filter = new DispositionFilter();
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+                        .Returns(new List<PimsDispositionFile>()
+                        {
+                            dispositionFile,
+                        });
+
+            // Act
+            var result = service.GetDispositionFileExport(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(1, result.Count());
+            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetDispositionFileExport_Success_Properties()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            var filter = new DispositionFilter();
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+            dispositionFile.FileNumber = "10-25-2023";
+            dispositionFile.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>()
+            {
+                new PimsDispositionFileProperty()
+                {
+                    DispositionFileId = 1,
+                    PropertyId = 100,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 100,
+                        Pid = 8000,
+                        Address = EntityHelper.CreateAddress(1)
+                    },
+                },
+                new PimsDispositionFileProperty()
+                {
+                    DispositionFileId = 1,
+                    PropertyId = 200,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 200,
+                        Pid = 9000,
+                    },
+                },
+            };
+
+            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+                        .Returns(new List<PimsDispositionFile>()
+                        {
+                            dispositionFile,
+                        });
+
+            // Act
+            var result = service.GetDispositionFileExport(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(1, result.Count());
+            Assert.Equal("1234 St BC desc V9V9V9", result[0].CivicAddress);
+            Assert.Equal("10-25-2023", result[0].FileNumber);
+            Assert.Equal("8000|9000", result[0].Pid);
+            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetDispositionFileExport_Success_Team()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            var filter = new DispositionFilter();
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+            dispositionFile.FileNumber = "10-25-2023";
+            dispositionFile.PimsDispositionFileTeams = new List<PimsDispositionFileTeam>()
+            {
+                new PimsDispositionFileTeam()
+                {
+                    Person = EntityHelper.CreatePerson(1, "first", "last"),
+                    PersonId = 1,
+                    DspFlTeamProfileTypeCodeNavigation = new PimsDspFlTeamProfileType() { Description = "person role"}
+                },
+                new PimsDispositionFileTeam()
+                {
+                    Organization = EntityHelper.CreateOrganization(1, "org"),
+                    DspFlTeamProfileTypeCodeNavigation = new PimsDspFlTeamProfileType() { Description = "org role"}
+                },
+                new PimsDispositionFileTeam()
+                {
+                    DspFlTeamProfileTypeCodeNavigation = new PimsDspFlTeamProfileType() { Description = "primary role"},
+                    Organization = EntityHelper.CreateOrganization(2, "org2"),
+                    PrimaryContact = EntityHelper.CreatePerson(2, "primary", "contact")
+                }
+            };
+
+            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+                        .Returns(new List<PimsDispositionFile>()
+                        {
+                            dispositionFile,
+                        });
+
+            // Act
+            var result = service.GetDispositionFileExport(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            result.FirstOrDefault().TeamMembers.Should().Be("last first (person role)|org (Role: org role, Primary: N/A)|org2 (Role: primary role, Primary: contact primary)");
+            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetDispositionFileExport_Success_Appraisals_Empty()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            var filter = new DispositionFilter();
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+            dispositionFile.FileNumber = "10-25-2023";
+            dispositionFile.PimsDispositionAppraisals = new List<PimsDispositionAppraisal>();
+
+            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+                        .Returns(new List<PimsDispositionFile>()
+                        {
+                            dispositionFile,
+                        });
+
+            // Act
+            var result = service.GetDispositionFileExport(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(1, result.Count());
+            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetDispositionFileExport_Success_Appraisals()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            var filter = new DispositionFilter();
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+            dispositionFile.FileNumber = "10-25-2023";
+            dispositionFile.PimsDispositionAppraisals = new List<PimsDispositionAppraisal>() { new PimsDispositionAppraisal()
+            {
+                AppraisedAmt = 1,
+                BcaRollYear = 2,
+                ListPriceAmt = 3,
+                BcaValueAmt = 4,
+                AppraisalDt = new DateOnly(2000,1,1),
+            } };
+
+            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+                        .Returns(new List<PimsDispositionFile>()
+                        {
+                            dispositionFile,
+                        });
+
+            // Act
+            var result = service.GetDispositionFileExport(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(1, result.Count());
+            var row = result[0];
+            row.AppraisalValue.Should().Be(1);
+            row.RollYear.Should().Be("2");
+            row.ListPrice.Should().Be(3);
+            row.AssessmentValue.Should().Be(4);
+            row.AppraisalDate.Should().Be("01-Jan-2000");
+
+            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetDispositionFileExport_Success_Sales_Empty()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            var filter = new DispositionFilter();
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+            dispositionFile.FileNumber = "10-25-2023";
+            dispositionFile.PimsDispositionSales = new List<PimsDispositionSale>();
+
+            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+                        .Returns(new List<PimsDispositionFile>()
+                        {
+                            dispositionFile,
+                        });
+
+            // Act
+            var result = service.GetDispositionFileExport(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(1, result.Count());
+            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetDispositionFileExport_Success_Sales()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            var filter = new DispositionFilter();
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+            dispositionFile.FileNumber = "10-25-2023";
+            dispositionFile.PimsDispositionSales = new List<PimsDispositionSale>() { new PimsDispositionSale()
+            {
+               NetBookAmt = 1,
+               GstCollectedAmt = 2,
+               RealtorCommissionAmt = 3,
+               RemediationAmt = 4,
+               SaleFinalAmt = 5,
+               SppAmt = 6,
+               TotalCostAmt = 7,
+               SaleCompletionDt = new DateOnly(2000,1,1),
+               SaleFiscalYear = 2001,
+            } };
+
+            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+                        .Returns(new List<PimsDispositionFile>()
+                        {
+                            dispositionFile,
+                        });
+
+            // Act
+            var result = service.GetDispositionFileExport(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(1, result.Count());
+            var row = result[0];
+            row.NetBookValue.Should().Be(1);
+            row.GstCollected.Should().Be(2);
+            row.RealtorCommission.Should().Be(3);
+            row.RemediationCost.Should().Be(4);
+            row.FinalSalePrice.Should().Be(5);
+            row.SppAmount.Should().Be(6);
+            row.TotalCostOfSale.Should().Be(7);
+            row.NetBeforeSpp.Should().Be(-8);
+            row.NetAfterSpp.Should().Be(-14);
+            row.TotalCostOfSale.Should().Be(7);
+            row.FiscalYearOfSale.Should().Be("2001");
+            row.SaleCompletionDate.Should().Be("01-Jan-2000");
+
+            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetDispositionFileExport_Success_Sales_Purchasers()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            var filter = new DispositionFilter();
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+            dispositionFile.FileNumber = "10-25-2023";
+            dispositionFile.PimsDispositionSales = new List<PimsDispositionSale>() { new PimsDispositionSale()
+            {
+               PimsDispositionPurchasers = new List<PimsDispositionPurchaser>()
+               {
+                   new PimsDispositionPurchaser()
+                   {
+                       Person = EntityHelper.CreatePerson(1, "first", "last"),
+                       PersonId = 1,
+                   },
+                   new PimsDispositionPurchaser()
+                   {
+                       Organization = EntityHelper.CreateOrganization(1, "org"),
+                   },
+                   new PimsDispositionPurchaser()
+                   {
+                       Organization = EntityHelper.CreateOrganization(1, "org2"),
+                       PrimaryContact = EntityHelper.CreatePerson(2, "primary", "contact")
+                   },
+               }
+            } };
+
+            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+                        .Returns(new List<PimsDispositionFile>()
+                        {
+                            dispositionFile,
+                        });
+
+            // Act
+            var result = service.GetDispositionFileExport(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(1, result.Count());
+            var row = result[0];
+            row.PurchaserNames.Should().Be("last first|org (Primary: N/A)|org2 (Primary: contact primary)");
+
+            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+        }
+
+        #endregion
+
         #endregion
     }
 }
