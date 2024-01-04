@@ -18,6 +18,7 @@ const onViewPropertyInfo = jest.fn();
 const onCreateResearchFile = jest.fn();
 const onCreateAcquisitionFile = jest.fn();
 const onCreateLeaseLicense = jest.fn();
+const onCreateDispositionFile = jest.fn();
 
 describe('LayerPopupFlyout component', () => {
   const setup = (renderOptions?: RenderOptions & Partial<ILayerPopupFlyoutProps>) => {
@@ -28,6 +29,7 @@ describe('LayerPopupFlyout component', () => {
         onCreateAcquisitionFile={onCreateAcquisitionFile}
         onCreateResearchFile={onCreateResearchFile}
         onCreateLeaseLicense={onCreateLeaseLicense}
+        onCreateDispositionFile={onCreateDispositionFile}
       />,
       {
         ...renderOptions,
@@ -89,5 +91,20 @@ describe('LayerPopupFlyout component', () => {
     const link = getByText('Acquisition File - Create new');
     userEvent.click(link);
     expect(onCreateAcquisitionFile).toHaveBeenCalled();
+  });
+
+  it('renders the link for creating a disposition file if user has claim', async () => {
+    const { getByText, getAllByRole } = setup({ claims: [Claims.DISPOSITION_ADD] });
+
+    expect(getByText('Disposition File - Create new')).toBeVisible();
+    expect(getAllByRole('button')).toHaveLength(2);
+  });
+
+  it('calls onCreateDispositionFile when link clicked', async () => {
+    const { getByText } = setup({ claims: [Claims.DISPOSITION_ADD] });
+
+    const link = getByText('Disposition File - Create new');
+    userEvent.click(link);
+    expect(onCreateDispositionFile).toHaveBeenCalled();
   });
 });

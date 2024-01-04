@@ -123,7 +123,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static MethodInfo FindMethod(this Type type, string name, params Type[] parameterTypes)
         {
-            if (!parameterTypes.Any())
+            if (parameterTypes.Length == 0)
             {
                 parameterTypes = Array.Empty<Type>();
             }

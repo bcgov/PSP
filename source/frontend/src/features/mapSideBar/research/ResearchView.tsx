@@ -7,7 +7,7 @@ import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs'
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import { stripTrailingSlash } from '@/utils';
 
-import FilePropertyRouter from '../acquisition/router/FilePropertyRouter';
+import FilePropertyRouter from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
 import ResearchRouter from './ResearchRouter';
 

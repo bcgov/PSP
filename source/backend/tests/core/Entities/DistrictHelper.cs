@@ -21,7 +21,7 @@ namespace Pims.Core.Test
         public static Entity.PimsDistrict CreateDistrict(short id, string code, Entity.PimsRegion region = null)
         {
             region ??= EntityHelper.CreateRegion(id, "Region 1");
-            return new Entity.PimsDistrict(code, region) { DistrictCode = id, ConcurrencyControlNumber = 1 };
+            return new Entity.PimsDistrict(code, region) { DistrictCode = id, DistrictName = code, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now };
         }
 
         /// <summary>
@@ -34,8 +34,8 @@ namespace Pims.Core.Test
             region ??= EntityHelper.CreateRegion(1, "Region 1");
             return new List<Entity.PimsDistrict>()
             {
-                new Entity.PimsDistrict("District 1", region) { DistrictCode = 1, ConcurrencyControlNumber = 1 },
-                new Entity.PimsDistrict("District 2", region) { DistrictCode = 2,  ConcurrencyControlNumber = 1 },
+                new Entity.PimsDistrict("District 1", region) { DistrictCode = 1, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+                new Entity.PimsDistrict("District 2", region) { DistrictCode = 2,  ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
             };
         }
 
@@ -49,7 +49,7 @@ namespace Pims.Core.Test
         public static Entity.PimsDistrict CreateDistrict(this PimsContext context, short id, string code, Entity.PimsRegion region = null)
         {
             region ??= context.PimsRegions.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a region.");
-            return new Entity.PimsDistrict(code, region) { DistrictCode = id, ConcurrencyControlNumber = 1 };
+            return new Entity.PimsDistrict(code, region) { DistrictCode = id, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" };
         }
     }
 }

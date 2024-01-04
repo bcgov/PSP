@@ -68,7 +68,6 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
   containerState: {
     isEditing: false,
     selectedMenuIndex: 0,
-    showConfirmModal: false,
     defaultFileTab: FileTabType.FILE_DETAILS,
     defaultPropertyTab: InventoryTabNames.property,
   },

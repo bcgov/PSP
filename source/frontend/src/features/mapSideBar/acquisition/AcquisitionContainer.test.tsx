@@ -187,10 +187,9 @@ describe('AcquisitionContainer component', () => {
     await screen.findByText('1');
     await act(async () => viewProps.onMenuChange(1));
 
-    expect(viewProps.containerState.showConfirmModal).toBe(true);
     expect(history.location.pathname).toBe('/property/1');
     const params = new URLSearchParams(history.location.search);
-    expect(params.has('edit')).toBe(false);
+    expect(params.has('edit')).toBe(true);
   });
 
   it('cancels edit if form is not dirty and menu index changes', async () => {

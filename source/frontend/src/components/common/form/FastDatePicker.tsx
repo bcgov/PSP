@@ -53,14 +53,12 @@ const FormikDatePicker: FunctionComponent<React.PropsWithChildren<FastDatePicker
   popperModifiers,
   formikProps: {
     values,
-    initialValues,
     errors,
     touched,
     setFieldValue,
     registerField,
     unregisterField,
     setFieldTouched,
-    handleChange,
   },
   ...rest
 }) => {

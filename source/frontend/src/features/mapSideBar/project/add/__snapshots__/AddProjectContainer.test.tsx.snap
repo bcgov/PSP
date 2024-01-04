@@ -214,6 +214,10 @@ exports[`AddProjectContainer component renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c9 button.close {
+  font-size: 2.4rem;
+}
+
 .c0 {
   width: 100%;
   position: relative;
@@ -226,10 +230,6 @@ exports[`AddProjectContainer component renders as expected 1`] = `
 .c1 {
   height: 100%;
   width: 100%;
-}
-
-.c9 button.close {
-  font-size: 2.4rem;
 }
 
 .c4 {

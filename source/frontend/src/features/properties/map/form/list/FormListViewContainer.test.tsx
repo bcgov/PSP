@@ -117,7 +117,7 @@ describe('form list view container', () => {
       claims: [],
     });
     viewProps.onDelete(1);
-    const continueButton = await screen.findByText('Continue');
+    const continueButton = await screen.findByText('Yes');
     act(() => userEvent.click(continueButton));
 
     expect(mockApi.execute).toHaveBeenCalledWith('acquisition', 1);

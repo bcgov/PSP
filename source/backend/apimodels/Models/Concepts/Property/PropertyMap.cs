@@ -1,5 +1,7 @@
 using Mapster;
 using Pims.Api.Models.Base;
+using Pims.Core.Extensions;
+using System;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Property
@@ -62,7 +64,7 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.Longitude, src => src.Location.Coordinate.X)
 
                 .Map(dest => dest.SurplusDeclarationComment, src => src.SurplusDeclarationComment)
-                .Map(dest => dest.SurplusDeclarationDate, src => src.SurplusDeclarationDate)
+                .Map(dest => dest.SurplusDeclarationDate, src => src.SurplusDeclarationDate.ToNullableDateOnly())
                 .Map(dest => dest.SurplusDeclarationType, src => src.SurplusDeclarationTypeCodeNavigation)
 
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();

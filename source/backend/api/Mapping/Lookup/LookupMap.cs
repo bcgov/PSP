@@ -38,6 +38,20 @@ namespace Pims.Api.Mapping.Lookup
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.Type, src => src.GetType().Name);
 
+            config.NewConfig<Entity.ITypeEntity<string, bool>, Model.LookupModel>()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Name, src => src.Description != null ? src.Description : src.Id)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
+                .Map(dest => dest.Type, src => src.GetType().Name);
+
+            config.NewConfig<Entity.ITypeEntity<string, bool?>, Model.LookupModel>()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Name, src => src.Description)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
+                .Map(dest => dest.Type, src => src.GetType().Name);
+
             config.NewConfig<Entity.PimsOrganization, Model.LookupModel>()
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.Code, src => src.OrganizationIdentifier)

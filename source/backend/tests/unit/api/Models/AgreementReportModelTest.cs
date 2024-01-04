@@ -72,7 +72,7 @@ namespace Pims.Api.Test
         {
             // Arrange
             var testAgreement = new Dal.Entities.PimsAgreement();
-            testAgreement.AgreementDate = new DateTime(1990, 1, 1);
+            testAgreement.AgreementDate = new DateOnly(1990, 1, 1);
 
             // Act
             var model = new AgreementReportModel(testAgreement, new System.Security.Claims.ClaimsPrincipal());

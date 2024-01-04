@@ -7,11 +7,13 @@ import { Api_Address } from './Address';
 import { Api_AuditFields } from './AuditFields';
 import { Api_CompensationRequisition } from './CompensationRequisition';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import { DateOnly } from './DateOnly';
 import { Api_InterestHolder } from './InterestHolder';
 import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
 import { Api_Product, Api_Project } from './Project';
 import { Api_PropertyFile } from './PropertyFile';
+import { UtcIsoDateTime } from './UtcIsoDateTime';
 
 export enum EnumAcquisitionFileType {
   CONSEN = 'CONSEN',
@@ -24,9 +26,9 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   id?: number;
   fileNo?: number;
   legacyFileNumber?: string;
-  assignedDate?: string;
-  deliveryDate?: string;
-  completionDate?: string;
+  assignedDate?: UtcIsoDateTime;
+  deliveryDate?: DateOnly;
+  completionDate?: DateOnly;
   // Code Tables
   acquisitionPhysFileStatusTypeCode?: Api_TypeCode<string>;
   acquisitionTypeCode?: Api_TypeCode<string>;

@@ -21,7 +21,7 @@ namespace Pims.Api.Mapping.User
                 .Map(dest => dest.Email, src => src.Person.GetWorkEmail())
                 .Map(dest => dest.Organizations, src => src.GetOrganizations())
                 .Map(dest => dest.Roles, src => src.PimsUserRoles.Select(r => r.Role))
-                .Inherits<Entity.IDisableBaseAppEntity, BaseAuditModel>();
+                .Inherits<Entity.IDisableBaseAppEntity<bool?>, BaseAuditModel>();
 
             config.NewConfig<Model.UserModel, Entity.PimsUser>()
                 .Map(dest => dest.Internal_Id, src => src.Id)
@@ -32,7 +32,7 @@ namespace Pims.Api.Mapping.User
                 .Map(dest => dest.Person.Surname, src => src.Surname)
                 .Map(dest => dest.Position, src => src.Position)
                 .Map(dest => dest.PimsUserOrganizations, src => src.Organizations)
-                .Inherits<BaseAuditModel, Entity.IDisableBaseAppEntity>();
+                .Inherits<BaseAuditModel, Entity.IDisableBaseAppEntity<bool?>>();
 
             config.NewConfig<Model.UserModel, Entity.PimsUserOrganization>()
                 .Map(dest => dest.UserId, src => src.Id)
