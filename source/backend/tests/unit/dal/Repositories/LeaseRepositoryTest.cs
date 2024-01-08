@@ -158,6 +158,10 @@ namespace Pims.Dal.Test.Repositories
             elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
             elease.OrigStartDate = new DateTime(2000, 1, 1);
+            elease.PsFileNo = "111";
+            elease.LeaseProgramTypeCode = "testProgramType";
+            elease.LeaseStatusTypeCode = "testStatusType";
+            elease.LeaseDescription = "details";
 
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(elease);
