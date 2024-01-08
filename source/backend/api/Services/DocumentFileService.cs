@@ -348,7 +348,7 @@ namespace Pims.Api.Services
             }
         }
 
-        public async Task<ExternalResult<string>> DeleteDispositionDocumentAsync(PimsDispositionFileDocument dispositionFileDocument)
+        public async Task<ExternalResponse<string>> DeleteDispositionDocumentAsync(PimsDispositionFileDocument dispositionFileDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single disposition file");
             this.User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.DispositionEdit);
@@ -362,7 +362,7 @@ namespace Pims.Api.Services
             {
                 _dispositionFileDocumentRepository.DeleteDispositionDocument(dispositionFileDocument);
                 _dispositionFileDocumentRepository.CommitTransaction();
-                return new ExternalResult<string>() { Status = ExternalResultStatus.NotExecuted };
+                return new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
             }
         }
     }
