@@ -9,4 +9,5 @@ export enum ApiGen_CodeTypes_DocumentRelationType {
   Leases = 'Leases',
   Projects = 'Projects',
   ManagementFiles = 'ManagementFiles',
+  DispositionFiles = 'DispositionFiles',
 }

@@ -13,7 +13,7 @@ export interface ApiGen_Concepts_SecurityDeposit extends ApiGen_Base_BaseConcurr
   leaseId: number;
   description: string | null;
   amountPaid: number;
-  depositDate: string | null;
+  depositDateOnly: string;
   depositType: ApiGen_Base_CodeType<string> | null;
   otherTypeDescription: string | null;
   depositReturns: ApiGen_Concepts_SecurityDepositReturn[] | null;

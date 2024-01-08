@@ -1,6 +1,6 @@
 using Pims.Api.Models.Base;
 
-namespace Pims.Api.Models.Models.Concepts.File
+namespace Pims.Api.Models.Concepts.File
 {
     public class FileChecklistItemModel : BaseAuditModel
     {

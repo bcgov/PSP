@@ -29,7 +29,7 @@ export interface ApiGen_Concepts_Lease extends ApiGen_Base_BaseAudit {
   otherPurposeType: string | null;
   otherType: string | null;
   expiryDate: string | null;
-  startDate: string | null;
+  startDate: string;
   renewalDate: string | null;
   renewalCount: number;
   paymentReceivableType: ApiGen_Base_CodeType<string> | null;

@@ -3,18 +3,17 @@
  * Do not manually modify, changes made to this file will be lost when this file is regenerated.
  */
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
-import { ApiGen_Concepts_AcquisitionFileChecklistItem } from './ApiGen_Concepts_AcquisitionFileChecklistItem';
 import { ApiGen_Concepts_AcquisitionFileOwner } from './ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileProperty } from './ApiGen_Concepts_AcquisitionFileProperty';
 import { ApiGen_Concepts_AcquisitionFileTeam } from './ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_CompensationRequisition } from './ApiGen_Concepts_CompensationRequisition';
-import { ApiGen_Concepts_File } from './ApiGen_Concepts_File';
+import { ApiGen_Concepts_FileWithChecklist } from './ApiGen_Concepts_FileWithChecklist';
 import { ApiGen_Concepts_InterestHolder } from './ApiGen_Concepts_InterestHolder';
 import { ApiGen_Concepts_Product } from './ApiGen_Concepts_Product';
 import { ApiGen_Concepts_Project } from './ApiGen_Concepts_Project';
 
 // LINK: @backend/apimodels/Models/Concepts/AcquisitionFile/AcquisitionFileModel.cs
-export interface ApiGen_Concepts_AcquisitionFile extends ApiGen_Concepts_File {
+export interface ApiGen_Concepts_AcquisitionFile extends ApiGen_Concepts_FileWithChecklist {
   fileNo: number;
   legacyFileNumber: string | null;
   assignedDate: string | null;
@@ -35,6 +34,5 @@ export interface ApiGen_Concepts_AcquisitionFile extends ApiGen_Concepts_File {
   acquisitionTeam: ApiGen_Concepts_AcquisitionFileTeam[] | null;
   acquisitionFileOwners: ApiGen_Concepts_AcquisitionFileOwner[] | null;
   acquisitionFileInterestHolders: ApiGen_Concepts_InterestHolder[] | null;
-  acquisitionFileChecklist: ApiGen_Concepts_AcquisitionFileChecklistItem[] | null;
   compensationRequisitions: ApiGen_Concepts_CompensationRequisition[] | null;
 }
