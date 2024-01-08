@@ -59,7 +59,7 @@ export class Api_GenerateLease {
       ? moment.utc(firstTerm?.expiryDate).format('MMMM DD, YYYY') ?? ''
       : '';
     this.payment_amount = formatMoney(firstTerm?.paymentAmount ?? 0);
-    this.payment_due_date = firstTerm?.paymentDueDate ?? '';
+    this.payment_due_date = firstTerm?.paymentDueDateStr ?? '';
 
     this.cgl_limit =
       formatMoney(insurances.find(i => i?.insuranceType?.id === 'GENERAL')?.coverageLimit) ??

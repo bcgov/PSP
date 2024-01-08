@@ -152,7 +152,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = () => service.UploadFormDocumentTemplateAsync(testTypeCode, testUploadRequest);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentService.Verify(x => x.UploadDocumentAsync(testUploadRequest), Times.Never);
         }
 
@@ -209,7 +209,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = () => service.UploadFormDocumentTemplateAsync(testTypeCode, testUploadRequest);
 
             // Assert
-            act.Should().Throw<InvalidOperationException>();
+            act.Should().ThrowAsync<InvalidOperationException>();
             documentRepositoryMock.Verify(x => x.DocumentRelationshipCount(testDocumentId), Times.Once);
             documentServiceMock.Verify(x => x.DeleteDocumentAsync(testExistingDocument), Times.Once);
             documentServiceMock.Verify(x => x.UploadDocumentAsync(testUploadRequest), Times.Never);
@@ -281,7 +281,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = () => service.DeleteFormDocumentTemplateAsync(testFormType);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentRepositoryMock.Verify(x => x.DocumentRelationshipCount(testDocumentId), Times.Never);
         }
         #endregion

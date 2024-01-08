@@ -1,6 +1,7 @@
 import { Api_Address } from './Address';
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion, Api_ConcurrentVersion_Null } from './ConcurrentVersion';
+import { DateOnly } from './DateOnly';
 import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
 import Api_TypeCode from './TypeCode';
@@ -33,7 +34,7 @@ export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
   district?: Api_TypeCode<number>;
 
   dataSource?: Api_TypeCode<string>;
-  dataSourceEffectiveDate?: string;
+  dataSourceEffectiveDateOnly?: DateOnly;
 
   latitude?: number;
   longitude?: number;
@@ -146,7 +147,7 @@ export interface Api_PropertyManagement extends Api_ConcurrentVersion_Null, Api_
   isUtilitiesPayable: boolean | null;
   isTaxesPayable: boolean | null;
   relatedLeases: number;
-  leaseExpiryDate: string | null;
+  leaseExpiryDate: DateOnly | null;
 }
 
 export interface Api_PropertyManagementPurpose extends Api_ConcurrentVersion_Null, Api_AuditFields {

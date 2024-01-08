@@ -109,6 +109,9 @@ export const TAKE_LAND_ACT_TYPES = 'PimsLandActType';
 export const ACQUISITION_CHECKLIST_SECTION_TYPES = 'PimsAcqChklstSectionType';
 export const ACQUISITION_CHECKLIST_ITEM_TYPES = 'PimsAcqChklstItemType';
 export const ACQUISITION_CHECKLIST_ITEM_STATUS_TYPES = 'PimsAcqChklstItemStatusType';
+export const DISPOSITION_CHECKLIST_SECTION_TYPES = 'PimsDspChklstSectionType';
+export const DISPOSITION_CHECKLIST_ITEM_TYPES = 'PimsDspChklstItemType';
+export const DISPOSITION_CHECKLIST_ITEM_STATUS_TYPES = 'PimsDspChklstItemStatusType';
 export const AGREEMENT_TYPES = 'PimsAgreementType';
 export const INTEREST_HOLDER_TYPES = 'PimsInterestHolderInterestType';
 export const PAYMENT_ITEM_TYPES = 'PimsPaymentItemType';
@@ -116,6 +119,15 @@ export const PROP_MGMT_ACTIVITY_STATUS_TYPES = 'PimsPropMgmtActivityStatusType';
 export const PROP_MGMT_ACTIVITY_SUBTYPES_TYPES = 'PimsPropMgmtActivitySubtype';
 export const PROP_MGMT_ACTIVITY_TYPES = 'PimsPropMgmtActivityType';
 export const AGREEMENT_STATUS_TYPES = 'PimsAgreementStatusType';
+export const DISPOSITION_STATUS_TYPES = 'PimsDispositionStatusType';
+export const DISPOSITION_TYPES = 'PimsDispositionType';
+export const DISPOSITION_FILE_STATUS_TYPES = 'PimsDispositionFileStatusType';
+export const DISPOSITION_INITIATING_DOC_TYPES = 'PimsDispositionInitiatingDocType';
+export const DISPOSITION_PHYSICAL_STATUS_TYPES = 'PimsDspPhysFileStatusType';
+export const DISPOSITION_INITIATING_BRANCH_TYPES = 'PimsDspInitiatingBranchType';
+export const DISPOSITION_TEAM_PROFILE_TYPES = 'PimsDspFlTeamProfileType';
+export const DISPOSITION_FUNDING_TYPES = 'PimsDispositionFundingType';
+export const DISPOSITION_OFFER_STATUS_TYPES = 'PimsDispositionOfferStatusType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

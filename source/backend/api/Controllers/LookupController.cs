@@ -134,6 +134,18 @@ namespace Pims.Api.Controllers
                 var mgmtActivityStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivityStatusTypes());
                 var mgmtActivitySubtypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivitySubtypes());
                 var mgmtActivityTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivityTypes());
+                var dispositionStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionStatusTypes());
+                var dispositionFileFundingTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionFileFundingTypes());
+                var dispositionFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionFileStatusTypes());
+                var dispositionFlTeamProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionFlTeamProfileTypes());
+                var dispositionInitiatingBranchTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionInitiatingBranchTypes());
+                var dispositionPhysFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionPhysFileStatusTypes());
+                var dispositionInitiatingDocTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionInitiatingDocTypes());
+                var dispositionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionTypes());
+                var dispositionOfferStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionOfferStatusTypes());
+                var dispositionChecklistItemStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionChecklistItemStatusTypes());
+                var dispositionChecklistItemTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionChecklistItemTypes());
+                var dispositionChecklistSectionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionChecklistSectionTypes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -196,6 +208,18 @@ namespace Pims.Api.Controllers
                 codes.AddRange(mgmtActivityStatusTypes);
                 codes.AddRange(mgmtActivitySubtypes);
                 codes.AddRange(mgmtActivityTypes);
+                codes.AddRange(dispositionFileFundingTypes);
+                codes.AddRange(dispositionFileStatusTypes);
+                codes.AddRange(dispositionFlTeamProfileTypes);
+                codes.AddRange(dispositionInitiatingBranchTypes);
+                codes.AddRange(dispositionPhysFileStatusTypes);
+                codes.AddRange(dispositionInitiatingDocTypes);
+                codes.AddRange(dispositionTypes);
+                codes.AddRange(dispositionStatusTypes);
+                codes.AddRange(dispositionOfferStatusTypes);
+                codes.AddRange(dispositionChecklistItemStatusTypes);
+                codes.AddRange(dispositionChecklistItemTypes);
+                codes.AddRange(dispositionChecklistSectionTypes);
 
                 var response = new JsonResult(codes);
 

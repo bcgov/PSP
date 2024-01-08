@@ -33,6 +33,7 @@ using Pims.Api.Models.Concepts.Document;
 using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Models.CodeTypes;
+using Pims.Api.Constants;
 
 namespace Pims.Api.Test.Services
 {
@@ -83,7 +84,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void GetPimsDocumentTypes_Research_Success()
+        public void GetFileDocuments_Research_Success()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentView, Permissions.ResearchFileView);
@@ -99,23 +100,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void GetPimsDocumentTypes_PropertyActivity_Success()
-        {
-            // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentView, Permissions.ManagementView);
-            var propertyActivityFileDocumentRepository = this._helper.GetService<Mock<IPropertyActivityDocumentRepository>>();
-
-            propertyActivityFileDocumentRepository.Setup(x => x.GetAllByPropertyActivity(It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
-
-            // Act
-            var sut = service.GetFileDocuments<PimsResearchFileDocument>(Constants.FileType.Management, 1);
-
-            // Assert
-            propertyActivityFileDocumentRepository.Verify(x => x.GetAllByPropertyActivity(It.IsAny<long>()), Times.Once);
-        }
-
-        [Fact]
-        public void GetPimsDocumentTypes_Acquisition_Success()
+        public void GetFileDocuments_Acquisition_Success()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentView, Permissions.AcquisitionFileView);
@@ -131,7 +116,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void GetAllProjectDocuments_Project_Success()
+        public void GetFileDocuments_Project_Success()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentView, Permissions.ProjectView);
@@ -147,7 +132,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void GetAllDocuments_Lease_Success()
+        public void GetFileDocuments_Lease_Success()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentView, Permissions.LeaseView);
@@ -163,7 +148,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void GetAllDocuments_PropertyActivity_Success()
+        public void GetFileDocuments_PropertyActivity_Success()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentView, Permissions.ManagementView);
@@ -172,14 +157,30 @@ namespace Pims.Api.Test.Services
             propertyActivityDocumentRepository.Setup(x => x.GetAllByPropertyActivity(It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
 
             // Act
-            var sut = service.GetFileDocuments<PimsLeaseDocument>(Constants.FileType.Management, 1);
+            var sut = service.GetFileDocuments<PimsPropertyActivityDocument>(Constants.FileType.Management, 1);
 
             // Assert
             propertyActivityDocumentRepository.Verify(x => x.GetAllByPropertyActivity(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
-        public void GetPimsDocumentTypes_Lease_NotAuthorized()
+        public void GetFileDocuments_Disposition_Success()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentView, Permissions.DispositionView);
+            var dispositionFileDocumentRepository = this._helper.GetService<Mock<IDispositionFileDocumentRepository>>();
+
+            dispositionFileDocumentRepository.Setup(x => x.GetAllByDispositionFile(It.IsAny<long>())).Returns(new List<PimsDispositionFileDocument>());
+
+            // Act
+            var sut = service.GetFileDocuments<PimsDispositionFileDocument>(Constants.FileType.Disposition, 1);
+
+            // Assert
+            dispositionFileDocumentRepository.Verify(x => x.GetAllByDispositionFile(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetFileDocuments_Lease_NotAuthorized()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions();
@@ -194,7 +195,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void GetPimsDocumentTypes_Project_NotAuthorized()
+        public void GetFileDocuments_Project_NotAuthorized()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions();
@@ -221,7 +222,7 @@ namespace Pims.Api.Test.Services
             Func<Task> sut = async () => await service.UploadResearchDocumentAsync(1, uploadRequest);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            sut.Should().ThrowAsync<NotAuthorizedException>();
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
         }
 
@@ -238,7 +239,7 @@ namespace Pims.Api.Test.Services
             Func<Task> sut = async () => await service.UploadResearchDocumentAsync(1, uploadRequest);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            sut.Should().ThrowAsync<NotAuthorizedException>();
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
         }
 
@@ -255,7 +256,7 @@ namespace Pims.Api.Test.Services
             Func<Task> sut = async () => await service.UploadProjectDocumentAsync(1, uploadRequest);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            sut.Should().ThrowAsync<NotAuthorizedException>();
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
         }
 
@@ -272,7 +273,7 @@ namespace Pims.Api.Test.Services
             Func<Task> sut = async () => await service.UploadLeaseDocumentAsync(1, uploadRequest);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            sut.Should().ThrowAsync<NotAuthorizedException>();
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
         }
 
@@ -289,15 +290,32 @@ namespace Pims.Api.Test.Services
             Func<Task> sut = async () => await service.UploadPropertyActivityDocumentAsync(1, uploadRequest);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            sut.Should().ThrowAsync<NotAuthorizedException>();
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
         }
 
         [Fact]
-        public async void UploadDocumentAsync_Project_Sucess()
+        public void UploadDocumentAsync_Disposition_ShouldThrowException_NotAuthorized()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+            var service = this.CreateDocumentFileServiceWithPermissions();
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile(string.Empty) };
+
+            // Assert
+            Func<Task> action = async () => await service.UploadDispositionDocumentAsync(1, uploadRequest);
+
+            // Assert
+            action.Should().ThrowExactlyAsync<NotAuthorizedException>();
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+        }
+
+        [Fact]
+        public async void UploadDocumentAsync_Project_Success()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ProjectEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var projectRepository = this._helper.GetService<Mock<IProjectRepository>>();
 
@@ -323,14 +341,14 @@ namespace Pims.Api.Test.Services
 
             // Assert
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
-            projectRepository.Verify(x => x.AddProjectDocument(It.IsAny<PimsProjectDocument>()));
+            projectRepository.Verify(x => x.AddProjectDocument(It.IsAny<PimsProjectDocument>()), Times.Once);
         }
 
         [Fact]
-        public async void UploadDocumentAsync_Acquisition_Sucess()
+        public async void UploadDocumentAsync_Acquisition_Success()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.AcquisitionFileEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var acquisitionFileDocumentRepository = this._helper.GetService<Mock<IAcquisitionFileDocumentRepository>>();
 
@@ -356,14 +374,14 @@ namespace Pims.Api.Test.Services
 
             // Assert
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
-            acquisitionFileDocumentRepository.Verify(x => x.AddAcquisition(It.IsAny<PimsAcquisitionFileDocument>()));
+            acquisitionFileDocumentRepository.Verify(x => x.AddAcquisition(It.IsAny<PimsAcquisitionFileDocument>()), Times.Once);
         }
 
         [Fact]
-        public async void UploadDocumentAsync_Research_Sucess()
+        public async void UploadDocumentAsync_Research_Success()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ResearchFileEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var researchFileDocumentRepository = this._helper.GetService<Mock<IResearchFileDocumentRepository>>();
 
@@ -389,14 +407,14 @@ namespace Pims.Api.Test.Services
 
             // Assert
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
-            researchFileDocumentRepository.Verify(x => x.AddResearch(It.IsAny<PimsResearchFileDocument>()));
+            researchFileDocumentRepository.Verify(x => x.AddResearch(It.IsAny<PimsResearchFileDocument>()), Times.Once);
         }
 
         [Fact]
-        public async void UploadDocumentAsync_Lease_Sucess()
+        public async void UploadDocumentAsync_Lease_Success()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.LeaseEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
 
@@ -422,14 +440,14 @@ namespace Pims.Api.Test.Services
 
             // Assert
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
-            leaseRepository.Verify(x => x.AddLeaseDocument(It.IsAny<PimsLeaseDocument>()));
+            leaseRepository.Verify(x => x.AddLeaseDocument(It.IsAny<PimsLeaseDocument>()), Times.Once);
         }
 
         [Fact]
         public async void UploadDocumentAsync_PropertyActivity_Success()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ManagementEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var propertyActivityDocumentRepository = this._helper.GetService<Mock<IPropertyActivityDocumentRepository>>();
 
@@ -455,7 +473,46 @@ namespace Pims.Api.Test.Services
 
             // Assert
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
-            propertyActivityDocumentRepository.Verify(x => x.AddPropertyActivityDocument(It.IsAny<PimsPropertyActivityDocument>()));
+            propertyActivityDocumentRepository.Verify(x => x.AddPropertyActivityDocument(It.IsAny<PimsPropertyActivityDocument>()), Times.Once);
+        }
+
+        [Fact]
+        public async void UploadDocumentAsync_Disposition_Success()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.DispositionEdit);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+            var dispositionFileDocumentRepository = this._helper.GetService<Mock<IDispositionFileDocumentRepository>>();
+
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()))
+                .ReturnsAsync(new DocumentUploadResponse()
+                {
+                    Document = new DocumentModel()
+                    {
+                        Id = 1,
+                    },
+                });
+
+            dispositionFileDocumentRepository.Setup(x => x.AddDispositionDocument(It.IsAny<PimsDispositionFileDocument>()))
+                .Returns(new PimsDispositionFileDocument() { DispositionFileId = 100, DocumentId = 1 });
+
+            // Act
+            DocumentUploadRequest uploadRequest = new()
+            {
+                DocumentTypeMayanId = 3,
+                DocumentTypeId = 4,
+                File = this._helper.GetFormFile(string.Empty),
+                DocumentStatusCode = "DocumentStatus",
+            };
+
+            var result = await service.UploadDispositionDocumentAsync(100, uploadRequest);
+
+            // Assert
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
+            dispositionFileDocumentRepository.Verify(x => x.AddDispositionDocument(It.IsAny<PimsDispositionFileDocument>()), Times.Once);
+            result.UploadResponse.Document.Id.Should().Be(1);
+            result.DocumentRelationship.ParentId.Should().Be("100");
+            result.DocumentRelationship.RelationshipType.Should().Be(DocumentRelationType.DispositionFiles);
         }
 
         [Fact]
@@ -475,7 +532,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.DeleteResearchDocumentAsync(doc);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentRepository.Verify(x => x.DeleteResearch(doc), Times.Never);
         }
 
@@ -483,7 +540,7 @@ namespace Pims.Api.Test.Services
         public async void DeleteDocumentResearch_Success_Status_Success()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.ResearchFileEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
 
@@ -511,7 +568,7 @@ namespace Pims.Api.Test.Services
         public async void DeleteDocumentResearch_Success_Status_NotFound()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.ResearchFileEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
 
@@ -539,7 +596,7 @@ namespace Pims.Api.Test.Services
         public async void DeleteDocumentResearch_Success_NoResults_Status_NotFound()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.ResearchFileEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var researchDocumentRepository = this._helper.GetService<Mock<IResearchFileDocumentRepository>>();
 
@@ -567,7 +624,7 @@ namespace Pims.Api.Test.Services
         public async void DeleteDocumentPropertyActivity_Success_NoResults_Status_NotFound()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.ManagementDelete);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.ManagementEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var propertyActivityDocumentRepository = this._helper.GetService<Mock<IPropertyActivityDocumentRepository>>();
 
@@ -595,7 +652,7 @@ namespace Pims.Api.Test.Services
         public async void Delete_PropertyActivity_Success_Status_Success()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.ManagementDelete);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.ManagementEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
 
@@ -636,7 +693,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.DeleteAcquisitionDocumentAsync(doc);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentRepository.Verify(x => x.DeleteAcquisition(doc), Times.Never);
         }
 
@@ -657,7 +714,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.DeletePropertyActivityDocumentAsync(doc);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentRepository.Verify(x => x.DeletePropertyActivityDocument(doc), Times.Never);
         }
 
@@ -665,7 +722,7 @@ namespace Pims.Api.Test.Services
         public async void DeleteDocumentAcquisition_Success_Status_Success()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.AcquisitionFileEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
 
@@ -693,7 +750,7 @@ namespace Pims.Api.Test.Services
         public async void DeleteDocumentAcquisition_Success_Status_NotFound()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.AcquisitionFileEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
 
@@ -733,14 +790,14 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.DeleteProjectDocumentAsync(doc);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
         }
 
         [Fact]
         public async void Delete_ProjectDocument_Success_Status_Success()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.ProjectEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
 
@@ -768,7 +825,7 @@ namespace Pims.Api.Test.Services
         public async void Delete_ProjectDocument_Success_Status_NotFound()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.ProjectEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
 
@@ -796,7 +853,7 @@ namespace Pims.Api.Test.Services
         public async void Delete_ProjectDocument_Success_NoResults_Status_NotFound()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.ProjectEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var projectRepository = this._helper.GetService<Mock<IProjectRepository>>();
 
@@ -836,14 +893,14 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.DeleteLeaseDocumentAsync(doc);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
         }
 
         [Fact]
         public async void Delete_LeaseDocument_Success_Status_Success()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.LeaseEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
 
@@ -871,7 +928,7 @@ namespace Pims.Api.Test.Services
         public async void Delete_LeaseDocument_Success_Status_NotFound()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.LeaseEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
 
@@ -899,7 +956,7 @@ namespace Pims.Api.Test.Services
         public async void Delete_LeaseDocument_Success_NoResults_Status_NotFound()
         {
             // Arrange
-            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.LeaseEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
 
@@ -921,6 +978,110 @@ namespace Pims.Api.Test.Services
 
             // Assert
             leaseRepository.Verify(x => x.DeleteLeaseDocument(It.Is<long>(x => x == 1)), Times.Once);
+        }
+
+        [Fact]
+        public void Delete_DispositionDocument_ShouldThrowException_NotAuthorized()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions();
+
+            PimsDispositionFileDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+            };
+
+            // Act
+            Func<Task> act = async () => await service.DeleteDispositionDocumentAsync(doc);
+
+            // Assert
+            act.Should().ThrowExactlyAsync<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public async void Delete_DispositionDocument_Success_Status_Success()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.DispositionEdit);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+            var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
+
+            documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
+            documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
+                .ReturnsAsync(new ExternalResponse<string>()
+                {
+                    Status = ExternalResponseStatus.Success,
+                });
+
+            PimsDispositionFileDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+            };
+
+            // Act
+            await service.DeleteDispositionDocumentAsync(doc);
+
+            // Assert
+            documentService.Verify(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()), Times.Once);
+        }
+
+        [Fact]
+        public async void Delete_DispositionDocument_Success_Status_NotFound()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.DispositionEdit);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+            var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
+
+            documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
+            documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
+                .ReturnsAsync(new ExternalResponse<string>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.NotFound,
+                });
+
+            PimsDispositionFileDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+            };
+
+            // Act
+            await service.DeleteDispositionDocumentAsync(doc);
+
+            // Assert
+            documentService.Verify(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()), Times.Once);
+        }
+
+        [Fact]
+        public async void Delete_DispositionDocument_Success_NoResults_Status_NotFound()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.DispositionEdit);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+            var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
+            var dispositionRepository = this._helper.GetService<Mock<IDispositionFileDocumentRepository>>();
+
+            documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(100);
+            documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
+                .ReturnsAsync(new ExternalResponse<string>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.NotFound,
+                });
+
+            PimsDispositionFileDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+            };
+
+            // Act
+            await service.DeleteDispositionDocumentAsync(doc);
+
+            // Assert
+            dispositionRepository.Verify(x => x.DeleteDispositionDocument(doc), Times.Once);
         }
     }
 }

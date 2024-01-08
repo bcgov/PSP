@@ -136,6 +136,49 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
+        #region Add Lease
+        [Fact]
+        public void Add_Lease_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseAdd, Permissions.LeaseView);
+            var lease = EntityHelper.CreateLease(1);
+            helper.CreatePimsContext(user, true);
+
+            var mockSequenceRepo = new Mock<ISequenceRepository>();
+            mockSequenceRepo.Setup(x => x.GetNextSequenceValue(It.IsAny<string>())).Returns(50);
+            helper.AddSingleton(mockSequenceRepo.Object);
+
+            var repository = helper.CreateRepository<LeaseRepository>(user);
+
+            // Act
+            var result = repository.Add(lease);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsLease>();
+            result.LeaseId.Should().Be(50);
+            result.LFileNo.Should().Be("L-000-050");
+        }
+
+        [Fact]
+        public void Add_Lease_ThrowIfNull()
+        {
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseAdd, Permissions.LeaseView);
+            helper.CreatePimsContext(user, true);
+
+            var repository = helper.CreateRepository<LeaseRepository>(user);
+
+            // Act
+            Action act = () => repository.Add(null);
+
+            // Assert
+            act.Should().Throw<ArgumentNullException>();
+        }
+        #endregion
+
         #region Update Tenant
         [Fact]
         public void Update_Lease_Tenants_Add()
@@ -152,8 +195,8 @@ namespace Pims.Dal.Test.Repositories
             // Act
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
             var organization = EntityHelper.CreateOrganization(1, "tester org");
-            var addTenantPerson = new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER1" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN1" } };
-            var addTenantOrganization = new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, OrganizationId = organization.OrganizationId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER2" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN2" } };
+            var addTenantPerson = new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER1", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN1", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" } };
+            var addTenantOrganization = new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, OrganizationId = organization.OrganizationId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER2", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN2", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" } };
             lease.PimsLeaseTenants.Add(addTenantPerson);
             lease.PimsLeaseTenants.Add(addTenantOrganization);
             repository.Update(1, lease.PimsLeaseTenants);
@@ -176,8 +219,8 @@ namespace Pims.Dal.Test.Repositories
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
             var updatePerson = EntityHelper.CreatePerson(2, "tester", "two");
             var organization = EntityHelper.CreateOrganization(1, "tester org");
-            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER1" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN1" } });
-            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, OrganizationId = organization.OrganizationId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER2" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN2" } });
+            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER1", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN1", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" } });
+            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, OrganizationId = organization.OrganizationId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER2", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN2", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" } });
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
@@ -204,19 +247,19 @@ namespace Pims.Dal.Test.Repositories
             var lease = EntityHelper.CreateLease(1);
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
             var organization = EntityHelper.CreateOrganization(1, "tester org");
-            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER1" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN1" } });
+            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER1", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN1", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" } });
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseTenantRepository>(user);
+            var repository = helper.CreateRepository<LeaseTenantRepository>(user);
 
             // Act
             var deleteTenant = lease.PimsLeaseTenants.FirstOrDefault();
             lease.PimsLeaseTenants.Remove(deleteTenant);
             context.ChangeTracker.Clear();
-            service.Update(1, lease.PimsLeaseTenants);
-            service.SaveChanges();
-            var updatedLeaseTenants = service.GetByLeaseId(lease.LeaseId);
+            repository.Update(1, lease.PimsLeaseTenants);
+            repository.SaveChanges();
+            var updatedLeaseTenants = repository.GetByLeaseId(lease.LeaseId);
 
             // Assert
             updatedLeaseTenants.Should().BeEmpty();
@@ -232,8 +275,8 @@ namespace Pims.Dal.Test.Repositories
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
             var addPerson = EntityHelper.CreatePerson(2, "tester", "two");
             var organization = EntityHelper.CreateOrganization(1, "tester org");
-            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER1" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN1" } });
-            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, OrganizationId = organization.OrganizationId, LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER2" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN2" } });
+            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId, LessorTypeCode = "PER1", TenantTypeCode = "TEN1", LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER1", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN1", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" } });
+            lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, OrganizationId = organization.OrganizationId, LessorTypeCode = "PER1", TenantTypeCode = "TEN1", LessorTypeCodeNavigation = new PimsLessorType() { Id = "PER2", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" }, TenantTypeCodeNavigation = new PimsTenantType() { Id = "TEN2", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" } });
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
@@ -242,7 +285,7 @@ namespace Pims.Dal.Test.Repositories
             // Act
             var deleteTenant = lease.PimsLeaseTenants.FirstOrDefault();
             lease.PimsLeaseTenants.Remove(deleteTenant);
-            var addTenant = new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = addPerson.PersonId };
+            var addTenant = new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = addPerson.PersonId, LessorTypeCode = "PER1", TenantTypeCode = "TEN1" };
             lease.PimsLeaseTenants.Add(addTenant);
             context.ChangeTracker.Clear();
             repository.Update(1, lease.PimsLeaseTenants);
@@ -250,7 +293,7 @@ namespace Pims.Dal.Test.Repositories
             var updatedLeaseTenants = repository.GetByLeaseId(lease.LeaseId);
 
             // Assert
-            updatedLeaseTenants.Should().HaveCount(1);
+            updatedLeaseTenants.Should().HaveCount(2);
             updatedLeaseTenants.FirstOrDefault().Internal_Id.Should().NotBe(deleteTenant.Internal_Id);
         }
         #endregion
@@ -530,7 +573,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
 
             var lease = EntityHelper.CreateLease(1);
-            lease.PimsPropertyImprovements.Add(new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId, PropertyImprovementId = 1 });
+            lease.PimsPropertyImprovements.Add(new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId, PropertyImprovementId = 1, PropertyImprovementTypeCode = "OTHER" });
             var context = helper.CreatePimsContext(user, true);
             context.AddRange(lease);
             var repository = helper.CreateRepository<PropertyImprovementRepository>(user);
@@ -554,7 +597,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
 
             var lease = EntityHelper.CreateLease(1);
-            lease.PimsPropertyImprovements.Add(new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId, PropertyImprovementId = 1 });
+            lease.PimsPropertyImprovements.Add(new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId, PropertyImprovementId = 1, PropertyImprovementTypeCode = "OTHER" });
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 

@@ -33,11 +33,11 @@ namespace Pims.Api.Models.Concepts.Take
 
         public float? LicenseToConstructArea { get; set; }
 
-        public DateTime? LtcEndDt { get; set; }
+        public DateOnly? LtcEndDt { get; set; }
 
         public float? LandActArea { get; set; }
 
-        public DateTime? LandActEndDt { get; set; }
+        public DateOnly? LandActEndDt { get; set; }
 
         public AcquisitionFileModel PropertyAcquisitionFile { get; set; }
 
@@ -45,7 +45,7 @@ namespace Pims.Api.Models.Concepts.Take
 
         public float? StatutoryRightOfWayArea { get; set; }
 
-        public DateTime? SrwEndDt { get; set; }
+        public DateOnly? SrwEndDt { get; set; }
 
         public float? SurplusArea { get; set; }
 

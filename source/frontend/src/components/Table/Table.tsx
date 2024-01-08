@@ -295,7 +295,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   const manualSortBy = !!externalSort || props.manualSortBy;
   const totalItems = externalTotalItems ?? data?.length;
   const pageCount =
-    externalPageCount ?? internalPageSize > 0 ? Math.ceil(totalItems / internalPageSize) : 0;
+    externalPageCount ?? (internalPageSize > 0 ? Math.ceil(totalItems / internalPageSize) : 0);
   const selectedRowsRef = React.useRef<T[]>(externalSelectedRows ?? []); // used as a global var for providing up to date list of selected rows to code within the table (that is arrow function scoped).
 
   // manually update the contents of the global ref of selected rows if the list of external selected rows changes.

@@ -17,4 +17,5 @@ export const MenuRow = styled(Row)`
 
 export const StyledLink = styled(Link)`
   padding: 0 0.4rem;
+  display: block;
 `;

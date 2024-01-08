@@ -1,3 +1,5 @@
+import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
+
 export interface ILookupCode {
   id: string | number;
   code?: string;
@@ -11,7 +13,7 @@ export interface ILookupCode {
   description?: string;
   hint?: string;
   displayOrder: number;
-  appCreateTimestamp?: string;
+  appCreateTimestamp?: UtcIsoDateTime;
   updatedOn?: string;
   updatedByName?: string;
   rowVersion?: number;

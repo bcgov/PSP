@@ -81,6 +81,7 @@ export const getFilePropertyName = (
 
   if (
     fileProperty.propertyName !== undefined &&
+    fileProperty.propertyName !== null &&
     fileProperty.propertyName !== '' &&
     skipName === false
   ) {

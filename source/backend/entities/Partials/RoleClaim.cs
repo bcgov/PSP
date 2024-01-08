@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// RoleClaim class, provides an entity for the datamodel to manage role organizations.
     /// </summary>
-    public partial class PimsRoleClaim : IDisableBaseAppEntity
+    public partial class PimsRoleClaim : IDisableBaseAppEntity<bool?>
     {
         #region Constructors
         public PimsRoleClaim()

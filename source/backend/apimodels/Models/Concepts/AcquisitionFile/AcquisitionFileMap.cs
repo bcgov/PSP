@@ -1,5 +1,6 @@
 using Mapster;
 using Pims.Api.Models.Base;
+using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 
@@ -22,8 +23,8 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.FundingTypeCode, src => src.AcquisitionFundingTypeCodeNavigation)
                 .Map(dest => dest.FundingOther, src => src.FundingOther)
                 .Map(dest => dest.AssignedDate, src => src.AssignedDate)
-                .Map(dest => dest.DeliveryDate, src => src.DeliveryDate)
-                .Map(dest => dest.CompletionDate, src => src.CompletionDate)
+                .Map(dest => dest.DeliveryDate, src => src.DeliveryDate.ToNullableDateOnly())
+                .Map(dest => dest.CompletionDate, src => src.CompletionDate.ToNullableDateOnly())
                 .Map(dest => dest.TotalAllowableCompensation, src => src.TotalAllowableCompensation)
                 .Map(dest => dest.FileStatusTypeCode, src => src.AcquisitionFileStatusTypeCodeNavigation)
                 .Map(dest => dest.AcquisitionPhysFileStatusTypeCode, src => src.AcqPhysFileStatusTypeCodeNavigation)
@@ -33,7 +34,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.AcquisitionTeam, src => src.PimsAcquisitionFileTeams)
                 .Map(dest => dest.AcquisitionFileOwners, src => src.PimsAcquisitionOwners)
                 .Map(dest => dest.AcquisitionFileInterestHolders, src => src.PimsInterestHolders)
-                .Map(dest => dest.AcquisitionFileChecklist, src => src.PimsAcquisitionChecklistItems)
+                .Map(dest => dest.FileChecklistItems, src => src.PimsAcquisitionChecklistItems)
                 .Map(dest => dest.LegacyStakeholders, src => src.GetLegacyInterestHolders())
                 .Map(dest => dest.CompensationRequisitions, src => src.PimsCompensationRequisitions)
                 .Inherits<IBaseAppEntity, BaseAuditModel>();
@@ -49,8 +50,8 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.AcquisitionFundingTypeCode, src => src.FundingTypeCode.Id)
                 .Map(dest => dest.FundingOther, src => src.FundingOther)
                 .Map(dest => dest.AssignedDate, src => src.AssignedDate)
-                .Map(dest => dest.DeliveryDate, src => src.DeliveryDate)
-                .Map(dest => dest.CompletionDate, src => src.CompletionDate)
+                .Map(dest => dest.DeliveryDate, src => src.DeliveryDate.ToNullableDateTime())
+                .Map(dest => dest.CompletionDate, src => src.CompletionDate.ToNullableDateTime())
                 .Map(dest => dest.TotalAllowableCompensation, src => src.TotalAllowableCompensation)
                 .Map(dest => dest.AcquisitionFileStatusTypeCode, src => src.FileStatusTypeCode.Id)
                 .Map(dest => dest.AcqPhysFileStatusTypeCode, src => src.AcquisitionPhysFileStatusTypeCode.Id)
@@ -60,7 +61,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.PimsAcquisitionFileTeams, src => src.AcquisitionTeam)
                 .Map(dest => dest.PimsAcquisitionOwners, src => src.AcquisitionFileOwners)
                 .Map(dest => dest.PimsInterestHolders, src => src.AcquisitionFileInterestHolders)
-                .Map(dest => dest.PimsAcquisitionChecklistItems, src => src.AcquisitionFileChecklist)
+                .Map(dest => dest.PimsAcquisitionChecklistItems, src => src.FileChecklistItems)
                 .Inherits<BaseAuditModel, IBaseAppEntity>();
         }
     }

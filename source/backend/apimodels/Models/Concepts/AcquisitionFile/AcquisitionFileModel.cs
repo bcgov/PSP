@@ -9,7 +9,7 @@ using Pims.Api.Models.Concepts.Project;
 
 namespace Pims.Api.Models.Concepts.AcquisitionFile
 {
-    public class AcquisitionFileModel : FileModel
+    public class AcquisitionFileModel : FileWithChecklistModel
     {
         #region Properties
 
@@ -31,12 +31,12 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// <summary>
         /// The date for delivery of the property to the project.
         /// </summary>
-        public DateTime? DeliveryDate { get; set; }
+        public DateOnly? DeliveryDate { get; set; }
 
         /// <summary>
         /// The date of acquisition file completion.
         /// </summary>
-        public DateTime? CompletionDate { get; set; }
+        public DateOnly? CompletionDate { get; set; }
 
         /// <summary>
         /// get/set - The acquisition physical file status type.
@@ -112,11 +112,6 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// get/set - A list of acquisition file interest holder relationships.
         /// </summary>
         public IList<InterestHolderModel> AcquisitionFileInterestHolders { get; set; }
-
-        /// <summary>
-        /// get/set - A list of acquisition file checklist items.
-        /// </summary>
-        public IList<AcquisitionFileChecklistItemModel> AcquisitionFileChecklist { get; set; }
 
         /// <summary>
         /// get/set - A list of compensation requisitions related to the acquisition file.

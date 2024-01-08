@@ -1,5 +1,6 @@
 using Mapster;
 using Pims.Api.Models.Base;
+using Pims.Core.Extensions;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.AcquisitionFile
@@ -15,7 +16,6 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.AgreementStatusType, src => src.AgreementStatusTypeCodeNavigation)
                 .Map(dest => dest.AgreementDate, src => src.AgreementDate)
 
-                // .Map(dest => dest.IsDraft, src => src.IsDraft) TODO: Fix this
                 .Map(dest => dest.CompletionDate, src => src.CompletionDate)
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate)
                 .Map(dest => dest.CommencementDate, src => src.CommencementDate)
@@ -38,7 +38,6 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.AgreementStatusTypeCode, src => src.AgreementStatusType.Id)
                 .Map(dest => dest.AgreementDate, src => src.AgreementDate)
 
-                // .Map(dest => dest.IsDraft, src => src.IsDraft) TODO: Fix this
                 .Map(dest => dest.CompletionDate, src => src.CompletionDate)
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate)
                 .Map(dest => dest.CommencementDate, src => src.CommencementDate)

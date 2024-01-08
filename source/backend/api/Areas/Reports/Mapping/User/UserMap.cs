@@ -23,7 +23,7 @@ namespace Pims.Api.Areas.Reports.Mapping.User
                 .Map(dest => dest.UserType, src => src.UserTypeCodeNavigation.Description)
                 .Map(dest => dest.ApprovedBy, src => src.ApprovedById)
                 .Map(dest => dest.IssueOn, src => src.IssueDate)
-                .Inherits<Entity.IDisableBaseAppEntity, BaseAuditModel>();
+                .Inherits<Entity.IDisableBaseAppEntity<bool?>, BaseAuditModel>();
         }
     }
 }

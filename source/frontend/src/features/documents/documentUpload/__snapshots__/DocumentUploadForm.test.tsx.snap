@@ -177,7 +177,7 @@ exports[`DocumentUploadView component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c6 form-section"
+      class="c6 form-section pt-4"
     >
       <h2
         class="c7"
@@ -320,6 +320,11 @@ exports[`DocumentUploadView component renders as expected 1`] = `
           <div
             style="color: red;"
           />
+        </div>
+        <div
+          class="pt-5 pb-0 mb-0"
+        >
+          Do you want to proceed?
         </div>
       </div>
     </div>

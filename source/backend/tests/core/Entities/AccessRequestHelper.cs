@@ -31,7 +31,7 @@ namespace Pims.Core.Test
             user ??= EntityHelper.CreateUser("test");
             role ??= user.PimsUserRoles.FirstOrDefault().Role ?? EntityHelper.CreateRole("test role");
             region ??= user?.PimsRegionUsers?.FirstOrDefault()?.RegionCodeNavigation ?? new Entity.PimsRegion() { Id = 1 };
-            status ??= new Entity.PimsAccessRequestStatusType() { AccessRequestStatusTypeCode = "Received" };
+            status ??= new Entity.PimsAccessRequestStatusType() { AccessRequestStatusTypeCode = "Received", DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" };
             var accessRequest = new Entity.PimsAccessRequest()
             {
                 AccessRequestId = id,

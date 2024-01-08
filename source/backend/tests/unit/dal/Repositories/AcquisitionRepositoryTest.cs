@@ -97,7 +97,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { AlternateProject = new PimsProject() { Code = "1", Description = "test" } } };
+            acqFile.PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { AlternateProject = new PimsProject() { Code = "1", Description = "test", ProjectStatusTypeCode = "draft" } } };
             var filter = new AcquisitionFilter() { ProjectNameOrNumber = "test" };
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
@@ -393,6 +393,31 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             result.Should().HaveCount(1);
+        }
+
+        #endregion
+
+        #region GetLastUpdateBy
+        [Fact]
+        public void GetLastUpdateBy_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.AppLastUpdateUserid = "test";
+            acqFile.AppLastUpdateTimestamp = DateTime.Now;
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetLastUpdateBy(1);
+
+            // Assert
+            result.AppLastUpdateUserid.Should().Be("service");
+            result.AppLastUpdateTimestamp.Should().BeSameDateAs(acqFile.AppLastUpdateTimestamp);
         }
 
         #endregion

@@ -28,40 +28,36 @@ namespace Pims.Core.Test
                 LFileNo = lFileNo,
                 ConcurrencyControlNumber = 1,
             };
-            var person = new Entity.PimsPerson() { FirstName = tenantFirstName, Surname = tenantLastName };
-            person.PimsPersonAddresses.Add(new PimsPersonAddress() { Person = person, Address = address });
-            var organization = new Entity.PimsOrganization();
-            organization.PimsOrganizationAddresses.Add(new PimsOrganizationAddress() { Organization = organization, Address = address });
+            var person = new Entity.PimsPerson() { FirstName = tenantFirstName ?? "first", Surname = tenantLastName ?? "last" };
+            person.PimsPersonAddresses.Add(new PimsPersonAddress() { Person = person, Address = address, AddressUsageTypeCode = AddressUsageTypes.Mailing });
+            var organization = new Entity.PimsOrganization() { OrganizationName = "Lease organization" };
+            organization.PimsOrganizationAddresses.Add(new PimsOrganizationAddress() { Organization = organization, Address = address, AddressUsageTypeCode = AddressUsageTypes.Mailing });
             if (addProperty)
             {
                 lease.PimsPropertyLeases.Add(new PimsPropertyLease()
                 {
-                    Property = new Entity.PimsProperty()
-                    {
-                        Pid = pid,
-                        Location = GeometryHelper.CreatePoint(0, 0, SpatialReference.BCALBERS),
-                    },
+                    Property = EntityHelper.CreateProperty(pid: pid),
                     Lease = lease,
                 });
             }
             lease.MotiContact = $"{motiFirstName} {motiLastName}";
-            lease.LeaseProgramTypeCodeNavigation = pimsLeaseProgramType ?? new Entity.PimsLeaseProgramType() { Id = "testProgramType" };
+            lease.LeaseProgramTypeCodeNavigation = pimsLeaseProgramType ?? new Entity.PimsLeaseProgramType() { Id = "testProgramType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
             lease.LeaseProgramTypeCode = "testProgramType";
-            lease.LeasePurposeTypeCodeNavigation = pimsLeasePurposeType ?? new Entity.PimsLeasePurposeType() { Id = "testPurposeType" };
+            lease.LeasePurposeTypeCodeNavigation = pimsLeasePurposeType ?? new Entity.PimsLeasePurposeType() { Id = "testPurposeType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
             lease.LeasePurposeTypeCode = "testPurposeType";
-            lease.LeaseStatusTypeCodeNavigation = pimsLeaseStatusType ?? new Entity.PimsLeaseStatusType() { Id = "testStatusType" };
-            lease.LeasePayRvblTypeCodeNavigation = pimsLeasePayRvblType ?? new Entity.PimsLeasePayRvblType() { Id = "testRvblType" };
-            lease.LeaseCategoryTypeCodeNavigation = pimsLeaseCategoryType ?? new Entity.PimsLeaseCategoryType() { Id = "testCategoryType" };
-            lease.LeaseInitiatorTypeCodeNavigation = pimsLeaseInitiatorType ?? new Entity.PimsLeaseInitiatorType() { Id = "testInitiatorType" };
-            lease.LeaseResponsibilityTypeCodeNavigation = pimsLeaseResponsibilityType ?? new Entity.PimsLeaseResponsibilityType() { Id = "testResponsibilityType" };
-            lease.LeaseLicenseTypeCodeNavigation = pimsLeaseLicenseType ?? new Entity.PimsLeaseLicenseType() { Id = "testType" };
+            lease.LeaseStatusTypeCodeNavigation = pimsLeaseStatusType ?? new Entity.PimsLeaseStatusType() { Id = "testStatusType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
+            lease.LeasePayRvblTypeCodeNavigation = pimsLeasePayRvblType ?? new Entity.PimsLeasePayRvblType() { Id = "testRvblType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
+            lease.LeaseCategoryTypeCodeNavigation = pimsLeaseCategoryType ?? new Entity.PimsLeaseCategoryType() { Id = "testCategoryType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
+            lease.LeaseInitiatorTypeCodeNavigation = pimsLeaseInitiatorType ?? new Entity.PimsLeaseInitiatorType() { Id = "testInitiatorType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
+            lease.LeaseResponsibilityTypeCodeNavigation = pimsLeaseResponsibilityType ?? new Entity.PimsLeaseResponsibilityType() { Id = "testResponsibilityType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
+            lease.LeaseLicenseTypeCodeNavigation = pimsLeaseLicenseType ?? new Entity.PimsLeaseLicenseType() { Id = "testType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
             if (region != null)
             {
                 lease.RegionCodeNavigation = region;
             }
             if (addTenant)
             {
-                lease.PimsLeaseTenants.Add(new PimsLeaseTenant(lease, person, organization, new PimsLessorType("tst")));
+                lease.PimsLeaseTenants.Add(new PimsLeaseTenant(lease, person, organization, new PimsLessorType("tst") { DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" }, new PimsTenantType("TENANT") { DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" }));
             }
             return lease;
         }

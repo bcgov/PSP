@@ -98,7 +98,7 @@ describe('UpdateProperties component', () => {
                 description: 'Vancouver Island District',
                 isDisabled: false,
               },
-              dataSourceEffectiveDate: '2022-10-05T00:00:00',
+              dataSourceEffectiveDateOnly: '2022-10-05T00:00:00',
               isSensitive: false,
               isRwyBeltDomPatent: false,
               address: {

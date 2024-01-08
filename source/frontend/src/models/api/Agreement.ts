@@ -1,6 +1,8 @@
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import { DateOnly } from './DateOnly';
 import Api_TypeCode from './TypeCode';
+import { UtcIsoDateTime } from './UtcIsoDateTime';
 
 export interface Api_Agreement extends Api_ConcurrentVersion, Api_AuditFields {
   agreementId: number;
@@ -8,18 +10,18 @@ export interface Api_Agreement extends Api_ConcurrentVersion, Api_AuditFields {
   agreementType: Api_TypeCode<string>;
   agreementStatusType: Api_TypeCode<string>;
   agreementDate: string | null;
-  completionDate: string | null;
-  terminationDate: string | null;
-  commencementDate: string | null;
-  possessionDate: string | null;
+  completionDate: DateOnly | null;
+  terminationDate: DateOnly | null;
+  commencementDate: DateOnly | null;
+  possessionDate: DateOnly | null;
   depositAmount: number | null;
   noLaterThanDays: number | null;
   purchasePrice: number | null;
   legalSurveyPlanNum: string | null;
-  offerDate: string | null;
-  expiryDateTime: string | null;
-  signedDate: string | null;
-  inspectionDate: string | null;
+  offerDate: DateOnly | null;
+  expiryDateTime: UtcIsoDateTime | null;
+  signedDate: DateOnly | null;
+  inspectionDate: DateOnly | null;
   cancellationNote: string | null;
 }
 

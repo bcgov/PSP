@@ -9,6 +9,7 @@ import { ApiGen_Mayan_DocumentMetadata } from '@/models/api/generated/ApiGen_May
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
 import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
+import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 
 export interface ComposedDocument {
   mayanMetadata?: ApiGen_Mayan_DocumentMetadata[];
@@ -24,7 +25,7 @@ export class DocumentRow {
   statusTypeCode: ApiGen_Base_CodeType<string> | undefined;
   fileName: string | undefined;
   isFileAvailable: boolean | undefined;
-  appCreateTimestamp?: string;
+  appCreateTimestamp?: UtcIsoDateTime;
   appCreateUserid?: string;
   relationshipId: number | undefined;
   relationshipType: ApiGen_CodeTypes_DocumentRelationType | null = null;

@@ -97,7 +97,7 @@ describe('ManagementActivitiesListContainer component', () => {
     });
 
     viewProps.onDelete(1);
-    const continueButton = await screen.findByText('Continue');
+    const continueButton = await screen.findByText('Yes');
     act(() => userEvent.click(continueButton));
 
     expect(mockDeleteApi.execute).toHaveBeenCalledTimes(1);

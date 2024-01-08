@@ -30,7 +30,11 @@ describe('TermForm component', () => {
     // render component under test
     const component = await renderAsync(
       <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-        <TermForm onSave={onSave} formikRef={{ current: { submitForm } } as any} />
+        <TermForm
+          onSave={onSave}
+          formikRef={{ current: { submitForm } } as any}
+          lease={{} as any}
+        />
       </Formik>,
       {
         ...renderOptions,

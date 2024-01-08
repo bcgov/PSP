@@ -33,8 +33,8 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.Project = new PimsProject() { Id = 1 };
-            var agreement = new PimsAgreement() { AcquisitionFile = acqFile, AgreementTypeCodeNavigation = new PimsAgreementType() { AgreementTypeCode = "test" } };
+            acqFile.Project = new PimsProject() { Id = 1, Description = "project", ProjectStatusTypeCode ="draft" };
+            var agreement = new PimsAgreement() { AcquisitionFile = acqFile, AgreementTypeCodeNavigation = new PimsAgreementType() { AgreementTypeCode = "test", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "test" }, AgreementStatusTypeCode = "draft" };
             var filter = new AcquisitionReportFilterModel() { Projects = new List<long> { 1 } };
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(agreement);
@@ -56,7 +56,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
             var acqFile = EntityHelper.CreateAcquisitionFile();
             acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { PersonId = 1 } };
-            var agreement = new PimsAgreement() { AcquisitionFile = acqFile, AgreementTypeCodeNavigation = new PimsAgreementType() { AgreementTypeCode = "test" } };
+            var agreement = new PimsAgreement() { AcquisitionFile = acqFile, AgreementTypeCodeNavigation = new PimsAgreementType() { AgreementTypeCode = "test", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "test" }, AgreementStatusTypeCode = "draft" };
             var filter = new AcquisitionReportFilterModel() { AcquisitionTeamPersons = new List<long> { 1 } };
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(agreement);
@@ -78,7 +78,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
             var acqFile = EntityHelper.CreateAcquisitionFile();
             acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { OrganizationId = 100 } };
-            var agreement = new PimsAgreement() { AcquisitionFile = acqFile, AgreementTypeCodeNavigation = new PimsAgreementType() { AgreementTypeCode = "test" } };
+            var agreement = new PimsAgreement() { AcquisitionFile = acqFile, AgreementTypeCodeNavigation = new PimsAgreementType() { AgreementTypeCode = "test", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "test" }, AgreementStatusTypeCode = "draft" };
             var filter = new AcquisitionReportFilterModel() { AcquisitionTeamOrganizations = new List<long> { 100 } };
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(agreement);
@@ -100,7 +100,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
             var acqFile = EntityHelper.CreateAcquisitionFile();
             acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { PersonId = 1 } };
-            var agreement = new PimsAgreement() { AcquisitionFile = acqFile, AgreementTypeCodeNavigation = new PimsAgreementType() { AgreementTypeCode = "test" } };
+            var agreement = new PimsAgreement() { AcquisitionFile = acqFile, AgreementTypeCodeNavigation = new PimsAgreementType() { AgreementTypeCode = "test", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "test" }, AgreementStatusTypeCode = "draft" };
             var filter = new AcquisitionReportFilterModel() { AcquisitionTeamPersons = new List<long> { 1 }, Projects = new List<long> { 1 } };
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(agreement);
@@ -121,7 +121,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            var agreement = new PimsAgreement() { AcquisitionFile = acqFile, AgreementTypeCodeNavigation = new PimsAgreementType() { AgreementTypeCode = "test" } };
+            var agreement = new PimsAgreement() { AcquisitionFile = acqFile, AgreementTypeCodeNavigation = new PimsAgreementType() { AgreementTypeCode = "test", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "test" }, AgreementStatusTypeCode = "draft" };
             var filter = new AcquisitionReportFilterModel();
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(agreement);

@@ -93,8 +93,8 @@ namespace Pims.Api.Controllers
                     var mappedResearchFileDocuments = _mapper.Map<List<DocumentRelationshipModel>>(researchFileDocuments);
                     return new JsonResult(mappedResearchFileDocuments);
                 case DocumentRelationType.AcquisitionFiles:
-                    var acquistionFileDocuments = _documentFileService.GetFileDocuments<PimsAcquisitionFileDocument>(FileType.Acquisition, long.Parse(parentId));
-                    var mappedAcquisitionFileDocuments = _mapper.Map<List<DocumentRelationshipModel>>(acquistionFileDocuments);
+                    var acquisitionFileDocuments = _documentFileService.GetFileDocuments<PimsAcquisitionFileDocument>(FileType.Acquisition, long.Parse(parentId));
+                    var mappedAcquisitionFileDocuments = _mapper.Map<List<DocumentRelationshipModel>>(acquisitionFileDocuments);
                     return new JsonResult(mappedAcquisitionFileDocuments);
                 case DocumentRelationType.Templates:
                     var templateDocuments = _formDocumentService.GetFormDocumentTypes(parentId);
@@ -112,6 +112,10 @@ namespace Pims.Api.Controllers
                     var managementDocuments = _documentFileService.GetFileDocuments<PimsPropertyActivityDocument>(FileType.Management, long.Parse(parentId));
                     var mappedPropertyActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(managementDocuments);
                     return new JsonResult(mappedPropertyActivityDocuments);
+                case DocumentRelationType.DispositionFiles:
+                    var dispositionFileDocuments = _documentFileService.GetFileDocuments<PimsDispositionFileDocument>(FileType.Disposition, long.Parse(parentId));
+                    var mappedDispositionFileDocuments = _mapper.Map<List<DocumentRelationshipModel>>(dispositionFileDocuments);
+                    return new JsonResult(mappedDispositionFileDocuments);
                 default:
                     throw new BadRequestException("Relationship type not valid for retrieve.");
             }
@@ -142,6 +146,7 @@ namespace Pims.Api.Controllers
                 DocumentRelationType.Projects => await _documentFileService.UploadProjectDocumentAsync(long.Parse(parentId), uploadRequest),
                 DocumentRelationType.Leases => await _documentFileService.UploadLeaseDocumentAsync(long.Parse(parentId), uploadRequest),
                 DocumentRelationType.ManagementFiles => await _documentFileService.UploadPropertyActivityDocumentAsync(long.Parse(parentId), uploadRequest),
+                DocumentRelationType.DispositionFiles => await _documentFileService.UploadDispositionDocumentAsync(long.Parse(parentId), uploadRequest),
                 _ => throw new BadRequestException("Relationship type not valid for upload."),
             };
 
@@ -187,6 +192,10 @@ namespace Pims.Api.Controllers
                     var propertyActivityRelationship = _mapper.Map<PimsPropertyActivityDocument>(model);
                     var propertyActivityResult = await _documentFileService.DeletePropertyActivityDocumentAsync(propertyActivityRelationship);
                     return new JsonResult(propertyActivityResult);
+                case DocumentRelationType.DispositionFiles:
+                    var dispositionRelationship = _mapper.Map<PimsDispositionFileDocument>(model);
+                    var dispositionResult = await _documentFileService.DeleteDispositionDocumentAsync(dispositionRelationship);
+                    return new JsonResult(dispositionResult);
                 default:
                     throw new BadRequestException("Relationship type not valid for delete.");
             }

@@ -42,6 +42,7 @@ namespace Pims.Api.Services
         private readonly IExpropriationPaymentRepository _expropriationPaymentRepository;
         private readonly ITakeRepository _takeRepository;
         private readonly IAcquisitionStatusSolver _statusSolver;
+        private readonly IPropertyService _propertyService;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -60,7 +61,8 @@ namespace Pims.Api.Services
             ICompReqFinancialService compReqFinancialService,
             IExpropriationPaymentRepository expropriationPaymentRepository,
             ITakeRepository takeRepository,
-            IAcquisitionStatusSolver statusSolver)
+            IAcquisitionStatusSolver statusSolver,
+            IPropertyService propertyService)
         {
             _user = user;
             _logger = logger;
@@ -79,6 +81,7 @@ namespace Pims.Api.Services
             _expropriationPaymentRepository = expropriationPaymentRepository;
             _takeRepository = takeRepository;
             _statusSolver = statusSolver;
+            _propertyService = propertyService;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -326,7 +329,7 @@ namespace Pims.Api.Services
                     throw new BusinessRuleViolationException("You must remove all takes and interest holders from an acquisition file property before removing that property from an acquisition file");
                 }
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
-                if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
+                if (deletedProperty.Property.IsPropertyOfInterest == true)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
@@ -573,37 +576,6 @@ namespace Pims.Api.Services
             }
         }
 
-        private void UpdateLocation(PimsProperty acquisitionProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes)
-        {
-            if (propertyToUpdate.Location == null)
-            {
-                if (overrideCodes.Contains(UserOverrideCode.AddLocationToProperty))
-                {
-                    // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-                    var geom = acquisitionProperty.Location;
-                    if (geom.SRID != SpatialReference.BCALBERS)
-                    {
-                        var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
-                        propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
-                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
-                    }
-
-                    // apply similar logic to the boundary
-                    var boundaryGeom = acquisitionProperty.Boundary;
-                    if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
-                    {
-                        var newCoords = boundaryGeom.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
-                        var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
-                        acquisitionProperty.Boundary = gf.CreatePolygon(newCoords.ToArray());
-                    }
-                }
-                else
-                {
-                    throw new UserOverrideException(UserOverrideCode.AddLocationToProperty, "The selected property already exists in the system's inventory. However, the record is missing spatial details.\n\n To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.");
-                }
-            }
-        }
-
         private void MatchProperties(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrideCodes)
         {
             foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
@@ -615,13 +587,13 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid);
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;
-                        UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
+                        _propertyService.UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
                         acquisitionProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
                     {
                         _logger.LogDebug("Adding new property with pid:{pid}", pid);
-                        PopulateNewProperty(acquisitionProperty.Property);
+                        acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
                     }
                 }
                 else if (acquisitionProperty.Property.Pin.HasValue)
@@ -631,61 +603,20 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin);
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;
-                        UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
+                        _propertyService.UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
                         acquisitionProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
                     {
                         _logger.LogDebug("Adding new property with pin:{pin}", pin);
-                        PopulateNewProperty(acquisitionProperty.Property);
+                        acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
                     }
                 }
                 else
                 {
                     _logger.LogDebug("Adding new property without a pid");
-                    PopulateNewProperty(acquisitionProperty.Property);
+                    acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
                 }
-            }
-        }
-
-        private void PopulateNewProperty(PimsProperty property)
-        {
-            property.PropertyClassificationTypeCode = "UNKNOWN";
-            property.PropertyDataSourceEffectiveDate = System.DateTime.Now;
-            property.PropertyDataSourceTypeCode = "PMBC";
-
-            property.PropertyTypeCode = "UNKNOWN";
-
-            property.PropertyStatusTypeCode = "UNKNOWN";
-            property.SurplusDeclarationTypeCode = "UNKNOWN";
-
-            property.IsPropertyOfInterest = true;
-
-            if (property.Address != null)
-            {
-                var provinceId = _lookupRepository.GetAllProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
-                if (provinceId.HasValue)
-                {
-                    property.Address.ProvinceStateId = provinceId.Value;
-                }
-                property.Address.CountryId = _lookupRepository.GetAllCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
-            }
-
-            // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-            var geom = property.Location;
-            if (geom.SRID != SpatialReference.BCALBERS)
-            {
-                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
-            }
-
-            // apply similar logic to the boundary
-            var boundaryGeom = property.Boundary;
-            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
-            {
-                var newCoords = property.Boundary.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
-                var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
-                property.Boundary = gf.CreatePolygon(newCoords.ToArray());
             }
         }
 
@@ -758,9 +689,9 @@ namespace Pims.Api.Services
         {
             // Get the current properties in the research file
             var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
-            var propertiesOfInterest = currentProperties.Where(p => p.Property.IsPropertyOfInterest.HasValue && p.Property.IsPropertyOfInterest.Value);
-            var propertiesAccounted = currentProperties.Where(x => x.Property.IsPropertyOfInterest.HasValue && !x.Property.IsPropertyOfInterest.Value
-                                            && x.Property.IsOwned.HasValue && !x.Property.IsOwned.Value);
+            var propertiesOfInterest = currentProperties.Where(p => p.Property.IsPropertyOfInterest);
+            var propertiesAccounted = currentProperties.Where(x => x.Property.IsPropertyOfInterest
+                                            && x.Property.IsOwned);
 
             // PSP-6111 Business rule: Transfer properties of interest to core inventory when acquisition file is completed
             foreach (var acquisitionProperty in propertiesOfInterest)
@@ -769,19 +700,19 @@ namespace Pims.Api.Services
                 var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionProperty.Internal_Id);
 
                 var activeTakes = takes.Where(t =>
-                    !(t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && t.LandActEndDt.HasValue && t.LandActEndDt.Value.Date < DateTime.UtcNow.Date) &&
-                    !(t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value && t.LtcEndDt.HasValue && t.LtcEndDt.Value.Date < DateTime.UtcNow.Date) &&
-                    !(t.IsNewInterestInSrw.HasValue && t.IsNewInterestInSrw.Value && t.SrwEndDt.HasValue && t.SrwEndDt.Value.Date < DateTime.UtcNow.Date));
+                    !(t.IsNewLandAct && t.LandActEndDt.HasValue && t.LandActEndDt.Value < DateOnly.FromDateTime(DateTime.Now)) &&
+                    !(t.IsNewLicenseToConstruct && t.LtcEndDt.HasValue && t.LtcEndDt.Value < DateOnly.FromDateTime(DateTime.Now)) &&
+                    !(t.IsNewInterestInSrw && t.SrwEndDt.HasValue && t.SrwEndDt.Value < DateOnly.FromDateTime(DateTime.Now)));
 
                 // see psp-6589 for business rules.
-                var isOwned = !(activeTakes.All(t => (t.IsNewLandAct.HasValue && t.IsNewLandAct.Value && COREINVENTORYINTERESTCODES.Contains(t.LandActTypeCode))
-                    || (t.IsNewInterestInSrw.HasValue && t.IsNewInterestInSrw.Value)
-                    || (t.IsNewLicenseToConstruct.HasValue && t.IsNewLicenseToConstruct.Value)) && activeTakes.Any());
+                var isOwned = !(activeTakes.All(t => (t.IsNewLandAct && COREINVENTORYINTERESTCODES.Contains(t.LandActTypeCode))
+                    || t.IsNewInterestInSrw
+                    || t.IsNewLicenseToConstruct) && activeTakes.Any());
                 var isPropertyOfInterest = false;
 
                 // Override for dedication psp-7048.
                 var doNotAcquire = takes.All(t =>
-                    t.IsNewHighwayDedication.HasValue && t.IsNewHighwayDedication.Value && t.IsAcquiredForInventory.HasValue && !t.IsAcquiredForInventory.Value);
+                    t.IsNewHighwayDedication && !t.IsAcquiredForInventory);
 
                 if (doNotAcquire)
                 {
@@ -806,7 +737,7 @@ namespace Pims.Api.Services
                 }
 
                 var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acqFileProperty.Internal_Id);
-                var isOwned = takes.Any(x => x.IsThereSurplus.HasValue && x.IsThereSurplus.Value);
+                var isOwned = takes.Any(x => x.IsThereSurplus);
 
                 _propertyRepository.TransferFileProperty(property, isOwned);
             }
@@ -861,14 +792,14 @@ namespace Pims.Api.Services
         private void AppendToAcquisitionChecklist(PimsAcquisitionFile acquisitionFile, ref List<PimsAcquisitionChecklistItem> pimsAcquisitionChecklistItems)
         {
             var doNotAddToStatuses = new List<string>() { "COMPLT", "CANCEL", "ARCHIV" };
-            if (doNotAddToStatuses.Contains(acquisitionFile.AcqPhysFileStatusTypeCode))
+            if (doNotAddToStatuses.Contains(acquisitionFile.AcquisitionFileStatusTypeCode))
             {
                 return;
             }
             var checklistStatusTypes = _lookupRepository.GetAllAcquisitionChecklistItemStatusTypes();
             foreach (var itemType in _checklistRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType()))
             {
-                if (!pimsAcquisitionChecklistItems.Any(cli => cli.AcqChklstItemTypeCode == itemType.AcqChklstItemTypeCode) && acquisitionFile.AppCreateTimestamp >= itemType.EffectiveDate)
+                if (!pimsAcquisitionChecklistItems.Any(cli => cli.AcqChklstItemTypeCode == itemType.AcqChklstItemTypeCode) && DateOnly.FromDateTime(acquisitionFile.AppCreateTimestamp) >= itemType.EffectiveDate)
                 {
                     var checklistItem = new PimsAcquisitionChecklistItem
                     {

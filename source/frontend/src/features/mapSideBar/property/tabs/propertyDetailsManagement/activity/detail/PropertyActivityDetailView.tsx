@@ -87,10 +87,10 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                     {props.activity.activityStatusTypeCode?.description}
                   </SectionField>
                   <SectionField label="Requested added date" contentWidth="7">
-                    {prettyFormatDate(props.activity.requestAddedDateTime)}
+                    {prettyFormatDate(props.activity.requestAddedDateOnly)}
                   </SectionField>
                   <SectionField label="Completion date" contentWidth="7">
-                    {prettyFormatDate(props.activity.completionDateTime)}
+                    {prettyFormatDate(props.activity.completionDateOnly)}
                   </SectionField>
                   <SectionField label="Description" contentWidth="7">
                     {props.activity.description}

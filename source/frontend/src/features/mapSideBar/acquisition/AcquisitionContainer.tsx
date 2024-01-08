@@ -17,6 +17,7 @@ import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs'
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { Api_File } from '@/models/api/File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { stripTrailingSlash } from '@/utils';
@@ -35,7 +36,6 @@ export interface IAcquisitionContainerProps {
 export interface AcquisitionContainerState {
   isEditing: boolean;
   selectedMenuIndex: number;
-  showConfirmModal: boolean;
   defaultFileTab: FileTabType;
   defaultPropertyTab: InventoryTabNames;
 }
@@ -43,7 +43,6 @@ export interface AcquisitionContainerState {
 const initialState: AcquisitionContainerState = {
   isEditing: false,
   selectedMenuIndex: 0,
-  showConfirmModal: false,
   defaultFileTab: FileTabType.FILE_DETAILS,
   defaultPropertyTab: InventoryTabNames.property,
 };
@@ -81,6 +80,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: loadingGetLastUpdatedBy },
   } = useAcquisitionProvider();
 
+  const { setModalContent, setDisplayModal } = useModalContext();
   const mapMachine = useMapStateMachine();
 
   const formikRef = useRef<FormikProps<any>>(null);
@@ -137,7 +137,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
     if (retrieved) {
       retrieved.fileProperties = acquisitionProperties;
-      retrieved.acquisitionFileChecklist = acquisitionChecklist;
+      retrieved.fileChecklistItems = acquisitionChecklist ?? [];
       setFile({ ...retrieved, fileType: FileTypes.Acquisition });
       setStaleFile(false);
     }
@@ -198,19 +198,11 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   const onMenuChange = (selectedIndex: number) => {
     if (isEditing) {
       if (formikRef?.current?.dirty) {
-        if (
-          window.confirm('You have made changes on this form. Do you wish to leave without saving?')
-        ) {
-          handleCancelClick();
-          navigateToMenuRoute(selectedIndex);
-        }
-      } else {
-        handleCancelClick();
-        navigateToMenuRoute(selectedIndex);
+        handleCancelClick(() => navigateToMenuRoute(selectedIndex));
+        return;
       }
-    } else {
-      navigateToMenuRoute(selectedIndex);
     }
+    navigateToMenuRoute(selectedIndex);
   };
 
   const onShowPropertySelector = () => {
@@ -231,10 +223,19 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     }
   };
 
-  const handleCancelClick = () => {
+  const handleCancelClick = (onCancelConfirm?: () => void) => {
     if (formikRef !== undefined) {
       if (formikRef.current?.dirty) {
-        setContainerState({ showConfirmModal: true });
+        setModalContent({
+          ...getCancelModalProps(),
+          handleOk: () => {
+            handleCancelConfirm();
+            setDisplayModal(false);
+            onCancelConfirm && onCancelConfirm();
+          },
+          handleCancel: () => setDisplayModal(false),
+        });
+        setDisplayModal(true);
       } else {
         handleCancelConfirm();
       }
@@ -247,7 +248,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
     }
-    setContainerState({ showConfirmModal: false });
     setIsEditing(false);
   };
 
@@ -266,7 +266,10 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     // The backend does not update the product or project so its safe to send nulls even if there might be data for those fields.
     return withUserOverride((userOverrideCodes: UserOverrideCode[]) => {
       return updateAcquisitionProperties
-        .execute({ ...file, productId: null, projectId: null }, userOverrideCodes)
+        .execute(
+          { ...file, productId: null, projectId: null, fileChecklistItems: [] },
+          userOverrideCodes,
+        )
         .then(response => {
           onSuccess();
           return response;

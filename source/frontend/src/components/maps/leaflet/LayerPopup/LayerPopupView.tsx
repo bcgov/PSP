@@ -83,6 +83,13 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
     history.push('/mapview/sidebar/lease/new');
   };
 
+  const handleCreateDispositionFile = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.stopPropagation();
+    mapMachine.prepareForCreation();
+    closeFlyout();
+    history.push('/mapview/sidebar/disposition/new');
+  };
+
   return (
     <StyledContainer>
       <StyledRow>
@@ -108,6 +115,7 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
             onCreateResearchFile={handleCreateResearchFile}
             onCreateAcquisitionFile={handleCreateAcquisitionFile}
             onCreateLeaseLicense={handleCreateLeaseLicence}
+            onCreateDispositionFile={handleCreateDispositionFile}
           />
         </StyledFlyoutContainer>
       )}

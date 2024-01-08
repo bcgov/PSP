@@ -48,51 +48,48 @@ const useLocationFeatureLoader = () => {
         districtFeature: null,
         municipalityFeature: null,
       };
-      try {
-        // call these APIs in parallel - notice there is no "await"
-        const pmbcTask = pmbcServiceFindOne(latLng);
-        const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'GEOMETRY');
-        const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'GEOMETRY');
 
-        const [parcelFeature, regionFeature, districtFeature] = await Promise.all([
-          pmbcTask,
-          regionTask,
-          districtTask,
-        ]);
+      // call these APIs in parallel - notice there is no "await"
+      const pmbcTask = pmbcServiceFindOne(latLng);
+      const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'GEOMETRY');
+      const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'GEOMETRY');
 
-        let pimsLocationProperties:
-          | FeatureCollection<Geometry, PIMS_Property_Location_View>
-          | undefined = undefined;
+      const [parcelFeature, regionFeature, districtFeature] = await Promise.all([
+        pmbcTask,
+        regionTask,
+        districtTask,
+      ]);
 
-        // Load PimsProperties
-        if (latLng) {
-          const latLngFeature = await findOneByBoundary(latLng, 'GEOMETRY', 4326);
-          if (latLngFeature !== undefined) {
-            pimsLocationProperties = { features: [latLngFeature], type: 'FeatureCollection' };
-          }
-        } else if (parcelFeature !== undefined) {
-          pimsLocationProperties = await loadProperties({
-            PID: parcelFeature.properties?.PID || '',
-            PIN: parcelFeature.properties?.PIN?.toString() || '',
-          });
+      let pimsLocationProperties:
+        | FeatureCollection<Geometry, PIMS_Property_Location_View>
+        | undefined = undefined;
+
+      // Load PimsProperties
+      if (latLng) {
+        const latLngFeature = await findOneByBoundary(latLng, 'GEOMETRY', 4326);
+        if (latLngFeature !== undefined) {
+          pimsLocationProperties = { features: [latLngFeature], type: 'FeatureCollection' };
         }
-
-        const municipalityFeature = await adminLegalBoundaryLayerServiceFindOneMunicipality(latLng);
-
-        if (
-          pimsLocationProperties?.features !== undefined &&
-          pimsLocationProperties.features.length > 0
-        ) {
-          result.pimsFeature = pimsLocationProperties.features[0] ?? null;
-        }
-
-        result.parcelFeature = parcelFeature ?? null;
-        result.regionFeature = regionFeature ?? null;
-        result.districtFeature = districtFeature ?? null;
-        result.municipalityFeature = municipalityFeature ?? null;
-      } finally {
-        // TODO: Remove once the try above is deemed no longer necessary.
+      } else if (parcelFeature !== undefined) {
+        pimsLocationProperties = await loadProperties({
+          PID: parcelFeature.properties?.PID || '',
+          PIN: parcelFeature.properties?.PIN?.toString() || '',
+        });
       }
+
+      const municipalityFeature = await adminLegalBoundaryLayerServiceFindOneMunicipality(latLng);
+
+      if (
+        pimsLocationProperties?.features !== undefined &&
+        pimsLocationProperties.features.length > 0
+      ) {
+        result.pimsFeature = pimsLocationProperties.features[0] ?? null;
+      }
+
+      result.parcelFeature = parcelFeature ?? null;
+      result.regionFeature = regionFeature ?? null;
+      result.districtFeature = districtFeature ?? null;
+      result.municipalityFeature = municipalityFeature ?? null;
 
       return result;
     },

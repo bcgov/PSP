@@ -13,7 +13,20 @@ namespace Pims.Api.Models.Base
                 .Map("IsDisabled", "IsDisabled")
                 .Map("DisplayOrder", "DisplayOrder");
 
-            config.NewConfig<Entity.ICodeEntity<short>, CodeTypeModel<short>>()
+
+            config.ForType(typeof(Entity.ITypeEntity<string, bool>), typeof(CodeTypeModel<string>))
+                .Map("Id", "Id")
+                .Map("Description", "Description")
+                .Map("IsDisabled", "IsDisabled")
+                .Map("DisplayOrder", "DisplayOrder");
+
+            config.ForType(typeof(Entity.ITypeEntity<string, bool?>), typeof(CodeTypeModel<string>))
+                .Map("Id", "Id")
+                .Map("Description", "Description")
+                .Map("IsDisabled", "IsDisabled")
+                .Map("DisplayOrder", "DisplayOrder");
+
+            config.NewConfig<Entity.ICodeEntity<short, bool>, CodeTypeModel<short>>()
                 .Map(dest => dest.Id, src => src.Code)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)

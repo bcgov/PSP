@@ -1,0 +1,154 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DispositionMenu component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c0 {
+  text-align: left;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+}
+
+.c1 {
+  font-weight: normal;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+}
+
+.c1.selected {
+  font-weight: bold;
+  cursor: default;
+}
+
+.c4 {
+  font-size: 1.5rem;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 1rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  border-bottom: 1px solid;
+}
+
+.c3 {
+  font-size: 1.4rem;
+  line-height: 2.2rem;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 no-gutters selected row"
+      data-testid="menu-item-row-0"
+    >
+      <div
+        class="col-1"
+      >
+        <svg
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 192 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
+          />
+        </svg>
+      </div>
+      <div
+        class="col"
+      >
+        one
+      </div>
+      <div
+        class="c2"
+      >
+        <span
+          class="c3"
+        >
+          Properties
+        </span>
+      </div>
+    </div>
+    <div
+      class="c1 no-gutters row"
+      data-testid="menu-item-row-1"
+    >
+      <div
+        class="col-1"
+      />
+      <div
+        class="pr-2 col-auto"
+      >
+        <div
+          class="c4"
+        >
+          1
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        two
+      </div>
+    </div>
+    <div
+      class="c1 no-gutters row"
+      data-testid="menu-item-row-2"
+    >
+      <div
+        class="col-1"
+      />
+      <div
+        class="pr-2 col-auto"
+      >
+        <div
+          class="c4"
+        >
+          2
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        three
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

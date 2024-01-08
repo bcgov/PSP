@@ -51,7 +51,7 @@ namespace Pims.Core.Test
             user.UserTypeCode = isContractor ? EnumUserTypeCodes.CONTRACT.ToString() : EnumUserTypeCodes.MINSTAFF.ToString();
             if (regionCode.HasValue)
             {
-                user.PimsRegionUsers.Add(new Entity.PimsRegionUser() { RegionCode = regionCode.Value });
+                user.PimsRegionUsers.Add(new Entity.PimsRegionUser() { RegionCode = regionCode.Value, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, });
             }
 
             return user;

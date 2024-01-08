@@ -1,3 +1,5 @@
+import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
+
 export interface IUserRecord {
   id?: number;
   keycloakUserId?: string;
@@ -10,6 +12,6 @@ export interface IUserRecord {
   roles?: string;
   position?: string;
   lastLogin?: string;
-  appCreateTimestamp?: string;
+  appCreateTimestamp?: UtcIsoDateTime;
   rowVersion?: number;
 }

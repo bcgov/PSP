@@ -18,9 +18,7 @@ interface IDocumentListContainerProps {
   onSuccess?: () => void;
 }
 
-const DocumentListContainer: React.FunctionComponent<
-  React.PropsWithChildren<IDocumentListContainerProps>
-> = props => {
+const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps> = props => {
   const isMounted = useIsMounted();
 
   const [documentResults, setDocumentResults] = useState<DocumentRow[]>([]);

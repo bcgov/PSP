@@ -53,6 +53,10 @@ export enum Claims {
   MANAGEMENT_ADD = 'management-add',
   MANAGEMENT_EDIT = 'management-edit',
   MANAGEMENT_DELETE = 'management-delete',
+  DISPOSITION_EDIT = 'disposition-edit',
+  DISPOSITION_VIEW = 'disposition-view',
+  DISPOSITION_ADD = 'disposition-add',
+  DISPOSITION_DELETE = 'disposition-delete',
 }
 
 export default Claims;

@@ -14,7 +14,7 @@ namespace Pims.Api.Mapping.User
                 .Map(dest => dest.Parent, src => src.PrntOrganization)
                 .Map(dest => dest.Children, src => src.InversePrntOrganization)
                 .Map(dest => dest.Users, src => src.GetUsers())
-                .Inherits<Entity.IDisableBaseAppEntity, BaseAuditModel>();
+                .Inherits<Entity.IDisableBaseAppEntity<bool>, BaseAuditModel>();
 
             config.NewConfig<Model.OrganizationModel, Entity.PimsOrganization>()
                 .Map(dest => dest.Internal_Id, src => src.Id)
@@ -22,7 +22,7 @@ namespace Pims.Api.Mapping.User
                 .Map(dest => dest.PrntOrganization, src => src.Parent)
                 .Map(dest => dest.InversePrntOrganization, src => src.Children)
                 .Map(dest => dest.PimsUserOrganizations, src => src.Users)
-                .Inherits<BaseAuditModel, Entity.IDisableBaseAppEntity>();
+                .Inherits<BaseAuditModel, Entity.IDisableBaseAppEntity<bool>>();
 
             config.NewConfig<Model.OrganizationModel, Entity.PimsUserOrganization>()
                 .Map(dest => dest.OrganizationId, src => src.Id)

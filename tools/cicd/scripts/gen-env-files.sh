@@ -39,7 +39,7 @@ ASPNETCORE_URLS=http://*:5000
 
 TZ=America/Los_Angeles
 
-ConnectionStrings__PIMS=Server=localhost,5433;uid=$varApiDb;Password=$passvar;Database=pims
+ConnectionStrings__PIMS=Server=localhost,5433;uid=$varApiDb;Password=$passvar;Database=pims;TrustServerCertificate=True
 DB_PASSWORD=$passvar
 
 Keycloak__Secret=
