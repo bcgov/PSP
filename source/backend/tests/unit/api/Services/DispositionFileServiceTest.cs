@@ -213,6 +213,129 @@ namespace Pims.Api.Test.Services
         }
         #endregion
 
+        [Fact]
+        public void Add_Should_Fail_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions();
+            var dispFile = EntityHelper.CreateDispositionFile(1);
+
+            // Act
+            Action act = () => service.Add(dispFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void Add_Fails_Duplicate_Team()
+        {
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionAdd);
+            var dispFile = EntityHelper.CreateDispositionFile();
+
+            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { PersonId = 1, DspFlTeamProfileTypeCode = "LISTAGENT" });
+            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { PersonId = 2, DspFlTeamProfileTypeCode = "LISTAGENT" });
+
+            // Act
+            Action act = () => service.Add(dispFile, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory });
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void Update_Should_Fail_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions();
+            var dispFile = EntityHelper.CreateDispositionFile(1);
+
+            // Act
+            Action act = () => service.Update(1, dispFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void Update_Should_Fail_Invalid_DispositionFileId()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var dispFile = EntityHelper.CreateDispositionFile(1);
+
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+
+            // Act
+            Action act = () => service.Update(2, dispFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void Update_Should_Fail_Duplicate_Team()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var dispFile = EntityHelper.CreateDispositionFile(1);
+
+            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { PersonId = 1, DspFlTeamProfileTypeCode = "LISTAGENT" });
+            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { PersonId = 2, DspFlTeamProfileTypeCode = "LISTAGENT" });
+
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+
+            // Act
+            Action act = () => service.Update(1, dispFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void Update_Should_Fail_Region_Validation()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var dispFile = EntityHelper.CreateDispositionFile(1);
+
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(2);
+            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+
+            // Act
+            Action act = () => service.Update(1, dispFile, new List<UserOverrideCode>());
+
+            // Assert
+            var ex = act.Should().Throw<UserOverrideException>();
+            ex.Which.UserOverride.Should().Be(UserOverrideCode.UpdateRegion);
+        }
+
+        [Fact]
+        public void Update_Success()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var dispFile = EntityHelper.CreateDispositionFile(1);
+
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+
+            // Act
+            var result = service.Update(1, dispFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
+
+            // Assert
+            Assert.NotNull(result);
+            repository.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>()), Times.Once);
+        }
+
         #region GetTeamMembers
         [Fact]
         public void GetTeamMembers_Success()
@@ -253,22 +376,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-        }
-
-        [Fact]
-        public void Add_Fails_Duplicate_Team()
-        {
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionAdd);
-            var dispFile = EntityHelper.CreateDispositionFile();
-
-            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { PersonId = 1, DspFlTeamProfileTypeCode = "LISTAGENT" });
-            dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { PersonId = 2, DspFlTeamProfileTypeCode = "LISTAGENT" });
-
-            // Act
-            Action act = () => service.Add(dispFile, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory });
-
-            // Assert
-            act.Should().Throw<BadRequestException>();
         }
 
         #endregion

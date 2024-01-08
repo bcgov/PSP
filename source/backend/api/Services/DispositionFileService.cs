@@ -2,21 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Core.Extensions;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Entities.Extensions;
 
 namespace Pims.Api.Services
 {
@@ -80,6 +80,32 @@ namespace Pims.Api.Services
             var dispositionFile = _dispositionFileRepository.GetById(id);
 
             return dispositionFile;
+        }
+
+        public PimsDispositionFile Update(long id, PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
+        {
+            dispositionFile.ThrowIfNull(nameof(dispositionFile));
+
+            _logger.LogInformation("Updating acquisition file with id {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+
+            if (id != dispositionFile.DispositionFileId)
+            {
+                throw new BadRequestException("Invalid dispositionFileId.");
+            }
+
+            ValidateStaff(dispositionFile);
+            ValidateVersion(id, dispositionFile.ConcurrencyControlNumber);
+
+            if (!userOverrides.Contains(UserOverrideCode.UpdateRegion))
+            {
+                ValidateMinistryRegion(id, dispositionFile.RegionCode);
+            }
+
+            _dispositionFileRepository.Update(id, dispositionFile);
+            _dispositionFileRepository.CommitTransaction();
+
+            return _dispositionFileRepository.GetById(id);
         }
 
         public LastUpdatedByModel GetLastUpdateInformation(long dispositionFileId)
@@ -191,7 +217,7 @@ namespace Pims.Api.Services
 
         public bool DeleteDispositionFileOffer(long dispositionFileId, long offerId)
         {
-            _logger.LogInformation("Deleting Disposition Offer with id ...", offerId);
+            _logger.LogInformation("Deleting Disposition Offer with id: {offerId}", offerId);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             var deleteResult = _dispositionFileRepository.TryDeleteDispositionOffer(dispositionFileId, offerId);
@@ -299,12 +325,30 @@ namespace Pims.Api.Services
                 }).ToList();
         }
 
+        private static decimal CalculateNetProceedsBeforeSpp(PimsDispositionSale sale)
+        {
+            if (sale != null)
+            {
+                return (sale?.SaleFinalAmt ?? 0) - ((sale?.RealtorCommissionAmt ?? 0) + (sale.GstCollectedAmt ?? 0) + (sale.NetBookAmt ?? 0) + (sale.TotalCostAmt ?? 0));
+            }
+            return 0;
+        }
+
+        private static decimal CalculateNetProceedsAfterSpp(PimsDispositionSale sale)
+        {
+            if (sale != null)
+            {
+                return (sale?.SaleFinalAmt ?? 0) - ((sale?.RealtorCommissionAmt ?? 0) + (sale.GstCollectedAmt ?? 0) + (sale.NetBookAmt ?? 0) + (sale.TotalCostAmt ?? 0) + (sale.SppAmt ?? 0));
+            }
+            return 0;
+        }
+
         private static void ValidateStaff(PimsDispositionFile dispositionFile)
         {
             bool duplicate = dispositionFile.PimsDispositionFileTeams.GroupBy(p => p.DspFlTeamProfileTypeCode).Any(g => g.Count() > 1);
             if (duplicate)
             {
-                throw new BadRequestException("Invalid Disposition team, each team member and role combination can only be added once.");    
+                throw new BadRequestException("Invalid Disposition team, each team member and role combination can only be added once.");
             }
         }
 
@@ -314,6 +358,15 @@ namespace Pims.Api.Services
             if (offerAlreadyAccepted && !string.IsNullOrEmpty(newOffer.DispositionOfferStatusTypeCode) && newOffer.DispositionOfferStatusTypeCode == EnumDispositionOfferStatusTypeCode.ACCCEPTED.ToString())
             {
                 throw new DuplicateEntityException("Invalid Disposition Offer, an Offer has been already accepted for this Disposition File");
+            }
+        }
+
+        private void ValidateMinistryRegion(long dispositionFileId, short updatedRegion)
+        {
+            short currentRegion = _dispositionFileRepository.GetRegion(dispositionFileId);
+            if (currentRegion != updatedRegion)
+            {
+                throw new UserOverrideException(UserOverrideCode.UpdateRegion, "The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.");
             }
         }
 
@@ -421,22 +474,13 @@ namespace Pims.Api.Services
             }
         }
 
-        private static decimal CalculateNetProceedsBeforeSpp(PimsDispositionSale sale)
+        private void ValidateVersion(long dispositionFileId, long dispositionFileVersion)
         {
-            if (sale != null)
+            long currentRowVersion = _dispositionFileRepository.GetRowVersion(dispositionFileId);
+            if (currentRowVersion != dispositionFileVersion)
             {
-                return (sale?.SaleFinalAmt ?? 0) - ((sale?.RealtorCommissionAmt ?? 0) + (sale.GstCollectedAmt ?? 0) + (sale.NetBookAmt ?? 0) + (sale.TotalCostAmt ?? 0));
+                throw new DbUpdateConcurrencyException("You are working with an older version of this acquisition file, please refresh the application and retry.");
             }
-            return 0;
-        }
-
-        private static decimal CalculateNetProceedsAfterSpp(PimsDispositionSale sale)
-        {
-            if (sale != null)
-            {
-                return (sale?.SaleFinalAmt ?? 0) - ((sale?.RealtorCommissionAmt ?? 0) + (sale.GstCollectedAmt ?? 0) + (sale.NetBookAmt ?? 0) + (sale.TotalCostAmt ?? 0) + (sale.SppAmt ?? 0));
-            }
-            return 0;
         }
     }
 }
