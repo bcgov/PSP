@@ -3,13 +3,13 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { NoteTypes } from '@/constants/noteTypes';
 import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
 import DocumentsTab from '@/features/mapSideBar/shared/tabs/DocumentsTab';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 
 import { SideBarContext } from '../../context/sidebarContext';
 import { ChecklistView } from '../../shared/tabs/checklist/detail/ChecklistView';
@@ -85,7 +85,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
       content: (
         <DocumentsTab
           fileId={dispositionFile.id}
-          relationshipType={DocumentRelationshipType.DISPOSITION_FILES}
+          relationshipType={ApiGen_CodeTypes_DocumentRelationType.DispositionFiles}
           onSuccess={onChildSuccess}
         />
       ),
