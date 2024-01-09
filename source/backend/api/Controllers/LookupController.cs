@@ -143,6 +143,9 @@ namespace Pims.Api.Controllers
                 var dispositionInitiatingDocTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionInitiatingDocTypes());
                 var dispositionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionTypes());
                 var dispositionOfferStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionOfferStatusTypes());
+                var dispositionChecklistItemStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionChecklistItemStatusTypes());
+                var dispositionChecklistItemTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionChecklistItemTypes());
+                var dispositionChecklistSectionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionChecklistSectionTypes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -214,6 +217,9 @@ namespace Pims.Api.Controllers
                 codes.AddRange(dispositionTypes);
                 codes.AddRange(dispositionStatusTypes);
                 codes.AddRange(dispositionOfferStatusTypes);
+                codes.AddRange(dispositionChecklistItemStatusTypes);
+                codes.AddRange(dispositionChecklistItemTypes);
+                codes.AddRange(dispositionChecklistSectionTypes);
 
                 var response = new JsonResult(codes);
 

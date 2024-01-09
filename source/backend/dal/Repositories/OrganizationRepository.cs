@@ -79,7 +79,7 @@ namespace Pims.Dal.Repositories
             {
 
                 List<PimsOrganization> existingOrgs = this.Context.PimsOrganizations
-                    .Where(o => EF.Functions.Collate(o.OrganizationName, SqlCollation.LATINGENERALCASEINSENSITIVE) == organization.OrganizationName)
+                    .Where(o => o.OrganizationName == organization.OrganizationName)
                     .Include(o => o.PimsContactMethods).ToList();
 
                 var isDuplicate = existingOrgs.Any(

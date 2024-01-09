@@ -1,4 +1,4 @@
-import { Api_File } from '@/models/api/File';
+import { Api_FileWithChecklist } from '@/models/api/File';
 import Api_TypeCode from '@/models/api/TypeCode';
 
 import { Api_AuditFields } from './AuditFields';
@@ -9,7 +9,10 @@ import { Api_Product, Api_Project } from './Project';
 import { Api_PropertyFile } from './PropertyFile';
 
 // LINK @backend/api/Models/Concepts/DispositionFile/DispositionFileModel.cs
-export interface Api_DispositionFile extends Api_ConcurrentVersion, Api_AuditFields, Api_File {
+export interface Api_DispositionFile
+  extends Api_ConcurrentVersion,
+    Api_AuditFields,
+    Api_FileWithChecklist {
   id?: number;
   fileReference: string | null;
   assignedDate: string | null;

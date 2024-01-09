@@ -8,44 +8,46 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
-import * as API from '@/constants/API';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import {
-  Api_AcquisitionFile,
+  Api_FileWithChecklist,
   isDefaultState,
   lastModifiedBy,
   sortByDisplayOrder,
-} from '@/models/api/AcquisitionFile';
+} from '@/models/api/File';
 import { prettyFormatUTCDate } from '@/utils';
 
-import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 import { StyledChecklistItemStatus, StyledSectionCentered } from './styles';
 
-export interface IAcquisitionChecklistViewProps {
-  acquisitionFile?: Api_AcquisitionFile;
+export interface IChecklistViewProps {
+  apiFile?: Api_FileWithChecklist;
   onEdit: () => void;
+  prefix?: string;
+  sectionTypeName: string;
+  editClaim: Claims;
 }
 
-export const AcquisitionChecklistView: React.FC<IAcquisitionChecklistViewProps> = ({
-  acquisitionFile,
+export const ChecklistView: React.FC<IChecklistViewProps> = ({
+  apiFile,
+  prefix,
   onEdit,
+  sectionTypeName,
+  editClaim,
 }) => {
   const keycloak = useKeycloakWrapper();
   const { getByType } = useLookupCodeHelpers();
-  const sectionTypes = getByType(API.ACQUISITION_CHECKLIST_SECTION_TYPES);
+  const sectionTypes = getByType(sectionTypeName);
 
-  const checklist = acquisitionFile?.acquisitionFileChecklist || [];
+  const checklist = apiFile?.fileChecklistItems || [];
   const lastUpdated = lastModifiedBy(checklist);
-
-  const statusSolver = new StatusUpdateSolver(acquisitionFile);
 
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
-        {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && statusSolver.canEditChecklists() ? (
-          <EditButton title="Edit acquisition checklist" onClick={onEdit} />
+        {keycloak.hasClaim(editClaim) ? (
+          <EditButton title="Edit checklist" onClick={onEdit} />
         ) : null}
       </StyledEditWrapper>
       {lastUpdated && (
@@ -64,7 +66,7 @@ export const AcquisitionChecklistView: React.FC<IAcquisitionChecklistViewProps> 
 
       {sectionTypes.map((section, i) => (
         <Section
-          key={section.id ?? `acq-checklist-section-${i}`}
+          key={section.id ?? `${prefix}-checklist-section-${i}`}
           header={section.name}
           isCollapsable
           initiallyExpanded
@@ -74,7 +76,7 @@ export const AcquisitionChecklistView: React.FC<IAcquisitionChecklistViewProps> 
             .sort(sortByDisplayOrder)
             .map((checklistItem, j) => (
               <SectionField
-                key={checklistItem.itemType?.code ?? `acq-checklist-item-${j}`}
+                key={checklistItem.itemType?.code ?? `${prefix}-checklist-item-${j}`}
                 label={checklistItem.itemType?.description ?? ''}
                 tooltip={checklistItem.itemType?.hint}
                 labelWidth="6"

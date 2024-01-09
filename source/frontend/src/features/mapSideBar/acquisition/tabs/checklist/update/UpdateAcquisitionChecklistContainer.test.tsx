@@ -1,17 +1,18 @@
 import { createRef } from 'react';
 
+import { IUpdateChecklistFormProps } from '@/features/mapSideBar/shared/tabs/checklist/update/UpdateChecklistForm';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import {
-  mockAcquisitionFileChecklistResponse,
   mockAcquisitionFileResponse,
+  mockFileChecklistResponse,
 } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/index.mock';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_FileWithChecklist } from '@/models/api/File';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, createAxiosError, render, RenderOptions, screen } from '@/utils/test-utils';
 
 import { UpdateAcquisitionChecklistContainer } from './UpdateAcquisitionChecklistContainer';
-import { IUpdateAcquisitionChecklistFormProps } from './UpdateAcquisitionChecklistForm';
 
 // mock API service calls
 jest.mock('@/hooks/repositories/useAcquisitionProvider');
@@ -28,9 +29,9 @@ const mockUpdateAcquisitionChecklist = jest.fn();
   },
 } as unknown as ReturnType<Provider>);
 
-let viewProps: IUpdateAcquisitionChecklistFormProps | undefined;
+let viewProps: IUpdateChecklistFormProps | undefined;
 
-const TestView: React.FC<IUpdateAcquisitionChecklistFormProps> = props => {
+const TestView: React.FC<IUpdateChecklistFormProps> = props => {
   viewProps = props;
   return <span>Content Rendered</span>;
 };
@@ -65,7 +66,7 @@ describe('UpdateAcquisitionChecklist container', () => {
   beforeEach(() => {
     viewProps = undefined;
     acquisitionFile = mockAcquisitionFileResponse();
-    acquisitionFile.acquisitionFileChecklist = mockAcquisitionFileChecklistResponse();
+    acquisitionFile.fileChecklistItems = mockFileChecklistResponse();
   });
 
   afterEach(() => {
@@ -79,15 +80,15 @@ describe('UpdateAcquisitionChecklist container', () => {
 
   it('makes request to update the acquisition checklist and returns the response', async () => {
     setup();
-    mockUpdateAcquisitionChecklist.mockResolvedValue(mockAcquisitionFileChecklistResponse());
+    mockUpdateAcquisitionChecklist.mockResolvedValue(mockFileChecklistResponse());
 
-    let updatedChecklist: Api_AcquisitionFile | undefined;
+    let updatedChecklist: Api_FileWithChecklist | undefined;
     await act(async () => {
-      updatedChecklist = await viewProps?.onSave({} as Api_AcquisitionFile);
+      updatedChecklist = await viewProps?.onSave({} as Api_FileWithChecklist);
     });
 
     expect(mockUpdateAcquisitionChecklist).toHaveBeenCalled();
-    expect(updatedChecklist).toStrictEqual([...mockAcquisitionFileChecklistResponse()]);
+    expect(updatedChecklist).toStrictEqual([...mockFileChecklistResponse()]);
   });
 
   it('calls onSuccess when the acquisition checklist is saved successfully', async () => {

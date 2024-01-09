@@ -96,7 +96,174 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
-        #region GetById
+        #region GetDispositionFileSale
+        [Fact]
+        public void GetDispositionFileSale_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionSales = new List<PimsDispositionSale>() { new PimsDispositionSale() };
+            _helper.AddAndSaveChanges(dispFile);
+
+            // Act
+            var result = repository.GetDispositionFileSale(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionSale>();
+        }
+        #endregion
+
+        #region GetTeamMembers
+        [Fact]
+        public void GetTeamMembers_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionFileTeams = new List<PimsDispositionFileTeam>() { new PimsDispositionFileTeam() { DspFlTeamProfileTypeCode = "PROPCOORD" } };
+            _helper.AddAndSaveChanges(dispFile);
+
+            // Act
+            var result = repository.GetTeamMembers();
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo< List<PimsDispositionFileTeam>>();
+            result.Should().HaveCount(1);
+        }
+        #endregion
+
+        #region GetDispositionOffers
+        [Fact]
+        public void GetDispositionOffers_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionOffers = new List<PimsDispositionOffer>() { new PimsDispositionOffer() { OfferName = "offer"} };
+            _helper.AddAndSaveChanges(dispFile);
+
+            // Act
+            var result = repository.GetDispositionOffers(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<List<PimsDispositionOffer>>();
+            result.Should().HaveCount(1);
+        }
+        #endregion
+
+        #region GetDispositionOfferById
+        [Fact]
+        public void GetDispositionOfferById_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionOffers = new List<PimsDispositionOffer>() { new PimsDispositionOffer() { OfferName = "offer" } };
+            _helper.AddAndSaveChanges(dispFile);
+
+            // Act
+            var result = repository.GetDispositionOfferById(1, 1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionOffer>();
+        }
+
+        [Fact]
+        public void GetDispositionOfferById_NotFound()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+
+            // Act
+            Action act = () => repository.GetDispositionOfferById(1, 1);
+
+            // Assert
+            act.Should().Throw<KeyNotFoundException>();
+        }
+        #endregion
+
+        #region AddDispositionOffer
+        [Fact]
+        public void AddDispositionOffer_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            var offer = new PimsDispositionOffer() { OfferName = "offer" };
+            _helper.AddAndSaveChanges(dispFile);
+
+            // Act
+            var result = repository.AddDispositionOffer(offer);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionOffer>();
+        }
+        #endregion
+
+        #region UpdateDispositionOffer
+        [Fact]
+        public void UpdateDispositionOffer_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionOffers = new List<PimsDispositionOffer>() { new PimsDispositionOffer() { OfferName = "offer" } };
+            _helper.AddAndSaveChanges(dispFile);
+
+            var offer = dispFile.PimsDispositionOffers.FirstOrDefault();
+            offer.OfferName = "updated";
+            // Act
+            var result = repository.UpdateDispositionOffer(offer);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionOffer>();
+            result.OfferName.Should().Be("updated");
+        }
+
+        [Fact]
+        public void UpdateDispositionOffer_NotFound()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionOffers = new List<PimsDispositionOffer>() { new PimsDispositionOffer() { OfferName = "offer" } };
+
+            var offer = dispFile.PimsDispositionOffers.FirstOrDefault();
+            offer.OfferName = "updated";
+            // Act
+            Action act = () => repository.UpdateDispositionOffer(offer);
+
+            // Assert
+            act.Should().Throw<KeyNotFoundException>();
+        }
+        #endregion
+
+        #region TryDeleteDispositionOffer
+        [Fact]
+        public void TryDeleteDispositionOffer_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionOffers = new List<PimsDispositionOffer>() { new PimsDispositionOffer() { OfferName = "offer" } };
+            _helper.AddAndSaveChanges(dispFile);
+
+            // Act
+            var result = repository.TryDeleteDispositionOffer(1, 1);
+
+            // Assert
+            result.Should().Be(true);
+        }
+        #endregion
+
+        #region GetRowVersion
         [Fact]
         public void GetRowVersion_Success()
         {
@@ -278,6 +445,148 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             result.Should().HaveCount(0);
         }
+
+        [Fact]
+        public void GetPageDeep_Pid_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = EntityHelper.CreateProperty(1, 2) } };
+            _helper.AddAndSaveChanges(dispFile);
+
+            // Act
+            var result = repository.GetPageDeep(new DispositionFilter() { Pid = "1" });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetPageDeep_Pin_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = EntityHelper.CreateProperty(1, 2) } };
+            _helper.AddAndSaveChanges(dispFile);
+
+            // Act
+            var result = repository.GetPageDeep(new DispositionFilter() { Pin = "2" });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetPageDeep_Address_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = EntityHelper.CreateProperty(1, 2) } };
+            _helper.AddAndSaveChanges(dispFile);
+
+            // Act
+            var result = repository.GetPageDeep(new DispositionFilter() { Address = "1234" });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetPageDeep_FileStatus_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            _helper.AddAndSaveChanges(dispFile);
+
+            // Act
+            var result = repository.GetPageDeep(new DispositionFilter() { DispositionFileStatusCode = "ACTIVE" });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetPageDeep_Status_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.DispositionStatusTypeCode = "DRAFT";
+            _helper.AddAndSaveChanges(dispFile);
+
+            // Act
+            var result = repository.GetPageDeep(new DispositionFilter() { DispositionStatusCode = "DRAFT" });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetPageDeep_Type_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.DispositionTypeCode = "SECTN3";
+
+            _helper.AddAndSaveChanges(dispFile);
+
+            // Act
+            var result = repository.GetPageDeep(new DispositionFilter() { DispositionTypeCode = "SECTN3" });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+        #endregion
+
+        #region Export
+
+        [Fact]
+        public void GetDispositionFileExport_Filter_DispositionName()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DispositionAdd, Permissions.DispositionView);
+            var dspFile = EntityHelper.CreateDispositionFile();
+            dspFile.FileName = "fileName";
+            var filter = new DispositionFilter() { FileNameOrNumberOrReference = "fileName" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(dspFile);
+
+            var repository = helper.CreateRepository<DispositionFileRepository>(user);
+
+            // Act
+            var result = repository.GetDispositionFileExportDeep(filter);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetDispositionFileExport_Filter_DispositionNumber()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DispositionAdd);
+            var dspFile = EntityHelper.CreateDispositionFile();
+            dspFile.FileNumber = "fileNumber";
+            var filter = new DispositionFilter() { FileNameOrNumberOrReference = "fileNumber" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(dspFile);
+
+            var repository = helper.CreateRepository<DispositionFileRepository>(user);
+
+            // Act
+            var result = repository.GetDispositionFileExportDeep(filter);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
         #endregion
 
         #endregion

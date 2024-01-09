@@ -1,9 +1,11 @@
 import { FormikProps } from 'formik';
 import { find, noop } from 'lodash';
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { FaExclamationCircle, FaPlusCircle } from 'react-icons/fa';
 
-import GenericModal from '@/components/common/GenericModal';
+import GenericModal, { ModalSize } from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { ModalContext } from '@/contexts/modalContext';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
 import { useGenerateH1005a } from '@/features/mapSideBar/acquisition/common/GenerateForm/hooks/useGenerateH1005a';
@@ -17,7 +19,7 @@ import { SystemConstants, useSystemConstants } from '@/store/slices/systemConsta
 
 import { useDeleteTermsPayments } from './hooks/useDeleteTermsPayments';
 import PaymentModal from './modal/payment/PaymentModal';
-import TermModal from './modal/term/TermModal';
+import TermForm from './modal/term/TermForm';
 import { FormLeasePayment, FormLeaseTerm } from './models';
 import TermsForm from './table/terms/TermsForm';
 
@@ -38,6 +40,7 @@ export const TermPaymentsContainer: React.FunctionComponent<
   const { updateLeaseTerm, addLeaseTerm, getLeaseTerms, deleteLeaseTerm } =
     useLeaseTermRepository();
 
+  const { setModalContent, setDisplayModal } = useContext(ModalContext);
   const { updateLeasePayment, addLeasePayment } = useLeasePaymentRepository();
   const { getSystemConstant } = useSystemConstants();
   const gstConstant = getSystemConstant(SystemConstants.GST);
@@ -129,6 +132,44 @@ export const TermPaymentsContainer: React.FunctionComponent<
     }
   };
 
+  const onCancelTerm = useCallback(() => {
+    setEditModalValues(undefined);
+  }, []);
+
+  const TermFormComp = useMemo(
+    () => (
+      <TermForm
+        formikRef={formikRef as any}
+        initialValues={editModalValues}
+        onSave={onSaveTerm}
+        lease={lease}
+      />
+    ),
+    [editModalValues, formikRef, onSaveTerm, lease],
+  );
+  useEffect(() => {
+    setModalContent({
+      variant: 'info',
+      headerIcon: !editModalValues?.id ? <FaPlusCircle /> : <FaExclamationCircle size={22} />,
+      title: !editModalValues?.id ? 'Add a Term' : 'Edit a Term',
+      okButtonText: 'Yes',
+      cancelButtonText: 'No',
+      handleCancel: onCancelTerm,
+      handleOk: () => formikRef?.current?.submitForm(),
+      message: TermFormComp,
+      modalSize: ModalSize.MEDIUM,
+    });
+    setDisplayModal(!!editModalValues);
+  }, [
+    setModalContent,
+    setDisplayModal,
+    onCancelTerm,
+    TermFormComp,
+    editModalValues,
+    formikRef,
+    lease,
+  ]);
+
   return (
     <>
       <LoadingBackdrop show={getLeaseTerms.loading} parentScreen />
@@ -155,14 +196,6 @@ export const TermPaymentsContainer: React.FunctionComponent<
         }}
         onSave={onSavePayment}
         terms={terms ?? []}
-      />
-      <TermModal
-        displayModal={!!editModalValues}
-        initialValues={editModalValues}
-        onCancel={() => {
-          setEditModalValues(undefined);
-        }}
-        onSave={onSaveTerm}
       />
       <GenericModal
         variant="warning"
