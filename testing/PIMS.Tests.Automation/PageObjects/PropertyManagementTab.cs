@@ -271,8 +271,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
             ChooseSpecificSelectOption(managementActStatusInput, activity.PropertyActivityStatus);
 
-            //Inserting Requestes Added Date
+            //Inserting Requested Added Date
             ClearInput(managementActRequestAddedDateInput);
+            webDriver.FindElement(managementActRequestAddedDateInput).Click();
             webDriver.FindElement(managementActRequestAddedDateInput).SendKeys(activity.PropertyActivityRequestedDate);
             webDriver.FindElement(managementActRequestAddedDateInput).SendKeys(Keys.Enter);
 
@@ -291,7 +292,7 @@ namespace PIMS.Tests.Automation.PageObjects
             while (webDriver.FindElements(managementActMinistryContactDeleteBttns).Count > 0)
                 webDriver.FindElements(managementActMinistryContactDeleteBttns)[0].Click();
 
-            if (activity.PropertyActivityMinistryContact.Count > 0)
+            if (activity.PropertyActivityMinistryContact.First() != "")
             {
                 webDriver.FindElement(managementActMinistryContactBttn).Click();
                 sharedSelectContact.SelectContact(activity.PropertyActivityMinistryContact[0], "");
@@ -323,7 +324,7 @@ namespace PIMS.Tests.Automation.PageObjects
             while (webDriver.FindElements(managementActInvolvedPartiesDeleteBttns).Count > 0)
                 webDriver.FindElements(managementActInvolvedPartiesDeleteBttns)[0].Click();
 
-            if (activity.PropertyActivityInvolvedParties.Count > 0)
+            if (activity.PropertyActivityInvolvedParties.First() != "")
             {
                 webDriver.FindElement(managementActInvolvedPartiesBttn).Click();
                 sharedSelectContact.SelectContact(activity.PropertyActivityInvolvedParties[0], "");

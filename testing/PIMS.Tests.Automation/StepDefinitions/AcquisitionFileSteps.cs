@@ -668,6 +668,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             h120.DeleteCompensationRequisition(1);
 
             var compensationsAfterDelete = h120.TotalCompensationCount();
+
+
             Assert.True(compensationsBeforeDelete - compensationsAfterDelete == 1);
         }
 

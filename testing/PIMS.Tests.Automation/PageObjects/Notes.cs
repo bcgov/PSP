@@ -19,7 +19,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By notesTabTableBody = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']");
         private By notesTabTableContentTotal = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper']");
 
-        private By notesTab1stResultViewBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][2]/div/div[4]/div/button[@title='View Note']");
+        private By notesTab2ndResultViewBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][2]/div/div[4]/div/button[@title='View Note']");
         private By notesTab1stResultDeleteBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/button[@title='Delete Note']");
 
         //Notes 1st result Elements
@@ -84,10 +84,10 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(notesAddDetailsTextarea).SendKeys(note);
         }
 
-        public void ViewSecondLastNoteDetails()
+        public void ViewSecondNoteDetails()
         {
             Wait(2000);
-            webDriver.FindElement(notesTab1stResultViewBttn).Click();
+            webDriver.FindElement(notesTab2ndResultViewBttn).Click();
         }
 
         public void EditNote(string note)
@@ -182,6 +182,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyAutomaticNotes(string fileType, string fromStatus, string toStatus)
         {
+            WaitUntilTableSpinnerDisappear();
+
             WaitUntilVisibleText(note1stNoteContent, webDriver.FindElement(note1stNoteContent).Text);
             AssertTrueContentEquals(note1stNoteContent, fileType + " status changed from "+ fromStatus +" to " + toStatus);
         }

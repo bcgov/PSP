@@ -406,7 +406,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int TotalCompensationCount()
         {
-            Wait();
+            Wait(2000);
             return webDriver.FindElements(compensationH120TotalCount).Count();
         }
 
