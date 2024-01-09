@@ -28,7 +28,6 @@ const testProperty: IMapProperty = {
   pid: '123-456-789',
   planNumber: 'SPS22411',
   address: 'Test address 123',
-  legalDescription: 'Test Legal Description',
   region: 1,
   regionName: 'South Coast',
   district: 5,
@@ -63,7 +62,7 @@ describe('MapSelectorContainer component', () => {
     mockAxios
       .onGet(
         new RegExp(
-          'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW/ows',
+          'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows',
         ),
       )
       .reply(200, mockFAParcelLayerResponse)
@@ -114,7 +113,6 @@ describe('MapSelectorContainer component', () => {
       expect(getByText(/Test address 123/g)).toBeVisible();
       expect(getByText(/1 - South Coast/g)).toBeVisible();
       expect(getByText(/5 - Okanagan-Shuswap/g)).toBeVisible();
-      expect(getByText(/Test Legal Description/g)).toBeVisible();
     });
   });
 
@@ -143,8 +141,6 @@ describe('MapSelectorContainer component', () => {
         districtName: 'Cannot determine',
         id: 'PID-009-727-493',
         latitude: 48.76613749999999,
-        legalDescription:
-          'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
         longitude: -123.46163749999998,
         name: undefined,
         pid: '9727493',

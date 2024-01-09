@@ -31,6 +31,10 @@ namespace Pims.Dal.Entities
         {
             Id = id;
         }
+
+        public PimsLandActType()
+        {
+        }
         #endregion
     }
 }

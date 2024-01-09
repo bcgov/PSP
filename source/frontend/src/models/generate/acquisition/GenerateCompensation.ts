@@ -21,8 +21,8 @@ export class Api_GenerateCompensation {
   detailed_remarks: string;
   financial_activities: Api_GenerateCompensationFinancial[];
   summary_financial_activities: Api_GenerateCompensationFinancialSummary[];
-  file_financial_total: string;
-  financial_total: string;
+  file_financial_pretax_total: string;
+  financial_pretax_total: string;
   yearly_financial: string;
   service_line: string;
   responsibility_center: string;
@@ -56,14 +56,14 @@ export class Api_GenerateCompensation {
             finalFileFinancials,
           ),
       )
-      .filter(summary => summary.file_total !== '$0.00' || summary.total !== '$0.00')
+      .filter(summary => summary.file_pretax_total !== '$0.00' || summary.pretax_total !== '$0.00')
       .value();
 
-    this.file_financial_total = formatMoney(
-      finalFileFinancials?.reduce((acc, curr) => acc + (curr?.totalAmount ?? 0), 0) ?? 0,
+    this.file_financial_pretax_total = formatMoney(
+      finalFileFinancials?.reduce((acc, curr) => acc + (curr?.pretaxAmount ?? 0), 0) ?? 0,
     );
-    this.financial_total = formatMoney(
-      compensation?.financials?.reduce((acc, curr) => acc + (curr?.totalAmount ?? 0), 0) ?? 0,
+    this.financial_pretax_total = formatMoney(
+      compensation?.financials?.reduce((acc, curr) => acc + (curr?.pretaxAmount ?? 0), 0) ?? 0,
     );
     this.yearly_financial = compensation?.yearlyFinancial?.code ?? '';
     this.service_line = compensation?.chartOfAccounts?.code ?? '';

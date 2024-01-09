@@ -3,6 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
+using Pims.Api.Concepts.CodeTypes;
+using Pims.Api.Models.Concepts.Document.Upload;
+using Pims.Api.Models.Concepts.Http;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
@@ -146,7 +149,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = () => service.UploadFormDocumentTemplateAsync(testTypeCode, testUploadRequest);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentService.Verify(x => x.UploadDocumentAsync(testUploadRequest), Times.Never);
         }
 
@@ -203,7 +206,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = () => service.UploadFormDocumentTemplateAsync(testTypeCode, testUploadRequest);
 
             // Assert
-            act.Should().Throw<InvalidOperationException>();
+            act.Should().ThrowAsync<InvalidOperationException>();
             documentRepositoryMock.Verify(x => x.DocumentRelationshipCount(testDocumentId), Times.Once);
             documentServiceMock.Verify(x => x.DeleteDocumentAsync(testExistingDocument), Times.Once);
             documentServiceMock.Verify(x => x.UploadDocumentAsync(testUploadRequest), Times.Never);
@@ -275,7 +278,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = () => service.DeleteFormDocumentTemplateAsync(testFormType);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentRepositoryMock.Verify(x => x.DocumentRelationshipCount(testDocumentId), Times.Never);
         }
         #endregion

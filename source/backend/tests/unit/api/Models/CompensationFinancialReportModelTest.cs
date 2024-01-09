@@ -15,7 +15,7 @@ namespace Pims.Api.Test
             // Arrange
             var testFinancial = new PimsCompReqFinancial
             {
-                CompensationRequisition = new PimsCompensationRequisition() { FinalizedDate = new DateTime(1990, 1, 1) },
+                CompensationRequisition = new PimsCompensationRequisition() { FinalizedDate = new DateOnly(1990, 1, 1) },
             };
 
             // Act

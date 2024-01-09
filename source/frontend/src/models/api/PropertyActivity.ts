@@ -1,4 +1,5 @@
 import { Api_ConcurrentVersion_Null } from './ConcurrentVersion';
+import { DateOnly } from './DateOnly';
 import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
 import { Api_Property } from './Property';
@@ -9,8 +10,8 @@ export interface Api_PropertyActivity extends Api_ConcurrentVersion_Null {
   activityTypeCode: Api_TypeCode<string>;
   activitySubtypeCode: Api_TypeCode<string>;
   activityStatusTypeCode: Api_TypeCode<string>;
-  requestAddedDateTime: string;
-  completionDateTime: string | null;
+  requestAddedDateOnly: DateOnly;
+  completionDateOnly: DateOnly | null;
   description: string;
   requestSource: string;
   pretaxAmt: number | null;

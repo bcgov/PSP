@@ -1,11 +1,12 @@
 import { Api_Note } from '@/models/api/Note';
+import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 
 export class NoteForm {
   id?: number;
   note?: string = '';
   rowVersion?: number;
-  appCreateTimestamp?: string;
-  appLastUpdateTimestamp?: string;
+  appCreateTimestamp?: UtcIsoDateTime;
+  appLastUpdateTimestamp?: UtcIsoDateTime;
   appLastUpdateUserid?: string;
   appCreateUserid?: string;
   appLastUpdateUserGuid?: string;

@@ -13,6 +13,7 @@ using Pims.Api.Areas.Reports.Controllers;
 using Pims.Api.Helpers.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Services;
+using Pims.Core.Extensions;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities;
@@ -153,7 +154,7 @@ namespace Pims.Api.Test.Controllers.Reports
             this._leaseService.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Once());
             result.MotiRegion.Should().Be("region");
             result.LFileNo.Should().Be("L-010-070");
-            result.StartDate.Should().Be(new DateTime(2000, 1, 1));
+            result.StartDate.Should().Be(new DateOnly(2000, 1, 1));
             result.ProgramName.Should().Be("otherprogramdesc - program");
             result.StatusType.Should().Be("status");
             result.PurposeType.Should().Be("otherpurposedesc - purpose");
@@ -190,11 +191,11 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             this._leaseService.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Once());
-            result.CurrentTermStartDate.Should().Be(leaseTerm.TermStartDate);
-            result.CurrentTermEndDate.Should().Be(leaseTerm.TermExpiryDate);
-            result.TermStartDate.Should().Be(leaseTerm.TermStartDate);
-            result.TermRenewalDate.Should().Be(leaseTerm.TermRenewalDate);
-            result.TermExpiryDate.Should().Be(leaseTerm.TermExpiryDate);
+            result.CurrentTermStartDate.Should().Be(DateOnly.FromDateTime(leaseTerm.TermStartDate));
+            result.CurrentTermEndDate.Should().Be(leaseTerm.TermExpiryDate.ToNullableDateOnly());
+            result.TermStartDate.Should().Be(DateOnly.FromDateTime(leaseTerm.TermStartDate));
+            result.TermRenewalDate.Should().Be(leaseTerm.TermRenewalDate.ToNullableDateOnly());
+            result.TermExpiryDate.Should().Be(leaseTerm.TermExpiryDate.ToNullableDateOnly());
             result.IsExpired.Should().Be("No");
             result.LeasePaymentFrequencyType.Should().Be("pmt");
             result.LeaseAmount.Should().Be(1000);

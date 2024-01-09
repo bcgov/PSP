@@ -65,7 +65,7 @@ export const defaultPropertyInfo: Partial<Api_Property> = {
   tenures: [],
   roadTypes: [],
   adjacentLands: [],
-  dataSourceEffectiveDate: '',
+  dataSourceEffectiveDateOnly: '',
   isSensitive: false,
   isProvincialPublicHwy: false,
   pid: 0,

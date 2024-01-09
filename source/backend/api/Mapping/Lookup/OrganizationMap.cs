@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Api.Models.Base;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Lookup;
 
@@ -14,13 +15,13 @@ namespace Pims.Api.Mapping.Lookup
                 .Map(dest => dest.Code, src => src.OrganizationIdentifier)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Type, src => src.GetType().Name)
-                .Inherits<Entity.IDisableBaseAppEntity, Models.BaseAppModel>();
+                .Inherits<Entity.IDisableBaseAppEntity<bool>, BaseAuditModel>();
 
             config.NewConfig<Model.OrganizationModel, Entity.PimsOrganization>()
                 .Map(dest => dest.Internal_Id, src => src.Id)
                 .Map(dest => dest.OrganizationName, src => src.Name)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Inherits<Models.BaseAppModel, Entity.IDisableBaseAppEntity>();
+                .Inherits<BaseAuditModel, Entity.IDisableBaseAppEntity<bool>>();
         }
     }
 }

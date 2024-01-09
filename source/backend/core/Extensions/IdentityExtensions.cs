@@ -161,10 +161,7 @@ namespace Pims.Core.Extensions
         /// <returns>True if the user has all of the roles.</returns>
         public static bool HasRoles(this ClaimsPrincipal user, params string[] role)
         {
-            if (role == null)
-            {
-                throw new ArgumentNullException(nameof(role));
-            }
+            ArgumentNullException.ThrowIfNull(role, nameof(role));
 
             if (role.Length == 0)
             {

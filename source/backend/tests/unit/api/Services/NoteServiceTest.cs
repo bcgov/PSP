@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using MapsterMapper;
 using Moq;
+using Pims.Api.Models.Concepts.Note;
 using Pims.Api.Constants;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
@@ -76,6 +77,46 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFileNote>()), Times.Once);
+        }
+
+        [Fact]
+        public void Add_DispositionFileNote_Success()
+        {
+            // Arrange
+            var service = this.CreateNoteServiceWithPermissions(Permissions.NoteAdd);
+
+            var mapper = this._helper.GetService<IMapper>();
+            var dispositionFileNote = EntityHelper.CreateDispositionFileNote();
+            var noteModel = mapper.Map<EntityNoteModel>(dispositionFileNote);
+
+            var repository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsDispositionFileNote>())).Returns(dispositionFileNote);
+
+            // Act
+            var result = service.Add(NoteType.Disposition_File, noteModel);
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsDispositionFileNote>()), Times.Once);
+        }
+
+        [Fact]
+        public void Add_LeaseFileNote_Success()
+        {
+            // Arrange
+            var service = this.CreateNoteServiceWithPermissions(Permissions.NoteAdd);
+
+            var mapper = this._helper.GetService<IMapper>();
+            var leaseFileNote = EntityHelper.CreateLeaseNote();
+            var noteModel = mapper.Map<EntityNoteModel>(leaseFileNote);
+
+            var repository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsLeaseNote>())).Returns(leaseFileNote);
+
+            // Act
+            var result = service.Add(NoteType.Lease_File, noteModel);
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsLeaseNote>()), Times.Once);
         }
 
         [Fact]
@@ -191,6 +232,60 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.GetAllProjectNotesById(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetNotes_Acquisition_Success()
+        {
+            // Arrange
+            var service = this.CreateNoteServiceWithPermissions(Permissions.NoteView);
+
+            var notes = new[] { EntityHelper.CreateNote("Test Note 1"), EntityHelper.CreateNote("Test Note 2") };
+
+            var repository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            repository.Setup(x => x.GetAllAcquisitionNotesById(It.IsAny<long>())).Returns(notes);
+
+            // Act
+            var result = service.GetNotes(NoteType.Acquisition_File, 1);
+
+            // Assert
+            repository.Verify(x => x.GetAllAcquisitionNotesById(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetNotes_Disposition_Success()
+        {
+            // Arrange
+            var service = this.CreateNoteServiceWithPermissions(Permissions.NoteView);
+
+            var notes = new[] { EntityHelper.CreateNote("Test Note 1"), EntityHelper.CreateNote("Test Note 2") };
+
+            var repository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            repository.Setup(x => x.GetAllDispositionNotesById(It.IsAny<long>())).Returns(notes);
+
+            // Act
+            var result = service.GetNotes(NoteType.Disposition_File, 1);
+
+            // Assert
+            repository.Verify(x => x.GetAllDispositionNotesById(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetNotes_Lease_Success()
+        {
+            // Arrange
+            var service = this.CreateNoteServiceWithPermissions(Permissions.NoteView);
+
+            var notes = new[] { EntityHelper.CreateNote("Test Note 1"), EntityHelper.CreateNote("Test Note 2") };
+
+            var repository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            repository.Setup(x => x.GetAllLeaseNotesById(It.IsAny<long>())).Returns(notes);
+
+            // Act
+            var result = service.GetNotes(NoteType.Lease_File, 1);
+
+            // Assert
+            repository.Verify(x => x.GetAllLeaseNotesById(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -318,6 +413,38 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.DeleteAcquisitionFileNotes(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void DeleteNote_DispositionFile_Success()
+        {
+            // Arrange
+            var service = this.CreateNoteServiceWithPermissions(Permissions.NoteDelete);
+
+            var repository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            repository.Setup(x => x.DeleteDispositionFileNotes(It.IsAny<long>()));
+
+            // Act
+            service.DeleteNote(NoteType.Disposition_File, 1);
+
+            // Assert
+            repository.Verify(x => x.DeleteDispositionFileNotes(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void DeleteNote_LeaseFile_Success()
+        {
+            // Arrange
+            var service = this.CreateNoteServiceWithPermissions(Permissions.NoteDelete);
+
+            var repository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            repository.Setup(x => x.DeleteLeaseFileNotes(It.IsAny<long>()));
+
+            // Act
+            service.DeleteNote(NoteType.Lease_File, 1);
+
+            // Assert
+            repository.Verify(x => x.DeleteLeaseFileNotes(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]

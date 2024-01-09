@@ -26,6 +26,10 @@ namespace Pims.Dal.Entities
             this.ClaimUid = key;
             this.Name = name;
         }
+
+        public PimsClaim()
+        {
+        }
         #endregion
     }
 }

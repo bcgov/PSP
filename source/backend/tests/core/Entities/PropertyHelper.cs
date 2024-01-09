@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+using NetTopologySuite.Geometries;
 using Pims.Dal;
+using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -37,6 +39,7 @@ namespace Pims.Core.Test
                 Pin = pin,
                 ConcurrencyControlNumber = 1,
                 Location = new NetTopologySuite.Geometries.Point(0, 0),
+                SurplusDeclarationTypeCode = "SURPLUS",
             };
             if (lease != null)
             {
@@ -58,7 +61,7 @@ namespace Pims.Core.Test
         /// <param name="areaUnit"></param>
         /// <param name="dataSource"></param>
         /// <returns></returns>
-        public static Entity.PimsProperty CreateProperty(this PimsContext context, int pid, int? pin = null, Entity.PimsPropertyType type = null, Entity.PimsPropertyClassificationType classification = null, Entity.PimsAddress address = null, Entity.PimsPropertyTenureType tenure = null, Entity.PimsAreaUnitType areaUnit = null, Entity.PimsDataSourceType dataSource = null, Entity.PimsPropertyStatusType status = null)
+        public static Entity.PimsProperty CreateProperty(this PimsContext context, int pid, int? pin = null, Entity.PimsPropertyType type = null, Entity.PimsPropertyClassificationType classification = null, Entity.PimsAddress address = null, Entity.PimsPropertyTenureType tenure = null, Entity.PimsAreaUnitType areaUnit = null, Entity.PimsDataSourceType dataSource = null, Entity.PimsPropertyStatusType status = null, Geometry location = null)
         {
             type ??= context.PimsPropertyTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property type.");
             classification ??= context.PimsPropertyClassificationTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property classification type.");
@@ -69,6 +72,7 @@ namespace Pims.Core.Test
             status ??= context.PimsPropertyStatusTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property status type.");
             var lease = context.PimsLeases.FirstOrDefault() ?? EntityHelper.CreateLease(pid);
             var property = EntityHelper.CreateProperty(pid, pin, type, classification, address, tenure, areaUnit, dataSource, status);
+            property.Location = location;
             context.PimsProperties.Add(property);
             return property;
         }

@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Concepts.CodeTypes;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Concepts.Document;
+using Pims.Api.Models.Concepts.Document.UpdateMetadata;
+using Pims.Api.Models.Concepts.Document.Upload;
+using Pims.Api.Models.Concepts.Http;
 using Pims.Api.Models.Download;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
@@ -105,6 +108,9 @@ namespace Pims.Api.Services
                     break;
                 case DocumentRelationType.ManagementFiles:
                     categoryType = "MANAGEMENT";
+                    break;
+                case DocumentRelationType.DispositionFiles:
+                    categoryType = "DISPOSE";
                     break;
                 default:
                     throw new InvalidDataException("The requested category relationship does not exist");

@@ -16,7 +16,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.PimsCountry CreateCountry(short id, string code)
         {
-            return new Entity.PimsCountry(code) { CountryId = id, ConcurrencyControlNumber = 1 };
+            return new Entity.PimsCountry(code) { CountryId = id, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" };
         }
 
         /// <summary>
@@ -27,8 +27,8 @@ namespace Pims.Core.Test
         {
             return new List<Entity.PimsCountry>()
             {
-                new Entity.PimsCountry("CAN") { CountryId = 1, ConcurrencyControlNumber = 1 },
-                new Entity.PimsCountry("USA") { CountryId = 2,  ConcurrencyControlNumber = 1 },
+                new Entity.PimsCountry("CAN") { CountryId = 1, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
+                new Entity.PimsCountry("USA") { CountryId = 2,  ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
             };
         }
     }

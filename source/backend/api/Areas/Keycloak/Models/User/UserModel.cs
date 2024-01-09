@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Pims.Api.Models.Base;
 
 namespace Pims.Api.Areas.Keycloak.Models.User
 {
     /// <summary>
     /// UserModel class, provides a model to represent a user.
     /// </summary>
-    public class UserModel : Pims.Api.Models.BaseAppModel
+    public class UserModel : BaseAuditModel
     {
         #region Properties
 

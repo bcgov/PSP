@@ -1,6 +1,7 @@
 using System.Collections.Generic;
-using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Concepts.Property;
 using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
 
 namespace Pims.Api.Services
 {
@@ -34,8 +35,12 @@ namespace Pims.Api.Services
 
         PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity);
 
-        PimsPropertyActivity UpdateActivity(PimsPropertyActivity propertyActivity);
+        PimsPropertyActivity UpdateActivity(long propertyId, long activityId, PimsPropertyActivity propertyActivity);
 
         bool DeleteActivity(long activityId);
+
+        PimsProperty PopulateNewProperty(PimsProperty property);
+
+        void UpdateLocation(PimsProperty acquisitionProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes);
     }
 }

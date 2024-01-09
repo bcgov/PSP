@@ -20,6 +20,13 @@ using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
+using Pims.Api.Models.Concepts.Http;
+using Pims.Api.Concepts.CodeTypes;
+using Pims.Api.Models.Concepts.Document.UpdateMetadata;
+using Pims.Api.Models.Concepts.Document;
+using Pims.Api.Models.Concepts.Document.Upload;
+using Pims.Api.Models.Mayan.Metadata;
+using Pims.Api.Constants;
 
 namespace Pims.Api.Test.Services
 {
@@ -30,6 +37,17 @@ namespace Pims.Api.Test.Services
     public class DocumentServiceTest
     {
         private TestHelper _helper;
+
+        public static IEnumerable<object[]> GetPimsDocumentTypesParameters =>
+            new List<object[]>
+            {
+                new object[] {DocumentRelationType.ResearchFiles, "RESEARCH"},
+                new object[] {DocumentRelationType.AcquisitionFiles, "ACQUIRE"},
+                new object[] {DocumentRelationType.Leases, "LEASLIC"},
+                new object[] {DocumentRelationType.Projects, "PROJECT"},
+                new object[] {DocumentRelationType.ManagementFiles, "MANAGEMENT"},
+                new object[] {DocumentRelationType.DispositionFiles, "DISPOSE"},
+            };
 
         public DocumentServiceTest()
         {
@@ -72,6 +90,22 @@ namespace Pims.Api.Test.Services
             documentTypeRepository.Verify(x => x.GetAll(), Times.Once);
         }
 
+        [Theory]
+        [MemberData(nameof(GetPimsDocumentTypesParameters))]
+        public void GetPimsDocumentTypes_ByRelationshipType_Success(DocumentRelationType relationshipType, string category)
+        {
+            // Arrange
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentTypeRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
+
+            documentTypeRepository.Setup(x => x.GetByCategory(It.IsAny<string>())).Returns(new List<PimsDocumentTyp>());
+
+            // Act
+            var result = service.GetPimsDocumentTypes(relationshipType);
+
+            // Assert
+            documentTypeRepository.Verify(x => x.GetByCategory(category), Times.Once);
+        }
         [Fact]
         public void UploadDocumentAsync_UploadRequest_ShouldThrowException_NotAuthorized()
         {
@@ -85,7 +119,7 @@ namespace Pims.Api.Test.Services
             Func<Task> sut = async () => await service.UploadDocumentAsync(uploadRequest);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            sut.Should().ThrowAsync<NotAuthorizedException>();
             documentTypeRepository.Verify(x => x.GetAll(), Times.Never);
         }
 
@@ -184,7 +218,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.UpdateDocumentAsync(updateRequest);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentRepository.Verify(x => x.Add(It.IsAny<PimsDocument>()), Times.Never);
         }
 
@@ -210,7 +244,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.UpdateDocumentAsync(updateRequest);
 
             // Assert
-            act.Should().Throw<BadRequestException>();
+            act.Should().ThrowAsync<BadRequestException>();
             documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Once);
         }
 
@@ -240,7 +274,7 @@ namespace Pims.Api.Test.Services
                             {
                                 new() {
                                     Id = 1,
-                                    MetadataType= new Models.Mayan.Metadata.MetadataType()
+                                    MetadataType= new MetadataType()
                                     {
                                         Id= 100,
                                     },
@@ -312,7 +346,7 @@ namespace Pims.Api.Test.Services
                     {
                         Id = 1,
                         Value = "test_value",
-                        MetadataType = new Models.Mayan.Metadata.MetadataType()
+                        MetadataType = new MetadataType()
                         {
                             Id = 1,
                         },
@@ -364,7 +398,7 @@ namespace Pims.Api.Test.Services
                             {
                                 new() {
                                     Id = 1,
-                                    MetadataType= new Models.Mayan.Metadata.MetadataType()
+                                    MetadataType= new MetadataType()
                                     {
                                         Id= 100,
                                     },
@@ -423,7 +457,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.DeleteDocumentAsync(doc);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Never);
         }
 
@@ -490,7 +524,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.GetStorageDocumentTypes(null, page: 1, pageSize: 10);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentStorageRepository.Verify(x => x.TryDeleteDocument(It.IsAny<long>()), Times.Never);
         }
 
@@ -530,7 +564,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.GetStorageDocumentList(null, page: 1, pageSize: 10);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
         }
 
         [Fact]
@@ -590,7 +624,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.GetStorageDocumentMetadata(1, string.Empty, 1, 10);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
         }
 
         [Fact]
@@ -629,7 +663,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.DownloadFileAsync(1, 2);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
         }
 
         [Fact]
@@ -667,7 +701,7 @@ namespace Pims.Api.Test.Services
             Func<Task> sut = async () => await service.DownloadFileLatestAsync(1);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            sut.Should().ThrowAsync<NotAuthorizedException>();
         }
 
         [Fact]

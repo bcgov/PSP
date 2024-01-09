@@ -20,8 +20,8 @@ const emptyActivity: Api_PropertyActivity = {
     isDisabled: false,
     displayOrder: 100,
   },
-  requestAddedDateTime: '',
-  completionDateTime: null,
+  requestAddedDateOnly: '',
+  completionDateOnly: null,
   description: '',
   requestSource: '',
   pretaxAmt: null,
@@ -63,7 +63,7 @@ export const mockGetPropertyManagementActivity = (
     isDisabled: false,
     displayOrder: 100,
   },
-  requestAddedDateTime: '2023-10-17T00:00:00',
+  requestAddedDateOnly: '2023-10-17T00:00:00',
   rowVersion: 1,
   activityProperties: [
     {
@@ -101,7 +101,7 @@ export const mockGetPropertyManagementActivityNotStarted = (
     isDisabled: false,
     displayOrder: 100,
   },
-  requestAddedDateTime: '2023-10-17T00:00:00',
+  requestAddedDateOnly: '2023-10-17T00:00:00',
   rowVersion: 1,
   activityProperties: [
     {

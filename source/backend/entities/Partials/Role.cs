@@ -32,6 +32,10 @@ namespace Pims.Dal.Entities
             this.Name = name;
             this.IsDisabled = false;
         }
+
+        public PimsRole()
+        {
+        }
         #endregion
     }
 }

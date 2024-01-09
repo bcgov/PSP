@@ -4,19 +4,19 @@ import React from 'react';
 import { toast } from 'react-toastify';
 
 import * as API from '@/constants/API';
+import { ChecklistFormModel } from '@/features/mapSideBar/shared/tabs/checklist/update/models';
+import { IUpdateChecklistFormProps } from '@/features/mapSideBar/shared/tabs/checklist/update/UpdateChecklistForm';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { IApiError } from '@/interfaces/IApiError';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-
-import { AcquisitionChecklistFormModel } from './models';
-import { IUpdateAcquisitionChecklistFormProps } from './UpdateAcquisitionChecklistForm';
+import { Api_FileWithChecklist } from '@/models/api/File';
 
 export interface IAcquisitionChecklistContainerProps {
-  formikRef: React.Ref<FormikProps<AcquisitionChecklistFormModel>>;
+  formikRef: React.Ref<FormikProps<ChecklistFormModel>>;
   acquisitionFile?: Api_AcquisitionFile;
   onSuccess: () => void;
-  View: React.FC<IUpdateAcquisitionChecklistFormProps>;
+  View: React.FC<IUpdateChecklistFormProps>;
 }
 
 export const UpdateAcquisitionChecklistContainer: React.FC<IAcquisitionChecklistContainerProps> = ({
@@ -34,14 +34,14 @@ export const UpdateAcquisitionChecklistContainer: React.FC<IAcquisitionChecklist
 
   const initialValues =
     acquisitionFile !== undefined
-      ? AcquisitionChecklistFormModel.fromApi(acquisitionFile, sectionTypes)
-      : new AcquisitionChecklistFormModel();
+      ? ChecklistFormModel.fromApi(acquisitionFile, sectionTypes)
+      : new ChecklistFormModel();
 
-  const saveChecklist = async (apiAcquisitionFile: Api_AcquisitionFile) => {
+  const saveChecklist = async (apiAcquisitionFile: Api_FileWithChecklist) => {
     return updateAcquisitionChecklist(apiAcquisitionFile);
   };
 
-  const onUpdateSuccess = async (apiAcquisitionFile: Api_AcquisitionFile) => {
+  const onUpdateSuccess = async (apiAcquisitionFile: Api_FileWithChecklist) => {
     onSuccess && onSuccess();
   };
 
@@ -61,6 +61,9 @@ export const UpdateAcquisitionChecklistContainer: React.FC<IAcquisitionChecklist
       onSave={saveChecklist}
       onSuccess={onUpdateSuccess}
       onError={onError}
+      sectionTypeName={API.ACQUISITION_CHECKLIST_SECTION_TYPES}
+      statusTypeName={API.ACQUISITION_CHECKLIST_ITEM_STATUS_TYPES}
+      prefix="acq"
     />
   );
 };

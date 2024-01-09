@@ -15,7 +15,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.PimsAcquisitionType CreateAcquisitionType(string id)
         {
-            return new Entity.PimsAcquisitionType(id) { ConcurrencyControlNumber = 1 };
+            return new Entity.PimsAcquisitionType(id) { ConcurrencyControlNumber = 1, Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" };
         }
 
         /// <summary>
@@ -26,9 +26,9 @@ namespace Pims.Core.Test
         {
             return new List<Entity.PimsAcquisitionType>()
             {
-                new Entity.PimsAcquisitionType("CONSEN") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsAcquisitionType("SECTN3") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsAcquisitionType("SECTN6") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsAcquisitionType("CONSEN") { ConcurrencyControlNumber = 1, Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" },
+                new Entity.PimsAcquisitionType("SECTN3") { ConcurrencyControlNumber = 1, Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" },
+                new Entity.PimsAcquisitionType("SECTN6") { ConcurrencyControlNumber = 1, Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" },
             };
         }
     }

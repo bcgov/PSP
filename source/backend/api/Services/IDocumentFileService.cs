@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Pims.Api.Constants;
-using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Concepts.Document.Upload;
+using Pims.Api.Models.Concepts.Http;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
@@ -25,6 +25,8 @@ namespace Pims.Api.Services
 
         Task<DocumentUploadRelationshipResponse> UploadPropertyActivityDocumentAsync(long propertyActivityId, DocumentUploadRequest uploadRequest);
 
+        Task<DocumentUploadRelationshipResponse> UploadDispositionDocumentAsync(long dispositionFileId, DocumentUploadRequest uploadRequest);
+
         Task<ExternalResult<string>> DeleteResearchDocumentAsync(PimsResearchFileDocument researchFileDocument);
 
         Task<ExternalResult<string>> DeleteAcquisitionDocumentAsync(PimsAcquisitionFileDocument acquisitionFileDocument);
@@ -34,5 +36,7 @@ namespace Pims.Api.Services
         Task<ExternalResult<string>> DeleteLeaseDocumentAsync(PimsLeaseDocument leaseDocument);
 
         Task<ExternalResult<string>> DeletePropertyActivityDocumentAsync(PimsPropertyActivityDocument propertyActivityDocument);
+
+        Task<ExternalResult<string>> DeleteDispositionDocumentAsync(PimsDispositionFileDocument dispositionFileDocument);
     }
 }

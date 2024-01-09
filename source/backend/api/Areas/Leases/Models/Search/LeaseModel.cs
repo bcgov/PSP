@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Pims.Api.Models;
+using Pims.Api.Models.Base;
 
 namespace Pims.Api.Areas.Lease.Models.Search
 {
@@ -21,7 +21,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// <summary>
         /// get/set - The expiry date time.
         /// </summary>
-        public DateTime? ExpiryDate { get; set; }
+        public DateOnly? ExpiryDate { get; set; }
 
         /// <summary>
         /// get/set - The value of the program name.

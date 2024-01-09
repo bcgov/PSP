@@ -1,5 +1,6 @@
 using System.Linq;
 using Mapster;
+using Pims.Api.Models.Base;
 using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Reports.Models.User;
@@ -22,7 +23,7 @@ namespace Pims.Api.Areas.Reports.Mapping.User
                 .Map(dest => dest.UserType, src => src.UserTypeCodeNavigation.Description)
                 .Map(dest => dest.ApprovedBy, src => src.ApprovedById)
                 .Map(dest => dest.IssueOn, src => src.IssueDate)
-                .Inherits<Entity.IDisableBaseAppEntity, Api.Models.BaseAppModel>();
+                .Inherits<Entity.IDisableBaseAppEntity<bool?>, BaseAuditModel>();
         }
     }
 }

@@ -76,7 +76,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
       <Section
         header={
           <AssociationHeader
-            icon={<MdOutlineCallMissedOutgoing title="Leases-Licenses" size="2.5rem" />}
+            icon={<MdOutlineCallMissedOutgoing title="Disposition-Files" size="2.5rem" />}
             title="Disposition Files"
             count={props.associations?.dispositionAssociations?.length}
           />
@@ -86,7 +86,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
         <AssociationContent
           associationName="disposition"
           associations={props.associations?.dispositionAssociations}
-          linkUrlMask="/dispositions/|id|/details"
+          linkUrlMask="/mapview/sidebar/disposition/|id|"
         />
       </Section>
     </StyledSummarySection>

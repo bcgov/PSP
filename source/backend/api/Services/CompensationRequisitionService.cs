@@ -79,7 +79,7 @@ namespace Pims.Api.Services
 
             return updatedEntity;
 
-            DateTime? CheckFinalizedDate(bool? currentStatusIsDraft, bool? newStatusIsDraft, DateTime? currentValue)
+            DateOnly? CheckFinalizedDate(bool? currentStatusIsDraft, bool? newStatusIsDraft, DateOnly? currentValue)
             {
                 if (currentStatusIsDraft.Equals(newStatusIsDraft))
                 {
@@ -88,7 +88,7 @@ namespace Pims.Api.Services
 
                 if (newStatusIsDraft.HasValue)
                 {
-                    return newStatusIsDraft.Value ? null : DateTime.UtcNow;
+                    return newStatusIsDraft.Value ? null : DateOnly.FromDateTime(DateTime.UtcNow);
                 }
 
                 return null;
@@ -102,9 +102,9 @@ namespace Pims.Api.Services
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationId);
 
-            var currentAcqusitionStatus = GetCurrentAcquisitionStatus(currentCompensation.AcquisitionFileId);
+            var currentAcquisitionStatus = GetCurrentAcquisitionStatus(currentCompensation.AcquisitionFileId);
 
-            if (!_statusSolver.CanEditOrDeleteCompensation(currentAcqusitionStatus, currentCompensation.IsDraft) && !_user.HasPermission(Permissions.SystemAdmin))
+            if (!_statusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
@@ -171,9 +171,7 @@ namespace Pims.Api.Services
 
         private AcquisitionStatusTypes GetCurrentAcquisitionStatus(long acquisitionFileId)
         {
-            var currentCompensation = _compensationRequisitionRepository.GetById(acquisitionFileId);
-
-            var currentAcquisitionFile = _acqFileRepository.GetById(currentCompensation.AcquisitionFileId);
+            var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
             return Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
         }
     }

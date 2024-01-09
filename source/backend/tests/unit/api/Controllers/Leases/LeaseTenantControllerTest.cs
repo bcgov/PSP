@@ -5,6 +5,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Lease.Controllers;
+using Pims.Api.Models.Concepts.Lease;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Test;
@@ -12,7 +13,6 @@ using Pims.Dal;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
-using Model = Pims.Api.Areas.Lease.Models.Lease;
 
 namespace Pims.Api.Test.Controllers.Lease
 {

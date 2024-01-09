@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Concepts.Note;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
@@ -65,6 +65,14 @@ namespace Pims.Api.Services
                     _entityNoteRepository.CommitTransaction();
 
                     result = _mapper.Map<EntityNoteModel>(createdAcqEntity);
+                    break;
+                case NoteType.Disposition_File:
+                    PimsDispositionFileNote dispositionNoteEntity = _mapper.Map<PimsDispositionFileNote>(model);
+
+                    PimsDispositionFileNote createdDispositionEntity = _entityNoteRepository.Add<PimsDispositionFileNote>(dispositionNoteEntity);
+                    _entityNoteRepository.CommitTransaction();
+
+                    result = _mapper.Map<EntityNoteModel>(createdDispositionEntity);
                     break;
                 case NoteType.Lease_File:
                     PimsLeaseNote leaseNoteEntity = _mapper.Map<PimsLeaseNote>(model);
@@ -129,6 +137,7 @@ namespace Pims.Api.Services
             deleted = type switch
             {
                 NoteType.Acquisition_File => _entityNoteRepository.DeleteAcquisitionFileNotes(noteId),
+                NoteType.Disposition_File => _entityNoteRepository.DeleteDispositionFileNotes(noteId),
                 NoteType.Project => _entityNoteRepository.DeleteProjectNotes(noteId),
                 NoteType.Lease_File => _entityNoteRepository.DeleteLeaseFileNotes(noteId),
                 NoteType.Research_File => _entityNoteRepository.DeleteResearchNotes(noteId),
@@ -157,6 +166,7 @@ namespace Pims.Api.Services
             List<PimsNote> notes = type switch
             {
                 NoteType.Acquisition_File => _entityNoteRepository.GetAllAcquisitionNotesById(entityId).ToList(),
+                NoteType.Disposition_File => _entityNoteRepository.GetAllDispositionNotesById(entityId).ToList(),
                 NoteType.Project => _entityNoteRepository.GetAllProjectNotesById(entityId).ToList(),
                 NoteType.Lease_File => _entityNoteRepository.GetAllLeaseNotesById(entityId).ToList(),
                 NoteType.Research_File => _entityNoteRepository.GetAllResearchNotesById(entityId).ToList(),

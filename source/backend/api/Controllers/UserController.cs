@@ -2,9 +2,9 @@ using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Models.Concepts.User;
 using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
-using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Controllers
 {
@@ -46,7 +46,7 @@ namespace Pims.Api.Controllers
         /// <returns>User person info.</returns>
         [HttpGet("info/{keycloakUserId}")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.UserModel), 200)]
+        [ProducesResponseType(typeof(UserModel), 200)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "userInfo" })]
         public IActionResult UserBasicInfo([FromRoute] Guid keycloakUserId)
@@ -56,7 +56,7 @@ namespace Pims.Api.Controllers
                 return new JsonResult(new Models.ErrorResponseModel("Invalid keycloakUserId", "keycloakUserId should be a valid non empty guid"));
             }
             var entity = _userRepository.GetUserInfoByKeycloakUserId(keycloakUserId);
-            var user = _mapper.Map<Model.UserModel>(entity);
+            var user = _mapper.Map<UserModel>(entity);
             return new JsonResult(user);
         }
         #endregion

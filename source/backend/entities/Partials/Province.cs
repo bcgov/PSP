@@ -6,7 +6,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// Province class, provides an entity for the datamodel to manage a list of provinces.
     /// </summary>
-    public partial class PimsProvinceState : ICodeEntity<string>
+    public partial class PimsProvinceState : ICodeEntity<string, bool>
     {
         #region Properties
 
@@ -38,6 +38,10 @@ namespace Pims.Dal.Entities
             this.Code = code;
             this.Country = country ?? throw new ArgumentNullException(nameof(country));
             this.CountryId = country.Id;
+        }
+
+        public PimsProvinceState()
+        {
         }
         #endregion
     }

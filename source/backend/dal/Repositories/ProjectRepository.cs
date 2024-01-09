@@ -1,4 +1,3 @@
-using System.Data.Entity.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +10,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Pims.Dal.Repositories
 {
@@ -71,7 +68,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public PimsProject Get(long id)
+        public PimsProject TryGet(long id)
         {
             User.ThrowIfNotAuthorized(Permissions.ProjectView);
 
@@ -86,6 +83,27 @@ namespace Pims.Dal.Repositories
                     .Include(x => x.WorkActivityCode)
                     .Where(x => x.Id == id)
                     .FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Get by ID - Search Projects by name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public IEnumerable<PimsProject> GetAllByName(string name)
+        {
+            User.ThrowIfNotAuthorized(Permissions.ProjectView);
+
+            return Context.PimsProjects
+                    .AsNoTracking()
+                    .Include(x => x.PimsProjectProducts)
+                        .ThenInclude(x => x.Product)
+                    .Include(x => x.ProjectStatusTypeCodeNavigation)
+                    .Include(x => x.RegionCodeNavigation)
+                    .Include(x => x.CostTypeCode)
+                    .Include(x => x.BusinessFunctionCode)
+                    .Include(x => x.WorkActivityCode)
+                    .Where(x => x.Description == name).ToArray();
         }
 
         /// <summary>
