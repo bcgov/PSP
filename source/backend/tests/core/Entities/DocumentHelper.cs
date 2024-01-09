@@ -29,6 +29,10 @@ namespace Pims.Core.Test
                 DbCreateUserid = string.Empty,
                 DbLastUpdateUserid = string.Empty,
                 ConcurrencyControlNumber = 1,
+                DocumentStatusTypeCode = "DRAFT",
+                DocumentStatusTypeCodeNavigation = new Entity.PimsDocumentStatusType() { Id = $"DRAFT-{id}", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" },
+                DocumentTypeId = 1,
+                DocumentType = new Entity.PimsDocumentTyp() { DocumentTypeId = id, DbCreateUserid = "test", DbLastUpdateUserid = "test", DocumentType = "test", DocumentTypeDescription = "test" },
             };
         }
     }
