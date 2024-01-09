@@ -9,22 +9,21 @@ import { IApiError } from '@/interfaces/IApiError';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
+import DispositionForm from '../form/DispositionForm';
 import { DispositionFormModel } from '../models/DispositionFormModel';
 import { IUpdateDispositionViewProps } from './UpdateDispositionView';
 
 export interface IUpdateDispositionContainerProps {
-  formikRef: React.Ref<FormikProps<DispositionFormModel>>;
   dispositionFile: Api_DispositionFile;
   onSuccess: () => void;
   View: React.FC<IUpdateDispositionViewProps>;
 }
 
-const UpdateDispositionContainer: React.FC<IUpdateDispositionContainerProps> = ({
-  formikRef,
-  dispositionFile,
-  onSuccess,
-  View,
-}) => {
+export const UpdateDispositionContainer = React.forwardRef<
+  FormikProps<DispositionFormModel>,
+  IUpdateDispositionContainerProps
+>((props, formikRef) => {
+  const { dispositionFile, onSuccess, View } = props;
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const {
@@ -34,10 +33,6 @@ const UpdateDispositionContainer: React.FC<IUpdateDispositionContainerProps> = (
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<Api_DispositionFile | void>
   >('Failed to update Disposition File');
-
-  const onUpdateSuccess = async (apiDispositionFile: Api_DispositionFile) => {
-    onSuccess && onSuccess();
-  };
 
   const handleSubmit = async (
     values: DispositionFormModel,
@@ -55,7 +50,7 @@ const UpdateDispositionContainer: React.FC<IUpdateDispositionContainerProps> = (
 
         if (!!response?.id) {
           formikHelpers?.resetForm();
-          onUpdateSuccess(response);
+          onSuccess();
         }
       }
     } finally {
@@ -89,6 +84,6 @@ const UpdateDispositionContainer: React.FC<IUpdateDispositionContainerProps> = (
       loading={loading}
     ></View>
   );
-};
+});
 
 export default UpdateDispositionContainer;

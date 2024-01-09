@@ -1,4 +1,5 @@
 import { FormikProps } from 'formik';
+import React from 'react';
 import styled from 'styled-components';
 
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -9,28 +10,16 @@ import { DispositionFormModel } from '../models/DispositionFormModel';
 export interface IUpdateDispositionViewProps {
   formikRef: React.Ref<FormikProps<DispositionFormModel>>;
   dispositionInitialValues: DispositionFormModel;
-  loading: boolean;
-  // displayFormInvalid: boolean;
   onSubmit: (
     values: DispositionFormModel,
     setSubmitting: (isSubmitting: boolean) => void,
     userOverrides: UserOverrideCode[],
   ) => void | Promise<any>;
-  // onCancel: () => void;
-  // onSave: () => void;
 }
 
 const UpdateDispositionView: React.FunctionComponent<
   React.PropsWithChildren<IUpdateDispositionViewProps>
-> = ({
-  formikRef,
-  dispositionInitialValues,
-  loading,
-  // displayFormInvalid,
-  onSubmit,
-  // onSave,
-  // onCancel,
-}) => {
+> = ({ formikRef, dispositionInitialValues, onSubmit }) => {
   return (
     <StyledFormWrapper>
       <DispositionForm
