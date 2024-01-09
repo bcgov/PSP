@@ -46,28 +46,6 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get the original value of the specified 'propertyName'.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entity"></param>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
-        public T OriginalValue<T>(object entity, string propertyName)
-        {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            if (string.IsNullOrWhiteSpace(propertyName))
-            {
-                throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.");
-            }
-
-            return (T)this.Context.Entry(entity).OriginalValues[propertyName];
-        }
-
-        /// <summary>
         /// Commit all saved changes as a single transaction.
         /// </summary>
         public void CommitTransaction()
@@ -75,27 +53,6 @@ namespace Pims.Dal.Repositories
             this.Context.CommitTransaction();
         }
 
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Provides a way to fetch the context within the assembly.
-        /// </summary>
-        /// <returns></returns>
-        internal PimsContext GetContext()
-        {
-            return this.Context;
-        }
-
-        /// <summary>
-        /// Provides a way to fetch the user within the assembly.
-        /// </summary>
-        /// <returns></returns>
-        internal ClaimsPrincipal GetUser()
-        {
-            return this.User;
-        }
         #endregion
     }
 }

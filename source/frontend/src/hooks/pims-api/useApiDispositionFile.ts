@@ -10,7 +10,7 @@ import {
   Api_DispositionFileTeam,
 } from '@/models/api/DispositionFile';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
-import { Api_LastUpdatedBy } from '@/models/api/File';
+import { Api_FileWithChecklist, Api_LastUpdatedBy } from '@/models/api/File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
@@ -43,6 +43,10 @@ export const useApiDispositionFile = () => {
         api.get<Api_DispositionFile>(`/dispositionfiles/${dispositionFileId}`),
       getLastUpdatedByApi: (dispositionFileId: number) =>
         api.get<Api_LastUpdatedBy>(`/dispositionfiles/${dispositionFileId}/updateInfo`),
+      getDispositionFileChecklist: (acqFileId: number) =>
+        api.get<[]>(`/dispositionfiles/${acqFileId}/checklist`),
+      putDispositionFileChecklist: (acqFile: Api_FileWithChecklist) =>
+        api.put<Api_DispositionFile>(`/dispositionfiles/${acqFile?.id}/checklist`, acqFile),
       getDispositionFileProperties: (dispositionFileId: number) =>
         api.get<Api_DispositionFileProperty[]>(`/dispositionfiles/${dispositionFileId}/properties`),
       getAllDispositionFileTeamMembers: () =>
@@ -68,6 +72,16 @@ export const useApiDispositionFile = () => {
         ),
       deleteDispositionFileOffer: (dispositionFileId: number, offferId: number) =>
         api.delete<boolean>(`/dispositionfiles/${dispositionFileId}/offers/${offferId}`),
+      exportDispositionFiles: (filter: IPaginateDisposition, outputFormat: 'excel' = 'excel') =>
+        api.get<Blob>(
+          `/reports/disposition?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
+          {
+            responseType: 'blob',
+            headers: {
+              Accept: 'application/vnd.ms-excel',
+            },
+          },
+        ),
     }),
     [api],
   );

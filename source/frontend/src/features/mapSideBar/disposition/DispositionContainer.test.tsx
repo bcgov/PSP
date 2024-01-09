@@ -206,7 +206,7 @@ describe('DispositionContainer component', () => {
 
     await act(async () => viewProps.onSuccess());
 
-    expect(mockAxios.history.get.filter(x => x.url === '/dispositionfiles/1')).toHaveLength(3);
+    expect(mockAxios.history.get.filter(x => x.url === '/dispositionfiles/1')).toHaveLength(2);
   });
 
   it('on success function cancels edit', async () => {

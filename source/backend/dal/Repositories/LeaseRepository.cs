@@ -636,6 +636,11 @@ namespace Pims.Dal.Repositories
                 .Include(t => t.PimsLeaseTerms)
                     .ThenInclude(t => t.PimsLeasePayments)
                     .ThenInclude(t => t.LeasePaymentStatusTypeCodeNavigation)
+
+                .Include(t => t.PimsLeaseConsultations)
+                    .ThenInclude(t => t.ConsultationTypeCodeNavigation)
+                .Include(t => t.PimsLeaseConsultations)
+                    .ThenInclude(t => t.ConsultationStatusTypeCodeNavigation)
                 .FirstOrDefault(l => l.LeaseId == id) ?? throw new KeyNotFoundException();
 
             lease.LeasePurposeTypeCodeNavigation = this.Context.PimsLeasePurposeTypes.Single(type => type.LeasePurposeTypeCode == lease.LeasePurposeTypeCode);

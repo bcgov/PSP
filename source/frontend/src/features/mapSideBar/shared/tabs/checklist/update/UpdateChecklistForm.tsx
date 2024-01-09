@@ -7,38 +7,43 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
-import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_FileWithChecklist } from '@/models/api/File';
 import { prettyFormatUTCDate } from '@/utils';
 
 import { StyledSectionCentered } from '../detail/styles';
-import { AcquisitionChecklistFormModel } from './models';
+import { ChecklistFormModel } from './models';
 
-export interface IUpdateAcquisitionChecklistFormProps {
-  formikRef: React.Ref<FormikProps<AcquisitionChecklistFormModel>>;
-  initialValues: AcquisitionChecklistFormModel;
-  onSave: (apiAcquisitionFile: Api_AcquisitionFile) => Promise<Api_AcquisitionFile | undefined>;
-  onSuccess: (apiAcquisitionFile: Api_AcquisitionFile) => Promise<void>;
+export interface IUpdateChecklistFormProps {
+  formikRef: React.Ref<FormikProps<ChecklistFormModel>>;
+  initialValues: ChecklistFormModel;
+  sectionTypeName: string;
+  statusTypeName: string;
+  prefix: string;
+  onSave: (apiFile: Api_FileWithChecklist) => Promise<Api_FileWithChecklist | undefined>;
+  onSuccess: (apiFile: Api_FileWithChecklist) => Promise<void>;
   onError: (e: AxiosError<IApiError>) => void;
 }
 
-export const UpdateAcquisitionChecklistForm: React.FC<IUpdateAcquisitionChecklistFormProps> = ({
+export const UpdateChecklistForm: React.FC<IUpdateChecklistFormProps> = ({
   formikRef,
   initialValues,
   onSave,
   onSuccess,
   onError,
+  sectionTypeName,
+  statusTypeName,
+  prefix,
 }) => {
   const { getByType, getOptionsByType } = useLookupCodeHelpers();
-  const sectionTypes = getByType(API.ACQUISITION_CHECKLIST_SECTION_TYPES);
-  const statusTypes = getOptionsByType(API.ACQUISITION_CHECKLIST_ITEM_STATUS_TYPES);
+  const sectionTypes = getByType(sectionTypeName);
+  const statusTypes = getOptionsByType(statusTypeName);
 
   const lastUpdated = initialValues.lastModifiedBy();
 
   return (
-    <Formik<AcquisitionChecklistFormModel>
+    <Formik<ChecklistFormModel>
       enableReinitialize
       innerRef={formikRef}
       initialValues={initialValues}
@@ -47,7 +52,7 @@ export const UpdateAcquisitionChecklistForm: React.FC<IUpdateAcquisitionChecklis
           const updatedFile = await onSave(values.toApi());
           if (!!updatedFile?.id) {
             formikHelpers.resetForm({
-              values: AcquisitionChecklistFormModel.fromApi(updatedFile, sectionTypes),
+              values: ChecklistFormModel.fromApi(updatedFile, sectionTypes),
             });
             await onSuccess(updatedFile);
           }
@@ -78,10 +83,10 @@ export const UpdateAcquisitionChecklistForm: React.FC<IUpdateAcquisitionChecklis
           )}
 
           {formikProps.values.checklistSections.map((section, i) => (
-            <Section key={section.id ?? `acq-checklist-section-${i}`} header={section.name}>
+            <Section key={section.id ?? `${prefix}-checklist-section-${i}`} header={section.name}>
               {section.items.map((checklistItem, j) => (
                 <SectionField
-                  key={checklistItem.itemType?.code ?? `acq-checklist-item-${j}`}
+                  key={checklistItem.itemType?.code ?? `${prefix}-checklist-item-${j}`}
                   label={checklistItem.itemType?.description ?? ''}
                   tooltip={checklistItem.itemType?.hint}
                   labelWidth="7"

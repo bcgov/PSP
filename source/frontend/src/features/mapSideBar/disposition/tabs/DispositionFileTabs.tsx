@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
+import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
 import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { NoteTypes } from '@/constants/noteTypes';
@@ -11,6 +12,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
 
 import { SideBarContext } from '../../context/sidebarContext';
+import { ChecklistView } from '../../shared/tabs/checklist/detail/ChecklistView';
 import DispositionSummaryView from './fileDetails/detail/DispositionSummaryView';
 import OffersAndSaleContainer from './offersAndSale/OffersAndSaleContainer';
 import OffersAndSaleContainerView from './offersAndSale/OffersAndSaleContainerView';
@@ -65,7 +67,15 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
   }
 
   tabViews.push({
-    content: <></>,
+    content: (
+      <ChecklistView
+        onEdit={() => setIsEditing(true)}
+        sectionTypeName={API.DISPOSITION_CHECKLIST_SECTION_TYPES}
+        editClaim={Claims.DISPOSITION_EDIT}
+        prefix="dsp"
+        apiFile={dispositionFile}
+      />
+    ),
     key: FileTabType.CHECKLIST,
     name: 'Checklist',
   });

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using Pims.Core.Extensions;
@@ -129,6 +131,72 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             result.Should().NotBeNull();
             result.Pid.Should().Be(100);
+        }
+        #endregion
+
+        #region GetAllByIds
+        [Fact]
+        public void GetAllByIds_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            property.Internal_Id = 1;
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetAllByIds(new List<long>() { 1 });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetAllByIds_NotAuthorized()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyDelete);
+            var property = EntityHelper.CreateProperty(100);
+            property.Internal_Id = 1;
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            Action act = () => repository.GetAllByIds(new List<long>() { 1 });
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+        #endregion
+
+        #region GetAllAssociationsById
+        [Fact]
+        public void GetAllAssociationsById_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var property = EntityHelper.CreateProperty(100);
+            property.Internal_Id = 1;
+            property.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { AcquisitionFile = new PimsAcquisitionFile() {
+                AcquisitionTypeCode = "TYPE", FileName = "ACQFILE", FileNumber = "1234", AcquisitionFileStatusTypeCodeNavigation = new PimsAcquisitionFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" } } } };
+            property.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { ResearchFile = new PimsResearchFile() {
+                Name = "Research", RfileNumber = "1234", ResearchFileStatusTypeCodeNavigation = new PimsResearchFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" } } } };
+            property.PimsPropertyLeases = new List<PimsPropertyLease>() { new PimsPropertyLease() { Lease = new PimsLease() {
+                LeaseLicenseTypeCode = "TYPE", LeasePayRvblTypeCode = "RCVBL", LeaseProgramTypeCode = "PROGRAM", LeasePurposeTypeCode = "PURPOSE",
+                LeaseStatusTypeCodeNavigation = new PimsLeaseStatusType () { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" } } } };
+            property.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { DispositionFile = new PimsDispositionFile() {
+                DispositionStatusTypeCode = "DRAFT", DispositionTypeCode = "TYPE", DispositionFileStatusTypeCodeNavigation = new PimsDispositionFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" } } } };
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetAllAssociationsById(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.PimsPropertyAcquisitionFiles.Should().HaveCount(1);
+            result.PimsPropertyResearchFiles.Should().HaveCount(1);
+            result.PimsPropertyLeases.Should().HaveCount(1);
+            result.PimsDispositionFileProperties.Should().HaveCount(1);
         }
         #endregion
 
@@ -473,6 +541,64 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
+        }
+        #endregion
+
+        #region Delete
+        [Fact]
+        public void Delete_Property_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var property = EntityHelper.CreateProperty(1);
+            var context = _helper.AddAndSaveChanges(property);
+
+            // Act
+            repository.Delete(property);
+
+            // Assert
+            var deletedProperty = context.PimsProperties.FirstOrDefault();
+            context.ChangeTracker.Entries().Should().NotBeEmpty();
+        }
+        #endregion
+
+        #region TransferFileProperties
+        [Fact]
+        public void TransferFileProperties_Success_Owned()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var property = EntityHelper.CreateProperty(1);
+            var context = _helper.AddAndSaveChanges(property);
+
+
+            // Act
+            var transferredProperty = repository.TransferFileProperty(property, true, true);
+            context.CommitTransaction();
+
+            // Assert
+            transferredProperty.IsOwned.Should().BeTrue();
+            transferredProperty.IsPropertyOfInterest.Should().BeTrue();
+            transferredProperty.PropertyClassificationTypeCode.Should().Be("COREOPER");
+        }
+
+        [Fact]
+        public void TransferFileProperties_Success_NotOwned()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var property = EntityHelper.CreateProperty(1);
+            var context = _helper.AddAndSaveChanges(property);
+
+
+            // Act
+            var transferredProperty = repository.TransferFileProperty(property, false, false);
+            context.CommitTransaction();
+
+            // Assert
+            transferredProperty.IsOwned.Should().BeFalse();
+            transferredProperty.IsPropertyOfInterest.Should().BeFalse();
+            transferredProperty.PropertyClassificationTypeCode.Should().Be("OTHER");
         }
         #endregion
 

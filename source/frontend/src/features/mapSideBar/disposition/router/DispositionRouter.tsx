@@ -9,6 +9,8 @@ import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
+import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
+import { UpdateDispositionChecklistContainer } from '../tabs/checklist/update/UpdateDispositionChecklistContainer';
 import DispositionFileTabs from '../tabs/DispositionFileTabs';
 import AddDispositionOfferContainer from '../tabs/offersAndSale/dispositionOffer/add/AddDispositionOfferContainer';
 import DispositionOfferForm from '../tabs/offersAndSale/dispositionOffer/form/DispositionOfferForm';
@@ -38,6 +40,14 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
         {/* Ignore property-related routes (which are handled in separate FilePropertyRouter) */}
         <Route path={`${stripTrailingSlash(path)}/property`}>
           <></>
+        </Route>
+        <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.CHECKLIST}`}>
+          <UpdateDispositionChecklistContainer
+            formikRef={props.formikRef}
+            dispositionFile={props.dispositionFile}
+            onSuccess={props.onSuccess}
+            View={UpdateChecklistForm}
+          />
         </Route>
         <Redirect
           from={`${path}`}
