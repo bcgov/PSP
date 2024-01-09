@@ -15,6 +15,8 @@ import DispositionFileTabs from '../tabs/DispositionFileTabs';
 import AddDispositionOfferContainer from '../tabs/offersAndSale/dispositionOffer/add/AddDispositionOfferContainer';
 import DispositionOfferForm from '../tabs/offersAndSale/dispositionOffer/form/DispositionOfferForm';
 import UpdateDispositionOfferContainer from '../tabs/offersAndSale/dispositionOffer/update/UpdateDispositionOfferContainer';
+import UpdateDispositionContainer from '../update/UpdateDispositionContainer';
+import UpdateDispositionView from '../update/UpdateDispositionView';
 
 export interface IDispositionRouterProps {
   formikRef: React.Ref<FormikProps<any>>;
@@ -40,6 +42,14 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
         {/* Ignore property-related routes (which are handled in separate FilePropertyRouter) */}
         <Route path={`${stripTrailingSlash(path)}/property`}>
           <></>
+        </Route>
+        <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.FILE_DETAILS}`}>
+          <UpdateDispositionContainer
+            formikRef={props.formikRef}
+            dispositionFile={props.dispositionFile}
+            onSuccess={props.onSuccess}
+            View={UpdateDispositionView}
+          />
         </Route>
         <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.CHECKLIST}`}>
           <UpdateDispositionChecklistContainer

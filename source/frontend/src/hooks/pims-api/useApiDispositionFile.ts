@@ -41,6 +41,17 @@ export const useApiDispositionFile = () => {
         ),
       getDispositionFile: (dispositionFileId: number) =>
         api.get<Api_DispositionFile>(`/dispositionfiles/${dispositionFileId}`),
+      putDispositionFileApi: (
+        dispositionFileId: number,
+        dispositionFile: Api_DispositionFile,
+        userOverrideCodes: UserOverrideCode[] = [],
+      ) =>
+        api.put<Api_DispositionFile>(
+          `/dispositionfiles/${dispositionFileId}?${userOverrideCodes
+            .map(o => `userOverrideCodes=${o}`)
+            .join('&')}`,
+          dispositionFile,
+        ),
       getLastUpdatedByApi: (dispositionFileId: number) =>
         api.get<Api_LastUpdatedBy>(`/dispositionfiles/${dispositionFileId}/updateInfo`),
       getDispositionFileChecklist: (acqFileId: number) =>

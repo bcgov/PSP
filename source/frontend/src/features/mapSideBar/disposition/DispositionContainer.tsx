@@ -186,9 +186,9 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
   const onSuccess = () => {
     fetchDispositionFile();
+    setIsEditing(false);
     fetchLastUpdatedBy();
     mapMachine.refreshMapProperties();
-    setIsEditing(false);
   };
 
   const canRemove = async (propertyId: number) => {
