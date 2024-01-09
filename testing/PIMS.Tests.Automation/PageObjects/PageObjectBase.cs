@@ -53,6 +53,11 @@ namespace PIMS.Tests.Automation.PageObjects
             wait.Until(ExpectedConditions.ElementIsVisible(element));
         }
 
+        protected void WaitUntilExist(By element)
+        {
+            wait.Until(ExpectedConditions.ElementExists(element));
+        }
+
         protected void WaitUntilClickable(By element)
         {
             wait.Until(ExpectedConditions.ElementToBeClickable(element));

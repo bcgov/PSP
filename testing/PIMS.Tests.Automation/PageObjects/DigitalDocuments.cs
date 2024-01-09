@@ -20,6 +20,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
         private By documentUploadDocTypeLabel = By.XPath("//label[contains(text(),'Document type')]");
         private By documentUploadDocTypeModalSelect = By.XPath("//div[@class='modal-body']/div/div[2]/div/select[@id='input-documentTypeId']");
+        private By documentUploadDocTypeModalSelect1stOption = By.CssSelector("div[class='modal-content'] select[data-testid='document-type'] option:nth-child(1)");
         private By documentUploadChooseDocLabel = By.XPath("//label[contains(text(),'Choose document to upload')]");
         private By documentUploadDragDropArea = By.XPath("//div[contains(text(),'Drag files here to attach or')]");
         private By documentUploadDocInput = By.Id("uploadInput");
@@ -339,7 +340,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyDocumentFields(string documentType)
         {
-            Wait(2000);
+            WaitUntilExist(documentUploadDocTypeModalSelect1stOption);
             ChooseSpecificSelectOption(documentUploadDocTypeModalSelect, documentType);
 
             switch (documentType)
@@ -1188,7 +1189,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(documentUploadDocInfoSubtitle2);
             AssertTrueIsDisplayed(documentViewDocumentInfoTooltip);
             AssertTrueIsDisplayed(documentEditBttn);
-            AssertTrueIsDisplayed(documentUploadStatusLabel);
+            AssertTrueIsDisplayed(documentUploadViewStatusLabel);
             AssertTrueContentEquals(documentViewStatusContent, document.DocumentStatus);
 
             //Document Details
