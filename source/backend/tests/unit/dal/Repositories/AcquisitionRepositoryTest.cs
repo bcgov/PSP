@@ -110,6 +110,69 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             result.Should().HaveCount(1);
         }
+
+        [Fact]
+        public void GetPage_Pid()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Property = EntityHelper.CreateProperty(1, 2) } };
+            var filter = new AcquisitionFilter() { Pid = "1" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetPage_Pin()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Property = EntityHelper.CreateProperty(1, 2) } };
+            var filter = new AcquisitionFilter() { Pin = "2" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetPage_Address()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Property = EntityHelper.CreateProperty(1, 2) } };
+            var filter = new AcquisitionFilter() { Address = "1234" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
         #endregion
 
         #region Add
@@ -418,6 +481,96 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             result.AppLastUpdateUserid.Should().Be("service");
             result.AppLastUpdateTimestamp.Should().BeSameDateAs(acqFile.AppLastUpdateTimestamp);
+        }
+
+        #endregion
+
+        #region GetOwnersByAcquisitionFileId
+        [Fact]
+        public void GetOwnersByAcquisitionFileId_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionOwners = new List<PimsAcquisitionOwner>() { new PimsAcquisitionOwner() { } };
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetOwnersByAcquisitionFileId(1);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        #endregion
+
+        #region GetTeamMembers
+        [Fact]
+        public void GetTeamMembers_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { } };
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetTeamMembers(new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        #endregion
+
+        #region GetRowVersion
+        [Fact]
+        public void GetRowVersion_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetRowVersion(1);
+
+            // Assert
+            result.Should().Be(2);
+        }
+
+        #endregion
+
+        #region GetRegion
+        [Fact]
+        public void GetRegion_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetRegion(1);
+
+            // Assert
+            result.Should().Be(1);
         }
 
         #endregion
