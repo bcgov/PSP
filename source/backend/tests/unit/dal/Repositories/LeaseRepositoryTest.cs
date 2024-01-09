@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
-using k8s.Models;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NSubstitute;
