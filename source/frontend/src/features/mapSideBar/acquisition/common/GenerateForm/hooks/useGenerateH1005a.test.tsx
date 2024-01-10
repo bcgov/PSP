@@ -14,14 +14,14 @@ import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDe
 import { getMockDeposits } from '@/mocks/deposits.mock';
 import { getMockApiLease } from '@/mocks/lease.mock';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
 
 import { useGenerateH1005a } from './useGenerateH1005a';
 
 const generateFn = jest
   .fn()
-  .mockResolvedValue({ status: ExternalResultStatus.Success, payload: {} });
+  .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
 const getLeaseTenantsFn = jest.fn<Promise<Api_LeaseTenant[] | undefined>, any[]>();
 const getSecurityDepositsFn = jest.fn();
 const getInsurancesFn = jest.fn();
@@ -110,7 +110,10 @@ describe('useGenerateH10005a functions', () => {
   });
 
   it('throws an error if generation api call is unsuccessful', async () => {
-    generateFn.mockResolvedValue({ status: ExternalResultStatus.Error, payload: null });
+    generateFn.mockResolvedValue({
+      status: ApiGen_CodeTypes_ExternalResponseStatus.Error,
+      payload: null,
+    });
     const generate = setup();
     await expect(generate(getMockApiLease())).rejects.toThrow('Failed to generate file');
   });

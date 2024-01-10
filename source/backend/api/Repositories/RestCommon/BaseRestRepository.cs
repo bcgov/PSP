@@ -10,9 +10,9 @@ using System.Net.Mime;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Concepts.CodeTypes;
-using Pims.Api.Models.Concepts.Http;
-using Pims.Api.Models.Download;
+using Pims.Api.Models.CodeTypes;
+
+using Pims.Api.Models.Requests.Http;
 
 namespace Pims.Api.Repositories.Rest
 {
@@ -39,7 +39,7 @@ namespace Pims.Api.Repositories.Rest
 
         public abstract void AddAuthentication(HttpClient client, string authenticationToken = null);
 
-        public async Task<ExternalResult<T>> GetAsync<T>(Uri endpoint, string authenticationToken)
+        public async Task<ExternalResponse<T>> GetAsync<T>(Uri endpoint, string authenticationToken)
         {
             using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             client.DefaultRequestHeaders.Accept.Clear();
@@ -54,15 +54,15 @@ namespace Pims.Api.Repositories.Rest
             catch (Exception e)
             {
                 _logger.LogError("Unexpected exception during Get {e}", e);
-                return new ExternalResult<T>()
+                return new ExternalResponse<T>()
                 {
-                    Status = ExternalResultStatus.Error,
+                    Status = ExternalResponseStatus.Error,
                     Message = "Exception during Get",
                 };
             }
         }
 
-        public async Task<ExternalResult<T>> PostAsync<T>(Uri endpoint, HttpContent content, string authenticationToken = null)
+        public async Task<ExternalResponse<T>> PostAsync<T>(Uri endpoint, HttpContent content, string authenticationToken = null)
         {
             using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             client.DefaultRequestHeaders.Accept.Clear();
@@ -78,15 +78,15 @@ namespace Pims.Api.Repositories.Rest
             catch (Exception e)
             {
                 _logger.LogError("Unexpected exception during post {e}", e);
-                return new ExternalResult<T>()
+                return new ExternalResponse<T>()
                 {
-                    Status = ExternalResultStatus.Error,
+                    Status = ExternalResponseStatus.Error,
                     Message = "Exception during Post",
                 };
             }
         }
 
-        public async Task<ExternalResult<T>> PutAsync<T>(Uri endpoint, HttpContent content, string authenticationToken = null)
+        public async Task<ExternalResponse<T>> PutAsync<T>(Uri endpoint, HttpContent content, string authenticationToken = null)
         {
             using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             client.DefaultRequestHeaders.Accept.Clear();
@@ -102,24 +102,24 @@ namespace Pims.Api.Repositories.Rest
             catch (Exception e)
             {
                 _logger.LogError("Unexpected exception during put {e}", e);
-                return new ExternalResult<T>()
+                return new ExternalResponse<T>()
                 {
-                    Status = ExternalResultStatus.Error,
+                    Status = ExternalResponseStatus.Error,
                     Message = "Exception during Put",
                 };
             }
         }
 
-        public async Task<ExternalResult<string>> DeleteAsync(Uri endpoint, string authenticationToken = null)
+        public async Task<ExternalResponse<string>> DeleteAsync(Uri endpoint, string authenticationToken = null)
         {
             using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             client.DefaultRequestHeaders.Accept.Clear();
             AddAuthentication(client, authenticationToken);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
 
-            ExternalResult<string> result = new ExternalResult<string>()
+            ExternalResponse<string> result = new ExternalResponse<string>()
             {
-                Status = ExternalResultStatus.Error,
+                Status = ExternalResponseStatus.Error,
                 Payload = endpoint.AbsolutePath,
             };
 
@@ -135,22 +135,22 @@ namespace Pims.Api.Repositories.Rest
                 {
                     case HttpStatusCode.OK:
                         _logger.LogTrace("Response payload: {payload}", payload);
-                        result.Status = ExternalResultStatus.Success;
+                        result.Status = ExternalResponseStatus.Success;
                         break;
                     case HttpStatusCode.NoContent:
-                        result.Status = ExternalResultStatus.Success;
+                        result.Status = ExternalResponseStatus.Success;
                         result.Message = "No content was returned from the call";
                         break;
                     case HttpStatusCode.Forbidden:
-                        result.Status = ExternalResultStatus.Error;
+                        result.Status = ExternalResponseStatus.Error;
                         result.Message = "Request was forbidden";
                         break;
                     case HttpStatusCode.BadRequest:
-                        result.Status = ExternalResultStatus.Error;
+                        result.Status = ExternalResponseStatus.Error;
                         result.Message = payload;
                         break;
                     default:
-                        result.Status = ExternalResultStatus.Error;
+                        result.Status = ExternalResponseStatus.Error;
                         result.Message = $"Unable to contact endpoint {response.RequestMessage.RequestUri}. Http status {response.StatusCode}";
                         break;
                 }
@@ -158,18 +158,18 @@ namespace Pims.Api.Repositories.Rest
             }
             catch (Exception e)
             {
-                result.Status = ExternalResultStatus.Error;
+                result.Status = ExternalResponseStatus.Error;
                 result.Message = "Exception during Delete";
                 _logger.LogError("Unexpected exception during delete {e}", e);
             }
             return result;
         }
 
-        protected async Task<ExternalResult<FileDownload>> ProcessDownloadResponse(HttpResponseMessage response)
+        protected async Task<ExternalResponse<FileDownloadResponse>> ProcessDownloadResponse(HttpResponseMessage response)
         {
-            ExternalResult<FileDownload> result = new ExternalResult<FileDownload>()
+            ExternalResponse<FileDownloadResponse> result = new ExternalResponse<FileDownloadResponse>()
             {
-                Status = ExternalResultStatus.Error,
+                Status = ExternalResponseStatus.Error,
             };
 
             byte[] responsePayload = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(true);
@@ -183,8 +183,8 @@ namespace Pims.Api.Repositories.Rest
                     string contentDisposition = response.Content.Headers.GetValues("Content-Disposition").FirstOrDefault();
                     string fileName = GetFileNameFromContentDisposition(contentDisposition);
 
-                    result.Status = ExternalResultStatus.Success;
-                    result.Payload = new Models.Download.FileDownload()
+                    result.Status = ExternalResponseStatus.Success;
+                    result.Payload = new FileDownloadResponse()
                     {
                         FilePayload = Convert.ToBase64String(responsePayload),
                         Size = contentLength,
@@ -196,15 +196,15 @@ namespace Pims.Api.Repositories.Rest
 
                     break;
                 case HttpStatusCode.NoContent:
-                    result.Status = ExternalResultStatus.Success;
+                    result.Status = ExternalResponseStatus.Success;
                     result.Message = "No content found";
                     break;
                 case HttpStatusCode.Forbidden:
-                    result.Status = ExternalResultStatus.Error;
+                    result.Status = ExternalResponseStatus.Error;
                     result.Message = "Forbidden";
                     break;
                 default:
-                    result.Status = ExternalResultStatus.Error;
+                    result.Status = ExternalResponseStatus.Error;
                     result.Message = $"Unable to contact endpoint {response.RequestMessage.RequestUri}. Http status {response.StatusCode}";
                     break;
             }
@@ -220,11 +220,11 @@ namespace Pims.Api.Repositories.Rest
             return fileNamePart[(fileNameFlag.Length + 1) ..].Replace("\"", string.Empty);
         }
 
-        private async Task<ExternalResult<T>> ProcessResponse<T>(HttpResponseMessage response)
+        private async Task<ExternalResponse<T>> ProcessResponse<T>(HttpResponseMessage response)
         {
-            ExternalResult<T> result = new ExternalResult<T>()
+            ExternalResponse<T> result = new ExternalResponse<T>()
             {
-                Status = ExternalResultStatus.Error,
+                Status = ExternalResponseStatus.Error,
             };
 
             _logger.LogTrace("Response: {response}", response);
@@ -247,27 +247,27 @@ namespace Pims.Api.Repositories.Rest
                             result.Payload = requestTokenResult;
                             break;
                     }
-                    result.Status = ExternalResultStatus.Success;
+                    result.Status = ExternalResponseStatus.Success;
                     break;
                 case HttpStatusCode.NoContent:
-                    result.Status = ExternalResultStatus.Error;
+                    result.Status = ExternalResponseStatus.Error;
                     result.Message = "No content was returned from the call";
                     break;
                 case HttpStatusCode.NotFound:
-                    result.Status = ExternalResultStatus.Error;
+                    result.Status = ExternalResponseStatus.Error;
                     result.Message = "The requested resource does not exist on the server";
                     break;
                 case HttpStatusCode.Forbidden:
-                    result.Status = ExternalResultStatus.Error;
+                    result.Status = ExternalResponseStatus.Error;
                     result.Message = "Request was forbidden";
                     break;
                 case HttpStatusCode.BadRequest:
                 case HttpStatusCode.MethodNotAllowed:
-                    result.Status = ExternalResultStatus.Error;
+                    result.Status = ExternalResponseStatus.Error;
                     result.Message = payload;
                     break;
                 default:
-                    result.Status = ExternalResultStatus.Error;
+                    result.Status = ExternalResponseStatus.Error;
                     result.Message = $"Unable to contact endpoint {response.RequestMessage.RequestUri}. Http status {response.StatusCode}";
                     break;
             }

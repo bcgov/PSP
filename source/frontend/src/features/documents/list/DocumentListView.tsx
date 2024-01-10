@@ -6,10 +6,12 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { TableSort } from '@/components/Table/TableSort';
 import Claims from '@/constants/claims';
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { DocumentTypeName } from '@/constants/documentType';
 import { defaultDocumentFilter, IDocumentFilter } from '@/interfaces/IDocumentResults';
-import { Api_Document, Api_DocumentRelationship, Api_DocumentType } from '@/models/api/Document';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Concepts_Document } from '@/models/api/generated/ApiGen_Concepts_Document';
+import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
+import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 
 import { DocumentRow } from '../ComposedDocument';
 import { DocumentDetailModal } from '../documentDetail/DocumentDetailModal';
@@ -20,13 +22,13 @@ import { DocumentResults } from './DocumentResults/DocumentResults';
 
 export interface IDocumentListViewProps {
   parentId: string;
-  relationshipType: DocumentRelationshipType;
+  relationshipType: ApiGen_CodeTypes_DocumentRelationType;
   isLoading: boolean;
   documentResults: DocumentRow[];
   hideFilters?: boolean;
   defaultFilters?: IDocumentFilter;
   addButtonText?: string;
-  onDelete: (relationship: Api_DocumentRelationship) => Promise<boolean | undefined>;
+  onDelete: (relationship: ApiGen_Concepts_DocumentRelationship) => Promise<boolean | undefined>;
   onSuccess: () => void;
   disableAdd?: boolean;
   title?: string;
@@ -41,9 +43,9 @@ export const DocumentListView: React.FunctionComponent<
 
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
 
-  const [documentTypes, setDocumentTypes] = useState<Api_DocumentType[]>([]);
+  const [documentTypes, setDocumentTypes] = useState<ApiGen_Concepts_DocumentType[]>([]);
 
-  const [sort, setSort] = React.useState<TableSort<Api_Document>>({});
+  const [sort, setSort] = React.useState<TableSort<ApiGen_Concepts_Document>>({});
 
   const [filters, setFilters] = React.useState<IDocumentFilter>(
     defaultFilters ?? defaultDocumentFilter,
@@ -53,7 +55,7 @@ export const DocumentListView: React.FunctionComponent<
 
   useEffect(() => {
     const fetch = async () => {
-      if (props.relationshipType === DocumentRelationshipType.TEMPLATES) {
+      if (props.relationshipType === ApiGen_CodeTypes_DocumentRelationType.Templates) {
         const axiosResponse = await getDocumentTypes();
         if (axiosResponse !== undefined) {
           setDocumentTypes(axiosResponse?.filter(x => x.documentType === DocumentTypeName.CDOGS));
@@ -110,15 +112,15 @@ export const DocumentListView: React.FunctionComponent<
 
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const [isUploadVisible, setIsUploadVisible] = useState(false);
-  const [selectedDocument, setSelectedDocument] = useState<Api_DocumentRelationship | undefined>(
-    undefined,
-  );
+  const [selectedDocument, setSelectedDocument] = useState<
+    ApiGen_Concepts_DocumentRelationship | undefined
+  >(undefined);
 
   const handleModalUploadClose = () => {
     setIsUploadVisible(false);
   };
 
-  const handleViewDetails = (document: Api_DocumentRelationship) => {
+  const handleViewDetails = (document: ApiGen_Concepts_DocumentRelationship) => {
     setIsDetailsVisible(true);
     setSelectedDocument(document);
   };
@@ -128,7 +130,7 @@ export const DocumentListView: React.FunctionComponent<
     setSelectedDocument(undefined);
   };
 
-  const handleDeleteClick = (document: Api_DocumentRelationship) => {
+  const handleDeleteClick = (document: ApiGen_Concepts_DocumentRelationship) => {
     setShowDeleteConfirmModal(true);
     setSelectedDocument(document);
   };

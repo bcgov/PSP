@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Scrollable as ScrollableBase } from '@/components/common/Scrollable/Scrollable';
 import { Section } from '@/components/common/Section/Section';
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 import { Api_FormDocumentType } from '@/models/api/FormDocument';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 
 export interface IDocumentTemplateManagementViewProp {
   isLoading: boolean;
@@ -53,7 +53,7 @@ export const DocumentTemplateManagementView: React.FunctionComponent<
           <DocumentListContainer
             parentId={props.selectedFormDocumentTypeCode}
             addButtonText="Add a Form Document Template"
-            relationshipType={DocumentRelationshipType.TEMPLATES}
+            relationshipType={ApiGen_CodeTypes_DocumentRelationType.Templates}
           />
         )}
       </Scrollable>

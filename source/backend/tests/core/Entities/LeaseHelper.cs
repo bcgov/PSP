@@ -6,6 +6,7 @@ using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers;
 using Entity = Pims.Dal.Entities;
+using Pims.Api.Models.CodeTypes;
 
 namespace Pims.Core.Test
 {

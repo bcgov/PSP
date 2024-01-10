@@ -5,7 +5,7 @@ import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
-import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
 import { Api_GeneratePerson } from '@/models/generate/GeneratePerson';
 import { Api_GenerateProperty } from '@/models/generate/GenerateProperty';
@@ -111,7 +111,7 @@ export const useGenerateH0443 = () => {
         templateData: h0443Data,
         convertToType: null,
       });
-      generatedFile?.status === ExternalResultStatus.Success!! &&
+      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success!! &&
         generatedFile?.payload &&
         showFile(generatedFile?.payload);
     }

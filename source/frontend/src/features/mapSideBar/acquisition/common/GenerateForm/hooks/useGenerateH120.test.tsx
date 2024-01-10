@@ -15,14 +15,14 @@ import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
 import { emptyApiInterestHolder } from '@/mocks/interestHolder.mock';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
-import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
 
 import { useGenerateH120 } from './useGenerateH120';
 
 const generateFn = jest
   .fn()
-  .mockResolvedValue({ status: ExternalResultStatus.Success, payload: {} });
+  .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
 const getAcquisitionFileFn = jest.fn<Promise<Api_AcquisitionFile | undefined>, any[]>();
 const getAcquisitionPropertiesFn = jest.fn();
 const getAcquisitionCompReqH120s = jest.fn();
@@ -183,7 +183,10 @@ describe('useGenerateH120 functions', () => {
   });
 
   it('throws an error if generation api call is unsuccessful', async () => {
-    generateFn.mockResolvedValue({ status: ExternalResultStatus.Error, payload: null });
+    generateFn.mockResolvedValue({
+      status: ApiGen_CodeTypes_ExternalResponseStatus.Error,
+      payload: null,
+    });
     const generate = setup();
     await expect(generate(getMockApiDefaultCompensation())).rejects.toThrow(
       'Failed to generate file',

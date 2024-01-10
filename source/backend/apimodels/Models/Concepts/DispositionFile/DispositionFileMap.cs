@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mapster;
-using Pims.Api.Models.Models.Concepts.DispositionFile;
+using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 

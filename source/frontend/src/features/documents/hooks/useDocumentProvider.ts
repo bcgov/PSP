@@ -2,23 +2,19 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { useApiDocuments } from '@/hooks/pims-api/useApiDocuments';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
-import {
-  Api_DocumentType,
-  Api_DocumentUpdateRequest,
-  Api_DocumentUpdateResponse,
-} from '@/models/api/Document';
-import {
-  Api_FileDownload,
-  Api_Storage_DocumentDetail,
-  Api_Storage_DocumentMetadata,
-  Api_Storage_DocumentTypeMetadataType,
-  DocumentQueryResult,
-} from '@/models/api/DocumentStorage';
-import { ExternalResult } from '@/models/api/ExternalResult';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
+import { ApiGen_Mayan_DocumentDetail } from '@/models/api/generated/ApiGen_Mayan_DocumentDetail';
+import { ApiGen_Mayan_DocumentMetadata } from '@/models/api/generated/ApiGen_Mayan_DocumentMetadata';
+import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
+import { ApiGen_Mayan_QueryResponse } from '@/models/api/generated/ApiGen_Mayan_QueryResponse';
+import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
+import { ApiGen_Requests_DocumentUpdateResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateResponse';
+import { ApiGen_Requests_ExternalResponse } from '@/models/api/generated/ApiGen_Requests_ExternalResponse';
+import { ApiGen_Requests_FileDownloadResponse } from '@/models/api/generated/ApiGen_Requests_FileDownloadResponse';
 
 /**
  * hook that retrieves document information.
@@ -41,7 +37,12 @@ export const useDocumentProvider = () => {
       (
         mayanDocumentId: number,
       ) => Promise<
-        AxiosResponse<ExternalResult<DocumentQueryResult<Api_Storage_DocumentMetadata>>, any>
+        AxiosResponse<
+          ApiGen_Requests_ExternalResponse<
+            ApiGen_Mayan_QueryResponse<ApiGen_Mayan_DocumentMetadata>
+          >,
+          any
+        >
       >
     >({
       requestFunction: useCallback(
@@ -65,7 +66,9 @@ export const useDocumentProvider = () => {
         mayanDocumentId: number,
       ) => Promise<
         AxiosResponse<
-          ExternalResult<DocumentQueryResult<Api_Storage_DocumentTypeMetadataType>>,
+          ApiGen_Requests_ExternalResponse<
+            ApiGen_Mayan_QueryResponse<ApiGen_Mayan_DocumentTypeMetadataType>
+          >,
           any
         >
       >
@@ -86,7 +89,7 @@ export const useDocumentProvider = () => {
 
   // Provides functionality to retrieve document types
   const { execute: getDocumentTypes, loading: getDocumentTypesLoading } = useApiRequestWrapper<
-    () => Promise<AxiosResponse<Api_DocumentType[], any>>
+    () => Promise<AxiosResponse<ApiGen_Concepts_DocumentType[], any>>
   >({
     requestFunction: useCallback(
       async () => await getDocumentTypesApiCall(),
@@ -106,11 +109,11 @@ export const useDocumentProvider = () => {
   const { execute: getDocumentRelationshipTypes, loading: getDocumentRelationshipTypesLoading } =
     useApiRequestWrapper<
       (
-        relationshipType: DocumentRelationshipType,
-      ) => Promise<AxiosResponse<Api_DocumentType[], any>>
+        relationshipType: ApiGen_CodeTypes_DocumentRelationType,
+      ) => Promise<AxiosResponse<ApiGen_Concepts_DocumentType[], any>>
     >({
       requestFunction: useCallback(
-        async (relationshipType: DocumentRelationshipType) =>
+        async (relationshipType: ApiGen_CodeTypes_DocumentRelationType) =>
           await getDocumentRelationshipTypesApiCall(relationshipType),
         [getDocumentRelationshipTypesApiCall],
       ),
@@ -128,11 +131,11 @@ export const useDocumentProvider = () => {
   const { execute: updateDocument, loading: updateDocumentLoading } = useApiRequestWrapper<
     (
       documentId: number,
-      updateRequest: Api_DocumentUpdateRequest,
-    ) => Promise<AxiosResponse<Api_DocumentUpdateResponse, any>>
+      updateRequest: ApiGen_Requests_DocumentUpdateRequest,
+    ) => Promise<AxiosResponse<ApiGen_Requests_DocumentUpdateResponse, any>>
   >({
     requestFunction: useCallback(
-      async (documentId: number, updateRequest: Api_DocumentUpdateRequest) =>
+      async (documentId: number, updateRequest: ApiGen_Requests_DocumentUpdateRequest) =>
         await updateDocumentMetadataApiCall(documentId, updateRequest),
       [updateDocumentMetadataApiCall],
     ),
@@ -151,7 +154,9 @@ export const useDocumentProvider = () => {
     useApiRequestWrapper<
       (
         mayanDocumentId: number,
-      ) => Promise<AxiosResponse<ExternalResult<Api_Storage_DocumentDetail>, any>>
+      ) => Promise<
+        AxiosResponse<ApiGen_Requests_ExternalResponse<ApiGen_Mayan_DocumentDetail>, any>
+      >
     >({
       requestFunction: useCallback(
         async (mayanDocumentId: number) => await getDocumentDetailApiCall(mayanDocumentId),
@@ -171,7 +176,7 @@ export const useDocumentProvider = () => {
       (
         mayanDocumentId: number,
         mayanFileId: number,
-      ) => Promise<AxiosResponse<Api_FileDownload, any>>
+      ) => Promise<AxiosResponse<ApiGen_Requests_FileDownloadResponse, any>>
     >({
       requestFunction: useCallback(
         async (mayanDocumentId: number, mayanFileId: number) =>
@@ -191,7 +196,9 @@ export const useDocumentProvider = () => {
     execute: downloadWrappedDocumentFileLatest,
     response: downloadWrappedDocumentFileLatestResponse,
     loading: downloadWrappedDocumentFileLatestLoading,
-  } = useApiRequestWrapper<(documendId: number) => Promise<AxiosResponse<Api_FileDownload, any>>>({
+  } = useApiRequestWrapper<
+    (documendId: number) => Promise<AxiosResponse<ApiGen_Requests_FileDownloadResponse, any>>
+  >({
     requestFunction: useCallback(
       async (mayanDocumentId: number) =>
         await downloadWrappedDocumentFileLatestApiCall(mayanDocumentId),

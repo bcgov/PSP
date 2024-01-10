@@ -1,6 +1,6 @@
 using Pims.Api.Models.Base;
 
-namespace Pims.Api.Models.Models.Concepts.File
+namespace Pims.Api.Models.Concepts.File
 {
     public class FileChecklistItemModel : BaseAuditModel
     {
@@ -22,6 +22,6 @@ namespace Pims.Api.Models.Models.Concepts.File
         /// <summary>
         /// get/set - Checklist item status type code.
         /// </summary>
-        public TypeModel<string> StatusTypeCode { get; set; }
+        public CodeTypeModel<string> StatusTypeCode { get; set; }
     }
 }
