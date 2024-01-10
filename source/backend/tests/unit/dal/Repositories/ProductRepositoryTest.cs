@@ -22,7 +22,6 @@ namespace Pims.Dal.Test.Repositories
         #endregion
 
         #region Tests
-        /* TODO: Verify this is necessary
         [Fact]
         public void GetByProductBatch_ChangedCode()
         {
@@ -30,8 +29,8 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteAdd);
 
-            var initialProduct = new PimsProduct() { Code = "code1", Description = "desc1" };
-            var project = new PimsProject() { PimsProducts = new List<PimsProduct>() { initialProduct } };
+            var initialProduct = new PimsProduct() { Code = "code1", Description = "desc1", };
+            var project = new PimsProject() { Description ="project", ProjectStatusTypeCode = "ACTIVE", PimsProjectProducts = new List<PimsProjectProduct>() { new PimsProjectProduct() { Product = initialProduct } } };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(project);
             var repository = helper.CreateRepository<ProductRepository>(user);
@@ -52,7 +51,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteAdd);
 
             var initialProduct = new PimsProduct() { Code = "code1", Description = "desc1" };
-            var project = new PimsProject() { PimsProducts = new List<PimsProduct>() { initialProduct } };
+            var project = new PimsProject() { Description = "project", ProjectStatusTypeCode = "ACTIVE", PimsProjectProducts = new List<PimsProjectProduct>() { new PimsProjectProduct() { Product = initialProduct } } };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(project);
             var repository = helper.CreateRepository<ProductRepository>(user);
@@ -72,7 +71,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteAdd);
 
             var initialProduct = new PimsProduct() { Code = "code1", Description = "desc1" };
-            var project = new PimsProject() { PimsProducts = new List<PimsProduct>() { initialProduct } };
+            var project = new PimsProject() { Description = "project", ProjectStatusTypeCode = "ACTIVE", PimsProjectProducts = new List<PimsProjectProduct>() { new PimsProjectProduct() { Product = initialProduct } } };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(project);
             var repository = helper.CreateRepository<ProductRepository>(user);
@@ -97,7 +96,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteAdd);
 
             var initialProduct = new PimsProduct() { Code = "code1", Description = "desc1" };
-            var project = new PimsProject() { PimsProducts = new List<PimsProduct>() { initialProduct } };
+            var project = new PimsProject() { Description = "project", ProjectStatusTypeCode = "ACTIVE", PimsProjectProducts = new List<PimsProjectProduct>() { new PimsProjectProduct() { Product = initialProduct } } };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(project);
             var repository = helper.CreateRepository<ProductRepository>(user);
@@ -118,7 +117,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteAdd);
 
             var initialProduct = new PimsProduct() { Code = "code1", Description = "desc1" };
-            var project = new PimsProject() { PimsProducts = new List<PimsProduct>() { initialProduct } };
+            var project = new PimsProject() { Description = "project", ProjectStatusTypeCode = "ACTIVE", PimsProjectProducts = new List<PimsProjectProduct>() { new PimsProjectProduct() { Product = initialProduct } } };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(project);
             var repository = helper.CreateRepository<ProductRepository>(user);
@@ -129,7 +128,7 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             result.Should().NotBeNull();
             result.Should().BeEmpty(); // in this instance even though the code/description is the same the new product is replacing the old product within the given project.
-        }*/
+        }
 
         #endregion
     }
