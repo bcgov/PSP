@@ -12,11 +12,11 @@ namespace Pims.Api.Models.Concepts.Property
 
         public long Id { get; set; }
 
-        public TypeModel<string> ActivityTypeCode { get; set; }
+        public CodeTypeModel<string> ActivityTypeCode { get; set; }
 
-        public TypeModel<string> ActivitySubtypeCode { get; set; }
+        public CodeTypeModel<string> ActivitySubtypeCode { get; set; }
 
-        public TypeModel<string> ActivityStatusTypeCode { get; set; }
+        public CodeTypeModel<string> ActivityStatusTypeCode { get; set; }
 
         public DateOnly RequestAddedDateTime { get; set; }
 

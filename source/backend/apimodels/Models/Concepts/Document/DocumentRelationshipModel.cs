@@ -1,5 +1,5 @@
-using Pims.Api.Constants;
 using Pims.Api.Models.Base;
+using Pims.Api.Models.CodeTypes;
 
 namespace Pims.Api.Models.Concepts.Document
 {

@@ -1,11 +1,11 @@
 import { FormikProps } from 'formik';
 
 import { Claims, NoteTypes } from '@/constants';
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 import { LeaseFormModel } from '@/features/leases/models';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { Api_Lease } from '@/models/api/Lease';
 
 import { LeaseContainerState, LeasePageNames, leasePages } from '../LeaseContainer';
@@ -141,7 +141,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
       content: (
         <DocumentListContainer
           parentId={lease?.id.toString()}
-          relationshipType={DocumentRelationshipType.LEASES}
+          relationshipType={ApiGen_CodeTypes_DocumentRelationType.Leases}
           title="File Documents"
           onSuccess={onSuccess}
         />

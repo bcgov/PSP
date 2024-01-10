@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Concepts.CodeTypes;
 using Pims.Api.Models.Cdogs;
-using Pims.Api.Models.Concepts.Http;
-using Pims.Api.Models.Download;
+using Pims.Api.Models.CodeTypes;
+
+using Pims.Api.Models.Requests.Http;
 
 namespace Pims.Api.Repositories.Cdogs
 {
@@ -41,20 +41,20 @@ namespace Pims.Api.Repositories.Cdogs
             _authRepository = authRepository;
         }
 
-        public async Task<ExternalResult<FileTypes>> TryGetFileTypesAsync()
+        public async Task<ExternalResponse<FileTypes>> TryGetFileTypesAsync()
         {
             _logger.LogDebug("Retrieving supported file types...");
             string authenticationToken = await _authRepository.GetTokenAsync();
 
             Uri endpoint = new(this._config.CDogsHost, "/api/v2/fileTypes");
 
-            ExternalResult<FileTypes> result = await GetAsync<FileTypes>(endpoint, authenticationToken);
+            ExternalResponse<FileTypes> result = await GetAsync<FileTypes>(endpoint, authenticationToken);
 
             _logger.LogDebug($"Finished retrieving suported file types");
             return result;
         }
 
-        public async Task<ExternalResult<string>> TryUploadTemplateAsync(IFormFile file)
+        public async Task<ExternalResponse<string>> TryUploadTemplateAsync(IFormFile file)
         {
             _logger.LogDebug("Uploading document template...");
             string authenticationToken = await _authRepository.GetTokenAsync();
@@ -70,15 +70,15 @@ namespace Pims.Api.Repositories.Cdogs
 
             Uri endpoint = new(this._config.CDogsHost, "/api/v2/template");
 
-            ExternalResult<string> result = await PostAsync<string>(endpoint, multiContent, authenticationToken);
+            ExternalResponse<string> result = await PostAsync<string>(endpoint, multiContent, authenticationToken);
 
             // If the document generation service returns a MethodNotAllowed it means that the file is already cached,
             // abstract the error while keeping relevant information.
-            if (result.Status == ExternalResultStatus.Error && result.HttpStatusCode == HttpStatusCode.MethodNotAllowed)
+            if (result.Status == ExternalResponseStatus.Error && result.HttpStatusCode == HttpStatusCode.MethodNotAllowed)
             {
                 _logger.LogInformation("File already cached.");
                 UploadTemplateCachedError uploadCached = JsonSerializer.Deserialize<UploadTemplateCachedError>(result.Message);
-                result.Status = ExternalResultStatus.Success;
+                result.Status = ExternalResponseStatus.Success;
                 result.Payload = uploadCached.FileHash;
                 result.Message = uploadCached.ErrorDetail;
                 return result;
@@ -88,7 +88,7 @@ namespace Pims.Api.Repositories.Cdogs
             return result;
         }
 
-        public async Task<ExternalResult<FileDownload>> UploadAndGenerate(RenderRequest request)
+        public async Task<ExternalResponse<FileDownloadResponse>> UploadAndGenerate(RenderRequest request)
         {
             _logger.LogDebug("Uploading template and generating report...");
 
@@ -99,9 +99,9 @@ namespace Pims.Api.Repositories.Cdogs
             AddAuthentication(client, authenticationToken);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
 
-            ExternalResult<FileDownload> result = new ExternalResult<FileDownload>()
+            ExternalResponse<FileDownloadResponse> result = new ExternalResponse<FileDownloadResponse>()
             {
-                Status = ExternalResultStatus.Error,
+                Status = ExternalResponseStatus.Error,
             };
 
             try
@@ -122,7 +122,7 @@ namespace Pims.Api.Repositories.Cdogs
             }
             catch (Exception e)
             {
-                result.Status = ExternalResultStatus.Error;
+                result.Status = ExternalResponseStatus.Error;
                 result.Message = "Exception downloading file";
                 _logger.LogError("Unexpected exception downloading file {e}", e);
             }

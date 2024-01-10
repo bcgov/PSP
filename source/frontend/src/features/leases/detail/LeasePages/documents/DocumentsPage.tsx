@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 
 const DocumentsPage: React.FunctionComponent = () => {
   const { lease } = useContext(LeaseStateContext);
@@ -10,7 +10,7 @@ const DocumentsPage: React.FunctionComponent = () => {
     <>
       <DocumentListContainer
         parentId={lease?.id?.toString() || ''}
-        relationshipType={DocumentRelationshipType.LEASES}
+        relationshipType={ApiGen_CodeTypes_DocumentRelationType.Leases}
       />
     </>
   );

@@ -27,7 +27,7 @@ namespace Pims.Api.Models.Concepts.InterestHolder
 
         public IEnumerable<InterestHolderPropertyModel> InterestHolderProperties { get; set; }
 
-        public virtual TypeModel<string> InterestHolderType { get; set; }
+        public virtual CodeTypeModel<string> InterestHolderType { get; set; }
 
         public bool IsDisabled { get; set; }
     }

@@ -10,7 +10,7 @@ namespace Pims.Api.Models.Concepts.ExpropriationPayment
 
         public string PaymentItemTypeCode { get; set; }
 
-        public TypeModel<string> PaymentItemType { get; set; }
+        public CodeTypeModel<string> PaymentItemType { get; set; }
 
         public bool? IsGstRequired { get; set; }
 

@@ -19,7 +19,7 @@ namespace Pims.Api.Models.Concepts.Property
         /// <summary>
         /// get/set - Road type code.
         /// </summary>
-        public virtual TypeModel<string> PropertyRoadTypeCode { get; set; }
+        public virtual CodeTypeModel<string> PropertyRoadTypeCode { get; set; }
 
         #endregion
     }
