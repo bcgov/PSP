@@ -30,7 +30,7 @@ export const UpdateDispositionChecklistContainer: React.FC<IDispositionChecklist
     putDispositionChecklist: { execute: updateDispositionChecklist },
   } = useDispositionProvider();
 
-  const sectionTypes = getByType(API.ACQUISITION_CHECKLIST_SECTION_TYPES);
+  const sectionTypes = getByType(API.DISPOSITION_CHECKLIST_SECTION_TYPES);
 
   const initialValues =
     dispositionFile !== undefined
