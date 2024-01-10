@@ -1,11 +1,12 @@
 import { getIn } from 'formik';
 import React from 'react';
+import { MdContactMail } from 'react-icons/md';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ContactBreadcrumb, ContactTypeSelector } from '@/features/contacts';
+import { ContactTypeSelector } from '@/features/contacts';
 import { ContactTypes } from '@/features/contacts/interfaces';
-import * as Styled from '@/features/contacts/styles';
+import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 
 import ContactRouter from './ContactRouter';
 
@@ -22,17 +23,27 @@ export const CreateContactContainer: React.FunctionComponent<
     history.push(`${path}/${newValue}`);
   };
 
+  const onClose = () => {
+    history.push('/mapview');
+  };
+
   return (
     <ContactLayout>
-      <ContactBreadcrumb />
-      <Styled.H1>Add a Contact</Styled.H1>
+      <MapSideBarLayout
+        showCloseButton
+        title="Add Contact"
+        icon={<MdContactMail className="mr-2 mb-2" size={32} />}
+        onClose={onClose}
+      >
+        <ContactTypeSelector
+          contactType={contactType}
+          setContactType={onSelectorChange}
+        ></ContactTypeSelector>
 
-      <ContactTypeSelector
-        contactType={contactType}
-        setContactType={onSelectorChange}
-      ></ContactTypeSelector>
+        <ContactRouter />
+      </MapSideBarLayout>
 
-      <ContactRouter />
+      {/* <Styled.H1>Add a Contact</Styled.H1> */}
     </ContactLayout>
   );
 };
@@ -43,10 +54,15 @@ const ContactLayout = styled.div`
   text-align: left;
   height: 100%;
   width: 50%;
-  min-width: 30rem;
+  min-width: 93rem;
   overflow: hidden;
   padding: 1rem;
   gap: 1.6rem;
+
+  h1 {
+    border-bottom: none;
+    margin-bottom: 0.2rem;
+  }
 `;
 
 const getContactTypeFromPath = (pathname: string) => {
