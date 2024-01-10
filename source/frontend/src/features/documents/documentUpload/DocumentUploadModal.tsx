@@ -32,7 +32,6 @@ export const DocumentUploadModal: React.FunctionComponent<
   return (
     <GenericModal
       variant="info"
-      className=""
       display={props.display}
       setDisplay={props.setDisplay}
       closeButton={false}

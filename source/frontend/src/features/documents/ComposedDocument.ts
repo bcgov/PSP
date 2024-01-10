@@ -134,11 +134,11 @@ export class DocumentUploadFormData {
     }
 
     return {
-      documentTypeId: documentType.id,
+      documentTypeId: documentType?.id,
       documentStatusCode: this.documentStatusCode,
       file: file,
       documentMetadata: metadata,
-      documentTypeMayanId: documentType.mayanId,
+      documentTypeMayanId: documentType?.mayanId,
     };
   }
 }
