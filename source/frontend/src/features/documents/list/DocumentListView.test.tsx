@@ -167,7 +167,7 @@ describe('Document List View', () => {
     act(() => userEvent.click(deleteButtonTooltip[0]));
 
     await waitFor(() => screen.getByText('Yes'));
-    const continueButton = screen.getByText('Continue');
+    const continueButton = screen.getByText('Yes');
     act(() => userEvent.click(continueButton));
 
     expect(deleteMock).toHaveBeenCalledWith(DocumentRow.toApi(documentRows[0]));
