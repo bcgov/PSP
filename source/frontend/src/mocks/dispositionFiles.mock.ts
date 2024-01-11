@@ -102,6 +102,8 @@ export const mockDispositionFileResponse = (
     isDisabled: false,
   },
   dispositionAppraisal: {
+    id: 250,
+    dispositionFileId: id,
     appraisedAmount: 550000,
     appraisalDate: '2023-12-28T00:00:00',
     bcaValueAmount: 600000,

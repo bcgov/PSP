@@ -25,6 +25,13 @@ const mockGetDispositionFileSalesApi = {
   loading: false,
 };
 
+const mockGetDispositionFileAppraisalApi = {
+  error: undefined,
+  response: undefined,
+  execute: jest.fn(),
+  loading: false,
+};
+
 const mockDeleteDispositionFileOfferApi = {
   error: undefined,
   response: undefined,
@@ -39,6 +46,7 @@ jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
     return {
       getDispositionFileOffers: mockGetDispositionFileOffersApi,
       getDispositionFileSale: mockGetDispositionFileSalesApi,
+      getDispositionFileAppraisal: mockGetDispositionFileAppraisalApi,
       deleteDispositionOffer: mockDeleteDispositionFileOfferApi,
     };
   },

@@ -30,6 +30,7 @@ describe('Disposition Offer Detail View component', () => {
         dispositionFile={renderOptions.props?.dispositionFile ?? mockDispositionFileApi}
         dispositionOffers={[]}
         dispositionSale={renderOptions.props?.dispositionSale ?? null}
+        dispositionAppraisal={renderOptions.props?.dispositionAppraisal ?? null}
         onDispositionOfferDeleted={onDelete}
       />,
       {
@@ -100,7 +101,11 @@ describe('Disposition Offer Detail View component', () => {
     const mockDisposition = mockDispositionFileResponse(1);
 
     const { queryByTestId } = await setup({
-      props: { dispositionFile: mockDisposition, dispositionOffers: [] },
+      props: {
+        dispositionFile: mockDisposition,
+        dispositionOffers: [],
+        dispositionAppraisal: mockDisposition.dispositionAppraisal,
+      },
     });
 
     expect(queryByTestId('disposition-file.appraisedValueAmount')).toHaveTextContent('$550,000.00');

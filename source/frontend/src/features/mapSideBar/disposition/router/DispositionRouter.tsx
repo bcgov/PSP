@@ -12,6 +12,8 @@ import AppRoute from '@/utils/AppRoute';
 import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
 import { UpdateDispositionChecklistContainer } from '../tabs/checklist/update/UpdateDispositionChecklistContainer';
 import DispositionFileTabs from '../tabs/DispositionFileTabs';
+import DispositionAppraisalForm from '../tabs/offersAndSale/dispositionAppraisal/form/DispositionAppraisalForm';
+import UpdateDispositionAppraisalContainer from '../tabs/offersAndSale/dispositionAppraisal/update/UpdateDispositionAppraisalContainer';
 import AddDispositionOfferContainer from '../tabs/offersAndSale/dispositionOffer/add/AddDispositionOfferContainer';
 import DispositionOfferForm from '../tabs/offersAndSale/dispositionOffer/form/DispositionOfferForm';
 import UpdateDispositionOfferContainer from '../tabs/offersAndSale/dispositionOffer/update/UpdateDispositionOfferContainer';
@@ -63,6 +65,19 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
         <Route path={`${stripTrailingSlash(path)}/property`}>
           <></>
         </Route>
+        <AppRoute
+          exact
+          path={`${stripTrailingSlash(path)}/${FileTabType.OFFERS_AND_SALE}/appraisal/update`}
+          customRender={() => (
+            <UpdateDispositionAppraisalContainer
+              dispositionFileId={props.dispositionFile?.id ?? 0}
+              View={DispositionAppraisalForm}
+            ></UpdateDispositionAppraisalContainer>
+          )}
+          claim={Claims.DISPOSITION_EDIT}
+          key={'disposition'}
+          title={'Add Disposition Offer'}
+        />
         <AppRoute
           exact
           path={`${stripTrailingSlash(path)}/${FileTabType.OFFERS_AND_SALE}/offers/new`}

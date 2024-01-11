@@ -3,13 +3,17 @@ import { FaPlus } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
+import EditButton from '@/components/common/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
+import { H2 } from '@/components/common/styles';
 import { Claims } from '@/constants';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import {
   Api_DispositionFile,
+  Api_DispositionFileAppraisal,
   Api_DispositionFileOffer,
   Api_DispositionFileSale,
 } from '@/models/api/DispositionFile';
@@ -28,6 +32,7 @@ export interface IOffersAndSaleContainerViewProps {
   dispositionFile: Api_DispositionFile;
   dispositionOffers: Api_DispositionFileOffer[];
   dispositionSale: Api_DispositionFileSale | null;
+  dispositionAppraisal: Api_DispositionFileAppraisal | null;
   onDispositionOfferDeleted: (offerId: number) => void;
 }
 
@@ -36,16 +41,12 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
   dispositionFile,
   dispositionOffers,
   dispositionSale,
+  dispositionAppraisal,
   onDispositionOfferDeleted,
 }) => {
   const history = useHistory();
   const match = useRouteMatch();
-
-  const getAppraisalHasData = (): boolean => {
-    return dispositionFile.dispositionAppraisal !== null;
-  };
-
-  const appraisalHasData = getAppraisalHasData();
+  const keycloak = useKeycloakWrapper();
 
   const purchaserAgent = dispositionSale?.dispositionPurchaserAgents[0] ?? null;
   const purchaserAgentSolicitor = dispositionSale?.dispositionPurchaserSolicitors[0] ?? null;
@@ -53,43 +54,59 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
   return (
     <>
       <LoadingBackdrop show={loading} />
-      <Section header="Appraisal and Assessment">
-        {appraisalHasData ? (
+      <Section
+        isCollapsable={false}
+        header={
+          <StyledSubHeader>
+            <label>Appraisal and Assessment</label>
+            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && (
+              <EditButton
+                title="Edit Appraisal"
+                dataTestId={`appraisal-edit-btn`}
+                onClick={() => {
+                  history.push(`${match.url}/appraisal/update`);
+                }}
+              />
+            )}
+          </StyledSubHeader>
+        }
+      >
+        {dispositionAppraisal ? (
           <>
             <SectionField
               label="Appraisal value ($)"
               labelWidth="5"
               valueTestId="disposition-file.appraisedValueAmount"
             >
-              {formatMoney(dispositionFile.dispositionAppraisal?.appraisedAmount)}
+              {formatMoney(dispositionAppraisal.appraisedAmount)}
             </SectionField>
             <SectionField
               label="Appraisal date"
               labelWidth="5"
               valueTestId="disposition-file.appraisalDate"
             >
-              {prettyFormatDate(dispositionFile.dispositionAppraisal?.appraisalDate)}
+              {prettyFormatDate(dispositionAppraisal.appraisalDate)}
             </SectionField>
             <SectionField
               label="BC assessment value ($)"
               labelWidth="5"
               valueTestId="disposition-file.bcaValueAmount"
             >
-              {formatMoney(dispositionFile.dispositionAppraisal?.bcaValueAmount)}
+              {formatMoney(dispositionAppraisal.bcaValueAmount)}
             </SectionField>
             <SectionField
               label="BC assessment roll year"
               labelWidth="5"
               valueTestId="disposition-file.bcaAssessmentRollYear"
             >
-              {dispositionFile.dispositionAppraisal?.bcaRollYear ?? ''}
+              {dispositionAppraisal.bcaRollYear ?? ''}
             </SectionField>
             <SectionField
               label="List price ($)"
               labelWidth="5"
               valueTestId="disposition-file.listPriceAmount"
             >
-              {formatMoney(dispositionFile.dispositionAppraisal?.listPriceAmount)}
+              {formatMoney(dispositionAppraisal.listPriceAmount)}
             </SectionField>
           </>
         ) : (
@@ -274,4 +291,24 @@ export default OffersAndSaleContainerView;
 
 const StyledSpacer = styled.div`
   border-bottom: 0.1rem solid ${props => props.theme.css.tableHoverColor};
+`;
+
+const StyledSubHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+
+  label {
+    color: ${props => props.theme.css.primaryColor};
+    font-family: 'BCSans-Bold';
+    font-size: 2rem;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 0;
+  }
+
+  button {
+    margin-bottom: 1rem;
+  }
 `;

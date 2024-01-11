@@ -5,18 +5,17 @@ using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Core.Extensions;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Entities.Extensions;
 
 namespace Pims.Api.Services
 {
@@ -206,6 +205,53 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
 
             return _dispositionFileRepository.GetDispositionFileSale(dispositionFileId);
+        }
+
+        public PimsDispositionAppraisal GetDispositionFileAppraisal(long dispositionFileId)
+        {
+            _logger.LogInformation("Getting disposition file appraisal with DispositionFileId: {id}", dispositionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+
+            return _dispositionFileRepository.GetDispositionFileAppraisal(dispositionFileId);
+        }
+
+        public PimsDispositionAppraisal AddDispositionFileAppraisal(long dispositionFileId, PimsDispositionAppraisal dispositionAppraisal)
+        {
+            _logger.LogInformation("Adding disposition file offer to Disposition File with Id: {id}", dispositionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+
+            var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
+            if (dispositionFileId != dispositionAppraisal.DispositionFileId || dispositionFileParent is null)
+            {
+                throw new BadRequestException("Invalid dispositionFileId.");
+            }
+
+            if(dispositionFileParent.PimsDispositionAppraisals.Count > 0)
+            {
+                throw new DuplicateEntityException("Invalid Disposition Appraisal. An Appraisal has been already created for this Disposition File");
+            }
+
+            var newAppraisal = _dispositionFileRepository.AddDispositionFileAppraisal(dispositionAppraisal);
+            _dispositionFileRepository.CommitTransaction();
+
+            return newAppraisal;
+        }
+
+        public PimsDispositionAppraisal UpdateDispositionFileAppraisal(long dispositionFileId, long appraisalId, PimsDispositionAppraisal dispositionAppraisal)
+        {
+            _logger.LogInformation("Updating disposition file Appraisal with DispositionFileId: {id}", dispositionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+
+            var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
+            if (dispositionFileId != dispositionAppraisal.DispositionFileId || dispositionAppraisal.DispositionAppraisalId != appraisalId || dispositionFileParent is null)
+            {
+                throw new BadRequestException("Invalid dispositionFileId.");
+            }
+
+            var updatedOffer = _dispositionFileRepository.UpdateDispositionFileAppraisal(appraisalId, dispositionAppraisal);
+            _dispositionFileRepository.CommitTransaction();
+
+            return updatedOffer;
         }
 
         public IEnumerable<PimsDispositionChecklistItem> GetChecklistItems(long id)
