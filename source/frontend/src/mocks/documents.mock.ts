@@ -1,13 +1,12 @@
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
-import { Api_DocumentRelationship, Api_DocumentType } from '@/models/api/Document';
-import {
-  Api_Storage_DocumentMetadata,
-  Api_Storage_DocumentTypeMetadataType,
-} from '@/models/api/DocumentStorage';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
+import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
+import { ApiGen_Mayan_DocumentMetadata } from '@/models/api/generated/ApiGen_Mayan_DocumentMetadata';
+import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 
-export const mockDocumentResponse = (id = 1): Api_DocumentRelationship => ({
+export const mockDocumentResponse = (id = 1): ApiGen_Concepts_DocumentRelationship => ({
   id,
-  parentId: 1,
+  parentId: '1',
   document: {
     id: 21,
     mayanDocumentId: 33,
@@ -29,6 +28,7 @@ export const mockDocumentResponse = (id = 1): Api_DocumentRelationship => ({
       id: 'AMENDD',
       description: 'Amended',
       isDisabled: false,
+      displayOrder: null,
     },
     fileName: 'moti_plan.txt',
     appCreateTimestamp: '2022-09-08T21:18:54.057',
@@ -39,7 +39,7 @@ export const mockDocumentResponse = (id = 1): Api_DocumentRelationship => ({
     appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
     rowVersion: 1,
   },
-  relationshipType: DocumentRelationshipType.ACQUISITION_FILES,
+  relationshipType: ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles,
   appCreateTimestamp: '2022-09-08T21:18:54.057',
   appLastUpdateTimestamp: '2022-09-08T21:18:54.057',
   appLastUpdateUserid: 'admin',
@@ -49,47 +49,59 @@ export const mockDocumentResponse = (id = 1): Api_DocumentRelationship => ({
   rowVersion: 1,
 });
 
-export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
+export const mockDocumentsResponse = (): ApiGen_Concepts_DocumentRelationship[] => [
   {
     id: 1,
-    parentId: 1,
+    parentId: '1',
     document: {
       id: 20,
       mayanDocumentId: 13,
       documentType: {
         id: 12,
-        mayanId: null,
+        mayanId: 0,
         documentType: 'Gazette',
         documentTypeDescription: 'GAZE',
+
+        isDisabled: false,
+
+        rowVersion: 1,
+
         appCreateTimestamp: '2022-07-27T16:06:42.42',
         appLastUpdateTimestamp: '2022-07-27T16:06:42.42',
         appLastUpdateUserid: 'service',
         appCreateUserid: 'service',
         appLastUpdateUserGuid: '00000000-0000-0000-0000-000000000000',
         appCreateUserGuid: '00000000-0000-0000-0000-000000000000',
-        rowVersion: 1,
-        isDisabled: false,
       },
       statusTypeCode: {
         id: 'SIGND',
         description: 'Signed',
         isDisabled: false,
+        displayOrder: null,
       },
       fileName: 'DocTest.docx',
       appCreateTimestamp: '0001-01-01T00:00:00',
       appLastUpdateTimestamp: '0001-01-01T00:00:00',
       rowVersion: 1,
+
+      appLastUpdateUserid: null,
+      appCreateUserid: 'James Bond',
+      appLastUpdateUserGuid: null,
+      appCreateUserGuid: null,
     },
-    relationshipType: DocumentRelationshipType.ACQUISITION_FILES,
+    relationshipType: ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles,
     appCreateTimestamp: '2022-07-27T16:10:01.82',
     appLastUpdateTimestamp: '2022-07-27T16:10:01.82',
     appLastUpdateUserid: 'dbo',
     appCreateUserid: 'dbo',
     rowVersion: 1,
+
+    appLastUpdateUserGuid: null,
+    appCreateUserGuid: null,
   },
   {
     id: 2,
-    parentId: 1,
+    parentId: '1',
     document: {
       id: 21,
       mayanDocumentId: 33,
@@ -111,6 +123,7 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
         id: 'AMENDD',
         description: 'Amended',
         isDisabled: false,
+        displayOrder: null,
       },
       fileName: 'moti_plan.txt',
       appCreateTimestamp: '2022-09-08T21:18:54.057',
@@ -121,7 +134,7 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
       appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
       rowVersion: 1,
     },
-    relationshipType: DocumentRelationshipType.ACQUISITION_FILES,
+    relationshipType: ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles,
     appCreateTimestamp: '2022-09-08T21:18:54.057',
     appLastUpdateTimestamp: '2022-09-08T21:18:54.057',
     appLastUpdateUserid: 'admin',
@@ -132,33 +145,52 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
   },
 ];
 
-export const mockDocumentTypesResponse = (): Api_DocumentType[] => [
+export const mockDocumentTypesResponse = (): ApiGen_Concepts_DocumentType[] => [
   {
     documentType: 'SURV',
     documentTypeDescription: 'Survey',
     id: 1,
     mayanId: 8,
-    appCreateUserid: 'James Bond',
-    appCreateTimestamp: '10-Jan-2022',
+
     isDisabled: false,
+
+    rowVersion: 1,
+
+    appCreateTimestamp: '10-Jan-2022',
+    appLastUpdateTimestamp: '10-Jan-2022',
+    appLastUpdateUserid: null,
+    appCreateUserid: 'James Bond',
+    appLastUpdateUserGuid: null,
+    appCreateUserGuid: null,
   },
   {
     id: 2,
     documentType: 'PRIVCOUN',
     documentTypeDescription: 'Privy Council',
     mayanId: 7,
-    appCreateUserid: 'James Bond',
-    appCreateTimestamp: '10-Jan-2022',
     isDisabled: false,
+
+    rowVersion: 1,
+
+    appCreateTimestamp: '10-Jan-2022',
+    appLastUpdateTimestamp: '10-Jan-2022',
+    appLastUpdateUserid: null,
+    appCreateUserid: 'James Bond',
+    appLastUpdateUserGuid: null,
+    appCreateUserGuid: null,
   },
 ];
 
-export const mockDocumentTypeMetadata = (): Api_Storage_DocumentTypeMetadataType[] => [
+export const mockDocumentTypeMetadata = (): ApiGen_Mayan_DocumentTypeMetadataType[] => [
   {
     id: 1,
     document_type: {
       id: 1,
       label: 'Survey',
+      delete_time_period: null,
+      delete_time_unit: null,
+      trash_time_period: null,
+      trash_time_unit: null,
     },
     metadata_type: {
       default: '',
@@ -173,10 +205,11 @@ export const mockDocumentTypeMetadata = (): Api_Storage_DocumentTypeMetadataType
       validation_arguments: '',
     },
     required: true,
+    url: null,
   },
 ];
 
-export const mockDocumentMetadata = (): Api_Storage_DocumentMetadata[] => [
+export const mockDocumentMetadata = (): ApiGen_Mayan_DocumentMetadata[] => [
   {
     document: {
       label: '',
@@ -184,19 +217,36 @@ export const mockDocumentMetadata = (): Api_Storage_DocumentMetadata[] => [
       description: '',
       file_latest: {
         id: 2,
-        document_id: 1,
         comment: '',
         encoding: '',
-        fileName: '',
+        filename: '',
         mimetype: '',
         size: 12,
-        timeStamp: '',
+        timestamp: '',
       },
       id: 1,
-      document_type: { id: 1, label: 'Survey' },
+      document_type: {
+        id: 1,
+        label: 'Survey',
+        delete_time_period: null,
+        delete_time_unit: null,
+        trash_time_period: null,
+        trash_time_unit: null,
+      },
     },
     id: 1,
-    metadata_type: { id: 1, label: 'Tag' },
+    metadata_type: {
+      id: 1,
+      label: 'Tag',
+      default: null,
+      lookup: null,
+      name: null,
+      parser: null,
+      parser_arguments: null,
+      url: null,
+      validation: null,
+      validation_arguments: null,
+    },
     url: '',
     value: 'Tag1234',
   },

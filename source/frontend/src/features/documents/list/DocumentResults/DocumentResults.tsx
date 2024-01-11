@@ -3,17 +3,18 @@ import { useMemo } from 'react';
 import { Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
 import { DocumentRow } from '@/features/documents/ComposedDocument';
-import { Api_Document, Api_DocumentRelationship } from '@/models/api/Document';
+import { ApiGen_Concepts_Document } from '@/models/api/generated/ApiGen_Concepts_Document';
+import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 
 import { getDocumentColumns } from './DocumentResultsColumns';
 
 export interface IDocumentResultProps {
   results: DocumentRow[];
   loading?: boolean;
-  sort: TableSort<Api_Document>;
-  setSort: (value: TableSort<Api_Document>) => void;
-  onViewDetails: (values: Api_DocumentRelationship) => void;
-  onDelete: (values: Api_DocumentRelationship) => void;
+  sort: TableSort<ApiGen_Concepts_Document>;
+  setSort: (value: TableSort<ApiGen_Concepts_Document>) => void;
+  onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void;
+  onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void;
 }
 
 export const DocumentResults: React.FunctionComponent<

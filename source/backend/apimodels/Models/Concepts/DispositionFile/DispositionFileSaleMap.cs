@@ -1,7 +1,7 @@
 using Mapster;
 using Entity = Pims.Dal.Entities;
 
-namespace Pims.Api.Models.Models.Concepts.DispositionFile
+namespace Pims.Api.Models.Concepts.DispositionFile
 {
     public class DispositionFileSaleMap : IRegister
     {

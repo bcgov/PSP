@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Pims.Api.Models.Base;
 
-namespace Pims.Api.Models.Models.Concepts.DispositionFile
+namespace Pims.Api.Models.Concepts.DispositionFile
 {
     public class DispositionFileSaleModel : BaseConcurrentModel
     {

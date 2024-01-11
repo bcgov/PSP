@@ -1,6 +1,6 @@
 using Mapster;
 using Pims.Api.Models.Base;
-using Pims.Api.Models.Models.Concepts.File;
+using Pims.Api.Models.Concepts.File;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.AcquisitionFile

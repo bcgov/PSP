@@ -22,7 +22,7 @@ namespace Pims.Api.Areas.Contact.Models.Contact
         /// <summary>
         /// get/set - The address type.
         /// </summary>
-        public TypeModel<string> AddressType { get; set; }
+        public CodeTypeModel<string> AddressType { get; set; }
 
         /// <summary>
         /// get/set - The street address.

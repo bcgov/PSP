@@ -3,12 +3,12 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { NoteTypes } from '@/constants/noteTypes';
 import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 
 import { SideBarContext } from '../../context/sidebarContext';
 import { ChecklistView } from '../../shared/tabs/checklist/detail/ChecklistView';
@@ -81,7 +81,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       content: (
         <DocumentsTab
           fileId={acquisitionFile.id}
-          relationshipType={DocumentRelationshipType.ACQUISITION_FILES}
+          relationshipType={ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles}
           onSuccess={onChildSuccess}
         />
       ),

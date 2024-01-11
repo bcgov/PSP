@@ -12,7 +12,7 @@ namespace Pims.Api.Helpers.Extensions
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static string GetTypeId(this TypeModel<string> type)
+        public static string GetTypeId(this CodeTypeModel<string> type)
         {
             return type?.Id;
         }

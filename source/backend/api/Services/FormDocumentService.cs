@@ -4,10 +4,10 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Concepts.CodeTypes;
+using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Document;
-using Pims.Api.Models.Concepts.Document.Upload;
-using Pims.Api.Models.Concepts.Http;
+using Pims.Api.Models.Requests.Document.Upload;
+using Pims.Api.Models.Requests.Http;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -68,7 +68,7 @@ namespace Pims.Api.Services
             if (currentFormType.DocumentId != null)
             {
                 var result = await DeleteFormDocumentTemplateAsync(currentFormType);
-                if (result.Status != ExternalResultStatus.Success)
+                if (result.Status != ExternalResponseStatus.Success)
                 {
                     throw new InvalidOperationException("Could not remove existing template");
                 }
@@ -86,7 +86,7 @@ namespace Pims.Api.Services
                 UploadResponse = uploadResult,
             };
 
-            if (uploadResult.DocumentExternalResult.Status == ExternalResultStatus.Success && uploadResult.Document != null && uploadResult.Document.Id != 0)
+            if (uploadResult.DocumentExternalResponse.Status == ExternalResponseStatus.Success && uploadResult.Document != null && uploadResult.Document.Id != 0)
             {
                 currentFormType.DocumentId = uploadResult.Document.Id;
                 var updatedFormType = _formTypeRepository.SetFormTypeDocument(currentFormType);
@@ -98,7 +98,7 @@ namespace Pims.Api.Services
             return relationshipResponse;
         }
 
-        public async Task<ExternalResult<string>> DeleteFormDocumentTemplateAsync(PimsFormType formType)
+        public async Task<ExternalResponse<string>> DeleteFormDocumentTemplateAsync(PimsFormType formType)
         {
             this.Logger.LogInformation("Deleting form document template");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentAdmin);
@@ -116,12 +116,12 @@ namespace Pims.Api.Services
                     formType.DocumentId = null;
                     _formTypeRepository.SetFormTypeDocument(formType);
                     _formTypeRepository.CommitTransaction();
-                    return new ExternalResult<string>() { Status = ExternalResultStatus.NotExecuted };
+                    return new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
                 }
             }
             else
             {
-                return new ExternalResult<string>() { Status = ExternalResultStatus.NotExecuted };
+                return new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
             }
         }
 

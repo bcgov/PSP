@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Pims.Api.Models.Concepts.Document.Upload;
-using Pims.Api.Models.Concepts.Http;
+using Pims.Api.Models.Requests.Document.Upload;
+using Pims.Api.Models.Requests.Http;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
@@ -14,7 +14,7 @@ namespace Pims.Api.Services
 
         Task<DocumentUploadRelationshipResponse> UploadFormDocumentTemplateAsync(string formTypeCode, DocumentUploadRequest uploadRequest);
 
-        Task<ExternalResult<string>> DeleteFormDocumentTemplateAsync(PimsFormType formType);
+        Task<ExternalResponse<string>> DeleteFormDocumentTemplateAsync(PimsFormType formType);
 
         PimsAcquisitionFileForm AddAcquisitionForm(PimsFormType formType, long acquisitionFileId);
 
