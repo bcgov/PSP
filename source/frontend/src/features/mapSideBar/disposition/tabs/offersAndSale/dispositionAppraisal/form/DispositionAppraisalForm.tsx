@@ -16,7 +16,7 @@ import { Api_DispositionFileAppraisal } from '@/models/api/DispositionFile';
 import { DispositionAppraisalFormYupSchema } from './DispostionAppraisalFormYupSchema';
 
 export interface IDispositionAppraisalFormProps {
-  initialValues: DispositionAppraisalFormModel | null;
+  initialValues: DispositionAppraisalFormModel;
   loading: boolean;
   onSave: (
     appraisal: Api_DispositionFileAppraisal,
@@ -61,7 +61,6 @@ const DispositionAppraisalForm: React.FC<IDispositionAppraisalFormProps> = ({
         initialValues={initialValues}
         onSubmit={async (values: DispositionAppraisalFormModel, formikHelpers) => {
           try {
-            console.log(values);
             if (values.isEmpty()) {
               onSuccess();
             }

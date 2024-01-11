@@ -21,9 +21,10 @@ const UpdateDispositionAppraisalContainer: React.FunctionComponent<
   const history = useHistory();
   const location = useLocation();
   const backUrl = location.pathname.split(`/appraisal`)[0];
+  const initialValues = new DispositionAppraisalFormModel(null, dispositionFileId, null);
 
   const [dispositionAppraisal, setdispositionAppraisal] =
-    useState<DispositionAppraisalFormModel | null>(null);
+    useState<DispositionAppraisalFormModel>(initialValues);
   const {
     getDispositionAppraisal: { execute: getDispositionAppraisal, loading: loadingAppraisal },
     postDispositionAppraisal: { execute: postDispositionAppraisal, loading: creatingAppraisal },
