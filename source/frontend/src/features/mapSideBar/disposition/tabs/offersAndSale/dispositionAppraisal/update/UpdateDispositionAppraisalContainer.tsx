@@ -28,7 +28,7 @@ const UpdateDispositionAppraisalContainer: React.FunctionComponent<
   const {
     getDispositionAppraisal: { execute: getDispositionAppraisal, loading: loadingAppraisal },
     postDispositionAppraisal: { execute: postDispositionAppraisal, loading: creatingAppraisal },
-    putDispositionAppraisal: { execute: updateDispositionAppraisal, loading: updatingAppraisal },
+    putDispositionAppraisal: { execute: putDispositionAppraisal, loading: updatingAppraisal },
   } = useDispositionProvider();
 
   const fetchAppraisalInformation = useCallback(async () => {
@@ -45,7 +45,7 @@ const UpdateDispositionAppraisalContainer: React.FunctionComponent<
 
   const handleSave = async (appraisal: Api_DispositionFileAppraisal) => {
     if (dispositionAppraisal?.id) {
-      return updateDispositionAppraisal(dispositionFileId, dispositionAppraisal?.id, appraisal);
+      return putDispositionAppraisal(dispositionFileId, dispositionAppraisal?.id, appraisal);
     } else {
       return postDispositionAppraisal(dispositionFileId, appraisal);
     }

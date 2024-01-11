@@ -5,6 +5,11 @@ export const formatMoney = (value?: number | '' | null): string => {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+
+  if (value === null) {
+    return '';
+  }
+
   return formatter.format(value || 0);
 };
 

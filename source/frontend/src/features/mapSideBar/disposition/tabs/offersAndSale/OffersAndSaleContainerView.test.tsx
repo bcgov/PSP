@@ -5,7 +5,7 @@ import {
   mockDispositionFileResponse,
   mockDispositionFileSaleApi,
 } from '@/mocks/dispositionFiles.mock';
-import { render, RenderOptions, waitFor } from '@/utils/test-utils';
+import { render, RenderOptions, waitFor, waitForEffects } from '@/utils/test-utils';
 
 import OffersAndSaleContainerView, {
   IOffersAndSaleContainerViewProps,
@@ -35,6 +35,7 @@ describe('Disposition Offer Detail View component', () => {
       />,
       {
         ...renderOptions,
+        useMockAuthentication: true,
         history: history,
         claims: renderOptions?.claims ?? [Claims.DISPOSITION_VIEW],
       },
@@ -75,6 +76,48 @@ describe('Disposition Offer Detail View component', () => {
     ).toBeVisible();
   });
 
+  it('displays the Disposition Appraisal and Value when available', async () => {
+    const mockDisposition = mockDispositionFileResponse(1);
+
+    const { queryByTestId } = await setup({
+      props: {
+        dispositionFile: mockDisposition,
+        dispositionOffers: [],
+        dispositionAppraisal: mockDisposition.dispositionAppraisal,
+      },
+    });
+
+    expect(queryByTestId('disposition-file.appraisedValueAmount')).toHaveTextContent('$550,000.00');
+    expect(queryByTestId('disposition-file.appraisalDate')).toHaveTextContent('Dec 28, 2023');
+    expect(queryByTestId('disposition-file.bcaValueAmount')).toHaveTextContent('$600,000.00');
+    expect(queryByTestId('disposition-file.bcaAssessmentRollYear')).toHaveTextContent('2023');
+    expect(queryByTestId('disposition-file.listPriceAmount')).toHaveTextContent('$590,000.00');
+  });
+
+  it('hides the edit button for Appraisal for users without permissions', async () => {
+    const { queryByTitle } = await setup({
+      props: { dispositionFile: mockDispositionFileResponse() },
+      claims: [Claims.DISPOSITION_VIEW],
+    });
+    await waitForEffects();
+
+    const editButton = queryByTitle('Edit Appraisal');
+
+    expect(editButton).toBeNull();
+  });
+
+  it('renders the edit button for Appraisal for users with disposition edit permissions', async () => {
+    const { getByTitle } = await setup({
+      props: { dispositionFile: mockDispositionFileResponse() },
+      claims: [Claims.DISPOSITION_EDIT],
+    });
+    await waitForEffects();
+
+    const editButton = getByTitle('Edit Appraisal');
+
+    expect(editButton).toBeVisible();
+  });
+
   it('displays a message when Disposition has no offers', async () => {
     const mockDisposition = mockDispositionFileApi;
     mockDisposition.dispositionSale = null;
@@ -95,24 +138,6 @@ describe('Disposition Offer Detail View component', () => {
     expect(
       getByText(/There are no sale details indicated with this disposition file/i),
     ).toBeVisible();
-  });
-
-  it('displays the Disposition Appraisal and Value when available', async () => {
-    const mockDisposition = mockDispositionFileResponse(1);
-
-    const { queryByTestId } = await setup({
-      props: {
-        dispositionFile: mockDisposition,
-        dispositionOffers: [],
-        dispositionAppraisal: mockDisposition.dispositionAppraisal,
-      },
-    });
-
-    expect(queryByTestId('disposition-file.appraisedValueAmount')).toHaveTextContent('$550,000.00');
-    expect(queryByTestId('disposition-file.appraisalDate')).toHaveTextContent('Dec 28, 2023');
-    expect(queryByTestId('disposition-file.bcaValueAmount')).toHaveTextContent('$600,000.00');
-    expect(queryByTestId('disposition-file.bcaAssessmentRollYear')).toHaveTextContent('2023');
-    expect(queryByTestId('disposition-file.listPriceAmount')).toHaveTextContent('$590,000.00');
   });
 
   it('displays the Disposition Sale information when available', async () => {
