@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Api_FileDownload } from '@/models/api/DocumentStorage';
-import { ExternalResult } from '@/models/api/ExternalResult';
+import { ApiGen_Requests_ExternalResponse } from '@/models/api/generated/ApiGen_Requests_ExternalResponse';
+import { ApiGen_Requests_FileDownloadResponse } from '@/models/api/generated/ApiGen_Requests_FileDownloadResponse';
 
 import { DocumentGenerationRequest } from './../../models/api/DocumentGenerationRequest';
 import useAxiosApi from './useApi';
@@ -17,7 +17,7 @@ export const useApiDocumentGeneration = () => {
   return React.useMemo(
     () => ({
       generateDocumentDownloadWrapped: (request: DocumentGenerationRequest) =>
-        api.post<ExternalResult<Api_FileDownload>>(
+        api.post<ApiGen_Requests_ExternalResponse<ApiGen_Requests_FileDownloadResponse>>(
           `/documentGeneration/template/generate/download-wrapped`,
           request,
         ),

@@ -19,7 +19,7 @@ namespace Pims.Api.Models.Concepts.Property
         /// <summary>
         /// get/set - Tenure type code.
         /// </summary>
-        public virtual TypeModel<string> PropertyTenureTypeCode { get; set; }
+        public virtual CodeTypeModel<string> PropertyTenureTypeCode { get; set; }
 
         #endregion
     }

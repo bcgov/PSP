@@ -5,9 +5,9 @@ using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
-using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
@@ -350,7 +350,7 @@ namespace Pims.Api.Services
             bool duplicate = dispositionFile.PimsDispositionFileTeams.GroupBy(p => p.DspFlTeamProfileTypeCode).Any(g => g.Count() > 1);
             if (duplicate)
             {
-                throw new BadRequestException("Invalid Disposition team, each team member and role combination can only be added once.");    
+                throw new BadRequestException("Invalid Disposition team, each team member and role combination can only be added once.");
             }
         }
 

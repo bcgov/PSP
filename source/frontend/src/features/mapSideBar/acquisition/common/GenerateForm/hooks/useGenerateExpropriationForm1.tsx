@@ -8,7 +8,7 @@ import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
-import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateExpropriationForm1 } from '@/models/generate/acquisition/GenerateExpropriationForm1';
 
@@ -80,7 +80,10 @@ export const useGenerateExpropriationForm1 = () => {
       convertToType: null,
     });
 
-    if (generatedFile?.status === ExternalResultStatus.Success && generatedFile?.payload) {
+    if (
+      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
+      generatedFile?.payload
+    ) {
       const fileExt = generatedFile?.payload?.fileNameExtension ?? 'docx';
       const fileName = `Form 1-${file.fileNumber}-${moment().format('yyyyMMDD_hhmmss')}.${fileExt}`;
       showFile(generatedFile?.payload, fileName);

@@ -27,7 +27,7 @@ namespace Pims.Api.Models.Contact
         /// <summary>
         /// get/set - Foreign key to the contact method type.
         /// </summary>
-        public TypeModel<string> ContactMethodTypeCode { get; set; }
+        public CodeTypeModel<string> ContactMethodTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The contact method value.

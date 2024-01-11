@@ -19,7 +19,7 @@ namespace Pims.Api.Models.Concepts.Property
         /// <summary>
         /// get/set - Anomaly type code.
         /// </summary>
-        public virtual TypeModel<string> PropertyAnomalyTypeCode { get; set; }
+        public virtual CodeTypeModel<string> PropertyAnomalyTypeCode { get; set; }
 
         #endregion
     }

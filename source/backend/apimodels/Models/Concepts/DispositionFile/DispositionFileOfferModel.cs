@@ -1,7 +1,7 @@
 using System;
 using Pims.Api.Models.Base;
 
-namespace Pims.Api.Models.Models.Concepts.DispositionFile
+namespace Pims.Api.Models.Concepts.DispositionFile
 {
     public class DispositionFileOfferModel : BaseConcurrentModel
     {
@@ -23,7 +23,7 @@ namespace Pims.Api.Models.Models.Concepts.DispositionFile
         /// <summary>
         /// Disposition Offer Status Object.
         /// </summary>
-        public TypeModel<string> DispositionOfferStatusType { get; set; }
+        public CodeTypeModel<string> DispositionOfferStatusType { get; set; }
 
         /// <summary>
         /// Disposition Offer Name.

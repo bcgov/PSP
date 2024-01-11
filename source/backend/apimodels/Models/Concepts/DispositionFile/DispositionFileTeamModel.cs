@@ -61,7 +61,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         /// <summary>
         /// get/set - The Team's profile type code.
         /// </summary>
-        public TypeModel<string> TeamProfileType { get; set; }
+        public CodeTypeModel<string> TeamProfileType { get; set; }
 
         #endregion
     }

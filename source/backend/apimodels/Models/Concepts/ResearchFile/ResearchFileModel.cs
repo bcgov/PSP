@@ -34,7 +34,7 @@ namespace Pims.Api.Models.Concepts.ResearchFile
 
         public string ExpropriationNotes { get; set; }
 
-        public TypeModel<string> RequestSourceType { get; set; }
+        public CodeTypeModel<string> RequestSourceType { get; set; }
 
         public PersonModel RequestorPerson { get; set; }
 

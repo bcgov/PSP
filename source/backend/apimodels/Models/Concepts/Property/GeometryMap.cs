@@ -1,6 +1,6 @@
 using Mapster;
 using NetTopologySuite.Geometries;
-using Pims.Dal.Constants;
+using Pims.Api.Models.CodeTypes;
 using Pims.Dal.Helpers;
 
 namespace Pims.Api.Models.Concepts.Property

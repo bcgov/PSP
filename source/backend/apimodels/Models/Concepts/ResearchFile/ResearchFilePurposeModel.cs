@@ -14,7 +14,7 @@ namespace Pims.Api.Models.Concepts.ResearchFile
         /// <summary>
         /// get/set - Purpose type code.
         /// </summary>
-        public virtual TypeModel<string> ResearchPurposeTypeCode { get; set; }
+        public virtual CodeTypeModel<string> ResearchPurposeTypeCode { get; set; }
 
         #endregion
     }

@@ -28,7 +28,7 @@ namespace Pims.Api.Models.Concepts.Document
         /// <summary>
         /// get/set - The document status type.
         /// </summary>
-        public TypeModel<string> StatusTypeCode { get; set; }
+        public CodeTypeModel<string> StatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - Document/File Name.

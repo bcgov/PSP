@@ -11,8 +11,8 @@ import * as API from '@/constants/API';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { Api_DocumentUpdateRequest } from '@/models/api/Document';
-import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
+import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
+import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
 
 import { StyledH3, StyledScrollable } from '../commonStyles';
 import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
@@ -25,8 +25,8 @@ export interface IDocumentDetailFormProps {
   formikRef: React.RefObject<FormikProps<DocumentUpdateFormData>>;
   document: ComposedDocument;
   isLoading: boolean;
-  mayanMetadataTypes: Api_Storage_DocumentTypeMetadataType[];
-  onUpdate: (updateRequest: Api_DocumentUpdateRequest) => void;
+  mayanMetadataTypes: ApiGen_Mayan_DocumentTypeMetadataType[];
+  onUpdate: (updateRequest: ApiGen_Requests_DocumentUpdateRequest) => void;
   onCancel: () => void;
 }
 

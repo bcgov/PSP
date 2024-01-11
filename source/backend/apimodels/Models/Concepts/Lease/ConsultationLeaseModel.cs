@@ -8,9 +8,9 @@ namespace Pims.Api.Models.Concepts.Lease
 
         public long Id { get; set; }
 
-        public TypeModel<string> ConsultationType { get; set; }
+        public CodeTypeModel<string> ConsultationType { get; set; }
 
-        public TypeModel<string> ConsultationStatusType { get; set; }
+        public CodeTypeModel<string> ConsultationStatusType { get; set; }
 
         public long ParentLeaseId { get; set; }
 

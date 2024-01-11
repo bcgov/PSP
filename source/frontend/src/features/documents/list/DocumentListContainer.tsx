@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import useIsMounted from '@/hooks/util/useIsMounted';
-import { Api_DocumentRelationship } from '@/models/api/Document';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 
 import { DocumentRow } from '../ComposedDocument';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
@@ -11,7 +11,7 @@ import DocumentListView from './DocumentListView';
 
 interface IDocumentListContainerProps {
   parentId: string;
-  relationshipType: DocumentRelationshipType;
+  relationshipType: ApiGen_CodeTypes_DocumentRelationType;
   disableAdd?: boolean;
   addButtonText?: string;
   title?: string;
@@ -34,7 +34,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
     if (documents !== undefined && isMounted()) {
       setDocumentResults([
         ...documents
-          .filter((x): x is Api_DocumentRelationship => !!x?.document)
+          .filter((x): x is ApiGen_Concepts_DocumentRelationship => !!x?.document)
           .map(x => DocumentRow.fromApi(x)),
       ]);
     }
@@ -45,7 +45,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
   }, [retrieveDocuments]);
 
   const onDelete = async (
-    documentRelationship: Api_DocumentRelationship,
+    documentRelationship: ApiGen_Concepts_DocumentRelationship,
   ): Promise<boolean | undefined> => {
     if (documentRelationship.relationshipType !== null) {
       let result = await deleteDocumentRelationship(

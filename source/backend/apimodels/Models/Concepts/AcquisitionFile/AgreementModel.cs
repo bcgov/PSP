@@ -9,9 +9,9 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
 
         public long AcquisitionFileId { get; set; }
 
-        public TypeModel<string> AgreementType { get; set; }
+        public CodeTypeModel<string> AgreementType { get; set; }
 
-        public TypeModel<string> AgreementStatusType { get; set; }
+        public CodeTypeModel<string> AgreementStatusType { get; set; }
 
         public DateOnly? AgreementDate { get; set; }
 

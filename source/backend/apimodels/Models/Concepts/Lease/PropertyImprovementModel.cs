@@ -18,7 +18,7 @@ namespace Pims.Api.Models.Concepts.Lease
 
         public string ImprovementDescription { get; set; }
 
-        public TypeModel<string> PropertyImprovementTypeCode { get; set; }
+        public CodeTypeModel<string> PropertyImprovementTypeCode { get; set; }
 
         #endregion
     }

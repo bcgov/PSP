@@ -8,8 +8,9 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import ValidDocumentExtensions from '@/constants/ValidDocumentExtensions';
-import { Api_DocumentType, Api_DocumentUploadRequest } from '@/models/api/Document';
-import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
+import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
+import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
+import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
 
 import { StyledH3, StyledScrollable } from '../commonStyles';
 import { DocumentUploadFormData } from '../ComposedDocument';
@@ -20,12 +21,12 @@ interface IDocumentUploadFormProps {
   isLoading: boolean;
   formikRef: React.RefObject<FormikProps<DocumentUploadFormData>>;
   initialDocumentType: string;
-  documentTypes: Api_DocumentType[];
+  documentTypes: ApiGen_Concepts_DocumentType[];
   documentStatusOptions: SelectOption[];
-  mayanMetadataTypes: Api_Storage_DocumentTypeMetadataType[];
+  mayanMetadataTypes: ApiGen_Mayan_DocumentTypeMetadataType[];
   onDocumentSelected: () => void;
   onDocumentTypeChange: (changeEvent: ChangeEvent<HTMLInputElement>) => void;
-  onUploadDocument: (uploadRequest: Api_DocumentUploadRequest) => void;
+  onUploadDocument: (uploadRequest: ApiGen_Requests_DocumentUploadRequest) => void;
   onCancel: () => void;
 }
 
