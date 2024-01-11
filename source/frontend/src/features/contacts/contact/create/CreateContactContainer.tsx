@@ -4,9 +4,9 @@ import { MdContactMail } from 'react-icons/md';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { FormTitleBar } from '@/components/common/form/FormTitleBar';
 import { ContactTypeSelector } from '@/features/contacts';
 import { ContactTypes } from '@/features/contacts/interfaces';
-import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 
 import ContactRouter from './ContactRouter';
 
@@ -29,40 +29,47 @@ export const CreateContactContainer: React.FunctionComponent<
 
   return (
     <ContactLayout>
-      <MapSideBarLayout
+      <FormTitleBar
         showCloseButton
         title="Add Contact"
         icon={<MdContactMail className="mr-2 mb-2" size={32} />}
         onClose={onClose}
-      >
+      ></FormTitleBar>
+
+      <StyledFormWrapper>
         <ContactTypeSelector
           contactType={contactType}
           setContactType={onSelectorChange}
         ></ContactTypeSelector>
 
         <ContactRouter />
-      </MapSideBarLayout>
-
-      {/* <Styled.H1>Add a Contact</Styled.H1> */}
+      </StyledFormWrapper>
     </ContactLayout>
   );
 };
 
 const ContactLayout = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-  text-align: left;
   height: 100%;
   width: 50%;
   min-width: 93rem;
   overflow: hidden;
-  padding: 1rem;
-  gap: 1.6rem;
+  padding: 1.4rem 1.6rem;
+  padding-bottom: 0;
+  /* text-align: left; */
+  /* gap: 1.6rem; */
+`;
 
-  h1 {
-    border-bottom: none;
-    margin-bottom: 0.2rem;
-  }
+const StyledFormWrapper = styled.div`
+  background-color: ${props => props.theme.css.filterBackgroundColor};
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  overflow: inherit;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 `;
 
 const getContactTypeFromPath = (pathname: string) => {

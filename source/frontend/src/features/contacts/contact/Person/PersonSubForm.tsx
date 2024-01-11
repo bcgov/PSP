@@ -1,10 +1,11 @@
 import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
-import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 
 import { AsyncTypeahead, Check, Input } from '@/components/common/form';
 import { FormSection } from '@/components/common/form/styles';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
 import * as Styled from '@/features/contacts/contact/edit/styles';
 import { usePersonOrganizationTypeahead } from '@/features/contacts/hooks/usePersonOrganizationTypeahead';
 import { IEditablePersonForm } from '@/interfaces/editable-contact';
@@ -26,42 +27,32 @@ const PersonSubForm: React.FunctionComponent<React.PropsWithChildren<IPersonSubF
 
   return (
     <>
-      <FormSection>
-        <Row>
-          <Col md={4}>
-            <Input field="firstName" label="First Name" required />
-          </Col>
-          <Col md={3}>
-            <Input field="middleNames" label="Middle" />
-          </Col>
-          <Col>
-            <Input field="surname" label="Last Name" required />
-          </Col>
-        </Row>
-        <Row>
-          <Col md={7}>
-            <Input field="preferredName" label="Preferred Name" />
-          </Col>
-          <Col></Col>
-        </Row>
-      </FormSection>
-      <FormSection>
-        <Styled.H2>Organization</Styled.H2>
-        <Row>
-          <Col md={7}>
-            <AsyncTypeahead
-              field="organization"
-              label="Link to an existing organization"
-              labelKey="text"
-              isLoading={isTypeaheadLoading}
-              options={matchedOrgs}
-              onSearch={handleTypeaheadSearch}
-            />
-          </Col>
-        </Row>
-      </FormSection>
-      <FormSection>
-        <Styled.H2>Contact info</Styled.H2>
+      <Section header="Contact Details">
+        <SectionField label="First name" required>
+          <Input field="firstName" />
+        </SectionField>
+        <SectionField label="Middle">
+          <Input field="middleNames" />
+        </SectionField>
+        <SectionField label="Last name" required>
+          <Input field="surname" />
+        </SectionField>
+        <SectionField label="Preferred name">
+          <Input field="preferredName" />
+        </SectionField>
+      </Section>
+      <Section header="Organization">
+        <SectionField label="Link to an existing organization">
+          <AsyncTypeahead
+            field="organization"
+            labelKey="text"
+            isLoading={isTypeaheadLoading}
+            options={matchedOrgs}
+            onSearch={handleTypeaheadSearch}
+          />
+        </SectionField>
+      </Section>
+      <Section header="Contact Info">
         <Styled.SectionMessage
           appearance={
             isContactMethodInvalid && getIn(errors, 'needsContactMethod') ? 'error' : 'information'
@@ -74,10 +65,19 @@ const PersonSubForm: React.FunctionComponent<React.PropsWithChildren<IPersonSubF
             <em>(ex: email,phone or address)</em>
           </p>
         </Styled.SectionMessage>
-        <ContactEmailList field="emailContactMethods" contactEmails={values.emailContactMethods} />
-        <br />
-        <ContactPhoneList field="phoneContactMethods" contactPhones={values.phoneContactMethods} />
-      </FormSection>
+        <SectionField label="Email">
+          <ContactEmailList
+            field="emailContactMethods"
+            contactEmails={values.emailContactMethods}
+          />
+        </SectionField>
+        <SectionField label="Phone" className="mt-3">
+          <ContactPhoneList
+            field="phoneContactMethods"
+            contactPhones={values.phoneContactMethods}
+          />
+        </SectionField>
+      </Section>
       <FormSection>
         <Styled.H2>Address</Styled.H2>
         <Styled.H3>Mailing Address</Styled.H3>
