@@ -3,7 +3,12 @@ import {
   Api_DispositionFileProperty,
   Api_DispositionFileTeam,
 } from '@/models/api/DispositionFile';
-import { emptyStringtoNullable, toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
+import {
+  emptyStringtoNullable,
+  fromTypeCode,
+  toTypeCode,
+  toTypeCodeNullable,
+} from '@/utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
 import { ChecklistItemFormModel } from '../../shared/tabs/checklist/update/models';
@@ -38,6 +43,7 @@ export class DispositionFormModel implements WithDispositionTeam {
   constructor(
     readonly id: number | null = null,
     readonly fileNumber: string | null = null,
+    readonly rowVersion: number | null = null,
     dispositionFileStatus: string = 'ACTIVE',
     dispositionStatus: string = 'UNKNOWN',
   ) {
@@ -92,6 +98,39 @@ export class DispositionFormModel implements WithDispositionTeam {
       productId: null,
       dispositionAppraisal: this.appraisal ? this.appraisal.toApi() : null,
       fileChecklistItems: this.fileChecklist.map(x => x.toApi()),
+      rowVersion: this.rowVersion ?? 0,
     };
+  }
+
+  static fromApi(model: Api_DispositionFile): DispositionFormModel {
+    const dispositionForm = new DispositionFormModel(
+      model.id,
+      model.fileNumber,
+      model.rowVersion,
+      model.fileStatusTypeCode?.id,
+      model.dispositionStatusTypeCode?.id,
+    );
+
+    dispositionForm.fundingTypeCode = fromTypeCode(model.fundingTypeCode) ?? '';
+    dispositionForm.fileName = model.fileName ?? '';
+    dispositionForm.referenceNumber = model.fileReference;
+    dispositionForm.assignedDate = model.assignedDate;
+    dispositionForm.completionDate = model.completionDate;
+    dispositionForm.dispositionTypeCode = fromTypeCode(model.dispositionTypeCode) ?? '';
+    dispositionForm.dispositionTypeOther = model.dispositionTypeOther;
+    dispositionForm.initiatingBranchTypeCode = fromTypeCode(model.initiatingBranchTypeCode) ?? '';
+    dispositionForm.physicalFileStatusTypeCode =
+      fromTypeCode(model.physicalFileStatusTypeCode) ?? '';
+    dispositionForm.initiatingDocumentTypeCode =
+      fromTypeCode(model.initiatingDocumentTypeCode) ?? '';
+    dispositionForm.initiatingDocumentTypeOther = model.initiatingDocumentTypeOther;
+    dispositionForm.initiatingDocumentDate = model.initiatingDocumentDate;
+    dispositionForm.regionCode = fromTypeCode(model.regionCode)?.toString() ?? '';
+
+    dispositionForm.team =
+      model.dispositionTeam?.map(x => DispositionTeamSubFormModel.fromApi(x)) || [];
+    dispositionForm.fileProperties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
+
+    return dispositionForm;
   }
 }

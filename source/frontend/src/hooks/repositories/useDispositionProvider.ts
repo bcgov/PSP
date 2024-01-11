@@ -27,6 +27,7 @@ export const useDispositionProvider = () => {
   const {
     postDispositionFileApi,
     getDispositionFile,
+    putDispositionFileApi,
     getDispositionFileProperties,
     getLastUpdatedByApi,
     getDispositionFileChecklist,
@@ -66,6 +67,27 @@ export const useDispositionProvider = () => {
     ),
     requestName: 'RetrieveDispositionFile',
     onError: useAxiosErrorHandlerWithAuthorization('Failed to load Disposition File'),
+  });
+
+  const updateDispositionFileApi = useApiRequestWrapper<
+    (
+      dispositionFileId: number,
+      dispositionFile: Api_DispositionFile,
+      userOverrideCodes: UserOverrideCode[],
+    ) => Promise<AxiosResponse<Api_DispositionFile, any>>
+  >({
+    requestFunction: useCallback(
+      async (
+        dispositionFileId: number,
+        dispositionFile: Api_DispositionFile,
+        useOverride: UserOverrideCode[] = [],
+      ) => await putDispositionFileApi(dispositionFileId, dispositionFile, useOverride),
+      [putDispositionFileApi],
+    ),
+    requestName: 'UpdateDispositionFile',
+    onSuccess: useAxiosSuccessHandler('Disposition File saved'),
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
   });
 
   const getLastUpdatedBy = useApiRequestWrapper<
@@ -213,6 +235,7 @@ export const useDispositionProvider = () => {
     () => ({
       addDispositionFileApi: addDispositionFileApi,
       getDispositionFile: getDispositionFileApi,
+      putDispositionFile: updateDispositionFileApi,
       getLastUpdatedBy,
       getDispositionProperties: getDispositionPropertiesApi,
       getDispositionChecklist: getDispositionChecklistApi,
@@ -228,6 +251,7 @@ export const useDispositionProvider = () => {
     [
       addDispositionFileApi,
       getDispositionFileApi,
+      updateDispositionFileApi,
       getLastUpdatedBy,
       getDispositionPropertiesApi,
       getDispositionChecklistApi,

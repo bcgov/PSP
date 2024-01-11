@@ -61,7 +61,7 @@ const AddDispositionContainerView: React.FunctionComponent<
       <StyledFormWrapper>
         <LoadingBackdrop show={loading} parentScreen={true} />
         <DispositionForm
-          ref={formikRef}
+          formikRef={formikRef}
           initialValues={dispositionInitialValues}
           onSubmit={onSubmit}
         ></DispositionForm>
