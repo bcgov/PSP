@@ -22,7 +22,7 @@ const PersonSubForm: React.FunctionComponent<React.PropsWithChildren<IPersonSubF
 }) => {
   const { handleTypeaheadSearch, isTypeaheadLoading, matchedOrgs } =
     usePersonOrganizationTypeahead();
-  const { values, errors } = useFormikContext<IEditablePersonForm>();
+  const { values } = useFormikContext<IEditablePersonForm>();
   const organizationId = getIn(values, 'organization.id');
   const useOrganizationAddress = getIn(values, 'useOrganizationAddress');
 
