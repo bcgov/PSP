@@ -48,11 +48,13 @@ export class DispositionAppraisalFormModel {
     return {
       id: this.id,
       dispositionFileId: this.dispositionFileId,
-      appraisedAmount: this.appraisedValueAmount,
+      appraisedAmount: this.appraisedValueAmount
+        ? parseFloat(this.appraisedValueAmount.toString())
+        : null,
       appraisalDate: emptyStringtoNullable(this.appraisalDate),
-      bcaValueAmount: this.bcaValueAmount,
+      bcaValueAmount: this.bcaValueAmount ? parseFloat(this.bcaValueAmount.toString()) : null,
       bcaRollYear: emptyStringtoNullable(this.bcaRollYear),
-      listPriceAmount: this.listPriceAmount,
+      listPriceAmount: this.listPriceAmount ? parseFloat(this.listPriceAmount.toString()) : null,
       rowVersion: this.rowVersion ?? 0,
     };
   }
