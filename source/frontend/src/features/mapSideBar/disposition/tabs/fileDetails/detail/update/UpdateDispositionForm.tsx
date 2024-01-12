@@ -10,11 +10,10 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
+import DispositionTeamSubForm from '@/features/mapSideBar/disposition/form/DispositionTeamSubForm';
+import { UpdateDispositionFormYupSchema } from '@/features/mapSideBar/disposition/models/AddDispositionFormYupSchema';
+import { DispositionFormModel } from '@/features/mapSideBar/disposition/models/DispositionFormModel';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-
-import DispositionTeamSubForm from '../../../../form/DispositionTeamSubForm';
-import { AddDispositionFormYupSchema } from '../../../../models/AddDispositionFormYupSchema';
-import { DispositionFormModel } from '../../../../models/DispositionFormModel';
 
 export interface IUpdateDispositionFormProps {
   formikRef: React.Ref<FormikProps<DispositionFormModel>>;
@@ -53,7 +52,7 @@ const UpdateDispositionForm: React.FC<IUpdateDispositionFormProps> = ({
       enableReinitialize
       innerRef={formikRef}
       initialValues={initialValues}
-      validationSchema={AddDispositionFormYupSchema}
+      validationSchema={UpdateDispositionFormYupSchema}
       onSubmit={async (values, formikHelpers) => {
         onSubmit(values, formikHelpers);
       }}

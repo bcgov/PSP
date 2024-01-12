@@ -1,9 +1,11 @@
 import { Formik, FormikProps } from 'formik';
 import { createRef } from 'react';
 
-import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
-import { mockAcquisitionFileResponse, mockLookups } from '@/mocks/index.mock';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { DispositionFormModel } from '@/features/mapSideBar/disposition/models/DispositionFormModel';
+import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
+import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -16,31 +18,30 @@ import {
   waitFor,
 } from '@/utils/test-utils';
 
-import { UpdateAcquisitionSummaryFormModel } from './models';
-import { UpdateAcquisitionContainer } from './UpdateAcquisitionContainer';
-import { IUpdateAcquisitionFormProps } from './UpdateAcquisitionForm';
+import UpdateDispositionContainer from './UpdateDispositionContainer';
+import { IUpdateDispositionFormProps } from './UpdateDispositionForm';
 
 // mock API service calls
-jest.mock('@/hooks/repositories/useAcquisitionProvider');
+jest.mock('@/hooks/repositories/useDispositionProvider');
 
-type Provider = typeof useAcquisitionProvider;
-const mockUpdateAcquisitionFile = jest.fn();
+type Provider = typeof useDispositionProvider;
+const mockUpdateDispositionFile = jest.fn();
 
-(useAcquisitionProvider as jest.MockedFunction<Provider>).mockReturnValue({
-  updateAcquisitionFile: {
+(useDispositionProvider as jest.MockedFunction<Provider>).mockReturnValue({
+  putDispositionFile: {
     error: undefined,
     response: undefined,
-    execute: mockUpdateAcquisitionFile,
+    execute: mockUpdateDispositionFile,
     loading: false,
   },
 } as unknown as ReturnType<Provider>);
 
-let viewProps: IUpdateAcquisitionFormProps | undefined;
+let viewProps: IUpdateDispositionFormProps | undefined;
 
-const TestView: React.FC<IUpdateAcquisitionFormProps> = props => {
+const TestView: React.FC<IUpdateDispositionFormProps> = props => {
   viewProps = props;
   return (
-    <Formik<UpdateAcquisitionSummaryFormModel>
+    <Formik<DispositionFormModel>
       enableReinitialize
       innerRef={props.formikRef}
       onSubmit={props.onSubmit}
@@ -51,16 +52,16 @@ const TestView: React.FC<IUpdateAcquisitionFormProps> = props => {
   );
 };
 
-describe('UpdateAcquisition container', () => {
-  let acquisitionFile: Api_AcquisitionFile;
+describe('UpdateDisposition container', () => {
+  let dispositionFile: Api_DispositionFile;
   const onSuccess = jest.fn();
 
   const setup = (renderOptions: RenderOptions = {}) => {
-    const formikRef = createRef<FormikProps<UpdateAcquisitionSummaryFormModel>>();
+    const formikRef = createRef<FormikProps<DispositionFormModel>>();
     const utils = render(
-      <UpdateAcquisitionContainer
+      <UpdateDispositionContainer
         ref={formikRef}
-        acquisitionFile={acquisitionFile}
+        dispositionFile={dispositionFile}
         onSuccess={onSuccess}
         View={TestView}
       />,
@@ -82,7 +83,7 @@ describe('UpdateAcquisition container', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    acquisitionFile = mockAcquisitionFileResponse();
+    dispositionFile = mockDispositionFileResponse();
   });
 
   afterEach(() => {
@@ -91,23 +92,23 @@ describe('UpdateAcquisition container', () => {
 
   it('renders the underlying form', async () => {
     const { getByText } = setup();
-    expect(getByText(/Content Rendered - Test ACQ File/)).toBeVisible();
+    expect(getByText(/Test Disposition File/)).toBeVisible();
   });
 
-  it('calls the API to update the acquisition file when form is saved', async () => {
-    mockUpdateAcquisitionFile.mockResolvedValue(mockAcquisitionFileResponse());
+  it('calls the API to update the disposition file when form is saved', async () => {
+    mockUpdateDispositionFile.mockResolvedValue(mockDispositionFileResponse());
     const { formikRef } = setup();
 
     expect(formikRef.current).not.toBeNull();
     await act(async () => formikRef.current?.submitForm());
 
     const fileData = viewProps?.initialValues.toApi();
-    expect(mockUpdateAcquisitionFile).toHaveBeenCalledWith(fileData, []);
+    expect(mockUpdateDispositionFile).toHaveBeenCalledWith(1, fileData, []);
     expect(onSuccess).toHaveBeenCalled();
   });
 
   it('displays a toast with server-returned error responses', async () => {
-    mockUpdateAcquisitionFile.mockRejectedValue(createAxiosError(400, 'Lorem ipsum error'));
+    mockUpdateDispositionFile.mockRejectedValue(createAxiosError(400, 'Lorem ipsum error'));
     const { formikRef } = setup();
 
     expect(formikRef.current).not.toBeNull();
@@ -117,17 +118,17 @@ describe('UpdateAcquisition container', () => {
   });
 
   it('displays a toast for generic server errors', async () => {
-    mockUpdateAcquisitionFile.mockRejectedValue(createAxiosError(500));
+    mockUpdateDispositionFile.mockRejectedValue(createAxiosError(500));
     const { formikRef } = setup();
 
     expect(formikRef.current).not.toBeNull();
     await act(async () => formikRef.current?.submitForm());
 
-    expect(await screen.findByText('Failed to update Acquisition File')).toBeVisible();
+    expect(await screen.findByText('Failed to update Disposition File')).toBeVisible();
   });
 
   it(`triggers the confirm popup when region doesn't match`, async () => {
-    mockUpdateAcquisitionFile.mockRejectedValue(
+    mockUpdateDispositionFile.mockRejectedValue(
       createAxiosError(409, 'The Ministry region has been changed', {
         errorCode: UserOverrideCode.UPDATE_REGION,
       }),
@@ -141,44 +142,8 @@ describe('UpdateAcquisition container', () => {
     expect(popup).toBeVisible();
   });
 
-  it(`triggers the modal for contractor self-removal`, async () => {
-    mockUpdateAcquisitionFile.mockRejectedValue(
-      createAxiosError(
-        409,
-        'Contractors cannot remove themselves from a file. Please contact the admin at pims@gov.bc.ca',
-        {
-          errorCode: UserOverrideCode.CONTRACTOR_SELFREMOVED,
-        },
-      ),
-    );
-    const { formikRef, findByText } = setup();
-
-    expect(formikRef.current).not.toBeNull();
-    await act(async () => formikRef.current?.submitForm());
-
-    const popup = await findByText(
-      /Contractors cannot remove themselves from a file. Please contact the admin/i,
-    );
-    expect(popup).toBeVisible();
-  });
-
-  it(`triggers popup when deleting a selected payee`, async () => {
-    mockUpdateAcquisitionFile.mockRejectedValue(
-      createAxiosError(409, 'Acquisition File Owner Reperesentative can not be removed', {
-        errorCode: null,
-      }),
-    );
-    const { formikRef, findByText } = setup();
-
-    expect(formikRef.current).not.toBeNull();
-    await act(async () => formikRef.current?.submitForm());
-
-    const popup = await findByText(/Acquisition File Owner Reperesentative can not be removed/i);
-    expect(popup).toBeVisible();
-  });
-
   it(`saves the form when clicking 'Continue Save' in the region popup`, async () => {
-    mockUpdateAcquisitionFile.mockRejectedValue(
+    mockUpdateDispositionFile.mockRejectedValue(
       createAxiosError(409, 'The Ministry region has been changed', {
         errorCode: UserOverrideCode.UPDATE_REGION,
       }),
@@ -191,21 +156,21 @@ describe('UpdateAcquisition container', () => {
     const popup = await screen.findByText(/The Ministry region has been changed/i);
     expect(popup).toBeVisible();
 
-    mockUpdateAcquisitionFile.mockResolvedValue(mockAcquisitionFileResponse());
+    mockUpdateDispositionFile.mockResolvedValue(mockDispositionFileResponse());
 
     await act(async () => userEvent.click(await screen.findByText('Yes')));
 
     const fileData = viewProps?.initialValues.toApi();
-    expect(mockUpdateAcquisitionFile).toHaveBeenCalledTimes(2);
-    expect(mockUpdateAcquisitionFile).toHaveBeenNthCalledWith(1, fileData, []);
-    expect(mockUpdateAcquisitionFile).toHaveBeenNthCalledWith(2, fileData, [
+    expect(mockUpdateDispositionFile).toHaveBeenCalledTimes(2);
+    expect(mockUpdateDispositionFile).toHaveBeenNthCalledWith(1, 1, fileData, []);
+    expect(mockUpdateDispositionFile).toHaveBeenNthCalledWith(2, 1, fileData, [
       UserOverrideCode.UPDATE_REGION,
     ]);
     expect(onSuccess).toHaveBeenCalled();
   });
 
   it(`dismisses the region popup when clicking 'No'`, async () => {
-    mockUpdateAcquisitionFile.mockRejectedValue(
+    mockUpdateDispositionFile.mockRejectedValue(
       createAxiosError(409, 'The Ministry region has been changed', {
         errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
       }),
@@ -226,12 +191,12 @@ describe('UpdateAcquisition container', () => {
   });
 
   it(`triggers the confirm popup when user changes file status to completed`, async () => {
-    mockUpdateAcquisitionFile.mockRejectedValue(
+    mockUpdateDispositionFile.mockRejectedValue(
       createAxiosError(
         409,
-        'The properties of interest will be added to the inventory as acquired properties',
+        'You are changing this file to a non-editable state. Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?',
         {
-          errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
+          errorCode: UserOverrideCode.DISPOSITION_FILE_FINAL_STATUS,
         },
       ),
     );
@@ -240,17 +205,15 @@ describe('UpdateAcquisition container', () => {
     expect(formikRef.current).not.toBeNull();
     await act(async () => formikRef.current?.submitForm());
 
-    const popup = await screen.findByText(
-      /The properties of interest will be added to the inventory as acquired properties/i,
-    );
+    const popup = await screen.findByText(/You are changing this file to a non-editable state/i);
     expect(popup).toBeVisible();
   });
 
   it(`saves the form when clicking 'Continue Save' in the properties popup`, async () => {
-    mockUpdateAcquisitionFile.mockRejectedValue(
+    mockUpdateDispositionFile.mockRejectedValue(
       createAxiosError(
         409,
-        'The properties of interest will be added to the inventory as acquired properties',
+        'You are changing this file to a non-editable state. Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?',
         { errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY },
       ),
     );
@@ -259,26 +222,24 @@ describe('UpdateAcquisition container', () => {
     expect(formikRef.current).not.toBeNull();
     await act(async () => formikRef.current?.submitForm());
 
-    const popup = await screen.findByText(
-      /The properties of interest will be added to the inventory as acquired properties/i,
-    );
+    const popup = await screen.findByText(/You are changing this file to a non-editable state/i);
     expect(popup).toBeVisible();
 
-    mockUpdateAcquisitionFile.mockResolvedValue(mockAcquisitionFileResponse());
+    mockUpdateDispositionFile.mockResolvedValue(mockDispositionFileResponse());
 
     await act(async () => userEvent.click(await screen.findByText('Yes')));
 
     const fileData = viewProps?.initialValues.toApi();
-    expect(mockUpdateAcquisitionFile).toHaveBeenCalledTimes(2);
-    expect(mockUpdateAcquisitionFile).toHaveBeenNthCalledWith(1, fileData, []);
-    expect(mockUpdateAcquisitionFile).toHaveBeenNthCalledWith(2, fileData, [
+    expect(mockUpdateDispositionFile).toHaveBeenCalledTimes(2);
+    expect(mockUpdateDispositionFile).toHaveBeenNthCalledWith(1, 1, fileData, []);
+    expect(mockUpdateDispositionFile).toHaveBeenNthCalledWith(2, 1, fileData, [
       'PROPERTY_OF_INTEREST_TO_INVENTORY',
     ]);
     expect(onSuccess).toHaveBeenCalled();
   });
 
   it(`displays custom 400 errors in a modal`, async () => {
-    mockUpdateAcquisitionFile.mockRejectedValue(
+    mockUpdateDispositionFile.mockRejectedValue(
       createAxiosError(400, 'test error', {
         errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
       }),
@@ -290,38 +251,5 @@ describe('UpdateAcquisition container', () => {
 
     const popup = await screen.findByText(/test error/i);
     expect(popup).toBeVisible();
-  });
-
-  it(`dismisses the properties popup when clicking 'No'`, async () => {
-    mockUpdateAcquisitionFile.mockRejectedValue(
-      createAxiosError(
-        409,
-        'The properties of interest will be added to the inventory as acquired properties',
-        {
-          errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
-        },
-      ),
-    );
-    const { formikRef } = setup();
-
-    expect(formikRef.current).not.toBeNull();
-    await act(async () => formikRef.current?.submitForm());
-
-    expect(
-      await screen.findByText(
-        /The properties of interest will be added to the inventory as acquired properties/i,
-      ),
-    ).toBeVisible();
-
-    await act(async () => userEvent.click(await screen.findByText('No')));
-
-    await waitFor(() =>
-      expect(
-        screen.queryByText(
-          /The properties of interest will be added to the inventory as acquired properties/i,
-        ),
-      ).toBeNull(),
-    );
-    expect(onSuccess).not.toHaveBeenCalled();
   });
 });
