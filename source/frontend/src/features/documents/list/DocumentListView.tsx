@@ -226,8 +226,8 @@ export const DocumentListView: React.FunctionComponent<
         }
         handleOk={onDeleteConfirm}
         handleCancel={() => setShowDeleteConfirmModal(false)}
-        okButtonText="Continue"
-        cancelButtonText="Cancel"
+        okButtonText="Yes"
+        cancelButtonText="No"
       />
     </>
   );
