@@ -7,7 +7,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   />
   <div />
   <div />
-  .c10.btn {
+  .c11.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -37,49 +37,49 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c10.btn:hover {
+.c11.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c10.btn:focus {
+.c11.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c10.btn.btn-primary {
+.c11.btn.btn-primary {
   border: none;
 }
 
-.c10.btn.btn-secondary {
+.c11.btn.btn-secondary {
   background: none;
 }
 
-.c10.btn.btn-info {
+.c11.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c10.btn.btn-info:hover,
-.c10.btn.btn-info:active,
-.c10.btn.btn-info:focus {
+.c11.btn.btn-info:hover,
+.c11.btn.btn-info:active,
+.c11.btn.btn-info:focus {
   background: none;
 }
 
-.c10.btn.btn-light {
+.c11.btn.btn-light {
   border: none;
 }
 
-.c10.btn.btn-dark {
+.c11.btn.btn-dark {
   border: none;
 }
 
-.c10.btn.btn-link {
+.c11.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -100,9 +100,9 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   padding: 0;
 }
 
-.c10.btn.btn-link:hover,
-.c10.btn.btn-link:active,
-.c10.btn.btn-link:focus {
+.c11.btn.btn-link:hover,
+.c11.btn.btn-link:active,
+.c11.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +111,14 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   outline: none;
 }
 
-.c10.btn.btn-link:disabled,
-.c10.btn.btn-link.disabled {
+.c11.btn.btn-link:disabled,
+.c11.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c10.btn:disabled,
-.c10.btn:disabled:hover {
+.c11.btn:disabled,
+.c11.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,19 +129,19 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c10.Button .Button__icon {
+.c11.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c10.Button--icon-only:focus {
+.c11.Button--icon-only:focus {
   outline: none;
 }
 
-.c10.Button--icon-only .Button__icon {
+.c11.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c6 button.close {
+.c9 button.close {
   font-size: 2.4rem;
 }
 
@@ -151,20 +151,21 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   padding: 2.5rem;
 }
 
-.c11.c11.btn {
+.c12.c12.btn {
+  font-size: 1.3rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c11.c11.btn .text {
+.c12.c12.btn .text {
   display: none;
 }
 
-.c11.c11.btn:hover,
-.c11.c11.btn:active,
-.c11.c11.btn:focus {
+.c12.c12.btn:hover,
+.c12.c12.btn:active,
+.c12.c12.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -178,9 +179,9 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c11.c11.btn:hover .text,
-.c11.c11.btn:active .text,
-.c11.c11.btn:focus .text {
+.c12.c12.btn:hover .text,
+.c12.c12.btn:active .text,
+.c12.c12.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -196,46 +197,15 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   gap: 1.6rem;
 }
 
+.c8.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
 .c7 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  gap: 0.5rem;
-}
-
-.c13 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  gap: 1.6rem;
-}
-
-.c9 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  gap: 0rem;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
+  font-weight: bold;
 }
 
 .c4 {
@@ -255,36 +225,24 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   padding-right: 1rem;
 }
 
-.c14 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(33,37,41);
-  text-decoration: none solid rgb(33,37,41);
-  line-height: 2rem;
-}
-
-.c15 {
-  font-size: 1.6rem;
-  font-weight: 400;
-  -webkit-text-decoration: none solid rgb(170,170,170);
-  text-decoration: none solid rgb(170,170,170);
-  line-height: 2rem;
-}
-
-.c5 {
-  font-size: 2rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(0,51,102);
-  text-decoration: none solid rgb(0,51,102);
-  line-height: 2.9rem;
-}
-
-.c12 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(33,37,41);
-  text-decoration: none solid rgb(33,37,41);
-  line-height: 2rem;
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 0rem;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
 }
 
 .c1 .form-group.required label:after {
@@ -292,11 +250,32 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   color: red;
 }
 
-.c8 {
-  color: #494949;
+.c14 {
+  float: right;
+  cursor: pointer;
+}
+
+.c6 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c5 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c13 {
   font-size: 1.6rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
+  font-weight: normal;
+}
+
+.c13 label {
+  margin-bottom: 0;
 }
 
 <div
@@ -354,176 +333,225 @@ exports[`UpdatePersonForm renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c3"
+          class="c5 form-section"
         >
-          <div
-            class="row"
+          <h2
+            class="c6"
           >
             <div
-              class="col-md-4"
+              class="no-gutters row"
             >
               <div
-                class="required input form-group"
+                class="col"
               >
-                <label
-                  class="form-label"
-                  for="input-firstName"
-                >
-                  First Name 
-                </label>
-                <input
-                  class="form-control"
-                  id="input-firstName"
-                  name="firstName"
-                  title="Chester"
-                  value="Chester"
-                />
+                Contact Details
               </div>
             </div>
-            <div
-              class="col-md-3"
-            >
-              <div
-                class="input form-group"
-              >
-                <label
-                  class="form-label"
-                  for="input-middleNames"
-                >
-                  Middle 
-                </label>
-                <input
-                  class="form-control"
-                  id="input-middleNames"
-                  name="middleNames"
-                  title=""
-                  value=""
-                />
-              </div>
-            </div>
-            <div
-              class="col"
-            >
-              <div
-                class="required input form-group"
-              >
-                <label
-                  class="form-label"
-                  for="input-surname"
-                >
-                  Last Name 
-                </label>
-                <input
-                  class="form-control"
-                  id="input-surname"
-                  name="surname"
-                  title="Tester"
-                  value="Tester"
-                />
-              </div>
-            </div>
-          </div>
+          </h2>
           <div
-            class="row"
+            class="collapse show"
           >
             <div
-              class="col-md-7"
+              class="pb-2 row"
             >
               <div
-                class="input form-group"
+                class="pr-0 text-left col-4"
               >
                 <label
-                  class="form-label"
-                  for="input-preferredName"
+                  class="c7"
                 >
-                  Preferred Name 
+                  First name:
                 </label>
-                <input
-                  class="form-control"
-                  id="input-preferredName"
-                  name="preferredName"
-                  title=""
-                  value=""
-                />
+              </div>
+              <div
+                class="c8 required text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-firstName"
+                    name="firstName"
+                    title="Chester"
+                    value="Chester"
+                  />
+                </div>
               </div>
             </div>
             <div
-              class="col"
-            />
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c7"
+                >
+                  Middle:
+                </label>
+              </div>
+              <div
+                class="c8 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-middleNames"
+                    name="middleNames"
+                    title=""
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c7"
+                >
+                  Last name:
+                </label>
+              </div>
+              <div
+                class="c8 required text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-surname"
+                    name="surname"
+                    title="Tester"
+                    value="Tester"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c7"
+                >
+                  Preferred name:
+                </label>
+              </div>
+              <div
+                class="c8 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-preferredName"
+                    name="preferredName"
+                    title=""
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div
-          class="c3"
+          class="c5 form-section"
         >
           <h2
-            class="c5"
-          >
-            Organization
-          </h2>
-          <div
-            class="row"
+            class="c6"
           >
             <div
-              class="col-md-7"
+              class="no-gutters row"
             >
               <div
-                class="c6 form-group"
-                data-testid="typeahead-organization"
+                class="col"
+              >
+                Organization
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
               >
                 <label
-                  class="form-label"
-                  for="typeahead-organization"
+                  class="c7"
                 >
-                  Link to an existing organization
+                  Link to an existing organization:
                 </label>
+              </div>
+              <div
+                class="c8 text-left col"
+              >
                 <div
-                  class="rbt has-aux"
-                  style="outline: none; position: relative;"
-                  tabindex="-1"
+                  class="c9 form-group"
+                  data-testid="typeahead-organization"
                 >
                   <div
-                    style="display: flex; flex: 1; height: 100%; position: relative;"
+                    class="rbt has-aux"
+                    style="outline: none; position: relative;"
+                    tabindex="-1"
                   >
-                    <input
-                      aria-autocomplete="both"
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
-                      autocomplete="off"
-                      class="rbt-input-main form-control rbt-input"
-                      id="typeahead-organization"
-                      name="typeahead-organization"
-                      role="combobox"
-                      type="text"
-                      value="FooBarBaz Property Management"
-                    />
-                    <input
-                      aria-hidden="true"
-                      class="rbt-input-hint"
-                      readonly=""
-                      style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
-                      tabindex="-1"
-                      value=""
-                    />
-                  </div>
-                  <div
-                    class="rbt-aux"
-                  >
-                    <button
-                      aria-label="Clear"
-                      class="close rbt-close"
-                      type="button"
+                    <div
+                      style="display: flex; flex: 1; height: 100%; position: relative;"
                     >
-                      <span
+                      <input
+                        aria-autocomplete="both"
+                        aria-expanded="false"
+                        aria-haspopup="listbox"
+                        autocomplete="off"
+                        class="rbt-input-main form-control rbt-input"
+                        id="typeahead-organization"
+                        name="typeahead-organization"
+                        role="combobox"
+                        type="text"
+                        value="FooBarBaz Property Management"
+                      />
+                      <input
                         aria-hidden="true"
+                        class="rbt-input-hint"
+                        readonly=""
+                        style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                        tabindex="-1"
+                        value=""
+                      />
+                    </div>
+                    <div
+                      class="rbt-aux"
+                    >
+                      <button
+                        aria-label="Clear"
+                        class="close rbt-close"
+                        type="button"
                       >
-                        ×
-                      </span>
-                      <span
-                        class="sr-only"
-                      >
-                        Clear
-                      </span>
-                    </button>
+                        <span
+                          aria-hidden="true"
+                        >
+                          ×
+                        </span>
+                        <span
+                          class="sr-only"
+                        >
+                          Clear
+                        </span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -531,882 +559,1140 @@ exports[`UpdatePersonForm renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c3"
+          class="c5 form-section"
         >
           <h2
-            class="c5"
+            class="c6"
           >
-            Contact info
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="d-flex align-items-center"
+                >
+                  <span>
+                    Contact Info
+                  </span>
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-contactInfoToolTip"
+                    id="contactInfoToolTip"
+                  >
+                    <svg
+                      class="tooltip-icon ml-4 mb-1"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </div>
           </h2>
           <div
-            class="c7 c8"
-          >
-            <svg
-              class="mt-2"
-              fill="currentColor"
-              height="1.8rem"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 1024 1024"
-              width="1.8rem"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
-              />
-              <path
-                d="M464 688a48 48 0 1 0 96 0 48 48 0 1 0-96 0zm24-112h48c4.4 0 8-3.6 8-8V296c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v272c0 4.4 3.6 8 8 8z"
-              />
-            </svg>
-            <p>
-              Contacts must have a minimum of one method of contact to be saved. 
-              <br />
-              <em>
-                (ex: email,phone or address)
-              </em>
-            </p>
-          </div>
-          <div
-            class="row"
+            class="collapse show"
           >
             <div
-              class="col-md-6"
+              class="pb-2 row"
             >
               <div
-                class="input form-group"
+                class="pr-0 text-left col-4"
               >
                 <label
-                  class="form-label"
-                  for="input-emailContactMethods.0.value"
+                  class="c7"
                 >
-                  Email 
+                  Email:
                 </label>
-                <input
-                  class="form-control"
-                  id="input-emailContactMethods.0.value"
-                  name="emailContactMethods.0.value"
-                  title="test@test.com"
-                  value="test@test.com"
-                />
               </div>
-            </div>
-            <div
-              class="col-md-4"
-            >
               <div
-                class="form-group"
+                class="c8 text-left col"
               >
-                <label
-                  class="form-label"
-                  for="input-emailContactMethods.0.contactMethodTypeCode"
+                <div
+                  class="row"
                 >
-                  Email type 
-                </label>
-                <select
-                  class="form-select form-control"
-                  id="input-emailContactMethods.0.contactMethodTypeCode"
-                  name="emailContactMethods.0.contactMethodTypeCode"
-                >
-                  <option
-                    value=""
+                  <div
+                    class="col-md-6"
                   >
-                    Select...
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-PERSEMAIL"
-                    value="PERSEMAIL"
+                    <div
+                      class="input form-group"
+                    >
+                      <input
+                        class="form-control"
+                        id="input-emailContactMethods.0.value"
+                        name="emailContactMethods.0.value"
+                        title="test@test.com"
+                        value="test@test.com"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="pl-0 col-md-4"
                   >
-                    Personal email
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-WORKEMAIL"
-                    value="WORKEMAIL"
+                    <div
+                      class="form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-emailContactMethods.0.contactMethodTypeCode"
+                        name="emailContactMethods.0.contactMethodTypeCode"
+                      >
+                        <option
+                          value=""
+                        >
+                          Select type...
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-PERSEMAIL"
+                          value="PERSEMAIL"
+                        >
+                          Personal email
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-WORKEMAIL"
+                          value="WORKEMAIL"
+                        >
+                          Work email
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    class="pl-0 pt-2 col-md-2"
                   >
-                    Work email
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div
-              class="col-md-2"
-              style="padding-left: 0px; padding-top: 3rem;"
-            >
-              <div
-                class="c9 h-100"
-              >
+                    <div
+                      class="c10 h-100"
+                    >
+                      <button
+                        class="c11 Button c12 btn btn-link"
+                        type="button"
+                      >
+                        <div
+                          class="Button__value"
+                        >
+                          <svg
+                            data-testid="remove-button"
+                            fill="currentColor"
+                            height="2rem"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="2rem"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <title>
+                              remove
+                            </title>
+                            <path
+                              d="M0 0h24v24H0z"
+                              fill="none"
+                            />
+                            <path
+                              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                            />
+                          </svg>
+                           
+                          <span
+                            class="text"
+                          >
+                            Remove
+                          </span>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
                 <button
-                  class="c10 Button c11 btn btn-link"
+                  class="c11 Button btn btn-link"
                   type="button"
                 >
                   <div
                     class="Button__value"
                   >
-                    <svg
-                      data-testid="remove-button"
-                      fill="currentColor"
-                      height="2rem"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      width="2rem"
-                      xmlns="http://www.w3.org/2000/svg"
+                    + Add email address
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div
+              class="mt-3 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c7"
+                >
+                  Phone:
+                </label>
+              </div>
+              <div
+                class="c8 text-left col"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col-md-6"
+                  >
+                    <div
+                      class="input form-group"
                     >
-                      <title>
-                        remove
-                      </title>
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
+                      <input
+                        class="form-control"
+                        id="input-phoneContactMethods.0.value"
+                        name="phoneContactMethods.0.value"
+                        title=""
+                        value=""
                       />
-                      <path
-                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                      />
-                    </svg>
-                     
-                    <span
-                      class="text"
+                    </div>
+                  </div>
+                  <div
+                    class="pl-0 col-md-4"
+                  >
+                    <div
+                      class="form-group"
                     >
-                      Remove
-                    </span>
+                      <select
+                        class="form-select form-control"
+                        id="input-phoneContactMethods.0.contactMethodTypeCode"
+                        name="phoneContactMethods.0.contactMethodTypeCode"
+                      >
+                        <option
+                          value=""
+                        >
+                          Select type...
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-FAX"
+                          value="FAX"
+                        >
+                          Facsimile machine
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-PERSMOBIL"
+                          value="PERSMOBIL"
+                        >
+                          Personal mobile phone
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-PERSPHONE"
+                          value="PERSPHONE"
+                        >
+                          Personal phone
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-WORKMOBIL"
+                          value="WORKMOBIL"
+                        >
+                          Work mobile phone
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-WORKPHONE"
+                          value="WORKPHONE"
+                        >
+                          Work phone
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    class="pl-0 pt-2 col-md-2"
+                  >
+                    <button
+                      class="c11 Button c12 btn btn-link"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        <svg
+                          data-testid="remove-button"
+                          fill="currentColor"
+                          height="2rem"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="2rem"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <title>
+                            remove
+                          </title>
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                         
+                        <span
+                          class="text"
+                        >
+                          Remove
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+                <button
+                  class="c11 Button btn btn-link"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    + Add phone number
                   </div>
                 </button>
               </div>
             </div>
           </div>
-          <button
-            class="c10 Button btn btn-link"
-            type="button"
-          >
-            <div
-              class="Button__value"
-            >
-              + Add another email address
-            </div>
-          </button>
-          <br />
-          <div
-            class="row"
-          >
-            <div
-              class="col-md-6"
-            >
-              <div
-                class="input form-group"
-              >
-                <label
-                  class="form-label"
-                  for="input-phoneContactMethods.0.value"
-                >
-                  Phone 
-                </label>
-                <input
-                  class="form-control"
-                  id="input-phoneContactMethods.0.value"
-                  name="phoneContactMethods.0.value"
-                  title=""
-                  value=""
-                />
-              </div>
-            </div>
-            <div
-              class="col-md-4"
-            >
-              <div
-                class="form-group"
-              >
-                <label
-                  class="form-label"
-                  for="input-phoneContactMethods.0.contactMethodTypeCode"
-                >
-                  Phone type 
-                </label>
-                <select
-                  class="form-select form-control"
-                  id="input-phoneContactMethods.0.contactMethodTypeCode"
-                  name="phoneContactMethods.0.contactMethodTypeCode"
-                >
-                  <option
-                    value=""
-                  >
-                    Select...
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-FAX"
-                    value="FAX"
-                  >
-                    Facsimile machine
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-PERSMOBIL"
-                    value="PERSMOBIL"
-                  >
-                    Personal mobile phone
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-PERSPHONE"
-                    value="PERSPHONE"
-                  >
-                    Personal phone
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-WORKMOBIL"
-                    value="WORKMOBIL"
-                  >
-                    Work mobile phone
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-WORKPHONE"
-                    value="WORKPHONE"
-                  >
-                    Work phone
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div
-              class="col-md-2"
-              style="padding-left: 0px; padding-top: 3rem;"
-            >
-              <button
-                class="c10 Button c11 btn btn-link"
-                type="button"
-              >
-                <div
-                  class="Button__value"
-                >
-                  <svg
-                    data-testid="remove-button"
-                    fill="currentColor"
-                    height="2rem"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="2rem"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>
-                      remove
-                    </title>
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                   
-                  <span
-                    class="text"
-                  >
-                    Remove
-                  </span>
-                </div>
-              </button>
-            </div>
-          </div>
-          <button
-            class="c10 Button btn btn-link"
-            type="button"
-          >
-            <div
-              class="Button__value"
-            >
-              + Add another phone number
-            </div>
-          </button>
         </div>
         <div
-          class="c3"
+          class="c5 form-section"
         >
           <h2
-            class="c5"
+            class="c6"
           >
-            Address
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="d-flex align-items-center"
+                >
+                  <span>
+                    Mailing Address
+                  </span>
+                  <div
+                    class="c13 ml-auto mb-0 form-group"
+                  >
+                    <div
+                      class="check-field"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          class="form-check-input position-static"
+                          id="input-useOrganizationAddress"
+                          name="useOrganizationAddress"
+                          type="checkbox"
+                          value="false"
+                        />
+                      </div>
+                      <label
+                        class="text-wrap form-label"
+                        for="input-useOrganizationAddress"
+                      >
+                        Use mailing address from organization
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-1"
+              >
+                <svg
+                  class="c14"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    collapse-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M7 14l5-5 5 5z"
+                  />
+                </svg>
+              </div>
+            </div>
           </h2>
-          <h3
-            class="c12"
-          >
-            Mailing Address
-          </h3>
           <div
-            class="form-group"
+            class="collapse show"
           >
             <div
-              class="check-field"
+              class="pb-2 row"
             >
               <div
-                class="form-check"
-              >
-                <input
-                  class="form-check-input position-static"
-                  id="input-useOrganizationAddress"
-                  name="useOrganizationAddress"
-                  type="checkbox"
-                  value="false"
-                />
-              </div>
-              <label
-                class="text-wrap form-label"
-                for="input-useOrganizationAddress"
-              >
-                Use mailing address from organization
-              </label>
-            </div>
-          </div>
-          <div
-            class="row"
-          >
-            <div
-              class="col-md-8"
-            >
-              <div
-                class="input form-group"
+                class="pr-0 text-left col-4"
               >
                 <label
-                  class="form-label"
-                  for="input-mailingAddress.streetAddress1"
+                  class="c7"
                 >
-                  Address (line 1) 
+                  Address (line 1):
                 </label>
-                <input
-                  class="form-control"
-                  id="input-mailingAddress.streetAddress1"
-                  name="mailingAddress.streetAddress1"
-                  title=""
-                  value=""
-                />
               </div>
-            </div>
-            <div
-              class="col"
-              style="padding-left: 0px; padding-bottom: 2rem;"
-            />
-          </div>
-          <div
-            class="row"
-            style="margin-top: -1rem; margin-bottom: 1rem;"
-          >
-            <div
-              class="col"
-            >
-              <button
-                class="c10 Button btn btn-link"
-                type="button"
+              <div
+                class="c8 text-left col"
               >
                 <div
-                  class="Button__value"
+                  class="row"
                 >
-                  + Add an address line
+                  <div
+                    class="col-md-9"
+                  >
+                    <div
+                      class="input form-group"
+                    >
+                      <input
+                        class="form-control"
+                        id="input-mailingAddress.streetAddress1"
+                        name="mailingAddress.streetAddress1"
+                        title=""
+                        value=""
+                      />
+                    </div>
+                  </div>
                 </div>
-              </button>
+              </div>
             </div>
-          </div>
-          <div
-            class="row"
-          >
             <div
-              class="col-md-4"
+              class="pb-2 row"
             >
               <div
-                class="form-group"
+                class="pr-0 text-left col-4"
+              />
+              <div
+                class="c8 text-left col"
+              >
+                <div
+                  class="row"
+                  style="margin-top: -1rem; margin-bottom: 1rem;"
+                >
+                  <div
+                    class="col"
+                  >
+                    <button
+                      class="c11 Button btn btn-link"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        + Add an address line
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
               >
                 <label
-                  class="form-label"
-                  for="input-mailingAddress.countryId"
+                  class="c7"
                 >
-                  Country 
+                  Country:
                 </label>
-                <select
-                  class="form-select form-control"
-                  id="input-mailingAddress.countryId"
-                  name="mailingAddress.countryId"
+              </div>
+              <div
+                class="c8 text-left col-4"
+              >
+                <div
+                  class="form-group"
                 >
-                  <option
+                  <select
+                    class="form-select form-control"
+                    id="input-mailingAddress.countryId"
+                    name="mailingAddress.countryId"
+                  >
+                    <option
+                      value=""
+                    >
+                      Select...
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-1"
+                      value="1"
+                    >
+                      Canada
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-2"
+                      value="2"
+                    >
+                      United States of America
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-3"
+                      value="3"
+                    >
+                      Mexico
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-4"
+                      value="4"
+                    >
+                      Other
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c7"
+                >
+                  City:
+                </label>
+              </div>
+              <div
+                class="c8 text-left col-4"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-mailingAddress.municipality"
+                    name="mailingAddress.municipality"
+                    title=""
                     value=""
-                  >
-                    Select...
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-1"
-                    value="1"
-                  >
-                    Canada
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-2"
-                    value="2"
-                  >
-                    United States of America
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-3"
-                    value="3"
-                  >
-                    Mexico
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-4"
-                    value="4"
-                  >
-                    Other
-                  </option>
-                </select>
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            class="row"
-          >
             <div
-              class="col-md-4"
+              class="pb-2 row"
             >
               <div
-                class="input form-group"
+                class="pr-0 text-left col-4"
               >
                 <label
-                  class="form-label"
-                  for="input-mailingAddress.municipality"
+                  class="c7"
                 >
-                  City 
+                  Province:
                 </label>
-                <input
-                  class="form-control"
-                  id="input-mailingAddress.municipality"
-                  name="mailingAddress.municipality"
-                  title=""
-                  value=""
-                />
+              </div>
+              <div
+                class="c8 text-left col-4"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-mailingAddress.provinceId"
+                    name="mailingAddress.provinceId"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            class="row"
-          >
             <div
-              class="col-md-4"
+              class="pb-2 row"
             >
               <div
-                class="form-group"
+                class="pr-0 text-left col-4"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-mailingAddress.provinceId"
-                  name="mailingAddress.provinceId"
-                />
+                <label
+                  class="c7"
+                >
+                  Postal Code:
+                </label>
               </div>
-            </div>
-          </div>
-          <div
-            class="row"
-          >
-            <div
-              class="col-md-4"
-            >
               <div
-                class="input form-group"
+                class="c8 text-left col-4"
               >
-                <input
-                  class="form-control"
-                  id="input-mailingAddress.postal"
-                  name="mailingAddress.postal"
-                  title=""
-                  value=""
-                />
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-mailingAddress.postal"
+                    name="mailingAddress.postal"
+                    title=""
+                    value=""
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div
-          class="c3"
+          class="c5 form-section"
         >
-          <h3
-            class="c12"
-          >
-            Property Address
-          </h3>
-          <div
-            class="row"
+          <h2
+            class="c6"
           >
             <div
-              class="col-md-8"
+              class="no-gutters row"
             >
               <div
-                class="input form-group"
+                class="col"
               >
-                <label
-                  class="form-label"
-                  for="input-propertyAddress.streetAddress1"
+                Property Address
+              </div>
+              <div
+                class="col-1"
+              >
+                <svg
+                  class="c14"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  Address (line 1) 
-                </label>
-                <input
-                  class="form-control"
-                  id="input-propertyAddress.streetAddress1"
-                  name="propertyAddress.streetAddress1"
-                  title=""
-                  value=""
-                />
+                  <title>
+                    collapse-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M7 14l5-5 5 5z"
+                  />
+                </svg>
               </div>
             </div>
-            <div
-              class="col"
-              style="padding-left: 0px; padding-bottom: 2rem;"
-            />
-          </div>
+          </h2>
           <div
-            class="row"
-            style="margin-top: -1rem; margin-bottom: 1rem;"
+            class="collapse show"
           >
             <div
-              class="col"
+              class="pb-2 row"
             >
-              <button
-                class="c10 Button btn btn-link"
-                type="button"
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c7"
+                >
+                  Address (line 1):
+                </label>
+              </div>
+              <div
+                class="c8 text-left col"
               >
                 <div
-                  class="Button__value"
+                  class="row"
                 >
-                  + Add an address line
+                  <div
+                    class="col-md-9"
+                  >
+                    <div
+                      class="input form-group"
+                    >
+                      <input
+                        class="form-control"
+                        id="input-propertyAddress.streetAddress1"
+                        name="propertyAddress.streetAddress1"
+                        title=""
+                        value=""
+                      />
+                    </div>
+                  </div>
                 </div>
-              </button>
+              </div>
             </div>
-          </div>
-          <div
-            class="row"
-          >
             <div
-              class="col-md-4"
+              class="pb-2 row"
             >
               <div
-                class="form-group"
+                class="pr-0 text-left col-4"
+              />
+              <div
+                class="c8 text-left col"
+              >
+                <div
+                  class="row"
+                  style="margin-top: -1rem; margin-bottom: 1rem;"
+                >
+                  <div
+                    class="col"
+                  >
+                    <button
+                      class="c11 Button btn btn-link"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        + Add an address line
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
               >
                 <label
-                  class="form-label"
-                  for="input-propertyAddress.countryId"
+                  class="c7"
                 >
-                  Country 
+                  Country:
                 </label>
-                <select
-                  class="form-select form-control"
-                  id="input-propertyAddress.countryId"
-                  name="propertyAddress.countryId"
+              </div>
+              <div
+                class="c8 text-left col-4"
+              >
+                <div
+                  class="form-group"
                 >
-                  <option
+                  <select
+                    class="form-select form-control"
+                    id="input-propertyAddress.countryId"
+                    name="propertyAddress.countryId"
+                  >
+                    <option
+                      value=""
+                    >
+                      Select...
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-1"
+                      value="1"
+                    >
+                      Canada
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-2"
+                      value="2"
+                    >
+                      United States of America
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-3"
+                      value="3"
+                    >
+                      Mexico
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-4"
+                      value="4"
+                    >
+                      Other
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c7"
+                >
+                  City:
+                </label>
+              </div>
+              <div
+                class="c8 text-left col-4"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-propertyAddress.municipality"
+                    name="propertyAddress.municipality"
+                    title=""
                     value=""
-                  >
-                    Select...
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-1"
-                    value="1"
-                  >
-                    Canada
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-2"
-                    value="2"
-                  >
-                    United States of America
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-3"
-                    value="3"
-                  >
-                    Mexico
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-4"
-                    value="4"
-                  >
-                    Other
-                  </option>
-                </select>
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            class="row"
-          >
             <div
-              class="col-md-4"
+              class="pb-2 row"
             >
               <div
-                class="input form-group"
+                class="pr-0 text-left col-4"
               >
                 <label
-                  class="form-label"
-                  for="input-propertyAddress.municipality"
+                  class="c7"
                 >
-                  City 
+                  Province:
                 </label>
-                <input
-                  class="form-control"
-                  id="input-propertyAddress.municipality"
-                  name="propertyAddress.municipality"
-                  title=""
-                  value=""
-                />
+              </div>
+              <div
+                class="c8 text-left col-4"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-propertyAddress.provinceId"
+                    name="propertyAddress.provinceId"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            class="row"
-          >
             <div
-              class="col-md-4"
+              class="pb-2 row"
             >
               <div
-                class="form-group"
+                class="pr-0 text-left col-4"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-propertyAddress.provinceId"
-                  name="propertyAddress.provinceId"
-                />
+                <label
+                  class="c7"
+                >
+                  Postal Code:
+                </label>
               </div>
-            </div>
-          </div>
-          <div
-            class="row"
-          >
-            <div
-              class="col-md-4"
-            >
               <div
-                class="input form-group"
+                class="c8 text-left col-4"
               >
-                <input
-                  class="form-control"
-                  id="input-propertyAddress.postal"
-                  name="propertyAddress.postal"
-                  title=""
-                  value=""
-                />
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-propertyAddress.postal"
+                    name="propertyAddress.postal"
+                    title=""
+                    value=""
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div
-          class="c3"
+          class="c5 form-section"
         >
-          <h3
-            class="c12"
-          >
-            Billing Address
-          </h3>
-          <div
-            class="row"
+          <h2
+            class="c6"
           >
             <div
-              class="col-md-8"
+              class="no-gutters row"
             >
               <div
-                class="input form-group"
+                class="col"
               >
-                <label
-                  class="form-label"
-                  for="input-billingAddress.streetAddress1"
+                Billing Address
+              </div>
+              <div
+                class="col-1"
+              >
+                <svg
+                  class="c14"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  Address (line 1) 
-                </label>
-                <input
-                  class="form-control"
-                  id="input-billingAddress.streetAddress1"
-                  name="billingAddress.streetAddress1"
-                  title=""
-                  value=""
-                />
+                  <title>
+                    collapse-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M7 14l5-5 5 5z"
+                  />
+                </svg>
               </div>
             </div>
-            <div
-              class="col"
-              style="padding-left: 0px; padding-bottom: 2rem;"
-            />
-          </div>
+          </h2>
           <div
-            class="row"
-            style="margin-top: -1rem; margin-bottom: 1rem;"
+            class="collapse show"
           >
             <div
-              class="col"
+              class="pb-2 row"
             >
-              <button
-                class="c10 Button btn btn-link"
-                type="button"
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c7"
+                >
+                  Address (line 1):
+                </label>
+              </div>
+              <div
+                class="c8 text-left col"
               >
                 <div
-                  class="Button__value"
+                  class="row"
                 >
-                  + Add an address line
+                  <div
+                    class="col-md-9"
+                  >
+                    <div
+                      class="input form-group"
+                    >
+                      <input
+                        class="form-control"
+                        id="input-billingAddress.streetAddress1"
+                        name="billingAddress.streetAddress1"
+                        title=""
+                        value=""
+                      />
+                    </div>
+                  </div>
                 </div>
-              </button>
+              </div>
             </div>
-          </div>
-          <div
-            class="row"
-          >
             <div
-              class="col-md-4"
+              class="pb-2 row"
             >
               <div
-                class="form-group"
+                class="pr-0 text-left col-4"
+              />
+              <div
+                class="c8 text-left col"
+              >
+                <div
+                  class="row"
+                  style="margin-top: -1rem; margin-bottom: 1rem;"
+                >
+                  <div
+                    class="col"
+                  >
+                    <button
+                      class="c11 Button btn btn-link"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        + Add an address line
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
               >
                 <label
-                  class="form-label"
-                  for="input-billingAddress.countryId"
+                  class="c7"
                 >
-                  Country 
+                  Country:
                 </label>
-                <select
-                  class="form-select form-control"
-                  id="input-billingAddress.countryId"
-                  name="billingAddress.countryId"
+              </div>
+              <div
+                class="c8 text-left col-4"
+              >
+                <div
+                  class="form-group"
                 >
-                  <option
+                  <select
+                    class="form-select form-control"
+                    id="input-billingAddress.countryId"
+                    name="billingAddress.countryId"
+                  >
+                    <option
+                      value=""
+                    >
+                      Select...
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-1"
+                      value="1"
+                    >
+                      Canada
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-2"
+                      value="2"
+                    >
+                      United States of America
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-3"
+                      value="3"
+                    >
+                      Mexico
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-4"
+                      value="4"
+                    >
+                      Other
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c7"
+                >
+                  City:
+                </label>
+              </div>
+              <div
+                class="c8 text-left col-4"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-billingAddress.municipality"
+                    name="billingAddress.municipality"
+                    title=""
                     value=""
-                  >
-                    Select...
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-1"
-                    value="1"
-                  >
-                    Canada
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-2"
-                    value="2"
-                  >
-                    United States of America
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-3"
-                    value="3"
-                  >
-                    Mexico
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-4"
-                    value="4"
-                  >
-                    Other
-                  </option>
-                </select>
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            class="row"
-          >
             <div
-              class="col-md-4"
+              class="pb-2 row"
             >
               <div
-                class="input form-group"
+                class="pr-0 text-left col-4"
               >
                 <label
-                  class="form-label"
-                  for="input-billingAddress.municipality"
+                  class="c7"
                 >
-                  City 
+                  Province:
                 </label>
-                <input
-                  class="form-control"
-                  id="input-billingAddress.municipality"
-                  name="billingAddress.municipality"
-                  title=""
-                  value=""
-                />
+              </div>
+              <div
+                class="c8 text-left col-4"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-billingAddress.provinceId"
+                    name="billingAddress.provinceId"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            class="row"
-          >
             <div
-              class="col-md-4"
+              class="pb-2 row"
             >
               <div
-                class="form-group"
+                class="pr-0 text-left col-4"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-billingAddress.provinceId"
-                  name="billingAddress.provinceId"
-                />
+                <label
+                  class="c7"
+                >
+                  Postal Code:
+                </label>
               </div>
-            </div>
-          </div>
-          <div
-            class="row"
-          >
-            <div
-              class="col-md-4"
-            >
               <div
-                class="input form-group"
+                class="c8 text-left col-4"
               >
-                <input
-                  class="form-control"
-                  id="input-billingAddress.postal"
-                  name="billingAddress.postal"
-                  title=""
-                  value=""
-                />
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-billingAddress.postal"
+                    name="billingAddress.postal"
+                    title=""
+                    value=""
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div
-          class="c3"
+          class="c5 form-section"
         >
-          <div
-            class="c13"
+          <h2
+            class="c6"
           >
-            <label
-              class="c14 form-label"
+            <div
+              class="no-gutters row"
             >
-              Comments
-            </label>
-            <span
-              class="c15"
-            >
-              (Optional)
-            </span>
-          </div>
+              <div
+                class="col"
+              >
+                Comments
+              </div>
+            </div>
+          </h2>
           <div
-            class="textarea input form-group"
+            class="collapse show"
           >
-            <textarea
-              class="form-control"
-              id="input-comment"
-              name="comment"
-              rows="5"
-              title="Lorem ipsum"
+            <div
+              class="textarea input form-group"
             >
-              Lorem ipsum
-            </textarea>
+              <textarea
+                class="form-control"
+                id="input-comment"
+                name="comment"
+                rows="5"
+                title="Lorem ipsum"
+              >
+                Lorem ipsum
+              </textarea>
+            </div>
           </div>
         </div>
       </div>
