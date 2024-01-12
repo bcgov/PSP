@@ -209,6 +209,45 @@ namespace Pims.Api.Services
             return _dispositionFileRepository.GetDispositionFileSale(dispositionFileId);
         }
 
+        public PimsDispositionSale AddDispositionFileSale(long dispositionFileId, PimsDispositionSale dispositionSale)
+        {
+            _logger.LogInformation("Adding disposition file Sale to Disposition File with Id: {id}", dispositionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+
+            var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
+            if (dispositionFileId != dispositionSale.DispositionFileId || dispositionFileParent is null)
+            {
+                throw new BadRequestException("Invalid dispositionFileId.");
+            }
+
+            if (dispositionFileParent.PimsDispositionSales.Count > 0)
+            {
+                throw new DuplicateEntityException("Invalid Disposition Sale. A Sale has been already created for this Disposition File");
+            }
+
+            _dispositionFileRepository.AddDispositionFileSale(dispositionSale);
+            _dispositionFileRepository.CommitTransaction();
+
+            return dispositionSale;
+        }
+
+        public PimsDispositionSale UpdateDispositionFileSale(long dispositionFileId, long saleId, PimsDispositionSale dispositionSale)
+        {
+            _logger.LogInformation("Updating disposition file Sale with DispositionFileId: {id}", dispositionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+
+            var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
+            if (dispositionFileId != dispositionSale.DispositionFileId || dispositionSale.DispositionSaleId != saleId || dispositionFileParent is null)
+            {
+                throw new BadRequestException("Invalid dispositionFileId.");
+            }
+
+            var updatedSale = _dispositionFileRepository.UpdateDispositionFileSale(saleId, dispositionSale);
+            _dispositionFileRepository.CommitTransaction();
+
+            return updatedSale;
+        }
+
         public IEnumerable<PimsDispositionChecklistItem> GetChecklistItems(long id)
         {
             _logger.LogInformation("Getting disposition file checklist with DispositionFile id: {id}", id);

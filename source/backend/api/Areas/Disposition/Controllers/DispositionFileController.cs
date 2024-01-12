@@ -323,6 +323,59 @@ namespace Pims.Api.Areas.Disposition.Controllers
             return new JsonResult(_mapper.Map<DispositionFileSaleModel>(dispositionSale));
         }
 
+        [HttpPost("{id:long}/sale")]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileSaleModel), 201)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult AddDispositionFileSale([FromRoute]long id, [FromBody]DispositionFileSaleModel dispositionFileSale)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(AddDispositionFileSale),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            try
+            {
+                var dispositionSaleEntity = _mapper.Map<Dal.Entities.PimsDispositionSale>(dispositionFileSale);
+                var newDispositionSale = _dispositionService.AddDispositionFileSale(id, dispositionSaleEntity);
+
+                return new JsonResult(_mapper.Map<DispositionFileSaleModel>(newDispositionSale));
+            }
+            catch (DuplicateEntityException e)
+            {
+                return Conflict(e.Message);
+            }
+        }
+
+        [HttpPut("{id:long}/sale/{saleId:long}")]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileSaleModel), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateDispositionFileSale([FromRoute] long id, [FromRoute]long saleId, [FromBody]DispositionFileSaleModel dispositionFileSale)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(UpdateDispositionFileSale),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            var dispositionSaleEntity = _mapper.Map<Dal.Entities.PimsDispositionSale>(dispositionFileSale);
+            var updatedSale = _dispositionService.UpdateDispositionFileSale(id, saleId, dispositionSaleEntity);
+
+            return new JsonResult(_mapper.Map<DispositionFileSaleModel>(updatedSale));
+        }
+
         #endregion
     }
 }

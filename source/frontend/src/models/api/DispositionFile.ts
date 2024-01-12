@@ -71,7 +71,7 @@ export interface Api_DispositionFileOffer extends Api_ConcurrentVersion {
   offerNote: string | null;
 }
 
-export interface Api_DispositionFileSale {
+export interface Api_DispositionFileSale extends Api_ConcurrentVersion {
   id: number | null;
   dispositionFileId: number;
   finalConditionRemovalDate: string | null;
@@ -86,8 +86,8 @@ export interface Api_DispositionFileSale {
   sppAmount: number | null;
   remediationAmount: number | null;
   dispositionPurchasers: Api_DispositionSalePurchaser[];
-  dispositionPurchaserAgents: Api_DispositionSalePurchaserAgent[];
-  dispositionPurchaserSolicitors: Api_DispositionSalePurchaserSolicitor[];
+  dispositionPurchaserAgent: Api_DispositionSalePurchaserAgent | null;
+  dispositionPurchaserSolicitor: Api_DispositionSalePurchaserSolicitor | null;
 }
 
 export interface Api_DispositionFileAppraisal {

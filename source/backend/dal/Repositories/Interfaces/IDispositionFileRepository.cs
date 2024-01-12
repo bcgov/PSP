@@ -28,6 +28,10 @@ namespace Pims.Dal.Repositories
 
         PimsDispositionSale GetDispositionFileSale(long dispositionId);
 
+        PimsDispositionSale AddDispositionFileSale(PimsDispositionSale dispositionSale);
+
+        PimsDispositionSale UpdateDispositionFileSale(long saleId, PimsDispositionSale dispositionSale);
+
         long GetRowVersion(long id);
 
         List<PimsDispositionFile> GetDispositionFileExportDeep(DispositionFilter filter);

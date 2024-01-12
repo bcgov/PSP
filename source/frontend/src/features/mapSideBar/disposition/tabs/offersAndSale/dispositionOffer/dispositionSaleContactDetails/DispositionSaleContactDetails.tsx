@@ -10,7 +10,7 @@ import {
 } from '@/models/api/DispositionFile';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-export interface IDispositionSaleContactDetails {
+export interface IDispositionSaleContactDetailsProps {
   contactInformation:
     | Api_DispositionSalePurchaser
     | Api_DispositionSalePurchaserAgent
@@ -18,10 +18,9 @@ export interface IDispositionSaleContactDetails {
   primaryContactLabel?: string | null;
 }
 
-const DispositionSaleContactDetails: React.FunctionComponent<IDispositionSaleContactDetails> = ({
-  contactInformation,
-  primaryContactLabel,
-}) => {
+const DispositionSaleContactDetails: React.FunctionComponent<
+  IDispositionSaleContactDetailsProps
+> = ({ contactInformation, primaryContactLabel }) => {
   const labelValue = primaryContactLabel ? primaryContactLabel : 'Primary contact';
   const primaryContact = contactInformation.primaryContact ?? null;
 

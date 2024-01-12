@@ -1,6 +1,10 @@
 import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
 
-export class DispositionSalePurchaserModel {
+export interface WithSalePurchasers {
+  dispositionPurchasers: DispositionSaleContactModel[];
+}
+
+export class DispositionSaleContactModel {
   contact: IContactSearchResult | null = null;
   primaryContactId: string = '';
 

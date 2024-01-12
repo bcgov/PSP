@@ -3,11 +3,13 @@ import { FaPlus } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
+import EditButton from '@/components/common/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { Claims } from '@/constants';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import {
   Api_DispositionFile,
   Api_DispositionFileOffer,
@@ -40,6 +42,7 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
 }) => {
   const history = useHistory();
   const match = useRouteMatch();
+  const keycloak = useKeycloakWrapper();
 
   const getAppraisalHasData = (): boolean => {
     return dispositionFile.dispositionAppraisal !== null;
@@ -47,8 +50,8 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
 
   const appraisalHasData = getAppraisalHasData();
 
-  const purchaserAgent = dispositionSale?.dispositionPurchaserAgents[0] ?? null;
-  const purchaserAgentSolicitor = dispositionSale?.dispositionPurchaserSolicitors[0] ?? null;
+  const purchaserAgent = dispositionSale?.dispositionPurchaserAgent;
+  const purchaserAgentSolicitor = dispositionSale?.dispositionPurchaserSolicitor;
 
   return (
     <>
@@ -125,7 +128,23 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
         )}
       </Section>
 
-      <Section header="Sales Details">
+      <Section
+        isCollapsable={false}
+        header={
+          <StyledSubHeader>
+            <label>Sales Details</label>
+            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && (
+              <EditButton
+                title="Edit Sale"
+                dataTestId={`sale-edit-btn`}
+                onClick={() => {
+                  history.push(`${match.url}/sale/update`);
+                }}
+              />
+            )}
+          </StyledSubHeader>
+        }
+      >
         {(dispositionSale && (
           <>
             <SectionField
@@ -274,4 +293,22 @@ export default OffersAndSaleContainerView;
 
 const StyledSpacer = styled.div`
   border-bottom: 0.1rem solid ${props => props.theme.css.tableHoverColor};
+`;
+
+const StyledSubHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  label {
+    color: ${props => props.theme.css.primaryColor};
+    font-family: 'BCSans-Bold';
+    font-size: 2rem;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 0;
+  }
+  button {
+    margin-bottom: 1rem;
+  }
 `;

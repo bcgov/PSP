@@ -15,6 +15,8 @@ import DispositionFileTabs from '../tabs/DispositionFileTabs';
 import AddDispositionOfferContainer from '../tabs/offersAndSale/dispositionOffer/add/AddDispositionOfferContainer';
 import DispositionOfferForm from '../tabs/offersAndSale/dispositionOffer/form/DispositionOfferForm';
 import UpdateDispositionOfferContainer from '../tabs/offersAndSale/dispositionOffer/update/UpdateDispositionOfferContainer';
+import DispositionSaleForm from '../tabs/offersAndSale/dispositionSale/form/DispositionSaleForm';
+import UpdateDispositionSaleContainer from '../tabs/offersAndSale/dispositionSale/update/UpdateDispositionSaleContainer';
 
 export interface IDispositionRouterProps {
   formikRef: React.Ref<FormikProps<any>>;
@@ -85,6 +87,19 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
               dispositionOfferId={match.params.offerId}
               View={DispositionOfferForm}
             ></UpdateDispositionOfferContainer>
+          )}
+          claim={Claims.DISPOSITION_EDIT}
+          key={'disposition'}
+          title={'Add Disposition Offer'}
+        />
+        <AppRoute
+          exact
+          path={`${stripTrailingSlash(path)}/${FileTabType.OFFERS_AND_SALE}/sale/update`}
+          customRender={() => (
+            <UpdateDispositionSaleContainer
+              dispositionFileId={props.dispositionFile?.id ?? 0}
+              View={DispositionSaleForm}
+            ></UpdateDispositionSaleContainer>
           )}
           claim={Claims.DISPOSITION_EDIT}
           key={'disposition'}

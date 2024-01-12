@@ -1,13 +1,15 @@
 import { Api_DispositionFileSale } from '@/models/api/DispositionFile';
 import { emptyStringtoNullable } from '@/utils/formUtils';
 
-export class DispositionSaleFormModel {
+import { DispositionSaleContactModel, WithSalePurchasers } from './DispositionSaleContactModel';
+
+export class DispositionSaleFormModel implements WithSalePurchasers {
   finalConditionRemovalDate: string | null = null;
   saleCompletionDate: string | null = null;
   saleFiscalYear: string | null = null;
   finalSaleAmount: number | null = null;
   realtorCommissionAmount: number | null = null;
-  isGstRequired: boolean | null = null;
+  isGstRequired: boolean = false;
   gstCollectedAmount: number | null = null;
   netBookAmount: number | null = null;
   totalCostAmount: number | null = null;
@@ -15,13 +17,21 @@ export class DispositionSaleFormModel {
   sppAmount: number | null = null;
   netProceedsAfterSppAmount: number | null = null;
   remediationAmount: number | null = null;
+  dispositionPurchasers: DispositionSaleContactModel[] = [];
+  dispositionPurchaserAgent: DispositionSaleContactModel = new DispositionSaleContactModel();
+  dispositionPurchaserSolicitor: DispositionSaleContactModel = new DispositionSaleContactModel();
 
-  constructor(readonly id: number | null = null, readonly dispositionFileId: number) {
+  constructor(
+    readonly id: number | null = null,
+    readonly dispositionFileId: number,
+    readonly rowVersion: number | null = null,
+  ) {
     this.id = id;
     this.dispositionFileId = dispositionFileId;
+    this.rowVersion = rowVersion;
   }
 
-  static fromApi(entity: Api_DispositionFileSale) {
+  static fromApi(entity: Api_DispositionFileSale): DispositionSaleFormModel {
     const model = new DispositionSaleFormModel(entity.id, entity.dispositionFileId);
 
     model.finalConditionRemovalDate = entity.finalConditionRemovalDate;
@@ -29,7 +39,7 @@ export class DispositionSaleFormModel {
     model.saleFiscalYear = entity.saleFiscalYear;
     model.finalSaleAmount = entity.finalSaleAmount;
     model.realtorCommissionAmount = entity.realtorCommissionAmount;
-    model.isGstRequired = entity.isGstRequired;
+    model.isGstRequired = entity.isGstRequired ?? false;
     model.gstCollectedAmount = entity.gstCollectedAmount;
     model.netBookAmount = entity.netBookAmount;
     model.totalCostAmount = entity.totalCostAmount;
@@ -38,6 +48,8 @@ export class DispositionSaleFormModel {
 
     model.netProceedsBeforeSppAmount = calculateNetProceedsBeforeSppAmount(entity);
     model.netProceedsAfterSppAmount = calculateNetProceedsAfterSppAmount(entity);
+
+    return model;
   }
 
   toApi(): Api_DispositionFileSale {
@@ -56,8 +68,8 @@ export class DispositionSaleFormModel {
       sppAmount: this.sppAmount,
       remediationAmount: this.remediationAmount,
       dispositionPurchasers: [],
-      dispositionPurchaserAgents: [],
-      dispositionPurchaserSolicitors: [],
+      dispositionPurchaserAgent: null,
+      dispositionPurchaserSolicitor: null,
     };
   }
 }

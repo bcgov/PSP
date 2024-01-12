@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -292,6 +293,23 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.PimsDspPurchSolicitors)
                     .ThenInclude(y => y.PrimaryContact)
                 .Where(x => x.DispositionFileId == dispositionId).FirstOrDefault();
+        }
+
+        public PimsDispositionSale AddDispositionFileSale(PimsDispositionSale dispositionSale)
+        {
+            Context.PimsDispositionSales.Add(dispositionSale);
+
+            return dispositionSale;
+        }
+
+        public PimsDispositionSale UpdateDispositionFileSale(long saleId, PimsDispositionSale dispositionSale)
+        {
+            var existingSale = Context.PimsDispositionSales
+                .FirstOrDefault(x => x.DispositionSaleId.Equals(saleId)) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingSale).CurrentValues.SetValues(dispositionSale);
+
+            return existingSale;
         }
 
         /// <summary>
