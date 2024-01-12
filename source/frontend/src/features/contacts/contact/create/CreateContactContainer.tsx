@@ -5,7 +5,7 @@ import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { FormTitleBar } from '@/components/common/form/FormTitleBar';
-import { ContactTypeSelector } from '@/features/contacts';
+import { ContactTypeSelector, HalfWidthLayout } from '@/features/contacts';
 import { ContactTypes } from '@/features/contacts/interfaces';
 
 import ContactRouter from './ContactRouter';
@@ -28,7 +28,7 @@ export const CreateContactContainer: React.FunctionComponent<
   };
 
   return (
-    <ContactLayout>
+    <HalfWidthLayout>
       <FormTitleBar
         showCloseButton
         title="Add Contact"
@@ -44,21 +44,9 @@ export const CreateContactContainer: React.FunctionComponent<
 
         <ContactRouter />
       </StyledFormWrapper>
-    </ContactLayout>
+    </HalfWidthLayout>
   );
 };
-
-const ContactLayout = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 50%;
-  min-width: 93rem;
-  overflow: hidden;
-  padding: 1.4rem 1.6rem;
-  padding-bottom: 0;
-`;
 
 const StyledFormWrapper = styled.div`
   background-color: ${props => props.theme.css.filterBackgroundColor};
