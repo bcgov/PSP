@@ -12,8 +12,8 @@ export const AcquisitionFormModal = (props: IRemoveTeamMemberModalProps) => (
     variant="info"
     title={props.title}
     message={props.message}
-    okButtonText="Ok"
-    cancelButtonText="Cancel"
+    okButtonText="Yes"
+    cancelButtonText="No"
     {...props}
   ></GenericModal>
 );
