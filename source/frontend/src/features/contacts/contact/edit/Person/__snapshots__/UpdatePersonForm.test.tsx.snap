@@ -7,7 +7,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   />
   <div />
   <div />
-  .c11.btn {
+  .c10.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -37,49 +37,49 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c11.btn:hover {
+.c10.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c11.btn:focus {
+.c10.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c11.btn.btn-primary {
+.c10.btn.btn-primary {
   border: none;
 }
 
-.c11.btn.btn-secondary {
+.c10.btn.btn-secondary {
   background: none;
 }
 
-.c11.btn.btn-info {
+.c10.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c11.btn.btn-info:hover,
-.c11.btn.btn-info:active,
-.c11.btn.btn-info:focus {
+.c10.btn.btn-info:hover,
+.c10.btn.btn-info:active,
+.c10.btn.btn-info:focus {
   background: none;
 }
 
-.c11.btn.btn-light {
+.c10.btn.btn-light {
   border: none;
 }
 
-.c11.btn.btn-dark {
+.c10.btn.btn-dark {
   border: none;
 }
 
-.c11.btn.btn-link {
+.c10.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -100,9 +100,9 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   padding: 0;
 }
 
-.c11.btn.btn-link:hover,
-.c11.btn.btn-link:active,
-.c11.btn.btn-link:focus {
+.c10.btn.btn-link:hover,
+.c10.btn.btn-link:active,
+.c10.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +111,14 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   outline: none;
 }
 
-.c11.btn.btn-link:disabled,
-.c11.btn.btn-link.disabled {
+.c10.btn.btn-link:disabled,
+.c10.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c11.btn:disabled,
-.c11.btn:disabled:hover {
+.c10.btn:disabled,
+.c10.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,29 +129,23 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c11.Button .Button__icon {
+.c10.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c11.Button--icon-only:focus {
+.c10.Button--icon-only:focus {
   outline: none;
 }
 
-.c11.Button--icon-only .Button__icon {
+.c10.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c9 button.close {
+.c8 button.close {
   font-size: 2.4rem;
 }
 
-.c3 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
-}
-
-.c12.c12.btn {
+.c11.c11.btn {
   font-size: 1.3rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -159,13 +153,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   line-height: unset;
 }
 
-.c12.c12.btn .text {
+.c11.c11.btn .text {
   display: none;
 }
 
-.c12.c12.btn:hover,
-.c12.c12.btn:active,
-.c12.c12.btn:focus {
+.c11.c11.btn:hover,
+.c11.c11.btn:active,
+.c11.c11.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -179,9 +173,9 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c12.c12.btn:hover .text,
-.c12.c12.btn:active .text,
-.c12.c12.btn:focus .text {
+.c11.c11.btn:hover .text,
+.c11.c11.btn:active .text,
+.c11.c11.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -194,38 +188,39 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  gap: 1.6rem;
 }
 
-.c8.required::before {
+.c13 {
+  float: right;
+  cursor: pointer;
+}
+
+.c7 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c3 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c5.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c7 {
+.c4 {
   font-weight: bold;
 }
 
-.c4 {
-  text-align: left;
-}
-
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  width: 100%;
-  overflow: auto;
-  padding-right: 1rem;
-}
-
-.c10 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -245,36 +240,34 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   justify-content: flex-start;
 }
 
+.c6 {
+  text-align: left;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  overflow: auto;
+  padding-right: 1rem;
+}
+
 .c1 .form-group.required label:after {
   content: ' *';
   color: red;
 }
 
-.c14 {
-  float: right;
-  cursor: pointer;
-}
-
-.c6 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c5 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c13 {
+.c12 {
   font-size: 1.6rem;
   font-weight: normal;
 }
 
-.c13 label {
+.c12 label {
   margin-bottom: 0;
 }
 
@@ -290,53 +283,71 @@ exports[`UpdatePersonForm renders as expected 1`] = `
         class="c2"
       >
         <div
-          class="c3 py-2"
+          class="c3 form-section py-2"
         >
           <div
-            class="c4 align-items-center row"
+            class="collapse show"
           >
             <div
-              class="d-flex col"
-            >
-              <span>
-                Individual
-              </span>
-            </div>
-            <div
-              class="d-flex ml-auto col-md-auto"
+              class="py-3 row"
             >
               <div
-                class="mb-0 form-group"
+                class="pr-0 text-left col-4"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-isDisabled"
-                  name="isDisabled"
+                <label
+                  class="c4"
                 >
-                  <option
-                    class="option"
-                    data-testid="select-option-true"
-                    value="true"
-                  >
-                    Inactive
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-false"
-                    value="false"
-                  >
-                    Active
-                  </option>
-                </select>
+                  Individual:
+                </label>
               </div>
+              <div
+                class="c5 ml-auto col-auto"
+              >
+                <div
+                  class="mb-0 form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-isDisabled"
+                    name="isDisabled"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-true"
+                      value="true"
+                    >
+                      Inactive
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-false"
+                      value="false"
+                    >
+                      Active
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c6 align-items-center row"
+            >
+              <div
+                class="d-flex col"
+              >
+                <span />
+              </div>
+              <div
+                class="d-flex ml-auto col-md-auto"
+              />
             </div>
           </div>
         </div>
         <div
-          class="c5 form-section"
+          class="c3 form-section"
         >
           <h2
-            class="c6"
+            class="c7"
           >
             <div
               class="no-gutters row"
@@ -358,13 +369,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   First name:
                 </label>
               </div>
               <div
-                class="c8 required text-left col"
+                class="c5 required text-left col"
               >
                 <div
                   class="input form-group"
@@ -386,13 +397,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Middle:
                 </label>
               </div>
               <div
-                class="c8 text-left col"
+                class="c5 text-left col"
               >
                 <div
                   class="input form-group"
@@ -414,13 +425,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Last name:
                 </label>
               </div>
               <div
-                class="c8 required text-left col"
+                class="c5 required text-left col"
               >
                 <div
                   class="input form-group"
@@ -442,13 +453,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Preferred name:
                 </label>
               </div>
               <div
-                class="c8 text-left col"
+                class="c5 text-left col"
               >
                 <div
                   class="input form-group"
@@ -466,10 +477,10 @@ exports[`UpdatePersonForm renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c5 form-section"
+          class="c3 form-section"
         >
           <h2
-            class="c6"
+            class="c7"
           >
             <div
               class="no-gutters row"
@@ -491,16 +502,16 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Link to an existing organization:
                 </label>
               </div>
               <div
-                class="c8 text-left col"
+                class="c5 text-left col"
               >
                 <div
-                  class="c9 form-group"
+                  class="c8 form-group"
                   data-testid="typeahead-organization"
                 >
                   <div
@@ -559,10 +570,10 @@ exports[`UpdatePersonForm renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c5 form-section"
+          class="c3 form-section"
         >
           <h2
-            class="c6"
+            class="c7"
           >
             <div
               class="no-gutters row"
@@ -610,13 +621,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Email:
                 </label>
               </div>
               <div
-                class="c8 text-left col"
+                class="c5 text-left col"
               >
                 <div
                   class="row"
@@ -673,10 +684,10 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                     class="pl-0 pt-2 col-md-2"
                   >
                     <div
-                      class="c10 h-100"
+                      class="c9 h-100"
                     >
                       <button
-                        class="c11 Button c12 btn btn-link"
+                        class="c10 Button c11 btn btn-link"
                         type="button"
                       >
                         <div
@@ -715,7 +726,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                   </div>
                 </div>
                 <button
-                  class="c11 Button btn btn-link"
+                  class="c10 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -733,13 +744,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Phone:
                 </label>
               </div>
               <div
-                class="c8 text-left col"
+                class="c5 text-left col"
               >
                 <div
                   class="row"
@@ -817,7 +828,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                     class="pl-0 pt-2 col-md-2"
                   >
                     <button
-                      class="c11 Button c12 btn btn-link"
+                      class="c10 Button c11 btn btn-link"
                       type="button"
                     >
                       <div
@@ -855,7 +866,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                   </div>
                 </div>
                 <button
-                  class="c11 Button btn btn-link"
+                  class="c10 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -869,10 +880,10 @@ exports[`UpdatePersonForm renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c5 form-section"
+          class="c3 form-section"
         >
           <h2
-            class="c6"
+            class="c7"
           >
             <div
               class="no-gutters row"
@@ -887,7 +898,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                     Mailing Address
                   </span>
                   <div
-                    class="c13 ml-auto mb-0 form-group"
+                    class="c12 ml-auto mb-0 form-group"
                   >
                     <div
                       class="check-field"
@@ -917,7 +928,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c14"
+                  class="c13"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -950,13 +961,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Address (line 1):
                 </label>
               </div>
               <div
-                class="c8 text-left col"
+                class="c5 text-left col"
               >
                 <div
                   class="row"
@@ -986,7 +997,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               />
               <div
-                class="c8 text-left col"
+                class="c5 text-left col"
               >
                 <div
                   class="row"
@@ -996,7 +1007,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                     class="col"
                   >
                     <button
-                      class="c11 Button btn btn-link"
+                      class="c10 Button btn btn-link"
                       type="button"
                     >
                       <div
@@ -1016,13 +1027,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Country:
                 </label>
               </div>
               <div
-                class="c8 text-left col-4"
+                class="c5 text-left col-4"
               >
                 <div
                   class="form-group"
@@ -1076,13 +1087,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   City:
                 </label>
               </div>
               <div
-                class="c8 text-left col-4"
+                class="c5 text-left col-4"
               >
                 <div
                   class="input form-group"
@@ -1104,13 +1115,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Province:
                 </label>
               </div>
               <div
-                class="c8 text-left col-4"
+                class="c5 text-left col-4"
               >
                 <div
                   class="form-group"
@@ -1130,13 +1141,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Postal Code:
                 </label>
               </div>
               <div
-                class="c8 text-left col-4"
+                class="c5 text-left col-4"
               >
                 <div
                   class="input form-group"
@@ -1154,10 +1165,10 @@ exports[`UpdatePersonForm renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c5 form-section"
+          class="c3 form-section"
         >
           <h2
-            class="c6"
+            class="c7"
           >
             <div
               class="no-gutters row"
@@ -1171,7 +1182,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c14"
+                  class="c13"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -1204,13 +1215,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Address (line 1):
                 </label>
               </div>
               <div
-                class="c8 text-left col"
+                class="c5 text-left col"
               >
                 <div
                   class="row"
@@ -1240,7 +1251,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               />
               <div
-                class="c8 text-left col"
+                class="c5 text-left col"
               >
                 <div
                   class="row"
@@ -1250,7 +1261,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                     class="col"
                   >
                     <button
-                      class="c11 Button btn btn-link"
+                      class="c10 Button btn btn-link"
                       type="button"
                     >
                       <div
@@ -1270,13 +1281,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Country:
                 </label>
               </div>
               <div
-                class="c8 text-left col-4"
+                class="c5 text-left col-4"
               >
                 <div
                   class="form-group"
@@ -1330,13 +1341,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   City:
                 </label>
               </div>
               <div
-                class="c8 text-left col-4"
+                class="c5 text-left col-4"
               >
                 <div
                   class="input form-group"
@@ -1358,13 +1369,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Province:
                 </label>
               </div>
               <div
-                class="c8 text-left col-4"
+                class="c5 text-left col-4"
               >
                 <div
                   class="form-group"
@@ -1384,13 +1395,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Postal Code:
                 </label>
               </div>
               <div
-                class="c8 text-left col-4"
+                class="c5 text-left col-4"
               >
                 <div
                   class="input form-group"
@@ -1408,10 +1419,10 @@ exports[`UpdatePersonForm renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c5 form-section"
+          class="c3 form-section"
         >
           <h2
-            class="c6"
+            class="c7"
           >
             <div
               class="no-gutters row"
@@ -1425,7 +1436,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c14"
+                  class="c13"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -1458,13 +1469,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Address (line 1):
                 </label>
               </div>
               <div
-                class="c8 text-left col"
+                class="c5 text-left col"
               >
                 <div
                   class="row"
@@ -1494,7 +1505,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               />
               <div
-                class="c8 text-left col"
+                class="c5 text-left col"
               >
                 <div
                   class="row"
@@ -1504,7 +1515,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                     class="col"
                   >
                     <button
-                      class="c11 Button btn btn-link"
+                      class="c10 Button btn btn-link"
                       type="button"
                     >
                       <div
@@ -1524,13 +1535,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Country:
                 </label>
               </div>
               <div
-                class="c8 text-left col-4"
+                class="c5 text-left col-4"
               >
                 <div
                   class="form-group"
@@ -1584,13 +1595,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   City:
                 </label>
               </div>
               <div
-                class="c8 text-left col-4"
+                class="c5 text-left col-4"
               >
                 <div
                   class="input form-group"
@@ -1612,13 +1623,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Province:
                 </label>
               </div>
               <div
-                class="c8 text-left col-4"
+                class="c5 text-left col-4"
               >
                 <div
                   class="form-group"
@@ -1638,13 +1649,13 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Postal Code:
                 </label>
               </div>
               <div
-                class="c8 text-left col-4"
+                class="c5 text-left col-4"
               >
                 <div
                   class="input form-group"
@@ -1662,10 +1673,10 @@ exports[`UpdatePersonForm renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c5 form-section"
+          class="c3 form-section"
         >
           <h2
-            class="c6"
+            class="c7"
           >
             <div
               class="no-gutters row"

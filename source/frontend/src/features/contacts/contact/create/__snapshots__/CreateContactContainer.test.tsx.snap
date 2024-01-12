@@ -233,6 +233,23 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   margin-bottom: 0.2rem;
 }
 
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 100%;
+  width: 50%;
+  min-width: 93rem;
+  overflow: hidden;
+  padding: 1.4rem 1.6rem;
+  padding-bottom: 0;
+}
+
 .c7 {
   gap: 5rem;
   background-color: white;
@@ -284,6 +301,26 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   font-weight: bold;
 }
 
+.c16 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 0rem;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
 .c9 {
   width: 100%;
   overflow: auto;
@@ -308,26 +345,6 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   align-items: stretch;
 }
 
-.c16 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  gap: 0rem;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-}
-
 .c19 {
   font-size: 1.6rem;
   font-weight: normal;
@@ -335,23 +352,6 @@ exports[`CreateContactContainer component should render as expected 1`] = `
 
 .c19 label {
   margin-bottom: 0;
-}
-
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  height: 100%;
-  width: 50%;
-  min-width: 93rem;
-  overflow: hidden;
-  padding: 1.4rem 1.6rem;
-  padding-bottom: 0;
 }
 
 .c5 {

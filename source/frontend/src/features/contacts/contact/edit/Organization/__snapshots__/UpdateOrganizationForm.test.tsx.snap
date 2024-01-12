@@ -7,7 +7,7 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
   />
   <div />
   <div />
-  .c10.btn {
+  .c8.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -37,49 +37,49 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c10.btn:hover {
+.c8.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c10.btn:focus {
+.c8.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c10.btn.btn-primary {
+.c8.btn.btn-primary {
   border: none;
 }
 
-.c10.btn.btn-secondary {
+.c8.btn.btn-secondary {
   background: none;
 }
 
-.c10.btn.btn-info {
+.c8.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c10.btn.btn-info:hover,
-.c10.btn.btn-info:active,
-.c10.btn.btn-info:focus {
+.c8.btn.btn-info:hover,
+.c8.btn.btn-info:active,
+.c8.btn.btn-info:focus {
   background: none;
 }
 
-.c10.btn.btn-light {
+.c8.btn.btn-light {
   border: none;
 }
 
-.c10.btn.btn-dark {
+.c8.btn.btn-dark {
   border: none;
 }
 
-.c10.btn.btn-link {
+.c8.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -100,9 +100,9 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
   padding: 0;
 }
 
-.c10.btn.btn-link:hover,
-.c10.btn.btn-link:active,
-.c10.btn.btn-link:focus {
+.c8.btn.btn-link:hover,
+.c8.btn.btn-link:active,
+.c8.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +111,14 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
   outline: none;
 }
 
-.c10.btn.btn-link:disabled,
-.c10.btn.btn-link.disabled {
+.c8.btn.btn-link:disabled,
+.c8.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c10.btn:disabled,
-.c10.btn:disabled:hover {
+.c8.btn:disabled,
+.c8.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,25 +129,19 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c10.Button .Button__icon {
+.c8.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c10.Button--icon-only:focus {
+.c8.Button--icon-only:focus {
   outline: none;
 }
 
-.c10.Button--icon-only .Button__icon {
+.c8.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c3 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
-}
-
-.c11.c11.btn {
+.c9.c9.btn {
   font-size: 1.3rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -155,13 +149,13 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
   line-height: unset;
 }
 
-.c11.c11.btn .text {
+.c9.c9.btn .text {
   display: none;
 }
 
-.c11.c11.btn:hover,
-.c11.c11.btn:active,
-.c11.c11.btn:focus {
+.c9.c9.btn:hover,
+.c9.c9.btn:active,
+.c9.c9.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -175,9 +169,9 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c11.c11.btn:hover .text,
-.c11.c11.btn:active .text,
-.c11.c11.btn:focus .text {
+.c9.c9.btn:hover .text,
+.c9.c9.btn:active .text,
+.c9.c9.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -190,65 +184,39 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  gap: 1.6rem;
 }
 
-.c15 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  gap: 1.6rem;
+.c10 {
+  float: right;
+  cursor: pointer;
 }
 
-.c8.required::before {
+.c6 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c3 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c5.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c7 {
+.c4 {
   font-weight: bold;
 }
 
-.c4 {
-  text-align: left;
-}
-
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  width: 100%;
-  overflow: auto;
-  padding-right: 1rem;
-}
-
-.c16 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(33,37,41);
-  text-decoration: none solid rgb(33,37,41);
-  line-height: 2rem;
-}
-
-.c17 {
-  font-size: 1.6rem;
-  font-weight: 400;
-  -webkit-text-decoration: none solid rgb(170,170,170);
-  text-decoration: none solid rgb(170,170,170);
-  line-height: 2rem;
-}
-
-.c9 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -268,45 +236,22 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
   justify-content: flex-start;
 }
 
-.c13 {
-  font-size: 2rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(0,51,102);
-  text-decoration: none solid rgb(0,51,102);
-  line-height: 2.9rem;
-}
-
-.c14 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(33,37,41);
-  text-decoration: none solid rgb(33,37,41);
-  line-height: 2rem;
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  overflow: auto;
+  padding-right: 1rem;
 }
 
 .c1 .form-group.required label:after {
   content: ' *';
   color: red;
-}
-
-.c12 {
-  position: absolute;
-  top: 2.5rem;
-  right: 2.5rem;
-}
-
-.c6 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c5 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
 }
 
 <div
@@ -321,50 +266,56 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
         class="c2"
       >
         <div
-          class="c3 py-2"
+          class="c3 form-section py-2"
         >
           <div
-            class="c4 align-items-center row"
+            class="collapse show"
           >
             <div
-              class="d-flex col"
-            >
-              <span>
-                Organization
-              </span>
-            </div>
-            <div
-              class="d-flex ml-auto col-md-auto"
+              class="py-3 row"
             >
               <div
-                class="mb-0 form-group"
+                class="pr-0 text-left col-4"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-isDisabled"
-                  name="isDisabled"
+                <label
+                  class="c4"
                 >
-                  <option
-                    class="option"
-                    data-testid="select-option-true"
-                    value="true"
+                  Organization:
+                </label>
+              </div>
+              <div
+                class="c5 ml-auto col-auto"
+              >
+                <div
+                  class="mb-0 form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-isDisabled"
+                    name="isDisabled"
                   >
-                    Inactive
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-false"
-                    value="false"
-                  >
-                    Active
-                  </option>
-                </select>
+                    <option
+                      class="option"
+                      data-testid="select-option-true"
+                      value="true"
+                    >
+                      Inactive
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-false"
+                      value="false"
+                    >
+                      Active
+                    </option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div
-          class="c5 form-section"
+          class="c3 form-section"
         >
           <h2
             class="c6"
@@ -389,13 +340,13 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Organization name:
                 </label>
               </div>
               <div
-                class="c8 required text-left col-6"
+                class="c5 required text-left col-6"
               >
                 <div
                   class="input form-group"
@@ -417,13 +368,13 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Alias:
                 </label>
               </div>
               <div
-                class="c8 text-left col-6"
+                class="c5 text-left col-6"
               >
                 <div
                   class="input form-group"
@@ -445,13 +396,13 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Incorporation number:
                 </label>
               </div>
               <div
-                class="c8 text-left col-6"
+                class="c5 text-left col-6"
               >
                 <div
                   class="input form-group"
@@ -469,7 +420,7 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c5 form-section"
+          class="c3 form-section"
         >
           <h2
             class="c6"
@@ -520,13 +471,13 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Email:
                 </label>
               </div>
               <div
-                class="c8 text-left col"
+                class="c5 text-left col"
               >
                 <div
                   class="row"
@@ -583,10 +534,10 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
                     class="pl-0 pt-2 col-md-2"
                   >
                     <div
-                      class="c9 h-100"
+                      class="c7 h-100"
                     >
                       <button
-                        class="c10 Button c11 btn btn-link"
+                        class="c8 Button c9 btn btn-link"
                         type="button"
                       >
                         <div
@@ -625,7 +576,7 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
                   </div>
                 </div>
                 <button
-                  class="c10 Button btn btn-link"
+                  class="c8 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -643,13 +594,13 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c7"
+                  class="c4"
                 >
                   Phone:
                 </label>
               </div>
               <div
-                class="c8 text-left col"
+                class="c5 text-left col"
               >
                 <div
                   class="row"
@@ -727,7 +678,7 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
                     class="pl-0 pt-2 col-md-2"
                   >
                     <button
-                      class="c10 Button c11 btn btn-link"
+                      class="c8 Button c9 btn btn-link"
                       type="button"
                     >
                       <div
@@ -765,7 +716,7 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
                   </div>
                 </div>
                 <button
-                  class="c10 Button btn btn-link"
+                  class="c8 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -779,735 +730,860 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c3 position-relative"
-        >
-          <div
-            class="c12"
-          >
-            <span
-              class="tooltip-icon"
-              data-testid="tooltip-icon-individual-contacts"
-              id="individual-contacts"
-            >
-              <svg
-                class="tooltip-icon"
-                fill="currentColor"
-                height="1em"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 512 512"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                />
-              </svg>
-            </span>
-          </div>
-          <h2
-            class="c13"
-          >
-            Individual Contacts
-          </h2>
-          <h3
-            class="c14"
-          >
-            Connected to this organization:
-          </h3>
-          <div
-            class="c4 row"
-          >
-            <div
-              class="col"
-            />
-          </div>
-        </div>
-        <div
-          class="c3"
+          class="c3 form-section"
         >
           <h2
-            class="c13"
+            class="c6"
           >
-            Address
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                Individual Contacts
+              </div>
+            </div>
           </h2>
-          <h3
-            class="c14"
-          >
-            Mailing Address
-          </h3>
           <div
-            class="pb-2 row"
+            class="collapse show"
           >
             <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c7"
-              >
-                Address (line 1):
-              </label>
-            </div>
-            <div
-              class="c8 text-left col"
+              class="pb-2 row"
             >
               <div
-                class="row"
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c4"
+                >
+                  Connected to this organization:
+                  <span
+                    class="ml-2"
+                  >
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-section-field-tooltip"
+                      id="section-field-tooltip"
+                    >
+                      <svg
+                        class="tooltip-icon"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </label>
+              </div>
+              <div
+                class="c5 text-left col"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="c3 form-section"
+        >
+          <h2
+            class="c6"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                Mailing Address
+              </div>
+              <div
+                class="col-1"
+              >
+                <svg
+                  class="c10"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    collapse-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M7 14l5-5 5 5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c4"
+                >
+                  Address (line 1):
+                </label>
+              </div>
+              <div
+                class="c5 text-left col"
               >
                 <div
-                  class="col-md-9"
+                  class="row"
                 >
                   <div
-                    class="input form-group"
+                    class="col-md-9"
                   >
-                    <input
-                      class="form-control"
-                      id="input-mailingAddress.streetAddress1"
-                      name="mailingAddress.streetAddress1"
-                      title=""
-                      value=""
-                    />
+                    <div
+                      class="input form-group"
+                    >
+                      <input
+                        class="form-control"
+                        id="input-mailingAddress.streetAddress1"
+                        name="mailingAddress.streetAddress1"
+                        title=""
+                        value=""
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            class="pb-2 row"
-          >
             <div
-              class="pr-0 text-left col-4"
-            />
-            <div
-              class="c8 text-left col"
+              class="pb-2 row"
             >
               <div
-                class="row"
-                style="margin-top: -1rem; margin-bottom: 1rem;"
+                class="pr-0 text-left col-4"
+              />
+              <div
+                class="c5 text-left col"
               >
                 <div
-                  class="col"
+                  class="row"
+                  style="margin-top: -1rem; margin-bottom: 1rem;"
                 >
-                  <button
-                    class="c10 Button btn btn-link"
-                    type="button"
+                  <div
+                    class="col"
                   >
-                    <div
-                      class="Button__value"
+                    <button
+                      class="c8 Button btn btn-link"
+                      type="button"
                     >
-                      + Add an address line
-                    </div>
-                  </button>
+                      <div
+                        class="Button__value"
+                      >
+                        + Add an address line
+                      </div>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            class="pb-2 row"
-          >
             <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c7"
-              >
-                Country:
-              </label>
-            </div>
-            <div
-              class="c8 text-left col-4"
+              class="pb-2 row"
             >
               <div
-                class="form-group"
+                class="pr-0 text-left col-4"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-mailingAddress.countryId"
-                  name="mailingAddress.countryId"
+                <label
+                  class="c4"
                 >
-                  <option
+                  Country:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-4"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-mailingAddress.countryId"
+                    name="mailingAddress.countryId"
+                  >
+                    <option
+                      value=""
+                    >
+                      Select...
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-1"
+                      value="1"
+                    >
+                      Canada
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-2"
+                      value="2"
+                    >
+                      United States of America
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-3"
+                      value="3"
+                    >
+                      Mexico
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-4"
+                      value="4"
+                    >
+                      Other
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c4"
+                >
+                  City:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-4"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-mailingAddress.municipality"
+                    name="mailingAddress.municipality"
+                    title=""
                     value=""
-                  >
-                    Select...
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-1"
-                    value="1"
-                  >
-                    Canada
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-2"
-                    value="2"
-                  >
-                    United States of America
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-3"
-                    value="3"
-                  >
-                    Mexico
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-4"
-                    value="4"
-                  >
-                    Other
-                  </option>
-                </select>
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            class="pb-2 row"
-          >
             <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c7"
-              >
-                City:
-              </label>
-            </div>
-            <div
-              class="c8 text-left col-4"
+              class="pb-2 row"
             >
               <div
-                class="input form-group"
+                class="pr-0 text-left col-4"
               >
-                <input
-                  class="form-control"
-                  id="input-mailingAddress.municipality"
-                  name="mailingAddress.municipality"
-                  title=""
-                  value=""
-                />
+                <label
+                  class="c4"
+                >
+                  Province:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-4"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-mailingAddress.provinceId"
+                    name="mailingAddress.provinceId"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            class="pb-2 row"
-          >
             <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c7"
-              >
-                Province:
-              </label>
-            </div>
-            <div
-              class="c8 text-left col-4"
+              class="pb-2 row"
             >
               <div
-                class="form-group"
+                class="pr-0 text-left col-4"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-mailingAddress.provinceId"
-                  name="mailingAddress.provinceId"
-                />
+                <label
+                  class="c4"
+                >
+                  Postal Code:
+                </label>
               </div>
-            </div>
-          </div>
-          <div
-            class="pb-2 row"
-          >
-            <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c7"
-              >
-                Postal Code:
-              </label>
-            </div>
-            <div
-              class="c8 text-left col-4"
-            >
               <div
-                class="input form-group"
+                class="c5 text-left col-4"
               >
-                <input
-                  class="form-control"
-                  id="input-mailingAddress.postal"
-                  name="mailingAddress.postal"
-                  title=""
-                  value=""
-                />
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-mailingAddress.postal"
+                    name="mailingAddress.postal"
+                    title=""
+                    value=""
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div
-          class="c3"
+          class="c3 form-section"
         >
-          <h3
-            class="c14"
-          >
-            Property Address
-          </h3>
-          <div
-            class="pb-2 row"
+          <h2
+            class="c6"
           >
             <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c7"
-              >
-                Address (line 1):
-              </label>
-            </div>
-            <div
-              class="c8 text-left col"
+              class="no-gutters row"
             >
               <div
-                class="row"
+                class="col"
+              >
+                Property Address
+              </div>
+              <div
+                class="col-1"
+              >
+                <svg
+                  class="c10"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    collapse-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M7 14l5-5 5 5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c4"
+                >
+                  Address (line 1):
+                </label>
+              </div>
+              <div
+                class="c5 text-left col"
               >
                 <div
-                  class="col-md-9"
+                  class="row"
                 >
                   <div
-                    class="input form-group"
+                    class="col-md-9"
                   >
-                    <input
-                      class="form-control"
-                      id="input-propertyAddress.streetAddress1"
-                      name="propertyAddress.streetAddress1"
-                      title=""
-                      value=""
-                    />
+                    <div
+                      class="input form-group"
+                    >
+                      <input
+                        class="form-control"
+                        id="input-propertyAddress.streetAddress1"
+                        name="propertyAddress.streetAddress1"
+                        title=""
+                        value=""
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            class="pb-2 row"
-          >
             <div
-              class="pr-0 text-left col-4"
-            />
-            <div
-              class="c8 text-left col"
+              class="pb-2 row"
             >
               <div
-                class="row"
-                style="margin-top: -1rem; margin-bottom: 1rem;"
+                class="pr-0 text-left col-4"
+              />
+              <div
+                class="c5 text-left col"
               >
                 <div
-                  class="col"
+                  class="row"
+                  style="margin-top: -1rem; margin-bottom: 1rem;"
                 >
-                  <button
-                    class="c10 Button btn btn-link"
-                    type="button"
+                  <div
+                    class="col"
                   >
-                    <div
-                      class="Button__value"
+                    <button
+                      class="c8 Button btn btn-link"
+                      type="button"
                     >
-                      + Add an address line
-                    </div>
-                  </button>
+                      <div
+                        class="Button__value"
+                      >
+                        + Add an address line
+                      </div>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            class="pb-2 row"
-          >
             <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c7"
-              >
-                Country:
-              </label>
-            </div>
-            <div
-              class="c8 text-left col-4"
+              class="pb-2 row"
             >
               <div
-                class="form-group"
+                class="pr-0 text-left col-4"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-propertyAddress.countryId"
-                  name="propertyAddress.countryId"
+                <label
+                  class="c4"
                 >
-                  <option
+                  Country:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-4"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-propertyAddress.countryId"
+                    name="propertyAddress.countryId"
+                  >
+                    <option
+                      value=""
+                    >
+                      Select...
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-1"
+                      value="1"
+                    >
+                      Canada
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-2"
+                      value="2"
+                    >
+                      United States of America
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-3"
+                      value="3"
+                    >
+                      Mexico
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-4"
+                      value="4"
+                    >
+                      Other
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c4"
+                >
+                  City:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-4"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-propertyAddress.municipality"
+                    name="propertyAddress.municipality"
+                    title=""
                     value=""
-                  >
-                    Select...
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-1"
-                    value="1"
-                  >
-                    Canada
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-2"
-                    value="2"
-                  >
-                    United States of America
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-3"
-                    value="3"
-                  >
-                    Mexico
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-4"
-                    value="4"
-                  >
-                    Other
-                  </option>
-                </select>
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            class="pb-2 row"
-          >
             <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c7"
-              >
-                City:
-              </label>
-            </div>
-            <div
-              class="c8 text-left col-4"
+              class="pb-2 row"
             >
               <div
-                class="input form-group"
+                class="pr-0 text-left col-4"
               >
-                <input
-                  class="form-control"
-                  id="input-propertyAddress.municipality"
-                  name="propertyAddress.municipality"
-                  title=""
-                  value=""
-                />
+                <label
+                  class="c4"
+                >
+                  Province:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-4"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-propertyAddress.provinceId"
+                    name="propertyAddress.provinceId"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            class="pb-2 row"
-          >
             <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c7"
-              >
-                Province:
-              </label>
-            </div>
-            <div
-              class="c8 text-left col-4"
+              class="pb-2 row"
             >
               <div
-                class="form-group"
+                class="pr-0 text-left col-4"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-propertyAddress.provinceId"
-                  name="propertyAddress.provinceId"
-                />
+                <label
+                  class="c4"
+                >
+                  Postal Code:
+                </label>
               </div>
-            </div>
-          </div>
-          <div
-            class="pb-2 row"
-          >
-            <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c7"
-              >
-                Postal Code:
-              </label>
-            </div>
-            <div
-              class="c8 text-left col-4"
-            >
               <div
-                class="input form-group"
+                class="c5 text-left col-4"
               >
-                <input
-                  class="form-control"
-                  id="input-propertyAddress.postal"
-                  name="propertyAddress.postal"
-                  title=""
-                  value=""
-                />
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-propertyAddress.postal"
+                    name="propertyAddress.postal"
+                    title=""
+                    value=""
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div
-          class="c3"
+          class="c3 form-section"
         >
-          <h3
-            class="c14"
-          >
-            Billing Address
-          </h3>
-          <div
-            class="pb-2 row"
+          <h2
+            class="c6"
           >
             <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c7"
-              >
-                Address (line 1):
-              </label>
-            </div>
-            <div
-              class="c8 text-left col"
+              class="no-gutters row"
             >
               <div
-                class="row"
+                class="col"
+              >
+                Billing Address
+              </div>
+              <div
+                class="col-1"
+              >
+                <svg
+                  class="c10"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    collapse-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M7 14l5-5 5 5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c4"
+                >
+                  Address (line 1):
+                </label>
+              </div>
+              <div
+                class="c5 text-left col"
               >
                 <div
-                  class="col-md-9"
+                  class="row"
                 >
                   <div
-                    class="input form-group"
+                    class="col-md-9"
                   >
-                    <input
-                      class="form-control"
-                      id="input-billingAddress.streetAddress1"
-                      name="billingAddress.streetAddress1"
-                      title=""
-                      value=""
-                    />
+                    <div
+                      class="input form-group"
+                    >
+                      <input
+                        class="form-control"
+                        id="input-billingAddress.streetAddress1"
+                        name="billingAddress.streetAddress1"
+                        title=""
+                        value=""
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            class="pb-2 row"
-          >
             <div
-              class="pr-0 text-left col-4"
-            />
-            <div
-              class="c8 text-left col"
+              class="pb-2 row"
             >
               <div
-                class="row"
-                style="margin-top: -1rem; margin-bottom: 1rem;"
+                class="pr-0 text-left col-4"
+              />
+              <div
+                class="c5 text-left col"
               >
                 <div
-                  class="col"
+                  class="row"
+                  style="margin-top: -1rem; margin-bottom: 1rem;"
                 >
-                  <button
-                    class="c10 Button btn btn-link"
-                    type="button"
+                  <div
+                    class="col"
                   >
-                    <div
-                      class="Button__value"
+                    <button
+                      class="c8 Button btn btn-link"
+                      type="button"
                     >
-                      + Add an address line
-                    </div>
-                  </button>
+                      <div
+                        class="Button__value"
+                      >
+                        + Add an address line
+                      </div>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            class="pb-2 row"
-          >
             <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c7"
-              >
-                Country:
-              </label>
-            </div>
-            <div
-              class="c8 text-left col-4"
+              class="pb-2 row"
             >
               <div
-                class="form-group"
+                class="pr-0 text-left col-4"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-billingAddress.countryId"
-                  name="billingAddress.countryId"
+                <label
+                  class="c4"
                 >
-                  <option
+                  Country:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-4"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-billingAddress.countryId"
+                    name="billingAddress.countryId"
+                  >
+                    <option
+                      value=""
+                    >
+                      Select...
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-1"
+                      value="1"
+                    >
+                      Canada
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-2"
+                      value="2"
+                    >
+                      United States of America
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-3"
+                      value="3"
+                    >
+                      Mexico
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-4"
+                      value="4"
+                    >
+                      Other
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c4"
+                >
+                  City:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-4"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-billingAddress.municipality"
+                    name="billingAddress.municipality"
+                    title=""
                     value=""
-                  >
-                    Select...
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-1"
-                    value="1"
-                  >
-                    Canada
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-2"
-                    value="2"
-                  >
-                    United States of America
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-3"
-                    value="3"
-                  >
-                    Mexico
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-4"
-                    value="4"
-                  >
-                    Other
-                  </option>
-                </select>
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            class="pb-2 row"
-          >
             <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c7"
-              >
-                City:
-              </label>
-            </div>
-            <div
-              class="c8 text-left col-4"
+              class="pb-2 row"
             >
               <div
-                class="input form-group"
+                class="pr-0 text-left col-4"
               >
-                <input
-                  class="form-control"
-                  id="input-billingAddress.municipality"
-                  name="billingAddress.municipality"
-                  title=""
-                  value=""
-                />
+                <label
+                  class="c4"
+                >
+                  Province:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-4"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-billingAddress.provinceId"
+                    name="billingAddress.provinceId"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            class="pb-2 row"
-          >
             <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c7"
-              >
-                Province:
-              </label>
-            </div>
-            <div
-              class="c8 text-left col-4"
+              class="pb-2 row"
             >
               <div
-                class="form-group"
+                class="pr-0 text-left col-4"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-billingAddress.provinceId"
-                  name="billingAddress.provinceId"
-                />
+                <label
+                  class="c4"
+                >
+                  Postal Code:
+                </label>
               </div>
-            </div>
-          </div>
-          <div
-            class="pb-2 row"
-          >
-            <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c7"
-              >
-                Postal Code:
-              </label>
-            </div>
-            <div
-              class="c8 text-left col-4"
-            >
               <div
-                class="input form-group"
+                class="c5 text-left col-4"
               >
-                <input
-                  class="form-control"
-                  id="input-billingAddress.postal"
-                  name="billingAddress.postal"
-                  title=""
-                  value=""
-                />
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-billingAddress.postal"
+                    name="billingAddress.postal"
+                    title=""
+                    value=""
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div
-          class="c3"
+          class="c3 form-section"
         >
-          <div
-            class="c15"
+          <h2
+            class="c6"
           >
-            <label
-              class="c16 form-label"
+            <div
+              class="no-gutters row"
             >
-              Comments
-            </label>
-            <span
-              class="c17"
-            >
-              (Optional)
-            </span>
-          </div>
+              <div
+                class="col"
+              >
+                Comments
+              </div>
+            </div>
+          </h2>
           <div
-            class="textarea input form-group"
+            class="collapse show"
           >
-            <textarea
-              class="form-control"
-              id="input-comment"
-              name="comment"
-              rows="5"
-              title="I got comments for you"
+            <div
+              class="textarea input form-group"
             >
-              I got comments for you
-            </textarea>
+              <textarea
+                class="form-control"
+                id="input-comment"
+                name="comment"
+                rows="5"
+                title="I got comments for you"
+              >
+                I got comments for you
+              </textarea>
+            </div>
           </div>
         </div>
       </div>

@@ -216,16 +216,6 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c1 {
-  width: 100%;
-  overflow: auto;
-}
-
-.c2 .form-group.required label:after {
-  content: ' *';
-  color: red;
-}
-
 .c7 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -244,6 +234,16 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
+}
+
+.c1 {
+  width: 100%;
+  overflow: auto;
+}
+
+.c2 .form-group.required label:after {
+  content: ' *';
+  color: red;
 }
 
 <div
