@@ -185,7 +185,7 @@ describe('UpdateProperties component', () => {
     await act(async () => userEvent.click(cancelButton));
 
     expect(
-      await screen.findByText(/If you cancel now, this file will not be saved./),
+      await screen.findByText(/If you choose to cancel now, your changes will not be saved./i),
     ).toBeVisible();
   });
 

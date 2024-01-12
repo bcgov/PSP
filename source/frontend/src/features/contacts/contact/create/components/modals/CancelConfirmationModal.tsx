@@ -10,9 +10,16 @@ export type ICancelConfirmationModalProps = Omit<
 export const CancelConfirmationModal = (props: ICancelConfirmationModalProps) => (
   <GenericModal
     title="Unsaved Changes"
-    message="Confirm cancel adding this contact? Changes will not be saved."
-    okButtonText="Confirm"
+    message={
+      <>
+        <div>If you choose to cancel now, your changes will not be saved.</div>
+        <br />
+        <strong>Do you want to proceed?</strong>
+      </>
+    }
+    okButtonText="Yes"
     cancelButtonText="No"
     {...props}
+    variant="info"
   ></GenericModal>
 );
