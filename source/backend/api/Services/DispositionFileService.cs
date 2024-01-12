@@ -248,10 +248,10 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Invalid dispositionFileId.");
             }
 
-            var updatedOffer = _dispositionFileRepository.UpdateDispositionFileAppraisal(appraisalId, dispositionAppraisal);
+            var updatedAppraisal = _dispositionFileRepository.UpdateDispositionFileAppraisal(appraisalId, dispositionAppraisal);
             _dispositionFileRepository.CommitTransaction();
 
-            return updatedOffer;
+            return updatedAppraisal;
         }
 
         public IEnumerable<PimsDispositionChecklistItem> GetChecklistItems(long id)
