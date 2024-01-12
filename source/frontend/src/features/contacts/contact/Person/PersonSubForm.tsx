@@ -1,16 +1,17 @@
 import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
+import styled from 'styled-components';
 
-import { AsyncTypeahead, Check, Input } from '@/components/common/form';
-import { FormSection } from '@/components/common/form/styles';
+import { AsyncTypeahead, Check, Input, TextArea } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import * as Styled from '@/features/contacts/contact/edit/styles';
 import { usePersonOrganizationTypeahead } from '@/features/contacts/hooks/usePersonOrganizationTypeahead';
 import { IEditablePersonForm } from '@/interfaces/editable-contact';
 
-import { Address, CommentNotes, ContactEmailList, ContactPhoneList } from '../create/components';
+import { Address, ContactEmailList, ContactPhoneList } from '../create/components';
 
 interface IPersonSubFormProps {
   isContactMethodInvalid?: boolean;
@@ -52,7 +53,18 @@ const PersonSubForm: React.FunctionComponent<React.PropsWithChildren<IPersonSubF
           />
         </SectionField>
       </Section>
-      <Section header="Contact Info">
+      <Section
+        header={
+          <div className="d-flex align-items-center">
+            <span>Contact Info</span>
+            <TooltipIcon
+              toolTipId="contactInfoToolTip"
+              innerClassName="ml-4 mb-1"
+              toolTip="Contacts must have a minimum of one method of contact to be saved. (ex: email,phone or address)"
+            />
+          </div>
+        }
+      >
         <Styled.SectionMessage
           appearance={
             isContactMethodInvalid && getIn(errors, 'needsContactMethod') ? 'error' : 'information'
@@ -78,29 +90,42 @@ const PersonSubForm: React.FunctionComponent<React.PropsWithChildren<IPersonSubF
           />
         </SectionField>
       </Section>
-      <FormSection>
-        <Styled.H2>Address</Styled.H2>
-        <Styled.H3>Mailing Address</Styled.H3>
-        <Check
-          field="useOrganizationAddress"
-          postLabel="Use mailing address from organization"
-          disabled={!organizationId}
-        />
+      <Section
+        isCollapsable
+        initiallyExpanded
+        header={
+          <div className="d-flex align-items-center">
+            <span>Mailing Address</span>
+            <StyledCheckBox
+              field="useOrganizationAddress"
+              postLabel="Use mailing address from organization"
+              disabled={!organizationId}
+              className="ml-auto mb-0"
+            />
+          </div>
+        }
+      >
         <Address namespace="mailingAddress" disabled={useOrganizationAddress} />
-      </FormSection>
-      <FormSection>
-        <Styled.H3>Property Address</Styled.H3>
+      </Section>
+      <Section header="Property Address" isCollapsable initiallyExpanded>
         <Address namespace="propertyAddress" />
-      </FormSection>
-      <FormSection>
-        <Styled.H3>Billing Address</Styled.H3>
+      </Section>
+      <Section header="Billing Address" isCollapsable initiallyExpanded>
         <Address namespace="billingAddress" />
-      </FormSection>
-      <FormSection>
-        <CommentNotes />
-      </FormSection>
+      </Section>
+      <Section header="Comments">
+        <TextArea rows={5} field="comment" />
+      </Section>
     </>
   );
 };
 
 export default PersonSubForm;
+
+const StyledCheckBox = styled(Check)`
+  font-size: 1.6rem;
+  font-weight: normal;
+  label {
+    margin-bottom: 0;
+  }
+`;

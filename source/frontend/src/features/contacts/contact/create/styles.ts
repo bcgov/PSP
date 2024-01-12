@@ -26,7 +26,6 @@ export const H3 = styled.h3`
 export const CreateFormLayout = styled(FlexBox).attrs({ column: true })`
   width: 100%;
   overflow: auto;
-  padding-right: 1rem;
 `;
 
 export const Form = styled(FormikForm)`
@@ -71,7 +70,7 @@ export const SubtleText = styled.span`
 
 export const ButtonGroup = styled(FlexBox)`
   width: 100%;
-  padding: 1rem 4rem;
+  padding: 1rem 3rem;
   gap: 2rem;
   justify-content: flex-end;
   align-items: stretch;

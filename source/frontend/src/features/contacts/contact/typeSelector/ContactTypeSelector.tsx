@@ -41,7 +41,7 @@ const StyledInlineFlex = styled(InlineFlexDiv)`
   background-color: white;
   border-radius: 0.5rem;
   margin: 1.5rem;
-  margin-right: 4rem;
+  margin-right: 3rem;
   padding: 1.5rem;
   .form-check {
     display: flex;
