@@ -213,6 +213,8 @@ namespace Pims.Api.Test.Services
         }
         #endregion
 
+        #region Add
+
         [Fact]
         public void Add_Should_Fail_NoPermission()
         {
@@ -242,6 +244,9 @@ namespace Pims.Api.Test.Services
             // Assert
             act.Should().Throw<BadRequestException>();
         }
+        #endregion
+
+        #region Update
 
         [Fact]
         public void Update_Should_Fail_NoPermission()
@@ -316,6 +321,28 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Update_UserOverride_Final_Validation()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var dispFile = EntityHelper.CreateDispositionFile(1);
+            dispFile.DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.COMPLETE.ToString();
+
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+
+            // Act
+            Action act = () => service.Update(1, dispFile, new List<UserOverrideCode>());
+
+            // Assert
+            var ex = act.Should().Throw<UserOverrideException>();
+            ex.Which.UserOverride.Should().Be(UserOverrideCode.DispositionFileFinalStatus);
+        }
+
+        [Fact]
         public void Update_Success()
         {
             // Arrange
@@ -335,6 +362,7 @@ namespace Pims.Api.Test.Services
             Assert.NotNull(result);
             repository.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>()), Times.Once);
         }
+        #endregion
 
         #region GetTeamMembers
         [Fact]

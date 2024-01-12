@@ -94,7 +94,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(AcquisitionFileController),
+                nameof(DispositionFileController),
                 nameof(AddDispositionFile),
                 User.GetUsername(),
                 DateTime.Now);
