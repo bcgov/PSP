@@ -65,18 +65,15 @@ const PersonSubForm: React.FunctionComponent<React.PropsWithChildren<IPersonSubF
           </div>
         }
       >
-        <Styled.SectionMessage
-          appearance={
-            isContactMethodInvalid && getIn(errors, 'needsContactMethod') ? 'error' : 'information'
-          }
-          gap="0.5rem"
-        >
-          <AiOutlineExclamationCircle size="1.8rem" className="mt-2" />
-          <p>
-            Contacts must have a minimum of one method of contact to be saved. <br />
-            <em>(ex: email,phone or address)</em>
-          </p>
-        </Styled.SectionMessage>
+        {isContactMethodInvalid && (
+          <Styled.SectionMessage appearance="error" gap="0.5rem">
+            <AiOutlineExclamationCircle size="1.8rem" className="mt-2" />
+            <p>
+              Contacts must have a minimum of one method of contact to be saved. <br />
+              <em>(ex: email,phone or address)</em>
+            </p>
+          </Styled.SectionMessage>
+        )}
         <SectionField label="Email">
           <ContactEmailList
             field="emailContactMethods"

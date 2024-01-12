@@ -58,8 +58,6 @@ const ContactLayout = styled.div`
   overflow: hidden;
   padding: 1.4rem 1.6rem;
   padding-bottom: 0;
-  /* text-align: left; */
-  /* gap: 1.6rem; */
 `;
 
 const StyledFormWrapper = styled.div`
