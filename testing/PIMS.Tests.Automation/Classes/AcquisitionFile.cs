@@ -167,6 +167,7 @@
         public string? CompensationAgreementDate { get; set; } = String.Empty;
         public string? CompensationExpropriationNoticeDate { get; set; } = String.Empty;
         public string? CompensationExpropriationVestingDate { get; set; } = String.Empty;
+        public string? CompensationAdvancedPaymentDate { get; set; } = String.Empty;
         public string? CompensationSpecialInstructions { get; set; } = String.Empty;
         public string? CompensationFiscalYear { get; set; } = String.Empty;
         public string? CompensationSTOB { get; set; } = String.Empty;

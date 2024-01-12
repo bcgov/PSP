@@ -101,18 +101,18 @@ namespace PIMS.Tests.Automation.PageObjects
         public void CreateNewFinancialCode(FinancialCode financialCode)
         {
             WaitUntilClickable(financialCodeFormTypeSelect);
-            ChooseSpecificSelectOption(financialCodeFormTypeSelect, financialCode.CodeType);
-            webDriver.FindElement(financialCodeFormValueInput).SendKeys(financialCode.CodeValue);
-            webDriver.FindElement(financialCodeFormDescriptionInput).SendKeys(financialCode.CodeDescription);
-            webDriver.FindElement(financialCodeFormOrderInput).SendKeys(financialCode.DisplayOrder);
+            ChooseSpecificSelectOption(financialCodeFormTypeSelect, financialCode.FinnCodeType);
+            webDriver.FindElement(financialCodeFormValueInput).SendKeys(financialCode.FinnCodeValue);
+            webDriver.FindElement(financialCodeFormDescriptionInput).SendKeys(financialCode.FinnCodeDescription);
+            webDriver.FindElement(financialCodeFormOrderInput).SendKeys(financialCode.FinnDisplayOrder);
         }
 
         public void UpdateFinancialCode(FinancialCode financialCode)
         {
             WaitUntilClickable(financialCodeFormDescriptionInput);
             ClearInput(financialCodeFormDescriptionInput);
-            webDriver.FindElement(financialCodeFormDescriptionInput).SendKeys(financialCode.CodeDescription);
-            webDriver.FindElement(financialCodeFormExpiryDateInput).SendKeys(financialCode.ExpiryDate);
+            webDriver.FindElement(financialCodeFormDescriptionInput).SendKeys(financialCode.FinnCodeDescription);
+            webDriver.FindElement(financialCodeFormExpiryDateInput).SendKeys(financialCode.FinnExpiryDate);
             webDriver.FindElement(financialCodeFormExpiryDateLabel).Click();
         }
 

@@ -414,11 +414,11 @@ namespace PIMS.Tests.Automation.PageObjects
                     //Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
                     //Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
                 }
-                //else
-                //{
-                //    Assert.True(sharedModals.ModalHeader().Equals("Different Ministry region"));
-                //    Assert.True(sharedModals.ModalContent().Equals("Selected Ministry region is different from that of one or more selected properties. Do you wish to continue?"));
-                //}
+                else
+                {
+                    Assert.True(sharedModals.ModalHeader().Equals("Different Ministry region"));
+                    Assert.True(sharedModals.ModalContent().Equals("Selected Ministry region is different from that of one or more selected properties. Do you wish to continue?"));
+                }
                 sharedModals.ModalClickOKBttn();
             }
 
@@ -450,9 +450,8 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
                 {
-                    Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
-                    Assert.True(sharedModals.ConfirmationModalText1().Equals("If you cancel now, this form will not be saved."));
-                    Assert.True(sharedModals.ConfirmationModalText2().Equals("Are you sure you want to Cancel?"));
+                    Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
+                    Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
                 }
             }
