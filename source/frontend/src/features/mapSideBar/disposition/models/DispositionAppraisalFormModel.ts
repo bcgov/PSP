@@ -49,9 +49,9 @@ export class DispositionAppraisalFormModel {
       id: this.id,
       dispositionFileId: this.dispositionFileId,
       appraisedAmount: this.appraisedValueAmount,
-      appraisalDate: this.appraisalDate,
+      appraisalDate: emptyStringtoNullable(this.appraisalDate),
       bcaValueAmount: this.bcaValueAmount,
-      bcaRollYear: this.bcaRollYear,
+      bcaRollYear: emptyStringtoNullable(this.bcaRollYear),
       listPriceAmount: this.listPriceAmount,
       rowVersion: this.rowVersion ?? 0,
     };

@@ -100,7 +100,7 @@ const DispositionAppraisalForm: React.FC<IDispositionAppraisalFormProps> = ({
                   <SectionField label="BC assessment roll year">
                     <FastDateYearPicker field="bcaRollYear" formikProps={formikProps} />
                   </SectionField>
-                  <SectionField label="Appraisal value ($)" contentWidth="5">
+                  <SectionField label="List price ($)" contentWidth="5">
                     <FastCurrencyInput formikProps={formikProps} field="listPriceAmount" />
                   </SectionField>
                 </Section>

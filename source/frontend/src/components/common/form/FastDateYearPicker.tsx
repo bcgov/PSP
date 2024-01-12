@@ -69,7 +69,7 @@ const FormikDateYearPicker: FunctionComponent<React.PropsWithChildren<FastDateYe
     value = null;
   }
   if (typeof value === 'string') {
-    value = moment(value, 'YYYY-MM-DD').toDate();
+    value = moment(value, 'YYYY').toDate();
   }
   useEffect(() => {
     registerField(field, {});

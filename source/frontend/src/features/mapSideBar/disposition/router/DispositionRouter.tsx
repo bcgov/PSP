@@ -76,7 +76,7 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
           )}
           claim={Claims.DISPOSITION_EDIT}
           key={'disposition'}
-          title={'Add Disposition Offer'}
+          title={'Updpate Appraisal'}
         />
         <AppRoute
           exact
@@ -103,7 +103,7 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
           )}
           claim={Claims.DISPOSITION_EDIT}
           key={'disposition'}
-          title={'Add Disposition Offer'}
+          title={'Update Disposition Offer'}
         />
         <Route path={`${stripTrailingSlash(path)}/:tab`}>
           <DispositionFileTabs
