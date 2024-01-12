@@ -3,7 +3,6 @@ import MockAdapter from 'axios-mock-adapter';
 import { FormikProps } from 'formik';
 import { createRef } from 'react';
 
-import { UpdateDispositionFormYupSchema } from '@/features/mapSideBar/disposition/models/AddDispositionFormYupSchema';
 import { DispositionFormModel } from '@/features/mapSideBar/disposition/models/DispositionFormModel';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
