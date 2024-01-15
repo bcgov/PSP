@@ -245,6 +245,66 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
+        #region Appraisal
+
+        [Fact]
+        public void AddDisposition_Appraisal_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            var appraisal = new PimsDispositionAppraisal() { DispositionFileId = 1 };
+            _helper.AddAndSaveChanges(dispFile);
+
+            // Act
+            var result = repository.AddDispositionFileAppraisal(appraisal);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionAppraisal>();
+        }
+
+        [Fact]
+        public void UpdateDisposition_Appraisal_NotFound()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionAppraisals = new List<PimsDispositionAppraisal>() { new PimsDispositionAppraisal() { DispositionAppraisalId = 1, ListPriceAmt = 200 } };
+
+            var appraisal = dispFile.PimsDispositionAppraisals.FirstOrDefault();
+            appraisal.ListPriceAmt = 300;
+
+            // Act
+            Action act = () => repository.UpdateDispositionFileAppraisal(2, appraisal);
+
+            // Assert
+            act.Should().Throw<KeyNotFoundException>();
+        }
+
+        [Fact]
+        public void UpdateDisposition_Appraisal_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionAppraisals = new List<PimsDispositionAppraisal>() { new PimsDispositionAppraisal() { DispositionAppraisalId = 1, ListPriceAmt = 200 } };
+            _helper.AddAndSaveChanges(dispFile);
+
+            var appraisal = dispFile.PimsDispositionAppraisals.FirstOrDefault();
+            appraisal.ListPriceAmt = 300;
+
+            // Act
+            var result = repository.UpdateDispositionFileAppraisal(1, appraisal);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionAppraisal>();
+            result.ListPriceAmt.Should().Be(300);
+        }
+
+        #endregion
+
         #region AddDispositionOffer
         [Fact]
         public void AddDispositionOffer_Success()

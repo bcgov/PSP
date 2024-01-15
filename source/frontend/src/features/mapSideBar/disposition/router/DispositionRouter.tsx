@@ -14,6 +14,8 @@ import { UpdateDispositionChecklistContainer } from '../tabs/checklist/update/Up
 import DispositionFileTabs from '../tabs/DispositionFileTabs';
 import UpdateDispositionContainer from '../tabs/fileDetails/detail/update/UpdateDispositionContainer';
 import UpdateDispositionForm from '../tabs/fileDetails/detail/update/UpdateDispositionForm';
+import DispositionAppraisalForm from '../tabs/offersAndSale/dispositionAppraisal/form/DispositionAppraisalForm';
+import UpdateDispositionAppraisalContainer from '../tabs/offersAndSale/dispositionAppraisal/update/UpdateDispositionAppraisalContainer';
 import AddDispositionOfferContainer from '../tabs/offersAndSale/dispositionOffer/add/AddDispositionOfferContainer';
 import DispositionOfferForm from '../tabs/offersAndSale/dispositionOffer/form/DispositionOfferForm';
 import UpdateDispositionOfferContainer from '../tabs/offersAndSale/dispositionOffer/update/UpdateDispositionOfferContainer';
@@ -74,6 +76,19 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
         </Route>
         <AppRoute
           exact
+          path={`${stripTrailingSlash(path)}/${FileTabType.OFFERS_AND_SALE}/appraisal/update`}
+          customRender={() => (
+            <UpdateDispositionAppraisalContainer
+              dispositionFileId={props.dispositionFile?.id ?? 0}
+              View={DispositionAppraisalForm}
+            ></UpdateDispositionAppraisalContainer>
+          )}
+          claim={Claims.DISPOSITION_EDIT}
+          key={'disposition'}
+          title={'Updpate Appraisal'}
+        />
+        <AppRoute
+          exact
           path={`${stripTrailingSlash(path)}/${FileTabType.OFFERS_AND_SALE}/offers/new`}
           customRender={() => (
             <AddDispositionOfferContainer
@@ -97,7 +112,7 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
           )}
           claim={Claims.DISPOSITION_EDIT}
           key={'disposition'}
-          title={'Add Disposition Offer'}
+          title={'Update Disposition Offer'}
         />
         <Route path={`${stripTrailingSlash(path)}/:tab`}>
           <DispositionFileTabs

@@ -33,6 +33,12 @@ namespace Pims.Api.Services
 
         PimsDispositionSale GetDispositionFileSale(long dispositionFileId);
 
+        PimsDispositionAppraisal GetDispositionFileAppraisal(long dispositionFileId);
+
+        PimsDispositionAppraisal AddDispositionFileAppraisal(long dispositionFileId, PimsDispositionAppraisal dispositionAppraisal);
+
+        PimsDispositionAppraisal UpdateDispositionFileAppraisal(long dispositionFileId,long appraisalId, PimsDispositionAppraisal dispositionAppraisal);
+
         IEnumerable<PimsDispositionChecklistItem> GetChecklistItems(long id);
 
         List<DispositionFileExportModel> GetDispositionFileExport(DispositionFilter filter);

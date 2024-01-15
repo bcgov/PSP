@@ -20,15 +20,34 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c3.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
-.c2 {
-  font-weight: bold;
+.c2 label {
+  font-family: 'BCSans-Bold';
+  font-size: 2rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 0;
+}
+
+.c2 button {
+  margin-bottom: 1rem;
 }
 
 <div
@@ -43,108 +62,22 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
         <div
           class="col"
         >
-          Appraisal and Assessment
+          <div
+            class="c2"
+          >
+            <label>
+              Appraisal and Assessment
+            </label>
+          </div>
         </div>
       </div>
     </h2>
     <div
       class="collapse show"
     >
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-5"
-        >
-          <label
-            class="c2"
-          >
-            Appraisal value ($):
-          </label>
-        </div>
-        <div
-          class="c3 text-left col"
-          data-testid="disposition-file.appraisedValueAmount"
-        >
-          $550,000.00
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-5"
-        >
-          <label
-            class="c2"
-          >
-            Appraisal date:
-          </label>
-        </div>
-        <div
-          class="c3 text-left col"
-          data-testid="disposition-file.appraisalDate"
-        >
-          Dec 28, 2023
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-5"
-        >
-          <label
-            class="c2"
-          >
-            BC assessment value ($):
-          </label>
-        </div>
-        <div
-          class="c3 text-left col"
-          data-testid="disposition-file.bcaValueAmount"
-        >
-          $600,000.00
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-5"
-        >
-          <label
-            class="c2"
-          >
-            BC assessment roll year:
-          </label>
-        </div>
-        <div
-          class="c3 text-left col"
-          data-testid="disposition-file.bcaAssessmentRollYear"
-        >
-          2023
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-5"
-        >
-          <label
-            class="c2"
-          >
-            List price ($):
-          </label>
-        </div>
-        <div
-          class="c3 text-left col"
-          data-testid="disposition-file.listPriceAmount"
-        >
-          $590,000.00
-        </div>
-      </div>
+      <p>
+        There are no value details indicated with this disposition file.
+      </p>
     </div>
   </div>
   .c3 {

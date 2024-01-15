@@ -346,6 +346,80 @@ namespace Pims.Api.Areas.Disposition.Controllers
             return new JsonResult(_mapper.Map<DispositionFileSaleModel>(dispositionSale));
         }
 
+        [HttpGet("{id:long}/appraisal")]
+        [HasPermission(Permissions.DispositionView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileAppraisalModel), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetDispositionFileAppraisal([FromRoute] long id)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(GetDispositionFileAppraisal),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            var dispositionSale = _dispositionService.GetDispositionFileAppraisal(id);
+            return new JsonResult(_mapper.Map<DispositionFileAppraisalModel>(dispositionSale));
+        }
+
+        [HttpPost("{id:long}/appraisal")]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileAppraisalModel), 201)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult AddDispositionFileAppraisal([FromRoute] long id, [FromBody] DispositionFileAppraisalModel dispositionFileAppraisal)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(AddDispositionFileAppraisal),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            try
+            {
+                var dispositionAppraisalEntity = _mapper.Map<Dal.Entities.PimsDispositionAppraisal>(dispositionFileAppraisal);
+                var newDispositionAppraisal = _dispositionService.AddDispositionFileAppraisal(id, dispositionAppraisalEntity);
+
+                return new JsonResult(_mapper.Map<DispositionFileAppraisalModel>(newDispositionAppraisal));
+            }
+            catch (DuplicateEntityException e)
+            {
+                return Conflict(e.Message);
+            }
+        }
+
+        [HttpPut("{id:long}/appraisal/{appraisalId:long}")]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileAppraisalModel), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateDispositionFileAppraisal([FromRoute] long id, [FromRoute] long appraisalId, [FromBody] DispositionFileAppraisalModel dispositionFileAppraisal)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(UpdateDispositionFileAppraisal),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            var dispositionAppraisalEntity = _mapper.Map<Dal.Entities.PimsDispositionAppraisal>(dispositionFileAppraisal);
+            var updatedOffer = _dispositionService.UpdateDispositionFileAppraisal(id, appraisalId, dispositionAppraisalEntity);
+
+            return new JsonResult(_mapper.Map<DispositionFileAppraisalModel>(updatedOffer));
+        }
+
         #endregion
     }
 }
