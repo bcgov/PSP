@@ -11,8 +11,9 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="18"
-  DTS:VersionGUID="{89CFF98B-18F2-492F-AFDC-E6915752F4F2}">
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="19"
+  DTS:VersionGUID="{EE6A3C2B-A061-4AE9-8B47-149A98DE2963}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -28,8 +29,7 @@
           DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLOLEDB.1;Persist Security Info=True;Application Name=SSIS-Package-{871BCBE7-D6A1-4459-AEA3-052A22C56D27}localhost,5433.pims.admin;Auto Translate=False;">
           <DTS:Password
             DTS:Name="Password"
-            Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAApwSf1uM7jUmo6fc803wqkQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABCsV8jQpm4BwcpEPBJriI2/uJ6JHVJVFCuHnhBPThA8AAAAAAOgAAAAAIAACAAAABcXRac/ZeqTPAB/4jsLC9cm8MA7WE3SijOT1yVQ4Dn0EAAAACWXvDiVNiQkmV+7QAwKnr1GGA2ciDLOM0lXgRzOKpzfjEZsnhDq/i/kIqkq50u2XOebtJV8tcWCz3SVm1W45PaQAAAABkeyfVqut6rzazs4if0CwV59NrAB4Ex+piLnQLAwW2NYA0sghUwoZapGsffZr1TfSLfJYiipuAYgOS3D9DyvNI</DTS:Password>
+            Sensitive="1"></DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -55,7 +55,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="LOAD PIMS_ACQUISITION_FILE_TEAM_HIST"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="4">
+          DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -73,7 +73,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="LOAD PIMS_ACQUISITION_OWNER"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="2">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -91,7 +91,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="LOAD PIMS_COMP_REQ_FINANCIAL_HIST"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="1">
+          DTS:ThreadHint="3">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -109,7 +109,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="LOAD PIMS_EXPROPRIATION_PAYMENT"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="2">
+          DTS:ThreadHint="1">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -127,7 +127,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="LOAD PIMS_EXPROP_PMT_PMT_ITEM_HIST"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="3">
+          DTS:ThreadHint="4">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData

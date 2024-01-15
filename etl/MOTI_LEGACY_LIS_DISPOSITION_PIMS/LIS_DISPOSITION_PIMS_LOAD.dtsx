@@ -11,8 +11,9 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="93"
-  DTS:VersionGUID="{00DBDBDF-F31B-4626-8EDA-86330084889B}">
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="94"
+  DTS:VersionGUID="{E6B1250B-4305-49A9-8E54-F3C508262F15}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -40,8 +41,7 @@
           DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLOLEDB.1;Persist Security Info=True;Application Name=SSIS-Package-{719B66AE-B16C-45F5-A5E7-08502974E082}localhost,5433.pims.admin;Auto Translate=False;">
           <DTS:Password
             DTS:Name="Password"
-            Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAApwSf1uM7jUmo6fc803wqkQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACSCjtEx8FMzTi0LE0qRwWtqf5CmOckyqPWZhRfougzagAAAAAOgAAAAAIAACAAAABG4KaVLHyBix4WQyGiFnrKq0J0yeMQFDpHRAE7tHqTzUAAAAAOmalR7iKzE+pk0RDBrIA+dDzK4FdWaVcbfYCrPycjQxmJkBIKZhra2PkI1ldW7s3HhVGuXJ6lB9gZUCXIgmhEQAAAAEMQl7fQjQsut85WARxe00kRF54CkedDDL/WUmZBJxs/EjUXbU2VZXv4atKRYSnrEmC0v4B42bLj/Z9MWSt4obs</DTS:Password>
+            Sensitive="1"></DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>

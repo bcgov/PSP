@@ -12,11 +12,11 @@
   <DataSourceViews />
   <DeploymentModelSpecificContent>
     <Manifest>
-      <SSIS:Project SSIS:ProtectionLevel="EncryptSensitiveWithUserKey" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
+      <SSIS:Project SSIS:ProtectionLevel="DontSaveSensitive" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
         <SSIS:Properties>
           <SSIS:Property SSIS:Name="ID">{7f436b59-5a46-4ae1-97c3-2aaa3c640d0b}</SSIS:Property>
           <SSIS:Property SSIS:Name="Name">PIMS_HIST_LOAD</SSIS:Property>
-          <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+          <SSIS:Property SSIS:Name="VersionMajor">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionBuild">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionComments">
@@ -26,7 +26,6 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">ARIMA-DELL</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAApwSf1uM7jUmo6fc803wqkQAAAAACAAAAAAAQZgAAAAEAACAAAABbI9cUmFdaFD1Aeg8M35xxtcWGy95QfFra+Kat0eN10wAAAAAOgAAAAAIAACAAAADVmJFN1xatbuCllMwr9OJ+2472v6RfaZrY/+Hj2/jG4JAAAABcRW7qICvhl18NNKyyUYUgc0Pkvs1RJdgnxvskFAwscv6XoVFKU7vdsactLLXQE37j9/9AMwoBN1qieLDTRWFkE3xBcRAmrJsDix/N0jeVfNGVrc5iZD79Qh3PaQXPTQ8XsBOsoK++MFgsTpcBRznV545o0rlhi3IaYylQPZkZ8481beOJQKwHaFr41qOHENFAAAAAG+E5BlpR9CdDLToJhhrK8lNVM7LtDpmuitJ33z8E6kvcP1GhkQI1ha6D7jbftx4b1eSPZrRjSfzm2oZIu31mIQ==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -42,14 +41,14 @@
                 <SSIS:Property SSIS:Name="Name">Package</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">18</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">19</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{89CFF98B-18F2-492F-AFDC-E6915752F4F2}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{EE6A3C2B-A061-4AE9-8B47-149A98DE2963}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
               </SSIS:Properties>
               <SSIS:Parameters>
                 <SSIS:Parameter SSIS:Name="CM.PIMS.ConnectByProxy">
