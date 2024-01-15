@@ -94,7 +94,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(AcquisitionFileController),
+                nameof(DispositionFileController),
                 nameof(AddDispositionFile),
                 User.GetUsername(),
                 DateTime.Now);
@@ -103,6 +103,29 @@ namespace Pims.Api.Areas.Disposition.Controllers
 
             var dispositionFileEntity = _mapper.Map<Dal.Entities.PimsDispositionFile>(model);
             var dispositionFile = _dispositionService.Add(dispositionFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
+
+            return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
+        }
+
+        [HttpPut("{id:long}")]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileModel), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        public IActionResult UpdateDispositionFile([FromRoute]long id, [FromBody] DispositionFileModel model, [FromQuery] string[] userOverrideCodes)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(UpdateDispositionFile),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            var dispositionFileEntity = _mapper.Map<Dal.Entities.PimsDispositionFile>(model);
+            var dispositionFile = _dispositionService.Update(id, dispositionFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
 
             return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
         }

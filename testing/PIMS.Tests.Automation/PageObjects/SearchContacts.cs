@@ -67,6 +67,8 @@ namespace PIMS.Tests.Automation.PageObjects
         //Search For a general contact
         public void SearchGeneralContact(string searchCriteria)
         {
+            WaitUntilDisappear(searchContactLoadingResultTable);
+
             WaitUntilClickable(searchContactNameInput);
             webDriver.FindElement(searchContactNameInput).SendKeys(searchCriteria);
             webDriver.FindElement(searchContactResultsBttn).Click();
@@ -189,7 +191,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyContactTableContent(string summary, string firstName, string lastName, string organization, string email, string address, string city, string province, string country)
         {
-            //WaitUntilDisappear(searchContactLoadingResultTable);
             Wait(2000);
 
             AssertTrueContentEquals(searchContactFirstResultLink,summary);

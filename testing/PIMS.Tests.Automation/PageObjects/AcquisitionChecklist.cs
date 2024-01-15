@@ -7,7 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         private By checklistLinkTab = By.XPath("//a[contains(text(),'Checklist')]");
 
-        private By checklistEditBttn = By.CssSelector("button[title='Edit acquisition checklist']");
+        private By checklistEditBttn = By.CssSelector("button[title='Edit checklist']");
         private By checklistInfo = By.XPath("//div/em[contains(text(),'This checklist was last updated')]");
 
         //Checklist View Elements

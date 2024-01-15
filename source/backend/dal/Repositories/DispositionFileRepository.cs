@@ -177,6 +177,22 @@ namespace Pims.Dal.Repositories
             return lastUpdatedByAggregate.OrderByDescending(x => x.AppLastUpdateTimestamp).FirstOrDefault();
         }
 
+        public PimsDispositionFile Update(long dispositionFileId, PimsDispositionFile dispositionFile)
+        {
+            using var scope = Logger.QueryScope();
+            dispositionFile.ThrowIfNull(nameof(dispositionFile));
+
+            var existingFile = Context.PimsDispositionFiles
+                .FirstOrDefault(x => x.DispositionFileId == dispositionFileId) ?? throw new KeyNotFoundException();
+
+            dispositionFile.FileNumber = existingFile.FileNumber;
+
+            Context.Entry(existingFile).CurrentValues.SetValues(dispositionFile);
+            Context.UpdateChild<PimsDispositionFile, long, PimsDispositionFileTeam, long>(p => p.PimsDispositionFileTeams, dispositionFile.Internal_Id, dispositionFile.PimsDispositionFileTeams.ToArray());
+
+            return existingFile;
+        }
+
         /// <summary>
         /// Retrieves a page with an array of disposition files within the specified filters.
         /// Note that the 'filter' will control the 'page' and 'quantity'.
@@ -199,6 +215,21 @@ namespace Pims.Dal.Repositories
             var pageItems = query.Skip(skip).Take(filter.Quantity).ToList();
 
             return new Paged<PimsDispositionFile>(pageItems, filter.Page, filter.Quantity, query.Count());
+        }
+
+        /// <summary>
+        /// Retrieves the region of the disposition file with the specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The file region.</returns>
+        public short GetRegion(long id)
+        {
+            using var scope = Logger.QueryScope();
+
+            return this.Context.PimsDispositionFiles.AsNoTracking()
+                .Where(p => p.DispositionFileId == id)?
+                .Select(p => p.RegionCode)?
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
         /// <summary>

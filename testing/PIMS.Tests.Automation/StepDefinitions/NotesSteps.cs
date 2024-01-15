@@ -62,7 +62,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Edit note
             PopulateNotes(rowNumber);
-            notes.ViewSecondLastNoteDetails();
+            notes.ViewSecondNoteDetails();
             notes.VerifyNotesEditForm();
             notes.EditNote(notesData[0]);
 
@@ -70,7 +70,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             notes.CancelNote();
 
             //Edit note
-            notes.ViewSecondLastNoteDetails();
+            notes.ViewSecondNoteDetails();
             notes.EditNote(notesData[0]);
 
             //Save changes

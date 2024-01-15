@@ -68,7 +68,7 @@ namespace Pims.Core.Helpers
                         type = typeof(string); // Need to do this because enums are converted to strings.
                     }
 
-                    if (pType == typeof(DateTime))
+                    if (pType == typeof(DateTime) || pType == typeof(DateTime?) || pType == typeof(DateOnly) || pType == typeof(DateOnly?))
                     {
                         type = typeof(string);
                     }
@@ -76,6 +76,7 @@ namespace Pims.Core.Helpers
                     var displayAttr = p.GetCustomAttribute<DisplayNameAttribute>();
                     var name = displayAttr?.DisplayName ?? p.Name;
                     var column = new DataColumn(name, type) { AllowDBNull = isNullable || type == typeof(string) };
+
                     dt.Columns.Add(column);
                     columns.Add(index++, new ExportColumn(p, column));
                 }

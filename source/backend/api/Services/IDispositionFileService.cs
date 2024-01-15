@@ -13,6 +13,8 @@ namespace Pims.Api.Services
 
         PimsDispositionFile Add(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides);
 
+        PimsDispositionFile Update(long id, PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides);
+
         LastUpdatedByModel GetLastUpdateInformation(long dispositionFileId);
 
         IEnumerable<PimsDispositionFileProperty> GetProperties(long id);

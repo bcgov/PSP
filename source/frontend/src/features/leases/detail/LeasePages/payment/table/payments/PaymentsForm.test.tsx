@@ -264,7 +264,7 @@ describe('PaymentsForm component', () => {
       await act(async () => {
         await fillInput(document.body, 'terms.0.payments.0.note', 'a test note', 'textarea');
       });
-      const saveButton = getByText('Save');
+      const saveButton = getByText('Yes');
       act(() => {
         userEvent.click(saveButton);
       });
@@ -285,7 +285,7 @@ describe('PaymentsForm component', () => {
         await fillInput(document.body, 'terms.0.payments.0.note', 'a test note', 'textarea');
       });
       await screen.findByDisplayValue('a test note');
-      const cancelButton = getByText('Cancel');
+      const cancelButton = getByText('No');
       act(() => {
         userEvent.click(cancelButton);
         userEvent.click(notesButton);

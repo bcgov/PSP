@@ -15,13 +15,14 @@ export const AddDispositionFormYupSchema = yup
     fileName: yup.string().max(200, 'Disposition file name must be at most ${max} characters'),
     referenceNumber: yup
       .string()
+      .nullable()
       .max(200, 'Disposition reference number must be at most ${max} characters'),
-    dispositionStatusTypeCode: yup.string().required('Disposition status is required'),
     dispositionTypeCode: yup.string().nullable().required('Disposition type is required'),
     dispositionTypeOther: yup.string().when('dispositionTypeCode', {
       is: (dispositionTypeCode: string) => dispositionTypeCode && dispositionTypeCode === 'OTHER',
       then: yup
         .string()
+        .nullable()
         .required('Other Disposition type is required')
         .max(200, 'Other Disposition type must be at most ${max} characters'),
       otherwise: yup.string().nullable(),
@@ -39,3 +40,10 @@ export const AddDispositionFormYupSchema = yup
     regionCode: yup.string().required('Ministry region is required'),
   })
   .concat(DispositionTeamYupSchema);
+
+export const UpdateDispositionFormYupSchema = yup
+  .object()
+  .shape({
+    dispositionStatusTypeCode: yup.string().required('Disposition status is required'),
+  })
+  .concat(AddDispositionFormYupSchema);

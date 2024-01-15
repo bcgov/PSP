@@ -12,12 +12,13 @@ import AppRoute from '@/utils/AppRoute';
 import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
 import { UpdateDispositionChecklistContainer } from '../tabs/checklist/update/UpdateDispositionChecklistContainer';
 import DispositionFileTabs from '../tabs/DispositionFileTabs';
+import UpdateDispositionContainer from '../tabs/fileDetails/detail/update/UpdateDispositionContainer';
+import UpdateDispositionForm from '../tabs/fileDetails/detail/update/UpdateDispositionForm';
 import DispositionAppraisalForm from '../tabs/offersAndSale/dispositionAppraisal/form/DispositionAppraisalForm';
 import UpdateDispositionAppraisalContainer from '../tabs/offersAndSale/dispositionAppraisal/update/UpdateDispositionAppraisalContainer';
 import AddDispositionOfferContainer from '../tabs/offersAndSale/dispositionOffer/add/AddDispositionOfferContainer';
 import DispositionOfferForm from '../tabs/offersAndSale/dispositionOffer/form/DispositionOfferForm';
 import UpdateDispositionOfferContainer from '../tabs/offersAndSale/dispositionOffer/update/UpdateDispositionOfferContainer';
-
 export interface IDispositionRouterProps {
   formikRef: React.Ref<FormikProps<any>>;
   dispositionFile?: Api_DispositionFile;
@@ -25,7 +26,7 @@ export interface IDispositionRouterProps {
   setIsEditing: (value: boolean) => void;
   defaultFileTab: FileTabType;
   defaultPropertyTab: InventoryTabNames;
-  onSuccess: () => void;
+  onSuccess: (updateProperties?: boolean) => void;
 }
 
 export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
@@ -42,6 +43,14 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
         {/* Ignore property-related routes (which are handled in separate FilePropertyRouter) */}
         <Route path={`${stripTrailingSlash(path)}/property`}>
           <></>
+        </Route>
+        <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.FILE_DETAILS}`}>
+          <UpdateDispositionContainer
+            ref={props.formikRef}
+            dispositionFile={props.dispositionFile}
+            onSuccess={props.onSuccess}
+            View={UpdateDispositionForm}
+          />
         </Route>
         <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.CHECKLIST}`}>
           <UpdateDispositionChecklistContainer
