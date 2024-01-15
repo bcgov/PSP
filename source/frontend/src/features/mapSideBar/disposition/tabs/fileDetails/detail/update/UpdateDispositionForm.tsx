@@ -64,7 +64,7 @@ const UpdateDispositionForm: React.FC<IUpdateDispositionFormProps> = ({
 
             <Container>
               <Section header="">
-                <SectionField label="Status">
+                <SectionField label="Status" required>
                   <Select
                     field="fileStatusTypeCode"
                     options={dispositionFileStatusTypesOptions}
