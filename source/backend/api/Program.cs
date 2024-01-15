@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using CommandLine;
 using CommandLine.Text;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;

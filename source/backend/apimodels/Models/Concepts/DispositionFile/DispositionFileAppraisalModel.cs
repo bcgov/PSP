@@ -1,18 +1,19 @@
 using System;
-using System.Collections.Generic;
 using Pims.Api.Models.Base;
-using Pims.Api.Models.Concepts.File;
-using Pims.Api.Models.Concepts.DispositionFile;
 
-/*
-* Frontend model
-* LINK @frontend/src\models\api\DispositionFile.ts:14
-*/
 namespace Pims.Api.Models.Concepts.DispositionFile
 {
-    public class DispositionFileAppraisalModel : FileModel
+    public class DispositionFileAppraisalModel : BaseConcurrentModel
     {
-        #region Properties
+        /// <summary>
+        /// get/set - The relationship id.
+        /// </summary>
+        public long? Id { get; set; }
+
+        /// <summary>
+        /// Parent Disposition File.
+        /// </summary>
+        public long DispositionFileId { get; set; }
 
         /// <summary>
         /// PIMS_DISPOSITION_APPRAISAL => get/set - The Disposition Apprasided Value amount.
@@ -38,7 +39,5 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         /// PIMS_DISPOSITION_APPRAISAL => get/set - BCA list price amount.
         /// </summary>
         public decimal? ListPriceAmount { get; set; }
-
-        #endregion
     }
 }
