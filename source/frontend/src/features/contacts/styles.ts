@@ -31,15 +31,15 @@ export const StatusIndicators = styled.div`
 `;
 
 export const HalfWidthLayout = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-  text-align: left;
   height: 100%;
   width: 50%;
-  min-width: 30rem;
+  min-width: 93rem;
   overflow: hidden;
-  padding: 1rem;
-  gap: 1.6rem;
+  padding: 1.4rem 1.6rem;
+  padding-bottom: 0;
 `;
 
 export const ScrollingFormLayout = styled.div`

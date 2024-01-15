@@ -12,6 +12,7 @@ import { Claims } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import {
   Api_DispositionFile,
+  Api_DispositionFileAppraisal,
   Api_DispositionFileOffer,
   Api_DispositionFileSale,
 } from '@/models/api/DispositionFile';
@@ -30,6 +31,7 @@ export interface IOffersAndSaleContainerViewProps {
   dispositionFile: Api_DispositionFile;
   dispositionOffers: Api_DispositionFileOffer[];
   dispositionSale: Api_DispositionFileSale | null;
+  dispositionAppraisal: Api_DispositionFileAppraisal | null;
   onDispositionOfferDeleted: (offerId: number) => void;
 }
 
@@ -38,17 +40,12 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
   dispositionFile,
   dispositionOffers,
   dispositionSale,
+  dispositionAppraisal,
   onDispositionOfferDeleted,
 }) => {
   const history = useHistory();
   const match = useRouteMatch();
   const keycloak = useKeycloakWrapper();
-
-  const getAppraisalHasData = (): boolean => {
-    return dispositionFile.dispositionAppraisal !== null;
-  };
-
-  const appraisalHasData = getAppraisalHasData();
 
   const purchaserAgent = dispositionSale?.dispositionPurchaserAgent;
   const purchaserAgentSolicitor = dispositionSale?.dispositionPurchaserSolicitor;
@@ -56,43 +53,59 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
   return (
     <>
       <LoadingBackdrop show={loading} />
-      <Section header="Appraisal and Assessment">
-        {appraisalHasData ? (
+      <Section
+        isCollapsable={false}
+        header={
+          <StyledSubHeader>
+            <label>Appraisal and Assessment</label>
+            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && (
+              <EditButton
+                title="Edit Appraisal"
+                dataTestId={`appraisal-edit-btn`}
+                onClick={() => {
+                  history.push(`${match.url}/appraisal/update`);
+                }}
+              />
+            )}
+          </StyledSubHeader>
+        }
+      >
+        {dispositionAppraisal ? (
           <>
             <SectionField
               label="Appraisal value ($)"
               labelWidth="5"
               valueTestId="disposition-file.appraisedValueAmount"
             >
-              {formatMoney(dispositionFile.dispositionAppraisal?.appraisedAmount)}
+              {formatMoney(dispositionAppraisal.appraisedAmount)}
             </SectionField>
             <SectionField
               label="Appraisal date"
               labelWidth="5"
               valueTestId="disposition-file.appraisalDate"
             >
-              {prettyFormatDate(dispositionFile.dispositionAppraisal?.appraisalDate)}
+              {prettyFormatDate(dispositionAppraisal.appraisalDate)}
             </SectionField>
             <SectionField
               label="BC assessment value ($)"
               labelWidth="5"
               valueTestId="disposition-file.bcaValueAmount"
             >
-              {formatMoney(dispositionFile.dispositionAppraisal?.bcaValueAmount)}
+              {formatMoney(dispositionAppraisal.bcaValueAmount)}
             </SectionField>
             <SectionField
               label="BC assessment roll year"
               labelWidth="5"
               valueTestId="disposition-file.bcaAssessmentRollYear"
             >
-              {dispositionFile.dispositionAppraisal?.bcaRollYear ?? ''}
+              {dispositionAppraisal.bcaRollYear ?? ''}
             </SectionField>
             <SectionField
               label="List price ($)"
               labelWidth="5"
               valueTestId="disposition-file.listPriceAmount"
             >
-              {formatMoney(dispositionFile.dispositionAppraisal?.listPriceAmount)}
+              {formatMoney(dispositionAppraisal.listPriceAmount)}
             </SectionField>
           </>
         ) : (
@@ -300,6 +313,7 @@ const StyledSubHeader = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+
   label {
     color: ${props => props.theme.css.primaryColor};
     font-family: 'BCSans-Bold';
@@ -308,6 +322,7 @@ const StyledSubHeader = styled.div`
     text-align: left;
     margin-bottom: 0;
   }
+
   button {
     margin-bottom: 1rem;
   }

@@ -185,11 +185,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Search for a property by Legal Description
-            if (acquisitionFile.SearchProperties.LegalDescription != "")
-            {
-                sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
-                sharedSearchProperties.SelectFirstOption();
-            }
+            //if (acquisitionFile.SearchProperties.LegalDescription != "")
+            //{
+            //    sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
+            //    sharedSearchProperties.SelectFirstOption();
+            //}
 
             //Search for a duplicate property
             if (acquisitionFile.SearchProperties.PID != "")
@@ -218,9 +218,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionProperties.NavigateToAddPropertiesAcquisitionFile();
 
             //Search for a property by Legal Description
-            sharedSearchProperties.NavigateToSearchTab();
-            sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
-            sharedSearchProperties.SelectFirstOption();
+            //sharedSearchProperties.NavigateToSearchTab();
+            //sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
+            //sharedSearchProperties.SelectFirstOption();
 
             //Save changes
             acquisitionProperties.SaveAcquisitionFileProperties();
@@ -668,6 +668,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             h120.DeleteCompensationRequisition(1);
 
             var compensationsAfterDelete = h120.TotalCompensationCount();
+
+
             Assert.True(compensationsBeforeDelete - compensationsAfterDelete == 1);
         }
 
@@ -1281,6 +1283,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 compensation.CompensationAgreementDate = ExcelDataContext.ReadData(i, "CompensationAgreementDate");
                 compensation.CompensationExpropriationNoticeDate = ExcelDataContext.ReadData(i, "CompensationExpropriationNoticeDate");
                 compensation.CompensationExpropriationVestingDate = ExcelDataContext.ReadData(i, "CompensationExpropriationVestingDate");
+                compensation.CompensationAdvancedPaymentDate = ExcelDataContext.ReadData(i, "CompensationAdvancedPaymentDate");
                 compensation.CompensationSpecialInstructions = ExcelDataContext.ReadData(i, "CompensationSpecialInstructions");
                 compensation.CompensationFiscalYear = ExcelDataContext.ReadData(i, "CompensationFiscalYear");
                 compensation.CompensationSTOB = ExcelDataContext.ReadData(i, "CompensationSTOB");

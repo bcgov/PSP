@@ -90,7 +90,9 @@ export interface Api_DispositionFileSale extends Api_ConcurrentVersion {
   dispositionPurchaserSolicitor: Api_DispositionSalePurchaserSolicitor | null;
 }
 
-export interface Api_DispositionFileAppraisal {
+export interface Api_DispositionFileAppraisal extends Api_ConcurrentVersion {
+  id: number | null;
+  dispositionFileId: number;
   appraisedAmount: number | null;
   appraisalDate: string | null;
   bcaValueAmount: number | null;

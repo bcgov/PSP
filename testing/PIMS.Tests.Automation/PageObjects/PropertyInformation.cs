@@ -329,9 +329,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             ButtonElement("Cancel");
 
-            Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
-            //Assert.True(webDriver.FindElement(propertyDetailsCancelContentModal1).Text.Equals("If you cancel now, this property information will not be saved."));
-            Assert.True(webDriver.FindElement(propertyDetailsCancelContentModal2).Text.Equals("Are you sure you want to Cancel?"));
+            Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
+            Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", sharedModals.ModalContent());
 
             sharedModals.ModalClickOKBttn();
         }
@@ -410,7 +409,6 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (property.Anomalies.First() != "")
             {
-                ClearMultiSelectInput(propertyDetailsAnomaliesInput);
                 foreach (string anomaly in property.Anomalies)
                 {
                     FocusAndClick(propertyDetailsAnomaliesInput);
@@ -431,8 +429,6 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (property.TenureStatus.First() != "")
             {
-                Wait();
-                ClearMultiSelectInput(propertyDetailsTenureStatusInput);
                 foreach (string status in property.TenureStatus)
                 {
                     FocusAndClick(propertyDetailsTenureStatusInput);
@@ -898,7 +894,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPimsFiles()
         {
-            Wait(2000);
+            //Wait(2000);
 
             WaitUntilClickable(propertyPimsFilesLinkTab);
             webDriver.FindElement(propertyPimsFilesLinkTab).Click();
@@ -918,7 +914,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(propertyAcquisitionFileSubtitle).Displayed);
             Assert.True(webDriver.FindElement(propertyAcquisitionCountLabel).Displayed);
 
-            WaitUntilClickable(propertyAcquisitionExpandTableBttn);
+            Wait(2000);
             webDriver.FindElement(propertyAcquisitionExpandTableBttn).Click();
 
             WaitUntilVisible(propertyAcquisitionTable);

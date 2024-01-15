@@ -405,7 +405,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify Create a new deposit form
             deposits.AddDepositBttn();
             deposits.VerifyCreateDepositForm();
-            leaseDetails.CancelLicense();
+            deposits.CancelDeposit();
 
             if (lease.DepositsStartRow != 0)
             {

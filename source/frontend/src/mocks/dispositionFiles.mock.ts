@@ -1,5 +1,6 @@
 import {
   Api_DispositionFile,
+  Api_DispositionFileAppraisal,
   Api_DispositionFileOffer,
   Api_DispositionFileSale,
 } from '@/models/api/DispositionFile';
@@ -102,6 +103,8 @@ export const mockDispositionFileResponse = (
     isDisabled: false,
   },
   dispositionAppraisal: {
+    id: 250,
+    dispositionFileId: id,
     appraisedAmount: 550000,
     appraisalDate: '2023-12-28T00:00:00',
     bcaValueAmount: 600000,
@@ -407,4 +410,18 @@ export const mockDispositionFileSaleApi = (
     primaryContact: null,
     rowVersion: 1,
   },
+});
+
+export const mockDispositionAppraisalApi = (
+  id: number = 10,
+  dispositionFileId: number = 1,
+): Api_DispositionFileAppraisal => ({
+  id: id,
+  dispositionFileId: dispositionFileId,
+  appraisedAmount: 20000.0,
+  appraisalDate: '2024-01-18',
+  bcaValueAmount: 350000.0,
+  bcaRollYear: '2024',
+  listPriceAmount: 500000.0,
+  rowVersion: 1,
 });

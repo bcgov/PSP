@@ -166,8 +166,8 @@ describe('Document List View', () => {
     const deleteButtonTooltip = await findAllByTestId('document-delete-button');
     act(() => userEvent.click(deleteButtonTooltip[0]));
 
-    await waitFor(() => screen.getByText('Delete a document'));
-    const continueButton = screen.getByText('Continue');
+    await waitFor(() => screen.getByText('Yes'));
+    const continueButton = screen.getByText('Yes');
     act(() => userEvent.click(continueButton));
 
     expect(deleteMock).toHaveBeenCalledWith(DocumentRow.toApi(documentRows[0]));

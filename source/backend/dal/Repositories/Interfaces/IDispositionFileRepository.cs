@@ -12,6 +12,8 @@ namespace Pims.Dal.Repositories
 
         PimsDispositionFile Add(PimsDispositionFile disposition);
 
+        PimsDispositionFile Update(long dispositionFileId, PimsDispositionFile dispositionFile);
+
         LastUpdatedByModel GetLastUpdateBy(long id);
 
         List<PimsDispositionFileTeam> GetTeamMembers();
@@ -31,8 +33,16 @@ namespace Pims.Dal.Repositories
         PimsDispositionSale AddDispositionFileSale(PimsDispositionSale dispositionSale);
 
         PimsDispositionSale UpdateDispositionFileSale(long saleId, PimsDispositionSale dispositionSale);
+        
+        PimsDispositionAppraisal GetDispositionFileAppraisal(long dispositionId);
+
+        PimsDispositionAppraisal AddDispositionFileAppraisal(PimsDispositionAppraisal dispositionAppraisal);
+
+        PimsDispositionAppraisal UpdateDispositionFileAppraisal(long id, PimsDispositionAppraisal dispositionAppraisal);
 
         long GetRowVersion(long id);
+
+        short GetRegion(long id);
 
         List<PimsDispositionFile> GetDispositionFileExportDeep(DispositionFilter filter);
     }

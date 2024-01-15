@@ -4,6 +4,7 @@ import React from 'react';
 import { IPagedItems } from '@/interfaces';
 import {
   Api_DispositionFile,
+  Api_DispositionFileAppraisal,
   Api_DispositionFileOffer,
   Api_DispositionFileProperty,
   Api_DispositionFileSale,
@@ -41,6 +42,17 @@ export const useApiDispositionFile = () => {
         ),
       getDispositionFile: (dispositionFileId: number) =>
         api.get<Api_DispositionFile>(`/dispositionfiles/${dispositionFileId}`),
+      putDispositionFileApi: (
+        dispositionFileId: number,
+        dispositionFile: Api_DispositionFile,
+        userOverrideCodes: UserOverrideCode[] = [],
+      ) =>
+        api.put<Api_DispositionFile>(
+          `/dispositionfiles/${dispositionFileId}?${userOverrideCodes
+            .map(o => `userOverrideCodes=${o}`)
+            .join('&')}`,
+          dispositionFile,
+        ),
       getLastUpdatedByApi: (dispositionFileId: number) =>
         api.get<Api_LastUpdatedBy>(`/dispositionfiles/${dispositionFileId}/updateInfo`),
       getDispositionFileChecklist: (acqFileId: number) =>
@@ -51,6 +63,25 @@ export const useApiDispositionFile = () => {
         api.get<Api_DispositionFileProperty[]>(`/dispositionfiles/${dispositionFileId}/properties`),
       getAllDispositionFileTeamMembers: () =>
         api.get<Api_DispositionFileTeam[]>(`/dispositionfiles/team-members`),
+      getDispositionFileAppraisal: (dispositionFileId: number) =>
+        api.get<Api_DispositionFileAppraisal>(`/dispositionfiles/${dispositionFileId}/appraisal`),
+      postDispositionFileAppraisal: (
+        dispositionFileId: number,
+        appraisal: Api_DispositionFileAppraisal,
+      ) =>
+        api.post<Api_DispositionFileAppraisal>(
+          `/dispositionfiles/${dispositionFileId}/appraisal`,
+          appraisal,
+        ),
+      putDispositionFileAppraisal: (
+        dispositionFileId: number,
+        dispositionAppraisalId: number,
+        appraisal: Api_DispositionFileAppraisal,
+      ) =>
+        api.put<Api_DispositionFileAppraisal>(
+          `/dispositionfiles/${dispositionFileId}/appraisal/${dispositionAppraisalId}`,
+          appraisal,
+        ),
       getDispositionFileOffers: (dispositionFileId: number) =>
         api.get<Api_DispositionFileOffer[]>(`/dispositionfiles/${dispositionFileId}/offers`),
       postDispositionFileOffer: (dispositionFileId: number, offer: Api_DispositionFileOffer) =>
