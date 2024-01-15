@@ -98,9 +98,16 @@ export default CreatePersonForm;
 /**
  * Sub-component that is wrapped by Formik
  */
-const CreatePersonComponent: React.FC<
-  React.PropsWithChildren<FormikProps<IEditablePersonForm>>
-> = ({ values, errors, touched, dirty, resetForm, submitForm, setFieldValue, initialValues }) => {
+const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
+  values,
+  errors,
+  touched,
+  dirty,
+  resetForm,
+  submitForm,
+  setFieldValue,
+  initialValues,
+}) => {
   const history = useHistory();
   const { getOrganization } = useApiContacts();
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -178,7 +185,7 @@ const CreatePersonComponent: React.FC<
 
       <Styled.CreateFormLayout>
         <Styled.Form id="createForm">
-          <FlexBox column gap="1.6rem">
+          <FlexBox column>
             <PersonSubForm isContactMethodInvalid={isContactMethodInvalid} />
           </FlexBox>
         </Styled.Form>

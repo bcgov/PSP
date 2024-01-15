@@ -1,14 +1,12 @@
 import { getIn, useFormikContext } from 'formik';
 import React, { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { MdClose } from 'react-icons/md';
 
 import { LinkButton, RemoveButton } from '@/components/common/buttons';
-import { Input, Select, SelectOption } from '@/components/common/form';
-import { Stack } from '@/components/common/Stack/Stack';
+import { Input, Select } from '@/components/common/form';
+import { SectionField } from '@/components/common/Section/SectionField';
 import { CountryCodes } from '@/constants/countryCodes';
 import useCounter from '@/hooks/useCounter';
-import { Dictionary } from '@/interfaces/Dictionary';
 import { withNameSpace } from '@/utils/formUtils';
 
 import useAddressHelpers from './useAddressHelpers';
@@ -75,119 +73,81 @@ export const Address: React.FunctionComponent<React.PropsWithChildren<IAddressPr
 
   return (
     <>
-      <Row>
-        <Col md={8}>
-          <Input
-            disabled={disabled}
-            field={withNameSpace(namespace, 'streetAddress1')}
-            label="Address (line 1)"
-          />
-          {count > 1 && (
-            <Input
-              disabled={disabled}
-              field={withNameSpace(namespace, 'streetAddress2')}
-              label="Address (line 2)"
-            />
-          )}
-          {count > 2 && (
-            <Input
-              disabled={disabled}
-              field={withNameSpace(namespace, 'streetAddress3')}
-              label="Address (line 3)"
-            />
-          )}
-        </Col>
-        <Col style={{ paddingLeft: 0, paddingBottom: '2rem' }}>
-          {count > 1 && !disabled && (
-            <Stack justifyContent="flex-end" className="h-100">
-              <RemoveButton onRemove={decrementFunction}>
-                <MdClose size="2rem" /> <span className="text">Remove</span>
-              </RemoveButton>
-            </Stack>
-          )}
-        </Col>
-      </Row>
-      {count < 3 && !disabled && (
-        <Row style={{ marginTop: '-1rem', marginBottom: '1rem' }}>
-          <Col>
-            <LinkButton onClick={increment}>+ Add an address line</LinkButton>
+      <SectionField label="Address (line 1)">
+        <Row>
+          <Col md={9}>
+            <Input disabled={disabled} field={withNameSpace(namespace, 'streetAddress1')} />
           </Col>
         </Row>
+      </SectionField>
+      {count > 1 && (
+        <SectionField label="Address (line 2)">
+          <Row>
+            <Col md={9}>
+              <Input disabled={disabled} field={withNameSpace(namespace, 'streetAddress2')} />
+            </Col>
+            <Col className="pl-0 pt-2">
+              {count === 2 && !disabled && (
+                <RemoveButton fontSize="1.3rem" onRemove={decrementFunction} />
+              )}
+            </Col>
+          </Row>
+        </SectionField>
       )}
-      <Row>
-        <Col md={4}>
+      {count > 2 && (
+        <SectionField label="Address (line 3)">
+          <Row>
+            <Col md={9}>
+              <Input disabled={disabled} field={withNameSpace(namespace, 'streetAddress3')} />
+            </Col>
+            <Col className="pl-0 pt-2">
+              {count === 3 && !disabled && (
+                <RemoveButton fontSize="1.3rem" onRemove={decrementFunction} />
+              )}
+            </Col>
+          </Row>
+        </SectionField>
+      )}
+      {count < 3 && !disabled && (
+        <SectionField label={null}>
+          <Row style={{ marginTop: '-1rem', marginBottom: '1rem' }}>
+            <Col>
+              <LinkButton onClick={increment}>+ Add an address line</LinkButton>
+            </Col>
+          </Row>
+        </SectionField>
+      )}
+      <SectionField label="Country" contentWidth="4">
+        <Select
+          disabled={disabled}
+          field={withNameSpace(namespace, 'countryId')}
+          options={countries}
+          onChange={onCountryChanged}
+          placeholder="Select..."
+        />
+      </SectionField>
+      <SectionField label="City" contentWidth="4">
+        <Input disabled={disabled} field={withNameSpace(namespace, 'municipality')} />
+      </SectionField>
+      {selectedCountryCode !== CountryCodes.Other && (
+        <SectionField label={formLabels.province ?? 'Province'} contentWidth="4">
           <Select
             disabled={disabled}
-            label="Country"
-            field={withNameSpace(namespace, 'countryId')}
-            options={countries}
-            onChange={onCountryChanged}
-            placeholder="Select..."
+            field={withNameSpace(namespace, 'provinceId')}
+            options={provinces}
+            placeholder={formLabels.provincePlaceholder}
           />
-        </Col>
-      </Row>
-      <Row>
-        <Col md={4}>
-          <Input
-            disabled={disabled}
-            field={withNameSpace(namespace, 'municipality')}
-            label="City"
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col md={4}>
-          <ProvinceOrCountryName
-            disabled={disabled}
-            namespace={namespace}
-            selectedCountry={selectedCountryCode}
-            provinces={provinces}
-            formLabels={formLabels}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col md={4}>
-          <Input
-            disabled={disabled}
-            field={withNameSpace(namespace, 'postal')}
-            label={formLabels.postal}
-          />
-        </Col>
-      </Row>
+        </SectionField>
+      )}
+      {selectedCountryCode === CountryCodes.Other && (
+        <SectionField label="Country name" contentWidth="4">
+          <Input disabled={disabled} field={withNameSpace(namespace, 'countryOther')} />
+        </SectionField>
+      )}
+      <SectionField label={formLabels.postal ?? 'Postal Code'} contentWidth="4">
+        <Input disabled={disabled} field={withNameSpace(namespace, 'postal')} />
+      </SectionField>
     </>
-  );
-};
-
-interface IProvinceOrCountryName {
-  selectedCountry: string;
-  provinces: SelectOption[];
-  formLabels: Dictionary<string>;
-  namespace?: string;
-  disabled?: boolean;
-}
-
-const ProvinceOrCountryName: React.FunctionComponent<
-  React.PropsWithChildren<IProvinceOrCountryName>
-> = ({ selectedCountry, provinces, formLabels, namespace, disabled = false }) => {
-  if (selectedCountry === CountryCodes.Other) {
-    return (
-      <Input
-        disabled={disabled}
-        field={withNameSpace(namespace, 'countryOther')}
-        label="Country name"
-      />
-    );
-  }
-
-  return (
-    <Select
-      disabled={disabled}
-      field={withNameSpace(namespace, 'provinceId')}
-      options={provinces}
-      label={formLabels.province}
-      placeholder={formLabels.provincePlaceholder}
-    />
   );
 };
 

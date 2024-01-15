@@ -7,8 +7,9 @@ import { toast } from 'react-toastify';
 
 import { Button } from '@/components/common/buttons/Button';
 import { Select } from '@/components/common/form';
-import { FormSection } from '@/components/common/form/styles';
 import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
 import { FlexBox } from '@/components/common/styles';
 import { AddressTypes } from '@/constants/addressTypes';
 import {
@@ -180,24 +181,31 @@ const UpdatePersonComponent: React.FC<
 
       <Styled.ScrollingFormLayout>
         <Styled.Form id="updateForm">
-          <FlexBox column gap="1.6rem">
-            <FormSection className="py-2">
+          <FlexBox column>
+            <Section className="py-2">
+              <SectionField
+                label="Individual"
+                contentWidth="auto"
+                className="py-3"
+                valueClassName="ml-auto"
+              >
+                <Select
+                  className="mb-0"
+                  field="isDisabled"
+                  options={[
+                    { label: 'Inactive', value: 'true' },
+                    { label: 'Active', value: 'false' },
+                  ]}
+                ></Select>
+              </SectionField>
+
               <Styled.RowAligned className="align-items-center">
                 <Col className="d-flex">
-                  <span>Individual</span>
+                  <span></span>
                 </Col>
-                <Col md="auto" className="d-flex ml-auto">
-                  <Select
-                    className="mb-0"
-                    field="isDisabled"
-                    options={[
-                      { label: 'Inactive', value: 'true' },
-                      { label: 'Active', value: 'false' },
-                    ]}
-                  ></Select>
-                </Col>
+                <Col md="auto" className="d-flex ml-auto"></Col>
               </Styled.RowAligned>
-            </FormSection>
+            </Section>
 
             <PersonSubForm isContactMethodInvalid={isContactMethodInvalid} />
           </FlexBox>

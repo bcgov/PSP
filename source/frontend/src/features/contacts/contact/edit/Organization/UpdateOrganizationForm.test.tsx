@@ -8,7 +8,7 @@ import { useUpdateContact } from '@/features/contacts/hooks/useUpdateContact';
 import { IEditableOrganization, IEditableOrganizationAddress } from '@/interfaces/editable-contact';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
 import UpdateOrganizationForm from './UpdateOrganizationForm';
 
@@ -79,8 +79,7 @@ describe('UpdateOrganizationForm', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = setup({ id: 1 });
-    const fragment = await waitFor(() => asFragment());
-    await act(async () => expect(fragment).toMatchSnapshot());
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('when Cancel button is clicked', () => {
