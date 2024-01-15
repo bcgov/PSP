@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Disposition.Controllers;
 using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Xunit;
@@ -106,6 +108,44 @@ namespace Pims.Api.Test.Controllers
 
             // Assert
             this._service.Verify(m => m.GetTeamMembers(), Times.Once());
+        }
+
+        /// <summary>
+        /// Make a successful request to get an disposition file by id.
+        /// </summary>
+        [Fact]
+        public void AddDispositionFile_Success()
+        {
+            // Arrange
+            var dispFile = new PimsDispositionFile();
+
+            this._service.Setup(m => m.Add(It.IsAny<PimsDispositionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(dispFile);
+
+            // Act
+            var model = _mapper.Map<DispositionFileModel>(dispFile);
+            var result = this._controller.AddDispositionFile(model, new string[] { } );
+
+            // Assert
+            this._service.Verify(m => m.Add(It.IsAny<PimsDispositionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
+        }
+
+        /// <summary>
+        /// Make a successful request to get an disposition file by id.
+        /// </summary>
+        [Fact]
+        public void UpdateDispositionFile_Success()
+        {
+            // Arrange
+            var dispFile = new PimsDispositionFile();
+
+            this._service.Setup(m => m.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(dispFile);
+
+            // Act
+            var model = _mapper.Map<DispositionFileModel>(dispFile);
+            var result = this._controller.UpdateDispositionFile(model.Id, model, new string[] { });
+
+            // Assert
+            this._service.Verify(m => m.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
         }
         #endregion
     }
