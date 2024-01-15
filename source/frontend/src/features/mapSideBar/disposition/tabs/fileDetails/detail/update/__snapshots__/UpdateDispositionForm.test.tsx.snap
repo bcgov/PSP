@@ -293,7 +293,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c3 required text-left col"
           >
             <div
               class="required form-group"
