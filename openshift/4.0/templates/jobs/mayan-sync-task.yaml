@@ -13,16 +13,21 @@ spec:
   steps:
     - args:
         - >-
-          RESPONSE=`curl --location "$(params.TOKEN_URL)" --header
-          'Content-Type: application/x-www-form-urlencoded' --data-urlencode
-          "client_id=$(params.CLIENT_ID)" --data-urlencode
-          'grant_type=client_credentials' --data-urlencode
-          "audience=$(params.CLIENT_ID)" --data-urlencode
-          "client_secret=$CLIENT_SECRET"` && TOKEN=`echo "$RESPONSE" | egrep -o
-          "[^\"]*" | sed -n 4p` && echo "$DATA" && curl --location --request
-          PATCH "$(params.MAYAN_SYNC_URL)" --header 'Content-Type:
-          application/json' --header "Authorization: Bearer $TOKEN" --data
-          "$DATA"
+          RESPONSE=`curl --location "$(params.TOKEN_URL)" 
+          --header 'Content-Type: application/x-www-form-urlencoded' 
+          --data-urlencode "client_id=$(params.CLIENT_ID)" 
+          --data-urlencode 'grant_type=client_credentials' 
+          --data-urlencode "audience=$(params.CLIENT_ID)" 
+          --data-urlencode "client_secret=$CLIENT_SECRET"` 
+          
+          && TOKEN=`echo "$RESPONSE" | 
+          egrep -o "[^\"]*" | sed -n 4p` && echo "$DATA" 
+          
+          && curl --location --request
+          PATCH "$(params.MAYAN_SYNC_URL)" 
+          --header 'Content-Type: application/json' 
+          --header "Authorization: Bearer $TOKEN" 
+          --data "$DATA"
       command:
         - sh
         - '-c'

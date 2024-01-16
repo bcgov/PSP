@@ -113,6 +113,27 @@ jobs:
         run: dotnet run
         working-directory: ${{env.sync-directory}}
 
+  mayan-sync:
+    name: sync mayan
+    needs: database-upgrade
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: 3cd915-dev
+      - name: call scripts to sync mayan
+        shell: bash
+        run: |
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/mayan/metadatatype -p KEYCLOAK_SECRET_NAME=pims-api-sso-test | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=60s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso-test | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=60s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso-test | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=60s)        
+        
   ci-cd-end-notification:
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-latest
