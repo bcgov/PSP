@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Security;
 
 namespace Pims.Api.Services
 {
@@ -13,6 +12,8 @@ namespace Pims.Api.Services
         PimsDispositionFile GetById(long id);
 
         PimsDispositionFile Add(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides);
+
+        PimsDispositionFile Update(long id, PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides);
 
         LastUpdatedByModel GetLastUpdateInformation(long dispositionFileId);
 
@@ -31,6 +32,12 @@ namespace Pims.Api.Services
         bool DeleteDispositionFileOffer(long dispositionFileId, long offerId);
 
         PimsDispositionSale GetDispositionFileSale(long dispositionFileId);
+
+        PimsDispositionAppraisal GetDispositionFileAppraisal(long dispositionFileId);
+
+        PimsDispositionAppraisal AddDispositionFileAppraisal(long dispositionFileId, PimsDispositionAppraisal dispositionAppraisal);
+
+        PimsDispositionAppraisal UpdateDispositionFileAppraisal(long dispositionFileId,long appraisalId, PimsDispositionAppraisal dispositionAppraisal);
 
         IEnumerable<PimsDispositionChecklistItem> GetChecklistItems(long id);
 

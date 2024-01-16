@@ -101,9 +101,9 @@ export const useApiUserOverride = <
           });
           setDisplayModal(false);
         },
-        okButtonText: 'Acknowledge & Continue',
+        okButtonText: 'Yes',
         okButtonVariant: 'warning',
-        cancelButtonText: 'Cancel Update',
+        cancelButtonText: 'No',
       });
     } else if (
       state?.userOverrideCode &&

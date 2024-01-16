@@ -1,11 +1,12 @@
 import { getIn } from 'formik';
 import React from 'react';
+import { MdContactMail } from 'react-icons/md';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ContactBreadcrumb, ContactTypeSelector } from '@/features/contacts';
+import { FormTitleBar } from '@/components/common/form/FormTitleBar';
+import { ContactTypeSelector, HalfWidthLayout } from '@/features/contacts';
 import { ContactTypes } from '@/features/contacts/interfaces';
-import * as Styled from '@/features/contacts/styles';
 
 import ContactRouter from './ContactRouter';
 
@@ -22,31 +23,39 @@ export const CreateContactContainer: React.FunctionComponent<
     history.push(`${path}/${newValue}`);
   };
 
+  const onClose = () => {
+    history.push('/mapview');
+  };
+
   return (
-    <ContactLayout>
-      <ContactBreadcrumb />
-      <Styled.H1>Add a Contact</Styled.H1>
+    <HalfWidthLayout>
+      <FormTitleBar
+        showCloseButton
+        title="Add Contact"
+        icon={<MdContactMail className="mr-2 mb-2" size={32} />}
+        onClose={onClose}
+      ></FormTitleBar>
 
-      <ContactTypeSelector
-        contactType={contactType}
-        setContactType={onSelectorChange}
-      ></ContactTypeSelector>
+      <StyledFormWrapper>
+        <ContactTypeSelector
+          contactType={contactType}
+          setContactType={onSelectorChange}
+        ></ContactTypeSelector>
 
-      <ContactRouter />
-    </ContactLayout>
+        <ContactRouter />
+      </StyledFormWrapper>
+    </HalfWidthLayout>
   );
 };
 
-const ContactLayout = styled.div`
+const StyledFormWrapper = styled.div`
+  background-color: ${props => props.theme.css.filterBackgroundColor};
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  overflow: inherit;
   display: flex;
   flex-direction: column;
-  text-align: left;
-  height: 100%;
-  width: 50%;
-  min-width: 30rem;
-  overflow: hidden;
-  padding: 1rem;
-  gap: 1.6rem;
+  flex: 1;
 `;
 
 const getContactTypeFromPath = (pathname: string) => {

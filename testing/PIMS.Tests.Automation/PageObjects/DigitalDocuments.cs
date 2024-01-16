@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.DevTools.V117.Network;
 using PIMS.Tests.Automation.Classes;
 using System.Xml.Linq;
 
