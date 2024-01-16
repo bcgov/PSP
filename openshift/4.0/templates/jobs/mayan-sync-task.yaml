@@ -10,6 +10,10 @@ spec:
       type: string
     - name: CLIENT_ID
       type: string
+# This action is a generic mayan sync action that can be used to call any mayan sync endpoint with a valid token.
+# Block 1: get a valid token from keycloak for the backend requests.
+# Block 2: parse the token from the response of #1.
+# Block 3: call the mayan sync endpoint with the token from #2. Note this uses static data from the listed configmap.
   steps:
     - args:
         - >-

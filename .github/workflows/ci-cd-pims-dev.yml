@@ -149,7 +149,9 @@ jobs:
       - name: Start keycloak sync
         run: dotnet run
         working-directory: ${{env.sync-directory}}
-  
+
+## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
+## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
   mayan-sync:
     name: sync mayan
     needs: database-upgrade
