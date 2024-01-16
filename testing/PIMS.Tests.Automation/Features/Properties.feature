@@ -5,6 +5,7 @@ Property Inventory and Information Details test cases
 
 Scenario: Property Map Filters and Details validation
 	Given I search for a Property in the Inventory by different filters from row number 9
+	Then Properties filters works successfully
 
 Scenario: Invalid Property Not Found
 	Given I search for an Invalid Property from row number 10
@@ -14,6 +15,11 @@ Scenario: Property Information Tab
 	Given I review a Property's Information
 	When I update a Property details from row number 3
 	Then A Property Information is saved successfully
+
+Scenario: Property PIMS Files Tab
+	Given I search for a property in the inventory by PID from row number 26
+	When I verify the PIMS Files Tab
+	Then PIMS Files Tab has rendered successfully
 
 Scenario: Property Management Tab
 	Given I search for a property in the inventory by PID from row number 25

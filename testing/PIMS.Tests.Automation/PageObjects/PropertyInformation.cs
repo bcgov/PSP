@@ -75,7 +75,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By propertyTransfersTitle = By.XPath("//h2/div/div[contains(text(),'Transfers')]");
         private By propertyTransfersNoneContent = By.XPath("//div[contains(text(),'Transfers')]/parent::div/parent::h2/following-sibling::div[contains(text(),'None')]");
 
-
         private By propertyNotesTitle = By.XPath("//h2/div/div[contains(text(),'Transfers')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Notes')]");
         private By propertyMiscellaneousNotesLabel = By.XPath("//label[contains(text(),'Miscellaneous notes')]");
         private By propertyParcelStatusLabel = By.XPath("//label[contains(text(),'Parcel status')]");
@@ -226,30 +225,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By propertyDetailsWaitSpinner = By.CssSelector("div[data-testid='filter-backdrop-loading']");
 
-        //PIMS Files Elements
-        private By propertyPimsFilesLinkTab = By.XPath("//a[contains(text(),'PIMS Files')]");
-        private By propertyPimsFiles = By.XPath("//div[contains(text(),'This property is associated with the following files.')]");
-
-        private By propertyResearchFileSubtitle = By.XPath("//div[contains(text(),'Research Files')]");
-        private By propertyResearchCountLabel = By.XPath("//div[contains(text(),'Research Files')]/following-sibling::div[@class='my-1 col-auto']");
-        private By propertyResearchTable = By.XPath("//div[contains(text(),'Research Files')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
-        private By propertyResearchExpandTableBttn = By.XPath("//div[contains(text(),'Research Files')]/parent::div/parent::div/following-sibling::div/*[1]");
-
-        private By propertyAcquisitionFileSubtitle = By.XPath("//div[contains(text(),'Acquisition Files')]");
-        private By propertyAcquisitionCountLabel = By.XPath("//div[contains(text(),'Acquisition Files')]/following-sibling::div[@class='my-1 col-auto']");
-        private By propertyAcquisitionTable = By.XPath("//div[contains(text(),'Acquisition Files')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
-        private By propertyAcquisitionExpandTableBttn = By.XPath("//div[contains(text(),'Acquisition Files')]/parent::div/parent::div/following-sibling::div/*[1]");
-
-        private By propertyLeasesSubtitle = By.XPath("//div[contains(text(),'Leases/Licenses')]");
-        private By propertyLeaseCountLabel = By.XPath("//div[contains(text(),'Leases/Licenses')]/following-sibling::div[@class='my-1 col-auto']");
-        private By propertyLeaseTable = By.XPath("//div[contains(text(),'Leases/Licenses')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
-        private By propertyLeaseExpandTableBttn = By.XPath("//div[contains(text(),'Leases/Licenses')]/parent::div/parent::div/following-sibling::div/*[1]");
-
-        private By propertyDispositionFileSubtitle = By.XPath("//div[contains(text(),'Disposition Files')]");
-        private By propertyDispositionCountLabel = By.XPath("//div[contains(text(),'Disposition Files')]/following-sibling::div[@class='my-1 col-auto']");
-
         private SharedModals sharedModals;
-
 
         public PropertyInformation(IWebDriver webDriver) : base(webDriver)
         {
@@ -890,47 +866,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Assert.True(webDriver.FindElement(propertyDetailsEditNotesTitle).Displayed);
             Assert.True(webDriver.FindElement(propertyDetailsNotesTextarea).Displayed);
-        }
-
-        public void VerifyPimsFiles()
-        {
-            //Wait(2000);
-
-            WaitUntilClickable(propertyPimsFilesLinkTab);
-            webDriver.FindElement(propertyPimsFilesLinkTab).Click();
-
-            WaitUntilVisible(propertyPimsFiles);
-            Assert.True(webDriver.FindElement(propertyPimsFiles).Displayed);
-
-            Assert.True(webDriver.FindElement(propertyResearchFileSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(propertyResearchCountLabel).Displayed);
-
-            WaitUntilClickable(propertyResearchExpandTableBttn);
-            webDriver.FindElement(propertyResearchExpandTableBttn).Click();
-
-            WaitUntilVisible(propertyResearchTable);
-            Assert.True(webDriver.FindElement(propertyResearchTable).Displayed);
-
-            Assert.True(webDriver.FindElement(propertyAcquisitionFileSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(propertyAcquisitionCountLabel).Displayed);
-
-            Wait(2000);
-            webDriver.FindElement(propertyAcquisitionExpandTableBttn).Click();
-
-            WaitUntilVisible(propertyAcquisitionTable);
-            Assert.True(webDriver.FindElement(propertyAcquisitionTable).Displayed);
-
-            Assert.True(webDriver.FindElement(propertyLeasesSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(propertyLeaseCountLabel).Displayed);
-
-            WaitUntilVisible(propertyLeaseExpandTableBttn);
-            webDriver.FindElement(propertyLeaseExpandTableBttn).Click();
-
-            WaitUntilVisible(propertyLeaseTable);
-            Assert.True(webDriver.FindElement(propertyLeaseTable).Displayed);
-
-            Assert.True(webDriver.FindElement(propertyDispositionFileSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(propertyDispositionCountLabel).Displayed);
         }
 
         public void VerifyNonInventoryPropertyTabs()
