@@ -76,11 +76,13 @@ namespace PIMS.Tests.Automation.PageObjects
             if (buttonName == "Save")
             {
                 wait.Until(ExpectedConditions.ElementExists(saveButton));
+                wait.Until(ExpectedConditions.ElementToBeClickable(saveButton));
                 FocusAndClick(saveButton);
             }
             else
             {
                 wait.Until(ExpectedConditions.ElementExists(cancelButton));
+                wait.Until(ExpectedConditions.ElementToBeClickable(cancelButton));
                 FocusAndClick(cancelButton);
             }
         }
