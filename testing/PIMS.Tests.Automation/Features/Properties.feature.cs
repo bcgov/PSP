@@ -274,10 +274,10 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Property Management Activity Digital Documents")]
+        [Xunit.SkippableFactAttribute(DisplayName="Non-Inventory Property Information")]
         [Xunit.TraitAttribute("FeatureTitle", "Properties")]
-        [Xunit.TraitAttribute("Description", "Property Management Activity Digital Documents")]
-        public void PropertyManagementActivityDigitalDocuments()
+        [Xunit.TraitAttribute("Description", "Non-Inventory Property Information")]
+        public void Non_InventoryPropertyInformation()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
