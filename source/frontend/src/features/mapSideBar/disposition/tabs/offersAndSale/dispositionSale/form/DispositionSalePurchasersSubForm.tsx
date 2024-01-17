@@ -71,7 +71,7 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
                 {purchaser.contact?.organizationId && !purchaser.contact?.personId && (
                   <Row noGutters>
                     <Col xs="auto" xl="12">
-                      <SectionField label="Primary contact" labelWidth="6" contentWidth="6">
+                      <SectionField label="Primary contact" labelWidth="4" contentWidth="6">
                         <PrimaryContactSelector
                           field={`dispositionPurchasers.${index}.primaryContactId`}
                           contactInfo={purchaser?.contact}
@@ -86,7 +86,7 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
 
           <LinkButton
             data-testid="add-purchaser-button"
-            className="mb-2"
+            className="mb-3"
             onClick={() => {
               const purchaserContact = new DispositionSaleContactModel(
                 null,
