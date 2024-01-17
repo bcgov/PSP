@@ -35,7 +35,10 @@ const Login = () => {
       return <Redirect to={{ pathname: '/access/request' }} />;
     } else if (typeof redirect === 'string' && redirect.length) {
       return <Redirect to={redirect} />;
-    } else if (keyCloakWrapper.roles?.length === 1 && keyCloakWrapper.hasRole(Roles.FINANCE)) {
+    } else if (
+      keyCloakWrapper.roles?.length === 1 &&
+      keyCloakWrapper.hasRole(Roles.LEASE_FUNCTIONAL)
+    ) {
       return <Redirect to="/lease/list" />;
     } else {
       return <Redirect to={'/mapview'} />;
