@@ -19,8 +19,8 @@ import UpdateDispositionAppraisalContainer from '../tabs/offersAndSale/dispositi
 import AddDispositionOfferContainer from '../tabs/offersAndSale/dispositionOffer/add/AddDispositionOfferContainer';
 import DispositionOfferForm from '../tabs/offersAndSale/dispositionOffer/form/DispositionOfferForm';
 import UpdateDispositionOfferContainer from '../tabs/offersAndSale/dispositionOffer/update/UpdateDispositionOfferContainer';
-import DispositionSaleForm from '../tabs/offersAndSale/dispositionSale/form/DispositionSaleForm';
 import UpdateDispositionSaleContainer from '../tabs/offersAndSale/dispositionSale/update/UpdateDispositionSaleContainer';
+import UpdateDispositionSaleView from '../tabs/offersAndSale/dispositionSale/update/UpdateDispostionSaleView';
 
 export interface IDispositionRouterProps {
   formikRef: React.Ref<FormikProps<any>>;
@@ -123,7 +123,7 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
           customRender={() => (
             <UpdateDispositionSaleContainer
               dispositionFileId={props.dispositionFile?.id ?? 0}
-              View={DispositionSaleForm}
+              View={UpdateDispositionSaleView}
             ></UpdateDispositionSaleContainer>
           )}
           claim={Claims.DISPOSITION_EDIT}

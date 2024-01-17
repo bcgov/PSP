@@ -85,9 +85,9 @@ export interface Api_DispositionFileSale extends Api_ConcurrentVersion {
   totalCostAmount: number | null;
   sppAmount: number | null;
   remediationAmount: number | null;
-  dispositionPurchasers: Api_DispositionSalePurchaser[];
-  dispositionPurchaserAgent: Api_DispositionSalePurchaserAgent | null;
-  dispositionPurchaserSolicitor: Api_DispositionSalePurchaserSolicitor | null;
+  dispositionPurchasers: Api_DispositionSaleContact[];
+  dispositionPurchaserAgent: Api_DispositionSaleContact | null;
+  dispositionPurchaserSolicitor: Api_DispositionSaleContact | null;
 }
 
 export interface Api_DispositionFileAppraisal extends Api_ConcurrentVersion {
@@ -109,26 +109,10 @@ export interface ContactInformation {
   primaryContact: Api_Person | null;
 }
 
-export interface Api_DispositionSalePurchaser
+export interface Api_DispositionSaleContact
   extends ContactInformation,
     Api_ConcurrentVersion,
     Api_AuditFields {
   id?: number;
-  dispositionSaleId: number;
-}
-
-export interface Api_DispositionSalePurchaserAgent
-  extends ContactInformation,
-    Api_ConcurrentVersion,
-    Api_AuditFields {
-  id?: number;
-  dispositionSaleId: number;
-}
-
-export interface Api_DispositionSalePurchaserSolicitor
-  extends ContactInformation,
-    Api_ConcurrentVersion,
-    Api_AuditFields {
-  id?: number;
-  dispositionSaleId: number;
+  dispositionSaleId: number | null;
 }

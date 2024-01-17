@@ -1,6 +1,5 @@
 using Mapster;
 using Pims.Api.Models.Base;
-using Pims.Api.Models.Concepts.DispositionFile;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.DispositionFile

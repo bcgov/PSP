@@ -338,6 +338,9 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(x => x.DispositionSaleId.Equals(saleId)) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingSale).CurrentValues.SetValues(dispositionSale);
+            Context.UpdateChild<PimsDispositionSale, long, PimsDispositionPurchaser, long>(p => p.PimsDispositionPurchasers, dispositionSale.Internal_Id, dispositionSale.PimsDispositionPurchasers.ToArray());
+            Context.UpdateChild<PimsDispositionSale, long, PimsDspPurchAgent, long>(p => p.PimsDspPurchAgents, dispositionSale.Internal_Id, dispositionSale.PimsDspPurchAgents.ToArray());
+            Context.UpdateChild<PimsDispositionSale, long, PimsDspPurchSolicitor, long>(p => p.PimsDspPurchSolicitors, dispositionSale.Internal_Id, dispositionSale.PimsDspPurchSolicitors.ToArray());
 
             return existingSale;
         }

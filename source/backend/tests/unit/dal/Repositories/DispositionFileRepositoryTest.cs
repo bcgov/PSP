@@ -72,7 +72,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var dispositionFile = EntityHelper.CreateDispositionFile();
-            
+
             var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
             _helper.AddAndSaveChanges(dispositionFile);
 
@@ -187,7 +187,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeAssignableTo< List<PimsDispositionFileTeam>>();
+            result.Should().BeAssignableTo<List<PimsDispositionFileTeam>>();
             result.Should().HaveCount(1);
         }
         #endregion
@@ -199,7 +199,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
             var dispFile = EntityHelper.CreateDispositionFile();
-            dispFile.PimsDispositionOffers = new List<PimsDispositionOffer>() { new PimsDispositionOffer() { OfferName = "offer"} };
+            dispFile.PimsDispositionOffers = new List<PimsDispositionOffer>() { new PimsDispositionOffer() { OfferName = "offer" } };
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
@@ -300,6 +300,80 @@ namespace Pims.Dal.Test.Repositories
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<PimsDispositionAppraisal>();
             result.ListPriceAmt.Should().Be(300);
+        }
+
+        #endregion
+
+        #region DispositionSale
+
+        [Fact]
+        public void AddDisposition_Sale_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            _helper.AddAndSaveChanges(dispFile);
+
+            var sale = new PimsDispositionSale() { DispositionFileId = 1 };
+
+            // Act
+            var result = repository.AddDispositionFileSale(sale);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionSale>();
+        }
+
+        [Fact]
+        public void UpdateDisposition_Sale_NotFound()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionSales = new List<PimsDispositionSale>() {
+                new PimsDispositionSale()
+                {
+                    DispositionSaleId = 1,
+                    SaleFinalAmt = 2000,
+                }
+            };
+            _helper.AddAndSaveChanges(dispFile);
+
+            var sale = dispFile.PimsDispositionSales.FirstOrDefault();
+            sale.SaleFinalAmt = 3000;
+
+            // Act
+            Action act = () => repository.UpdateDispositionFileSale(2, sale);
+
+            // Assert
+            act.Should().Throw<KeyNotFoundException>();
+        }
+
+        [Fact]
+        public void UpdateDisposition_Sale_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionSales = new List<PimsDispositionSale>() {
+                new PimsDispositionSale()
+                {
+                    DispositionSaleId = 1,
+                    SaleFinalAmt = 2000,
+                }
+            };
+            _helper.AddAndSaveChanges(dispFile);
+
+            var sale = dispFile.PimsDispositionSales.FirstOrDefault();
+            sale.SaleFinalAmt = 3000;
+
+            // Act
+            var result = repository.UpdateDispositionFileSale(1, sale);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionSale>();
+            result.SaleFinalAmt.Should().Be(3000);
         }
 
         #endregion

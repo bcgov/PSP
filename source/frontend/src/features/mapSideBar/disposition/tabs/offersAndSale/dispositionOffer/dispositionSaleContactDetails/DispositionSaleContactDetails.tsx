@@ -3,18 +3,11 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
-import {
-  Api_DispositionSalePurchaser,
-  Api_DispositionSalePurchaserAgent,
-  Api_DispositionSalePurchaserSolicitor,
-} from '@/models/api/DispositionFile';
+import { Api_DispositionSaleContact } from '@/models/api/DispositionFile';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 export interface IDispositionSaleContactDetailsProps {
-  contactInformation:
-    | Api_DispositionSalePurchaser
-    | Api_DispositionSalePurchaserAgent
-    | Api_DispositionSalePurchaserSolicitor;
+  contactInformation: Api_DispositionSaleContact;
   primaryContactLabel?: string | null;
 }
 

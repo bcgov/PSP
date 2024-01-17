@@ -8,11 +8,11 @@ import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvi
 import { IApiError } from '@/interfaces/IApiError';
 import { Api_DispositionFileSale } from '@/models/api/DispositionFile';
 
-import { IDispositionSaleFormProps } from '../form/DispositionSaleForm';
+import { IUpdateDispositionSaleViewProps } from './UpdateDispostionSaleView';
 
 export interface IUpdateDispositionSaleContainerProps {
   dispositionFileId: number;
-  View: React.FC<IDispositionSaleFormProps>;
+  View: React.FC<IUpdateDispositionSaleViewProps>;
 }
 
 const UpdateDispositionSaleContainer: React.FunctionComponent<

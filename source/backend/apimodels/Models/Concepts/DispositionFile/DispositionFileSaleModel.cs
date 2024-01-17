@@ -87,13 +87,13 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         public IList<DispositionSalePurchaserModel> DispositionPurchasers { get; set; }
 
         /// <summary>
-        /// get/set - A list of disposition Sale Purchaser(s) Agents.
+        /// get/set - Disposition Sale Purchaser(s)'s Agents.
         /// </summary>
-        public IList<DispositionSalePurchaserAgentModel> DispositionPurchaserAgents { get; set; }
+        public DispositionSalePurchaserAgentModel DispositionPurchaserAgent { get; set; }
 
         /// <summary>
-        /// get/set - A list of disposition Sale Purchaser(s) Solicitors.
+        /// get/set - Disposition Sale Purchaser(s)'s Solicitor.
         /// </summary>
-        public IList<DispositionSalePurchaserSolicitorModel> DispositionPurchaserSolicitors { get; set; }
+        public DispositionSalePurchaserSolicitorModel DispositionPurchaserSolicitor { get; set; }
     }
 }

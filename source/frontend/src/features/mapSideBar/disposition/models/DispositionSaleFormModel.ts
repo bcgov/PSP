@@ -1,4 +1,4 @@
-import { Api_DispositionFileSale } from '@/models/api/DispositionFile';
+import { Api_DispositionFileSale, Api_DispositionSaleContact } from '@/models/api/DispositionFile';
 import { emptyStringtoNullable } from '@/utils/formUtils';
 
 import { DispositionSaleContactModel, WithSalePurchasers } from './DispositionSaleContactModel';
@@ -32,7 +32,11 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
   }
 
   static fromApi(entity: Api_DispositionFileSale): DispositionSaleFormModel {
-    const model = new DispositionSaleFormModel(entity.id, entity.dispositionFileId);
+    const model = new DispositionSaleFormModel(
+      entity.id,
+      entity.dispositionFileId,
+      entity.rowVersion,
+    );
 
     model.finalConditionRemovalDate = entity.finalConditionRemovalDate;
     model.saleCompletionDate = entity.saleCompletionDate;
@@ -48,6 +52,18 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
 
     model.netProceedsBeforeSppAmount = calculateNetProceedsBeforeSppAmount(entity);
     model.netProceedsAfterSppAmount = calculateNetProceedsAfterSppAmount(entity);
+
+    model.dispositionPurchasers = entity.dispositionPurchasers?.map(
+      x => DispositionSaleContactModel.fromApi(x) || [],
+    );
+
+    model.dispositionPurchaserAgent = entity.dispositionPurchaserAgent
+      ? DispositionSaleContactModel.fromApi(entity.dispositionPurchaserAgent)
+      : new DispositionSaleContactModel(null, entity.id, 0, null);
+
+    model.dispositionPurchaserSolicitor = entity.dispositionPurchaserSolicitor
+      ? DispositionSaleContactModel.fromApi(entity.dispositionPurchaserSolicitor)
+      : new DispositionSaleContactModel(null, entity.id, 0, null);
 
     return model;
   }
@@ -67,14 +83,20 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
       totalCostAmount: this.totalCostAmount,
       sppAmount: this.sppAmount,
       remediationAmount: this.remediationAmount,
-      dispositionPurchasers: [],
-      dispositionPurchaserAgent: null,
-      dispositionPurchaserSolicitor: null,
+      dispositionPurchasers: this.dispositionPurchasers
+        .filter(x => !!x.contact)
+        .map(x => x.toApi())
+        .filter((x): x is Api_DispositionSaleContact => x !== null),
+      dispositionPurchaserAgent: this.dispositionPurchaserAgent.toApi(),
+      dispositionPurchaserSolicitor: this.dispositionPurchaserSolicitor.toApi(),
+      rowVersion: this.rowVersion ?? 0,
     };
   }
 }
 
-export const calculateNetProceedsBeforeSppAmount = (apiModel: Api_DispositionFileSale | null) => {
+export const calculateNetProceedsBeforeSppAmount = (
+  apiModel: Api_DispositionFileSale | null,
+): number | null => {
   return apiModel == null
     ? 0
     : (apiModel.finalSaleAmount ?? 0) -
@@ -84,7 +106,9 @@ export const calculateNetProceedsBeforeSppAmount = (apiModel: Api_DispositionFil
           (apiModel.netBookAmount ?? 0));
 };
 
-export const calculateNetProceedsAfterSppAmount = (apiModel: Api_DispositionFileSale | null) => {
+export const calculateNetProceedsAfterSppAmount = (
+  apiModel: Api_DispositionFileSale | null,
+): number | null => {
   return apiModel == null
     ? 0
     : (apiModel.finalSaleAmount ?? 0) -
