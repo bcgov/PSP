@@ -39,7 +39,7 @@ export const DocumentDetailView: React.FunctionComponent<
             noPadding
             header={
               <>
-                Document information
+                Document Information
                 <TooltipIcon
                   toolTipId="documentInfoToolTip"
                   innerClassName="documentInfoToolTip"
