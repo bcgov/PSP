@@ -65,6 +65,41 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
         }
 
+        [StepDefinition(@"I create Digital Documents for a Property Management row number (.*)")]
+        public void DocumentActivityCreate(int rowNumber)
+        {
+            //Verify Initial List View
+            digitalDocumentsTab.VerifyDocumentsListView("Property Management");
+
+            //Getting Digital Document Details
+            PopulateDigitalDocumentIndex(rowNumber);
+
+            for (var i = 0; i < digitalDocumentList.Count; i++)
+            {
+                //Add a New Document
+                digitalDocumentsTab.AddNewDocument("Property Management");
+
+                //Verify and create a new Document
+                digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[i].DocumentType);
+                digitalDocumentsTab.CreateNewDocumentType(digitalDocumentList[i]);
+
+                //Upload one digital document
+                Random random = new Random();
+                var index = random.Next(0, documentFiles.Count());
+                var document = documentFiles.ElementAt(index);
+
+                digitalDocumentsTab.UploadDocument(document.Url);
+
+                //Save digital document
+                digitalDocumentsTab.SaveDigitalDocument();
+
+                //Verify Details View Form
+                digitalDocumentsTab.ViewLastDocument(i);
+                digitalDocumentsTab.VerifyDocumentDetailsCreateViewForm(digitalDocumentList[i]);
+                digitalDocumentsTab.CloseDigitalDocumentViewDetails();
+            }
+        }
+
         [StepDefinition(@"I edit a Digital Document for a ""(.*)"" from row number (.*)")]
         public void UpdateDigitalDocuments(string fileType, int rowNumber)
         {

@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Models.Concepts.Http;
+
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Metadata;
+using Pims.Api.Models.Requests.Http;
 
 namespace Pims.Api.Repositories.Mayan
 {
@@ -37,7 +38,7 @@ namespace Pims.Api.Repositories.Mayan
             _authRepository = authRepository;
         }
 
-        public async Task<ExternalResult<QueryResult<MetadataType>>> TryGetMetadataTypesAsync(string ordering = "", int? page = null, int? pageSize = null)
+        public async Task<ExternalResponse<QueryResponse<MetadataTypeModel>>> TryGetMetadataTypesAsync(string ordering = "", int? page = null, int? pageSize = null)
         {
             _logger.LogDebug("Retrieving metadata types...");
 
@@ -47,13 +48,13 @@ namespace Pims.Api.Repositories.Mayan
             string endpointString = $"{_config.BaseUri}/metadata_types/";
             Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
 
-            var response = await GetAsync<QueryResult<MetadataType>>(endpoint, authenticationToken).ConfigureAwait(true);
+            var response = await GetAsync<QueryResponse<MetadataTypeModel>>(endpoint, authenticationToken).ConfigureAwait(true);
 
             _logger.LogDebug("Finished retrieving metadata types");
             return response;
         }
 
-        public async Task<ExternalResult<MetadataType>> TryCreateMetadataTypeAsync(MetadataType metadataType)
+        public async Task<ExternalResponse<MetadataTypeModel>> TryCreateMetadataTypeAsync(MetadataTypeModel metadataType)
         {
             _logger.LogDebug("Creating metadata type...");
 
@@ -69,13 +70,13 @@ namespace Pims.Api.Repositories.Mayan
 
             Uri endpoint = new($"{this._config.BaseUri}/metadata_types/");
 
-            var response = await PostAsync<MetadataType>(endpoint, content, authenticationToken).ConfigureAwait(true);
+            var response = await PostAsync<MetadataTypeModel>(endpoint, content, authenticationToken).ConfigureAwait(true);
 
             this._logger.LogDebug($"Finished creating a metadata type");
             return response;
         }
 
-        public async Task<ExternalResult<MetadataType>> TryUpdateMetadataTypeAsync(MetadataType metadataType)
+        public async Task<ExternalResponse<MetadataTypeModel>> TryUpdateMetadataTypeAsync(MetadataTypeModel metadataType)
         {
             _logger.LogDebug("Updating metadata type {id}...", metadataType.Id);
 
@@ -91,13 +92,13 @@ namespace Pims.Api.Repositories.Mayan
 
             Uri endpoint = new($"{this._config.BaseUri}/metadata_types/{metadataType.Id}/");
 
-            var response = await PutAsync<MetadataType>(endpoint, content, authenticationToken).ConfigureAwait(true);
+            var response = await PutAsync<MetadataTypeModel>(endpoint, content, authenticationToken).ConfigureAwait(true);
 
             this._logger.LogDebug($"Finished updating a metadata type", metadataType.Id);
             return response;
         }
 
-        public async Task<ExternalResult<string>> TryDeleteMetadataTypeAsync(long metadataTypeId)
+        public async Task<ExternalResponse<string>> TryDeleteMetadataTypeAsync(long metadataTypeId)
         {
             _logger.LogDebug("Deleting metadata type...");
 

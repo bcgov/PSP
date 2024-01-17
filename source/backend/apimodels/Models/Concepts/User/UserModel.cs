@@ -37,7 +37,7 @@ namespace Pims.Api.Models.Concepts.User
         /// <summary>
         /// get/set - The User type code.
         /// </summary>
-        public TypeModel<string> UserTypeCode { get; set; }
+        public CodeTypeModel<string> UserTypeCode { get; set; }
 
         /// <summary>
         /// get/set - A note corresponding to this user.

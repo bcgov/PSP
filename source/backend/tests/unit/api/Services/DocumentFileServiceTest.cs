@@ -28,10 +28,11 @@ using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Xunit;
-using Pims.Api.Concepts.CodeTypes;
-using Pims.Api.Models.Concepts.Http;
-using Pims.Api.Models.Concepts.Document.Upload;
+
 using Pims.Api.Models.Concepts.Document;
+using Pims.Api.Models.Requests.Document.Upload;
+using Pims.Api.Models.Requests.Http;
+using Pims.Api.Models.CodeTypes;
 using Pims.Api.Constants;
 
 namespace Pims.Api.Test.Services
@@ -545,9 +546,9 @@ namespace Pims.Api.Test.Services
 
             documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
-                    Status = ExternalResultStatus.Success,
+                    Status = ExternalResponseStatus.Success,
                 });
 
             PimsResearchFileDocument doc = new()
@@ -573,7 +574,7 @@ namespace Pims.Api.Test.Services
 
             documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.NotFound,
                 });
@@ -601,7 +602,7 @@ namespace Pims.Api.Test.Services
 
             researchDocumentRepository.Setup(x => x.GetAllByDocument(It.IsAny<long>())).Returns(new List<PimsResearchFileDocument>());
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.NotFound,
                 });
@@ -629,7 +630,7 @@ namespace Pims.Api.Test.Services
 
             propertyActivityDocumentRepository.Setup(x => x.GetAllByPropertyActivity(It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.NotFound,
                 });
@@ -657,9 +658,9 @@ namespace Pims.Api.Test.Services
 
             documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
-                    Status = ExternalResultStatus.Success,
+                    Status = ExternalResponseStatus.Success,
                 });
 
             PimsPropertyActivityDocument doc = new()
@@ -727,9 +728,9 @@ namespace Pims.Api.Test.Services
 
             documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
-                    Status = ExternalResultStatus.Success,
+                    Status = ExternalResponseStatus.Success,
                 });
 
             PimsAcquisitionFileDocument doc = new()
@@ -755,7 +756,7 @@ namespace Pims.Api.Test.Services
 
             documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.NotFound,
                 });
@@ -802,9 +803,9 @@ namespace Pims.Api.Test.Services
 
             documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
-                    Status = ExternalResultStatus.Success,
+                    Status = ExternalResponseStatus.Success,
                 });
 
             PimsProjectDocument doc = new()
@@ -830,7 +831,7 @@ namespace Pims.Api.Test.Services
 
             documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.NotFound,
                 });
@@ -858,7 +859,7 @@ namespace Pims.Api.Test.Services
 
             projectRepository.Setup(x => x.GetAllByDocument(It.IsAny<long>())).Returns(new List<PimsProjectDocument>());
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.NotFound,
                 });
@@ -905,9 +906,9 @@ namespace Pims.Api.Test.Services
 
             documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
-                    Status = ExternalResultStatus.Success,
+                    Status = ExternalResponseStatus.Success,
                 });
 
             PimsLeaseDocument doc = new()
@@ -933,7 +934,7 @@ namespace Pims.Api.Test.Services
 
             documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.NotFound,
                 });
@@ -961,7 +962,7 @@ namespace Pims.Api.Test.Services
 
             leaseRepository.Setup(x => x.GetAllLeaseDocuments(It.IsAny<long>())).Returns(new List<PimsLeaseDocument>());
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.NotFound,
                 });
@@ -1008,9 +1009,9 @@ namespace Pims.Api.Test.Services
 
             documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
-                    Status = ExternalResultStatus.Success,
+                    Status = ExternalResponseStatus.Success,
                 });
 
             PimsDispositionFileDocument doc = new()
@@ -1036,7 +1037,7 @@ namespace Pims.Api.Test.Services
 
             documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.NotFound,
                 });
@@ -1065,7 +1066,7 @@ namespace Pims.Api.Test.Services
 
             documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(100);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.NotFound,
                 });

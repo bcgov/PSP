@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
-using System.Xml.Linq;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -17,12 +16,16 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Upload Documents Dialog General Elements
         private By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
-        private By documentUploadInstructions = By.CssSelector("div[class='modal-body'] div div[class='pb-4']");
         private By documentUploadDocTypeLabel = By.XPath("//label[contains(text(),'Document type')]");
-        private By documentUploadDocTypeModalSelect = By.XPath("//div[@class='modal-body']/div/div[2]/div[2]/div/select[@id='input-documentTypeId']");
+        private By documentUploadDocTypeModalSelect = By.XPath("//div[@class='modal-body']/div/div[2]/div/select[@id='input-documentTypeId']");
+        private By documentUploadDocTypeModalSelect1stOption = By.CssSelector("div[class='modal-content'] select[data-testid='document-type'] option:nth-child(1)");
+        private By documentUploadChooseDocLabel = By.XPath("//label[contains(text(),'Choose document to upload')]");
+        private By documentUploadDragDropArea = By.XPath("//div[contains(text(),'Drag files here to attach or')]");
         private By documentUploadDocInput = By.Id("uploadInput");
-        private By documentUploadDocInfoSubtitle = By.XPath("//h2[contains(text(),'Document information')]");
-        private By documentUploadStatusLabel = By.XPath("//div[@class='pb-2 row']/div/label[contains(text(),'Status')]");
+        private By documentUploadDocInfoSubtitle = By.XPath("//h2/div/div[contains(text(),'Document Information')]");
+        private By documentUploadDocInfoSubtitle2 = By.XPath("//h2/div/div[contains(text(),'Document information')]");
+        private By documentUploadStatusLabel = By.XPath("//div[contains(text(),'Document Information')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
+        private By documentUploadViewStatusLabel = By.XPath("//div[contains(text(),'Document information')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
         private By documentUploadStatusSelect = By.Id("input-documentStatusCode");
         private By documentUploadDetailsSubtitle = By.XPath("//h3[contains(text(),'Details')]");
 
@@ -182,18 +185,18 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentPAPlanProjectNameMandatory = By.XPath("//div[contains(text(),'Project name is required')]");
 
         //View Document Details Elements
-        private By documentViewDocumentTypeLabel = By.XPath("//div[@class='modal-body']/div/div/div/label[contains(text(),'Document type')]");
-        private By documentViewDocumentTypeContent = By.XPath("//div[@class='modal-body']/div/div/div/label[contains(text(),'Document type')]/parent::div/following-sibling::div");
-        private By documenyViewDocumentNameLabel = By.XPath("//div[@class='modal-body']/div/div/div/label[contains(text(),'File name')]");
-        private By documentViewFileNameContent = By.XPath("//div[@class='modal-body']/div/div/div/label[contains(text(),'File name')]/parent::div/following-sibling::div");
+        private By documentViewDocumentTypeLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/label[contains(text(),'Document type')]");
+        private By documentViewDocumentTypeContent = By.XPath("//div[@class='modal-body']/div/div/div/div/label[contains(text(),'Document type')]/parent::div/following-sibling::div");
+        private By documenyViewDocumentNameLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/label[contains(text(),'File name')]");
+        private By documentViewFileNameContent = By.XPath("//div[@class='modal-body']/div/div/div/div/label[contains(text(),'File name')]/parent::div/following-sibling::div");
         private By documentViewDownloadButton = By.CssSelector("button[data-testid='document-download-button']");
         private By documentViewDocumentInfoTooltip = By.CssSelector("span[data-testid='tooltip-icon-documentInfoToolTip']");
-        private By documentViewStatusContent = By.XPath("//div[@class='pb-2 row']/div/label[contains(text(),'Status')]/parent::div/following-sibling::div");
+        private By documentViewStatusContent = By.XPath("//div[contains(text(),'Document information')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]/parent::div/following-sibling::div");
 
         private By documentViewCanadaLandSurveyContent = By.XPath("//label[contains(text(),'Canada land survey')]/parent::div/following-sibling::div");
         private By documentViewCivicAddressContent = By.XPath("//label[contains(text(),'Civic address')]/parent::div/following-sibling::div");
         private By documentViewCrownGrantContent = By.XPath("//label[contains(text(),'Crown grant #')]/parent::div/following-sibling::div");
-        private By documentViewDateContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Date')]/parent::div/following-sibling::div");
+        private By documentViewDateContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Date')]/parent::div/following-sibling::div");
         private By documentViewDateSignedContent = By.XPath("//label[contains(text(),'Date signed')]/parent::div/following-sibling::div");
         private By documentViewDistrictLotContent = By.XPath("//label[contains(text(),'District lot')]/parent::div/following-sibling::div");
         private By documentViewElectoralDistrictContent = By.XPath("//label[contains(text(),'Electoral district')]/parent::div/following-sibling::div");
@@ -216,7 +219,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentViewOICNumberContent = By.XPath("//label[contains(text(),'OIC #')]/parent::div/following-sibling::div");
         private By documentViewOICRouteContent = By.XPath("//label[contains(text(),'OIC route #')]/parent::div/following-sibling::div");
         private By documentViewOICTypeContent = By.XPath("//label[contains(text(),'OIC type')]/parent::div/following-sibling::div");
-        private By documentViewOwnerContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Owner')]/parent::div/following-sibling::div");
+        private By documentViewOwnerContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Owner')]/parent::div/following-sibling::div");
         private By documentViewPhysicalLocationContent = By.XPath("//label[contains(text(),'Physical location')]/parent::div/following-sibling::div");
         private By documentViewPIDLabel = By.XPath("//label[contains(text(),'PID')]");
         private By documentViewPIDContent = By.XPath("//label[contains(text(),'PID')]/parent::div/following-sibling::div");
@@ -231,11 +234,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentViewPropertyIdentifierContent = By.XPath("/label[contains(text(),'Property identifier')]/parent::div/following-sibling::div");
         private By documentViewPublishedDateContent = By.XPath("//label[contains(text(),'Published date')]/parent::div/following-sibling::div");
         private By documentViewRelatedGazetteContent = By.XPath("//label[contains(text(),'Related gazette')]/parent::div/following-sibling::div");
-        private By documentViewRoadNameContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Road name')]/parent::div/following-sibling::div");
+        private By documentViewRoadNameContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Road name')]/parent::div/following-sibling::div");
         private By documentViewRollContent = By.XPath("//label[contains(text(),'Roll')]/parent::div/following-sibling::div");
         private By documentViewSectionContent = By.XPath("//label[contains(text(),'Section')]/parent::div/following-sibling::div");
-        private By documentViewShortDescriptorContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Short descriptor')]/parent::div/following-sibling::div");
-        private By documentViewStartDateContent = By.XPath("//div[@class='modal-body']/div/div[3]/div/div[4]/div/label[contains(text(),'Start date')]/parent::div/following-sibling::div");
+        private By documentViewShortDescriptorContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Short descriptor')]/parent::div/following-sibling::div");
+        private By documentViewStartDateContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Start date')]/parent::div/following-sibling::div");
         private By documentViewTitleContent = By.XPath("//label[contains(text(),'Title')]/parent::div/following-sibling::div");
         private By documentViewTransferContent = By.XPath("//label[contains(text(),'Transfer')]/parent::div/following-sibling::div");
         private By documentViewYearContent = By.XPath("//label[contains(text(),'Year')]/parent::div/following-sibling::div");
@@ -243,11 +246,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Document Modal Elements
         private By documentModalCloseIcon = By.CssSelector("div[class='modal-close-btn']");
-        private By documentEditBttn = By.XPath("//div[@class='modal-body']/div/div[3]/div/div[2]/button");
-        private By documentSaveButton = By.CssSelector("button[data-testid='save']");
-        private By documentCancelButton = By.CssSelector("button[data-testid='cancel']");
-        private By documentSaveEditBttn = By.XPath("//div[@class='modal-body']/div/div[3]/div[2]/div/div/button[@type='submit']");
-        private By documentCancelEditBttn = By.XPath("//div[@class='modal-body']/div/div[3]/div[2]/div/div/button[@type='button']");
+        private By documentEditBttn = By.XPath("//div[@class='modal-body']/div/div/div/div/button");
+        //private By documentSaveButton = By.CssSelector("button[data-testid='save']");
+        //private By documentCancelButton = By.CssSelector("button[data-testid='cancel']");
+        private By documentSaveEditBttn = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div[5]/div/button[@type='submit']");
+        private By documentCancelEditBttn = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div[5]/div[1]/button");
 
         //Toast Element
         private By documentGeneralToastBody = By.CssSelector("div[class='Toastify__toast-body']");
@@ -300,8 +303,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentPaginationPrevPageLink = By.CssSelector("ul[class='pagination'] a[aria-label='Previous page']");
         private By documentPaginationNextPageLink = By.CssSelector("ul[class='pagination'] a[aria-label='Next page']");
 
+        private SharedModals sharedModals;
+
         public DigitalDocuments(IWebDriver webDriver) : base(webDriver)
-        {}
+        {
+            sharedModals = new SharedModals(webDriver);
+        }
 
         public void NavigateDocumentsTab()
         {
@@ -317,7 +324,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddNewDocument(string fileType)
         {
-            if (fileType.Equals("Lease") || fileType.Equals("CDOGS Templates") || fileType.Equals("Project"))
+            if (fileType.Equals("Lease") || fileType.Equals("CDOGS Templates") || fileType.Equals("Project") || fileType.Equals("Property Management"))
             {
                 WaitUntilClickable(addDocumentBttn);
                 FocusAndClick(addDocumentBttn);
@@ -331,7 +338,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyDocumentFields(string documentType)
         {
-            Wait(2000);
+            WaitUntilExist(documentUploadDocTypeModalSelect1stOption);
             ChooseSpecificSelectOption(documentUploadDocTypeModalSelect, documentType);
 
             switch (documentType)
@@ -402,7 +409,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyDocumentsListView(string fileType)
         {
             WaitUntilVisible(documentFilterTypeSelect);
-            if (fileType.Equals("CDOGS Templates") || fileType.Equals("Project"))
+            if (fileType.Equals("CDOGS Templates") || fileType.Equals("Project") || fileType.Equals("Property Management"))
             {
                 AssertTrueIsDisplayed(documentsTitle);
                 AssertTrueIsDisplayed(addDocumentBttn);
@@ -513,22 +520,20 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UploadDocument(string documentFile)
         {
-            WaitUntilVisible(documentUploadDocInput);
+            Wait(2000);
             webDriver.FindElement(documentUploadDocInput).SendKeys(documentFile);
         }
 
         public void SaveDigitalDocument()
         {
-            WaitUntilClickable(documentSaveButton);
-            webDriver.FindElement(documentSaveButton).Click();
+            sharedModals.ModalClickOKBttn();
 
             WaitUntilVisible(documentGeneralToastBody);
         }
 
         public void SaveCDOGTemplate()
         {
-            WaitUntilClickable(documentSaveButton);
-            webDriver.FindElement(documentSaveButton).Click();
+            sharedModals.ModalClickOKBttn();
 
             WaitUntilSpinnerDisappear();
         }
@@ -543,10 +548,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelDigitalDocument()
         {
-            WaitUntilVisible(documentCancelButton);
-            webDriver.FindElement(documentCancelButton).Click();
+            sharedModals.ModalClickCancelBttn();
 
-            WaitUntilVisible(documentConfirmationModal);
+            Wait(2000);
             if (webDriver.FindElements(documentConfirmationModal).Count() > 0)
             {
                 AssertTrueContentEquals(documentConfirmationContent, "You have made changes on this form. Do you wish to leave without saving?");
@@ -609,8 +613,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditDocument()
         {
-            WaitUntilClickable(documentEditBttn);
-            webDriver.FindElement(documentEditBttn).Click();
+            Wait(2000);
+            FocusAndClick(documentEditBttn);
         }
 
         public void CreateNewDocumentType(DigitalDocument document)
@@ -1016,10 +1020,10 @@ namespace PIMS.Tests.Automation.PageObjects
             //AssertTrueIsDisplayed(documentViewDownloadButton);
 
             //Document Information
-            AssertTrueIsDisplayed(documentUploadDocInfoSubtitle);
+            AssertTrueIsDisplayed(documentUploadDocInfoSubtitle2);
             AssertTrueIsDisplayed(documentViewDocumentInfoTooltip);
             AssertTrueIsDisplayed(documentEditBttn);
-            AssertTrueIsDisplayed(documentUploadStatusLabel);
+            AssertTrueIsDisplayed(documentUploadViewStatusLabel);
             AssertTrueContentEquals(documentViewStatusContent, document.DocumentStatus);
 
             //Document Details
@@ -1180,10 +1184,10 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(documentViewDownloadButton);
 
             //Document Information
-            AssertTrueIsDisplayed(documentUploadDocInfoSubtitle);
+            AssertTrueIsDisplayed(documentUploadDocInfoSubtitle2);
             AssertTrueIsDisplayed(documentViewDocumentInfoTooltip);
             AssertTrueIsDisplayed(documentEditBttn);
-            AssertTrueIsDisplayed(documentUploadStatusLabel);
+            AssertTrueIsDisplayed(documentUploadViewStatusLabel);
             AssertTrueContentEquals(documentViewStatusContent, document.DocumentStatus);
 
             //Document Details
@@ -1336,10 +1340,11 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(documentsUploadHeader);
 
             AssertTrueIsDisplayed(documentsUploadHeader);
-            AssertTrueIsDisplayed(documentUploadInstructions);
             AssertTrueIsDisplayed(documentUploadDocTypeLabel);
             AssertTrueIsDisplayed(documentUploadDocTypeModalSelect);
-            AssertTrueIsDisplayed(documentUploadDocInput);
+            AssertTrueIsDisplayed(documentUploadChooseDocLabel);
+            AssertTrueIsDisplayed(documentUploadDragDropArea);
+            //AssertTrueIsDisplayed(documentUploadDocInput);
             AssertTrueIsDisplayed(documentUploadDocInfoSubtitle);
             AssertTrueIsDisplayed(documentUploadStatusLabel);
             AssertTrueIsDisplayed(documentUploadStatusSelect);

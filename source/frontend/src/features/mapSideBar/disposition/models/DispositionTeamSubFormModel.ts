@@ -1,8 +1,12 @@
 import { isNumber } from 'lodash';
 
-import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
+import {
+  fromApiOrganization,
+  fromApiPerson,
+  IContactSearchResult,
+} from '@/interfaces/IContactSearchResult';
 import { Api_DispositionFileTeam } from '@/models/api/DispositionFile';
-import { toTypeCode } from '@/utils/formUtils';
+import { fromTypeCode, toTypeCode } from '@/utils/formUtils';
 
 export interface WithDispositionTeam {
   team: DispositionTeamSubFormModel[];
@@ -45,5 +49,23 @@ export class DispositionTeamSubFormModel {
       teamProfileType: toTypeCode(this.teamProfileTypeCode),
       teamProfileTypeCode: this.teamProfileTypeCode,
     };
+  }
+
+  static fromApi(model: Api_DispositionFileTeam | null): DispositionTeamSubFormModel {
+    const contact: IContactSearchResult | undefined =
+      model?.person !== undefined
+        ? fromApiPerson(model.person)
+        : model?.organization !== undefined
+        ? fromApiOrganization(model.organization)
+        : undefined;
+
+    const newForm = new DispositionTeamSubFormModel(model?.id ?? 0, model?.rowVersion, contact);
+    newForm.teamProfileTypeCode = fromTypeCode(model?.teamProfileType) ?? '';
+
+    if (model?.primaryContactId) {
+      newForm.primaryContactId = model.primaryContactId.toString();
+    }
+
+    return newForm;
   }
 }

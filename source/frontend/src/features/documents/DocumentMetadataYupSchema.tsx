@@ -1,9 +1,9 @@
 import * as Yup from 'yup';
 
-import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
+import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 
 export const getDocumentMetadataYupSchema = (
-  mayanMetadata: Api_Storage_DocumentTypeMetadataType[],
+  mayanMetadata: ApiGen_Mayan_DocumentTypeMetadataType[],
 ) => {
   let metadataSchema: Record<string, Yup.StringSchema> = {};
   for (const data of mayanMetadata) {

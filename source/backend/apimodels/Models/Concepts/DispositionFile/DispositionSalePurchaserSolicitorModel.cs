@@ -2,7 +2,7 @@ using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.Organization;
 using Pims.Api.Models.Concepts.Person;
 
-namespace Pims.Api.Models.Models.Concepts.DispositionFile
+namespace Pims.Api.Models.Concepts.DispositionFile
 {
     public class DispositionSalePurchaserSolicitorModel : BaseConcurrentModel
     {

@@ -1,15 +1,17 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { MdContactMail } from 'react-icons/md';
+import { useHistory, useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { ContactBreadcrumb } from '@/features/contacts';
+import { FormTitleBar } from '@/components/common/form/FormTitleBar';
 import { ContactTypes } from '@/features/contacts/interfaces';
-import * as Styled from '@/features/contacts/styles';
+import { HalfWidthLayout } from '@/features/contacts/styles';
 
-import { HalfWidthLayout } from '../create/styles';
 import UpdateOrganizationForm from './Organization/UpdateOrganizationForm';
 import UpdatePersonForm from './Person/UpdatePersonForm';
 
 export const UpdateContactContainer: React.FC<React.PropsWithChildren<unknown>> = () => {
+  const history = useHistory();
   // get id from route params -> /contact/{id}/edit
   const { id } = useParams<{ id: string }>();
   const showPerson = id && id.startsWith(ContactTypes.INDIVIDUAL);
@@ -19,14 +21,35 @@ export const UpdateContactContainer: React.FC<React.PropsWithChildren<unknown>> 
   // we want to ignore the prefix when getting the contact Id
   const idNumber = parseInt(id.substring(1));
 
+  const onClose = () => {
+    history.push('/mapview');
+  };
+
   return (
     <HalfWidthLayout>
-      <ContactBreadcrumb />
-      <Styled.H1>Update Contact</Styled.H1>
-      {showPerson && <UpdatePersonForm id={idNumber} />}
-      {showOrganization && <UpdateOrganizationForm id={idNumber} />}
+      <FormTitleBar
+        showCloseButton
+        title="Update Contact"
+        icon={<MdContactMail className="mr-2 mb-2" size={32} />}
+        onClose={onClose}
+      ></FormTitleBar>
+
+      <StyledFormWrapper>
+        {showPerson && <UpdatePersonForm id={idNumber} />}
+        {showOrganization && <UpdateOrganizationForm id={idNumber} />}
+      </StyledFormWrapper>
     </HalfWidthLayout>
   );
 };
+
+const StyledFormWrapper = styled.div`
+  background-color: ${props => props.theme.css.filterBackgroundColor};
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  overflow: inherit;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
 
 export default UpdateContactContainer;

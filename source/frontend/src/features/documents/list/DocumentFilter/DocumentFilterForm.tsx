@@ -7,11 +7,11 @@ import { Form, Input, Select, SelectOption } from '@/components/common/form';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { defaultDocumentFilter, IDocumentFilter } from '@/interfaces/IDocumentResults';
-import { Api_DocumentType } from '@/models/api/Document';
+import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 
 export interface IDocumentFilterFormProps {
   documentFilter?: IDocumentFilter;
-  documentTypes: Api_DocumentType[];
+  documentTypes: ApiGen_Concepts_DocumentType[];
   onSetFilter: (filterValues: IDocumentFilter) => void;
 }
 

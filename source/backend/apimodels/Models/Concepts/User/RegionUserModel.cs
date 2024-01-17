@@ -10,7 +10,7 @@ namespace Pims.Api.Models.Concepts.User
 
         public long UserId { get; set; }
 
-        public TypeModel<short> Region { get; set; }
+        public CodeTypeModel<short> Region { get; set; }
 
         public short RegionCode { get; set; }
     }

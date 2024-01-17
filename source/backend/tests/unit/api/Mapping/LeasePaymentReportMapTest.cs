@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Areas.Acquisition.Controllers;
+using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Report.Lease;
 using Pims.Api.Services;

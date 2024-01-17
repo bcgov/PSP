@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO.Compression;
 using System.Linq;
 using FluentAssertions;
 using Moq;
@@ -38,6 +39,7 @@ namespace Pims.Dal.Test.Repositories
 
         #region Tests
 
+        #region Add
         [Fact]
         public void Add_Success()
         {
@@ -61,6 +63,45 @@ namespace Pims.Dal.Test.Repositories
             result.DispositionFileId.Should().Be(1);
             result.FileNumber.Equals("D-100");
         }
+        #endregion
+
+        #region Update
+
+        [Fact]
+        public void Update_Success()
+        {
+            // Arrange
+            var dispositionFile = EntityHelper.CreateDispositionFile();
+            
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            _helper.AddAndSaveChanges(dispositionFile);
+
+            // Act
+            var result = repository.Update(dispositionFile.Internal_Id, dispositionFile);
+
+            // Assert
+
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionFile>();
+            result.DispositionFileId.Should().Be(1);
+        }
+
+        [Fact]
+        public void Update_KeyNotFound()
+        {
+            // Arrange
+            var dispositionFile = EntityHelper.CreateDispositionFile();
+
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+
+            // Act
+            Action act = () => repository.Update(dispositionFile.Internal_Id, dispositionFile);
+
+            // Assert
+
+            act.Should().Throw<KeyNotFoundException>();
+        }
+        #endregion
 
 
         #region GetById
@@ -93,6 +134,23 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             act.Should().Throw<KeyNotFoundException>();
+        }
+        #endregion
+
+        #region GetRegion
+        [Fact]
+        public void GetRegion_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            _helper.AddAndSaveChanges(dispFile);
+
+            // Act
+            var result = repository.GetRegion(1);
+
+            // Assert
+            result.Should().Be(1);
         }
         #endregion
 
@@ -185,6 +243,66 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             act.Should().Throw<KeyNotFoundException>();
         }
+        #endregion
+
+        #region Appraisal
+
+        [Fact]
+        public void AddDisposition_Appraisal_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            var appraisal = new PimsDispositionAppraisal() { DispositionFileId = 1 };
+            _helper.AddAndSaveChanges(dispFile);
+
+            // Act
+            var result = repository.AddDispositionFileAppraisal(appraisal);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionAppraisal>();
+        }
+
+        [Fact]
+        public void UpdateDisposition_Appraisal_NotFound()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionAppraisals = new List<PimsDispositionAppraisal>() { new PimsDispositionAppraisal() { DispositionAppraisalId = 1, ListPriceAmt = 200 } };
+
+            var appraisal = dispFile.PimsDispositionAppraisals.FirstOrDefault();
+            appraisal.ListPriceAmt = 300;
+
+            // Act
+            Action act = () => repository.UpdateDispositionFileAppraisal(2, appraisal);
+
+            // Assert
+            act.Should().Throw<KeyNotFoundException>();
+        }
+
+        [Fact]
+        public void UpdateDisposition_Appraisal_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionAppraisals = new List<PimsDispositionAppraisal>() { new PimsDispositionAppraisal() { DispositionAppraisalId = 1, ListPriceAmt = 200 } };
+            _helper.AddAndSaveChanges(dispFile);
+
+            var appraisal = dispFile.PimsDispositionAppraisals.FirstOrDefault();
+            appraisal.ListPriceAmt = 300;
+
+            // Act
+            var result = repository.UpdateDispositionFileAppraisal(1, appraisal);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionAppraisal>();
+            result.ListPriceAmt.Should().Be(300);
+        }
+
         #endregion
 
         #region AddDispositionOffer

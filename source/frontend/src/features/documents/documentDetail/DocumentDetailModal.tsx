@@ -1,14 +1,14 @@
 import { FaEye } from 'react-icons/fa';
 
 import GenericModal, { ModalSize } from '@/components/common/GenericModal';
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 
 import { DocumentRow } from '../ComposedDocument';
 import { DocumentDetailContainer } from './DocumentDetailContainer';
 
 export interface IDocumentDetailModalProps {
   display?: boolean;
-  relationshipType: DocumentRelationshipType;
+  relationshipType: ApiGen_CodeTypes_DocumentRelationType;
   setDisplay?: (display: boolean) => void;
   pimsDocument?: DocumentRow;
   onUpdateSuccess: () => void;

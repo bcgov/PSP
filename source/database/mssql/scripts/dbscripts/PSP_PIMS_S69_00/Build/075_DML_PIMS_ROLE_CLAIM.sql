@@ -15,6 +15,8 @@ DECLARE @prjfunc BIGINT;
 DECLARE @prjrdon BIGINT;
 DECLARE @resfunc BIGINT;
 DECLARE @resrdon BIGINT;
+DECLARE @dispfunc BIGINT;
+DECLARE @disprdon BIGINT;
 DECLARE @sysadmn BIGINT;
 --
 SELECT @acqfunc = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Acquisition functional';
@@ -27,6 +29,8 @@ SELECT @prjfunc = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Project functional';
 SELECT @prjrdon = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Project read-only';
 SELECT @resfunc = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Research functional';
 SELECT @resrdon = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Research read-only';
+SELECT @dispfunc = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Disposition functional';
+SELECT @disprdon = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Disposition read-only';
 SELECT @sysadmn = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'System administrator';
 
 -- ****************************************************************************
@@ -152,6 +156,15 @@ SELECT @managementAdd = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'management-add';
 SELECT @managementEdit = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'management-edit';
 SELECT @managementDelete = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'management-delete';
 
+DECLARE @dispositionView BIGINT;
+DECLARE @dispositionAdd BIGINT;
+DECLARE @dispositionEdit BIGINT;
+DECLARE @dispositionDelete BIGINT;
+SELECT @dispositionView = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'disposition-view';
+SELECT @dispositionAdd = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'disposition-add';
+SELECT @dispositionEdit = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'disposition-edit';
+SELECT @dispositionDelete = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'disposition-delete';
+
 INSERT INTO [dbo].[PIMS_ROLE_CLAIM] ([ROLE_ID], [CLAIM_ID], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_USER_DIRECTORY])
 VALUES
     -- Administrator
@@ -206,6 +219,10 @@ VALUES
     (@sysadmn,    @managementEdit,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@sysadmn,    @managementAdd,          N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@sysadmn,    @managementDelete,       N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@sysadmn,    @dispositionView,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@sysadmn,    @dispositionEdit,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@sysadmn,    @dispositionAdd,          N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@sysadmn,    @dispositionDelete,       N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     -- Acquisition Functional
     (@acqfunc, @propertyView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@acqfunc, @propertyAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
@@ -354,5 +371,36 @@ VALUES
     (@resrdon, @noteView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@resrdon, @documentView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@resrdon, @projectView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@resrdon, @researchView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', '')
+    (@resrdon, @researchView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    -- Disposition Functional
+    (@dispfunc, @propertyView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @propertyAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @propertyEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @propertyDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @contactView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @contactAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @contactEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @contactDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @rolePimsR,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @noteView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @noteAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @noteEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @noteDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @documentView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @documentAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @documentEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @documentDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @projectView,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @dispositionView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @dispositionAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @dispositionEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@dispfunc, @dispositionDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    -- Disposition Read
+    (@disprdon, @propertyView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@disprdon, @contactView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@disprdon, @rolePimsR,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@disprdon, @noteView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@disprdon, @projectView,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@disprdon, @documentView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@disprdon, @dispositionView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', '')
 GO
