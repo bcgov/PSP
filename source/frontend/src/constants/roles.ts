@@ -2,6 +2,7 @@
  * Roles enum, provide the available role names that a user can belong to.
  */
 export enum Roles {
+  UNDETERMINED = 'Undetermined',
   SYSTEM_ADMINISTRATOR = 'System Administrator',
   ACQUISITION_FUNCTIONAL = 'Acquisition functional',
   ACQUISITION_READ_ONLY = 'Acquisition read-only',
