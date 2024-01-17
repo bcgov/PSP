@@ -491,17 +491,32 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
                   <li
                     class="option  highlightOption highlight  "
                   >
-                    Finance
+                    Acquisition functional
                   </li>
                   <li
                     class="option    "
                   >
-                    Functional
+                    Acquisition read-only
                   </li>
                   <li
                     class="option    "
                   >
-                    Functional (Restricted)
+                    Disposition functional
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Disposition read-only
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Lease/License functional
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Lease/License read-only
                   </li>
                   <li
                     class="option    "
@@ -516,7 +531,22 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
                   <li
                     class="option    "
                   >
-                    Read Only
+                    Project functional
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Project read-only
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Research functional
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Research read-only
                   </li>
                   <li
                     class="option    "
