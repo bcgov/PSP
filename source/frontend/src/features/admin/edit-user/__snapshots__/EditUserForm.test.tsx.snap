@@ -544,12 +544,32 @@ exports[`EditUserForm component renders as expected 1`] = `
                   <li
                     class="option  highlightOption highlight  "
                   >
-                    Finance
+                    Acquisition functional
                   </li>
                   <li
                     class="option    "
                   >
-                    Functional (Restricted)
+                    Acquisition read-only
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Disposition functional
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Disposition read-only
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Lease/License functional
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Lease/License read-only
                   </li>
                   <li
                     class="option    "
@@ -564,7 +584,22 @@ exports[`EditUserForm component renders as expected 1`] = `
                   <li
                     class="option    "
                   >
-                    Read Only
+                    Project functional
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Project read-only
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Research functional
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Research read-only
                   </li>
                 </ul>
               </div>
