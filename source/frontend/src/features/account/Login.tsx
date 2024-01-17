@@ -37,7 +37,8 @@ const Login = () => {
       return <Redirect to={redirect} />;
     } else if (
       keyCloakWrapper.roles?.length === 1 &&
-      keyCloakWrapper.hasRole(Roles.LEASE_FUNCTIONAL)
+      (keyCloakWrapper.hasRole(Roles.LEASE_FUNCTIONAL) ||
+        keyCloakWrapper.hasRole(Roles.LEASE_READ_ONLY))
     ) {
       return <Redirect to="/lease/list" />;
     } else {
