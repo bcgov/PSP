@@ -24,6 +24,8 @@ import getKeycloakEventHandler from '@/utils/getKeycloakEventHandler';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker.ignore';
+import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
+import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
 
 function prepare() {
   if (process.env.NODE_ENV === 'development') {
@@ -38,33 +40,36 @@ const keycloak: KeycloakInstance = new Keycloak('/keycloak.json');
 const Index = () => {
   return (
     <TenantProvider>
-      <TenantConsumer>
-        {({ tenant }) => (
-          <ThemeProvider theme={{ tenant, css }}>
-            <ReactKeycloakProvider
-              initOptions={{ pkceMethod: 'S256' }}
-              authClient={keycloak}
-              LoadingComponent={
-                <EmptyLayout>
-                  <LoginLoading />
-                </EmptyLayout>
-              }
-              onEvent={getKeycloakEventHandler(keycloak)}
-            >
-              <Provider store={store}>
-                <AuthStateContextProvider>
-                  <ModalContextProvider>
-                    <Router>
-                      <App />
-                    </Router>
-                  </ModalContextProvider>
-                </AuthStateContextProvider>
-              </Provider>
-            </ReactKeycloakProvider>
-          </ThemeProvider>
-        )}
-      </TenantConsumer>
+      <TenantConsumer>{({ tenant }) => <InnerComponent tenant={tenant} />}</TenantConsumer>
     </TenantProvider>
+  );
+};
+
+const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
+  const { refresh } = useRefreshSiteminder();
+  return (
+    <ThemeProvider theme={{ tenant, css }}>
+      <ReactKeycloakProvider
+        initOptions={{ pkceMethod: 'S256' }}
+        authClient={keycloak}
+        LoadingComponent={
+          <EmptyLayout>
+            <LoginLoading />
+          </EmptyLayout>
+        }
+        onEvent={getKeycloakEventHandler(keycloak, refresh)}
+      >
+        <Provider store={store}>
+          <AuthStateContextProvider>
+            <ModalContextProvider>
+              <Router>
+                <App />
+              </Router>
+            </ModalContextProvider>
+          </AuthStateContextProvider>
+        </Provider>
+      </ReactKeycloakProvider>
+    </ThemeProvider>
   );
 };
 
