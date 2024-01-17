@@ -32,7 +32,7 @@ const DispositionSaleForm: React.FunctionComponent<
 
   return (
     <Section header="Sales Details">
-      <SectionField label="Purchaser name(s)" labelWidth="5" contentWidth="6">
+      <SectionField label="Purchaser name(s)" labelWidth="5" contentWidth="7">
         <DispositionSalePurchaserSubForm dispositionSaleId={dispostionSaleId} />
       </SectionField>
 
@@ -45,7 +45,7 @@ const DispositionSaleForm: React.FunctionComponent<
       </SectionField>
       {dispositionPurchaserAgent.contact?.organizationId &&
         !dispositionPurchaserAgent.contact?.personId && (
-          <SectionField label="Primary contact" labelWidth="5" contentWidth="6">
+          <SectionField label="Primary contact" labelWidth="5" contentWidth="5">
             <PrimaryContactSelector
               field={`dispositionPurchaserAgent.primaryContactId`}
               contactInfo={dispositionPurchaserAgent?.contact}
@@ -61,7 +61,7 @@ const DispositionSaleForm: React.FunctionComponent<
       </SectionField>
       {dispositionPurchaserSolicitor.contact?.organizationId &&
         !dispositionPurchaserSolicitor.contact?.personId && (
-          <SectionField label="Primary contact" labelWidth="5" contentWidth="6">
+          <SectionField label="Primary contact" labelWidth="5" contentWidth="5">
             <PrimaryContactSelector
               field={`dispositionPurchaserSolicitor.primaryContactId`}
               contactInfo={dispositionPurchaserSolicitor?.contact}

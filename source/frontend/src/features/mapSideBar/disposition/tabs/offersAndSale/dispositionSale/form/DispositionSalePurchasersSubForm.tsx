@@ -2,7 +2,6 @@ import { FieldArray, useFormikContext } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
-import styled from 'styled-components';
 
 import { LinkButton, StyledRemoveLinkButton } from '@/components/common/buttons';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
@@ -33,44 +32,53 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
           {values.dispositionPurchasers.map(
             (purchaser: DispositionSaleContactModel, index: number) => (
               <React.Fragment key={`purchaser-${index}`}>
-                <StyledRow className="py-3" data-testid={`purchaserRow[${index}]`}>
-                  <ContactInputContainer
-                    field={`dispositionPurchasers.${index}.contact`}
-                    View={ContactInputView}
-                    displayErrorAsTooltip={false}
-                  ></ContactInputContainer>
-                  <StyledRemoveLinkButton
-                    title="Remove Purchaser"
-                    data-testid={`dispositionPurchasers.${index}.remove-button`}
-                    variant="light"
-                    onClick={() => {
-                      setModalContent({
-                        ...getDeleteModalProps(),
-                        title: 'Remo vePurchaser',
-                        message: 'Do you wish to remove this purchaser?',
-                        okButtonText: 'Yes',
-                        cancelButtonText: 'No',
-                        handleOk: async () => {
-                          arrayHelpers.remove(index);
-                          setDisplayModal(false);
-                        },
-                        handleCancel: () => {
-                          setDisplayModal(false);
-                        },
-                      });
-                      setDisplayModal(true);
-                    }}
-                  >
-                    <FaTrash size="2rem" />
-                  </StyledRemoveLinkButton>
-                </StyledRow>
+                <Row className="py-2" data-testid={`purchaserRow[${index}]`} noGutters>
+                  <Col xs="auto" xl="10">
+                    <ContactInputContainer
+                      field={`dispositionPurchasers.${index}.contact`}
+                      View={ContactInputView}
+                      displayErrorAsTooltip={false}
+                    ></ContactInputContainer>
+                  </Col>
+                  <Col xs="auto" xl="2" className="pl-3 mt-2">
+                    <StyledRemoveLinkButton
+                      title="Remove Purchaser"
+                      data-testid={`dispositionPurchasers.${index}.remove-button`}
+                      variant="light"
+                      onClick={() => {
+                        setModalContent({
+                          ...getDeleteModalProps(),
+                          title: 'Remo vePurchaser',
+                          message: 'Do you wish to remove this purchaser?',
+                          okButtonText: 'Yes',
+                          cancelButtonText: 'No',
+                          handleOk: async () => {
+                            arrayHelpers.remove(index);
+                            setDisplayModal(false);
+                          },
+                          handleCancel: () => {
+                            setDisplayModal(false);
+                          },
+                        });
+                        setDisplayModal(true);
+                      }}
+                    >
+                      <FaTrash size="2rem" />
+                    </StyledRemoveLinkButton>
+                  </Col>
+                </Row>
+
                 {purchaser.contact?.organizationId && !purchaser.contact?.personId && (
-                  <SectionField label="Primary contact" labelWidth="5">
-                    <PrimaryContactSelector
-                      field={`dispositionPurchasers.${index}.primaryContactId`}
-                      contactInfo={purchaser?.contact}
-                    ></PrimaryContactSelector>
-                  </SectionField>
+                  <Row noGutters>
+                    <Col xs="auto" xl="12">
+                      <SectionField label="Primary contact" labelWidth="6" contentWidth="6">
+                        <PrimaryContactSelector
+                          field={`dispositionPurchasers.${index}.primaryContactId`}
+                          contactInfo={purchaser?.contact}
+                        ></PrimaryContactSelector>
+                      </SectionField>
+                    </Col>
+                  </Row>
                 )}
               </React.Fragment>
             ),
@@ -78,6 +86,7 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
 
           <LinkButton
             data-testid="add-purchaser-button"
+            className="mb-2"
             onClick={() => {
               const purchaserContact = new DispositionSaleContactModel(
                 null,
@@ -97,11 +106,3 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
 };
 
 export default DispositionSalePurchaserSubForm;
-
-const StyledRow = styled(Row)`
-  flex-wrap: nowrap;
-`;
-
-// const StyledRemoveButtonCol = styled(Col)`
-//   padding-right: 0;
-// `;
