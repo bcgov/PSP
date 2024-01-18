@@ -22,7 +22,6 @@ export class DispositionTeamSubFormModel {
     readonly rowVersion: number | null = null,
     contact: IContactSearchResult | null = null,
   ) {
-    debugger;
     this.id = id;
     this.rowVersion = rowVersion;
     this.contact = contact;
