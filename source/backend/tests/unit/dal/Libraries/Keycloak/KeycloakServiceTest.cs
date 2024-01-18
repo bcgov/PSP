@@ -37,7 +37,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             // Act
             // Assert
-            var result = Assert.Throws<ConfigurationException>(() => helper.Create<KeycloakService>(options, user));
+            var result = Assert.Throws<ConfigurationException>(() => helper.Create<KeycloakRepository>(options, user));
             result.Message.Should().Be("The configuration for Keycloak:Authority is invalid or missing.");
         }
 
@@ -60,7 +60,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             // Act
             // Assert
-            var result = Assert.Throws<ConfigurationException>(() => helper.Create<KeycloakService>(options, user));
+            var result = Assert.Throws<ConfigurationException>(() => helper.Create<KeycloakRepository>(options, user));
             result.Message.Should().Be("The configuration for Keycloak:Audience is invalid or missing.");
         }
 
@@ -84,7 +84,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             // Act
             // Assert
-            var result = Assert.Throws<ConfigurationException>(() => helper.Create<KeycloakService>(options, user));
+            var result = Assert.Throws<ConfigurationException>(() => helper.Create<KeycloakRepository>(options, user));
             result.Message.Should().Be("The configuration for Keycloak:Client is invalid or missing.");
         }
 
@@ -109,7 +109,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             // Act
             // Assert
-            var result = Assert.Throws<ConfigurationException>(() => helper.Create<KeycloakService>(options, user));
+            var result = Assert.Throws<ConfigurationException>(() => helper.Create<KeycloakRepository>(options, user));
             result.Message.Should().Be("The configuration for Keycloak:ServiceAccount is invalid or missing.");
         }
 
@@ -135,7 +135,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             // Act
             // Assert
-            var result = Assert.Throws<ConfigurationException>(() => helper.Create<KeycloakService>(options, user));
+            var result = Assert.Throws<ConfigurationException>(() => helper.Create<KeycloakRepository>(options, user));
             result.Message.Should().Be("The configuration for Keycloak:ServiceAccount:Client is invalid or missing.");
         }
 
@@ -164,7 +164,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             // Act
             // Assert
-            var result = Assert.Throws<ConfigurationException>(() => helper.Create<KeycloakService>(options, user));
+            var result = Assert.Throws<ConfigurationException>(() => helper.Create<KeycloakRepository>(options, user));
             result.Message.Should().Be("The configuration for Keycloak:ServiceAccount:Secret is invalid or missing.");
         }
 
@@ -196,7 +196,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             helper.AddSingleton(openIdConnect.Object);
 
             // Act
-            var service = helper.Create<KeycloakService>(options, user);
+            var service = helper.Create<KeycloakRepository>(options, user);
 
             // Assert
             openIdConnect.Object.AuthClientOptions.Audience.Should().Be(options.Value.Audience);
@@ -235,7 +235,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             helper.AddSingleton(openIdConnect.Object);
 
             // Act
-            var service = helper.Create<KeycloakService>(options, user);
+            var service = helper.Create<KeycloakRepository>(options, user);
 
             // Assert
             openIdConnect.Object.AuthClientOptions.Audience.Should().Be(options.Value.ServiceAccount.Audience);

@@ -323,7 +323,6 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             ButtonElement("Save");
 
-            //sharedModals.SiteMinderModal();
         }
 
         public void CancelPropertyDetails()
@@ -947,7 +946,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int PropertyTabs()
         {
-            Wait();
+            Wait(2000);
             return webDriver.FindElements(propertyInformationTabsTotal).Count();
         }
     }

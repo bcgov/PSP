@@ -14,7 +14,9 @@ export const PropertyActivityEditFormYupSchema = Yup.object().shape({
     .required('Description is required')
     .max(2000, 'Description must be at most 2000 characters'),
 
-  requestedSource: Yup.string().max(2000, 'Requested source must be at most 2000 characters'),
+  requestedSource: Yup.string()
+    .nullable()
+    .max(2000, 'Requested source must be at most 2000 characters'),
 
   invoices: Yup.array().of(
     Yup.object().shape({

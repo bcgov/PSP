@@ -96,7 +96,7 @@ const FormikDatePicker: FunctionComponent<React.PropsWithChildren<FastDatePicker
         autoComplete="off"
         name={field}
         required={required}
-        placeholderText="MTH DD, YYYY"
+        placeholderText="MMM DD, YYYY"
         className={classNames('form-control', 'date-picker', isInvalid, isValid, innerClassName)}
         dateFormat="MMM dd, yyyy"
         selected={(value && new Date(value)) || null}

@@ -10,8 +10,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By compensationLinkTab = By.XPath("//a[contains(text(),'Compensation')]");
 
         //Add Compensation Elements
-        private By compensationAddSubtitle = By.XPath("//div[contains(text(),'Add Compensation')]");
-        private By compensationAddBttn = By.XPath("//div[contains(text(),'Add Compensation')]/following-sibling::div/button");
+        private By compensationAddSubtitle = By.XPath("//div[contains(text(),'Compensation Requisitions')]");
+        private By compensationAddBttn = By.XPath("//div[contains(text(),'Compensation Requisitions')]/following-sibling::div/button");
 
         private By compensationTotalAllowableLabel = By.XPath("//label[contains(text(),'Total allowable compensation')]");
         private By compensationTotalAllowableContent = By.XPath("//label[contains(text(),'Total allowable compensation')]/parent::div/following-sibling::div");
@@ -25,7 +25,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By compensationDraftsTotalLabel = By.XPath("//label[contains(text(),'Drafts')]");
         private By compensationDraftsTotalContent = By.XPath("//label[contains(text(),'Drafts')]/parent::div/following-sibling::div");
 
-        private By compensationAddCompensationTooltips = By.XPath("//div[contains(text(),'Add Compensation')]/parent::div/parent::div/parent::div/parent::h2/parent::div/div/div/div/label/span");
+        private By compensationAddCompensationTooltips = By.XPath("//div[contains(text(),'Compensation Requisitions')]/parent::div/parent::div/parent::div/parent::h2/parent::div/div/div/div/label/span");
 
         //Requisition in this file (H120) Elements
         private By compensationH120Subtitle = By.XPath("//div[contains(text(),'Requisitions in this file (H120)')]");
@@ -83,13 +83,19 @@ namespace PIMS.Tests.Automation.PageObjects
         private By requisitionFiscalYearSelect = By.Id("input-fiscalYear");
         private By requisitionSTOBLabel = By.XPath("//label[contains(text(),'STOB')]");
         private By requisitionSTOBContent = By.XPath("//label[contains(text(),'STOB')]/parent::div/following-sibling::div");
-        private By requisitionSTOBSelect = By.Id("input-stob");
+        private By requisitionSTOBInput = By.Id("typeahead-select-stob");
+        private By requisitionSTOBOptions = By.CssSelector("div[id='typeahead-select-stob']");
+        private By requisitionSTOB1stOption = By.CssSelector("div[id='typeahead-select-stob'] a:nth-child(1)");
         private By requisitionServiceLineLabel = By.XPath("//label[contains(text(),'Service line')]");
         private By requisitionServiceLineContent = By.XPath("//label[contains(text(),'Service line')]/parent::div/following-sibling::div/label");
-        private By requisitionServiceLineSelect = By.Id("input-serviceLine");
+        private By requisitionServiceLineInput = By.Id("typeahead-select-serviceLine");
+        private By requisitionServiceLineOptions = By.CssSelector("div[id='typeahead-select-serviceLine']");
+        private By requisitionServiceLine1stOption = By.CssSelector("div[id='typeahead-select-serviceLine'] a:nth-child(1)");
         private By requisitionResponsibilityCentreLabel = By.XPath("//label[contains(text(),'Responsibility centre')]");
         private By requisitionResponsibilityCentreContent = By.XPath("//label[contains(text(),'Responsibility centre')]/parent::div/following-sibling::div/label");
-        private By requisitionResponsibilityCentreSelect = By.Id("input-responsibilityCentre");
+        private By requisitionResponsibilityCentreInput = By.Id("typeahead-select-responsibilityCentre");
+        private By requisitionResponsibilityCentreOptions = By.CssSelector("div[id='typeahead-select-responsibilityCentre']");
+        private By requisitionResponsibilityCentre1stOption = By.CssSelector("div[id='typeahead-select-responsibilityCentre'] a:nth-child(1)");
 
         private By requisitionPaymentSubtitle = By.XPath("//h2/div/div[contains(text(),'Payment')]");
         private By requisitionPayeeLabel = By.XPath("//label[contains(text(),'Payee')]");
@@ -291,17 +297,30 @@ namespace PIMS.Tests.Automation.PageObjects
             if (compensation.CompensationFiscalYear != "")
                 ChooseSpecificSelectOption(requisitionFiscalYearSelect, compensation.CompensationFiscalYear);
 
-            if(compensation.CompensationSTOB != "")
-                ChooseSpecificSelectOption(requisitionSTOBSelect, compensation.CompensationSTOB);
+            if (compensation.CompensationSTOB != "")
+            {
+                webDriver.FindElement(requisitionSTOBInput).SendKeys(compensation.CompensationSTOB);
+                WaitUntilVisible(requisitionSTOBOptions);
+                FocusAndClick(requisitionSTOB1stOption);
+            }
 
-            if(compensation.CompensationServiceLine != "")
-                ChooseSpecificSelectOption(requisitionServiceLineSelect, compensation.CompensationServiceLine);
+            if (compensation.CompensationServiceLine != "")
+            {
+                webDriver.FindElement(requisitionServiceLineInput).SendKeys(compensation.CompensationServiceLine);
+                WaitUntilVisible(requisitionServiceLineOptions);
+                FocusAndClick(requisitionServiceLine1stOption);
+            }
+                
 
-            if(compensation.CompensationResponsibilityCentre != "")
-                ChooseSpecificSelectOption(requisitionResponsibilityCentreSelect, compensation.CompensationResponsibilityCentre);
+            if (compensation.CompensationResponsibilityCentre != "")
+            {
+                webDriver.FindElement(requisitionResponsibilityCentreInput).SendKeys(compensation.CompensationResponsibilityCentre);
+                WaitUntilVisible(requisitionResponsibilityCentreOptions);
+                FocusAndClick(requisitionResponsibilityCentre1stOption);
+            }
 
             //Payment
-            if(compensation.CompensationPayee != "")
+            if (compensation.CompensationPayee != "")
                 ChooseSpecificSelectOption(requisitionPayeeSelect, compensation.CompensationPayee);
 
             if (compensation.CompensationPaymentInTrust)
@@ -450,11 +469,11 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(requisitionFiscalYearLabel);
             AssertTrueIsDisplayed(requisitionFiscalYearSelect);
             AssertTrueIsDisplayed(requisitionSTOBLabel);
-            AssertTrueIsDisplayed(requisitionSTOBSelect);
+            AssertTrueIsDisplayed(requisitionSTOBInput);
             AssertTrueIsDisplayed(requisitionServiceLineLabel);
-            AssertTrueIsDisplayed(requisitionServiceLineSelect);
+            AssertTrueIsDisplayed(requisitionServiceLineInput);
             AssertTrueIsDisplayed(requisitionResponsibilityCentreLabel);
-            AssertTrueIsDisplayed(requisitionResponsibilityCentreSelect);
+            AssertTrueIsDisplayed(requisitionResponsibilityCentreInput);
 
             //Payment
             AssertTrueIsDisplayed(requisitionPaymentSubtitle);
@@ -620,7 +639,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(By.XPath("//div[@data-testid='finacialActivity["+ index +"]']/div/button[@title='Delete financial activity']"));
 
             AssertTrueIsDisplayed(By.XPath("//div[@data-testid='finacialActivity["+ index +"]']/div/div/label[contains(text(),'Code & Description')]"));
-            AssertTrueIsDisplayed(By.Id("input-financials["+ index +"].financialActivityCodeId"));
+            AssertTrueIsDisplayed(By.Id("typeahead-select-financials."+ index +".financialActivityCodeId"));
 
             AssertTrueIsDisplayed(By.XPath("//div[@data-testid='finacialActivity["+ index +"]']/div/div/label[contains(text(),'Amount (before tax)')]"));
             AssertTrueIsDisplayed(By.Id("input-financials["+ index +"].pretaxAmount"));
@@ -633,7 +652,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Create a new Activity
             if (activity.ActCodeDescription != "")
-                ChooseSpecificSelectOption(By.Id("input-financials["+ index +"].financialActivityCodeId"), activity.ActCodeDescription);
+            {
+                webDriver.FindElement(By.Id("typeahead-select-financials."+ index +".financialActivityCodeId")).SendKeys(activity.ActCodeDescription);
+                WaitUntilVisible(By.CssSelector("div[id='typeahead-select-financials."+ index +".financialActivityCodeId']"));
+                webDriver.FindElement(By.CssSelector("div[id='typeahead-select-financials."+ index +".financialActivityCodeId'] a:nth-child(1)")).Click();
+            }
 
             if (activity.ActAmount != "")
             {

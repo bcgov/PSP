@@ -42,6 +42,7 @@ export const NotesModal: React.FunctionComponent<React.PropsWithChildren<INotesM
         <FaRegFileAlt />
       </StyledIconButton>
       <GenericModal
+        variant="info"
         display={showNotes}
         setDisplay={setShowNotes}
         title={title}
@@ -51,7 +52,6 @@ export const NotesModal: React.FunctionComponent<React.PropsWithChildren<INotesM
             <TextArea field={fieldWithNameSpace} data-testid="note-field"></TextArea>
           </>
         }
-        closeButton
         okButtonText="Save"
         cancelButtonText="Cancel"
         handleOk={() => {

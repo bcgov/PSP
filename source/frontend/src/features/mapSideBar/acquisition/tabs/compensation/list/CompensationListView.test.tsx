@@ -1,12 +1,13 @@
 import { createMemoryHistory } from 'history';
 
+import { AcquisitionStatus } from '@/constants/acquisitionFileStatus';
 import Claims from '@/constants/claims';
 import {
   emptyCompensationFinancial,
   emptyCompensationRequisition,
   getMockApiCompensationList,
 } from '@/mocks/compensations.mock';
-import { mockLookups } from '@/mocks/index.mock';
+import { mockAcquisitionFileResponse, mockLookups } from '@/mocks/index.mock';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
@@ -24,11 +25,14 @@ const onDelete = jest.fn();
 const onAddCompensationRequisition = jest.fn();
 const onUpdateTotalCompensation = jest.fn();
 
+const mockAcquisitionfile = mockAcquisitionFileResponse();
+
 describe('compensation list view', () => {
   const setup = (renderOptions?: RenderOptions & Partial<ICompensationListViewProps>) => {
     // render component under test
     const component = render(
       <CompensationListView
+        acquisitionFile={renderOptions?.acquisitionFile ?? { ...mockAcquisitionfile }}
         compensations={renderOptions?.compensations ?? []}
         onDelete={onDelete}
         onAdd={onAddCompensationRequisition}
@@ -108,15 +112,20 @@ describe('compensation list view', () => {
   });
 
   it('can click the delete action on a given row', async () => {
+    const compensations = getMockApiCompensationList();
     const { findAllByTitle } = setup({
-      compensations: getMockApiCompensationList(),
+      acquisitionFile: {
+        ...mockAcquisitionFileResponse(),
+        fileStatusTypeCode: { id: AcquisitionStatus.Active },
+      },
+      compensations: compensations,
       claims: [Claims.COMPENSATION_REQUISITION_DELETE],
     });
 
     const deleteButton = (await findAllByTitle('Delete Compensation'))[0];
     act(() => userEvent.click(deleteButton));
     await waitFor(() => {
-      expect(onDelete).toHaveBeenCalledWith(4);
+      expect(onDelete).toHaveBeenCalledWith(compensations[0].id);
     });
   });
 

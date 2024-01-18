@@ -50,6 +50,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsAddressUsageType> PimsAddressUsageTypes { get; set; }
         public virtual DbSet<PimsAgreement> PimsAgreements { get; set; }
         public virtual DbSet<PimsAgreementHist> PimsAgreementHists { get; set; }
+        public virtual DbSet<PimsAgreementStatusType> PimsAgreementStatusTypes { get; set; }
         public virtual DbSet<PimsAgreementType> PimsAgreementTypes { get; set; }
         public virtual DbSet<PimsAreaUnitType> PimsAreaUnitTypes { get; set; }
         public virtual DbSet<PimsBusinessFunctionCode> PimsBusinessFunctionCodes { get; set; }
@@ -1207,6 +1208,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.AgreementDate).HasComment("Date of the agreement.");
 
+                entity.Property(e => e.AgreementStatusTypeCode).HasDefaultValueSql("('DRAFT')");
+
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
@@ -1218,6 +1221,8 @@ namespace Pims.Dal
                 entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
 
                 entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.CancellationNote).HasComment("Note pertaining to the cancellation of the agreement.");
 
                 entity.Property(e => e.CommencementDate).HasComment("Date of commencement of the agreement.");
 
@@ -1241,10 +1246,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.InspectionDate).HasComment("Date of inspection.");
 
-                entity.Property(e => e.IsDraft)
-                    .HasDefaultValueSql("(CONVERT([bit],(1)))")
-                    .HasComment("Status of the agreement (currently TRUE/FALSE).  Defaults to TRUE.");
-
                 entity.Property(e => e.LegalSurveyPlanNum).HasComment("Legal survey plan number,");
 
                 entity.Property(e => e.NoLaterThanDays).HasComment("Deposit due date");
@@ -1265,6 +1266,12 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACQNFL_PIM_AGRMNT_FK");
 
+                entity.HasOne(d => d.AgreementStatusTypeCodeNavigation)
+                    .WithMany(p => p.PimsAgreements)
+                    .HasForeignKey(d => d.AgreementStatusTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_AGRSTY_PIM_AGRMNT_FK");
+
                 entity.HasOne(d => d.AgreementTypeCodeNavigation)
                     .WithMany(p => p.PimsAgreements)
                     .HasForeignKey(d => d.AgreementTypeCode)
@@ -1280,6 +1287,34 @@ namespace Pims.Dal
                 entity.Property(e => e.AgreementHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_AGREEMENT_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsAgreementStatusType>(entity =>
+            {
+                entity.HasKey(e => e.AgreementStatusTypeCode)
+                    .HasName("AGRSTY_PK");
+
+                entity.HasComment("Table that contains the codes and associated descriptions of the agreement types.");
+
+                entity.Property(e => e.AgreementStatusTypeCode).HasComment("Codified version of the agreement status.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the agreement status type.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code value is inactive.");
             });
 
             modelBuilder.Entity<PimsAgreementType>(entity =>
@@ -7962,6 +7997,14 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_EXPROPRIATION_PAYMENT_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_FILE_ENTITY_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_FILE_ENTITY_PERMISSIONS_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 

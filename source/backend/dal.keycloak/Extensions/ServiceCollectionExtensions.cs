@@ -16,7 +16,7 @@ namespace Pims.Dal.Keycloak
         public static IServiceCollection AddPimsKeycloakService(this IServiceCollection services)
         {
             return services.AddScoped<IPimsKeycloakService, PimsKeycloakService>()
-                .AddScoped<IKeycloakService, KeycloakService>();
+                .AddScoped<IKeycloakRepository, KeycloakRepository>();
         }
     }
 }

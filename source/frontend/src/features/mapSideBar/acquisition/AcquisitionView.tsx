@@ -192,6 +192,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                 />
 
                 <GenericModal
+                  variant="info"
                   display={containerState.showConfirmModal}
                   title={'Confirm changes'}
                   message={

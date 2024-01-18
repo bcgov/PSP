@@ -144,6 +144,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
           ref={formikRef}
         />
         <GenericModal
+          variant="info"
           display={showCancelConfirmModal}
           title={'Confirm changes'}
           message={

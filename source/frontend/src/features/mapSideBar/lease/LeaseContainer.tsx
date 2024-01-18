@@ -229,6 +229,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       }
     >
       <GenericModal
+        variant="info"
         display={containerState.showConfirmModal}
         title={'Confirm changes'}
         message={

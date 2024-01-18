@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -107,7 +107,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ProjectView);
             _logger.LogInformation("Getting Project by Id ...");
 
-            return _projectRepository.Get(projectId);
+            return _projectRepository.TryGet(projectId);
         }
 
         public IList<PimsProduct> GetProducts(long projectId)
@@ -134,6 +134,11 @@ namespace Pims.Api.Services
             {
                 throw new ArgumentNullException(nameof(project), "Project cannot be null.");
             }
+            var existingProject = _projectRepository.GetAllByName(project.Description);
+            if (existingProject.Any(p => p.Code == project.Code))
+            {
+                throw new BusinessRuleViolationException($"Project {project.Code} already exists. Project will not be duplicated.");
+            }
 
             var externalProducts = MatchProducts(project);
             if (externalProducts.Count > 0 && !userOverrides.Contains(UserOverrideCode.ProductReuse))
@@ -145,7 +150,7 @@ namespace Pims.Api.Services
             var newProject = _projectRepository.Add(project);
             _projectRepository.CommitTransaction();
 
-            return _projectRepository.Get(newProject.Internal_Id);
+            return _projectRepository.TryGet(newProject.Internal_Id);
         }
 
         public PimsProject Update(PimsProject project, IEnumerable<UserOverrideCode> userOverrides)
@@ -246,7 +251,7 @@ namespace Pims.Api.Services
 
         private void AddNoteIfStatusChanged(PimsProject updatedProject)
         {
-            var currentProject = _projectRepository.Get(updatedProject.Internal_Id);
+            var currentProject = _projectRepository.TryGet(updatedProject.Internal_Id);
             bool statusChanged = currentProject.ProjectStatusTypeCode != updatedProject.ProjectStatusTypeCode;
             if (!statusChanged)
             {
@@ -298,4 +303,3 @@ namespace Pims.Api.Services
         }
     }
 }
-

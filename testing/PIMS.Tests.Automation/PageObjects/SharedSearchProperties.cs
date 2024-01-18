@@ -193,22 +193,23 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFirstOption()
         {
-            WaitUntilVisible(searchProperties1stResultPropDiv);
+            Wait(2000);
             FocusAndClick(searchProperties1stResultPropCheckbox);
 
             webDriver.FindElement(searchPropertiesAddSelectionBttn).Click();
 
-            
+
+            Wait(2000);
             if (webDriver.FindElements(duplicatePropToast).Count() == 1)
             {
                 WaitUntilVisible(duplicatePropToast);
-                Assert.True(webDriver.FindElement(duplicatePropToast).Text == "A property that the user is trying to select has already been added to the selected properties list");
+                Assert.Equal("A property that the user is trying to select has already been added to the selected properties list", webDriver.FindElement(duplicatePropToast).Text);
             }
 
             if (webDriver.FindElements(searchPropertiesModal).Count > 0)
             {
-                Assert.True(sharedModals.ModalHeader() == "Not inventory property");
-                Assert.True(sharedModals.ModalContent() == "You have selected a property not previously in the inventory. Do you want to add this property to the lease?");
+                Assert.Equal("Not inventory property", sharedModals.ModalHeader());
+                Assert.Equal("You have selected a property not previously in the inventory. Do you want to add this property to the lease?", sharedModals.ModalContent());
 
                 sharedModals.ModalClickOKBttn();
             }
@@ -224,33 +225,34 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(searchSectionTitle);
 
-            Assert.True(webDriver.FindElement(searchSectionTitle).Displayed);
-            Assert.True(webDriver.FindElement(searchSectionInstructions).Displayed);
+            AssertTrueIsDisplayed(searchSectionTitle);
+            AssertTrueIsDisplayed(searchSectionInstructions);
 
-            Assert.True(webDriver.FindElement(locateOnMapTab).Displayed);
-            Assert.True(webDriver.FindElement(searchByTab).Displayed);
+            AssertTrueIsDisplayed(locateOnMapTab);
+            AssertTrueIsDisplayed(searchByTab);
 
-            Assert.True(webDriver.FindElement(locateOnMapSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(locateOnMapBlueIcon).Displayed);
-            Assert.True(webDriver.FindElement(locateOnMapInstuction1).Displayed);
-            Assert.True(webDriver.FindElement(locateOnMapInstuction2).Displayed);
-            Assert.True(webDriver.FindElement(locateOnMapInstuction3).Displayed);
-            Assert.True(webDriver.FindElement(locateOnMapSelectedLabel).Displayed);
-            Assert.True(webDriver.FindElement(locateOnMapPIDLabel).Displayed);
-            Assert.True(webDriver.FindElement(locateOnMapPlanLabel).Displayed);
-            Assert.True(webDriver.FindElement(locateOnMapAddressLabel).Displayed);
-            Assert.True(webDriver.FindElement(locateOnMapRegionLabel).Displayed);
-            Assert.True(webDriver.FindElement(locateOnMapDistrictLabel).Displayed);
-            Assert.True(webDriver.FindElement(locateOnMapLegalDescriptionLabel).Displayed);
+            AssertTrueIsDisplayed(locateOnMapSubtitle);
+            AssertTrueIsDisplayed(locateOnMapBlueIcon);
+            AssertTrueIsDisplayed(locateOnMapInstuction1);
+            AssertTrueIsDisplayed(locateOnMapInstuction2);
+            AssertTrueIsDisplayed(locateOnMapInstuction3);
+            AssertTrueIsDisplayed(locateOnMapSelectedLabel);
+            AssertTrueIsDisplayed(locateOnMapPIDLabel);
+            AssertTrueIsDisplayed(locateOnMapPlanLabel);
+            AssertTrueIsDisplayed(locateOnMapAddressLabel);
+            AssertTrueIsDisplayed(locateOnMapRegionLabel);
+            AssertTrueIsDisplayed(locateOnMapDistrictLabel);
+            AssertTrueIsDisplayed(locateOnMapLegalDescriptionLabel);
 
-            Assert.True(webDriver.FindElement(searchPropertiesSelectedPropertiesSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertiesSelectedIdentifierHeader).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertiesSelectedDescriptiveNameHeader).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertiesSelectedToolTipIcon).Displayed);
+            AssertTrueIsDisplayed(searchPropertiesSelectedPropertiesSubtitle);
+            AssertTrueIsDisplayed(searchPropertiesSelectedIdentifierHeader);
+            AssertTrueIsDisplayed(searchPropertiesSelectedDescriptiveNameHeader);
+            AssertTrueIsDisplayed(searchPropertiesSelectedToolTipIcon);
+
             if (webDriver.FindElements(searchPropertiesSelectedDefault).Count > 0)
             {
                 WaitUntilVisible(searchPropertiesSelectedDefault);
-                Assert.True(webDriver.FindElement(searchPropertiesSelectedDefault).Displayed);
+                AssertTrueIsDisplayed(searchPropertiesSelectedDefault);
             }
         }
 
@@ -258,19 +260,19 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilSpinnerDisappear();
 
-            Assert.True(webDriver.FindElement(searchByTab).Displayed);
-            Assert.True(webDriver.FindElement(searchBySubtitle).Displayed);
-            Assert.True(webDriver.FindElement(searchBySelect).Displayed);
-            Assert.True(webDriver.FindElement(searchByPIDInput).Displayed);
-            Assert.True(webDriver.FindElement(searchByButton).Displayed);
-            Assert.True(webDriver.FindElement(searchResetButton).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertiesResultTableHeader).Displayed);
-            Assert.True(webDriver.FindElement(searchPropsResultSelectAllInput).Displayed);
-            Assert.True(webDriver.FindElement(searchPropResultsPIDHeader).Displayed);
-            Assert.True(webDriver.FindElement(searchPropResultsPINHeader).Displayed);
-            Assert.True(webDriver.FindElement(searchPropResultsPlanHeader).Displayed);
-            Assert.True(webDriver.FindElement(searchPropResultsAddressHeader).Displayed);
-            Assert.True(webDriver.FindElement(searchPropResultsLegalDescriptHeader).Displayed);
+            AssertTrueIsDisplayed(searchByTab);
+            AssertTrueIsDisplayed(searchBySubtitle);
+            AssertTrueIsDisplayed(searchBySelect);
+            AssertTrueIsDisplayed(searchByPIDInput);
+            AssertTrueIsDisplayed(searchByButton);
+            AssertTrueIsDisplayed(searchResetButton);
+            AssertTrueIsDisplayed(searchPropertiesResultTableHeader);
+            AssertTrueIsDisplayed(searchPropsResultSelectAllInput);
+            AssertTrueIsDisplayed(searchPropResultsPIDHeader);
+            AssertTrueIsDisplayed(searchPropResultsPINHeader);
+            AssertTrueIsDisplayed(searchPropResultsPlanHeader);
+            AssertTrueIsDisplayed(searchPropResultsAddressHeader);
+            AssertTrueIsDisplayed(searchPropResultsLegalDescriptHeader);
         }
         
     }

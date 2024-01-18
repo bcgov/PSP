@@ -22,10 +22,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Financial Codes Table
         private By financialCodeTableHeaderCodeValue = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Code value')]");
+        private By financialCodeTableCodeSortBttn = By.CssSelector("div[data-testid='sort-column-code']");
         private By financialCodeTableHeaderCodeDescription = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Code description')]");
+        private By financialCodeTableDescriptionSortBttn = By.CssSelector("div[data-testid='sort-column-description']");
         private By financialCodeTableHeaderCodeType = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Code type')]");
+        private By financialCodeTableTypeSortBttn = By.CssSelector("div[data-testid='sort-column-type']");
         private By financialCodeTableHeaderEffectiveDate = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Effective date')]");
+        private By financialCodeTableEffectiveDateSortBttn = By.CssSelector("div[data-testid='sort-column-effectiveDate']");
         private By financialCodeTableHeaderExpiryDate = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Expiry date')]");
+        private By financialCodeTableExpiryDateSortBttn = By.CssSelector("div[data-testid='sort-column-expiryDate']");
         private By financialCodeTableResultsTotal = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='tbody']/div[@class='tr-wrapper']");
 
         private By financialResults1stResultCodeValue = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[1]/a");
@@ -69,7 +74,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By financialCodeFormSaveBttn = By.XPath("//div[contains(text(),'Save')]/parent::button");
 
         //Financial Code Confirmation Modal
-        private By financialCodeModal = By.CssSelector("div[class='modal-dialog']");
+        private By financialCodeModal = By.CssSelector("div[class='modal-content']");
 
         //Financial Code Error Message
         private By financialCodeDuplicateErrorMessage = By.XPath("//div[contains(text(),'Cannot create duplicate financial code')]");
@@ -142,9 +147,49 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(financialCodeSearchBttn).Click();
         }
 
+        public void FilterFinancialCodeByType(string value)
+        {
+            WaitUntilClickable(financialCodeResetBttn);
+            webDriver.FindElement(financialCodeResetBttn).Click();
+
+            WaitUntilVisible(financialCodeTypeSelect);
+            ChooseSpecificSelectOption(financialCodeTypeSelect, value);
+            webDriver.FindElement(financialCodeSearchBttn).Click();
+        }
+
+        public void OrderByFinancialCodeValue()
+        {
+            WaitUntilClickable(financialCodeTableCodeSortBttn);
+            webDriver.FindElement(financialCodeTableCodeSortBttn).Click();
+        }
+
+        public void OrderByFinancialCodeDescription()
+        {
+            WaitUntilClickable(financialCodeTableDescriptionSortBttn);
+            webDriver.FindElement(financialCodeTableDescriptionSortBttn).Click();
+        }
+
+        public void OrderByFinancialCodeType()
+        {
+            WaitUntilClickable(financialCodeTableTypeSortBttn);
+            webDriver.FindElement(financialCodeTableTypeSortBttn).Click();
+        }
+
+        public void OrderByFinancialCodeEffectiveDate()
+        {
+            WaitUntilClickable(financialCodeTableEffectiveDateSortBttn);
+            webDriver.FindElement(financialCodeTableEffectiveDateSortBttn).Click();
+        }
+
+        public void OrderByFinancialCodeExpiryDate()
+        {
+            WaitUntilClickable(financialCodeTableExpiryDateSortBttn);
+            webDriver.FindElement(financialCodeTableExpiryDateSortBttn).Click();
+        }
+
         public int CountTotalFinancialCodeResults()
         {
-            Wait();
+            WaitUntilTableSpinnerDisappear();
             return webDriver.FindElements(financialCodeTableResultsTotal).Count();
         }
 
@@ -152,6 +197,36 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(financialCodeDuplicateErrorMessage);
             return webDriver.FindElement(financialCodeDuplicateErrorMessage).Displayed;
+        }
+
+        public string FirstFinancialCodeValue()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(financialResults1stResultCodeValue).Text;
+        }
+
+        public string FirstFinancialCodeDescription()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(financialResults1stResultCodeDescription).Text;
+        }
+
+        public string FirstFinancialCodeType()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(financialResults1stResultCodeType).Text;
+        }
+
+        public string FirstFinancialCodeEffectiveDate()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(financialResults1stResultEffectiveDate).Text;
+        }
+
+        public string FirstFinancialCodeExpiryDate()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(financialResults1stResultExpiryDate).Text;
         }
 
         public void ChooseFirstSearchCodeValue()
@@ -162,95 +237,94 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyFinancialCodeListView()
         {
-            WaitUntilVisible(financialCodeTitle);
-            Assert.True(webDriver.FindElement(financialCodeTitle).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeTypeSelect).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeDescriptionInput).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeShowExpiredInput).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeShowExpiredSpan).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeSearchBttn).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeResetBttn).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeCreateNewBttn).Displayed);
+            AssertTrueIsDisplayed(financialCodeTitle);
+            AssertTrueIsDisplayed(financialCodeTypeSelect);
+            AssertTrueIsDisplayed(financialCodeDescriptionInput);
+            AssertTrueIsDisplayed(financialCodeShowExpiredInput);
+            AssertTrueIsDisplayed(financialCodeShowExpiredSpan);
+            AssertTrueIsDisplayed(financialCodeSearchBttn);
+            AssertTrueIsDisplayed(financialCodeResetBttn);
+            AssertTrueIsDisplayed(financialCodeCreateNewBttn);
 
-            Assert.True(webDriver.FindElement(financialCodeTableHeaderCodeValue).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeTableHeaderCodeDescription).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeTableHeaderCodeType).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeTableHeaderEffectiveDate).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeTableHeaderExpiryDate).Displayed);
-            Assert.True(webDriver.FindElements(financialCodeTableResultsTotal).Count() > 1);
-            
-            Assert.True(webDriver.FindElement(financialCodePaginationEntries).Displayed);
-            Assert.True(webDriver.FindElement(financialCodePaginationList).Displayed);
+            AssertTrueIsDisplayed(financialCodeTableHeaderCodeValue);
+            AssertTrueIsDisplayed(financialCodeTableHeaderCodeDescription);
+            AssertTrueIsDisplayed(financialCodeTableHeaderCodeType);
+            AssertTrueIsDisplayed(financialCodeTableHeaderEffectiveDate);
+            AssertTrueIsDisplayed(financialCodeTableHeaderExpiryDate);
+
+            Assert.True(webDriver.FindElements(financialCodeTableResultsTotal).Count() > 0);
+
+            AssertTrueIsDisplayed(financialCodePaginationEntries);
+            AssertTrueIsDisplayed(financialCodePaginationList);
         }
 
         public void VerifyCreateNewFinancialCodeForm()
         {
-            WaitUntilVisible(financialCodeCreateTitle);
-            Assert.True(webDriver.FindElement(financialCodeCreateTitle).Displayed);
 
-            Assert.True(webDriver.FindElement(financialCodeFormTypeLabel).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormTypeSelect).Displayed);
+            AssertTrueIsDisplayed(financialCodeCreateTitle);
+
+            AssertTrueIsDisplayed(financialCodeFormTypeLabel);
+            AssertTrueIsDisplayed(financialCodeFormTypeSelect);
 
             webDriver.FindElement(financialCodeFormTypeSelect).Click();
             webDriver.FindElement(financialCodeFormTypeLabel).Click();
-            Assert.True(webDriver.FindElement(financialCodeFormTypeErrorMessage).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormTypeErrorMessage);
 
-            Assert.True(webDriver.FindElement(financialCodeFormValueLabel).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormValueInput).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormValueLabel);
+            AssertTrueIsDisplayed(financialCodeFormValueInput);
 
             webDriver.FindElement(financialCodeFormValueInput).Click();
             webDriver.FindElement(financialCodeFormValueLabel).Click();
-            Assert.True(webDriver.FindElement(financialCodeFormValueErrorMessage).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormValueErrorMessage);
 
-            Assert.True(webDriver.FindElement(financialCodeFormDescriptionLabel).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormDescriptionInput).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormDescriptionLabel);
+            AssertTrueIsDisplayed(financialCodeFormDescriptionInput);
 
             webDriver.FindElement(financialCodeFormDescriptionInput).Click();
             webDriver.FindElement(financialCodeFormDescriptionLabel).Click();
-            Assert.True(webDriver.FindElement(financialCodeFormDescriptionErrorMessage).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormDescriptionErrorMessage);
 
-            Assert.True(webDriver.FindElement(financialCodeFormEffectiveDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormEffectiveDateTooltip).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormEffectiveDateInput).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormEffectiveDateLabel);
+            AssertTrueIsDisplayed(financialCodeFormEffectiveDateTooltip);
+            AssertTrueIsDisplayed(financialCodeFormEffectiveDateInput);
 
-            Assert.True(webDriver.FindElement(financialCodeFormExpiryDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormExpiryDateTooltip).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormExpiryDateInput).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormExpiryDateLabel);
+            AssertTrueIsDisplayed(financialCodeFormExpiryDateTooltip);
+            AssertTrueIsDisplayed(financialCodeFormExpiryDateInput);
 
-            Assert.True(webDriver.FindElement(financialCodeFormOrderLabel).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormOrderInput).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormOrderLabel);
+            AssertTrueIsDisplayed(financialCodeFormOrderInput);
 
-            Assert.True(webDriver.FindElement(financialCodeFormCancelBttn).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormSaveBttn).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormCancelBttn);
+            AssertTrueIsDisplayed(financialCodeFormSaveBttn);
         }
 
         public void VerifyUpdateFinancialCodeForm()
         {
-            WaitUntilVisible(financialCodeUpdateTitle);
-            Assert.True(webDriver.FindElement(financialCodeUpdateTitle).Displayed);
+            AssertTrueIsDisplayed(financialCodeUpdateTitle);
 
-            Assert.True(webDriver.FindElement(financialCodeFormTypeLabel).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormValueContent).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormTypeLabel);
+            AssertTrueIsDisplayed(financialCodeFormValueContent);
 
-            Assert.True(webDriver.FindElement(financialCodeFormValueLabel).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormValueInput).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormValueLabel);
+            AssertTrueIsDisplayed(financialCodeFormValueInput);
 
-            Assert.True(webDriver.FindElement(financialCodeFormDescriptionLabel).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormDescriptionInput).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormDescriptionLabel);
+            AssertTrueIsDisplayed(financialCodeFormDescriptionInput);
 
-            Assert.True(webDriver.FindElement(financialCodeFormEffectiveDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormEffectiveDateTooltip).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormEffectiveDateInput).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormEffectiveDateLabel);
+            AssertTrueIsDisplayed(financialCodeFormEffectiveDateTooltip);
+            AssertTrueIsDisplayed(financialCodeFormEffectiveDateInput);
 
-            Assert.True(webDriver.FindElement(financialCodeFormExpiryDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormExpiryDateTooltip).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormExpiryDateInput).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormExpiryDateLabel);
+            AssertTrueIsDisplayed(financialCodeFormExpiryDateTooltip);
+            AssertTrueIsDisplayed(financialCodeFormExpiryDateInput);
 
-            Assert.True(webDriver.FindElement(financialCodeFormOrderLabel).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormOrderInput).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormOrderLabel);
+            AssertTrueIsDisplayed(financialCodeFormOrderInput);
 
-            Assert.True(webDriver.FindElement(financialCodeFormCancelBttn).Displayed);
-            Assert.True(webDriver.FindElement(financialCodeFormSaveBttn).Displayed);
+            AssertTrueIsDisplayed(financialCodeFormCancelBttn);
+            AssertTrueIsDisplayed(financialCodeFormSaveBttn);
         }
     }
 }

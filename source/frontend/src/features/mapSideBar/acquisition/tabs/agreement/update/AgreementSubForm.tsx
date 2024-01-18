@@ -1,5 +1,5 @@
-import { FormikProps } from 'formik';
-import React from 'react';
+import { FormikProps, getIn } from 'formik';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import {
@@ -7,10 +7,13 @@ import {
   FastDatePicker,
   Input,
   Select,
-  SelectOption,
   TextArea,
 } from '@/components/common/form';
 import { SectionField, StyledFieldLabel } from '@/components/common/Section/SectionField';
+import * as API from '@/constants/API';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { useModalContext } from '@/hooks/useModalContext';
+import { AgreementStatusTypes } from '@/models/api/Agreement';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { mapLookupCode } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
@@ -23,6 +26,7 @@ export interface IAgreementSubFormProps {
   nameSpace: string;
   formikProps: FormikProps<AgreementsFormModel>;
   agreementTypes: ILookupCode[];
+  isDisabled: boolean;
 }
 
 export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> = ({
@@ -30,20 +34,61 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
   nameSpace,
   formikProps,
   agreementTypes,
+  isDisabled,
 }) => {
   const H0074Type = 'H0074';
-  const options: SelectOption[] = [
-    { label: 'Draft', value: 'true' },
-    { label: 'Final', value: 'false' },
-  ];
+  const { getOptionsByType } = useLookupCodeHelpers();
+
+  const agreementStatusOptions = getOptionsByType(API.AGREEMENT_STATUS_TYPES);
+  const agreement = getIn(formikProps.values, nameSpace);
+
+  const { setDisplayModal, setModalContent } = useModalContext();
+  const setFieldValue = formikProps.setFieldValue;
+  useEffect(() => {
+    if (
+      agreement.agreementStatusTypeCode !== AgreementStatusTypes.CANCELLED &&
+      !!agreement.cancellationNote
+    ) {
+      setModalContent({
+        variant: 'warning',
+        okButtonText: 'Yes',
+        cancelButtonText: 'No',
+        message:
+          'Changing status to a status other than "Cancelled" will remove your "Cancellation reason". Are you sure you want to continue?',
+        title: 'Warning',
+        handleCancel: () => {
+          setFieldValue(
+            withNameSpace(nameSpace, 'agreementStatusTypeCode'),
+            AgreementStatusTypes.CANCELLED,
+          );
+          setDisplayModal(false);
+        },
+        handleOk: () => {
+          setFieldValue(withNameSpace(nameSpace, 'cancellationNote'), '');
+          setDisplayModal(false);
+        },
+      });
+      setDisplayModal(true);
+    }
+  }, [agreement, setFieldValue, nameSpace, setDisplayModal, setModalContent]);
+
   return (
     <>
       <StyledSectionSubheader>Agreement details</StyledSectionSubheader>
       <SectionField labelWidth="5" label="Agreement status">
-        <Select options={options} field={withNameSpace(nameSpace, 'isDraft')} />
+        <Select
+          options={agreementStatusOptions}
+          field={withNameSpace(nameSpace, 'agreementStatusTypeCode')}
+          disabled={isDisabled}
+        />
       </SectionField>
+      {agreement.agreementStatusTypeCode === AgreementStatusTypes.CANCELLED && (
+        <SectionField labelWidth="5" label="Cancellation reason">
+          <Input field={withNameSpace(nameSpace, 'cancellationNote')} disabled={isDisabled} />
+        </SectionField>
+      )}
       <SectionField labelWidth="5" label="Legal survey plan">
-        <Input field={withNameSpace(nameSpace, 'legalSurveyPlanNum')} />
+        <Input field={withNameSpace(nameSpace, 'legalSurveyPlanNum')} disabled={isDisabled} />
       </SectionField>
       <SectionField labelWidth="5" label="Agreement type" required>
         <Select
@@ -58,12 +103,14 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
               formikProps.setFieldValue(withNameSpace(nameSpace, 'commencementDate'), '');
             }
           }}
+          disabled={isDisabled}
         />
       </SectionField>
       <SectionField labelWidth="5" label="Agreement date">
         <FastDatePicker
           field={withNameSpace(nameSpace, 'agreementDate')}
           formikProps={formikProps}
+          disabled={isDisabled}
         />
       </SectionField>
       {formikProps.values.agreements[index].agreementTypeCode === H0074Type && (
@@ -71,6 +118,7 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
           <FastDatePicker
             field={withNameSpace(nameSpace, 'commencementDate')}
             formikProps={formikProps}
+            disabled={isDisabled}
           />
         </SectionField>
       )}
@@ -78,18 +126,21 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
         <FastDatePicker
           field={withNameSpace(nameSpace, 'completionDate')}
           formikProps={formikProps}
+          disabled={isDisabled}
         />
       </SectionField>
       <SectionField labelWidth="5" label="Termination date">
         <FastDatePicker
           field={withNameSpace(nameSpace, 'terminationDate')}
           formikProps={formikProps}
+          disabled={isDisabled}
         />
       </SectionField>
       <SectionField labelWidth="5" label="Possession date">
         <FastDatePicker
           field={withNameSpace(nameSpace, 'possessionDate')}
           formikProps={formikProps}
+          disabled={isDisabled}
         />
       </SectionField>
 
@@ -98,6 +149,7 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
         <FastCurrencyInput
           field={withNameSpace(nameSpace, 'purchasePrice')}
           formikProps={formikProps}
+          disabled={isDisabled}
         />
       </SectionField>
       <SectionField
@@ -106,7 +158,7 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
         tooltip="Generally, if applicable, this is number of days from the execution of the agreement."
       >
         <StyledDiv>
-          <Input field={withNameSpace(nameSpace, 'noLaterThanDays')} />
+          <Input field={withNameSpace(nameSpace, 'noLaterThanDays')} disabled={isDisabled} />
           <StyledFieldLabel>days.</StyledFieldLabel>
         </StyledDiv>
       </SectionField>
@@ -114,6 +166,7 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
         <FastCurrencyInput
           field={withNameSpace(nameSpace, 'depositAmount')}
           formikProps={formikProps}
+          disabled={isDisabled}
         />
       </SectionField>
     </>

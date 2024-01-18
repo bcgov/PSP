@@ -65,7 +65,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
           </Row>
         </Col>
         <Col xs="auto" className="d-flex p-0 align-items-center justify-content-end">
-          <TooltipWrapper toolTipId="property-zoom-map" toolTip="Zoom Map">
+          <TooltipWrapper tooltipId="property-zoom-map" tooltip="Zoom Map">
             <StyledIconButton
               variant="info"
               disabled={!props.onZoom}

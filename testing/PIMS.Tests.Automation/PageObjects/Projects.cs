@@ -1,12 +1,13 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
+using System.Text.RegularExpressions;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
     public class Projects : PageObjectBase
     {
         //Menu Elements
-        private By projectMenuBttn = By.XPath("//a/label[contains(text(),'Project')]/parent::a");
+        private By projectMenuBttn = By.CssSelector("div[data-testid='nav-tooltip-project'] a");
         private By createProjectButton = By.XPath("//a[contains(text(),'Create Project')]");
 
         private By projectDetailTabLink = By.CssSelector("a[data-rb-event-key='projectDetails]");
@@ -26,11 +27,17 @@ namespace PIMS.Tests.Automation.PageObjects
         private By projectSummaryLabel = By.XPath("//label[contains(text(),'Project summary')]");
         private By projectSummaryTextarea = By.Id("input-summary");
         private By projectCostTypeLabel = By.XPath("//label[contains(text(),'Cost type')]");
-        private By projectCostTypeSelect = By.Id("input-costTypeCode");
+        private By projectCostTypeInput = By.Id("typeahead-select-costTypeCode");
+        private By projectCostTypeOptions = By.CssSelector("div[id='typeahead-select-costTypeCode']");
+        private By projectCostType1stOption = By.CssSelector("div[id='typeahead-select-costTypeCode'] a:nth-child(1)");
         private By projectWorkActivityLabel = By.XPath("//label[contains(text(),'Work activity')]");
-        private By projectWorkActivitySelect = By.Id("input-workActivityCode");
+        private By projectWorkActivityInput = By.Id("typeahead-select-workActivityCode");
+        private By projectWorkActivityOptions = By.CssSelector("div[id='typeahead-select-workActivityCode']");
+        private By projectWorkActivity1stOption = By.CssSelector("div[id='typeahead-select-workActivityCode'] a:nth-child(1)");
         private By projectBusinessFunctionLabel = By.XPath("//label[contains(text(),'Business function')]");
-        private By projectBusinessFunctionSelect = By.Id("input-businessFunctionCode");
+        private By projectBusinessFunctionInput = By.Id("typeahead-select-businessFunctionCode");
+        private By projectBusinessFunctionOptions = By.CssSelector("div[id='typeahead-select-businessFunctionCode']");
+        private By projectBusinessFunction1stOption = By.CssSelector("div[id='typeahead-select-businessFunctionCode'] a:nth-child(1)");
 
         private By projectAssociatedProdsSubtitle = By.XPath("//div[contains(text(),'Associated products')]");
         private By projectAddProductButton = By.XPath("//div[contains(text(),'+ Add another product')]/parent::button");
@@ -79,8 +86,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By projectSaveButton = By.XPath("//div[contains(text(),'Save')]/parent::button");
 
         //Modals Elements
-        private By deleteProductModal = By.CssSelector("div[class='modal-dialog']");
-        private By duplicateProjectToast = By.CssSelector("div[class='Toastify__toast-body']");
+        private By productDeleteModal = By.CssSelector("div[class='modal-content']");
+        private By projectDuplicateToast = By.CssSelector("div[class='Toastify__toast-body']");
+        private By projectOverrideConfirmationModal = By.CssSelector("div[class='modal-content']");
 
         private SharedModals sharedModals;
 
@@ -123,15 +131,21 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (project.CostType != "")
             {
-                ChooseSpecificSelectOption(projectCostTypeSelect, project.CostType);
+                webDriver.FindElement(projectCostTypeInput).SendKeys(project.CostType);
+                WaitUntilVisible(projectCostTypeOptions);
+                webDriver.FindElement(projectCostType1stOption).Click();
             }
             if (project.WorkActivity != "")
             {
-                ChooseSpecificSelectOption(projectWorkActivitySelect, project.WorkActivity);
+                webDriver.FindElement(projectWorkActivityInput).SendKeys(project.WorkActivity);
+                WaitUntilVisible(projectWorkActivityOptions);
+                webDriver.FindElement(projectWorkActivity1stOption).Click();
             }
             if (project.BusinessFunction!= "")
             {
-                ChooseSpecificSelectOption(projectBusinessFunctionSelect, project.BusinessFunction);
+                webDriver.FindElement(projectBusinessFunctionInput).SendKeys(project.BusinessFunction);
+                WaitUntilVisible(projectBusinessFunctionOptions);
+                webDriver.FindElement(projectBusinessFunction1stOption).Click();
             }
         }
 
@@ -204,48 +218,42 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (project.CostType != "")
             {
-                ChooseSpecificSelectOption(projectCostTypeSelect, project.CostType);
+                webDriver.FindElement(projectCostTypeInput).SendKeys(project.CostType);
+                WaitUntilVisible(projectCostTypeOptions);
+                webDriver.FindElement(projectCostType1stOption).Click();
             }
             if (project.WorkActivity != "")
             {
-                ChooseSpecificSelectOption(projectWorkActivitySelect, project.WorkActivity);
+                webDriver.FindElement(projectWorkActivityInput).SendKeys(project.WorkActivity);
+                WaitUntilVisible(projectWorkActivityOptions);
+                webDriver.FindElement(projectWorkActivity1stOption).Click();
             }
-            if (project.BusinessFunction!= "")
+            if (project.BusinessFunction != "")
             {
-                ChooseSpecificSelectOption(projectBusinessFunctionSelect, project.BusinessFunction);
+                webDriver.FindElement(projectBusinessFunctionInput).SendKeys(project.BusinessFunction);
+                WaitUntilVisible(projectBusinessFunctionOptions);
+                webDriver.FindElement(projectBusinessFunction1stOption).Click();
             }
         }
 
         public void UpdateProduct(Product product, int index)
         {
-            By productCodeDynamicInput = By.Id("input-products."+ index +".code");
-            By productNameDynamicInput = By.Id("input-products."+ index +".description");
             By productStartDateDynamicInput = By.Id("datepicker-products."+ index +".startDate");
             By productCostEstimateDynamicInput = By.Id("input-products."+ index +".costEstimate");
             By productEstimateDateDynamicInput = By.Id("datepicker-products."+ index +".costEstimateDate");
             By productObjectiveDynamicInput = By.Id("input-products."+ index +".objective");
             By productScopeDynamicInput = By.Id("input-products."+ index +".scope");
 
-            WaitUntilClickable(productCodeDynamicInput);
+            
             //Cleaning previous input
-            if (webDriver.FindElements(productEstimateDateDynamicInput).Count > 0) { ClearInput(productEstimateDateDynamicInput); }
-            ClearInput(productCodeDynamicInput);
-            ClearInput(productCodeDynamicInput);
-            ClearInput(productNameDynamicInput);
+            if (webDriver.FindElements(productEstimateDateDynamicInput).Count > 0)
+                ClearInput(productEstimateDateDynamicInput);
+            
             ClearInput(productStartDateDynamicInput);
             ClearInput(productCostEstimateDynamicInput);
             ClearInput(productObjectiveDynamicInput);
             ClearInput(productScopeDynamicInput);
            
-
-            if (product.ProductCode != "")
-            {
-                webDriver.FindElement(productCodeDynamicInput).SendKeys(product.ProductCode);
-            }
-            if (product.ProductName != "")
-            {
-                webDriver.FindElement(productNameDynamicInput).SendKeys(product.ProductName);
-            }
             if (product.StartDate != "")
             {
                 webDriver.FindElement(productStartDateDynamicInput).SendKeys(product.StartDate);
@@ -275,8 +283,9 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(deleteButtonElement);
             webDriver.FindElement(deleteButtonElement).Click();
 
-            if (webDriver.FindElements(deleteProductModal).Count > 0)
+            if (webDriver.FindElements(productDeleteModal).Count > 0)
             {
+                Wait();
                 Assert.True(sharedModals.ModalHeader().Equals("Remove Product"));
                 Assert.True(sharedModals.ModalContent().Equals("Deleting this product will remove it from all \"Product\" dropdowns. Are you certain you wish to proceed?"));
                 sharedModals.ModalClickOKBttn();
@@ -287,6 +296,18 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilClickable(projectSaveButton);
             FocusAndClick(projectSaveButton);
+
+            Wait();
+            if (webDriver.FindElements(projectOverrideConfirmationModal).Count() > 0)
+            {
+                if (sharedModals.ModalHeader().Equals("User Override Required"))
+                {
+                    Assert.Contains("can also be found in one or more other projects. Please verify the correct product is being added", sharedModals.ModalContent());
+                }
+                sharedModals.ModalClickOKBttn();
+            }
+
+            AssertTrueIsDisplayed(projectEditButton);
         }
 
         public void CancelProject()
@@ -297,33 +318,34 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreateProjectForm()
         {
-            WaitUntilVisible(projectNameLabel);
-            Assert.True(webDriver.FindElement(projectCreateTitle).Displayed);
-            Assert.True(webDriver.FindElement(projectInstructionParagraph).Displayed);
+            Wait(2000);
 
-            Assert.True(webDriver.FindElement(projectNameLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectNameInput).Displayed);
-            Assert.True(webDriver.FindElement(projectNumberLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectNumberInput).Displayed);
-            Assert.True(webDriver.FindElement(projectStatusLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectStatusSelect).Displayed);
-            Assert.True(webDriver.FindElement(projectMOTIRegionLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectMOTIRegionInput).Displayed);
-            Assert.True(webDriver.FindElement(projectSummaryLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectSummaryTextarea).Displayed);
+            AssertTrueIsDisplayed(projectCreateTitle);
+            AssertTrueIsDisplayed(projectInstructionParagraph);
 
-            Assert.True(webDriver.FindElement(projectCostTypeLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectCostTypeSelect).Displayed);
-            Assert.True(webDriver.FindElement(projectWorkActivityLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectWorkActivitySelect).Displayed);
-            Assert.True(webDriver.FindElement(projectBusinessFunctionLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectBusinessFunctionSelect).Displayed);
+            AssertTrueIsDisplayed(projectNameLabel);
+            AssertTrueIsDisplayed(projectNameInput);
+            AssertTrueIsDisplayed(projectNumberLabel);
+            AssertTrueIsDisplayed(projectNumberInput);
+            AssertTrueIsDisplayed(projectStatusLabel);
+            AssertTrueIsDisplayed(projectStatusSelect);
+            AssertTrueIsDisplayed(projectMOTIRegionLabel);
+            AssertTrueIsDisplayed(projectMOTIRegionInput);
+            AssertTrueIsDisplayed(projectSummaryLabel);
+            AssertTrueIsDisplayed(projectSummaryTextarea);
 
-            Assert.True(webDriver.FindElement(projectAssociatedProdsSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(projectAddProductButton).Displayed);
+            AssertTrueIsDisplayed(projectCostTypeLabel);
+            AssertTrueIsDisplayed(projectCostTypeInput);
+            AssertTrueIsDisplayed(projectWorkActivityLabel);
+            AssertTrueIsDisplayed(projectWorkActivityInput);
+            AssertTrueIsDisplayed(projectBusinessFunctionLabel);
+            AssertTrueIsDisplayed(projectBusinessFunctionInput);
 
-            Assert.True(webDriver.FindElement(projectCancelButton).Displayed);
-            Assert.True(webDriver.FindElement(projectSaveButton).Displayed);
+            AssertTrueIsDisplayed(projectAssociatedProdsSubtitle);
+            AssertTrueIsDisplayed(projectAddProductButton);
+
+            AssertTrueIsDisplayed(projectCancelButton);
+            AssertTrueIsDisplayed(projectSaveButton);
         }
 
         public void VerifyCreateProductForm()
@@ -331,20 +353,20 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(projectAddProductButton);
             webDriver.FindElement(projectAddProductButton).Click();
 
-            WaitUntilVisible(productCodeLabel);
-            Assert.True(webDriver.FindElement(productCodeLabel).Displayed);
-            Assert.True(webDriver.FindElement(productCodeInput).Displayed);
-            Assert.True(webDriver.FindElement(productNameLabel).Displayed);
-            Assert.True(webDriver.FindElement(productNameInput).Displayed);
-            Assert.True(webDriver.FindElement(productStartDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(productStartDateInput).Displayed);
-            Assert.True(webDriver.FindElement(productCostEstimateLabel).Displayed);
-            Assert.True(webDriver.FindElement(productCostEstimateInput).Displayed);
-            Assert.True(webDriver.FindElement(productObjectiveLabel).Displayed);
-            Assert.True(webDriver.FindElement(productObjectiveInput).Displayed);
-            Assert.True(webDriver.FindElement(productScopeLabel).Displayed);
-            Assert.True(webDriver.FindElement(productScopeInput).Displayed);
-            Assert.True(webDriver.FindElement(productDeleteButton).Displayed);
+            Wait();
+            AssertTrueIsDisplayed(productCodeLabel);
+            AssertTrueIsDisplayed(productCodeInput);
+            AssertTrueIsDisplayed(productNameLabel);
+            AssertTrueIsDisplayed(productNameInput);
+            AssertTrueIsDisplayed(productStartDateLabel);
+            AssertTrueIsDisplayed(productStartDateInput);
+            AssertTrueIsDisplayed(productCostEstimateLabel);
+            AssertTrueIsDisplayed(productCostEstimateInput);
+            AssertTrueIsDisplayed(productObjectiveLabel);
+            AssertTrueIsDisplayed(productObjectiveInput);
+            AssertTrueIsDisplayed(productScopeLabel);
+            AssertTrueIsDisplayed(productScopeInput);
+            AssertTrueIsDisplayed(productDeleteButton);
 
             DeleteProduct(1);
         }
@@ -406,86 +428,77 @@ namespace PIMS.Tests.Automation.PageObjects
             By productScopeContent = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" + child + "]/div/div/label[contains(text(),'Scope')]/parent::div/following-sibling::div");
 
             WaitUntilVisible(productStartDateLabel);
+
             if (validationType == "Create")
             {
-                Assert.True(webDriver.FindElement(productHeader).Displayed);
-                Assert.True(webDriver.FindElement(productStartDateLabel).Displayed);
-                Assert.True(webDriver.FindElement(productStartDateContent).Text.Equals(TransformDateFormat(product.StartDate)));
-                Assert.True(webDriver.FindElement(productCostEstimateLabel).Displayed);
+                AssertTrueIsDisplayed(productHeader);
+                AssertTrueIsDisplayed(productStartDateLabel);
+                AssertTrueContentEquals(productStartDateContent, TransformDateFormat(product.StartDate));
+                AssertTrueIsDisplayed(productCostEstimateLabel);
+
                 if (product.EstimateDate != "")
-                {
-                    Assert.True(webDriver.FindElement(productCostEstimateContent).Text.Equals(TransformCurrencyFormat(product.CostEstimate) + " as of " + TransformDateFormat(product.EstimateDate)));
-                }
+                    AssertTrueContentEquals(productCostEstimateContent, TransformCurrencyFormat(product.CostEstimate) + " as of " + TransformDateFormat(product.EstimateDate));
                 else
-                {
-                    Assert.True(webDriver.FindElement(productCostEstimateContent).Text.Equals(TransformCurrencyFormat(product.CostEstimate) + " no estimate date entered"));
-                }
-                Assert.True(webDriver.FindElement(productObjectivesLabel).Displayed);
+                    AssertTrueContentEquals(productCostEstimateContent, TransformCurrencyFormat(product.CostEstimate) + " no estimate date entered");
+
+                AssertTrueIsDisplayed(productObjectivesLabel);
+
                 if (product.Objectives != "")
-                {
-                    Assert.True(webDriver.FindElement(productObjectivesContent).Text.Equals(product.Objectives));
-                }
+                    AssertTrueContentEquals(productObjectivesContent, product.Objectives);
                 else
-                {
-                    Assert.True(webDriver.FindElement(productObjectivesContent).Text.Equals("no objective entered"));
-                }
-                Assert.True(webDriver.FindElement(productScopeLabel).Displayed);
+                    AssertTrueContentEquals(productObjectivesContent, "no objective entered");
+
+                AssertTrueIsDisplayed(productScopeLabel);
                 if (product.Scope != "")
-                {
-                    Assert.True(webDriver.FindElement(productScopeContent).Text.Equals(product.Scope));
-                }
+                
+                    AssertTrueContentEquals(productScopeContent, product.Scope);
                 else
-                {
-                    Assert.True(webDriver.FindElement(productScopeContent).Text.Equals("no scope entered"));
-                }
+                    AssertTrueContentEquals(productScopeContent, "no scope entered");
             }
             else
             {
-                Assert.True(webDriver.FindElement(productHeader).Displayed);
-                Assert.True(webDriver.FindElement(productStartDateLabel).Displayed);
-                Assert.True(webDriver.FindElement(productStartDateContent).Text.Equals(TransformDateFormat(product.StartDate)));
-                Assert.True(webDriver.FindElement(productCostEstimateLabel).Displayed);
+                AssertTrueIsDisplayed(productHeader);
+                AssertTrueIsDisplayed(productStartDateLabel);
+                AssertTrueContentEquals(productStartDateContent, TransformDateFormat(product.StartDate));
+                AssertTrueIsDisplayed(productCostEstimateLabel);
+
                 if (product.EstimateDate != "")
-                {
-                    Assert.True(webDriver.FindElement(productCostEstimateContent).Text.Equals(TransformCurrencyFormat(product.CostEstimate) + " as of " + TransformDateFormat(product.EstimateDate)));
-                }
+                    AssertTrueContentEquals(productCostEstimateContent, TransformCurrencyFormat(product.CostEstimate) + " as of " + TransformDateFormat(product.EstimateDate));
                 else
-                {
-                    Assert.True(webDriver.FindElement(productCostEstimateContent).Text.Equals(TransformCurrencyFormat(product.CostEstimate) + " no estimate date entered"));
-                }
-                Assert.True(webDriver.FindElement(productObjectivesLabel).Displayed);
+                    AssertTrueContentEquals(productCostEstimateContent, TransformCurrencyFormat(product.CostEstimate) + " no estimate date entered");
+
+                AssertTrueIsDisplayed(productObjectivesLabel);
+
                 if (product.Objectives != "")
-                {
-                    Assert.True(webDriver.FindElement(productObjectivesContent).Text.Equals(product.Objectives));
-                }
+                    AssertTrueContentEquals(productObjectivesContent, product.Objectives);
                 else if (product.Objectives != "")
-                {
-                    Assert.True(webDriver.FindElement(productObjectivesContent).Text.Equals(product.Objectives));
-                }
+                    AssertTrueContentEquals(productObjectivesContent, product.Objectives);
                 else
-                {
-                    Assert.True(webDriver.FindElement(productObjectivesContent).Text.Equals("no objective entered"));
-                }
-                Assert.True(webDriver.FindElement(productScopeLabel).Displayed);
+                    AssertTrueContentEquals(productObjectivesContent, "no objective entered");
+
+                AssertTrueIsDisplayed(productScopeLabel);
                 if (product.Scope != "")
-                {
-                    Assert.True(webDriver.FindElement(productScopeContent).Text.Equals(product.Scope));
-                }
+                    AssertTrueContentEquals(productScopeContent, product.Scope);
                 else if (product.Scope != "")
-                {
-                    Assert.True(webDriver.FindElement(productScopeContent).Text.Equals(product.Scope));
-                }
-                else
-                {
-                    Assert.True(webDriver.FindElement(productScopeContent).Text.Equals("no scope entered"));
-                }
+                    AssertTrueContentEquals(productScopeContent, product.Scope);
+                else    
+                    AssertTrueContentEquals(productScopeContent, "no scope entered");
             }
         }
 
-        public Boolean duplicateProject()
+        public Boolean DuplicateProject()
         {
             Wait();
-            return webDriver.FindElements(duplicateProjectToast).Count > 0;
+            return webDriver.FindElements(projectDuplicateToast).Count > 0;
         }
+
+        public string GetProjectName()
+        {
+            WaitUntilVisible(projectHeaderProjectNameContent);
+
+            var totalProjectName = webDriver.FindElement(projectHeaderProjectNameContent).Text;
+            return Regex.Match(totalProjectName, "[^ ]* (.*)").Groups[1].Value;
+        }
+
     }
 }

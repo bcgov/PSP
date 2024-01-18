@@ -20,11 +20,12 @@ export const DocumentDetailModal: React.FunctionComponent<
 > = props => {
   return (
     <GenericModal
+      variant="info"
+      headerIcon={<FaEye size={22} />}
       display={props.display}
       setDisplay={props.setDisplay}
       title={
         <>
-          <FaEye />
           <span> View Document Information</span>
         </>
       }
@@ -39,7 +40,6 @@ export const DocumentDetailModal: React.FunctionComponent<
       }
       modalSize={ModalSize.LARGE}
       handleCancel={props.onClose}
-      closeButton
       hideFooter
     ></GenericModal>
   );

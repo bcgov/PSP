@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Api.Models.Base;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Mapping
@@ -7,10 +8,10 @@ namespace Pims.Api.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.IBaseEntity, Models.BaseModel>()
+            config.NewConfig<Entity.IBaseEntity, BaseConcurrentModel>()
                 .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber);
 
-            config.NewConfig<Models.BaseModel, Entity.IBaseEntity>()
+            config.NewConfig<BaseConcurrentModel, Entity.IBaseEntity>()
                 .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion);
         }
     }

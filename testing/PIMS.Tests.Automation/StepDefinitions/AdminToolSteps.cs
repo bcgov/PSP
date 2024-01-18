@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
+using PIMS.Tests.Automation.PageObjects;
 using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
@@ -15,6 +16,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly DigitalDocuments digitalDocuments;
         private readonly CDOGSTemplates cdogsTemplates;
         private readonly FinancialCodes financialCodes;
+        private readonly SharedPagination sharedPagination;
         private readonly IEnumerable<DocumentFile> documentFiles;
 
         private readonly string userName = "TRANPSP1";
@@ -30,6 +32,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocuments = new DigitalDocuments(driver.Current);
             financialCodes = new FinancialCodes(driver.Current);
             cdogsTemplates = new CDOGSTemplates(driver.Current);
+            sharedPagination = new SharedPagination(driver.Current);
             documentFiles = digitalDocumentSteps.UploadFileDocuments();
             financialCode = new FinancialCode();
         }
@@ -65,6 +68,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Filters
             manageUsers.FilterUsers("TRANPSP1", "Cannot determine");
+            Assert.Equal(0, manageUsers.TotalUsersResult());
+
+            manageUsers.FilterUsers("TRANPSP1", "");
+            Assert.Equal(1, manageUsers.TotalUsersResult());
+
+            manageUsers.ResetDefaultListView();
         }
 
         [StepDefinition(@"I create a CDOGS template")]
@@ -213,6 +222,110 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save new Financial Code
             financialCodes.SaveFinancialCode();
+        }
+
+        [StepDefinition(@"I search for an existing Financial Code from row number (.*)")]
+        public void SearchFinancialCodes(int rowNumber)
+        {
+            /* TEST COVERAGE:  PSP-5310, PSP-5318 */
+
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Admin Tools
+            PopulateFinancialCode(rowNumber);
+            manageUsers.NavigateAdminTools();
+
+            //Navigate to Financial Codes
+            financialCodes.NavigateAdminFinancialCodes();
+
+            //Verify Pagination
+            sharedPagination.ChoosePaginationOption(5);
+            Assert.Equal(5, financialCodes.CountTotalFinancialCodeResults());
+
+            sharedPagination.ChoosePaginationOption(10);
+            Assert.Equal(10, financialCodes.CountTotalFinancialCodeResults());
+
+            sharedPagination.ChoosePaginationOption(20);
+            Assert.Equal(20, financialCodes.CountTotalFinancialCodeResults());
+
+            sharedPagination.ChoosePaginationOption(50);
+            Assert.Equal(50, financialCodes.CountTotalFinancialCodeResults());
+
+            sharedPagination.ChoosePaginationOption(100);
+            Assert.Equal(100, financialCodes.CountTotalFinancialCodeResults());
+
+
+            //Verify Column Sorting by Financial Code Value
+            financialCodes.OrderByFinancialCodeValue();
+            var firstCodeValueDescResult = financialCodes.FirstFinancialCodeValue();
+
+            financialCodes.OrderByFinancialCodeValue();
+            var firstCodeValueAscResult = financialCodes.FirstFinancialCodeValue();
+
+            Assert.NotEqual(firstCodeValueDescResult, firstCodeValueAscResult);
+
+            //Verify Column Sorting by Financial Code Description
+            financialCodes.OrderByFinancialCodeDescription();
+            var firstFinCodeDescriptionDescResult = financialCodes.FirstFinancialCodeDescription();
+
+            financialCodes.OrderByFinancialCodeDescription();
+            var firstFinCodeDescriptionAscResult = financialCodes.FirstFinancialCodeDescription();
+
+            Assert.NotEqual(firstFinCodeDescriptionDescResult, firstFinCodeDescriptionAscResult);
+
+            //Verify Column Sorting by Financial Code Type Date
+            financialCodes.OrderByFinancialCodeType();
+            var firstFinCodeTypeDescResult = financialCodes.FirstFinancialCodeType();
+
+            financialCodes.OrderByFinancialCodeType();
+            var firstFinCodeTypeAscResult = financialCodes.FirstFinancialCodeType();
+
+            Assert.NotEqual(firstFinCodeTypeDescResult, firstFinCodeTypeAscResult);
+
+            //Verify Column Sorting by Financial Code Effective Date
+            financialCodes.OrderByFinancialCodeEffectiveDate();
+            var firstFinCodeEffectiveDateDescResult = financialCodes.FirstFinancialCodeEffectiveDate();
+
+            financialCodes.OrderByFinancialCodeEffectiveDate();
+            var firstFinCodeEffectiveAscResult = financialCodes.FirstFinancialCodeEffectiveDate();
+
+            Assert.NotEqual(firstFinCodeEffectiveDateDescResult, firstFinCodeEffectiveAscResult);
+
+            //Verify Column Sorting by Financial Code Expiry Date
+            financialCodes.OrderByFinancialCodeExpiryDate();
+            var firstFinCodeExpiryDateDescResult = financialCodes.FirstFinancialCodeExpiryDate();
+
+            financialCodes.OrderByFinancialCodeExpiryDate();
+            var firstFinCodeExpiryDateAscResult = financialCodes.FirstFinancialCodeExpiryDate();
+
+            Assert.NotEqual(firstFinCodeExpiryDateDescResult, firstFinCodeExpiryDateAscResult);
+
+
+            //Filter Financial Codes by Cost Types
+            financialCodes.FilterFinancialCodeByType("Business function");
+            Assert.Equal(financialCodes.FirstFinancialCodeType(), "Business function");
+
+            financialCodes.FilterFinancialCodeByType("Cost types");
+            Assert.Equal(financialCodes.FirstFinancialCodeType(), "Cost types");
+
+            financialCodes.FilterFinancialCodeByType("Work activity");
+            Assert.Equal(financialCodes.FirstFinancialCodeType(), "Work activity");
+
+            financialCodes.FilterFinancialCodeByType("Chart of accounts");
+            Assert.Equal(financialCodes.FirstFinancialCodeType(), "Chart of accounts");
+
+            financialCodes.FilterFinancialCodeByType("Financial activity");
+            Assert.Equal(financialCodes.FirstFinancialCodeType(), "Financial activity");
+
+            financialCodes.FilterFinancialCodeByType("Responsibility");
+            Assert.Equal(financialCodes.FirstFinancialCodeType(), "Responsibility");
+
+            financialCodes.FilterFinancialCodeByType("Yearly financial");
+            Assert.Equal(financialCodes.FirstFinancialCodeType(), "Yearly financial");
+
+            //Filter by Code Value
+            financialCodes.FilterFinancialCode(financialCode.CodeValue);
         }
 
         [StepDefinition(@"Help Desk rendered successfully")]

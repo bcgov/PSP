@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -409,6 +408,7 @@ namespace Pims.Api
             services.AddScoped<IH120CategoryService, H120CategoryService>();
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IExpropriationPaymentService, ExpropriationPaymentService>();
+            services.AddScoped<IAcquisitionStatusSolver, AcquisitionStatusSolver>();
         }
 
         /// <summary>

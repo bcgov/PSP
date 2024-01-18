@@ -23,6 +23,7 @@ export const ContactManagerModal: React.FunctionComponent<
 > = props => {
   return (
     <GenericModal
+      variant="info"
       display={props.display}
       setDisplay={props.setDisplay}
       title="Select a contact"

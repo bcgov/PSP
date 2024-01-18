@@ -18,7 +18,7 @@ describe('Property management model tests', () => {
       expect(model.additionalDetails).toBe('');
       expect(model.isTaxesPayable).toBe(null);
       expect(model.isUtilitiesPayable).toBe(null);
-      expect(model.formattedLeaseInformation).toBe('No active Lease/License');
+      expect(model.formattedLeaseInformation).toBe('No');
     });
 
     it('fromApi sets values as expected from api response', () => {
@@ -35,11 +35,11 @@ describe('Property management model tests', () => {
       expect(model.additionalDetails).toBe('test');
       expect(model.isTaxesPayable).toBe(null);
       expect(model.isUtilitiesPayable).toBe(null);
-      expect(model.formattedLeaseInformation).toBe('No active Lease/License');
+      expect(model.formattedLeaseInformation).toBe('No');
     });
 
     it.each([
-      ['NO lease found', 0, null, 'No active Lease/License'],
+      ['NO lease found', 0, null, 'No'],
       ['ONE lease with expiry date', 1, '2020-03-15', 'Yes (Mar 15, 2020)'],
       ['ONE lease with no expiry date', 1, null, 'Yes'],
       ['MULTIPLE leases', 5, null, 'Multiple'],

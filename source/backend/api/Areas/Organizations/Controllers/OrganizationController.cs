@@ -2,13 +2,13 @@ using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Models.Concepts.Organization;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using Concepts = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Areas.Organizations.Controllers
 {
@@ -70,12 +70,12 @@ namespace Pims.Api.Areas.Organizations.Controllers
         [HttpGet("concept/{id:long}")]
         [HasPermission(Permissions.ContactView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Concepts.OrganizationModel), 200)]
+        [ProducesResponseType(typeof(OrganizationModel), 200)]
         [SwaggerOperation(Tags = new[] { "organization" })]
         public IActionResult GetOrganizationConcept(int id)
         {
             var organization = _organizationService.GetOrganization(id);
-            return new JsonResult(_mapper.Map<Concepts.OrganizationModel>(organization));
+            return new JsonResult(_mapper.Map<OrganizationModel>(organization));
         }
 
         /// <summary>

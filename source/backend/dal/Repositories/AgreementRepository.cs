@@ -32,13 +32,14 @@ namespace Pims.Dal.Repositories
 
         #region Methods
 
-        public List<PimsAgreement> GetAgreementsByAquisitionFile(long acquisitionFileId)
+        public List<PimsAgreement> GetAgreementsByAcquisitionFile(long acquisitionFileId)
         {
             using var scope = Logger.QueryScope();
 
             return Context.PimsAgreements
                 .Where(ci => ci.AcquisitionFileId == acquisitionFileId)
                 .Include(ci => ci.AgreementTypeCodeNavigation)
+                .Include(ci => ci.AgreementStatusTypeCodeNavigation)
                 .AsNoTracking()
                 .ToList();
         }

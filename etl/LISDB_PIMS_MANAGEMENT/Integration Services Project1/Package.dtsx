@@ -7,13 +7,13 @@
   DTS:CreatorName="Xerces\Devin Smith"
   DTS:DTSID="{6C914856-AF42-4D92-BBE1-AA6D6E2F0355}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="16.0.948.0"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="6"
-  DTS:VersionGUID="{BCD0BF53-9147-4093-9AA0-82F4932373C5}">
+  DTS:VersionBuild="8"
+  DTS:VersionGUID="{9EEFEAE5-0A29-4CEB-9ECD-01034D41441C}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1036,6 +1036,14 @@ where [refTable].[PID] = ?</property>
           Size="172,42"
           Id="Package\Summary\PIMS_PROPERTY"
           TopLeft="358,270" />
+        <NodeLayout
+          Size="183,42"
+          Id="Package\Summary\CONCAT COLUMNS"
+          TopLeft="363,376" />
+        <NodeLayout
+          Size="211,42"
+          Id="Package\Summary\Update PIMS_PROPERTY"
+          TopLeft="334,481" />
         <EdgeLayout
           Id="Package\Summary.Paths[OLE DB Source Output]"
           TopLeft="435.5,207">
@@ -1067,17 +1075,11 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="211,42"
-          Id="Package\Summary\Update PIMS_PROPERTY"
-          TopLeft="334,481" />
-        <NodeLayout
-          Size="183,42"
-          Id="Package\Summary\CONCAT COLUMNS"
-          TopLeft="363,376" />
         <EdgeLayout
           Id="Package\Summary.Paths[Lookup Match Output]"
           TopLeft="444,312">
@@ -1145,7 +1147,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -1170,7 +1174,7 @@ where [refTable].[PID] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -1180,7 +1184,7 @@ where [refTable].[PID] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>

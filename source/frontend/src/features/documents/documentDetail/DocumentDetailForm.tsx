@@ -4,6 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import { Button } from '@/components/common/buttons/Button';
 import { Select } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import * as API from '@/constants/API';
@@ -13,13 +14,7 @@ import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { Api_DocumentUpdateRequest } from '@/models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
 
-import {
-  StyledGreySection,
-  StyledH2,
-  StyledH3,
-  StyledHeader,
-  StyledScrollable,
-} from '../commonStyles';
+import { StyledH3, StyledScrollable } from '../commonStyles';
 import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
 import { DocumentMetadataView } from '../DocumentMetadataView';
 import { getDocumentMetadataYupSchema } from '../DocumentMetadataYupSchema';
@@ -53,20 +48,20 @@ export const DocumentDetailForm: React.FunctionComponent<
       {hasClaim(Claims.DOCUMENT_VIEW) && (
         <>
           <DocumentDetailHeader document={props.document} />
-          <StyledGreySection>
-            <Row className="pb-3">
-              <Col className="text-left">
-                <StyledHeader>
-                  <StyledH2>Document information</StyledH2>
-                  <TooltipIcon
-                    toolTipId={'documentInfoToolTip'}
-                    innerClassName={'documentInfoToolTip'}
-                    toolTip="Information you provided here will be searchable"
-                  ></TooltipIcon>
-                </StyledHeader>
-              </Col>
-            </Row>
 
+          <Section
+            noPadding
+            header={
+              <>
+                Document information
+                <TooltipIcon
+                  toolTipId="documentInfoToolTip"
+                  innerClassName="documentInfoToolTip"
+                  toolTip="Information you provided here will be searchable"
+                />{' '}
+              </>
+            }
+          >
             <StyledScrollable>
               <Formik<DocumentUpdateFormData>
                 innerRef={props.formikRef}
@@ -95,15 +90,22 @@ export const DocumentDetailForm: React.FunctionComponent<
                       mayanMetadata={props.mayanMetadataTypes}
                       formikProps={formikProps}
                     />
+                    <div className="pt-5">Do you want to proceed?</div>
+                    <hr />
                     <Row className="justify-content-end pt-4">
                       <Col xs="auto">
-                        <Button variant="secondary" type="button" onClick={props.onCancel}>
-                          Cancel
+                        <Button
+                          variant="secondary"
+                          type="button"
+                          onClick={props.onCancel}
+                          className="px-5"
+                        >
+                          No
                         </Button>
                       </Col>
                       <Col xs="auto">
-                        <Button type="submit" onClick={formikProps.submitForm}>
-                          Save
+                        <Button type="submit" onClick={formikProps.submitForm} className="px-5">
+                          Yes
                         </Button>
                       </Col>
                     </Row>
@@ -111,7 +113,7 @@ export const DocumentDetailForm: React.FunctionComponent<
                 )}
               </Formik>
             </StyledScrollable>
-          </StyledGreySection>
+          </Section>
         </>
       )}
     </StyledContainer>

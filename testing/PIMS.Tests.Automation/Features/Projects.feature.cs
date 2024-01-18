@@ -82,20 +82,18 @@ namespace PIMS.Tests.Automation.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="Create new Projects")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="Type of Projects")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
-        [Xunit.TraitAttribute("Description", "Create new Projects")]
-        [Xunit.InlineDataAttribute("1", "8", new string[0])]
-        [Xunit.InlineDataAttribute("2", "9", new string[0])]
-        [Xunit.InlineDataAttribute("3", "10", new string[0])]
-        [Xunit.InlineDataAttribute("4", "11", new string[0])]
-        public void CreateNewProjects(string rowNumber, string docRowNumber, string[] exampleTags)
+        [Xunit.TraitAttribute("Description", "Type of Projects")]
+        [Xunit.InlineDataAttribute("1", new string[0])]
+        [Xunit.InlineDataAttribute("2", new string[0])]
+        [Xunit.InlineDataAttribute("3", new string[0])]
+        public void TypeOfProjects(string rowNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("RowNumber", rowNumber);
-            argumentsOfScenario.Add("DocRowNumber", docRowNumber);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create new Projects", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Type of Projects", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -110,30 +108,21 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given(string.Format("I create a new Project from row number {0}", rowNumber), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 6
- testRunner.When("I verify The Project View Form", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 7
- testRunner.And(string.Format("I create Digital Documents for a \"Project\" row number {0}", docRowNumber), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 8
- testRunner.And("I search for an existing project", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 9
- testRunner.Then("Expected Content is displayed on Projects Table", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("A new Project is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update Project")]
+        [Xunit.SkippableFactAttribute(DisplayName="01. Project Details")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
-        [Xunit.TraitAttribute("Description", "Update Project")]
-        public void UpdateProject()
+        [Xunit.TraitAttribute("Description", "01. Project Details")]
+        public void _01_ProjectDetails()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update Project", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 17
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01. Project Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 13
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -143,31 +132,62 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 18
- testRunner.Given("I update an existing project from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 14
+ testRunner.Given("I create a new Project from row number 4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
+#line 15
+ testRunner.When("I update an existing project from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 16
+ testRunner.Then("A new Project is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="02. Project Documents")]
+        [Xunit.TraitAttribute("FeatureTitle", "Projects")]
+        [Xunit.TraitAttribute("Description", "02. Project Documents")]
+        public void _02_ProjectDocuments()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Project Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 18
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
 #line 19
- testRunner.When("I edit a Digital Document for a \"Project\" from row number 12", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("I create a new Project from row number 6", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 20
- testRunner.And("I navigate back to Project Details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I create Digital Documents for a \"Project\" row number 8", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 21
- testRunner.Then("The Project is updated successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I edit a Digital Document for a \"Project\" from row number 9", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 22
+ testRunner.Then("A new Project is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Duplicate Project")]
+        [Xunit.SkippableFactAttribute(DisplayName="03. Project Notes")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
-        [Xunit.TraitAttribute("Description", "Duplicate Project")]
-        public void DuplicateProject()
+        [Xunit.TraitAttribute("Description", "03. Project Notes")]
+        public void _03_ProjectNotes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Duplicate Project", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 23
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Project Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 24
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -177,11 +197,45 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 24
- testRunner.Given("I create a new Project from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
 #line 25
- testRunner.Then("Duplicate Project Alert is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Given("I create a new Project from row number 7", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 26
+ testRunner.When("I create a new Note on the Notes Tab from row number 6", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 27
+ testRunner.And("I edit a Note on the Notes Tab from row number 7", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 28
+ testRunner.Then("A new Project is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="04. Project List View")]
+        [Xunit.TraitAttribute("FeatureTitle", "Projects")]
+        [Xunit.TraitAttribute("Description", "04. Project List View")]
+        public void _04_ProjectListView()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Project List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 30
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 31
+ testRunner.Given("I search for existing Projects from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 32
+ testRunner.Then("Expected Project Content is displayed on Projects Table", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

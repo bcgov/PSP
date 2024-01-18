@@ -1,6 +1,6 @@
 import fileDownload from 'js-file-download';
 import isEmpty from 'lodash/isEmpty';
-import React, { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaFileExcel } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -49,6 +49,12 @@ export const ManageUsersPage = () => {
     'No matching results can be found. Try widening your search criteria.',
   );
 
+  // This will get called when the table needs new data
+  const updateCurrentPage = useCallback(
+    ({ pageIndex }: { pageIndex: number }) => setCurrentPage && setCurrentPage(pageIndex),
+    [setCurrentPage],
+  );
+
   const columns = useMemo(() => getUserColumns(execute), [execute]);
   let userList = results.map((u: Api_User): FormUser => new FormUser(u));
 
@@ -75,7 +81,7 @@ export const ManageUsersPage = () => {
           <UsersFilterBar values={filter} onChange={setFilter} />
         </Col>
         <Col md={4} className="align-items-center d-flex">
-          <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
+          <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to Excel">
             <StyledIconButton onClick={() => fetch('excel')}>
               <FaFileExcel data-testid="excel-icon" size={36} />
             </StyledIconButton>
@@ -93,7 +99,7 @@ export const ManageUsersPage = () => {
           pageCount={totalPages}
           pageSize={pageSize}
           totalItems={totalItems}
-          onRequestData={req => setCurrentPage(req.pageIndex)}
+          onRequestData={updateCurrentPage}
           externalSort={{ sort: sort, setSort: setSort }}
           onPageSizeChange={setPageSize}
           clickableTooltip="Click IDIR/BCeID link to view User Information page"

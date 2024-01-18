@@ -16,7 +16,7 @@
         public string? TypeOther { get; set; } = String.Empty;
         public string? Category { get; set; } = String.Empty;
         public string? CategoryOther { get; set; } = String.Empty;
-        public string Purpose { get; set; } = null!;
+        public string? LeasePurpose { get; set; } = String.Empty;
         public string? PurposeOther { get; set; } = String.Empty;
         public string? Initiator { get; set; } = String.Empty;
         public string? Responsibility { get; set; } = String.Empty;

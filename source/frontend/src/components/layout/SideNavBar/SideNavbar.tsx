@@ -54,7 +54,7 @@ export const SideNavBar = () => {
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.LEASE)}
           icon={<Fence />}
-          text="Management"
+          text="Leases & Licenses"
           showText={expanded}
         />
         <NavIcon

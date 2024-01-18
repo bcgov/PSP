@@ -15,7 +15,7 @@ namespace Pims.Keycloak.Models
         /// <summary>
         /// get/set - whether or not this role is a composite role.
         /// </summary>
-        public bool Composite { get; set; }
+        public bool? Composite { get; set; }
         #endregion
     }
 }

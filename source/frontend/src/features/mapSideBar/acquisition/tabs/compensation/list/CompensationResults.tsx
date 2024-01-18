@@ -1,10 +1,12 @@
 import { Table } from '@/components/Table';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 
+import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 import { createCompensationTableColumns } from './columns';
 
 export interface ICompensationResultProps {
   results: Api_CompensationRequisition[];
+  statusSolver: StatusUpdateSolver;
   onShow: (compensationId: number) => void;
   onDelete: (compensationId: number) => void;
 }
@@ -12,7 +14,7 @@ export interface ICompensationResultProps {
 export function CompensationResults(props: ICompensationResultProps) {
   const { results, ...rest } = props;
 
-  const columns = createCompensationTableColumns(props.onShow, props.onDelete);
+  const columns = createCompensationTableColumns(props.statusSolver, props.onShow, props.onDelete);
 
   return (
     <Table<Api_CompensationRequisition>

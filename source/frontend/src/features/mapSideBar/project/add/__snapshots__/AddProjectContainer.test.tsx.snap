@@ -80,7 +80,7 @@ exports[`AddProjectContainer component renders as expected 1`] = `
       class="c2"
     />
   </div>
-  .c9.btn {
+  .c10.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -110,49 +110,49 @@ exports[`AddProjectContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c9.btn:hover {
+.c10.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c9.btn:focus {
+.c10.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c9.btn.btn-primary {
+.c10.btn.btn-primary {
   border: none;
 }
 
-.c9.btn.btn-secondary {
+.c10.btn.btn-secondary {
   background: none;
 }
 
-.c9.btn.btn-info {
+.c10.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c9.btn.btn-info:hover,
-.c9.btn.btn-info:active,
-.c9.btn.btn-info:focus {
+.c10.btn.btn-info:hover,
+.c10.btn.btn-info:active,
+.c10.btn.btn-info:focus {
   background: none;
 }
 
-.c9.btn.btn-light {
+.c10.btn.btn-light {
   border: none;
 }
 
-.c9.btn.btn-dark {
+.c10.btn.btn-dark {
   border: none;
 }
 
-.c9.btn.btn-link {
+.c10.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -173,9 +173,9 @@ exports[`AddProjectContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c9.btn.btn-link:hover,
-.c9.btn.btn-link:active,
-.c9.btn.btn-link:focus {
+.c10.btn.btn-link:hover,
+.c10.btn.btn-link:active,
+.c10.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -184,14 +184,14 @@ exports[`AddProjectContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c9.btn.btn-link:disabled,
-.c9.btn.btn-link.disabled {
+.c10.btn.btn-link:disabled,
+.c10.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c9.btn:disabled,
-.c9.btn:disabled:hover {
+.c10.btn:disabled,
+.c10.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -202,15 +202,15 @@ exports[`AddProjectContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c9.Button .Button__icon {
+.c10.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c9.Button--icon-only:focus {
+.c10.Button--icon-only:focus {
   outline: none;
 }
 
-.c9.Button--icon-only .Button__icon {
+.c10.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -226,6 +226,10 @@ exports[`AddProjectContainer component renders as expected 1`] = `
 .c1 {
   height: 100%;
   width: 100%;
+}
+
+.c9 button.close {
+  font-size: 2.4rem;
 }
 
 .c4 {
@@ -561,19 +565,40 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                   class="c7 text-left col"
                 >
                   <div
-                    class="form-group"
+                    class="c9 form-group"
+                    data-testid="typeahead-select-costTypeCode"
                   >
-                    <select
-                      class="form-select form-control"
-                      id="input-costTypeCode"
-                      name="costTypeCode"
+                    <div
+                      class="rbt"
+                      style="outline: none; position: relative;"
+                      tabindex="-1"
                     >
-                      <option
-                        value=""
+                      <div
+                        style="display: flex; flex: 1; height: 100%; position: relative;"
                       >
-                        Select...
-                      </option>
-                    </select>
+                        <input
+                          aria-autocomplete="both"
+                          aria-expanded="false"
+                          aria-haspopup="listbox"
+                          autocomplete="off"
+                          class="rbt-input-main form-control rbt-input"
+                          id="typeahead-select-costTypeCode"
+                          name="typeahead-select-costTypeCode"
+                          placeholder="Type to search..."
+                          role="combobox"
+                          type="text"
+                          value=""
+                        />
+                        <input
+                          aria-hidden="true"
+                          class="rbt-input-hint"
+                          readonly=""
+                          style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                          tabindex="-1"
+                          value=""
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -593,19 +618,40 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                   class="c7 text-left col"
                 >
                   <div
-                    class="form-group"
+                    class="c9 form-group"
+                    data-testid="typeahead-select-workActivityCode"
                   >
-                    <select
-                      class="form-select form-control"
-                      id="input-workActivityCode"
-                      name="workActivityCode"
+                    <div
+                      class="rbt"
+                      style="outline: none; position: relative;"
+                      tabindex="-1"
                     >
-                      <option
-                        value=""
+                      <div
+                        style="display: flex; flex: 1; height: 100%; position: relative;"
                       >
-                        Select...
-                      </option>
-                    </select>
+                        <input
+                          aria-autocomplete="both"
+                          aria-expanded="false"
+                          aria-haspopup="listbox"
+                          autocomplete="off"
+                          class="rbt-input-main form-control rbt-input"
+                          id="typeahead-select-workActivityCode"
+                          name="typeahead-select-workActivityCode"
+                          placeholder="Type to search..."
+                          role="combobox"
+                          type="text"
+                          value=""
+                        />
+                        <input
+                          aria-hidden="true"
+                          class="rbt-input-hint"
+                          readonly=""
+                          style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                          tabindex="-1"
+                          value=""
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -625,19 +671,40 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                   class="c7 text-left col"
                 >
                   <div
-                    class="form-group"
+                    class="c9 form-group"
+                    data-testid="typeahead-select-businessFunctionCode"
                   >
-                    <select
-                      class="form-select form-control"
-                      id="input-businessFunctionCode"
-                      name="businessFunctionCode"
+                    <div
+                      class="rbt"
+                      style="outline: none; position: relative;"
+                      tabindex="-1"
                     >
-                      <option
-                        value=""
+                      <div
+                        style="display: flex; flex: 1; height: 100%; position: relative;"
                       >
-                        Select...
-                      </option>
-                    </select>
+                        <input
+                          aria-autocomplete="both"
+                          aria-expanded="false"
+                          aria-haspopup="listbox"
+                          autocomplete="off"
+                          class="rbt-input-main form-control rbt-input"
+                          id="typeahead-select-businessFunctionCode"
+                          name="typeahead-select-businessFunctionCode"
+                          placeholder="Type to search..."
+                          role="combobox"
+                          type="text"
+                          value=""
+                        />
+                        <input
+                          aria-hidden="true"
+                          class="rbt-input-hint"
+                          readonly=""
+                          style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                          tabindex="-1"
+                          value=""
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -663,7 +730,7 @@ exports[`AddProjectContainer component renders as expected 1`] = `
               class="collapse show"
             >
               <button
-                class="c9 Button btn btn-link"
+                class="c10 Button btn btn-link"
                 type="button"
               >
                 <div

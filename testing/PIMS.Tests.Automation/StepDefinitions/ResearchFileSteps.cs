@@ -19,7 +19,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly GenericSteps genericSteps;
 
         private readonly string userName = "TRANPSP1";
-        //private readonly string userName = "SUTAIRAK";
 
         private ResearchFile researchFile;
         protected string researchFileCode = "";
@@ -34,7 +33,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties = new SearchProperties(driver.Current);
             genericSteps = new GenericSteps(driver);
             notes = new Notes(driver.Current);
-            researchFile = new ResearchFile();
         }
 
         [StepDefinition(@"I create a basic Research File from row number (.*)")]
@@ -302,6 +300,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             DataTable researchFileSheet = ExcelDataContext.GetInstance().Sheets["ResearchFiles"];
             ExcelDataContext.PopulateInCollection(researchFileSheet);
+            researchFile = new ResearchFile();
 
             researchFile.ResearchFileName = ExcelDataContext.ReadData(rowNumber, "ResearchFileName");
             researchFile.Status = ExcelDataContext.ReadData(rowNumber, "Status");
@@ -355,7 +354,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 PropertyResearch propertyResearch = new PropertyResearch();
                 propertyResearch.DescriptiveName = ExcelDataContext.ReadData(i, "DescriptiveName");
-                propertyResearch.Purpose = ExcelDataContext.ReadData(i, "Purpose");
+                propertyResearch.PropertyResearchPurpose = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyResearchPurpose"));
                 propertyResearch.LegalOpinionRequest = ExcelDataContext.ReadData(i, "LegalOpinionRequest");
                 propertyResearch.LegalOpinionObtained = ExcelDataContext.ReadData(i, "LegalOpinionObtained");
                 propertyResearch.DocumentReference = ExcelDataContext.ReadData(i, "DocumentReference");

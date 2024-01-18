@@ -129,6 +129,7 @@ export const CompensationListContainer: React.FunctionComponent<
   return (
     <View
       onUpdateTotalCompensation={onUpdateTotalCompensation}
+      acquisitionFile={file}
       compensations={compensations || []}
       onAdd={async () => onAddCompensationRequisition(fileId)}
       onDelete={async (compensationId: number) => {
@@ -148,7 +149,6 @@ export const CompensationListContainer: React.FunctionComponent<
         });
         setDisplayModal(true);
       }}
-      totalAllowableCompensation={file?.totalAllowableCompensation || 0}
     />
   );
 };

@@ -84,7 +84,8 @@ namespace Pims.Api.Areas.Reports.Models.Agreement
             AcquisitionNumberAndName = $"{agreement.AcquisitionFile?.FileNumber} - {agreement.AcquisitionFile?.FileName}";
             FileCreatedDate = GetNullableDate(agreement.AcquisitionFile?.AppCreateTimestamp);
             FileStatus = agreement.AcquisitionFile?.AcquisitionFileStatusTypeCodeNavigation?.Description;
-            AgreementStatus = !agreement.IsDraft.HasValue || agreement.IsDraft.Value ? "Draft" : "Final";
+
+            // AgreementStatus = !agreement.IsDraft.HasValue || agreement.IsDraft.Value ? "Draft" : "Final"; TODO: Fix this
             LegalSurveyPlan = agreement.LegalSurveyPlanNum;
             AgreementType = agreement.AgreementTypeCodeNavigation?.Description ?? string.Empty;
             AgreementDate = GetNullableDate(agreement.AgreementDate);
@@ -107,7 +108,7 @@ namespace Pims.Api.Areas.Reports.Models.Agreement
         {
             var matchingTeamMember = file?.PimsAcquisitionFileTeams?.FirstOrDefault(x => x.AcqFlTeamProfileTypeCode == teamProfileTypeCode);
 
-            if(matchingTeamMember is not null)
+            if (matchingTeamMember is not null)
             {
                 return matchingTeamMember.PersonId.HasValue ? matchingTeamMember.Person?.GetFullName() : matchingTeamMember.Organization.Name;
             }

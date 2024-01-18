@@ -330,7 +330,7 @@ exports[`UpdateFinancialCode form renders as expected 1`] = `
                 class="c4 form-control date-picker"
                 id="datepicker-effectiveDate"
                 name="effectiveDate"
-                placeholder="MTH DD, YYYY"
+                placeholder="MMM DD, YYYY"
                 type="text"
                 value="Nov 22, 1999"
               />
@@ -401,7 +401,7 @@ exports[`UpdateFinancialCode form renders as expected 1`] = `
                 class="c4 form-control date-picker"
                 id="datepicker-expiryDate"
                 name="expiryDate"
-                placeholder="MTH DD, YYYY"
+                placeholder="MMM DD, YYYY"
                 type="text"
                 value=""
               />

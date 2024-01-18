@@ -20,7 +20,7 @@ export function FormResults(props: IFormResultProps) {
 
   return (
     <Table<Api_FormDocumentFile>
-      name="AcqusitionFormTable"
+      name="AcquisitionFormTable"
       manualSortBy={false}
       lockPageSize={true}
       manualPagination={false}

@@ -9,7 +9,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class AcquisitionFilesDetails : PageObjectBase
     {
         //Acquisition Files Menu Elements
-        private By menuAcquisitionButton = By.XPath("//a/label[contains(text(),'Acquisition')]/parent::a");
+        private By menuAcquisitionButton = By.CssSelector("div[data-testid='nav-tooltip-acquisition'] a");
         private By createAcquisitionFileButton = By.XPath("//a[contains(text(),'Create an Acquisition File')]");
 
         private By acquisitionFileSummaryBttn = By.XPath("//div[contains(text(),'File Summary')]");
@@ -72,17 +72,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By acquisitionFileOwnerSubtitle = By.XPath("//div[contains(text(),'Owner Information')]");
 
-
         //Acquisition File Main Form Input Elements
         private By acquisitionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Acquisition File')]/parent::div/parent::div/parent::div/parent::div");
         private By acquisitionFileDeliveryDateInput = By.Id("datepicker-deliveryDate");
         private By acquisitionFileCompletedDateInput = By.Id("datepicker-completionDate");
 
+        private By acquisitionFileNameInput = By.Id("input-fileName");
+        private By acquisitionFileNameInvalidMessage = By.XPath("//div[contains(text(),'Acquisition file name must be at most 500 characters')]");
+
         private By acquisitionFileHistoricalNumberLabel = By.XPath("//label[contains(text(),'Historical file number')]");
         private By acquisitionFileHistoricalNumberInput = By.Id("input-legacyFileNumber");
+        private By acquisitionFileHistoricalInvalidMessage = By.XPath("//div[contains(text(),'Legacy file number must be at most 18 characters')]");
         private By acquisitionFileHistoricalNumberTooltip = By.XPath("//label[contains(text(),'Historical file number')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
 
-        private By acquisitionFileNameInput = By.Id("input-fileName");
         private By acquisitionFilePhysicalStatusSelect = By.Id("input-acquisitionPhysFileStatusType");
         private By acquisitionFileDetailsTypeSelect = By.Id("input-acquisitionType");
         private By acquisitionFileDetailsRegionSelect = By.Id("input-region");
@@ -90,6 +92,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By acquisitionFileAddAnotherMemberLink = By.CssSelector("button[data-testid='add-team-member']");
         private By acquisitionFileTeamMembersGroup = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row']");
         private By acquisitionFileTeamFirstMemberDeleteBttn = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row'][1]/div[3]/button");
+        private By acquisitionFileTeamInvalidTeamMemberMessage = By.XPath("//div[contains(text(),'Select a team member')]");
+        private By acquisitionFileTeamInvalidProfileMessage = By.XPath("//div[contains(text(),'Select a profile')]");
 
         private By acquisitionFileCreateOwnerSubtitle = By.XPath("//div[contains(text(),'Owners')]");
         private By acquisitionFileOwnerInfo = By.XPath("//p[contains(text(),'Each property in this file should be owned by the owner(s) in this section')]");
@@ -181,7 +185,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(acquisitionFileProjectInput).SendKeys(Keys.Backspace);
 
                 Wait(2000);
-                webDriver.FindElement(acquisitionFileProject1stOption).Click(); 
+                FocusAndClick(acquisitionFileProject1stOption); 
             }
 
             if (acquisition.AcquisitionProjProduct != "")
@@ -251,6 +255,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.OwnerComment != "")
             {
                 Wait(2000);
+                webDriver.FindElement(acquisitionFileOwnerCommentTextArea).Click();
                 webDriver.FindElement(acquisitionFileOwnerCommentTextArea).SendKeys(acquisition.OwnerComment);
             }
         }
@@ -646,9 +651,14 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(acquisitionFileDetailsMOTIRegionLabel);
             AssertTrueIsDisplayed(acquisitionFileDetailsRegionSelect);
 
+            VerifyMaximumFields();
+
             //Team members
             AssertTrueIsDisplayed(acquisitionFileTeamSubtitle);
             AssertTrueIsDisplayed(acquisitionFileAddAnotherMemberLink);
+
+            VerifyRequiredTeamMemberMessages();
+            DeleteFirstStaffMember();
 
             //Owners
             AssertTrueIsDisplayed(acquisitionFileCreateOwnerSubtitle);
@@ -757,6 +767,38 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this Owner?");
 
             sharedModals.ModalClickOKBttn();
+        }
+
+        private void VerifyRequiredTeamMemberMessages()
+        {
+            //Add a new Team member form
+            WaitUntilClickable(acquisitionFileAddAnotherMemberLink);
+            webDriver.FindElement(acquisitionFileAddAnotherMemberLink).Click();
+
+            //Verify that invalid team member message is displayed
+            ChooseSpecificSelectOption(By.Id("input-team.0.contactTypeCode"), "Expropriation agent");
+            AssertTrueIsDisplayed(acquisitionFileTeamInvalidTeamMemberMessage);
+
+            //verify that invalid profile message is displayed
+            ChooseSpecificSelectOption(By.Id("input-team.0.contactTypeCode"), "Select profile...");
+            webDriver.FindElement(By.CssSelector("div[data-testid='contact-input'] button[title='Select Contact']")).Click();
+            sharedSelectContact.SelectContact("Test", "");
+            AssertTrueIsDisplayed(acquisitionFileTeamInvalidProfileMessage);
+        }
+
+        private void VerifyMaximumFields()
+        {
+            //Verify File Name Input
+            webDriver.FindElement(acquisitionFileNameInput).SendKeys("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus");
+            webDriver.FindElement(acquisitionFileDetailsNameLabel).Click();
+            AssertTrueIsDisplayed(acquisitionFileNameInvalidMessage);
+            ClearInput(acquisitionFileNameInput);
+
+            //Verify Historical File Number Input
+            webDriver.FindElement(acquisitionFileHistoricalNumberInput).SendKeys("Lorem ipsum dolor s");
+            webDriver.FindElement(acquisitionFileHistoricalNumberLabel).Click();
+            AssertTrueIsDisplayed(acquisitionFileHistoricalInvalidMessage);
+            ClearInput(acquisitionFileHistoricalNumberInput);
         }
     }
 }

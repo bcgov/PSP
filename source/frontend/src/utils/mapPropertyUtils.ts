@@ -12,6 +12,7 @@ import polylabel from 'polylabel';
 import { toast } from 'react-toastify';
 
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { ONE_HUNDRED_METER_PRECISION } from '@/components/maps/constants';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { DistrictCodes } from '@/constants/districtCodes';
 import { RegionCodes } from '@/constants/regionCodes';
@@ -129,10 +130,17 @@ export const featuresToIdentifiedMapProperty = (
     )
     .map((feature): IMapProperty => {
       if (feature?.geometry?.type === 'Polygon') {
-        const boundedCenter = polylabel((feature.geometry as Polygon).coordinates);
+        const boundedCenter = polylabel(
+          (feature.geometry as Polygon).coordinates,
+          ONE_HUNDRED_METER_PRECISION,
+        );
         return toMapProperty(feature, address, boundedCenter[1], boundedCenter[0]);
       } else if (feature?.geometry?.type === 'MultiPolygon') {
-        const boundedCenter = polylabel((feature.geometry as MultiPolygon).coordinates[0]);
+        const boundedCenter = polylabel(
+          (feature.geometry as MultiPolygon).coordinates[0],
+          ONE_HUNDRED_METER_PRECISION,
+        );
+        //TODO: calculate the center of the polygon with the largest area.
         return toMapProperty(feature, address, boundedCenter[1], boundedCenter[0]);
       } else {
         toast.error(

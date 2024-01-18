@@ -8,7 +8,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class LeaseDetails : PageObjectBase
     {
         //Main Menu links Elements
-        private By menuManagementButton = By.XPath("//a/label[contains(text(),'Management')]/parent::a");
+        private By menuManagementButton = By.CssSelector("div[data-testid='nav-tooltip-leases&licenses'] a");
         private By createLicenseButton = By.XPath("//a[contains(text(),'Create a Lease/License File')]");
 
         //File Details Edit Icon
@@ -254,8 +254,8 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Purpose
-            if(lease.Purpose != "")
-                ChooseSpecificSelectOption(licenseDetailsPurposeSelector, lease.Purpose);
+            if(lease.LeasePurpose != "")
+                ChooseSpecificSelectOption(licenseDetailsPurposeSelector, lease.LeasePurpose);
 
             //If other Purpose is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0 && lease.PurposeOther != "")
@@ -475,8 +475,8 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Purpose
-            if (lease.Purpose != "")
-                ChooseSpecificSelectOption(licenseDetailsPurposeSelector, lease.Purpose);
+            if (lease.LeasePurpose != "")
+                ChooseSpecificSelectOption(licenseDetailsPurposeSelector, lease.LeasePurpose);
 
             //If other Purpose is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0 && lease.PurposeOther != "")
@@ -842,8 +842,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(licenseDetailsPurposeLabel);
 
-            if(lease.Purpose != "")
-                AssertTrueElementValueEquals(licenseDetailsPurposeContent, lease.Purpose);
+            if(lease.LeasePurpose != "")
+                AssertTrueElementValueEquals(licenseDetailsPurposeContent, lease.LeasePurpose);
 
             if (lease.PurposeOther != "")
                 AssertTrueElementValueEquals(licenseDetailsOtherPurposeContent, lease.PurposeOther);

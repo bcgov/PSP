@@ -637,7 +637,7 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
                     class="c7 form-control date-picker"
                     id="datepicker-assignedDate"
                     name="assignedDate"
-                    placeholder="MTH DD, YYYY"
+                    placeholder="MMM DD, YYYY"
                     type="text"
                     value=""
                   />
@@ -684,7 +684,7 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
                     class="c7 form-control date-picker"
                     id="datepicker-deliveryDate"
                     name="deliveryDate"
-                    placeholder="MTH DD, YYYY"
+                    placeholder="MMM DD, YYYY"
                     type="text"
                     value=""
                   />

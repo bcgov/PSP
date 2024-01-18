@@ -40,7 +40,7 @@ export const useAcquisitionFileExport = () => {
         if (axios.isAxiosError(axiosError)) {
           dispatch(
             logError({
-              name: 'GetAquisitionListExport',
+              name: 'GetAcquisitionListExport',
               status: axiosError?.response?.status,
               error: axiosError,
             }),

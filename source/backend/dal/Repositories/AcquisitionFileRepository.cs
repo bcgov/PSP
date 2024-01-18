@@ -53,7 +53,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            IQueryable<PimsAcquisitionFile> query = GetCommonAquisitionFileQueryDeep(filter, regions, contractorPersonId);
+            IQueryable<PimsAcquisitionFile> query = GetCommonAcquisitionFileQueryDeep(filter, regions, contractorPersonId);
 
             var skip = (filter.Page - 1) * filter.Quantity;
             var pageItems = query.Skip(skip).Take(filter.Quantity).ToList();
@@ -79,7 +79,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            return GetCommonAquisitionFileQueryDeep(filter, regions, contractorPersonId).ToList();
+            return GetCommonAcquisitionFileQueryDeep(filter, regions, contractorPersonId).ToList();
         }
 
         /// <summary>
@@ -692,6 +692,12 @@ namespace Pims.Dal.Repositories
                 .Where(a => a.ProductId == productId).ToList();
         }
 
+        public PimsAcquisitionFile GetByAcquisitionFilePropertyId(long acquisitionFilePropertyId)
+        {
+            return this.Context.PimsAcquisitionFiles.AsNoTracking()
+                .FirstOrDefault(a => a.PimsPropertyAcquisitionFiles.Any(x => x.PropertyAcquisitionFileId == acquisitionFilePropertyId));
+        }
+
         /// <summary>
         /// Generates a new Acquisition Number in the following format.
         /// </summary>
@@ -728,13 +734,13 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Generate a Commeon IQueryable for Aquisition Files.
+        /// Generate a common IQueryable for Acquisition Files.
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="regions"></param>
         /// <param name="contractorPersonId"></param>
         /// <returns></returns>
-        private IQueryable<PimsAcquisitionFile> GetCommonAquisitionFileQueryDeep(AcquisitionFilter filter, HashSet<short> regions, long? contractorPersonId = null)
+        private IQueryable<PimsAcquisitionFile> GetCommonAcquisitionFileQueryDeep(AcquisitionFilter filter, HashSet<short> regions, long? contractorPersonId = null)
         {
             var predicate = PredicateBuilder.New<PimsAcquisitionFile>(acq => true);
 
@@ -772,7 +778,7 @@ namespace Pims.Dal.Repositories
             if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))
             {
                 predicate = predicate.And(acq => EF.Functions.Like(acq.Project.Code, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(acq.Project.Description, $"%{filter.ProjectNameOrNumber}%")
-                || acq.PimsCompensationRequisitions.Any(cr => EF.Functions.Like(cr.AlternateProject.Code, $"%{filter.ProjectNameOrNumber}%") || acq.PimsCompensationRequisitions.Any(cr => EF.Functions.Like(cr.AlternateProject.Description, $"%{filter.ProjectNameOrNumber}%"))));
+                || acq.PimsCompensationRequisitions.Any(cr => EF.Functions.Like(cr.AlternateProject.Code, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(cr.AlternateProject.Description, $"%{filter.ProjectNameOrNumber}%")));
             }
 
             predicate = predicate.And(acq => regions.Contains(acq.RegionCode));

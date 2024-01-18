@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Concepts.Property;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
@@ -34,7 +34,7 @@ namespace Pims.Api.Services
 
         PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity);
 
-        PimsPropertyActivity UpdateActivity(PimsPropertyActivity propertyActivity);
+        PimsPropertyActivity UpdateActivity(long propertyId, long activityId, PimsPropertyActivity propertyActivity);
 
         bool DeleteActivity(long activityId);
     }

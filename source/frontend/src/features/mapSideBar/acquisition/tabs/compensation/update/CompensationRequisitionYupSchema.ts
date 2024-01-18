@@ -25,7 +25,7 @@ export const CompensationRequisitionYupSchema = yup.object().shape({
   }),
   financials: yup.array().of(
     yup.object().shape({
-      financialActivityCodeId: yup.string().required('Activity code is required'),
+      financialActivityCodeId: yup.object().nullable().required('Activity code is required'),
       isGstRequired: yup.string(),
       pretaxAmount: yup
         .number()

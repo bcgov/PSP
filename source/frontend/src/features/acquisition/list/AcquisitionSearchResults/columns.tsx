@@ -104,13 +104,13 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
   },
   {
     Header: 'Team member',
-    accessor: 'aquisitionTeam',
+    accessor: 'acquisitionTeam',
     align: 'left',
     clickable: true,
     width: 40,
     maxWidth: 40,
     Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
-      const acquisitionTeam = props.row.original.aquisitionTeam;
+      const acquisitionTeam = props.row.original.acquisitionTeam;
       const personsInTeam = acquisitionTeam?.filter(x => x.personId !== undefined);
       const organizationsInTeam = acquisitionTeam?.filter(x => x.organizationId !== undefined);
 
@@ -151,8 +151,8 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
           items={teamAsString ?? []}
           keyFunction={(item: MemberRoleGroup, index: number) =>
             item.person
-              ? `aquisition-team-${item.id}-person-${item.person.id ?? index}`
-              : `aquisition-team-${item.id}-org-${item.organization?.id ?? index}`
+              ? `acquisition-team-${item.id}-person-${item.person.id ?? index}`
+              : `acquisition-team-${item.id}-org-${item.organization?.id ?? index}`
           }
           renderFunction={(item: MemberRoleGroup) =>
             item.person ? (

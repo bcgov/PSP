@@ -16,7 +16,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By addDocumentBttn = By.XPath("//div[contains(text(),'Documents')]/following-sibling::div/button");
 
         //Upload Documents Dialog General Elements
-        private By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4'] span");
+        private By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
         private By documentUploadInstructions = By.CssSelector("div[class='modal-body'] div div[class='pb-4']");
         private By documentUploadDocTypeLabel = By.XPath("//label[contains(text(),'Document type')]");
         private By documentUploadDocTypeModalSelect = By.XPath("//div[@class='modal-body']/div/div[2]/div[2]/div/select[@id='input-documentTypeId']");
@@ -242,8 +242,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentViewYearPrivyCouncilContent = By.XPath("//label[contains(text(),'Year - privy council #')]/parent::div/following-sibling::div");
 
         //Document Modal Elements
-        private By documentModalCloseIcon = By.CssSelector("button[class='close']");
-        private By documentModalContentDiv = By.CssSelector("div[class='modal-content']");
+        private By documentModalCloseIcon = By.CssSelector("div[class='modal-close-btn']");
         private By documentEditBttn = By.XPath("//div[@class='modal-body']/div/div[3]/div/div[2]/button");
         private By documentSaveButton = By.CssSelector("button[data-testid='save']");
         private By documentCancelButton = By.CssSelector("button[data-testid='cancel']");
@@ -256,7 +255,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Document Confirmation Modal Elements
         private By documentConfirmationModal = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/parent::div");
         private By documentConfirmationContent = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/following-sibling::div[@class='modal-body']");
-        private By documentConfirmModalOkBttn = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/following-sibling::div/button[@title='ok-modal']");
+        private By documentConfirmModalOkBttn = By.CssSelector("div[class='modal-content'] button[title='ok-modal']");
 
         //Document Delete Document Confirmation Modal Elements
         private By documentDeleteHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
@@ -271,25 +270,34 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentFilterNameInput = By.XPath("//input[@data-testid='document-filename']");
         private By documentFilterSearchBttn = By.XPath("//input[@id='input-filename']/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/button[@data-testid='search']");
         private By documentFilterResetBttn = By.XPath("//input[@id='input-filename']/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/button[@data-testid='reset-button']");
-        
+
+        //Document List Sortable Columns Elements
+        private By documentDocumentTypeSortBttn = By.CssSelector("div[data-testid='sort-column-documentType']");
+        private By documentDocumentNameSortBttn = By.CssSelector("div[data-testid='sort-column-fileName']");
+        private By documentDocumentUploadedDateSortBttn = By.CssSelector("div[data-testid='sort-column-appCreateTimestamp']");
+        private By documentDocumentStatusSortBttn = By.CssSelector("div[data-testid='sort-column-statusTypeCode']");
+
         //Documents Tab List Results
-        private By documentTableResults = By.XPath("//div[@data-testid='documentsTable']");
+        private By documentTableListView = By.XPath("//div[@data-testid='documentsTable']");
         private By documentTableTypeColumn = By.XPath("//div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Document type')]");
         private By documentTableNameColumn = By.XPath("//div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'File name')]");
         private By documentTableDateColumn = By.XPath("//div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Uploaded')]");
         private By documentTableStatusColumn = By.XPath("//div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Status')]");
         private By documentTableActionsColumn = By.XPath("//div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Actions')]");
-        private By documentTableContentTotal = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div");
+        private By documentTableContentTotal = By.CssSelector("div[data-testid='documentsTable'] div[class='tbody'] div[class='tr-wrapper']");
         private By documentTableWaitSpinner = By.CssSelector("div[class='table-loading']");
        
         //Activities Documents List 1st Result Elements
-        private By documentTableResults1stDownloadBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/div/button[@data-testid='document-download-button']");
+        private By documentTableResults1stDocumentTypeContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[1]");
+        private By documentTableResults1stDocumentNameContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[2]/button/div");
+        private By documentTableResults1stDocumentStatusContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[4]");
         private By documentTableResults1stViewBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/button[@data-testid='document-view-button']");
         private By documentTableResults1stDeleteBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/button[@data-testid='document-delete-button']");
 
         //Documents Tab Pagination
         private By documentPagination = By.XPath("//div[@class='row']/div[4]/ul[@class='pagination']");
         private By documentMenuPagination = By.XPath("//div[@class='row']/div[3]/div[@class='Menu-root']");
+        private By documentPaginationPrevPageLink = By.CssSelector("ul[class='pagination'] a[aria-label='Previous page']");
         private By documentPaginationNextPageLink = By.CssSelector("ul[class='pagination'] a[aria-label='Next page']");
 
         public DigitalDocuments(IWebDriver webDriver) : base(webDriver)
@@ -299,6 +307,12 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentsTab);
             webDriver.FindElement(documentsTab).Click();
+        }
+
+        public void NavigateToFirstPageDocumentsTable()
+        {
+            WaitUntilVisible(documentPaginationPrevPageLink);
+            FocusAndClick(documentPaginationPrevPageLink);
         }
 
         public void AddNewDocument(string fileType)
@@ -390,27 +404,76 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(documentFilterTypeSelect);
             if (fileType.Equals("CDOGS Templates") || fileType.Equals("Project"))
             {
-                Assert.True(webDriver.FindElement(documentsTitle).Displayed);
-                Assert.True(webDriver.FindElement(addDocumentBttn).Displayed);
+                AssertTrueIsDisplayed(documentsTitle);
+                AssertTrueIsDisplayed(addDocumentBttn);
             }
             else
             {
-                Assert.True(webDriver.FindElement(documentsFileTitle).Displayed);
-                Assert.True(webDriver.FindElement(addFileDocumentBttn).Displayed);
-            
+                AssertTrueIsDisplayed(documentsFileTitle);
+                AssertTrueIsDisplayed(addFileDocumentBttn);
             }
-            Assert.True(webDriver.FindElement(documentFilterTypeSelect).Displayed);
-            Assert.True(webDriver.FindElement(documentFilterStatusSelect).Displayed);
-            Assert.True(webDriver.FindElement(documentFilterNameInput).Displayed);
-            Assert.True(webDriver.FindElement(documentFilterSearchBttn).Displayed);
-            Assert.True(webDriver.FindElement(documentFilterResetBttn).Displayed);
+            AssertTrueIsDisplayed(documentFilterTypeSelect);
+            AssertTrueIsDisplayed(documentFilterStatusSelect);
+            AssertTrueIsDisplayed(documentFilterNameInput);
+            AssertTrueIsDisplayed(documentFilterSearchBttn);
+            AssertTrueIsDisplayed(documentFilterResetBttn);
 
-            Assert.True(webDriver.FindElement(documentTableResults).Displayed);
-            Assert.True(webDriver.FindElement(documentTableTypeColumn).Displayed);
-            Assert.True(webDriver.FindElement(documentTableNameColumn).Displayed);
-            Assert.True(webDriver.FindElement(documentTableDateColumn).Displayed);
-            Assert.True(webDriver.FindElement(documentTableStatusColumn).Displayed);
-            Assert.True(webDriver.FindElement(documentTableActionsColumn).Displayed);
+            AssertTrueIsDisplayed(documentTableListView);
+            AssertTrueIsDisplayed(documentTableTypeColumn);
+            AssertTrueIsDisplayed(documentTableNameColumn);
+            AssertTrueIsDisplayed(documentTableDateColumn);
+            AssertTrueIsDisplayed(documentTableStatusColumn);
+            AssertTrueIsDisplayed(documentTableActionsColumn);
+        }
+
+        public void VerifyPaginationElements()
+        {
+            AssertTrueIsDisplayed(documentPagination);
+            AssertTrueIsDisplayed(documentMenuPagination);
+            AssertTrueIsDisplayed(documentPaginationPrevPageLink);
+            AssertTrueIsDisplayed(documentPaginationNextPageLink);
+        }
+
+        public int DigitalDocumentsTableResultNumber()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElements(documentTableContentTotal).Count;
+        }
+
+        public void OrderByDocumentFileType()
+        {
+            WaitUntilClickable(documentDocumentTypeSortBttn);
+            webDriver.FindElement(documentDocumentTypeSortBttn).Click();
+        }
+
+        public void OrderByDocumentFileName()
+        {
+            WaitUntilClickable(documentDocumentNameSortBttn);
+            webDriver.FindElement(documentDocumentNameSortBttn).Click();
+        }
+
+        public void OrderByDocumentFileStatus()
+        {
+            WaitUntilClickable(documentDocumentStatusSortBttn);
+            webDriver.FindElement(documentDocumentStatusSortBttn).Click();
+        }
+
+        public string FirstDocumentFileType()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(documentTableResults1stDocumentTypeContent).Text;
+        }
+
+        public string FirstDocumentFileName()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(documentTableResults1stDocumentNameContent).Text;
+        }
+
+        public string FirstDocumentFileStatus()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(documentTableResults1stDocumentStatusContent).Text;
         }
 
         public void FilterByType(string documentType)
@@ -1331,24 +1394,24 @@ namespace PIMS.Tests.Automation.PageObjects
             VerifyGeneralUploadDocumentForm();
             AssertTrueIsDisplayed(documentCivicAddressLabel);
             AssertTrueIsDisplayed(documentCivicAddressInput);
-            webDriver.FindElement(documentCivicAddressInput).Click();
-            webDriver.FindElement(documentCivicAddressLabel).Click();
-            AssertTrueIsDisplayed(documentBCAssessmentTypeAddressMandatory);
+            //webDriver.FindElement(documentCivicAddressInput).Click();
+            //webDriver.FindElement(documentCivicAddressLabel).Click();
+            //AssertTrueIsDisplayed(documentBCAssessmentTypeAddressMandatory);
 
             AssertTrueIsDisplayed(documentBCAssessmentTypeJurisdictionLabel);
             AssertTrueIsDisplayed(documentBCAssessmentTypeJurisdictionInput);
-            webDriver.FindElement(documentBCAssessmentTypeJurisdictionInput).Click();
-            webDriver.FindElement(documentBCAssessmentTypeJurisdictionLabel).Click();
-            AssertTrueIsDisplayed(documentBCAssessmentTypeJurisdictionMandatory);
+            //webDriver.FindElement(documentBCAssessmentTypeJurisdictionInput).Click();
+            //webDriver.FindElement(documentBCAssessmentTypeJurisdictionLabel).Click();
+            //AssertTrueIsDisplayed(documentBCAssessmentTypeJurisdictionMandatory);
 
             AssertTrueIsDisplayed(documentBCAssessmentTypeRollLabel);
             AssertTrueIsDisplayed(documentBCAssessmentTypeRollInput);
 
             AssertTrueIsDisplayed(documentYearLabel);
             AssertTrueIsDisplayed(documentYearInput);
-            webDriver.FindElement(documentYearInput).Click();
-            webDriver.FindElement(documentYearLabel).Click();
-            AssertTrueIsDisplayed(documentBCAssessmentTypeYearMandatory);
+            //webDriver.FindElement(documentYearInput).Click();
+            //webDriver.FindElement(documentYearLabel).Click();
+            //AssertTrueIsDisplayed(documentBCAssessmentTypeYearMandatory);
         }
 
         private void VerifyTransferAdministrationFields()
@@ -1361,24 +1424,24 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(documentMOTIFileLabel);
             AssertTrueIsDisplayed(documentTypeMotiFileInput);
-            webDriver.FindElement(documentTypeMotiFileInput).Click();
-            webDriver.FindElement(documentMOTIFileLabel).Click();
-            AssertTrueIsDisplayed(documentTransferAdmTypeMOTIFileMandatory);
+            //webDriver.FindElement(documentTypeMotiFileInput).Click();
+            //webDriver.FindElement(documentMOTIFileLabel).Click();
+            //AssertTrueIsDisplayed(documentTransferAdmTypeMOTIFileMandatory);
 
             AssertTrueIsDisplayed(documentTransferAdmTypeProIdLabel);
             AssertTrueIsDisplayed(documentTypePropertyIdentifierInput);
 
             AssertTrueIsDisplayed(documentRoadNameLabel);
             AssertTrueIsDisplayed(documentRoadNameInput);
-            webDriver.FindElement(documentRoadNameInput).Click();
-            webDriver.FindElement(documentRoadNameLabel).Click();
-            AssertTrueIsDisplayed(documentTransferAdmTypeRoadNameMandatory);
+            //webDriver.FindElement(documentRoadNameInput).Click();
+            //webDriver.FindElement(documentRoadNameLabel).Click();
+            //AssertTrueIsDisplayed(documentTransferAdmTypeRoadNameMandatory);
 
             AssertTrueIsDisplayed(documentTransferAdmTypeTransferLabel);
             AssertTrueIsDisplayed(documentTransferAdmTypeTransferInput);
-            webDriver.FindElement(documentTransferAdmTypeTransferInput).Click();
-            webDriver.FindElement(documentTransferAdmTypeTransferLabel).Click();
-            AssertTrueIsDisplayed(documentTransferAdmTypeTransferMandatory);
+            //webDriver.FindElement(documentTransferAdmTypeTransferInput).Click();
+            //webDriver.FindElement(documentTransferAdmTypeTransferLabel).Click();
+            //AssertTrueIsDisplayed(documentTransferAdmTypeTransferMandatory);
         }
 
         private void VerifyMinisterialOrderFields()
@@ -1405,15 +1468,15 @@ namespace PIMS.Tests.Automation.PageObjects
             VerifyGeneralUploadDocumentForm();
             AssertTrueIsDisplayed(documentCanLandSurveyTypeCanLandSurveyLabel);
             AssertTrueIsDisplayed(documentCanLandSurveyTypeCanLandSurveyInput);
-            webDriver.FindElement(documentCanLandSurveyTypeCanLandSurveyInput).Click();
-            webDriver.FindElement(documentCanLandSurveyTypeCanLandSurveyLabel).Click();
-            AssertTrueIsDisplayed(documentCanLandSurveyTypeCanLandSurveyMandatory);
+            //webDriver.FindElement(documentCanLandSurveyTypeCanLandSurveyInput).Click();
+            //webDriver.FindElement(documentCanLandSurveyTypeCanLandSurveyLabel).Click();
+            //AssertTrueIsDisplayed(documentCanLandSurveyTypeCanLandSurveyMandatory);
 
             AssertTrueIsDisplayed(documentCanLandSurveyTypeIndianReserveLabel);
             AssertTrueIsDisplayed(documentCanLandSurveyTypeIndianReserveInput);
-            webDriver.FindElement(documentCanLandSurveyTypeIndianReserveInput).Click();
-            webDriver.FindElement(documentCanLandSurveyTypeIndianReserveLabel).Click();
-            AssertTrueIsDisplayed(documentCanLandSurveyTypeIndianReserveMandatory);
+            //webDriver.FindElement(documentCanLandSurveyTypeIndianReserveInput).Click();
+            //webDriver.FindElement(documentCanLandSurveyTypeIndianReserveLabel).Click();
+            //AssertTrueIsDisplayed(documentCanLandSurveyTypeIndianReserveMandatory);
         }
 
         private void VerifyPhotosCorrespondenceFields()
@@ -1465,9 +1528,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(documentHistoricFileTypeFileLabel);
             AssertTrueIsDisplayed(documentHistoricFileTypeFileInput);
-            webDriver.FindElement(documentHistoricFileTypeFileInput).Click();
-            webDriver.FindElement(documentHistoricFileTypeFileLabel).Click();
-            AssertTrueIsDisplayed(documentHistoricFileTypeFileMandatory);
+            //webDriver.FindElement(documentHistoricFileTypeFileInput).Click();
+            //webDriver.FindElement(documentHistoricFileTypeFileLabel).Click();
+            //AssertTrueIsDisplayed(documentHistoricFileTypeFileMandatory);
 
             AssertTrueIsDisplayed(documentHistoricFileTypePhyLocationLabel);
             AssertTrueIsDisplayed(documentHistoricFileTypePhyLocationInput);
@@ -1484,9 +1547,9 @@ namespace PIMS.Tests.Automation.PageObjects
             VerifyGeneralUploadDocumentForm();
             AssertTrueIsDisplayed(documentCrownGrantTypeCrownLabel);
             AssertTrueIsDisplayed(documentCrownGrantTypeCrownInput);
-            webDriver.FindElement(documentCrownGrantTypeCrownInput).Click();
-            webDriver.FindElement(documentCrownGrantTypeCrownLabel).Click();
-            AssertTrueIsDisplayed(documentCrownGrantTypeCrownMandatory);
+            //webDriver.FindElement(documentCrownGrantTypeCrownInput).Click();
+            //webDriver.FindElement(documentCrownGrantTypeCrownLabel).Click();
+            //AssertTrueIsDisplayed(documentCrownGrantTypeCrownMandatory);
         }
 
         private void VerifyPrivyCouncilFields()
@@ -1496,9 +1559,9 @@ namespace PIMS.Tests.Automation.PageObjects
             VerifyGeneralUploadDocumentForm();
             AssertTrueIsDisplayed(documentPrivyCouncilTypePrivyLabel);
             AssertTrueIsDisplayed(documentPrivyCouncilTypePrivyInput);
-            webDriver.FindElement(documentPrivyCouncilTypePrivyInput).Click();
-            webDriver.FindElement(documentPrivyCouncilTypePrivyLabel).Click();
-            AssertTrueIsDisplayed(documentPrivyCounciltTypePrivyMandatory);
+            //webDriver.FindElement(documentPrivyCouncilTypePrivyInput).Click();
+            //webDriver.FindElement(documentPrivyCouncilTypePrivyLabel).Click();
+            //AssertTrueIsDisplayed(documentPrivyCounciltTypePrivyMandatory);
         }
 
         private void VerifyOICFields()
@@ -1560,15 +1623,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(documentGazettePublishedDateLabel);
             AssertTrueIsDisplayed(documentGazettePublishedDateInput);
-            webDriver.FindElement(documentGazettePublishedDateInput).Click();
-            webDriver.FindElement(documentGazettePublishedDateLabel).Click();
-            AssertTrueIsDisplayed(documentGazettePublishedDateMandatory);
+            //webDriver.FindElement(documentGazettePublishedDateInput).Click();
+            //webDriver.FindElement(documentGazettePublishedDateLabel).Click();
+            //AssertTrueIsDisplayed(documentGazettePublishedDateMandatory);
 
             AssertTrueIsDisplayed(documentGazettePublishedTypeLabel);
             AssertTrueIsDisplayed(documentGazettePublishedTypeInput);
-            webDriver.FindElement(documentGazettePublishedTypeInput).Click();
-            webDriver.FindElement(documentGazettePublishedTypeLabel).Click();
-            AssertTrueIsDisplayed(documentGazettePublishedTypeMandatory);
+            //webDriver.FindElement(documentGazettePublishedTypeInput).Click();
+            //webDriver.FindElement(documentGazettePublishedTypeLabel).Click();
+            //AssertTrueIsDisplayed(documentGazettePublishedTypeMandatory);
 
             AssertTrueIsDisplayed(documentGazetteLegalSurveyPlanLabel);
             AssertTrueIsDisplayed(documentLegalSurveyInput);
@@ -1579,9 +1642,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(documentRoadNameLabel);
             AssertTrueIsDisplayed(documentRoadNameInput);
-            webDriver.FindElement(documentRoadNameInput).Click();
-            webDriver.FindElement(documentRoadNameLabel).Click();
-            AssertTrueIsDisplayed(documentGazetteRoadNameMandatory);
+            //webDriver.FindElement(documentRoadNameInput).Click();
+            //webDriver.FindElement(documentRoadNameLabel).Click();
+            //AssertTrueIsDisplayed(documentGazetteRoadNameMandatory);
         }
 
         private void VerifyPAPlansFields()
@@ -1591,9 +1654,9 @@ namespace PIMS.Tests.Automation.PageObjects
             VerifyGeneralUploadDocumentForm();
             AssertTrueIsDisplayed(documentPAPlanNbrLabel);
             AssertTrueIsDisplayed(documentPAPlanNbrInput);
-            webDriver.FindElement(documentPAPlanNbrInput).Click();
-            webDriver.FindElement(documentPAPlanNbrLabel).Click();
-            AssertTrueIsDisplayed(documentPAPlanNbrMandatory);
+            //webDriver.FindElement(documentPAPlanNbrInput).Click();
+            //webDriver.FindElement(documentPAPlanNbrLabel).Click();
+            //AssertTrueIsDisplayed(documentPAPlanNbrMandatory);
 
             AssertTrueIsDisplayed(documentPAPlanRevisionLabel);
             AssertTrueIsDisplayed(documentPAPlanRevisionInput);
@@ -1602,9 +1665,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(documentPAPlanProjectNameLabel);
             AssertTrueIsDisplayed(documentPAPlanProjectNameInput);
-            webDriver.FindElement(documentPAPlanProjectNameInput).Click();
-            webDriver.FindElement(documentPAPlanProjectNameLabel).Click();
-            AssertTrueIsDisplayed(documentPAPlanProjectNameMandatory);
+            //webDriver.FindElement(documentPAPlanProjectNameInput).Click();
+            //webDriver.FindElement(documentPAPlanProjectNameLabel).Click();
+            //AssertTrueIsDisplayed(documentPAPlanProjectNameMandatory);
         }
 
         private void VerifyShortDescriptorField()

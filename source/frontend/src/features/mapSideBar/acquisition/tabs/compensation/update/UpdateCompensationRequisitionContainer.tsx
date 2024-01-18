@@ -231,7 +231,13 @@ const UpdateCompensationRequisitionContainer: React.FC<
         loadingYearlyFinancials ||
         loadingInterestHolders
       }
-      initialValues={CompensationRequisitionFormModel.fromApi(compensation)}
+      initialValues={CompensationRequisitionFormModel.fromApi(
+        compensation,
+        yearlyFinancialOptions,
+        chartOfAccountOptions,
+        responsibilityCentreOptions,
+        financialActivityOptions,
+      )}
       payeeOptions={payeeOptions}
       gstConstant={gstDecimalPercentage ?? 0}
       financialActivityOptions={financialActivityOptions}

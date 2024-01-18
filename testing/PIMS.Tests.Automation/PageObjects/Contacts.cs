@@ -7,7 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class Contacts : PageObjectBase
     {
         //Contact Menu Elements
-        private By menuContactsButton = By.XPath("//a/label[contains(text(),'Contacts')]/parent::a");
+        private By menuContactsButton = By.CssSelector("div[data-testid='nav-tooltip-contacts'] a");
         private By createContactButton = By.XPath("//a[contains(text(),'Add a Contact')]");
 
         //Contacts Create Elements
@@ -163,7 +163,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By commentsOrganizationContent = By.CssSelector("div[data-testid='contact-organization-comment']");
 
         //Contact Modal Element
-        private By contactDuplicateModal = By.CssSelector("div[class='modal-dialog']");
+        private By contactDuplicateModal = By.CssSelector("div[class='modal-content']");
 
         private By contactsSearchTable = By.CssSelector("div[data-testid='contactsTable']");
         private By contactModalContinueSaveBttn = By.XPath("//button/div[contains(text(),'Continue Save')]");

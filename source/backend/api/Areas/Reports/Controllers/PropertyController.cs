@@ -7,6 +7,7 @@ using Pims.Api.Helpers.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Helpers.Reporting;
+using Pims.Api.Models.Base;
 using Pims.Api.Policies;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
@@ -97,7 +98,7 @@ namespace Pims.Api.Areas.Reports.Controllers
 
             filter.Quantity = all ? _propertyRepository.Count() : filter.Quantity;
             var page = _propertyRepository.GetPage((PropertyFilter)filter);
-            var report = _mapper.Map<Api.Models.PageModel<Models.Property.PropertyModel>>(page);
+            var report = _mapper.Map<PageModel<Models.Property.PropertyModel>>(page);
 
             return acceptHeader.ToString() switch
             {

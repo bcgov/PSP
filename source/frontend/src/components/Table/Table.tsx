@@ -295,7 +295,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   const manualSortBy = !!externalSort || props.manualSortBy;
   const totalItems = externalTotalItems ?? data?.length;
   const pageCount =
-    externalPageCount ?? internalPageSize > 0 ? Math.ceil(totalItems / internalPageSize) : 0;
+    externalPageCount ?? (internalPageSize > 0 ? Math.ceil(totalItems / internalPageSize) : 0);
   const selectedRowsRef = React.useRef<T[]>(externalSelectedRows ?? []); // used as a global var for providing up to date list of selected rows to code within the table (that is arrow function scoped).
 
   // manually update the contents of the global ref of selected rows if the list of external selected rows changes.
@@ -489,7 +489,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
         {props.canRowExpand ? <div className="th" style={{ width: '4.7rem' }}></div> : null}
         {filterable && (
           <div className={'th reset-filter svg-btn'}>
-            <TooltipWrapper toolTipId="properties-list-filter-reset-tooltip" toolTip="Reset Filter">
+            <TooltipWrapper tooltipId="properties-list-filter-reset-tooltip" tooltip="Reset Filter">
               <Button
                 onClick={() => {
                   const nextState: any = { ...props.filter };
@@ -568,8 +568,8 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
       return (
         props.detailsPanel && (
           <TooltipWrapper
-            toolTipId="expand-all-rows"
-            toolTip={open ? 'Collapse Row' : 'Expand Row'}
+            tooltipId="expand-all-rows"
+            tooltip={open ? 'Collapse Row' : 'Expand Row'}
           >
             <div className={className + ' svg-btn'} onClick={onClick}>
               {open ? detailsOpenedIcon : detailsClosedIcon}

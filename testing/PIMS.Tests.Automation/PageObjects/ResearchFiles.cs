@@ -8,7 +8,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class ResearchFiles : PageObjectBase
     {
         //Research File Menu options
-        private By menuResearchButton = By.XPath("//a/label[contains(text(),'Research')]/parent::a");
+        private By menuResearchButton = By.CssSelector("div[data-testid='nav-tooltip-research'] a");
         private By createResearchFileButton = By.XPath("//a[contains(text(),'Create a Research File')]");
 
         //File Details Tab Element
@@ -108,7 +108,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By selectContactButton = By.CssSelector("div[class='pl-0 col-auto'] button");
 
-        private By researchFileHeaderCode = By.XPath("//strong[contains(text(),'R-')]");
+        private By researchFileHeaderCode = By.XPath("//label[contains(text(),'File #:')]/parent::div/following-sibling::div/strong");
 
         //Research File - Properties Elements
         private By researchProperty1stPropLink = By.CssSelector("div[data-testid='menu-item-row-1'] div:nth-child(3)");
@@ -301,12 +301,15 @@ namespace PIMS.Tests.Automation.PageObjects
                 WaitUntilClickable(researchPropertyNameInput);
                 webDriver.FindElement(researchPropertyNameInput).SendKeys(propertyResearch.DescriptiveName);
             }
-            if (propertyResearch.Purpose != "")
+            if (propertyResearch.PropertyResearchPurpose.Count > 0)
             {
-                webDriver.FindElement(researchPropertyPurposeSelect).Click();
+                for (int i = 0; i < propertyResearch.PropertyResearchPurpose.Count; i++)
+                {
+                    webDriver.FindElement(researchPropertyPurposeSelect).Click();
 
-                WaitUntilVisible(researchPropertyPurposeOptions);
-                ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, propertyResearch.Purpose);
+                    WaitUntilVisible(researchPropertyPurposeOptions);
+                    ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, propertyResearch.PropertyResearchPurpose[i]);
+                }
             }
             if (propertyResearch.LegalOpinionRequest != "")
             {
@@ -466,11 +469,14 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearInput(researchPropertyNameInput);
                 webDriver.FindElement(researchPropertyNameInput).SendKeys(propertyResearch.DescriptiveName);
             }
-            if (propertyResearch.Purpose != "")
+            if (propertyResearch.PropertyResearchPurpose.Count > 0)
             {
-                ClearMultiSelectInput(researchPropertyPurposeDiv);
-                webDriver.FindElement(researchPropertyPurposeSelect).Click();
-                ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, propertyResearch.Purpose);
+                for (int i = 0; i < propertyResearch.PropertyResearchPurpose.Count; i++)
+                {
+                    ClearMultiSelectInput(researchPropertyPurposeDiv);
+                    webDriver.FindElement(researchPropertyPurposeSelect).Click();
+                    ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, propertyResearch.PropertyResearchPurpose[i]);
+                }
             }
             if (propertyResearch.LegalOpinionRequest != "")
             {
@@ -719,7 +725,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(researchPropertyNameViewInput, propertyResearch.DescriptiveName);
 
             AssertTrueIsDisplayed(researchPropertyPurposeLabel);
-            AssertTrueContentEquals(researchPropertyPurposeViewInput,propertyResearch.Purpose);
+            AssertTrueContentEquals(researchPropertyPurposeViewInput, TransformListToText(propertyResearch.PropertyResearchPurpose));
             AssertTrueIsDisplayed(researchPropertyLegalReqLabel);
 
             if (propertyResearch.LegalOpinionRequest == "Unknown")

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { LinkButton, StyledRemoveLinkButton } from '@/components/common/buttons';
 import { FastCurrencyInput } from '@/components/common/form';
 import { Select, SelectOption } from '@/components/common/form/Select';
+import { TypeaheadSelect } from '@/components/common/form/TypeaheadSelect';
 import GenericModal from '@/components/common/GenericModal';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { getCurrencyCleanValue, stringToBoolean } from '@/utils/formUtils';
@@ -100,11 +101,9 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
                   </StyledSubHeader>
 
                   <SectionField label="Code & Description" labelWidth="4" required>
-                    <Select
-                      field={`financials[${index}].financialActivityCodeId`}
+                    <TypeaheadSelect
+                      field={`financials.${index}.financialActivityCodeId`}
                       options={financialActivityOptions}
-                      placeholder="Select..."
-                      required
                     />
                   </SectionField>
 
@@ -174,6 +173,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
             </LinkButton>
 
             <GenericModal
+              variant="warning"
               display={showModal}
               title="Remove financial activity"
               message={'Are you sure you want to remove this financial activity?'}

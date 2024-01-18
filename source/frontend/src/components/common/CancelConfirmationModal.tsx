@@ -2,8 +2,11 @@ import React from 'react';
 
 import GenericModal, { ModalProps } from '@/components/common/GenericModal';
 
-export const CancelConfirmationModal: React.FC<React.PropsWithChildren<ModalProps>> = props => {
+export const CancelConfirmationModal: React.FC<
+  React.PropsWithChildren<Partial<ModalProps>>
+> = props => {
   const {
+    variant = 'info',
     title = 'Unsaved Changes',
     message = 'You have made changes on this form. Do you wish to leave without saving?',
     okButtonText = 'Confirm',
@@ -13,6 +16,7 @@ export const CancelConfirmationModal: React.FC<React.PropsWithChildren<ModalProp
 
   return (
     <GenericModal
+      variant={variant}
       title={title}
       message={message}
       okButtonText={okButtonText}

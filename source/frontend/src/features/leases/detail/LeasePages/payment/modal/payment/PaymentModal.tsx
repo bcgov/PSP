@@ -2,7 +2,7 @@ import { FormikProps } from 'formik';
 import * as React from 'react';
 import { useRef } from 'react';
 
-import * as CommonStyled from '@/components/common/styles';
+import GenericModal from '@/components/common/GenericModal';
 import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
 
 import { FormLeasePayment } from '../../models';
@@ -29,7 +29,8 @@ export const PaymentModal: React.FunctionComponent<React.PropsWithChildren<IPaym
 }) => {
   const formikRef = useRef<FormikProps<FormLeasePayment>>(null);
   return (
-    <CommonStyled.PrimaryGenericModal
+    <GenericModal
+      variant="info"
       title="Payment details"
       display={displayModal}
       okButtonText="Save payment"

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Constants;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
-using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -22,6 +22,7 @@ namespace Pims.Api.Services
         private readonly IUserRepository _userRepository;
         private readonly IAcquisitionFileRepository _acqFileRepository;
         private readonly ICompReqFinancialService _compReqFinancialService;
+        private readonly IAcquisitionStatusSolver _statusSolver;
 
         public CompensationRequisitionService(
             ClaimsPrincipal user,
@@ -30,7 +31,8 @@ namespace Pims.Api.Services
             IEntityNoteRepository entityNoteRepository,
             IUserRepository userRepository,
             IAcquisitionFileRepository acqFileRepository,
-            ICompReqFinancialService compReqFinancialService)
+            ICompReqFinancialService compReqFinancialService,
+            IAcquisitionStatusSolver statusSolver)
         {
             _user = user;
             _logger = logger;
@@ -39,6 +41,7 @@ namespace Pims.Api.Services
             _userRepository = userRepository;
             _acqFileRepository = acqFileRepository;
             _compReqFinancialService = compReqFinancialService;
+            _statusSolver = statusSolver;
         }
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
@@ -59,8 +62,15 @@ namespace Pims.Api.Services
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
 
-            CheckDraftStatusUpdateAuthorized(currentCompensation.IsDraft, compensationRequisition.IsDraft);
-            CheckTotalAllowableCompensation(compensationRequisition.AcquisitionFileId, compensationRequisition);
+            var currentAcquisitionFile = _acqFileRepository.GetById(currentCompensation.AcquisitionFileId);
+            var currentAcquisitionStatus = Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
+
+            if (!_statusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft) && !_user.HasPermission(Permissions.SystemAdmin))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
+            CheckTotalAllowableCompensation(currentAcquisitionFile, compensationRequisition);
             compensationRequisition.FinalizedDate = CheckFinalizedDate(currentCompensation.IsDraft, compensationRequisition.IsDraft, currentCompensation.FinalizedDate);
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
@@ -89,6 +99,15 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Deleting compensation with id ...", compensationId);
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionDelete, Permissions.AcquisitionFileEdit);
+
+            var currentCompensation = _compensationRequisitionRepository.GetById(compensationId);
+
+            var currentAcquisitionStatus = GetCurrentAcquisitionStatus(currentCompensation.AcquisitionFileId);
+
+            if (!_statusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft) && !_user.HasPermission(Permissions.SystemAdmin))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             var fileFormToDelete = _compensationRequisitionRepository.TryDelete(compensationId);
             _compensationRequisitionRepository.CommitTransaction();
@@ -135,30 +154,25 @@ namespace Pims.Api.Services
             _entityNoteRepository.Add(fileNoteInstance);
         }
 
-        private void CheckDraftStatusUpdateAuthorized(bool? currentStatus, bool? newStatus)
+        private void CheckTotalAllowableCompensation(PimsAcquisitionFile currentAcquisitionFile, PimsCompensationRequisition newCompensation)
         {
-            if (currentStatus.HasValue && currentStatus.Value.Equals(false)
-                && ((newStatus.HasValue && newStatus.Value.Equals(true)) || !newStatus.HasValue)
-                && !_user.HasPermission(Permissions.SystemAdmin))
-            {
-                throw new NotAuthorizedException();
-            }
-        }
-
-        private void CheckTotalAllowableCompensation(long currentAcquisitionFileId, PimsCompensationRequisition newCompensation)
-        {
-            PimsAcquisitionFile acquisitionFile = _acqFileRepository.GetById(currentAcquisitionFileId);
-            if (!acquisitionFile.TotalAllowableCompensation.HasValue || (newCompensation.IsDraft.HasValue && newCompensation.IsDraft.Value))
+            if (!currentAcquisitionFile.TotalAllowableCompensation.HasValue || (newCompensation.IsDraft.HasValue && newCompensation.IsDraft.Value))
             {
                 return;
             }
-            IEnumerable<PimsCompReqFinancial> allFinancialsForFile = _compReqFinancialService.GetAllByAcquisitionFileId(currentAcquisitionFileId, true);
+            IEnumerable<PimsCompReqFinancial> allFinancialsForFile = _compReqFinancialService.GetAllByAcquisitionFileId(currentAcquisitionFile.AcquisitionFileId, true);
             IEnumerable<PimsCompReqFinancial> allUnchangedFinancialsForFile = allFinancialsForFile.Where(f => f.CompensationRequisitionId != newCompensation.Internal_Id);
             decimal newTotalCompensation = allUnchangedFinancialsForFile.Concat(newCompensation.PimsCompReqFinancials).Aggregate(0m, (acc, f) => acc + (f.TotalAmt ?? 0m));
-            if (newTotalCompensation > acquisitionFile.TotalAllowableCompensation)
+            if (newTotalCompensation > currentAcquisitionFile.TotalAllowableCompensation)
             {
                 throw new BusinessRuleViolationException("Your compensation requisition cannot be saved in FINAL status, as its compensation amount exceeds total allowable compensation for this file.");
             }
+        }
+
+        private AcquisitionStatusTypes GetCurrentAcquisitionStatus(long acquisitionFileId)
+        {
+            var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
+            return Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
         }
     }
 }

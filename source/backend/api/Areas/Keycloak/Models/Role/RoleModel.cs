@@ -1,11 +1,12 @@
 using System;
+using Pims.Api.Models.Base;
 
 namespace Pims.Api.Areas.Keycloak.Models.Role
 {
     /// <summary>
     /// RoleModel class, provides a model that represents a role.
     /// </summary>
-    public class RoleModel : Api.Models.BaseModel
+    public class RoleModel : BaseConcurrentModel
     {
         #region Properties
 
