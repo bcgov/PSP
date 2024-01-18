@@ -50,8 +50,10 @@
 
     public class AcquisitionTeamMember
     {
-        public string TeamRole { get; set; } = null!;
-        public string ContactName { get; set; } = null!;
+        public string TeamMemberRole { get; set; } = null!;
+        public string TeamMemberContactName { get; set; } = null!;
+        public string TeamMemberContactType { get; set; } = null!;
+        public string? TeamMemberPrimaryContact { get; set; } = String.Empty;
     }
 
     public class AcquisitionOwner

@@ -1,0 +1,51 @@
+name: Mayan Sync
+env:
+  OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
+  # service account: gitaction
+  OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
+  OPENSHIFT_TOOLS_NAMESPACE: "3cd915-dev"
+  MS_TEAMS_WEBHOOK_BUILD_CHANNEL: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
+  AUTH__KEYCLOAK__SECRET: ${{ secrets.KEYCLOAK_SECRET }}
+  ASPNETCORE_ENVIRONMENT: "Development"
+
+  ## variables for scripts under git\openshift\4.0\scripts\oc-*.sh
+  APP_PORT: 8080
+  DESTINATION: "dev"
+  OC_JOB_NAME: "dev"
+  GIT_URL: "${{github.server_url}}/${{github.repository}}"
+  GIT_BRANCH: "${{github.ref}}"
+  APP_NAME: "pims"
+  PROJ_PREFIX: "3cd915"
+  PROJ_TOOLS: "3cd915-tools"
+  PROJ_DEV: "dev"
+  PROJ_TEST: "test"
+  PROJ_PROD: "prod"
+  TAG_DEV: "dev"
+  TAG_TEST: "test"
+  TAG_PROD: "prod"
+
+on:
+  workflow_dispatch:
+
+## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
+## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
+jobs:
+  mayan-sync:
+    name: mayan-sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: 3cd915-dev
+      - name: call scripts to sync mayan
+        shell: bash
+        run: |
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-dev-only-4700 -p MAYAN_SYNC_URL=https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/mayan/metadatatype -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-dev-only-4700 -p MAYAN_SYNC_URL=https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-dev-only-4700 -p MAYAN_SYNC_URL=https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)

@@ -6,6 +6,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Mayan_DocumentMetadata } from '@/models/api/generated/ApiGen_Mayan_DocumentMetadata';
 import { ApiGen_Mayan_MetadataType } from '@/models/api/generated/ApiGen_Mayan_MetadataType';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
@@ -91,8 +92,8 @@ const mockDocument: ComposedDocument = {
       },
       fileName: 'NewFile.doc',
       rowVersion: 0,
-      appCreateTimestamp: '',
-      appLastUpdateTimestamp: '',
+      appCreateTimestamp: EpochIsoDateTime,
+      appLastUpdateTimestamp: EpochIsoDateTime,
       appLastUpdateUserid: null,
       appCreateUserid: null,
       appLastUpdateUserGuid: null,
@@ -100,8 +101,8 @@ const mockDocument: ComposedDocument = {
     },
     parentId: null,
     relationshipType: ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles,
-    appCreateTimestamp: '',
-    appLastUpdateTimestamp: '',
+    appCreateTimestamp: EpochIsoDateTime,
+    appLastUpdateTimestamp: EpochIsoDateTime,
     appLastUpdateUserid: null,
     appCreateUserid: null,
     appLastUpdateUserGuid: null,
