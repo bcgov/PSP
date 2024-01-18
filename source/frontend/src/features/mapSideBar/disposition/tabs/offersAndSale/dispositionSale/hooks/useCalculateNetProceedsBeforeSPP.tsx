@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { DispositionSaleFormModel } from '@/features/mapSideBar/disposition/models/DispositionSaleFormModel';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
-export const useCalculateNetProceedsBeforeSPP = (isGstEligible: boolean) => {
+export const useCalculateNetProceeds = (isGstEligible: boolean) => {
   const { values, touched, setFieldValue, isSubmitting } =
     useFormikContext<DispositionSaleFormModel>();
   const { getSystemConstant } = useSystemConstants();

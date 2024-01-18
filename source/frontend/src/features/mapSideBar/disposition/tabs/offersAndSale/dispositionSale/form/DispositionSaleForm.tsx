@@ -11,7 +11,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { DispositionSaleFormModel } from '@/features/mapSideBar/disposition/models/DispositionSaleFormModel';
 
 import { useCalculateDispositionSaleGst } from '../hooks/useCalculateDispositionSaleGst';
-import { useCalculateNetProceedsBeforeSPP } from '../hooks/useCalculateNetProceedsBeforeSPP';
+import { useCalculateNetProceeds } from '../hooks/useCalculateNetProceedsBeforeSPP';
 import DispositionSalePurchaserSubForm from './DispositionSalePurchasersSubForm';
 
 export interface IDispositionSaleFormProps {
@@ -28,7 +28,7 @@ const DispositionSaleForm: React.FunctionComponent<
   const dispositionPurchaserSolicitor = getIn(formikProps.values, 'dispositionPurchaserSolicitor');
 
   useCalculateDispositionSaleGst(isGstRequired);
-  useCalculateNetProceedsBeforeSPP(isGstRequired);
+  useCalculateNetProceeds(isGstRequired);
 
   return (
     <Section header="Sales Details">

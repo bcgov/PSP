@@ -75,14 +75,20 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
       finalConditionRemovalDate: emptyStringtoNullable(this.finalConditionRemovalDate),
       saleCompletionDate: emptyStringtoNullable(this.saleCompletionDate),
       saleFiscalYear: emptyStringtoNullable(this.saleFiscalYear),
-      finalSaleAmount: this.finalSaleAmount,
-      realtorCommissionAmount: this.realtorCommissionAmount,
+      finalSaleAmount: this.finalSaleAmount ? parseFloat(this.finalSaleAmount.toString()) : null,
+      realtorCommissionAmount: this.realtorCommissionAmount
+        ? parseFloat(this.realtorCommissionAmount.toString())
+        : null,
       isGstRequired: this.isGstRequired,
-      gstCollectedAmount: this.gstCollectedAmount,
-      netBookAmount: this.netBookAmount,
-      totalCostAmount: this.totalCostAmount,
-      sppAmount: this.sppAmount,
-      remediationAmount: this.remediationAmount,
+      gstCollectedAmount: this.gstCollectedAmount
+        ? parseFloat(this.gstCollectedAmount.toString())
+        : null,
+      netBookAmount: this.netBookAmount ? parseFloat(this.netBookAmount.toString()) : null,
+      totalCostAmount: this.totalCostAmount ? parseFloat(this.totalCostAmount.toString()) : null,
+      sppAmount: this.sppAmount ? parseFloat(this.sppAmount.toString()) : null,
+      remediationAmount: this.remediationAmount
+        ? parseFloat(this.remediationAmount.toString())
+        : null,
       dispositionPurchasers: this.dispositionPurchasers
         .filter(x => !!x.contact)
         .map(x => x.toApi())

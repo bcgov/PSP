@@ -48,7 +48,7 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
                       onClick={() => {
                         setModalContent({
                           ...getDeleteModalProps(),
-                          title: 'Remo vePurchaser',
+                          title: 'Remove Purchaser',
                           message: 'Do you wish to remove this purchaser?',
                           okButtonText: 'Yes',
                           cancelButtonText: 'No',
