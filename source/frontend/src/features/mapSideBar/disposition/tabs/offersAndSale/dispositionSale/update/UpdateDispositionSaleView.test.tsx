@@ -2,7 +2,6 @@ import { createMemoryHistory } from 'history';
 
 import Claims from '@/constants/claims';
 import { DispositionSaleFormModel } from '@/features/mapSideBar/disposition/models/DispositionSaleFormModel';
-import { mockDispositionSaleApi } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { systemConstantsSlice } from '@/store/slices/systemConstants';
