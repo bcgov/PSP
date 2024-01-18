@@ -21,7 +21,7 @@ namespace Pims.Api.Models.Concepts.Property
         /// <summary>
         /// get/set - The property type description.
         /// </summary>
-        public TypeModel<string> PropertyType { get; set; }
+        public CodeTypeModel<string> PropertyType { get; set; }
 
         /// <summary>
         /// get/set - The property anomalies.
@@ -41,22 +41,22 @@ namespace Pims.Api.Models.Concepts.Property
         /// <summary>
         /// get/set - The status description.
         /// </summary>
-        public TypeModel<string> Status { get; set; }
+        public CodeTypeModel<string> Status { get; set; }
 
         /// <summary>
         /// get/set - The data source description.
         /// </summary>
-        public TypeModel<string> DataSource { get; set; }
+        public CodeTypeModel<string> DataSource { get; set; }
 
         /// <summary>
         /// get/set - The MOTI region that this property falls under.
         /// </summary>
-        public TypeModel<short> Region { get; set; }
+        public CodeTypeModel<short> Region { get; set; }
 
         /// <summary>
         /// get/set - The property's district.
         /// </summary>
-        public TypeModel<short> District { get; set; }
+        public CodeTypeModel<short> District { get; set; }
 
         /// <summary>
         /// get/set - The data source effective date.
@@ -162,7 +162,7 @@ namespace Pims.Api.Models.Concepts.Property
         /// <summary>
         /// get/set - Area Unit name.
         /// </summary>
-        public TypeModel<string> AreaUnit { get; set; }
+        public CodeTypeModel<string> AreaUnit { get; set; }
 
         /// <summary>
         /// get/set - The land area of the parcel.
@@ -182,12 +182,12 @@ namespace Pims.Api.Models.Concepts.Property
         /// <summary>
         /// get/set - Volumetric Unit name.
         /// </summary>
-        public TypeModel<string> VolumetricUnit { get; set; }
+        public CodeTypeModel<string> VolumetricUnit { get; set; }
 
         /// <summary>
         /// get/set - Volumetric parcel type. e.g. airspace / sub-surface.
         /// </summary>
-        public TypeModel<string> VolumetricType { get; set; }
+        public CodeTypeModel<string> VolumetricType { get; set; }
 
         /// <summary>
         /// get/set - The land legal description of the parcel.
@@ -236,7 +236,7 @@ namespace Pims.Api.Models.Concepts.Property
         #endregion
 
         #region Surplus
-        public TypeModel<string> SurplusDeclarationType { get; set; }
+        public CodeTypeModel<string> SurplusDeclarationType { get; set; }
 
         public string SurplusDeclarationComment { get; set; }
 

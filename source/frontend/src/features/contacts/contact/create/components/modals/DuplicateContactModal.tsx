@@ -12,7 +12,7 @@ export const DuplicateContactModal = (props: IDuplicateContactModalProps) => (
     title="Duplicate Contact"
     message="A contact matching this information already exists in the system."
     okButtonText="Continue Save"
-    cancelButtonText="Cancel Update"
+    cancelButtonText="No"
     {...props}
   ></GenericModal>
 );

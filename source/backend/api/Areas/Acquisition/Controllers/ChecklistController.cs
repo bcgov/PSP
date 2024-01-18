@@ -3,6 +3,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts.AcquisitionFile;
+using Pims.Api.Models.Concepts.File;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Security;
@@ -50,12 +51,12 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [HttpGet("{id:long}/checklist")]
         [HasPermission(Permissions.AcquisitionFileView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<AcquisitionFileChecklistItemModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<FileChecklistItemModel>), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         public IActionResult GetAcquisitionFileChecklist([FromRoute] long id)
         {
             var checklist = _acquisitionService.GetChecklistItems(id);
-            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileChecklistItemModel>>(checklist));
+            return new JsonResult(_mapper.Map<IEnumerable<FileChecklistItemModel>>(checklist));
         }
 
         /// <summary>

@@ -19,7 +19,7 @@ namespace Pims.Api.Models.Concepts.Deposit
         /// <summary>
         /// get/set - Security deposit type.
         /// </summary>
-        public TypeModel<string> DepositType { get; set; }
+        public CodeTypeModel<string> DepositType { get; set; }
 
         /// <summary>
         /// get/set - The termination date of the deposit.

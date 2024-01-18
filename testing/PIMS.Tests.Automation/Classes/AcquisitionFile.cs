@@ -50,8 +50,10 @@
 
     public class AcquisitionTeamMember
     {
-        public string TeamRole { get; set; } = null!;
-        public string ContactName { get; set; } = null!;
+        public string TeamMemberRole { get; set; } = null!;
+        public string TeamMemberContactName { get; set; } = null!;
+        public string TeamMemberContactType { get; set; } = null!;
+        public string? TeamMemberPrimaryContact { get; set; } = String.Empty;
     }
 
     public class AcquisitionOwner
@@ -167,6 +169,7 @@
         public string? CompensationAgreementDate { get; set; } = String.Empty;
         public string? CompensationExpropriationNoticeDate { get; set; } = String.Empty;
         public string? CompensationExpropriationVestingDate { get; set; } = String.Empty;
+        public string? CompensationAdvancedPaymentDate { get; set; } = String.Empty;
         public string? CompensationSpecialInstructions { get; set; } = String.Empty;
         public string? CompensationFiscalYear { get; set; } = String.Empty;
         public string? CompensationSTOB { get; set; } = String.Empty;

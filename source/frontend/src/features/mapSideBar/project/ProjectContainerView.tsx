@@ -101,15 +101,15 @@ const ProjectContainerView: React.FC<IProjectContainerViewProps> = ({
           title={'Confirm changes'}
           message={
             <>
-              <div>If you cancel now, this project will not be saved.</div>
+              <div>If you choose to cancel now, your changes will not be saved.</div>
               <br />
-              <strong>Are you sure you want to Cancel?</strong>
+              <strong>Do you want to proceed?</strong>
             </>
           }
           handleOk={handleCancelConfirm}
           handleCancel={() => onSetContainerState({ showConfirmModal: false })}
-          okButtonText="Ok"
-          cancelButtonText="Resume editing"
+          okButtonText="Yes"
+          cancelButtonText="No"
           show
         />
       </StyledFormWrapper>

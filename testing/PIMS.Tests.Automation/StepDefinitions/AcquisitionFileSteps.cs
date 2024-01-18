@@ -12,7 +12,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     {
         private readonly GenericSteps genericSteps;
         private readonly LoginSteps loginSteps;
-        private readonly AcquisitionFilesDetails acquisitionFilesDetails;
+        private readonly AcquisitionDetails acquisitionFilesDetails;
         private readonly SearchAcquisitionFiles searchAcquisitionFiles;
         private readonly SharedSearchProperties sharedSearchProperties;
         private readonly SharedPagination sharedPagination;
@@ -38,7 +38,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps = new LoginSteps(driver);
             genericSteps = new GenericSteps(driver);
 
-            acquisitionFilesDetails = new AcquisitionFilesDetails(driver.Current);
+            acquisitionFilesDetails = new AcquisitionDetails(driver.Current);
             searchAcquisitionFiles = new SearchAcquisitionFiles(driver.Current);
             sharedSearchProperties = new SharedSearchProperties(driver.Current);
             sharedPagination = new SharedPagination(driver.Current);
@@ -185,11 +185,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Search for a property by Legal Description
-            if (acquisitionFile.SearchProperties.LegalDescription != "")
-            {
-                sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
-                sharedSearchProperties.SelectFirstOption();
-            }
+            //if (acquisitionFile.SearchProperties.LegalDescription != "")
+            //{
+            //    sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
+            //    sharedSearchProperties.SelectFirstOption();
+            //}
 
             //Search for a duplicate property
             if (acquisitionFile.SearchProperties.PID != "")
@@ -218,9 +218,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionProperties.NavigateToAddPropertiesAcquisitionFile();
 
             //Search for a property by Legal Description
-            sharedSearchProperties.NavigateToSearchTab();
-            sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
-            sharedSearchProperties.SelectFirstOption();
+            //sharedSearchProperties.NavigateToSearchTab();
+            //sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
+            //sharedSearchProperties.SelectFirstOption();
 
             //Save changes
             acquisitionProperties.SaveAcquisitionFileProperties();
@@ -668,6 +668,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             h120.DeleteCompensationRequisition(1);
 
             var compensationsAfterDelete = h120.TotalCompensationCount();
+
+
             Assert.True(compensationsBeforeDelete - compensationsAfterDelete == 1);
         }
 
@@ -1141,8 +1143,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
                 AcquisitionTeamMember teamMember = new AcquisitionTeamMember();
-                teamMember.TeamRole = ExcelDataContext.ReadData(i, "TeamRole");
-                teamMember.ContactName = ExcelDataContext.ReadData(i, "ContactName");
+                teamMember.TeamMemberRole = ExcelDataContext.ReadData(i, "TeamMemberRole");
+                teamMember.TeamMemberContactName = ExcelDataContext.ReadData(i, "TeamMemberContactName");
+                teamMember.TeamMemberContactType = ExcelDataContext.ReadData(i, "TeamMemberContactType");
+                teamMember.TeamMemberPrimaryContact = ExcelDataContext.ReadData(i, "TeamMemberPrimaryContact");
 
                 acquisitionFile.AcquisitionTeam.Add(teamMember);
             }
@@ -1281,6 +1285,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 compensation.CompensationAgreementDate = ExcelDataContext.ReadData(i, "CompensationAgreementDate");
                 compensation.CompensationExpropriationNoticeDate = ExcelDataContext.ReadData(i, "CompensationExpropriationNoticeDate");
                 compensation.CompensationExpropriationVestingDate = ExcelDataContext.ReadData(i, "CompensationExpropriationVestingDate");
+                compensation.CompensationAdvancedPaymentDate = ExcelDataContext.ReadData(i, "CompensationAdvancedPaymentDate");
                 compensation.CompensationSpecialInstructions = ExcelDataContext.ReadData(i, "CompensationSpecialInstructions");
                 compensation.CompensationFiscalYear = ExcelDataContext.ReadData(i, "CompensationFiscalYear");
                 compensation.CompensationSTOB = ExcelDataContext.ReadData(i, "CompensationSTOB");

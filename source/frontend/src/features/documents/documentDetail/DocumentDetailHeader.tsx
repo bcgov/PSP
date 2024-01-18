@@ -34,7 +34,7 @@ const DocumentDetailHeader: React.FunctionComponent<
             <DownloadDocumentButton
               mayanDocumentId={mayanDocumentId}
               mayanFileId={props.document.mayanFileId}
-              isFileAvailable={!!props.document.documentDetail?.file_latest.id}
+              isFileAvailable={!!props.document?.documentDetail?.file_latest?.id}
             />
           </Col>
         </Row>

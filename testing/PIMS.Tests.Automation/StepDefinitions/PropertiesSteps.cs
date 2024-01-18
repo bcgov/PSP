@@ -1,8 +1,5 @@
-﻿
-
-using PIMS.Tests.Automation.Classes;
+﻿using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
 using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
@@ -11,8 +8,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
     public class PropertiesSteps
     {
         private readonly LoginSteps loginSteps;
-        private SearchProperties searchProperties;
-        private PropertyInformation propertyInformation;
+        private readonly SearchProperties searchProperties;
+        private readonly PropertyInformation propertyInformation;
+        private readonly PropertyManagementTab propertyManagementTab;
+        private readonly PropertyPIMSFiles pimsFiles;
+
         private readonly GenericSteps genericSteps;
 
         private readonly string userName = "TRANPSP1";
@@ -20,7 +20,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private Property property;
         private SearchProperty searchProperty;
         private PropertyManagement propertyManagement;
-        private PropertyManagementTab propertyManagementTab;
+
 
         public PropertiesSteps(BrowserDriver driver)
         {
@@ -28,6 +28,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties = new SearchProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
             propertyManagementTab = new PropertyManagementTab(driver.Current);
+            pimsFiles = new PropertyPIMSFiles(driver.Current);
             genericSteps = new GenericSteps(driver);
         }
 
@@ -54,6 +55,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a valid PID in Inventory
             searchProperties.SearchPropertyByPINPID(searchProperty.PID);
+
+            //Validate that the result gives only one pin
+            Assert.True(searchProperties.PropertiesFoundCount() == 1);
+
+            //Search for a valid Plan in Inventory
+            searchProperties.SearchPropertyByPINPID(searchProperty.PlanNumber);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesFoundCount() == 1);
@@ -203,6 +210,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 propertyManagementTab.VerifyLastInsertedPropertyContactTable(propertyManagement.ManagementPropertyContacts[i]);
             }
 
+            //Insert Activities
             for (int j = 0; j < propertyManagement.ManagementPropertyActivities.Count; j++)
             {
                 propertyManagementTab.AddNewPropertyActivityButton();
@@ -213,6 +221,30 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 propertyManagementTab.ViewLastActivityFromList();
                 propertyManagementTab.VerifyLastInsertedActivityTable(propertyManagement.ManagementPropertyActivities[j]);
             }
+        }
+
+        [StepDefinition(@"I insert activities to the Property Management Tab from row number (.*)")]
+        public void InsertActivityManagementPropertyTab(int rowNumber)
+        {
+            //Grab data from excel
+            PopulateManagementProperty(rowNumber);
+
+            //Go to the Property Management Tab
+            propertyManagementTab.NavigateManagementTab();
+            //propertyManagementTab.VerifyInitManagementTabView();
+
+            //Insert Activities
+            for (int j = 0; j < propertyManagement.ManagementPropertyActivities.Count; j++)
+            {
+                propertyManagementTab.AddNewPropertyActivityButton();
+                propertyManagementTab.VerifyCreateActivityInitForm();
+                propertyManagementTab.InsertNewPropertyActivity(propertyManagement.ManagementPropertyActivities[j]);
+                propertyManagementTab.SavePropertyManagement();
+                propertyManagementTab.VerifyInsertedActivity(propertyManagement.ManagementPropertyActivities[j]);
+                propertyManagementTab.ViewLastActivityFromList();
+                propertyManagementTab.VerifyLastInsertedActivityTable(propertyManagement.ManagementPropertyActivities[j]);
+            }
+
         }
 
         [StepDefinition(@"I update information in the Property Management Tab from row number (.*)")]
@@ -269,26 +301,43 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyManagementTab.DeleteAllActivities();
         }
 
-        [StepDefinition(@"LTSA Pop-up Information validation is successful")]
-        public void ValidateLTSAPopUp()
+        [StepDefinition(@"I delete all activities from the Property Management Tab")]
+        public void DeleteActivitiesManagementPropertyTab()
         {
-            /* TEST COVERAGE: PSP-3186 */
+            //Close Activity Tray
+            propertyManagementTab.CloseActivityTray();
 
-            //Select found property on Map
-            searchProperties.SelectFoundPin();
-
-            //Validate LTSA Pop-up
-            propertyInformation.VerifyPropertyMapPopUpView();
-
-            //Close Property Details Form
-            propertyInformation.ClosePropertyInfoModal();
-
-            //Reset Map
-            searchProperties.SearchPropertyReset();
-
-            //Close LTSA Pop-up
-            propertyInformation.CloseLTSAPopUp();
+            //Delete all Activities
+            propertyManagementTab.DeleteAllActivities();
         }
+
+        [StepDefinition(@"I verify the PIMS Files Tab")]
+        public void VerifyPIMSFilesTab()
+        {
+            pimsFiles.NavigatePIMSFiles();
+            pimsFiles.VerifyPimsFiles();
+        }
+
+        //[StepDefinition(@"LTSA Pop-up Information validation is successful")]
+        //public void ValidateLTSAPopUp()
+        //{
+        //    /* TEST COVERAGE: PSP-3186 */
+
+        //    //Select found property on Map
+        //    searchProperties.SelectFoundPin();
+
+        //    //Validate LTSA Pop-up
+        //    propertyInformation.VerifyPropertyMapPopUpView();
+
+        //    //Close Property Details Form
+        //    propertyInformation.ClosePropertyInfoModal();
+
+        //    //Reset Map
+        //    searchProperties.SearchPropertyReset();
+
+        //    //Close LTSA Pop-up
+        //    propertyInformation.CloseLTSAPopUp();
+        //}
 
         [StepDefinition(@"No Properties were found")]
         public void NonPropertyFound()
@@ -320,6 +369,21 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void PropertyManagementSuccess()
         {
             propertyManagementTab.VerifyInitManagementTabView();
+        }
+
+        [StepDefinition(@"PIMS Files Tab has rendered successfully")]
+        public void VerifySuccessPIMSFile()
+        {
+            Assert.True(pimsFiles.GetResearchFilesCount() > 0);
+            Assert.True(pimsFiles.GetAcquisitionFilesCount() > 0);
+            Assert.True(pimsFiles.GetLeasesCount() > 0);
+            Assert.True(pimsFiles.GetDispositionFilesCount() == 0);
+        }
+
+        [StepDefinition(@"Properties filters works successfully")]
+        public void PropertySearchBarSuccess()
+        {
+            searchProperties.SearchPropertyReset();
         }
 
         private void PopulateProperty(int rowNumber)

@@ -4,10 +4,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Concepts.CodeTypes;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Cdogs;
-using Pims.Api.Models.Concepts.Http;
+using Pims.Api.Models.CodeTypes;
+using Pims.Api.Models.Requests.Http;
 
 namespace Pims.Api.Repositories.Cdogs
 {
@@ -39,9 +39,9 @@ namespace Pims.Api.Repositories.Cdogs
         {
             if (!IsValidToken())
             {
-                ExternalResult<JwtResponse> tokenResult = await TryRequestToken();
+                ExternalResponse<JwtResponse> tokenResult = await TryRequestToken();
 
-                if (tokenResult.Status == ExternalResultStatus.Error)
+                if (tokenResult.Status == ExternalResponseStatus.Error)
                 {
                     throw new AuthenticationException(tokenResult.Message);
                 }
@@ -72,7 +72,7 @@ namespace Pims.Api.Repositories.Cdogs
             return false;
         }
 
-        private async Task<ExternalResult<JwtResponse>> TryRequestToken()
+        private async Task<ExternalResponse<JwtResponse>> TryRequestToken()
         {
             _logger.LogDebug("Getting authentication token...");
 
@@ -90,7 +90,7 @@ namespace Pims.Api.Repositories.Cdogs
             content.Headers.Clear();
             content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
 
-            ExternalResult<JwtResponse> result = await PostAsync<JwtResponse>(_config.AuthEndpoint, content);
+            ExternalResponse<JwtResponse> result = await PostAsync<JwtResponse>(_config.AuthEndpoint, content);
             _logger.LogDebug("Finished getting authentication token");
 
             return result;

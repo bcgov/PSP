@@ -27,9 +27,11 @@ jest.mock('@react-keycloak/web');
 jest.mock('@/hooks/pims-api/useApiDispositionFile');
 const getDispositionFilesPagedApiFn = jest.fn();
 const getAllDispositionFileTeamMembersFn = jest.fn();
+const exportDispositionFilesFn = jest.fn();
 (useApiDispositionFile as jest.Mock).mockReturnValue({
   getDispositionFilesPagedApi: getDispositionFilesPagedApiFn,
   getAllDispositionFileTeamMembers: getAllDispositionFileTeamMembersFn,
+  exportDispositionFiles: exportDispositionFilesFn,
 });
 
 const mockPagedResults = (
@@ -178,5 +180,16 @@ describe('Disposition List View', () => {
     expect(button).toBeVisible();
     await act(async () => userEvent.click(button));
     expect(history.location.pathname).toBe('/mapview/sidebar/disposition/new');
+  });
+
+  it('calls export function when export button clicked', async () => {
+    let results = mockPagedResults([]);
+    getDispositionFilesPagedApiFn.mockResolvedValue(results);
+    setup({ claims: [Claims.DISPOSITION_VIEW, Claims.DISPOSITION_ADD] });
+    await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
+    const button = await screen.findByTestId(/excel-icon/i);
+    expect(button).toBeVisible();
+    await act(async () => userEvent.click(button));
+    expect(exportDispositionFilesFn).toHaveBeenCalled();
   });
 });

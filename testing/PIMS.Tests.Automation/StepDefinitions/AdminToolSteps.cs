@@ -158,7 +158,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             financialCodes.SaveFinancialCode();
 
             //Filter Financial Code
-            financialCodes.FilterFinancialCode(financialCode.CodeValue);
+            financialCodes.FilterFinancialCode(financialCode.FinnCodeValue);
 
             //Verify new code exists
             Assert.True(financialCodes.CountTotalFinancialCodeResults() == 1);
@@ -189,7 +189,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(financialCodes.CountTotalFinancialCodeResults() == 0);
 
             //Filter Financial Code
-            financialCodes.FilterFinancialCode(financialCode.CodeValue);
+            financialCodes.FilterFinancialCode(financialCode.FinnCodeValue);
 
             //Choose first result from search
             financialCodes.ChooseFirstSearchCodeValue();
@@ -325,7 +325,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.Equal(financialCodes.FirstFinancialCodeType(), "Yearly financial");
 
             //Filter by Code Value
-            financialCodes.FilterFinancialCode(financialCode.CodeValue);
+            financialCodes.FilterFinancialCode(financialCode.FinnCodeValue);
         }
 
         [StepDefinition(@"Help Desk rendered successfully")]
@@ -376,12 +376,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             DataTable financialCodesSheet = ExcelDataContext.GetInstance().Sheets["FinancialCodes"];
             ExcelDataContext.PopulateInCollection(financialCodesSheet);
 
-            financialCode.CodeType = ExcelDataContext.ReadData(rowNumber, "CodeType");
-            financialCode.CodeValue = ExcelDataContext.ReadData(rowNumber, "CodeValue");
-            financialCode.CodeDescription = ExcelDataContext.ReadData(rowNumber, "CodeDescription");
-            financialCode.EffectiveDate = ExcelDataContext.ReadData(rowNumber, "EffectiveDate");
-            financialCode.ExpiryDate = ExcelDataContext.ReadData(rowNumber, "ExpiryDate");
-            financialCode.DisplayOrder = ExcelDataContext.ReadData(rowNumber, "DisplayOrder");
+            financialCode.FinnCodeType = ExcelDataContext.ReadData(rowNumber, "FinnCodeType");
+            financialCode.FinnCodeValue = ExcelDataContext.ReadData(rowNumber, "FinnCodeValue");
+            financialCode.FinnCodeDescription = ExcelDataContext.ReadData(rowNumber, "FinnCodeDescription");
+            financialCode.FinnEffectiveDate = ExcelDataContext.ReadData(rowNumber, "FinnEffectiveDate");
+            financialCode.FinnExpiryDate = ExcelDataContext.ReadData(rowNumber, "FinnExpiryDate");
+            financialCode.FinnDisplayOrder = ExcelDataContext.ReadData(rowNumber, "FinnDisplayOrder");
         }
 
     }

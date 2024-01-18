@@ -14,6 +14,6 @@ namespace Pims.Api.Models.Concepts.InterestHolder
 
         public AcquisitionFilePropertyModel AcquisitionFileProperty { get; set; }
 
-        public List<TypeModel<string>> PropertyInterestTypes { get; set; }
+        public List<CodeTypeModel<string>> PropertyInterestTypes { get; set; }
     }
 }

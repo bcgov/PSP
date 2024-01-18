@@ -12,9 +12,9 @@ namespace Pims.Api.Models.Concepts.AccessRequest
         #region Properties
         public long Id { get; set; }
 
-        public TypeModel<string> AccessRequestStatusTypeCode { get; set; }
+        public CodeTypeModel<string> AccessRequestStatusTypeCode { get; set; }
 
-        public TypeModel<short> RegionCode { get; set; }
+        public CodeTypeModel<short> RegionCode { get; set; }
 
         public string Note { get; set; }
 

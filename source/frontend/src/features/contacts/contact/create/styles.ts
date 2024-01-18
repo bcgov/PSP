@@ -4,9 +4,6 @@ import styled from 'styled-components';
 import { Form as FormBase } from '@/components/common/form';
 import { FlexBox } from '@/components/common/styles';
 
-// common ui styling
-export * from '@/features/contacts/styles';
-
 export const H2 = styled.h2`
   font-size: 2rem;
   font-weight: 700;
@@ -26,7 +23,6 @@ export const H3 = styled.h3`
 export const CreateFormLayout = styled(FlexBox).attrs({ column: true })`
   width: 100%;
   overflow: auto;
-  padding-right: 1rem;
 `;
 
 export const Form = styled(FormikForm)`
@@ -71,7 +67,7 @@ export const SubtleText = styled.span`
 
 export const ButtonGroup = styled(FlexBox)`
   width: 100%;
-  padding: 1rem 4rem;
+  padding: 1rem 3rem;
   gap: 2rem;
   justify-content: flex-end;
   align-items: stretch;

@@ -1,4 +1,4 @@
-namespace Pims.Dal.Constants
+namespace Pims.Api.Models.CodeTypes
 {
     public static class SpatialReference
     {

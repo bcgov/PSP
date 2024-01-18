@@ -6,10 +6,10 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Concepts.CodeTypes;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models.Concepts.Http;
+using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Mayan;
+using Pims.Api.Models.Requests.Http;
 
 namespace Pims.Api.Repositories.Mayan
 {
@@ -39,19 +39,19 @@ namespace Pims.Api.Repositories.Mayan
         {
             if (string.IsNullOrEmpty(_currentToken))
             {
-                ExternalResult<TokenResult> tokenResult = await TryRequestToken();
+                ExternalResponse<TokenResponse> tokenResponse = await TryRequestToken();
 
-                if (tokenResult.Status == ExternalResultStatus.Error)
+                if (tokenResponse.Status == ExternalResponseStatus.Error)
                 {
-                    throw new AuthenticationException(tokenResult.Message);
+                    throw new AuthenticationException(tokenResponse.Message);
                 }
-                _currentToken = tokenResult.Payload.Token;
+                _currentToken = tokenResponse.Payload.Token;
             }
 
             return _currentToken;
         }
 
-        private async Task<ExternalResult<TokenResult>> TryRequestToken()
+        private async Task<ExternalResponse<TokenResponse>> TryRequestToken()
         {
             _logger.LogDebug("Getting authentication token...");
             Uri endpoint = new Uri($"{_config.BaseUri}/auth/token/obtain/");
@@ -61,7 +61,7 @@ namespace Pims.Api.Repositories.Mayan
                 Password = _config.ConnectionPassword,
             }), Encoding.UTF8, MediaTypeNames.Application.Json);
 
-            ExternalResult<TokenResult> result = await PostAsync<TokenResult>(endpoint, credentials);
+            ExternalResponse<TokenResponse> result = await PostAsync<TokenResponse>(endpoint, credentials);
             _logger.LogDebug("Finished getting authentication token");
 
             return result;

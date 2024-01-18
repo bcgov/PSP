@@ -1,4 +1,4 @@
-using Pims.Dal.Constants;
+using Pims.Api.Models.CodeTypes;
 
 namespace Pims.Dal.Helpers
 {

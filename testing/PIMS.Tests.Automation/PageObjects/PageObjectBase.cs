@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+using Sprache;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -18,7 +19,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             this.webDriver = webDriver;
             wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
-            wait.PollingInterval = TimeSpan.FromMilliseconds(100);
+            //wait.PollingInterval = TimeSpan.FromMilliseconds(100);
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
         }
 
@@ -50,6 +51,11 @@ namespace PIMS.Tests.Automation.PageObjects
         protected void WaitUntilVisible(By element)
         {
             wait.Until(ExpectedConditions.ElementIsVisible(element));
+        }
+
+        protected void WaitUntilExist(By element)
+        {
+            wait.Until(ExpectedConditions.ElementExists(element));
         }
 
         protected void WaitUntilClickable(By element)
@@ -86,6 +92,7 @@ namespace PIMS.Tests.Automation.PageObjects
             var js = (IJavaScriptExecutor)webDriver;
 
             wait.Until(ExpectedConditions.ElementExists(button));
+            wait.Until(ExpectedConditions.ElementToBeClickable(button));
             webDriver.FindElement(button).Click();
         }
 
@@ -111,7 +118,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected void ChooseSpecificSelectOption(By parentElement, string option)
         {
-            Wait();
+            Wait(2000);
 
             var js = (IJavaScriptExecutor)webDriver;
 
@@ -169,10 +176,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected void ClearMultiSelectInput(By elementBy)
         {
-            var parentElement = webDriver.FindElement(elementBy);
-            var childrenElement = parentElement.FindElements(By.TagName("span"));
+            WaitUntilVisible(elementBy);
 
-            foreach (var element in childrenElement)
+            var parentElement = webDriver.FindElement(elementBy);
+            var childrenElements = parentElement.FindElements(By.TagName("span"));
+
+            foreach (var element in childrenElements)
             {
                 element.FindElement(By.TagName("i")).Click();
             }
@@ -234,6 +243,12 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             decimal value = decimal.Parse(amount);
             return "$" + value.ToString("#,##0.00");
+        }
+
+        protected string TransformProjectFormat(string project)
+        {
+            var splittedProject = project.Split(' ', 2);
+            return splittedProject[0] + " - " + splittedProject[1];
         }
 
         protected string TransformListToText(List<string> list)

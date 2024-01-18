@@ -56,7 +56,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// <summary>
         /// get/set - The Team's profile type code.
         /// </summary>
-        public TypeModel<string> TeamProfileType { get; set; }
+        public CodeTypeModel<string> TeamProfileType { get; set; }
 
         #endregion
     }
