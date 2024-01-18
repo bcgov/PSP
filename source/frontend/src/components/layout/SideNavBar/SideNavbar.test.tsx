@@ -17,7 +17,7 @@ const renderComponent = (props?: IRenderProps) =>
   render(
     <TestCommonWrapper
       history={history}
-      roles={props?.roles ?? [Roles.REAL_ESTATE_MANAGER]}
+      roles={props?.roles ?? [Roles.ACQUISITION_FUNCTIONAL]}
       claims={[
         ...(props?.claims ?? []),
         Claims.LEASE_VIEW,
