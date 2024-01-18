@@ -34,7 +34,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.AcquisitionTeam, src => src.PimsAcquisitionFileTeams)
                 .Map(dest => dest.AcquisitionFileOwners, src => src.PimsAcquisitionOwners)
                 .Map(dest => dest.AcquisitionFileInterestHolders, src => src.PimsInterestHolders)
-                .Map(dest => dest.AcquisitionFileChecklist, src => src.PimsAcquisitionChecklistItems)
+                .Map(dest => dest.FileChecklistItems, src => src.PimsAcquisitionChecklistItems)
                 .Map(dest => dest.LegacyStakeholders, src => src.GetLegacyInterestHolders())
                 .Map(dest => dest.CompensationRequisitions, src => src.PimsCompensationRequisitions)
                 .Inherits<IBaseAppEntity, BaseAuditModel>();
@@ -61,7 +61,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.PimsAcquisitionFileTeams, src => src.AcquisitionTeam)
                 .Map(dest => dest.PimsAcquisitionOwners, src => src.AcquisitionFileOwners)
                 .Map(dest => dest.PimsInterestHolders, src => src.AcquisitionFileInterestHolders)
-                .Map(dest => dest.PimsAcquisitionChecklistItems, src => src.AcquisitionFileChecklist)
+                .Map(dest => dest.PimsAcquisitionChecklistItems, src => src.FileChecklistItems)
                 .Inherits<BaseAuditModel, IBaseAppEntity>();
         }
     }

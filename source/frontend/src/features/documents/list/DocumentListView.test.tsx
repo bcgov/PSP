@@ -4,9 +4,9 @@ import MockAdapter from 'axios-mock-adapter';
 import { noop } from 'lodash';
 
 import Claims from '@/constants/claims';
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { mockDocumentsResponse, mockDocumentTypesResponse } from '@/mocks/documents.mock';
 import { mockLookups } from '@/mocks/index.mock';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -50,7 +50,7 @@ describe('Document List View', () => {
         isLoading={false}
         parentId={renderOptions?.parentId.toString() || '0'}
         relationshipType={
-          renderOptions?.relationshipType || DocumentRelationshipType.RESEARCH_FILES
+          renderOptions?.relationshipType || ApiGen_CodeTypes_DocumentRelationType.ResearchFiles
         }
         documentResults={
           renderOptions?.documentResults ||
@@ -95,7 +95,7 @@ describe('Document List View', () => {
       hideFilters: false,
       isLoading: false,
       parentId: '0',
-      relationshipType: DocumentRelationshipType.RESEARCH_FILES,
+      relationshipType: ApiGen_CodeTypes_DocumentRelationType.ResearchFiles,
       documentResults: mockDocumentRowResponse(),
       onDelete: deleteMock,
       onSuccess: noop,
@@ -109,7 +109,7 @@ describe('Document List View', () => {
       hideFilters: false,
       isLoading: false,
       parentId: '0',
-      relationshipType: DocumentRelationshipType.RESEARCH_FILES,
+      relationshipType: ApiGen_CodeTypes_DocumentRelationType.ResearchFiles,
       documentResults: mockDocumentRowResponse(),
       onDelete: deleteMock,
       onSuccess: noop,
@@ -123,7 +123,7 @@ describe('Document List View', () => {
       hideFilters: false,
       isLoading: false,
       parentId: '0',
-      relationshipType: DocumentRelationshipType.RESEARCH_FILES,
+      relationshipType: ApiGen_CodeTypes_DocumentRelationType.ResearchFiles,
       documentResults: mockDocumentRowResponse(),
       onDelete: deleteMock,
       onSuccess: noop,
@@ -140,7 +140,7 @@ describe('Document List View', () => {
       hideFilters: false,
       isLoading: false,
       parentId: '0',
-      relationshipType: DocumentRelationshipType.RESEARCH_FILES,
+      relationshipType: ApiGen_CodeTypes_DocumentRelationType.ResearchFiles,
       documentResults: documentRows,
       onDelete: deleteMock,
       onSuccess: noop,
@@ -157,7 +157,7 @@ describe('Document List View', () => {
       hideFilters: false,
       isLoading: false,
       parentId: '0',
-      relationshipType: DocumentRelationshipType.RESEARCH_FILES,
+      relationshipType: ApiGen_CodeTypes_DocumentRelationType.ResearchFiles,
       documentResults: documentRows,
       onDelete: deleteMock,
       onSuccess: noop,
@@ -166,8 +166,8 @@ describe('Document List View', () => {
     const deleteButtonTooltip = await findAllByTestId('document-delete-button');
     act(() => userEvent.click(deleteButtonTooltip[0]));
 
-    await waitFor(() => screen.getByText('Delete a document'));
-    const continueButton = screen.getByText('Continue');
+    await waitFor(() => screen.getByText('Yes'));
+    const continueButton = screen.getByText('Yes');
     act(() => userEvent.click(continueButton));
 
     expect(deleteMock).toHaveBeenCalledWith(DocumentRow.toApi(documentRows[0]));

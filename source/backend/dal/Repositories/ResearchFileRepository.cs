@@ -17,6 +17,8 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class ResearchFileRepository : BaseRepository<PimsResearchFile>, IResearchFileRepository
     {
+        private readonly ISequenceRepository _sequenceRepository;
+
         #region Constructors
 
         /// <summary>
@@ -25,9 +27,10 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public ResearchFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ResearchFileRepository> logger)
+        public ResearchFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ResearchFileRepository> logger, ISequenceRepository sequenceRepository)
             : base(dbContext, user, logger)
         {
+            _sequenceRepository = sequenceRepository;
         }
         #endregion
 
@@ -303,13 +306,7 @@ namespace Pims.Dal.Repositories
         /// <param name="context"></param>
         private long GetNextResearchSequenceValue()
         {
-            SqlParameter result = new SqlParameter("@result", System.Data.SqlDbType.BigInt)
-            {
-                Direction = System.Data.ParameterDirection.Output,
-            };
-            this.Context.Database.ExecuteSqlRaw("set @result = next value for dbo.PIMS_RESEARCH_FILE_ID_SEQ;", result);
-
-            return (long)result.Value;
+            return _sequenceRepository.GetNextSequenceValue("dbo.PIMS_RESEARCH_FILE_ID_SEQ");
         }
         #endregion
     }

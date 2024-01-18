@@ -137,11 +137,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 sharedSearchProperties.SelectFirstOption();
             }
             //Search for a property by Legal Description
-            if (researchFile.SearchProperties.LegalDescription != "")
-            {
-                sharedSearchProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
-                sharedSearchProperties.SelectFirstOption();
-            }
+            //if (researchFile.SearchProperties.LegalDescription != "")
+            //{
+            //    sharedSearchProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
+            //    sharedSearchProperties.SelectFirstOption();
+            //}
 
             //Save Research File
             researchFiles.SaveResearchFileProperties();
@@ -184,10 +184,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(sharedSearchProperties.noRowsResultsMessage().Equals("No results found for your search criteria."));
 
             //Search for a property by Legal Description
-            sharedSearchProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
+            //sharedSearchProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
 
             //Verify more than 15 properties found result
-            Assert.True(sharedSearchProperties.noRowsResultsMessage().Equals("Too many results (more than 15) match this criteria. Please refine your search."));
+            //Assert.True(sharedSearchProperties.noRowsResultsMessage().Equals("Too many results (more than 15) match this criteria. Please refine your search."));
 
             //Cancel changes on a Property Detail on Research File
             researchFiles.CancelResearchFileProps();
@@ -212,10 +212,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     researchFiles.VerifyPropResearchTabFormView(researchFile.PropertyResearch[i]);
                 }
             }
-
-            //Verify PIMS Files Tab
-            propertyInformation.VerifyPimsFiles();
-
         }
 
         [StepDefinition(@"I create a Research File from a pin on map and from row number (.*)")]

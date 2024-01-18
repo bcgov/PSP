@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Pims.Api.Models.Cdogs;
-using Pims.Api.Models.Concepts.Http;
-using Pims.Api.Models.Download;
+
+using Pims.Api.Models.Requests.Http;
 
 namespace Pims.Api.Repositories.Cdogs
 {
@@ -11,10 +11,10 @@ namespace Pims.Api.Repositories.Cdogs
     /// </summary>
     public interface IDocumentGenerationRepository
     {
-        Task<ExternalResult<string>> TryUploadTemplateAsync(IFormFile file);
+        Task<ExternalResponse<string>> TryUploadTemplateAsync(IFormFile file);
 
-        Task<ExternalResult<FileTypes>> TryGetFileTypesAsync();
+        Task<ExternalResponse<FileTypes>> TryGetFileTypesAsync();
 
-        Task<ExternalResult<FileDownload>> UploadAndGenerate(RenderRequest request);
+        Task<ExternalResponse<FileDownloadResponse>> UploadAndGenerate(RenderRequest request);
     }
 }

@@ -1,19 +1,20 @@
 import React, { useContext } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
+import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { NoteTypes } from '@/constants/noteTypes';
 import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 
 import { SideBarContext } from '../../context/sidebarContext';
+import { ChecklistView } from '../../shared/tabs/checklist/detail/ChecklistView';
 import DocumentsTab from '../../shared/tabs/DocumentsTab';
 import AgreementContainer from './agreement/detail/AgreementContainer';
 import AgreementView from './agreement/detail/AgreementView';
-import { AcquisitionChecklistView } from './checklist/detail/AcquisitionChecklistView';
 import CompensationListContainer from './compensation/list/CompensationListContainer';
 import CompensationListView from './compensation/list/CompensationListView';
 import ExpropriationTabContainer from './expropriation/ExpropriationTabContainer';
@@ -63,9 +64,12 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
 
   tabViews.push({
     content: (
-      <AcquisitionChecklistView
-        acquisitionFile={acquisitionFile}
+      <ChecklistView
+        apiFile={acquisitionFile}
         onEdit={() => setIsEditing(true)}
+        sectionTypeName={API.ACQUISITION_CHECKLIST_SECTION_TYPES}
+        editClaim={Claims.ACQUISITION_EDIT}
+        prefix="acq"
       />
     ),
     key: FileTabType.CHECKLIST,
@@ -77,7 +81,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       content: (
         <DocumentsTab
           fileId={acquisitionFile.id}
-          relationshipType={DocumentRelationshipType.ACQUISITION_FILES}
+          relationshipType={ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles}
           onSuccess={onChildSuccess}
         />
       ),

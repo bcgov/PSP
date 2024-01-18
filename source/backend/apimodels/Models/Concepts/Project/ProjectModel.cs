@@ -20,7 +20,7 @@ namespace Pims.Api.Models.Concepts.Project
         /// <summary>
         /// get/set - The status type code.
         /// </summary>
-        public TypeModel<string> ProjectStatusTypeCode { get; set; }
+        public CodeTypeModel<string> ProjectStatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - Business function code.
@@ -40,7 +40,7 @@ namespace Pims.Api.Models.Concepts.Project
         /// <summary>
         /// get/set - The region code.
         /// </summary>
-        public TypeModel<short> RegionCode { get; set; }
+        public CodeTypeModel<short> RegionCode { get; set; }
 
         /// <summary>
         /// get/set - The project code.

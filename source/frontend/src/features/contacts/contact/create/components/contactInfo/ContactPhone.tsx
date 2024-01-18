@@ -26,23 +26,20 @@ export const ContactPhone: React.FunctionComponent<React.PropsWithChildren<ICont
   const { phoneTypes } = useContactInfoHelpers();
 
   return (
-    <>
-      <Row>
-        <Col md={6}>
-          <Input field={withNameSpace(namespace, 'value')} label="Phone" />
-        </Col>
-        <Col md={4}>
-          <Select
-            label="Phone type"
-            field={withNameSpace(namespace, 'contactMethodTypeCode')}
-            options={phoneTypes}
-            placeholder="Select..."
-          />
-        </Col>
-        <Col md={2} style={{ paddingLeft: 0, paddingTop: '3rem' }}>
-          {onRemove && <RemoveButton onRemove={onRemove} />}
-        </Col>
-      </Row>
-    </>
+    <Row>
+      <Col md={6}>
+        <Input field={withNameSpace(namespace, 'value')} />
+      </Col>
+      <Col md={4} className="pl-0">
+        <Select
+          field={withNameSpace(namespace, 'contactMethodTypeCode')}
+          options={phoneTypes}
+          placeholder="Select type..."
+        />
+      </Col>
+      <Col md={2} className="pl-0 pt-2">
+        {onRemove && <RemoveButton fontSize="1.3rem" onRemove={onRemove} />}
+      </Col>
+    </Row>
   );
 };

@@ -46,11 +46,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDepositAddOtherTypeInput = By.Id("input-otherTypeDescription");
         private By licenceDepositAddDescriptionLabel = By.XPath("//div[@class='modal-body']/form/div/div/div/label[contains(text(),'Description')]");
         private By licenseDepositAddDescriptionTextarea = By.CssSelector("textarea[id='input-description']");
-        private By licenseDepositAddAmountLabel = By.XPath("//label[contains(text(),'Deposit Amount')]");
+        private By licenseDepositAddAmountLabel = By.XPath("//label[contains(text(),'Deposit amount')]");
         private By licenseDepositAddAmountInput = By.Id("input-amountPaid");
         private By licenseDepositAddPaidDateLabel = By.XPath("//label[contains(text(),'Paid date')]");
         private By licenseDepositAddPaidDateInput = By.Id("datepicker-depositDate");
-        private By licenseDepositAddDepositHolderLabel = By.XPath("//label[contains(text(),'Deposit Holder')]");
+        private By licenseDepositAddDepositHolderLabel = By.XPath("//label[contains(text(),'Deposit holder')]");
         private By licenseDepositAddDepositHolderInput = By.CssSelector("label[for='input-contactHolder']");
         private By licenseDepositAddContactButton = By.CssSelector("div[class='pl-0 col-auto'] button");
 
@@ -113,6 +113,12 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(licenseDepositAddBttn);
         }
 
+        public void CancelDeposit()
+        {
+            sharedModals.ModalClickCancelBttn();
+
+        }
+
         public void AddDeposit(Deposit deposit)
         {
             WaitUntilClickable(licenseDepositAddTypeSelect);
@@ -133,7 +139,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             sharedSelectContact.SelectContact(deposit.DepositHolder, "");
 
-            ButtonElement("Save");
+            sharedModals.ModalClickOKBttn();
         }
 
         public void AddReturnBttn()
@@ -186,6 +192,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait(2000);
             var totalDeposits = webDriver.FindElements(licenseDepositTableTotal).Count;
+
+            Wait();
             webDriver.FindElement(By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") button[title='edit deposit']")).Click();
 
             ChooseSpecificSelectOption(licenseDepositAddTypeSelect, deposit.DepositType);
@@ -210,7 +218,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(licenseDepositAddContactButton).Click();
             sharedSelectContact.SelectContact(deposit.DepositHolder, "");
 
-            ButtonElement("Save");
+            sharedModals.ModalClickOKBttn();
         }
 
         public void DeleteFirstDeposit()

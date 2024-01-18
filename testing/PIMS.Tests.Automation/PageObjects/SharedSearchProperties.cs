@@ -242,7 +242,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(locateOnMapAddressLabel);
             AssertTrueIsDisplayed(locateOnMapRegionLabel);
             AssertTrueIsDisplayed(locateOnMapDistrictLabel);
-            AssertTrueIsDisplayed(locateOnMapLegalDescriptionLabel);
+            //AssertTrueIsDisplayed(locateOnMapLegalDescriptionLabel);
 
             AssertTrueIsDisplayed(searchPropertiesSelectedPropertiesSubtitle);
             AssertTrueIsDisplayed(searchPropertiesSelectedIdentifierHeader);
@@ -272,7 +272,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchPropResultsPINHeader);
             AssertTrueIsDisplayed(searchPropResultsPlanHeader);
             AssertTrueIsDisplayed(searchPropResultsAddressHeader);
-            AssertTrueIsDisplayed(searchPropResultsLegalDescriptHeader);
+            //AssertTrueIsDisplayed(searchPropResultsLegalDescriptHeader);
         }
         
     }

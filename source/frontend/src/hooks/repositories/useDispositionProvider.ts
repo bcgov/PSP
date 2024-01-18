@@ -5,12 +5,13 @@ import { useApiDispositionFile } from '@/hooks/pims-api/useApiDispositionFile';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import {
   Api_DispositionFile,
+  Api_DispositionFileAppraisal,
   Api_DispositionFileOffer,
   Api_DispositionFileProperty,
   Api_DispositionFileSale,
   Api_DispositionFileTeam,
 } from '@/models/api/DispositionFile';
-import { Api_LastUpdatedBy } from '@/models/api/File';
+import { Api_FileChecklistItem, Api_FileWithChecklist, Api_LastUpdatedBy } from '@/models/api/File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import {
   useAxiosErrorHandler,
@@ -27,9 +28,15 @@ export const useDispositionProvider = () => {
   const {
     postDispositionFileApi,
     getDispositionFile,
+    putDispositionFileApi,
     getDispositionFileProperties,
     getLastUpdatedByApi,
+    getDispositionFileChecklist,
+    putDispositionFileChecklist,
     getAllDispositionFileTeamMembers,
+    getDispositionFileAppraisal,
+    postDispositionFileAppraisal,
+    putDispositionFileAppraisal,
     getDispositionFileOffers,
     postDispositionFileOffer,
     getDispositionFileSale,
@@ -66,6 +73,27 @@ export const useDispositionProvider = () => {
     onError: useAxiosErrorHandlerWithAuthorization('Failed to load Disposition File'),
   });
 
+  const updateDispositionFileApi = useApiRequestWrapper<
+    (
+      dispositionFileId: number,
+      dispositionFile: Api_DispositionFile,
+      userOverrideCodes: UserOverrideCode[],
+    ) => Promise<AxiosResponse<Api_DispositionFile, any>>
+  >({
+    requestFunction: useCallback(
+      async (
+        dispositionFileId: number,
+        dispositionFile: Api_DispositionFile,
+        useOverride: UserOverrideCode[] = [],
+      ) => await putDispositionFileApi(dispositionFileId, dispositionFile, useOverride),
+      [putDispositionFileApi],
+    ),
+    requestName: 'UpdateDispositionFile',
+    onSuccess: useAxiosSuccessHandler('Disposition File saved'),
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
+  });
+
   const getLastUpdatedBy = useApiRequestWrapper<
     (dispositionFileId: number) => Promise<AxiosResponse<Api_LastUpdatedBy, any>>
   >({
@@ -88,6 +116,29 @@ export const useDispositionProvider = () => {
     onError: useAxiosErrorHandler('Failed to retrieve Disposition File Properties'),
   });
 
+  const getDispositionChecklistApi = useApiRequestWrapper<
+    (acqFileId: number) => Promise<AxiosResponse<Api_FileChecklistItem[], any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number) => await getDispositionFileChecklist(acqFileId),
+      [getDispositionFileChecklist],
+    ),
+    requestName: 'GetDispositionFileChecklist',
+    onError: useAxiosErrorHandler('Failed to retrieve Disposition File Checklist'),
+  });
+
+  const updateDispositionChecklistApi = useApiRequestWrapper<
+    (acqFile: Api_FileWithChecklist) => Promise<AxiosResponse<Api_DispositionFile, any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFile: Api_FileWithChecklist) => await putDispositionFileChecklist(acqFile),
+      [putDispositionFileChecklist],
+    ),
+    requestName: 'UpdateDispositionFileChecklist',
+    onError: useAxiosErrorHandler('Failed to update Disposition File Checklist'),
+    throwError: true,
+  });
+
   const getAllDispositionTeamMembersApi = useApiRequestWrapper<
     () => Promise<AxiosResponse<Api_DispositionFileTeam[], any>>
   >({
@@ -97,6 +148,53 @@ export const useDispositionProvider = () => {
     ),
     requestName: 'GetAllDispositionTeamMembers',
     onError: useAxiosErrorHandler('Failed to retrieve Disposition File Team Members'),
+  });
+
+  const getDispositionAppraisalApi = useApiRequestWrapper<
+    (dispositionFileId: number) => Promise<AxiosResponse<Api_DispositionFileAppraisal, any>>
+  >({
+    requestFunction: useCallback(
+      async (dispositionFileId: number) => await getDispositionFileAppraisal(dispositionFileId),
+      [getDispositionFileAppraisal],
+    ),
+    requestName: 'GetDispositionAppraisal',
+    onError: useAxiosErrorHandler('Failed to retrieve Disposition File Appraisal'),
+  });
+
+  const postDispositionAppraisalApi = useApiRequestWrapper<
+    (
+      dispositionFileId: number,
+      dispositionAppraisal: Api_DispositionFileAppraisal,
+    ) => Promise<AxiosResponse<Api_DispositionFileAppraisal, any>>
+  >({
+    requestFunction: useCallback(
+      async (dispositionFileId: number, dispositionAppraisal: Api_DispositionFileAppraisal) =>
+        await postDispositionFileAppraisal(dispositionFileId, dispositionAppraisal),
+      [postDispositionFileAppraisal],
+    ),
+    requestName: 'PostDispositionAppraisal',
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
+  });
+
+  const putDispositionAppraisalApi = useApiRequestWrapper<
+    (
+      dispositionFileId: number,
+      appraisalId: number,
+      dispositionAppraisal: Api_DispositionFileAppraisal,
+    ) => Promise<AxiosResponse<Api_DispositionFileAppraisal, any>>
+  >({
+    requestFunction: useCallback(
+      async (
+        dispositionFileId: number,
+        appraisalId: number,
+        dispositionAppraisal: Api_DispositionFileAppraisal,
+      ) => await putDispositionFileAppraisal(dispositionFileId, appraisalId, dispositionAppraisal),
+      [putDispositionFileAppraisal],
+    ),
+    requestName: 'PutDispositionAppraisal',
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
   });
 
   const getAllDispositionOffersApi = useApiRequestWrapper<
@@ -188,9 +286,15 @@ export const useDispositionProvider = () => {
     () => ({
       addDispositionFileApi: addDispositionFileApi,
       getDispositionFile: getDispositionFileApi,
+      putDispositionFile: updateDispositionFileApi,
       getLastUpdatedBy,
       getDispositionProperties: getDispositionPropertiesApi,
+      getDispositionChecklist: getDispositionChecklistApi,
+      putDispositionChecklist: updateDispositionChecklistApi,
       getAllDispositionTeamMembers: getAllDispositionTeamMembersApi,
+      getDispositionAppraisal: getDispositionAppraisalApi,
+      postDispositionAppraisal: postDispositionAppraisalApi,
+      putDispositionAppraisal: putDispositionAppraisalApi,
       getDispositionFileOffers: getAllDispositionOffersApi,
       postDispositionFileOffer: postDispositionOfferApi,
       getDispositionFileSale: getDispositionFileSaleApi,
@@ -201,9 +305,15 @@ export const useDispositionProvider = () => {
     [
       addDispositionFileApi,
       getDispositionFileApi,
+      updateDispositionFileApi,
       getLastUpdatedBy,
       getDispositionPropertiesApi,
+      getDispositionChecklistApi,
+      updateDispositionChecklistApi,
       getAllDispositionTeamMembersApi,
+      getDispositionAppraisalApi,
+      postDispositionAppraisalApi,
+      putDispositionAppraisalApi,
       getAllDispositionOffersApi,
       postDispositionOfferApi,
       getDispositionFileSaleApi,

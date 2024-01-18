@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.File;
-using Pims.Api.Models.Models.Concepts.DispositionFile;
+using Pims.Api.Models.Concepts.DispositionFile;
 
 /*
 * Frontend model
@@ -10,7 +10,7 @@ using Pims.Api.Models.Models.Concepts.DispositionFile;
 */
 namespace Pims.Api.Models.Concepts.DispositionFile
 {
-    public class DispositionFileModel : FileModel
+    public class DispositionFileModel : FileWithChecklistModel
     {
         #region Properties
 
@@ -37,32 +37,32 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         /// <summary>
         /// get/set - The disposition type.
         /// </summary>
-        public TypeModel<string> DispositionTypeCode { get; set; }
+        public CodeTypeModel<string> DispositionTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The disposition status type.
         /// </summary>
-        public TypeModel<string> DispositionStatusTypeCode { get; set; }
+        public CodeTypeModel<string> DispositionStatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The initiating branch type.
         /// </summary>
-        public TypeModel<string> InitiatingBranchTypeCode { get; set; }
+        public CodeTypeModel<string> InitiatingBranchTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The initiating document type.
         /// </summary>
-        public TypeModel<string> PhysicalFileStatusTypeCode { get; set; }
+        public CodeTypeModel<string> PhysicalFileStatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The funding type.
         /// </summary>
-        public TypeModel<string> FundingTypeCode { get; set; }
+        public CodeTypeModel<string> FundingTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The initiating document type.
         /// </summary>
-        public TypeModel<string> InitiatingDocumentTypeCode { get; set; }
+        public CodeTypeModel<string> InitiatingDocumentTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The disposition other text.
@@ -77,7 +77,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         /// <summary>
         /// get/set - The MOTI region that this disposition file falls under.
         /// </summary>
-        public TypeModel<short> RegionCode { get; set; }
+        public CodeTypeModel<short> RegionCode { get; set; }
 
         /// <summary>
         /// get/set - A list of disposition property relationships.

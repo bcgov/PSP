@@ -1,23 +1,19 @@
 import React from 'react';
 
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
-import {
-  Api_DocumentRelationship,
-  Api_DocumentType,
-  Api_DocumentUpdateRequest,
-  Api_DocumentUpdateResponse,
-  Api_DocumentUploadRequest,
-  Api_DocumentUploadResponse,
-} from '@/models/api/Document';
-import {
-  Api_FileDownload,
-  Api_Storage_DocumentMetadata,
-  Api_Storage_DocumentTypeMetadataType,
-  DocumentQueryResult,
-} from '@/models/api/DocumentStorage';
-import { ExternalResult } from '@/models/api/ExternalResult';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
+import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
+import { ApiGen_Mayan_DocumentDetail } from '@/models/api/generated/ApiGen_Mayan_DocumentDetail';
+import { ApiGen_Mayan_DocumentMetadata } from '@/models/api/generated/ApiGen_Mayan_DocumentMetadata';
+import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
+import { ApiGen_Mayan_QueryResponse } from '@/models/api/generated/ApiGen_Mayan_QueryResponse';
+import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
+import { ApiGen_Requests_DocumentUpdateResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateResponse';
+import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
+import { ApiGen_Requests_DocumentUploadResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUploadResponse';
+import { ApiGen_Requests_ExternalResponse } from '@/models/api/generated/ApiGen_Requests_ExternalResponse';
+import { ApiGen_Requests_FileDownloadResponse } from '@/models/api/generated/ApiGen_Requests_FileDownloadResponse';
 
-import { Api_Storage_DocumentDetail } from './../../models/api/DocumentStorage';
 import useAxiosApi from './useApi';
 
 /**
@@ -30,56 +26,63 @@ export const useApiDocuments = () => {
 
   return React.useMemo(
     () => ({
-      getDocumentTypesApiCall: () => api.get<Api_DocumentType[]>(`/documents/types`),
+      getDocumentTypesApiCall: () => api.get<ApiGen_Concepts_DocumentType[]>(`/documents/types`),
 
-      getDocumentRelationshipTypesApiCall: (relationshipType: DocumentRelationshipType) =>
-        api.get<Api_DocumentType[]>(`/documents/categories/${relationshipType}`),
+      getDocumentRelationshipTypesApiCall: (
+        relationshipType: ApiGen_CodeTypes_DocumentRelationType,
+      ) => api.get<ApiGen_Concepts_DocumentType[]>(`/documents/categories/${relationshipType}`),
 
       getDocumentTypeMetadataApiCall: (mayanDocumentTypeId: number) =>
-        api.get<ExternalResult<DocumentQueryResult<Api_Storage_DocumentTypeMetadataType>>>(
-          `/documents/storage/types/${mayanDocumentTypeId}/metadata`,
-        ),
+        api.get<
+          ApiGen_Requests_ExternalResponse<
+            ApiGen_Mayan_QueryResponse<ApiGen_Mayan_DocumentTypeMetadataType>
+          >
+        >(`/documents/storage/types/${mayanDocumentTypeId}/metadata`),
 
       getDocumentRelationshipApiCall: (
-        relationshipType: DocumentRelationshipType,
+        relationshipType: ApiGen_CodeTypes_DocumentRelationType,
         parentId: string,
-      ) => api.get<Api_DocumentRelationship[]>(`/documents/${relationshipType}/${parentId}`),
+      ) =>
+        api.get<ApiGen_Concepts_DocumentRelationship[]>(
+          `/documents/${relationshipType}/${parentId}`,
+        ),
 
       deleteDocumentRelationshipApiCall: (
-        relationshipType: DocumentRelationshipType,
-        documentRelationship: Api_DocumentRelationship,
+        relationshipType: ApiGen_CodeTypes_DocumentRelationType,
+        documentRelationship: ApiGen_Concepts_DocumentRelationship,
       ) => api.delete<boolean>(`/documents/${relationshipType}`, { data: documentRelationship }),
 
       getDocumentMetadataApiCall: (mayanDocumentId: number) =>
-        api.get<ExternalResult<DocumentQueryResult<Api_Storage_DocumentMetadata>>>(
-          `/documents/storage/${mayanDocumentId}/metadata`,
-        ),
+        api.get<
+          ApiGen_Requests_ExternalResponse<
+            ApiGen_Mayan_QueryResponse<ApiGen_Mayan_DocumentMetadata>
+          >
+        >(`/documents/storage/${mayanDocumentId}/metadata`),
 
       getDocumentDetailApiCall: (mayanDocumentId: number) =>
-        api.get<ExternalResult<Api_Storage_DocumentDetail>>(
+        api.get<ApiGen_Requests_ExternalResponse<ApiGen_Mayan_DocumentDetail>>(
           `/documents/storage/${mayanDocumentId}/detail`,
         ),
 
       downloadWrappedDocumentFileApiCall: (mayanDocumentId: number, mayanFileId: number) =>
-        api.get<Api_FileDownload>(
+        api.get<ApiGen_Requests_FileDownloadResponse>(
           `/documents/storage/${mayanDocumentId}/files/${mayanFileId}/download-wrapped`,
         ),
 
       downloadWrappedDocumentFileLatestApiCall: (mayanDocumentId: number) =>
-        api.get<Api_FileDownload>(`/documents/storage/${mayanDocumentId}/download-wrapped`),
+        api.get<ApiGen_Requests_FileDownloadResponse>(
+          `/documents/storage/${mayanDocumentId}/download-wrapped`,
+        ),
 
       uploadDocumentRelationshipApiCall: (
-        relationshipType: DocumentRelationshipType,
+        relationshipType: ApiGen_CodeTypes_DocumentRelationType,
         parentId: string,
-        uploadRequest: Api_DocumentUploadRequest,
+        uploadRequest: ApiGen_Requests_DocumentUploadRequest,
       ) => {
         const formData = new FormData();
         formData.append('file', uploadRequest.file);
-        formData.append(
-          'documentTypeMayanId',
-          uploadRequest.documentType.mayanId?.toString() || '',
-        );
-        formData.append('documentTypeId', uploadRequest.documentType.id?.toString() || '');
+        formData.append('documentTypeMayanId', uploadRequest.documentTypeMayanId?.toString() || '');
+        formData.append('documentTypeId', uploadRequest.documentTypeId?.toString() || '');
         formData.append('documentStatusCode', uploadRequest.documentStatusCode || '');
 
         uploadRequest.documentMetadata?.forEach((metadata, index) => {
@@ -87,20 +90,20 @@ export const useApiDocuments = () => {
             'DocumentMetadata[' + index + '].MetadataTypeId',
             metadata.metadataTypeId.toString(),
           );
-          formData.append('DocumentMetadata[' + index + '].Value', metadata.value);
+          formData.append('DocumentMetadata[' + index + '].Value', metadata.value ?? '');
           index++;
         });
 
-        return api.post<Api_DocumentUploadResponse>(
+        return api.post<ApiGen_Requests_DocumentUploadResponse>(
           `/documents/upload/${relationshipType}/${parentId}`,
           formData,
         );
       },
       updateDocumentMetadataApiCall: (
         documentId: number,
-        updateRequest: Api_DocumentUpdateRequest,
+        updateRequest: ApiGen_Requests_DocumentUpdateRequest,
       ) => {
-        return api.put<Api_DocumentUpdateResponse>(
+        return api.put<ApiGen_Requests_DocumentUpdateResponse>(
           `/documents/${documentId}/metadata`,
           updateRequest,
         );

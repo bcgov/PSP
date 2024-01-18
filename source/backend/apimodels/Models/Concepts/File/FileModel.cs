@@ -24,7 +24,7 @@ namespace Pims.Api.Models.Concepts.File
         /// <summary>
         /// get/set - The file status type.
         /// </summary>
-        public TypeModel<string> FileStatusTypeCode { get; set; }
+        public CodeTypeModel<string> FileStatusTypeCode { get; set; }
 
         #endregion
     }

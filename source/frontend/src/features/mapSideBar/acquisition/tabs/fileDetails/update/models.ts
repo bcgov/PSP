@@ -1,4 +1,5 @@
 import { InterestHolderType } from '@/constants/interestHolderTypes';
+import { ChecklistItemFormModel } from '@/features/mapSideBar/shared/tabs/checklist/update/models';
 import { IAutocompletePrediction } from '@/interfaces';
 import {
   Api_AcquisitionFile,
@@ -36,6 +37,7 @@ export class UpdateAcquisitionSummaryFormModel
   region?: string;
   team: AcquisitionTeamFormModel[] = [];
   owners: AcquisitionOwnerFormModel[] = [];
+  fileChecklist: ChecklistItemFormModel[] = [];
 
   project?: IAutocompletePrediction;
   product: string = '';
@@ -80,6 +82,7 @@ export class UpdateAcquisitionSummaryFormModel
         InterestHolderForm.toApi(this.ownerSolicitor, []),
         InterestHolderForm.toApi(this.ownerRepresentative, []),
       ].filter((x): x is Api_InterestHolder => x !== null),
+      fileChecklistItems: this.fileChecklist.map(x => x.toApi()),
     };
   }
 
