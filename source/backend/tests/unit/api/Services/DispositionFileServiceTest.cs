@@ -362,6 +362,42 @@ namespace Pims.Api.Test.Services
             Assert.NotNull(result);
             repository.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>()), Times.Once);
         }
+
+        [Fact]
+        public void Update_Success_AddsNote()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+
+            var dspFile = EntityHelper.CreateDispositionFile();
+            dspFile.ConcurrencyControlNumber = 1;
+            dspFile.AppCreateUserid = "TESTER";
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+
+            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dspFile);
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsDispositionFile()
+            {
+                DispositionFileStatusTypeCode = "CLOSED",
+                DispositionFileStatusTypeCodeNavigation = new PimsDispositionFileStatusType() { Description = "Closed" },
+            });
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+            lookupRepository.Setup(x => x.GetAllDispositionFileStatusTypes()).Returns(new PimsDispositionFileStatusType[]{ new PimsDispositionFileStatusType() {
+                Id = dspFile.DispositionFileStatusTypeCodeNavigation.Id,
+                Description = dspFile.DispositionFileStatusTypeCodeNavigation.Description,
+            },});
+
+            // Act
+            var result = service.Update(dspFile.Internal_Id, dspFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
+
+            // Assert
+            repository.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>()), Times.Once);
+            noteRepository.Verify(x => x.Add(It.Is<PimsDispositionFileNote>(x => x.DispositionFileId == 1
+                    && x.Note.NoteTxt == "Disposition File status changed from Closed to Active")), Times.Once);
+        }
         #endregion
 
         #region GetTeamMembers
